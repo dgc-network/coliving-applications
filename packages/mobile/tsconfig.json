@@ -1,0 +1,40 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "commonjs",
+    "lib": ["es6", "dom"],
+    "allowJs": true,
+    "jsx": "react-jsx",
+    "noEmit": true,
+    "incremental": true,
+    "isolatedModules": true,
+    "moduleResolution": "node",
+    "paths": {
+      "app/*": ["./src/*"],
+      // Remove these when no longer dependent on -client
+      "audio/*": ["./node_modules/-client/src/audio/*"],
+      "common/*": ["./node_modules/-client/src/common/*"],
+      "components/*": ["./node_modules/-client/src/components/*"],
+      "hooks/*": ["./node_modules/-client/src/hooks/*"],
+      "pages/*": ["./node_modules/-client/src/pages/*"],
+      "models/*": ["./node_modules/-client/src/models/*"],
+      "services/*": ["./node_modules/-client/src/services/*"],
+      "store/*": ["./node_modules/-client/src/store/*"],
+      "utils/*": ["./node_modules/-client/src/utils/*"]
+    },
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "strictNullChecks": true,
+    // Update these when no longer dependent on -client
+    "strict": false,
+    "skipLibCheck": true
+  },
+  "exclude": [
+    "node_modules",
+    "babel.config.js",
+    "metro.config.js",
+    "jest.config.js",
+    "./android/*",
+    "./web-app/*"
+  ]
+}

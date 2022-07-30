@@ -1,0 +1,10 @@
+.mutualsContainer {
+  margin-top: 32px;
+}
+
+.followingIcon {
+  width: 32px;
+}
+.followingIcon path {
+  fill: var(--neutral) !important;
+}

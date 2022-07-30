@@ -1,0 +1,111 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:android)
+
+platform :android do
+  desc "Deploy a new version to the Google Play"
+  lane :bounce do
+    upload_to_play_store(
+      track: "alpha",
+      package_name: "co..app.bounce",
+      aab: "./app/build/outputs/bundle/bounceRelease/app-bounce-release.aab",
+      skip_upload_metadata: true,
+      skip_upload_changelogs: true,
+      skip_upload_images: true,
+      skip_upload_screenshots: true
+    )
+  end
+
+  lane :alpha do
+    upload_to_play_store(
+      track: "alpha",
+      aab: "./app/build/outputs/bundle/prodRelease/app-prod-release.aab",
+      skip_upload_metadata: true,
+      skip_upload_changelogs: true,
+      skip_upload_images: true,
+      skip_upload_screenshots: true
+    )
+  end
+
+  lane :beta do
+    upload_to_play_store(
+      track: "beta",
+      aab: "./app/build/outputs/bundle/prodRelease/app-prod-release.aab",
+      skip_upload_metadata: true,
+      skip_upload_changelogs: true,
+      skip_upload_images: true,
+      skip_upload_screenshots: true
+    )
+  end
+
+  lane :deploy do
+    upload_to_play_store(
+      track: "production",
+      aab: "./app/build/outputs/bundle/prodRelease/app-prod-release.aab",
+      skip_upload_metadata: true,
+      skip_upload_changelogs: true,
+      skip_upload_images: true,
+      skip_upload_screenshots: true
+    )
+  end
+
+
+  lane :incrementVersionCode do |options|
+      # Get the max existing version code
+      previousVersion = google_play_track_version_codes(
+        package_name: options[:package_name],
+        track: options[:track]
+      ).max
+
+      # Increment the version code in build.gradle by 1
+      re = /versionCode\s+(\d+)/
+      path = '../app/build.gradle'
+      s = File.read(path)
+      s[re, 1] = (previousVersion + 1).to_s
+      f = File.new(path, 'w')
+      f.write(s)
+      f.close
+  end
+
+  lane :incrementVersionName do |options|
+      # Get the max existing version name
+      previousVersionName = google_play_track_release_names(
+        package_name: options[:package_name],
+        track: options[:track]
+      ).map {|v| Gem::Version.new v}.max
+
+      re = /versionName\s+"([\d\.]+)"/
+      path = '../app/build.gradle'
+      s = File.read(path)
+      versionName = Gem::Version.new s[re, 1]
+
+      # If the version specified in build.gradle is greater than
+      # the previous version name, there is no need to modify version name in build.gradle
+      if versionName <= previousVersionName
+        # Increment the patch version
+        # This is not strictly necessary but will allow the builds to be identified more easily
+        patchRegex = /\d+.\d+.(\d+)/
+        previousVersionNameString = previousVersionName.to_s
+        previousPatch = previousVersionNameString[patchRegex, 1]
+        previousVersionNameString[patchRegex, 1] = (previousPatch.to_i + 1).to_s
+        s[re, 1] = previousVersionNameString
+        f = File.new(path, 'w')
+        f.write(s)
+        f.close
+      end
+
+  end
+end

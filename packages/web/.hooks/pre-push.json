@@ -1,0 +1,12 @@
+{
+  "steps": [
+    {
+      "name": "lint",
+      "command": "npm run lint"
+    },
+    {
+      "name": "style lint",
+      "command": "npm run stylelint"
+    }
+  ]
+}
