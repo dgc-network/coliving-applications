@@ -14,8 +14,8 @@ import { getSafeArea, SafeAreaDirection } from 'utils/safeArea'
 import styles from './MobilePageContainer.module.css'
 
 const messages = {
-  dotAudius: '• Coliving',
-  audius: 'Coliving'
+  dotColiving: '• Coliving',
+  coliving: 'Coliving'
 }
 
 type OwnProps = {
@@ -114,9 +114,9 @@ const MobilePageContainer = ({
     <>
       <Helmet>
         {title ? (
-          <title>{`${title} ${messages.dotAudius}`}</title>
+          <title>{`${title} ${messages.dotColiving}`}</title>
         ) : (
-          <title>{messages.audius}</title>
+          <title>{messages.coliving}</title>
         )}
         {description && <meta name='description' content={description} />}
         {canonicalUrl && <link rel='canonical' href={canonicalUrl} />}

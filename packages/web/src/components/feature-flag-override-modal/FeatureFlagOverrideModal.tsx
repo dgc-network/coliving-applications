@@ -1,13 +1,13 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 
-import { FeatureFlags } from '@audius/common'
+import { FeatureFlags } from '@coliving/common'
 import {
   Modal,
   ModalContent,
   ModalHeader,
   ModalTitle,
   SegmentedControl
-} from '@audius/stems'
+} from '@coliving/stems'
 
 import {
   FEATURE_FLAG_OVERRIDE_KEY,

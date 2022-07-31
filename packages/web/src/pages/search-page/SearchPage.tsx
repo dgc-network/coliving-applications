@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 
-import { Client } from '@audius/common'
+import { Client } from '@coliving/common'
 import { connect } from 'react-redux'
 
 import SearchPageProvider from 'pages/search-page/SearchPageProvider'

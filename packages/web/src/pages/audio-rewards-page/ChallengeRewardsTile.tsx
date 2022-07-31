@@ -5,8 +5,8 @@ import {
   OptimisticUserChallenge,
   removeNullable,
   StringKeys
-} from '@audius/common'
-import { ProgressBar } from '@audius/stems'
+} from '@coliving/common'
+import { ProgressBar } from '@coliving/stems'
 import cn from 'classnames'
 import { useDispatch, useSelector } from 'react-redux'
 

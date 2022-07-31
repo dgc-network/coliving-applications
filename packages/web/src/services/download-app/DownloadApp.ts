@@ -1,17 +1,17 @@
-import { OS } from '@audius/common'
+import { OS } from '@coliving/common'
 
 const ENVIRONMENT = process.env.REACT_APP_ENVIRONMENT
 
 let APP_DOWNLOAD_URL: string
 switch (ENVIRONMENT) {
   case 'staging':
-    APP_DOWNLOAD_URL = 'https://download.staging.audius.co'
+    APP_DOWNLOAD_URL = 'https://download.staging.coliving.co'
     break
   case 'production':
-    APP_DOWNLOAD_URL = 'https://download.audius.co'
+    APP_DOWNLOAD_URL = 'https://download.coliving.co'
     break
   default:
-    APP_DOWNLOAD_URL = 'https://download.audius.co'
+    APP_DOWNLOAD_URL = 'https://download.coliving.co'
     break
 }
 

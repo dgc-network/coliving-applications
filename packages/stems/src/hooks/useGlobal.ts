@@ -2,11 +2,11 @@ import { useEffect, useMemo } from 'react'
 
 declare global {
   interface Window {
-    AudiusStems: any
+    ColivingStems: any
   }
 }
 
-window.AudiusStems = window.AudiusStems || {}
+window.ColivingStems = window.ColivingStems || {}
 
 /**
  * Hook to "share state" between components using the global window object.
@@ -24,15 +24,15 @@ export const useGlobal = <T>(
   initialValue: T
 ): [() => T, (mutator: (cur: T) => void) => void] => {
   useEffect(() => {
-    if (window.AudiusStems[name] === undefined) {
-      window.AudiusStems[name] = initialValue
+    if (window.ColivingStems[name] === undefined) {
+      window.ColivingStems[name] = initialValue
     }
   }, [name, initialValue])
 
-  const getter = useMemo(() => () => window.AudiusStems[name], [name])
+  const getter = useMemo(() => () => window.ColivingStems[name], [name])
   const setter = useMemo(
     () => (mutator: (cur: T) => void) => {
-      window.AudiusStems[name] = mutator(window.AudiusStems[name])
+      window.ColivingStems[name] = mutator(window.ColivingStems[name])
     },
     [name]
   )

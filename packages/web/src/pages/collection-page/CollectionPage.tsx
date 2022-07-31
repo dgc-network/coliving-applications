@@ -1,4 +1,4 @@
-import { SmartCollection } from '@audius/common'
+import { SmartCollection } from '@coliving/common'
 import { connect } from 'react-redux'
 
 import { AppState } from 'store/types'

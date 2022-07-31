@@ -1,4 +1,4 @@
-import { Theme } from '@audius/common'
+import { Theme } from '@coliving/common'
 
 import { NativeMobileMessage } from './helpers'
 import { MessageType } from './types'

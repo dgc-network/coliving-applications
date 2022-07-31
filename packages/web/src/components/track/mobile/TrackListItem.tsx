@@ -1,7 +1,7 @@
 import { memo, MouseEvent } from 'react'
 
-import { ID, CoverArtSizes, SquareSizes } from '@audius/common'
-import { IconKebabHorizontal, IconButton } from '@audius/stems'
+import { ID, CoverArtSizes, SquareSizes } from '@coliving/common'
+import { IconKebabHorizontal, IconButton } from '@coliving/stems'
 import cn from 'classnames'
 import Lottie from 'react-lottie'
 

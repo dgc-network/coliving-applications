@@ -1,7 +1,7 @@
 import { useState, useMemo, useEffect, useCallback } from 'react'
 
-import { PlayableType, ID, Name, Track } from '@audius/common'
-import { Modal, Button, ButtonType } from '@audius/stems'
+import { PlayableType, ID, Name, Track } from '@coliving/common'
+import { Modal, Button, ButtonType } from '@coliving/stems'
 import cn from 'classnames'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'

@@ -1,4 +1,4 @@
-import { ID } from '@audius/common'
+import { ID } from '@coliving/common'
 
 import { OPEN, CLOSE } from './actions'
 import { CreatePlaylistModalState } from './types'

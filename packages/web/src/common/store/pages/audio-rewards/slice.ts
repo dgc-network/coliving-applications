@@ -3,7 +3,7 @@ import {
   UserChallenge,
   ChallengeRewardID,
   Specifier
-} from '@audius/common'
+} from '@coliving/common'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 export type TrendingRewardsModalType = 'tracks' | 'playlists' | 'underground'

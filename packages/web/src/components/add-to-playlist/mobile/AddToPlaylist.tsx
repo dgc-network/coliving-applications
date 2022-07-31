@@ -1,6 +1,6 @@
 import { useCallback, useContext } from 'react'
 
-import { ID, CreatePlaylistSource, Collection } from '@audius/common'
+import { ID, CreatePlaylistSource, Collection } from '@coliving/common'
 import { push as pushRoute } from 'connected-react-router'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'

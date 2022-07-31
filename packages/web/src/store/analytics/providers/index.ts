@@ -1,4 +1,4 @@
-import { Nullable, BooleanKeys } from '@audius/common'
+import { Nullable, BooleanKeys } from '@coliving/common'
 
 import {
   SetAnalyticsUser,

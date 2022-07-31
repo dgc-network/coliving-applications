@@ -1,9 +1,9 @@
-import { ID, Kind, UserTrackMetadata, removeNullable } from '@audius/common'
+import { ID, Kind, UserTrackMetadata, removeNullable } from '@coliving/common'
 import { select, call, put } from 'typed-redux-saga/macro'
 
 import { getUserId } from 'common/store/account/selectors'
 import * as cacheActions from 'common/store/cache/actions'
-import apiClient from 'services/audius-api-client/AudiusAPIClient'
+import apiClient from 'services/coliving-api-client/ColivingAPIClient'
 import { waitForValue } from 'utils/sagaHelpers'
 
 import { getTrack } from '../selectors'

@@ -19,7 +19,7 @@ export const BgWaveLarge: Story<SVGAttributes<SVGElement>> = (args) => {
 BgWaveLarge.parameters = {
   docs: {
     source: {
-      code: 'import { BgWaveLarge } from @audius/stems\n// Render the SVG element: <BgWaveLarge />'
+      code: 'import { BgWaveLarge } from @coliving/stems\n// Render the SVG element: <BgWaveLarge />'
     }
   }
 }
@@ -32,7 +32,7 @@ export const BgWaveSmall: Story<SVGAttributes<SVGElement>> = (args) => {
 BgWaveSmall.parameters = {
   docs: {
     source: {
-      code: 'import { BgWaveSmall } from @audius/stems\n// Render the SVG element: <BgWaveSmall />'
+      code: 'import { BgWaveSmall } from @coliving/stems\n// Render the SVG element: <BgWaveSmall />'
     }
   }
 }

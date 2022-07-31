@@ -1,4 +1,4 @@
-import { FavoriteType } from '@audius/common'
+import { FavoriteType } from '@coliving/common'
 import { takeEvery, put } from 'redux-saga/effects'
 
 import * as favoritesActions from 'common/store/user-list/favorites/actions'

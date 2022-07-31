@@ -1,4 +1,4 @@
-import { IntKeys } from '@audius/common'
+import { IntKeys } from '@coliving/common'
 import { each } from 'lodash'
 import moment from 'moment'
 import { all, call, put, take, takeEvery } from 'redux-saga/effects'
@@ -6,7 +6,7 @@ import { all, call, put, take, takeEvery } from 'redux-saga/effects'
 import { getAccountUser } from 'common/store/account/selectors'
 import { retrieveUserTracks } from 'common/store/pages/profile/lineups/tracks/retrieveUserTracks'
 import { getBalance } from 'common/store/wallet/slice'
-import AudiusBackend from 'services/AudiusBackend'
+import ColivingBackend from 'services/ColivingBackend'
 import { remoteConfigInstance } from 'services/remote-config/remote-config-instance'
 import { waitForBackendSetup } from 'store/backend/sagas'
 import { DASHBOARD_PAGE } from 'utils/route'
@@ -27,7 +27,7 @@ function* fetchDashboardAsync(action) {
       // the dashboard
       getUnlisted: true
     }),
-    call(AudiusBackend.getPlaylists, account.user_id, [])
+    call(ColivingBackend.getPlaylists, account.user_id, [])
   ])
   const listedTracks = tracks.filter((t) => t.is_unlisted === false)
   const unlistedTracks = tracks.filter((t) => t.is_unlisted === true)
@@ -64,7 +64,7 @@ const formatMonth = (date) => moment.utc(date).format('MMM').toUpperCase()
 
 function* fetchDashboardListenDataAsync(action) {
   const listenData = yield call(
-    AudiusBackend.getTrackListens,
+    ColivingBackend.getTrackListens,
     action.trackIds,
     action.start,
     action.end,

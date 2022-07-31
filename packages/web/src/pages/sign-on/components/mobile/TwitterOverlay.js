@@ -1,4 +1,4 @@
-import { BooleanKeys } from '@audius/common'
+import { BooleanKeys } from '@coliving/common'
 import cn from 'classnames'
 import PropTypes from 'prop-types'
 import { Transition } from 'react-spring/renderprops'

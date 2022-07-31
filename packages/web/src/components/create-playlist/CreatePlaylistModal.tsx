@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 
-import { Name, FeatureFlags } from '@audius/common'
+import { Name, FeatureFlags } from '@coliving/common'
 import {
   Modal,
   SegmentedControl,
@@ -9,7 +9,7 @@ import {
   ModalTitle,
   IconFolder,
   IconPlaylists
-} from '@audius/stems'
+} from '@coliving/stems'
 
 import { useFlag } from 'hooks/useRemoteConfig'
 import { make, useRecord } from 'store/analytics/actions'

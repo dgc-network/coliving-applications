@@ -1,4 +1,4 @@
-import { StemTrack } from '@audius/common'
+import { StemTrack } from '@coliving/common'
 
 import { getTrack, getTracks } from 'common/store/cache/tracks/selectors'
 import { AppState } from 'store/types'

@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 
-import { ID, BadgeTier } from '@audius/common'
+import { ID, BadgeTier } from '@coliving/common'
 import cn from 'classnames'
 import { useDispatch } from 'react-redux'
 

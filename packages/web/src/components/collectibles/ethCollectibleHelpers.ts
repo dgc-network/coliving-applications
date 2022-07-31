@@ -1,4 +1,4 @@
-import { Chain, Collectible, CollectibleMediaType } from '@audius/common'
+import { Chain, Collectible, CollectibleMediaType } from '@coliving/common'
 
 import {
   OpenSeaAssetExtended,

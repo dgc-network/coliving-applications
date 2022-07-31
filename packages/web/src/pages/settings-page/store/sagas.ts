@@ -1,10 +1,10 @@
-import { Name } from '@audius/common'
+import { Name } from '@coliving/common'
 import { select, call, put, takeEvery } from 'typed-redux-saga'
 
 import * as actions from 'common/store/pages/settings/actions'
 import { getBrowserNotificationSettings } from 'common/store/pages/settings/selectors'
 import { BrowserNotificationSetting } from 'common/store/pages/settings/types'
-import AudiusBackend from 'services/AudiusBackend'
+import ColivingBackend from 'services/ColivingBackend'
 import { make } from 'store/analytics/actions'
 import { waitForBackendSetup } from 'store/backend/sagas'
 import {
@@ -29,7 +29,7 @@ function* watchGetSettings() {
     try {
       yield* call(waitForBackendSetup)
       const emailSettings = yield* call(
-        AudiusBackend.getEmailNotificationSettings
+        ColivingBackend.getEmailNotificationSettings
       )
       yield* put(
         actions.updateEmailFrequency(
@@ -39,7 +39,7 @@ function* watchGetSettings() {
       )
       if (!isBrowserPushAvailable) return
       const settings = yield* call(
-        AudiusBackend.getBrowserPushNotificationSettings
+        ColivingBackend.getBrowserPushNotificationSettings
       )
       // If settings exist, set them in the store, else leave it at the defaults.
       if (settings) yield* put(actions.setNotificationSettings(settings))
@@ -53,7 +53,7 @@ function* watchGetSettings() {
                 getPushManagerBrowserSubscription
               )
               const enabled = yield* call(
-                AudiusBackend.getBrowserPushSubscription,
+                ColivingBackend.getBrowserPushSubscription,
                 subscription.endpoint
               )
               yield* put(actions.setBrowserNotificationEnabled(enabled, false))
@@ -66,7 +66,7 @@ function* watchGetSettings() {
           )
           if (permissionData.permission === Permission.GRANTED) {
             const enabled = yield* call(
-              AudiusBackend.getSafariBrowserPushEnabled,
+              ColivingBackend.getSafariBrowserPushEnabled,
               permissionData.deviceToken
             )
             yield* put(actions.setBrowserNotificationEnabled(enabled, false))
@@ -88,7 +88,7 @@ function* watchToogleBrowserPushNotification() {
           const subscription = yield* call(getPushManagerBrowserSubscription)
           if (subscription) {
             if (action.updateServer) {
-              yield* call(AudiusBackend.updateBrowserNotifications, {
+              yield* call(ColivingBackend.updateBrowserNotifications, {
                 enabled: action.enabled,
                 subscription
               })
@@ -107,7 +107,7 @@ function* watchToogleBrowserPushNotification() {
           ) {
             if (action.updateServer) {
               yield* call(
-                AudiusBackend.registerDeviceToken,
+                ColivingBackend.registerDeviceToken,
                 pushPermission.deviceToken,
                 'safari'
               )
@@ -124,7 +124,7 @@ function* watchToogleBrowserPushNotification() {
           ) {
             if (action.updateServer) {
               yield* call(
-                AudiusBackend.deregisterDeviceToken,
+                ColivingBackend.deregisterDeviceToken,
                 pushPermission.deviceToken
               )
             }
@@ -158,7 +158,7 @@ function* watchSetBrowserNotificationSettingsOn() {
           [BrowserNotificationSetting.Remixes]: true
         }
         yield* put(actions.setNotificationSettings(updatedSettings))
-        yield* call(AudiusBackend.updateNotificationSettings, updatedSettings)
+        yield* call(ColivingBackend.updateNotificationSettings, updatedSettings)
       } catch (error) {
         yield* put(
           actions.browserPushNotificationFailed(getErrorMessage(error))
@@ -180,7 +180,7 @@ function* watchUpdateNotificationSettings() {
           )
           isOn = notificationSettings[action.notificationType]
         }
-        yield* call(AudiusBackend.updateNotificationSettings, {
+        yield* call(ColivingBackend.updateNotificationSettings, {
           [action.notificationType]: isOn
         })
 
@@ -205,7 +205,7 @@ function* watchUpdateEmailFrequency() {
     function* (action: actions.UpdateEmailFrequency) {
       if (action.updateServer) {
         yield* call(
-          AudiusBackend.updateEmailNotificationSettings,
+          ColivingBackend.updateEmailNotificationSettings,
           action.frequency
         )
       }

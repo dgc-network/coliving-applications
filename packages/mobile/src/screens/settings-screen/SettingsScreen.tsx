@@ -2,7 +2,7 @@ import { useCallback } from 'react'
 
 import { Image, Platform } from 'react-native'
 
-import audiusLogoHorizontal from 'app/assets/images/Horizontal-Logo-Full-Color.png'
+import colivingLogoHorizontal from 'app/assets/images/Horizontal-Logo-Full-Color.png'
 import Bell from 'app/assets/images/emojis/bell.png'
 import Headphone from 'app/assets/images/emojis/headphone.png'
 import SpeechBalloon from 'app/assets/images/emojis/speech-balloon.png'
@@ -68,7 +68,7 @@ export const SettingsScreen = () => {
   return (
     <Screen title={messages.title} topbarRight={null} variant='secondary'>
       <ScrollView>
-        <Image source={audiusLogoHorizontal} style={styles.logo} />
+        <Image source={colivingLogoHorizontal} style={styles.logo} />
         <AccountSettingsRow />
         <SettingsRow onPress={handlePressHistory}>
           <SettingsRowLabel

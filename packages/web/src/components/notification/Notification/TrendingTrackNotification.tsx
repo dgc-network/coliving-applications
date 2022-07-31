@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 
-import { Name, Nullable } from '@audius/common'
+import { Name, Nullable } from '@coliving/common'
 import { push } from 'connected-react-router'
 import { useDispatch } from 'react-redux'
 
@@ -27,7 +27,7 @@ const messages = {
   twitterShareText: (entityTitle: string, rank: number) =>
     `My track ${entityTitle} is trending ${rank}${getRankSuffix(
       rank
-    )} on @dgc.network! #AudiusTrending #Coliving`
+    )} on @dgc.network! #ColivingTrending #Coliving`
 }
 
 type TrendingTrackNotificationProps = {

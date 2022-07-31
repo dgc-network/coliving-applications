@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 
-import { Button, IconArrow, ButtonType } from '@audius/stems'
+import { Button, IconArrow, ButtonType } from '@coliving/stems'
 import cn from 'classnames'
 
 import QRCode from 'assets/img/imageQR.png'

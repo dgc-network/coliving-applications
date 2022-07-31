@@ -17,7 +17,7 @@ import { SettingsRow } from './SettingsRow'
 
 const messages = {
   title: 'About',
-  appName: 'Coliving Music',
+  appName: 'Coliving',
   version: 'Coliving Version',
   copyright: COPYRIGHT_TEXT,
   discord: 'Join our community on Discord',
@@ -64,7 +64,7 @@ export const AboutScreen = () => {
       <SettingsRow url='https://twitter.com/dgc.network'>
         <SettingsRowLabel label={messages.twitter} icon={IconTwitter} />
       </SettingsRow>
-      <SettingsRow url='https://www.instagram.com/audiusmusic/'>
+      <SettingsRow url='https://www.instagram.com/colivingmusic/'>
         <SettingsRowLabel label={messages.instagram} icon={IconInstagram} />
       </SettingsRow>
       <SettingsRow url='mailto:contact@.co'>

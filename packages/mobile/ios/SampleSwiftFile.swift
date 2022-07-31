@@ -1,6 +1,6 @@
 //
 //  SampleSwiftFile.swift
-//  AudiusReactNative
+//  ColivingReactNative
 //
 //  Created by Michael Piazza on 1/17/20.
 //  Copyright © 2020 Facebook. All rights reserved.

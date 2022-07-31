@@ -1,4 +1,4 @@
-import { Kind, removeNullable, Uid } from '@audius/common'
+import { Kind, removeNullable, Uid } from '@coliving/common'
 import { keyBy } from 'lodash'
 import moment from 'moment'
 import { select, call } from 'redux-saga/effects'

@@ -5,7 +5,7 @@ import {
   Variant as CollectionVariant,
   Status,
   User
-} from '@audius/common'
+} from '@coliving/common'
 import Lottie from 'react-lottie'
 
 import loadingSpinner from 'assets/animations/loadingSpinner.json'

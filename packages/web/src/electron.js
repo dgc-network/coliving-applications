@@ -61,32 +61,32 @@ switch (env) {
   case 'localhost':
     appEnvironment = Environment.LOCALHOST
     localhostPort = args[1] || '3000'
-    scheme = 'audius-localhost'
+    scheme = 'coliving-localhost'
     buildName = 'build'
     s3Bucket = ''
     break
   case 'staging':
     appEnvironment = Environment.STAGING
-    scheme = 'audius-staging'
+    scheme = 'coliving-staging'
     buildName = 'build-staging'
-    s3Bucket = 'staging.audius.co'
+    s3Bucket = 'staging.coliving.co'
     break
   case 'production':
     appEnvironment = Environment.PRODUCTION
-    scheme = 'audius'
+    scheme = 'coliving'
     buildName = 'build-production'
-    s3Bucket = 'audius.co'
+    s3Bucket = 'coliving.co'
     break
   default:
     appEnvironment = ''
     scheme = ''
     buildName = 'build'
-    s3Bucket = 'audius.co'
+    s3Bucket = 'coliving.co'
     break
 }
 
 // The protocol scheme determines what URLs resolve to the app.
-// For example, the URL audius:// will trigger the application to open.
+// For example, the URL coliving:// will trigger the application to open.
 protocol.registerSchemesAsPrivileged([
   {
     scheme,
@@ -107,7 +107,7 @@ const getPath = async (p) => {
 }
 
 /**
- * Transforms a url audius://route to audius://-/route so that it is
+ * Transforms a url coliving://route to coliving://-/route so that it is
  * properly loaded from the filesystem.
  */
 const reformatURL = (url) => {
@@ -228,7 +228,7 @@ const initAutoUpdater = () => {
   autoUpdater.logger.transports.file.level = 'info'
 }
 
-// Set if the app is opened up via a deep link (e.g. audius://handle in the web browser)
+// Set if the app is opened up via a deep link (e.g. coliving://handle in the web browser)
 let deepLinkedURL
 const createWindow = () => {
   const config = {

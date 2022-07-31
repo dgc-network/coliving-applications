@@ -11,8 +11,8 @@ import SearchBar from 'components/search-bar/ConnectedSearchBar'
 import styles from './Page.module.css'
 
 const messages = {
-  dotAudius: '• Coliving',
-  audius: 'Coliving'
+  dotColiving: '• Coliving',
+  coliving: 'Coliving'
 }
 
 const HEADER_MARGIN_PX = 32
@@ -111,9 +111,9 @@ export const Page = (props) => {
         >
           <Helmet>
             {props.title ? (
-              <title>{`${props.title} ${messages.dotAudius}`}</title>
+              <title>{`${props.title} ${messages.dotColiving}`}</title>
             ) : (
-              <title>{messages.audius}</title>
+              <title>{messages.coliving}</title>
             )}
             {props.description ? (
               <meta name='description' content={props.description} />

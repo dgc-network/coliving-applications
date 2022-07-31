@@ -1,7 +1,7 @@
 import { MutableRefObject, useContext } from 'react'
 
-import { ID, User } from '@audius/common'
-import { Popup, PopupPosition } from '@audius/stems'
+import { ID, User } from '@coliving/common'
+import { Popup, PopupPosition } from '@coliving/stems'
 import { useSelector } from 'react-redux'
 
 import { getUser } from 'common/store/cache/users/selectors'

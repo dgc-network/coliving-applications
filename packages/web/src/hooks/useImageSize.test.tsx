@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 
-import { DefaultSizes, SquareSizes } from '@audius/common'
+import { DefaultSizes, SquareSizes } from '@coliving/common'
 import { render } from '@testing-library/react'
 
 import { useImageSize } from 'common/hooks/useImageSize'

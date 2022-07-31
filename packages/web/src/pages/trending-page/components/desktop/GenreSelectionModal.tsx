@@ -1,4 +1,4 @@
-import { Modal, Scrollbar } from '@audius/stems'
+import { Modal, Scrollbar } from '@coliving/stems'
 
 import GenreSelectionList from 'pages/trending-page/components/GenreSelectionList'
 

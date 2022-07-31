@@ -1,4 +1,4 @@
-import { Status, Collection, Track } from '@audius/common'
+import { Status, Collection, Track } from '@coliving/common'
 
 export default interface ArtistDashboardState {
   status: Status

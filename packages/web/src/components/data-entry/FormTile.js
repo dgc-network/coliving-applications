@@ -1,6 +1,6 @@
 import { Component, useState, useCallback } from 'react'
 
-import { Button, ButtonType, IconDownload, IconIndent } from '@audius/stems'
+import { Button, ButtonType, IconDownload, IconIndent } from '@coliving/stems'
 import cn from 'classnames'
 import PropTypes from 'prop-types'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'

@@ -1,12 +1,12 @@
-import { Name, Nullable } from '@audius/common'
+import { Name, Nullable } from '@coliving/common'
 import { AccountInfo } from '@solana/spl-token'
 import { PublicKey } from '@solana/web3.js'
 
-import { waitForLibsInit } from 'services/audius-backend/eagerLoadUtils'
+import { waitForLibsInit } from 'services/coliving-backend/eagerLoadUtils'
 import { track } from 'store/analytics/providers'
 
 // @ts-ignore
-const libs = () => window.audiusLibs
+const libs = () => window.colivingLibs
 
 export const doesUserBankExist = async () => {
   await waitForLibsInit()

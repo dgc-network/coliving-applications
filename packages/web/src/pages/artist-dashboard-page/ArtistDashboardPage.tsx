@@ -1,6 +1,6 @@
 import { Suspense, Component, useMemo, ReactNode } from 'react'
 
-import { ID, Status, Theme, Track, User } from '@audius/common'
+import { ID, Status, Theme, Track, User } from '@coliving/common'
 import cn from 'classnames'
 import { push as pushRoute } from 'connected-react-router'
 import { each } from 'lodash'

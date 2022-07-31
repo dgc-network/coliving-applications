@@ -1,4 +1,4 @@
-import { StringWei, Nullable } from '@audius/common'
+import { StringWei, Nullable } from '@coliving/common'
 import { createSelector } from '@reduxjs/toolkit'
 
 import { CommonState } from 'common/store'

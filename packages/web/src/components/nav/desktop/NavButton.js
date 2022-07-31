@@ -6,7 +6,7 @@ import {
   ButtonSize,
   IconFollow,
   IconUpload
-} from '@audius/stems'
+} from '@coliving/stems'
 import cn from 'classnames'
 import PropTypes from 'prop-types'
 

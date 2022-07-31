@@ -1224,7 +1224,7 @@ type SocialProofError = {
   error: string
 }
 
-type AudiusOauthStart = {
+type ColivingOauthStart = {
   eventName: Name.COLIVING_OAUTH_START
   redirectUriParam: string | string[]
   originParam: string | string[] | undefined | null
@@ -1232,16 +1232,16 @@ type AudiusOauthStart = {
   responseMode: string | string[] | undefined | null
 }
 
-type AudiusOauthSubmit = {
+type ColivingOauthSubmit = {
   eventName: Name.COLIVING_OAUTH_SUBMIT
   alreadySignedIn: boolean
 }
 
-type AudiusOauthComplete = {
+type ColivingOauthComplete = {
   eventName: Name.COLIVING_OAUTH_COMPLETE
 }
 
-type AudiusOauthError = {
+type ColivingOauthError = {
   eventName: Name.COLIVING_OAUTH_ERROR
   isUserError: boolean
   error: string
@@ -1411,7 +1411,7 @@ export type AllTrackingEvents =
   | FolderSubmitEdit
   | FolderDelete
   | FolderCancelEdit
-  | AudiusOauthStart
-  | AudiusOauthComplete
-  | AudiusOauthSubmit
-  | AudiusOauthError
+  | ColivingOauthStart
+  | ColivingOauthComplete
+  | ColivingOauthSubmit
+  | ColivingOauthError

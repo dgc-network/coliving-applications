@@ -1,5 +1,5 @@
 module.exports = {
-  extends: ['audius', 'plugin:storybook/recommended'],
+  extends: ['coliving', 'plugin:storybook/recommended'],
   settings: {
     'import/resolver': {
       // NOTE: sk - These aliases are required for the import/order rule.

@@ -5,7 +5,7 @@ import {
   stemCategoryFriendlyNames,
   StemUpload,
   Download
-} from '@audius/common'
+} from '@coliving/common'
 import {
   Button,
   ButtonSize,
@@ -13,7 +13,7 @@ import {
   IconRemove,
   Modal,
   IconButton
-} from '@audius/stems'
+} from '@coliving/stems'
 import cn from 'classnames'
 
 import LoadingSpinner from 'components/loading-spinner/LoadingSpinner'

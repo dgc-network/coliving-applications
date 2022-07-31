@@ -1,4 +1,4 @@
-import { ID } from '@audius/common'
+import { ID } from '@coliving/common'
 import cn from 'classnames'
 import { useDispatch } from 'react-redux'
 

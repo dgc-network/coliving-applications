@@ -1,6 +1,6 @@
 import { useEffect, useContext } from 'react'
 
-import { CID, ID, LineupState, Track, User } from '@audius/common'
+import { CID, ID, LineupState, Track, User } from '@coliving/common'
 
 import { tracksActions } from 'common/store/pages/track/lineup/actions'
 import { QueueItem } from 'common/store/queue/types'

@@ -1,6 +1,6 @@
 import { Component } from 'react'
 
-import { Button, ButtonType } from '@audius/stems'
+import { Button, ButtonType } from '@coliving/stems'
 import PropTypes from 'prop-types'
 
 import { ReactComponent as LogoMetaMask } from 'assets/img/logoMetaMask.svg'

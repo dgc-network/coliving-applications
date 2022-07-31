@@ -1,4 +1,4 @@
-import { ID, RepostSource, FavoriteSource, ShareSource } from '@audius/common'
+import { ID, RepostSource, FavoriteSource, ShareSource } from '@coliving/common'
 import { createCustomAction } from 'typesafe-actions'
 
 export const REPOST_COLLECTION = 'SOCIAL/REPOST_COLLECTION'

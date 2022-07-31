@@ -11,7 +11,7 @@ import {
   SolanaWalletAddress,
   WalletAddress,
   Nullable
-} from '@audius/common'
+} from '@coliving/common'
 
 export type OpaqueID = string
 

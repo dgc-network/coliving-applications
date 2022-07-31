@@ -1,5 +1,5 @@
 /* eslint-disable no-import-assign */
-import { Kind, makeKindId, Status } from '@audius/common'
+import { Kind, makeKindId, Status } from '@coliving/common'
 import { combineReducers } from 'redux'
 import { expectSaga } from 'redux-saga-test-plan'
 

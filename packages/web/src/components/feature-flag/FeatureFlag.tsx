@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 
-import { FeatureFlags } from '@audius/common'
+import { FeatureFlags } from '@coliving/common'
 
 import { useFlag } from 'hooks/useRemoteConfig'
 

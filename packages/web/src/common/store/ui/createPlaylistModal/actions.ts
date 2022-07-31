@@ -1,4 +1,4 @@
-import { ID } from '@audius/common'
+import { ID } from '@coliving/common'
 export const OPEN = 'APPLICATION/UI/CREATE_PLAYLIST_MODAL/OPEN'
 export const CLOSE = 'APPLICATION/UI/CREATE_PLAYLIST_MODAL/CLOSE'
 

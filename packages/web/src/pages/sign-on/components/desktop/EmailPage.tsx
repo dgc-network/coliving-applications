@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
 
-import { Button, ButtonSize, ButtonType, IconArrow } from '@audius/stems'
+import { Button, ButtonSize, ButtonType, IconArrow } from '@coliving/stems'
 import cn from 'classnames'
 import { Spring } from 'react-spring/renderprops'
 
-import audiusLogoColored from 'assets/img/audiusLogoColored.png'
+import colivingLogoColored from 'assets/img/colivingLogoColored.png'
 import Input from 'components/data-entry/Input'
 import LoadingSpinner from 'components/loading-spinner/LoadingSpinner'
 import PreloadImage from 'components/preload-image/PreloadImage'
@@ -113,7 +113,7 @@ export const EmailPage = ({
       })}
     >
       <PreloadImage
-        src={audiusLogoColored}
+        src={colivingLogoColored}
         alt='Coliving Colored Logo'
         className={styles.logo}
       />

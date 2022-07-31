@@ -1,4 +1,4 @@
-import { ID } from '@audius/common'
+import { ID } from '@coliving/common'
 
 import { getAccountUser } from 'common/store/account/selectors'
 import { getProfileUser } from 'common/store/pages/profile/selectors'

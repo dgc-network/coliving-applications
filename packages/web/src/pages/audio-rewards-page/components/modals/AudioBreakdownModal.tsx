@@ -1,5 +1,5 @@
-import { BNWei } from '@audius/common'
-import { IconInfo } from '@audius/stems'
+import { BNWei } from '@coliving/common'
+import { IconInfo } from '@coliving/stems'
 import BN from 'bn.js'
 
 import { useModalState } from 'common/hooks/useModalState'
@@ -18,8 +18,8 @@ import ModalDrawer from './ModalDrawer'
 const messages = {
   modalTitle: '$AUDIO BREAKDOWN',
   total: 'TOTAL $AUDIO',
-  audiusWallet: 'COLIVING WALLET',
-  audiusWalletDescription: 'You can use this $AUDIO throughout the app',
+  colivingWallet: 'COLIVING WALLET',
+  colivingWalletDescription: 'You can use this $AUDIO throughout the app',
   linkedWallets: 'LINKED WALLETS',
   linkedWalletsDescription:
     'Linked wallets are more secure but not all features are supported',
@@ -54,7 +54,7 @@ const AudioBreakdownBody = () => {
       <div className={wm(styles.totalText)}>{messages.total}</div>
       <div className={styles.section}>
         <div className={styles.sectionTitle}>
-          {messages.audiusWallet}
+          {messages.colivingWallet}
           <DisplayAudio
             showLabel={false}
             amount={accountBalance}
@@ -63,7 +63,7 @@ const AudioBreakdownBody = () => {
           />
         </div>
         <div className={wm(styles.sectionDescription)}>
-          {messages.audiusWalletDescription}
+          {messages.colivingWalletDescription}
         </div>
       </div>
       <div className={styles.section}>

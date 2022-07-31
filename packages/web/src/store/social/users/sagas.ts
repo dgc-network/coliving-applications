@@ -1,4 +1,4 @@
-import { Kind, ID, Name, makeKindId } from '@audius/common'
+import { Kind, ID, Name, makeKindId } from '@coliving/common'
 import { call, select, takeEvery, put } from 'typed-redux-saga/macro'
 
 import { getUserId } from 'common/store/account/selectors'
@@ -7,7 +7,7 @@ import { adjustUserField } from 'common/store/cache/users/sagas'
 import { getUsers, getUser } from 'common/store/cache/users/selectors'
 import * as socialActions from 'common/store/social/users/actions'
 import * as signOnActions from 'pages/sign-on/store/actions'
-import AudiusBackend from 'services/AudiusBackend'
+import ColivingBackend from 'services/ColivingBackend'
 import { make } from 'store/analytics/actions'
 import { waitForBackendSetup } from 'store/backend/sagas'
 import * as confirmerActions from 'store/confirmer/actions'
@@ -73,7 +73,7 @@ export function* confirmFollowUser(userId: ID, accountId: ID) {
       makeKindId(Kind.USERS, userId),
       function* () {
         const { blockHash, blockNumber } = yield* call(
-          AudiusBackend.followUser,
+          ColivingBackend.followUser,
           userId
         )
         const confirmed = yield* call(
@@ -180,7 +180,7 @@ export function* confirmUnfollowUser(userId: ID, accountId: ID) {
       makeKindId(Kind.USERS, userId),
       function* () {
         const { blockHash, blockNumber } = yield* call(
-          AudiusBackend.unfollowUser,
+          ColivingBackend.unfollowUser,
           userId
         )
         const confirmed = yield* call(

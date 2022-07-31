@@ -1,6 +1,6 @@
 import { PureComponent } from 'react'
 
-import { Name } from '@audius/common'
+import { Name } from '@coliving/common'
 import {
   push as pushRoute,
   replace as replaceRoute

@@ -1,10 +1,10 @@
 // Amplitude Analytics
-import { Name, Nullable } from '@audius/common'
+import { Name, Nullable } from '@coliving/common'
 
 import { getSource } from './segment'
 
 const AMP_API_KEY = process.env.REACT_APP_AMPLITUDE_API_KEY
-const AMPLITUDE_PROXY = 'metrics.audius.co'
+const AMPLITUDE_PROXY = 'metrics.coliving.co'
 
 /**
  * ========================= Amplitude Analytics =========================

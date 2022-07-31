@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 
-import { TrendingRewardID, StringKeys } from '@audius/common'
+import { TrendingRewardID, StringKeys } from '@coliving/common'
 import { useDispatch } from 'react-redux'
 
 import { useSetVisibility } from 'common/hooks/useModalState'

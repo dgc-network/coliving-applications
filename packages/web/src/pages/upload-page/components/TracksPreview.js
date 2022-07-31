@@ -1,4 +1,4 @@
-import { Scrollbar } from '@audius/stems'
+import { Scrollbar } from '@coliving/stems'
 import cn from 'classnames'
 import PropTypes from 'prop-types'
 

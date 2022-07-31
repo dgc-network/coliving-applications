@@ -16,7 +16,7 @@
 	<true/>
 	<key>keychain-access-groups</key>
 	<array>
-		<string>$(AppIdentifierPrefix)co..audiusmusic</string>
+		<string>$(AppIdentifierPrefix)co..colivingmusic</string>
 		<string>$(AppIdentifierPrefix)io.fullstack.oauth.AUTH_MANAGER</string>
 	</array>
 </dict>

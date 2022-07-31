@@ -1,6 +1,6 @@
 import { Fragment, useState, useEffect } from 'react'
 
-import { Button, ButtonType } from '@audius/stems'
+import { Button, ButtonType } from '@coliving/stems'
 import { matchPath } from 'react-router-dom'
 import { animated, useTransition } from 'react-spring'
 
@@ -121,7 +121,7 @@ const AppRedirectPopover = ({
   const onClick = () => {
     onBeforeClickApp()
     const pathname = getPathname()
-    const newHref = `https://redirect.audius.co${APP_REDIRECT}${pathname}`
+    const newHref = `https://redirect.coliving.co${APP_REDIRECT}${pathname}`
     // If we're on the signup page, copy the URL to clipboard on app redirect
     // The app can then read the URL on load, persisting through install, to associate referrals
     if (

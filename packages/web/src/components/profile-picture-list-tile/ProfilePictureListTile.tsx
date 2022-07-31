@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { IconArrow } from '@audius/stems'
+import { IconArrow } from '@coliving/stems'
 
 import {
   UserProfileListProps,

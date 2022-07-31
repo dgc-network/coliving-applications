@@ -1,7 +1,7 @@
 import { useCallback, useEffect } from 'react'
 
-import { Nullable } from '@audius/common'
-import { Modal, ModalHeader, ModalTitle } from '@audius/stems'
+import { Nullable } from '@coliving/common'
+import { Modal, ModalHeader, ModalTitle } from '@coliving/stems'
 import { useDispatch } from 'react-redux'
 import { animated, Transition } from 'react-spring/renderprops'
 import { usePrevious } from 'react-use'

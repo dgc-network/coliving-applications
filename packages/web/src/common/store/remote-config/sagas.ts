@@ -1,4 +1,4 @@
-import { RemoteConfigInstance } from '@audius/common'
+import { RemoteConfigInstance } from '@coliving/common'
 import { eventChannel, END } from 'redux-saga'
 import { put, take } from 'redux-saga/effects'
 

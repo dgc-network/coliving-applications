@@ -11,14 +11,14 @@ import {
   Nullable,
   FeatureFlags,
   IntKeys
-} from '@audius/common'
+} from '@coliving/common'
 import {
   Button,
   TokenValueInput,
   Format,
   IconValidationX,
   ButtonType
-} from '@audius/stems'
+} from '@coliving/stems'
 
 import { ReactComponent as IconGoldBadgeSVG } from 'assets/img/IconGoldBadge.svg'
 import {
@@ -102,12 +102,12 @@ type SendInputBodyProps = {
 }
 
 const isValidEthDestination = (wallet: WalletAddress) => {
-  const libs = window.audiusLibs
+  const libs = window.colivingLibs
   return libs.web3Manager.web3.utils.isAddress(wallet)
 }
 
 const isValidSolDestination = (wallet: SolanaWalletAddress) => {
-  const solanaweb3 = window.audiusLibs.solanaWeb3Manager.solanaWeb3
+  const solanaweb3 = window.colivingLibs.solanaWeb3Manager.solanaWeb3
   try {
     const ignored = new solanaweb3.PublicKey(wallet)
     return true

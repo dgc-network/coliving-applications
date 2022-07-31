@@ -50,7 +50,7 @@ All.parameters = {
   },
   docs: {
     source: {
-      code: `// Usage:\n// import { ICON_NAME_HERE } from '@audius/stems'\nimport { IconAlbum } from '@audius/stems'\n\n// Rendering the svg element:\n<IconAlbum />
+      code: `// Usage:\n// import { ICON_NAME_HERE } from '@coliving/stems'\nimport { IconAlbum } from '@coliving/stems'\n\n// Rendering the svg element:\n<IconAlbum />
       `
     }
   }

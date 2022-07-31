@@ -25,12 +25,12 @@ const NATIVE_MOBILE = process.env.REACT_APP_NATIVE_MOBILE
 
 const links = {
   discord: 'https://discordapp.com/invite/yNUg2e2',
-  instagram: 'https://www.instagram.com/audiusmusic/',
+  instagram: 'https://www.instagram.com/colivingmusic/',
   twitter: 'https://twitter.com/dgc.network',
-  contact: 'mailto:contact@audius.co',
-  careers: 'https://jobs.lever.co/audius',
-  help: 'https://help.audius.co/',
-  terms: 'https://audius.co/legal/terms-of-use'
+  contact: 'mailto:contact@coliving.co',
+  careers: 'https://jobs.lever.co/coliving',
+  help: 'https://help.coliving.co/',
+  terms: 'https://coliving.co/legal/terms-of-use'
 }
 
 const messages = {
@@ -42,7 +42,7 @@ const messages = {
   help: 'Help / FAQ',
   terms: 'Terms & Privacy Policy',
 
-  title: 'Coliving Music',
+  title: 'Coliving',
   version: 'Coliving Version',
   copyright: COPYRIGHT_TEXT
 }

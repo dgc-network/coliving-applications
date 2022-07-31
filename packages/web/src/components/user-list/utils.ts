@@ -1,4 +1,4 @@
-import { ID, User, UserMetadata } from '@audius/common'
+import { ID, User, UserMetadata } from '@coliving/common'
 import { call, select } from 'typed-redux-saga/macro'
 
 import { getAccountUser, getUserId } from 'common/store/account/selectors'

@@ -1,4 +1,4 @@
-import { User } from '@audius/common'
+import { User } from '@coliving/common'
 
 import { FollowArtistsCategory } from 'pages/sign-on/store/types'
 

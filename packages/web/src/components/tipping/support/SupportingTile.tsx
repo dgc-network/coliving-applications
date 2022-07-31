@@ -6,8 +6,8 @@ import {
   Supporting,
   User,
   Nullable
-} from '@audius/common'
-import { IconTrophy } from '@audius/stems'
+} from '@coliving/common'
+import { IconTrophy } from '@coliving/stems'
 import cn from 'classnames'
 import { push as pushRoute } from 'connected-react-router'
 import { useDispatch, useSelector } from 'react-redux'

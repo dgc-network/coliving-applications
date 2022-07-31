@@ -5,7 +5,7 @@ import {
   UserTrackMetadata,
   Nullable,
   StringKeys
-} from '@audius/common'
+} from '@coliving/common'
 import { call, put, select } from 'redux-saga/effects'
 
 import { getTracks } from 'common/store/cache/tracks/selectors'
@@ -17,7 +17,7 @@ import {
   getTrendingGenre
 } from 'common/store/pages/trending/selectors'
 import { Genre } from 'common/utils/genres'
-import apiClient from 'services/audius-api-client/AudiusAPIClient'
+import apiClient from 'services/coliving-api-client/ColivingAPIClient'
 import { remoteConfigInstance } from 'services/remote-config/remote-config-instance'
 import { AppState } from 'store/types'
 

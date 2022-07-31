@@ -13,7 +13,7 @@ import {
   Variant as CollectionVariant,
   Status,
   User
-} from '@audius/common'
+} from '@coliving/common'
 import cn from 'classnames'
 import { useDispatch, useSelector } from 'react-redux'
 

@@ -1,4 +1,4 @@
-import { ID, User, UserMetadata } from '@audius/common'
+import { ID, User, UserMetadata } from '@coliving/common'
 import { put, select } from 'typed-redux-saga'
 
 import { getUser } from 'common/store/cache/users/selectors'
@@ -14,11 +14,11 @@ import {
 } from 'common/store/user-list/supporting/selectors'
 import { stringWeiToBN } from 'common/utils/wallet'
 import { createUserListProvider } from 'components/user-list/utils'
-import * as adapter from 'services/audius-api-client/ResponseAdapter'
+import * as adapter from 'services/coliving-api-client/ResponseAdapter'
 import {
   fetchSupporting,
   SupportingResponse
-} from 'services/audius-backend/Tipping'
+} from 'services/coliving-backend/Tipping'
 import { decodeHashId, encodeHashId } from 'utils/route/hashIds'
 
 export const USER_LIST_TAG = 'SUPPORTING'

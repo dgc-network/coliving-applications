@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
 
-import { Name } from '@audius/common'
-import { IconTrending } from '@audius/stems'
+import { Name } from '@coliving/common'
+import { IconTrending } from '@coliving/stems'
 
 import Tag from 'components/track/Tag'
 import { make, useRecord } from 'store/analytics/actions'

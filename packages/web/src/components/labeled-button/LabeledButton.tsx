@@ -1,4 +1,4 @@
-import { Button, ButtonProps } from '@audius/stems'
+import { Button, ButtonProps } from '@coliving/stems'
 
 import styles from './LabeledButton.module.css'
 

@@ -6,7 +6,7 @@ import {
   FeatureFlags,
   IntKeys,
   remoteConfigIntDefaults
-} from '@audius/common'
+} from '@coliving/common'
 import moment from 'moment'
 import { eventChannel } from 'redux-saga'
 import {
@@ -43,7 +43,7 @@ import {
 import { getIsReachable } from 'common/store/reachability/selectors'
 import { fetchReactionValues } from 'common/store/ui/reactions/slice'
 import { getBalance } from 'common/store/wallet/slice'
-import AudiusBackend from 'services/AudiusBackend'
+import ColivingBackend from 'services/ColivingBackend'
 import { ResetNotificationsBadgeCount } from 'services/native-mobile-interface/notifications'
 import { getFeatureEnabled } from 'services/remote-config/featureFlagHelpers'
 import { remoteConfigInstance } from 'services/remote-config/remote-config-instance'
@@ -135,7 +135,7 @@ export function* fetchNotifications(
       : moment().toISOString()
     const withTips = getFeatureEnabled(FeatureFlags.TIPPING_ENABLED)
     const notificationsResponse: NotificationsResponse = yield* call(
-      AudiusBackend.getNotifications,
+      ColivingBackend.getNotifications,
       {
         limit,
         timeOffset,
@@ -381,19 +381,19 @@ export function* fetchNotificationUsers(
 export function* subscribeUserSettings(
   action: notificationActions.SubscribeUser
 ) {
-  yield* call(AudiusBackend.updateUserSubscription, action.userId, true)
+  yield* call(ColivingBackend.updateUserSubscription, action.userId, true)
 }
 
 export function* unsubscribeUserSettings(
   action: notificationActions.UnsubscribeUser
 ) {
-  yield* call(AudiusBackend.updateUserSubscription, action.userId, false)
+  yield* call(ColivingBackend.updateUserSubscription, action.userId, false)
 }
 
 export function* updatePlaylistLastViewedAt(
   action: notificationActions.UpdatePlaylistLastViewedAt
 ) {
-  yield* call(AudiusBackend.updatePlaylistLastViewedAt, action.playlistId)
+  yield* call(ColivingBackend.updatePlaylistLastViewedAt, action.playlistId)
 }
 
 // Action Watchers
@@ -503,7 +503,7 @@ export function* getNotifications(isFirstFetch: boolean) {
       const withTips = getFeatureEnabled(FeatureFlags.TIPPING_ENABLED)
 
       const notificationsResponse: NotificationsResponse | undefined =
-        yield* call(AudiusBackend.getNotifications, {
+        yield* call(ColivingBackend.getNotifications, {
           limit,
           timeOffset,
           withTips
@@ -582,7 +582,7 @@ export function* getNotifications(isFirstFetch: boolean) {
 function* notificationPollingDaemon() {
   yield* call(waitForBackendSetup)
   yield* call(waitForValue, getHasAccount, {})
-  yield* call(AudiusBackend.getEmailNotificationSettings)
+  yield* call(ColivingBackend.getEmailNotificationSettings)
 
   // Set up daemon that will watch for browser into focus and refetch notifications
   // as soon as it goes into focus
@@ -639,7 +639,7 @@ function* notificationPollingDaemon() {
 
 export function* markAllNotificationsViewed() {
   yield* call(waitForBackendSetup)
-  yield* call(AudiusBackend.markAllNotificationAsViewed)
+  yield* call(ColivingBackend.markAllNotificationAsViewed)
   if (NATIVE_MOBILE) {
     const message = new ResetNotificationsBadgeCount()
     message.send()

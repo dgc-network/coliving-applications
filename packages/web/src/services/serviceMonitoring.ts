@@ -3,7 +3,7 @@ import {
   MonitorPayload,
   ServiceMonitorType,
   IntKeys
-} from '@audius/common'
+} from '@coliving/common'
 
 import { remoteConfigInstance } from 'services/remote-config/remote-config-instance'
 import { track } from 'store/analytics/providers'

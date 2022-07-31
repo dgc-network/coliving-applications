@@ -6,7 +6,7 @@ import {
   SmartCollectionVariant,
   Status,
   LineupTrack
-} from '@audius/common'
+} from '@coliving/common'
 import { Moment } from 'moment'
 
 export type CollectionsPageState = {

@@ -1,4 +1,4 @@
-import { Modal, ModalProps } from '@audius/stems'
+import { Modal, ModalProps } from '@coliving/stems'
 import cn from 'classnames'
 
 import Drawer, { DrawerProps } from 'components/drawer/Drawer'

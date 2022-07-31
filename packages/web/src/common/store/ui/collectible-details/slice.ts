@@ -1,4 +1,4 @@
-import { ID, Collectible } from '@audius/common'
+import { ID, Collectible } from '@coliving/common'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 export type CollectibleDetailsState = {

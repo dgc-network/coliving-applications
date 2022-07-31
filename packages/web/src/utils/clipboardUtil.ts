@@ -37,7 +37,7 @@ export const getCopyableLink = (link: string) => {
   const protocol = window.location.protocol
   const hostname = window.location.host // host instead of hostname to work with ports besides 80
 
-  if (protocol !== 'audius:' && !NATIVE_MOBILE) {
+  if (protocol !== 'coliving:' && !NATIVE_MOBILE) {
     return `${protocol}//${hostname}${link}`
   } else {
     return `${PUBLIC_PROTOCOL}//${PUBLIC_HOSTNAME}${link}`

@@ -7,7 +7,7 @@ import {
   useState
 } from 'react'
 
-import { Chain, Collectible, CollectibleMediaType } from '@audius/common'
+import { Chain, Collectible, CollectibleMediaType } from '@coliving/common'
 import {
   Button,
   ButtonSize,
@@ -18,7 +18,7 @@ import {
   LogoEth,
   LogoSol,
   Modal
-} from '@audius/stems'
+} from '@coliving/stems'
 import cn from 'classnames'
 import { useDispatch, useSelector } from 'react-redux'
 

@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "audiusLogoColored.png",
+      "filename" : "colivingLogoColored.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "audiusLogoColored-1.png",
+      "filename" : "colivingLogoColored-1.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "audiusLogoColored-2.png",
+      "filename" : "colivingLogoColored-2.png",
       "scale" : "3x"
     }
   ],

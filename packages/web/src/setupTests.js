@@ -1,5 +1,5 @@
 // eslint-disable-next-line
-import '__mocks__/AudiusBackend'
+import '__mocks__/ColivingBackend'
 // eslint-disable-next-line
 import '__mocks__/Hashids'
 // eslint-disable-next-line

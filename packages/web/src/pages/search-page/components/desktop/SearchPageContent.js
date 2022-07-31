@@ -1,6 +1,6 @@
 import { Component } from 'react'
 
-import { Status } from '@audius/common'
+import { Status } from '@coliving/common'
 import { Redirect } from 'react-router'
 
 import { ReactComponent as IconBigSearch } from 'assets/img/iconBigSearch.svg'

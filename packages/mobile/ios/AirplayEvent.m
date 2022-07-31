@@ -1,6 +1,6 @@
 //
 //  AirplayEventEmitter.m
-//  AudiusReactNative
+//  ColivingReactNative
 //  Manages events for airplay
 //  Note: This code is heavily lifted from
 //  https://github.com/gazedash/react-native-airplay-ios/blob/master/ios/RNAirplay.m

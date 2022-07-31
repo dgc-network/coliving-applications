@@ -1,4 +1,4 @@
-import { Collectible } from '@audius/common'
+import { Collectible } from '@coliving/common'
 import * as allPromisesSettled from 'promise.allsettled'
 
 import {

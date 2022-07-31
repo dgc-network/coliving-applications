@@ -9,8 +9,8 @@ import {
   BooleanKeys,
   FeatureFlags,
   uuid
-} from '@audius/common'
-import { IdentityAPI, DiscoveryAPI } from '@audius/sdk/dist/core'
+} from '@coliving/common'
+import { IdentityAPI, DiscoveryAPI } from '@coliving/sdk/dist/core'
 import { ASSOCIATED_TOKEN_PROGRAM_ID } from '@solana/spl-token'
 import {
   PublicKey,
@@ -29,7 +29,7 @@ import imageCoverPhotoBlank from 'assets/img/imageCoverPhotoBlank.jpg'
 import placeholderProfilePicture from 'assets/img/imageProfilePicEmpty2X.png'
 import CIDCache from 'common/store/cache/CIDCache'
 import * as schemas from 'schemas'
-import { ClientRewardsReporter } from 'services/audius-backend/Rewards'
+import { ClientRewardsReporter } from 'services/coliving-backend/Rewards'
 import { getFeatureEnabled } from 'services/remote-config/featureFlagHelpers'
 import { remoteConfigInstance } from 'services/remote-config/remote-config-instance'
 import { IS_MOBILE_USER_KEY } from 'store/account/mobileSagas'
@@ -43,7 +43,7 @@ import {
   waitForLibsInit,
   withEagerOption,
   LIBS_INITTED_EVENT
-} from './audius-backend/eagerLoadUtils'
+} from './coliving-backend/eagerLoadUtils'
 import { monitoringCallbacks } from './serviceMonitoring'
 dayjs.extend(utc)
 dayjs.extend(timezone)
@@ -124,12 +124,12 @@ export const waitForWeb3 = async () => {
   }
 }
 
-let AudiusLibs = null
+let ColivingLibs = null
 export let Utils = null
 let SanityChecks = null
 let SolanaUtils = null
 
-let audiusLibs = null
+let colivingLibs = null
 const unauthenticatedUuid = uuid()
 /**
  * Combines two lists by concatting `maxSaved` results from the `savedList` onto the head of `normalList`,
@@ -173,7 +173,7 @@ export const fetchCID = async (
 ) => {
   await waitForLibsInit()
   try {
-    const res = await audiusLibs.File.fetchCID(
+    const res = await colivingLibs.File.fetchCID(
       cid,
       creatorNodeGateways,
       () => {},
@@ -262,7 +262,7 @@ const fetchImageCID = async (cid, creatorNodeGateways = [], cache = true) => {
   await waitForLibsInit()
   // Else, race fetching of the image from all gateways & return the image url blob
   try {
-    const image = await audiusLibs.File.fetchCID(
+    const image = await colivingLibs.File.fetchCID(
       cid,
       creatorNodeGateways,
       () => {}
@@ -281,14 +281,14 @@ const fetchImageCID = async (cid, creatorNodeGateways = [], cache = true) => {
   }
 }
 
-class AudiusBackend {
+class ColivingBackend {
   static currentDiscoveryProvider = null
   static didSelectDiscoveryProviderListeners = []
 
   static addDiscoveryProviderSelectionListener(listener) {
-    AudiusBackend.didSelectDiscoveryProviderListeners.push(listener)
-    if (AudiusBackend.currentDiscoveryProvider !== null) {
-      listener(AudiusBackend.currentDiscoveryProvider)
+    ColivingBackend.didSelectDiscoveryProviderListeners.push(listener)
+    if (ColivingBackend.currentDiscoveryProvider !== null) {
+      listener(ColivingBackend.currentDiscoveryProvider)
     }
   }
 
@@ -371,7 +371,7 @@ class AudiusBackend {
       endpoint,
       reason: decisionTree.map((reason) => reason.stage).join(' -> ')
     })
-    AudiusBackend.didSelectDiscoveryProviderListeners.forEach((listener) =>
+    ColivingBackend.didSelectDiscoveryProviderListeners.forEach((listener) =>
       listener(endpoint)
     )
   }
@@ -391,12 +391,12 @@ class AudiusBackend {
     })
   }
 
-  static async sanityChecks(audiusLibs) {
+  static async sanityChecks(colivingLibs) {
     try {
       const sanityCheckOptions = {
         skipRollover: getRemoteVar(BooleanKeys.SKIP_ROLLOVER_NODES_SANITY_CHECK)
       }
-      const sanityChecks = new SanityChecks(audiusLibs, sanityCheckOptions)
+      const sanityChecks = new SanityChecks(colivingLibs, sanityCheckOptions)
       await sanityChecks.run()
     } catch (e) {
       console.error(`Sanity checks failed: ${e}`)
@@ -409,20 +409,20 @@ class AudiusBackend {
     // Wait for optimizely to load if necessary
     await waitForRemoteConfig()
 
-    const { libs } = await import('./audius-backend/AudiusLibsLazyLoader')
+    const { libs } = await import('./coliving-backend/ColivingLibsLazyLoader')
 
-    AudiusLibs = libs
+    ColivingLibs = libs
     Utils = libs.Utils
     SanityChecks = libs.SanityChecks
     SolanaUtils = libs.SolanaUtils
 
     // initialize libs
     let libsError = null
-    const { web3Error, web3Config } = await AudiusBackend.getWeb3Config()
-    const { ethWeb3Config } = AudiusBackend.getEthWeb3Config()
-    const { solanaWeb3Config } = AudiusBackend.getSolanaWeb3Config()
-    const { solanaAudiusDataConfig } = AudiusBackend.getSolanaAudiusDataConfig()
-    const { wormholeConfig } = AudiusBackend.getWormholeConfig()
+    const { web3Error, web3Config } = await ColivingBackend.getWeb3Config()
+    const { ethWeb3Config } = ColivingBackend.getEthWeb3Config()
+    const { solanaWeb3Config } = ColivingBackend.getSolanaWeb3Config()
+    const { solanaColivingDataConfig } = ColivingBackend.getSolanaColivingDataConfig()
+    const { wormholeConfig } = ColivingBackend.getWormholeConfig()
 
     let contentNodeBlockList = getRemoteVar(StringKeys.CONTENT_NODE_BLOCK_LIST)
     if (contentNodeBlockList) {
@@ -446,18 +446,18 @@ class AudiusBackend {
     }
 
     try {
-      audiusLibs = new AudiusLibs({
+      colivingLibs = new ColivingLibs({
         web3Config,
         ethWeb3Config,
         solanaWeb3Config,
-        solanaAudiusDataConfig,
+        solanaColivingDataConfig,
         wormholeConfig,
         discoveryProviderConfig: {
           blacklist: discoveryNodeBlockList,
           reselectTimeout: getRemoteVar(
             IntKeys.DISCOVERY_PROVIDER_SELECTION_TIMEOUT_MS
           ),
-          selectionCallback: AudiusBackend.discoveryProviderSelectionCallback,
+          selectionCallback: ColivingBackend.discoveryProviderSelectionCallback,
           monitoringCallbacks: monitoringCallbacks.discoveryNode,
           selectionRequestTimeout: getRemoteVar(
             IntKeys.DISCOVERY_NODE_SELECTION_REQUEST_TIMEOUT
@@ -473,8 +473,8 @@ class AudiusBackend {
           )
         },
         identityServiceConfig:
-          AudiusLibs.configIdentityService(IDENTITY_SERVICE),
-        creatorNodeConfig: AudiusLibs.configCreatorNode(
+          ColivingLibs.configIdentityService(IDENTITY_SERVICE),
+        creatorNodeConfig: ColivingLibs.configCreatorNode(
           USER_NODE,
           /* lazyConnect */ true,
           /* passList */ null,
@@ -498,12 +498,12 @@ class AudiusBackend {
           FeatureFlags.PREFER_HIGHER_PATCH_FOR_SECONDARIES
         )
       })
-      await audiusLibs.init()
-      window.audiusLibs = audiusLibs
+      await colivingLibs.init()
+      window.colivingLibs = colivingLibs
       const event = new CustomEvent(LIBS_INITTED_EVENT)
       window.dispatchEvent(event)
 
-      AudiusBackend.sanityChecks(audiusLibs)
+      ColivingBackend.sanityChecks(colivingLibs)
     } catch (err) {
       console.log(err)
       libsError = err.message
@@ -518,7 +518,7 @@ class AudiusBackend {
     const ethProviderUrls =
       getRemoteVar(StringKeys.ETH_PROVIDER_URLS) || ETH_PROVIDER_URLS
     return {
-      ethWeb3Config: AudiusLibs.configEthWeb3(
+      ethWeb3Config: ColivingLibs.configEthWeb3(
         ETH_TOKEN_ADDRESS,
         ETH_REGISTRY_ADDRESS,
         ethProviderUrls,
@@ -539,7 +539,7 @@ class AudiusBackend {
       try {
         return {
           error: false,
-          web3Config: await AudiusLibs.configExternalWeb3(
+          web3Config: await ColivingLibs.configExternalWeb3(
             REGISTRY_ADDRESS,
             web3.currentProvider,
             WEB3_NETWORK_ID
@@ -548,7 +548,7 @@ class AudiusBackend {
       } catch (e) {
         return {
           error: true,
-          web3Config: AudiusLibs.configInternalWeb3(
+          web3Config: ColivingLibs.configInternalWeb3(
             REGISTRY_ADDRESS,
             WEB3_PROVIDER_URLS
           )
@@ -557,7 +557,7 @@ class AudiusBackend {
     }
     return {
       error: false,
-      web3Config: AudiusLibs.configInternalWeb3(
+      web3Config: ColivingLibs.configInternalWeb3(
         REGISTRY_ADDRESS,
         WEB3_PROVIDER_URLS
       )
@@ -582,7 +582,7 @@ class AudiusBackend {
     }
     return {
       error: false,
-      solanaWeb3Config: AudiusLibs.configSolanaWeb3({
+      solanaWeb3Config: ColivingLibs.configSolanaWeb3({
         solanaClusterEndpoint: SOLANA_CLUSTER_ENDPOINT,
         mintAddress: WAUDIO_MINT_ADDRESS,
         solanaTokenAddress: SOLANA_TOKEN_ADDRESS,
@@ -597,9 +597,9 @@ class AudiusBackend {
     }
   }
 
-  static getSolanaAudiusDataConfig() {
+  static getSolanaColivingDataConfig() {
     if (!REACT_APP_ANCHOR_PROGRAM_ID || !REACT_APP_ANCHOR_ADMIN_ACCOUNT) {
-      console.warn('Missing solana audius data config')
+      console.warn('Missing solana coliving data config')
       return {
         error: true
       }
@@ -607,7 +607,7 @@ class AudiusBackend {
 
     return {
       error: false,
-      solanaAudiusDataConfig: AudiusLibs.configSolanaAudiusData({
+      solanaColivingDataConfig: ColivingLibs.configSolanaColivingData({
         programId: REACT_APP_ANCHOR_PROGRAM_ID,
         adminAccount: REACT_APP_ANCHOR_ADMIN_ACCOUNT
       })
@@ -630,7 +630,7 @@ class AudiusBackend {
 
     return {
       error: false,
-      wormholeConfig: AudiusLibs.configWormhole({
+      wormholeConfig: ColivingLibs.configWormhole({
         rpcHosts: WORMHOLE_RPC_HOSTS,
         solBridgeAddress: SOL_BRIDGE_ADDRESS,
         solTokenBridgeAddress: SOL_TOKEN_BRIDGE_ADDRESS,
@@ -641,13 +641,13 @@ class AudiusBackend {
   }
 
   static async setCreatorNodeEndpoint(endpoint) {
-    return audiusLibs.creatorNode.setEndpoint(endpoint)
+    return colivingLibs.creatorNode.setEndpoint(endpoint)
   }
 
   static async isCreatorNodeSyncing(endpoint) {
     try {
       const { isBehind, isConfigured } =
-        await audiusLibs.creatorNode.getSyncStatus(endpoint)
+        await colivingLibs.creatorNode.getSyncStatus(endpoint)
       return isBehind && isConfigured
     } catch (e) {
       return true
@@ -655,11 +655,11 @@ class AudiusBackend {
   }
 
   static async listCreatorNodes() {
-    return audiusLibs.ServiceProvider.listCreatorNodes()
+    return colivingLibs.ServiceProvider.listCreatorNodes()
   }
 
   static async autoSelectCreatorNodes() {
-    return audiusLibs.ServiceProvider.autoSelectCreatorNodes({})
+    return colivingLibs.ServiceProvider.autoSelectCreatorNodes({})
   }
 
   static async getSelectableCreatorNodes() {
@@ -672,7 +672,7 @@ class AudiusBackend {
         contentNodeBlockList = null
       }
     }
-    return audiusLibs.ServiceProvider.getSelectableCreatorNodes(
+    return colivingLibs.ServiceProvider.getSelectableCreatorNodes(
       /* whitelist */ null,
       /* blacklist */ contentNodeBlockList
     )
@@ -683,15 +683,15 @@ class AudiusBackend {
     try {
       let account
       if (fromSource) {
-        const wallet = audiusLibs.Account.getCurrentUser().wallet
-        account = await audiusLibs.discoveryProvider.getUserAccount(wallet)
-        audiusLibs.userStateManager.setCurrentUser(account)
+        const wallet = colivingLibs.Account.getCurrentUser().wallet
+        account = await colivingLibs.discoveryProvider.getUserAccount(wallet)
+        colivingLibs.userStateManager.setCurrentUser(account)
       } else {
-        account = audiusLibs.Account.getCurrentUser()
+        account = colivingLibs.Account.getCurrentUser()
         if (!account) return null
       }
       try {
-        const body = await AudiusBackend.getCreatorSocialHandle(account.handle)
+        const body = await ColivingBackend.getCreatorSocialHandle(account.handle)
         account.twitter_handle = body.twitterHandle || null
         account.instagram_handle = body.instagramHandle || null
         account.tiktok_handle = body.tikTokHandle || null
@@ -704,14 +704,14 @@ class AudiusBackend {
         console.error(e)
       }
       try {
-        const userBank = await audiusLibs.solanaWeb3Manager.getUserBank()
+        const userBank = await colivingLibs.solanaWeb3Manager.getUserBank()
         account.userBank = userBank.toString()
-        return AudiusBackend.getUserImages(account)
+        return ColivingBackend.getUserImages(account)
       } catch (e) {
         // Failed to fetch solana user bank account for user
         // in any case
         console.error(e)
-        return AudiusBackend.getUserImages(account)
+        return ColivingBackend.getUserImages(account)
       }
     } catch (e) {
       console.error(e)
@@ -844,7 +844,7 @@ class AudiusBackend {
       console.error(err)
     }
     return feedItems.map((item) => {
-      if (item.playlist_id) return AudiusBackend.getCollectionImages(item)
+      if (item.playlist_id) return ColivingBackend.getCollectionImages(item)
       return item
     })
   }
@@ -900,12 +900,12 @@ class AudiusBackend {
           savedTracks.filter(notDeleted),
           tracks.filter(notDeleted),
           'track_id'
-        ).map(async (track) => AudiusBackend.getTrackImages(track))
+        ).map(async (track) => ColivingBackend.getTrackImages(track))
       )
 
       const combinedUsers = await Promise.all(
         combineLists(followedUsers, users, 'user_id').map(async (user) =>
-          AudiusBackend.getUserImages(user)
+          ColivingBackend.getUserImages(user)
         )
       )
 
@@ -945,7 +945,7 @@ class AudiusBackend {
 
   static async recordTrackListen(trackId) {
     try {
-      const listen = await audiusLibs.Track.logTrackListen(
+      const listen = await colivingLibs.Track.logTrackListen(
         trackId,
         unauthenticatedUuid,
         getFeatureEnabled(FeatureFlags.SOLANA_LISTEN_ENABLED)
@@ -958,7 +958,7 @@ class AudiusBackend {
 
   static async repostTrack(trackId) {
     try {
-      return audiusLibs.Track.addTrackRepost(trackId)
+      return colivingLibs.Track.addTrackRepost(trackId)
     } catch (err) {
       console.error(err.message)
       throw err
@@ -967,7 +967,7 @@ class AudiusBackend {
 
   static async undoRepostTrack(trackId) {
     try {
-      return audiusLibs.Track.deleteTrackRepost(trackId)
+      return colivingLibs.Track.deleteTrackRepost(trackId)
     } catch (err) {
       console.error(err.message)
       throw err
@@ -976,7 +976,7 @@ class AudiusBackend {
 
   static async repostCollection(playlistId) {
     try {
-      return audiusLibs.Playlist.addPlaylistRepost(playlistId)
+      return colivingLibs.Playlist.addPlaylistRepost(playlistId)
     } catch (err) {
       console.error(err.message)
       throw err
@@ -985,7 +985,7 @@ class AudiusBackend {
 
   static async undoRepostCollection(playlistId) {
     try {
-      return audiusLibs.Playlist.deletePlaylistRepost(playlistId)
+      return colivingLibs.Playlist.deletePlaylistRepost(playlistId)
     } catch (err) {
       console.error(err.message)
       throw err
@@ -997,13 +997,13 @@ class AudiusBackend {
    * @param {string} newCreatorNodeEndpoint will follow the structure 'cn1,cn2,cn3'
    */
   static async upgradeToCreator(newCreatorNodeEndpoint) {
-    return audiusLibs.User.upgradeToCreator(USER_NODE, newCreatorNodeEndpoint)
+    return colivingLibs.User.upgradeToCreator(USER_NODE, newCreatorNodeEndpoint)
   }
 
   // Uploads a single track
   // Returns { trackId, error, phase }
   static async uploadTrack(trackFile, coverArtFile, metadata, onProgress) {
-    return await audiusLibs.Track.uploadTrack(
+    return await colivingLibs.Track.uploadTrack(
       trackFile,
       coverArtFile,
       metadata,
@@ -1019,7 +1019,7 @@ class AudiusBackend {
     metadata,
     onProgress
   ) {
-    return audiusLibs.Track.uploadTrackContentToCreatorNode(
+    return colivingLibs.Track.uploadTrackContentToCreatorNode(
       trackFile,
       coverArtFile,
       metadata,
@@ -1029,7 +1029,7 @@ class AudiusBackend {
 
   static async getUserEmail() {
     await waitForLibsInit()
-    const { email } = await audiusLibs.Account.getUserEmail()
+    const { email } = await colivingLibs.Account.getUserEmail()
     return email
   }
 
@@ -1039,21 +1039,21 @@ class AudiusBackend {
    * Associates tracks with user on creatorNode
    */
   static async registerUploadedTracks(uploadedTracks) {
-    return audiusLibs.Track.addTracksToChainAndCnode(uploadedTracks)
+    return colivingLibs.Track.addTracksToChainAndCnode(uploadedTracks)
   }
 
   static async uploadImage(file) {
-    return audiusLibs.File.uploadImage(file)
+    return colivingLibs.File.uploadImage(file)
   }
 
   static async updateTrack(trackId, metadata) {
     const cleanedMetadata = schemas.newTrackMetadata(metadata, true)
 
     if (metadata.artwork) {
-      const resp = await audiusLibs.File.uploadImage(metadata.artwork.file)
+      const resp = await colivingLibs.File.uploadImage(metadata.artwork.file)
       cleanedMetadata.cover_art_sizes = resp.dirCID
     }
-    return await audiusLibs.Track.updateTrack(cleanedMetadata)
+    return await colivingLibs.Track.updateTrack(cleanedMetadata)
   }
 
   static async getCreators(ids) {
@@ -1073,7 +1073,7 @@ class AudiusBackend {
       }
 
       return Promise.all(
-        creators.map(async (creator) => AudiusBackend.getUserImages(creator))
+        creators.map(async (creator) => ColivingBackend.getUserImages(creator))
       )
     } catch (err) {
       console.error(err.message)
@@ -1162,7 +1162,7 @@ class AudiusBackend {
 
   static async updateCreator(metadata, id) {
     let newMetadata = { ...metadata }
-    const associatedWallets = await AudiusBackend.fetchUserAssociatedWallets(
+    const associatedWallets = await ColivingBackend.fetchUserAssociatedWallets(
       metadata
     )
     newMetadata.associated_wallets =
@@ -1173,14 +1173,14 @@ class AudiusBackend {
 
     try {
       if (newMetadata.updatedProfilePicture) {
-        const resp = await audiusLibs.File.uploadImage(
+        const resp = await colivingLibs.File.uploadImage(
           newMetadata.updatedProfilePicture.file
         )
         newMetadata.profile_picture_sizes = resp.dirCID
       }
 
       if (newMetadata.updatedCoverPhoto) {
-        const resp = await audiusLibs.File.uploadImage(
+        const resp = await colivingLibs.File.uploadImage(
           newMetadata.updatedCoverPhoto.file,
           false
         )
@@ -1194,7 +1194,7 @@ class AudiusBackend {
         typeof newMetadata.website === 'string' ||
         typeof newMetadata.donation === 'string'
       ) {
-        const { data, signature } = await AudiusBackend.signData()
+        const { data, signature } = await ColivingBackend.signData()
         await fetch(`${IDENTITY_SERVICE}/social_handles`, {
           method: 'POST',
           headers: {
@@ -1215,7 +1215,7 @@ class AudiusBackend {
       newMetadata = schemas.newUserMetadata(newMetadata, true)
 
       const { blockHash, blockNumber, userId } =
-        await audiusLibs.User.updateCreator(newMetadata.user_id, newMetadata)
+        await colivingLibs.User.updateCreator(newMetadata.user_id, newMetadata)
       return { blockHash, blockNumber, userId }
     } catch (err) {
       console.error(err.message)
@@ -1227,14 +1227,14 @@ class AudiusBackend {
     let newMetadata = { ...metadata }
     try {
       if (newMetadata.updatedProfilePicture) {
-        const resp = await audiusLibs.File.uploadImage(
+        const resp = await colivingLibs.File.uploadImage(
           newMetadata.updatedProfilePicture.file
         )
         newMetadata.profile_picture_sizes = resp.dirCID
       }
 
       if (newMetadata.updatedCoverPhoto) {
-        const resp = await audiusLibs.File.uploadImage(
+        const resp = await colivingLibs.File.uploadImage(
           newMetadata.updatedCoverPhoto.file,
           false
         )
@@ -1264,7 +1264,7 @@ class AudiusBackend {
 
       newMetadata = schemas.newUserMetadata(newMetadata, true)
 
-      const { blockHash, blockNumber } = await audiusLibs.User.updateUser(
+      const { blockHash, blockNumber } = await colivingLibs.User.updateUser(
         id,
         newMetadata
       )
@@ -1277,7 +1277,7 @@ class AudiusBackend {
 
   static async updateIsVerified(userId, verified) {
     try {
-      await audiusLibs.User.updateIsVerified(userId, verified)
+      await colivingLibs.User.updateIsVerified(userId, verified)
       return true
     } catch (err) {
       console.error(err.message)
@@ -1287,7 +1287,7 @@ class AudiusBackend {
 
   static async followUser(followeeUserId) {
     try {
-      return await audiusLibs.User.addUserFollow(followeeUserId)
+      return await colivingLibs.User.addUserFollow(followeeUserId)
     } catch (err) {
       console.error(err.message)
       throw err
@@ -1296,7 +1296,7 @@ class AudiusBackend {
 
   static async unfollowUser(followeeUserId) {
     try {
-      return await audiusLibs.User.deleteUserFollow(followeeUserId)
+      return await colivingLibs.User.deleteUserFollow(followeeUserId)
     } catch (err) {
       console.error(err.message)
       throw err
@@ -1306,7 +1306,7 @@ class AudiusBackend {
   static async getFolloweeFollows(userId, limit = 100, offset = 0) {
     let followers = []
     try {
-      followers = await audiusLibs.User.getMutualFollowers(
+      followers = await colivingLibs.User.getMutualFollowers(
         limit,
         offset,
         userId
@@ -1314,7 +1314,7 @@ class AudiusBackend {
 
       if (followers.length) {
         return Promise.all(
-          followers.map((follower) => AudiusBackend.getUserImages(follower))
+          followers.map((follower) => ColivingBackend.getUserImages(follower))
         )
       }
     } catch (err) {
@@ -1337,7 +1337,7 @@ class AudiusBackend {
         userId,
         true
       )
-      return (playlists || []).map(AudiusBackend.getCollectionImages)
+      return (playlists || []).map(ColivingBackend.getCollectionImages)
     } catch (err) {
       console.error(err.message)
       return []
@@ -1358,7 +1358,7 @@ class AudiusBackend {
     if (isAlbum) isPrivate = false
 
     try {
-      const response = await audiusLibs.Playlist.createPlaylist(
+      const response = await colivingLibs.Playlist.createPlaylist(
         userId,
         playlistName,
         isPrivate,
@@ -1374,19 +1374,19 @@ class AudiusBackend {
       // If this playlist is being created from an existing cover art, use it.
       if (metadata.cover_art_sizes) {
         updatePromises.push(
-          audiusLibs.contracts.PlaylistFactoryClient.updatePlaylistCoverPhoto(
+          colivingLibs.contracts.PlaylistFactoryClient.updatePlaylistCoverPhoto(
             playlistId,
             Utils.formatOptionalMultihash(metadata.cover_art_sizes)
           )
         )
       } else if (coverArt) {
         updatePromises.push(
-          audiusLibs.Playlist.updatePlaylistCoverPhoto(playlistId, coverArt)
+          colivingLibs.Playlist.updatePlaylistCoverPhoto(playlistId, coverArt)
         )
       }
       if (description) {
         updatePromises.push(
-          audiusLibs.Playlist.updatePlaylistDescription(playlistId, description)
+          colivingLibs.Playlist.updatePlaylistDescription(playlistId, description)
         )
       }
 
@@ -1395,7 +1395,7 @@ class AudiusBackend {
        * and return that block number along with its corresponding block hash
        */
       if (updatePromises.length > 0) {
-        const latestReceipt = AudiusBackend.getLatestTxReceipt(
+        const latestReceipt = ColivingBackend.getLatestTxReceipt(
           await Promise.all(updatePromises)
         )
         blockHash = latestReceipt.blockHash
@@ -1421,17 +1421,17 @@ class AudiusBackend {
       const promises = []
       if (playlistName) {
         promises.push(
-          audiusLibs.Playlist.updatePlaylistName(playlistId, playlistName)
+          colivingLibs.Playlist.updatePlaylistName(playlistId, playlistName)
         )
       }
       if (coverPhoto) {
         promises.push(
-          audiusLibs.Playlist.updatePlaylistCoverPhoto(playlistId, coverPhoto)
+          colivingLibs.Playlist.updatePlaylistCoverPhoto(playlistId, coverPhoto)
         )
       }
       if (description) {
         promises.push(
-          audiusLibs.Playlist.updatePlaylistDescription(playlistId, description)
+          colivingLibs.Playlist.updatePlaylistDescription(playlistId, description)
         )
       }
 
@@ -1440,7 +1440,7 @@ class AudiusBackend {
        * and return that block number along with its corresponding block hash
        */
       if (promises.length > 0) {
-        const latestReceipt = AudiusBackend.getLatestTxReceipt(
+        const latestReceipt = ColivingBackend.getLatestTxReceipt(
           await Promise.all(promises)
         )
         blockHash = latestReceipt.blockHash
@@ -1457,7 +1457,7 @@ class AudiusBackend {
   static async orderPlaylist(playlistId, trackIds, retries) {
     try {
       const { blockHash, blockNumber } =
-        await audiusLibs.Playlist.orderPlaylistTracks(
+        await colivingLibs.Playlist.orderPlaylistTracks(
           playlistId,
           trackIds,
           retries
@@ -1472,7 +1472,7 @@ class AudiusBackend {
   static async publishPlaylist(playlistId) {
     try {
       const { blockHash, blockNumber } =
-        await audiusLibs.Playlist.updatePlaylistPrivacy(playlistId, false)
+        await colivingLibs.Playlist.updatePlaylistPrivacy(playlistId, false)
       return { blockHash, blockNumber }
     } catch (error) {
       console.error(error.message)
@@ -1483,7 +1483,7 @@ class AudiusBackend {
   static async addPlaylistTrack(playlistId, trackId) {
     try {
       const { blockHash, blockNumber } =
-        await audiusLibs.Playlist.addPlaylistTrack(playlistId, trackId)
+        await colivingLibs.Playlist.addPlaylistTrack(playlistId, trackId)
       return { blockHash, blockNumber }
     } catch (error) {
       console.error(error.message)
@@ -1494,7 +1494,7 @@ class AudiusBackend {
   static async deletePlaylistTrack(playlistId, trackId, timestamp, retries) {
     try {
       const { blockHash, blockNumber } =
-        await audiusLibs.Playlist.deletePlaylistTrack(
+        await colivingLibs.Playlist.deletePlaylistTrack(
           playlistId,
           trackId,
           timestamp,
@@ -1510,7 +1510,7 @@ class AudiusBackend {
   static async validateTracksInPlaylist(playlistId) {
     try {
       const { isValid, invalidTrackIds } =
-        await audiusLibs.Playlist.validateTracksInPlaylist(playlistId)
+        await colivingLibs.Playlist.validateTracksInPlaylist(playlistId)
       return { error: false, isValid, invalidTrackIds }
     } catch (error) {
       console.error(error.message)
@@ -1523,7 +1523,7 @@ class AudiusBackend {
   // It's added for the purpose of manually fixing broken playlists
   static async dangerouslySetPlaylistOrder(playlistId, trackIds) {
     try {
-      await audiusLibs.contracts.PlaylistFactoryClient.orderPlaylistTracks(
+      await colivingLibs.contracts.PlaylistFactoryClient.orderPlaylistTracks(
         playlistId,
         trackIds
       )
@@ -1536,7 +1536,7 @@ class AudiusBackend {
 
   static async deletePlaylist(playlistId) {
     try {
-      const { txReceipt } = await audiusLibs.Playlist.deletePlaylist(playlistId)
+      const { txReceipt } = await colivingLibs.Playlist.deletePlaylist(playlistId)
       return {
         blockHash: txReceipt.blockHash,
         blockNumber: txReceipt.blockNumber
@@ -1555,17 +1555,17 @@ class AudiusBackend {
         )}`
       )
       const trackDeletionPromises = trackIds.map((t) =>
-        audiusLibs.Track.deleteTrack(t.track)
+        colivingLibs.Track.deleteTrack(t.track)
       )
       const playlistDeletionPromise =
-        audiusLibs.Playlist.deletePlaylist(playlistId)
+        colivingLibs.Playlist.deletePlaylist(playlistId)
       const results = await Promise.all(
         trackDeletionPromises.concat(playlistDeletionPromise)
       )
       const deleteTrackReceipts = results.slice(0, -1).map((r) => r.txReceipt)
       const deletePlaylistReceipt = results.slice(-1)[0].txReceipt
 
-      const { blockHash, blockNumber } = AudiusBackend.getLatestTxReceipt(
+      const { blockHash, blockNumber } = ColivingBackend.getLatestTxReceipt(
         deleteTrackReceipts.concat(deletePlaylistReceipt)
       )
       return { blockHash, blockNumber }
@@ -1628,7 +1628,7 @@ class AudiusBackend {
   // Favoriting a track
   static async saveTrack(trackId) {
     try {
-      return await audiusLibs.Track.addTrackSave(trackId)
+      return await colivingLibs.Track.addTrackSave(trackId)
     } catch (err) {
       console.error(err.message)
       throw err
@@ -1637,7 +1637,7 @@ class AudiusBackend {
 
   static async deleteTrack(trackId) {
     try {
-      const { txReceipt } = await audiusLibs.Track.deleteTrack(trackId)
+      const { txReceipt } = await colivingLibs.Track.deleteTrack(trackId)
       return {
         blockHash: txReceipt.blockHash,
         blockNumber: txReceipt.blockNumber
@@ -1651,7 +1651,7 @@ class AudiusBackend {
   // Favorite a playlist
   static async saveCollection(playlistId) {
     try {
-      return await audiusLibs.Playlist.addPlaylistSave(playlistId)
+      return await colivingLibs.Playlist.addPlaylistSave(playlistId)
     } catch (err) {
       console.error(err.message)
       throw err
@@ -1661,7 +1661,7 @@ class AudiusBackend {
   // Unfavoriting a track
   static async unsaveTrack(trackId) {
     try {
-      return await audiusLibs.Track.deleteTrackSave(trackId)
+      return await colivingLibs.Track.deleteTrackSave(trackId)
     } catch (err) {
       console.error(err.message)
       throw err
@@ -1671,7 +1671,7 @@ class AudiusBackend {
   // Unfavorite a playlist
   static async unsaveCollection(playlistId) {
     try {
-      return await audiusLibs.Playlist.deletePlaylistSave(playlistId)
+      return await colivingLibs.Playlist.deletePlaylistSave(playlistId)
     } catch (err) {
       console.error(err.message)
       throw err
@@ -1685,7 +1685,7 @@ class AudiusBackend {
   static async setArtistPick(trackId = null) {
     await waitForLibsInit()
     try {
-      const { data, signature } = await AudiusBackend.signData()
+      const { data, signature } = await ColivingBackend.signData()
       await fetch(`${IDENTITY_SERVICE}/artist_pick`, {
         method: 'POST',
         headers: {
@@ -1705,12 +1705,12 @@ class AudiusBackend {
 
   static async signIn(email, password) {
     await waitForLibsInit()
-    return audiusLibs.Account.login(email, password)
+    return colivingLibs.Account.login(email, password)
   }
 
   static async signOut() {
     await waitForLibsInit()
-    return audiusLibs.Account.logout()
+    return colivingLibs.Account.logout()
   }
 
   /**
@@ -1756,14 +1756,14 @@ class AudiusBackend {
     }
 
     // Returns { userId, error, phase }
-    return audiusLibs.Account.signUp(
+    return colivingLibs.Account.signUp(
       email,
       password,
       metadata,
       formFields.profilePicture,
       formFields.coverPhoto,
       hasWallet,
-      AudiusBackend._getHostUrl(),
+      ColivingBackend._getHostUrl(),
       track,
       {
         Request: Name.CREATE_USER_BANK_REQUEST,
@@ -1776,23 +1776,23 @@ class AudiusBackend {
 
   static async resetPassword(email, password) {
     await waitForLibsInit()
-    return audiusLibs.Account.resetPassword(email, password)
+    return colivingLibs.Account.resetPassword(email, password)
   }
 
   static async changePassword(email, password, oldpassword) {
     await waitForLibsInit()
-    return audiusLibs.Account.changePassword(email, password, oldpassword)
+    return colivingLibs.Account.changePassword(email, password, oldpassword)
   }
 
   static async confirmCredentials(email, password) {
     await waitForLibsInit()
-    return audiusLibs.Account.confirmCredentials(email, password)
+    return colivingLibs.Account.confirmCredentials(email, password)
   }
 
   static async sendRecoveryEmail() {
     await waitForLibsInit()
-    const host = AudiusBackend._getHostUrl()
-    return audiusLibs.Account.generateRecoveryLink({ host })
+    const host = ColivingBackend._getHostUrl()
+    return colivingLibs.Account.generateRecoveryLink({ host })
   }
 
   static _getHostUrl() {
@@ -1801,10 +1801,10 @@ class AudiusBackend {
       : window.location.origin
   }
 
-  static async associateAudiusUserForAuth(email, handle) {
+  static async associateColivingUserForAuth(email, handle) {
     await waitForLibsInit()
     try {
-      await audiusLibs.Account.associateAudiusUserForAuth(email, handle)
+      await colivingLibs.Account.associateColivingUserForAuth(email, handle)
       return { success: true }
     } catch (error) {
       console.error(error.message)
@@ -1816,7 +1816,7 @@ class AudiusBackend {
     await waitForLibsInit()
     try {
       const { exists: emailExists } =
-        await audiusLibs.Account.checkIfEmailRegistered(email)
+        await colivingLibs.Account.checkIfEmailRegistered(email)
       return emailExists
     } catch (error) {
       console.error(error.message)
@@ -1827,7 +1827,7 @@ class AudiusBackend {
   static async handleInUse(handle) {
     await waitForLibsInit()
     try {
-      const handleIsValid = await audiusLibs.Account.handleIsValid(handle)
+      const handleIsValid = await colivingLibs.Account.handleIsValid(handle)
       return !handleIsValid
     } catch (error) {
       return true
@@ -1837,7 +1837,7 @@ class AudiusBackend {
   static async twitterHandle(handle) {
     await waitForLibsInit()
     try {
-      const user = await audiusLibs.Account.lookupTwitterHandle(handle)
+      const user = await colivingLibs.Account.lookupTwitterHandle(handle)
       return { success: true, user }
     } catch (error) {
       return { success: false, error }
@@ -1847,7 +1847,7 @@ class AudiusBackend {
   static async associateTwitterAccount(twitterId, userId, handle) {
     await waitForLibsInit()
     try {
-      await audiusLibs.Account.associateTwitterUser(twitterId, userId, handle)
+      await colivingLibs.Account.associateTwitterUser(twitterId, userId, handle)
       return { success: true }
     } catch (error) {
       console.error(error.message)
@@ -1858,7 +1858,7 @@ class AudiusBackend {
   static async associateInstagramAccount(instagramId, userId, handle) {
     await waitForLibsInit()
     try {
-      await audiusLibs.Account.associateInstagramUser(
+      await colivingLibs.Account.associateInstagramUser(
         instagramId,
         userId,
         handle
@@ -1872,10 +1872,10 @@ class AudiusBackend {
 
   static async getNotifications({ limit, timeOffset, withTips }) {
     await waitForLibsInit()
-    const account = audiusLibs.Account.getCurrentUser()
+    const account = colivingLibs.Account.getCurrentUser()
     if (!account) return
     try {
-      const { data, signature } = await AudiusBackend.signData()
+      const { data, signature } = await ColivingBackend.signData()
       const timeOffsetQuery = timeOffset
         ? `&timeOffset=${encodeURI(timeOffset)}`
         : ''
@@ -1911,10 +1911,10 @@ class AudiusBackend {
 
   static async markAllNotificationAsViewed() {
     await waitForLibsInit()
-    const account = audiusLibs.Account.getCurrentUser()
+    const account = colivingLibs.Account.getCurrentUser()
     if (!account) return
     try {
-      const { data, signature } = await AudiusBackend.signData()
+      const { data, signature } = await ColivingBackend.signData()
       return fetch(`${IDENTITY_SERVICE}/notifications/all`, {
         method: 'POST',
         headers: {
@@ -1931,10 +1931,10 @@ class AudiusBackend {
 
   static async clearNotificationBadges() {
     await waitForLibsInit()
-    const account = audiusLibs.Account.getCurrentUser()
+    const account = colivingLibs.Account.getCurrentUser()
     if (!account) return
     try {
-      const { data, signature } = await AudiusBackend.signData()
+      const { data, signature } = await ColivingBackend.signData()
       return fetch(`${IDENTITY_SERVICE}/notifications/clear_badges`, {
         method: 'POST',
         headers: {
@@ -1950,10 +1950,10 @@ class AudiusBackend {
 
   static async getEmailNotificationSettings() {
     await waitForLibsInit()
-    const account = audiusLibs.Account.getCurrentUser()
+    const account = colivingLibs.Account.getCurrentUser()
     if (!account) return
     try {
-      const { data, signature } = await AudiusBackend.signData()
+      const { data, signature } = await ColivingBackend.signData()
       const res = await fetch(`${IDENTITY_SERVICE}/notifications/settings`, {
         method: 'GET',
         headers: {
@@ -1970,10 +1970,10 @@ class AudiusBackend {
 
   static async updateEmailNotificationSettings(emailFrequency) {
     await waitForLibsInit()
-    const account = audiusLibs.Account.getCurrentUser()
+    const account = colivingLibs.Account.getCurrentUser()
     if (!account) return
     try {
-      const { data, signature } = await AudiusBackend.signData()
+      const { data, signature } = await ColivingBackend.signData()
       const res = await fetch(`${IDENTITY_SERVICE}/notifications/settings`, {
         method: 'POST',
         headers: {
@@ -1991,10 +1991,10 @@ class AudiusBackend {
 
   static async updateNotificationSettings(settings) {
     await waitForLibsInit()
-    const account = audiusLibs.Account.getCurrentUser()
+    const account = colivingLibs.Account.getCurrentUser()
     if (!account) return
     try {
-      const { data, signature } = await AudiusBackend.signData()
+      const { data, signature } = await ColivingBackend.signData()
       return fetch(`${IDENTITY_SERVICE}/push_notifications/browser/settings`, {
         method: 'POST',
         headers: {
@@ -2011,10 +2011,10 @@ class AudiusBackend {
 
   static async updatePushNotificationSettings(settings) {
     await waitForLibsInit()
-    const account = audiusLibs.Account.getCurrentUser()
+    const account = colivingLibs.Account.getCurrentUser()
     if (!account) return
     try {
-      const { data, signature } = await AudiusBackend.signData()
+      const { data, signature } = await ColivingBackend.signData()
       return fetch(`${IDENTITY_SERVICE}/push_notifications/settings`, {
         method: 'POST',
         headers: {
@@ -2032,7 +2032,7 @@ class AudiusBackend {
   static async signData() {
     const unixTs = Math.round(new Date().getTime() / 1000) // current unix timestamp (sec)
     const data = `Click sign to authenticate with identity service: ${unixTs}`
-    const signature = await audiusLibs.Account.web3Manager.sign(data)
+    const signature = await colivingLibs.Account.web3Manager.sign(data)
     return { data, signature }
   }
 
@@ -2045,16 +2045,16 @@ class AudiusBackend {
       const unixTs = Math.round(new Date().getTime() / 1000) // current unix timestamp (sec)
       data = `Click sign to authenticate with discovery node: ${unixTs}`
     }
-    const signature = await audiusLibs.Account.web3Manager.sign(data)
+    const signature = await colivingLibs.Account.web3Manager.sign(data)
     return { data, signature }
   }
 
   static async getBrowserPushNotificationSettings() {
     await waitForLibsInit()
-    const account = audiusLibs.Account.getCurrentUser()
+    const account = colivingLibs.Account.getCurrentUser()
     if (!account) return
     try {
-      const { data, signature } = await AudiusBackend.signData()
+      const { data, signature } = await ColivingBackend.signData()
       return fetch(`${IDENTITY_SERVICE}/push_notifications/browser/settings`, {
         headers: {
           [AuthHeaders.Message]: data,
@@ -2071,10 +2071,10 @@ class AudiusBackend {
 
   static async getBrowserPushSubscription(pushEndpoint) {
     await waitForLibsInit()
-    const account = audiusLibs.Account.getCurrentUser()
+    const account = colivingLibs.Account.getCurrentUser()
     if (!account) return
     try {
-      const { data, signature } = await AudiusBackend.signData()
+      const { data, signature } = await ColivingBackend.signData()
       const endpiont = encodeURIComponent(pushEndpoint)
       return fetch(
         `${IDENTITY_SERVICE}/push_notifications/browser/enabled?endpoint=${endpiont}`,
@@ -2095,10 +2095,10 @@ class AudiusBackend {
 
   static async getSafariBrowserPushEnabled(deviceToken) {
     await waitForLibsInit()
-    const account = audiusLibs.Account.getCurrentUser()
+    const account = colivingLibs.Account.getCurrentUser()
     if (!account) return
     try {
-      const { data, signature } = await AudiusBackend.signData()
+      const { data, signature } = await ColivingBackend.signData()
       return fetch(
         `${IDENTITY_SERVICE}/push_notifications/device_token/enabled?deviceToken=${deviceToken}&deviceType=safari`,
         {
@@ -2118,7 +2118,7 @@ class AudiusBackend {
 
   static async updateBrowserNotifications({ enabled = true, subscription }) {
     await waitForLibsInit()
-    const { data, signature } = await AudiusBackend.signData()
+    const { data, signature } = await ColivingBackend.signData()
     return fetch(`${IDENTITY_SERVICE}/push_notifications/browser/register`, {
       method: 'POST',
       headers: {
@@ -2132,7 +2132,7 @@ class AudiusBackend {
 
   static async disableBrowserNotifications({ subscription }) {
     await waitForLibsInit()
-    const { data, signature } = await AudiusBackend.signData()
+    const { data, signature } = await ColivingBackend.signData()
     return fetch(`${IDENTITY_SERVICE}/push_notifications/browser/deregister`, {
       method: 'POST',
       headers: {
@@ -2146,10 +2146,10 @@ class AudiusBackend {
 
   static async getPushNotificationSettings() {
     await waitForLibsInit()
-    const account = audiusLibs.Account.getCurrentUser()
+    const account = colivingLibs.Account.getCurrentUser()
     if (!account) return
     try {
-      const { data, signature } = await AudiusBackend.signData()
+      const { data, signature } = await ColivingBackend.signData()
       return fetch(`${IDENTITY_SERVICE}/push_notifications/settings`, {
         headers: {
           [AuthHeaders.Message]: data,
@@ -2165,10 +2165,10 @@ class AudiusBackend {
 
   static async registerDeviceToken(deviceToken, deviceType) {
     await waitForLibsInit()
-    const account = audiusLibs.Account.getCurrentUser()
+    const account = colivingLibs.Account.getCurrentUser()
     if (!account) return
     try {
-      const { data, signature } = await AudiusBackend.signData()
+      const { data, signature } = await ColivingBackend.signData()
       return fetch(`${IDENTITY_SERVICE}/push_notifications/device_token`, {
         method: 'POST',
         headers: {
@@ -2188,10 +2188,10 @@ class AudiusBackend {
 
   static async deregisterDeviceToken(deviceToken) {
     await waitForLibsInit()
-    const account = audiusLibs.Account.getCurrentUser()
+    const account = colivingLibs.Account.getCurrentUser()
     if (!account) return
     try {
-      const { data, signature } = await AudiusBackend.signData()
+      const { data, signature } = await ColivingBackend.signData()
       return fetch(
         `${IDENTITY_SERVICE}/push_notifications/device_token/deregister`,
         {
@@ -2213,10 +2213,10 @@ class AudiusBackend {
 
   static async getUserSubscribed(userId) {
     await waitForLibsInit()
-    const account = audiusLibs.Account.getCurrentUser()
+    const account = colivingLibs.Account.getCurrentUser()
     if (!account) return
     try {
-      const { data, signature } = await AudiusBackend.signData()
+      const { data, signature } = await ColivingBackend.signData()
       return fetch(
         `${IDENTITY_SERVICE}/notifications/subscription?userId=${userId}`,
         {
@@ -2239,10 +2239,10 @@ class AudiusBackend {
 
   static async getUserSubscriptions(userIds) {
     await waitForLibsInit()
-    const account = audiusLibs.Account.getCurrentUser()
+    const account = colivingLibs.Account.getCurrentUser()
     if (!account) return
     try {
-      const { data, signature } = await AudiusBackend.signData()
+      const { data, signature } = await ColivingBackend.signData()
       return fetch(
         `${IDENTITY_SERVICE}/notifications/subscription?${userIds
           .map((id) => `userId=${id}`)
@@ -2263,10 +2263,10 @@ class AudiusBackend {
 
   static async updateUserSubscription(userId, isSubscribed) {
     await waitForLibsInit()
-    const account = audiusLibs.Account.getCurrentUser()
+    const account = colivingLibs.Account.getCurrentUser()
     if (!account) return
     try {
-      const { data, signature } = await AudiusBackend.signData()
+      const { data, signature } = await ColivingBackend.signData()
       return fetch(`${IDENTITY_SERVICE}/notifications/subscription`, {
         method: 'POST',
         headers: {
@@ -2286,10 +2286,10 @@ class AudiusBackend {
 
   static async updateUserLocationTimezone() {
     await waitForLibsInit()
-    const account = audiusLibs.Account.getCurrentUser()
+    const account = colivingLibs.Account.getCurrentUser()
     if (!account) return
     try {
-      const { data, signature } = await AudiusBackend.signData()
+      const { data, signature } = await ColivingBackend.signData()
       const timezone = dayjs.tz.guess()
       const res = await fetch(`${IDENTITY_SERVICE}/users/update`, {
         method: 'POST',
@@ -2308,10 +2308,10 @@ class AudiusBackend {
 
   static async sendWelcomeEmail({ name }) {
     await waitForLibsInit()
-    const account = audiusLibs.Account.getCurrentUser()
+    const account = colivingLibs.Account.getCurrentUser()
     if (!account) return
     try {
-      const { data, signature } = await AudiusBackend.signData()
+      const { data, signature } = await ColivingBackend.signData()
       return fetch(`${IDENTITY_SERVICE}/email/welcome`, {
         method: 'POST',
         headers: {
@@ -2328,10 +2328,10 @@ class AudiusBackend {
 
   static async updateUserEvent({ hasSignedInNativeMobile }) {
     await waitForLibsInit()
-    const account = audiusLibs.Account.getCurrentUser()
+    const account = colivingLibs.Account.getCurrentUser()
     if (!account) return
     try {
-      const { data, signature } = await AudiusBackend.signData()
+      const { data, signature } = await ColivingBackend.signData()
       const res = await fetch(`${IDENTITY_SERVICE}/userEvents`, {
         method: 'POST',
         headers: {
@@ -2355,11 +2355,11 @@ class AudiusBackend {
     if (!getFeatureEnabled(FeatureFlags.PLAYLIST_UPDATES_ENABLED)) return
 
     await waitForLibsInit()
-    const account = audiusLibs.Account.getCurrentUser()
+    const account = colivingLibs.Account.getCurrentUser()
     if (!account) return
 
     try {
-      const { data, signature } = await AudiusBackend.signData()
+      const { data, signature } = await ColivingBackend.signData()
       await fetch(
         `${IDENTITY_SERVICE}/user_playlist_updates?walletAddress=${account.wallet}&playlistId=${playlistId}`,
         {
@@ -2379,11 +2379,11 @@ class AudiusBackend {
 
   static async updateHCaptchaScore(token) {
     await waitForLibsInit()
-    const account = audiusLibs.Account.getCurrentUser()
+    const account = colivingLibs.Account.getCurrentUser()
     if (!account) return { error: true }
 
     try {
-      const { data, signature } = await AudiusBackend.signData()
+      const { data, signature } = await ColivingBackend.signData()
       return await fetch(`${IDENTITY_SERVICE}/score/hcaptcha`, {
         method: 'POST',
         headers: {
@@ -2403,8 +2403,8 @@ class AudiusBackend {
     await waitForLibsInit()
     try {
       const { feePayer } =
-        await audiusLibs.solanaWeb3Manager.getRandomFeePayer()
-      audiusLibs.solanaWeb3Manager.feePayerKey = new PublicKey(feePayer)
+        await colivingLibs.solanaWeb3Manager.getRandomFeePayer()
+      colivingLibs.solanaWeb3Manager.feePayerKey = new PublicKey(feePayer)
       return { feePayer }
     } catch (err) {
       console.error(err.message)
@@ -2418,11 +2418,11 @@ class AudiusBackend {
    */
   static async getClaimDistributionAmount() {
     await waitForLibsInit()
-    const wallet = audiusLibs.web3Manager.getWalletAddress()
+    const wallet = colivingLibs.web3Manager.getWalletAddress()
     if (!wallet) return
 
     try {
-      const amount = await audiusLibs.Account.getClaimDistributionAmount()
+      const amount = await colivingLibs.Account.getClaimDistributionAmount()
       return amount
     } catch (e) {
       console.error(e)
@@ -2437,10 +2437,10 @@ class AudiusBackend {
    */
   static async makeDistributionClaim() {
     await waitForLibsInit()
-    const wallet = audiusLibs.web3Manager.getWalletAddress()
+    const wallet = colivingLibs.web3Manager.getWalletAddress()
     if (!wallet) return null
 
-    await audiusLibs.Account.makeDistributionClaim()
+    await colivingLibs.Account.makeDistributionClaim()
   }
 
   /**
@@ -2449,11 +2449,11 @@ class AudiusBackend {
    */
   static async getHasClaimed() {
     await waitForLibsInit()
-    const wallet = audiusLibs.web3Manager.getWalletAddress()
+    const wallet = colivingLibs.web3Manager.getWalletAddress()
     if (!wallet) return
 
     try {
-      const hasClaimed = await audiusLibs.Account.getHasClaimed()
+      const hasClaimed = await colivingLibs.Account.getHasClaimed()
       return hasClaimed
     } catch (e) {
       console.error(e)
@@ -2468,16 +2468,16 @@ class AudiusBackend {
    */
   static async getBalance(bustCache = false) {
     await waitForLibsInit()
-    const wallet = audiusLibs.web3Manager.getWalletAddress()
+    const wallet = colivingLibs.web3Manager.getWalletAddress()
     if (!wallet) return
 
     try {
-      const ethWeb3 = audiusLibs.ethWeb3Manager.getWeb3()
+      const ethWeb3 = colivingLibs.ethWeb3Manager.getWeb3()
       const checksumWallet = ethWeb3.utils.toChecksumAddress(wallet)
       if (bustCache) {
-        audiusLibs.ethContracts.AudiusTokenClient.bustCache()
+        colivingLibs.ethContracts.ColivingTokenClient.bustCache()
       }
-      const balance = await audiusLibs.ethContracts.AudiusTokenClient.balanceOf(
+      const balance = await colivingLibs.ethContracts.ColivingTokenClient.balanceOf(
         checksumWallet
       )
       return balance
@@ -2495,9 +2495,9 @@ class AudiusBackend {
     await waitForLibsInit()
 
     try {
-      const userBank = await audiusLibs.solanaWeb3Manager.getUserBank()
+      const userBank = await colivingLibs.solanaWeb3Manager.getUserBank()
       const ownerWAudioBalance =
-        await audiusLibs.solanaWeb3Manager.getWAudioBalance(userBank)
+        await colivingLibs.solanaWeb3Manager.getWAudioBalance(userBank)
       if (!ownerWAudioBalance) {
         console.error('Failed to fetch account waudio balance')
         return new BN('0')
@@ -2520,20 +2520,20 @@ class AudiusBackend {
     if (!address) return
 
     try {
-      const ethWeb3 = audiusLibs.ethWeb3Manager.getWeb3()
+      const ethWeb3 = colivingLibs.ethWeb3Manager.getWeb3()
       const checksumWallet = ethWeb3.utils.toChecksumAddress(address)
       if (bustCache) {
-        audiusLibs.ethContracts.AudiusTokenClient.bustCache()
+        colivingLibs.ethContracts.ColivingTokenClient.bustCache()
       }
-      const balance = await audiusLibs.ethContracts.AudiusTokenClient.balanceOf(
+      const balance = await colivingLibs.ethContracts.ColivingTokenClient.balanceOf(
         checksumWallet
       )
       const delegatedBalance =
-        await audiusLibs.ethContracts.DelegateManagerClient.getTotalDelegatorStake(
+        await colivingLibs.ethContracts.DelegateManagerClient.getTotalDelegatorStake(
           checksumWallet
         )
       const stakedBalance =
-        await audiusLibs.ethContracts.StakingProxyClient.totalStakedFor(
+        await colivingLibs.ethContracts.StakingProxyClient.totalStakedFor(
           checksumWallet
         )
 
@@ -2549,7 +2549,7 @@ class AudiusBackend {
    */
   static async sendTokens(address, amount) {
     await waitForLibsInit()
-    const receipt = await audiusLibs.Account.permitAndSendTokens(
+    const receipt = await colivingLibs.Account.permitAndSendTokens(
       address,
       amount
     )
@@ -2564,14 +2564,14 @@ class AudiusBackend {
 
     // Check when sending waudio if the user has a user bank acccount
     let tokenAccountInfo =
-      await audiusLibs.solanaWeb3Manager.getAssociatedTokenAccountInfo(address)
+      await colivingLibs.solanaWeb3Manager.getAssociatedTokenAccountInfo(address)
     if (!tokenAccountInfo) {
       console.info('Provided recipient solana address was not a token account')
       // If not, check to see if it already has an associated token account.
       const associatedTokenAccount =
-        await audiusLibs.solanaWeb3Manager.findAssociatedTokenAddress(address)
+        await colivingLibs.solanaWeb3Manager.findAssociatedTokenAddress(address)
       tokenAccountInfo =
-        await audiusLibs.solanaWeb3Manager.getAssociatedTokenAccountInfo(
+        await colivingLibs.solanaWeb3Manager.getAssociatedTokenAccountInfo(
           associatedTokenAccount.toString()
         )
 
@@ -2594,22 +2594,22 @@ class AudiusBackend {
         const tx = await getCreateAssociatedTokenAccountTransaction({
           feePayerKey: SolanaUtils.newPublicKeyNullable(phantomWallet),
           solanaWalletKey: SolanaUtils.newPublicKeyNullable(address),
-          mintKey: audiusLibs.solanaWeb3Manager.mintKey,
-          solanaTokenProgramKey: audiusLibs.solanaWeb3Manager.solanaTokenKey,
-          connection: audiusLibs.solanaWeb3Manager.connection
+          mintKey: colivingLibs.solanaWeb3Manager.mintKey,
+          solanaTokenProgramKey: colivingLibs.solanaWeb3Manager.solanaTokenKey,
+          connection: colivingLibs.solanaWeb3Manager.connection
         })
         const { signature } = await window.solana.signAndSendTransaction(tx)
-        await audiusLibs.solanaWeb3Manager.connection.confirmTransaction(
+        await colivingLibs.solanaWeb3Manager.connection.confirmTransaction(
           signature
         )
       }
     }
-    return audiusLibs.solanaWeb3Manager.transferWAudio(address, amount)
+    return colivingLibs.solanaWeb3Manager.transferWAudio(address, amount)
   }
 
   static async getSignature(data) {
     await waitForLibsInit()
-    return audiusLibs.web3Manager.sign(data)
+    return colivingLibs.web3Manager.sign(data)
   }
 
   /**
@@ -2636,8 +2636,8 @@ class AudiusBackend {
    */
   static async transferAudioToWAudio(balance) {
     await waitForLibsInit()
-    const userBank = await audiusLibs.solanaWeb3Manager.getUserBank()
-    return audiusLibs.Account.proxySendTokensFromEthToSol(
+    const userBank = await colivingLibs.solanaWeb3Manager.getUserBank()
+    return colivingLibs.Account.proxySendTokensFromEthToSol(
       balance,
       userBank.toString()
     )
@@ -2650,7 +2650,7 @@ class AudiusBackend {
    */
   static async getAddressWAudioBalance(address) {
     await waitForLibsInit()
-    const waudioBalance = await audiusLibs.solanaWeb3Manager.getWAudioBalance(
+    const waudioBalance = await colivingLibs.solanaWeb3Manager.getWAudioBalance(
       address
     )
     if (!waudioBalance) {
@@ -2681,12 +2681,12 @@ class AudiusBackend {
     try {
       if (!challenges.length) return
 
-      const reporter = new ClientRewardsReporter(audiusLibs)
+      const reporter = new ClientRewardsReporter(colivingLibs)
 
       const encodedUserId = encodeHashId(userId)
 
-      const attester = new AudiusLibs.RewardsAttester({
-        libs: audiusLibs,
+      const attester = new ColivingLibs.RewardsAttester({
+        libs: colivingLibs,
         parallelization,
         quorumSize,
         aaoEndpoint: AAOEndpoint,
@@ -2845,4 +2845,4 @@ async function getCreateAssociatedTokenAccountTransaction({
   return tx
 }
 
-export default AudiusBackend
+export default ColivingBackend

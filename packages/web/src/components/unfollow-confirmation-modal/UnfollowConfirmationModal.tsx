@@ -1,4 +1,4 @@
-import { ID, FollowSource } from '@audius/common'
+import { ID, FollowSource } from '@coliving/common'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 

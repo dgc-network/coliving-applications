@@ -7,7 +7,7 @@ import {
   URL,
   WidthSizes,
   Maybe
-} from '@audius/common'
+} from '@coliving/common'
 import { Dispatch } from 'redux'
 
 import useInstanceVar from 'common/hooks/useInstanceVar'

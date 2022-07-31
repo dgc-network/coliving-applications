@@ -1,1 +1,1 @@
-export { libs } from '@audius/sdk/dist/legacy'
+export { libs } from '@coliving/sdk/dist/legacy'

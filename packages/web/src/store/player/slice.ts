@@ -1,4 +1,4 @@
-import { UID, ID, Collectible, Nullable } from '@audius/common'
+import { UID, ID, Collectible, Nullable } from '@coliving/common'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import NativeMobileAudio from 'audio/NativeMobileAudio'

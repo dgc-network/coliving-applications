@@ -1,7 +1,7 @@
 import { useState, useContext, useCallback } from 'react'
 
-import { Name, SquareSizes } from '@audius/common'
-import { Modal, Button, ButtonType, IconMail, IconSignOut } from '@audius/stems'
+import { Name, SquareSizes } from '@coliving/common'
+import { Modal, Button, ButtonType, IconMail, IconSignOut } from '@coliving/stems'
 import cn from 'classnames'
 import { debounce } from 'lodash'
 
@@ -14,7 +14,7 @@ import MobilePageContainer from 'components/mobile-page-container/MobilePageCont
 import SignOutPage from 'components/nav/mobile/SignOut'
 import { ToastContext } from 'components/toast/ToastContext'
 import { useUserProfilePicture } from 'hooks/useUserProfilePicture'
-import AudiusBackend from 'services/AudiusBackend'
+import ColivingBackend from 'services/ColivingBackend'
 import { make, useRecord } from 'store/analytics/actions'
 import {
   ACCOUNT_VERIFICATION_SETTINGS_PAGE,
@@ -65,7 +65,7 @@ const AccountSettingsPage = ({
       debounce(
         async () => {
           try {
-            await AudiusBackend.sendRecoveryEmail()
+            await ColivingBackend.sendRecoveryEmail()
             toast(messages.emailSent)
             record(make(Name.SETTINGS_RESEND_ACCOUNT_RECOVERY, {}))
           } catch (e) {

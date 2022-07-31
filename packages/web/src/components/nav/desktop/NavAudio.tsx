@@ -1,6 +1,6 @@
 import { cloneElement, useCallback, useEffect, useState } from 'react'
 
-import { ChallengeRewardID, BadgeTier, BNWei, StringKeys } from '@audius/common'
+import { ChallengeRewardID, BadgeTier, BNWei, StringKeys } from '@coliving/common'
 import BN from 'bn.js'
 import cn from 'classnames'
 import { animated, Transition } from 'react-spring/renderprops'

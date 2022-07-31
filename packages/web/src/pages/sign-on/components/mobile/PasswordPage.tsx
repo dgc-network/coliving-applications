@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react'
 
-import { Button, ButtonType, IconArrow } from '@audius/stems'
+import { Button, ButtonType, IconArrow } from '@coliving/stems'
 import cn from 'classnames'
 
 import Input from 'components/data-entry/Input'

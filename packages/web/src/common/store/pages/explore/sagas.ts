@@ -1,4 +1,4 @@
-import { ID } from '@audius/common'
+import { ID } from '@coliving/common'
 import { call, put, takeEvery } from 'redux-saga/effects'
 
 import { retrieveCollections } from 'common/store/cache/collections/utils'

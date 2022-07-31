@@ -38,9 +38,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "Coliving Music.app"
-               BlueprintName = "AudiusReactNative"
-               ReferencedContainer = "container:AudiusReactNative.xcodeproj">
+               BuildableName = "Coliving.app"
+               BlueprintName = "ColivingReactNative"
+               ReferencedContainer = "container:ColivingReactNative.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -52,9 +52,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "AudiusReactNativeTests.xctest"
-               BlueprintName = "AudiusReactNativeTests"
-               ReferencedContainer = "container:AudiusReactNative.xcodeproj">
+               BuildableName = "ColivingReactNativeTests.xctest"
+               BlueprintName = "ColivingReactNativeTests"
+               ReferencedContainer = "container:ColivingReactNative.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -68,9 +68,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "Coliving Music.app"
-            BlueprintName = "AudiusReactNative"
-            ReferencedContainer = "container:AudiusReactNative.xcodeproj">
+            BuildableName = "Coliving.app"
+            BlueprintName = "ColivingReactNative"
+            ReferencedContainer = "container:ColivingReactNative.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <Testables>
@@ -79,9 +79,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "AudiusReactNativeTests.xctest"
-               BlueprintName = "AudiusReactNativeTests"
-               ReferencedContainer = "container:AudiusReactNative.xcodeproj">
+               BuildableName = "ColivingReactNativeTests.xctest"
+               BlueprintName = "ColivingReactNativeTests"
+               ReferencedContainer = "container:ColivingReactNative.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -110,9 +110,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "Coliving Music.app"
-            BlueprintName = "AudiusReactNative"
-            ReferencedContainer = "container:AudiusReactNative.xcodeproj">
+            BuildableName = "Coliving.app"
+            BlueprintName = "ColivingReactNative"
+            ReferencedContainer = "container:ColivingReactNative.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -127,9 +127,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "Coliving Music.app"
-            BlueprintName = "AudiusReactNative"
-            ReferencedContainer = "container:AudiusReactNative.xcodeproj">
+            BuildableName = "Coliving.app"
+            BlueprintName = "ColivingReactNative"
+            ReferencedContainer = "container:ColivingReactNative.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

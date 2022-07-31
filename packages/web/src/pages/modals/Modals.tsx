@@ -1,6 +1,6 @@
 import { ComponentType } from 'react'
 
-import { Client } from '@audius/common'
+import { Client } from '@coliving/common'
 
 import type { Modals as ModalTypes } from 'common/store/ui/modals/slice'
 import AddToPlaylistModal from 'components/add-to-playlist/desktop/AddToPlaylistModal'

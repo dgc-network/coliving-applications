@@ -1,6 +1,6 @@
 import { memo, useEffect } from 'react'
 
-import { CoverArtSizes, SquareSizes, Remix } from '@audius/common'
+import { CoverArtSizes, SquareSizes, Remix } from '@coliving/common'
 
 import CoSign from 'components/co-sign/CoSign'
 import { Size } from 'components/co-sign/types'

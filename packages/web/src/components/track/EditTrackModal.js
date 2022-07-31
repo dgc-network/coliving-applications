@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react'
 
-import { SquareSizes } from '@audius/common'
-import { Modal, Button, ButtonSize, ButtonType } from '@audius/stems'
+import { SquareSizes } from '@coliving/common'
+import { Modal, Button, ButtonSize, ButtonType } from '@coliving/stems'
 import { mapValues } from 'lodash'
 import PropTypes from 'prop-types'
 

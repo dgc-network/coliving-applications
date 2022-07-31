@@ -1,4 +1,4 @@
-import { Button, ButtonType, IconDiscord } from '@audius/stems'
+import { Button, ButtonType, IconDiscord } from '@coliving/stems'
 
 import { ModalBodyWrapper } from '../WalletModal'
 

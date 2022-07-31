@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 
-import { LineupState } from '@audius/common'
+import { LineupState } from '@coliving/common'
 import { useDispatch } from 'react-redux'
 
 import { makeGetLineupMetadatas } from 'common/store/lineup/selectors'

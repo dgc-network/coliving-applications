@@ -1,4 +1,4 @@
-import { ShareToTwitter } from '@audius/common'
+import { ShareToTwitter } from '@coliving/common'
 
 import { ShareModalContent } from 'common/store/ui/share-modal/types'
 import {

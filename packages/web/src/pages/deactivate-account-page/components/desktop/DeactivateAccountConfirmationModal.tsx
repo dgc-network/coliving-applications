@@ -1,4 +1,4 @@
-import { Button, ButtonType, Modal } from '@audius/stems'
+import { Button, ButtonType, Modal } from '@coliving/stems'
 import cn from 'classnames'
 
 import LoadingSpinnerFullPage from 'components/loading-spinner-full-page/LoadingSpinnerFullPage'

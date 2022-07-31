@@ -1,4 +1,4 @@
-import { ID, UserCollection, removeNullable } from '@audius/common'
+import { ID, UserCollection, removeNullable } from '@coliving/common'
 import moment from 'moment'
 
 import { CommonState } from 'common/store'

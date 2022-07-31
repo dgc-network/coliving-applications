@@ -1,5 +1,5 @@
-import { ID, UID, Lineup, Status, User } from '@audius/common'
-import { Button, ButtonType, IconPause, IconPlay } from '@audius/stems'
+import { ID, UID, Lineup, Status, User } from '@coliving/common'
+import { Button, ButtonType, IconPause, IconPlay } from '@coliving/stems'
 
 import { ReactComponent as IconAlbum } from 'assets/img/iconAlbum.svg'
 import { ReactComponent as IconNote } from 'assets/img/iconNote.svg'

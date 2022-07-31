@@ -1,4 +1,4 @@
-import { Kind, ID, UID, Status, Track } from '@audius/common'
+import { Kind, ID, UID, Status, Track } from '@coliving/common'
 
 import { CommonState } from 'common/store'
 import { getEntry, getAllEntries } from 'common/store/cache/selectors'

@@ -4,7 +4,7 @@ import {
   StringAudio,
   StringWei,
   Nullable
-} from '@audius/common'
+} from '@coliving/common'
 import BN from 'bn.js'
 
 import {

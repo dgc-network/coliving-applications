@@ -11,7 +11,7 @@ import {
   UserMetadata,
   StringWei,
   removeNullable
-} from '@audius/common'
+} from '@coliving/common'
 
 import { decodeHashId } from 'utils/route/hashIds'
 

@@ -1,4 +1,4 @@
-import { Kind, Cache, Collection } from '@audius/common'
+import { Kind, Cache, Collection } from '@coliving/common'
 import { combineReducers } from 'redux'
 
 import accountSlice from 'common/store/account/reducer'
@@ -208,7 +208,7 @@ export const sagas = (ctx: CommonStoreContext) => ({
   recoveryEmail: recoveryEmailSagas
   // TODO:
   // pull in the following from web
-  // once AudiusBackend and dependencies are migrated
+  // once ColivingBackend and dependencies are migrated
   // common/store/pages/explore/exploreCollections/sagas.ts
   // common/store/pages/explore/sagas.ts
   // components/add-to-playlist/store/sagas.ts

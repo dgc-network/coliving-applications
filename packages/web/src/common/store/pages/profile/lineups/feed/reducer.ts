@@ -1,4 +1,4 @@
-import { LineupState, Track } from '@audius/common'
+import { LineupState, Track } from '@coliving/common'
 
 import { RESET_SUCCEEDED, stripPrefix } from 'common/store/lineup/actions'
 import { initialLineupState } from 'common/store/lineup/reducer'

@@ -1,13 +1,13 @@
 import { useCallback, useState } from 'react'
 
-import { Name, PlaylistLibraryFolder } from '@audius/common'
+import { Name, PlaylistLibraryFolder } from '@coliving/common'
 import {
   IconFolder,
   Modal,
   ModalContent,
   ModalHeader,
   ModalTitle
-} from '@audius/stems'
+} from '@coliving/stems'
 import { useDispatch } from 'react-redux'
 
 import { useModalState } from 'common/hooks/useModalState'

@@ -1,4 +1,4 @@
-import { Name } from '@audius/common'
+import { Name } from '@coliving/common'
 import { takeLatest, put, call } from 'redux-saga/effects'
 
 import { disablePushNotifications } from 'pages/settings-page/store/mobileSagas'

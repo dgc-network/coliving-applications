@@ -2,7 +2,7 @@ import {
   SmartCollection,
   Variant,
   SmartCollectionVariant
-} from '@audius/common'
+} from '@coliving/common'
 
 import { ReactComponent as IconExploreFeelingLucky } from 'assets/img/iconExploreFeelingLucky.svg'
 import { ReactComponent as IconExploreMostLoved } from 'assets/img/iconExploreMostLoved.svg'

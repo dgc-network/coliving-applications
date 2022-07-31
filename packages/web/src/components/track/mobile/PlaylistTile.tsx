@@ -1,6 +1,6 @@
 import { useState, useEffect, MouseEvent } from 'react'
 
-import { UID, ID, LineupTrack } from '@audius/common'
+import { UID, ID, LineupTrack } from '@coliving/common'
 import cn from 'classnames'
 import { range } from 'lodash'
 

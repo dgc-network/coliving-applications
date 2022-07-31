@@ -9,7 +9,7 @@ import {
   LineupState,
   Status,
   User
-} from '@audius/common'
+} from '@coliving/common'
 import cn from 'classnames'
 
 import { ReactComponent as IconAlbum } from 'assets/img/iconAlbum.svg'

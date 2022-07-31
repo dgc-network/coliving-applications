@@ -1,4 +1,4 @@
-import { Name } from '@audius/common'
+import { Name } from '@coliving/common'
 import { LOCATION_CHANGE } from 'connected-react-router'
 import { take, takeEvery, call } from 'redux-saga/effects'
 

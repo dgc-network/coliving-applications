@@ -6,7 +6,7 @@ import {
   IconDonate,
   IconLink,
   IconTikTok
-} from '@audius/stems'
+} from '@coliving/stems'
 import cn from 'classnames'
 
 import Input from 'components/data-entry/Input'

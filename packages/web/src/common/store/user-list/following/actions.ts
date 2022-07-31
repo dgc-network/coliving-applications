@@ -1,4 +1,4 @@
-import { ID } from '@audius/common'
+import { ID } from '@coliving/common'
 import { createCustomAction } from 'typesafe-actions'
 
 export const SET_FOLLOWING = 'FOLLOWING_USER_PAGE/SET_FOLLOWING'

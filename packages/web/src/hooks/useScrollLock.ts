@@ -1,4 +1,4 @@
-import { useScrollLock as stemsScrollLock } from '@audius/stems'
+import { useScrollLock as stemsScrollLock } from '@coliving/stems'
 import { useDispatch } from 'react-redux'
 
 import {

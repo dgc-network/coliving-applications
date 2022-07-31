@@ -1,5 +1,5 @@
-import { BNWei } from '@audius/common'
-import { Button, ButtonType } from '@audius/stems'
+import { BNWei } from '@coliving/common'
+import { Button, ButtonType } from '@coliving/stems'
 import BN from 'bn.js'
 import cn from 'classnames'
 import { useDispatch } from 'react-redux'

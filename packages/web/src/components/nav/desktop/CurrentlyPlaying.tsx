@@ -1,6 +1,6 @@
 import { memo, useRef, MouseEvent } from 'react'
 
-import { Color, CoverArtSizes, SquareSizes, Nullable } from '@audius/common'
+import { Color, CoverArtSizes, SquareSizes, Nullable } from '@coliving/common'
 import cn from 'classnames'
 
 import { ReactComponent as IconVisualizer } from 'assets/img/iconVisualizer.svg'

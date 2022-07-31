@@ -169,8 +169,8 @@ const createStyles = (themeColors: ThemeColors) =>
 const messages = {
   modalTitle: '$AUDIO BREAKDOWN',
   total: 'TOTAL $AUDIO',
-  audiusWallet: 'COLIVING WALLET',
-  audiusWalletDescription: 'You can use this $AUDIO throughout the app',
+  colivingWallet: 'COLIVING WALLET',
+  colivingWalletDescription: 'You can use this $AUDIO throughout the app',
   linkedWallets: 'LINKED WALLETS',
   linkedWalletsDescription:
     'Linked wallets are more secure but not all features are supported',
@@ -219,7 +219,7 @@ export const AudioBreakdownDrawer = () => {
         <View style={styles.section}>
           <View style={styles.sectionTitle}>
             <Text style={styles.titleLabel} weight='bold'>
-              {messages.audiusWallet}
+              {messages.colivingWallet}
             </Text>
 
             <GradientText style={styles.titleAmount}>
@@ -229,7 +229,7 @@ export const AudioBreakdownDrawer = () => {
 
           <View style={styles.sectionDescription}>
             <Text style={styles.description} weight='bold'>
-              {messages.audiusWalletDescription}
+              {messages.colivingWalletDescription}
             </Text>
           </View>
         </View>

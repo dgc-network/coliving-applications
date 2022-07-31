@@ -3,13 +3,13 @@
  * protocol before libs has initialized.
  */
 import {
-  getAudiusAccountUser,
+  getColivingAccountUser,
   getCachedDiscoveryProvider
 } from 'services/LocalStorage'
 
 export const LIBS_INITTED_EVENT = 'LIBS_INITTED_EVENT'
 
-const user = getAudiusAccountUser()
+const user = getColivingAccountUser()
 const cachedDiscprov = getCachedDiscoveryProvider()
 
 const EAGER_DISCOVERY_NODES = process.env.REACT_APP_EAGER_DISCOVERY_NODES
@@ -34,17 +34,17 @@ export const getEagerDiscprov = () => eagerDiscprov
 
 /**
  * Wait for the `LIBS_INITTED_EVENT` or pass through if there
- * already exists a mounted `window.audiusLibs` object.
+ * already exists a mounted `window.colivingLibs` object.
  */
 export const waitForLibsInit = async () => {
   // If libs is already defined, it has already loaded & initted
   // so do nothing
   // @ts-ignore
-  if (window.audiusLibs) return
+  if (window.colivingLibs) return
   // Add an event listener and resolve when that returns
   return new Promise((resolve) => {
     // @ts-ignore
-    if (window.audiusLibs) resolve()
+    if (window.colivingLibs) resolve()
     window.addEventListener(LIBS_INITTED_EVENT, resolve)
   })
 }
@@ -70,9 +70,9 @@ export const withEagerOption = async (
   ...args: any
 ) => {
   // @ts-ignore
-  if (window.audiusLibs) {
+  if (window.colivingLibs) {
     // @ts-ignore
-    return normal(window.audiusLibs)(...args)
+    return normal(window.colivingLibs)(...args)
   } else {
     try {
       const req = eager(...args)
@@ -81,7 +81,7 @@ export const withEagerOption = async (
     } catch (e) {
       await waitForLibsInit()
       // @ts-ignore
-      return normal(window.audiusLibs)(...args)
+      return normal(window.colivingLibs)(...args)
     }
   }
 }
@@ -113,7 +113,7 @@ const parmsToQS = (
 }
 
 /**
- * Takes a request object provided from the audius libs API and makes the request
+ * Takes a request object provided from the coliving libs API and makes the request
  * using the fetch API.
  */
 const makeRequest = async (

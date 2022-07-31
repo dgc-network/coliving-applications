@@ -1,4 +1,4 @@
-import { ID, User } from '@audius/common'
+import { ID, User } from '@coliving/common'
 
 enum EditingStatus {
   EDITING = 'editing',

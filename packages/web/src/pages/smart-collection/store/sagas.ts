@@ -4,7 +4,7 @@ import {
   Status,
   Track,
   UserTrack
-} from '@audius/common'
+} from '@coliving/common'
 import { takeEvery, put, call, select } from 'typed-redux-saga/macro'
 
 import { getAccountStatus, getUserId } from 'common/store/account/selectors'
@@ -15,7 +15,7 @@ import {
   fetchSmartCollection,
   fetchSmartCollectionSucceeded
 } from 'common/store/pages/smart-collection/slice'
-import Explore from 'services/audius-backend/Explore'
+import Explore from 'services/coliving-backend/Explore'
 import { waitForBackendSetup } from 'store/backend/sagas'
 import { getLuckyTracks } from 'store/recommendation/sagas'
 import { EXPLORE_PAGE } from 'utils/route'

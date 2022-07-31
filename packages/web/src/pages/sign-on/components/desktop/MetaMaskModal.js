@@ -1,12 +1,12 @@
 import { Component } from 'react'
 
-import { Button, ButtonType } from '@audius/stems'
+import { Button, ButtonType } from '@coliving/stems'
 import Tooltip from 'antd/lib/tooltip'
 import cn from 'classnames'
 import PropTypes from 'prop-types'
 
-import { Utils } from 'services/AudiusBackend'
-import { waitForLibsInit } from 'services/audius-backend/eagerLoadUtils'
+import { Utils } from 'services/ColivingBackend'
+import { waitForLibsInit } from 'services/coliving-backend/eagerLoadUtils'
 
 import styles from './MetaMaskModal.module.css'
 

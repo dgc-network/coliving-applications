@@ -1,6 +1,6 @@
 import { useCallback, ReactNode, useState } from 'react'
 
-import { WidthSizes, SquareSizes } from '@audius/common'
+import { WidthSizes, SquareSizes } from '@coliving/common'
 import Popover from 'antd/lib/popover'
 import cn from 'classnames'
 

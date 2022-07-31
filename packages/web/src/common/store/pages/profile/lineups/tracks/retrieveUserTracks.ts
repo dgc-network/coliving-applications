@@ -1,7 +1,7 @@
-import { ID, Track } from '@audius/common'
+import { ID, Track } from '@coliving/common'
 
 import { processAndCacheTracks } from 'common/store/cache/tracks/utils'
-import apiClient from 'services/audius-api-client/AudiusAPIClient'
+import apiClient from 'services/coliving-api-client/ColivingAPIClient'
 
 type RetrieveUserTracksArgs = {
   handle: string

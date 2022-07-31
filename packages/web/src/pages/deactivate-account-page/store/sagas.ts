@@ -1,8 +1,8 @@
-import { ID, Name, Nullable } from '@audius/common'
+import { ID, Name, Nullable } from '@coliving/common'
 import { call, delay, put, select, takeEvery } from 'redux-saga/effects'
 
 import { getAccountUser, getUserId } from 'common/store/account/selectors'
-import AudiusBackend from 'services/AudiusBackend'
+import ColivingBackend from 'services/ColivingBackend'
 import { make } from 'store/analytics/actions'
 import { waitForBackendSetup } from 'store/backend/sagas'
 import { requestConfirmation } from 'store/confirmer/actions'
@@ -32,7 +32,7 @@ function* handleDeactivateAccount() {
         function* () {
           yield put(make(Name.DEACTIVATE_ACCOUNT_REQUEST, {}))
           const { blockHash, blockNumber } = yield call(
-            AudiusBackend.updateCreator,
+            ColivingBackend.updateCreator,
             { ...userMetadata, is_deactivated: true },
             accountUserId /* note: as of writing, unused parameter */
           )

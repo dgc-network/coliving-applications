@@ -1,7 +1,7 @@
 //
 //  AirplayViewManager.m
 //  Manages toggling of airplay
-//  AudiusReactNative
+//  ColivingReactNative
 //
 
 #import <Foundation/Foundation.h>

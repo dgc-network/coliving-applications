@@ -9,7 +9,7 @@ import {
   ModalContent,
   ModalHeader,
   ModalTitle
-} from '@audius/stems'
+} from '@coliving/stems'
 import cn from 'classnames'
 
 import { isDarkMode, isMatrix } from 'utils/theme/theme'

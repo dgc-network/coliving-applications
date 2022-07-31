@@ -1,6 +1,6 @@
 import { useCallback, useContext } from 'react'
 
-import { Name, FeatureFlags } from '@audius/common'
+import { Name, FeatureFlags } from '@coliving/common'
 import { useDispatch } from 'react-redux'
 
 import { getAccountUser } from 'common/store/account/selectors'

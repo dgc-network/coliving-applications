@@ -1,4 +1,4 @@
-import { ID } from '@audius/common'
+import { ID } from '@coliving/common'
 import { createCustomAction } from 'typesafe-actions'
 
 export const REQUEST_OPEN = 'ADD_TO_PLAYLIST/REQUEST_OPEN'

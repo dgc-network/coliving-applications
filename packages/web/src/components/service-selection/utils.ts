@@ -1,4 +1,4 @@
-import { Nullable } from '@audius/common'
+import { Nullable } from '@coliving/common'
 
 // Country code regex
 const CC_REGEX = /^[a-z]{2}$/i

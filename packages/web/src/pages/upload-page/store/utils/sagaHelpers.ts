@@ -1,4 +1,4 @@
-import { Name } from '@audius/common'
+import { Name } from '@coliving/common'
 import { range } from 'lodash'
 import { all, put, select } from 'redux-saga/effects'
 

@@ -1,11 +1,11 @@
-import AudiusBackend, {
+import ColivingBackend, {
   AuthHeaders,
   IDENTITY_SERVICE
-} from 'services/AudiusBackend'
-import { waitForLibsInit } from 'services/audius-backend/eagerLoadUtils'
+} from 'services/ColivingBackend'
+import { waitForLibsInit } from 'services/coliving-backend/eagerLoadUtils'
 
 // @ts-ignore
-const libs = () => window.audiusLibs
+const libs = () => window.colivingLibs
 
 export const recordIP = async (): Promise<
   { userIP: string } | { error: boolean }
@@ -15,7 +15,7 @@ export const recordIP = async (): Promise<
   if (!account) return { error: true }
 
   try {
-    const { data, signature } = await AudiusBackend.signData()
+    const { data, signature } = await ColivingBackend.signData()
     const response = await fetch(`${IDENTITY_SERVICE}/record_ip`, {
       method: 'POST',
       headers: {

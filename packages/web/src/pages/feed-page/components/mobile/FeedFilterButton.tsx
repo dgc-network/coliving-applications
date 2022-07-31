@@ -1,4 +1,4 @@
-import { FeedFilter } from '@audius/common'
+import { FeedFilter } from '@coliving/common'
 
 import HeaderButton from 'components/header-button/HeaderButton'
 

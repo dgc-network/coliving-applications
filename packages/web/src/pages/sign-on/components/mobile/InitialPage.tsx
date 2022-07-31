@@ -7,12 +7,12 @@ import {
   KeyboardEvent
 } from 'react'
 
-import { Button, ButtonType, IconArrow } from '@audius/stems'
+import { Button, ButtonType, IconArrow } from '@coliving/stems'
 import cn from 'classnames'
 import { Spring } from 'react-spring/renderprops'
 
 import djBackgroundImage from 'assets/img/2-DJ-4-3.jpg'
-import audiusLogoHorizontal from 'assets/img/Horizontal-Logo-Full-Color.png'
+import colivingLogoHorizontal from 'assets/img/Horizontal-Logo-Full-Color.png'
 import signupCtaImage from 'assets/img/signUpCTA.png'
 import { RouterContext } from 'components/animated-switch/RouterContextProvider'
 import Input from 'components/data-entry/Input'
@@ -140,7 +140,7 @@ const SignUpEmail = ({
   return (
     <div className={styles.topContainer}>
       <PreloadImage
-        src={audiusLogoHorizontal}
+        src={colivingLogoHorizontal}
         className={styles.logo}
         alt='Coliving Colored Logo'
       />
@@ -239,7 +239,7 @@ const SignIn = ({
   return (
     <div className={styles.topContainer}>
       <PreloadImage
-        src={audiusLogoHorizontal}
+        src={colivingLogoHorizontal}
         className={styles.logo}
         alt='Coliving Colored Logo'
       />

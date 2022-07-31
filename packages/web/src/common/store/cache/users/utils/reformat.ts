@@ -3,9 +3,9 @@ import {
   ProfilePictureSizes,
   User,
   UserMetadata
-} from '@audius/common'
+} from '@coliving/common'
 
-import AudiusBackend from 'services/AudiusBackend'
+import ColivingBackend from 'services/ColivingBackend'
 
 /**
  * Adds profile picture and cover art to a user object if it does not have one set
@@ -16,7 +16,7 @@ const addUserImages = <T extends UserMetadata>(
   _profile_picture_sizes: ProfilePictureSizes
   _cover_photo_sizes: CoverPhotoSizes
 } => {
-  return AudiusBackend.getUserImages(user)
+  return ColivingBackend.getUserImages(user)
 }
 
 /**

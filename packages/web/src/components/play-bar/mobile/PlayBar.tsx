@@ -6,7 +6,7 @@ import {
   Name,
   PlaybackSource,
   SquareSizes
-} from '@audius/common'
+} from '@coliving/common'
 import cn from 'classnames'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'

@@ -4,7 +4,7 @@ import {
   LineupStateTrack,
   Order,
   Status
-} from '@audius/common'
+} from '@coliving/common'
 import { Reducer } from 'redux'
 
 import {

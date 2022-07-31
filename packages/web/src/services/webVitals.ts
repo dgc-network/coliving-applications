@@ -1,4 +1,4 @@
-import { Name } from '@audius/common'
+import { Name } from '@coliving/common'
 import { getCLS, getFID, getLCP, getFCP, getTTFB } from 'web-vitals'
 
 import { track } from 'store/analytics/providers/amplitude'

@@ -4,7 +4,7 @@ import {
   UserChallenge,
   UserChallengeState,
   removeNullable
-} from '@audius/common'
+} from '@coliving/common'
 
 import {
   getUndisbursedUserChallenges,

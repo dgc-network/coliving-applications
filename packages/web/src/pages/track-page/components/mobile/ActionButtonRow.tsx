@@ -1,4 +1,4 @@
-import { IconShare, IconKebabHorizontal, IconButton } from '@audius/stems'
+import { IconShare, IconKebabHorizontal, IconButton } from '@coliving/stems'
 import cn from 'classnames'
 import Lottie from 'react-lottie'
 

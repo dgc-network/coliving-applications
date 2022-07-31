@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 
-import { Button, ButtonType, ButtonSize, IconFollow } from '@audius/stems'
+import { Button, ButtonType, ButtonSize, IconFollow } from '@coliving/stems'
 import cn from 'classnames'
 import PropTypes from 'prop-types'
 

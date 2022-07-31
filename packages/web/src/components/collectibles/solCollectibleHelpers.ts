@@ -3,7 +3,7 @@ import {
   Collectible,
   CollectibleMediaType,
   Nullable
-} from '@audius/common'
+} from '@coliving/common'
 
 import {
   MetaplexNFT,

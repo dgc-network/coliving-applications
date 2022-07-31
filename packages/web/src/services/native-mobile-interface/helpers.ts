@@ -1,4 +1,4 @@
-import { uuid } from '@audius/common'
+import { uuid } from '@coliving/common'
 import { eventChannel } from 'redux-saga'
 import { take, put } from 'typed-redux-saga/macro'
 

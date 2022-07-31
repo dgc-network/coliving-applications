@@ -1,4 +1,4 @@
-import { ID, ProfilePictureSizes, Nullable } from '@audius/common'
+import { ID, ProfilePictureSizes, Nullable } from '@coliving/common'
 import cn from 'classnames'
 
 import { ReactComponent as BadgeArtist } from 'assets/img/badgeArtist.svg'

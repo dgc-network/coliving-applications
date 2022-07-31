@@ -1,7 +1,7 @@
 import { useState, useCallback, useRef, useContext } from 'react'
 
-import { RandomImage } from '@audius/common'
-import { Button, ButtonType, Popup } from '@audius/stems'
+import { RandomImage } from '@coliving/common'
+import { Button, ButtonType, Popup } from '@coliving/stems'
 import cn from 'classnames'
 import PropTypes from 'prop-types'
 import { useSelector } from 'react-redux'

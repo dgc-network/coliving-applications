@@ -1,6 +1,6 @@
 import { MouseEvent, ReactNode, useCallback } from 'react'
 
-import { StringKeys } from '@audius/common'
+import { StringKeys } from '@coliving/common'
 import * as Sentry from '@sentry/browser'
 import cn from 'classnames'
 import 'url-search-params-polyfill'
@@ -174,7 +174,7 @@ const InstagramAuth = ({
         }
         try {
           if (
-            popup.location.hostname.includes('audius.co') ||
+            popup.location.hostname.includes('coliving.co') ||
             popup.location.hostname.includes(HOSTNAME) ||
             popup.location.hostname.includes(window.location.hostname)
           ) {

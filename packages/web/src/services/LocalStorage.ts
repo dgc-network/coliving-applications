@@ -1,12 +1,12 @@
-import { User } from '@audius/common'
-import { CURRENT_USER_EXISTS_LOCAL_STORAGE_KEY } from '@audius/sdk/dist/core'
+import { User } from '@coliving/common'
+import { CURRENT_USER_EXISTS_LOCAL_STORAGE_KEY } from '@coliving/sdk/dist/core'
 
-// TODO: the following should come from @audius/libs/dist/core when
+// TODO: the following should come from @coliving/libs/dist/core when
 // discoveryProvider/constants is migrated to typescript.
-const DISCOVERY_PROVIDER_TIMESTAMP = '@audius/libs:discovery-node-timestamp'
+const DISCOVERY_PROVIDER_TIMESTAMP = '@coliving/libs:discovery-node-timestamp'
 
-const COLIVING_ACCOUNT_KEY = '@audius/account'
-const COLIVING_ACCOUNT_USER_KEY = '@audius/audius-user'
+const COLIVING_ACCOUNT_KEY = '@coliving/account'
+const COLIVING_ACCOUNT_USER_KEY = '@coliving/coliving-user'
 
 const getValue = (key: string) => {
   if (window && window.localStorage) {
@@ -46,15 +46,15 @@ const removeItem = (key: string) => {
   }
 }
 
-export const getAudiusAccount = () => getJSONValue(COLIVING_ACCOUNT_KEY)
-export const setAudiusAccount = (value: object) =>
+export const getColivingAccount = () => getJSONValue(COLIVING_ACCOUNT_KEY)
+export const setColivingAccount = (value: object) =>
   setJSONValue(COLIVING_ACCOUNT_KEY, value)
-export const clearAudiusAccount = () => removeItem(COLIVING_ACCOUNT_KEY)
+export const clearColivingAccount = () => removeItem(COLIVING_ACCOUNT_KEY)
 
-export const getAudiusAccountUser = () => getJSONValue(COLIVING_ACCOUNT_USER_KEY)
-export const setAudiusAccountUser = (value: User) =>
+export const getColivingAccountUser = () => getJSONValue(COLIVING_ACCOUNT_USER_KEY)
+export const setColivingAccountUser = (value: User) =>
   setJSONValue(COLIVING_ACCOUNT_USER_KEY, value)
-export const clearAudiusAccountUser = () => removeItem(COLIVING_ACCOUNT_USER_KEY)
+export const clearColivingAccountUser = () => removeItem(COLIVING_ACCOUNT_USER_KEY)
 
 export const getCurrentUserExists = () =>
   getValue(CURRENT_USER_EXISTS_LOCAL_STORAGE_KEY)

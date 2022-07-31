@@ -7,7 +7,7 @@ import {
   ProfilePictureSizes,
   WidthSizes,
   SquareSizes
-} from '@audius/common'
+} from '@coliving/common'
 import {
   Button,
   ButtonType,
@@ -17,7 +17,7 @@ import {
   IconDonate,
   IconLink,
   IconTikTok
-} from '@audius/stems'
+} from '@coliving/stems'
 import cn from 'classnames'
 import Linkify from 'linkifyjs/react'
 

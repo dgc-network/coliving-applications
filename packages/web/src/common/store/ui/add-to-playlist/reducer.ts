@@ -1,4 +1,4 @@
-import { ID } from '@audius/common'
+import { ID } from '@coliving/common'
 import { createReducer, ActionType } from 'typesafe-actions'
 
 import * as actions from './actions'

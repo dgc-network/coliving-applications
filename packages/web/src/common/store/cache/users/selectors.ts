@@ -1,4 +1,4 @@
-import { ID, Kind, Status, UID, User } from '@audius/common'
+import { ID, Kind, Status, UID, User } from '@coliving/common'
 
 import { CommonState } from 'common/store'
 import {

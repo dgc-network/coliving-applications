@@ -1,4 +1,4 @@
-import { Playable, User } from '@audius/common'
+import { Playable, User } from '@coliving/common'
 
 import { useIsMobile } from 'utils/clientUtil'
 

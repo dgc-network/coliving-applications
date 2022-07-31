@@ -1,4 +1,4 @@
-import { FavoriteType } from '@audius/common'
+import { FavoriteType } from '@coliving/common'
 import { combineReducers } from 'redux'
 import { createReducer, ActionType } from 'typesafe-actions'
 

@@ -1,6 +1,6 @@
 import { memo } from 'react'
 
-import { Button, ButtonType, ButtonSize } from '@audius/stems'
+import { Button, ButtonType, ButtonSize } from '@coliving/stems'
 import cn from 'classnames'
 import PropTypes from 'prop-types'
 

@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react'
 
-import { ID, SmartCollectionVariant } from '@audius/common'
-import { IconKebabHorizontal, IconButton } from '@audius/stems'
+import { ID, SmartCollectionVariant } from '@coliving/common'
+import { IconKebabHorizontal, IconButton } from '@coliving/stems'
 import cn from 'classnames'
 import { NavLink, NavLinkProps } from 'react-router-dom'
 

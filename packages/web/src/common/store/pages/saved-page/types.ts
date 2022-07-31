@@ -5,7 +5,7 @@ import {
   Favorite,
   LineupState,
   LineupTrack
-} from '@audius/common'
+} from '@coliving/common'
 import { Moment } from 'moment'
 
 export default interface SavesPageState {

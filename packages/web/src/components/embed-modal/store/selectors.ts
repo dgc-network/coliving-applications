@@ -1,4 +1,4 @@
-import { PlayableType } from '@audius/common'
+import { PlayableType } from '@coliving/common'
 
 import { getCollection } from 'common/store/cache/collections/selectors'
 import { getTrack } from 'common/store/cache/tracks/selectors'

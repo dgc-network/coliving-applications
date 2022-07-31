@@ -6,7 +6,7 @@ import {
   FlowUICloseEvent,
   FlowSessionEvent,
   FlowErrorEvent
-} from '@audius/common'
+} from '@coliving/common'
 import { useDispatch } from 'react-redux'
 
 import { useModalState } from 'common/hooks/useModalState'
@@ -16,7 +16,7 @@ import {
   setCognitoFlowStatus
 } from 'common/store/pages/audio-rewards/slice'
 import { useScript } from 'hooks/useScript'
-import { getCognitoSignature } from 'services/audius-backend/Cognito'
+import { getCognitoSignature } from 'services/coliving-backend/Cognito'
 import { track } from 'store/analytics/providers'
 import { isElectron, isMobile } from 'utils/clientUtil'
 import { COGNITO_SCRIPT_URL } from 'utils/constants'

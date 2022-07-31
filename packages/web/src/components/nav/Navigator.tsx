@@ -1,4 +1,4 @@
-import { Client } from '@audius/common'
+import { Client } from '@coliving/common'
 import cn from 'classnames'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
 

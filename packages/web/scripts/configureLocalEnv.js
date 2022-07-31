@@ -1,7 +1,7 @@
-const COLIVING_CONFIG = '.audius/config.json'
-const COLIVING_SOL_CONFIG = '.audius/solana-program-config.json'
-const COLIVING_ETH_CONFIG = '.audius/eth-config.json'
-const AAO_CONFIG = '.audius/aao-config.json'
+const COLIVING_CONFIG = '.coliving/config.json'
+const COLIVING_SOL_CONFIG = '.coliving/solana-program-config.json'
+const COLIVING_ETH_CONFIG = '.coliving/eth-config.json'
+const AAO_CONFIG = '.coliving/aao-config.json'
 
 const fs = require('fs')
 const path = require('path')
@@ -38,7 +38,7 @@ try {
 
   const REACT_APP_ETH_REGISTRY_ADDRESS = ethConfigFile.registryAddress
   const REACT_APP_ETH_PROVIDER_URL = `http://${HOST}:8546`
-  const REACT_APP_ETH_TOKEN_ADDRESS = ethConfigFile.audiusTokenAddress
+  const REACT_APP_ETH_TOKEN_ADDRESS = ethConfigFile.colivingTokenAddress
   const REACT_APP_ETH_OWNER_WALLET = ethConfigFile.ownerWallet
 
   const REACT_APP_CLAIMABLE_TOKEN_PROGRAM_ADDRESS =
@@ -132,6 +132,6 @@ try {
   console.log(`Error configuring local env: ${e}`)
   console.error(`
     Did not find ~/${COLIVING_CONFIG} configuration file.
-    See https://github.com/dgc.network/audius-e2e-tests to configure a local dev environment.
+    See https://github.com/dgc.network/coliving-e2e-tests to configure a local dev environment.
   `)
 }

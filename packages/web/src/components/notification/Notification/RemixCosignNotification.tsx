@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 
-import { Nullable, Name } from '@audius/common'
+import { Nullable, Name } from '@coliving/common'
 import { push } from 'connected-react-router'
 import { useDispatch } from 'react-redux'
 

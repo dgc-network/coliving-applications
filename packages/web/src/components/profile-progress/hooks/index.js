@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 
-import { Name } from '@audius/common'
+import { Name } from '@coliving/common'
 import { useDispatch } from 'react-redux'
 import { useTransition } from 'react-spring'
 

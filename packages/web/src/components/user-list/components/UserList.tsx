@@ -1,4 +1,4 @@
-import { ID, User } from '@audius/common'
+import { ID, User } from '@coliving/common'
 import cn from 'classnames'
 import InfiniteScroll from 'react-infinite-scroller'
 import Lottie from 'react-lottie'

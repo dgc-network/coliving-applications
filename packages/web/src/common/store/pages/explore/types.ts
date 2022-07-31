@@ -1,4 +1,4 @@
-import { ID, Status } from '@audius/common'
+import { ID, Status } from '@coliving/common'
 
 export enum Tabs {
   FOR_YOU = 'FOR YOU',

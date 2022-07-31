@@ -9,7 +9,7 @@ import {
   ProfilePictureSizes,
   LineupState,
   Status
-} from '@audius/common'
+} from '@coliving/common'
 
 import { ReactComponent as IconAlbum } from 'assets/img/iconAlbum.svg'
 import { ReactComponent as IconCollectibles } from 'assets/img/iconCollectibles.svg'

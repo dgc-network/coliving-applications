@@ -1,7 +1,7 @@
 import { memo } from 'react'
 
-import { Nullable } from '@audius/common'
-import { Modal, Button, ButtonSize, ButtonType } from '@audius/stems'
+import { Nullable } from '@coliving/common'
+import { Modal, Button, ButtonSize, ButtonType } from '@coliving/stems'
 
 import styles from './DeleteConfirmationModal.module.css'
 

@@ -4,7 +4,7 @@ import {
   IconDonate,
   IconLink,
   IconTikTok
-} from '@audius/stems'
+} from '@coliving/stems'
 
 import EditableRow, { Format } from 'components/groupable-list/EditableRow'
 import GroupableList from 'components/groupable-list/GroupableList'

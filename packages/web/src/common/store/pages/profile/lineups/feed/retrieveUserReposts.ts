@@ -1,9 +1,9 @@
-import { ID, UserCollection, Track, UserTrackMetadata } from '@audius/common'
+import { ID, UserCollection, Track, UserTrackMetadata } from '@coliving/common'
 import { all } from 'redux-saga/effects'
 
 import { processAndCacheCollections } from 'common/store/cache/collections/utils'
 import { processAndCacheTracks } from 'common/store/cache/tracks/utils'
-import apiClient from 'services/audius-api-client/AudiusAPIClient'
+import apiClient from 'services/coliving-api-client/ColivingAPIClient'
 
 const getTracksAndCollections = (
   feed: (UserTrackMetadata | UserCollection)[]

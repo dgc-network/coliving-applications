@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 
-import { MobileOS } from '@audius/common'
+import { MobileOS } from '@coliving/common'
 import { push as pushRoute } from 'connected-react-router'
 import { connect } from 'react-redux'
 import { useHistory } from 'react-router-dom'

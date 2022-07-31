@@ -8,7 +8,7 @@ import {
   PushNotifications,
   PushNotificationSetting
 } from 'common/store/pages/settings/types'
-import AudiusBackend from 'services/AudiusBackend'
+import ColivingBackend from 'services/ColivingBackend'
 import {
   EnablePushNotificationsMessage,
   DisablePushNotificationsMessage
@@ -22,7 +22,7 @@ function* watchGetPushNotificationSettings() {
     yield* call(waitForBackendSetup)
     try {
       const settings = (yield* call(
-        AudiusBackend.getPushNotificationSettings
+        ColivingBackend.getPushNotificationSettings
       )) as PushNotifications
       const pushNotificationSettings = {
         ...settings,
@@ -43,7 +43,7 @@ export async function disablePushNotifications() {
   message.send()
   const { token } = await message.receive()
   if (token) {
-    await AudiusBackend.deregisterDeviceToken(token)
+    await ColivingBackend.deregisterDeviceToken(token)
   }
 }
 
@@ -69,10 +69,10 @@ function* watchUpdatePushNotificationSettings() {
             // @ts-ignore: remove this ignore when waitForValue is typed
             yield* call(waitForValue, getAccountUser)
             yield* call(
-              AudiusBackend.updatePushNotificationSettings,
+              ColivingBackend.updatePushNotificationSettings,
               newSettings
             )
-            yield* call(AudiusBackend.registerDeviceToken, token, os)
+            yield* call(ColivingBackend.registerDeviceToken, token, os)
           } else {
             yield* call(disablePushNotifications)
           }
@@ -83,7 +83,7 @@ function* watchUpdatePushNotificationSettings() {
             )
             isOn = !pushNotificationSettings[action.notificationType]
           }
-          yield* call(AudiusBackend.updatePushNotificationSettings, {
+          yield* call(ColivingBackend.updatePushNotificationSettings, {
             [action.notificationType]: isOn
           })
         }

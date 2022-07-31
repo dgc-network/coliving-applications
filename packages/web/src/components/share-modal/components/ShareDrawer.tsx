@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 
-import { IconLink, IconShare, IconTwitterBird } from '@audius/stems'
+import { IconLink, IconShare, IconTwitterBird } from '@coliving/stems'
 import cn from 'classnames'
 
 import ActionDrawer from 'components/action-drawer/ActionDrawer'

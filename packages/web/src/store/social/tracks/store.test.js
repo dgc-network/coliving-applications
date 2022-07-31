@@ -1,11 +1,11 @@
-import { Kind } from '@audius/common'
+import { Kind } from '@coliving/common'
 import { combineReducers } from 'redux'
 import { expectSaga } from 'redux-saga-test-plan'
 import * as matchers from 'redux-saga-test-plan/matchers'
 
 import * as cacheActions from 'common/store/cache/actions'
 import * as actions from 'common/store/social/tracks/actions'
-import AudiusBackend from 'services/AudiusBackend'
+import ColivingBackend from 'services/ColivingBackend'
 import { waitForBackendSetup } from 'store/backend/sagas'
 import * as sagas from 'store/social/tracks/sagas'
 import { noopReducer } from 'store/testHelper'
@@ -187,9 +187,9 @@ describe('recordListen', () => {
           }
         }
       )
-      .provide([[matchers.call.fn(AudiusBackend.recordTrackListen), true]])
+      .provide([[matchers.call.fn(ColivingBackend.recordTrackListen), true]])
       .dispatch(actions.recordListen(1))
-      .call(AudiusBackend.recordTrackListen, 1)
+      .call(ColivingBackend.recordTrackListen, 1)
       .silentRun()
   })
   it('limits listens on own account', async () => {
@@ -211,9 +211,9 @@ describe('recordListen', () => {
           }
         }
       )
-      .provide([[matchers.call.fn(AudiusBackend.recordTrackListen), true]])
+      .provide([[matchers.call.fn(ColivingBackend.recordTrackListen), true]])
       .dispatch(actions.recordListen(1))
-      .not.call.fn(AudiusBackend.recordTrackListen, 1)
+      .not.call.fn(ColivingBackend.recordTrackListen, 1)
       .silentRun()
   })
 })

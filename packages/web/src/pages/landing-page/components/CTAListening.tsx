@@ -1,11 +1,11 @@
 import { useState, useCallback, useRef, useEffect } from 'react'
 
-import { IconArrow } from '@audius/stems'
+import { IconArrow } from '@coliving/stems'
 import cn from 'classnames'
 import { Parallax } from 'react-scroll-parallax'
 import { useChain, useTrail, animated } from 'react-spring'
 
-import appImg from 'assets/img/publicSite/AudiusAppAlt@2x.png'
+import appImg from 'assets/img/publicSite/ColivingAppAlt@2x.png'
 import hqAudio from 'assets/img/publicSite/HQ-Audio@1x.jpg'
 import { useMatchesBreakpoint } from 'common/hooks/useMatchesBreakpoint'
 import { handleClickRoute } from 'components/public-site/handleClickRoute'

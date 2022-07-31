@@ -15,10 +15,10 @@
 
 default_platform(:ios)
 
-MY_APP_ID = "co..audiusmusic"
-MY_STAGING_APP_ID = "co..audiusmusic.bounce"
-MY_PROFILE = "match AppStore co..audiusmusic"
-MY_STAGING_PROFILE = "match AppStore co..audiusmusic.bounce"
+MY_APP_ID = "co..colivingmusic"
+MY_STAGING_APP_ID = "co..colivingmusic.bounce"
+MY_PROFILE = "match AppStore co..colivingmusic"
+MY_STAGING_PROFILE = "match AppStore co..colivingmusic.bounce"
 MY_TEAM = "LRFCG93S85"
 
 platform :ios do
@@ -28,11 +28,11 @@ platform :ios do
   desc "Build the app"
   lane :build do |options|
 
-    if options[:bundle_id] === 'co.audius.audiusmusic'  
+    if options[:bundle_id] === 'co.coliving.colivingmusic'  
       appId = MY_APP_ID
       provisioningProfile = MY_PROFILE
       environment = 'production'
-      scheme = 'AudiusReactNative'
+      scheme = 'ColivingReactNative'
       configuration = 'Release'
     else
       appId = MY_STAGING_APP_ID
@@ -67,7 +67,7 @@ platform :ios do
     # is specified in Info.plist, that one will be used
 
     previousVersionNumberString = get_app_store_version_number(
-      bundle_id: 'co.audius.audiusmusic'
+      bundle_id: 'co.coliving.colivingmusic'
     )
 
     previousVersionNumber = Gem::Version.new previousVersionNumberString
@@ -114,7 +114,7 @@ platform :ios do
 
     # Build ios
     gym(
-      workspace: "AudiusReactNative.xcworkspace",
+      workspace: "ColivingReactNative.xcworkspace",
       codesigning_identity: "iPhone Distribution",
       scheme: scheme,
       configuration: configuration,
@@ -131,9 +131,9 @@ platform :ios do
   desc "Push a build to TestFlight"
   lane :upload do |options|
 
-    if (options[:bundle_id] === 'co.audius.audiusmusic') 
+    if (options[:bundle_id] === 'co.coliving.colivingmusic') 
       appleId = "1491270519"
-      ipa = './output/gym/Coliving Music.ipa'
+      ipa = './output/gym/Coliving.ipa'
     else
       appleId = "1510764836"
       ipa = './output/gym/Coliving Bounce Music.ipa'

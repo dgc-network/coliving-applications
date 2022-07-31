@@ -6,7 +6,7 @@ import {
   IconAirplay,
   IconChromecast,
   IconButton
-} from '@audius/stems'
+} from '@coliving/stems'
 import cn from 'classnames'
 
 import { CastMethod } from 'common/store/cast/slice'

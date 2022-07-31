@@ -1,4 +1,4 @@
-import '@audius/stems/dist/stems.css'
+import '@coliving/stems/dist/stems.css'
 
 import { ConnectedRouter } from 'connected-react-router'
 import { Provider } from 'react-redux'
@@ -18,19 +18,19 @@ import { store } from './store/configureStore'
 import './services/webVitals'
 import './index.css'
 
-type AudiusAppProps = {
+type ColivingAppProps = {
   setReady: () => void
   isReady: boolean
   setConnectivityFailure: (failure: boolean) => void
   shouldShowPopover: boolean
 }
 
-const AudiusApp = ({
+const ColivingApp = ({
   setReady,
   isReady,
   setConnectivityFailure,
   shouldShowPopover
-}: AudiusAppProps) => {
+}: ColivingAppProps) => {
   return (
     <Provider store={store}>
       <ConnectedRouter history={history}>
@@ -68,4 +68,4 @@ const AudiusApp = ({
   )
 }
 
-export default AudiusApp
+export default ColivingApp

@@ -1,7 +1,7 @@
 import { memo } from 'react'
 
-import { ID } from '@audius/common'
-import { Modal, Button, ButtonSize, ButtonType } from '@audius/stems'
+import { ID } from '@coliving/common'
+import { Modal, Button, ButtonSize, ButtonType } from '@coliving/stems'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 

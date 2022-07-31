@@ -1,10 +1,10 @@
-import { Name } from '@audius/common'
+import { Name } from '@coliving/common'
 import { call, cancel, fork, put, race, select, take } from 'redux-saga/effects'
 
 import { getUserId } from 'common/store/account/selectors'
 import { setTracksIsBlocked } from 'common/store/cache/tracks/utils/blocklist'
 import * as searchActions from 'components/search-bar/store/actions'
-import apiClient from 'services/audius-api-client/AudiusAPIClient'
+import apiClient from 'services/coliving-api-client/ColivingAPIClient'
 import { make } from 'store/analytics/actions'
 import { waitForBackendSetup } from 'store/backend/sagas'
 

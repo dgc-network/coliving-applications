@@ -1,4 +1,4 @@
-import { Nullable } from '@audius/common'
+import { Nullable } from '@coliving/common'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import { CommonState } from 'common/store'

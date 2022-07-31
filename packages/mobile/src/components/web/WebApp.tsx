@@ -410,13 +410,13 @@ const WebApp = ({
     let { url: eventUrl } = event
     // First see if it's a link to an Coliving page, and redirect
     // within the app if so.
-    const audiusPrefixMatches = eventUrl.match(COLIVING_SITE_PREFIX)
-    const audiusPortIncludes = eventUrl.match(COLIVING_PORT_INCLUDE_PATTERN)
+    const colivingPrefixMatches = eventUrl.match(COLIVING_SITE_PREFIX)
+    const colivingPortIncludes = eventUrl.match(COLIVING_PORT_INCLUDE_PATTERN)
     // For android, empty route redirects here
     if (eventUrl.includes('about:blank')) return false
     if (
-      audiusPrefixMatches &&
-      audiusPrefixMatches.length &&
+      colivingPrefixMatches &&
+      colivingPrefixMatches.length &&
       !COLIVING_WEBLINK_WHITELIST.has(eventUrl)
     ) {
       eventUrl = `/${eventUrl.replace(COLIVING_SITE_PREFIX, '')}`
@@ -426,7 +426,7 @@ const WebApp = ({
       return true
     }
 
-    if (audiusPortIncludes && audiusPortIncludes.length) {
+    if (colivingPortIncludes && colivingPortIncludes.length) {
       eventUrl = `/${eventUrl.replace('http://localhost:3000/', '')}`
       pushRoute(eventUrl)
       return true

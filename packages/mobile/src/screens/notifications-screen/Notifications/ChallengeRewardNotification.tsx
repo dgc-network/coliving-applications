@@ -1,7 +1,7 @@
 import type { ChallengeRewardID } from '@/common'
 import type { ChallengeReward } from '-client/src/common/store/notifications/types'
 
-import IconAudius from 'app/assets/images/iconAudius.svg'
+import IconColiving from 'app/assets/images/iconAudius.svg'
 
 import {
   NotificationTile,
@@ -78,7 +78,7 @@ export const ChallengeRewardNotification = (
   const { title, amount } = challengeInfoMap[challengeId]
   return (
     <NotificationTile notification={notification}>
-      <NotificationHeader icon={IconAudius}>
+      <NotificationHeader icon={IconColiving}>
         <NotificationTitle>{title}</NotificationTitle>
       </NotificationHeader>
       <NotificationText>

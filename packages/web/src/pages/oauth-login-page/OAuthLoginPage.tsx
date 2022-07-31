@@ -1,6 +1,6 @@
 import { FormEvent, useEffect, useLayoutEffect, useMemo, useState } from 'react'
 
-import { Name, User } from '@audius/common'
+import { Name, User } from '@coliving/common'
 import {
   Button,
   ButtonProps,
@@ -8,7 +8,7 @@ import {
   IconAtSign,
   IconValidationCheck,
   IconValidationX
-} from '@audius/stems'
+} from '@coliving/stems'
 import base64url from 'base64url'
 import cn from 'classnames'
 import * as queryString from 'query-string'
@@ -20,7 +20,7 @@ import { getAccountUser } from 'common/store/account/selectors'
 import Input from 'components/data-entry/Input'
 import LoadingSpinner from 'components/loading-spinner/LoadingSpinner'
 import { ProfileInfo } from 'components/profile-info/ProfileInfo'
-import AudiusBackend from 'services/AudiusBackend'
+import ColivingBackend from 'services/ColivingBackend'
 import { make, useRecord } from 'store/analytics/actions'
 import { getCreatorNodeIPFSGateways } from 'utils/gatewayUtil'
 import { ERROR_PAGE, SIGN_UP_PAGE } from 'utils/route'
@@ -121,7 +121,7 @@ export const OAuthLoginPage = () => {
     const getAndSetEmail = async () => {
       let email: string
       try {
-        email = await AudiusBackend.getUserEmail()
+        email = await ColivingBackend.getUserEmail()
       } catch {
         setUserEmail(null)
         history.push(ERROR_PAGE)
@@ -262,7 +262,7 @@ export const OAuthLoginPage = () => {
     let email: string
     if (!userEmail) {
       try {
-        email = await AudiusBackend.getUserEmail()
+        email = await ColivingBackend.getUserEmail()
       } catch {
         history.push(ERROR_PAGE)
         return
@@ -311,7 +311,7 @@ export const OAuthLoginPage = () => {
     const message = `${header}.${payload}`
     let signedData: { data: string; signature: string }
     try {
-      signedData = await AudiusBackend.signDiscoveryNodeRequest(message)
+      signedData = await ColivingBackend.signDiscoveryNodeRequest(message)
     } catch {
       return
     }
@@ -367,7 +367,7 @@ export const OAuthLoginPage = () => {
     setIsSubmitting(true)
     let signInResponse: any
     try {
-      signInResponse = await AudiusBackend.signIn(emailInput, passwordInput)
+      signInResponse = await ColivingBackend.signIn(emailInput, passwordInput)
     } catch (err) {
       setIsSubmitting(false)
       setAndLogGeneralSubmitError(false, messages.miscError)

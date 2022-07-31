@@ -1,6 +1,6 @@
 import { memo, useEffect } from 'react'
 
-import { ID, Color, ProfilePictureSizes, SquareSizes } from '@audius/common'
+import { ID, Color, ProfilePictureSizes, SquareSizes } from '@coliving/common'
 import cn from 'classnames'
 import { animated, useSpring } from 'react-spring'
 

@@ -1,4 +1,4 @@
-import { ID, LineupState } from '@audius/common'
+import { ID, LineupState } from '@coliving/common'
 import { Moment } from 'moment'
 
 export default interface HistoryPageState {

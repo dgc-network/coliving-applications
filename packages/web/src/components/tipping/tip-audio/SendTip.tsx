@@ -1,7 +1,7 @@
 import { cloneElement, useCallback, useEffect, useState } from 'react'
 
-import { BadgeTier, BNWei, StringAudio, StringWei } from '@audius/common'
-import { Format, IconTrophy, TokenValueInput } from '@audius/stems'
+import { BadgeTier, BNWei, StringAudio, StringWei } from '@coliving/common'
+import { Format, IconTrophy, TokenValueInput } from '@coliving/stems'
 import BN from 'bn.js'
 import cn from 'classnames'
 import { useDispatch, useSelector } from 'react-redux'

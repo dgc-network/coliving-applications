@@ -1,6 +1,6 @@
 import { Component, ComponentType } from 'react'
 
-import { ID, Name, User } from '@audius/common'
+import { ID, Name, User } from '@coliving/common'
 import {
   push as pushRoute,
   replace as replaceRoute,
@@ -55,7 +55,7 @@ const messages = {
 }
 
 const META_MASK_SETUP_URL =
-  'https://medium.com/@audius/configuring-metamask-for-use-with-audius-91e24bf6840'
+  'https://medium.com/@coliving/configuring-metamask-for-use-with-coliving-91e24bf6840'
 
 type OwnProps = {
   children: ComponentType<MobileSignOnProps> | ComponentType<DesktopSignOnProps>
@@ -79,7 +79,7 @@ type SignOnState = {
 
 /**
  * TODO: When the user selects the metamask option, set the localStorage key 'useMetaMask' to true
- * Reference the setup function in Coliving backend. A new instance of Audiusbackend will have to be created
+ * Reference the setup function in Coliving backend. A new instance of Colivingbackend will have to be created
  */
 export class SignOnProvider extends Component<SignOnProps, SignOnState> {
   static defaultProps = {

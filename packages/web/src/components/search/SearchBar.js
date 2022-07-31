@@ -1,6 +1,6 @@
 import { createRef, Component } from 'react'
 
-import { Kind, Status } from '@audius/common'
+import { Kind, Status } from '@coliving/common'
 import AutoComplete from 'antd/lib/auto-complete'
 import Input from 'antd/lib/input'
 import cn from 'classnames'

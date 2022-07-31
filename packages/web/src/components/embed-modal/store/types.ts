@@ -1,4 +1,4 @@
-import { ID, PlayableType } from '@audius/common'
+import { ID, PlayableType } from '@coliving/common'
 
 export type EmbedModalState = {
   isOpen: boolean

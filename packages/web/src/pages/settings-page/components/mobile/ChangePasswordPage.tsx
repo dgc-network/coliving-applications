@@ -1,6 +1,6 @@
 import { useCallback, useContext, useEffect } from 'react'
 
-import { Name } from '@audius/common'
+import { Name } from '@coliving/common'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { getCurrentPage } from 'common/store/change-password/selectors'

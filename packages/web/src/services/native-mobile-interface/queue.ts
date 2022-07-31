@@ -1,4 +1,4 @@
-import { ID, UID } from '@audius/common'
+import { ID, UID } from '@coliving/common'
 
 import { RepeatMode } from 'common/store/queue/types'
 

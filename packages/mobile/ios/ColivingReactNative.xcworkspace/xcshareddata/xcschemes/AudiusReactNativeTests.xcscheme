@@ -17,9 +17,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "AudiusReactNativeTests.xctest"
-               BlueprintName = "AudiusReactNativeTests"
-               ReferencedContainer = "container:AudiusReactNative.xcodeproj">
+               BuildableName = "ColivingReactNativeTests.xctest"
+               BlueprintName = "ColivingReactNativeTests"
+               ReferencedContainer = "container:ColivingReactNative.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>

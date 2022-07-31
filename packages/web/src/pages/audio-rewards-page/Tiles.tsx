@@ -1,7 +1,7 @@
 import { useCallback, ReactNode } from 'react'
 
-import { BNWei, Nullable } from '@audius/common'
-import { Button, ButtonType, IconInfo } from '@audius/stems'
+import { BNWei, Nullable } from '@coliving/common'
+import { Button, ButtonType, IconInfo } from '@coliving/stems'
 import BN from 'bn.js'
 import cn from 'classnames'
 import { useDispatch } from 'react-redux'
@@ -40,7 +40,7 @@ const messages = {
   totalAudio: 'Total $AUDIO'
 }
 
-export const LEARN_MORE_URL = 'http://blog.audius.co/posts/community-meet-audio'
+export const LEARN_MORE_URL = 'http://blog.coliving.co/posts/community-meet-audio'
 
 type TileProps = {
   className?: string

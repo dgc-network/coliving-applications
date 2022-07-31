@@ -5,7 +5,7 @@ import {
   IconTrending,
   IconCampFire,
   IconKebabHorizontal
-} from '@audius/stems'
+} from '@coliving/stems'
 import cn from 'classnames'
 
 import HorizontalLogo from 'assets/img/publicSite/Horizontal-Logo-Full-Color@2x.png'

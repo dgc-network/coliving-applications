@@ -1,4 +1,4 @@
-import { LineupState, removeNullable } from '@audius/common'
+import { LineupState, removeNullable } from '@coliving/common'
 import { createSelector } from 'reselect'
 
 import { getTracksByUid } from 'common/store/cache/tracks/selectors'

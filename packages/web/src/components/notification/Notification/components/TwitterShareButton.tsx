@@ -1,6 +1,6 @@
 import { MouseEventHandler, useCallback } from 'react'
 
-import { Nullable } from '@audius/common'
+import { Nullable } from '@coliving/common'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { ReactComponent as IconTwitterBird } from 'assets/img/iconTwitterBird.svg'

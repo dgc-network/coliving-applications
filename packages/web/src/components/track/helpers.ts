@@ -1,4 +1,4 @@
-import { Collection, FieldVisibility, Track, User } from '@audius/common'
+import { Collection, FieldVisibility, Track, User } from '@coliving/common'
 
 const defaultFieldVisibility: FieldVisibility = {
   genre: true,

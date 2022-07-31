@@ -1,6 +1,6 @@
 import { useEffect, useCallback, ComponentType, RefObject } from 'react'
 
-import { ID } from '@audius/common'
+import { ID } from '@coliving/common'
 import { push as pushRoute } from 'connected-react-router'
 import { connect } from 'react-redux'
 import { useParams } from 'react-router'

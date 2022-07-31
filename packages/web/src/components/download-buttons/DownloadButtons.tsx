@@ -1,7 +1,7 @@
 import { memo, useCallback } from 'react'
 
-import { ID } from '@audius/common'
-import { IconDownload, IconButton } from '@audius/stems'
+import { ID } from '@coliving/common'
+import { IconDownload, IconButton } from '@coliving/stems'
 import cn from 'classnames'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'

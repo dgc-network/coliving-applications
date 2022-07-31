@@ -1,6 +1,6 @@
 import { memo } from 'react'
 
-import { ID, CoverArtSizes, SquareSizes, Remix } from '@audius/common'
+import { ID, CoverArtSizes, SquareSizes, Remix } from '@coliving/common'
 import cn from 'classnames'
 
 import { useLoadImageWithTimeout } from 'common/hooks/useImageSize'

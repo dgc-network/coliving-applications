@@ -1,6 +1,6 @@
 import { useEffect, useCallback } from 'react'
 
-import { ID, User } from '@audius/common'
+import { ID, User } from '@coliving/common'
 import cn from 'classnames'
 import { connect } from 'react-redux'
 import { animated } from 'react-spring'
@@ -92,7 +92,7 @@ export type MobilePages =
 
 /**
  * TODO: When the user selects the metamask option, set the localStorage key 'useMetaMask' to true
- * Reference the setup function in Coliving backend. A new instance of Audiusbackend will have to be created
+ * Reference the setup function in Coliving backend. A new instance of Colivingbackend will have to be created
  */
 const SignOnPage = ({
   title,

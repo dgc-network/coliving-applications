@@ -1,7 +1,7 @@
 import { memo } from 'react'
 
-import { SquareSizes } from '@audius/common'
-import { Button, ButtonType, IconArrow } from '@audius/stems'
+import { SquareSizes } from '@coliving/common'
+import { Button, ButtonType, IconArrow } from '@coliving/stems'
 
 import DynamicImage from 'components/dynamic-image/DynamicImage'
 import UserBadges from 'components/user-badges/UserBadges'

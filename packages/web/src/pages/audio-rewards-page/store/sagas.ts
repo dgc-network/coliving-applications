@@ -4,7 +4,7 @@ import {
   StringAudio,
   IntKeys,
   StringKeys
-} from '@audius/common'
+} from '@coliving/common'
 import {
   call,
   fork,
@@ -60,9 +60,9 @@ import { getBalance, increaseBalance } from 'common/store/wallet/slice'
 import { stringAudioToStringWei } from 'common/utils/wallet'
 import { show as showMusicConfetti } from 'components/music-confetti/store/slice'
 import mobileSagas from 'pages/audio-rewards-page/store/mobileSagas'
-import AudiusBackend from 'services/AudiusBackend'
-import apiClient from 'services/audius-api-client/AudiusAPIClient'
-import { getCognitoExists } from 'services/audius-backend/Cognito'
+import ColivingBackend from 'services/ColivingBackend'
+import apiClient from 'services/coliving-api-client/ColivingAPIClient'
+import { getCognitoExists } from 'services/coliving-backend/Cognito'
 import { remoteConfigInstance } from 'services/remote-config/remote-config-instance'
 import { waitForBackendSetup } from 'store/backend/sagas'
 import { AUDIO_PAGE } from 'utils/route'
@@ -236,7 +236,7 @@ function* claimChallengeRewardAsync(
       specifier
     }))
     const response: { error?: string } = yield* call(
-      AudiusBackend.submitAndEvaluateAttestations,
+      ColivingBackend.submitAndEvaluateAttestations,
       {
         challenges,
         userId: currentUser.user_id,
@@ -541,7 +541,7 @@ function* watchUpdateHCaptchaScore() {
     updateHCaptchaScore.type,
     function* (action: ReturnType<typeof updateHCaptchaScore>): any {
       const { token } = action.payload
-      const result = yield* call(AudiusBackend.updateHCaptchaScore, token)
+      const result = yield* call(ColivingBackend.updateHCaptchaScore, token)
       if (result.error) {
         yield put(setHCaptchaStatus({ status: HCaptchaStatus.ERROR }))
       } else {

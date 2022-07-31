@@ -1,6 +1,6 @@
 import { ReactNode, useCallback, useEffect, useRef, useState } from 'react'
 
-import { Theme } from '@audius/common'
+import { Theme } from '@coliving/common'
 import cn from 'classnames'
 
 import TokenStill from 'assets/img/tokenSpinStill.png'
@@ -20,7 +20,7 @@ const messages = {
   learnMore: 'Learn More'
 }
 
-export const LEARN_MORE_URL = 'http://blog.audius.co/posts/community-meet-audio'
+export const LEARN_MORE_URL = 'http://blog.coliving.co/posts/community-meet-audio'
 
 type TileProps = {
   className?: string

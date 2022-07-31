@@ -1,4 +1,4 @@
-import { Collection, Status } from '@audius/common'
+import { Collection, Status } from '@coliving/common'
 
 import { CommonState } from 'common/store'
 import { getCollections as getCachedCollections } from 'common/store/cache/collections/selectors'

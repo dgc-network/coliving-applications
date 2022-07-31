@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback, ComponentType } from 'react'
 
-import { ID, FavoriteType } from '@audius/common'
+import { ID, FavoriteType } from '@coliving/common'
 import { push as pushRoute } from 'connected-react-router'
 import { connect } from 'react-redux'
 import { matchPath } from 'react-router'

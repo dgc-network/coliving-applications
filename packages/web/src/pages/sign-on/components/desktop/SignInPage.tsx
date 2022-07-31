@@ -6,11 +6,11 @@ import {
   KeyboardEvent
 } from 'react'
 
-import { Button, ButtonType, IconArrow } from '@audius/stems'
+import { Button, ButtonType, IconArrow } from '@coliving/stems'
 import cn from 'classnames'
 import { Spring } from 'react-spring/renderprops'
 
-import audiusLogoColored from 'assets/img/audiusLogoColored.png'
+import colivingLogoColored from 'assets/img/colivingLogoColored.png'
 import useInstanceVar from 'common/hooks/useInstanceVar'
 import Input from 'components/data-entry/Input'
 import LoadingSpinner from 'components/loading-spinner/LoadingSpinner'
@@ -118,7 +118,7 @@ export const SignInPage = ({
       })}
     >
       <PreloadImage
-        src={audiusLogoColored}
+        src={colivingLogoColored}
         className={styles.logo}
         alt='Coliving Colored Logo'
       />

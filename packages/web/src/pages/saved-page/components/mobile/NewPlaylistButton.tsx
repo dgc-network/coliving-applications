@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 
-import { Name, CreatePlaylistSource } from '@audius/common'
+import { Name, CreatePlaylistSource } from '@coliving/common'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 

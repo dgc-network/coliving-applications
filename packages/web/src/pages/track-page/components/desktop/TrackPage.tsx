@@ -1,4 +1,4 @@
-import { ID, CID, LineupState, Track, User } from '@audius/common'
+import { ID, CID, LineupState, Track, User } from '@coliving/common'
 import cn from 'classnames'
 
 import { tracksActions } from 'common/store/pages/track/lineup/actions'

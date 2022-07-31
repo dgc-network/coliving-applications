@@ -1,11 +1,11 @@
-# `@audius/common`
+# `@coliving/common`
 
 > TODO: description
 
 ## Usage
 
 ```
-const common = require('@audius/common');
+const common = require('@coliving/common');
 
 // TODO: DEMONSTRATE API
 ```

@@ -9,7 +9,7 @@ import {
   ShareSource,
   FavoriteType,
   Track
-} from '@audius/common'
+} from '@coliving/common'
 import { push as pushRoute } from 'connected-react-router'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'

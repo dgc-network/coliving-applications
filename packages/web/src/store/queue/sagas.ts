@@ -9,7 +9,7 @@ import {
   Nullable,
   makeUid,
   Uid
-} from '@audius/common'
+} from '@coliving/common'
 import {
   all,
   call,

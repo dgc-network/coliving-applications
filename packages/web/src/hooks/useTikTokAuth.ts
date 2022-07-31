@@ -2,14 +2,14 @@
 import 'whatwg-fetch'
 import 'url-search-params-polyfill'
 
-import { Name } from '@audius/common'
+import { Name } from '@coliving/common'
 
 import {
   Credentials,
   UseTikTokAuthArguments,
   createUseTikTokAuthHook
 } from 'common/hooks/useTikTokAuth'
-import { IDENTITY_SERVICE } from 'services/AudiusBackend'
+import { IDENTITY_SERVICE } from 'services/ColivingBackend'
 import { useRecord, make } from 'store/analytics/actions'
 
 /**

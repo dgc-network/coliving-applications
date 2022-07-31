@@ -10,7 +10,7 @@ import {
   FieldVisibility,
   LineupTrack,
   Remix
-} from '@audius/common'
+} from '@coliving/common'
 
 export enum TrackTileSize {
   LARGE = 'LARGE',

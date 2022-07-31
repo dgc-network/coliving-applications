@@ -1,4 +1,4 @@
-import { ID, removeNullable } from '@audius/common'
+import { ID, removeNullable } from '@coliving/common'
 
 import { CommonState } from 'common/store'
 import { getUsers } from 'common/store/cache/users/selectors'

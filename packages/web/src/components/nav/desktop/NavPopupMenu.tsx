@@ -1,4 +1,4 @@
-import { removeNullable } from '@audius/common'
+import { removeNullable } from '@coliving/common'
 import {
   IconCrown,
   IconDashboard,
@@ -6,7 +6,7 @@ import {
   PopupMenu,
   PopupMenuItem,
   PopupPosition
-} from '@audius/stems'
+} from '@coliving/stems'
 import cn from 'classnames'
 
 import { ReactComponent as IconKebabHorizontal } from 'assets/img/iconKebabHorizontalAlt.svg'

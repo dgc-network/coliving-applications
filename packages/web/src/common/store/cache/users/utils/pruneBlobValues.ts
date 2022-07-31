@@ -1,4 +1,4 @@
-import { SquareSizes, WidthSizes, User } from '@audius/common'
+import { SquareSizes, WidthSizes, User } from '@coliving/common'
 
 /**
  * Prunes blob url values off of a user.

@@ -1,4 +1,4 @@
-import { TrackSegment } from '@audius/common'
+import { TrackSegment } from '@coliving/common'
 
 import {
   PlayTrackMessage,

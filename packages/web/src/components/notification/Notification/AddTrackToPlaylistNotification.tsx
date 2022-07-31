@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 
-import { Name, Track } from '@audius/common'
+import { Name, Track } from '@coliving/common'
 import { push } from 'connected-react-router'
 import { useDispatch } from 'react-redux'
 
@@ -33,7 +33,7 @@ const messages = {
     track: Track,
     playlist: CollectionEntity
   ) =>
-    `My track ${track.title} was added to the playlist ${playlist.playlist_name} by ${handle} on @audiusproject! #Coliving`
+    `My track ${track.title} was added to the playlist ${playlist.playlist_name} by ${handle} on @colivingproject! #Coliving`
 }
 
 type AddTrackToPlaylistNotificationProps = {

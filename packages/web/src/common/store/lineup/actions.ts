@@ -1,4 +1,4 @@
-import { ID, UID, TrackMetadata } from '@audius/common'
+import { ID, UID, TrackMetadata } from '@coliving/common'
 
 export const FETCH_LINEUP_METADATAS = 'FETCH_LINEUP_METADATAS'
 export const FETCH_LINEUP_METADATAS_REQUESTED =

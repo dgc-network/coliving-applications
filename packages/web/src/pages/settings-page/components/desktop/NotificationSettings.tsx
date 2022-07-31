@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 
-import { Modal } from '@audius/stems'
+import { Modal } from '@coliving/stems'
 import cn from 'classnames'
 
 import { ReactComponent as IconRemove } from 'assets/img/iconRemove.svg'

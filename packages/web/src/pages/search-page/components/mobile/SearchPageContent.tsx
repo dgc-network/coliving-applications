@@ -7,7 +7,7 @@ import {
   LineupState,
   Status,
   User
-} from '@audius/common'
+} from '@coliving/common'
 import cn from 'classnames'
 import { matchPath } from 'react-router'
 import { Dispatch } from 'redux'

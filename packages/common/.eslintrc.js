@@ -7,5 +7,5 @@ module.exports = {
       }
     }
   },
-  extends: ['audius']
+  extends: ['coliving']
 }

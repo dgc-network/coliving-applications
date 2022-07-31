@@ -1,4 +1,4 @@
-import { ID, UID, Collection, SquareSizes } from '@audius/common'
+import { ID, UID, Collection, SquareSizes } from '@coliving/common'
 
 export const CREATE_PLAYLIST = 'CREATE_PLAYLIST'
 export const CREATE_PLAYLIST_REQUESTED = 'CREATE_PLAYLIST_REQUESTED'

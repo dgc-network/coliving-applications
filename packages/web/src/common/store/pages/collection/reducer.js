@@ -1,4 +1,4 @@
-import { Status } from '@audius/common'
+import { Status } from '@coliving/common'
 
 import { asLineup } from 'common/store/lineup/reducer'
 import tracksReducer from 'common/store/pages/collection/lineup/reducer'

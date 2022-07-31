@@ -1,4 +1,4 @@
-import { ID } from '@audius/common'
+import { ID } from '@coliving/common'
 import { matchPath } from 'react-router-dom'
 
 import { TabRoute } from 'common/store/pages/profile/types'

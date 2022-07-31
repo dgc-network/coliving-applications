@@ -8,7 +8,7 @@ import {
   SmartCollectionVariant,
   Status,
   User
-} from '@audius/common'
+} from '@coliving/common'
 
 import {
   CollectionsPageType,

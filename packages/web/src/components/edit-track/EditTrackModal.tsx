@@ -7,7 +7,7 @@ import {
   Track,
   removeNullable,
   uuid
-} from '@audius/common'
+} from '@coliving/common'
 import { push as pushRoute } from 'connected-react-router'
 import { connect } from 'react-redux'
 import { matchPath } from 'react-router'

@@ -1,4 +1,4 @@
-import { CoverPhotoSizes, WidthSizes } from '@audius/common'
+import { CoverPhotoSizes, WidthSizes } from '@coliving/common'
 import { useDispatch } from 'react-redux'
 
 import imageCoverPhotoBlank from 'assets/img/imageCoverPhotoBlank.jpg'

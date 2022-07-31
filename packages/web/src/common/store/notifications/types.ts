@@ -8,7 +8,7 @@ import {
   User,
   StringWei,
   Nullable
-} from '@audius/common'
+} from '@coliving/common'
 
 export enum NotificationType {
   Announcement = 'Announcement',

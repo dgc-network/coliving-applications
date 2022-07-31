@@ -1,4 +1,4 @@
-import { BNWei } from '@audius/common'
+import { BNWei } from '@coliving/common'
 import cn from 'classnames'
 
 import { formatWei } from 'common/utils/wallet'

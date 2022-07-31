@@ -1,4 +1,4 @@
-import { Status } from '@audius/common'
+import { Status } from '@coliving/common'
 import { connect } from 'react-redux'
 
 import DesktopPlaylistTile from 'components/track/desktop/ConnectedPlaylistTile'

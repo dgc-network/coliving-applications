@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 
-import { Name } from '@audius/common'
+import { Name } from '@coliving/common'
 import cn from 'classnames'
 import { Options } from 'linkifyjs'
 import Linkify from 'linkifyjs/react'

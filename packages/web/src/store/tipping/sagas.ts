@@ -11,7 +11,7 @@ import {
   StringWei,
   Nullable,
   FeatureFlags
-} from '@audius/common'
+} from '@coliving/common'
 import BN from 'bn.js'
 import {
   call,
@@ -59,14 +59,14 @@ import {
   weiToAudioString,
   weiToString
 } from 'common/utils/wallet'
-import AudiusAPIClient from 'services/audius-api-client/AudiusAPIClient'
+import ColivingAPIClient from 'services/coliving-api-client/ColivingAPIClient'
 import {
   fetchRecentUserTips,
   fetchSupporters,
   fetchSupporting,
   SupportRequest,
   UserTipRequest
-} from 'services/audius-backend/Tipping'
+} from 'services/coliving-backend/Tipping'
 import { UpdateTipsStorageMessage } from 'services/native-mobile-interface/tipping'
 import { getFeatureEnabled } from 'services/remote-config/featureFlagHelpers'
 import { remoteConfigInstance } from 'services/remote-config/remote-config-instance'
@@ -695,7 +695,7 @@ function* fetchUserSupporterAsync(
   const { currentUserId, userId, supporterUserId } = action.payload
   try {
     const response = yield* call(
-      [AudiusAPIClient, AudiusAPIClient.getUserSupporter],
+      [ColivingAPIClient, ColivingAPIClient.getUserSupporter],
       {
         currentUserId,
         userId,

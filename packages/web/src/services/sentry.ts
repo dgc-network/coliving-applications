@@ -1,4 +1,4 @@
-import { User } from '@audius/common'
+import { User } from '@coliving/common'
 import * as Sentry from '@sentry/browser'
 import { CaptureConsole } from '@sentry/integrations'
 

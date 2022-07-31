@@ -1,5 +1,5 @@
 import { Entity, EntityType } from 'common/store/notifications/types'
-import AudiusBackend from 'services/AudiusBackend'
+import ColivingBackend from 'services/ColivingBackend'
 import { UserListEntityType } from 'store/application/ui/userListModal/types'
 import {
   albumPage,
@@ -40,7 +40,7 @@ export const getRankSuffix = (rank: number) => {
 }
 
 export const getTwitterHandleByUserHandle = async (userHandle: string) => {
-  const { twitterHandle } = await AudiusBackend.getCreatorSocialHandle(
+  const { twitterHandle } = await ColivingBackend.getCreatorSocialHandle(
     userHandle
   )
   return twitterHandle || ''

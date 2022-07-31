@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 
-import { Button, ButtonType } from '@audius/stems'
+import { Button, ButtonType } from '@coliving/stems'
 import { disableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock'
 import cn from 'classnames'
 import Lottie from 'react-lottie'

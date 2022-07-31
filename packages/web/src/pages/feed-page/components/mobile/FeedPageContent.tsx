@@ -1,6 +1,6 @@
 import { useContext, useEffect, useCallback } from 'react'
 
-import { FeedFilter, Name, Status } from '@audius/common'
+import { FeedFilter, Name, Status } from '@coliving/common'
 import cn from 'classnames'
 
 import { useModalState } from 'common/hooks/useModalState'

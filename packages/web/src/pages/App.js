@@ -7,7 +7,7 @@ import {
   Status,
   Theme,
   StringKeys
-} from '@audius/common'
+} from '@coliving/common'
 import cn from 'classnames'
 import { connect } from 'react-redux'
 import { matchPath } from 'react-router'

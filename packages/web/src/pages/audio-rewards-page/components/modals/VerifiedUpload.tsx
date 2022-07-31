@@ -6,7 +6,7 @@ import {
   IconInstagram,
   IconTwitterBird,
   IconUpload
-} from '@audius/stems'
+} from '@coliving/stems'
 
 import { useModalState } from 'common/hooks/useModalState'
 import { InstagramButton } from 'components/instagram-button/InstagramButton'
@@ -37,7 +37,7 @@ const messages = {
 }
 
 const TWITTER_LINK = 'https://twitter.com/dgc.network'
-const IG_LINK = 'https://www.instagram.com/audiusmusic/?hl=en'
+const IG_LINK = 'https://www.instagram.com/colivingmusic/?hl=en'
 
 const onClickTwitter = () => {
   window.open(TWITTER_LINK, '_blank')
@@ -114,7 +114,7 @@ const VerifiedUpload = ({ dismissModal }: { dismissModal: () => void }) => {
           <div className={styles.ctaRight}>
             <span>{messages.findUsInstagram}</span>
             <div className={styles.link} onClick={onClickInstagram}>
-              @AudiusMusic
+              @ColivingMusic
             </div>
           </div>
         </div>

@@ -1,4 +1,4 @@
-import { ID, StemUploadWithFile } from '@audius/common'
+import { ID, StemUploadWithFile } from '@coliving/common'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 const initialState = {

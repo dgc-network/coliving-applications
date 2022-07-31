@@ -1,4 +1,4 @@
-import { ID } from '@audius/common'
+import { ID } from '@coliving/common'
 import { createCustomAction } from 'typesafe-actions'
 
 export const SET_TOP_SUPPORTERS = 'TOP_SUPPORTERS_USER_PAGE/SET_TOP_SUPPORTERS'

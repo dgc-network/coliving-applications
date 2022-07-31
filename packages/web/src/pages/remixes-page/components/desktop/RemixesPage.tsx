@@ -1,4 +1,4 @@
-import { Track, User } from '@audius/common'
+import { Track, User } from '@coliving/common'
 import cn from 'classnames'
 
 import { ReactComponent as IconRemixes } from 'assets/img/iconRemix.svg'

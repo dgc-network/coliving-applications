@@ -1,7 +1,7 @@
 import { FormEvent, useEffect, useState } from 'react'
 
-import { Status } from '@audius/common'
-import { Button, ButtonType, IconArrow } from '@audius/stems'
+import { Status } from '@coliving/common'
+import { Button, ButtonType, IconArrow } from '@coliving/stems'
 import cn from 'classnames'
 import { useDispatch } from 'react-redux'
 import { Spring } from 'react-spring/renderprops'

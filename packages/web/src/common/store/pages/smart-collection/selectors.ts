@@ -1,4 +1,4 @@
-import { SmartCollectionVariant } from '@audius/common'
+import { SmartCollectionVariant } from '@coliving/common'
 
 import { CommonState } from 'common/store'
 

@@ -1,4 +1,4 @@
-import { ID } from '@audius/common'
+import { ID } from '@coliving/common'
 
 export enum PinTrackAction {
   ADD = 'ADD',

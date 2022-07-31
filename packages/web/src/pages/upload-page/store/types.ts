@@ -1,4 +1,4 @@
-import { TrackMetadata } from '@audius/common'
+import { TrackMetadata } from '@coliving/common'
 
 import UploadType from 'pages/upload-page/components/uploadType'
 

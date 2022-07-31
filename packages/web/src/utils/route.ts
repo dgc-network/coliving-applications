@@ -1,4 +1,4 @@
-import { ID } from '@audius/common'
+import { ID } from '@coliving/common'
 import { push as pushRoute } from 'connected-react-router'
 import { Location as HistoryLocation } from 'history'
 import { matchPath } from 'react-router'
@@ -22,10 +22,10 @@ const USE_HASH_ROUTING = process.env.REACT_APP_USE_HASH_ROUTING === 'true'
 // Host/protocol.
 export const BASE_URL = `${
   process.env.REACT_APP_PUBLIC_PROTOCOL || 'https:'
-}//${process.env.REACT_APP_PUBLIC_HOSTNAME || 'audius.co'}`
+}//${process.env.REACT_APP_PUBLIC_HOSTNAME || 'coliving.co'}`
 export const BASE_GA_URL = `${
   process.env.REACT_APP_PUBLIC_PROTOCOL || 'https:'
-}//${process.env.REACT_APP_GA_HOSTNAME || 'audius.co'}`
+}//${process.env.REACT_APP_GA_HOSTNAME || 'coliving.co'}`
 export const BASENAME = process.env.PUBLIC_URL
 
 // External Routes
@@ -39,10 +39,10 @@ export const AUTH_REDIRECT = '/auth-redirect'
 
 // App Routes
 export const ANDROID_PLAY_STORE_LINK =
-  'https://play.google.com/store/apps/details?id=co.audius.app'
+  'https://play.google.com/store/apps/details?id=co.coliving.app'
 export const IOS_WEBSITE_STORE_LINK =
-  'https://apps.apple.com/us/app/audius-music/id1491270519'
-export const IOS_APP_STORE_LINK = 'itms-apps://us/app/audius-music/id1491270519'
+  'https://apps.apple.com/us/app/coliving-music/id1491270519'
+export const IOS_APP_STORE_LINK = 'itms-apps://us/app/coliving-music/id1491270519'
 
 // Static routes.
 export const FEED_PAGE = '/feed'
@@ -124,31 +124,31 @@ export const EMPTY_PAGE = '/empty_page'
 
 // External Links
 export const COLIVING_TWITTER_LINK = 'https://twitter.com/dgc.network'
-export const COLIVING_INSTAMGRAM_LINK = 'https://www.instagram.com/audiusmusic'
-export const COLIVING_DISCORD_LINK = 'https://discord.gg/audius'
-export const COLIVING_PRESS_LINK = 'https://brand.audius.co'
-export const COLIVING_MERCH_LINK = 'https://merch.audius.co/'
-export const COLIVING_REMIX_CONTESTS_LINK = 'https://remix.audius.co/'
-export const COLIVING_BLOG_LINK = 'https://blog.audius.co/'
+export const COLIVING_INSTAMGRAM_LINK = 'https://www.instagram.com/colivingmusic'
+export const COLIVING_DISCORD_LINK = 'https://discord.gg/coliving'
+export const COLIVING_PRESS_LINK = 'https://brand.coliving.co'
+export const COLIVING_MERCH_LINK = 'https://merch.coliving.co/'
+export const COLIVING_REMIX_CONTESTS_LINK = 'https://remix.coliving.co/'
+export const COLIVING_BLOG_LINK = 'https://blog.coliving.co/'
 
 // Org Links
-export const COLIVING_ORG = 'https://audius.org'
-export const COLIVING_DOCS_LINK = 'https://docs.audius.org'
-export const COLIVING_TEAM_LINK = 'https://audius.org/team'
-export const COLIVING_DEV_STAKER_LINK = 'https://audius.org/protocol'
+export const COLIVING_ORG = 'https://coliving.org'
+export const COLIVING_DOCS_LINK = 'https://docs.coliving.org'
+export const COLIVING_TEAM_LINK = 'https://coliving.org/team'
+export const COLIVING_DEV_STAKER_LINK = 'https://coliving.org/protocol'
 
 export const COLIVING_HOME_LINK = '/'
 export const COLIVING_LISTENING_LINK = '/trending'
 export const COLIVING_SIGN_UP_LINK = '/signup'
 export const COLIVING_HOT_AND_NEW =
-  '/audius/playlist/hot-new-on-audius-%F0%9F%94%A5-4281'
+  '/coliving/playlist/hot-new-on-coliving-%F0%9F%94%A5-4281'
 export const COLIVING_EXPLORE_LINK = '/explore'
 
-export const COLIVING_CAREERS_LINK = 'https://jobs.lever.co/audius'
+export const COLIVING_CAREERS_LINK = 'https://jobs.lever.co/coliving'
 export const COLIVING_PODCAST_LINK =
   'https://www.youtube.com/playlist?list=PLKEECkHRxmPag5iYp4dTK5fGoRcoX40RY'
-export const COLIVING_CYPHER_LINK = 'https://discord.gg/audius'
-export const COLIVING_API_LINK = 'https://audius.org/api'
+export const COLIVING_CYPHER_LINK = 'https://discord.gg/coliving'
+export const COLIVING_API_LINK = 'https://coliving.org/api'
 
 export const authenticatedRoutes = [
   FEED_PAGE,

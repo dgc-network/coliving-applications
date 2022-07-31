@@ -1,4 +1,4 @@
-import { Collectible } from '@audius/common'
+import { Collectible } from '@coliving/common'
 import { TOKEN_PROGRAM_ID } from '@solana/spl-token'
 import { Connection, PublicKey } from '@solana/web3.js'
 

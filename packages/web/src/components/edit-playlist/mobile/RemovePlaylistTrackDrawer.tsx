@@ -1,4 +1,4 @@
-import { Button, ButtonType } from '@audius/stems'
+import { Button, ButtonType } from '@coliving/stems'
 
 import Drawer from 'components/drawer/Drawer'
 

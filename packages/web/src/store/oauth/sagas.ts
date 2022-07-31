@@ -1,4 +1,4 @@
-import { StringKeys } from '@audius/common'
+import { StringKeys } from '@coliving/common'
 import * as Sentry from '@sentry/browser'
 import { takeEvery } from 'redux-saga/effects'
 

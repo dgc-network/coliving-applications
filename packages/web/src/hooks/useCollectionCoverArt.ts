@@ -1,4 +1,4 @@
-import { CoverArtSizes, SquareSizes } from '@audius/common'
+import { CoverArtSizes, SquareSizes } from '@coliving/common'
 import { useDispatch } from 'react-redux'
 
 import imageEmpty from 'assets/img/imageBlank2x.png'

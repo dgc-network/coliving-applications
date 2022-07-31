@@ -1,4 +1,4 @@
-import { Button, ButtonType, IconCheck } from '@audius/stems'
+import { Button, ButtonType, IconCheck } from '@coliving/stems'
 
 import styles from './FormActions.module.css'
 

@@ -1,5 +1,5 @@
-import { BNWei, StringAudio, WalletAddress } from '@audius/common'
-import { Button, ButtonType, IconArrow } from '@audius/stems'
+import { BNWei, StringAudio, WalletAddress } from '@coliving/common'
+import { Button, ButtonType, IconArrow } from '@coliving/stems'
 
 import { stringAudioToBN, weiToAudio } from 'common/utils/wallet'
 

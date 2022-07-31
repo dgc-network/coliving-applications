@@ -6,7 +6,7 @@ import {
   Kind,
   Track,
   makeUid
-} from '@audius/common'
+} from '@coliving/common'
 import { call, select } from 'redux-saga/effects'
 
 import { CommonState } from 'common/store'
@@ -15,8 +15,8 @@ import { getCollections } from 'common/store/cache/collections/selectors'
 import { retrieve } from 'common/store/cache/sagas'
 import { getEntryTimestamp } from 'common/store/cache/selectors'
 import { retrieveTracks } from 'common/store/cache/tracks/utils'
-import AudiusBackend from 'services/AudiusBackend'
-import apiClient from 'services/audius-api-client/AudiusAPIClient'
+import ColivingBackend from 'services/ColivingBackend'
+import apiClient from 'services/coliving-api-client/ColivingAPIClient'
 
 import { addTracksFromCollections } from './addTracksFromCollections'
 import { addUsersFromCollections } from './addUsersFromCollections'
@@ -146,7 +146,7 @@ export function* retrieveCollections(
         metadatas = yield call(retrieveCollection, ids[0])
       } else {
         // TODO: Remove this branch when we have batched endpoints in new V1 api.
-        metadatas = yield call(AudiusBackend.getPlaylists, userId, ids)
+        metadatas = yield call(ColivingBackend.getPlaylists, userId, ids)
       }
 
       // Process any local deletions on the client

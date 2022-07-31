@@ -1,4 +1,4 @@
-import { Button, ButtonType } from '@audius/stems'
+import { Button, ButtonType } from '@coliving/stems'
 import PropTypes from 'prop-types'
 
 import styles from './EmptyTable.module.css'

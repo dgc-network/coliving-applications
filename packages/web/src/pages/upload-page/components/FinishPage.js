@@ -1,7 +1,7 @@
 import { Component } from 'react'
 
-import { DefaultSizes } from '@audius/common'
-import { ProgressBar } from '@audius/stems'
+import { DefaultSizes } from '@coliving/common'
+import { ProgressBar } from '@coliving/stems'
 import cn from 'classnames'
 import PropTypes from 'prop-types'
 

@@ -7,8 +7,8 @@ import {
   WalletAddress,
   Nullable,
   FeatureFlags
-} from '@audius/common'
-import { IconDiscord } from '@audius/stems'
+} from '@coliving/common'
+import { IconDiscord } from '@coliving/stems'
 import cn from 'classnames'
 import { useDispatch } from 'react-redux'
 

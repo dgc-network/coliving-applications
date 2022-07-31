@@ -7,7 +7,7 @@ import {
   IconCheck,
   IconVerified,
   IconTwitterBird
-} from '@audius/stems'
+} from '@coliving/stems'
 import cn from 'classnames'
 import { push as pushRoute } from 'connected-react-router'
 import { useDispatch, useSelector } from 'react-redux'
@@ -81,7 +81,7 @@ const messages = {
   claimYourReward: 'Claim Your Reward',
   twitterShare: (modalType: 'referrals' | 'ref-v') =>
     `Share Invite With Your ${modalType === 'referrals' ? 'Friends' : 'Fans'}`,
-  twitterCopy: `Come support me on @audiusproject! Use my link and we both earn $AUDIO when you sign up.\n\n #audius #audiorewards\n\n`,
+  twitterCopy: `Come support me on @colivingproject! Use my link and we both earn $AUDIO when you sign up.\n\n #coliving #audiorewards\n\n`,
   verifiedChallenge: 'VERIFIED CHALLENGE',
   claimAmountLabel: '$AUDIO available to claim',
   claimedSoFar: '$AUDIO claimed so far',

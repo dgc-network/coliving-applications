@@ -3,7 +3,7 @@ module.exports = {
     browser: true,
     es6: true
   },
-  extends: ['audius'],
+  extends: ['coliving'],
   settings: {
     // Only modules resolved from these folders will be considered "external".
     // If you are `npm link`ing from a directory not listed here you may run
@@ -11,7 +11,7 @@ module.exports = {
     'import/external-module-folders': [
       'node_modules',
       'stems',
-      'audius-protocol'
+      'coliving-protocol'
     ],
     'import/resolver': {
       // NOTE: sk - These aliases are required for the import/order rule.

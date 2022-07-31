@@ -3,7 +3,7 @@ import {
   UserTrackMetadata,
   UserMetadata,
   removeNullable
-} from '@audius/common'
+} from '@coliving/common'
 
 import * as adapter from './ResponseAdapter'
 import { APIResponse, APISearch } from './types'

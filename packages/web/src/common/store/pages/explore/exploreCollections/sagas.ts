@@ -1,9 +1,9 @@
-import { Collection, Status } from '@audius/common'
+import { Collection, Status } from '@coliving/common'
 import { takeEvery, call, put } from 'typed-redux-saga/macro'
 
 import { getAccountStatus } from 'common/store/account/selectors'
 import { processAndCacheCollections } from 'common/store/cache/collections/utils'
-import Explore from 'services/audius-backend/Explore'
+import Explore from 'services/coliving-backend/Explore'
 import { waitForBackendSetup } from 'store/backend/sagas'
 import { EXPLORE_PAGE } from 'utils/route'
 import { waitForValue, requiresAccount } from 'utils/sagaHelpers'

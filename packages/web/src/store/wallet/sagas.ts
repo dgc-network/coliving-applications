@@ -1,4 +1,4 @@
-import { Name, Chain, BNWei, FeatureFlags } from '@audius/common'
+import { Name, Chain, BNWei, FeatureFlags } from '@coliving/common'
 import BN from 'bn.js'
 import { all, call, put, take, takeEvery, select } from 'typed-redux-saga/macro'
 

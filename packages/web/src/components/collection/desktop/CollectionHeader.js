@@ -1,6 +1,6 @@
 import { PureComponent, useState, useEffect } from 'react'
 
-import { Variant, SquareSizes, SmartCollectionVariant } from '@audius/common'
+import { Variant, SquareSizes, SmartCollectionVariant } from '@coliving/common'
 import {
   Button,
   ButtonType,
@@ -12,7 +12,7 @@ import {
   IconShare,
   IconPencil,
   IconRocket
-} from '@audius/stems'
+} from '@coliving/stems'
 import cn from 'classnames'
 import Linkify from 'linkifyjs/react'
 import PropTypes from 'prop-types'

@@ -7,7 +7,7 @@ import {
   LineupTrack,
   TrackMetadata,
   UserTrackMetadata
-} from '@audius/common'
+} from '@coliving/common'
 import { select, all } from 'redux-saga/effects'
 
 import { CommonState } from 'common/store'
@@ -23,7 +23,7 @@ import {
 } from 'pages/sign-on/store/selectors'
 import apiClient, {
   GetSocialFeedArgs
-} from 'services/audius-api-client/AudiusAPIClient'
+} from 'services/coliving-api-client/ColivingAPIClient'
 import { LineupSagas } from 'store/lineup/sagas'
 
 type FeedItem = LineupTrack | Collection

@@ -1,13 +1,13 @@
 import { useState } from 'react'
 
-import { Button, ButtonType } from '@audius/stems'
+import { Button, ButtonType } from '@coliving/stems'
 
 import Input from 'components/data-entry/Input'
 import { useDevModeHotkey } from 'hooks/useHotkey'
 
 import styles from './DiscoveryNodeSelection.module.css'
 
-const localStorageKey = '@audius/libs:discovery-node-timestamp'
+const localStorageKey = '@coliving/libs:discovery-node-timestamp'
 
 const DiscoveryNodeSelection = () => {
   const isEnabled = useDevModeHotkey(68 /* d */)

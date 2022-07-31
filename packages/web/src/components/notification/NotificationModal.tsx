@@ -1,4 +1,4 @@
-import { Modal, Scrollbar } from '@audius/stems'
+import { Modal, Scrollbar } from '@coliving/stems'
 import ReactMarkdown from 'react-markdown'
 
 import { ReactComponent as IconRemove } from 'assets/img/iconRemove.svg'

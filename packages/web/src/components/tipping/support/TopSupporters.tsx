@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
 
-import { ID, User } from '@audius/common'
-import { IconTrophy } from '@audius/stems'
+import { ID, User } from '@coliving/common'
+import { IconTrophy } from '@coliving/stems'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { getUsers } from 'common/store/cache/users/selectors'

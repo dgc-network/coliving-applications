@@ -6,8 +6,8 @@ import {
   OptimisticUserChallenge,
   TrendingRewardID,
   Nullable
-} from '@audius/common'
-import { IconArrow, IconCheck, IconUpload } from '@audius/stems'
+} from '@coliving/common'
+import { IconArrow, IconCheck, IconUpload } from '@coliving/stems'
 
 import IconGoldBadge from 'assets/img/tokenBadgeGold40@2x.png'
 import { formatNumberCommas } from 'common/utils/formatUtil'

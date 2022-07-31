@@ -6,7 +6,7 @@ import {
   IconDonate,
   IconLink,
   IconTikTokInverted
-} from '@audius/stems'
+} from '@coliving/stems'
 import cn from 'classnames'
 import Linkify from 'linkifyjs/react'
 

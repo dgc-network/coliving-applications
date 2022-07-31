@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 
-import { Name, Status, BooleanKeys } from '@audius/common'
+import { Name, Status, BooleanKeys } from '@coliving/common'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { ReactComponent as IconValidationX } from 'assets/img/iconValidationX.svg'

@@ -5,7 +5,7 @@ import {
   StringAudio,
   IntKeys,
   StringKeys
-} from '@audius/common'
+} from '@coliving/common'
 import delayP from '@redux-saga/delay-p'
 import { expectSaga } from 'redux-saga-test-plan'
 import { call, select } from 'redux-saga-test-plan/matchers'
@@ -47,9 +47,9 @@ import { getFeePayer } from 'common/store/solana/selectors'
 import { setVisibility } from 'common/store/ui/modals/slice'
 import { getBalance, increaseBalance } from 'common/store/wallet/slice'
 import { stringAudioToStringWei } from 'common/utils/wallet'
-import AudiusBackend from 'services/AudiusBackend'
-import apiClient from 'services/audius-api-client/AudiusAPIClient'
-import { getCognitoExists } from 'services/audius-backend/Cognito'
+import ColivingBackend from 'services/ColivingBackend'
+import apiClient from 'services/coliving-api-client/ColivingAPIClient'
+import { getCognitoExists } from 'services/coliving-backend/Cognito'
 // Need the mock type to get the helper function that sets the config
 // eslint-disable-next-line jest/no-mocks-import
 import { MockRemoteConfigInstance } from 'services/remote-config/__mocks__/remote-config-instance'
@@ -61,8 +61,8 @@ import rewardsSagas from './sagas'
 // Setup mocks
 jest.mock('services/remote-config/remote-config-instance')
 jest.mock('utils/route/hashIds')
-jest.mock('services/AudiusBackend')
-jest.mock('services/audius-api-client/AudiusAPIClient')
+jest.mock('services/ColivingBackend')
+jest.mock('services/coliving-api-client/ColivingAPIClient')
 jest.mock('utils/sagaPollingDaemons')
 
 function* saga() {
@@ -160,13 +160,13 @@ describe('Rewards Page Sagas', () => {
           .provide([
             ...claimAsyncProvisions,
             [
-              call.fn(AudiusBackend.submitAndEvaluateAttestations),
+              call.fn(ColivingBackend.submitAndEvaluateAttestations),
               { error: FailureReason.HCAPTCHA }
             ]
           ])
           // Assertions
           .call.like({
-            fn: AudiusBackend.submitAndEvaluateAttestations,
+            fn: ColivingBackend.submitAndEvaluateAttestations,
             args: [expectedRequestArgs]
           })
           .put(claimChallengeRewardWaitForRetry(testClaim))
@@ -193,13 +193,13 @@ describe('Rewards Page Sagas', () => {
           .provide([
             ...claimAsyncProvisions,
             [
-              call.fn(AudiusBackend.submitAndEvaluateAttestations),
+              call.fn(ColivingBackend.submitAndEvaluateAttestations),
               { error: FailureReason.COGNITO_FLOW }
             ]
           ])
           // Assertions
           .call.like({
-            fn: AudiusBackend.submitAndEvaluateAttestations,
+            fn: ColivingBackend.submitAndEvaluateAttestations,
             args: [expectedRequestArgs]
           })
           .put(claimChallengeRewardWaitForRetry(testClaim))
@@ -226,13 +226,13 @@ describe('Rewards Page Sagas', () => {
           .provide([
             ...claimAsyncProvisions,
             [
-              call.fn(AudiusBackend.submitAndEvaluateAttestations),
+              call.fn(ColivingBackend.submitAndEvaluateAttestations),
               { error: FailureReason.BLOCKED }
             ]
           ])
           // Assertions
           .call.like({
-            fn: AudiusBackend.submitAndEvaluateAttestations,
+            fn: ColivingBackend.submitAndEvaluateAttestations,
             args: [expectedRequestArgs]
           })
           .not.put(claimChallengeRewardWaitForRetry(testClaim))
@@ -260,13 +260,13 @@ describe('Rewards Page Sagas', () => {
           .provide([
             ...claimAsyncProvisions,
             [
-              call.fn(AudiusBackend.submitAndEvaluateAttestations),
+              call.fn(ColivingBackend.submitAndEvaluateAttestations),
               { error: FailureReason.ALREADY_DISBURSED }
             ]
           ])
           // Assertions
           .call.like({
-            fn: AudiusBackend.submitAndEvaluateAttestations,
+            fn: ColivingBackend.submitAndEvaluateAttestations,
             args: [expectedRequestArgs]
           })
           .put(claimChallengeRewardAlreadyClaimed())
@@ -286,13 +286,13 @@ describe('Rewards Page Sagas', () => {
           .provide([
             ...claimAsyncProvisions,
             [
-              call.fn(AudiusBackend.submitAndEvaluateAttestations),
+              call.fn(ColivingBackend.submitAndEvaluateAttestations),
               { error: FailureReason.ALREADY_SENT }
             ]
           ])
           // Assertions
           .call.like({
-            fn: AudiusBackend.submitAndEvaluateAttestations,
+            fn: ColivingBackend.submitAndEvaluateAttestations,
             args: [expectedRequestArgs]
           })
           .put(claimChallengeRewardAlreadyClaimed())
@@ -313,13 +313,13 @@ describe('Rewards Page Sagas', () => {
             ...claimAsyncProvisions,
             [call.fn(delayP), null],
             [
-              call.fn(AudiusBackend.submitAndEvaluateAttestations),
+              call.fn(ColivingBackend.submitAndEvaluateAttestations),
               { error: FailureReason.UNKNOWN_ERROR }
             ]
           ])
           // Assertions
           .call.like({
-            fn: AudiusBackend.submitAndEvaluateAttestations,
+            fn: ColivingBackend.submitAndEvaluateAttestations,
             args: [expectedRequestArgs]
           })
           .put(
@@ -346,13 +346,13 @@ describe('Rewards Page Sagas', () => {
           .provide([
             ...claimAsyncProvisions,
             [
-              call.fn(AudiusBackend.submitAndEvaluateAttestations),
+              call.fn(ColivingBackend.submitAndEvaluateAttestations),
               { error: FailureReason.UNKNOWN_ERROR }
             ]
           ])
           // Assertions
           .call.like({
-            fn: AudiusBackend.submitAndEvaluateAttestations,
+            fn: ColivingBackend.submitAndEvaluateAttestations,
             args: [expectedRequestArgs]
           })
           .put(claimChallengeRewardFailed())
@@ -371,7 +371,7 @@ describe('Rewards Page Sagas', () => {
           )
           .provide([
             ...claimAsyncProvisions,
-            [call.fn(AudiusBackend.submitAndEvaluateAttestations), {}]
+            [call.fn(ColivingBackend.submitAndEvaluateAttestations), {}]
           ])
           // Assertions
           .put(
@@ -413,7 +413,7 @@ describe('Rewards Page Sagas', () => {
             [select(getUserId), testUser.user_id]
           ])
           // Assertions
-          .not.call(AudiusBackend.submitAndEvaluateAttestations)
+          .not.call(ColivingBackend.submitAndEvaluateAttestations)
           .not.put(
             setUserChallengesDisbursed({
               challengeId: testClaim.challengeId,
@@ -433,7 +433,7 @@ describe('Rewards Page Sagas', () => {
         .provide([
           ...retryClaimProvisions,
           ...claimAsyncProvisions,
-          [call.fn(AudiusBackend.submitAndEvaluateAttestations), {}]
+          [call.fn(ColivingBackend.submitAndEvaluateAttestations), {}]
         ])
         .put(
           setVisibility({ modal: 'ChallengeRewardsExplainer', visible: true })
@@ -447,7 +447,7 @@ describe('Rewards Page Sagas', () => {
         .provide([
           ...retryClaimProvisions,
           ...claimAsyncProvisions,
-          [call.fn(AudiusBackend.submitAndEvaluateAttestations), {}]
+          [call.fn(ColivingBackend.submitAndEvaluateAttestations), {}]
         ])
         .put(claimChallengeReward({ claim: testClaim, retryOnFailure: true }))
         .put(claimChallengeRewardSucceeded())
@@ -485,7 +485,7 @@ describe('Rewards Page Sagas', () => {
           ...claimAsyncProvisions,
           [select(getUserHandle), testUser.handle],
           [call.fn(getCognitoExists), { exists: true }],
-          [call.fn(AudiusBackend.submitAndEvaluateAttestations), {}]
+          [call.fn(ColivingBackend.submitAndEvaluateAttestations), {}]
         ])
         .put(claimChallengeReward({ claim: testClaim, retryOnFailure: false }))
         .put(claimChallengeRewardSucceeded())
@@ -501,12 +501,12 @@ describe('Rewards Page Sagas', () => {
           [select(getUserHandle), testUser.handle],
           [call.fn(getCognitoExists), { exists: true }],
           [
-            call.fn(AudiusBackend.submitAndEvaluateAttestations),
+            call.fn(ColivingBackend.submitAndEvaluateAttestations),
             { error: FailureReason.BLOCKED }
           ]
         ])
         .put(claimChallengeReward({ claim: testClaim, retryOnFailure: false }))
-        .call(AudiusBackend.submitAndEvaluateAttestations, {
+        .call(ColivingBackend.submitAndEvaluateAttestations, {
           ...expectedRequestArgs,
           isFinalAttempt: true
         })

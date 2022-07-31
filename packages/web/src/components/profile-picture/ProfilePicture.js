@@ -1,6 +1,6 @@
 import { memo, useState, useEffect } from 'react'
 
-import { SquareSizes } from '@audius/common'
+import { SquareSizes } from '@coliving/common'
 import cn from 'classnames'
 import PropTypes from 'prop-types'
 import Lottie from 'react-lottie'

@@ -1,4 +1,4 @@
-import { ID, Collection, Track } from '@audius/common'
+import { ID, Collection, Track } from '@coliving/common'
 import { put, select } from 'typed-redux-saga'
 
 import { getCollection } from 'common/store/cache/collections/selectors'
@@ -17,7 +17,7 @@ import {
 import { RepostType } from 'common/store/user-list/reposts/types'
 import UserListSagaFactory from 'common/store/user-list/sagas'
 import { createUserListProvider } from 'components/user-list/utils'
-import apiClient from 'services/audius-api-client/AudiusAPIClient'
+import apiClient from 'services/coliving-api-client/ColivingAPIClient'
 
 export const USER_LIST_TAG = 'REPOSTS'
 

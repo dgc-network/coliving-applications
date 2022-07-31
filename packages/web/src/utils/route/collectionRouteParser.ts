@@ -1,4 +1,4 @@
-import { ID } from '@audius/common'
+import { ID } from '@coliving/common'
 import { matchPath } from 'react-router-dom'
 
 import { PLAYLIST_PAGE, ALBUM_PAGE, PLAYLIST_ID_PAGE } from 'utils/route'

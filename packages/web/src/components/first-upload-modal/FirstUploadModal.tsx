@@ -1,7 +1,7 @@
 import { useCallback, useEffect } from 'react'
 
-import { Name, SquareSizes } from '@audius/common'
-import { Modal } from '@audius/stems'
+import { Name, SquareSizes } from '@coliving/common'
+import { Modal } from '@coliving/stems'
 import { connect, useDispatch } from 'react-redux'
 import { Dispatch } from 'redux'
 

@@ -10,7 +10,7 @@ import {
   IconRemove,
   IconTrending,
   IconTwitterBird
-} from '@audius/stems'
+} from '@coliving/stems'
 import cn from 'classnames'
 import ReactDOM from 'react-dom'
 

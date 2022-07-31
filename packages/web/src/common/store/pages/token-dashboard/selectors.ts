@@ -1,4 +1,4 @@
-import { Chain, BNWei, Nullable } from '@audius/common'
+import { Chain, BNWei, Nullable } from '@coliving/common'
 
 import { CommonState } from 'common/store'
 import { stringWeiToBN } from 'common/utils/wallet'

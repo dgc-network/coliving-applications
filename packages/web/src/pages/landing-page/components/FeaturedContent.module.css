@@ -144,7 +144,7 @@
   transition: all 0.07s ease-in-out;
 }
 
-.track .listenOnAudius {
+.track .listenOnColiving {
   opacity: 0;
   width: 154px;
   transition: all 0.07s ease-in-out;
@@ -158,7 +158,7 @@
   opacity: 1;
 }
 
-.track:hover .listenOnAudius {
+.track:hover .listenOnColiving {
   opacity: 1;
 }
 

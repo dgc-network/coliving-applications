@@ -1,4 +1,4 @@
-import { UID } from '@audius/common'
+import { UID } from '@coliving/common'
 import { createSelector } from 'reselect'
 
 import { CommonState } from 'common/store'

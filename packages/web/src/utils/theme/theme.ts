@@ -1,4 +1,4 @@
-import { Theme } from '@audius/common'
+import { Theme } from '@coliving/common'
 
 import { getIsIOS } from 'utils/browser'
 

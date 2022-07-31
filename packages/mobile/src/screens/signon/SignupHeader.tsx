@@ -1,6 +1,6 @@
 import { StyleSheet, View } from 'react-native'
 
-import HeaderLogo from 'app/assets/images/audiusLogoHorizontal.svg'
+import HeaderLogo from 'app/assets/images/colivingLogoHorizontal.svg'
 
 const styles = StyleSheet.create({
   header: {
@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: '#F7F7F9'
   },
-  audiusLogoHeader: {
+  colivingLogoHeader: {
     position: 'absolute',
     alignSelf: 'center',
     top: 8,
@@ -27,7 +27,7 @@ const SignupHeader = () => {
   return (
     <View style={{ backgroundColor: 'white', zIndex: 15 }}>
       <View style={styles.header}>
-        <HeaderLogo style={styles.audiusLogoHeader} fill={'#C2C0CC'} />
+        <HeaderLogo style={styles.colivingLogoHeader} fill={'#C2C0CC'} />
       </View>
     </View>
   )

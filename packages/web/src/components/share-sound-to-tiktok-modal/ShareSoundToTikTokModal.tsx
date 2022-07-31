@@ -1,13 +1,13 @@
 import { useCallback, useMemo } from 'react'
 
-import { Nullable } from '@audius/common'
+import { Nullable } from '@coliving/common'
 import {
   Button,
   Modal,
   ButtonType,
   IconTikTokInverted,
   IconTikTok
-} from '@audius/stems'
+} from '@coliving/stems'
 import cn from 'classnames'
 import { useDispatch, useSelector } from 'react-redux'
 

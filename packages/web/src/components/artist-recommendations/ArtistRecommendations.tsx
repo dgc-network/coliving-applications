@@ -14,7 +14,7 @@ import {
   ProfilePictureSizes,
   SquareSizes,
   User
-} from '@audius/common'
+} from '@coliving/common'
 import cn from 'classnames'
 import { push } from 'connected-react-router'
 import { useDispatch, useSelector } from 'react-redux'

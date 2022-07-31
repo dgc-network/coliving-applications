@@ -1,4 +1,4 @@
-import { BNWei, WalletAddress } from '@audius/common'
+import { BNWei, WalletAddress } from '@coliving/common'
 import cn from 'classnames'
 
 import LoadingSpinner from 'components/loading-spinner/LoadingSpinner'

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 
-import { Button, ButtonType, IconCheck } from '@audius/stems'
+import { Button, ButtonType, IconCheck } from '@coliving/stems'
 import cn from 'classnames'
 import { useDispatch, useSelector } from 'react-redux'
 import { Transition, animated } from 'react-spring/renderprops'

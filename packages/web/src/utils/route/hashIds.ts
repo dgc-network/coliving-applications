@@ -1,4 +1,4 @@
-import { Nullable } from '@audius/common'
+import { Nullable } from '@coliving/common'
 import Hashids from 'hashids'
 
 const HASH_SALT = 'azowernasdfoia'

@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 
-import { IconArrow, IconCrown } from '@audius/stems'
+import { IconArrow, IconCrown } from '@coliving/stems'
 import cn from 'classnames'
 import { useDispatch } from 'react-redux'
 

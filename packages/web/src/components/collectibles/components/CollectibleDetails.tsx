@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 
-import { Chain, Collectible, CollectibleMediaType } from '@audius/common'
-import { LogoEth, LogoSol } from '@audius/stems'
+import { Chain, Collectible, CollectibleMediaType } from '@coliving/common'
+import { LogoEth, LogoSol } from '@coliving/stems'
 import cn from 'classnames'
 import { useDispatch, useSelector } from 'react-redux'
 

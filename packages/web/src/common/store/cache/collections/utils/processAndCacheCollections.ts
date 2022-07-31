@@ -1,4 +1,4 @@
-import { ID, UserCollectionMetadata, Kind, makeUid } from '@audius/common'
+import { ID, UserCollectionMetadata, Kind, makeUid } from '@coliving/common'
 import { put, call } from 'redux-saga/effects'
 
 import * as cacheActions from 'common/store/cache/actions'

@@ -1,4 +1,4 @@
-import { Status, makeUids, getIdFromKindId } from '@audius/common'
+import { Status, makeUids, getIdFromKindId } from '@coliving/common'
 import { pick } from 'lodash'
 import { all, call, put, select, takeEvery } from 'redux-saga/effects'
 

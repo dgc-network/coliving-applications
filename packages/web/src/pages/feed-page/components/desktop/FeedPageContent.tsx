@@ -1,4 +1,4 @@
-import { Name, FeedFilter } from '@audius/common'
+import { Name, FeedFilter } from '@coliving/common'
 
 import { feedActions } from 'common/store/pages/feed/lineup/actions'
 import Header from 'components/header/desktop/Header'

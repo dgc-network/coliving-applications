@@ -3,7 +3,7 @@ import { useState, useEffect, useCallback, useRef } from 'react'
 import cn from 'classnames'
 import { useChain, useSpring, useTrail, animated } from 'react-spring'
 
-import productShot from 'assets/img/publicSite/AudiusWeb@2x.png'
+import productShot from 'assets/img/publicSite/ColivingWeb@2x.png'
 import dotsLogo1x from 'assets/img/publicSite/dot-logo@1x.jpg'
 import dotsLogo2x from 'assets/img/publicSite/dot-logo@2x.jpg'
 

@@ -1,6 +1,6 @@
 import { MouseEventHandler, useCallback, useMemo } from 'react'
 
-import { FollowSource, User, FeatureFlags } from '@audius/common'
+import { FollowSource, User, FeatureFlags } from '@coliving/common'
 import { useDispatch } from 'react-redux'
 
 import { setNotificationSubscription } from 'common/store/pages/profile/actions'

@@ -1,6 +1,6 @@
 import { memo, ReactChildren, useCallback } from 'react'
 
-import { IconArrow, Scrollbar } from '@audius/stems'
+import { IconArrow, Scrollbar } from '@coliving/stems'
 import cn from 'classnames'
 
 import {

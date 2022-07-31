@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
 
-import { Name } from '@audius/common'
-import { Button, ButtonType, IconTwitterBird, IconCheck } from '@audius/stems'
+import { Name } from '@coliving/common'
+import { Button, ButtonType, IconTwitterBird, IconCheck } from '@coliving/stems'
 import cn from 'classnames'
 
 import { useSelector } from 'common/hooks/useSelector'

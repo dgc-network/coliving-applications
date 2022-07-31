@@ -13,24 +13,24 @@ const builder = require('electron-builder')
 const notarize = require('electron-notarize').notarize
 const fse = require('fs-extra')
 
-const PRODUCTION_APP_ID = 'co.audius.app'
+const PRODUCTION_APP_ID = 'co.coliving.app'
 const PRODUCTION_NAME = 'Coliving'
-const PRODUCTION_PACKAGE_JSON_NAME = 'audius-client'
-const PRODUCTION_BUCKET = 'download.audius.co'
-const PRODUCTION_ICNS = 'resources/icons/AudiusIcon.icns'
-const PRODUCTION_DMG_ICNS = 'resources/icons/AudiusDmgIcon.icns'
-const PRODUCTION_ICON = 'resources/icons/AudiusIcon.png'
-const PRODUCTION_SCHEME = 'audius'
+const PRODUCTION_PACKAGE_JSON_NAME = 'coliving-client'
+const PRODUCTION_BUCKET = 'download.coliving.co'
+const PRODUCTION_ICNS = 'resources/icons/ColivingIcon.icns'
+const PRODUCTION_DMG_ICNS = 'resources/icons/ColivingDmgIcon.icns'
+const PRODUCTION_ICON = 'resources/icons/ColivingIcon.png'
+const PRODUCTION_SCHEME = 'coliving'
 const PRODUCTION_BUILD_DIR = 'build-production'
 
-const STAGING_APP_ID = 'co.audius.staging.app'
+const STAGING_APP_ID = 'co.coliving.staging.app'
 const STAGING_NAME = 'Coliving Staging'
-const STAGING_PACKAGE_JSON_NAME = 'audius-client-staging'
-const STAGING_BUCKET = 'download.staging.audius.co'
-const STAGING_ICNS = 'resources/icons/AudiusStagingIcon.icns'
-const STAGING_DMG_ICNS = 'resources/icons/AudiusStagingDmgIcon.icns'
-const STAGING_ICON = 'resources/icons/AudiusStagingIcon.png'
-const STAGING_SCHEME = 'audius-staging'
+const STAGING_PACKAGE_JSON_NAME = 'coliving-client-staging'
+const STAGING_BUCKET = 'download.staging.coliving.co'
+const STAGING_ICNS = 'resources/icons/ColivingStagingIcon.icns'
+const STAGING_DMG_ICNS = 'resources/icons/ColivingStagingDmgIcon.icns'
+const STAGING_ICON = 'resources/icons/ColivingStagingIcon.png'
+const STAGING_SCHEME = 'coliving-staging'
 const STAGING_BUILD_DIR = 'build-staging'
 
 program
@@ -184,7 +184,7 @@ const makeBuildParams = isProduction => {
       snap: {
         publish: {
           provider: 'generic',
-          url: 'https://audius.co'
+          url: 'https://coliving.co'
         }
       },
       afterSign: async params => notarizeFn(appId, params),

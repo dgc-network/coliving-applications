@@ -8,8 +8,8 @@ import {
   PlaylistLibrary as PlaylistLibraryType,
   Status,
   FeatureFlags
-} from '@audius/common'
-import { Scrollbar } from '@audius/stems'
+} from '@coliving/common'
+import { Scrollbar } from '@coliving/stems'
 import { ResizeObserver } from '@juggle/resize-observer'
 import cn from 'classnames'
 import { push as pushRoute } from 'connected-react-router'

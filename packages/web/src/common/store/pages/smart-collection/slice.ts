@@ -1,4 +1,4 @@
-import { SmartCollection, SmartCollectionVariant } from '@audius/common'
+import { SmartCollection, SmartCollectionVariant } from '@coliving/common'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 type FetchPayload = {

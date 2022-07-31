@@ -3,16 +3,16 @@ import {
   CollectionMetadata,
   UserCollectionMetadata,
   Variant
-} from '@audius/common'
+} from '@coliving/common'
 import { omit } from 'lodash'
 
-import AudiusBackend from 'services/AudiusBackend'
+import ColivingBackend from 'services/ColivingBackend'
 
 /**
  * Adds cover_art_url to a collection object if it does not have one set
  */
 const addCollectionImages = (collection: CollectionMetadata): Collection => {
-  return AudiusBackend.getCollectionImages(collection)
+  return ColivingBackend.getCollectionImages(collection)
 }
 
 /**

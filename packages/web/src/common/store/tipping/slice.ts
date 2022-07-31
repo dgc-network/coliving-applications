@@ -1,4 +1,4 @@
-import { ID, RecentTipsStorage, UserTip, User, Nullable } from '@audius/common'
+import { ID, RecentTipsStorage, UserTip, User, Nullable } from '@coliving/common'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import {

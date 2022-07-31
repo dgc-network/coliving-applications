@@ -1,7 +1,7 @@
 import { useCallback, useEffect } from 'react'
 
-import { Name, User, FeatureFlags } from '@audius/common'
-import { IconButton, PillButton, useMediaQueryListener } from '@audius/stems'
+import { Name, User, FeatureFlags } from '@coliving/common'
+import { IconButton, PillButton, useMediaQueryListener } from '@coliving/stems'
 import { push as pushRoute } from 'connected-react-router'
 import { useDispatch, useSelector } from 'react-redux'
 

@@ -2,7 +2,7 @@ import { COLIVING_API_LINK } from '-client/src/utils/route'
 import type { ImageStyle } from 'react-native'
 import { Image, View } from 'react-native'
 
-import AudiusAPI from 'app/assets/images/audiusAPI.png'
+import ColivingAPI from 'app/assets/images/colivingAPI.png'
 import IconArrow from 'app/assets/images/iconArrow.svg'
 import { Button, GradientText } from 'app/components/core'
 import { AppDrawer } from 'app/components/drawer'
@@ -61,7 +61,7 @@ export const ApiRewardsDrawer = () => {
         <GradientText style={styles.drawerTitle}>
           {messages.modalTitle}
         </GradientText>
-        <Image style={styles.image as ImageStyle} source={AudiusAPI} />
+        <Image style={styles.image as ImageStyle} source={ColivingAPI} />
         <Text style={styles.title} weight='bold'>
           {messages.title}
         </Text>

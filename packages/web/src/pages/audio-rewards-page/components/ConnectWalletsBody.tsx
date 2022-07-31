@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 
-import { Button, ButtonType } from '@audius/stems'
+import { Button, ButtonType } from '@coliving/stems'
 import cn from 'classnames'
 import { useDispatch } from 'react-redux'
 

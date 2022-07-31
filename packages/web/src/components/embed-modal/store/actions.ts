@@ -1,4 +1,4 @@
-import { ID, PlayableType } from '@audius/common'
+import { ID, PlayableType } from '@coliving/common'
 import { createCustomAction } from 'typesafe-actions'
 
 export const OPEN = 'EMBED_MODAL/OPEN'

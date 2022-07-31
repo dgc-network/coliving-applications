@@ -1,4 +1,4 @@
-import { ID, LineupState, TimeRange } from '@audius/common'
+import { ID, LineupState, TimeRange } from '@coliving/common'
 
 export type TrendingPageState = {
   trendingWeek: LineupState<{ id: ID }>

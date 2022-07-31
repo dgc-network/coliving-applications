@@ -1,6 +1,6 @@
-import { waitForLibsInit } from 'services/audius-backend/eagerLoadUtils'
+import { waitForLibsInit } from 'services/coliving-backend/eagerLoadUtils'
 
-const libs = () => window.audiusLibs
+const libs = () => window.colivingLibs
 
 export const submitReaction = async ({
   reactedTo,

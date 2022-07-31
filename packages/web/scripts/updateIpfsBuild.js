@@ -28,10 +28,10 @@ const config = {
     gaEndpoint: 'http://localhost:9001'
   },
   stage: {
-    gaEndpoint: 'https://general-admission.staging.audius.co'
+    gaEndpoint: 'https://general-admission.staging.coliving.co'
   },
   prod: {
-    gaEndpoint: 'https://general-admission.audius.co'
+    gaEndpoint: 'https://general-admission.coliving.co'
   }
 }
 
@@ -82,7 +82,7 @@ const updateContentNodePeers = async () => {
 }
 
 const updateGABuild = async () => {
-  const res = await fetch(`${endpoint}/ipfs/update_build?site=audius`)
+  const res = await fetch(`${endpoint}/ipfs/update_build?site=coliving`)
   const response = await res.json()
   if (!response.success) {
     console.error('unable to update GA build')
@@ -92,7 +92,7 @@ const updateGABuild = async () => {
 }
 
 const pinGABuild = async () => {
-  const res = await fetch(`${endpoint}/ipfs/pin_build?site=audius`)
+  const res = await fetch(`${endpoint}/ipfs/pin_build?site=coliving`)
   if (!res.ok) {
     console.error('unable to pin GA build')
     process.exit(1)

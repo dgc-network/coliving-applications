@@ -4,7 +4,7 @@ import {
   StemCategory,
   Track,
   StemTrack
-} from '@audius/common'
+} from '@coliving/common'
 import moment from 'moment'
 import { useSelector as reduxUseSelector, shallowEqual } from 'react-redux'
 

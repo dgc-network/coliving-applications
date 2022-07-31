@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { Button, ButtonType, IconArrow } from '@audius/stems'
+import { Button, ButtonType, IconArrow } from '@coliving/stems'
 import cn from 'classnames'
 import PropTypes from 'prop-types'
 import { Spring } from 'react-spring/renderprops'
@@ -13,7 +13,7 @@ import LoadingSpinner from 'components/loading-spinner/LoadingSpinner'
 import ProfilePicture from 'components/profile-picture/ProfilePicture'
 import StatusMessage from 'components/status-message/StatusMessage'
 import { useDelayedEffect } from 'hooks/useDelayedEffect'
-import { IDENTITY_SERVICE } from 'services/AudiusBackend'
+import { IDENTITY_SERVICE } from 'services/ColivingBackend'
 import { resizeImage } from 'utils/imageProcessingUtil'
 
 import {

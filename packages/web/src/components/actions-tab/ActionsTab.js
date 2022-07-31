@@ -1,6 +1,6 @@
 import { PureComponent } from 'react'
 
-import { ShareSource, RepostSource } from '@audius/common'
+import { ShareSource, RepostSource } from '@coliving/common'
 import cn from 'classnames'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'

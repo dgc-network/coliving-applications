@@ -1,7 +1,7 @@
-import { TrackSegment } from '@audius/common'
+import { TrackSegment } from '@coliving/common'
 import Hls from 'hls.js'
 
-import { fetchCID } from 'services/AudiusBackend'
+import { fetchCID } from 'services/ColivingBackend'
 import { generateM3U8, generateM3U8Variants } from 'utils/hlsUtil'
 import { decodeHashId } from 'utils/route/hashIds'
 
@@ -38,7 +38,7 @@ export enum AudioError {
   HLS = 'HLS'
 }
 
-// Custom fragment loader for HLS that utilizes the audius CID resolver.
+// Custom fragment loader for HLS that utilizes the coliving CID resolver.
 // eslint-disable-next-line
 class fLoader extends Hls.DefaultConfig.loader {
   getFallbacks = () => []

@@ -2,8 +2,8 @@ import {
   SolanaWalletAddress,
   WalletAddress,
   FeatureFlags
-} from '@audius/common'
-import { Button, ButtonType, LogoSol } from '@audius/stems'
+} from '@coliving/common'
+import { Button, ButtonType, LogoSol } from '@coliving/stems'
 import cn from 'classnames'
 
 import { useLocalStorage } from 'hooks/useLocalStorage'

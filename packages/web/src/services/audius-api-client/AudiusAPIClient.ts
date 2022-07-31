@@ -6,15 +6,15 @@ import {
   removeNullable,
   IntKeys,
   StringKeys
-} from '@audius/common'
+} from '@coliving/common'
 
 import { SearchKind } from 'common/store/pages/search-results/types'
-import AudiusBackend, { AuthHeaders } from 'services/AudiusBackend'
-import { SupporterResponse } from 'services/audius-backend/Tipping'
+import ColivingBackend, { AuthHeaders } from 'services/ColivingBackend'
+import { SupporterResponse } from 'services/coliving-backend/Tipping'
 import {
   getEagerDiscprov,
   waitForLibsInit
-} from 'services/audius-backend/eagerLoadUtils'
+} from 'services/coliving-backend/eagerLoadUtils'
 import { remoteConfigInstance } from 'services/remote-config/remote-config-instance'
 import { decodeHashId, encodeHashId } from 'utils/route/hashIds'
 
@@ -35,7 +35,7 @@ import {
 
 declare global {
   interface Window {
-    audiusLibs: any
+    colivingLibs: any
   }
 }
 
@@ -418,7 +418,7 @@ type GetUserSupporterArgs = {
   currentUserId: Nullable<ID>
 }
 
-class AudiusAPIClient {
+class ColivingAPIClient {
   initializationState: InitializationState = {
     state: 'uninitialized'
   }
@@ -916,7 +916,7 @@ class AudiusAPIClient {
 
     let headers = {}
     if (encodedCurrentUserId && getUnlisted) {
-      const { data, signature } = await AudiusBackend.signDiscoveryNodeRequest()
+      const { data, signature } = await ColivingBackend.signDiscoveryNodeRequest()
       headers = {
         [AuthHeaders.Message]: data,
         [AuthHeaders.Signature]: signature
@@ -1408,7 +1408,7 @@ class AudiusAPIClient {
     }
 
     // Listen for libs on chain selection
-    AudiusBackend.addDiscoveryProviderSelectionListener((endpoint: string) => {
+    ColivingBackend.addDiscoveryProviderSelectionListener((endpoint: string) => {
       console.debug(`APIClient: Setting to libs discprov: ${endpoint}`)
       this.initializationState = {
         state: 'initialized',
@@ -1433,7 +1433,7 @@ class AudiusAPIClient {
 
   _assertInitialized() {
     if (this.initializationState.state !== 'initialized')
-      throw new Error('AudiusAPIClient must be initialized before use')
+      throw new Error('ColivingAPIClient must be initialized before use')
   }
 
   async _getResponse<T>(
@@ -1455,8 +1455,8 @@ class AudiusAPIClient {
     }, {})
 
     const formattedPath = this._formatPath(pathType, path)
-    if (this.initializationState.type === 'libs' && window.audiusLibs) {
-      const data = await window.audiusLibs.discoveryProvider._makeRequest(
+    if (this.initializationState.type === 'libs' && window.colivingLibs) {
+      const data = await window.colivingLibs.discoveryProvider._makeRequest(
         {
           endpoint: formattedPath,
           queryParams: sanitizedParams,
@@ -1535,6 +1535,6 @@ class AudiusAPIClient {
   }
 }
 
-const instance = new AudiusAPIClient()
+const instance = new ColivingAPIClient()
 
 export default instance

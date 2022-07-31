@@ -1,4 +1,4 @@
-import { Name, Track, User } from '@audius/common'
+import { Name, Track, User } from '@coliving/common'
 import { takeEvery, put, call, select } from 'redux-saga/effects'
 
 import { getTrack } from 'common/store/cache/tracks/selectors'

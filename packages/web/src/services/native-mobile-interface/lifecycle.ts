@@ -1,4 +1,4 @@
-import { User } from '@audius/common'
+import { User } from '@coliving/common'
 
 import { NativeMobileMessage } from './helpers'
 import { MessageType } from './types'

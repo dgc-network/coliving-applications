@@ -1,4 +1,4 @@
-import { FeatureFlags } from '@audius/common'
+import { FeatureFlags } from '@coliving/common'
 
 import {
   FEATURE_FLAG_OVERRIDE_KEY,

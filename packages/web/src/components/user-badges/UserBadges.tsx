@@ -1,6 +1,6 @@
 import { cloneElement, ReactElement } from 'react'
 
-import { ID, BadgeTier, Nullable } from '@audius/common'
+import { ID, BadgeTier, Nullable } from '@coliving/common'
 import cn from 'classnames'
 
 import { ReactComponent as IconBronzeBadgeSVG } from 'assets/img/IconBronzeBadge.svg'

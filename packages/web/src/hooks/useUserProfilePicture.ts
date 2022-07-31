@@ -1,4 +1,4 @@
-import { ProfilePictureSizes, SquareSizes } from '@audius/common'
+import { ProfilePictureSizes, SquareSizes } from '@coliving/common'
 import { useDispatch } from 'react-redux'
 
 import profilePicEmpty from 'assets/img/imageProfilePicEmpty2X.png'

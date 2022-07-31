@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 
-import { BNWei } from '@audius/common'
+import { BNWei } from '@coliving/common'
 
 import { formatWei } from 'common/utils/wallet'
 import Tooltip from 'components/tooltip/Tooltip'

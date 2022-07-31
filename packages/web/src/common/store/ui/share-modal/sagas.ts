@@ -1,4 +1,4 @@
-import { ID } from '@audius/common'
+import { ID } from '@coliving/common'
 import { takeEvery, put, select } from 'typed-redux-saga/macro'
 
 import { CommonState } from 'common/store'

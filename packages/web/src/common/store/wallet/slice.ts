@@ -1,4 +1,4 @@
-import { Chain, Nullable, StringWei } from '@audius/common'
+import { Chain, Nullable, StringWei } from '@coliving/common'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import BN from 'bn.js'
 

@@ -1,6 +1,6 @@
 import { Component } from 'react'
 
-import { Name, SquareSizes } from '@audius/common'
+import { Name, SquareSizes } from '@coliving/common'
 import { push as pushRoute } from 'connected-react-router'
 import { has } from 'lodash'
 import { connect } from 'react-redux'

@@ -6,7 +6,7 @@ import {
   IconFollowing,
   Scrollbar,
   IconUser
-} from '@audius/stems'
+} from '@coliving/stems'
 
 import { ReactComponent as IconTip } from 'assets/img/iconTip.svg'
 import { useSelector } from 'common/hooks/useSelector'

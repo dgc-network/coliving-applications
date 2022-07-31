@@ -8,7 +8,7 @@ import {
   PlaylistLibraryFolder,
   SmartCollectionVariant,
   FeatureFlags
-} from '@audius/common'
+} from '@coliving/common'
 import cn from 'classnames'
 import { isEmpty } from 'lodash'
 import { useDispatch } from 'react-redux'

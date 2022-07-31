@@ -1,7 +1,7 @@
-import { CoverArtSizes, Track, TrackMetadata } from '@audius/common'
+import { CoverArtSizes, Track, TrackMetadata } from '@coliving/common'
 import { omit } from 'lodash'
 
-import AudiusBackend from 'services/AudiusBackend'
+import ColivingBackend from 'services/ColivingBackend'
 
 /**
  * Adds _cover_art_sizes to a track object if it does not have one set
@@ -9,7 +9,7 @@ import AudiusBackend from 'services/AudiusBackend'
 const addTrackImages = <T extends TrackMetadata>(
   track: T
 ): T & { duration: number; _cover_art_sizes: CoverArtSizes } => {
-  return AudiusBackend.getTrackImages(track)
+  return ColivingBackend.getTrackImages(track)
 }
 
 /**

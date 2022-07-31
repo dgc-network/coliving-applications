@@ -7,7 +7,7 @@ import {
   useState
 } from 'react'
 
-import { Collectible, CollectiblesMetadata } from '@audius/common'
+import { Collectible, CollectiblesMetadata } from '@coliving/common'
 import {
   Button,
   ButtonSize,
@@ -19,7 +19,7 @@ import {
   PopupMenu,
   PopupMenuItem,
   PopupPosition
-} from '@audius/stems'
+} from '@coliving/stems'
 import cn from 'classnames'
 import {
   DragDropContext,
@@ -85,7 +85,7 @@ export const collectibleMessages = {
   visibleThumbnail: 'Visible collectible thumbnail',
   hiddenThumbnail: 'Hidden collectible thumbnail',
   editInBrowser:
-    'Visit audius.co from a desktop browser to hide and sort your NFT collectibles.',
+    'Visit coliving.co from a desktop browser to hide and sort your NFT collectibles.',
   videoNotSupported: 'Your browser does not support the video tag.',
   clickCopy: 'Click To Copy',
   copied: 'Copied to Clipboard',

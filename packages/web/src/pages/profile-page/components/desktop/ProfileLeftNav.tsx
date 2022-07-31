@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 
-import { ID, Name, FeatureFlags } from '@audius/common'
+import { ID, Name, FeatureFlags } from '@coliving/common'
 import cn from 'classnames'
 import { animated } from 'react-spring'
 

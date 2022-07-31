@@ -1,4 +1,4 @@
-import { Button, ButtonProps, ButtonType, IconArrow } from '@audius/stems'
+import { Button, ButtonProps, ButtonType, IconArrow } from '@coliving/stems'
 import cn from 'classnames'
 
 import styles from './ButtonWithArrow.module.css'

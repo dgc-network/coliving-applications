@@ -1,4 +1,4 @@
-import { RecentTipsStorage, Nullable } from '@audius/common'
+import { RecentTipsStorage, Nullable } from '@coliving/common'
 import { put, takeEvery } from 'redux-saga/effects'
 
 import { fetchRecentTips } from 'common/store/tipping/slice'

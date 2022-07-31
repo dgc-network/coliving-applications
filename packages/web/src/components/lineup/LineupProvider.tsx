@@ -8,7 +8,7 @@ import {
   PlaybackSource,
   Lineup,
   Status
-} from '@audius/common'
+} from '@coliving/common'
 import cn from 'classnames'
 import { push as pushRoute } from 'connected-react-router'
 import InfiniteScroll from 'react-infinite-scroller'

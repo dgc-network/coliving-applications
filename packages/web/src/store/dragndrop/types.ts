@@ -1,4 +1,4 @@
-import { Kind, ID } from '@audius/common'
+import { Kind, ID } from '@coliving/common'
 
 export interface DragNDropState {
   dragging: boolean

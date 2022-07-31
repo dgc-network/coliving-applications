@@ -9,7 +9,7 @@ const updateTrackDownloadCIDInProgress = new Set([])
 
 class TrackDownload {
   static async downloadTrack(cid, creatorNodeEndpoints, filename) {
-    return window.audiusLibs.File.downloadCID(
+    return window.colivingLibs.File.downloadCID(
       cid,
       creatorNodeEndpoints,
       filename
@@ -42,7 +42,7 @@ class TrackDownload {
     updateTrackDownloadCIDInProgress.add(trackId)
 
     const cleanedMetadata = schemas.newTrackMetadata(metadata, true)
-    const account = window.audiusLibs.Account.getCurrentUser()
+    const account = window.colivingLibs.Account.getCurrentUser()
 
     if (!cid) {
       cid = await TrackDownload.checkIfDownloadAvailable(
@@ -51,7 +51,7 @@ class TrackDownload {
       )
     }
     cleanedMetadata.download.cid = cid
-    const update = await window.audiusLibs.Track.updateTrack(cleanedMetadata)
+    const update = await window.colivingLibs.Track.updateTrack(cleanedMetadata)
 
     updateTrackDownloadCIDInProgress.delete(trackId)
     return update
@@ -62,7 +62,7 @@ class TrackDownload {
     let cid
     while (!cid) {
       try {
-        cid = await window.audiusLibs.Track.checkIfDownloadAvailable(
+        cid = await window.colivingLibs.Track.checkIfDownloadAvailable(
           creatorNodeEndpoints,
           trackId
         )

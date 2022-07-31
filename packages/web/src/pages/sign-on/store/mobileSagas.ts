@@ -1,4 +1,4 @@
-import { User } from '@audius/common'
+import { User } from '@coliving/common'
 import { push as pushRoute } from 'connected-react-router'
 import { all, call, put, select, take, takeEvery } from 'redux-saga/effects'
 

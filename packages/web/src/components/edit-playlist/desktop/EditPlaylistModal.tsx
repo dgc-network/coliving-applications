@@ -1,13 +1,13 @@
 import { useCallback, useEffect, useState } from 'react'
 
-import { ID } from '@audius/common'
+import { ID } from '@coliving/common'
 import {
   IconPlaylists,
   Modal,
   ModalContent,
   ModalHeader,
   ModalTitle
-} from '@audius/stems'
+} from '@coliving/stems'
 import { push as pushRoute } from 'connected-react-router'
 import { connect } from 'react-redux'
 import { RouteComponentProps, withRouter } from 'react-router-dom'

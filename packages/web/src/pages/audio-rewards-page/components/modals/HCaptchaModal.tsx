@@ -8,7 +8,7 @@ import {
   HCaptchaStatus,
   setHCaptchaStatus
 } from 'common/store/pages/audio-rewards/slice'
-import AudiusBackend from 'services/AudiusBackend'
+import ColivingBackend from 'services/ColivingBackend'
 
 import styles from './HCaptchaModal.module.css'
 import ModalDrawer from './ModalDrawer'
@@ -35,7 +35,7 @@ export const HCaptchaModal = () => {
 
   const onVerify = useCallback(
     async (token: string) => {
-      const result = await AudiusBackend.updateHCaptchaScore(token)
+      const result = await ColivingBackend.updateHCaptchaScore(token)
       if (result.error) {
         dispatch(setHCaptchaStatus({ status: HCaptchaStatus.ERROR }))
       } else {

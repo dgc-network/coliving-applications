@@ -1,7 +1,7 @@
 import { ReactNode, useCallback, useEffect, useContext } from 'react'
 
-import { ID, UID, Name, Lineup, Status, User } from '@audius/common'
-import { Button, ButtonType } from '@audius/stems'
+import { ID, UID, Name, Lineup, Status, User } from '@coliving/common'
+import { Button, ButtonType } from '@coliving/stems'
 import cn from 'classnames'
 
 import { ReactComponent as IconAlbum } from 'assets/img/iconAlbum.svg'

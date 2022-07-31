@@ -1,4 +1,4 @@
-import { Modal } from '@audius/stems'
+import { Modal } from '@coliving/stems'
 import cn from 'classnames'
 
 import Switch from '../switch/Switch'

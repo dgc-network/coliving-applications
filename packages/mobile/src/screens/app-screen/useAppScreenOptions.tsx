@@ -10,7 +10,7 @@ import { markAllAsViewed } from '-client/src/common/store/notifications/actions'
 import { getNotificationUnviewedCount } from '-client/src/common/store/notifications/selectors'
 import { Text, View } from 'react-native'
 
-import AudiusLogo from 'app/assets/images/audiusLogoHorizontal.svg'
+import ColivingLogo from 'app/assets/images/colivingLogoHorizontal.svg'
 import IconCaretRight from 'app/assets/images/iconCaretRight.svg'
 import IconNotification from 'app/assets/images/iconNotification.svg'
 import IconSearch from 'app/assets/images/iconSearch.svg'
@@ -58,7 +58,7 @@ const useStyles = makeStyles(({ palette, spacing, typography }) => ({
     width: 28,
     transform: [{ rotate: '180deg' }]
   },
-  audiusLogo: {
+  colivingLogo: {
     height: 24,
     width: 93,
     marginRight: 10
@@ -179,9 +179,9 @@ export const useAppScreenOptions = (
           }
           return (
             <IconButton
-              icon={AudiusLogo}
+              icon={ColivingLogo}
               fill={neutralLight4}
-              styles={{ icon: styles.audiusLogo }}
+              styles={{ icon: styles.colivingLogo }}
               onPress={handlePressHome}
             />
           )

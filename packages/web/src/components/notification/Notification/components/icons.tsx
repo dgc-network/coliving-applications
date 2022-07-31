@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 
-import { ReactComponent as IconAudius } from 'assets/img/iconAudius.svg'
+import { ReactComponent as IconColiving } from 'assets/img/iconAudius.svg'
 import { ReactComponent as IconHeart } from 'assets/img/iconHeart.svg'
 import { ReactComponent as IconPlaylist } from 'assets/img/iconPlaylists.svg'
 import { ReactComponent as IconRemixBase } from 'assets/img/iconRemix.svg'
@@ -54,7 +54,7 @@ export const IconTip = () => {
 }
 
 export const IconAnnouncement = () => {
-  return <IconAudius className={styles.iconAnnouncement} />
+  return <IconColiving className={styles.iconAnnouncement} />
 }
 
 export const IconAddTrackToPlaylist = () => {

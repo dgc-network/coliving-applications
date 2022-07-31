@@ -1,7 +1,7 @@
 import { ReactNode, useCallback, useEffect } from 'react'
 
-import { Name, Status } from '@audius/common'
-import { Button, ButtonType } from '@audius/stems'
+import { Name, Status } from '@coliving/common'
+import { Button, ButtonType } from '@coliving/stems'
 import cn from 'classnames'
 import { push as pushRoute } from 'connected-react-router'
 import { useDispatch, useSelector } from 'react-redux'

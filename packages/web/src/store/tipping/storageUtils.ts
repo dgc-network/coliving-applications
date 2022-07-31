@@ -1,4 +1,4 @@
-import { RecentTipsStorage } from '@audius/common'
+import { RecentTipsStorage } from '@coliving/common'
 
 import { RECENT_TIPS_KEY } from 'utils/constants'
 

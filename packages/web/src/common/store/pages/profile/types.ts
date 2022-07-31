@@ -1,4 +1,4 @@
-import { ID, UID, LineupState, Status, User } from '@audius/common'
+import { ID, UID, LineupState, Status, User } from '@coliving/common'
 
 export enum FollowType {
   FOLLOWERS = 'followers',

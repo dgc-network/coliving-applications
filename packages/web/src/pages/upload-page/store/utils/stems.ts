@@ -1,4 +1,4 @@
-import { ID, StemCategory, StemUpload, Track, StemTrack } from '@audius/common'
+import { ID, StemCategory, StemUpload, Track, StemTrack } from '@coliving/common'
 
 export const updateAndFlattenStems = (
   stems: StemUpload[][],

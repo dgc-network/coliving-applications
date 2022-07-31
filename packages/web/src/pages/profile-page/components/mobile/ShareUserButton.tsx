@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
 
-import { ID, ShareSource, Nullable } from '@audius/common'
-import { IconShare, IconButton } from '@audius/stems'
+import { ID, ShareSource, Nullable } from '@coliving/common'
+import { IconShare, IconButton } from '@coliving/stems'
 import { useDispatch } from 'react-redux'
 
 import { requestOpen as requestOpenShareModal } from 'common/store/ui/share-modal/slice'

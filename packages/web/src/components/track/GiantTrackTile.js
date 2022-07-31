@@ -10,7 +10,7 @@ import {
   IconPause,
   IconPlay,
   IconKebabHorizontal
-} from '@audius/stems'
+} from '@coliving/stems'
 import cn from 'classnames'
 import Linkify from 'linkifyjs/react'
 import PropTypes from 'prop-types'

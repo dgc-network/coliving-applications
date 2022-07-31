@@ -1,6 +1,6 @@
-import { TrackMetadata } from '@audius/common'
+import { TrackMetadata } from '@coliving/common'
 
-import { waitForWeb3 } from 'services/AudiusBackend'
+import { waitForWeb3 } from 'services/ColivingBackend'
 
 declare global {
   interface Window {
@@ -11,7 +11,7 @@ declare global {
 
 // Check for string inclusion instead of match to catch subdomains like www.
 const IS_WEB_HOSTNAME = window.location.hostname.includes(
-  process.env.REACT_APP_PUBLIC_HOSTNAME || 'audius.co'
+  process.env.REACT_APP_PUBLIC_HOSTNAME || 'coliving.co'
 )
 
 let blockList: Set<string>

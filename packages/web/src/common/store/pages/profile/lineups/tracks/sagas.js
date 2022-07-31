@@ -1,4 +1,4 @@
-import { Kind } from '@audius/common'
+import { Kind } from '@coliving/common'
 import { all, call, select, takeEvery, put } from 'redux-saga/effects'
 
 import { getUserId } from 'common/store/account/selectors'

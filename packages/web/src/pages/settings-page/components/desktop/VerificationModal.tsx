@@ -7,8 +7,8 @@ import {
   SquareSizes,
   Status,
   BooleanKeys
-} from '@audius/common'
-import { Modal, Button, ButtonType, IconNote, ButtonSize } from '@audius/stems'
+} from '@coliving/common'
+import { Modal, Button, ButtonType, IconNote, ButtonSize } from '@coliving/stems'
 import cn from 'classnames'
 import { useDispatch } from 'react-redux'
 

@@ -1,7 +1,7 @@
 import { useCallback, useState, useEffect, useRef } from 'react'
 
-import { ID, SquareSizes, Track, User } from '@audius/common'
-import { Modal, Button, ButtonSize, ButtonType } from '@audius/stems'
+import { ID, SquareSizes, Track, User } from '@coliving/common'
+import { Modal, Button, ButtonSize, ButtonType } from '@coliving/stems'
 import { debounce } from 'lodash'
 
 import Input from 'components/data-entry/Input'

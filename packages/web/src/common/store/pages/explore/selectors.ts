@@ -1,4 +1,4 @@
-import { UserCollection, Status, User } from '@audius/common'
+import { UserCollection, Status, User } from '@coliving/common'
 import { createSelector } from 'reselect'
 
 import { CommonState } from 'common/store'

@@ -1,6 +1,6 @@
 import { useCallback, useRef, useState } from 'react'
 
-import { Name, Status, TimeRange } from '@audius/common'
+import { Name, Status, TimeRange } from '@coliving/common'
 
 import {
   trendingAllTimeActions,

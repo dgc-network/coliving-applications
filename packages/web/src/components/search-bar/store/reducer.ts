@@ -1,4 +1,4 @@
-import { Status } from '@audius/common'
+import { Status } from '@coliving/common'
 
 import {
   FETCH_SEARCH_REQUESTED,

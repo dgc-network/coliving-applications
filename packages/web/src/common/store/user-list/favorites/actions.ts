@@ -1,4 +1,4 @@
-import { ID, FavoriteType } from '@audius/common'
+import { ID, FavoriteType } from '@coliving/common'
 import { createCustomAction } from 'typesafe-actions'
 
 export const SET_FAVORITE = 'FAVORITING_USERS_PAGE/SET_FAVORITE'

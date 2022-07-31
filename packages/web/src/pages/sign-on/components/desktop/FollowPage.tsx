@@ -1,7 +1,7 @@
 import { useState, useCallback, useEffect } from 'react'
 
-import { ID, User } from '@audius/common'
-import { Button, ButtonType, IconArrow, Scrollbar } from '@audius/stems'
+import { ID, User } from '@coliving/common'
+import { Button, ButtonType, IconArrow, Scrollbar } from '@coliving/stems'
 import cn from 'classnames'
 
 import { ReactComponent as IconWand } from 'assets/img/iconWand.svg'

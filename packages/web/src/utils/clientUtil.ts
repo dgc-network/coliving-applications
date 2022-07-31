@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 
-import { Client, OS, MobileOS } from '@audius/common'
+import { Client, OS, MobileOS } from '@coliving/common'
 
 declare global {
   interface Window {

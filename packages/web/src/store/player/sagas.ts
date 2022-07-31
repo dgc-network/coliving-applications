@@ -1,4 +1,4 @@
-import { Kind, StringKeys } from '@audius/common'
+import { Kind, StringKeys } from '@coliving/common'
 import { eventChannel, END } from 'redux-saga'
 import {
   select,
@@ -15,7 +15,7 @@ import { getTrack } from 'common/store/cache/tracks/selectors'
 import { getUser } from 'common/store/cache/users/selectors'
 import * as queueActions from 'common/store/queue/slice'
 import { recordListen } from 'common/store/social/tracks/actions'
-import apiClient from 'services/audius-api-client/AudiusAPIClient'
+import apiClient from 'services/coliving-api-client/ColivingAPIClient'
 import { remoteConfigInstance } from 'services/remote-config/remote-config-instance'
 import {
   getAudio,

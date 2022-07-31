@@ -9,7 +9,7 @@ import {
 import {
   CognitoFlowResponse,
   getCognitoFlow
-} from 'services/audius-backend/Cognito'
+} from 'services/coliving-backend/Cognito'
 import { MessageType } from 'services/native-mobile-interface/types'
 
 function* fetchCognitoFlowUriAsync() {

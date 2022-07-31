@@ -4,7 +4,7 @@ import {
   FeatureFlags,
   IntKeys,
   StringKeys
-} from '@audius/common'
+} from '@coliving/common'
 import { push as pushRoute } from 'connected-react-router'
 import {
   all,
@@ -30,9 +30,9 @@ import * as socialActions from 'common/store/social/users/actions'
 import { getFeePayer } from 'common/store/solana/selectors'
 import { ELECTRONIC_SUBGENRES, Genre } from 'common/utils/genres'
 import { getIGUserUrl } from 'components/instagram-auth/InstagramAuth'
-import AudiusBackend from 'services/AudiusBackend'
+import ColivingBackend from 'services/ColivingBackend'
 import { getCityAndRegion } from 'services/Location'
-import apiClient from 'services/audius-api-client/AudiusAPIClient'
+import apiClient from 'services/coliving-api-client/ColivingAPIClient'
 import { getFeatureEnabled } from 'services/remote-config/featureFlagHelpers'
 import { remoteConfigInstance } from 'services/remote-config/remote-config-instance'
 import { fetchAccountAsync, reCacheAccount } from 'store/account/sagas'
@@ -75,7 +75,7 @@ const messages = {
 // Users ID to filter out of the suggested artists to follow list and to follow by default
 let defaultFollowUserIds = new Set([])
 if (IS_PRODUCTION) {
-  // user id 51: official audius account
+  // user id 51: official coliving account
   defaultFollowUserIds = new Set([51])
 } else if (IS_STAGING) {
   // user id 1964: stage testing account
@@ -159,7 +159,7 @@ function* fetchReferrer(action) {
         !currentUser.events?.referrer &&
         currentUser.user_id !== user.user_id
       ) {
-        yield call(AudiusBackend.updateCreator, {
+        yield call(ColivingBackend.updateCreator, {
           ...currentUser,
           events: { referrer: user.user_id }
         })
@@ -222,8 +222,8 @@ function* validateHandle(action) {
     let handleInUse
     if (IS_PRODUCTION_BUILD || IS_PRODUCTION) {
       const [inUse, twitterUserQuery, instagramUser] = yield all([
-        call(AudiusBackend.handleInUse, handle),
-        call(AudiusBackend.twitterHandle, handle),
+        call(ColivingBackend.handleInUse, handle),
+        call(ColivingBackend.twitterHandle, handle),
         call(getInstagramUser, handle)
       ])
       const handleCheckStatus = checkHandle(
@@ -239,7 +239,7 @@ function* validateHandle(action) {
       }
       handleInUse = inUse
     } else {
-      handleInUse = yield call(AudiusBackend.handleInUse, handle)
+      handleInUse = yield call(ColivingBackend.handleInUse, handle)
     }
 
     if (handleInUse) {
@@ -261,7 +261,7 @@ function* checkEmail(action) {
     return
   }
   try {
-    const inUse = yield call(AudiusBackend.emailInUse, action.email)
+    const inUse = yield call(ColivingBackend.emailInUse, action.email)
     if (inUse) {
       yield put(signOnActions.goToPage(Pages.SIGNIN))
       // let mobile client know that email is in use
@@ -313,7 +313,7 @@ function* signUp() {
       handle,
       function* () {
         const { blockHash, blockNumber, userId, error, errorStatus, phase } =
-          yield call(AudiusBackend.signUp, {
+          yield call(ColivingBackend.signUp, {
             email,
             password,
             formFields: createUserMetadata,
@@ -349,7 +349,7 @@ function* signUp() {
 
         if (!signOn.useMetaMask && signOn.twitterId) {
           const { error } = yield call(
-            AudiusBackend.associateTwitterAccount,
+            ColivingBackend.associateTwitterAccount,
             signOn.twitterId,
             userId,
             handle
@@ -365,7 +365,7 @@ function* signUp() {
             (signOn.instagramScreenName || '').toLowerCase()
         ) {
           const { error } = yield call(
-            AudiusBackend.associateInstagramAccount,
+            ColivingBackend.associateInstagramAccount,
             handle.toLowerCase(),
             userId,
             handle
@@ -423,7 +423,7 @@ function* signIn(action) {
   try {
     const signOn = yield select(getSignOn)
     const signInResponse = yield call(
-      AudiusBackend.signIn,
+      ColivingBackend.signIn,
       signOn.email.value,
       signOn.password.value
     )
@@ -459,7 +459,7 @@ function* signIn(action) {
 
       // Apply retroactive referral
       if (!signInResponse.user?.events?.referrer && signOn.referrer) {
-        yield fork(AudiusBackend.updateCreator, {
+        yield fork(ColivingBackend.updateCreator, {
           ...signInResponse.user,
           events: { referrer: signOn.referrer }
         })
@@ -573,7 +573,7 @@ function* followArtists() {
     yield put(signOnActions.setAccountReady())
     // The update user location depends on the user being discoverable in discprov
     // So we wait until both the user is indexed and the follow user actions are finished
-    yield call(AudiusBackend.updateUserLocationTimezone)
+    yield call(ColivingBackend.updateUserLocationTimezone)
 
     // Re-cache the account here (in local storage). This is to make sure that the follows are
     // persisted across the next refresh of the client. Initially the user is pulled in from
@@ -659,7 +659,7 @@ function* watchOpenSignOn() {
 
 function* watchSendWelcomeEmail() {
   yield takeLatest(signOnActions.SEND_WELCOME_EMAIL, function* (action) {
-    yield call(AudiusBackend.sendWelcomeEmail, {
+    yield call(ColivingBackend.sendWelcomeEmail, {
       name: action.name
     })
   })

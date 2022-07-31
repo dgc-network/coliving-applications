@@ -1,6 +1,6 @@
 import { useEffect, useCallback, useContext } from 'react'
 
-import { Status } from '@audius/common'
+import { Status } from '@coliving/common'
 import InfiniteScroll from 'react-infinite-scroller'
 import Lottie from 'react-lottie'
 import { useDispatch, useSelector } from 'react-redux'

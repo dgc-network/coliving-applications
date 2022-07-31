@@ -1,7 +1,7 @@
 import { useEffect, useContext } from 'react'
 
-import { Name } from '@audius/common'
-import { Button, ButtonType } from '@audius/stems'
+import { Name } from '@coliving/common'
+import { Button, ButtonType } from '@coliving/stems'
 import cn from 'classnames'
 import { push as pushRoute } from 'connected-react-router'
 import Lottie from 'react-lottie'

@@ -1,5 +1,5 @@
-import { Theme } from '@audius/common'
-import { Button, ButtonType, ButtonSize } from '@audius/stems'
+import { Theme } from '@coliving/common'
+import { Button, ButtonType, ButtonSize } from '@coliving/stems'
 
 import tileBackground from 'assets/img/notFoundTiledBackround.png'
 import LoadingSpinner from 'components/loading-spinner/LoadingSpinner'

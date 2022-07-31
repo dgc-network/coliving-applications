@@ -1,4 +1,4 @@
-import { User } from '@audius/common'
+import { User } from '@coliving/common'
 import cn from 'classnames'
 
 import { formatCount } from 'common/utils/formatUtil'

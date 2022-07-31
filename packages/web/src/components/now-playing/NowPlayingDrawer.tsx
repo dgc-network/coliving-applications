@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux'
 import { useSpring, animated } from 'react-spring'
 import { useDrag } from 'react-use-gesture'
 
-import { ReactComponent as AudiusLogo } from 'assets/img/audiusLogoHorizontal.svg'
+import { ReactComponent as ColivingLogo } from 'assets/img/colivingLogoHorizontal.svg'
 import useInstanceVar from 'common/hooks/useInstanceVar'
 import { setIsOpen as _setIsNowPlayingOpen } from 'common/store/ui/now-playing/slice'
 import ConnectedBottomBar from 'components/nav/mobile/ConnectedBottomBar'
@@ -401,7 +401,7 @@ const NowPlayingDrawer = ({
         }}
       >
         <animated.div className={styles.header} style={headerFadeProps}>
-          <AudiusLogo />
+          <ColivingLogo />
         </animated.div>
 
         <animated.div className={styles.playBar} style={playBarFadeProps}>

@@ -1,12 +1,12 @@
-import { Supporter, Supporting, UserTip } from '@audius/common'
+import { Supporter, Supporting, UserTip } from '@coliving/common'
 
-import { APIUser } from 'services/audius-api-client/types'
-import { waitForLibsInit } from 'services/audius-backend/eagerLoadUtils'
+import { APIUser } from 'services/coliving-api-client/types'
+import { waitForLibsInit } from 'services/coliving-backend/eagerLoadUtils'
 
 export const TIPPING_SUPPORT_DEFAULT_LIMIT = 25
 
 // @ts-ignore
-const libs = () => window.audiusLibs
+const libs = () => window.colivingLibs
 
 export type SupportingResponse = Omit<Supporting, 'receiver_id'> & {
   receiver: APIUser

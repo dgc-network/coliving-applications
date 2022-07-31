@@ -1,6 +1,6 @@
 import { useContext, useEffect, useCallback, FC } from 'react'
 
-import { ID, SquareSizes, ProfilePictureSizes, Theme } from '@audius/common'
+import { ID, SquareSizes, ProfilePictureSizes, Theme } from '@coliving/common'
 import cn from 'classnames'
 
 import horizontalLogo from 'assets/img/settingsPageLogo.png'

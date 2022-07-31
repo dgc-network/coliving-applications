@@ -16,16 +16,16 @@ import { getTheme } from 'common/store/ui/theme/selectors'
 import { shouldShowDark } from 'utils/theme/theme'
 import { profilePage } from 'utils/route'
 import { make, TrackEvent } from 'store/analytics/actions'
-import { Name } from '@audius/common'
-import { Track } from '@audius/common'
-import { SquareSizes } from '@audius/common'
+import { Name } from '@coliving/common'
+import { Track } from '@coliving/common'
+import { SquareSizes } from '@coliving/common'
 import DynamicImage from 'components/dynamic-image/DynamicImage'
 import PlayingTrackInfo from 'components/play-bar/desktop/components/PlayingTrackInfo'
 import AudioStream from 'audio/AudioStream'
 import { webglSupported } from './utils'
 import { getDominantColorsByTrack } from 'common/store/average-color/slice'
 import { ReactComponent as IconRemove } from 'assets/img/iconRemove.svg'
-import { ReactComponent as AudiusLogoHorizontal } from 'assets/img/audiusLogoHorizontal.svg'
+import { ReactComponent as ColivingLogoHorizontal } from 'assets/img/colivingLogoHorizontal.svg'
 import { useTrackCoverArt } from 'hooks/useTrackCoverArt'
 
 const Artwork = ({ track }: { track?: Track | null }) => {
@@ -185,7 +185,7 @@ const Visualizer = ({
       })}>
       <div className='visualizer' />
       <div className={styles.logoWrapper}>
-        <AudiusLogoHorizontal className={styles.logo} />
+        <ColivingLogoHorizontal className={styles.logo} />
       </div>
       <IconRemove className={styles.closeButtonIcon} onClick={onClose} />
       <div className={styles.infoOverlayTileShadow}></div>

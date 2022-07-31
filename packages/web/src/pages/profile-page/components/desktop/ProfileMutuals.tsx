@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
 
-import { removeNullable } from '@audius/common'
-import { IconFollowing } from '@audius/stems'
+import { removeNullable } from '@coliving/common'
+import { IconFollowing } from '@coliving/stems'
 import { useDispatch, useSelector } from 'react-redux'
 import { createSelector } from 'reselect'
 

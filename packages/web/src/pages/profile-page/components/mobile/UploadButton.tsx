@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 
-import { Button, ButtonType, IconUpload } from '@audius/stems'
+import { Button, ButtonType, IconUpload } from '@coliving/stems'
 import { useDispatch } from 'react-redux'
 
 import { setVisibility } from 'common/store/ui/modals/slice'

@@ -1,4 +1,4 @@
-import { WalletAddress, BNWei } from '@audius/common'
+import { WalletAddress, BNWei } from '@coliving/common'
 
 import { formatWei } from 'common/utils/wallet'
 

@@ -1,4 +1,4 @@
-import { ChallengeRewardID } from '@audius/common'
+import { ChallengeRewardID } from '@coliving/common'
 import { createSelector } from 'reselect'
 
 import { CommonState } from 'common/store'

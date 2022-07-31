@@ -4,7 +4,7 @@ import {
   ProfilePictureSizes,
   SquareSizes,
   WidthSizes
-} from '@audius/common'
+} from '@coliving/common'
 
 import { ReactComponent as BadgeArtist } from 'assets/img/badgeArtist.svg'
 import DynamicImage from 'components/dynamic-image/DynamicImage'

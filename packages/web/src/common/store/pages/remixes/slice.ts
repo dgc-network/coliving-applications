@@ -1,4 +1,4 @@
-import { ID } from '@audius/common'
+import { ID } from '@coliving/common'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { combineReducers } from 'redux'
 

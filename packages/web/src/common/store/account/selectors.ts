@@ -1,4 +1,4 @@
-import { removeNullable } from '@audius/common'
+import { removeNullable } from '@coliving/common'
 import { createSelector } from 'reselect'
 
 import { CommonState } from 'common/store'

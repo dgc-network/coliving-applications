@@ -1,7 +1,7 @@
 import { useContext, useMemo, useState } from 'react'
 
-import { CreatePlaylistSource, Collection, SquareSizes } from '@audius/common'
-import { Modal, Scrollbar } from '@audius/stems'
+import { CreatePlaylistSource, Collection, SquareSizes } from '@coliving/common'
+import { Modal, Scrollbar } from '@coliving/stems'
 import cn from 'classnames'
 import { useDispatch, useSelector } from 'react-redux'
 

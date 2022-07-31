@@ -1,4 +1,4 @@
-import { Collection, Track, Nullable } from '@audius/common'
+import { Collection, Track, Nullable } from '@coliving/common'
 import { createSelector } from 'reselect'
 
 import { CommonState } from 'common/store'

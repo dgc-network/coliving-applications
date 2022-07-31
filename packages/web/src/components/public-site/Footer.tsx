@@ -3,7 +3,7 @@ import {
   IconInstagram,
   IconTwitterBird,
   IconDiscord
-} from '@audius/stems'
+} from '@coliving/stems'
 import cn from 'classnames'
 
 import horizontalLogo from 'assets/img/publicSite/Horizontal-Logo-Full-Color@2x.png'

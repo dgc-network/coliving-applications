@@ -1,6 +1,6 @@
 import { useState, useContext, useCallback, useEffect } from 'react'
 
-import { Status } from '@audius/common'
+import { Status } from '@coliving/common'
 import {
   IconCaretRight,
   IconRemove,
@@ -8,13 +8,13 @@ import {
   IconSettings,
   IconCrown,
   IconButton
-} from '@audius/stems'
+} from '@coliving/stems'
 import cn from 'classnames'
 import { History } from 'history'
 import { useHistory } from 'react-router-dom'
 import { useTransition, animated } from 'react-spring'
 
-import { ReactComponent as AudiusLogo } from 'assets/img/audiusLogoHorizontal.svg'
+import { ReactComponent as ColivingLogo } from 'assets/img/colivingLogoHorizontal.svg'
 import { formatCount } from 'common/utils/formatUtil'
 import {
   RouterContext,
@@ -235,7 +235,7 @@ const NavBar = ({
             ({ item, props, key }) =>
               item && (
                 <animated.div style={props} key={key}>
-                  <AudiusLogo />
+                  <ColivingLogo />
                 </animated.div>
               )
           )}

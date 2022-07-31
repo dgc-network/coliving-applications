@@ -1,6 +1,6 @@
 import { ReactNode, useContext, useEffect } from 'react'
 
-import { FeatureFlags } from '@audius/common'
+import { FeatureFlags } from '@coliving/common'
 import { useDispatch } from 'react-redux'
 
 import { preloadWalletProviders } from 'common/store/pages/token-dashboard/slice'

@@ -1,4 +1,4 @@
-import { Name } from '@audius/common'
+import { Name } from '@coliving/common'
 
 import { Level } from 'common/store/errors/level'
 import { reportToSentry } from 'common/store/errors/reportToSentry'

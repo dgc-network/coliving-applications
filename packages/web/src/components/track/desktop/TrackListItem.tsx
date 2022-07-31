@@ -1,6 +1,6 @@
 import { memo, MouseEvent } from 'react'
 
-import { UID, ID } from '@audius/common'
+import { UID, ID } from '@coliving/common'
 import cn from 'classnames'
 
 import { ReactComponent as IconKebabHorizontal } from 'assets/img/iconKebabHorizontal.svg'

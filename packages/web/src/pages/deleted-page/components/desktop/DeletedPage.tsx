@@ -6,8 +6,8 @@ import {
   Playable,
   User,
   NestedNonNullable
-} from '@audius/common'
-import { Button, ButtonType, IconUser } from '@audius/stems'
+} from '@coliving/common'
+import { Button, ButtonType, IconUser } from '@coliving/stems'
 
 import { ArtistPopover } from 'components/artist/ArtistPopover'
 import CoverPhoto from 'components/cover-photo/CoverPhoto'

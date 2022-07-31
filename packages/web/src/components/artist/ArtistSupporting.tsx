@@ -1,6 +1,6 @@
 import { useCallback, useEffect } from 'react'
 
-import { ID, User } from '@audius/common'
+import { ID, User } from '@coliving/common'
 import { useDispatch } from 'react-redux'
 
 import { ReactComponent as IconTip } from 'assets/img/iconTip.svg'

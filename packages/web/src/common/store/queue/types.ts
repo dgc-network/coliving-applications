@@ -1,4 +1,4 @@
-import { ID, UID, Collectible, Track, User } from '@audius/common'
+import { ID, UID, Collectible, Track, User } from '@coliving/common'
 
 export enum RepeatMode {
   OFF = 'OFF',

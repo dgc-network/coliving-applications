@@ -7,7 +7,7 @@ import {
   User,
   StringAudio,
   Nullable
-} from '@audius/common'
+} from '@coliving/common'
 
 export type TippingSendStatus =
   | 'SEND'

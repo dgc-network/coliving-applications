@@ -16,7 +16,7 @@ import {
   Kind,
   Status,
   Uid
-} from '@audius/common'
+} from '@coliving/common'
 import { push as pushRoute, replace } from 'connected-react-router'
 import { UnregisterCallback } from 'history'
 import { connect } from 'react-redux'

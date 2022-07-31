@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
 
-import { ID } from '@audius/common'
-import { IconArrow } from '@audius/stems'
+import { ID } from '@coliving/common'
+import { IconArrow } from '@coliving/stems'
 import { useDispatch } from 'react-redux'
 
 import { ReactComponent as IconTip } from 'assets/img/iconTip.svg'

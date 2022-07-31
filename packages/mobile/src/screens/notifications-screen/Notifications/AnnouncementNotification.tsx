@@ -1,7 +1,7 @@
 import type { Announcement } from '-client/src/common/store/notifications/types'
 import Markdown from 'react-native-markdown-display'
 
-import IconAudius from 'app/assets/images/iconAudius.svg'
+import IconColiving from 'app/assets/images/iconAudius.svg'
 import { makeStyles } from 'app/styles'
 
 import {
@@ -43,7 +43,7 @@ export const AnnouncementNotification = (
 
   return (
     <NotificationTile notification={notification}>
-      <NotificationHeader icon={IconAudius}>
+      <NotificationHeader icon={IconColiving}>
         <NotificationTitle>
           <Markdown style={{ body: styles.title, link: styles.title }}>
             {title}

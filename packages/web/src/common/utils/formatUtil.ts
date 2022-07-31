@@ -1,4 +1,4 @@
-import { BNWei } from '@audius/common'
+import { BNWei } from '@coliving/common'
 import BN from 'bn.js'
 import numeral from 'numeral'
 

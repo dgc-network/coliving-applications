@@ -7,7 +7,7 @@ import {
   User,
   makeUid,
   makeKindId
-} from '@audius/common'
+} from '@coliving/common'
 import { call, select, takeEvery, put } from 'typed-redux-saga/macro'
 
 import * as accountActions from 'common/store/account/reducer'
@@ -24,7 +24,7 @@ import { removeFromPlaylistLibrary } from 'common/store/playlist-library/helpers
 import * as socialActions from 'common/store/social/collections/actions'
 import { formatShareText } from 'common/utils/formatUtil'
 import * as signOnActions from 'pages/sign-on/store/actions'
-import AudiusBackend from 'services/AudiusBackend'
+import ColivingBackend from 'services/ColivingBackend'
 import { make } from 'store/analytics/actions'
 import { waitForBackendSetup } from 'store/backend/sagas'
 import * as confirmerActions from 'store/confirmer/actions'
@@ -104,7 +104,7 @@ export function* confirmRepostCollection(
       makeKindId(Kind.COLLECTIONS, collectionId),
       function* () {
         const { blockHash, blockNumber } = yield* call(
-          AudiusBackend.repostCollection,
+          ColivingBackend.repostCollection,
           collectionId
         )
         const confirmed = yield* call(
@@ -206,7 +206,7 @@ export function* confirmUndoRepostCollection(
       makeKindId(Kind.COLLECTIONS, collectionId),
       function* () {
         const { blockHash, blockNumber } = yield* call(
-          AudiusBackend.undoRepostCollection,
+          ColivingBackend.undoRepostCollection,
           collectionId
         )
         const confirmed = yield* call(
@@ -372,7 +372,7 @@ export function* confirmSaveCollection(ownerId: ID, collectionId: ID) {
       makeKindId(Kind.COLLECTIONS, collectionId),
       function* () {
         const { blockHash, blockNumber } = yield* call(
-          AudiusBackend.saveCollection,
+          ColivingBackend.saveCollection,
           collectionId
         )
         const confirmed = yield* call(
@@ -485,7 +485,7 @@ export function* confirmUnsaveCollection(ownerId: ID, collectionId: ID) {
       makeKindId(Kind.COLLECTIONS, collectionId),
       function* () {
         const { blockHash, blockNumber } = yield* call(
-          AudiusBackend.unsaveCollection,
+          ColivingBackend.unsaveCollection,
           collectionId
         )
         const confirmed = yield* call(

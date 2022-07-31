@@ -6,7 +6,7 @@ import {
   WalletAddress,
   Nullable,
   BooleanKeys
-} from '@audius/common'
+} from '@coliving/common'
 import { select } from 'redux-saga-test-plan/matchers'
 import { all, call, put, race, take, takeLatest } from 'redux-saga/effects'
 import { WalletLinkProvider } from 'walletlink'
@@ -55,10 +55,10 @@ import {
   fetchSolanaCollectiblesForWallets
 } from 'pages/profile-page/sagas'
 import { newUserMetadata } from 'schemas'
-import AudiusBackend from 'services/AudiusBackend'
+import ColivingBackend from 'services/ColivingBackend'
 import apiClient, {
   AssociatedWalletsResponse
-} from 'services/audius-api-client/AudiusAPIClient'
+} from 'services/coliving-api-client/ColivingAPIClient'
 import { remoteConfigInstance } from 'services/remote-config/remote-config-instance'
 import walletClient from 'services/wallet-client/WalletClient'
 import {
@@ -210,7 +210,7 @@ function* fetchAccountAssociatedWallets() {
 function* getAccountMetadataCID(): Generator<any, Nullable<string>, any> {
   const accountUserId: Nullable<ID> = yield select(getUserId)
   if (!accountUserId) return null
-  const users: any[] = yield call(AudiusBackend.getCreators, [accountUserId])
+  const users: any[] = yield call(ColivingBackend.getCreators, [accountUserId])
   if (users.length !== 1) return null
   return users[0].metadata_multihash
 }
@@ -367,7 +367,7 @@ function* connectSPLWallet(
       })
     )
     const encodedMessage = new TextEncoder().encode(
-      `AudiusUserID:${accountUserId}`
+      `ColivingUserID:${accountUserId}`
     )
     const signedResponse: {
       publicKey: any
@@ -414,7 +414,7 @@ function* connectSPLWallet(
     }
 
     const currentWalletSignatures: Record<string, any> = yield call(
-      AudiusBackend.fetchUserAssociatedSolWallets,
+      ColivingBackend.fetchUserAssociatedSolWallets,
       updatedMetadata
     )
     updatedMetadata.associated_sol_wallets = {
@@ -427,7 +427,7 @@ function* connectSPLWallet(
         CONNECT_WALLET_CONFIRMATION_UID,
         function* () {
           const { blockHash, blockNumber } = yield call(
-            AudiusBackend.updateCreator,
+            ColivingBackend.updateCreator,
             updatedMetadata,
             accountUserId
           )
@@ -549,7 +549,7 @@ function* connectEthWallet(web3Instance: any) {
       })
     )
     const signature: string = yield web3Instance.eth.personal.sign(
-      `AudiusUserID:${accountUserId}`,
+      `ColivingUserID:${accountUserId}`,
       accounts[0]
     )
 
@@ -579,7 +579,7 @@ function* connectEthWallet(web3Instance: any) {
     }
 
     const currentWalletSignatures: Record<string, any> = yield call(
-      AudiusBackend.fetchUserAssociatedEthWallets,
+      ColivingBackend.fetchUserAssociatedEthWallets,
       updatedMetadata
     )
     updatedMetadata.associated_wallets = {
@@ -592,7 +592,7 @@ function* connectEthWallet(web3Instance: any) {
         CONNECT_WALLET_CONFIRMATION_UID,
         function* () {
           const { blockHash, blockNumber } = yield call(
-            AudiusBackend.updateCreator,
+            ColivingBackend.updateCreator,
             updatedMetadata,
             accountUserId
           )
@@ -674,7 +674,7 @@ function* removeWallet(action: ConfirmRemoveWalletAction) {
 
     if (removeChain === Chain.Eth) {
       const currentAssociatedWallets: Record<string, any> = yield call(
-        AudiusBackend.fetchUserAssociatedEthWallets,
+        ColivingBackend.fetchUserAssociatedEthWallets,
         updatedMetadata
       )
       if (
@@ -693,7 +693,7 @@ function* removeWallet(action: ConfirmRemoveWalletAction) {
       delete updatedMetadata.associated_wallets[removeWallet]
     } else if (removeChain === Chain.Sol) {
       const currentAssociatedWallets: Record<string, any> = yield call(
-        AudiusBackend.fetchUserAssociatedSolWallets,
+        ColivingBackend.fetchUserAssociatedSolWallets,
         updatedMetadata
       )
       if (
@@ -716,7 +716,7 @@ function* removeWallet(action: ConfirmRemoveWalletAction) {
         CONNECT_WALLET_CONFIRMATION_UID,
         function* () {
           const { blockHash, blockNumber } = yield call(
-            AudiusBackend.updateCreator,
+            ColivingBackend.updateCreator,
             updatedMetadata,
             accountUserId
           )
@@ -770,7 +770,7 @@ const getSignableData = () => {
 function* watchForDiscordCode() {
   yield take(fetchAccountSucceeded.type)
   const data = getSignableData()
-  const signature: string = yield call(AudiusBackend.getSignature, data)
+  const signature: string = yield call(ColivingBackend.getSignature, data)
   const appended = `${signature}:${data}`
   yield put(setDiscordCode({ code: appended }))
 }

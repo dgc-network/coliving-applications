@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 
-import { ID, Status } from '@audius/common'
+import { ID, Status } from '@coliving/common'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 

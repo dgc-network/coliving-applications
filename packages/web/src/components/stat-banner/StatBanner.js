@@ -6,7 +6,7 @@ import {
   ButtonType,
   IconShare,
   IconPencil
-} from '@audius/stems'
+} from '@coliving/stems'
 import PropTypes from 'prop-types'
 
 import { ArtistRecommendationsPopup } from 'components/artist-recommendations/ArtistRecommendationsPopup'

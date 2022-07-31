@@ -8,7 +8,7 @@ import {
   StringAudio,
   StringWei,
   Nullable
-} from '@audius/common'
+} from '@coliving/common'
 
 import { SupportersMap, SupportingMap } from 'common/store/tipping/types'
 import { parseWeiNumber } from 'common/utils/formatUtil'

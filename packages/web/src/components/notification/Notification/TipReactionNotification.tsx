@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 
-import { Name } from '@audius/common'
+import { Name } from '@coliving/common'
 
 import { useUIAudio } from 'common/hooks/useUIAudio'
 import { getNotificationUser } from 'common/store/notifications/selectors'
@@ -27,7 +27,7 @@ const messages = {
   reacted: 'reacted',
   react: 'reacted to your tip of ',
   twitterShare: (handle: string) =>
-    `I got a thanks from ${handle} for tipping them $AUDIO on @audiusproject! #Coliving #AUDIOTip`
+    `I got a thanks from ${handle} for tipping them $AUDIO on @colivingproject! #Coliving #AUDIOTip`
 }
 
 type TipReactionNotificationProps = {

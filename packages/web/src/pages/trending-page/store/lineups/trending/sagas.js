@@ -1,4 +1,4 @@
-import { TimeRange } from '@audius/common'
+import { TimeRange } from '@coliving/common'
 import { select } from 'redux-saga/effects'
 
 import { getUserId } from 'common/store/account/selectors'

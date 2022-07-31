@@ -1,9 +1,9 @@
-import { ID, BNWei, StringWei, WalletAddress } from '@audius/common'
+import { ID, BNWei, StringWei, WalletAddress } from '@coliving/common'
 import BN from 'bn.js'
 
 import { stringWeiToBN } from 'common/utils/wallet'
-import AudiusBackend from 'services/AudiusBackend'
-import apiClient from 'services/audius-api-client/AudiusAPIClient'
+import ColivingBackend from 'services/ColivingBackend'
+import apiClient from 'services/coliving-api-client/ColivingAPIClient'
 
 // 0.001 Audio
 export const MIN_TRANSFERRABLE_WEI = stringWeiToBN(
@@ -17,7 +17,7 @@ class WalletClient {
 
   async getCurrentBalance(bustCache = false): Promise<BNWei> {
     try {
-      const balance = await AudiusBackend.getBalance(bustCache)
+      const balance = await ColivingBackend.getBalance(bustCache)
       return balance as BNWei
     } catch (err) {
       console.error(err)
@@ -27,7 +27,7 @@ class WalletClient {
 
   async getCurrentWAudioBalance(): Promise<BNWei> {
     try {
-      const balance = await AudiusBackend.getWAudioBalance()
+      const balance = await ColivingBackend.getWAudioBalance()
       return balance as BNWei
     } catch (err) {
       console.error(err)
@@ -36,9 +36,9 @@ class WalletClient {
   }
 
   async transferTokensFromEthToSol(): Promise<void> {
-    const balance = await AudiusBackend.getBalance(true)
+    const balance = await ColivingBackend.getBalance(true)
     if (balance.gt(new BN('0'))) {
-      await AudiusBackend.transferAudioToWAudio(balance)
+      await ColivingBackend.transferAudioToWAudio(balance)
     }
   }
 
@@ -54,10 +54,10 @@ class WalletClient {
       if (associatedWallets === null) throw new Error('Unable to fetch wallets')
       const balances = await Promise.all([
         ...associatedWallets.wallets.map((wallet) =>
-          AudiusBackend.getAddressTotalStakedBalance(wallet, bustCache)
+          ColivingBackend.getAddressTotalStakedBalance(wallet, bustCache)
         ),
         ...associatedWallets.sol_wallets.map((wallet) =>
-          AudiusBackend.getAddressWAudioBalance(wallet)
+          ColivingBackend.getAddressWAudioBalance(wallet)
         )
       ])
 
@@ -79,7 +79,7 @@ class WalletClient {
     try {
       const balances: { address: string; balance: BNWei }[] = await Promise.all(
         wallets.map(async (wallet) => {
-          const balance = await AudiusBackend.getAddressTotalStakedBalance(
+          const balance = await ColivingBackend.getAddressTotalStakedBalance(
             wallet,
             bustCache
           )
@@ -99,7 +99,7 @@ class WalletClient {
     try {
       const balances: { address: string; balance: BNWei }[] = await Promise.all(
         wallets.map(async (wallet) => {
-          const balance = await AudiusBackend.getAddressWAudioBalance(wallet)
+          const balance = await ColivingBackend.getAddressWAudioBalance(wallet)
           return { address: wallet, balance: balance as BNWei }
         })
       )
@@ -112,7 +112,7 @@ class WalletClient {
 
   async claim(): Promise<void> {
     try {
-      await AudiusBackend.makeDistributionClaim()
+      await ColivingBackend.makeDistributionClaim()
     } catch (err) {
       console.error(err)
       throw err
@@ -124,7 +124,7 @@ class WalletClient {
       throw new Error('Insufficient Audio to transfer')
     }
     try {
-      await AudiusBackend.sendTokens(address, amount)
+      await ColivingBackend.sendTokens(address, amount)
     } catch (err) {
       console.error(err)
       throw err
@@ -136,7 +136,7 @@ class WalletClient {
       throw new Error('Insufficient Audio to transfer')
     }
     try {
-      const { res, error, errorCode } = await AudiusBackend.sendWAudioTokens(
+      const { res, error, errorCode } = await ColivingBackend.sendWAudioTokens(
         address,
         amount
       )

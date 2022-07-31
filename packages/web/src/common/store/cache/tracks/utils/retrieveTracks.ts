@@ -5,7 +5,7 @@ import {
   Track,
   TrackMetadata,
   UserTrackMetadata
-} from '@audius/common'
+} from '@coliving/common'
 import { call, put, select, spawn } from 'typed-redux-saga/macro'
 
 import { CommonState } from 'common/store'
@@ -14,8 +14,8 @@ import { retrieve } from 'common/store/cache/sagas'
 import { getEntryTimestamp } from 'common/store/cache/selectors'
 import * as trackActions from 'common/store/cache/tracks/actions'
 import { getTracks as getTracksSelector } from 'common/store/cache/tracks/selectors'
-import AudiusBackend from 'services/AudiusBackend'
-import apiClient from 'services/audius-api-client/AudiusAPIClient'
+import ColivingBackend from 'services/ColivingBackend'
+import apiClient from 'services/coliving-api-client/ColivingAPIClient'
 
 import { setTracksIsBlocked } from './blocklist'
 import {
@@ -214,12 +214,12 @@ export function* retrieveTracks({
       let fetched: UserTrackMetadata | UserTrackMetadata[] | null | undefined
       if (canBeUnlisted) {
         const ids = trackIds as UnlistedTrackRequest[]
-        // TODO: remove the AudiusBackend
+        // TODO: remove the ColivingBackend
         // branches here when we support
         // bulk track fetches in the API.
         if (ids.length > 1) {
           fetched = yield* call(
-            AudiusBackend.getTracksIncludingUnlisted,
+            ColivingBackend.getTracksIncludingUnlisted,
             trackIds as UnlistedTrackRequest[]
           )
         } else {
@@ -235,7 +235,7 @@ export function* retrieveTracks({
       } else {
         const ids = trackIds as number[]
         if (ids.length > 1) {
-          fetched = yield* call(AudiusBackend.getAllTracks, {
+          fetched = yield* call(ColivingBackend.getAllTracks, {
             offset: 0,
             limit: ids.length,
             idsArray: ids as ID[]

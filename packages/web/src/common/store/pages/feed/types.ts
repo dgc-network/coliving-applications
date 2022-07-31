@@ -1,4 +1,4 @@
-import { ID, FeedFilter, TimeRange, LineupState } from '@audius/common'
+import { ID, FeedFilter, TimeRange, LineupState } from '@coliving/common'
 
 export type FeedPageState = {
   suggestedFollows: ID[]

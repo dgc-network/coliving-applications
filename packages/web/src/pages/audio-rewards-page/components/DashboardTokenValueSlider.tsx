@@ -1,5 +1,5 @@
-import { BNAudio } from '@audius/common'
-import { TokenValueSlider } from '@audius/stems'
+import { BNAudio } from '@coliving/common'
+import { TokenValueSlider } from '@coliving/stems'
 import BN from 'bn.js'
 
 import { formatNumberCommas } from 'common/utils/formatUtil'

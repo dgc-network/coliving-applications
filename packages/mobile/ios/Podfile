@@ -3,13 +3,13 @@ platform :ios, '12.0'
 require_relative '../node_modules/react-native/scripts/react_native_pods'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
 
-project 'AudiusReactNative',
+project 'ColivingReactNative',
 'Bounce.Debug' => :debug,
 'Bounce.Release' => :release,
 'Prod.Debug' => :debug,
 'Prod.Release' => :release
 
-target 'AudiusReactNative' do
+target 'ColivingReactNative' do
   permissions_path = '../node_modules/react-native-permissions/ios'
   pod 'Permission-Notifications', :path => "#{permissions_path}/Notifications"
 

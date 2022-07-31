@@ -1,6 +1,6 @@
 import { memo, MouseEvent, useCallback } from 'react'
 
-import { IconCrown, IconHidden } from '@audius/stems'
+import { IconCrown, IconHidden } from '@coliving/stems'
 import cn from 'classnames'
 
 import { ReactComponent as IconStar } from 'assets/img/iconStar.svg'

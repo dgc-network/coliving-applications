@@ -1,7 +1,7 @@
 import { useCallback, useContext, useEffect, MouseEvent } from 'react'
 
-import { Chain, BNWei, FeatureFlags } from '@audius/common'
-import { LogoEth, LogoSol } from '@audius/stems'
+import { Chain, BNWei, FeatureFlags } from '@coliving/common'
+import { LogoEth, LogoSol } from '@coliving/stems'
 import cn from 'classnames'
 import { useDispatch } from 'react-redux'
 

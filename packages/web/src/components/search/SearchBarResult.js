@@ -1,13 +1,13 @@
 import { useState, useEffect, memo } from 'react'
 
-import { Kind } from '@audius/common'
+import { Kind } from '@coliving/common'
 import cn from 'classnames'
 import PropTypes from 'prop-types'
 
 import placeholderArt from 'assets/img/imageBlank2x.png'
 import DynamicImage from 'components/dynamic-image/DynamicImage'
 import UserBadges from 'components/user-badges/UserBadges'
-import AudiusBackend from 'services/AudiusBackend'
+import ColivingBackend from 'services/ColivingBackend'
 import { getCreatorNodeIPFSGateways } from 'utils/gatewayUtil'
 
 import searchBarStyles from './SearchBar.module.css'
@@ -22,7 +22,7 @@ const Image = memo((props) => {
     const getImage = async () => {
       try {
         const gateways = getCreatorNodeIPFSGateways(props.creatorNodeEndpoint)
-        const url = await AudiusBackend.getImageUrl(
+        const url = await ColivingBackend.getImageUrl(
           imageMultihash,
           size,
           gateways

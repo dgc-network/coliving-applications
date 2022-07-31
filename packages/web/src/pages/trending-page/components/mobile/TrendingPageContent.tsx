@@ -1,6 +1,6 @@
 import { useCallback, useContext, useEffect, useMemo } from 'react'
 
-import { Name, Status, TimeRange } from '@audius/common'
+import { Name, Status, TimeRange } from '@coliving/common'
 import cn from 'classnames'
 
 import { ReactComponent as IconAllTime } from 'assets/img/iconAllTime.svg'

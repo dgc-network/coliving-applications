@@ -1,4 +1,4 @@
-import { Kind } from '@audius/common'
+import { Kind } from '@coliving/common'
 import { keyBy } from 'lodash'
 import { call, select } from 'redux-saga/effects'
 
@@ -8,7 +8,7 @@ import {
   PREFIX,
   tracksActions
 } from 'common/store/pages/history-page/lineups/tracks/actions'
-import apiClient from 'services/audius-api-client/AudiusAPIClient'
+import apiClient from 'services/coliving-api-client/ColivingAPIClient'
 import { LineupSagas } from 'store/lineup/sagas'
 
 function* getHistoryTracks() {

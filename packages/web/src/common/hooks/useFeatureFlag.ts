@@ -5,7 +5,7 @@ import {
   FeatureFlagCohortType,
   RemoteConfigInstance,
   flagCohortType
-} from '@audius/common'
+} from '@coliving/common'
 import { useSelector } from 'react-redux'
 
 import { getAccountUser } from 'common/store/account/selectors'

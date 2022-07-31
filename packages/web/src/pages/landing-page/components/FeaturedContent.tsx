@@ -1,20 +1,20 @@
 import { useEffect, useState } from 'react'
 
-import { UserCollectionMetadata } from '@audius/common'
+import { UserCollectionMetadata } from '@coliving/common'
 import { useSpring, animated } from 'react-spring'
 import { useAsyncFn } from 'react-use'
 
-import audiusExclusivesPlaylistImg from 'assets/img/publicSite/AudiusExclusivesPlaylistArt.png'
-import audiusWeeklyPlaylistImg from 'assets/img/publicSite/AudiusWeeklyPlaylistArt.png'
+import colivingExclusivesPlaylistImg from 'assets/img/publicSite/ColivingExclusivesPlaylistArt.png'
+import colivingWeeklyPlaylistImg from 'assets/img/publicSite/ColivingWeeklyPlaylistArt.png'
 import hotAndNewPlaylistImg from 'assets/img/publicSite/HotAndNewPlaylistArt.jpeg'
 import { ReactComponent as IconLines } from 'assets/img/publicSite/Lines.svg'
 import moombahtonPlaylistImg from 'assets/img/publicSite/MoombahtonPlaylistArt.png'
-import { ReactComponent as IconListenOnAudius } from 'assets/img/publicSite/listen-on-audius.svg'
+import { ReactComponent as IconListenOnColiving } from 'assets/img/publicSite/listen-on-coliving.svg'
 import { fetchExploreContent } from 'common/store/pages/explore/sagas'
 import { handleClickRoute } from 'components/public-site/handleClickRoute'
 import useCardWeight from 'hooks/useCardWeight'
 import useHasViewed from 'hooks/useHasViewed'
-import AudiusBackend from 'services/AudiusBackend'
+import ColivingBackend from 'services/ColivingBackend'
 import { getCreatorNodeIPFSGateways } from 'utils/gatewayUtil'
 import { playlistPage } from 'utils/route'
 
@@ -36,25 +36,25 @@ const FALLBACK_PLAYLISTS = [
   {
     title: 'Coliving Exclusives',
     artist: 'Coliving',
-    imageUrl: audiusExclusivesPlaylistImg,
-    link: '/audius/playlist/official-audius-exclusives-1428'
+    imageUrl: colivingExclusivesPlaylistImg,
+    link: '/coliving/playlist/official-coliving-exclusives-1428'
   },
   {
     title: 'MOOMBAHTON COMES TO COLIVING',
     artist: 'Moombahton',
     imageUrl: moombahtonPlaylistImg,
-    link: '/moombahton/playlist/moombahton-comes-to-audius-9601'
+    link: '/moombahton/playlist/moombahton-comes-to-coliving-9601'
   },
   {
     title: 'Hot & New On Coliving 🔥',
     artist: 'Coliving',
     imageUrl: hotAndNewPlaylistImg,
-    link: '/audius/playlist/hot-new-on-audius-%F0%9F%94%A5-4281'
+    link: '/coliving/playlist/hot-new-on-coliving-%F0%9F%94%A5-4281'
   },
   {
     title: 'Coliving Weekly',
     artist: 'Coliving',
-    imageUrl: audiusWeeklyPlaylistImg,
+    imageUrl: colivingWeeklyPlaylistImg,
     link: '/3lau/is-it-love-feat.-yeah-boy-1151'
   }
 ]
@@ -92,7 +92,7 @@ const DesktopPlaylistTile = (props: PlaylistTileProps) => {
         >
           <div className={styles.trackContent}>
             <div className={styles.trackArtist}>{`By ${props.artist}`}</div>
-            <IconListenOnAudius className={styles.listenOnAudius} />
+            <IconListenOnColiving className={styles.listenOnColiving} />
           </div>
         </div>
       </animated.div>
@@ -113,7 +113,7 @@ const MobilePlaylistTile = (props: PlaylistTileProps) => (
       className={styles.trackImage}
       style={{
         backgroundImage: `url(${
-          props.imageUrl || audiusExclusivesPlaylistImg
+          props.imageUrl || colivingExclusivesPlaylistImg
         })`,
         boxShadow: `0px 10px 50px -2px rgba(56, 14, 13, 0.4)`
       }}
@@ -150,7 +150,7 @@ const FeaturedContent = (props: FeaturedContentProps) => {
     useAsyncFn(async () => {
       const featuredContent = await fetchExploreContent()
       const ids = featuredContent.featuredPlaylists
-      const playlists = AudiusBackend.getPlaylists(
+      const playlists = ColivingBackend.getPlaylists(
         null,
         ids
       ) as any as UserCollectionMetadata[]

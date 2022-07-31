@@ -1,4 +1,4 @@
-import { UserCollectionMetadata, Kind, makeUid } from '@audius/common'
+import { UserCollectionMetadata, Kind, makeUid } from '@coliving/common'
 import { uniqBy } from 'lodash'
 import { put, select } from 'redux-saga/effects'
 

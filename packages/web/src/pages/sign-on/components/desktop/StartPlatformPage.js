@@ -1,6 +1,6 @@
 import { Component } from 'react'
 
-import { Button, ButtonType, IconUpload, IconNote } from '@audius/stems'
+import { Button, ButtonType, IconUpload, IconNote } from '@coliving/stems'
 import cn from 'classnames'
 import PropTypes from 'prop-types'
 

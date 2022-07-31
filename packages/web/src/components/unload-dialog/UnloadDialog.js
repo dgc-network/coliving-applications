@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 
-import { Modal } from '@audius/stems'
+import { Modal } from '@coliving/stems'
 import { connect } from 'react-redux'
 
 import ConfirmationBox from 'components/confirmation-box/ConfirmationBox'

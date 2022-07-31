@@ -5,7 +5,7 @@ import {
   Track,
   User,
   Nullable
-} from '@audius/common'
+} from '@coliving/common'
 import { PayloadAction } from '@reduxjs/toolkit'
 
 export type ShareType =

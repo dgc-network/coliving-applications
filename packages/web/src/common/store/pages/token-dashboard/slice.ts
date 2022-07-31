@@ -4,7 +4,7 @@ import {
   StringWei,
   WalletAddress,
   Nullable
-} from '@audius/common'
+} from '@coliving/common'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import {

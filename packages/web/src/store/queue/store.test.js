@@ -1,4 +1,4 @@
-import { Kind } from '@audius/common'
+import { Kind } from '@coliving/common'
 import { combineReducers } from 'redux'
 import { expectSaga } from 'redux-saga-test-plan'
 import * as matchers from 'redux-saga-test-plan/matchers'

@@ -1,6 +1,6 @@
 import { SVGProps } from 'react'
 
-import { IconTikTok as BaseIconTikTok, IconTikTokInverted } from '@audius/stems'
+import { IconTikTok as BaseIconTikTok, IconTikTokInverted } from '@coliving/stems'
 
 import { isDarkMode, isMatrix } from 'utils/theme/theme'
 

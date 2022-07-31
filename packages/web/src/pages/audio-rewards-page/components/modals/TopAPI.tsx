@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 
-import AudiusAPI from 'assets/img/audiusAPI.png'
+import ColivingAPI from 'assets/img/colivingAPI.png'
 import { useModalState } from 'common/hooks/useModalState'
 import { useWithMobileStyle } from 'hooks/useWithMobileStyle'
 import { COLIVING_API_LINK } from 'utils/route'
@@ -22,19 +22,19 @@ const IS_NATIVE_MOBILE = process.env.REACT_APP_NATIVE_MOBILE
 const TopAPIBody = () => {
   const wm = useWithMobileStyle(styles.mobile)
 
-  const onClickAudiusAPI = useCallback(() => {
+  const onClickColivingAPI = useCallback(() => {
     window.open(COLIVING_API_LINK, '__blank')
   }, [])
 
   return (
     <div className={wm(styles.container)}>
-      <img src={AudiusAPI} alt='Coliving API Logo' />
+      <img src={ColivingAPI} alt='Coliving API Logo' />
       <span className={styles.title}>{messages.title}</span>
       <span className={styles.subtitle}>{messages.description}</span>
       <ButtonWithArrow
         text={messages.button}
         className={styles.button}
-        onClick={onClickAudiusAPI}
+        onClick={onClickColivingAPI}
         textClassName={styles.buttonText}
       />
     </div>

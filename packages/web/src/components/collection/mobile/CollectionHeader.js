@@ -1,7 +1,7 @@
 import { memo, useCallback } from 'react'
 
-import { Name, Variant, SquareSizes } from '@audius/common'
-import { Button, ButtonType, IconPause, IconPlay } from '@audius/stems'
+import { Name, Variant, SquareSizes } from '@coliving/common'
+import { Button, ButtonType, IconPause, IconPlay } from '@coliving/stems'
 import cn from 'classnames'
 import Linkify from 'linkifyjs/react'
 import PropTypes from 'prop-types'

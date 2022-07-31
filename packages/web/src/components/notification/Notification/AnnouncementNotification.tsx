@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 
-import { Name } from '@audius/common'
+import { Name } from '@coliving/common'
 import ReactMarkdown from 'react-markdown'
 import { useDispatch } from 'react-redux'
 

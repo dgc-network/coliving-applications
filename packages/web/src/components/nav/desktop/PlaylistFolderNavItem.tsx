@@ -10,14 +10,14 @@ import {
   Name,
   PlaylistLibraryFolder,
   SmartCollectionVariant
-} from '@audius/common'
+} from '@coliving/common'
 import {
   IconCaretRight,
   IconFolder,
   IconFolderOutline,
   IconKebabHorizontal,
   IconButton
-} from '@audius/stems'
+} from '@coliving/stems'
 import { ResizeObserver } from '@juggle/resize-observer'
 import cn from 'classnames'
 import { useSpring, animated } from 'react-spring'

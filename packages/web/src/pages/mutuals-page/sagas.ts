@@ -1,4 +1,4 @@
-import { ID, User } from '@audius/common'
+import { ID, User } from '@coliving/common'
 import { put, select } from 'typed-redux-saga/macro'
 
 import { getUser } from 'common/store/cache/users/selectors'
@@ -12,7 +12,7 @@ import {
 import { USER_LIST_TAG } from 'common/store/user-list/mutuals/types'
 import UserListSagaFactory from 'common/store/user-list/sagas'
 import { createUserListProvider } from 'components/user-list/utils'
-import AudiusBackend from 'services/AudiusBackend'
+import ColivingBackend from 'services/ColivingBackend'
 
 type FetchMutualsConfig = {
   limit: number
@@ -26,7 +26,7 @@ const fetchAllUsersForEntity = async ({
   offset,
   entityId: userId
 }: FetchMutualsConfig) => {
-  const mutuals = await AudiusBackend.getFolloweeFollows(userId, limit, offset)
+  const mutuals = await ColivingBackend.getFolloweeFollows(userId, limit, offset)
   return { users: mutuals }
 }
 

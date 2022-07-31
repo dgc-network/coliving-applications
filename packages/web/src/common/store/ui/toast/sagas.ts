@@ -1,4 +1,4 @@
-import { uuid } from '@audius/common'
+import { uuid } from '@coliving/common'
 import { put, takeEvery, delay } from 'typed-redux-saga'
 
 import { addToast, dismissToast, toast, ToastAction } from './slice'

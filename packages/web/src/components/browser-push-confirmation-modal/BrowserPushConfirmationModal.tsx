@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect } from 'react'
 
-import { Modal, Anchor, Button, ButtonType, ButtonSize } from '@audius/stems'
+import { Modal, Anchor, Button, ButtonType, ButtonSize } from '@coliving/stems'
 import cn from 'classnames'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'

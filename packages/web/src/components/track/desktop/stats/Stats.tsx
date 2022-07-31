@@ -1,6 +1,6 @@
 import { memo, useMemo, MouseEvent } from 'react'
 
-import { ID, Favorite, Repost } from '@audius/common'
+import { ID, Favorite, Repost } from '@coliving/common'
 import cn from 'classnames'
 import { useSelector } from 'react-redux'
 

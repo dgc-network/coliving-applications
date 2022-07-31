@@ -1,7 +1,7 @@
 import { useRef, useCallback, useEffect, MutableRefObject } from 'react'
 
-import { Status, Nullable } from '@audius/common'
-import { Popup, PopupPosition, Scrollbar } from '@audius/stems'
+import { Status, Nullable } from '@coliving/common'
+import { Popup, PopupPosition, Scrollbar } from '@coliving/stems'
 import cn from 'classnames'
 import InfiniteScroll from 'react-infinite-scroller'
 import Lottie from 'react-lottie'

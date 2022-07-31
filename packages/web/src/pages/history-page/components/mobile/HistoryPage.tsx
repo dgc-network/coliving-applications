@@ -1,7 +1,7 @@
 import { memo, useEffect, useCallback, useContext } from 'react'
 
-import { ID, UID, LineupTrack } from '@audius/common'
-import { Button, ButtonType } from '@audius/stems'
+import { ID, UID, LineupTrack } from '@coliving/common'
+import { Button, ButtonType } from '@coliving/stems'
 
 import LoadingSpinner from 'components/loading-spinner/LoadingSpinner'
 import MobilePageContainer from 'components/mobile-page-container/MobilePageContainer'

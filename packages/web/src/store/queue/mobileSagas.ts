@@ -1,4 +1,4 @@
-import { ID, UID, removeNullable } from '@audius/common'
+import { ID, UID, removeNullable } from '@coliving/common'
 import { all, put, select, takeEvery, call } from 'typed-redux-saga/macro'
 
 import { getUserId } from 'common/store/account/selectors'
@@ -32,7 +32,7 @@ import { generateM3U8Variants } from 'utils/hlsUtil'
 
 const PUBLIC_IPFS_GATEWAY = 'http://cloudflare-ipfs.com/ipfs/'
 const DEFAULT_IMAGE_URL =
-  'https://download.audius.co/static-resources/preview-image.jpg'
+  'https://download.coliving.co/static-resources/preview-image.jpg'
 
 const getImageUrl = (cid: string, gateway: string | null): string => {
   if (!cid) return DEFAULT_IMAGE_URL

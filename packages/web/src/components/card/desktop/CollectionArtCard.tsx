@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react'
 
-import { ID, SquareSizes } from '@audius/common'
+import { ID, SquareSizes } from '@coliving/common'
 import cn from 'classnames'
 import { push as pushRoute } from 'connected-react-router'
 import { connect } from 'react-redux'

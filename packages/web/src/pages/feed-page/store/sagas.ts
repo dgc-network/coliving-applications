@@ -1,4 +1,4 @@
-import { ID, FollowSource } from '@audius/common'
+import { ID, FollowSource } from '@coliving/common'
 import { call, put, take, fork, takeEvery } from 'redux-saga/effects'
 
 import { fetchUsers } from 'common/store/cache/users/sagas'

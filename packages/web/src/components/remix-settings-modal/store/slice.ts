@@ -1,4 +1,4 @@
-import { ID, Status } from '@audius/common'
+import { ID, Status } from '@coliving/common'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 type State = {

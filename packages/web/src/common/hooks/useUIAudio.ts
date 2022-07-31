@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 
-import { BNWei, StringWei } from '@audius/common'
+import { BNWei, StringWei } from '@coliving/common'
 import BN from 'bn.js'
 
 import { formatWei } from 'common/utils/wallet'

@@ -1,8 +1,8 @@
-import { removeNullable } from '@audius/common'
+import { removeNullable } from '@coliving/common'
 import { call, takeEvery, all, put, select } from 'typed-redux-saga/macro'
 
-import apiClient from 'services/audius-api-client/AudiusAPIClient'
-import { submitReaction } from 'services/audius-backend/Reactions'
+import apiClient from 'services/coliving-api-client/ColivingAPIClient'
+import { submitReaction } from 'services/coliving-backend/Reactions'
 
 import {
   fetchReactionValues,

@@ -1,6 +1,6 @@
 import { memo } from 'react'
 
-import { User } from '@audius/common'
+import { User } from '@coliving/common'
 
 import { formatCount, pluralize } from 'common/utils/formatUtil'
 

@@ -1,4 +1,4 @@
-import { Name } from '@audius/common'
+import { Name } from '@coliving/common'
 import { call, put, takeEvery } from 'redux-saga/effects'
 
 import {
@@ -9,7 +9,7 @@ import {
   changePasswordSucceeded,
   changePasswordFailed
 } from 'common/store/change-password/slice'
-import AudiusBackend from 'services/AudiusBackend'
+import ColivingBackend from 'services/ColivingBackend'
 import { make, TrackEvent } from 'store/analytics/actions'
 import { waitForBackendSetup } from 'store/backend/sagas'
 
@@ -19,7 +19,7 @@ function* handleConfirmCredentials(
   yield call(waitForBackendSetup)
   try {
     const confirmed: boolean = yield call(
-      AudiusBackend.confirmCredentials,
+      ColivingBackend.confirmCredentials,
       action.payload.email,
       action.payload.password
     )
@@ -36,7 +36,7 @@ function* handleChangePassword(action: ReturnType<typeof changePassword>) {
   yield call(waitForBackendSetup)
   try {
     yield call(
-      AudiusBackend.changePassword,
+      ColivingBackend.changePassword,
       action.payload.email,
       action.payload.password,
       action.payload.oldPassword

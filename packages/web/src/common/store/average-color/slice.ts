@@ -1,4 +1,4 @@
-import { CID, Color, Track, Nullable } from '@audius/common'
+import { CID, Color, Track, Nullable } from '@coliving/common'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import { CommonState } from 'common/store'

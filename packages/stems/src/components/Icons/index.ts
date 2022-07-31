@@ -1,5 +1,5 @@
-export { ReactComponent as AudiusLogoGlyph } from '../../assets/icons/audiusLogoGlyph.svg'
-export { ReactComponent as AudiusLogoHorizontal } from '../../assets/icons/audiusLogoHorizontal.svg'
+export { ReactComponent as ColivingLogoGlyph } from '../../assets/icons/colivingLogoGlyph.svg'
+export { ReactComponent as ColivingLogoHorizontal } from '../../assets/icons/colivingLogoHorizontal.svg'
 export { ReactComponent as BadgeArtist } from '../../assets/icons/badgeArtist.svg'
 export { ReactComponent as BadgeUser } from '../../assets/icons/badgeUser.svg'
 export { ReactComponent as BgWaveLarge } from '../../assets/icons/bgWaveLarge.svg'

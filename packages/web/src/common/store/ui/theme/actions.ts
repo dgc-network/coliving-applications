@@ -1,4 +1,4 @@
-import { Theme } from '@audius/common'
+import { Theme } from '@coliving/common'
 
 export const SET_THEME = 'CLIENT/SET_THEME'
 

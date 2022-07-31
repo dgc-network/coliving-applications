@@ -4,7 +4,7 @@ import {
   StringWei,
   WalletAddress,
   Nullable
-} from '@audius/common'
+} from '@coliving/common'
 import { PayloadAction } from '@reduxjs/toolkit'
 
 type ReceiveState = { stage: 'KEY_DISPLAY' }

@@ -1,4 +1,4 @@
-import { Kind, Status, USER_ID_AVAILABLE_EVENT } from '@audius/common'
+import { Kind, Status, USER_ID_AVAILABLE_EVENT } from '@coliving/common'
 import { call, put, fork, select, takeEvery } from 'redux-saga/effects'
 
 import * as accountActions from 'common/store/account/reducer'
@@ -21,18 +21,18 @@ import {
 } from 'common/store/pages/settings/actions'
 import { getFeePayer } from 'common/store/solana/selectors'
 import { setVisibility } from 'common/store/ui/modals/slice'
-import AudiusBackend from 'services/AudiusBackend'
+import ColivingBackend from 'services/ColivingBackend'
 import {
-  getAudiusAccount,
-  getAudiusAccountUser,
+  getColivingAccount,
+  getColivingAccountUser,
   getCurrentUserExists,
-  setAudiusAccount,
-  setAudiusAccountUser,
-  clearAudiusAccount,
-  clearAudiusAccountUser
+  setColivingAccount,
+  setColivingAccountUser,
+  clearColivingAccount,
+  clearColivingAccountUser
 } from 'services/LocalStorage'
-import { recordIP } from 'services/audius-backend/RecordIP'
-import { createUserBankIfNeeded } from 'services/audius-backend/waudio'
+import { recordIP } from 'services/coliving-backend/RecordIP'
+import { createUserBankIfNeeded } from 'services/coliving-backend/waudio'
 import fingerprintClient from 'services/fingerprint/FingerprintClient'
 import { SignedIn } from 'services/native-mobile-interface/lifecycle'
 import { remoteConfigInstance } from 'services/remote-config/remote-config-instance'
@@ -97,7 +97,7 @@ function* onFetchAccount(account) {
     yield put(accountActions.showPushNotificationConfirmation())
   }
 
-  yield fork(AudiusBackend.updateUserLocationTimezone)
+  yield fork(ColivingBackend.updateUserLocationTimezone)
   if (NATIVE_MOBILE) {
     yield fork(setHasSignedInOnMobile, account)
     new SignedIn(account).send()
@@ -125,8 +125,8 @@ export function* fetchAccountAsync(action) {
   yield put(accountActions.fetchAccountRequested())
 
   if (!fromSource) {
-    const cachedAccount = getAudiusAccount()
-    const cachedAccountUser = getAudiusAccountUser()
+    const cachedAccount = getColivingAccount()
+    const cachedAccountUser = getColivingAccountUser()
     if (
       cachedAccount &&
       cachedAccountUser &&
@@ -145,7 +145,7 @@ export function* fetchAccountAsync(action) {
     }
   }
 
-  const account = yield call(AudiusBackend.getAccount, fromSource)
+  const account = yield call(ColivingBackend.getAccount, fromSource)
   if (!account || account.is_deactivated) {
     yield put(
       accountActions.fetchAccountFailed({
@@ -153,8 +153,8 @@ export function* fetchAccountAsync(action) {
       })
     )
     // Clear local storage users if present
-    clearAudiusAccount()
-    clearAudiusAccountUser()
+    clearColivingAccount()
+    clearColivingAccountUser()
     // If the user is not signed in
     // Remove browser has requested push notifications.
     removeHasRequestedBrowserPermission()
@@ -166,7 +166,7 @@ export function* fetchAccountAsync(action) {
       isPushManagerAvailable
     ) {
       const subscription = yield call(getPushManagerBrowserSubscription)
-      yield call(AudiusBackend.disableBrowserNotifications, { subscription })
+      yield call(ColivingBackend.disableBrowserNotifications, { subscription })
     } else if (
       browserPushSubscriptionStatus === Permission.GRANTED &&
       isSafariPushAvailable
@@ -174,7 +174,7 @@ export function* fetchAccountAsync(action) {
       const safariSubscription = yield call(getSafariPushBrowser)
       if (safariSubscription.permission === Permission.GRANTED) {
         yield call(
-          AudiusBackend.deregisterDeviceToken,
+          ColivingBackend.deregisterDeviceToken,
           safariSubscription.deviceToken
         )
       }
@@ -215,8 +215,8 @@ function* cacheAccount(account) {
     collections,
     hasFavoritedItem
   }
-  setAudiusAccount(formattedAccount)
-  setAudiusAccountUser(account)
+  setColivingAccount(formattedAccount)
+  setColivingAccountUser(account)
 
   yield put(accountActions.fetchAccountSucceeded(formattedAccount))
 }
@@ -225,8 +225,8 @@ function* cacheAccount(account) {
 export function* reCacheAccount(action) {
   const account = yield select(getAccountToCache)
   const accountUser = yield select(getAccountUser)
-  setAudiusAccount(account)
-  setAudiusAccountUser(accountUser)
+  setColivingAccount(account)
+  setColivingAccountUser(accountUser)
 }
 
 const setBrowerPushPermissionConfirmationModal = setVisibility({
@@ -248,7 +248,7 @@ export function* showPushNotificationConfirmation() {
     if (isPushManagerAvailable) {
       const subscription = yield call(getPushManagerBrowserSubscription)
       const enabled = yield call(
-        AudiusBackend.getBrowserPushSubscription,
+        ColivingBackend.getBrowserPushSubscription,
         subscription.endpoint
       )
       if (!enabled) {
@@ -258,7 +258,7 @@ export function* showPushNotificationConfirmation() {
       try {
         const safariPushBrowser = yield call(getSafariPushBrowser)
         const enabled = yield call(
-          AudiusBackend.getBrowserPushSubscription,
+          ColivingBackend.getBrowserPushSubscription,
           safariPushBrowser.deviceToken
         )
         if (!enabled) {
@@ -290,7 +290,7 @@ export function* subscribeBrowserPushNotifcations() {
     if (pushManagerSubscription) {
       yield put(setBrowserNotificationPermission(Permission.GRANTED))
       yield put(setBrowserNotificationEnabled(true, false))
-      yield call(AudiusBackend.updateBrowserNotifications, {
+      yield call(ColivingBackend.updateBrowserNotifications, {
         subscription: pushManagerSubscription
       })
       yield put(setBrowserNotificationSettingsOn())
@@ -303,7 +303,7 @@ export function* subscribeBrowserPushNotifcations() {
       if (enabled) {
         yield put(setBrowserNotificationPermission(Permission.GRANTED))
         yield put(setBrowserNotificationEnabled(true, false))
-        yield call(AudiusBackend.updateBrowserNotifications, { subscription })
+        yield call(ColivingBackend.updateBrowserNotifications, { subscription })
       } else {
         yield put(setBrowserNotificationPermission(Permission.DENIED))
       }
@@ -315,7 +315,7 @@ export function* subscribeBrowserPushNotifcations() {
     const safariSubscription = yield call(getSafariPushBrowser)
     if (safariSubscription.permission === Permission.GRANTED) {
       yield call(
-        AudiusBackend.registerDeviceToken,
+        ColivingBackend.registerDeviceToken,
         safariSubscription.deviceToken,
         'safari'
       )
@@ -329,7 +329,7 @@ export function* unsubscribeBrowserPushNotifcations() {
   if (isPushManagerAvailable) {
     const pushManagerSubscription = yield call(unsubscribePushManagerBrowser)
     if (pushManagerSubscription) {
-      yield call(AudiusBackend.disableBrowserNotifications, {
+      yield call(ColivingBackend.disableBrowserNotifications, {
         subscription: pushManagerSubscription
       })
     }
@@ -337,7 +337,7 @@ export function* unsubscribeBrowserPushNotifcations() {
     const safariSubscription = yield call(getSafariPushBrowser)
     if (safariSubscription.premission === Permission.GRANTED) {
       yield call(
-        AudiusBackend.deregisterDeviceToken(safariSubscription.deviceToken)
+        ColivingBackend.deregisterDeviceToken(safariSubscription.deviceToken)
       )
     }
   }
@@ -348,7 +348,7 @@ function* associateTwitterAccount(action) {
   try {
     const userId = yield select(getUserId)
     const handle = yield select(getUserHandle)
-    yield call(AudiusBackend.associateTwitterAccount, uuid, userId, handle)
+    yield call(ColivingBackend.associateTwitterAccount, uuid, userId, handle)
 
     const account = yield select(getAccountUser)
     const { verified } = profile
@@ -369,7 +369,7 @@ function* associateInstagramAccount(action) {
   try {
     const userId = yield select(getUserId)
     const handle = yield select(getUserHandle)
-    yield call(AudiusBackend.associateInstagramAccount, uuid, userId, handle)
+    yield call(ColivingBackend.associateInstagramAccount, uuid, userId, handle)
 
     const account = yield select(getAccountUser)
     const { is_verified: verified } = profile

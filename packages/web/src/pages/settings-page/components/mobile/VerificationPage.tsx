@@ -7,14 +7,14 @@ import {
   SquareSizes,
   Status,
   BooleanKeys
-} from '@audius/common'
+} from '@coliving/common'
 import {
   Button,
   ButtonSize,
   ButtonType,
   IconNote,
   IconValidationX
-} from '@audius/stems'
+} from '@coliving/stems'
 import cn from 'classnames'
 
 import { InstagramProfile, TwitterProfile } from 'common/store/account/reducer'

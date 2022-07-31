@@ -1,5 +1,5 @@
-import { ID, FollowSource, ShareSource } from '@audius/common'
-import { PopupMenuItem } from '@audius/stems'
+import { ID, FollowSource, ShareSource } from '@coliving/common'
+import { PopupMenuItem } from '@coliving/stems'
 import { push as pushRoute } from 'connected-react-router'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'

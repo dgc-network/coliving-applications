@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 
-import { Status } from '@audius/common'
-import { Modal } from '@audius/stems'
+import { Status } from '@coliving/common'
+import { Modal } from '@coliving/stems'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { Modal, Scrollbar } from '@audius/stems'
+import { Modal, Scrollbar } from '@coliving/stems'
 import cn from 'classnames'
 import { each } from 'lodash'
 import PropTypes from 'prop-types'

@@ -1,4 +1,4 @@
-import { ID, FollowSource, ShareSource } from '@audius/common'
+import { ID, FollowSource, ShareSource } from '@coliving/common'
 import { createCustomAction } from 'typesafe-actions'
 
 export const FOLLOW_USER = 'SOCIAL/FOLLOW_USER'

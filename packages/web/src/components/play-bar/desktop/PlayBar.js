@@ -5,8 +5,8 @@ import {
   FavoriteSource,
   Name,
   PlaybackSource
-} from '@audius/common'
-import { Scrubber } from '@audius/stems'
+} from '@coliving/common'
+import { Scrubber } from '@coliving/stems'
 import { push as pushRoute } from 'connected-react-router'
 import { connect } from 'react-redux'
 

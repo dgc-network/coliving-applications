@@ -1,6 +1,6 @@
 import { memo, useState } from 'react'
 
-import { CoverPhotoSizes, WidthSizes, Nullable } from '@audius/common'
+import { CoverPhotoSizes, WidthSizes, Nullable } from '@coliving/common'
 import cn from 'classnames'
 import { FileWithPreview } from 'react-dropzone'
 import Lottie from 'react-lottie'

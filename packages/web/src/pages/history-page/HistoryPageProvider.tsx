@@ -15,7 +15,7 @@ import {
   Name,
   PlaybackSource,
   Status
-} from '@audius/common'
+} from '@coliving/common'
 import { push as pushRoute } from 'connected-react-router'
 import { connect } from 'react-redux'
 import { withRouter, RouteComponentProps } from 'react-router-dom'

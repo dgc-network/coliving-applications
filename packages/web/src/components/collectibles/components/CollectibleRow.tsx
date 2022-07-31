@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 
-import { Collectible, CollectibleMediaType } from '@audius/common'
+import { Collectible, CollectibleMediaType } from '@coliving/common'
 import cn from 'classnames'
 
 import { ReactComponent as IconDrag } from 'assets/img/iconDrag.svg'

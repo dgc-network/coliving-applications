@@ -1,6 +1,6 @@
 import { MouseEventHandler, useCallback } from 'react'
 
-import { Name, Collection, Track, User, Nullable } from '@audius/common'
+import { Name, Collection, Track, User, Nullable } from '@coliving/common'
 import { push } from 'connected-react-router'
 import { useDispatch } from 'react-redux'
 

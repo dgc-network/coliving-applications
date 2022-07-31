@@ -1,4 +1,4 @@
-import { ID, User, removeNullable } from '@audius/common'
+import { ID, User, removeNullable } from '@coliving/common'
 import { put, select } from 'typed-redux-saga/macro'
 
 import { getUser } from 'common/store/cache/users/selectors'
@@ -13,11 +13,11 @@ import {
   getUserIds
 } from 'common/store/user-list/top-supporters/selectors'
 import { createUserListProvider } from 'components/user-list/utils'
-import * as adapter from 'services/audius-api-client/ResponseAdapter'
+import * as adapter from 'services/coliving-api-client/ResponseAdapter'
 import {
   fetchSupporters,
   SupporterResponse
-} from 'services/audius-backend/Tipping'
+} from 'services/coliving-backend/Tipping'
 import { decodeHashId, encodeHashId } from 'utils/route/hashIds'
 
 export const USER_LIST_TAG = 'TOP SUPPORTERS'

@@ -1,11 +1,11 @@
-import { ID, UserTrack, Nullable } from '@audius/common'
+import { ID, UserTrack, Nullable } from '@coliving/common'
 import { call } from 'typed-redux-saga'
 
 import { processAndCacheTracks } from 'common/store/cache/tracks/utils'
-import apiClient from 'services/audius-api-client/AudiusAPIClient'
+import apiClient from 'services/coliving-api-client/ColivingAPIClient'
 
-import AudiusBackend from '../../services/AudiusBackend'
-import Explore from '../../services/audius-backend/Explore'
+import ColivingBackend from '../../services/ColivingBackend'
+import Explore from '../../services/coliving-backend/Explore'
 
 export function* getRecommendedTracks(
   genre: string,
@@ -26,7 +26,7 @@ export function* getLuckyTracks(limit: number) {
   const ids = Array.from({ length: limit }, () =>
     Math.floor(Math.random() * latestTrackID)
   )
-  const tracks: UserTrack[] = yield* call(AudiusBackend.getAllTracks, {
+  const tracks: UserTrack[] = yield* call(ColivingBackend.getAllTracks, {
     offset: 0,
     limit,
     idsArray: ids,

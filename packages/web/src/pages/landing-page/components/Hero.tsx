@@ -1,10 +1,10 @@
 import { useCallback } from 'react'
 
-import { IconArrow, IconDownload } from '@audius/stems'
+import { IconArrow, IconDownload } from '@coliving/stems'
 import cn from 'classnames'
 import { Parallax, withController } from 'react-scroll-parallax'
 
-import HeroForeground from 'assets/img/publicSite/AudiusApp@2x.png'
+import HeroForeground from 'assets/img/publicSite/ColivingApp@2x.png'
 import HeroBackgroundMobile from 'assets/img/publicSite/Hero-BG@1x.jpg'
 import HeroBackground from 'assets/img/publicSite/Hero-BG@2x.jpg'
 import HeroBackgroundXL from 'assets/img/publicSite/Hero-BG@3x.jpg'
@@ -90,7 +90,7 @@ export const Hero = (props: HeroProps) => {
               />
             </a>
             <a
-              href='https://play.google.com/store/apps/details?id=co.audius.app'
+              href='https://play.google.com/store/apps/details?id=co.coliving.app'
               target='_blank'
               rel='noopener noreferrer'
             >
@@ -182,7 +182,7 @@ export const Hero = (props: HeroProps) => {
         >
           <div className={styles.appLinksContent}>
             <a
-              href='https://apps.apple.com/us/app/audius-music/id1491270519'
+              href='https://apps.apple.com/us/app/coliving-music/id1491270519'
               target='_blank'
               rel='noopener noreferrer'
             >
@@ -193,7 +193,7 @@ export const Hero = (props: HeroProps) => {
               />
             </a>
             <a
-              href='https://play.google.com/store/apps/details?id=co.audius.app'
+              href='https://play.google.com/store/apps/details?id=co.coliving.app'
               target='_blank'
               rel='noopener noreferrer'
             >

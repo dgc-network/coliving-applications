@@ -1,4 +1,4 @@
-import { TimeRange } from '@audius/common'
+import { TimeRange } from '@coliving/common'
 
 import { asLineup } from 'common/store/lineup/reducer'
 import {

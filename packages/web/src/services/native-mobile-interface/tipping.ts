@@ -1,4 +1,4 @@
-import { RecentTipsStorage } from '@audius/common'
+import { RecentTipsStorage } from '@coliving/common'
 
 import { NativeMobileMessage } from './helpers'
 import { MessageType } from './types'

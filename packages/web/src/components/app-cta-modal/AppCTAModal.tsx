@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
 
-import { Name } from '@audius/common'
-import { Modal, Button, IconDownload, ButtonType } from '@audius/stems'
+import { Name } from '@coliving/common'
+import { Modal, Button, IconDownload, ButtonType } from '@coliving/stems'
 import { useDispatch } from 'react-redux'
 
 import QRCode from 'assets/img/imageQR.png'

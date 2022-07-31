@@ -1,4 +1,4 @@
-import { Kind, makeUid, makeUids, Uid } from '@audius/common'
+import { Kind, makeUid, makeUids, Uid } from '@coliving/common'
 import {
   all,
   call,

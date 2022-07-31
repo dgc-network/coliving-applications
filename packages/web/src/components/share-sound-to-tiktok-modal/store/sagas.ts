@@ -1,4 +1,4 @@
-import { Name } from '@audius/common'
+import { Name } from '@coliving/common'
 import { takeEvery, put, call, select } from 'typed-redux-saga/macro'
 
 import { getTrack } from 'common/store/cache/tracks/selectors'
@@ -20,7 +20,7 @@ import {
 } from 'common/store/ui/share-sound-to-tiktok-modal/slice'
 import { Status } from 'common/store/ui/share-sound-to-tiktok-modal/types'
 import { show as showConfetti } from 'components/music-confetti/store/slice'
-import apiClient from 'services/audius-api-client/AudiusAPIClient'
+import apiClient from 'services/coliving-api-client/ColivingAPIClient'
 import { make } from 'store/analytics/actions'
 import { AppState } from 'store/types'
 import { getErrorMessage } from 'utils/error'

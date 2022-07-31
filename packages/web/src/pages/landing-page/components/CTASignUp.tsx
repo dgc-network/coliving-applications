@@ -1,4 +1,4 @@
-import { IconArrow } from '@audius/stems'
+import { IconArrow } from '@coliving/stems'
 import { Parallax } from 'react-scroll-parallax'
 
 import footerBackgroundMobile from 'assets/img/publicSite/Footer-Background-mobile@2x.jpg'

@@ -28,7 +28,7 @@ export const setup = async () => {
   }
 }
 
-const isAudiusSetup = async () => {
+const isColivingSetup = async () => {
   if (analyticsSetupStatus === 'pending') {
     const ready = await new Promise((resolve, reject) => {
       const checkStatusInterval = setInterval(() => {
@@ -56,7 +56,7 @@ export const make = (event: AllEvents) => {
 // Identify User
 // Docs: https://segment.com/docs/connections/spec/identify
 export const identify = async ({ handle, traits = {} }: Identify) => {
-  const isSetup = await isAudiusSetup()
+  const isSetup = await isColivingSetup()
   if (!isSetup) return
   console.info('Analytics identify', handle, traits)
   ampInstance.setUserId(handle)
@@ -66,7 +66,7 @@ export const identify = async ({ handle, traits = {} }: Identify) => {
 // Track Event
 // Docs: https://segment.com/docs/connections/spec/track/
 export const track = async ({ eventName, properties }: Track) => {
-  const isSetup = await isAudiusSetup()
+  const isSetup = await isColivingSetup()
   if (!isSetup) return
   const version = VersionNumber.appVersion
   const propertiesWithContext = {
@@ -80,7 +80,7 @@ export const track = async ({ eventName, properties }: Track) => {
 // Screen Event
 // Docs: https://segment.com/docs/connections/sources/catalog/libraries/mobile/react-native/#screen
 export const screen = async ({ route, properties = {} }: Screen) => {
-  const isSetup = await isAudiusSetup()
+  const isSetup = await isColivingSetup()
   if (!isSetup) return
   console.info('Analytics screen', route, properties)
   ampInstance.logEvent(EventNames.PAGE_VIEW, { route, ...properties })

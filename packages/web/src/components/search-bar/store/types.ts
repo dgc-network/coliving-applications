@@ -1,4 +1,4 @@
-import { Collection, Status, Track, User } from '@audius/common'
+import { Collection, Status, Track, User } from '@coliving/common'
 
 export default interface SearchBarState {
   searchText: string

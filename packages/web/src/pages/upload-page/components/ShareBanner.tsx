@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
 
-import { Name, User, FeatureFlags } from '@audius/common'
-import { Button, ButtonType, IconTikTok, IconTwitterBird } from '@audius/stems'
+import { Name, User, FeatureFlags } from '@coliving/common'
+import { Button, ButtonType, IconTikTok, IconTwitterBird } from '@coliving/stems'
 import cn from 'classnames'
 import { useDispatch } from 'react-redux'
 
@@ -12,8 +12,8 @@ import { open as openTikTokModal } from 'common/store/ui/share-sound-to-tiktok-m
 import Toast from 'components/toast/Toast'
 import { MountPlacement, ComponentPlacement } from 'components/types'
 import { useFlag } from 'hooks/useRemoteConfig'
-import AudiusBackend from 'services/AudiusBackend'
-import apiClient from 'services/audius-api-client/AudiusAPIClient'
+import ColivingBackend from 'services/ColivingBackend'
+import apiClient from 'services/coliving-api-client/ColivingAPIClient'
 import { useRecord, make } from 'store/analytics/actions'
 import { copyLinkToClipboard } from 'utils/clipboardUtil'
 import {
@@ -57,7 +57,7 @@ const getContinuePage = (uploadType: UploadType) => {
 }
 
 const getTwitterHandleByUserHandle = async (userHandle: string) => {
-  const { twitterHandle } = await AudiusBackend.getCreatorSocialHandle(
+  const { twitterHandle } = await ColivingBackend.getCreatorSocialHandle(
     userHandle
   )
   return twitterHandle || ''

@@ -1,4 +1,4 @@
-import { RemoteConfigInstance } from '@audius/common'
+import { RemoteConfigInstance } from '@coliving/common'
 
 let fakeConfig: Record<string, any> = {}
 

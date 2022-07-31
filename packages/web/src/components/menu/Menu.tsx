@@ -5,7 +5,7 @@ import {
   PopupMenuItem,
   PopupMenuProps,
   PopupPosition
-} from '@audius/stems'
+} from '@coliving/stems'
 
 import { MainContentContext } from 'pages/MainContentContext'
 

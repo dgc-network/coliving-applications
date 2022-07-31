@@ -1,4 +1,4 @@
-import { Status } from '@audius/common'
+import { Status } from '@coliving/common'
 
 import * as actions from './actions'
 import NotificationState, { Notification } from './types'

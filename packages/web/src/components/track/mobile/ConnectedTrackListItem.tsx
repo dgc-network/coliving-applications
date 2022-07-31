@@ -1,6 +1,6 @@
 import { memo } from 'react'
 
-import { ID, FavoriteSource, RepostSource } from '@audius/common'
+import { ID, FavoriteSource, RepostSource } from '@coliving/common'
 import { push as pushRoute } from 'connected-react-router'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'

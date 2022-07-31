@@ -1,4 +1,4 @@
-import { OS } from '@audius/common'
+import { OS } from '@coliving/common'
 import fetchMock from 'fetch-mock'
 
 import { getDownloadLinkForSystem } from './DownloadApp'
@@ -40,20 +40,20 @@ releaseDate: '2019-10-04T21:13:43.777Z'
 
 describe('can create a download link', () => {
   beforeAll(() => {
-    fetchMock.get('https://download.audius.co/latest-mac.yml', LATEST_MAC)
-    fetchMock.get('https://download.audius.co/latest.yml', LATEST_WIN)
-    fetchMock.get('https://download.audius.co/latest-linux.yml', LATEST_LINUX)
+    fetchMock.get('https://download.coliving.co/latest-mac.yml', LATEST_MAC)
+    fetchMock.get('https://download.coliving.co/latest.yml', LATEST_WIN)
+    fetchMock.get('https://download.coliving.co/latest-linux.yml', LATEST_LINUX)
   })
   it('works for mac osx', async () => {
     const link = await getDownloadLinkForSystem(OS.MAC)
-    expect(link).toEqual('https://download.audius.co/Coliving-0.20.4.dmg')
+    expect(link).toEqual('https://download.coliving.co/Coliving-0.20.4.dmg')
   })
   it('works for windows', async () => {
     const link = await getDownloadLinkForSystem(OS.WIN)
-    expect(link).toEqual('https://download.audius.co/Coliving Setup 0.20.4.exe')
+    expect(link).toEqual('https://download.coliving.co/Coliving Setup 0.20.4.exe')
   })
   it('works for linux', async () => {
     const link = await getDownloadLinkForSystem(OS.LINUX)
-    expect(link).toEqual('https://download.audius.co/Coliving 0.20.4.AppImage')
+    expect(link).toEqual('https://download.coliving.co/Coliving 0.20.4.AppImage')
   })
 })

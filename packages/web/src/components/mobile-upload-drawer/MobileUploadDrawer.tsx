@@ -13,7 +13,7 @@ const NATIVE_MOBILE = process.env.REACT_APP_NATIVE_MOBILE
 
 const messages = {
   start: 'Start Uploading',
-  visit: 'Visit audius.co from a desktop browser',
+  visit: 'Visit coliving.co from a desktop browser',
   unlimited: 'Unlimited Uploads',
   exclusive: 'Exclusive Content',
   clear: 'Crystal Clear 320kbps'

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 
-import { ID, StringWei, Nullable } from '@audius/common'
-import { IconTrophy, IconTrending } from '@audius/stems'
+import { ID, StringWei, Nullable } from '@coliving/common'
+import { IconTrophy, IconTrending } from '@coliving/stems'
 import cn from 'classnames'
 
 import { ReactComponent as IconTip } from 'assets/img/iconTip.svg'

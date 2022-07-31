@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 
-import { Name } from '@audius/common'
-import { Modal } from '@audius/stems'
+import { Name } from '@coliving/common'
+import { Modal } from '@coliving/stems'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { getCurrentPage } from 'common/store/change-password/selectors'

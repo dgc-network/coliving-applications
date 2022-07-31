@@ -1,6 +1,6 @@
 import { ComponentType, useCallback, useState } from 'react'
 
-import { Name, Nullable } from '@audius/common'
+import { Name, Nullable } from '@coliving/common'
 import { useDispatch } from 'react-redux'
 
 import { useUIAudio } from 'common/hooks/useUIAudio'

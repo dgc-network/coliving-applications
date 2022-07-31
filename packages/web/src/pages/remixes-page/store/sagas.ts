@@ -1,4 +1,4 @@
-import { TrackMetadata } from '@audius/common'
+import { TrackMetadata } from '@coliving/common'
 import { takeEvery, call, put } from 'redux-saga/effects'
 
 import { retrieveTrackByHandleAndSlug } from 'common/store/cache/tracks/utils/retrieveTracks'

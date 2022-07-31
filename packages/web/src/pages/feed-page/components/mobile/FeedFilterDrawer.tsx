@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from 'react'
 
-import { FeedFilter } from '@audius/common'
+import { FeedFilter } from '@coliving/common'
 
 import ActionDrawer from 'components/action-drawer/ActionDrawer'
 

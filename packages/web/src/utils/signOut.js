@@ -1,8 +1,8 @@
 import { BADGE_LOCAL_STORAGE_KEY } from 'pages/audio-rewards-page/Tiers'
-import AudiusBackend from 'services/AudiusBackend'
+import ColivingBackend from 'services/ColivingBackend'
 import {
-  clearAudiusAccount,
-  clearAudiusAccountUser
+  clearColivingAccount,
+  clearColivingAccountUser
 } from 'services/LocalStorage'
 import { SignedOut } from 'services/native-mobile-interface/lifecycle'
 import { ReloadMessage } from 'services/native-mobile-interface/linking'
@@ -27,10 +27,10 @@ const removeLocalStorageItems = () => {
 
 export const signOut = async () => {
   removeLocalStorageItems()
-  clearAudiusAccount()
-  clearAudiusAccountUser()
+  clearColivingAccount()
+  clearColivingAccountUser()
   removeHasRequestedBrowserPermission()
-  await AudiusBackend.signOut()
+  await ColivingBackend.signOut()
   clearTheme()
 
   if (NATIVE_MOBILE) {

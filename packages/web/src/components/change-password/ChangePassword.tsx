@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 
-import { Status } from '@audius/common'
-import { Button, ButtonType, IconLock } from '@audius/stems'
+import { Status } from '@coliving/common'
+import { Button, ButtonType, IconLock } from '@coliving/stems'
 import cn from 'classnames'
 import { useDispatch, useSelector } from 'react-redux'
 

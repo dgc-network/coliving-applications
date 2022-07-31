@@ -1,6 +1,6 @@
 import { Component } from 'react'
 
-import { Name } from '@audius/common'
+import { Name } from '@coliving/common'
 import { push as pushRoute } from 'connected-react-router'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router'

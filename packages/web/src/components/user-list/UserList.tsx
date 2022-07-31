@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-import { ID, FollowSource, User } from '@audius/common'
+import { ID, FollowSource, User } from '@coliving/common'
 import { push as pushRoute } from 'connected-react-router'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'

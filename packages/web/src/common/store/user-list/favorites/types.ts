@@ -1,4 +1,4 @@
-import { ID, FavoriteType } from '@audius/common'
+import { ID, FavoriteType } from '@coliving/common'
 
 import { UserListStoreState } from 'common/store/user-list/types'
 

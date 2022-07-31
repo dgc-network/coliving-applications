@@ -23,7 +23,7 @@ import RadialGradient from 'react-native-radial-gradient'
 import { useSelector, useDispatch } from 'react-redux'
 
 import backgImage from 'app/assets/images/DJportrait.jpg'
-import audiusLogoHorizontal from 'app/assets/images/Horizontal-Logo-Full-Color.png'
+import colivingLogoHorizontal from 'app/assets/images/Horizontal-Logo-Full-Color.png'
 import IconArrow from 'app/assets/images/iconArrow.svg'
 import ValidationIconX from 'app/assets/images/iconValidationX.svg'
 import signupCTA from 'app/assets/images/signUpCTA.png'
@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
     paddingTop: 3,
     paddingBottom: 3
   },
-  audiusLogoHorizontal: {
+  colivingLogoHorizontal: {
     width: 194,
     height: 51,
     marginTop: 24
@@ -263,7 +263,7 @@ const messages = {
   signinDescription: 'Sign Into Your Coliving Account',
   signUp: 'Sign Up',
   signIn: 'Sign In',
-  newToAudius: 'New to Coliving?',
+  newToColiving: 'New to Coliving?',
   createAccount: 'Create an Account',
   hasAccountAlready: 'Already have an account?',
   forgotPassword: 'Forgot your password?'
@@ -515,7 +515,7 @@ const SignOn = ({ navigation }: SignOnProps) => {
   const renderFormSwitchButton = () => {
     return (
       <Text style={styles.switchFormBtnTitle}>
-        {isSignin ? `${messages.newToAudius}` : `${messages.hasAccountAlready}`}
+        {isSignin ? `${messages.newToColiving}` : `${messages.hasAccountAlready}`}
         &nbsp;
         <Text style={{ textDecorationLine: 'underline' }}>
           {isSignin ? `${messages.createAccount}` : `${messages.signIn}`}
@@ -718,8 +718,8 @@ const SignOn = ({ navigation }: SignOnProps) => {
             }}
           >
             <Image
-              source={audiusLogoHorizontal}
-              style={styles.audiusLogoHorizontal}
+              source={colivingLogoHorizontal}
+              style={styles.colivingLogoHorizontal}
             />
             <FormTitle isSignin={isSignin} />
             <TextInput

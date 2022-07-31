@@ -1,4 +1,4 @@
-import { ID } from '@audius/common'
+import { ID } from '@coliving/common'
 import { createCustomAction } from 'typesafe-actions'
 
 import { RepostType } from './types'

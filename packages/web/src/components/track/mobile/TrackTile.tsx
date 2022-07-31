@@ -1,7 +1,7 @@
 import { useCallback, useState, useEffect, MouseEvent } from 'react'
 
-import { ID } from '@audius/common'
-import { IconCrown, IconHidden, IconTrending } from '@audius/stems'
+import { ID } from '@coliving/common'
+import { IconCrown, IconHidden, IconTrending } from '@coliving/stems'
 import cn from 'classnames'
 
 import { ReactComponent as IconStar } from 'assets/img/iconStar.svg'

@@ -1,6 +1,6 @@
 <p align="center">
   <p align="center">
-    An audio-forward React Component library built with ❤️ from the team <a href="https://audius.org">@Coliving</a>.
+    An audio-forward React Component library built with ❤️ from the team <a href="https://coliving.org">@Coliving</a>.
   </p>
   <p align="center">
     <b>🚧  Actively under development, not recommended for production use! 🚧</b>
@@ -14,23 +14,23 @@
 
 ## Installation
 
-Install `@audius/stems` required peer dependencies:
+Install `@coliving/stems` required peer dependencies:
 ```bash
 npm install --save bn.js classnames@2.2.6 lodash@4.17.20 moment@2.24.0 prop-types react react-dom react-spring@8.0.27
 ```
 
-Then install `@audius/stems`
+Then install `@coliving/stems`
 ```bash
-npm install --save @audius/stems
+npm install --save @coliving/stems
 ```
 
 ## Usage
 
 ```js
 import React from 'react'
-import { Button } from '@audius/stems'
+import { Button } from '@coliving/stems'
 
-import '@audius/stems/dist/stems.css'
+import '@coliving/stems/dist/stems.css'
 
 const App = () => {
   return (
@@ -42,7 +42,7 @@ const App = () => {
 Optional: You may also wish to include the Avenir font, which is provided as a css file
 
 ```js
-import '@audius/stems/dist/avenir.css'
+import '@coliving/stems/dist/avenir.css'
 ```
 
 ## Development
@@ -73,5 +73,5 @@ npm link
 
 npm start
 
-<other repo> npm link @audius/stems
+<other repo> npm link @coliving/stems
 ```

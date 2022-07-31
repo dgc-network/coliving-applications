@@ -1,4 +1,4 @@
-import { ID, User } from '@audius/common'
+import { ID, User } from '@coliving/common'
 import { put, select } from 'typed-redux-saga/macro'
 
 import { getUser } from 'common/store/cache/users/selectors'
@@ -11,7 +11,7 @@ import {
 } from 'common/store/user-list/following/selectors'
 import UserListSagaFactory from 'common/store/user-list/sagas'
 import { createUserListProvider } from 'components/user-list/utils'
-import apiClient from 'services/audius-api-client/AudiusAPIClient'
+import apiClient from 'services/coliving-api-client/ColivingAPIClient'
 
 export const USER_LIST_TAG = 'FOLLOWING'
 

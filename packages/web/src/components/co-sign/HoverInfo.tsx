@@ -1,4 +1,4 @@
-import { ID } from '@audius/common'
+import { ID } from '@coliving/common'
 
 import { ReactComponent as IconHeart } from 'assets/img/iconHeart.svg'
 import { ReactComponent as IconRepost } from 'assets/img/iconRepost.svg'

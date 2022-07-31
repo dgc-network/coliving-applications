@@ -1,6 +1,6 @@
 import { StyleSheet, Animated } from 'react-native'
 
-import AudiusLogoHorizontal from 'app/assets/images/audiusLogoHorizontal.svg'
+import ColivingLogoHorizontal from 'app/assets/images/colivingLogoHorizontal.svg'
 import { useThemeColors } from 'app/utils/theme'
 
 import { NOW_PLAYING_HEIGHT } from './constants'
@@ -36,7 +36,7 @@ export const Logo = ({ translationAnim }: LogoProps) => {
         }
       ]}
     >
-      <AudiusLogoHorizontal fill={neutralLight4} height='100%' width='100%' />
+      <ColivingLogoHorizontal fill={neutralLight4} height='100%' width='100%' />
     </Animated.View>
   )
 }

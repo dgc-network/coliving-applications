@@ -1,4 +1,4 @@
-import { Name } from '@audius/common'
+import { Name } from '@coliving/common'
 import { push as pushRoute } from 'connected-react-router'
 import { takeEvery, put } from 'redux-saga/effects'
 

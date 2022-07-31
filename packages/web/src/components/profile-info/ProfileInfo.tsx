@@ -1,4 +1,4 @@
-import { SquareSizes, User, Nullable } from '@audius/common'
+import { SquareSizes, User, Nullable } from '@coliving/common'
 import cn from 'classnames'
 
 import UserBadges from 'components/user-badges/UserBadges'

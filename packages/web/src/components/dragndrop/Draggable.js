@@ -120,7 +120,7 @@ Draggable.propTypes = {
 Draggable.defaultProps = {
   elementType: 'div',
   text: 'Untitled',
-  link: 'https://audius.co'
+  link: 'https://coliving.co'
 }
 
 const mapStateToProps = (state, props) => ({})

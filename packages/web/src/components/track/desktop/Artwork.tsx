@@ -1,7 +1,7 @@
 import { memo } from 'react'
 
-import { ID, SquareSizes, CoverArtSizes } from '@audius/common'
-import { PbIconPlay as IconPlay, PbIconPause as IconPause } from '@audius/stems'
+import { ID, SquareSizes, CoverArtSizes } from '@coliving/common'
+import { PbIconPlay as IconPlay, PbIconPause as IconPause } from '@coliving/stems'
 import cn from 'classnames'
 import Lottie from 'react-lottie'
 

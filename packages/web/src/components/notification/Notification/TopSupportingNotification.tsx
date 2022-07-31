@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 
-import { Name } from '@audius/common'
+import { Name } from '@coliving/common'
 
 import { ReactComponent as IconTrending } from 'assets/img/iconTrending.svg'
 import { getNotificationUser } from 'common/store/notifications/selectors'

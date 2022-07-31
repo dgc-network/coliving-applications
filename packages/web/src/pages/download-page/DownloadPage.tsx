@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 
-import { MobileOS, OS } from '@audius/common'
-import { IconDownload } from '@audius/stems'
+import { MobileOS, OS } from '@coliving/common'
+import { IconDownload } from '@coliving/stems'
 import cn from 'classnames'
 import * as queryString from 'query-string'
 import { useLocation } from 'react-router-dom'

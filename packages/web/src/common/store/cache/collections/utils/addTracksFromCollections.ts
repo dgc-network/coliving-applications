@@ -1,4 +1,4 @@
-import { UserCollectionMetadata, UserTrackMetadata } from '@audius/common'
+import { UserCollectionMetadata, UserTrackMetadata } from '@coliving/common'
 
 import { processAndCacheTracks } from 'common/store/cache/tracks/utils'
 

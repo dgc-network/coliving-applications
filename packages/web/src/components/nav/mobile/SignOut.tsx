@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
 
-import { Name } from '@audius/common'
-import { Button, ButtonType } from '@audius/stems'
+import { Name } from '@coliving/common'
+import { Button, ButtonType } from '@coliving/stems'
 import cn from 'classnames'
 
 import { disablePushNotifications } from 'pages/settings-page/store/mobileSagas'

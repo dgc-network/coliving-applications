@@ -4,7 +4,7 @@ import {
   RepostSource,
   FavoriteSource,
   ShareSource
-} from '@audius/common'
+} from '@coliving/common'
 import { createCustomAction } from 'typesafe-actions'
 
 export const REPOST_TRACK = 'SOCIAL/REPOST_TRACK'

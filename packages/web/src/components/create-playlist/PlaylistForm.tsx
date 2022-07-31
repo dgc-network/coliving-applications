@@ -6,7 +6,7 @@ import {
   SquareSizes,
   DeepNullable,
   Nullable
-} from '@audius/common'
+} from '@coliving/common'
 
 import Input from 'components/data-entry/Input'
 import TextArea from 'components/data-entry/TextArea'

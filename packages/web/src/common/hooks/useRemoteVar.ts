@@ -7,7 +7,7 @@ import {
   DoubleKeys,
   StringKeys,
   RemoteConfigInstance
-} from '@audius/common'
+} from '@coliving/common'
 import { useSelector } from 'react-redux'
 
 import { isRemoteConfigLoaded } from 'common/store/remote-config/selectors'

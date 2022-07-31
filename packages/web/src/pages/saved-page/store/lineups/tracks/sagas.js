@@ -1,4 +1,4 @@
-import { Kind, makeUid } from '@audius/common'
+import { Kind, makeUid } from '@coliving/common'
 import moment from 'moment'
 import { call, select, put, takeEvery } from 'redux-saga/effects'
 

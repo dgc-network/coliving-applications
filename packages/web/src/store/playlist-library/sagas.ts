@@ -7,7 +7,7 @@ import {
   PlaylistLibraryIdentifier,
   User,
   makeKindId
-} from '@audius/common'
+} from '@coliving/common'
 import {
   all,
   call,

@@ -5,7 +5,7 @@ import {
   ProfilePictureSizes,
   SquareSizes,
   CoverArtSizes
-} from '@audius/common'
+} from '@coliving/common'
 import cn from 'classnames'
 
 import placeholderArt from 'assets/img/imageBlank2x.png'

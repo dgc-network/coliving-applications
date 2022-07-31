@@ -8,8 +8,8 @@ import {
   CoverArtSizes,
   FieldVisibility,
   Remix
-} from '@audius/common'
-import { Button, ButtonType, IconPause, IconPlay } from '@audius/stems'
+} from '@coliving/common'
+import { Button, ButtonType, IconPause, IconPlay } from '@coliving/stems'
 import cn from 'classnames'
 import Linkify from 'linkifyjs/react'
 

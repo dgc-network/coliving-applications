@@ -1,4 +1,4 @@
-import { LineupStateTrack, TimeRange } from '@audius/common'
+import { LineupStateTrack, TimeRange } from '@coliving/common'
 
 import { AppState } from 'store/types'
 

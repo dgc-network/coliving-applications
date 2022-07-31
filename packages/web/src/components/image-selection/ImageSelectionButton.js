@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react'
 
-import { Button, IconCamera, ButtonType } from '@audius/stems'
+import { Button, IconCamera, ButtonType } from '@coliving/stems'
 import cn from 'classnames'
 import PropTypes from 'prop-types'
 import ReactDropzone from 'react-dropzone'

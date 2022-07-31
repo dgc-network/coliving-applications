@@ -1,4 +1,4 @@
-import { ID, User, UserMetadata, Nullable } from '@audius/common'
+import { ID, User, UserMetadata, Nullable } from '@coliving/common'
 
 import { CollectionSortMode } from './types'
 

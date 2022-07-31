@@ -1,12 +1,12 @@
 <p align="center">
   <br/>
-  <a target="_blank" href="https://audius.co">
-    <img src="https://user-images.githubusercontent.com/2731362/90302695-e5ae8a00-de5c-11ea-88b5-24c1408affc6.png" alt="audius-client" width="300">
+  <a target="_blank" href="https://coliving.co">
+    <img src="https://user-images.githubusercontent.com/2731362/90302695-e5ae8a00-de5c-11ea-88b5-24c1408affc6.png" alt="coliving-client" width="300">
   </a>
   <br/>
 
   <p align="center">
-    The Decentralized <a target="_blank" href="https://audius.co">Coliving.co</a> Client
+    The Decentralized <a target="_blank" href="https://coliving.co">Coliving.co</a> Client
     <br/>
     🎧🎸🎹🤘🎶🥁🎷🎻🎤🔊
   </p>
@@ -15,14 +15,14 @@
 <br/>
 <br/>
 
-[![CircleCI](https://circleci.com/gh/dgc.network/audius-client.svg?style=svg)](https://circleci.com/gh/dgc.network/audius-client)
+[![CircleCI](https://circleci.com/gh/dgc.network/coliving-client.svg?style=svg)](https://circleci.com/gh/dgc.network/coliving-client)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 ## Development
 
 There are 3 environments you can develop against
-- development (local net, see the [Coliving Protocol](https://github.com/dgc.network/audius-protocol))
+- development (local net, see the [Coliving Protocol](https://github.com/dgc.network/coliving-protocol))
 - staging (test net)
 - production (main net)
 
@@ -39,21 +39,21 @@ npm run start:<environment>
 npm run build:<environment>
 ```
 
-### Using local linked version of @audius/libs (@audius/sdk)
+### Using local linked version of @coliving/libs (@coliving/sdk)
 
-To run audius-client/web with a local version of @audius/sdk run:
+To run coliving-client/web with a local version of @coliving/sdk run:
 
-- In a separate terminal for `audius-protocol/libs`
+- In a separate terminal for `coliving-protocol/libs`
 ```bash
 npm link
 npm run dev
 ```
 
-This will link @audius/sdk, and also run it it dev mode, which will transpiles changes and triggers a hot-reload in web.
+This will link @coliving/sdk, and also run it it dev mode, which will transpiles changes and triggers a hot-reload in web.
 
-- In terminal for `audius-client/packages/web`
+- In terminal for `coliving-client/packages/web`
 ```bash
-npm link @audius/sdk
+npm link @coliving/sdk
 ```
 
 Then start the application using the start/build commands above.

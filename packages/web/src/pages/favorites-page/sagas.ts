@@ -1,4 +1,4 @@
-import { ID, Collection, FavoriteType, Track } from '@audius/common'
+import { ID, Collection, FavoriteType, Track } from '@coliving/common'
 import { select, put } from 'typed-redux-saga/macro'
 
 import { getCollection } from 'common/store/cache/collections/selectors'
@@ -16,7 +16,7 @@ import {
 } from 'common/store/user-list/favorites/selectors'
 import UserListSagaFactory from 'common/store/user-list/sagas'
 import { createUserListProvider } from 'components/user-list/utils'
-import apiClient from 'services/audius-api-client/AudiusAPIClient'
+import apiClient from 'services/coliving-api-client/ColivingAPIClient'
 
 export const USER_LIST_TAG = 'FAVORITES'
 

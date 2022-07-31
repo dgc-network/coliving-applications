@@ -1,4 +1,4 @@
-import { ReactComponent as Logo } from 'assets/img/audiusLogoHorizontal.svg'
+import { ReactComponent as Logo } from 'assets/img/colivingLogoHorizontal.svg'
 
 import styles from './Header.module.css'
 

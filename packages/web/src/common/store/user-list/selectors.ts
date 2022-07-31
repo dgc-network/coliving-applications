@@ -1,4 +1,4 @@
-import { ID } from '@audius/common'
+import { ID } from '@coliving/common'
 import { createSelector } from '@reduxjs/toolkit'
 
 import {

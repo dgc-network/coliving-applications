@@ -1,4 +1,4 @@
-import { ID, LineupState, Status, Track } from '@audius/common'
+import { ID, LineupState, Status, Track } from '@coliving/common'
 
 export type SearchPageState = {
   status: Status

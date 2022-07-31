@@ -1,4 +1,4 @@
-import { TimeRange } from '@audius/common'
+import { TimeRange } from '@coliving/common'
 
 import { Genre } from 'common/utils/genres'
 

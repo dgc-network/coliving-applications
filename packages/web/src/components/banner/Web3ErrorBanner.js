@@ -7,7 +7,7 @@ import Pill from 'components/pill/Pill'
 import styles from './Web3ErrorBanner.module.css'
 
 const META_MASK_SETUP_URL =
-  'https://medium.com/@audius/configuring-metamask-for-use-with-audius-91e24bf6840'
+  'https://medium.com/@coliving/configuring-metamask-for-use-with-coliving-91e24bf6840'
 
 const Web3ErrorBanner = (props) => {
   const onAccept = () => {

@@ -1,4 +1,4 @@
-import { Nullable } from '@audius/common'
+import { Nullable } from '@coliving/common'
 import * as Sentry from '@sentry/browser'
 import { routerMiddleware, push as pushRoute } from 'connected-react-router'
 import { debounce, isEmpty, pick, pickBy } from 'lodash'

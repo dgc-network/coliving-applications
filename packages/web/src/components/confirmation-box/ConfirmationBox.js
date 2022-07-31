@@ -1,4 +1,4 @@
-import { Button, ButtonSize, ButtonType } from '@audius/stems'
+import { Button, ButtonSize, ButtonType } from '@coliving/stems'
 import PropTypes from 'prop-types'
 
 import styles from './ConfirmationBox.module.css'

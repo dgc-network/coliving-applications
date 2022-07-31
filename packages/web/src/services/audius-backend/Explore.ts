@@ -1,15 +1,15 @@
-import { ID, Collection, FeedFilter, Track, UserTrack } from '@audius/common'
+import { ID, Collection, FeedFilter, Track, UserTrack } from '@coliving/common'
 
-import AudiusBackend, {
+import ColivingBackend, {
   IDENTITY_SERVICE,
   AuthHeaders
-} from 'services/AudiusBackend'
-import apiClient from 'services/audius-api-client/AudiusAPIClient'
+} from 'services/ColivingBackend'
+import apiClient from 'services/coliving-api-client/ColivingAPIClient'
 
 type CollectionWithScore = Collection & { score: number }
 
 // @ts-ignore
-const libs = () => window.audiusLibs
+const libs = () => window.colivingLibs
 
 const scoreComparator = <T extends { score: number }>(a: T, b: T) =>
   b.score - a.score
@@ -27,7 +27,7 @@ class Explore {
   /** TRACKS ENDPOINTS */
   static async getTopUserListens(): Promise<TopUserListen[]> {
     try {
-      const { data, signature } = await AudiusBackend.signData()
+      const { data, signature } = await ColivingBackend.signData()
       return fetch(`${IDENTITY_SERVICE}/users/listens/top`, {
         headers: {
           [AuthHeaders.Message]: data,
@@ -44,7 +44,7 @@ class Explore {
 
   static async getUserListens(trackIds: ID[]): Promise<UserListens> {
     try {
-      const { data, signature } = await AudiusBackend.signData()
+      const { data, signature } = await ColivingBackend.signData()
       const idQuery = trackIds.map((id) => `&trackIdList=${id}`).join('')
       return fetch(`${IDENTITY_SERVICE}/users/listens?${idQuery}`, {
         headers: {
@@ -80,7 +80,7 @@ class Explore {
 
   static async getFeedNotListenedTo(limit = 25) {
     try {
-      const tracks: UserTrack[] = await AudiusBackend.getSocialFeed({
+      const tracks: UserTrack[] = await ColivingBackend.getSocialFeed({
         filter: FeedFilter.ORIGINAL,
         offset: 0,
         limit: 100,

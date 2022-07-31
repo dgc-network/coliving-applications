@@ -5,7 +5,7 @@ import {
   BNAudio,
   StringAudio,
   StringWei
-} from '@audius/common'
+} from '@coliving/common'
 import { createSelector } from 'reselect'
 
 import { CommonState } from 'common/store'

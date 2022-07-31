@@ -7,7 +7,7 @@ import {
   Track,
   User,
   Uid
-} from '@audius/common'
+} from '@coliving/common'
 
 import { CommonState } from 'common/store'
 import { getAllEntries, getEntry } from 'common/store/cache/selectors'

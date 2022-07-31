@@ -1,4 +1,4 @@
-import { ButtonSize, IconArrowWhite, Button, ButtonType } from '@audius/stems'
+import { ButtonSize, IconArrowWhite, Button, ButtonType } from '@coliving/stems'
 import cn from 'classnames'
 
 import styles from './DeactivatedProfileTombstone.module.css'

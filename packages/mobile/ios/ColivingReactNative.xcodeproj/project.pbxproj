@@ -12,7 +12,7 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		13B32CE723D2782B002F0526 /* SampleSwiftFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B32CE623D2782B002F0526 /* SampleSwiftFile.swift */; };
-		1D1C74AC9C45BDAA287388AB /* libPods-AudiusReactNative.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C7BA0E377C49EAD2B77B4D02 /* libPods-AudiusReactNative.a */; };
+		1D1C74AC9C45BDAA287388AB /* libPods-ColivingReactNative.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C7BA0E377C49EAD2B77B4D02 /* libPods-ColivingReactNative.a */; };
 		32FE1B49FE7E47B69CF28E06 /* AvenirNextLTPro-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = EA6D8E31A68B4451B423AFF0 /* AvenirNextLTPro-Bold.otf */; };
 		5983D8FED74747CCA45F8FC4 /* AvenirNextLTPro-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 33E11CC84EEA4109B8A1AE2C /* AvenirNextLTPro-Medium.otf */; };
 		717F36E82733C73F0017511F /* AvenirNextLTPro-DemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 717F36E72733C73F0017511F /* AvenirNextLTPro-DemiBold.otf */; };
@@ -31,18 +31,18 @@
 /* Begin PBXFileReference section */
 		008F07F21AC5B25A0029DE68 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		00E356F21AD99517003FC87E /* AudiusReactNativeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AudiusReactNativeTests.m; sourceTree = "<group>"; };
-		13B07F961A680F5B00A75B9A /* Coliving Music.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Coliving Music.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = AudiusReactNative/AppDelegate.h; sourceTree = "<group>"; };
-		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = AudiusReactNative/AppDelegate.m; sourceTree = "<group>"; };
+		00E356F21AD99517003FC87E /* ColivingReactNativeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ColivingReactNativeTests.m; sourceTree = "<group>"; };
+		13B07F961A680F5B00A75B9A /* Coliving.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Coliving.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = ColivingReactNative/AppDelegate.h; sourceTree = "<group>"; };
+		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = ColivingReactNative/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB21A68108700A75B9A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = AudiusReactNative/Images.xcassets; sourceTree = "<group>"; };
-		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = AudiusReactNative/Info.plist; sourceTree = "<group>"; };
-		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = AudiusReactNative/main.m; sourceTree = "<group>"; };
-		13B32CE523D2782A002F0526 /* AudiusReactNative-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AudiusReactNative-Bridging-Header.h"; sourceTree = "<group>"; };
+		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = ColivingReactNative/Images.xcassets; sourceTree = "<group>"; };
+		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = ColivingReactNative/Info.plist; sourceTree = "<group>"; };
+		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = ColivingReactNative/main.m; sourceTree = "<group>"; };
+		13B32CE523D2782A002F0526 /* ColivingReactNative-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ColivingReactNative-Bridging-Header.h"; sourceTree = "<group>"; };
 		13B32CE623D2782B002F0526 /* SampleSwiftFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleSwiftFile.swift; sourceTree = "<group>"; };
 		33E11CC84EEA4109B8A1AE2C /* AvenirNextLTPro-Medium.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "AvenirNextLTPro-Medium.otf"; path = "../src/assets/fonts/AvenirNextLTPro-Medium.otf"; sourceTree = "<group>"; };
-		5F7BF21B8CA5939E46BBE018 /* Pods-AudiusReactNative.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AudiusReactNative.debug.xcconfig"; path = "Target Support Files/Pods-AudiusReactNative/Pods-AudiusReactNative.debug.xcconfig"; sourceTree = "<group>"; };
+		5F7BF21B8CA5939E46BBE018 /* Pods-ColivingReactNative.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ColivingReactNative.debug.xcconfig"; path = "Target Support Files/Pods-ColivingReactNative/Pods-ColivingReactNative.debug.xcconfig"; sourceTree = "<group>"; };
 		6F65A9A9BAD047FABD240C59 /* AvenirNextLTPro-Regular.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "AvenirNextLTPro-Regular.otf"; path = "../src/assets/fonts/AvenirNextLTPro-Regular.otf"; sourceTree = "<group>"; };
 		717F36E72733C73F0017511F /* AvenirNextLTPro-DemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "AvenirNextLTPro-DemiBold.otf"; path = "../src/assets/fonts/AvenirNextLTPro-DemiBold.otf"; sourceTree = "<group>"; };
 		838AABDF23CE3813004B2DA3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -51,14 +51,14 @@
 		83F7359E23C55C2D0040A4C5 /* AirplayViewManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AirplayViewManager.m; sourceTree = "<group>"; };
 		83F735A423C64C950040A4C5 /* AirplayEvent.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AirplayEvent.m; sourceTree = "<group>"; };
 		8FFE615B56774422849C5A08 /* AvenirNextLTPro-Light.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "AvenirNextLTPro-Light.otf"; path = "../src/assets/fonts/AvenirNextLTPro-Light.otf"; sourceTree = "<group>"; };
-		A20D1DBF23ABDA2B003D6530 /* Coliving Music.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = "Coliving Music.entitlements"; path = "AudiusReactNative/Coliving Music.entitlements"; sourceTree = "<group>"; };
-		AB456077D7BA5F103540F98A /* Pods-AudiusReactNative.bounce.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AudiusReactNative.bounce.release.xcconfig"; path = "Target Support Files/Pods-AudiusReactNative/Pods-AudiusReactNative.bounce.release.xcconfig"; sourceTree = "<group>"; };
-		AE4E2F21CB0C756441EA2941 /* Pods-AudiusReactNative.bounce.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AudiusReactNative.bounce.debug.xcconfig"; path = "Target Support Files/Pods-AudiusReactNative/Pods-AudiusReactNative.bounce.debug.xcconfig"; sourceTree = "<group>"; };
+		A20D1DBF23ABDA2B003D6530 /* Coliving.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = "Coliving.entitlements"; path = "ColivingReactNative/Coliving.entitlements"; sourceTree = "<group>"; };
+		AB456077D7BA5F103540F98A /* Pods-ColivingReactNative.bounce.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ColivingReactNative.bounce.release.xcconfig"; path = "Target Support Files/Pods-ColivingReactNative/Pods-ColivingReactNative.bounce.release.xcconfig"; sourceTree = "<group>"; };
+		AE4E2F21CB0C756441EA2941 /* Pods-ColivingReactNative.bounce.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ColivingReactNative.bounce.debug.xcconfig"; path = "Target Support Files/Pods-ColivingReactNative/Pods-ColivingReactNative.bounce.debug.xcconfig"; sourceTree = "<group>"; };
 		BAEB40775EC64F48AC1983F7 /* AvenirNextLTPro-Thin.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "AvenirNextLTPro-Thin.otf"; path = "../src/assets/fonts/AvenirNextLTPro-Thin.otf"; sourceTree = "<group>"; };
-		C7BA0E377C49EAD2B77B4D02 /* libPods-AudiusReactNative.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AudiusReactNative.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C7BA0E377C49EAD2B77B4D02 /* libPods-ColivingReactNative.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ColivingReactNative.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D40C2F0A0A4641D18D426558 /* AvenirNextLTPro-Heavy.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "AvenirNextLTPro-Heavy.otf"; path = "../src/assets/fonts/AvenirNextLTPro-Heavy.otf"; sourceTree = "<group>"; };
 		D83DC634C3DC44B588896E10 /* AvenirNextLTPro-UltLt.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "AvenirNextLTPro-UltLt.otf"; path = "../src/assets/fonts/AvenirNextLTPro-UltLt.otf"; sourceTree = "<group>"; };
-		DEDD0DBCA2181D0CE2C5A21D /* Pods-AudiusReactNative.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AudiusReactNative.release.xcconfig"; path = "Target Support Files/Pods-AudiusReactNative/Pods-AudiusReactNative.release.xcconfig"; sourceTree = "<group>"; };
+		DEDD0DBCA2181D0CE2C5A21D /* Pods-ColivingReactNative.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ColivingReactNative.release.xcconfig"; path = "Target Support Files/Pods-ColivingReactNative/Pods-ColivingReactNative.release.xcconfig"; sourceTree = "<group>"; };
 		EA6D8E31A68B4451B423AFF0 /* AvenirNextLTPro-Bold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "AvenirNextLTPro-Bold.otf"; path = "../src/assets/fonts/AvenirNextLTPro-Bold.otf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
@@ -69,20 +69,20 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1D1C74AC9C45BDAA287388AB /* libPods-AudiusReactNative.a in Frameworks */,
+				1D1C74AC9C45BDAA287388AB /* libPods-ColivingReactNative.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		00E356EF1AD99517003FC87E /* AudiusReactNativeTests */ = {
+		00E356EF1AD99517003FC87E /* ColivingReactNativeTests */ = {
 			isa = PBXGroup;
 			children = (
-				00E356F21AD99517003FC87E /* AudiusReactNativeTests.m */,
+				00E356F21AD99517003FC87E /* ColivingReactNativeTests.m */,
 				00E356F01AD99517003FC87E /* Supporting Files */,
 			);
-			path = AudiusReactNativeTests;
+			path = ColivingReactNativeTests;
 			sourceTree = "<group>";
 		};
 		00E356F01AD99517003FC87E /* Supporting Files */ = {
@@ -93,11 +93,11 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		13B07FAE1A68108700A75B9A /* AudiusReactNative */ = {
+		13B07FAE1A68108700A75B9A /* ColivingReactNative */ = {
 			isa = PBXGroup;
 			children = (
 				838AABDF23CE3813004B2DA3 /* GoogleService-Info.plist */,
-				A20D1DBF23ABDA2B003D6530 /* Coliving Music.entitlements */,
+				A20D1DBF23ABDA2B003D6530 /* Coliving.entitlements */,
 				83D3A5312399E3290084E702 /* Web.bundle */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
@@ -109,7 +109,7 @@
 				83F7359E23C55C2D0040A4C5 /* AirplayViewManager.m */,
 				83F735A423C64C950040A4C5 /* AirplayEvent.m */,
 			);
-			name = AudiusReactNative;
+			name = ColivingReactNative;
 			sourceTree = "<group>";
 		};
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
@@ -118,7 +118,7 @@
 				83E8F64123F6101600817622 /* libRNAnalytics.a */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
-				C7BA0E377C49EAD2B77B4D02 /* libPods-AudiusReactNative.a */,
+				C7BA0E377C49EAD2B77B4D02 /* libPods-ColivingReactNative.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -134,13 +134,13 @@
 			isa = PBXGroup;
 			children = (
 				13B32CE623D2782B002F0526 /* SampleSwiftFile.swift */,
-				13B07FAE1A68108700A75B9A /* AudiusReactNative */,
+				13B07FAE1A68108700A75B9A /* ColivingReactNative */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
-				00E356EF1AD99517003FC87E /* AudiusReactNativeTests */,
+				00E356EF1AD99517003FC87E /* ColivingReactNativeTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				9203ADA7911C8949B98165F4 /* Pods */,
-				13B32CE523D2782A002F0526 /* AudiusReactNative-Bridging-Header.h */,
+				13B32CE523D2782A002F0526 /* ColivingReactNative-Bridging-Header.h */,
 				A5F065694F9E40CE97972CFA /* Resources */,
 				F2E727A52732EE4F008E4614 /* Recovered References */,
 			);
@@ -152,7 +152,7 @@
 		83CBBA001A601CBA00E9B192 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13B07F961A680F5B00A75B9A /* Coliving Music.app */,
+				13B07F961A680F5B00A75B9A /* Coliving.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -160,10 +160,10 @@
 		9203ADA7911C8949B98165F4 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				5F7BF21B8CA5939E46BBE018 /* Pods-AudiusReactNative.debug.xcconfig */,
-				AE4E2F21CB0C756441EA2941 /* Pods-AudiusReactNative.bounce.debug.xcconfig */,
-				DEDD0DBCA2181D0CE2C5A21D /* Pods-AudiusReactNative.release.xcconfig */,
-				AB456077D7BA5F103540F98A /* Pods-AudiusReactNative.bounce.release.xcconfig */,
+				5F7BF21B8CA5939E46BBE018 /* Pods-ColivingReactNative.debug.xcconfig */,
+				AE4E2F21CB0C756441EA2941 /* Pods-ColivingReactNative.bounce.debug.xcconfig */,
+				DEDD0DBCA2181D0CE2C5A21D /* Pods-ColivingReactNative.release.xcconfig */,
+				AB456077D7BA5F103540F98A /* Pods-ColivingReactNative.bounce.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -193,9 +193,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		13B07F861A680F5B00A75B9A /* AudiusReactNative */ = {
+		13B07F861A680F5B00A75B9A /* ColivingReactNative */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "AudiusReactNative" */;
+			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "ColivingReactNative" */;
 			buildPhases = (
 				A01BECF0B0EF53DA4206ABAD /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
@@ -214,9 +214,9 @@
 			);
 			dependencies = (
 			);
-			name = AudiusReactNative;
-			productName = AudiusReactNative;
-			productReference = 13B07F961A680F5B00A75B9A /* Coliving Music.app */;
+			name = ColivingReactNative;
+			productName = ColivingReactNative;
+			productReference = 13B07F961A680F5B00A75B9A /* Coliving.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -235,7 +235,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "AudiusReactNative" */;
+			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "ColivingReactNative" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -249,7 +249,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				13B07F861A680F5B00A75B9A /* AudiusReactNative */,
+				13B07F861A680F5B00A75B9A /* ColivingReactNative */,
 			);
 		};
 /* End PBXProject section */
@@ -312,7 +312,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-AudiusReactNative/Pods-AudiusReactNative-resources.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-ColivingReactNative/Pods-ColivingReactNative-resources.sh",
 				"${PODS_ROOT}/Amplitude/Sources/Resources/ComodoRsaDomainValidationCA.der",
 				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core/AccessibilityResources.bundle",
 				"${PODS_ROOT}/google-cast-sdk-no-bluetooth/GoogleCastSDK-ios-4.7.0_static/GoogleCast.framework/GoogleCastCoreResources.bundle",
@@ -327,7 +327,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AudiusReactNative/Pods-AudiusReactNative-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ColivingReactNative/Pods-ColivingReactNative-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		838AABE123CE404D004B2DA3 /* ShellScript */ = {
@@ -362,7 +362,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-AudiusReactNative-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-ColivingReactNative-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -375,7 +375,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-AudiusReactNative/Pods-AudiusReactNative-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-ColivingReactNative/Pods-ColivingReactNative-frameworks.sh",
 				"${PODS_XCFRAMEWORKS_BUILD_DIR}/OpenSSL-Universal/OpenSSL.framework/OpenSSL",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -384,7 +384,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AudiusReactNative/Pods-AudiusReactNative-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ColivingReactNative/Pods-ColivingReactNative-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		C6D113CAABADFDC38DBF425F /* [CP-User] [RNFB] Crashlytics Configuration */ = {
@@ -457,7 +457,7 @@
 				13B07FB21A68108700A75B9A /* Base */,
 			);
 			name = LaunchScreen.xib;
-			path = AudiusReactNative;
+			path = ColivingReactNative;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -465,19 +465,19 @@
 /* Begin XCBuildConfiguration section */
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5F7BF21B8CA5939E46BBE018 /* Pods-AudiusReactNative.debug.xcconfig */;
+			baseConfigurationReference = 5F7BF21B8CA5939E46BBE018 /* Pods-ColivingReactNative.debug.xcconfig */;
 			buildSettings = {
-				APP_DISPLAY_NAME = "Coliving Music";
+				APP_DISPLAY_NAME = "Coliving";
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon${BUNDLE_ID_SUFFIX}";
 				BUNDLE_ID_SUFFIX = "";
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = "AudiusReactNative/Coliving Music.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "ColivingReactNative/Coliving.entitlements";
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = LRFCG93S85;
 				EXCLUDED_ARCHS = "";
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
-				INFOPLIST_FILE = AudiusReactNative/Info.plist;
+				INFOPLIST_FILE = ColivingReactNative/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -485,10 +485,10 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = co.audius.audiusmusic;
-				PRODUCT_NAME = "Coliving Music";
-				PROVISIONING_PROFILE_SPECIFIER = "match Development co.audius.audiusmusic";
-				SWIFT_OBJC_BRIDGING_HEADER = "AudiusReactNative-Bridging-Header.h";
+				PRODUCT_BUNDLE_IDENTIFIER = co.coliving.colivingmusic;
+				PRODUCT_NAME = "Coliving";
+				PROVISIONING_PROFILE_SPECIFIER = "match Development co.coliving.colivingmusic";
+				SWIFT_OBJC_BRIDGING_HEADER = "ColivingReactNative-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -497,19 +497,19 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DEDD0DBCA2181D0CE2C5A21D /* Pods-AudiusReactNative.release.xcconfig */;
+			baseConfigurationReference = DEDD0DBCA2181D0CE2C5A21D /* Pods-ColivingReactNative.release.xcconfig */;
 			buildSettings = {
-				APP_DISPLAY_NAME = "Coliving Music";
+				APP_DISPLAY_NAME = "Coliving";
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon${BUNDLE_ID_SUFFIX}";
 				BUNDLE_ID_SUFFIX = "";
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = "AudiusReactNative/Coliving Music.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "ColivingReactNative/Coliving.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = LRFCG93S85;
 				EXCLUDED_ARCHS = "";
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
-				INFOPLIST_FILE = AudiusReactNative/Info.plist;
+				INFOPLIST_FILE = ColivingReactNative/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -517,10 +517,10 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = co.audius.audiusmusic;
-				PRODUCT_NAME = "Coliving Music";
-				PROVISIONING_PROFILE_SPECIFIER = "match Development co.audius.audiusmusic";
-				SWIFT_OBJC_BRIDGING_HEADER = "AudiusReactNative-Bridging-Header.h";
+				PRODUCT_BUNDLE_IDENTIFIER = co.coliving.colivingmusic;
+				PRODUCT_NAME = "Coliving";
+				PROVISIONING_PROFILE_SPECIFIER = "match Development co.coliving.colivingmusic";
+				SWIFT_OBJC_BRIDGING_HEADER = "ColivingReactNative-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -689,20 +689,20 @@
 		};
 		D4E8207324577D66007BFEE4 /* Bounce.Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = AE4E2F21CB0C756441EA2941 /* Pods-AudiusReactNative.bounce.debug.xcconfig */;
+			baseConfigurationReference = AE4E2F21CB0C756441EA2941 /* Pods-ColivingReactNative.bounce.debug.xcconfig */;
 			buildSettings = {
 				APP_DISPLAY_NAME = "Coliving Bounce";
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon${BUNDLE_ID_SUFFIX}";
 				BUNDLE_ID_SUFFIX = .bounce;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = "AudiusReactNative/Coliving Music.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "ColivingReactNative/Coliving.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = LRFCG93S85;
 				EXCLUDED_ARCHS = "";
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
-				INFOPLIST_FILE = AudiusReactNative/Info.plist;
+				INFOPLIST_FILE = ColivingReactNative/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -710,10 +710,10 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = co.audius.audiusmusic.bounce;
+				PRODUCT_BUNDLE_IDENTIFIER = co.coliving.colivingmusic.bounce;
 				PRODUCT_NAME = "Coliving Bounce Music";
-				PROVISIONING_PROFILE_SPECIFIER = "match Development co.audius.audiusmusic.bounce";
-				SWIFT_OBJC_BRIDGING_HEADER = "AudiusReactNative-Bridging-Header.h";
+				PROVISIONING_PROFILE_SPECIFIER = "match Development co.coliving.colivingmusic.bounce";
+				SWIFT_OBJC_BRIDGING_HEADER = "ColivingReactNative-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -771,19 +771,19 @@
 		};
 		D4E8207524577D78007BFEE4 /* Bounce.Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = AB456077D7BA5F103540F98A /* Pods-AudiusReactNative.bounce.release.xcconfig */;
+			baseConfigurationReference = AB456077D7BA5F103540F98A /* Pods-ColivingReactNative.bounce.release.xcconfig */;
 			buildSettings = {
 				APP_DISPLAY_NAME = "Coliving Bounce";
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon${BUNDLE_ID_SUFFIX}";
 				BUNDLE_ID_SUFFIX = .bounce;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = "AudiusReactNative/Coliving Music.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "ColivingReactNative/Coliving.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = LRFCG93S85;
 				EXCLUDED_ARCHS = "";
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
-				INFOPLIST_FILE = AudiusReactNative/Info.plist;
+				INFOPLIST_FILE = ColivingReactNative/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -791,10 +791,10 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = co.audius.audiusmusic.bounce;
+				PRODUCT_BUNDLE_IDENTIFIER = co.coliving.colivingmusic.bounce;
 				PRODUCT_NAME = "Coliving Bounce Music";
-				PROVISIONING_PROFILE_SPECIFIER = "match Development co.audius.audiusmusic.bounce";
-				SWIFT_OBJC_BRIDGING_HEADER = "AudiusReactNative-Bridging-Header.h";
+				PROVISIONING_PROFILE_SPECIFIER = "match Development co.coliving.colivingmusic.bounce";
+				SWIFT_OBJC_BRIDGING_HEADER = "ColivingReactNative-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -803,7 +803,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "AudiusReactNative" */ = {
+		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "ColivingReactNative" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				13B07F941A680F5B00A75B9A /* Debug */,
@@ -814,7 +814,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "AudiusReactNative" */ = {
+		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "ColivingReactNative" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				83CBBA201A601CBA00E9B192 /* Debug */,

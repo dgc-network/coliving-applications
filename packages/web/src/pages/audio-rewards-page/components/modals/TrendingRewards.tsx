@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 
-import { Theme, StringKeys } from '@audius/common'
-import { TabSlider } from '@audius/stems'
+import { Theme, StringKeys } from '@coliving/common'
+import { TabSlider } from '@coliving/stems'
 import cn from 'classnames'
 import { useDispatch } from 'react-redux'
 import { TwitterTweetEmbed } from 'react-twitter-embed'
@@ -82,7 +82,7 @@ const textMap = {
   }
 }
 
-const TOS_URL = 'https://blog.audius.co/posts/audio-rewards'
+const TOS_URL = 'https://blog.coliving.co/posts/audio-rewards'
 
 // Getters and setters for whether we're looking at
 // trending playlists or trending tracks

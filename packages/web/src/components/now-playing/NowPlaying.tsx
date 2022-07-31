@@ -8,8 +8,8 @@ import {
   Name,
   ShareSource,
   SquareSizes
-} from '@audius/common'
-import { Scrubber } from '@audius/stems'
+} from '@coliving/common'
+import { Scrubber } from '@coliving/stems'
 import cn from 'classnames'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'

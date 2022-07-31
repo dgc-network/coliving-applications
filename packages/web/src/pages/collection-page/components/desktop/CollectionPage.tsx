@@ -7,7 +7,7 @@ import {
   Variant,
   Status,
   User
-} from '@audius/common'
+} from '@coliving/common'
 
 import {
   CollectionTrack,

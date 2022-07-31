@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 
-import { SmartCollectionVariant } from '@audius/common'
+import { SmartCollectionVariant } from '@coliving/common'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 

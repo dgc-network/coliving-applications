@@ -1,4 +1,4 @@
-import { Modal } from '@audius/stems'
+import { Modal } from '@coliving/stems'
 
 import { ReactComponent as IconQuestionMark } from 'assets/img/iconQuestionMark.svg'
 import Toast from 'components/toast/Toast'
@@ -13,7 +13,7 @@ const messages = {
     'To restore access to your account, please search for the email we sent when you first signed up.',
   fromHeader: 'From:',
   subjectHeader: 'Subject:',
-  from: 'recovery@audius.co',
+  from: 'recovery@coliving.co',
   subject: '"Save This Email: Coliving Password Recovery"',
   copied: 'Copied to Clipboard!'
 }

@@ -1,11 +1,11 @@
-import AudiusBackend, {
+import ColivingBackend, {
   AuthHeaders,
   IDENTITY_SERVICE
-} from 'services/AudiusBackend'
-import { waitForLibsInit } from 'services/audius-backend/eagerLoadUtils'
+} from 'services/ColivingBackend'
+import { waitForLibsInit } from 'services/coliving-backend/eagerLoadUtils'
 
 // @ts-ignore
-const libs = () => window.audiusLibs
+const libs = () => window.colivingLibs
 
 type HttpMethod = 'POST' | 'GET' | 'PUT' | 'DELETE' | 'PATCH'
 
@@ -33,7 +33,7 @@ async function _makeRequest<ResponseModel>({
     if (!account) {
       throw new Error('Cognito Identity Request Failed: Missing current user')
     }
-    const { data, signature } = await AudiusBackend.signData()
+    const { data, signature } = await ColivingBackend.signData()
     options.headers = {
       [AuthHeaders.Message]: data,
       [AuthHeaders.Signature]: signature

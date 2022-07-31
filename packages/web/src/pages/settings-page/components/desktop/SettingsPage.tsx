@@ -1,6 +1,6 @@
 import { Component } from 'react'
 
-import { ID, ProfilePictureSizes, OS, Theme } from '@audius/common'
+import { ID, ProfilePictureSizes, OS, Theme } from '@coliving/common'
 import {
   Modal,
   Button,
@@ -9,10 +9,10 @@ import {
   IconLock,
   IconNotification,
   IconSignOut
-} from '@audius/stems'
+} from '@coliving/stems'
 import cn from 'classnames'
 
-import audiusIcon from 'assets/img/audiusIcon.png'
+import colivingIcon from 'assets/img/colivingIcon.png'
 import { InstagramProfile } from 'common/store/account/reducer'
 import {
   Notifications,
@@ -27,7 +27,7 @@ import Page from 'components/page/Page'
 import { SelectedServices } from 'components/service-selection'
 import Toast from 'components/toast/Toast'
 import { ComponentPlacement } from 'components/types'
-import AudiusBackend from 'services/AudiusBackend'
+import ColivingBackend from 'services/ColivingBackend'
 import DownloadApp from 'services/download-app/DownloadApp'
 import { isMobile, isElectron, getOS } from 'utils/clientUtil'
 import { COPYRIGHT_TEXT } from 'utils/copyright'
@@ -138,7 +138,7 @@ class SettingsPage extends Component<SettingsPageProps, SettingsPageState> {
 
   showEmailToast = async () => {
     try {
-      await AudiusBackend.sendRecoveryEmail()
+      await ColivingBackend.sendRecoveryEmail()
       this.setState({ emailToastText: messages.emailSent })
       this.props.recordAccountRecovery()
     } catch (e) {
@@ -295,7 +295,7 @@ class SettingsPage extends Component<SettingsPageProps, SettingsPageState> {
                 leftIcon={
                   <img
                     alt='Coliving Icon'
-                    src={audiusIcon}
+                    src={colivingIcon}
                     style={{ width: '24px', height: '24px' }}
                   />
                 }

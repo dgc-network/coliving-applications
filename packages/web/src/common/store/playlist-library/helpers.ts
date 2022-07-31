@@ -5,7 +5,7 @@ import {
   PlaylistLibraryFolder,
   SmartCollectionVariant,
   uuid
-} from '@audius/common'
+} from '@coliving/common'
 import isEmpty from 'lodash/isEmpty'
 
 import { AccountCollection } from '../account/reducer'
