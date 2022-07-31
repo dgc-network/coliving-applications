@@ -37,7 +37,7 @@ import { useWithMobileStyle } from 'hooks/useWithMobileStyle'
 import { getFeatureEnabled } from 'services/remote-config/featureFlagHelpers'
 import { isMobile } from 'utils/clientUtil'
 import { useSelector } from 'utils/reducer'
-import { AUDIUS_DISCORD_LINK } from 'utils/route'
+import { COLIVING_DISCORD_LINK } from 'utils/route'
 
 import styles from './WalletModal.module.css'
 import ConnectWalletsBody from './components/ConnectWalletsBody'
@@ -353,7 +353,7 @@ const WalletModal = () => {
   }
 
   const onLaunchDiscord = () => {
-    window.open(AUDIUS_DISCORD_LINK, '_blank')
+    window.open(COLIVING_DISCORD_LINK, '_blank')
   }
 
   const { status } = useSelector(getAssociatedWallets)

@@ -105,7 +105,7 @@ const SEARCH_MAX_TOTAL_RESULTS = 50
 const IMAGE_CACHE_MAX_SIZE = 200
 
 const NATIVE_MOBILE = process.env.REACT_APP_NATIVE_MOBILE === 'true'
-const AUDIUS_ORIGIN = `${process.env.REACT_APP_PUBLIC_PROTOCOL}//${process.env.REACT_APP_PUBLIC_HOSTNAME}`
+const COLIVING_ORIGIN = `${process.env.REACT_APP_PUBLIC_PROTOCOL}//${process.env.REACT_APP_PUBLIC_HOSTNAME}`
 
 export const AuthHeaders = Object.freeze({
   Message: 'Encoded-Data-Message',
@@ -1797,7 +1797,7 @@ class AudiusBackend {
 
   static _getHostUrl() {
     return NATIVE_MOBILE && process.env.REACT_APP_ENVIRONMENT === 'production'
-      ? AUDIUS_ORIGIN
+      ? COLIVING_ORIGIN
       : window.location.origin
   }
 

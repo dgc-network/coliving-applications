@@ -12,13 +12,13 @@ import { removeHasRequestedBrowserPermission } from 'utils/browserNotifications'
 import { clearTheme } from './theme/theme'
 
 const NATIVE_MOBILE = process.env.REACT_APP_NATIVE_MOBILE
-const AUDIUS_EVENTS = 'events'
-const AUDIUS_USE_METAMASK = 'useMetaMask'
+const COLIVING_EVENTS = 'events'
+const COLIVING_USE_METAMASK = 'useMetaMask'
 
 const removeLocalStorageItems = () => {
   const items = [
-    AUDIUS_EVENTS,
-    AUDIUS_USE_METAMASK,
+    COLIVING_EVENTS,
+    COLIVING_USE_METAMASK,
     BADGE_LOCAL_STORAGE_KEY,
     IS_MOBILE_USER_KEY
   ]

@@ -48,10 +48,10 @@ export const URL_SCHEME = '://'
 const URL_INTERCEPT_PATTERN = new RegExp(
   `^(http://localhost|file:///|://|https://platform.twitter|https://www.google.com/recaptcha/.*|${URL_OVERRIDE}.*)`
 )
-const AUDIUS_SITE_PREFIX = /^(https|http):\/\/.co\//
-const AUDIUS_REDIRECT_SITE_PREFIX =
+const COLIVING_SITE_PREFIX = /^(https|http):\/\/.co\//
+const COLIVING_REDIRECT_SITE_PREFIX =
   /^(https|http):\/\/redirect..co\/app-redirect\//
-const AUDIUS_PORT_INCLUDE_PATTERN = /(:3100|:3101)/
+const COLIVING_PORT_INCLUDE_PATTERN = /(:3100|:3101)/
 
 // Android Paths
 const DOCUMENT_DIRECTORY_PATH = RNFS.DocumentDirectoryPath
@@ -60,7 +60,7 @@ const ANDROID_BUNDLE_PATH = `${DOCUMENT_DIRECTORY_PATH}/${BUNDLE_PATH}`
 
 // If a link is opened from the DApp and is in this list, it is opened in the browser
 // rather than as a deep link
-const AUDIUS_WEBLINK_WHITELIST = new Set([
+const COLIVING_WEBLINK_WHITELIST = new Set([
   'https://.co/legal/terms-of-use',
   'https://.co/legal/privacy-policy'
 ])
@@ -265,8 +265,8 @@ const WebApp = ({
     (routeUrl: string) => {
       const trimmedRoute = `/${routeUrl
         .replace(URL_SCHEME, '')
-        .replace(AUDIUS_SITE_PREFIX, '')
-        .replace(AUDIUS_REDIRECT_SITE_PREFIX, '')}`
+        .replace(COLIVING_SITE_PREFIX, '')
+        .replace(COLIVING_REDIRECT_SITE_PREFIX, '')}`
       if (!webRef.current) return
       postMessage(webRef.current, {
         type: MessageType.PUSH_ROUTE,
@@ -410,16 +410,16 @@ const WebApp = ({
     let { url: eventUrl } = event
     // First see if it's a link to an Coliving page, and redirect
     // within the app if so.
-    const audiusPrefixMatches = eventUrl.match(AUDIUS_SITE_PREFIX)
-    const audiusPortIncludes = eventUrl.match(AUDIUS_PORT_INCLUDE_PATTERN)
+    const audiusPrefixMatches = eventUrl.match(COLIVING_SITE_PREFIX)
+    const audiusPortIncludes = eventUrl.match(COLIVING_PORT_INCLUDE_PATTERN)
     // For android, empty route redirects here
     if (eventUrl.includes('about:blank')) return false
     if (
       audiusPrefixMatches &&
       audiusPrefixMatches.length &&
-      !AUDIUS_WEBLINK_WHITELIST.has(eventUrl)
+      !COLIVING_WEBLINK_WHITELIST.has(eventUrl)
     ) {
-      eventUrl = `/${eventUrl.replace(AUDIUS_SITE_PREFIX, '')}`
+      eventUrl = `/${eventUrl.replace(COLIVING_SITE_PREFIX, '')}`
       // @ts-ignore
       webRef.current.stopLoading()
       pushRoute(eventUrl)

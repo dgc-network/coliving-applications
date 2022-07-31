@@ -169,7 +169,7 @@ const createStyles = (themeColors: ThemeColors) =>
 const messages = {
   modalTitle: '$AUDIO BREAKDOWN',
   total: 'TOTAL $AUDIO',
-  audiusWallet: 'AUDIUS WALLET',
+  audiusWallet: 'COLIVING WALLET',
   audiusWalletDescription: 'You can use this $AUDIO throughout the app',
   linkedWallets: 'LINKED WALLETS',
   linkedWalletsDescription:

@@ -153,13 +153,13 @@ export const OAuthLoginPage = () => {
     errorMessage: string
   ) => {
     setGeneralSubmitError(errorMessage)
-    record(make(Name.AUDIUS_OAUTH_ERROR, { isUserError, error: errorMessage }))
+    record(make(Name.COLIVING_OAUTH_ERROR, { isUserError, error: errorMessage }))
   }
 
   const setAndLogInvalidCredentialsError = () => {
     setHasCredentialsError(true)
     record(
-      make(Name.AUDIUS_OAUTH_ERROR, {
+      make(Name.COLIVING_OAUTH_ERROR, {
         isUserError: true,
         error: messages.invalidCredentialsError
       })
@@ -239,7 +239,7 @@ export const OAuthLoginPage = () => {
   useEffect(() => {
     if (!queryParamsError) {
       record(
-        make(Name.AUDIUS_OAUTH_START, {
+        make(Name.COLIVING_OAUTH_START, {
           redirectUriParam:
             parsedRedirectUri === 'postmessage' ? 'postmessage' : redirect_uri!,
           originParam,
@@ -333,7 +333,7 @@ export const OAuthLoginPage = () => {
             setAndLogGeneralSubmitError(false, messages.noWindowError)
             setIsSubmitting(false)
           } else {
-            record(make(Name.AUDIUS_OAUTH_COMPLETE, {}))
+            record(make(Name.COLIVING_OAUTH_COMPLETE, {}))
             window.opener.postMessage(
               { state, token: jwt },
               parsedOrigin.origin
@@ -341,7 +341,7 @@ export const OAuthLoginPage = () => {
           }
         }
       } else {
-        record(make(Name.AUDIUS_OAUTH_COMPLETE, {}))
+        record(make(Name.COLIVING_OAUTH_COMPLETE, {}))
         if (response_mode && response_mode === 'query') {
           if (state != null) {
             parsedRedirectUri!.searchParams.append('state', state as string)
@@ -358,7 +358,7 @@ export const OAuthLoginPage = () => {
 
   const handleSignInFormSubmit = async (e: FormEvent) => {
     e.preventDefault()
-    record(make(Name.AUDIUS_OAUTH_SUBMIT, { alreadySignedIn: false }))
+    record(make(Name.COLIVING_OAUTH_SUBMIT, { alreadySignedIn: false }))
     clearErrors()
     if (!emailInput || !passwordInput) {
       setAndLogGeneralSubmitError(true, messages.missingFieldError)
@@ -396,7 +396,7 @@ export const OAuthLoginPage = () => {
 
   const handleAlreadySignedInAuthorizeSubmit = () => {
     clearErrors()
-    record(make(Name.AUDIUS_OAUTH_SUBMIT, { alreadySignedIn: true }))
+    record(make(Name.COLIVING_OAUTH_SUBMIT, { alreadySignedIn: true }))
     if (!account) {
       setAndLogGeneralSubmitError(false, messages.miscError)
     } else {

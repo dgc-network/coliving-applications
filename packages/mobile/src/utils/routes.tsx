@@ -35,19 +35,19 @@ export const encodeUrlName = (name: string) => {
   return encodeURIComponent(formatUrlName(name))
 }
 
-const AUDIUS_URL = Config.AUDIUS_URL
+const COLIVING_URL = Config.COLIVING_URL
 
 export const getTrackRoute = (
   track: { permalink: string },
   fullUrl = false
 ) => {
   const route = track.permalink
-  return fullUrl ? `${AUDIUS_URL}${route}` : route
+  return fullUrl ? `${COLIVING_URL}${route}` : route
 }
 
 export const getUserRoute = (user: User | UserHandle, fullUrl = false) => {
   const route = `/${user.handle}`
-  return fullUrl ? `${AUDIUS_URL}${route}` : route
+  return fullUrl ? `${COLIVING_URL}${route}` : route
 }
 
 export const getCollectionRoute = (
@@ -60,22 +60,22 @@ export const getCollectionRoute = (
   const route = collection.is_album
     ? `/${encodeUrlName(handle)}/album/${encodeUrlName(title)}-${id}`
     : `/${encodeUrlName(handle)}/playlist/${encodeUrlName(title)}-${id}`
-  return fullUrl ? `${AUDIUS_URL}${route}` : route
+  return fullUrl ? `${COLIVING_URL}${route}` : route
 }
 
 export const getSearchRoute = (query: string, fullUrl = false) => {
   const route = `/search/${encodeUrlName(query)}`
-  return fullUrl ? `${AUDIUS_URL}${route}` : route
+  return fullUrl ? `${COLIVING_URL}${route}` : route
 }
 
 export const getTagSearchRoute = (query: string, fullUrl = false) => {
   const route = `/search/#${encodeUrlName(query)}`
-  return fullUrl ? `${AUDIUS_URL}${route}` : route
+  return fullUrl ? `${COLIVING_URL}${route}` : route
 }
 
 export const getEmptyPageRoute = (fullUrl = false) => {
   const route = `/empty_page`
-  return fullUrl ? `${AUDIUS_URL}${route}` : route
+  return fullUrl ? `${COLIVING_URL}${route}` : route
 }
 
 export const getAudioPageRoute = () => {
@@ -95,6 +95,6 @@ export const getHash = (str: string) =>
   ).toString(36)
 
 export const getCollectiblesRoute = (handle: string, collectibleId?: string) =>
-  `${AUDIUS_URL}/${encodeUrlName(handle)}/collectibles${
+  `${COLIVING_URL}/${encodeUrlName(handle)}/collectibles${
     collectibleId ? `/${getHash(collectibleId)}` : ''
   }`

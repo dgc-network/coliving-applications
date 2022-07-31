@@ -1,6 +1,6 @@
-const AUDIUS_CONFIG = '.audius/config.json'
-const AUDIUS_SOL_CONFIG = '.audius/solana-program-config.json'
-const AUDIUS_ETH_CONFIG = '.audius/eth-config.json'
+const COLIVING_CONFIG = '.audius/config.json'
+const COLIVING_SOL_CONFIG = '.audius/solana-program-config.json'
+const COLIVING_ETH_CONFIG = '.audius/eth-config.json'
 const AAO_CONFIG = '.audius/aao-config.json'
 
 const fs = require('fs')
@@ -9,23 +9,23 @@ const homeDir = require('os').homedir()
 
 let HOST = 'localhost'
 if (process.argv[2] && process.argv[2] === '--remote-host') {
-  HOST = process.env.AUDIUS_REMOTE_DEV_HOST
+  HOST = process.env.COLIVING_REMOTE_DEV_HOST
   if (!HOST) {
     throw new Error(
-      'Misconfigured local env. Ensure AUDIUS_REMOTE_DEV_HOST envvar has been exported.'
+      'Misconfigured local env. Ensure COLIVING_REMOTE_DEV_HOST envvar has been exported.'
     )
   }
   if (HOST.trim() !== HOST) {
     throw new Error(
-      `Invisible characters detected in $AUDIUS_REMOTE_DEV_HOST: '${HOST}'`
+      `Invisible characters detected in $COLIVING_REMOTE_DEV_HOST: '${HOST}'`
     )
   }
 }
 
 try {
-  const configFile = require(path.join(homeDir, AUDIUS_CONFIG))
-  const ethConfigFile = require(path.join(homeDir, AUDIUS_ETH_CONFIG))
-  const solConfigFile = require(path.join(homeDir, AUDIUS_SOL_CONFIG))
+  const configFile = require(path.join(homeDir, COLIVING_CONFIG))
+  const ethConfigFile = require(path.join(homeDir, COLIVING_ETH_CONFIG))
+  const solConfigFile = require(path.join(homeDir, COLIVING_SOL_CONFIG))
   const aaoConfigFile = require(path.join(homeDir, AAO_CONFIG))
 
   const REACT_APP_ENVIRONMENT = 'development'
@@ -131,7 +131,7 @@ try {
 } catch (e) {
   console.log(`Error configuring local env: ${e}`)
   console.error(`
-    Did not find ~/${AUDIUS_CONFIG} configuration file.
+    Did not find ~/${COLIVING_CONFIG} configuration file.
     See https://github.com/AudiusProject/audius-e2e-tests to configure a local dev environment.
   `)
 }

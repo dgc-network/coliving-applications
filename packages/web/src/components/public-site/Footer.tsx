@@ -8,20 +8,20 @@ import cn from 'classnames'
 
 import horizontalLogo from 'assets/img/publicSite/Horizontal-Logo-Full-Color@2x.png'
 import {
-  AUDIUS_HOME_LINK,
-  AUDIUS_TWITTER_LINK,
-  AUDIUS_INSTAMGRAM_LINK,
-  AUDIUS_DISCORD_LINK,
-  AUDIUS_TEAM_LINK,
-  AUDIUS_PRESS_LINK,
+  COLIVING_HOME_LINK,
+  COLIVING_TWITTER_LINK,
+  COLIVING_INSTAMGRAM_LINK,
+  COLIVING_DISCORD_LINK,
+  COLIVING_TEAM_LINK,
+  COLIVING_PRESS_LINK,
   PRIVACY_POLICY,
   TERMS_OF_SERVICE,
-  AUDIUS_LISTENING_LINK,
-  AUDIUS_HOT_AND_NEW,
-  AUDIUS_EXPLORE_LINK,
-  AUDIUS_BLOG_LINK,
-  AUDIUS_REMIX_CONTESTS_LINK,
-  AUDIUS_DOCS_LINK,
+  COLIVING_LISTENING_LINK,
+  COLIVING_HOT_AND_NEW,
+  COLIVING_EXPLORE_LINK,
+  COLIVING_BLOG_LINK,
+  COLIVING_REMIX_CONTESTS_LINK,
+  COLIVING_DOCS_LINK,
   DOWNLOAD_LINK
 } from 'utils/route'
 
@@ -43,39 +43,39 @@ const siteLinkRows = [
   [
     {
       text: 'Trending',
-      link: AUDIUS_LISTENING_LINK
+      link: COLIVING_LISTENING_LINK
     },
     {
       text: 'Explore',
-      link: AUDIUS_EXPLORE_LINK
+      link: COLIVING_EXPLORE_LINK
     },
     {
       text: 'Hot & New',
-      link: AUDIUS_HOT_AND_NEW
+      link: COLIVING_HOT_AND_NEW
     }
   ],
   [
     {
       text: 'Blog',
-      link: AUDIUS_BLOG_LINK
+      link: COLIVING_BLOG_LINK
     },
     {
       text: 'Remixes',
-      link: AUDIUS_REMIX_CONTESTS_LINK
+      link: COLIVING_REMIX_CONTESTS_LINK
     },
     {
       text: 'Team',
-      link: AUDIUS_TEAM_LINK
+      link: COLIVING_TEAM_LINK
     }
   ],
   [
     {
       text: 'Brand',
-      link: AUDIUS_PRESS_LINK
+      link: COLIVING_PRESS_LINK
     },
     {
       text: 'Docs',
-      link: AUDIUS_DOCS_LINK
+      link: COLIVING_DOCS_LINK
     },
     {
       text: 'Download App',
@@ -87,15 +87,15 @@ const siteLinkRows = [
 const socialLinks = [
   {
     Icon: IconInstagram,
-    link: AUDIUS_INSTAMGRAM_LINK
+    link: COLIVING_INSTAMGRAM_LINK
   },
   {
     Icon: IconTwitterBird,
-    link: AUDIUS_TWITTER_LINK
+    link: COLIVING_TWITTER_LINK
   },
   {
     Icon: IconDiscord,
-    link: AUDIUS_DISCORD_LINK
+    link: COLIVING_DISCORD_LINK
   }
 ]
 
@@ -127,13 +127,13 @@ const Footer = (props: FooterProps) => {
             className={styles.logo}
             alt='Coliving Logo'
             onClick={handleClickRoute(
-              AUDIUS_HOME_LINK,
+              COLIVING_HOME_LINK,
               props.setRenderPublicSite
             )}
           />
           <button
             onClick={handleClickRoute(
-              AUDIUS_LISTENING_LINK,
+              COLIVING_LISTENING_LINK,
               props.setRenderPublicSite
             )}
             className={styles.startListeningButton}

@@ -25,9 +25,9 @@ const NavHeader = ({
   isElectron
 }) => {
   const notificationPanelAnchorRef = useRef()
-  const logoVariant = useRemoteVar(StringKeys.AUDIUS_LOGO_VARIANT)
+  const logoVariant = useRemoteVar(StringKeys.COLIVING_LOGO_VARIANT)
   const logoVariantClickTarget = useRemoteVar(
-    StringKeys.AUDIUS_LOGO_VARIANT_CLICK_TARGET
+    StringKeys.COLIVING_LOGO_VARIANT_CLICK_TARGET
   )
   const isMatrix = getTheme() === Theme.MATRIX
 

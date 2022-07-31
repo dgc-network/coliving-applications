@@ -9,7 +9,7 @@ import appImg from 'assets/img/publicSite/AudiusAppAlt@2x.png'
 import hqAudio from 'assets/img/publicSite/HQ-Audio@1x.jpg'
 import { useMatchesBreakpoint } from 'common/hooks/useMatchesBreakpoint'
 import { handleClickRoute } from 'components/public-site/handleClickRoute'
-import { AUDIUS_LISTENING_LINK } from 'utils/route'
+import { COLIVING_LISTENING_LINK } from 'utils/route'
 
 import styles from './CTAListening.module.css'
 
@@ -109,7 +109,7 @@ const CTAListening = (props: CTAListeningProps) => {
           </div>
           <button
             onClick={handleClickRoute(
-              AUDIUS_LISTENING_LINK,
+              COLIVING_LISTENING_LINK,
               props.setRenderPublicSite
             )}
             className={styles.ctaButton}
@@ -175,7 +175,7 @@ const CTAListening = (props: CTAListeningProps) => {
           </div>
           <button
             onClick={handleClickRoute(
-              AUDIUS_LISTENING_LINK,
+              COLIVING_LISTENING_LINK,
               props.setRenderPublicSite
             )}
             className={styles.ctaButton}

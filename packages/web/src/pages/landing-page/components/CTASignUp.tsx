@@ -6,7 +6,7 @@ import footerBackground from 'assets/img/publicSite/Footer-Background@2x.jpg'
 import footerForeground from 'assets/img/publicSite/Footer-Foreground@2x.png'
 import dots2x from 'assets/img/publicSite/dots@2x.jpg'
 import { handleClickRoute } from 'components/public-site/handleClickRoute'
-import { AUDIUS_SIGN_UP_LINK } from 'utils/route'
+import { COLIVING_SIGN_UP_LINK } from 'utils/route'
 
 import styles from './CTASignUp.module.css'
 
@@ -50,7 +50,7 @@ const CTASignUp = (props: CTASignUpProps) => {
         <div className={styles.title}>{messages.title}</div>
         <div
           onClick={handleClickRoute(
-            AUDIUS_SIGN_UP_LINK,
+            COLIVING_SIGN_UP_LINK,
             props.setRenderPublicSite
           )}
           className={styles.ctaButton}
@@ -68,7 +68,7 @@ const CTASignUp = (props: CTASignUpProps) => {
         <div className={styles.title}>{messages.title}</div>
         <button
           onClick={handleClickRoute(
-            AUDIUS_SIGN_UP_LINK,
+            COLIVING_SIGN_UP_LINK,
             props.setRenderPublicSite
           )}
           className={styles.ctaButton}

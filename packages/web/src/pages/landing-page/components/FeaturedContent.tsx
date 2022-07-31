@@ -40,7 +40,7 @@ const FALLBACK_PLAYLISTS = [
     link: '/audius/playlist/official-audius-exclusives-1428'
   },
   {
-    title: 'MOOMBAHTON COMES TO AUDIUS',
+    title: 'MOOMBAHTON COMES TO COLIVING',
     artist: 'Moombahton',
     imageUrl: moombahtonPlaylistImg,
     link: '/moombahton/playlist/moombahton-comes-to-audius-9601'

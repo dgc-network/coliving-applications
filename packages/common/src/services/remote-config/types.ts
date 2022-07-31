@@ -172,15 +172,15 @@ export enum DoubleKeys {
 export enum StringKeys {
   /**
    * Logo variant to display in the top left of the app.
-   * `AUDIUS_LOGO_VARIANT_CLICK_TARGET` can be used to customize the
+   * `COLIVING_LOGO_VARIANT_CLICK_TARGET` can be used to customize the
    * url that is navigated to on click.
    */
-  AUDIUS_LOGO_VARIANT = 'AUDIUS_LOGO_VARIANT',
+  COLIVING_LOGO_VARIANT = 'COLIVING_LOGO_VARIANT',
 
   /**
    * Click target for the top left Coliving logo in the app.
    */
-  AUDIUS_LOGO_VARIANT_CLICK_TARGET = 'AUDIUS_LOGO_VARIANT_CLICK_TARGET',
+  COLIVING_LOGO_VARIANT_CLICK_TARGET = 'COLIVING_LOGO_VARIANT_CLICK_TARGET',
 
   /**
    * Custom text for a top of page notice.

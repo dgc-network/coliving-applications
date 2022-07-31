@@ -5,8 +5,8 @@ import { CURRENT_USER_EXISTS_LOCAL_STORAGE_KEY } from '@audius/sdk/dist/core'
 // discoveryProvider/constants is migrated to typescript.
 const DISCOVERY_PROVIDER_TIMESTAMP = '@audius/libs:discovery-node-timestamp'
 
-const AUDIUS_ACCOUNT_KEY = '@audius/account'
-const AUDIUS_ACCOUNT_USER_KEY = '@audius/audius-user'
+const COLIVING_ACCOUNT_KEY = '@audius/account'
+const COLIVING_ACCOUNT_USER_KEY = '@audius/audius-user'
 
 const getValue = (key: string) => {
   if (window && window.localStorage) {
@@ -46,15 +46,15 @@ const removeItem = (key: string) => {
   }
 }
 
-export const getAudiusAccount = () => getJSONValue(AUDIUS_ACCOUNT_KEY)
+export const getAudiusAccount = () => getJSONValue(COLIVING_ACCOUNT_KEY)
 export const setAudiusAccount = (value: object) =>
-  setJSONValue(AUDIUS_ACCOUNT_KEY, value)
-export const clearAudiusAccount = () => removeItem(AUDIUS_ACCOUNT_KEY)
+  setJSONValue(COLIVING_ACCOUNT_KEY, value)
+export const clearAudiusAccount = () => removeItem(COLIVING_ACCOUNT_KEY)
 
-export const getAudiusAccountUser = () => getJSONValue(AUDIUS_ACCOUNT_USER_KEY)
+export const getAudiusAccountUser = () => getJSONValue(COLIVING_ACCOUNT_USER_KEY)
 export const setAudiusAccountUser = (value: User) =>
-  setJSONValue(AUDIUS_ACCOUNT_USER_KEY, value)
-export const clearAudiusAccountUser = () => removeItem(AUDIUS_ACCOUNT_USER_KEY)
+  setJSONValue(COLIVING_ACCOUNT_USER_KEY, value)
+export const clearAudiusAccountUser = () => removeItem(COLIVING_ACCOUNT_USER_KEY)
 
 export const getCurrentUserExists = () =>
   getValue(CURRENT_USER_EXISTS_LOCAL_STORAGE_KEY)

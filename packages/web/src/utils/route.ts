@@ -123,32 +123,32 @@ export const TRENDING_GENRES = '/trending/genres'
 export const EMPTY_PAGE = '/empty_page'
 
 // External Links
-export const AUDIUS_TWITTER_LINK = 'https://twitter.com/AudiusProject'
-export const AUDIUS_INSTAMGRAM_LINK = 'https://www.instagram.com/audiusmusic'
-export const AUDIUS_DISCORD_LINK = 'https://discord.gg/audius'
-export const AUDIUS_PRESS_LINK = 'https://brand.audius.co'
-export const AUDIUS_MERCH_LINK = 'https://merch.audius.co/'
-export const AUDIUS_REMIX_CONTESTS_LINK = 'https://remix.audius.co/'
-export const AUDIUS_BLOG_LINK = 'https://blog.audius.co/'
+export const COLIVING_TWITTER_LINK = 'https://twitter.com/AudiusProject'
+export const COLIVING_INSTAMGRAM_LINK = 'https://www.instagram.com/audiusmusic'
+export const COLIVING_DISCORD_LINK = 'https://discord.gg/audius'
+export const COLIVING_PRESS_LINK = 'https://brand.audius.co'
+export const COLIVING_MERCH_LINK = 'https://merch.audius.co/'
+export const COLIVING_REMIX_CONTESTS_LINK = 'https://remix.audius.co/'
+export const COLIVING_BLOG_LINK = 'https://blog.audius.co/'
 
 // Org Links
-export const AUDIUS_ORG = 'https://audius.org'
-export const AUDIUS_DOCS_LINK = 'https://docs.audius.org'
-export const AUDIUS_TEAM_LINK = 'https://audius.org/team'
-export const AUDIUS_DEV_STAKER_LINK = 'https://audius.org/protocol'
+export const COLIVING_ORG = 'https://audius.org'
+export const COLIVING_DOCS_LINK = 'https://docs.audius.org'
+export const COLIVING_TEAM_LINK = 'https://audius.org/team'
+export const COLIVING_DEV_STAKER_LINK = 'https://audius.org/protocol'
 
-export const AUDIUS_HOME_LINK = '/'
-export const AUDIUS_LISTENING_LINK = '/trending'
-export const AUDIUS_SIGN_UP_LINK = '/signup'
-export const AUDIUS_HOT_AND_NEW =
+export const COLIVING_HOME_LINK = '/'
+export const COLIVING_LISTENING_LINK = '/trending'
+export const COLIVING_SIGN_UP_LINK = '/signup'
+export const COLIVING_HOT_AND_NEW =
   '/audius/playlist/hot-new-on-audius-%F0%9F%94%A5-4281'
-export const AUDIUS_EXPLORE_LINK = '/explore'
+export const COLIVING_EXPLORE_LINK = '/explore'
 
-export const AUDIUS_CAREERS_LINK = 'https://jobs.lever.co/audius'
-export const AUDIUS_PODCAST_LINK =
+export const COLIVING_CAREERS_LINK = 'https://jobs.lever.co/audius'
+export const COLIVING_PODCAST_LINK =
   'https://www.youtube.com/playlist?list=PLKEECkHRxmPag5iYp4dTK5fGoRcoX40RY'
-export const AUDIUS_CYPHER_LINK = 'https://discord.gg/audius'
-export const AUDIUS_API_LINK = 'https://audius.org/api'
+export const COLIVING_CYPHER_LINK = 'https://discord.gg/audius'
+export const COLIVING_API_LINK = 'https://audius.org/api'
 
 export const authenticatedRoutes = [
   FEED_PAGE,
@@ -391,7 +391,7 @@ export const pushWindowRoute = (route: string) => {
     routeToPush = route
   }
 
-  if (route === AUDIUS_SIGN_UP_LINK) {
+  if (route === COLIVING_SIGN_UP_LINK) {
     recordGoToSignup(() => {
       window.location.href = `${BASENAME}${routeToPush}`
     })

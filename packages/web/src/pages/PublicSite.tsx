@@ -10,7 +10,7 @@ import {
   SIGN_UP_PAGE,
   UPLOAD_PAGE,
   EXPLORE_PAGE,
-  AUDIUS_PRESS_LINK
+  COLIVING_PRESS_LINK
 } from 'utils/route'
 
 const BASENAME = process.env.PUBLIC_URL
@@ -127,7 +127,7 @@ const PublicSite = ({
             exact
             path={'/press'}
             render={() => {
-              window.location.href = AUDIUS_PRESS_LINK
+              window.location.href = COLIVING_PRESS_LINK
               return null
             }}
           />

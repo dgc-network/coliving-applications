@@ -17,19 +17,19 @@ import ReactDOM from 'react-dom'
 import HeroBackground from 'assets/img/publicSite/Hero-BG@2x.jpg'
 import HorizontalLogo from 'assets/img/publicSite/Horizontal-Logo-Full-Color@2x.png'
 import {
-  AUDIUS_BLOG_LINK,
-  AUDIUS_DISCORD_LINK,
-  AUDIUS_DOCS_LINK,
-  AUDIUS_EXPLORE_LINK,
-  AUDIUS_HOT_AND_NEW,
-  AUDIUS_INSTAMGRAM_LINK,
-  AUDIUS_LISTENING_LINK,
-  AUDIUS_ORG,
-  AUDIUS_PRESS_LINK,
-  AUDIUS_REMIX_CONTESTS_LINK,
-  AUDIUS_SIGN_UP_LINK,
-  AUDIUS_TEAM_LINK,
-  AUDIUS_TWITTER_LINK,
+  COLIVING_BLOG_LINK,
+  COLIVING_DISCORD_LINK,
+  COLIVING_DOCS_LINK,
+  COLIVING_EXPLORE_LINK,
+  COLIVING_HOT_AND_NEW,
+  COLIVING_INSTAMGRAM_LINK,
+  COLIVING_LISTENING_LINK,
+  COLIVING_ORG,
+  COLIVING_PRESS_LINK,
+  COLIVING_REMIX_CONTESTS_LINK,
+  COLIVING_SIGN_UP_LINK,
+  COLIVING_TEAM_LINK,
+  COLIVING_TWITTER_LINK,
   DOWNLOAD_START_LINK,
   PRIVACY_POLICY,
   TERMS_OF_SERVICE
@@ -45,15 +45,15 @@ const messages = {
 const socialLinks = [
   {
     Icon: IconInstagram,
-    link: AUDIUS_INSTAMGRAM_LINK
+    link: COLIVING_INSTAMGRAM_LINK
   },
   {
     Icon: IconTwitterBird,
-    link: AUDIUS_TWITTER_LINK
+    link: COLIVING_TWITTER_LINK
   },
   {
     Icon: IconDiscord,
-    link: AUDIUS_DISCORD_LINK
+    link: COLIVING_DISCORD_LINK
   }
 ]
 
@@ -61,22 +61,22 @@ const dappLinks = [
   {
     text: 'Sign Up',
     icon: <IconFollow className={styles.dappLinkIcon} />,
-    link: AUDIUS_SIGN_UP_LINK
+    link: COLIVING_SIGN_UP_LINK
   },
   {
     text: 'Trending',
     icon: <IconTrending className={styles.dappLinkIcon} />,
-    link: AUDIUS_LISTENING_LINK
+    link: COLIVING_LISTENING_LINK
   },
   {
     text: 'Explore',
     icon: <IconExplore className={styles.dappLinkIcon} />,
-    link: AUDIUS_EXPLORE_LINK
+    link: COLIVING_EXPLORE_LINK
   },
   {
     text: 'Hot & New',
     icon: <IconCampFire className={styles.dappLinkIcon} />,
-    link: AUDIUS_HOT_AND_NEW
+    link: COLIVING_HOT_AND_NEW
   },
   {
     text: 'Download App',
@@ -88,11 +88,11 @@ const dappLinks = [
 const links = [
   {
     text: 'Blog',
-    link: AUDIUS_BLOG_LINK
+    link: COLIVING_BLOG_LINK
   },
   {
     text: 'Docs',
-    link: AUDIUS_DOCS_LINK
+    link: COLIVING_DOCS_LINK
   },
   {
     text: 'Privacy Policy',
@@ -100,11 +100,11 @@ const links = [
   },
   {
     text: 'Remixes',
-    link: AUDIUS_REMIX_CONTESTS_LINK
+    link: COLIVING_REMIX_CONTESTS_LINK
   },
   {
     text: 'Team',
-    link: AUDIUS_TEAM_LINK
+    link: COLIVING_TEAM_LINK
   },
   {
     text: 'Terms of Service',
@@ -112,11 +112,11 @@ const links = [
   },
   {
     text: 'Token',
-    link: AUDIUS_ORG
+    link: COLIVING_ORG
   },
   {
     text: 'Brand',
-    link: AUDIUS_PRESS_LINK
+    link: COLIVING_PRESS_LINK
   }
 ]
 
@@ -149,7 +149,7 @@ const useModalRoot = () => {
 const NavOverlay = (props: NavOverlayProps) => {
   const onStartListening = () => {
     props.closeNavScreen()
-    handleClickRoute(AUDIUS_LISTENING_LINK, props.setRenderPublicSite)()
+    handleClickRoute(COLIVING_LISTENING_LINK, props.setRenderPublicSite)()
   }
 
   const modalRoot = useModalRoot()

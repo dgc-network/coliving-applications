@@ -1,4 +1,4 @@
-import { AUDIUS_API_LINK } from '-client/src/utils/route'
+import { COLIVING_API_LINK } from '-client/src/utils/route'
 import type { ImageStyle } from 'react-native'
 import { Image, View } from 'react-native'
 
@@ -73,7 +73,7 @@ export const ApiRewardsDrawer = () => {
           size='large'
           icon={IconArrow}
           title={messages.button}
-          url={AUDIUS_API_LINK}
+          url={COLIVING_API_LINK}
           styles={{ button: styles.button, text: styles.buttonText }}
           fullWidth
         />

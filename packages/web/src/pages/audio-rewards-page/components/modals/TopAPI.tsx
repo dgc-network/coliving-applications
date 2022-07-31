@@ -3,7 +3,7 @@ import { useCallback } from 'react'
 import AudiusAPI from 'assets/img/audiusAPI.png'
 import { useModalState } from 'common/hooks/useModalState'
 import { useWithMobileStyle } from 'hooks/useWithMobileStyle'
-import { AUDIUS_API_LINK } from 'utils/route'
+import { COLIVING_API_LINK } from 'utils/route'
 
 import ButtonWithArrow from '../ButtonWithArrow'
 
@@ -23,7 +23,7 @@ const TopAPIBody = () => {
   const wm = useWithMobileStyle(styles.mobile)
 
   const onClickAudiusAPI = useCallback(() => {
-    window.open(AUDIUS_API_LINK, '__blank')
+    window.open(COLIVING_API_LINK, '__blank')
   }, [])
 
   return (

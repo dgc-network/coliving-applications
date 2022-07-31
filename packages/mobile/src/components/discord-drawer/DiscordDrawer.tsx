@@ -9,7 +9,7 @@ import {
   setModalState,
   setModalVisibility
 } from '-client/src/common/store/pages/token-dashboard/slice'
-import { AUDIUS_DISCORD_LINK } from '-client/src/utils/route'
+import { COLIVING_DISCORD_LINK } from '-client/src/utils/route'
 import { View } from 'react-native'
 
 import IconDiscord from 'app/assets/images/iconDiscord.svg'
@@ -80,7 +80,7 @@ export const DiscordDrawer = () => {
           size='medium'
           iconPosition='left'
           icon={IconDiscord}
-          url={AUDIUS_DISCORD_LINK}
+          url={COLIVING_DISCORD_LINK}
         />
       </View>
     </Drawer>

@@ -59,10 +59,10 @@ export enum Name {
   TIKTOK_SHARE_SOUND_ERROR = 'TikTok: Share Sound Error',
 
   // Coliving OAuth Login Page
-  AUDIUS_OAUTH_START = 'Coliving Oauth: Open Login (authenticate)',
-  AUDIUS_OAUTH_SUBMIT = 'Coliving Oauth: Submit Login (authenticate)',
-  AUDIUS_OAUTH_COMPLETE = 'Coliving Oauth: Login (authenticate) Success',
-  AUDIUS_OAUTH_ERROR = 'Coliving Oauth: Login (authenticate) Failed',
+  COLIVING_OAUTH_START = 'Coliving Oauth: Open Login (authenticate)',
+  COLIVING_OAUTH_SUBMIT = 'Coliving Oauth: Submit Login (authenticate)',
+  COLIVING_OAUTH_COMPLETE = 'Coliving Oauth: Login (authenticate) Success',
+  COLIVING_OAUTH_ERROR = 'Coliving Oauth: Login (authenticate) Failed',
 
   // Visualizer
   VISUALIZER_OPEN = 'Visualizer: Open',
@@ -1225,7 +1225,7 @@ type SocialProofError = {
 }
 
 type AudiusOauthStart = {
-  eventName: Name.AUDIUS_OAUTH_START
+  eventName: Name.COLIVING_OAUTH_START
   redirectUriParam: string | string[]
   originParam: string | string[] | undefined | null
   appNameParam: string | string[]
@@ -1233,16 +1233,16 @@ type AudiusOauthStart = {
 }
 
 type AudiusOauthSubmit = {
-  eventName: Name.AUDIUS_OAUTH_SUBMIT
+  eventName: Name.COLIVING_OAUTH_SUBMIT
   alreadySignedIn: boolean
 }
 
 type AudiusOauthComplete = {
-  eventName: Name.AUDIUS_OAUTH_COMPLETE
+  eventName: Name.COLIVING_OAUTH_COMPLETE
 }
 
 type AudiusOauthError = {
-  eventName: Name.AUDIUS_OAUTH_ERROR
+  eventName: Name.COLIVING_OAUTH_ERROR
   isUserError: boolean
   error: string
 }

@@ -30,8 +30,8 @@ export const remoteConfigIntDefaults: { [key in IntKeys]: number | null } = {
 export const remoteConfigStringDefaults: {
   [key in StringKeys]: string | null
 } = {
-  [StringKeys.AUDIUS_LOGO_VARIANT]: null,
-  [StringKeys.AUDIUS_LOGO_VARIANT_CLICK_TARGET]: null,
+  [StringKeys.COLIVING_LOGO_VARIANT]: null,
+  [StringKeys.COLIVING_LOGO_VARIANT_CLICK_TARGET]: null,
   [StringKeys.APP_WIDE_NOTICE_TEXT]: null,
   [StringKeys.ETH_PROVIDER_URLS]: ETH_PROVIDER_URLS,
   [StringKeys.CONTENT_BLOCK_LIST]: null,

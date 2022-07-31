@@ -11,11 +11,11 @@ import cn from 'classnames'
 import HorizontalLogo from 'assets/img/publicSite/Horizontal-Logo-Full-Color@2x.png'
 import { useMatchesBreakpoint } from 'common/hooks/useMatchesBreakpoint'
 import {
-  AUDIUS_LISTENING_LINK,
-  AUDIUS_HOT_AND_NEW,
-  AUDIUS_EXPLORE_LINK,
-  AUDIUS_ORG,
-  AUDIUS_BLOG_LINK,
+  COLIVING_LISTENING_LINK,
+  COLIVING_HOT_AND_NEW,
+  COLIVING_EXPLORE_LINK,
+  COLIVING_ORG,
+  COLIVING_BLOG_LINK,
   DOWNLOAD_START_LINK
 } from 'utils/route'
 
@@ -57,25 +57,25 @@ const NavBanner = (props: NavBannerProps) => {
   }, [])
 
   const onClickHome = handleClickRoute(
-    AUDIUS_LISTENING_LINK,
+    COLIVING_LISTENING_LINK,
     props.setRenderPublicSite
   )
   const onClickExplore = handleClickRoute(
-    AUDIUS_EXPLORE_LINK,
+    COLIVING_EXPLORE_LINK,
     props.setRenderPublicSite
   )
   const onClickTrending = handleClickRoute(
-    AUDIUS_LISTENING_LINK,
+    COLIVING_LISTENING_LINK,
     props.setRenderPublicSite
   )
   const onClickHotAndNew = handleClickRoute(
-    AUDIUS_HOT_AND_NEW,
+    COLIVING_HOT_AND_NEW,
     props.setRenderPublicSite
   )
-  const onClickToken = handleClickRoute(AUDIUS_ORG, props.setRenderPublicSite)
+  const onClickToken = handleClickRoute(COLIVING_ORG, props.setRenderPublicSite)
 
   const onClickBlog = handleClickRoute(
-    AUDIUS_BLOG_LINK,
+    COLIVING_BLOG_LINK,
     props.setRenderPublicSite
   )
 
@@ -129,7 +129,7 @@ const NavBanner = (props: NavBannerProps) => {
           <a
             className={styles.iconLink}
             onClick={onClickExplore}
-            href={AUDIUS_EXPLORE_LINK}
+            href={COLIVING_EXPLORE_LINK}
           >
             <IconExplore className={styles.linkIcon} />
             <h3 className={styles.iconLinkText}>{messages.explore}</h3>
@@ -137,7 +137,7 @@ const NavBanner = (props: NavBannerProps) => {
           <a
             className={styles.iconLink}
             onClick={onClickTrending}
-            href={AUDIUS_LISTENING_LINK}
+            href={COLIVING_LISTENING_LINK}
           >
             <IconTrending className={styles.linkIcon} />
             <h3 className={styles.iconLinkText}>{messages.trending}</h3>
@@ -145,7 +145,7 @@ const NavBanner = (props: NavBannerProps) => {
           <a
             className={styles.iconLink}
             onClick={onClickHotAndNew}
-            href={AUDIUS_HOT_AND_NEW}
+            href={COLIVING_HOT_AND_NEW}
           >
             <IconCampFire className={styles.linkIcon} />
             <h3 className={styles.iconLinkText}>{messages.hotAndNew}</h3>
