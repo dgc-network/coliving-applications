@@ -26,7 +26,7 @@ const NATIVE_MOBILE = process.env.REACT_APP_NATIVE_MOBILE
 const links = {
   discord: 'https://discordapp.com/invite/yNUg2e2',
   instagram: 'https://www.instagram.com/audiusmusic/',
-  twitter: 'https://twitter.com/AudiusProject',
+  twitter: 'https://twitter.com/dgc.network',
   contact: 'mailto:contact@audius.co',
   careers: 'https://jobs.lever.co/audius',
   help: 'https://help.audius.co/',

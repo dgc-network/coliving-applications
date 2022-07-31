@@ -132,6 +132,6 @@ try {
   console.log(`Error configuring local env: ${e}`)
   console.error(`
     Did not find ~/${COLIVING_CONFIG} configuration file.
-    See https://github.com/AudiusProject/audius-e2e-tests to configure a local dev environment.
+    See https://github.com/dgc.network/audius-e2e-tests to configure a local dev environment.
   `)
 }

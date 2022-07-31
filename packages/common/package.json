@@ -4,7 +4,7 @@
   "description": "Common utilities and store for web and mobile.",
   "private": "true",
   "author": "Coliving",
-  "homepage": "https://github.com/AudiusProject/audius-client#readme",
+  "homepage": "https://github.com/dgc.network/audius-client#readme",
   "license": "",
   "main": "dist/index.cjs.js",
   "types": "dist/index.d.ts",
@@ -14,7 +14,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/AudiusProject/audius-client.git"
+    "url": "git+https://github.com/dgc.network/audius-client.git"
   },
   "scripts": {
     "lint": "eslint --cache src",
@@ -22,7 +22,7 @@
     "build": "rollup -c"
   },
   "bugs": {
-    "url": "https://github.com/AudiusProject/audius-client/issues"
+    "url": "https://github.com/dgc.network/audius-client/issues"
   },
   "dependencies": {
     "@optimizely/optimizely-sdk": "4.0.0",

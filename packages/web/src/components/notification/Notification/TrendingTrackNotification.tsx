@@ -27,7 +27,7 @@ const messages = {
   twitterShareText: (entityTitle: string, rank: number) =>
     `My track ${entityTitle} is trending ${rank}${getRankSuffix(
       rank
-    )} on @AudiusProject! #AudiusTrending #Coliving`
+    )} on @dgc.network! #AudiusTrending #Coliving`
 }
 
 type TrendingTrackNotificationProps = {

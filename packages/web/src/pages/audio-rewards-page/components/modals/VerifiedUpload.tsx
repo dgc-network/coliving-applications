@@ -36,7 +36,7 @@ const messages = {
   findUsInstagram: 'Find Us On Instagram'
 }
 
-const TWITTER_LINK = 'https://twitter.com/AudiusProject'
+const TWITTER_LINK = 'https://twitter.com/dgc.network'
 const IG_LINK = 'https://www.instagram.com/audiusmusic/?hl=en'
 
 const onClickTwitter = () => {
@@ -105,7 +105,7 @@ const VerifiedUpload = ({ dismissModal }: { dismissModal: () => void }) => {
           <div className={styles.ctaRight}>
             <span>{messages.findUsTwitter}</span>
             <div className={styles.link} onClick={onClickTwitter}>
-              @AudiusProject
+              @dgc.network
             </div>
           </div>
         </div>

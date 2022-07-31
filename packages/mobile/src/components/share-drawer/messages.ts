@@ -16,12 +16,12 @@ export const messages = {
   shareSheet: (asset: ShareType) => `Share ${asset} via...`,
   toast: (asset: ShareType) => `Copied Link to ${shareTypeMap[asset]}`,
   trackShareText: (title: string, handle: string) =>
-    `Check out ${title} by ${handle} on @AudiusProject #Coliving`,
+    `Check out ${title} by ${handle} on @dgc.network #Coliving`,
   profileShareText: (handle: string) =>
-    `Check out ${handle} on @AudiusProject #Coliving`,
+    `Check out ${handle} on @dgc.network #Coliving`,
   albumShareText: (albumName: string, handle: string) =>
-    `Check out ${albumName} by ${handle} @AudiusProject #Coliving`,
+    `Check out ${albumName} by ${handle} @dgc.network #Coliving`,
   playlistShareText: (playlistName: string, handle: string) =>
-    `Check out ${playlistName} by ${handle} @AudiusProject #Coliving`,
+    `Check out ${playlistName} by ${handle} @dgc.network #Coliving`,
   nftPlaylistShareText: ''
 }

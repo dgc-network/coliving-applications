@@ -43,7 +43,7 @@ const messages = {
   twitterShare: (senderHandle: string, amount: number) =>
     `Thanks ${senderHandle} for the ${formatNumberCommas(
       amount
-    )} $AUDIO tip on @AudiusProject! #Coliving #AUDIOTip`
+    )} $AUDIO tip on @dgc.network! #Coliving #AUDIOTip`
 }
 
 const useSetReaction = (tipTxSignature: string) => {

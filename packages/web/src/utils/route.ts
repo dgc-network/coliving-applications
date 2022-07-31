@@ -123,7 +123,7 @@ export const TRENDING_GENRES = '/trending/genres'
 export const EMPTY_PAGE = '/empty_page'
 
 // External Links
-export const COLIVING_TWITTER_LINK = 'https://twitter.com/AudiusProject'
+export const COLIVING_TWITTER_LINK = 'https://twitter.com/dgc.network'
 export const COLIVING_INSTAMGRAM_LINK = 'https://www.instagram.com/audiusmusic'
 export const COLIVING_DISCORD_LINK = 'https://discord.gg/audius'
 export const COLIVING_PRESS_LINK = 'https://brand.audius.co'

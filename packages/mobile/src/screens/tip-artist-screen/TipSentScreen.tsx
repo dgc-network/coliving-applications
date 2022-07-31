@@ -26,7 +26,7 @@ const messages = {
   description: 'Share your support on Twitter!',
   done: 'Done',
   twitterCopyPrefix: 'I just tipped ',
-  twitterCopySuffix: ' $AUDIO on @AudiusProject #Coliving #AUDIOTip'
+  twitterCopySuffix: ' $AUDIO on @dgc.network #Coliving #AUDIOTip'
 }
 
 const useStyles = makeStyles(({ spacing }) => ({

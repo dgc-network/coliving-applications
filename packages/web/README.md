@@ -15,14 +15,14 @@
 <br/>
 <br/>
 
-[![CircleCI](https://circleci.com/gh/AudiusProject/audius-client.svg?style=svg)](https://circleci.com/gh/AudiusProject/audius-client)
+[![CircleCI](https://circleci.com/gh/dgc.network/audius-client.svg?style=svg)](https://circleci.com/gh/dgc.network/audius-client)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 ## Development
 
 There are 3 environments you can develop against
-- development (local net, see the [Coliving Protocol](https://github.com/AudiusProject/audius-protocol))
+- development (local net, see the [Coliving Protocol](https://github.com/dgc.network/audius-protocol))
 - staging (test net)
 - production (main net)
 
