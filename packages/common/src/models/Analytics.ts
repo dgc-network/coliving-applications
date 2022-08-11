@@ -186,7 +186,7 @@ export enum Name {
   // System
   WEB_VITALS = 'Web Vitals',
   PERFORMANCE = 'Performance',
-  DISCOVERY_PROVIDER_SELECTION = 'Discovery Provider Selection',
+  DISCOVERY_PROVIDER_SELECTION = 'Discovery Node Selection',
   CREATOR_NODE_SELECTION = 'Creator Node Selection',
 
   // Remixes
