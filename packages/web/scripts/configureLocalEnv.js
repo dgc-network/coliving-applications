@@ -31,7 +31,7 @@ try {
   const REACT_APP_ENVIRONMENT = 'development'
   const REACT_APP_EAGER_DISCOVERY_NODES = 'http://dn1_web-server_1:5000'
   const REACT_APP_IDENTITY_SERVICE = `http://${HOST}:7000`
-  const REACT_APP_USER_NODE = 'http://cn-um_network-node_1:4099'
+  const REACT_APP_USER_NODE = 'http://cn-um_content-node_1:4099'
 
   const REACT_APP_REGISTRY_ADDRESS = configFile.registryAddress
   const REACT_APP_WEB3_PROVIDER_URLS = `http://${HOST}:8545,http://${HOST}:8545`
