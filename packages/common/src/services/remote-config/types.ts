@@ -11,7 +11,7 @@ export enum IntKeys {
   IMAGE_QUICK_FETCH_PERFORMANCE_BATCH_SIZE = 'IMAGE_QUICK_FETCH_PERFORMANCE_BATCH_SIZE',
 
   /**
-   * Duration (in ms) before we timeout a discovery provider that is
+   * Duration (in ms) before we timeout a discovery node that is
    * cached in the user's local storage
    */
   DISCOVERY_PROVIDER_SELECTION_TIMEOUT_MS = 'DISCOVERY_PROVIDER_SELECTION_TIMEOUT_MS',

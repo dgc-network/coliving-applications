@@ -19,7 +19,7 @@ const EAGER_DISCOVERY_NODES = process.env.REACT_APP_EAGER_DISCOVERY_NODES
 // Set the eager discprov to use to either
 // 1. local storage discprov if available
 // 2. dapp whitelist
-// Note: This discovery provider is only used on intial paint
+// Note: This discovery node is only used on intial paint
 let eagerDiscprov: string
 if (cachedDiscprov) {
   eagerDiscprov = cachedDiscprov.endpoint

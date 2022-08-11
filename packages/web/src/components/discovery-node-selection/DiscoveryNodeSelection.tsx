@@ -67,13 +67,13 @@ const DiscoveryNodeSelection = () => {
 
       {success && (
         <div className={styles.success}>
-          New discovery provider successfully set
+          New discovery node successfully set
         </div>
       )}
 
       {error && (
         <div className={styles.error}>
-          Could not set discovery provider (does not exist or currently
+          Could not set discovery node (does not exist or currently
           unhealthy)
         </div>
       )}
