@@ -137,7 +137,7 @@ class ConnectedSearchBar extends Component {
               size: user.profile_picture_sizes
                 ? SquareSizes.SIZE_150_BY_150
                 : null,
-              creatorNodeEndpoint: user.creator_node_endpoint,
+              contentNodeEndpoint: user.creator_node_endpoint,
               defaultImage: profilePicEmpty,
               isVerifiedUser: user.is_verified,
               tier: getTierForUser(user)
@@ -155,7 +155,7 @@ class ConnectedSearchBar extends Component {
               userId: track.owner_id,
               imageMultihash: track.cover_art_sizes || track.cover_art,
               size: track.cover_art_sizes ? SquareSizes.SIZE_150_BY_150 : null,
-              creatorNodeEndpoint: track.user
+              contentNodeEndpoint: track.user
                 ? track.user.creator_node_endpoint
                 : '',
               defaultImage: placeholderArt,
@@ -184,7 +184,7 @@ class ConnectedSearchBar extends Component {
                 ? SquareSizes.SIZE_150_BY_150
                 : null,
               defaultImage: placeholderArt,
-              creatorNodeEndpoint: playlist.user
+              contentNodeEndpoint: playlist.user
                 ? playlist.user.creator_node_endpoint
                 : '',
               isVerifiedUser: playlist.user.is_verified,
@@ -210,7 +210,7 @@ class ConnectedSearchBar extends Component {
               imageMultihash: album.cover_art_sizes || album.cover_art,
               size: album.cover_art_sizes ? SquareSizes.SIZE_150_BY_150 : null,
               defaultImage: placeholderArt,
-              creatorNodeEndpoint: album.user
+              contentNodeEndpoint: album.user
                 ? album.user.creator_node_endpoint
                 : '',
               isVerifiedUser: album.user.is_verified,

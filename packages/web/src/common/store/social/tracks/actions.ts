@@ -88,10 +88,10 @@ export const recordListen = createCustomAction(
 
 export const downloadTrack = createCustomAction(
   DOWNLOAD_TRACK,
-  (trackId: ID, cid: CID, creatorNodeEndpoints: string, stemName?: string) => ({
+  (trackId: ID, cid: CID, contentNodeEndpoints: string, stemName?: string) => ({
     trackId,
     cid,
-    creatorNodeEndpoints,
+    contentNodeEndpoints,
     stemName
   })
 )

@@ -8,10 +8,10 @@ const CHECK_DOWNLOAD_AVAILIBILITY_POLLING_INTERVAL = 3000
 const updateTrackDownloadCIDInProgress = new Set([])
 
 class TrackDownload {
-  static async downloadTrack(cid, creatorNodeEndpoints, filename) {
+  static async downloadTrack(cid, contentNodeEndpoints, filename) {
     return window.colivingLibs.File.downloadCID(
       cid,
-      creatorNodeEndpoints,
+      contentNodeEndpoints,
       filename
     )
   }
@@ -57,13 +57,13 @@ class TrackDownload {
     return update
   }
 
-  static async checkIfDownloadAvailable(trackId, creatorNodeEndpoints) {
+  static async checkIfDownloadAvailable(trackId, contentNodeEndpoints) {
     await waitForLibsInit()
     let cid
     while (!cid) {
       try {
         cid = await window.colivingLibs.Track.checkIfDownloadAvailable(
-          creatorNodeEndpoints,
+          contentNodeEndpoints,
           trackId
         )
       } catch (e) {

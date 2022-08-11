@@ -21,7 +21,7 @@ const Image = memo((props) => {
     let isCanceled = false
     const getImage = async () => {
       try {
-        const gateways = getCreatorNodeIPFSGateways(props.creatorNodeEndpoint)
+        const gateways = getCreatorNodeIPFSGateways(props.contentNodeEndpoint)
         const url = await ColivingBackend.getImageUrl(
           imageMultihash,
           size,
@@ -36,7 +36,7 @@ const Image = memo((props) => {
     return () => {
       isCanceled = true
     }
-  }, [defaultImage, imageMultihash, props.creatorNodeEndpoint, size])
+  }, [defaultImage, imageMultihash, props.contentNodeEndpoint, size])
   return (
     <DynamicImage
       skeletonClassName={cn({ [styles.userImageContainerSkeleton]: isUser })}
@@ -60,7 +60,7 @@ const SearchBarResult = memo((props) => {
     primary,
     secondary,
     imageMultihash,
-    creatorNodeEndpoint,
+    contentNodeEndpoint,
     size,
     defaultImage,
     isVerifiedUser,
@@ -76,7 +76,7 @@ const SearchBarResult = memo((props) => {
         id={id}
         sizes={sizes}
         imageMultihash={imageMultihash}
-        creatorNodeEndpoint={creatorNodeEndpoint}
+        contentNodeEndpoint={contentNodeEndpoint}
         defaultImage={defaultImage}
         size={size}
       />
@@ -127,7 +127,7 @@ SearchBarResult.propTypes = {
   id: PropTypes.string,
   sizes: PropTypes.object,
   imageMultihash: PropTypes.string,
-  creatorNodeEndpoint: PropTypes.string,
+  contentNodeEndpoint: PropTypes.string,
   size: PropTypes.string,
   defaultImage: PropTypes.string,
   isVerifiedUser: PropTypes.bool

@@ -629,7 +629,7 @@ function* watchDownloadTrack() {
         return
       }
 
-      const endpoints = action.creatorNodeEndpoints
+      const endpoints = action.contentNodeEndpoints
         .split(',')
         .map((endpoint) => `${endpoint}/ipfs/`)
 

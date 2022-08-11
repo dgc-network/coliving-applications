@@ -286,7 +286,7 @@ class SearchBar extends Component {
                   userId={opt.userId}
                   sizes={opt.sizes}
                   imageMultihash={opt.imageMultihash}
-                  creatorNodeEndpoint={opt.creatorNodeEndpoint}
+                  contentNodeEndpoint={opt.contentNodeEndpoint}
                   size={opt.size}
                   primary={opt.primary}
                   defaultImage={opt.defaultImage}

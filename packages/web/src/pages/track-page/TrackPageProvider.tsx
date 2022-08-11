@@ -593,7 +593,7 @@ function mapDispatchToProps(dispatch: Dispatch) {
     downloadTrack: (
       trackId: ID,
       cid: CID,
-      creatorNodeEndpoints: string,
+      contentNodeEndpoints: string,
       category?: string,
       parentTrackId?: ID
     ) => {
@@ -601,7 +601,7 @@ function mapDispatchToProps(dispatch: Dispatch) {
         socialTracksActions.downloadTrack(
           trackId,
           cid,
-          creatorNodeEndpoints,
+          contentNodeEndpoints,
           category
         )
       )

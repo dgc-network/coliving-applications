@@ -130,9 +130,9 @@ type FeaturedContentProps = {
 const getImageUrl = (
   size: 'small' | 'large',
   { cover_art, cover_art_sizes }: UserCollectionMetadata,
-  creatorNodeEndpoint: string | null
+  contentNodeEndpoint: string | null
 ) => {
-  const gateways = getCreatorNodeIPFSGateways(creatorNodeEndpoint)
+  const gateways = getCreatorNodeIPFSGateways(contentNodeEndpoint)
   const cNode = gateways[0]
   if (cover_art_sizes) {
     return `${cNode}${cover_art_sizes}/${

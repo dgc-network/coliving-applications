@@ -54,7 +54,7 @@ export type OwnProps = {
   onDownloadTrack: (
     trackId: ID,
     cid: CID,
-    creatorNodeEndpoints: string,
+    contentNodeEndpoints: string,
     category?: string,
     parentTrackId?: ID
   ) => void
