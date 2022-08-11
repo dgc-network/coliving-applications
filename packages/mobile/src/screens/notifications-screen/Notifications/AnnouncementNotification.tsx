@@ -1,7 +1,7 @@
 import type { Announcement } from '-client/src/common/store/notifications/types'
 import Markdown from 'react-native-markdown-display'
 
-import IconColiving from 'app/assets/images/iconAudius.svg'
+import IconColiving from 'app/assets/images/iconColiving.svg'
 import { makeStyles } from 'app/styles'
 
 import {
