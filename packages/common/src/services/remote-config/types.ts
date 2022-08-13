@@ -76,9 +76,9 @@ export enum IntKeys {
   ATTESTATION_QUORUM_SIZE = 'ATTESTATION_QUORUM_SIZE',
 
   /**
-   * The minimum amount of AUDIO needed to be sent
+   * The minimum amount of LIVE needed to be sent
    */
-  MIN_AUDIO_SEND_AMOUNT = 'MIN_AUDIO_SEND_AMOUNT',
+  MIN_LIVE_SEND_AMOUNT = 'MIN_LIVE_SEND_AMOUNT',
 
   /**
    * The refresh interval in milliseconds for user challenges
@@ -86,13 +86,13 @@ export enum IntKeys {
   CHALLENGE_REFRESH_INTERVAL_MS = 'CHALLENGE_REFRESH_INTERVAL_MS',
 
   /**
-   * The refresh interval in milliseconds for user challenges when the user is on the $AUDIO page
+   * The refresh interval in milliseconds for user challenges when the user is on the $LIVE page
    */
-  CHALLENGE_REFRESH_INTERVAL_AUDIO_PAGE_MS = 'CHALLENGE_REFRESH_INTERVAL_AUDIO_PAGE_MS',
+  CHALLENGE_REFRESH_INTERVAL_LIVE_PAGE_MS = 'CHALLENGE_REFRESH_INTERVAL_LIVE_PAGE_MS',
 
   /**
    * The time to wait after a challenge is marked completed before showing a claim reward prompt.
-   * Should be larger than both CHALLENGE_REFRESH_INTERVAL_MS and CHALLENGE_REFRESH_INTERVAL_AUDIO_PAGE_MS
+   * Should be larger than both CHALLENGE_REFRESH_INTERVAL_MS and CHALLENGE_REFRESH_INTERVAL_LIVE_PAGE_MS
    * to allow additional polls to check for disbursement
    */
   MANUAL_CLAIM_PROMPT_DELAY_MS = 'MANUAL_CLAIM_PROMPT_DELAY_MS',

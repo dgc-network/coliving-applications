@@ -47,26 +47,26 @@ import { TrendingRewards } from './TrendingRewards'
 const LEARN_MORE_LINK = 'https://blog..co/article/community-meet-audio'
 
 const messages = {
-  title: '$AUDIO & Rewards',
-  audio: '$AUDIO',
-  totalAudio: 'Total $AUDIO',
-  send: 'Send $AUDIO',
-  receive: 'Receive $AUDIO',
+  title: '$LIVE & Rewards',
+  audio: '$LIVE',
+  totalAudio: 'Total $LIVE',
+  send: 'Send $LIVE',
+  receive: 'Receive $LIVE',
   connect: 'Connect Other Wallets',
-  rewards: '$AUDIO Rewards',
-  rewardsBody1: 'Complete tasks to earn $AUDIO tokens!',
+  rewards: '$LIVE Rewards',
+  rewardsBody1: 'Complete tasks to earn $LIVE tokens!',
   rewardsBody2:
-    'Opportunities to earn $AUDIO will change, so check back often for more chances to earn!',
+    'Opportunities to earn $LIVE will change, so check back often for more chances to earn!',
   trending: 'Trending Competitions',
-  trendingBody1: 'Win contests to earn $AUDIO tokens!',
-  vipTiers: '$AUDIO VIP Tiers',
-  vipTiersBody1: 'Unlock $AUDIO VIP Tiers by simply holding more $AUDIO!',
+  trendingBody1: 'Win contests to earn $LIVE tokens!',
+  vipTiers: '$LIVE VIP Tiers',
+  vipTiersBody1: 'Unlock $LIVE VIP Tiers by simply holding more $LIVE!',
   vipTiersBody2:
     'Advancing to a new tier will earn your profile a badge, visible throughout the app, and unlock various new features as they are released.',
   launchDiscord: 'Launch the VIP Discord',
-  what: 'What is $AUDIO',
+  what: 'What is $LIVE',
   whatBody1:
-    'Coliving is owned by people like you, not major corporations. Holding $AUDIO grants you partial ownership of the Coliving platform and gives you access to special features as they are released.',
+    'Coliving is owned by people like you, not major corporations. Holding $LIVE grants you partial ownership of the Coliving platform and gives you access to special features as they are released.',
   learnMore: 'Learn More',
   whatBody2: `Still confused? Don't worry, more details coming soon!`
 }

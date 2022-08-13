@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux'
 import { ChallengeReward } from 'common/store/notifications/types'
 import { challengeRewardsConfig } from 'pages/audio-rewards-page/config'
 import { make, useRecord } from 'store/analytics/actions'
-import { AUDIO_PAGE } from 'utils/route'
+import { LIVE_PAGE } from 'utils/route'
 
 import { NotificationBody } from './components/NotificationBody'
 import { NotificationFooter } from './components/NotificationFooter'
@@ -18,14 +18,14 @@ import { TwitterShareButton } from './components/TwitterShareButton'
 import { IconRewards } from './components/icons'
 
 const messages = {
-  amountEarned: (amount: number) => `You've earned ${amount} $AUDIO`,
+  amountEarned: (amount: number) => `You've earned ${amount} $LIVE`,
   referredText:
     ' for being referred! Invite your friends to join to earn more!',
   challengeCompleteText: ' for completing this challenge!',
   body: (amount: number) =>
-    `You've earned ${amount} $AUDIO for completing this challenge!`,
+    `You've earned ${amount} $LIVE for completing this challenge!`,
   twitterShareText:
-    'I earned $AUDIO for completing challenges on @dgc.network #AudioRewards'
+    'I earned $LIVE for completing challenges on @dgc.network #AudioRewards'
 }
 
 type ChallengeRewardNotificationProps = {
@@ -47,9 +47,9 @@ export const ChallengeRewardNotification = (
   } = challengeRewardsConfig[challengeId]
 
   const handleClick = useCallback(() => {
-    dispatch(push(AUDIO_PAGE))
+    dispatch(push(LIVE_PAGE))
     record(
-      make(Name.NOTIFICATIONS_CLICK_TILE, { kind: type, link_to: AUDIO_PAGE })
+      make(Name.NOTIFICATIONS_CLICK_TILE, { kind: type, link_to: LIVE_PAGE })
     )
   }, [dispatch, record, type])
 

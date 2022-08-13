@@ -106,7 +106,7 @@ import {
   SAVED_PAGE,
   HISTORY_PAGE,
   DASHBOARD_PAGE,
-  AUDIO_PAGE,
+  LIVE_PAGE,
   UPLOAD_PAGE,
   UPLOAD_ALBUM_PAGE,
   UPLOAD_PLAYLIST_PAGE,
@@ -150,7 +150,7 @@ import {
   CHECK_PAGE,
   getPathname,
   TRENDING_PLAYLISTS_PAGE_LEGACY,
-  AUDIO_NFT_PLAYLIST_PAGE,
+  LIVE_NFT_PLAYLIST_PAGE,
   DEACTIVATE_PAGE,
   SUPPORTING_USERS_ROUTE,
   TOP_SUPPORTERS_USERS_ROUTE,
@@ -677,7 +677,7 @@ class App extends Component {
               <Route exact path={EXPLORE_PAGE} render={() => <ExplorePage />} />
               <Route
                 exact
-                path={AUDIO_NFT_PLAYLIST_PAGE}
+                path={LIVE_NFT_PLAYLIST_PAGE}
                 render={() => <CollectiblesPlaylistPage />}
               />
               <Route
@@ -800,7 +800,7 @@ class App extends Component {
               />
               <Route
                 exact
-                path={AUDIO_PAGE}
+                path={LIVE_PAGE}
                 isMobile={isMobileClient}
                 component={AudioRewardsPage}
               />

@@ -31,7 +31,7 @@ const messages = {
   reacted: 'reacted',
   react: 'reacted to your tip of ',
   twitterShare: (handle: string) =>
-    `I got a thanks from ${handle} for tipping them $AUDIO on @colivingproject! #Coliving #AUDIOTip`
+    `I got a thanks from ${handle} for tipping them $LIVE on @colivingproject! #Coliving #LIVETip`
 }
 
 const useStyles = makeStyles(() => ({

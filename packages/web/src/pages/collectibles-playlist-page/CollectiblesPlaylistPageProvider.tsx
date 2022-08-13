@@ -35,11 +35,11 @@ import { setCollectible } from 'common/store/ui/collectible-details/slice'
 import { requestOpen as requestOpenShareModal } from 'common/store/ui/share-modal/slice'
 import { formatSeconds } from 'common/utils/timeUtil'
 import TablePlayButton from 'components/tracks-table/TablePlayButton'
-import { AUDIO_NFT_PLAYLIST } from 'pages/smart-collection/smartCollections'
+import { LIVE_NFT_PLAYLIST } from 'pages/smart-collection/smartCollections'
 import { getPlaying, makeGetCurrent } from 'store/player/selectors'
 import { getLocationPathname } from 'store/routing/selectors'
 import { AppState } from 'store/types'
-import { getHash, AUDIO_NFT_PLAYLIST_PAGE, profilePage } from 'utils/route'
+import { getHash, LIVE_NFT_PLAYLIST_PAGE, profilePage } from 'utils/route'
 
 import { CollectionPageProps as DesktopCollectionPageProps } from '../collection-page/components/desktop/CollectionPage'
 import { CollectionPageProps as MobileCollectionPageProps } from '../collection-page/components/mobile/CollectionPage'
@@ -92,7 +92,7 @@ export const CollectiblesPlaylistPageProvider = ({
   const routeMatch = useMemo(
     () =>
       matchPath<{ handle: string }>(pathname, {
-        path: AUDIO_NFT_PLAYLIST_PAGE,
+        path: LIVE_NFT_PLAYLIST_PAGE,
         exact: true
       }),
     [pathname]
@@ -225,8 +225,8 @@ export const CollectiblesPlaylistPageProvider = ({
   ])
 
   const title = user
-    ? `${user?.name} ${SmartCollectionVariant.AUDIO_NFT_PLAYLIST}`
-    : SmartCollectionVariant.AUDIO_NFT_PLAYLIST
+    ? `${user?.name} ${SmartCollectionVariant.LIVE_NFT_PLAYLIST}`
+    : SmartCollectionVariant.LIVE_NFT_PLAYLIST
 
   useEffect(() => {
     if (routeMatch?.params.handle) {
@@ -429,9 +429,9 @@ export const CollectiblesPlaylistPageProvider = ({
   }
 
   const metadata: SmartCollection | Collection = {
-    ...AUDIO_NFT_PLAYLIST,
+    ...LIVE_NFT_PLAYLIST,
     playlist_name: title,
-    description: AUDIO_NFT_PLAYLIST.makeDescription?.(user?.name) ?? '',
+    description: LIVE_NFT_PLAYLIST.makeDescription?.(user?.name) ?? '',
     playlist_contents: {
       track_ids: entries.map((entry) => ({
         track: entry.id
@@ -450,7 +450,7 @@ export const CollectiblesPlaylistPageProvider = ({
     title,
     description: '',
     canonicalUrl: '',
-    playlistId: SmartCollectionVariant.AUDIO_NFT_PLAYLIST,
+    playlistId: SmartCollectionVariant.LIVE_NFT_PLAYLIST,
     playing,
     type: 'playlist' as const,
     collection: {

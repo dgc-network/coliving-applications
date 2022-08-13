@@ -62,7 +62,7 @@ const validRewardIds: Set<TrendingRewardID> = new Set([
 
 const messages = {
   title: 'TRENDING COMPETITIONS',
-  description1: 'Win contests to earn $AUDIO tokens!'
+  description1: 'Win contests to earn $LIVE tokens!'
 }
 
 /** Pulls rewards from remoteconfig */

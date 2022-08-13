@@ -229,13 +229,13 @@ function* sendTipAsync() {
   const waudioWeiAmount = yield* call(walletClient.getCurrentWAudioBalance)
 
   if (weiBNAmount.gt(weiBNBalance)) {
-    const errorMessage = 'Not enough $AUDIO'
+    const errorMessage = 'Not enough $LIVE'
     throw new Error(errorMessage)
   }
 
   try {
     yield put(
-      make(Name.TIP_AUDIO_REQUEST, {
+      make(Name.TIP_LIVE_REQUEST, {
         senderWallet: sender.spl_wallet,
         recipientWallet,
         senderHandle: sender.handle,
@@ -246,7 +246,7 @@ function* sendTipAsync() {
       })
     )
     // If transferring spl wrapped audio and there are insufficent funds with only the
-    // user bank balance, transfer all eth AUDIO to spl wrapped audio
+    // user bank balance, transfer all eth LIVE to spl wrapped audio
     if (weiBNAmount.gt(waudioWeiAmount)) {
       // Wait for a second before showing the notice that this might take a while
       const showConvertingMessage = yield* fork(function* () {
@@ -272,7 +272,7 @@ function* sendTipAsync() {
 
     yield put(sendTipSucceeded())
     yield put(
-      make(Name.TIP_AUDIO_SUCCESS, {
+      make(Name.TIP_LIVE_SUCCESS, {
         senderWallet: sender.spl_wallet,
         recipientWallet,
         senderHandle: sender.handle,
@@ -308,7 +308,7 @@ function* sendTipAsync() {
     console.error(`Send tip failed: ${error}`)
     yield put(sendTipFailed({ error }))
     yield put(
-      make(Name.TIP_AUDIO_FAILURE, {
+      make(Name.TIP_LIVE_FAILURE, {
         senderWallet: sender.spl_wallet,
         recipientWallet,
         senderHandle: sender.handle,

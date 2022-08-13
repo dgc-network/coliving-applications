@@ -3,9 +3,9 @@ import jsmediatags from 'jsmediatags'
 import * as schemas from 'schemas'
 import { resizeImage } from 'utils/imageProcessingUtil'
 
-const ALLOWED_MAX_AUDIO_SIZE_BYTES = 250 * 1000 * 1000
+const ALLOWED_MAX_LIVE_SIZE_BYTES = 250 * 1000 * 1000
 
-const ALLOWED_AUDIO_FILE_EXTENSIONS = [
+const ALLOWED_LIVE_FILE_EXTENSIONS = [
   'mp2',
   'mp3',
   // mp4
@@ -50,7 +50,7 @@ const ALLOWED_AUDIO_FILE_EXTENSIONS = [
   'tsa'
 ]
 
-const ALLOWED_AUDIO_FILE_MIME = /^audio/
+const ALLOWED_LIVE_FILE_MIME = /^audio/
 
 const readMediaTags = (file: File): Promise<any> => {
   return new Promise(function (resolve, reject) {
@@ -84,13 +84,13 @@ export const processFiles = (
   handleInvalid: (fileName: string, errorType: 'size' | 'type') => void
 ) => {
   return selectedFiles.map(async (file) => {
-    if (file.size > ALLOWED_MAX_AUDIO_SIZE_BYTES) {
+    if (file.size > ALLOWED_MAX_LIVE_SIZE_BYTES) {
       handleInvalid(file.name, 'size')
       return null
     }
     // Check file extension (heuristic for failure)
     if (
-      !ALLOWED_AUDIO_FILE_EXTENSIONS.some((ext) =>
+      !ALLOWED_LIVE_FILE_EXTENSIONS.some((ext) =>
         file.name.trim().toLowerCase().endsWith(ext)
       )
     ) {
@@ -99,7 +99,7 @@ export const processFiles = (
     }
     // If the mime type is somehow undefined or it doesn't begin with audio/ reject.
     // Backend will try to match on mime again and if it's not an audio/ match, it'll error
-    if (file.type && !file.type.match(ALLOWED_AUDIO_FILE_MIME)) {
+    if (file.type && !file.type.match(ALLOWED_LIVE_FILE_MIME)) {
       handleInvalid(file.type, 'type')
       return null
     }

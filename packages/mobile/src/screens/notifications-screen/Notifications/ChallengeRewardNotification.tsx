@@ -12,12 +12,12 @@ import {
 } from '../Notification'
 
 const messages = {
-  amountEarned: (amount: number) => `You've earned ${amount} $AUDIO`,
+  amountEarned: (amount: number) => `You've earned ${amount} $LIVE`,
   referredText:
     ' for being referred! Invite your friends to join to earn more!',
   challengeCompleteText: ' for completing this challenge!',
   twitterShareText:
-    'I earned $AUDIO for completing challenges on @dgc.network #AudioRewards'
+    'I earned $LIVE for completing challenges on @dgc.network #AudioRewards'
 }
 
 const challengeInfoMap: Record<

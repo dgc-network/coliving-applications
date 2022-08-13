@@ -16,7 +16,7 @@ export const MODAL_NAME = 'TiersExplainer'
 
 const messages = {
   tier: 'Tier',
-  explainer1: 'Unlock $AUDIO VIP Tiers by simply holding more $AUDIO.',
+  explainer1: 'Unlock $LIVE VIP Tiers by simply holding more $LIVE.',
   explainer2:
     'Advancing to a new tier will earn you a profile badge, visible throughout the app, and unlock various new features, as they are released.',
   learnMore: 'LEARN MORE'
@@ -88,7 +88,7 @@ export const TiersExplainerDrawer = () => {
             accessibilityLabel={`${minAudioText} or more audio tokens`}
             style={styles.minAudio}
           >
-            {minAudio.toString()}+ $AUDIO
+            {minAudio.toString()}+ $LIVE
           </Text>
         </View>
       </View>

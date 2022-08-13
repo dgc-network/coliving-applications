@@ -84,7 +84,7 @@ const slice = createSlice({
         return
 
       state.modalState.flowState = {
-        stage: 'AWAITING_CONVERTING_ETH_AUDIO_TO_SOL',
+        stage: 'AWAITING_CONVERTING_ETH_LIVE_TO_SOL',
         recipientWallet: state.modalState.flowState.recipientWallet,
         amount: state.modalState.flowState.amount,
         chain: state.modalState.flowState.chain
@@ -95,7 +95,7 @@ const slice = createSlice({
         state.modalState?.stage !== 'SEND' ||
         (state.modalState.flowState.stage !== 'AWAITING_CONFIRMATION' &&
           state.modalState.flowState.stage !==
-            'AWAITING_CONVERTING_ETH_AUDIO_TO_SOL')
+            'AWAITING_CONVERTING_ETH_LIVE_TO_SOL')
       )
         return
 

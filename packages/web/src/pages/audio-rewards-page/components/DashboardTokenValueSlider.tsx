@@ -16,7 +16,7 @@ const MinMaxWrapper = ({ value }: { value: BN }) => {
   return (
     <div className={styles.minMaxWrapper}>{`${formatNumberCommas(
       value.toString()
-    )} $AUDIO`}</div>
+    )} $LIVE`}</div>
   )
 }
 

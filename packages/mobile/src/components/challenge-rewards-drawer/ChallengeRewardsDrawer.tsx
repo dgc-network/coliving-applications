@@ -24,14 +24,14 @@ const messages = {
   taskVerified: 'Verified Challenge',
   reward: 'Reward',
   progress: 'Progress',
-  audio: '$AUDIO',
+  audio: '$LIVE',
   incomplete: 'Incomplete',
   complete: 'Complete',
   claim: 'Claim Your Reward',
   claimErrorMessage:
     'Something has gone wrong, not all your rewards were claimed. Please try again.',
-  claimableLabel: '$AUDIO available to claim',
-  claimedLabel: '$AUDIO claimed so far'
+  claimableLabel: '$LIVE available to claim',
+  claimedLabel: '$LIVE claimed so far'
 }
 
 const createStyles = (themeColors: ThemeColors) =>
@@ -154,14 +154,14 @@ type ChallengeRewardsDrawerProps = {
   currentStep: number
   /** The number of steps the user has to complete in total */
   stepCount?: number
-  /** The amount of $AUDIO that is rewarded to the user for completing the challenge */
+  /** The amount of $LIVE that is rewarded to the user for completing the challenge */
   amount: number
   /** The label to use for the in-progress status */
   progressLabel: string
   challengeState: UserChallengeState
-  /** The amount of $AUDIO available to be claimed */
+  /** The amount of $LIVE available to be claimed */
   claimableAmount: number
-  /** The amount of $AUDIO the user has already claimed, used in aggregate challenges */
+  /** The amount of $LIVE the user has already claimed, used in aggregate challenges */
   claimedAmount: number
   /** The status of the rewards being claimed */
   claimStatus: ClaimStatus

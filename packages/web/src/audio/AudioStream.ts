@@ -34,7 +34,7 @@ const IS_CHROME_LIKE =
   /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor)
 
 export enum AudioError {
-  AUDIO = 'AUDIO',
+  LIVE = 'LIVE',
   HLS = 'HLS'
 }
 
@@ -160,7 +160,7 @@ class AudioStream {
     })
 
     this.audio.onerror = (e) => {
-      this.onError(AudioError.AUDIO, e)
+      this.onError(AudioError.LIVE, e)
 
       // Handle audio errors by trying to nudge the playhead and re attach media.
       // Simply nudging the media doesn't work.

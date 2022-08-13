@@ -33,9 +33,9 @@ import styles from './TrendingRewards.module.css'
 const IS_NATIVE_MOBILE = process.env.REACT_APP_NATIVE_MOBILE
 
 const messages = {
-  tracksTitle: 'Top 5 Tracks Each Week Receive 100 $AUDIO',
-  playlistTitle: 'Top 5 Playlists Each Week Receive 100 $AUDIO',
-  undergroundTitle: 'Top 5 Tracks Each Week Receive 100 $AUDIO',
+  tracksTitle: 'Top 5 Tracks Each Week Receive 100 $LIVE',
+  playlistTitle: 'Top 5 Playlists Each Week Receive 100 $LIVE',
+  undergroundTitle: 'Top 5 Tracks Each Week Receive 100 $LIVE',
   winners: 'Winners are selected every Friday at Noon PT!',
   lastWeek: "LAST WEEK'S WINNERS",
   tracks: 'TRACKS',

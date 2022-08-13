@@ -81,10 +81,10 @@ const messages = {
   claimYourReward: 'Claim Your Reward',
   twitterShare: (modalType: 'referrals' | 'ref-v') =>
     `Share Invite With Your ${modalType === 'referrals' ? 'Friends' : 'Fans'}`,
-  twitterCopy: `Come support me on @colivingproject! Use my link and we both earn $AUDIO when you sign up.\n\n #coliving #audiorewards\n\n`,
+  twitterCopy: `Come support me on @colivingproject! Use my link and we both earn $LIVE when you sign up.\n\n #coliving #audiorewards\n\n`,
   verifiedChallenge: 'VERIFIED CHALLENGE',
-  claimAmountLabel: '$AUDIO available to claim',
-  claimedSoFar: '$AUDIO claimed so far',
+  claimAmountLabel: '$LIVE available to claim',
+  claimedSoFar: '$LIVE claimed so far',
 
   // Profile checks
   profileCheckNameAndHandle: 'Name & Handle',
@@ -243,7 +243,7 @@ const ChallengeRewardsBody = ({ dismissModal }: BodyProps) => {
     <div className={wm(styles.progressReward)}>
       <h3>Reward</h3>
       <h2>{formatNumberCommas(challenge?.totalAmount ?? '')}</h2>
-      <h4>$AUDIO</h4>
+      <h4>$LIVE</h4>
     </div>
   )
 

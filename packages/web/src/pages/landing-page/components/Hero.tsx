@@ -24,7 +24,7 @@ import styles from './Hero.module.css'
 
 const messages = {
   title: 'Discover New & Exclusive Music',
-  subtitle: 'Upload, Share & Listen while earning $AUDIO Token Rewards',
+  subtitle: 'Upload, Share & Listen while earning $LIVE Token Rewards',
   cta: 'Sign Up Free',
   download: 'Download The App'
 }

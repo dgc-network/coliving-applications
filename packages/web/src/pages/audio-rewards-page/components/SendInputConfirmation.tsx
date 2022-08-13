@@ -11,7 +11,7 @@ import styles from './SendInputConfirmation.module.css'
 
 const messages = {
   title: "YOU'RE ABOUT TO SEND",
-  sendButton: 'SEND $AUDIO'
+  sendButton: 'SEND $LIVE'
 }
 
 type SendInputConfirmationProps = {

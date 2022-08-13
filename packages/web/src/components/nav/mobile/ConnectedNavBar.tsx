@@ -24,7 +24,7 @@ import {
   TRENDING_PAGE,
   NOTIFICATION_PAGE,
   SETTINGS_PAGE,
-  AUDIO_PAGE
+  LIVE_PAGE
 } from 'utils/route'
 
 import NavBar from './NavBar'
@@ -79,7 +79,7 @@ const ConnectedNavBar = ({
 
   const goToAudioPage = useCallback(() => {
     setStackReset(true)
-    setImmediate(() => goToRoute(AUDIO_PAGE))
+    setImmediate(() => goToRoute(LIVE_PAGE))
   }, [goToRoute, setStackReset])
 
   return (

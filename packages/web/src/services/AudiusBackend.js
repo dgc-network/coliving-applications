@@ -71,7 +71,7 @@ const CLAIM_DISTRIBUTION_CONTRACT_ADDRESS =
 
 // Solana Config
 const SOLANA_CLUSTER_ENDPOINT = process.env.REACT_APP_SOLANA_CLUSTER_ENDPOINT
-const WAUDIO_MINT_ADDRESS = process.env.REACT_APP_WAUDIO_MINT_ADDRESS
+const WLIVE_MINT_ADDRESS = process.env.REACT_APP_WLIVE_MINT_ADDRESS
 const SOLANA_TOKEN_ADDRESS = process.env.REACT_APP_SOLANA_TOKEN_PROGRAM_ADDRESS
 const CLAIMABLE_TOKEN_PDA = process.env.REACT_APP_CLAIMABLE_TOKEN_PDA
 const SOLANA_FEE_PAYER_ADDRESS = process.env.REACT_APP_SOLANA_FEE_PAYER_ADDRESS
@@ -567,7 +567,7 @@ class ColivingBackend {
   static getSolanaWeb3Config() {
     if (
       !SOLANA_CLUSTER_ENDPOINT ||
-      !WAUDIO_MINT_ADDRESS ||
+      !WLIVE_MINT_ADDRESS ||
       !SOLANA_TOKEN_ADDRESS ||
       !SOLANA_FEE_PAYER_ADDRESS ||
       !CLAIMABLE_TOKEN_PROGRAM_ADDRESS ||
@@ -584,7 +584,7 @@ class ColivingBackend {
       error: false,
       solanaWeb3Config: ColivingLibs.configSolanaWeb3({
         solanaClusterEndpoint: SOLANA_CLUSTER_ENDPOINT,
-        mintAddress: WAUDIO_MINT_ADDRESS,
+        mintAddress: WLIVE_MINT_ADDRESS,
         solanaTokenAddress: SOLANA_TOKEN_ADDRESS,
         claimableTokenPDA: CLAIMABLE_TOKEN_PDA,
         feePayerAddress: SOLANA_FEE_PAYER_ADDRESS,
@@ -2462,7 +2462,7 @@ class ColivingBackend {
   }
 
   /**
-   * Make a request to fetch the eth AUDIO balance of the the user
+   * Make a request to fetch the eth LIVE balance of the the user
    * @params {bool} bustCache
    * @returns {Promise<BN>} balance
    */
@@ -2583,7 +2583,7 @@ class ColivingBackend {
         if (!window.phantom) {
           return {
             error:
-              'Recipient has no $AUDIO token account. Please install Phantom-Wallet to create one.'
+              'Recipient has no $LIVE token account. Please install Phantom-Wallet to create one.'
           }
         }
         if (!window.solana.isConnected) {
@@ -2625,8 +2625,8 @@ class ColivingBackend {
   }
 
   /**
-   * Transfers the user's ERC20 AUDIO into SPL WAUDIO to their solana user bank account
-   * @param {BN} balance The amount of AUDIO to be transferred
+   * Transfers the user's ERC20 LIVE into SPL WLIVE to their solana user bank account
+   * @param {BN} balance The amount of LIVE to be transferred
    * @returns {
    *   txSignature: string
    *   phase: string
@@ -2644,7 +2644,7 @@ class ColivingBackend {
   }
 
   /**
-   * Fetches the SPL WAUDIO balance for the user's solana wallet address
+   * Fetches the SPL WLIVE balance for the user's solana wallet address
    * @param {string} The solana wallet address
    * @returns {Promise<BN>}
    */

@@ -67,11 +67,11 @@ export const parseAudioInputToWei = (audio: StringAudio): Nullable<BNWei> => {
 }
 
 /**
- * Format wei BN to the full $AUDIO currency with decimals
+ * Format wei BN to the full $LIVE currency with decimals
  * @param amount The wei amount
  * @param shouldTruncate truncate decimals at truncation length
  * @param significantDigits if truncation set to true, how many significant digits to include
- * @returns $AUDIO The $AUDIO amount with decimals
+ * @returns $LIVE The $LIVE amount with decimals
  */
 export const formatWei = (
   amount: BNWei,

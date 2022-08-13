@@ -61,24 +61,24 @@ function* sendAsync({
     chain === Chain.Eth &&
     (!weiBNBalance || !weiBNBalance.gte(weiBNAmount))
   ) {
-    yield* put(sendFailed({ error: 'Not enough $AUDIO' }))
+    yield* put(sendFailed({ error: 'Not enough $LIVE' }))
     return
   } else if (chain === Chain.Sol) {
     if (weiBNAmount.gt(weiBNBalance)) {
-      yield* put(sendFailed({ error: 'Not enough $AUDIO' }))
+      yield* put(sendFailed({ error: 'Not enough $LIVE' }))
       return
     }
   }
 
   try {
     yield* put(
-      make(Name.SEND_AUDIO_REQUEST, {
+      make(Name.SEND_LIVE_REQUEST, {
         from: account?.wallet,
         recipient: recipientWallet
       })
     )
     // If transferring spl wrapped audio and there are insufficent funds with only the
-    // user bank balance, transfer all eth AUDIO to spl wrapped audio
+    // user bank balance, transfer all eth LIVE to spl wrapped audio
     if (chain === Chain.Sol && weiBNAmount.gt(waudioWeiAmount)) {
       yield* put(transferEthAudioToSolWAudio())
       yield* call(walletClient.transferTokensFromEthToSol)
@@ -99,7 +99,7 @@ function* sendAsync({
         }
         if (
           errorMessage ===
-          'Recipient has no $AUDIO token account. Please install Phantom-Wallet to create one.'
+          'Recipient has no $LIVE token account. Please install Phantom-Wallet to create one.'
         ) {
           yield* put(sendFailed({ error: errorMessage }))
           return
@@ -117,7 +117,7 @@ function* sendAsync({
 
     yield* put(sendSucceeded())
     yield* put(
-      make(Name.SEND_AUDIO_SUCCESS, {
+      make(Name.SEND_LIVE_SUCCESS, {
         from: account?.wallet,
         recipient: recipientWallet
       })
@@ -128,11 +128,11 @@ function* sendAsync({
     let errorText = errorMessage
     if (isRateLimit) {
       errorText =
-        'If you’ve already sent $AUDIO today, please wait a day before trying again'
+        'If you’ve already sent $LIVE today, please wait a day before trying again'
     }
     yield* put(sendFailed({ error: errorText }))
     yield* put(
-      make(Name.SEND_AUDIO_FAILURE, {
+      make(Name.SEND_LIVE_FAILURE, {
         from: account?.wallet,
         recipient: recipientWallet,
         error: errorText
@@ -175,7 +175,7 @@ function* fetchBalanceAsync() {
     currentSolAudioWeiBalance
   ) as BNWei
 
-  const useSolAudio = getFeatureEnabled(FeatureFlags.ENABLE_SPL_AUDIO)
+  const useSolAudio = getFeatureEnabled(FeatureFlags.ENABLE_SPL_LIVE)
   if (useSolAudio) {
     const totalBalance = audioWeiBalance.add(associatedWalletBalance) as BNWei
     yield* put(

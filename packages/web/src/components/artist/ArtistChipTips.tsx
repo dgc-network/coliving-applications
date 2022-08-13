@@ -20,7 +20,7 @@ import { TIPPING_TOP_RANK_THRESHOLD } from 'utils/constants'
 import styles from './ArtistChip.module.css'
 
 const messages = {
-  audio: '$AUDIO',
+  audio: '$LIVE',
   supporter: 'Supporter'
 }
 

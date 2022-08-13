@@ -17,7 +17,7 @@ import {
   EXPLORE_MOST_LOVED_PAGE,
   EXPLORE_FEELING_LUCKY_PAGE,
   EXPLORE_REMIXABLES_PAGE,
-  AUDIO_NFT_PLAYLIST_PAGE
+  LIVE_NFT_PLAYLIST_PAGE
 } from 'utils/route'
 
 export const HEAVY_ROTATION: SmartCollection = {
@@ -81,12 +81,12 @@ export const FEELING_LUCKY: SmartCollection = {
   link: EXPLORE_FEELING_LUCKY_PAGE
 }
 
-export const AUDIO_NFT_PLAYLIST: SmartCollection = {
+export const LIVE_NFT_PLAYLIST: SmartCollection = {
   variant: Variant.SMART,
-  playlist_name: SmartCollectionVariant.AUDIO_NFT_PLAYLIST,
+  playlist_name: SmartCollectionVariant.LIVE_NFT_PLAYLIST,
   makeDescription: (name: string) =>
     `A collection of Audio NFTs owned and created by ${name}`,
-  link: AUDIO_NFT_PLAYLIST_PAGE
+  link: LIVE_NFT_PLAYLIST_PAGE
 }
 
 export const SMART_COLLECTION_MAP = {
@@ -96,5 +96,5 @@ export const SMART_COLLECTION_MAP = {
   [SmartCollectionVariant.MOST_LOVED]: MOST_LOVED,
   [SmartCollectionVariant.FEELING_LUCKY]: FEELING_LUCKY,
   [SmartCollectionVariant.REMIXABLES]: REMIXABLES,
-  [SmartCollectionVariant.AUDIO_NFT_PLAYLIST]: AUDIO_NFT_PLAYLIST
+  [SmartCollectionVariant.LIVE_NFT_PLAYLIST]: LIVE_NFT_PLAYLIST
 }

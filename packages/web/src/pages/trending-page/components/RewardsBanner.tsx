@@ -14,10 +14,10 @@ import { isMobile } from 'utils/clientUtil'
 import styles from './RewardsBanner.module.css'
 
 const messages = {
-  rewards: '$AUDIO REWARDS',
-  tracksDescription: 'TOP 5 TRACKS EACH WEEK WIN $AUDIO',
-  playlistsDescription: 'TOP 5 PLAYLISTS EACH WEEK WIN $AUDIO',
-  undergroundDescription: 'TOP 5 TRACKS EACH WEEK WIN $AUDIO',
+  rewards: '$LIVE REWARDS',
+  tracksDescription: 'TOP 5 TRACKS EACH WEEK WIN $LIVE',
+  playlistsDescription: 'TOP 5 PLAYLISTS EACH WEEK WIN $LIVE',
+  undergroundDescription: 'TOP 5 TRACKS EACH WEEK WIN $LIVE',
   learnMore: 'LEARN MORE'
 }
 

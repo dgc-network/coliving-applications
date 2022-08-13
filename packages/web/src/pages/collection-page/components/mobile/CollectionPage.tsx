@@ -181,7 +181,7 @@ const CollectionPage = ({
   } = computeCollectionMetadataProps(metadata)
 
   const togglePlay = (uid: string, trackId: ID) => {
-    if (playlistId === SmartCollectionVariant.AUDIO_NFT_PLAYLIST) {
+    if (playlistId === SmartCollectionVariant.LIVE_NFT_PLAYLIST) {
       const track = tracks.entries.find((track) => track.uid === uid)
 
       if (track?.collectible) {

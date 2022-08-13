@@ -14,9 +14,9 @@ export const FETCH_TRACKS_METADATAS_SUCCEEDED =
   'FETCH_TRACKS_METADATAS_SUCCEEDED'
 export const FETCH_TRACKS_METADATAS_FAILED = 'FETCH_TRACKS_METADATAS_FAILED'
 
-export const FETCH_TRACK_AUDIO = 'FETCH_TRACK_AUDIO'
-export const FETCH_TRACK_AUDIO_REQUESTED = 'FETCH_TRACK_AUDIO_REQUESTED'
-export const FETCH_TRACK_AUDIO_SUCCEEDED = 'FETCH_TRACK_AUDIO_SUCCEEDED'
+export const FETCH_TRACK_LIVE = 'FETCH_TRACK_LIVE'
+export const FETCH_TRACK_LIVE_REQUESTED = 'FETCH_TRACK_LIVE_REQUESTED'
+export const FETCH_TRACK_LIVE_SUCCEEDED = 'FETCH_TRACK_LIVE_SUCCEEDED'
 export const UPDATE_LINEUP_ORDER = 'UPDATE_LINEUP_ORDER'
 
 export const PLAY = 'PLAY'
@@ -133,14 +133,14 @@ export class LineupActions {
 
   fetchTrackAudio(trackMetadata: TrackMetadata) {
     return {
-      type: addPrefix(this.prefix, FETCH_TRACK_AUDIO),
+      type: addPrefix(this.prefix, FETCH_TRACK_LIVE),
       trackMetadata
     }
   }
 
   fetchTrackAudioRequested(index: number, trackId: ID) {
     return {
-      type: addPrefix(this.prefix, FETCH_TRACK_AUDIO_REQUESTED),
+      type: addPrefix(this.prefix, FETCH_TRACK_LIVE_REQUESTED),
       index,
       trackId
     }
@@ -148,7 +148,7 @@ export class LineupActions {
 
   fetchTrackAudioSucceeded(index: number, trackId: ID) {
     return {
-      type: addPrefix(this.prefix, FETCH_TRACK_AUDIO_SUCCEEDED),
+      type: addPrefix(this.prefix, FETCH_TRACK_LIVE_SUCCEEDED),
       index,
       trackId
     }

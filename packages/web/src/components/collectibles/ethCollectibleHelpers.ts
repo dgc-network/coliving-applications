@@ -27,7 +27,7 @@ const fetchWithTimeout = async (
  * extensions based on OpenSea metadata standards
  * https://docs.opensea.io/docs/metadata-standards
  */
-const OPENSEA_AUDIO_EXTENSIONS = ['mp3', 'wav', 'oga']
+const OPENSEA_LIVE_EXTENSIONS = ['mp3', 'wav', 'oga']
 const OPENSEA_VIDEO_EXTENSIONS = [
   'gltf',
   'glb',
@@ -44,7 +44,7 @@ const SUPPORTED_3D_EXTENSIONS = ['gltf', 'glb']
 
 const NON_IMAGE_EXTENSIONS = [
   ...OPENSEA_VIDEO_EXTENSIONS,
-  ...OPENSEA_AUDIO_EXTENSIONS
+  ...OPENSEA_LIVE_EXTENSIONS
 ]
 
 const NULL_ADDRESS = '0x0000000000000000000000000000000000000000'

@@ -65,7 +65,7 @@ import apiClient from 'services/coliving-api-client/ColivingAPIClient'
 import { getCognitoExists } from 'services/coliving-backend/Cognito'
 import { remoteConfigInstance } from 'services/remote-config/remote-config-instance'
 import { waitForBackendSetup } from 'store/backend/sagas'
-import { AUDIO_PAGE } from 'utils/route'
+import { LIVE_PAGE } from 'utils/route'
 import { waitForValue } from 'utils/sagaHelpers'
 import {
   foregroundPollingDaemon,
@@ -565,7 +565,7 @@ function* userChallengePollingDaemon() {
   )!
   const audioRewardsPageChallengePollingTimeout =
     remoteConfigInstance.getRemoteVar(
-      IntKeys.CHALLENGE_REFRESH_INTERVAL_AUDIO_PAGE_MS
+      IntKeys.CHALLENGE_REFRESH_INTERVAL_LIVE_PAGE_MS
     )!
 
   yield take(fetchAccountSucceeded.type)
@@ -577,7 +577,7 @@ function* userChallengePollingDaemon() {
     fetchUserChallenges(),
     defaultChallengePollingTimeout,
     {
-      [AUDIO_PAGE]: audioRewardsPageChallengePollingTimeout
+      [LIVE_PAGE]: audioRewardsPageChallengePollingTimeout
     }
   )
 }

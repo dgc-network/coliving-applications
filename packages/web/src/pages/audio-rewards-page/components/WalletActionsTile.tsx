@@ -18,8 +18,8 @@ import { useSelector } from 'utils/reducer'
 import styles from './WalletActionsTile.module.css'
 
 const messages = {
-  receiveLabel: 'RECEIVE $AUDIO',
-  sendLabel: 'SEND $AUDIO',
+  receiveLabel: 'RECEIVE $LIVE',
+  sendLabel: 'SEND $LIVE',
   manageWallets: 'Manage Wallets',
   connectWallets: 'Connect Other Wallets'
 }

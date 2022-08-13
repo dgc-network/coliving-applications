@@ -146,7 +146,7 @@ class WalletClient {
         }
         if (
           error ===
-          'Recipient has no $AUDIO token account. Please install Phantom-Wallet to create one.'
+          'Recipient has no $LIVE token account. Please install Phantom-Wallet to create one.'
         ) {
           throw new Error(error)
         }

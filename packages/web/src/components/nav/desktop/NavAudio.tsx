@@ -16,14 +16,14 @@ import { audioTierMapPng } from 'components/user-badges/UserBadges'
 import { useNavigateToPage } from 'hooks/useNavigateToPage'
 import { useRemoteVar } from 'hooks/useRemoteConfig'
 import { useSelector } from 'utils/reducer'
-import { AUDIO_PAGE } from 'utils/route'
+import { LIVE_PAGE } from 'utils/route'
 
 import styles from './NavAudio.module.css'
 
 type BubbleType = 'none' | 'claim' | 'earn'
 
 const messages = {
-  earnAudio: 'EARN $AUDIO',
+  earnAudio: 'EARN $LIVE',
   claimRewards: 'Claim Rewards'
 }
 
@@ -77,7 +77,7 @@ const NavAudio = () => {
   const [bubbleType, setBubbleType] = useState<BubbleType>('none')
 
   const goToAudioPage = useCallback(() => {
-    navigate(AUDIO_PAGE)
+    navigate(LIVE_PAGE)
   }, [navigate])
 
   useEffect(() => {

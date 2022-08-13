@@ -226,7 +226,7 @@ const SmartCollectionButtons = (props) => {
     <>
       <PlayButton playing={props.playing} onPlay={props.onPlay} />
       {/* Audio NFT Playlist share button */}
-      {props.playlistId === SmartCollectionVariant.AUDIO_NFT_PLAYLIST ? (
+      {props.playlistId === SmartCollectionVariant.LIVE_NFT_PLAYLIST ? (
         <Button
           className={cn(styles.buttonSpacing, styles.buttonFormatting)}
           textClassName={styles.buttonTextFormatting}

@@ -26,7 +26,7 @@ const messages = {
   description: 'Share your support on Twitter!',
   done: 'Done',
   twitterCopyPrefix: 'I just tipped ',
-  twitterCopySuffix: ' $AUDIO on @dgc.network #Coliving #AUDIOTip'
+  twitterCopySuffix: ' $LIVE on @dgc.network #Coliving #LIVETip'
 }
 
 const useStyles = makeStyles(({ spacing }) => ({
@@ -81,7 +81,7 @@ export const TipSentScreen = () => {
         analytics={
           account && recipient
             ? make({
-                eventName: EventNames.TIP_AUDIO_TWITTER_SHARE,
+                eventName: EventNames.TIP_LIVE_TWITTER_SHARE,
                 senderWallet: account.spl_wallet,
                 recipientWallet: recipient.spl_wallet,
                 senderHandle: account.handle,

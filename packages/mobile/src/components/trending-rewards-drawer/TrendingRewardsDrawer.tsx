@@ -36,9 +36,9 @@ const TRENDING_REWARDS_DRAWER_NAME = 'TrendingRewardsExplainer'
 const TOS_URL = 'https://blog..co/article/audio-rewards'
 
 const messages = {
-  tracksTitle: 'Top 5 Tracks Each Week Receive 100 $AUDIO',
-  playlistTitle: 'Top 5 Playlists Each Week Receive 100 $AUDIO',
-  undergroundTitle: 'Top 5 Tracks Each Week Receive 100 $AUDIO',
+  tracksTitle: 'Top 5 Tracks Each Week Receive 100 $LIVE',
+  playlistTitle: 'Top 5 Playlists Each Week Receive 100 $LIVE',
+  undergroundTitle: 'Top 5 Tracks Each Week Receive 100 $LIVE',
   winners: 'Winners are selected every Friday at Noon PT!',
   lastWeek: "LAST WEEK'S WINNERS",
   tracks: 'TRACKS',

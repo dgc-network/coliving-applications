@@ -11,7 +11,7 @@ import { makeStyles } from 'app/styles'
 import { useSelectProfile } from './selectors'
 
 const messages = {
-  title: 'Tip $AUDIO',
+  title: 'Tip $LIVE',
   label: 'Tip Audio tokens'
 }
 

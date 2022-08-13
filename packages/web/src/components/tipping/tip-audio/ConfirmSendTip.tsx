@@ -114,7 +114,7 @@ export const ConfirmSendTip = () => {
       </div>
       <div className={cn(styles.flexCenter, styles.modalContentHeaderSubtitle)}>
         <span className={styles.sendAmount}>{sendAmount}</span>
-        $AUDIO
+        $LIVE
       </div>
     </div>
   )

@@ -18,9 +18,9 @@ type SendInputSuccessProps = {
 
 const messages = {
   success: 'YOU HAVE SUCCESSFULLY SENT',
-  note: 'Note: The $AUDIO may take a couple minutes to show up',
+  note: 'Note: The $LIVE may take a couple minutes to show up',
   newBalance: 'YOUR BALANCE IS NOW',
-  currency: '$AUDIO'
+  currency: '$LIVE'
 }
 
 const SendInputSuccess = ({

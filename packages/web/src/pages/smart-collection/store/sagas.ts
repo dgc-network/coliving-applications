@@ -200,7 +200,7 @@ const fetchMap = {
   ),
   [SmartCollectionVariant.FEELING_LUCKY]: fetchFeelingLucky,
   [SmartCollectionVariant.REMIXABLES]: fetchRemixables,
-  [SmartCollectionVariant.AUDIO_NFT_PLAYLIST]: () => {}
+  [SmartCollectionVariant.LIVE_NFT_PLAYLIST]: () => {}
 }
 
 function* watchFetch() {

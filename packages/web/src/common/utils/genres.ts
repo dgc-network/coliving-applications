@@ -25,7 +25,7 @@ export enum Genre {
   COMEDY = 'Comedy',
   BLUES = 'Blues',
   KIDS = 'Kids',
-  AUDIOBOOKS = 'Audiobooks',
+  LIVEBOOKS = 'Audiobooks',
   LATIN = 'Latin',
   LOFI = 'Lo-Fi',
 
@@ -110,7 +110,7 @@ export const GENRES = [
   Genre.COMEDY,
   Genre.BLUES,
   Genre.KIDS,
-  Genre.AUDIOBOOKS,
+  Genre.LIVEBOOKS,
   Genre.LATIN,
   Genre.LOFI,
   ...Object.keys(ELECTRONIC_SUBGENRES).map(

@@ -14,7 +14,7 @@ type DisplayAudioProps = {
 }
 
 const messages = {
-  currency: '$AUDIO'
+  currency: '$LIVE'
 }
 
 const DisplayAudio = ({

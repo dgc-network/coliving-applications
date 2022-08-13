@@ -40,19 +40,19 @@ const { getRemoteVar } = remoteConfigInstance
 
 const messages = {
   warningTitle: 'PROCEED WITH CAUTION',
-  warningSubtitle: 'If you send $AUDIO to the wrong address it will be lost.',
+  warningSubtitle: 'If you send $LIVE to the wrong address it will be lost.',
   warningSubtitle2:
-    'WARNING: $AUDIO sent will not count towards badges, tiers, and unlocked features!',
+    'WARNING: $LIVE sent will not count towards badges, tiers, and unlocked features!',
   addressEthPlaceholder: '0xC7EF9651259197aA26544Af724441a46e491c12c',
   addressSolPlaceholder: '9qU2A32k4bL6sbohrah2MiZZRfemH92hyZTY7jKc5GR8',
-  sendAudio: 'SEND $AUDIO',
-  insufficientBalance: 'Account does not have enough $AUDIO',
+  sendAudio: 'SEND $LIVE',
+  insufficientBalance: 'Account does not have enough $LIVE',
   amountRequired: 'Amount is a required field',
-  amountInsufficient: 'This amount of $AUDIO is too low to send.',
+  amountInsufficient: 'This amount of $LIVE is too low to send.',
   amountMalformed: 'Amount must be a valid number',
   addressMalformed: 'Please enter a valid address',
   addressRequired: 'Address is required',
-  addressIsSelf: 'You cannot send $AUDIO to your own wallet!',
+  addressIsSelf: 'You cannot send $LIVE to your own wallet!',
   validSPLAddress: 'Please enter a valid Solana (SPL) wallet address',
   sendAmountLabel: 'Amount to SEND',
   destination: 'Destination Address',
@@ -73,7 +73,7 @@ type AddressError =
   | 'INVALID_SPL_ADDRESS'
 
 const makeMinAudioError = (num: number | string) =>
-  `You must send at least ${num} $AUDIO`
+  `You must send at least ${num} $LIVE`
 
 const balanceErrorMap: { [B in BalanceError]: string } = {
   INSUFFICIENT_BALANCE: messages.insufficientBalance,
@@ -209,10 +209,10 @@ const SendInputBody = ({
   )
 
   const useSolSPLAudio = getFeatureEnabled(
-    FeatureFlags.ENABLE_SPL_AUDIO
+    FeatureFlags.ENABLE_SPL_LIVE
   ) as boolean
   const minAudioSendAmount = getRemoteVar(
-    IntKeys.MIN_AUDIO_SEND_AMOUNT
+    IntKeys.MIN_LIVE_SEND_AMOUNT
   ) as number
 
   const onClickSend = () => {
@@ -284,7 +284,7 @@ const SendInputBody = ({
         label={messages.sendAmountLabel}
         format={Format.INPUT}
         placeholder={'0'}
-        rightLabel={'$AUDIO'}
+        rightLabel={'$LIVE'}
         value={amountToSend}
         isNumeric={true}
         onChange={onChangeAmount}

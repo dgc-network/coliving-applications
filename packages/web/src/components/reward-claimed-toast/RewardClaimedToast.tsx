@@ -9,12 +9,12 @@ import { ToastContext } from 'components/toast/ToastContext'
 import ToastLinkContent from 'components/toast/mobile/ToastLinkContent'
 import { getLocationPathname } from 'store/routing/selectors'
 import { CLAIM_REWARD_TOAST_TIMEOUT_MILLIS } from 'utils/constants'
-import { AUDIO_PAGE } from 'utils/route'
+import { LIVE_PAGE } from 'utils/route'
 
 import styles from './RewardClaimedToast.module.css'
 
 const messages = {
-  challengeCompleted: 'You’ve Completed an $AUDIO Rewards Challenge!',
+  challengeCompleted: 'You’ve Completed an $LIVE Rewards Challenge!',
   seeMore: 'See more'
 }
 
@@ -31,13 +31,13 @@ export const RewardClaimedToast = () => {
           <span className={styles.rewardClaimedToastIcon}>
             <i className='emoji face-with-party-horn-and-party-hat' />
           </span>
-          {pathname === AUDIO_PAGE ? (
+          {pathname === LIVE_PAGE ? (
             messages.challengeCompleted
           ) : (
             <ToastLinkContent
               text={messages.challengeCompleted}
               linkText={messages.seeMore}
-              link={AUDIO_PAGE}
+              link={LIVE_PAGE}
               linkIcon={<IconCaretRight className={styles.seeMoreCaret} />}
             />
           )}

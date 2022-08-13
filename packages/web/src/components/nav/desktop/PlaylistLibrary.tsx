@@ -35,7 +35,7 @@ import Droppable from 'components/dragndrop/Droppable'
 import { ToastContext } from 'components/toast/ToastContext'
 import { useFlag } from 'hooks/useRemoteConfig'
 import {
-  AUDIO_NFT_PLAYLIST,
+  LIVE_NFT_PLAYLIST,
   SMART_COLLECTION_MAP
 } from 'pages/smart-collection/smartCollections'
 import { make, useRecord } from 'store/analytics/actions'
@@ -136,12 +136,12 @@ const PlaylistLibrary = ({
     if (library) {
       const isAudioNftPlaylistInLibrary = !!findInPlaylistLibrary(
         library,
-        SmartCollectionVariant.AUDIO_NFT_PLAYLIST
+        SmartCollectionVariant.LIVE_NFT_PLAYLIST
       )
       if (audioCollectibles.length && !isAudioNftPlaylistInLibrary) {
         dispatch(
           saveSmartCollection(
-            AUDIO_NFT_PLAYLIST.playlist_name,
+            LIVE_NFT_PLAYLIST.playlist_name,
             FavoriteSource.IMPLICIT
           )
         )
@@ -237,7 +237,7 @@ const PlaylistLibrary = ({
     level = 0
   ) => {
     const isAudioNftPlaylist =
-      playlistId === SmartCollectionVariant.AUDIO_NFT_PLAYLIST
+      playlistId === SmartCollectionVariant.LIVE_NFT_PLAYLIST
     if (isAudioNftPlaylist && !audioCollectibles.length) return null
     const playlist = SMART_COLLECTION_MAP[playlistId]
     if (!playlist) return null

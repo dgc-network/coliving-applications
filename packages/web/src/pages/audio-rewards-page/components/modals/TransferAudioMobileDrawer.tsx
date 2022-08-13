@@ -5,8 +5,8 @@ import Drawer from 'components/drawer/Drawer'
 import styles from './TransferAudioMobileDrawer.module.css'
 
 const messages = {
-  title: 'Transfer $AUDIO',
-  subtitle: 'To transfer AUDIO please visit coliving.co from a desktop browser'
+  title: 'Transfer $LIVE',
+  subtitle: 'To transfer LIVE please visit coliving.co from a desktop browser'
 }
 
 const TransferAudioMobileDrawer = () => {

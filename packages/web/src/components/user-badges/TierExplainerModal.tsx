@@ -7,13 +7,13 @@ import { useDispatch } from 'react-redux'
 import { useModalState } from 'common/hooks/useModalState'
 import { useProfileTier } from 'common/hooks/wallet'
 import { Tier } from 'pages/audio-rewards-page/Tiers'
-import { AUDIO_PAGE } from 'utils/route'
+import { LIVE_PAGE } from 'utils/route'
 
 import styles from './TierExplainerModal.module.css'
 
 export const messages = {
-  title: '$AUDIO VIP Tiers',
-  desc1: 'Unlock $AUDIO VIP Tiers by simply holding more $AUDIO.',
+  title: '$LIVE VIP Tiers',
+  desc1: 'Unlock $LIVE VIP Tiers by simply holding more $LIVE.',
   desc2:
     'Advancing to a new tier will earn you a profile badge, visible throughout the app, and unlock various new features, as they are released.',
   learnMore: 'LEARN MORE'
@@ -31,7 +31,7 @@ const TierExplainerModal = () => {
 
   const onClickLearnMore = useCallback(() => {
     handleDismiss()
-    dispatch(pushRoute(AUDIO_PAGE))
+    dispatch(pushRoute(LIVE_PAGE))
   }, [dispatch, handleDismiss])
 
   return (

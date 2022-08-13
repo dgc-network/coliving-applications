@@ -18,7 +18,7 @@ const messages = {
   unlocked: 'tier unlocked',
   reached: "Congrats, you've reached ",
   having: 'Tier by having over',
-  audio: '$AUDIO!',
+  audio: '$LIVE!',
   audioLabel: 'audio tokens',
   accessInfo:
     'You now have access to exclusive features & a shiny new badge by your name.',

@@ -5,7 +5,7 @@ import { GradientText } from 'app/components/core'
 import { AppDrawer } from 'app/components/drawer'
 import Text from 'app/components/text'
 
-const TRANSFER_AUDIO_MODAL_NAME = 'TransferAudioMobileWarning'
+const TRANSFER_LIVE_MODAL_NAME = 'TransferAudioMobileWarning'
 
 const styles = StyleSheet.create({
   drawer: {
@@ -35,13 +35,13 @@ const styles = StyleSheet.create({
 })
 
 const messages = {
-  title: 'Transfer $AUDIO',
-  subtitle: 'To transfer AUDIO please visit .co from a desktop browser'
+  title: 'Transfer $LIVE',
+  subtitle: 'To transfer LIVE please visit .co from a desktop browser'
 }
 
 export const TransferAudioMobileDrawer = () => {
   return (
-    <AppDrawer modalName={TRANSFER_AUDIO_MODAL_NAME}>
+    <AppDrawer modalName={TRANSFER_LIVE_MODAL_NAME}>
       <View style={styles.drawer}>
         <IconGold style={styles.badge} height={134} width={134} />
         <GradientText style={styles.title}>{messages.title}</GradientText>

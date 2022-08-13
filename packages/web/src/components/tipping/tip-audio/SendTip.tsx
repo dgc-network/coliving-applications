@@ -32,9 +32,9 @@ const messages = {
   sendATip: 'Send Tip',
   enterAnAmount: 'Enter an amount',
   insufficientBalance: 'Insufficient Balance',
-  tooltip: '$AUDIO held in linked wallets cannot be used for tipping',
+  tooltip: '$LIVE held in linked wallets cannot be used for tipping',
   becomeTopSupporterPrefix: 'Tip ',
-  becomeTopSupporterSuffix: ' $AUDIO To Become Their Top Supporter',
+  becomeTopSupporterSuffix: ' $LIVE To Become Their Top Supporter',
   becomeFirstSupporter: 'Tip To Become Their First Supporter'
 }
 
@@ -163,7 +163,7 @@ export const SendTip = () => {
           inputClassName={styles.input}
           format={Format.INPUT}
           placeholder={'Enter an amount'}
-          rightLabel={'$AUDIO'}
+          rightLabel={'$LIVE'}
           value={tipAmount}
           isNumeric={true}
           isWhole={true}

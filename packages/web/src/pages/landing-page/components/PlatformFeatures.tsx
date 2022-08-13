@@ -32,7 +32,7 @@ type FeatureProps = {
 
 const features: Array<Omit<FeatureProps, 'iconPosition'>> = [
   {
-    title: 'HQ AUDIO',
+    title: 'HQ LIVE',
     description:
       'Coliving offers crystal clear streaming at 320kbps! The highest quality sound from any free music platform.',
     icon: <IconAudio className={styles.featureIcon} />

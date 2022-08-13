@@ -16,10 +16,10 @@ import styles from './AudioBreakdownModal.module.css'
 import ModalDrawer from './ModalDrawer'
 
 const messages = {
-  modalTitle: '$AUDIO BREAKDOWN',
-  total: 'TOTAL $AUDIO',
+  modalTitle: '$LIVE BREAKDOWN',
+  total: 'TOTAL $LIVE',
   colivingWallet: 'COLIVING WALLET',
-  colivingWalletDescription: 'You can use this $AUDIO throughout the app',
+  colivingWalletDescription: 'You can use this $LIVE throughout the app',
   linkedWallets: 'LINKED WALLETS',
   linkedWalletsDescription:
     'Linked wallets are more secure but not all features are supported',

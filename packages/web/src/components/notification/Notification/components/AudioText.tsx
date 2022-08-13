@@ -11,7 +11,7 @@ type AudioTextProps = {
 export const AudioText = ({ value }: AudioTextProps) => {
   return (
     <span className={styles.root}>
-      {value} <span aria-label={messages.audioLabel}>$AUDIO</span>
+      {value} <span aria-label={messages.audioLabel}>$LIVE</span>
     </span>
   )
 }

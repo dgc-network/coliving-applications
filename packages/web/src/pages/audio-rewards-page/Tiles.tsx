@@ -29,15 +29,15 @@ import styles from './Tiles.module.css'
 import TokenHoverTooltip from './components/TokenHoverTooltip'
 
 const messages = {
-  noClaim1: 'You earn $AUDIO by using Coliving.',
-  noClaim2: 'The more you use Coliving, the more $AUDIO you earn.',
-  balance: '$AUDIO BALANCE',
-  receiveLabel: 'RECEIVE $AUDIO',
-  sendLabel: 'SEND $AUDIO',
-  audio: '$AUDIO',
+  noClaim1: 'You earn $LIVE by using Coliving.',
+  noClaim2: 'The more you use Coliving, the more $LIVE you earn.',
+  balance: '$LIVE BALANCE',
+  receiveLabel: 'RECEIVE $LIVE',
+  sendLabel: 'SEND $LIVE',
+  audio: '$LIVE',
   manageWallets: 'Manage Wallets',
   connectWallets: 'Connect Other Wallets',
-  totalAudio: 'Total $AUDIO'
+  totalAudio: 'Total $LIVE'
 }
 
 export const LEARN_MORE_URL = 'http://blog.coliving.co/posts/community-meet-audio'

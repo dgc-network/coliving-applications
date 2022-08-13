@@ -9,7 +9,7 @@ import { useThemeColors } from 'app/utils/theme'
 
 const messages = {
   becomeTopSupporterPrefix: 'Tip ',
-  becomeTopSupporterSuffix: ' $AUDIO to become their top supporter'
+  becomeTopSupporterSuffix: ' $LIVE to become their top supporter'
 }
 
 const useStyles = makeStyles(({ spacing, palette, typography }) => ({

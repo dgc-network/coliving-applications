@@ -33,10 +33,10 @@ import { Tile } from './components/ExplainerTile'
 import { challengeRewardsConfig } from './config'
 
 const messages = {
-  title: '$AUDIO REWARDS',
-  description1: 'Complete tasks to earn $AUDIO tokens!',
+  title: '$LIVE REWARDS',
+  description1: 'Complete tasks to earn $LIVE tokens!',
   description2:
-    'Opportunities to earn $AUDIO will change, so check back often for more chances to earn!',
+    'Opportunities to earn $LIVE will change, so check back often for more chances to earn!',
   completeLabel: 'COMPLETE',
   claimReward: 'Claim Your Reward'
 }

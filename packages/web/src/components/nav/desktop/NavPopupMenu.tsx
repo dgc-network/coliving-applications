@@ -13,7 +13,7 @@ import { ReactComponent as IconKebabHorizontal } from 'assets/img/iconKebabHoriz
 import { getAccountHasTracks } from 'common/store/account/selectors'
 import { useNavigateToPage } from 'hooks/useNavigateToPage'
 import { useSelector } from 'utils/reducer'
-import { AUDIO_PAGE, DASHBOARD_PAGE, SETTINGS_PAGE } from 'utils/route'
+import { LIVE_PAGE, DASHBOARD_PAGE, SETTINGS_PAGE } from 'utils/route'
 import zIndex from 'utils/zIndex'
 
 import styles from './NavPopupMenu.module.css'
@@ -21,7 +21,7 @@ import styles from './NavPopupMenu.module.css'
 const messages = {
   settings: 'Settings',
   dashboard: 'Artist Dashboard',
-  audio: '$AUDIO & Rewards'
+  audio: '$LIVE & Rewards'
 }
 
 const useAccountHasTracks = () => {
@@ -50,7 +50,7 @@ const NavPopupMenu = () => {
     {
       text: messages.audio,
       className: styles.rewardsMenuItem,
-      onClick: () => navigate(AUDIO_PAGE),
+      onClick: () => navigate(LIVE_PAGE),
       icon: <IconCrown />,
       iconClassName: cn(styles.menuItemIcon, styles.crownIcon)
     }

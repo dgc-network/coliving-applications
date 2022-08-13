@@ -31,7 +31,7 @@ import type { ThemeColors } from 'app/hooks/useThemedStyles'
 import { useThemedStyles } from 'app/hooks/useThemedStyles'
 import share from 'app/utils/share'
 
-const AUDIO_BREAKDOWN_MODAL_NAME = 'AudioBreakdown'
+const LIVE_BREAKDOWN_MODAL_NAME = 'AudioBreakdown'
 
 const createStyles = (themeColors: ThemeColors) =>
   StyleSheet.create({
@@ -167,16 +167,16 @@ const createStyles = (themeColors: ThemeColors) =>
   })
 
 const messages = {
-  modalTitle: '$AUDIO BREAKDOWN',
-  total: 'TOTAL $AUDIO',
+  modalTitle: '$LIVE BREAKDOWN',
+  total: 'TOTAL $LIVE',
   colivingWallet: 'COLIVING WALLET',
-  colivingWalletDescription: 'You can use this $AUDIO throughout the app',
+  colivingWalletDescription: 'You can use this $LIVE throughout the app',
   linkedWallets: 'LINKED WALLETS',
   linkedWalletsDescription:
     'Linked wallets are more secure but not all features are supported',
   linkedWalletsTooltip:
     'Linked wallets affect VIP status and NFTs. Upcoming features may require different behavior to support linked wallets. ',
-  audio: '$AUDIO'
+  audio: '$LIVE'
 }
 
 export const AudioBreakdownDrawer = () => {
@@ -203,7 +203,7 @@ export const AudioBreakdownDrawer = () => {
 
   return (
     <AppDrawer
-      modalName={AUDIO_BREAKDOWN_MODAL_NAME}
+      modalName={LIVE_BREAKDOWN_MODAL_NAME}
       title={messages.modalTitle}
       isFullscreen
     >
@@ -292,7 +292,7 @@ type WalletProps = { chain: Chain; address: string; balance: BNWei }
 const Wallet = ({ chain, address, balance }: WalletProps) => {
   // todo: use feature flag to determine whether we show sol audio
   // const { isEnabled: solWalletAudioEnabled } = useFlag(
-  //   FeatureFlags.SOL_WALLET_AUDIO_ENABLED
+  //   FeatureFlags.SOL_WALLET_LIVE_ENABLED
   // )
   const solWalletAudioEnabled = false
   const styles = useThemedStyles(createStyles)

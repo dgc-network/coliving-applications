@@ -35,11 +35,11 @@ const reactionList: [ReactionTypes, ComponentType<ReactionProps>][] =
 const messages = {
   title: 'You Received a Tip!',
   sent: 'sent you a tip of',
-  audio: '$AUDIO',
+  audio: '$LIVE',
   sayThanks: 'Say Thanks With a Reaction',
   reactionSent: 'Reaction Sent!',
   twitterShare: (senderHandle: string, amount: number) =>
-    `Thanks ${senderHandle} for the ${amount} $AUDIO tip on @dgc.network! #Coliving #AUDIOTip`
+    `Thanks ${senderHandle} for the ${amount} $LIVE tip on @dgc.network! #Coliving #LIVETip`
 }
 
 type TipReceivedNotificationProps = {

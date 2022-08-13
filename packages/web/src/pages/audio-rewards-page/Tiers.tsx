@@ -23,8 +23,8 @@ import { useSelector } from 'utils/reducer'
 import styles from './Tiers.module.css'
 
 const messages = {
-  title: '$AUDIO VIP TIERS',
-  subtitle1: `Unlock $AUDIO VIP Tiers by simply holding more $AUDIO!`,
+  title: '$LIVE VIP TIERS',
+  subtitle1: `Unlock $LIVE VIP Tiers by simply holding more $LIVE!`,
   subtitle2: `Advancing to a new tier will earn your profile a badge, visible throughout the app, and unlock various new features as they are released.`,
   unlocks: 'UNLOCKS',
   badgeType: (badge: string) => `${badge} Badge`,
@@ -35,7 +35,7 @@ const messages = {
   currentTier: 'CURRENT TIER',
   learnMore: 'LEARN MORE',
   launchDiscord: 'LAUNCH THE VIP DISCORD',
-  tierLevel: (amount: string) => `${Number(amount).toLocaleString()}+ $AUDIO`,
+  tierLevel: (amount: string) => `${Number(amount).toLocaleString()}+ $LIVE`,
   matrixMode: 'Matrix Mode',
   collectibles: 'NFT Collectibles'
 }
@@ -91,7 +91,7 @@ export const TierNumber = ({ tier }: { tier: AudioTiers }) => {
   )
 }
 
-/** Renders out level of audio required for a tier - e.g. '1000+ $AUDIO */
+/** Renders out level of audio required for a tier - e.g. '1000+ $LIVE */
 export const TierLevel = ({ tier }: { tier: AudioTiers }) => {
   const minAudio = useMemo(
     () => badgeTiers.find((b) => b.tier === tier)?.minAudio.toString() ?? '',

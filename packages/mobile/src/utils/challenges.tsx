@@ -28,7 +28,7 @@ export const challenges = {
   connectVerifiedDescription:
     'Get verified on Coliving by linking your verified Twitter or Instagram account!',
   connectVerifiedShortDescription:
-    'Link your verified social media accounts to earn 1 $AUDIO',
+    'Link your verified social media accounts to earn 1 $LIVE',
   connectVerifiedButton: 'Verify Your Account',
   connectVerifiedProgressLabel: 'Not Linked',
 
@@ -37,7 +37,7 @@ export const challenges = {
   listenStreakDescription:
     'Sign in and listen to at least one track every day for 7 days',
   listenStreakShortDescription:
-    'Listen to one track a day for seven days to earn 1 $AUDIO',
+    'Listen to one track a day for seven days to earn 1 $LIVE',
   listenStreakButton: 'Trending Tracks',
   listenStreakProgressLabel: '%0/%1 Days',
 
@@ -45,7 +45,7 @@ export const challenges = {
   mobileInstallTitle: 'Get the Coliving Mobile App',
   mobileInstallDescription:
     'Install the Coliving app for iPhone and Android and Sign in to your account!',
-  mobileInstallShortDescription: 'Earn 1 $AUDIO',
+  mobileInstallShortDescription: 'Earn 1 $LIVE',
   mobileInstallButton: 'Get the App',
   mobileInstallProgressLabel: 'Not Installed',
 
@@ -54,15 +54,15 @@ export const challenges = {
   profileCompletionDescription:
     'Fill out the missing details on your Coliving profile and start interacting with tracks and artists!',
   profileCompletionShortDescription:
-    'Complete your Coliving profile to earn 1 $AUDIO',
+    'Complete your Coliving profile to earn 1 $LIVE',
   profileCompletionButton: 'More Info',
   profileCompletionProgressLabel: '%0/%1 Complete',
 
   // Referrals
   referreralsTitle: 'Invite your Friends',
   referralsDescription:
-    'Invite your Friends! You’ll earn 1 $AUDIO for each friend who joins with your link (and they’ll get an $AUDIO too)',
-  referralsShortDescription: 'Earn 1 $AUDIO, for you and your friend',
+    'Invite your Friends! You’ll earn 1 $LIVE for each friend who joins with your link (and they’ll get an $LIVE too)',
+  referralsShortDescription: 'Earn 1 $LIVE, for you and your friend',
   referralsProgressLabel: '%0/%1 Invites Accepted',
   referralsRemainingLabel: '%0/%1 Invites Remain',
   referralsButton: 'Invite your Friends',
@@ -70,15 +70,15 @@ export const challenges = {
   // Verified Referrals
   referreralsVerifiedTitle: 'Invite your Fans',
   referralsVerifiedDescription:
-    'Invite your fans! You’ll earn 1 $AUDIO for each friend who joins with your link (and they’ll get an $AUDIO too)',
-  referralsVerifiedShortDescription: 'Earn up to 5,000 $AUDIO',
+    'Invite your fans! You’ll earn 1 $LIVE for each friend who joins with your link (and they’ll get an $LIVE too)',
+  referralsVerifiedShortDescription: 'Earn up to 5,000 $LIVE',
   referralsVerifiedProgressLabel: '%0/%1 Invites Accepted',
   referralsVerifiedRemainingLabel: '%0/%1 Invites Remain',
 
   // Referred
   referredTitle: 'You Accepted An Invite',
-  referredDescription: 'You earned $AUDIO for being invited',
-  referredShortDescription: 'You earned $AUDIO for being invited',
+  referredDescription: 'You earned $LIVE for being invited',
+  referredShortDescription: 'You earned $LIVE for being invited',
   referredProgressLabel: '%0/%1 Invites',
 
   // Track Upload

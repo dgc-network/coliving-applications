@@ -17,7 +17,7 @@ import { useFlag } from 'hooks/useRemoteConfig'
 import { useRequiresAccount } from 'hooks/useRequiresAccount'
 import { useWithMobileStyle } from 'hooks/useWithMobileStyle'
 import { isMobile } from 'utils/clientUtil'
-import { AUDIO_PAGE, BASE_URL, TRENDING_PAGE } from 'utils/route'
+import { LIVE_PAGE, BASE_URL, TRENDING_PAGE } from 'utils/route'
 
 import styles from './AudioRewardsPage.module.css'
 import ChallengeRewardsTile from './ChallengeRewardsTile'
@@ -28,8 +28,8 @@ import WalletModal from './WalletModal'
 import ExplainerTile from './components/ExplainerTile'
 
 export const messages = {
-  title: '$AUDIO & Rewards',
-  description: 'Complete tasks to earn $AUDIO tokens!'
+  title: '$LIVE & Rewards',
+  description: 'Complete tasks to earn $LIVE tokens!'
 }
 
 export const RewardsContent = () => {
@@ -88,7 +88,7 @@ export const MobilePage = ({ children }: { children: ReactNode }) => {
     <MobilePageContainer
       title={messages.title}
       description={messages.description}
-      canonicalUrl={`${BASE_URL}${AUDIO_PAGE}`}
+      canonicalUrl={`${BASE_URL}${LIVE_PAGE}`}
       hasDefaultHeader
       containerClassName={styles.rewardsMobilePageContainer}
     >
