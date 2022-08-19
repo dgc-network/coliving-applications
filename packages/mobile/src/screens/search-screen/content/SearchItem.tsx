@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux'
 
 import IconArrow from 'app/assets/images/iconArrow.svg'
 import PlaylistImage from 'app/components/image/PlaylistImage'
-import TrackImage from 'app/components/image/TrackImage'
+import AgreementImage from 'app/components/image/AgreementImage'
 import UserImage from 'app/components/image/UserImage'
 import UserBadges from 'app/components/user-badges/UserBadges'
 import { useNavigation } from 'app/hooks/useNavigation'
@@ -13,12 +13,12 @@ import { close as closeSearch } from 'app/store/search/actions'
 import useSearchHistory from 'app/store/search/hooks'
 import type {
   SearchPlaylist,
-  SearchTrack,
+  SearchAgreement,
   SearchUser,
   SectionHeader
 } from 'app/store/search/types'
 import {
-  getTrackRoute,
+  getAgreementRoute,
   getUserRoute,
   getCollectionRoute
 } from 'app/utils/routes'
@@ -118,8 +118,8 @@ const UserSearchResult = ({ isLast, item: user }: UserSearchResultProps) => {
   )
 }
 
-type TrackSearchResultProps = { isLast: boolean; item: SearchTrack }
-const TrackSearchResult = ({ isLast, item: track }: TrackSearchResultProps) => {
+type AgreementSearchResultProps = { isLast: boolean; item: SearchAgreement }
+const AgreementSearchResult = ({ isLast, item: agreement }: AgreementSearchResultProps) => {
   const nameStyle = useTheme(styles.name, { color: 'neutral' })
   const userNameStyle = useTheme(styles.name, { color: 'neutralLight4' })
   const squareImageStyles = useTheme(styles.squareImage, {
@@ -131,33 +131,33 @@ const TrackSearchResult = ({ isLast, item: track }: TrackSearchResultProps) => {
   const { appendSearchItem } = useSearchHistory()
 
   const handlePress = useCallback(() => {
-    appendSearchItem(track.title)
-    const trackRoute = getTrackRoute(track)
+    appendSearchItem(agreement.title)
+    const agreementRoute = getAgreementRoute(agreement)
     dispatch(closeSearch())
     navigation.push({
       native: {
-        screen: 'Track',
-        params: { id: track.track_id, searchTrack: track }
+        screen: 'Agreement',
+        params: { id: agreement.agreement_id, searchAgreement: agreement }
       },
-      web: { route: trackRoute, fromPage: 'search' }
+      web: { route: agreementRoute, fromPage: 'search' }
     })
-  }, [track, dispatch, navigation, appendSearchItem])
+  }, [agreement, dispatch, navigation, appendSearchItem])
 
   return (
     <ItemContainer isLast={isLast} onPress={handlePress}>
-      <TrackImage
-        track={track}
-        user={track.user}
+      <AgreementImage
+        agreement={agreement}
+        user={agreement.user}
         imageStyle={squareImageStyles}
       />
       <View style={styles.nameContainer}>
         <Text numberOfLines={1} style={nameStyle}>
-          {track.title}
+          {agreement.title}
         </Text>
         <UserBadges
           style={styles.badgeContainer}
           nameStyle={userNameStyle}
-          user={track.user}
+          user={agreement.user}
         />
       </View>
     </ItemContainer>
@@ -262,14 +262,14 @@ const AlbumSearchResult = ({ isLast, item: album }: AlbumSearchResultProps) => {
 type SearchItemProps = {
   isLast: boolean
   type: SectionHeader
-  item: SearchUser | SearchTrack | SearchPlaylist
+  item: SearchUser | SearchAgreement | SearchPlaylist
 }
 const SearchItem = ({ isLast, type, item }: SearchItemProps) => {
   switch (type) {
     case 'users':
       return <UserSearchResult isLast={isLast} item={item as SearchUser} />
-    case 'tracks':
-      return <TrackSearchResult isLast={isLast} item={item as SearchTrack} />
+    case 'agreements':
+      return <AgreementSearchResult isLast={isLast} item={item as SearchAgreement} />
     case 'playlists':
       return (
         <PlaylistSearchResult isLast={isLast} item={item as SearchPlaylist} />

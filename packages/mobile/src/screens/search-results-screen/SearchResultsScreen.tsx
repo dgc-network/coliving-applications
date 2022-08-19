@@ -17,7 +17,7 @@ import { SearchFocusContext } from './SearchFocusContext'
 import { AlbumsTab } from './tabs/AlbumsTab'
 import { PlaylistsTab } from './tabs/PlaylistsTab'
 import { ProfilesTab } from './tabs/ProfilesTab'
-import { TracksTab } from './tabs/TracksTab'
+import { AgreementsTab } from './tabs/AgreementsTab'
 
 const messages = {
   header: 'More Results'
@@ -33,10 +33,10 @@ export const SearchResultsScreen = () => {
     component: ProfilesTab
   })
 
-  const tracksScreen = tabScreen({
-    name: 'Tracks',
+  const agreementsScreen = tabScreen({
+    name: 'Agreements',
     Icon: IconNote,
-    component: TracksTab
+    component: AgreementsTab
   })
 
   const albumsScreen = tabScreen({
@@ -57,7 +57,7 @@ export const SearchResultsScreen = () => {
       <SearchFocusContext.Provider value={focusContext}>
         <TabNavigator initialScreenName='Profiles'>
           {profilesScreen}
-          {tracksScreen}
+          {agreementsScreen}
           {albumsScreen}
           {playlistsScreen}
         </TabNavigator>

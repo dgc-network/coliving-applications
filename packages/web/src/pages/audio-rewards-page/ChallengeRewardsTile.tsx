@@ -137,7 +137,7 @@ type RewardsTileProps = {
 }
 
 const validRewardIds: Set<ChallengeRewardID> = new Set([
-  'track-upload',
+  'agreement-upload',
   'referrals',
   'ref-v',
   'mobile-install',

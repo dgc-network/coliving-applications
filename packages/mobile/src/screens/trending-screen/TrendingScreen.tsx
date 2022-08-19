@@ -18,7 +18,7 @@ const ThisWeekTab = () => {
   const trendingGenre = useSelectorWeb(getTrendingGenre)
   return (
     <TrendingLineup
-      header={trendingGenre ? null : <RewardsBanner type='tracks' />}
+      header={trendingGenre ? null : <RewardsBanner type='agreements' />}
       timeRange={TimeRange.WEEK}
       rankIconCount={5}
     />

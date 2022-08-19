@@ -2,83 +2,83 @@ import { Kind, makeUid } from '@coliving/common'
 import moment from 'moment'
 import { call, select, put, takeEvery } from 'redux-saga/effects'
 
-import { getTracks as getCacheTracks } from 'common/store/cache/tracks/selectors'
-import { retrieveTracks } from 'common/store/cache/tracks/utils'
+import { getAgreements as getCacheAgreements } from 'common/store/cache/agreements/selectors'
+import { retrieveAgreements } from 'common/store/cache/agreements/utils'
 import * as saveActions from 'common/store/pages/saved-page/actions'
 import {
   PREFIX,
-  tracksActions as savedTracksActions
-} from 'common/store/pages/saved-page/lineups/tracks/actions'
+  agreementsActions as savedAgreementsActions
+} from 'common/store/pages/saved-page/lineups/agreements/actions'
 import {
   getLocalSaves,
   getLocalSave,
-  getSavedTracksLineupUid,
+  getSavedAgreementsLineupUid,
   getSaves
 } from 'common/store/pages/saved-page/selectors'
 import * as queueActions from 'common/store/queue/slice'
-import { SAVE_TRACK, UNSAVE_TRACK } from 'common/store/social/tracks/actions'
+import { SAVE_AGREEMENT, UNSAVE_AGREEMENT } from 'common/store/social/agreements/actions'
 import { LineupSagas } from 'store/lineup/sagas'
 import { getUid as getPlayerUid } from 'store/player/selectors'
 
-const getSavedTracks = (state) => state.pages.savedPage.tracks
+const getSavedAgreements = (state) => state.pages.savedPage.agreements
 
-function* getTracks() {
-  const savedTracks = yield select(getSaves)
-  const savedTrackIds = savedTracks.map((save) => save.save_item_id)
-  const savedTrackTimestamps = savedTracks.reduce((map, save) => {
+function* getAgreements() {
+  const savedAgreements = yield select(getSaves)
+  const savedAgreementIds = savedAgreements.map((save) => save.save_item_id)
+  const savedAgreementTimestamps = savedAgreements.reduce((map, save) => {
     map[save.save_item_id] = save.created_at
     return map
   }, {})
 
   const localSaves = yield select(getLocalSaves)
-  const localSavedTrackIds = Object.keys(localSaves).filter(
-    (savedTrackId) => !savedTrackTimestamps[savedTrackId]
+  const localSavedAgreementIds = Object.keys(localSaves).filter(
+    (savedAgreementId) => !savedAgreementTimestamps[savedAgreementId]
   )
-  const localSavedTrackTimestamps = localSavedTrackIds.reduce((map, saveId) => {
+  const localSavedAgreementTimestamps = localSavedAgreementIds.reduce((map, saveId) => {
     map[saveId] = Date.now()
     return map
   }, {})
 
-  const allSavedTrackIds = [...localSavedTrackIds, ...savedTrackIds]
-  const allSavedTrackTimestamps = {
-    ...localSavedTrackTimestamps,
-    ...savedTrackTimestamps
+  const allSavedAgreementIds = [...localSavedAgreementIds, ...savedAgreementIds]
+  const allSavedAgreementTimestamps = {
+    ...localSavedAgreementTimestamps,
+    ...savedAgreementTimestamps
   }
 
-  if (allSavedTrackIds.length > 0) {
-    const tracks = yield call(retrieveTracks, { trackIds: allSavedTrackIds })
-    const tracksMap = tracks.reduce((map, track) => {
-      // If the track hasn't confirmed save from the backend, pretend it is for the client.
-      if (!track.has_current_user_saved) {
-        track.has_current_user_saved = true
-        track.save_count += 1
+  if (allSavedAgreementIds.length > 0) {
+    const agreements = yield call(retrieveAgreements, { agreementIds: allSavedAgreementIds })
+    const agreementsMap = agreements.reduce((map, agreement) => {
+      // If the agreement hasn't confirmed save from the backend, pretend it is for the client.
+      if (!agreement.has_current_user_saved) {
+        agreement.has_current_user_saved = true
+        agreement.save_count += 1
       }
-      track.dateSaved = allSavedTrackTimestamps[track.track_id]
+      agreement.dateSaved = allSavedAgreementTimestamps[agreement.agreement_id]
 
-      map[track.track_id] = track
+      map[agreement.agreement_id] = agreement
       return map
     }, {})
-    return allSavedTrackIds.map((id) => tracksMap[id])
+    return allSavedAgreementIds.map((id) => agreementsMap[id])
   }
   return []
 }
 
 const keepDateSaved = (entry) => ({
   uid: entry.uid,
-  kind: entry.track_id ? Kind.TRACKS : Kind.COLLECTIONS,
-  id: entry.track_id || entry.playlist_id,
+  kind: entry.agreement_id ? Kind.AGREEMENTS : Kind.COLLECTIONS,
+  id: entry.agreement_id || entry.playlist_id,
   dateSaved: entry.dateSaved
 })
 
 const sourceSelector = () => PREFIX
 
-class SavedTracksSagas extends LineupSagas {
+class SavedAgreementsSagas extends LineupSagas {
   constructor() {
     super(
       PREFIX,
-      savedTracksActions,
-      getSavedTracks,
-      getTracks,
+      savedAgreementsActions,
+      getSavedAgreements,
+      getAgreements,
       keepDateSaved,
       /* removeDeleted */ false,
       sourceSelector
@@ -88,34 +88,34 @@ class SavedTracksSagas extends LineupSagas {
 
 // If a local save is being done and the user is on the saved page route, make sure to update the lineup.
 function* watchSave() {
-  yield takeEvery(SAVE_TRACK, function* (action) {
-    const { trackId } = action
+  yield takeEvery(SAVE_AGREEMENT, function* (action) {
+    const { agreementId } = action
 
-    const tracks = yield select(getCacheTracks, { ids: [trackId] })
-    const track = tracks[trackId]
-    if (track.has_current_user_saved) return
+    const agreements = yield select(getCacheAgreements, { ids: [agreementId] })
+    const agreement = agreements[agreementId]
+    if (agreement.has_current_user_saved) return
 
     const localSaveUid = makeUid(
-      Kind.TRACKS,
-      trackId,
-      savedTracksActions.PREFIX
+      Kind.AGREEMENTS,
+      agreementId,
+      savedAgreementsActions.PREFIX
     )
 
     const newEntry = {
       uid: localSaveUid,
-      kind: Kind.TRACKS,
-      id: trackId,
+      kind: Kind.AGREEMENTS,
+      id: agreementId,
       dateSaved: moment().format()
     }
-    yield put(saveActions.addLocalSave(trackId, localSaveUid))
-    yield put(savedTracksActions.add(newEntry, trackId))
+    yield put(saveActions.addLocalSave(agreementId, localSaveUid))
+    yield put(savedAgreementsActions.add(newEntry, agreementId))
     yield put(
       queueActions.add({
         entries: [
           {
-            id: trackId,
+            id: agreementId,
             uid: localSaveUid,
-            souce: savedTracksActions.PREFIX
+            souce: savedAgreementsActions.PREFIX
           }
         ]
       })
@@ -124,20 +124,20 @@ function* watchSave() {
 }
 
 function* watchUnsave() {
-  yield takeEvery(UNSAVE_TRACK, function* (action) {
-    const { trackId } = action
-    const localSaveUid = yield select(getLocalSave, { id: trackId })
+  yield takeEvery(UNSAVE_AGREEMENT, function* (action) {
+    const { agreementId } = action
+    const localSaveUid = yield select(getLocalSave, { id: agreementId })
     const playerUid = yield select(getPlayerUid)
-    yield put(saveActions.removeLocalSave(action.trackId))
+    yield put(saveActions.removeLocalSave(action.agreementId))
     if (localSaveUid) {
-      yield put(savedTracksActions.remove(Kind.TRACKS, localSaveUid))
+      yield put(savedAgreementsActions.remove(Kind.AGREEMENTS, localSaveUid))
       if (localSaveUid !== playerUid) {
         yield put(queueActions.remove({ uid: localSaveUid }))
       }
     }
-    const lineupSaveUid = yield select(getSavedTracksLineupUid, { id: trackId })
+    const lineupSaveUid = yield select(getSavedAgreementsLineupUid, { id: agreementId })
     if (lineupSaveUid) {
-      yield put(savedTracksActions.remove(Kind.TRACKS, lineupSaveUid))
+      yield put(savedAgreementsActions.remove(Kind.AGREEMENTS, lineupSaveUid))
       if (lineupSaveUid !== playerUid) {
         yield put(queueActions.remove({ uid: lineupSaveUid }))
       }
@@ -146,5 +146,5 @@ function* watchUnsave() {
 }
 
 export default function sagas() {
-  return new SavedTracksSagas().getSagas().concat(watchSave, watchUnsave)
+  return new SavedAgreementsSagas().getSagas().concat(watchSave, watchUnsave)
 }

@@ -1,5 +1,5 @@
 import { initialCacheState } from 'common/store/cache/reducer'
-import { SET_PERMALINK_STATUS } from 'common/store/cache/tracks/actions'
+import { SET_PERMALINK_STATUS } from 'common/store/cache/agreements/actions'
 
 const initialState = {
   ...initialCacheState,

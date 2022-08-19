@@ -1,12 +1,12 @@
 import { useCallback } from 'react'
 
-import { Name, Track } from '@coliving/common'
+import { Name, Agreement } from '@coliving/common'
 import { push } from 'connected-react-router'
 import { useDispatch } from 'react-redux'
 
 import { getNotificationEntities } from 'common/store/notifications/selectors'
 import {
-  AddTrackToPlaylist,
+  AddAgreementToPlaylist,
   CollectionEntity,
   Entity
 } from 'common/store/notifications/types'
@@ -23,29 +23,29 @@ import { NotificationTitle } from './components/NotificationTitle'
 import { ProfilePicture } from './components/ProfilePicture'
 import { TwitterShareButton } from './components/TwitterShareButton'
 import { UserNameLink } from './components/UserNameLink'
-import { IconAddTrackToPlaylist } from './components/icons'
+import { IconAddAgreementToPlaylist } from './components/icons'
 import { getEntityLink } from './utils'
 
 const messages = {
-  title: 'Track Added to Playlist',
+  title: 'Agreement Added to Playlist',
   shareTwitterText: (
     handle: string,
-    track: Track,
+    agreement: Agreement,
     playlist: CollectionEntity
   ) =>
-    `My track ${track.title} was added to the playlist ${playlist.playlist_name} by ${handle} on @colivingproject! #Coliving`
+    `My agreement ${agreement.title} was added to the playlist ${playlist.playlist_name} by ${handle} on @colivingproject! #Coliving`
 }
 
-type AddTrackToPlaylistNotificationProps = {
-  notification: AddTrackToPlaylist
+type AddAgreementToPlaylistNotificationProps = {
+  notification: AddAgreementToPlaylist
 }
 
-export const AddTrackToPlaylistNotification = (
-  props: AddTrackToPlaylistNotificationProps
+export const AddAgreementToPlaylistNotification = (
+  props: AddAgreementToPlaylistNotificationProps
 ) => {
   const { notification } = props
   const { timeLabel, isViewed } = notification
-  const { track, playlist } = useSelector((state) =>
+  const { agreement, playlist } = useSelector((state) =>
     getNotificationEntities(state, notification)
   )
   const playlistOwner = playlist.user
@@ -54,10 +54,10 @@ export const AddTrackToPlaylistNotification = (
 
   const handleTwitterShare = useCallback(
     (twitterHandle: string) => {
-      if (track && playlist && twitterHandle) {
+      if (agreement && playlist && twitterHandle) {
         const shareText = messages.shareTwitterText(
           twitterHandle,
-          track,
+          agreement,
           playlist
         )
         const analytics = make(
@@ -68,18 +68,18 @@ export const AddTrackToPlaylistNotification = (
       }
       return null
     },
-    [track, playlist]
+    [agreement, playlist]
   )
 
   const handleClick = useCallback(() => {
     dispatch(push(getEntityLink(playlist)))
   }, [playlist, dispatch])
 
-  if (!playlistOwner || !track) return null
+  if (!playlistOwner || !agreement) return null
 
   return (
     <NotificationTile notification={notification} onClick={handleClick}>
-      <NotificationHeader icon={<IconAddTrackToPlaylist />}>
+      <NotificationHeader icon={<IconAddAgreementToPlaylist />}>
         <NotificationTitle>{messages.title}</NotificationTitle>
       </NotificationHeader>
       <NotificationBody className={styles.body}>
@@ -89,8 +89,8 @@ export const AddTrackToPlaylistNotification = (
         />
         <span>
           <UserNameLink user={playlistOwner} notification={notification} />
-          {' added your track '}
-          <EntityLink entity={track} entityType={Entity.Track} />
+          {' added your agreement '}
+          <EntityLink entity={agreement} entityType={Entity.Agreement} />
           {' to their playlist '}
           <EntityLink entity={playlist} entityType={Entity.Playlist} />
         </span>

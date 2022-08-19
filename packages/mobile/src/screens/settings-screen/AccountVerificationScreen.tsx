@@ -29,7 +29,7 @@ import {
 import { getHandleError, getHandleIsValid } from 'app/store/signon/selectors'
 import { makeStyles } from 'app/styles'
 import { EventNames } from 'app/types/analytics'
-import { track, make } from 'app/utils/analytics'
+import { agreement, make } from 'app/utils/analytics'
 import { getUserRoute } from 'app/utils/routes'
 
 const messages = {
@@ -152,7 +152,7 @@ export const AccountVerificationScreen = () => {
     [dispatchWeb, twitterInfo, instagramInfo]
   )
 
-  const trackOAuthComplete = useCallback(
+  const agreementOAuthComplete = useCallback(
     (type: 'twitter' | 'instagram') => {
       const info = type === 'twitter' ? twitterInfo : instagramInfo
       if (!info || !handle) return
@@ -160,7 +160,7 @@ export const AccountVerificationScreen = () => {
 
       if (type === 'twitter') {
         const { screen_name, verified: is_verified } = profile
-        track(
+        agreement(
           make({
             eventName: EventNames.SETTINGS_COMPLETE_TWITTER_OAUTH,
             screen_name,
@@ -170,7 +170,7 @@ export const AccountVerificationScreen = () => {
         )
       } else {
         const { username, verified: is_verified } = profile
-        track(
+        agreement(
           make({
             eventName: EventNames.SETTINGS_COMPLETE_INSTAGRAM_OAUTH,
             username,
@@ -189,10 +189,10 @@ export const AccountVerificationScreen = () => {
         validateHandle('twitter')
         setDidValidateHandle(true)
       } else if (handleError || twitterInfo.requiresUserReview) {
-        trackOAuthComplete('twitter')
+        agreementOAuthComplete('twitter')
         setStatus('')
       } else if (handleIsValid) {
-        trackOAuthComplete('twitter')
+        agreementOAuthComplete('twitter')
         setStatus(Status.SUCCESS)
       }
     }
@@ -202,7 +202,7 @@ export const AccountVerificationScreen = () => {
     handleError,
     didValidateHandle,
     validateHandle,
-    trackOAuthComplete
+    agreementOAuthComplete
   ])
 
   useEffect(() => {
@@ -215,10 +215,10 @@ export const AccountVerificationScreen = () => {
         validateHandle('instagram')
         setDidValidateHandle(true)
       } else if (handleError || instagramInfo.requiresUserReview) {
-        trackOAuthComplete('instagram')
+        agreementOAuthComplete('instagram')
         setStatus('')
       } else if (handleIsValid) {
-        trackOAuthComplete('instagram')
+        agreementOAuthComplete('instagram')
         setStatus(Status.SUCCESS)
       }
     }
@@ -228,7 +228,7 @@ export const AccountVerificationScreen = () => {
     handleError,
     didValidateHandle,
     validateHandle,
-    trackOAuthComplete
+    agreementOAuthComplete
   ])
 
   useEffect(() => {
@@ -243,7 +243,7 @@ export const AccountVerificationScreen = () => {
       type: MessageType.REQUEST_TWITTER_AUTH,
       isAction: true
     })
-    track(
+    agreement(
       make({
         eventName: EventNames.SETTINGS_START_TWITTER_OAUTH,
         handle
@@ -259,7 +259,7 @@ export const AccountVerificationScreen = () => {
       type: MessageType.REQUEST_INSTAGRAM_AUTH,
       isAction: true
     })
-    track(
+    agreement(
       make({
         eventName: EventNames.SETTINGS_START_INSTAGRAM_OAUTH,
         handle

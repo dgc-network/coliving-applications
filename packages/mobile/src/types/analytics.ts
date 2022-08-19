@@ -1,4 +1,4 @@
-import type { AllTrackingEvents as CommonTrackingEvents } from '@/common'
+import type { AllAgreementingEvents as CommonAgreementingEvents } from '@/common'
 import { Name as CommonEventNames } from '@/common'
 
 import type { Message } from 'app/message'
@@ -15,9 +15,9 @@ type NotificationsOpenPushNotification = {
   body?: string
 }
 
-type MobileTrackingEvents = NotificationsOpenPushNotification
+type MobileAgreementingEvents = NotificationsOpenPushNotification
 
-export type AllEvents = CommonTrackingEvents | MobileTrackingEvents
+export type AllEvents = CommonAgreementingEvents | MobileAgreementingEvents
 
 export type JsonMap = Record<string, unknown>
 
@@ -26,7 +26,7 @@ export type Identify = {
   traits?: JsonMap
 }
 
-export type Track = {
+export type Agreement = {
   eventName: string
   properties?: JsonMap
 }
@@ -36,7 +36,7 @@ export type Screen = {
   properties?: JsonMap
 }
 
-export type AnalyticsMessage = Message & (Identify | Track | Screen)
+export type AnalyticsMessage = Message & (Identify | Agreement | Screen)
 
 export {
   PlaybackSource,

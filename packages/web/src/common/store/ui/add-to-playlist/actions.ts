@@ -7,10 +7,10 @@ export const CLOSE = 'ADD_TO_PLAYLIST/CLOSE'
 
 export const requestOpen = createCustomAction(
   REQUEST_OPEN,
-  (trackId: ID, trackTitle: string) => ({ trackId, trackTitle })
+  (agreementId: ID, agreementTitle: string) => ({ agreementId, agreementTitle })
 )
 export const open = createCustomAction(
   OPEN,
-  (trackId: ID, trackTitle: string) => ({ trackId, trackTitle })
+  (agreementId: ID, agreementTitle: string) => ({ agreementId, agreementTitle })
 )
 export const close = createCustomAction(CLOSE, () => {})

@@ -16,7 +16,7 @@ import {
   FavoriteSource,
   PlaybackSource,
   Name,
-  Track
+  Agreement
 } from '@coliving/common'
 import cn from 'classnames'
 import { push as pushRoute } from 'connected-react-router'
@@ -28,7 +28,7 @@ import { ReactComponent as IconKebabHorizontal } from 'assets/img/iconKebabHoriz
 import { getUserHandle } from 'common/store/account/selectors'
 import {
   getCollection,
-  getTracksFromCollection
+  getAgreementsFromCollection
 } from 'common/store/cache/collections/selectors'
 import { getUserFromCollection } from 'common/store/cache/users/selectors'
 import {
@@ -42,10 +42,10 @@ import { ArtistPopover } from 'components/artist/ArtistPopover'
 import Draggable from 'components/dragndrop/Draggable'
 import { OwnProps as CollectionkMenuProps } from 'components/menu/CollectionMenu'
 import Menu from 'components/menu/Menu'
-import { CollectionArtwork } from 'components/track/desktop/Artwork'
-import { TrackTileSize } from 'components/track/types'
+import { CollectionArtwork } from 'components/agreement/desktop/Artwork'
+import { AgreementTileSize } from 'components/agreement/types'
 import UserBadges from 'components/user-badges/UserBadges'
-import { TrackEvent, make } from 'store/analytics/actions'
+import { AgreementEvent, make } from 'store/analytics/actions'
 import {
   setUsers,
   setVisibility
@@ -60,7 +60,7 @@ import {
   albumPage,
   fullAlbumPage,
   fullPlaylistPage,
-  fullTrackPage,
+  fullAgreementPage,
   playlistPage,
   profilePage
 } from 'utils/route'
@@ -70,7 +70,7 @@ import { getCollectionWithFallback, getUserWithFallback } from '../helpers'
 
 import styles from './ConnectedPlaylistTile.module.css'
 import PlaylistTile from './PlaylistTile'
-import TrackListItem from './TrackListItem'
+import AgreementListItem from './AgreementListItem'
 import Stats from './stats/Stats'
 import { Flavor } from './stats/StatsText'
 
@@ -78,12 +78,12 @@ type OwnProps = {
   uid: UID
   ordered: boolean
   index: number
-  size: TrackTileSize
+  size: AgreementTileSize
   containerClassName?: string
   togglePlay: () => void
-  playTrack: (uid: string) => void
-  playingTrackId?: ID
-  pauseTrack: () => void
+  playAgreement: (uid: string) => void
+  playingAgreementId?: ID
+  pauseAgreement: () => void
   isUploading?: boolean
   isLoading: boolean
   hasLoaded: (index: number) => void
@@ -105,16 +105,16 @@ const ConnectedPlaylistTile = memo(
     userHandle,
     containerClassName,
     user,
-    tracks,
+    agreements,
     togglePlay,
-    playTrack,
-    pauseTrack,
+    playAgreement,
+    pauseAgreement,
     playingUid,
     isBuffering,
     isPlaying,
     goToRoute,
     record,
-    playingTrackId,
+    playingAgreementId,
     isLoading,
     numLoadingSkeletonRows,
     isUploading,
@@ -142,7 +142,7 @@ const ConnectedPlaylistTile = memo(
       followee_saves: followeeSaves,
       has_current_user_reposted: isReposted,
       has_current_user_saved: isFavorited,
-      track_count: trackCount
+      agreement_count: agreementCount
     } = getCollectionWithFallback(collection)
 
     const {
@@ -153,55 +153,55 @@ const ConnectedPlaylistTile = memo(
     const isOwner = handle === userHandle
 
     const isActive = useMemo(() => {
-      return tracks.some((track: any) => track.uid === playingUid)
-    }, [tracks, playingUid])
+      return agreements.some((agreement: any) => agreement.uid === playingUid)
+    }, [agreements, playingUid])
 
     const onTogglePlay = useCallback(() => {
       if (isUploading) return
       if (!isActive || !isPlaying) {
         if (isActive) {
-          playTrack(playingUid!)
+          playAgreement(playingUid!)
           if (record) {
             record(
               make(Name.PLAYBACK_PLAY, {
-                id: `${playingTrackId}`,
-                source: PlaybackSource.PLAYLIST_TILE_TRACK
+                id: `${playingAgreementId}`,
+                source: PlaybackSource.PLAYLIST_TILE_AGREEMENT
               })
             )
           }
         } else {
-          const trackUid = tracks[0] ? tracks[0].uid : null
-          const trackId = tracks[0] ? tracks[0].track_id : null
-          if (!trackUid || !trackId) return
-          playTrack(trackUid)
+          const agreementUid = agreements[0] ? agreements[0].uid : null
+          const agreementId = agreements[0] ? agreements[0].agreement_id : null
+          if (!agreementUid || !agreementId) return
+          playAgreement(agreementUid)
           if (record) {
             record(
               make(Name.PLAYBACK_PLAY, {
-                id: `${trackId}`,
-                source: PlaybackSource.PLAYLIST_TILE_TRACK
+                id: `${agreementId}`,
+                source: PlaybackSource.PLAYLIST_TILE_AGREEMENT
               })
             )
           }
         }
       } else {
-        pauseTrack()
+        pauseAgreement()
         if (record) {
           record(
             make(Name.PLAYBACK_PAUSE, {
-              id: `${playingTrackId}`,
-              source: PlaybackSource.PLAYLIST_TILE_TRACK
+              id: `${playingAgreementId}`,
+              source: PlaybackSource.PLAYLIST_TILE_AGREEMENT
             })
           )
         }
       }
     }, [
       isPlaying,
-      tracks,
-      playTrack,
-      pauseTrack,
+      agreements,
+      playAgreement,
+      pauseAgreement,
       isActive,
       playingUid,
-      playingTrackId,
+      playingAgreementId,
       isUploading,
       record
     ])
@@ -323,12 +323,12 @@ const ConnectedPlaylistTile = memo(
     }, [setRepostUsers, id, setModalVisibility])
 
     const renderStats = () => {
-      const contentTitle = 'track' // undefined,  playlist or album -  undefined is track
+      const contentTitle = 'agreement' // undefined,  playlist or album -  undefined is agreement
       const sz = 'large'
       return (
         <div className={cn(styles.socialInfo)}>
           <Stats
-            hideImage={size === TrackTileSize.SMALL}
+            hideImage={size === AgreementTileSize.SMALL}
             count={repostCount}
             followeeActions={followeeReposts}
             contentTitle={contentTitle}
@@ -370,7 +370,7 @@ const ConnectedPlaylistTile = memo(
 
     const disableActions = false
 
-    const TileTrackContainer = useCallback(
+    const TileAgreementContainer = useCallback(
       ({ children }: { children: ReactChildren }) => (
         <Draggable
           key={id}
@@ -391,15 +391,15 @@ const ConnectedPlaylistTile = memo(
       [id, disableActions, title, isAlbum, handle, isOwner]
     )
 
-    const renderTrackList = useCallback(() => {
+    const renderAgreementList = useCallback(() => {
       const showSkeletons = !!(
-        !tracks.length &&
+        !agreements.length &&
         isLoading &&
         numLoadingSkeletonRows
       )
       if (showSkeletons) {
         return range(numLoadingSkeletonRows as number).map((i) => (
-          <TrackListItem
+          <AgreementListItem
             index={i}
             key={i}
             isLoading={true}
@@ -414,24 +414,24 @@ const ConnectedPlaylistTile = memo(
           />
         ))
       }
-      return tracks.map((track, i) => (
+      return agreements.map((agreement, i) => (
         <Draggable
-          key={`${track.title}+${i}`}
-          text={track.title}
-          kind='track'
-          id={track.track_id}
-          isOwner={track.user.handle === userHandle}
-          link={fullTrackPage(track.permalink)}
+          key={`${agreement.title}+${i}`}
+          text={agreement.title}
+          kind='agreement'
+          id={agreement.agreement_id}
+          isOwner={agreement.user.handle === userHandle}
+          link={fullAgreementPage(agreement.permalink)}
         >
-          <TrackListItem
+          <AgreementListItem
             index={i}
-            key={`${track.title}+${i}`}
+            key={`${agreement.title}+${i}`}
             isLoading={isLoading}
-            active={playingUid === track.uid}
+            active={playingUid === agreement.uid}
             size={size}
             disableActions={disableActions}
             playing={isPlaying}
-            track={track}
+            agreement={agreement}
             togglePlay={togglePlay}
             goToRoute={goToRoute}
             artistHandle={handle}
@@ -439,7 +439,7 @@ const ConnectedPlaylistTile = memo(
         </Draggable>
       ))
     }, [
-      tracks,
+      agreements,
       isLoading,
       userHandle,
       playingUid,
@@ -456,11 +456,11 @@ const ConnectedPlaylistTile = memo(
     const stats = renderStats()
     const rightActions = renderOverflowMenu()
     const userName = renderUserName()
-    const trackList = renderTrackList()
+    const agreementList = renderAgreementList()
 
     const order = ordered && index !== undefined ? index + 1 : undefined
     const header =
-      size === TrackTileSize.LARGE
+      size === AgreementTileSize.LARGE
         ? isAlbum
           ? 'ALBUM'
           : 'PLAYLIST'
@@ -472,7 +472,7 @@ const ConnectedPlaylistTile = memo(
     }
     return (
       <PlaylistTile
-        // Track Tile Props
+        // Agreement Tile Props
         size={size}
         order={order}
         isFavorited={isFavorited}
@@ -495,22 +495,22 @@ const ConnectedPlaylistTile = memo(
         onClickShare={onClickShare}
         onTogglePlay={onTogglePlay}
         key={`${index}-${title}`}
-        TileTrackContainer={TileTrackContainer}
-        duration={tracks.reduce(
-          (duration: number, track: Track) => duration + track.duration,
+        TileAgreementContainer={TileAgreementContainer}
+        duration={agreements.reduce(
+          (duration: number, agreement: Agreement) => duration + agreement.duration,
           0
         )}
         containerClassName={cn(styles.container, {
           [containerClassName!]: !!containerClassName,
           [styles.loading]: isLoading,
           [styles.active]: isActive,
-          [styles.small]: size === TrackTileSize.SMALL,
-          [styles.large]: TrackTileSize.LARGE
+          [styles.small]: size === AgreementTileSize.SMALL,
+          [styles.large]: AgreementTileSize.LARGE
         })}
-        tileClassName={cn(styles.trackTile)}
-        tracksContainerClassName={cn(styles.tracksContainer)}
-        trackList={trackList}
-        trackCount={trackCount}
+        tileClassName={cn(styles.agreementTile)}
+        agreementsContainerClassName={cn(styles.agreementsContainer)}
+        agreementList={agreementList}
+        agreementCount={agreementCount}
         isTrending={isTrending}
         showRankIcon={showRankIcon}
       />
@@ -521,7 +521,7 @@ const ConnectedPlaylistTile = memo(
 function mapStateToProps(state: AppState, ownProps: OwnProps) {
   return {
     collection: getCollection(state, { uid: ownProps.uid }),
-    tracks: getTracksFromCollection(state, { uid: ownProps.uid }),
+    agreements: getAgreementsFromCollection(state, { uid: ownProps.uid }),
     user: getUserFromCollection(state, { uid: ownProps.uid }),
     userHandle: getUserHandle(state),
     playingUid: getUid(state),
@@ -533,7 +533,7 @@ function mapStateToProps(state: AppState, ownProps: OwnProps) {
 function mapDispatchToProps(dispatch: Dispatch) {
   return {
     goToRoute: (route: string) => dispatch(pushRoute(route)),
-    record: (event: TrackEvent) => dispatch(event),
+    record: (event: AgreementEvent) => dispatch(event),
     shareCollection: (id: ID) =>
       dispatch(
         requestOpenShareModal({
@@ -551,20 +551,20 @@ function mapDispatchToProps(dispatch: Dispatch) {
     unsaveCollection: (id: ID) =>
       dispatch(unsaveCollection(id, FavoriteSource.TILE)),
 
-    setRepostUsers: (trackID: ID) =>
+    setRepostUsers: (agreementID: ID) =>
       dispatch(
         setUsers({
           userListType: UserListType.REPOST,
           entityType: UserListEntityType.COLLECTION,
-          id: trackID
+          id: agreementID
         })
       ),
-    setFavoriteUsers: (trackID: ID) =>
+    setFavoriteUsers: (agreementID: ID) =>
       dispatch(
         setUsers({
           userListType: UserListType.FAVORITE,
           entityType: UserListEntityType.COLLECTION,
-          id: trackID
+          id: agreementID
         })
       ),
     setModalVisibility: () => dispatch(setVisibility(true))

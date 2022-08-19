@@ -1,10 +1,10 @@
-import { LineupState, Track } from '@coliving/common'
+import { LineupState, Agreement } from '@coliving/common'
 
 import { RESET_SUCCEEDED, stripPrefix } from 'common/store/lineup/actions'
 import { initialLineupState } from 'common/store/lineup/reducer'
 import { PREFIX } from 'pages/deleted-page/store/lineups/more-by/actions'
 
-export const initialState: LineupState<Track> = {
+export const initialState: LineupState<Agreement> = {
   ...initialLineupState,
   prefix: PREFIX
 }

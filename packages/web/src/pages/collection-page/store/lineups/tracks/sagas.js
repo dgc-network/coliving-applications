@@ -3,23 +3,23 @@ import { keyBy } from 'lodash'
 import moment from 'moment'
 import { select, call } from 'redux-saga/effects'
 
-import { retrieveTracks } from 'common/store/cache/tracks/utils'
+import { retrieveAgreements } from 'common/store/cache/agreements/utils'
 import {
   PREFIX,
-  tracksActions
+  agreementsActions
 } from 'common/store/pages/collection/lineup/actions'
 import {
   getCollection,
   getSmartCollectionVariant,
   getCollectionId,
-  getCollectionTracksLineup
+  getCollectionAgreementsLineup
 } from 'common/store/pages/collection/selectors'
 import { getCollection as getSmartCollection } from 'common/store/pages/smart-collection/selectors'
 import { getPositions } from 'common/store/queue/selectors'
 import { LineupSagas } from 'store/lineup/sagas'
 import { waitForValue } from 'utils/sagaHelpers'
 
-function* getCollectionTracks() {
+function* getCollectionAgreements() {
   const smartCollectionVariant = yield select(getSmartCollectionVariant)
   let collection
   if (smartCollectionVariant) {
@@ -30,11 +30,11 @@ function* getCollectionTracks() {
     collection = yield call(waitForValue, getCollection)
   }
 
-  const track = collection.playlist_contents.track_ids
+  const agreement = collection.playlist_contents.agreement_ids
 
-  const trackIds = track.map((t) => t.track)
+  const agreementIds = agreement.map((t) => t.agreement)
   // TODO: Conform all timestamps to be of the same format so we don't have to do any special work here.
-  const times = track.map((t) => t.time)
+  const times = agreement.map((t) => t.time)
 
   // Reconcile fetching this playlist with the queue.
   // Search the queue for its currently playing uids. If any are sourced
@@ -60,18 +60,18 @@ function* getCollectionTracks() {
       return mapping
     }, {})
 
-  if (trackIds.length > 0) {
-    const trackMetadatas = yield call(retrieveTracks, { trackIds })
-    const keyedMetadatas = keyBy(trackMetadatas, (m) => m.track_id)
+  if (agreementIds.length > 0) {
+    const agreementMetadatas = yield call(retrieveAgreements, { agreementIds })
+    const keyedMetadatas = keyBy(agreementMetadatas, (m) => m.agreement_id)
 
-    return trackIds
+    return agreementIds
       .map((id, i) => {
         const metadata = { ...keyedMetadatas[id] }
 
-        // For whatever reason, the track id was retrieved and doesn't exist or is malformatted.
-        // This can happen if the collection references an unlisted track or one that
+        // For whatever reason, the agreement id was retrieved and doesn't exist or is malformatted.
+        // This can happen if the collection references an unlisted agreement or one that
         // doesn't (or never has) existed.
-        if (!metadata.track_id) return null
+        if (!metadata.agreement_id) return null
 
         if (times[i]) {
           metadata.dateAdded =
@@ -81,8 +81,8 @@ function* getCollectionTracks() {
         }
         if (uidForSource[id] && uidForSource[id].length > 0) {
           metadata.uid = uidForSource[id].shift()
-        } else if (track[i].uid) {
-          metadata.uid = track[i].uid
+        } else if (agreement[i].uid) {
+          metadata.uid = agreement[i].uid
         }
         return metadata
       })
@@ -91,21 +91,21 @@ function* getCollectionTracks() {
   return []
 }
 
-const keepDateAdded = (track) => ({
-  uid: track.uid,
-  kind: Kind.TRACKS,
-  dateAdded: track.dateAdded
+const keepDateAdded = (agreement) => ({
+  uid: agreement.uid,
+  kind: Kind.AGREEMENTS,
+  dateAdded: agreement.dateAdded
 })
 
 const sourceSelector = (state) => `collection:${getCollectionId(state)}`
 
-class TracksSagas extends LineupSagas {
+class AgreementsSagas extends LineupSagas {
   constructor() {
     super(
       PREFIX,
-      tracksActions,
-      getCollectionTracksLineup,
-      getCollectionTracks,
+      agreementsActions,
+      getCollectionAgreementsLineup,
+      getCollectionAgreements,
       keepDateAdded,
       /* removeDeleted */ false,
       sourceSelector
@@ -114,5 +114,5 @@ class TracksSagas extends LineupSagas {
 }
 
 export default function sagas() {
-  return new TracksSagas().getSagas()
+  return new AgreementsSagas().getSagas()
 }

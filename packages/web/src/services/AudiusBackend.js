@@ -33,7 +33,7 @@ import { ClientRewardsReporter } from 'services/coliving-backend/Rewards'
 import { getFeatureEnabled } from 'services/remote-config/featureFlagHelpers'
 import { remoteConfigInstance } from 'services/remote-config/remote-config-instance'
 import { IS_MOBILE_USER_KEY } from 'store/account/mobileSagas'
-import { track } from 'store/analytics/providers/amplitude'
+import { agreement } from 'store/analytics/providers/amplitude'
 import { isElectron } from 'utils/clientUtil'
 import { getCreatorNodeIPFSGateways } from 'utils/gatewayUtil'
 import { Timer } from 'utils/performance'
@@ -161,7 +161,7 @@ const notDeleted = (e) => !e.is_delete
  * @param {string[]} creatorNodeGateways
  * @param {boolean} cache
  * @param {boolean} asUrl
- * @param {Nullable<number>} trackId
+ * @param {Nullable<number>} agreementId
  * @returns {Promise<string>}
  */
 export const fetchCID = async (
@@ -169,7 +169,7 @@ export const fetchCID = async (
   creatorNodeGateways = [],
   cache = true,
   asUrl = true,
-  trackId = null
+  agreementId = null
 ) => {
   await waitForLibsInit()
   try {
@@ -180,7 +180,7 @@ export const fetchCID = async (
       // If requesting a url (we mean a blob url for the file),
       // otherwise, default to JSON
       asUrl ? 'blob' : 'json',
-      trackId
+      agreementId
     )
     if (asUrl) {
       const url = URL.createObjectURL(res.data)
@@ -304,16 +304,16 @@ class ColivingBackend {
     }
   }
 
-  static getTrackImages(track) {
+  static getAgreementImages(agreement) {
     const coverArtSizes = {}
-    if (!track.cover_art_sizes && !track.cover_art) {
+    if (!agreement.cover_art_sizes && !agreement.cover_art) {
       coverArtSizes[DefaultSizes.OVERRIDE] = placeholderCoverArt
     }
 
     return {
-      ...track,
+      ...agreement,
       // TODO: This method should be renamed as it does more than images.
-      duration: track.track_segments.reduce(
+      duration: agreement.agreement_segments.reduce(
         (duration, segment) => duration + parseFloat(segment.duration),
         0
       ),
@@ -367,7 +367,7 @@ class ColivingBackend {
 
   // Record the endpoint and reason for selecting the endpoint
   static discoveryProviderSelectionCallback(endpoint, decisionTree) {
-    track(Name.DISCOVERY_PROVIDER_SELECTION, {
+    agreement(Name.DISCOVERY_PROVIDER_SELECTION, {
       endpoint,
       reason: decisionTree.map((reason) => reason.stage).join(' -> ')
     })
@@ -377,13 +377,13 @@ class ColivingBackend {
   }
 
   static creatorNodeSelectionCallback(primary, secondaries, reason) {
-    track(Name.CREATOR_NODE_SELECTION, {
+    agreement(Name.CREATOR_NODE_SELECTION, {
       endpoint: primary,
       selectedAs: 'primary',
       reason
     })
     secondaries.forEach((secondary) => {
-      track(Name.CREATOR_NODE_SELECTION, {
+      agreement(Name.CREATOR_NODE_SELECTION, {
         endpoint: secondary,
         selectedAs: 'secondary',
         reason
@@ -697,7 +697,7 @@ class ColivingBackend {
         account.tiktok_handle = body.tikTokHandle || null
         account.website = body.website || null
         account.donation = body.donation || null
-        account._artist_pick = body.pinnedTrackId || null
+        account._artist_pick = body.pinnedAgreementId || null
         account.twitterVerified = body.twitterVerified || false
         account.instagramVerified = body.instagramVerified || false
       } catch (e) {
@@ -720,7 +720,7 @@ class ColivingBackend {
     }
   }
 
-  static async getAllTracks({
+  static async getAllAgreements({
     offset,
     limit,
     idsArray,
@@ -728,10 +728,10 @@ class ColivingBackend {
     filterDeletes = false
   }) {
     try {
-      const tracks = await withEagerOption(
+      const agreements = await withEagerOption(
         {
-          normal: (libs) => libs.Track.getTracks,
-          eager: DiscoveryAPI.getTracks
+          normal: (libs) => libs.Agreement.getAgreements,
+          eager: DiscoveryAPI.getAgreements
         },
         limit,
         offset,
@@ -742,7 +742,7 @@ class ColivingBackend {
         filterDeletes, // filterDeleted
         withUsers // withUsers
       )
-      return tracks || []
+      return agreements || []
     } catch (e) {
       console.error(e)
       return []
@@ -750,37 +750,37 @@ class ColivingBackend {
   }
 
   /**
-   * @typedef {Object} getTracksIdentifier
+   * @typedef {Object} getAgreementsIdentifier
    * @property {string} handle
    * @property {number} id
    * @property {string} url_title
    */
 
   /**
-   * gets all tracks matching identifiers, including unlisted.
+   * gets all agreements matching identifiers, including unlisted.
    *
-   * @param {getTracksIdentifier[]} identifiers
-   * @returns {(Array)} track
+   * @param {getAgreementsIdentifier[]} identifiers
+   * @returns {(Array)} agreement
    */
-  static async getTracksIncludingUnlisted(identifiers, withUsers = true) {
+  static async getAgreementsIncludingUnlisted(identifiers, withUsers = true) {
     try {
-      const tracks = await withEagerOption(
+      const agreements = await withEagerOption(
         {
-          normal: (libs) => libs.Track.getTracksIncludingUnlisted,
-          eager: DiscoveryAPI.getTracksIncludingUnlisted
+          normal: (libs) => libs.Agreement.getAgreementsIncludingUnlisted,
+          eager: DiscoveryAPI.getAgreementsIncludingUnlisted
         },
         identifiers,
         withUsers
       )
 
-      return tracks
+      return agreements
     } catch (e) {
       console.error(e)
       return []
     }
   }
 
-  static async getArtistTracks({
+  static async getArtistAgreements({
     offset,
     limit,
     userId,
@@ -789,10 +789,10 @@ class ColivingBackend {
     withUsers = true
   }) {
     try {
-      const tracks = await withEagerOption(
+      const agreements = await withEagerOption(
         {
-          normal: (libs) => libs.Track.getTracks,
-          eager: DiscoveryAPI.getTracks
+          normal: (libs) => libs.Agreement.getAgreements,
+          eager: DiscoveryAPI.getAgreements
         },
         limit,
         offset,
@@ -803,7 +803,7 @@ class ColivingBackend {
         filterDeleted,
         withUsers
       )
-      return tracks || []
+      return agreements || []
     } catch (e) {
       console.error(e)
       return []
@@ -815,7 +815,7 @@ class ColivingBackend {
     offset,
     limit,
     withUsers = true,
-    tracksOnly = false
+    agreementsOnly = false
   }) {
     const filterMap = {
       [FeedFilter.ALL]: 'all',
@@ -835,7 +835,7 @@ class ColivingBackend {
         limit,
         offset,
         withUsers,
-        tracksOnly
+        agreementsOnly
       )
       // It's possible all the requests timed out,
       // we need to not return a null object here.
@@ -851,7 +851,7 @@ class ColivingBackend {
 
   static async getUserFeed({ offset, limit, userId, withUsers = true }) {
     try {
-      const tracks = await withEagerOption(
+      const agreements = await withEagerOption(
         {
           normal: (libs) => libs.User.getUserRepostFeed,
           eager: DiscoveryAPI.getUserRepostFeed
@@ -861,7 +861,7 @@ class ColivingBackend {
         offset,
         withUsers
       )
-      return tracks
+      return agreements
     } catch (e) {
       console.error(e)
       return []
@@ -889,18 +889,18 @@ class ColivingBackend {
       )
 
       const {
-        tracks = [],
-        saved_tracks: savedTracks = [],
+        agreements = [],
+        saved_agreements: savedAgreements = [],
         followed_users: followedUsers = [],
         users = []
       } = searchTags
 
-      const combinedTracks = await Promise.all(
+      const combinedAgreements = await Promise.all(
         combineLists(
-          savedTracks.filter(notDeleted),
-          tracks.filter(notDeleted),
-          'track_id'
-        ).map(async (track) => ColivingBackend.getTrackImages(track))
+          savedAgreements.filter(notDeleted),
+          agreements.filter(notDeleted),
+          'agreement_id'
+        ).map(async (agreement) => ColivingBackend.getAgreementImages(agreement))
       )
 
       const combinedUsers = await Promise.all(
@@ -910,32 +910,32 @@ class ColivingBackend {
       )
 
       return {
-        tracks: combinedTracks,
+        agreements: combinedAgreements,
         users: combinedUsers
       }
     } catch (e) {
       console.error(e)
       return {
-        tracks: [],
+        agreements: [],
         users: []
       }
     }
   }
 
-  static async getTrackListens(trackIds, start, end, period) {
-    if (trackIds.length === 0) return []
+  static async getAgreementListens(agreementIds, start, end, period) {
+    if (agreementIds.length === 0) return []
     try {
       return withEagerOption(
         {
-          normal: (libs) => libs.Track.getTrackListens,
-          eager: IdentityAPI.getTrackListens,
+          normal: (libs) => libs.Agreement.getAgreementListens,
+          eager: IdentityAPI.getAgreementListens,
           endpoint: IDENTITY_SERVICE
         },
         period,
-        trackIds,
+        agreementIds,
         start,
         end,
-        trackIds.length
+        agreementIds.length
       )
     } catch (err) {
       console.error(err.message)
@@ -943,10 +943,10 @@ class ColivingBackend {
     }
   }
 
-  static async recordTrackListen(trackId) {
+  static async recordAgreementListen(agreementId) {
     try {
-      const listen = await colivingLibs.Track.logTrackListen(
-        trackId,
+      const listen = await colivingLibs.Agreement.logAgreementListen(
+        agreementId,
         unauthenticatedUuid,
         getFeatureEnabled(FeatureFlags.SOLANA_LISTEN_ENABLED)
       )
@@ -956,18 +956,18 @@ class ColivingBackend {
     }
   }
 
-  static async repostTrack(trackId) {
+  static async repostAgreement(agreementId) {
     try {
-      return colivingLibs.Track.addTrackRepost(trackId)
+      return colivingLibs.Agreement.addAgreementRepost(agreementId)
     } catch (err) {
       console.error(err.message)
       throw err
     }
   }
 
-  static async undoRepostTrack(trackId) {
+  static async undoRepostAgreement(agreementId) {
     try {
-      return colivingLibs.Track.deleteTrackRepost(trackId)
+      return colivingLibs.Agreement.deleteAgreementRepost(agreementId)
     } catch (err) {
       console.error(err.message)
       throw err
@@ -1000,27 +1000,27 @@ class ColivingBackend {
     return colivingLibs.User.upgradeToCreator(USER_NODE, newCreatorNodeEndpoint)
   }
 
-  // Uploads a single track
-  // Returns { trackId, error, phase }
-  static async uploadTrack(trackFile, coverArtFile, metadata, onProgress) {
-    return await colivingLibs.Track.uploadTrack(
-      trackFile,
+  // Uploads a single agreement
+  // Returns { agreementId, error, phase }
+  static async uploadAgreement(agreementFile, coverArtFile, metadata, onProgress) {
+    return await colivingLibs.Agreement.uploadAgreement(
+      agreementFile,
       coverArtFile,
       metadata,
       onProgress
     )
   }
 
-  // Used to upload multiple tracks as part of an album/playlist
-  // Returns { metadataMultihash, metadataFileUUID, transcodedTrackCID, transcodedTrackUUID }
-  static async uploadTrackToCreatorNode(
-    trackFile,
+  // Used to upload multiple agreements as part of an album/playlist
+  // Returns { metadataMultihash, metadataFileUUID, transcodedAgreementCID, transcodedAgreementUUID }
+  static async uploadAgreementToCreatorNode(
+    agreementFile,
     coverArtFile,
     metadata,
     onProgress
   ) {
-    return colivingLibs.Track.uploadTrackContentToCreatorNode(
-      trackFile,
+    return colivingLibs.Agreement.uploadAgreementContentToCreatorNode(
+      agreementFile,
       coverArtFile,
       metadata,
       onProgress
@@ -1035,25 +1035,25 @@ class ColivingBackend {
 
   /**
    * Takes an array of [{metadataMultihash, metadataFileUUID}, {}, ]
-   * Adds tracks to chain for this user
-   * Associates tracks with user on creatorNode
+   * Adds agreements to chain for this user
+   * Associates agreements with user on creatorNode
    */
-  static async registerUploadedTracks(uploadedTracks) {
-    return colivingLibs.Track.addTracksToChainAndCnode(uploadedTracks)
+  static async registerUploadedAgreements(uploadedAgreements) {
+    return colivingLibs.Agreement.addAgreementsToChainAndCnode(uploadedAgreements)
   }
 
   static async uploadImage(file) {
     return colivingLibs.File.uploadImage(file)
   }
 
-  static async updateTrack(trackId, metadata) {
-    const cleanedMetadata = schemas.newTrackMetadata(metadata, true)
+  static async updateAgreement(agreementId, metadata) {
+    const cleanedMetadata = schemas.newAgreementMetadata(metadata, true)
 
     if (metadata.artwork) {
       const resp = await colivingLibs.File.uploadImage(metadata.artwork.file)
       cleanedMetadata.cover_art_sizes = resp.dirCID
     }
-    return await colivingLibs.Track.updateTrack(cleanedMetadata)
+    return await colivingLibs.Agreement.updateAgreement(cleanedMetadata)
   }
 
   static async getCreators(ids) {
@@ -1348,7 +1348,7 @@ class ColivingBackend {
     userId,
     metadata,
     isAlbum = false,
-    trackIds = [],
+    agreementIds = [],
     isPrivate = true
   ) {
     const playlistName = metadata.playlist_name
@@ -1363,7 +1363,7 @@ class ColivingBackend {
         playlistName,
         isPrivate,
         isAlbum,
-        trackIds
+        agreementIds
       )
       let { blockHash, blockNumber, playlistId, error } = response
 
@@ -1454,12 +1454,12 @@ class ColivingBackend {
     }
   }
 
-  static async orderPlaylist(playlistId, trackIds, retries) {
+  static async orderPlaylist(playlistId, agreementIds, retries) {
     try {
       const { blockHash, blockNumber } =
-        await colivingLibs.Playlist.orderPlaylistTracks(
+        await colivingLibs.Playlist.orderPlaylistAgreements(
           playlistId,
-          trackIds,
+          agreementIds,
           retries
         )
       return { blockHash, blockNumber }
@@ -1480,10 +1480,10 @@ class ColivingBackend {
     }
   }
 
-  static async addPlaylistTrack(playlistId, trackId) {
+  static async addPlaylistAgreement(playlistId, agreementId) {
     try {
       const { blockHash, blockNumber } =
-        await colivingLibs.Playlist.addPlaylistTrack(playlistId, trackId)
+        await colivingLibs.Playlist.addPlaylistAgreement(playlistId, agreementId)
       return { blockHash, blockNumber }
     } catch (error) {
       console.error(error.message)
@@ -1491,12 +1491,12 @@ class ColivingBackend {
     }
   }
 
-  static async deletePlaylistTrack(playlistId, trackId, timestamp, retries) {
+  static async deletePlaylistAgreement(playlistId, agreementId, timestamp, retries) {
     try {
       const { blockHash, blockNumber } =
-        await colivingLibs.Playlist.deletePlaylistTrack(
+        await colivingLibs.Playlist.deletePlaylistAgreement(
           playlistId,
-          trackId,
+          agreementId,
           timestamp,
           retries
         )
@@ -1507,25 +1507,25 @@ class ColivingBackend {
     }
   }
 
-  static async validateTracksInPlaylist(playlistId) {
+  static async validateAgreementsInPlaylist(playlistId) {
     try {
-      const { isValid, invalidTrackIds } =
-        await colivingLibs.Playlist.validateTracksInPlaylist(playlistId)
-      return { error: false, isValid, invalidTrackIds }
+      const { isValid, invalidAgreementIds } =
+        await colivingLibs.Playlist.validateAgreementsInPlaylist(playlistId)
+      return { error: false, isValid, invalidAgreementIds }
     } catch (error) {
       console.error(error.message)
       return { error }
     }
   }
 
-  // NOTE: This is called to explicitly set a playlist track ids w/out running validation checks.
+  // NOTE: This is called to explicitly set a playlist agreement ids w/out running validation checks.
   // This should NOT be used to set the playlist order
   // It's added for the purpose of manually fixing broken playlists
-  static async dangerouslySetPlaylistOrder(playlistId, trackIds) {
+  static async dangerouslySetPlaylistOrder(playlistId, agreementIds) {
     try {
-      await colivingLibs.contracts.PlaylistFactoryClient.orderPlaylistTracks(
+      await colivingLibs.contracts.PlaylistFactoryClient.orderPlaylistAgreements(
         playlistId,
-        trackIds
+        agreementIds
       )
       return { error: false }
     } catch (error) {
@@ -1547,26 +1547,26 @@ class ColivingBackend {
     }
   }
 
-  static async deleteAlbum(playlistId, trackIds) {
+  static async deleteAlbum(playlistId, agreementIds) {
     try {
       console.debug(
-        `Deleting Album ${playlistId}, tracks: ${JSON.stringify(
-          trackIds.map((t) => t.track)
+        `Deleting Album ${playlistId}, agreements: ${JSON.stringify(
+          agreementIds.map((t) => t.agreement)
         )}`
       )
-      const trackDeletionPromises = trackIds.map((t) =>
-        colivingLibs.Track.deleteTrack(t.track)
+      const agreementDeletionPromises = agreementIds.map((t) =>
+        colivingLibs.Agreement.deleteAgreement(t.agreement)
       )
       const playlistDeletionPromise =
         colivingLibs.Playlist.deletePlaylist(playlistId)
       const results = await Promise.all(
-        trackDeletionPromises.concat(playlistDeletionPromise)
+        agreementDeletionPromises.concat(playlistDeletionPromise)
       )
-      const deleteTrackReceipts = results.slice(0, -1).map((r) => r.txReceipt)
+      const deleteAgreementReceipts = results.slice(0, -1).map((r) => r.txReceipt)
       const deletePlaylistReceipt = results.slice(-1)[0].txReceipt
 
       const { blockHash, blockNumber } = ColivingBackend.getLatestTxReceipt(
-        deleteTrackReceipts.concat(deletePlaylistReceipt)
+        deleteAgreementReceipts.concat(deletePlaylistReceipt)
       )
       return { blockHash, blockNumber }
     } catch (error) {
@@ -1609,12 +1609,12 @@ class ColivingBackend {
     }
   }
 
-  static async getSavedTracks(limit = 100, offset = 0) {
+  static async getSavedAgreements(limit = 100, offset = 0) {
     try {
       return withEagerOption(
         {
-          normal: (libs) => libs.Track.getSavedTracks,
-          eager: DiscoveryAPI.getSavedTracks
+          normal: (libs) => libs.Agreement.getSavedAgreements,
+          eager: DiscoveryAPI.getSavedAgreements
         },
         limit,
         offset
@@ -1625,19 +1625,19 @@ class ColivingBackend {
     }
   }
 
-  // Favoriting a track
-  static async saveTrack(trackId) {
+  // Favoriting a agreement
+  static async saveAgreement(agreementId) {
     try {
-      return await colivingLibs.Track.addTrackSave(trackId)
+      return await colivingLibs.Agreement.addAgreementSave(agreementId)
     } catch (err) {
       console.error(err.message)
       throw err
     }
   }
 
-  static async deleteTrack(trackId) {
+  static async deleteAgreement(agreementId) {
     try {
-      const { txReceipt } = await colivingLibs.Track.deleteTrack(trackId)
+      const { txReceipt } = await colivingLibs.Agreement.deleteAgreement(agreementId)
       return {
         blockHash: txReceipt.blockHash,
         blockNumber: txReceipt.blockNumber
@@ -1658,10 +1658,10 @@ class ColivingBackend {
     }
   }
 
-  // Unfavoriting a track
-  static async unsaveTrack(trackId) {
+  // Unfavoriting a agreement
+  static async unsaveAgreement(agreementId) {
     try {
-      return await colivingLibs.Track.deleteTrackSave(trackId)
+      return await colivingLibs.Agreement.deleteAgreementSave(agreementId)
     } catch (err) {
       console.error(err.message)
       throw err
@@ -1680,9 +1680,9 @@ class ColivingBackend {
 
   /**
    * Sets the artist pick for a user
-   * @param {number?} trackId if null, unsets the artist pick
+   * @param {number?} agreementId if null, unsets the artist pick
    */
-  static async setArtistPick(trackId = null) {
+  static async setArtistPick(agreementId = null) {
     await waitForLibsInit()
     try {
       const { data, signature } = await ColivingBackend.signData()
@@ -1694,7 +1694,7 @@ class ColivingBackend {
           [AuthHeaders.Signature]: signature
         },
         body: JSON.stringify({
-          trackId
+          agreementId
         })
       })
     } catch (err) {
@@ -1764,7 +1764,7 @@ class ColivingBackend {
       formFields.coverPhoto,
       hasWallet,
       ColivingBackend._getHostUrl(),
-      track,
+      agreement,
       {
         Request: Name.CREATE_USER_BANK_REQUEST,
         Success: Name.CREATE_USER_BANK_SUCCESS,
@@ -1884,7 +1884,7 @@ class ColivingBackend {
       const withTipsQuery = withTips ? `&withTips=true` : ''
       // TODO: withRemix, withTrending, withRewards are always true and should be removed in a future release
       const notifications = await fetch(
-        `${IDENTITY_SERVICE}/notifications?${limitQuery}${timeOffsetQuery}${handleQuery}${withTipsQuery}&withRewards=true&withRemix=true&withTrendingTrack=true`,
+        `${IDENTITY_SERVICE}/notifications?${limitQuery}${timeOffsetQuery}${handleQuery}${withTipsQuery}&withRewards=true&withRemix=true&withTrendingAgreement=true`,
         {
           headers: {
             'Content-Type': 'application/json',

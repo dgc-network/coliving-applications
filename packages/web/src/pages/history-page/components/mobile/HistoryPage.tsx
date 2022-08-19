@@ -1,13 +1,13 @@
 import { memo, useEffect, useCallback, useContext } from 'react'
 
-import { ID, UID, LineupTrack } from '@coliving/common'
+import { ID, UID, LineupAgreement } from '@coliving/common'
 import { Button, ButtonType } from '@coliving/stems'
 
 import LoadingSpinner from 'components/loading-spinner/LoadingSpinner'
 import MobilePageContainer from 'components/mobile-page-container/MobilePageContainer'
 import NavContext, { LeftPreset } from 'components/nav/store/context'
-import TrackList from 'components/track/mobile/TrackList'
-import { TrackItemAction } from 'components/track/mobile/TrackListItem'
+import AgreementList from 'components/agreement/mobile/AgreementList'
+import { AgreementItemAction } from 'components/agreement/mobile/AgreementListItem'
 import { TRENDING_PAGE } from 'utils/route'
 
 import styles from './HistoryPage.module.css'
@@ -15,7 +15,7 @@ import styles from './HistoryPage.module.css'
 const messages = {
   header: 'LISTENING HISTORY',
   empty: {
-    primary: 'You haven’t listened to any tracks yet.',
+    primary: 'You haven’t listened to any agreements yet.',
     secondary: 'Once you have, this is where you’ll find them!',
     cta: 'Start Listening'
   }
@@ -25,12 +25,12 @@ export type HistoryPageProps = {
   title: string
   description: string
   userId: ID
-  entries: LineupTrack[]
+  entries: LineupAgreement[]
   playing: boolean
   isEmpty: boolean
   loading: boolean
-  onToggleSave: (isSaved: boolean, trackId: ID) => void
-  onTogglePlay: (uid: UID, trackId: ID) => void
+  onToggleSave: (isSaved: boolean, agreementId: ID) => void
+  onTogglePlay: (uid: UID, agreementId: ID) => void
   currentQueueItem: any
   goToRoute: (route: string) => void
 }
@@ -55,21 +55,21 @@ const HistoryPage = ({
     setRight(null)
   }, [setLeft, setCenter, setRight])
 
-  const tracks = entries.map((track: LineupTrack, index: number) => {
-    const isActive = track.uid === currentQueueItem.uid
+  const agreements = entries.map((agreement: LineupAgreement, index: number) => {
+    const isActive = agreement.uid === currentQueueItem.uid
     return {
       isLoading: loading,
-      isReposted: track.has_current_user_reposted,
-      isSaved: track.has_current_user_saved,
+      isReposted: agreement.has_current_user_reposted,
+      isSaved: agreement.has_current_user_saved,
       isActive,
       isPlaying: isActive && playing,
-      artistName: track.user.name,
-      artistHandle: track.user.handle,
-      trackTitle: track.title,
-      trackId: track.track_id,
-      uid: track.uid,
-      coverArtSizes: track._cover_art_sizes,
-      isDeleted: track.is_delete || !!track.user.is_deactivated
+      artistName: agreement.user.name,
+      artistHandle: agreement.user.handle,
+      agreementTitle: agreement.title,
+      agreementId: agreement.agreement_id,
+      uid: agreement.uid,
+      coverArtSizes: agreement._cover_art_sizes,
+      isDeleted: agreement.is_delete || !!agreement.user.is_deactivated
     }
   })
 
@@ -95,19 +95,19 @@ const HistoryPage = ({
           />
         </div>
       ) : (
-        <div className={styles.trackListContainer}>
+        <div className={styles.agreementListContainer}>
           {loading ? (
             <LoadingSpinner className={styles.spinner} />
           ) : (
-            <TrackList
+            <AgreementList
               containerClassName={styles.containerClassName}
-              tracks={tracks}
+              agreements={agreements}
               itemClassName={styles.itemClassName}
               showDivider
               showBorder
               onSave={onToggleSave}
               togglePlay={onTogglePlay}
-              trackItemAction={TrackItemAction.Overflow}
+              agreementItemAction={AgreementItemAction.Overflow}
             />
           )}
         </div>

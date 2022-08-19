@@ -20,7 +20,7 @@ import {
 } from 'common/store/account/reducer'
 import { getHasAccount } from 'common/store/account/selectors'
 import { Pages, FollowArtistsCategory } from 'pages/sign-on/store/types'
-import { make, TrackEvent } from 'store/analytics/actions'
+import { make, AgreementEvent } from 'store/analytics/actions'
 import { AppState } from 'store/types'
 import { isElectron } from 'utils/clientUtil'
 import { setupHotkeys, removeHotkeys } from 'utils/hotkeyUtil'
@@ -266,7 +266,7 @@ export class SignOnProvider extends Component<SignOnProps, SignOnState> {
     }
   }
 
-  onUploadTrack = () => {
+  onUploadAgreement = () => {
     const { email, handle } = this.props.fields
     this.finishSignup()
     this.props.goToRoute(UPLOAD_PAGE)
@@ -438,7 +438,7 @@ export class SignOnProvider extends Component<SignOnProps, SignOnState> {
       onSetProfileImage: this.onSetProfileImage,
       onHandleChange: this.onHandleChange,
       finishSignup: this.finishSignup,
-      onUploadTrack: this.onUploadTrack,
+      onUploadAgreement: this.onUploadAgreement,
       onStartListening: this.onStartListening,
       onViewSignIn: this.onViewSignIn,
       onViewSignUp: this.onViewSignUp,
@@ -539,70 +539,70 @@ function mapDispatchToProps(dispatch: Dispatch) {
     goBack: () => dispatch(goBack()),
     replaceRoute: (route: string) => dispatch(replaceRoute(route)),
     recordSignInClick: () => {
-      const trackEvent: TrackEvent = make(Name.SIGN_IN_OPEN, {
+      const agreementEvent: AgreementEvent = make(Name.SIGN_IN_OPEN, {
         source: 'sign up page' as const
       })
-      dispatch(trackEvent)
+      dispatch(agreementEvent)
     },
     recordSignUpClick: () => {
-      const trackEvent: TrackEvent = make(Name.CREATE_ACCOUNT_OPEN, {
+      const agreementEvent: AgreementEvent = make(Name.CREATE_ACCOUNT_OPEN, {
         source: 'sign in page' as const
       })
-      dispatch(trackEvent)
+      dispatch(agreementEvent)
     },
     recordGoToUpload: () => {
-      const trackEvent: TrackEvent = make(Name.TRACK_UPLOAD_OPEN, {
+      const agreementEvent: AgreementEvent = make(Name.AGREEMENT_UPLOAD_OPEN, {
         source: 'signup' as const
       })
-      dispatch(trackEvent)
+      dispatch(agreementEvent)
     },
     recordCompletePassword: (emailAddress: string) => {
-      const trackEvent: TrackEvent = make(
+      const agreementEvent: AgreementEvent = make(
         Name.CREATE_ACCOUNT_COMPLETE_PASSWORD,
         { emailAddress }
       )
-      dispatch(trackEvent)
+      dispatch(agreementEvent)
     },
     recordCompleteProfile: (emailAddress: string, handle: string) => {
-      const trackEvent: TrackEvent = make(
+      const agreementEvent: AgreementEvent = make(
         Name.CREATE_ACCOUNT_COMPLETE_PROFILE,
         { emailAddress, handle }
       )
-      dispatch(trackEvent)
+      dispatch(agreementEvent)
     },
     recordTwitterStart: (emailAddress: string) => {
-      const trackEvent: TrackEvent = make(Name.CREATE_ACCOUNT_START_TWITTER, {
+      const agreementEvent: AgreementEvent = make(Name.CREATE_ACCOUNT_START_TWITTER, {
         emailAddress
       })
-      dispatch(trackEvent)
+      dispatch(agreementEvent)
     },
     recordTwitterComplete: (
       isVerified: boolean,
       emailAddress: string,
       handle: string
     ) => {
-      const trackEvent: TrackEvent = make(
+      const agreementEvent: AgreementEvent = make(
         Name.CREATE_ACCOUNT_COMPLETE_TWITTER,
         { isVerified, emailAddress, handle }
       )
-      dispatch(trackEvent)
+      dispatch(agreementEvent)
     },
     recordInstagramStart: (emailAddress: string) => {
-      const trackEvent: TrackEvent = make(Name.CREATE_ACCOUNT_START_INSTAGRAM, {
+      const agreementEvent: AgreementEvent = make(Name.CREATE_ACCOUNT_START_INSTAGRAM, {
         emailAddress
       })
-      dispatch(trackEvent)
+      dispatch(agreementEvent)
     },
     recordInstagramComplete: (
       isVerified: boolean,
       emailAddress: string,
       handle: string
     ) => {
-      const trackEvent: TrackEvent = make(
+      const agreementEvent: AgreementEvent = make(
         Name.CREATE_ACCOUNT_COMPLETE_INSTAGRAM,
         { isVerified, emailAddress, handle }
       )
-      dispatch(trackEvent)
+      dispatch(agreementEvent)
     },
     recordCompleteFollow: (
       users: string,
@@ -610,32 +610,32 @@ function mapDispatchToProps(dispatch: Dispatch) {
       emailAddress: string,
       handle: string
     ) => {
-      const trackEvent: TrackEvent = make(Name.CREATE_ACCOUNT_COMPLETE_FOLLOW, {
+      const agreementEvent: AgreementEvent = make(Name.CREATE_ACCOUNT_COMPLETE_FOLLOW, {
         users,
         count,
         emailAddress,
         handle
       })
-      dispatch(trackEvent)
+      dispatch(agreementEvent)
     },
     recordCompleteCreating: (emailAddress: string, handle: string) => {
-      const trackEvent: TrackEvent = make(
+      const agreementEvent: AgreementEvent = make(
         Name.CREATE_ACCOUNT_COMPLETE_CREATING,
         { emailAddress, handle }
       )
-      dispatch(trackEvent)
+      dispatch(agreementEvent)
     },
     recordFinish: (
       enterMode: 'upload' | 'listen',
       emailAddress: string,
       handle: string
     ) => {
-      const trackEvent: TrackEvent = make(Name.CREATE_ACCOUNT_FINISH, {
+      const agreementEvent: AgreementEvent = make(Name.CREATE_ACCOUNT_FINISH, {
         enterMode,
         emailAddress,
         handle
       })
-      dispatch(trackEvent)
+      dispatch(agreementEvent)
     }
   }
 }

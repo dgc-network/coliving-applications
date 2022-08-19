@@ -10,7 +10,7 @@ import CollectibleDetailsModal from 'components/collectibles/components/Collecti
 import DeletePlaylistConfirmationModal from 'components/delete-playlist-confirmation-modal/DeletePlaylistConfirmationModal'
 import EditFolderModal from 'components/edit-folder-modal/EditFolderModal'
 import EditPlaylistModal from 'components/edit-playlist/desktop/EditPlaylistModal'
-import EditTrackModal from 'components/edit-track/EditTrackModal'
+import EditAgreementModal from 'components/edit-agreement/EditAgreementModal'
 import EmbedModal from 'components/embed-modal/EmbedModal'
 import { FeatureFlagOverrideModal } from 'components/feature-flag-override-modal'
 import FirstUploadModal from 'components/first-upload-modal/FirstUploadModal'
@@ -19,7 +19,7 @@ import ServiceSelectionModal from 'components/service-selection/ServiceSelection
 import { ShareModal } from 'components/share-modal/ShareModal'
 import ShareSoundToTikTokModal from 'components/share-sound-to-tiktok-modal/ShareSoundToTikTokModal'
 import { TipAudioModal } from 'components/tipping/tip-live/TipAudioModal'
-import ConnectedMobileOverflowModal from 'components/track-overflow-modal/ConnectedMobileOverflowModal'
+import ConnectedMobileOverflowModal from 'components/agreement-overflow-modal/ConnectedMobileOverflowModal'
 import UnfollowConfirmationModal from 'components/unfollow-confirmation-modal/UnfollowConfirmationModal'
 import UnloadDialog from 'components/unload-dialog/UnloadDialog'
 import TierExplainerModal from 'components/user-badges/TierExplainerModal'
@@ -52,7 +52,7 @@ const Modals = () => {
         return <AppModal key={modalName} name={modalName} modal={Modal} />
       })}
       <ServiceSelectionModal />
-      <EditTrackModal />
+      <EditAgreementModal />
       <PasswordResetModal />
       <FirstUploadModal />
       <UnloadDialog />

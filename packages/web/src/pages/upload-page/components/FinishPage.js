@@ -9,13 +9,13 @@ import { ReactComponent as IconArrow } from 'assets/img/iconArrow.svg'
 import placeholderArt from 'assets/img/imageBlank2x.png'
 import Toast from 'components/toast/Toast'
 import {
-  TrackArtwork,
+  AgreementArtwork,
   CollectionArtwork
-} from 'components/track/desktop/Artwork'
-import PlaylistTile from 'components/track/desktop/PlaylistTile'
-import TrackListItem from 'components/track/desktop/TrackListItem'
-import TrackTile from 'components/track/desktop/TrackTile'
-import { TrackTileSize } from 'components/track/types'
+} from 'components/agreement/desktop/Artwork'
+import PlaylistTile from 'components/agreement/desktop/PlaylistTile'
+import AgreementListItem from 'components/agreement/desktop/AgreementListItem'
+import AgreementTile from 'components/agreement/desktop/AgreementTile'
+import { AgreementTileSize } from 'components/agreement/types'
 import { ComponentPlacement } from 'components/types'
 import UserBadges from 'components/user-badges/UserBadges'
 
@@ -33,16 +33,16 @@ const messages = {
   error: 'Error uploading one or more files, please try again'
 }
 
-const getShareUploadType = (uploadType, tracks) => {
+const getShareUploadType = (uploadType, agreements) => {
   switch (uploadType) {
-    case UploadType.INDIVIDUAL_TRACK: {
-      if (tracks.length > 0 && tracks[0].metadata.remix_of) {
+    case UploadType.INDIVIDUAL_AGREEMENT: {
+      if (agreements.length > 0 && agreements[0].metadata.remix_of) {
         return 'Remix'
       }
-      return 'Track'
+      return 'Agreement'
     }
-    case UploadType.INDIVIDUAL_TRACKS:
-      return 'Tracks'
+    case UploadType.INDIVIDUAL_AGREEMENTS:
+      return 'Agreements'
     case UploadType.PLAYLIST:
       return 'Playlist'
     case UploadType.ALBUM:
@@ -70,8 +70,8 @@ class FinishPage extends Component {
 
   componentDidUpdate() {
     if (
-      this.props.erroredTracks.length > 0 &&
-      this.props.uploadType === UploadType.INDIVIDUAL_TRACKS &&
+      this.props.erroredAgreements.length > 0 &&
+      this.props.uploadType === UploadType.INDIVIDUAL_AGREEMENTS &&
       !this.state.didShowToast
     ) {
       this.setState({
@@ -111,19 +111,19 @@ class FinishPage extends Component {
   render() {
     const {
       account,
-      tracks,
+      agreements,
       uploadProgress,
       upload,
       metadata,
       uploadType,
       inProgress,
       onContinue,
-      erroredTracks,
+      erroredAgreements,
       isFirstUpload
     } = this.props
 
     const tileProps = {
-      size: TrackTileSize.LARGE,
+      size: AgreementTileSize.LARGE,
       isActive: false,
       isDisabled: true,
       showArtworkIcon: false,
@@ -132,15 +132,15 @@ class FinishPage extends Component {
       showSkeleton: false
     }
 
-    const erroredTrackSet = new Set(erroredTracks)
+    const erroredAgreementSet = new Set(erroredAgreements)
 
     let content
     if (
-      uploadType === UploadType.INDIVIDUAL_TRACK ||
-      uploadType === UploadType.INDIVIDUAL_TRACKS
+      uploadType === UploadType.INDIVIDUAL_AGREEMENT ||
+      uploadType === UploadType.INDIVIDUAL_AGREEMENTS
     ) {
-      content = tracks.map((track, i) => {
-        const hasErrored = erroredTrackSet.has(i)
+      content = agreements.map((agreement, i) => {
+        const hasErrored = erroredAgreementSet.has(i)
         const userName = (
           <div className={styles.userName}>
             <span className={styles.createdBy}>{account.name}</span>
@@ -156,11 +156,11 @@ class FinishPage extends Component {
           (uploadProgress[i].loaded / uploadProgress[i].total) * 100
 
         const artwork = (
-          <TrackArtwork
+          <AgreementArtwork
             id={1} // Note the ID must be present to render the default overide image
             coverArtSizes={{
-              [DefaultSizes.OVERRIDE]: track.metadata.artwork.url
-                ? track.metadata.artwork.url
+              [DefaultSizes.OVERRIDE]: agreement.metadata.artwork.url
+                ? agreement.metadata.artwork.url
                 : placeholderArt
             }}
             size={'large'}
@@ -178,17 +178,17 @@ class FinishPage extends Component {
         })
 
         return (
-          <div key={track.metadata.title + i} className={styles.trackTile}>
-            <TrackTile
+          <div key={agreement.metadata.title + i} className={styles.agreementTile}>
+            <AgreementTile
               userName={userName}
-              title={track.metadata.title}
+              title={agreement.metadata.title}
               standalone
               artwork={artwork}
               bottomBar={bottomBar}
               showIconButtons={false}
               coverArtSizes={{
-                [DefaultSizes.OVERRIDE]: track.metadata.artwork.url
-                  ? track.metadata.artwork.url
+                [DefaultSizes.OVERRIDE]: agreement.metadata.artwork.url
+                  ? agreement.metadata.artwork.url
                   : placeholderArt
               }}
               {...tileProps}
@@ -201,10 +201,10 @@ class FinishPage extends Component {
       if (uploadType === UploadType.PLAYLIST) {
         header = 'PLAYLIST'
       }
-      const t = tracks.map((track) => {
-        const { duration } = track.preview
+      const t = agreements.map((agreement) => {
+        const { duration } = agreement.preview
         return {
-          ...track.metadata,
+          ...agreement.metadata,
           user: account,
           duration
         }
@@ -214,7 +214,7 @@ class FinishPage extends Component {
 
       const status =
         // Don't show complete until inProgress = false, to allow
-        // the saga to perform final processing steps (e.g. create a playlist after uploading tracks)
+        // the saga to perform final processing steps (e.g. create a playlist after uploading agreements)
         uploadProgress
           .map((u) => u.status)
           .every((s) => s === ProgressStatus.COMPLETE) && !inProgress
@@ -258,16 +258,16 @@ class FinishPage extends Component {
         />
       )
 
-      const trackList = t.map((track, i) => (
-        <TrackListItem
+      const agreementList = t.map((agreement, i) => (
+        <AgreementListItem
           index={i}
-          key={`${track.title}+${i}`}
+          key={`${agreement.title}+${i}`}
           isLoading={false}
           active={false}
-          size={TrackTileSize.LARGE}
+          size={AgreementTileSize.LARGE}
           disableActions={true}
           playing={false}
-          track={track}
+          agreement={agreement}
           artistHandle={account.handle}
         />
       ))
@@ -276,13 +276,13 @@ class FinishPage extends Component {
         <PlaylistTile
           header={header}
           userName={userName}
-          trackList={trackList}
+          agreementList={agreementList}
           title={metadata.playlist_name}
           artwork={artwork}
-          activeTrackUid={false} // No track should show as active
+          activeAgreementUid={false} // No agreement should show as active
           bottomBar={bottomBar}
           showIconButtons={false}
-          containerClassName={styles.trackListContainer}
+          containerClassName={styles.agreementListContainer}
           {...tileProps}
         />
       )
@@ -290,8 +290,8 @@ class FinishPage extends Component {
 
     let continueText
     switch (uploadType) {
-      case UploadType.INDIVIDUAL_TRACK:
-        continueText = 'View Track Page'
+      case UploadType.INDIVIDUAL_AGREEMENT:
+        continueText = 'View Agreement Page'
         break
       case UploadType.PLAYLIST:
         continueText = 'View Playlist'
@@ -300,9 +300,9 @@ class FinishPage extends Component {
         continueText = 'View Album'
         break
       default:
-        continueText = 'View Tracks'
+        continueText = 'View Agreements'
     }
-    const shareUploadType = getShareUploadType(uploadType, tracks)
+    const shareUploadType = getShareUploadType(uploadType, agreements)
     return (
       <Toast
         firesOnClick={false}
@@ -315,7 +315,7 @@ class FinishPage extends Component {
             <ShareBanner
               type={shareUploadType}
               isHidden={inProgress}
-              tracks={tracks}
+              agreements={agreements}
               upload={upload}
               metadata={metadata}
               user={account}
@@ -342,7 +342,7 @@ class FinishPage extends Component {
 
 FinishPage.propTypes = {
   account: PropTypes.object,
-  tracks: PropTypes.array,
+  agreements: PropTypes.array,
   uploadType: PropTypes.oneOf(Object.values(UploadType)),
   uploadProgress: PropTypes.array,
   /** Whether an upload is in progress. Only shows actions after upload is 'done.' */

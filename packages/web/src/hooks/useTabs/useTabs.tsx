@@ -83,7 +83,7 @@ type TabBarProps = {
   // Offset the tab to the left or right.
   // offset of 1 offsets 1 tab to the right,
   // offset of -1 to the left.
-  // Used to track in progress gestures.
+  // Used to agreement in progress gestures.
   fractionalOffset?: number
 }
 
@@ -405,7 +405,7 @@ const GestureSupportingBodyContainer = memo(
 
     // State
 
-    // Tracks our last seen activeIndex.
+    // Agreements our last seen activeIndex.
     const [internalIndex, setInternalIndex] = useState(activeIndex)
 
     // Instance Vars
@@ -495,8 +495,8 @@ const GestureSupportingBodyContainer = memo(
 
     // If the active index has changed, either because
     // we've clicked a new tab or finished a gesture,
-    // begin animations and track the index delta.
-    // We have to track the delta as opposed to the last seen
+    // begin animations and agreement the index delta.
+    // We have to agreement the delta as opposed to the last seen
     const newIndexDelta = activeIndex - internalIndex
     if (newIndexDelta !== getIndexDelta()) {
       // If newIndexDelta !== 0, that means we're starting a
@@ -624,7 +624,7 @@ const GestureSupportingBodyContainer = memo(
           setGestureInProgress(false)
           setMovementDirection(0)
         } else if (!first) {
-          // Track the gesture
+          // Agreement the gesture
           setScrollContainerX(mx, true)
           setScrollPos(mx)
 

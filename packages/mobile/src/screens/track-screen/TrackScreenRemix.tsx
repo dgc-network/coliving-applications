@@ -1,9 +1,9 @@
 import { useCallback } from 'react'
 
-import type { ID, Track, User } from '@/common'
+import type { ID, Agreement, User } from '@/common'
 import { SquareSizes } from '@/common'
-import { getTrack } from '-client/src/common/store/cache/tracks/selectors'
-import { getUserFromTrack } from '-client/src/common/store/cache/users/selectors'
+import { getAgreement } from '-client/src/common/store/cache/agreements/selectors'
+import { getUserFromAgreement } from '-client/src/common/store/cache/users/selectors'
 import { profilePage } from '-client/src/utils/route'
 import type { StyleProp, ViewStyle } from 'react-native'
 import { Pressable, View } from 'react-native'
@@ -15,7 +15,7 @@ import Text from 'app/components/text'
 import UserBadges from 'app/components/user-badges'
 import { useNavigation } from 'app/hooks/useNavigation'
 import { isEqual, useSelectorWeb } from 'app/hooks/useSelectorWeb'
-import { useTrackCoverArt } from 'app/hooks/useTrackCoverArt'
+import { useAgreementCoverArt } from 'app/hooks/useAgreementCoverArt'
 import { useUserProfilePicture } from 'app/hooks/useUserProfilePicture'
 import type { StylesProp } from 'app/styles'
 import { flexRowCentered, makeStyles } from 'app/styles'
@@ -24,9 +24,9 @@ const messages = {
   by: 'By '
 }
 
-type TrackScreenRemixProps = {
+type AgreementScreenRemixProps = {
   id: ID
-} & Omit<TrackScreenRemixComponentProps, 'track' | 'user'>
+} & Omit<AgreementScreenRemixComponentProps, 'agreement' | 'user'>
 
 const useStyles = makeStyles(({ palette, spacing, typography }) => ({
   root: {
@@ -80,41 +80,41 @@ const useStyles = makeStyles(({ palette, spacing, typography }) => ({
   }
 }))
 
-export const TrackScreenRemix = ({ id, ...props }: TrackScreenRemixProps) => {
-  const track = useSelectorWeb((state) => getTrack(state, { id }), isEqual)
+export const AgreementScreenRemix = ({ id, ...props }: AgreementScreenRemixProps) => {
+  const agreement = useSelectorWeb((state) => getAgreement(state, { id }), isEqual)
   const user = useSelectorWeb(
-    (state) => getUserFromTrack(state, { id }),
+    (state) => getUserFromAgreement(state, { id }),
     isEqual
   )
 
-  if (!track || !user) {
+  if (!agreement || !user) {
     console.warn(
-      'Track or user missing for TrackScreenRemix, preventing render'
+      'Agreement or user missing for AgreementScreenRemix, preventing render'
     )
     return null
   }
 
-  return <TrackScreenRemixComponent {...props} track={track} user={user} />
+  return <AgreementScreenRemixComponent {...props} agreement={agreement} user={user} />
 }
 
-type TrackScreenRemixComponentProps = {
+type AgreementScreenRemixComponentProps = {
   style?: StyleProp<ViewStyle>
   styles?: StylesProp<{
     root: ViewStyle
   }>
-  track: Track
+  agreement: Agreement
   user: User
 }
 
-const TrackScreenRemixComponent = ({
+const AgreementScreenRemixComponent = ({
   style,
   styles: stylesProp,
-  track,
+  agreement,
   user
-}: TrackScreenRemixComponentProps) => {
+}: AgreementScreenRemixComponentProps) => {
   const styles = useStyles()
 
-  const { _co_sign, permalink, track_id } = track
+  const { _co_sign, permalink, agreement_id } = agreement
   const { name, handle } = user
   const navigation = useNavigation()
 
@@ -124,18 +124,18 @@ const TrackScreenRemixComponent = ({
     size: SquareSizes.SIZE_150_BY_150
   })
 
-  const coverArtImage = useTrackCoverArt({
-    id: track.track_id,
-    sizes: track._cover_art_sizes,
+  const coverArtImage = useAgreementCoverArt({
+    id: agreement.agreement_id,
+    sizes: agreement._cover_art_sizes,
     size: SquareSizes.SIZE_480_BY_480
   })
 
-  const handlePressTrack = useCallback(() => {
+  const handlePressAgreement = useCallback(() => {
     navigation.push({
-      native: { screen: 'Track', params: { id: track_id } },
+      native: { screen: 'Agreement', params: { id: agreement_id } },
       web: { route: permalink }
     })
-  }, [navigation, permalink, track_id])
+  }, [navigation, permalink, agreement_id])
 
   const handlePressArtist = useCallback(() => {
     navigation.push({
@@ -157,7 +157,7 @@ const TrackScreenRemixComponent = ({
 
   return (
     <View style={[styles.root, style, stylesProp?.root]}>
-      <Pressable onPress={handlePressTrack}>
+      <Pressable onPress={handlePressAgreement}>
         {_co_sign ? <CoSign size={Size.MEDIUM}>{images}</CoSign> : images}
       </Pressable>
       <Pressable style={styles.artist} onPress={handlePressArtist}>

@@ -1,4 +1,4 @@
-.trackPreview {
+.agreementPreview {
   background-color: var(--white);
 
   display: flex;
@@ -10,23 +10,23 @@
   padding-right: 12px;
 }
 
-.trackPreview.single {
+.agreementPreview.single {
   box-shadow: 0 2px 5px -2px rgba(133, 129, 153, 0.25);
   height: 64px;
   padding: inherit;
 }
 
-.trackDetails {
+.agreementDetails {
   margin-left: 20px;
   display: flex;
   flex-grow: 1;
   align-items: center;
 }
-.trackDetails > img {
+.agreementDetails > img {
   margin-right: 24px;
 }
 
-.trackTitle {
+.agreementTitle {
   flex: 1;
   color: var(--neutral);
   font-family: var(--font-family);

@@ -1,4 +1,4 @@
-import { Collection, FieldVisibility, Track, User } from '@coliving/common'
+import { Collection, FieldVisibility, Agreement, User } from '@coliving/common'
 
 const defaultFieldVisibility: FieldVisibility = {
   genre: true,
@@ -9,10 +9,10 @@ const defaultFieldVisibility: FieldVisibility = {
   remixes: true
 }
 
-export const getTrackWithFallback = (track: Track | null) => {
+export const getAgreementWithFallback = (agreement: Agreement | null) => {
   return (
-    track || {
-      track_id: -1,
+    agreement || {
+      agreement_id: -1,
       title: '',
       permalink: '',
       repost_count: 0,
@@ -45,8 +45,8 @@ export const getCollectionWithFallback = (collection: Collection | null) => {
       playlist_name: '',
       repost_count: 0,
       save_count: 0,
-      track_ids: [],
-      track_count: 0,
+      agreement_ids: [],
+      agreement_count: 0,
       followee_reposts: [],
       followee_saves: [],
       has_current_user_reposted: false,

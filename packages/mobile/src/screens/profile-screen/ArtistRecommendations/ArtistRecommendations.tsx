@@ -20,7 +20,7 @@ import { useNavigation } from 'app/hooks/useNavigation'
 import { useSelectorWeb } from 'app/hooks/useSelectorWeb'
 import { makeStyles } from 'app/styles'
 import { EventNames } from 'app/types/analytics'
-import { track, make } from 'app/utils/analytics'
+import { agreement, make } from 'app/utils/analytics'
 
 import { useSelectProfile } from '../selectors'
 
@@ -92,7 +92,7 @@ export const ArtistRecommendations = (props: ArtistRecommendationsProps) => {
   useEffectOnce(() => {
     dispatchWeb(fetchRelatedArtists({ userId: user_id }))
 
-    track(
+    agreement(
       make({
         eventName: EventNames.PROFILE_PAGE_SHOWN_ARTIST_RECOMMENDATIONS,
         userId: user_id

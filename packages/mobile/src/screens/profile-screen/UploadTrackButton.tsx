@@ -11,7 +11,7 @@ import { makeStyles } from 'app/styles'
 import { useThemeColors } from 'app/utils/theme'
 
 const messages = {
-  uploadTrack: 'Upload Track'
+  uploadAgreement: 'Upload Agreement'
 }
 
 const useStyles = makeStyles(({ spacing, palette }) => ({
@@ -23,7 +23,7 @@ const useStyles = makeStyles(({ spacing, palette }) => ({
   }
 }))
 
-export const UploadTrackButton = () => {
+export const UploadAgreementButton = () => {
   const styles = useStyles()
   const dispatchWeb = useDispatchWeb()
   const { neutralLight2 } = useThemeColors()
@@ -39,7 +39,7 @@ export const UploadTrackButton = () => {
           text: styles.text
         }}
         variant='commonAlt'
-        title={messages.uploadTrack}
+        title={messages.uploadAgreement}
         icon={IconUpload}
         iconPosition='left'
         IconProps={{ fill: neutralLight2 }}

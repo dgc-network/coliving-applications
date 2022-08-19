@@ -8,7 +8,7 @@ import { Nullable } from 'utils/typeUtils'
 import { StemCategory } from './Stems'
 import { Timestamped } from './Timestamped'
 
-export interface TrackSegment {
+export interface AgreementSegment {
   duration: string
   multihash: CID
 }
@@ -22,7 +22,7 @@ interface Followee extends User {
 export interface Download {
   // TODO: figure out why
   // is_downloadable and requires_follow
-  // are randomly null on some tracks
+  // are randomly null on some agreements
   // returned from the API
   is_downloadable: Nullable<boolean>
   requires_follow: Nullable<boolean>
@@ -39,21 +39,21 @@ export type FieldVisibility = {
 }
 
 export type Remix = {
-  parent_track_id: ID
+  parent_agreement_id: ID
   user: User | any
   has_remix_author_reposted: boolean
   has_remix_author_saved: boolean
 }
 
 export type RemixOf = {
-  tracks: Remix[]
+  agreements: Remix[]
 }
 
-export type TrackMetadata = {
+export type AgreementMetadata = {
   blocknumber: number
   activity_timestamp?: string
   is_delete: boolean
-  track_id: number
+  agreement_id: number
   created_at: string
   isrc: Nullable<string>
   iswc: Nullable<string>
@@ -74,7 +74,7 @@ export type TrackMetadata = {
   save_count: number
   tags: Nullable<string>
   title: string
-  track_segments: TrackSegment[]
+  agreement_segments: AgreementSegment[]
   cover_art: Nullable<CID>
   cover_art_sizes: Nullable<CID>
   is_unlisted: boolean
@@ -86,7 +86,7 @@ export type TrackMetadata = {
   // Optional Fields
   is_invalid?: boolean
   stem_of?: {
-    parent_track_id: ID
+    parent_agreement_id: ID
     category: StemCategory
   }
   remix_of: Nullable<RemixOf>
@@ -97,11 +97,11 @@ export type TrackMetadata = {
 } & Timestamped
 
 export type Stem = {
-  track_id: ID
+  agreement_id: ID
   category: StemCategory
 }
 
-export type ComputedTrackProperties = {
+export type ComputedAgreementProperties = {
   // All below, added clientside
   _cover_art_sizes: CoverArtSizes
   _first_segment?: string
@@ -110,34 +110,34 @@ export type ComputedTrackProperties = {
   _is_publishing?: boolean
   _stems?: Stem[]
 
-  // Present iff remixes have been fetched for a track
-  _remixes?: Array<{ track_id: ID }>
+  // Present iff remixes have been fetched for a agreement
+  _remixes?: Array<{ agreement_id: ID }>
   _remixes_count?: number
-  // Present iff remix parents have been fetched for a track
-  _remix_parents?: Array<{ track_id: ID }>
-  // Present iff the track has been cosigned
+  // Present iff remix parents have been fetched for a agreement
+  _remix_parents?: Array<{ agreement_id: ID }>
+  // Present iff the agreement has been cosigned
   _co_sign?: Nullable<Remix>
 
   _blocked?: boolean
 }
 
-export type Track = TrackMetadata & ComputedTrackProperties
+export type Agreement = AgreementMetadata & ComputedAgreementProperties
 
-export type UserTrackMetadata = TrackMetadata & { user: UserMetadata }
+export type UserAgreementMetadata = AgreementMetadata & { user: UserMetadata }
 
-export type UserTrack = Track & {
+export type UserAgreement = Agreement & {
   user: User
 }
 
-export type LineupTrack = UserTrack & {
+export type LineupAgreement = UserAgreement & {
   uid: UID
 }
 
-// Track with known non-optional stem
-export type StemTrackMetadata = TrackMetadata & Required<Pick<Track, 'stem_of'>>
-export type StemTrack = Track & Required<Pick<Track, 'stem_of'>>
-export type StemUserTrack = UserTrack & Required<Pick<Track, 'stem_of'>>
+// Agreement with known non-optional stem
+export type StemAgreementMetadata = AgreementMetadata & Required<Pick<Agreement, 'stem_of'>>
+export type StemAgreement = Agreement & Required<Pick<Agreement, 'stem_of'>>
+export type StemUserAgreement = UserAgreement & Required<Pick<Agreement, 'stem_of'>>
 
-// Track with known non-optional remix parent
-export type RemixTrack = Track & Required<Pick<Track, 'remix_of'>>
-export type RemixUserTrack = UserTrack & Required<Pick<Track, 'remix_of'>>
+// Agreement with known non-optional remix parent
+export type RemixAgreement = Agreement & Required<Pick<Agreement, 'remix_of'>>
+export type RemixUserAgreement = UserAgreement & Required<Pick<Agreement, 'remix_of'>>

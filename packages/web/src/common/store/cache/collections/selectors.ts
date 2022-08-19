@@ -4,14 +4,14 @@ import {
   Collection,
   Kind,
   Status,
-  Track,
+  Agreement,
   User,
   Uid
 } from '@coliving/common'
 
 import { CommonState } from 'common/store'
 import { getAllEntries, getEntry } from 'common/store/cache/selectors'
-import { getTracks } from 'common/store/cache/tracks/selectors'
+import { getAgreements } from 'common/store/cache/agreements/selectors'
 import {
   getUser as getUserById,
   getUsers
@@ -73,9 +73,9 @@ export const getStatuses = (state: CommonState, props: { ids: ID[] }) => {
   return statuses
 }
 
-export type EnhancedCollectionTrack = Track & { user: User; uid: UID }
-const emptyList: EnhancedCollectionTrack[] = []
-export const getTracksFromCollection = (
+export type EnhancedCollectionAgreement = Agreement & { user: User; uid: UID }
+const emptyList: EnhancedCollectionAgreement[] = []
+export const getAgreementsFromCollection = (
   state: CommonState,
   props: { uid: UID }
 ) => {
@@ -84,22 +84,22 @@ export const getTracksFromCollection = (
   if (
     !collection ||
     !collection.playlist_contents ||
-    !collection.playlist_contents.track_ids
+    !collection.playlist_contents.agreement_ids
   )
     return emptyList
 
   const collectionSource = Uid.fromString(props.uid).source
 
-  const ids = collection.playlist_contents.track_ids.map((t) => t.track)
-  const tracks = getTracks(state, { ids })
+  const ids = collection.playlist_contents.agreement_ids.map((t) => t.agreement)
+  const agreements = getAgreements(state, { ids })
 
-  const userIds = Object.keys(tracks)
+  const userIds = Object.keys(agreements)
     .map((id) => {
-      const track = tracks[id as unknown as number]
-      if (track?.owner_id) {
-        return track.owner_id
+      const agreement = agreements[id as unknown as number]
+      if (agreement?.owner_id) {
+        return agreement.owner_id
       }
-      console.error(`Found empty track ${id}, expected it to have an owner_id`)
+      console.error(`Found empty agreement ${id}, expected it to have an owner_id`)
       return null
     })
     .filter((userId) => userId !== null) as number[]
@@ -107,24 +107,24 @@ export const getTracksFromCollection = (
 
   if (!users || Object.keys(users).length === 0) return emptyList
 
-  // Return tracks & rebuild UIDs for the track so they refer directly to this collection
-  return collection.playlist_contents.track_ids
+  // Return agreements & rebuild UIDs for the agreement so they refer directly to this collection
+  return collection.playlist_contents.agreement_ids
     .map((t, i) => {
-      const trackUid = Uid.fromString(t.uid ?? '')
-      trackUid.source = `${collectionSource}:${trackUid.source}`
-      trackUid.count = i
+      const agreementUid = Uid.fromString(t.uid ?? '')
+      agreementUid.source = `${collectionSource}:${agreementUid.source}`
+      agreementUid.count = i
 
-      if (!tracks[t.track]) {
-        console.error(`Found empty track ${t.track}`)
+      if (!agreements[t.agreement]) {
+        console.error(`Found empty agreement ${t.agreement}`)
         return null
       }
       return {
-        ...tracks[t.track],
-        uid: trackUid.toString(),
-        user: users[tracks[t.track].owner_id]
+        ...agreements[t.agreement],
+        uid: agreementUid.toString(),
+        user: users[agreements[t.agreement].owner_id]
       }
     })
-    .filter(Boolean) as EnhancedCollectionTrack[]
+    .filter(Boolean) as EnhancedCollectionAgreement[]
 }
 
 type EnhancedCollection = Collection & { user: User }

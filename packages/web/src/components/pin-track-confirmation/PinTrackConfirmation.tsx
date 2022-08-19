@@ -9,62 +9,62 @@ import { getAccountUser } from 'common/store/account/selectors'
 import {
   setArtistPick,
   unsetArtistPick
-} from 'common/store/social/tracks/actions'
+} from 'common/store/social/agreements/actions'
 import { cancelSetAsArtistPick } from 'store/application/ui/setAsArtistPickConfirmation/actions'
 import { getSetAsArtistPickConfirmation } from 'store/application/ui/setAsArtistPickConfirmation/selectors'
-import { PinTrackAction } from 'store/application/ui/setAsArtistPickConfirmation/types'
+import { PinAgreementAction } from 'store/application/ui/setAsArtistPickConfirmation/types'
 import { AppState } from 'store/types'
 
-import styles from './PinTrackConfirmation.module.css'
+import styles from './PinAgreementConfirmation.module.css'
 
-type PinTrackConfirmationProps = ReturnType<typeof mapStateToProps> &
+type PinAgreementConfirmationProps = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>
 
-const pinTrackActionMessages = {
-  [PinTrackAction.ADD]: {
+const pinAgreementActionMessages = {
+  [PinAgreementAction.ADD]: {
     title: 'SET YOUR ARTIST PICK',
     description:
-      'This track will appear at the top of your profile, above your recent uploads, until you change or remove it.',
-    confirm: 'PICK TRACK'
+      'This agreement will appear at the top of your profile, above your recent uploads, until you change or remove it.',
+    confirm: 'PICK AGREEMENT'
   },
-  [PinTrackAction.UPDATE]: {
+  [PinAgreementAction.UPDATE]: {
     title: 'CHANGE YOUR ARTIST PICK?',
     description:
-      'This track will appear at the top of your profile and replace your previously picked track.',
-    confirm: 'CHANGE TRACK'
+      'This agreement will appear at the top of your profile and replace your previously picked agreement.',
+    confirm: 'CHANGE AGREEMENT'
   },
-  [PinTrackAction.REMOVE]: {
+  [PinAgreementAction.REMOVE]: {
     title: 'UNSET AS ARTIST PICK',
     description: (
       <div className={styles.multiline}>
         <p>{'Are you sure you want to remove your pick?'}</p>
-        <p>{'This track will be displayed based on its release date.'}</p>
+        <p>{'This agreement will be displayed based on its release date.'}</p>
       </div>
     ),
-    confirm: 'UNSET TRACK'
+    confirm: 'UNSET AGREEMENT'
   }
 }
 
-const getMessages = (action?: PinTrackAction) => {
+const getMessages = (action?: PinAgreementAction) => {
   return {
     ...(action
-      ? pinTrackActionMessages[action]
+      ? pinAgreementActionMessages[action]
       : { title: '', description: '', confirm: '' }),
     cancel: 'CANCEL'
   }
 }
 
-const PinTrackConfirmation = (props: PinTrackConfirmationProps) => {
+const PinAgreementConfirmation = (props: PinAgreementConfirmationProps) => {
   const { _artist_pick: artistPick } = props.user || { _artist_pick: null }
   const pinAction = !artistPick
-    ? PinTrackAction.ADD
-    : props.pinTrack.trackId
-    ? PinTrackAction.UPDATE
-    : PinTrackAction.REMOVE
+    ? PinAgreementAction.ADD
+    : props.pinAgreement.agreementId
+    ? PinAgreementAction.UPDATE
+    : PinAgreementAction.REMOVE
   const messages = getMessages(pinAction)
 
   const onConfirm = () => {
-    props.setArtistPick(props.pinTrack.trackId)
+    props.setArtistPick(props.pinAgreement.agreementId)
     props.onCancel()
   }
 
@@ -76,7 +76,7 @@ const PinTrackConfirmation = (props: PinTrackConfirmationProps) => {
       bodyClassName={styles.modalBody}
       headerContainerClassName={styles.modalHeader}
       titleClassName={styles.modalTitle}
-      isOpen={props.pinTrack.isVisible}
+      isOpen={props.pinAgreement.isVisible}
       onClose={props.onCancel}
     >
       <div className={styles.container}>
@@ -102,26 +102,26 @@ const PinTrackConfirmation = (props: PinTrackConfirmationProps) => {
   )
 }
 
-PinTrackConfirmation.defaultProps = {
+PinAgreementConfirmation.defaultProps = {
   visible: false
 }
 
 function mapStateToProps(state: AppState) {
   return {
     user: getAccountUser(state),
-    pinTrack: getSetAsArtistPickConfirmation(state)
+    pinAgreement: getSetAsArtistPickConfirmation(state)
   }
 }
 
 function mapDispatchToProps(dispatch: Dispatch) {
   return {
     onCancel: () => dispatch(cancelSetAsArtistPick()),
-    setArtistPick: (trackId?: ID) =>
-      dispatch(trackId ? setArtistPick(trackId) : unsetArtistPick())
+    setArtistPick: (agreementId?: ID) =>
+      dispatch(agreementId ? setArtistPick(agreementId) : unsetArtistPick())
   }
 }
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(memo(PinTrackConfirmation))
+)(memo(PinAgreementConfirmation))

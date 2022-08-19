@@ -4,16 +4,16 @@ import {
   UserCollectionMetadata,
   FeedFilter,
   Kind,
-  LineupTrack,
-  TrackMetadata,
-  UserTrackMetadata
+  LineupAgreement,
+  AgreementMetadata,
+  UserAgreementMetadata
 } from '@coliving/common'
 import { select, all } from 'redux-saga/effects'
 
 import { CommonState } from 'common/store'
 import { getAccountUser } from 'common/store/account/selectors'
 import { processAndCacheCollections } from 'common/store/cache/collections/utils'
-import { processAndCacheTracks } from 'common/store/cache/tracks/utils'
+import { processAndCacheAgreements } from 'common/store/cache/agreements/utils'
 import { PREFIX, feedActions } from 'common/store/pages/feed/lineup/actions'
 import { getFeedFilter } from 'common/store/pages/feed/selectors'
 import {
@@ -26,7 +26,7 @@ import apiClient, {
 } from 'services/coliving-api-client/ColivingAPIClient'
 import { LineupSagas } from 'store/lineup/sagas'
 
-type FeedItem = LineupTrack | Collection
+type FeedItem = LineupAgreement | Collection
 
 const filterMap = {
   [FeedFilter.ALL]: 'all',
@@ -34,7 +34,7 @@ const filterMap = {
   [FeedFilter.REPOST]: 'repost'
 }
 
-function* getTracks({
+function* getAgreements({
   offset,
   limit
 }: {
@@ -66,51 +66,51 @@ function* getTracks({
     }
   }
 
-  const feed: (UserTrackMetadata | UserCollectionMetadata)[] =
+  const feed: (UserAgreementMetadata | UserCollectionMetadata)[] =
     yield apiClient.getSocialFeed(params)
   if (!feed.length) return []
   const filteredFeed = feed.filter((record) => !record.user.is_deactivated)
-  const [tracks, collections] = getTracksAndCollections(filteredFeed)
-  const trackIds = tracks.map((t) => t.track_id)
+  const [agreements, collections] = getAgreementsAndCollections(filteredFeed)
+  const agreementIds = agreements.map((t) => t.agreement_id)
 
   // Process (e.g. cache and remove entries)
-  const [processedTracks, processedCollections]: [LineupTrack[], Collection[]] =
+  const [processedAgreements, processedCollections]: [LineupAgreement[], Collection[]] =
     yield all([
-      processAndCacheTracks(tracks),
-      processAndCacheCollections(collections, true, trackIds)
+      processAndCacheAgreements(agreements),
+      processAndCacheCollections(collections, true, agreementIds)
     ])
-  const processedTracksMap = processedTracks.reduce<Record<ID, LineupTrack>>(
-    (acc, cur) => ({ ...acc, [cur.track_id]: cur }),
+  const processedAgreementsMap = processedAgreements.reduce<Record<ID, LineupAgreement>>(
+    (acc, cur) => ({ ...acc, [cur.agreement_id]: cur }),
     {}
   )
   const processedCollectionsMap = processedCollections.reduce<
     Record<ID, Collection>
   >((acc, cur) => ({ ...acc, [cur.playlist_id]: cur }), {})
   const processedFeed: FeedItem[] = filteredFeed.map((m) =>
-    (m as LineupTrack).track_id
-      ? processedTracksMap[(m as LineupTrack).track_id]
+    (m as LineupAgreement).agreement_id
+      ? processedAgreementsMap[(m as LineupAgreement).agreement_id]
       : processedCollectionsMap[(m as UserCollectionMetadata).playlist_id]
   )
   return processedFeed
 }
 
-const getTracksAndCollections = (
-  feed: Array<TrackMetadata | UserCollectionMetadata>
+const getAgreementsAndCollections = (
+  feed: Array<AgreementMetadata | UserCollectionMetadata>
 ) =>
-  feed.reduce<[LineupTrack[], UserCollectionMetadata[]]>(
+  feed.reduce<[LineupAgreement[], UserCollectionMetadata[]]>(
     (acc, cur) =>
-      (cur as LineupTrack).track_id
-        ? [[...acc[0], cur as LineupTrack], acc[1]]
+      (cur as LineupAgreement).agreement_id
+        ? [[...acc[0], cur as LineupAgreement], acc[1]]
         : [acc[0], [...acc[1], cur as UserCollectionMetadata]],
     [[], []]
   )
 
 const keepActivityTimeStamp = (
-  entry: (LineupTrack | Collection) & { uid: string } // LineupSaga adds a UID to each entry
+  entry: (LineupAgreement | Collection) & { uid: string } // LineupSaga adds a UID to each entry
 ) => ({
   uid: entry.uid,
-  kind: (entry as LineupTrack).track_id ? Kind.TRACKS : Kind.COLLECTIONS,
-  id: (entry as LineupTrack).track_id || (entry as Collection).playlist_id,
+  kind: (entry as LineupAgreement).agreement_id ? Kind.AGREEMENTS : Kind.COLLECTIONS,
+  id: (entry as LineupAgreement).agreement_id || (entry as Collection).playlist_id,
   activityTimestamp: entry.activity_timestamp
 })
 
@@ -120,7 +120,7 @@ class FeedSagas extends LineupSagas {
       PREFIX,
       feedActions,
       (store: CommonState) => store.pages.feed.feed,
-      getTracks,
+      getAgreements,
       keepActivityTimeStamp
     )
   }

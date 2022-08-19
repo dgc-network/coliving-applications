@@ -202,20 +202,20 @@ function mapStateToProps(state: AppState, ownProps: OwnProps) {
 
 function mapDispatchToProps(dispatch: Dispatch) {
   return {
-    setRepostUsers: (trackID: ID) =>
+    setRepostUsers: (agreementID: ID) =>
       dispatch(
         setUsers({
           userListType: UserListType.REPOST,
           entityType: UserListEntityType.COLLECTION,
-          id: trackID
+          id: agreementID
         })
       ),
-    setFavoriteUsers: (trackID: ID) =>
+    setFavoriteUsers: (agreementID: ID) =>
       dispatch(
         setUsers({
           userListType: UserListType.FAVORITE,
           entityType: UserListEntityType.COLLECTION,
-          id: trackID
+          id: agreementID
         })
       ),
     setModalVisibility: () => dispatch(setVisibility(true)),

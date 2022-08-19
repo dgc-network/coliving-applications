@@ -49,14 +49,14 @@
   fill: url(#matrixHeaderGradient);
 }
 
-.tracks {
+.agreements {
   display: flex;
   align-items: flex-start;
   justify-content: center;
   flex-wrap: wrap;
 }
 
-.tracks > * {
+.agreements > * {
   margin-left: 14px;
   margin-right: 14px;
   margin-bottom: 20px;

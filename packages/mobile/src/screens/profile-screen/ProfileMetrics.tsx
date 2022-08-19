@@ -12,7 +12,7 @@ import { formatCount } from 'app/utils/format'
 import { useSelectProfile } from './selectors'
 
 const messages = {
-  tracks: 'tracks',
+  agreements: 'agreements',
   followers: 'followers',
   following: 'following'
 }
@@ -46,10 +46,10 @@ const useStyles = makeStyles(({ typography, palette, spacing }) => ({
 
 export const ProfileMetrics = () => {
   const styles = useStyles()
-  const { user_id, track_count, follower_count, followee_count } =
+  const { user_id, agreement_count, follower_count, followee_count } =
     useSelectProfile([
       'user_id',
-      'track_count',
+      'agreement_count',
       'follower_count',
       'followee_count'
     ])
@@ -76,8 +76,8 @@ export const ProfileMetrics = () => {
   return (
     <View pointerEvents='box-none' style={styles.root}>
       <View style={styles.metric}>
-        <Text style={styles.value}>{formatCount(track_count)}</Text>
-        <Text style={styles.label}>{messages.tracks}</Text>
+        <Text style={styles.value}>{formatCount(agreement_count)}</Text>
+        <Text style={styles.label}>{messages.agreements}</Text>
       </View>
       <Pressable style={styles.metric} onPress={handlePressFollowers}>
         <Text style={styles.value}>{formatCount(follower_count)}</Text>

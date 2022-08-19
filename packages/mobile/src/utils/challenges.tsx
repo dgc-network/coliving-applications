@@ -35,10 +35,10 @@ export const challenges = {
   // Listen Streak
   listenStreakTitle: 'Listening Streak: 7 Days',
   listenStreakDescription:
-    'Sign in and listen to at least one track every day for 7 days',
+    'Sign in and listen to at least one agreement every day for 7 days',
   listenStreakShortDescription:
-    'Listen to one track a day for seven days to earn 1 $LIVE',
-  listenStreakButton: 'Trending Tracks',
+    'Listen to one agreement a day for seven days to earn 1 $LIVE',
+  listenStreakButton: 'Trending Agreements',
   listenStreakProgressLabel: '%0/%1 Days',
 
   // Mobile Install
@@ -52,7 +52,7 @@ export const challenges = {
   // Profile Completion
   profileCompletionTitle: 'Complete Your Profile',
   profileCompletionDescription:
-    'Fill out the missing details on your Coliving profile and start interacting with tracks and artists!',
+    'Fill out the missing details on your Coliving profile and start interacting with agreements and artists!',
   profileCompletionShortDescription:
     'Complete your Coliving profile to earn 1 $LIVE',
   profileCompletionButton: 'More Info',
@@ -81,12 +81,12 @@ export const challenges = {
   referredShortDescription: 'You earned $LIVE for being invited',
   referredProgressLabel: '%0/%1 Invites',
 
-  // Track Upload
-  trackUploadTitle: 'Upload 3 Tracks',
-  trackUploadDescription: 'Upload 3 tracks to your profile',
-  trackUploadShortDescription: 'Upload 3 tracks to your profile',
-  trackUploadProgressLabel: '%0/%1 Uploaded',
-  trackUploadButton: 'Upload Tracks',
+  // Agreement Upload
+  agreementUploadTitle: 'Upload 3 Agreements',
+  agreementUploadDescription: 'Upload 3 agreements to your profile',
+  agreementUploadShortDescription: 'Upload 3 agreements to your profile',
+  agreementUploadProgressLabel: '%0/%1 Uploaded',
+  agreementUploadButton: 'Upload Agreements',
 
   // Send First Tip
   sendFirstTipTitle: 'Send Your First Tip',
@@ -98,9 +98,9 @@ export const challenges = {
   sendFirstTipButton: 'Find Someone To Tip',
 
   firstPlaylistTitle: 'Create Your First Playlist',
-  firstPlaylistDescription: 'Create your first playlist & add a track to it',
+  firstPlaylistDescription: 'Create your first playlist & add a agreement to it',
   firstPlaylistShortDescription:
-    'Create your first playlist & add a track to it',
+    'Create your first playlist & add a agreement to it',
   firstPlaylistProgressLabel: 'Not Earned',
   firstPlaylistButton: 'Create Your First Playlist'
 }
@@ -215,14 +215,14 @@ export const challengesConfig: Record<ChallengeRewardID, ChallengeConfig> = {
     shortDescription: challenges.referredShortDescription,
     progressLabel: challenges.referredProgressLabel
   },
-  'track-upload': {
+  'agreement-upload': {
     icon: MultipleMusicalNotes,
-    title: challenges.trackUploadTitle,
-    description: challenges.trackUploadDescription,
-    shortDescription: challenges.trackUploadShortDescription,
-    progressLabel: challenges.trackUploadProgressLabel,
+    title: challenges.agreementUploadTitle,
+    description: challenges.agreementUploadDescription,
+    shortDescription: challenges.agreementUploadShortDescription,
+    progressLabel: challenges.agreementUploadProgressLabel,
     buttonInfo: {
-      label: challenges.trackUploadButton,
+      label: challenges.agreementUploadButton,
       renderIcon: (color) => <IconUpload fill={color} />,
       iconPosition: 'right'
     }
@@ -269,8 +269,8 @@ export const trendingRewardsConfig: Record<TrendingRewardID, ChallengeConfig> =
         iconPosition: 'right'
       }
     },
-    'trending-track': {
-      title: 'Top 5 Trending Tracks',
+    'trending-agreement': {
+      title: 'Top 5 Trending Agreements',
       icon: ChartIncreasing,
       description: 'Winners are selected every Friday at Noon PT!',
       buttonInfo: {
@@ -293,7 +293,7 @@ export const trendingRewardsConfig: Record<TrendingRewardID, ChallengeConfig> =
       title: 'First Upload With Your Verified Account',
       icon: ChartIncreasing,
       description:
-        'Verified on Twitter/Instagram? Upload your first track, post it on social media, & tag us',
+        'Verified on Twitter/Instagram? Upload your first agreement, post it on social media, & tag us',
       buttonInfo: {
         label: 'See More',
         renderIcon: (color) => <IconCheck fill={color} />,

@@ -9,7 +9,7 @@ import { useSelectorWeb } from 'app/hooks/useSelectorWeb'
 
 import CollectionOverflowMenuDrawer from './CollectionOverflowMenuDrawer'
 import ProfileOverflowMenuDrawer from './ProfileOverflowMenuDrawer'
-import TrackOverflowMenuDrawer from './TrackOverflowMenuDrawer'
+import AgreementOverflowMenuDrawer from './AgreementOverflowMenuDrawer'
 
 const rowMessageMap = {
   [OverflowAction.REPOST]: 'Repost',
@@ -21,7 +21,7 @@ const rowMessageMap = {
   [OverflowAction.EDIT_PLAYLIST]: 'Edit Playlist',
   [OverflowAction.DELETE_PLAYLIST]: 'Delete Playlist',
   [OverflowAction.PUBLISH_PLAYLIST]: 'Publish Playlist',
-  [OverflowAction.VIEW_TRACK_PAGE]: 'View Track Page',
+  [OverflowAction.VIEW_AGREEMENT_PAGE]: 'View Agreement Page',
   [OverflowAction.VIEW_ARTIST_PAGE]: 'View Artist Page',
   [OverflowAction.VIEW_PLAYLIST_PAGE]: 'View Playlist Page',
   [OverflowAction.VIEW_ALBUM_PAGE]: 'View Album Page',
@@ -43,11 +43,11 @@ export const OverflowMenuDrawer = () => {
 
   const OverflowDrawerComponent =
     {
-      [OverflowSource.TRACKS]: TrackOverflowMenuDrawer,
+      [OverflowSource.AGREEMENTS]: AgreementOverflowMenuDrawer,
       [OverflowSource.COLLECTIONS]: CollectionOverflowMenuDrawer,
       // No case for NOTIFICATIONS because there currently isn't an overflow menu on notifications
       [OverflowSource.PROFILE]: ProfileOverflowMenuDrawer
-    }[source] ?? TrackOverflowMenuDrawer
+    }[source] ?? AgreementOverflowMenuDrawer
 
   return (
     <OverflowDrawerComponent

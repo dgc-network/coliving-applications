@@ -47,7 +47,7 @@ const getTimeGenreCacheKey = (timeRange: TimeRange, genre: string | null) => {
   return `${timeRange}-${newGenre}`
 }
 
-// For a given timeRange with no tracks,
+// For a given timeRange with no agreements,
 // what other time ranges do we need to disable?
 const getRangesToDisable = (timeRange: TimeRange) => {
   switch (timeRange) {
@@ -76,8 +76,8 @@ const TrendingPageContent = (props: TrendingPageContentProps) => {
     trendingTimeRange,
     lastFetchedTrendingGenre,
     makeLoadMore,
-    makePlayTrack,
-    makePauseTrack,
+    makePlayAgreement,
+    makePauseAgreement,
     makeSetInView,
     makeResetTrending,
     getLineupForRange,
@@ -89,7 +89,7 @@ const TrendingPageContent = (props: TrendingPageContentProps) => {
   const allTimeProps = getLineupProps(trendingAllTime)
 
   // Maintain a set of combinations of time range & genre that
-  // have no tracks.
+  // have no agreements.
   const emptyTimeGenreSet = useRef(new Set())
 
   const getLimit = useCallback(
@@ -162,7 +162,7 @@ const TrendingPageContent = (props: TrendingPageContentProps) => {
   const currentLineup = getLineupForRange(trendingTimeRange)
 
   // We switch genres slightly before we fetch new lineup metadata, so if we're on a dead page
-  // (e.g. some obscure genre with no All Time tracks), and then switch to a more popular genre
+  // (e.g. some obscure genre with no All Time agreements), and then switch to a more popular genre
   // we will briefly be in a state with the New Genre set, but lineup status === Success and an empty
   // entries list. This would errantly cause us to think the lineup was empty and insert it into the cache.
   const unfetchedLineup = trendingGenre !== lastFetchedTrendingGenre
@@ -200,21 +200,21 @@ const TrendingPageContent = (props: TrendingPageContentProps) => {
   }
 
   const trendingLineups = [
-    <div key='weekly-trending-tracks' className={styles.lineupContainer}>
+    <div key='weekly-trending-agreements' className={styles.lineupContainer}>
       {trendingGenre === null ? (
         <div className={styles.bannerContainer}>
-          <RewardsBanner bannerType='tracks' />
+          <RewardsBanner bannerType='agreements' />
         </div>
       ) : null}
       <Lineup
-        aria-label='weekly trending tracks'
+        aria-label='weekly trending agreements'
         ordered
         rankIconCount={trendingGenre === null ? RANK_ICON_COUNT : undefined}
         {...weekProps}
         setInView={makeSetInView(TimeRange.WEEK)}
         loadMore={makeLoadMore(TimeRange.WEEK)}
-        playTrack={makePlayTrack(TimeRange.WEEK)}
-        pauseTrack={makePauseTrack(TimeRange.WEEK)}
+        playAgreement={makePlayAgreement(TimeRange.WEEK)}
+        pauseAgreement={makePauseAgreement(TimeRange.WEEK)}
         actions={trendingWeekActions}
         endOfLineup={
           <EndOfLineup
@@ -225,15 +225,15 @@ const TrendingPageContent = (props: TrendingPageContentProps) => {
         {...mainLineupProps}
       />
     </div>,
-    <div key='monthly-trending-tracks' className={styles.lineupContainer}>
+    <div key='monthly-trending-agreements' className={styles.lineupContainer}>
       <Lineup
-        aria-label='monthly trending tracks'
+        aria-label='monthly trending agreements'
         ordered
         {...monthProps}
         setInView={makeSetInView(TimeRange.MONTH)}
         loadMore={makeLoadMore(TimeRange.MONTH)}
-        playTrack={makePlayTrack(TimeRange.MONTH)}
-        pauseTrack={makePauseTrack(TimeRange.MONTH)}
+        playAgreement={makePlayAgreement(TimeRange.MONTH)}
+        pauseAgreement={makePauseAgreement(TimeRange.MONTH)}
         endOfLineup={
           <EndOfLineup
             key='endOfLineup'
@@ -244,15 +244,15 @@ const TrendingPageContent = (props: TrendingPageContentProps) => {
         {...mainLineupProps}
       />
     </div>,
-    <div key='all-time-trending-tracks' className={styles.lineupContainer}>
+    <div key='all-time-trending-agreements' className={styles.lineupContainer}>
       <Lineup
-        aria-label='all-time trending tracks'
+        aria-label='all-time trending agreements'
         ordered
         {...allTimeProps}
         setInView={makeSetInView(TimeRange.ALL_TIME)}
         loadMore={makeLoadMore(TimeRange.ALL_TIME)}
-        playTrack={makePlayTrack(TimeRange.ALL_TIME)}
-        pauseTrack={makePauseTrack(TimeRange.ALL_TIME)}
+        playAgreement={makePlayAgreement(TimeRange.ALL_TIME)}
+        pauseAgreement={makePauseAgreement(TimeRange.ALL_TIME)}
         actions={trendingAllTimeActions}
         endOfLineup={
           <EndOfLineup

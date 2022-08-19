@@ -22,8 +22,8 @@ import {
 } from 'common/store/account/selectors'
 import * as cacheActions from 'common/store/cache/actions'
 import { reformat } from 'common/store/cache/collections/utils'
-import * as tracksActions from 'common/store/cache/tracks/actions'
-import { trackNewRemixEvent } from 'common/store/cache/tracks/sagas'
+import * as agreementsActions from 'common/store/cache/agreements/actions'
+import { agreementNewRemixEvent } from 'common/store/cache/agreements/sagas'
 import { getUser } from 'common/store/cache/users/selectors'
 import { formatUrlName } from 'common/utils/formatUtil'
 import {
@@ -50,18 +50,18 @@ import { reportSuccessAndFailureEvents } from './utils/sagaHelpers'
 
 const MAX_CONCURRENT_UPLOADS = 4
 const MAX_CONCURRENT_REGISTRATIONS = 4
-const MAX_CONCURRENT_TRACK_SIZE_BYTES = 40 /* MB */ * 1024 * 1024
+const MAX_CONCURRENT_AGREEMENT_SIZE_BYTES = 40 /* MB */ * 1024 * 1024
 const UPLOAD_TIMEOUT_MILLIS =
   2 /* hour */ * 60 /* min */ * 60 /* sec */ * 1000 /* ms */
 
 /**
- * Combines the metadata for a track and a collection (playlist or album),
- * taking the metadata from the playlist when the track is missing it.
- * @param {object} trackMetadata
+ * Combines the metadata for a agreement and a collection (playlist or album),
+ * taking the metadata from the playlist when the agreement is missing it.
+ * @param {object} agreementMetadata
  * @param {object} collectionMetadata
  */
-const combineMetadata = (trackMetadata, collectionMetadata) => {
-  const metadata = trackMetadata
+const combineMetadata = (agreementMetadata, collectionMetadata) => {
+  const metadata = agreementMetadata
 
   metadata.cover_art_sizes = collectionMetadata.cover_art_sizes
   metadata.artwork = collectionMetadata.artwork
@@ -83,31 +83,31 @@ const combineMetadata = (trackMetadata, collectionMetadata) => {
       ].join(',')
     }
   }
-  return trackMetadata
+  return agreementMetadata
 }
 
-const getNumWorkers = (trackFiles) => {
-  const largestFileSize = Math.max(...trackFiles.map((t) => t.size))
+const getNumWorkers = (agreementFiles) => {
+  const largestFileSize = Math.max(...agreementFiles.map((t) => t.size))
 
-  // Divide it out so that we never hit > MAX_CONCURRENT_TRACK_SIZE_BYTES in flight.
-  // e.g. so if we have 40 MB max upload and max track size of 15MB,
+  // Divide it out so that we never hit > MAX_CONCURRENT_AGREEMENT_SIZE_BYTES in flight.
+  // e.g. so if we have 40 MB max upload and max agreement size of 15MB,
   // floor(40/15) => 2 workers
   const numWorkers = Math.floor(
-    MAX_CONCURRENT_TRACK_SIZE_BYTES / largestFileSize
+    MAX_CONCURRENT_AGREEMENT_SIZE_BYTES / largestFileSize
   )
-  const maxWorkers = Math.min(MAX_CONCURRENT_UPLOADS, trackFiles.length)
+  const maxWorkers = Math.min(MAX_CONCURRENT_UPLOADS, agreementFiles.length)
 
   // Clamp between 1 and `maxWorkers`
   return Math.min(Math.max(numWorkers, 1), maxWorkers)
 }
 
-// Worker to handle individual track upload requests.
+// Worker to handle individual agreement upload requests.
 // Crucially, the worker will block on receiving more requests
 // until its current request has finished processing.
 //
 // Workers can either be send a request that looks like:
 // {
-//   track: ...,
+//   agreement: ...,
 //   metadata: ...,
 //   id: ...,
 //   index: ...
@@ -128,7 +128,7 @@ const getNumWorkers = (trackFiles) => {
 //    metadataFileUUID: ...
 // }
 //
-// For individual tracks:
+// For individual agreements:
 //  {
 //    originalId: ...,
 //    newId: ...
@@ -146,7 +146,7 @@ function* uploadWorker(requestChan, respChan, progressChan) {
   const uploadDoneChan = yield call(channel)
 
   const makeOnProgress = (index) => {
-    // Tracks can retry now, so that means
+    // Agreements can retry now, so that means
     // the loaded value may actually retreat. We don't want to show
     // this to the user, so only feed increasing vals of loaded into
     // progressChan
@@ -172,10 +172,10 @@ function* uploadWorker(requestChan, respChan, progressChan) {
     }
   }
 
-  // If it's not a collection (e.g. we're just uploading multiple tracks)
-  // we can call uploadTrack, which uploads to creator node and then writes to chain.
+  // If it's not a collection (e.g. we're just uploading multiple agreements)
+  // we can call uploadAgreement, which uploads to creator node and then writes to chain.
   const makeConfirmerCall = (
-    track,
+    agreement,
     metadata,
     artwork,
     index,
@@ -184,11 +184,11 @@ function* uploadWorker(requestChan, respChan, progressChan) {
   ) => {
     return function* () {
       console.debug(
-        `Beginning non-collection upload for track: ${metadata.title}`
+        `Beginning non-collection upload for agreement: ${metadata.title}`
       )
-      const { blockHash, blockNumber, trackId, error, phase } = yield call(
-        ColivingBackend.uploadTrack,
-        track.file,
+      const { blockHash, blockNumber, agreementId, error, phase } = yield call(
+        ColivingBackend.uploadAgreement,
+        agreement.file,
         artwork,
         metadata,
         updateProgress ? makeOnProgress(index) : (loaded, total) => {}
@@ -210,25 +210,25 @@ function* uploadWorker(requestChan, respChan, progressChan) {
         throw new Error('')
       }
 
-      console.debug(`Got new ID ${trackId} for track ${metadata.title}}`)
+      console.debug(`Got new ID ${agreementId} for agreement ${metadata.title}}`)
 
       const confirmed = yield call(confirmTransaction, blockHash, blockNumber)
       if (!confirmed) {
         throw new Error(
-          `Could not confirm track upload for track id ${trackId}`
+          `Could not confirm agreement upload for agreement id ${agreementId}`
         )
       }
-      return trackId
+      return agreementId
     }
   }
 
   // If it is a collection, we should just upload to creator node.
-  const makeConfirmerCallForCollection = (track, metadata, artwork, index) => {
+  const makeConfirmerCallForCollection = (agreement, metadata, artwork, index) => {
     return function* () {
-      console.debug(`Beginning collection upload for track: ${metadata.title}`)
+      console.debug(`Beginning collection upload for agreement: ${metadata.title}`)
       return yield call(
-        ColivingBackend.uploadTrackToCreatorNode,
-        track.file,
+        ColivingBackend.uploadAgreementToCreatorNode,
+        agreement.file,
         artwork,
         metadata,
         makeOnProgress(index)
@@ -237,7 +237,7 @@ function* uploadWorker(requestChan, respChan, progressChan) {
   }
 
   const makeConfirmerSuccess = (id, index, updateProgress) => {
-    return function* (newTrackId) {
+    return function* (newAgreementId) {
       if (updateProgress) {
         yield put(
           progressChan,
@@ -248,8 +248,8 @@ function* uploadWorker(requestChan, respChan, progressChan) {
       }
 
       // Now we need to tell the response channel that we finished
-      const resp = { originalId: id, newId: newTrackId }
-      console.debug(`Finished track upload of id: ${newTrackId}`)
+      const resp = { originalId: id, newId: newAgreementId }
+      console.debug(`Finished agreement upload of id: ${newAgreementId}`)
       yield put(respChan, resp)
 
       // Finally, unblock this worker
@@ -261,14 +261,14 @@ function* uploadWorker(requestChan, respChan, progressChan) {
     return function* ({
       metadataMultihash,
       metadataFileUUID,
-      transcodedTrackCID,
-      transcodedTrackUUID
+      transcodedAgreementCID,
+      transcodedAgreementUUID
     }) {
       console.debug({
         metadataMultihash,
         metadataFileUUID,
-        transcodedTrackCID,
-        transcodedTrackUUID
+        transcodedAgreementCID,
+        transcodedAgreementUUID
       })
 
       // Don't tell the progress channel we're done yet, because we need
@@ -278,8 +278,8 @@ function* uploadWorker(requestChan, respChan, progressChan) {
         originalId: id,
         metadataMultihash,
         metadataFileUUID,
-        transcodedTrackCID,
-        transcodedTrackUUID
+        transcodedAgreementCID,
+        transcodedAgreementUUID
       }
 
       console.debug(`Finished creator node upload of: ${JSON.stringify(resp)}`)
@@ -315,7 +315,7 @@ function* uploadWorker(requestChan, respChan, progressChan) {
   while (true) {
     const request = yield take(requestChan)
     const {
-      track,
+      agreement,
       metadata,
       id,
       index,
@@ -328,7 +328,7 @@ function* uploadWorker(requestChan, respChan, progressChan) {
       confirmerActions.requestConfirmation(
         id,
         (isCollection ? makeConfirmerCallForCollection : makeConfirmerCall)(
-          track,
+          agreement,
           metadata,
           artwork,
           index,
@@ -351,21 +351,21 @@ function* uploadWorker(requestChan, respChan, progressChan) {
 /*
  * handleUploads spins up to MAX_CONCURRENT_UPLOADS workers to handle individual uploads.
  *
- * tracks is of type [{ track: ..., metadata: ... }]
+ * agreements is of type [{ agreement: ..., metadata: ... }]
  */
 export function* handleUploads({
-  tracks,
+  agreements,
   isCollection,
   isStem = false,
   isAlbum = false
 }) {
-  const numWorkers = getNumWorkers(tracks.map((t) => t.track.file))
+  const numWorkers = getNumWorkers(agreements.map((t) => t.agreement.file))
 
-  // Map of shape {[trackId]: { track: track, metadata: object, artwork?: file, index: number }}
-  const idToTrackMap = tracks.reduce((prev, cur, idx) => {
+  // Map of shape {[agreementId]: { agreement: agreement, metadata: object, artwork?: file, index: number }}
+  const idToAgreementMap = agreements.reduce((prev, cur, idx) => {
     const newId = `${cur.metadata.title}_${idx}`
     prev[newId] = {
-      track: cur.track,
+      agreement: cur.agreement,
       metadata: cur.metadata,
       index: idx,
       artwork: cur.metadata.artwork.file
@@ -384,7 +384,7 @@ export function* handleUploads({
 
   // `respChan` is used to communicate
   // when a worker has finished it's job
-  // It will see result like { originalId: id, newId: trackInfo.newId }
+  // It will see result like { originalId: id, newId: agreementInfo.newId }
   const respChan = yield call(channel)
 
   // Spawn up our workers
@@ -396,13 +396,13 @@ export function* handleUploads({
   )
 
   // Give our workers jobs to do
-  const ids = Object.keys(idToTrackMap)
+  const ids = Object.keys(idToAgreementMap)
   for (let i = 0; i < ids.length; i++) {
     const id = ids[i]
-    const value = idToTrackMap[id]
+    const value = idToAgreementMap[id]
     const request = {
       id,
-      track: value.track,
+      agreement: value.agreement,
       metadata: value.metadata,
       index: value.index,
       artwork: isCollection ? null : value.artwork,
@@ -411,7 +411,7 @@ export function* handleUploads({
     }
     yield put(requestChan, request)
     yield put(
-      make(Name.TRACK_UPLOAD_TRACK_UPLOADING, {
+      make(Name.AGREEMENT_UPLOAD_AGREEMENT_UPLOADING, {
         artworkSource: value.metadata.artwork.source,
         genre: value.metadata.genre,
         mood: value.metadata.mood,
@@ -428,12 +428,12 @@ export function* handleUploads({
   // Set some sensible progress values
   if (!isStem) {
     for (let i = 0; i < ids.length; i++) {
-      const trackFile = tracks[i].track.file
+      const agreementFile = agreements[i].agreement.file
       yield put(
         progressChan,
         uploadActions.updateProgress(i, {
           loaded: 0,
-          total: trackFile.size,
+          total: agreementFile.size,
           status: ProgressStatus.UPLOADING
         })
       )
@@ -442,9 +442,9 @@ export function* handleUploads({
 
   // Now wait for our workers to finish or error
   console.debug('Awaiting workers')
-  let numOutstandingRequests = tracks.length
+  let numOutstandingRequests = agreements.length
   let numSuccessRequests = 0 // Technically not needed, but adding defensively
-  const trackIds = []
+  const agreementIds = []
   const creatorNodeMetadata = []
   const failedRequests = [] // Array of shape [{ id, timeout, message }]
 
@@ -462,16 +462,16 @@ export function* handleUploads({
       newId,
       metadataMultihash,
       metadataFileUUID,
-      transcodedTrackCID,
-      transcodedTrackUUID
+      transcodedAgreementCID,
+      transcodedAgreementUUID
     } = yield take(respChan)
 
     if (error) {
       console.error('Worker errored')
-      const index = idToTrackMap[originalId].index
+      const index = idToAgreementMap[originalId].index
 
       if (!isStem) {
-        yield put(uploadActions.uploadSingleTrackFailed(index))
+        yield put(uploadActions.uploadSingleAgreementFailed(index))
       }
 
       // Save this out to the failedRequests array
@@ -481,19 +481,19 @@ export function* handleUploads({
     }
 
     // Logic here depends on whether it's a collection or not.
-    // If it's not a collection, rejoice because we have the trackId already.
+    // If it's not a collection, rejoice because we have the agreementId already.
     // Otherwise, save our metadata and continue on.
     if (isCollection) {
       creatorNodeMetadata.push({
         metadataMultihash,
         metadataFileUUID,
-        transcodedTrackCID,
-        transcodedTrackUUID,
+        transcodedAgreementCID,
+        transcodedAgreementUUID,
         originalId
       })
     } else {
-      const trackObj = idToTrackMap[originalId]
-      trackIds[trackObj.index] = newId
+      const agreementObj = idToAgreementMap[originalId]
+      agreementIds[agreementObj.index] = newId
     }
 
     // Finally, decrement the request count and increase success count
@@ -506,16 +506,16 @@ export function* handleUploads({
   console.debug('Spinning down workers')
   yield all(workerTasks.map((t) => cancel(t)))
 
-  let returnVal = { trackIds }
+  let returnVal = { agreementIds }
 
   // Report success + failure events
   const uploadType = isCollection
     ? isAlbum
       ? 'album'
       : 'playlist'
-    : 'multi_track'
+    : 'multi_agreement'
   yield reportSuccessAndFailureEvents({
-    // Don't report non-uploaded tracks due to playlist upload abort
+    // Don't report non-uploaded agreements due to playlist upload abort
     numSuccess: numSuccessRequests,
     numFailure: failedRequests.length,
     errors: failedRequests.map((r) => r.message),
@@ -530,24 +530,24 @@ export function* handleUploads({
       // to match what was originally sent by the user.
       const sortedMetadata = []
       creatorNodeMetadata.forEach((m) => {
-        const originalIndex = idToTrackMap[m.originalId].index
+        const originalIndex = idToAgreementMap[m.originalId].index
         sortedMetadata[originalIndex] = m
       })
 
       console.debug(
-        `Attempting to register tracks: ${JSON.stringify(sortedMetadata)}`
+        `Attempting to register agreements: ${JSON.stringify(sortedMetadata)}`
       )
 
-      // Send the tracks off to chain to get our trackIDs
+      // Send the agreements off to chain to get our agreementIDs
       //
       // We want to limit the number of concurrent requests to chain here, as tons and tons of
-      // tracks lead to a lot of metadata being colocated on the same block and discovery nodes
+      // agreements lead to a lot of metadata being colocated on the same block and discovery nodes
       // can have a hard time keeping up. [see AUD-462]. So, chunk the registration into "rounds."
       //
-      // Multi-track upload does not have the same issue because we write to chain immediately
+      // Multi-agreement upload does not have the same issue because we write to chain immediately
       // after each upload succeeds and those fire on a rolling window.
       // Realistically, with a higher throughput system, this should be a non-issue.
-      let trackIds = []
+      let agreementIds = []
       let error = null
       for (
         let i = 0;
@@ -558,15 +558,15 @@ export function* handleUploads({
           i,
           i + MAX_CONCURRENT_REGISTRATIONS
         )
-        const { trackIds: roundTrackIds, error: roundHadError } =
-          yield ColivingBackend.registerUploadedTracks(concurrentMetadata)
+        const { agreementIds: roundAgreementIds, error: roundHadError } =
+          yield ColivingBackend.registerUploadedAgreements(concurrentMetadata)
 
-        trackIds = trackIds.concat(roundTrackIds)
+        agreementIds = agreementIds.concat(roundAgreementIds)
         console.debug(
-          `Finished registering: ${roundTrackIds}, Registered so far: ${trackIds}`
+          `Finished registering: ${roundAgreementIds}, Registered so far: ${agreementIds}`
         )
 
-        // Any errors should break out, but we need to record the associated tracks first
+        // Any errors should break out, but we need to record the associated agreements first
         // so that we can delete the orphaned ones.
         if (roundHadError) {
           error = roundHadError
@@ -575,35 +575,35 @@ export function* handleUploads({
       }
 
       if (error) {
-        console.error('Something went wrong registering tracks!')
+        console.error('Something went wrong registering agreements!')
 
-        // Delete tracks if necessary
-        if (trackIds.length > 0) {
-          // If there were tracks, that means we wrote to chain
+        // Delete agreements if necessary
+        if (agreementIds.length > 0) {
+          // If there were agreements, that means we wrote to chain
           // but our call to associate failed.
           // First log this error, but don't navigate away
-          // bc we need them to keep the page open to delete tracks
-          yield put(uploadActions.associateTracksError(error))
-          console.debug(`Deleting orphaned tracks: ${JSON.stringify(trackIds)}`)
+          // bc we need them to keep the page open to delete agreements
+          yield put(uploadActions.associateAgreementsError(error))
+          console.debug(`Deleting orphaned agreements: ${JSON.stringify(agreementIds)}`)
           try {
-            yield all(trackIds.map((id) => ColivingBackend.deleteTrack(id)))
-            console.debug('Successfully deleted orphaned tracks')
+            yield all(agreementIds.map((id) => ColivingBackend.deleteAgreement(id)))
+            console.debug('Successfully deleted orphaned agreements')
           } catch {
-            console.debug('Something went wrong deleting orphaned tracks')
+            console.debug('Something went wrong deleting orphaned agreements')
           }
           // Now navigate them to something went wrong
           yield put(pushRoute(ERROR_PAGE))
         } else {
-          yield put(uploadActions.addTrackToChainError(error))
+          yield put(uploadActions.addAgreementToChainError(error))
         }
 
         returnVal = { error: true }
       } else {
-        console.debug('Tracks registered successfully')
+        console.debug('Agreements registered successfully')
         // Update all the progress
         if (!isStem) {
           yield all(
-            range(tracks.length).map((i) =>
+            range(agreements.length).map((i) =>
               put(
                 progressChan,
                 uploadActions.updateProgress(i, {
@@ -613,7 +613,7 @@ export function* handleUploads({
             )
           )
         }
-        returnVal = { trackIds }
+        returnVal = { agreementIds }
       }
     } else {
       // Because it's a collection we stopped for just 1
@@ -627,17 +627,17 @@ export function* handleUploads({
       returnVal = { error: true }
     }
   } else if (!isCollection && failedRequests.length > 0) {
-    // If some requests failed for multitrack, log em
+    // If some requests failed for multiagreement, log em
     yield all(
       failedRequests.map((r) => {
         if (r.timeout) {
-          return put(uploadActions.multiTrackTimeoutError())
+          return put(uploadActions.multiAgreementTimeoutError())
         } else {
           return put(
-            uploadActions.multiTrackUploadError(
+            uploadActions.multiAgreementUploadError(
               r.message,
               r.phase,
-              tracks.length,
+              agreements.length,
               isStem
             )
           )
@@ -653,7 +653,7 @@ export function* handleUploads({
   return returnVal
 }
 
-function* uploadCollection(tracks, userId, collectionMetadata, isAlbum) {
+function* uploadCollection(agreements, userId, collectionMetadata, isAlbum) {
   // First upload album art
   const coverArtResp = yield call(
     ColivingBackend.uploadImage,
@@ -661,16 +661,16 @@ function* uploadCollection(tracks, userId, collectionMetadata, isAlbum) {
   )
   collectionMetadata.cover_art_sizes = coverArtResp.dirCID
 
-  // Then upload tracks
-  const tracksWithMetadata = tracks.map((track) => {
-    const metadata = combineMetadata(track.metadata, collectionMetadata)
+  // Then upload agreements
+  const agreementsWithMetadata = agreements.map((agreement) => {
+    const metadata = combineMetadata(agreement.metadata, collectionMetadata)
     return {
-      track,
+      agreement,
       metadata
     }
   })
-  const { trackIds, error } = yield call(handleUploads, {
-    tracks: tracksWithMetadata,
+  const { agreementIds, error } = yield call(handleUploads, {
+    agreements: agreementsWithMetadata,
     isCollection: true,
     isAlbum
   })
@@ -694,7 +694,7 @@ function* uploadCollection(tracks, userId, collectionMetadata, isAlbum) {
           userId,
           collectionMetadata,
           isAlbum,
-          trackIds,
+          agreementIds,
           isPrivate
         )
 
@@ -704,7 +704,7 @@ function* uploadCollection(tracks, userId, collectionMetadata, isAlbum) {
             yield put(uploadActions.createPlaylistErrorIDExists(error))
             console.debug('Deleting playlist')
             // If we got a playlist ID back, that means we
-            // created the playlist but adding tracks to it failed. So we must delete the playlist
+            // created the playlist but adding agreements to it failed. So we must delete the playlist
             yield call(ColivingBackend.deletePlaylist, playlistId)
             console.debug('Playlist deleted successfully')
           } else {
@@ -725,7 +725,7 @@ function* uploadCollection(tracks, userId, collectionMetadata, isAlbum) {
       },
       function* (confirmedPlaylist) {
         yield put(
-          uploadActions.uploadTracksSucceeded(confirmedPlaylist.playlist_id)
+          uploadActions.uploadAgreementsSucceeded(confirmedPlaylist.playlist_id)
         )
         const user = yield select(getUser, { id: userId })
         yield put(
@@ -775,8 +775,8 @@ function* uploadCollection(tracks, userId, collectionMetadata, isAlbum) {
           })
         )
         yield put(
-          make(Name.TRACK_UPLOAD_COMPLETE_UPLOAD, {
-            count: trackIds.length,
+          make(Name.AGREEMENT_UPLOAD_COMPLETE_UPLOAD, {
+            count: agreementIds.length,
             kind: isAlbum ? 'album' : 'playlist'
           })
         )
@@ -790,15 +790,15 @@ function* uploadCollection(tracks, userId, collectionMetadata, isAlbum) {
         }
 
         console.error(
-          `Create playlist call failed, deleting tracks: ${JSON.stringify(
-            trackIds
+          `Create playlist call failed, deleting agreements: ${JSON.stringify(
+            agreementIds
           )}`
         )
         try {
-          yield all(trackIds.map((id) => ColivingBackend.deleteTrack(id)))
-          console.debug('Deleted tracks.')
+          yield all(agreementIds.map((id) => ColivingBackend.deleteAgreement(id)))
+          console.debug('Deleted agreements.')
         } catch (err) {
-          console.debug(`Could not delete all tracks: ${err}`)
+          console.debug(`Could not delete all agreements: ${err}`)
         }
         yield put(pushRoute(ERROR_PAGE))
       }
@@ -806,7 +806,7 @@ function* uploadCollection(tracks, userId, collectionMetadata, isAlbum) {
   )
 }
 
-function* uploadSingleTrack(track) {
+function* uploadSingleAgreement(agreement) {
   // Need an object to hold phase error info that
   // can get captured by confirmer closure
   // while remaining mutable.
@@ -814,18 +814,18 @@ function* uploadSingleTrack(track) {
   const progressChan = yield call(channel)
 
   // When the upload finishes, it should return
-  // either a { track_id } or { error } object,
+  // either a { agreement_id } or { error } object,
   // which is then used to upload stems if they exist.
   const responseChan = yield call(channel)
 
   const dispatcher = yield fork(actionChannelDispatcher, progressChan)
-  const recordEvent = make(Name.TRACK_UPLOAD_TRACK_UPLOADING, {
-    artworkSource: track.metadata.artwork.source,
-    genre: track.metadata.genre,
-    mood: track.metadata.mood,
+  const recordEvent = make(Name.AGREEMENT_UPLOAD_AGREEMENT_UPLOADING, {
+    artworkSource: agreement.metadata.artwork.source,
+    genre: agreement.metadata.genre,
+    mood: agreement.metadata.mood,
     downloadable:
-      track.metadata.download && track.metadata.download.is_downloadable
-        ? track.metadata.download.requires_follow
+      agreement.metadata.download && agreement.metadata.download.is_downloadable
+        ? agreement.metadata.download.requires_follow
           ? 'follow'
           : 'yes'
         : 'no'
@@ -834,13 +834,13 @@ function* uploadSingleTrack(track) {
 
   yield put(
     confirmerActions.requestConfirmation(
-      `${track.metadata.title}`,
+      `${agreement.metadata.title}`,
       function* () {
-        const { blockHash, blockNumber, trackId, error, phase } = yield call(
-          ColivingBackend.uploadTrack,
-          track.file,
-          track.metadata.artwork.file,
-          track.metadata,
+        const { blockHash, blockNumber, agreementId, error, phase } = yield call(
+          ColivingBackend.uploadAgreement,
+          agreement.file,
+          agreement.metadata.artwork.file,
+          agreement.metadata,
           (loaded, total) => {
             progressChan.put(
               uploadActions.updateProgress(0, {
@@ -864,32 +864,32 @@ function* uploadSingleTrack(track) {
         const handle = yield select(getUserHandle)
         const confirmed = yield call(confirmTransaction, blockHash, blockNumber)
         if (!confirmed) {
-          throw new Error(`Could not confirm upload single track ${trackId}`)
+          throw new Error(`Could not confirm upload single agreement ${agreementId}`)
         }
 
-        return yield apiClient.getTrack({
-          id: trackId,
+        return yield apiClient.getAgreement({
+          id: agreementId,
           currentUserId: userId,
           unlistedArgs: {
-            urlTitle: formatUrlName(track.metadata.title),
+            urlTitle: formatUrlName(agreement.metadata.title),
             handle
           }
         })
       },
-      function* (confirmedTrack) {
-        yield call(responseChan.put, { confirmedTrack })
+      function* (confirmedAgreement) {
+        yield call(responseChan.put, { confirmedAgreement })
       },
       function* ({ timeout, message }) {
-        yield put(uploadActions.uploadTrackFailed())
+        yield put(uploadActions.uploadAgreementFailed())
 
         if (timeout) {
-          yield put(uploadActions.singleTrackTimeoutError())
+          yield put(uploadActions.singleAgreementTimeoutError())
         } else {
           yield put(
-            uploadActions.singleTrackUploadError(
+            uploadActions.singleAgreementUploadError(
               message,
               phaseContainer.phase,
-              track.file.size
+              agreement.file.size
             )
           )
         }
@@ -901,12 +901,12 @@ function* uploadSingleTrack(track) {
     )
   )
 
-  const { confirmedTrack, error } = yield take(responseChan)
+  const { confirmedAgreement, error } = yield take(responseChan)
 
   yield reportSuccessAndFailureEvents({
     numSuccess: error ? 0 : 1,
     numFailure: error ? 1 : 0,
-    uploadType: 'single_track',
+    uploadType: 'single_agreement',
     errors: error ? [error] : []
   })
 
@@ -917,7 +917,7 @@ function* uploadSingleTrack(track) {
   const stems = yield select(getStems)
   if (stems.length) {
     yield call(uploadStems, {
-      parentTrackIds: [confirmedTrack.track_id],
+      parentAgreementIds: [confirmedAgreement.agreement_id],
       stems
     })
   }
@@ -927,63 +927,63 @@ function* uploadSingleTrack(track) {
     uploadActions.updateProgress(0, { status: ProgressStatus.COMPLETE })
   )
   yield put(
-    uploadActions.uploadTracksSucceeded(confirmedTrack.track_id, [
-      confirmedTrack
+    uploadActions.uploadAgreementsSucceeded(confirmedAgreement.agreement_id, [
+      confirmedAgreement
     ])
   )
   yield put(
-    make(Name.TRACK_UPLOAD_COMPLETE_UPLOAD, {
+    make(Name.AGREEMENT_UPLOAD_COMPLETE_UPLOAD, {
       count: 1,
-      kind: 'tracks'
+      kind: 'agreements'
     })
   )
   const account = yield select(getAccountUser)
   yield put(cacheActions.setExpired(Kind.USERS, account.user_id))
 
-  if (confirmedTrack.download && confirmedTrack.download.is_downloadable) {
-    yield put(tracksActions.checkIsDownloadable(confirmedTrack.track_id))
+  if (confirmedAgreement.download && confirmedAgreement.download.is_downloadable) {
+    yield put(agreementsActions.checkIsDownloadable(confirmedAgreement.agreement_id))
   }
 
   // If the hide remixes is turned on, send analytics event
   if (
-    confirmedTrack.field_visibility &&
-    !confirmedTrack.field_visibility.remixes
+    confirmedAgreement.field_visibility &&
+    !confirmedAgreement.field_visibility.remixes
   ) {
     yield put(
       make(Name.REMIX_HIDE, {
-        id: confirmedTrack.track_id,
+        id: confirmedAgreement.agreement_id,
         handle: account.handle
       })
     )
   }
 
   if (
-    confirmedTrack.remix_of &&
-    Array.isArray(confirmedTrack.remix_of.tracks) &&
-    confirmedTrack.remix_of.tracks.length > 0
+    confirmedAgreement.remix_of &&
+    Array.isArray(confirmedAgreement.remix_of.agreements) &&
+    confirmedAgreement.remix_of.agreements.length > 0
   ) {
-    yield call(trackNewRemixEvent, confirmedTrack)
+    yield call(agreementNewRemixEvent, confirmedAgreement)
   }
 
   yield cancel(dispatcher)
 }
 
-export function* uploadStems({ parentTrackIds, stems }) {
-  const updatedStems = updateAndFlattenStems(stems, parentTrackIds)
+export function* uploadStems({ parentAgreementIds, stems }) {
+  const updatedStems = updateAndFlattenStems(stems, parentAgreementIds)
 
-  const uploadedTracks = yield call(handleUploads, {
-    tracks: updatedStems,
+  const uploadedAgreements = yield call(handleUploads, {
+    agreements: updatedStems,
     isCollection: false,
     isStem: true
   })
-  if (uploadedTracks.trackIds) {
-    for (let i = 0; i < uploadedTracks.trackIds.length; i += 1) {
-      const trackId = uploadedTracks.trackIds[i]
-      const parentTrackId = updatedStems[i].metadata.stem_of.parent_track_id
+  if (uploadedAgreements.agreementIds) {
+    for (let i = 0; i < uploadedAgreements.agreementIds.length; i += 1) {
+      const agreementId = uploadedAgreements.agreementIds[i]
+      const parentAgreementId = updatedStems[i].metadata.stem_of.parent_agreement_id
       const category = updatedStems[i].metadata.stem_of.category
       const recordEvent = make(Name.STEM_COMPLETE_UPLOAD, {
-        id: trackId,
-        parent_track_id: parentTrackId,
+        id: agreementId,
+        parent_agreement_id: parentAgreementId,
         category
       })
       yield put(recordEvent)
@@ -991,57 +991,57 @@ export function* uploadStems({ parentTrackIds, stems }) {
   }
 }
 
-function* uploadMultipleTracks(tracks) {
-  const tracksWithMetadata = tracks.map((track) => ({
-    track,
-    metadata: track.metadata
+function* uploadMultipleAgreements(agreements) {
+  const agreementsWithMetadata = agreements.map((agreement) => ({
+    agreement,
+    metadata: agreement.metadata
   }))
 
-  const { trackIds } = yield call(handleUploads, {
-    tracks: tracksWithMetadata,
+  const { agreementIds } = yield call(handleUploads, {
+    agreements: agreementsWithMetadata,
     isCollection: false
   })
   const stems = yield select(getStems)
   if (stems.length) {
     yield call(uploadStems, {
-      parentTrackIds: trackIds,
+      parentAgreementIds: agreementIds,
       stems
     })
   }
 
-  yield put(uploadActions.uploadTracksSucceeded())
+  yield put(uploadActions.uploadAgreementsSucceeded())
   yield put(
-    make(Name.TRACK_UPLOAD_COMPLETE_UPLOAD, {
-      count: tracksWithMetadata.length,
-      kind: 'tracks'
+    make(Name.AGREEMENT_UPLOAD_COMPLETE_UPLOAD, {
+      count: agreementsWithMetadata.length,
+      kind: 'agreements'
     })
   )
   const account = yield select(getAccountUser)
 
   // If the hide remixes is turned on, send analytics event
-  for (let i = 0; i < tracks.length; i += 1) {
-    const track = tracks[i]
-    const trackId = trackIds[i]
-    if (track.metadata?.field_visibility?.remixes === false) {
+  for (let i = 0; i < agreements.length; i += 1) {
+    const agreement = agreements[i]
+    const agreementId = agreementIds[i]
+    if (agreement.metadata?.field_visibility?.remixes === false) {
       yield put(
         make(Name.REMIX_HIDE, {
-          id: trackId,
+          id: agreementId,
           handle: account.handle
         })
       )
     }
   }
 
-  const remixTracks = tracks
-    .map((t, i) => ({ track_id: trackIds[i], ...t.metadata }))
+  const remixAgreements = agreements
+    .map((t, i) => ({ agreement_id: agreementIds[i], ...t.metadata }))
     .filter((t) => !!t.remix_of)
-  if (remixTracks.length > 0) {
-    for (const remixTrack of remixTracks) {
+  if (remixAgreements.length > 0) {
+    for (const remixAgreement of remixAgreements) {
       if (
-        Array.isArray(remixTrack.remix_of.tracks) &&
-        remixTrack.remix_of.tracks.length > 0
+        Array.isArray(remixAgreement.remix_of.agreements) &&
+        remixAgreement.remix_of.agreements.length > 0
       ) {
-        yield call(trackNewRemixEvent, remixTrack)
+        yield call(agreementNewRemixEvent, remixAgreement)
       }
     }
   }
@@ -1049,12 +1049,12 @@ function* uploadMultipleTracks(tracks) {
   yield put(cacheActions.setExpired(Kind.USERS, account.user_id))
 }
 
-function* uploadTracksAsync(action) {
+function* uploadAgreementsAsync(action) {
   yield call(waitForBackendSetup)
   const user = yield select(getAccountUser)
   yield put(
-    uploadActions.uploadTracksRequested(
-      action.tracks,
+    uploadActions.uploadAgreementsRequested(
+      action.agreements,
       action.metadata,
       action.uploadType,
       action.stems
@@ -1066,7 +1066,7 @@ function* uploadTracksAsync(action) {
   if (!newEndpoint) {
     const serviceSelectionStatus = yield select(getStatus)
     if (serviceSelectionStatus === Status.ERROR) {
-      yield put(uploadActions.uploadTrackFailed())
+      yield put(uploadActions.uploadAgreementFailed())
       yield put(
         uploadActions.upgradeToCreatorError(
           'Failed to find creator nodes to upload to'
@@ -1085,7 +1085,7 @@ function* uploadTracksAsync(action) {
       failure: take(fetchServicesFailed.type)
     })
     if (!selectedServices) {
-      yield put(uploadActions.uploadTrackFailed())
+      yield put(uploadActions.uploadAgreementFailed())
       yield put(
         uploadActions.upgradeToCreatorError(
           'Failed to find creator nodes to upload to, after taking a long time'
@@ -1113,15 +1113,15 @@ function* uploadTracksAsync(action) {
         return 'playlist'
       case UploadType.ALBUM:
         return 'album'
-      case UploadType.INDIVIDUAL_TRACK:
-      case UploadType.INDIVIDUAL_TRACKS:
+      case UploadType.INDIVIDUAL_AGREEMENT:
+      case UploadType.INDIVIDUAL_AGREEMENTS:
       default:
-        return 'tracks'
+        return 'agreements'
     }
   })()
 
-  const recordEvent = make(Name.TRACK_UPLOAD_START_UPLOADING, {
-    count: action.tracks.length,
+  const recordEvent = make(Name.AGREEMENT_UPLOAD_START_UPLOADING, {
+    count: action.agreements.length,
     kind: uploadType
   })
   yield put(recordEvent)
@@ -1134,24 +1134,24 @@ function* uploadTracksAsync(action) {
     const isAlbum = action.uploadType === UploadType.ALBUM
     yield call(
       uploadCollection,
-      action.tracks,
+      action.agreements,
       user.user_id,
       action.metadata,
       isAlbum
     )
   } else {
-    if (action.tracks.length === 1) {
-      yield call(uploadSingleTrack, action.tracks[0])
+    if (action.agreements.length === 1) {
+      yield call(uploadSingleAgreement, action.agreements[0])
     } else {
-      yield call(uploadMultipleTracks, action.tracks)
+      yield call(uploadMultipleAgreements, action.agreements)
     }
   }
 }
 
-function* watchUploadTracks() {
-  yield takeLatest(uploadActions.UPLOAD_TRACKS, uploadTracksAsync)
+function* watchUploadAgreements() {
+  yield takeLatest(uploadActions.UPLOAD_AGREEMENTS, uploadAgreementsAsync)
 }
 
 export default function sagas() {
-  return [watchUploadTracks, watchUploadErrors]
+  return [watchUploadAgreements, watchUploadErrors]
 }

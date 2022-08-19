@@ -58,7 +58,7 @@ const download = async ({
     const fetchRes = await fetchTask
 
     // Do this after download is done
-    dispatch(setVisibility({ drawer: 'DownloadTrackProgress', visible: false }))
+    dispatch(setVisibility({ drawer: 'DownloadAgreementProgress', visible: false }))
 
     await onFetchComplete?.(fetchRes)
   } catch (err) {
@@ -72,15 +72,15 @@ const download = async ({
 }
 
 export const messageHandlers: Partial<MessageHandlers> = {
-  [MessageType.DOWNLOAD_TRACK]: async ({ message }) => {
+  [MessageType.DOWNLOAD_AGREEMENT]: async ({ message }) => {
     const fileUrl = message.urls.find(
       (url) => url !== null && url !== undefined
     )
     const fileName = message.filename
-    const trackName = fileName.split('.').slice(0, -1).join('')
+    const agreementName = fileName.split('.').slice(0, -1).join('')
 
-    dispatch(setVisibility({ drawer: 'DownloadTrackProgress', visible: true }))
-    dispatch(setFileInfo({ trackName, fileName }))
+    dispatch(setVisibility({ drawer: 'DownloadAgreementProgress', visible: true }))
+    dispatch(setFileInfo({ agreementName, fileName }))
     dispatch(setFetchCancel(cancelDownloadTask))
 
     if (Platform.OS === 'ios') {
@@ -89,8 +89,8 @@ export const messageHandlers: Partial<MessageHandlers> = {
         fileName,
         directory: RNFetchBlob.fs.dirs.DocumentDir,
         getFetchConfig: (filePath) => ({
-          // On iOS fetch & cache the track, let user choose where to download it
-          // with the share sheet, then delete the cached copy of the track.
+          // On iOS fetch & cache the agreement, let user choose where to download it
+          // with the share sheet, then delete the cached copy of the agreement.
           fileCache: true,
           path: filePath
         }),
@@ -109,12 +109,12 @@ export const messageHandlers: Partial<MessageHandlers> = {
         getFetchConfig: (filePath) => ({
           // On android save to FS and trigger notification that it is saved
           addAndroidDownloads: {
-            description: trackName,
+            description: agreementName,
             mediaScannable: true,
             mime: 'live/mpeg',
             notification: true,
             path: filePath,
-            title: trackName,
+            title: agreementName,
             useDownloadManager: true
           }
         })

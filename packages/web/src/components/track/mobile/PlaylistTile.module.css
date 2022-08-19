@@ -194,8 +194,8 @@
   margin-left: 4px;
 }
 
-/* Track Item */
-.trackItem {
+/* Agreement Item */
+.agreementItem {
   display: inline-flex;
   align-items: center;
   width: 100%;
@@ -207,13 +207,13 @@
   font-weight: var(--font-medium);
 }
 
-.trackItem .index {
+.agreementItem .index {
   color: var(--neutral-light-4);
   margin-right: 4px;
   flex: 0 0;
 }
 
-.trackItem .trackTitle {
+.agreementItem .agreementTitle {
   color: var(--neutral);
   max-width: 220px;
   text-overflow: ellipsis;
@@ -222,26 +222,26 @@
   margin-right: 4px;
 }
 
-.trackItem .byArtist {
+.agreementItem .byArtist {
   color: var(--neutral-light-4);
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
 }
 
-.trackItem.activeTrackItem .index,
-.trackItem.activeTrackItem .trackTitle,
-.trackItem.activeTrackItem .byArtist {
+.agreementItem.activeAgreementItem .index,
+.agreementItem.activeAgreementItem .agreementTitle,
+.agreementItem.activeAgreementItem .byArtist {
   color: var(--primary);
 }
 
-.trackItemDivider {
+.agreementItemDivider {
   margin: 0px 11px;
   width: calc(100% - 22px);
   border-top: 1px solid var(--neutral-light-8);
 }
 
-.trackItemMore {
+.agreementItemMore {
   color: var(--neutral-light-4);
 }
 

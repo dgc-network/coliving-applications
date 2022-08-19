@@ -40,7 +40,7 @@ export const Slider = ({
 
   // Div refs
   const railRef = useRef<HTMLDivElement>(null)
-  const trackRef = useRef<HTMLDivElement>(null)
+  const agreementRef = useRef<HTMLDivElement>(null)
   const handleRef = useRef<HTMLDivElement>(null)
 
   /**
@@ -179,11 +179,11 @@ export const Slider = ({
     >
       <div ref={railRef} className={styles.rail}>
         <div
-          ref={trackRef}
-          className={styles.trackWrapper}
+          ref={agreementRef}
+          className={styles.agreementWrapper}
           style={transformStyles}
         >
-          <div ref={trackRef} className={styles.track} />
+          <div ref={agreementRef} className={styles.agreement} />
         </div>
       </div>
       {showHandle !== false ? (

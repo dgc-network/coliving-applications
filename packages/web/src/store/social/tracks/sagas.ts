@@ -1,18 +1,18 @@
-import { Kind, ID, Name, Track, User, makeKindId } from '@coliving/common'
+import { Kind, ID, Name, Agreement, User, makeKindId } from '@coliving/common'
 import { call, select, takeEvery, put } from 'typed-redux-saga/macro'
 
 import * as accountActions from 'common/store/account/reducer'
 import { getUserId, getUserHandle } from 'common/store/account/selectors'
 import * as cacheActions from 'common/store/cache/actions'
-import { getTrack, getTracks } from 'common/store/cache/tracks/selectors'
+import { getAgreement, getAgreements } from 'common/store/cache/agreements/selectors'
 import { adjustUserField } from 'common/store/cache/users/sagas'
 import { getUser } from 'common/store/cache/users/selectors'
 import { updateOptimisticListenStreak } from 'common/store/pages/live-rewards/slice'
-import * as socialActions from 'common/store/social/tracks/actions'
+import * as socialActions from 'common/store/social/agreements/actions'
 import { formatShareText } from 'common/utils/formatUtil'
 import * as signOnActions from 'pages/sign-on/store/actions'
 import ColivingBackend from 'services/ColivingBackend'
-import TrackDownload from 'services/coliving-backend/TrackDownload'
+import AgreementDownload from 'services/coliving-backend/AgreementDownload'
 import { make } from 'store/analytics/actions'
 import { waitForBackendSetup } from 'store/backend/sagas'
 import * as confirmerActions from 'store/confirmer/actions'
@@ -20,17 +20,17 @@ import { confirmTransaction } from 'store/confirmer/sagas'
 import { waitForValue } from 'utils/sagaHelpers'
 import { share } from 'utils/share'
 
-import watchTrackErrors from './errorSagas'
+import watchAgreementErrors from './errorSagas'
 
 const NATIVE_MOBILE = process.env.REACT_APP_NATIVE_MOBILE
 
-/* REPOST TRACK */
-export function* watchRepostTrack() {
-  yield* takeEvery(socialActions.REPOST_TRACK, repostTrackAsync)
+/* REPOST AGREEMENT */
+export function* watchRepostAgreement() {
+  yield* takeEvery(socialActions.REPOST_AGREEMENT, repostAgreementAsync)
 }
 
-export function* repostTrackAsync(
-  action: ReturnType<typeof socialActions.repostTrack>
+export function* repostAgreementAsync(
+  action: ReturnType<typeof socialActions.repostAgreement>
 ) {
   yield* call(waitForBackendSetup)
   const userId = yield* select(getUserId)
@@ -59,77 +59,77 @@ export function* repostTrackAsync(
   )
 
   const event = make(Name.REPOST, {
-    kind: 'track',
+    kind: 'agreement',
     source: action.source,
-    id: action.trackId
+    id: action.agreementId
   })
   yield* put(event)
 
-  yield* call(confirmRepostTrack, action.trackId, user)
+  yield* call(confirmRepostAgreement, action.agreementId, user)
 
-  const tracks = yield* select(getTracks, { ids: [action.trackId] })
-  const track = tracks[action.trackId]
+  const agreements = yield* select(getAgreements, { ids: [action.agreementId] })
+  const agreement = agreements[action.agreementId]
 
-  const eagerlyUpdatedMetadata: Partial<Track> = {
+  const eagerlyUpdatedMetadata: Partial<Agreement> = {
     has_current_user_reposted: true,
-    repost_count: track.repost_count + 1
+    repost_count: agreement.repost_count + 1
   }
 
-  const remixTrack = track.remix_of?.tracks?.[0]
-  const isCoSign = remixTrack?.user?.user_id === userId
+  const remixAgreement = agreement.remix_of?.agreements?.[0]
+  const isCoSign = remixAgreement?.user?.user_id === userId
 
-  if (remixTrack && isCoSign) {
+  if (remixAgreement && isCoSign) {
     // This repost is a co-sign
     const remixOf = {
-      tracks: [
+      agreements: [
         {
-          ...remixTrack,
+          ...remixAgreement,
           has_remix_author_reposted: true
         }
       ]
     }
     eagerlyUpdatedMetadata.remix_of = remixOf
-    eagerlyUpdatedMetadata._co_sign = remixOf.tracks[0]
+    eagerlyUpdatedMetadata._co_sign = remixOf.agreements[0]
   }
 
   yield* put(
-    cacheActions.update(Kind.TRACKS, [
+    cacheActions.update(Kind.AGREEMENTS, [
       {
-        id: action.trackId,
+        id: action.agreementId,
         metadata: eagerlyUpdatedMetadata
       }
     ])
   )
 
-  if (remixTrack && isCoSign) {
+  if (remixAgreement && isCoSign) {
     const {
-      parent_track_id,
+      parent_agreement_id,
       has_remix_author_reposted,
       has_remix_author_saved
-    } = remixTrack
+    } = remixAgreement
 
-    // Track Cosign Event
+    // Agreement Cosign Event
     const hasAlreadyCoSigned =
       has_remix_author_reposted || has_remix_author_saved
 
-    const parentTrack = yield* select(getTrack, { id: parent_track_id })
+    const parentAgreement = yield* select(getAgreement, { id: parent_agreement_id })
 
-    if (parentTrack) {
+    if (parentAgreement) {
       const coSignIndicatorEvent = make(Name.REMIX_COSIGN_INDICATOR, {
-        id: action.trackId,
+        id: action.agreementId,
         handle: user.handle,
-        original_track_id: parentTrack.track_id,
-        original_track_title: parentTrack.title,
+        original_agreement_id: parentAgreement.agreement_id,
+        original_agreement_title: parentAgreement.title,
         action: 'reposted'
       })
       yield* put(coSignIndicatorEvent)
 
       if (!hasAlreadyCoSigned) {
         const coSignEvent = make(Name.REMIX_COSIGN, {
-          id: action.trackId,
+          id: action.agreementId,
           handle: user.handle,
-          original_track_id: parentTrack.track_id,
-          original_track_title: parentTrack.title,
+          original_agreement_id: parentAgreement.agreement_id,
+          original_agreement_title: parentAgreement.title,
           action: 'reposted'
         })
         yield* put(coSignEvent)
@@ -138,14 +138,14 @@ export function* repostTrackAsync(
   }
 }
 
-export function* confirmRepostTrack(trackId: ID, user: User) {
+export function* confirmRepostAgreement(agreementId: ID, user: User) {
   yield* put(
     confirmerActions.requestConfirmation(
-      makeKindId(Kind.TRACKS, trackId),
+      makeKindId(Kind.AGREEMENTS, agreementId),
       function* () {
         const { blockHash, blockNumber } = yield* call(
-          ColivingBackend.repostTrack,
-          trackId
+          ColivingBackend.repostAgreement,
+          agreementId
         )
         const confirmed = yield* call(
           confirmTransaction,
@@ -154,10 +154,10 @@ export function* confirmRepostTrack(trackId: ID, user: User) {
         )
         if (!confirmed) {
           throw new Error(
-            `Could not confirm repost track for track id ${trackId}`
+            `Could not confirm repost agreement for agreement id ${agreementId}`
           )
         }
-        return trackId
+        return agreementId
       },
       function* () {},
       // @ts-ignore: remove when confirmer is typed
@@ -169,8 +169,8 @@ export function* confirmRepostTrack(trackId: ID, user: User) {
           delta: -1
         })
         yield* put(
-          socialActions.trackRepostFailed(
-            trackId,
+          socialActions.agreementRepostFailed(
+            agreementId,
             timeout ? 'Timeout' : message
           )
         )
@@ -179,12 +179,12 @@ export function* confirmRepostTrack(trackId: ID, user: User) {
   )
 }
 
-export function* watchUndoRepostTrack() {
-  yield* takeEvery(socialActions.UNDO_REPOST_TRACK, undoRepostTrackAsync)
+export function* watchUndoRepostAgreement() {
+  yield* takeEvery(socialActions.UNDO_REPOST_AGREEMENT, undoRepostAgreementAsync)
 }
 
-export function* undoRepostTrackAsync(
-  action: ReturnType<typeof socialActions.undoRepostTrack>
+export function* undoRepostAgreementAsync(
+  action: ReturnType<typeof socialActions.undoRepostAgreement>
 ) {
   yield* call(waitForBackendSetup)
   const userId = yield* select(getUserId)
@@ -202,61 +202,61 @@ export function* undoRepostTrackAsync(
   yield* call(adjustUserField, { user, fieldName: 'repost_count', delta: -1 })
 
   const event = make(Name.UNDO_REPOST, {
-    kind: 'track',
+    kind: 'agreement',
     source: action.source,
-    id: action.trackId
+    id: action.agreementId
   })
   yield* put(event)
 
-  yield* call(confirmUndoRepostTrack, action.trackId, user)
+  yield* call(confirmUndoRepostAgreement, action.agreementId, user)
 
-  const tracks = yield* select(getTracks, { ids: [action.trackId] })
-  const track = tracks[action.trackId]
+  const agreements = yield* select(getAgreements, { ids: [action.agreementId] })
+  const agreement = agreements[action.agreementId]
 
-  const eagerlyUpdatedMetadata: Partial<Track> = {
+  const eagerlyUpdatedMetadata: Partial<Agreement> = {
     has_current_user_reposted: false,
-    repost_count: track.repost_count - 1
+    repost_count: agreement.repost_count - 1
   }
 
-  if (track.remix_of?.tracks?.[0]?.user?.user_id === userId) {
+  if (agreement.remix_of?.agreements?.[0]?.user?.user_id === userId) {
     // This repost is a co-sign
     const remixOf = {
-      tracks: [
+      agreements: [
         {
-          ...track.remix_of.tracks[0],
+          ...agreement.remix_of.agreements[0],
           has_remix_author_reposted: false
         }
       ]
     }
     eagerlyUpdatedMetadata.remix_of = remixOf
     if (
-      remixOf.tracks[0].has_remix_author_saved ||
-      remixOf.tracks[0].has_remix_author_reposted
+      remixOf.agreements[0].has_remix_author_saved ||
+      remixOf.agreements[0].has_remix_author_reposted
     ) {
-      eagerlyUpdatedMetadata._co_sign = remixOf.tracks[0]
+      eagerlyUpdatedMetadata._co_sign = remixOf.agreements[0]
     } else {
       eagerlyUpdatedMetadata._co_sign = null
     }
   }
 
   yield* put(
-    cacheActions.update(Kind.TRACKS, [
+    cacheActions.update(Kind.AGREEMENTS, [
       {
-        id: action.trackId,
+        id: action.agreementId,
         metadata: eagerlyUpdatedMetadata
       }
     ])
   )
 }
 
-export function* confirmUndoRepostTrack(trackId: ID, user: User) {
+export function* confirmUndoRepostAgreement(agreementId: ID, user: User) {
   yield* put(
     confirmerActions.requestConfirmation(
-      makeKindId(Kind.TRACKS, trackId),
+      makeKindId(Kind.AGREEMENTS, agreementId),
       function* () {
         const { blockHash, blockNumber } = yield* call(
-          ColivingBackend.undoRepostTrack,
-          trackId
+          ColivingBackend.undoRepostAgreement,
+          agreementId
         )
         const confirmed = yield* call(
           confirmTransaction,
@@ -265,10 +265,10 @@ export function* confirmUndoRepostTrack(trackId: ID, user: User) {
         )
         if (!confirmed) {
           throw new Error(
-            `Could not confirm undo repost track for track id ${trackId}`
+            `Could not confirm undo repost agreement for agreement id ${agreementId}`
           )
         }
-        return trackId
+        return agreementId
       },
       function* () {},
       // @ts-ignore: remove when confirmer is typed
@@ -280,8 +280,8 @@ export function* confirmUndoRepostTrack(trackId: ID, user: User) {
           delta: 1
         })
         yield* put(
-          socialActions.trackRepostFailed(
-            trackId,
+          socialActions.agreementRepostFailed(
+            agreementId,
             timeout ? 'Timeout' : message
           )
         )
@@ -289,14 +289,14 @@ export function* confirmUndoRepostTrack(trackId: ID, user: User) {
     )
   )
 }
-/* SAVE TRACK */
+/* SAVE AGREEMENT */
 
-export function* watchSaveTrack() {
-  yield* takeEvery(socialActions.SAVE_TRACK, saveTrackAsync)
+export function* watchSaveAgreement() {
+  yield* takeEvery(socialActions.SAVE_AGREEMENT, saveAgreementAsync)
 }
 
-export function* saveTrackAsync(
-  action: ReturnType<typeof socialActions.saveTrack>
+export function* saveAgreementAsync(
+  action: ReturnType<typeof socialActions.saveAgreement>
 ) {
   yield* call(waitForBackendSetup)
   const userId = yield* select(getUserId)
@@ -307,74 +307,74 @@ export function* saveTrackAsync(
     return
   }
 
-  const tracks = yield* select(getTracks, { ids: [action.trackId] })
-  const track = tracks[action.trackId]
+  const agreements = yield* select(getAgreements, { ids: [action.agreementId] })
+  const agreement = agreements[action.agreementId]
 
-  if (track.has_current_user_saved) return
+  if (agreement.has_current_user_saved) return
   yield* put(accountActions.didFavoriteItem())
 
   const event = make(Name.FAVORITE, {
-    kind: 'track',
+    kind: 'agreement',
     source: action.source,
-    id: action.trackId
+    id: action.agreementId
   })
   yield* put(event)
 
-  yield* call(confirmSaveTrack, action.trackId)
+  yield* call(confirmSaveAgreement, action.agreementId)
 
-  const eagerlyUpdatedMetadata: Partial<Track> = {
+  const eagerlyUpdatedMetadata: Partial<Agreement> = {
     has_current_user_saved: true,
-    save_count: track.save_count + 1
+    save_count: agreement.save_count + 1
   }
 
-  const remixTrack = track.remix_of?.tracks?.[0]
-  const isCoSign = remixTrack?.user?.user_id === userId
-  if (remixTrack && isCoSign) {
+  const remixAgreement = agreement.remix_of?.agreements?.[0]
+  const isCoSign = remixAgreement?.user?.user_id === userId
+  if (remixAgreement && isCoSign) {
     // This repost is a co-sign
     const remixOf = {
-      tracks: [
+      agreements: [
         {
-          ...remixTrack,
+          ...remixAgreement,
           has_remix_author_saved: true
         }
       ]
     }
     eagerlyUpdatedMetadata.remix_of = remixOf
-    eagerlyUpdatedMetadata._co_sign = remixOf.tracks[0]
+    eagerlyUpdatedMetadata._co_sign = remixOf.agreements[0]
   }
 
   yield* put(
-    cacheActions.update(Kind.TRACKS, [
+    cacheActions.update(Kind.AGREEMENTS, [
       {
-        id: action.trackId,
+        id: action.agreementId,
         metadata: eagerlyUpdatedMetadata
       }
     ])
   )
-  yield* put(socialActions.saveTrackSucceeded(action.trackId))
+  yield* put(socialActions.saveAgreementSucceeded(action.agreementId))
   if (isCoSign) {
-    // Track Cosign Event
-    const parentTrackId = remixTrack.parent_track_id
+    // Agreement Cosign Event
+    const parentAgreementId = remixAgreement.parent_agreement_id
     const hasAlreadyCoSigned =
-      remixTrack.has_remix_author_reposted || remixTrack.has_remix_author_saved
+      remixAgreement.has_remix_author_reposted || remixAgreement.has_remix_author_saved
 
-    const parentTrack = yield* select(getTrack, { id: parentTrackId })
+    const parentAgreement = yield* select(getAgreement, { id: parentAgreementId })
     const handle = yield* select(getUserHandle)
     const coSignIndicatorEvent = make(Name.REMIX_COSIGN_INDICATOR, {
-      id: action.trackId,
+      id: action.agreementId,
       handle,
-      original_track_id: parentTrack?.track_id,
-      original_track_title: parentTrack?.title,
+      original_agreement_id: parentAgreement?.agreement_id,
+      original_agreement_title: parentAgreement?.title,
       action: 'favorited'
     })
     yield* put(coSignIndicatorEvent)
 
     if (!hasAlreadyCoSigned) {
       const coSignEvent = make(Name.REMIX_COSIGN, {
-        id: action.trackId,
+        id: action.agreementId,
         handle,
-        original_track_id: parentTrack?.track_id,
-        original_track_title: parentTrack?.title,
+        original_agreement_id: parentAgreement?.agreement_id,
+        original_agreement_title: parentAgreement?.title,
         action: 'favorited'
       })
       yield* put(coSignEvent)
@@ -382,14 +382,14 @@ export function* saveTrackAsync(
   }
 }
 
-export function* confirmSaveTrack(trackId: ID) {
+export function* confirmSaveAgreement(agreementId: ID) {
   yield* put(
     confirmerActions.requestConfirmation(
-      makeKindId(Kind.TRACKS, trackId),
+      makeKindId(Kind.AGREEMENTS, agreementId),
       function* () {
         const { blockHash, blockNumber } = yield* call(
-          ColivingBackend.saveTrack,
-          trackId
+          ColivingBackend.saveAgreement,
+          agreementId
         )
         const confirmed = yield* call(
           confirmTransaction,
@@ -398,28 +398,28 @@ export function* confirmSaveTrack(trackId: ID) {
         )
         if (!confirmed) {
           throw new Error(
-            `Could not confirm save track for track id ${trackId}`
+            `Could not confirm save agreement for agreement id ${agreementId}`
           )
         }
-        return trackId
+        return agreementId
       },
       function* () {},
       // @ts-ignore: remove when confirmer is typed
       function* ({ timeout, message }: { timeout: boolean; message: string }) {
         yield* put(
-          socialActions.saveTrackFailed(trackId, timeout ? 'Timeout' : message)
+          socialActions.saveAgreementFailed(agreementId, timeout ? 'Timeout' : message)
         )
       }
     )
   )
 }
 
-export function* watchUnsaveTrack() {
-  yield* takeEvery(socialActions.UNSAVE_TRACK, unsaveTrackAsync)
+export function* watchUnsaveAgreement() {
+  yield* takeEvery(socialActions.UNSAVE_AGREEMENT, unsaveAgreementAsync)
 }
 
-export function* unsaveTrackAsync(
-  action: ReturnType<typeof socialActions.unsaveTrack>
+export function* unsaveAgreementAsync(
+  action: ReturnType<typeof socialActions.unsaveAgreement>
 ) {
   yield* call(waitForBackendSetup)
   const userId = yield* select(getUserId)
@@ -431,64 +431,64 @@ export function* unsaveTrackAsync(
   }
 
   const event = make(Name.UNFAVORITE, {
-    kind: 'track',
+    kind: 'agreement',
     source: action.source,
-    id: action.trackId
+    id: action.agreementId
   })
   yield* put(event)
 
-  yield* call(confirmUnsaveTrack, action.trackId)
+  yield* call(confirmUnsaveAgreement, action.agreementId)
 
-  const tracks = yield* select(getTracks, { ids: [action.trackId] })
-  const track = tracks[action.trackId]
-  if (track) {
-    const eagerlyUpdatedMetadata: Partial<Track> = {
+  const agreements = yield* select(getAgreements, { ids: [action.agreementId] })
+  const agreement = agreements[action.agreementId]
+  if (agreement) {
+    const eagerlyUpdatedMetadata: Partial<Agreement> = {
       has_current_user_saved: false,
-      save_count: track.save_count - 1
+      save_count: agreement.save_count - 1
     }
 
-    if (track.remix_of?.tracks?.[0]?.user?.user_id === userId) {
+    if (agreement.remix_of?.agreements?.[0]?.user?.user_id === userId) {
       // This repost is a co-sign
       const remixOf = {
-        tracks: [
+        agreements: [
           {
-            ...track.remix_of.tracks[0],
+            ...agreement.remix_of.agreements[0],
             has_remix_author_saved: false
           }
         ]
       }
       eagerlyUpdatedMetadata.remix_of = remixOf
       if (
-        remixOf.tracks[0].has_remix_author_saved ||
-        remixOf.tracks[0].has_remix_author_reposted
+        remixOf.agreements[0].has_remix_author_saved ||
+        remixOf.agreements[0].has_remix_author_reposted
       ) {
-        eagerlyUpdatedMetadata._co_sign = remixOf.tracks[0]
+        eagerlyUpdatedMetadata._co_sign = remixOf.agreements[0]
       } else {
         eagerlyUpdatedMetadata._co_sign = null
       }
     }
 
     yield* put(
-      cacheActions.update(Kind.TRACKS, [
+      cacheActions.update(Kind.AGREEMENTS, [
         {
-          id: action.trackId,
+          id: action.agreementId,
           metadata: eagerlyUpdatedMetadata
         }
       ])
     )
   }
 
-  yield* put(socialActions.unsaveTrackSucceeded(action.trackId))
+  yield* put(socialActions.unsaveAgreementSucceeded(action.agreementId))
 }
 
-export function* confirmUnsaveTrack(trackId: ID) {
+export function* confirmUnsaveAgreement(agreementId: ID) {
   yield* put(
     confirmerActions.requestConfirmation(
-      makeKindId(Kind.TRACKS, trackId),
+      makeKindId(Kind.AGREEMENTS, agreementId),
       function* () {
         const { blockHash, blockNumber } = yield* call(
-          ColivingBackend.unsaveTrack,
-          trackId
+          ColivingBackend.unsaveAgreement,
+          agreementId
         )
         const confirmed = yield* call(
           confirmTransaction,
@@ -497,17 +497,17 @@ export function* confirmUnsaveTrack(trackId: ID) {
         )
         if (!confirmed) {
           throw new Error(
-            `Could not confirm unsave track for track id ${trackId}`
+            `Could not confirm unsave agreement for agreement id ${agreementId}`
           )
         }
-        return trackId
+        return agreementId
       },
       function* () {},
       // @ts-ignore: remove when confirmer is typed
       function* ({ timeout, message }: { timeout: boolean; message: string }) {
         yield* put(
-          socialActions.unsaveTrackFailed(
-            trackId,
+          socialActions.unsaveAgreementFailed(
+            agreementId,
             timeout ? 'Timeout' : message
           )
         )
@@ -525,13 +525,13 @@ export function* watchSetArtistPick() {
         cacheActions.update(Kind.USERS, [
           {
             id: userId,
-            metadata: { _artist_pick: action.trackId }
+            metadata: { _artist_pick: action.agreementId }
           }
         ])
       )
-      yield* call(ColivingBackend.setArtistPick, action.trackId)
+      yield* call(ColivingBackend.setArtistPick, action.agreementId)
 
-      const event = make(Name.ARTIST_PICK_SELECT_TRACK, { id: action.trackId })
+      const event = make(Name.ARTIST_PICK_SELECT_AGREEMENT, { id: action.agreementId })
       yield* put(event)
     }
   )
@@ -550,7 +550,7 @@ export function* watchUnsetArtistPick() {
     )
     yield* call(ColivingBackend.setArtistPick)
 
-    const event = make(Name.ARTIST_PICK_SELECT_TRACK, { id: 'none' })
+    const event = make(Name.ARTIST_PICK_SELECT_AGREEMENT, { id: 'none' })
     yield* put(event)
   })
 }
@@ -562,18 +562,18 @@ export function* watchRecordListen() {
     socialActions.RECORD_LISTEN,
     function* (action: ReturnType<typeof socialActions.recordListen>) {
       if (NATIVE_MOBILE) return
-      console.debug('Listen recorded for track', action.trackId)
+      console.debug('Listen recorded for agreement', action.agreementId)
 
       const userId = yield* select(getUserId)
-      const track = yield* select(getTrack, { id: action.trackId })
-      if (!userId || !track) return
+      const agreement = yield* select(getAgreement, { id: action.agreementId })
+      if (!userId || !agreement) return
 
-      if (userId !== track.owner_id || track.play_count < 10) {
-        yield* call(ColivingBackend.recordTrackListen, action.trackId)
+      if (userId !== agreement.owner_id || agreement.play_count < 10) {
+        yield* call(ColivingBackend.recordAgreementListen, action.agreementId)
       }
 
-      // Record track listen analytics event
-      const event = make(Name.LISTEN, { trackId: action.trackId })
+      // Record agreement listen analytics event
+      const event = make(Name.LISTEN, { agreementId: action.agreementId })
       yield* put(event)
 
       // Optimistically update the listen streak if applicable
@@ -582,12 +582,12 @@ export function* watchRecordListen() {
   )
 }
 
-/* DOWNLOAD TRACK */
+/* DOWNLOAD AGREEMENT */
 
-function* watchDownloadTrack() {
+function* watchDownloadAgreement() {
   yield* takeEvery(
-    socialActions.DOWNLOAD_TRACK,
-    function* (action: ReturnType<typeof socialActions.downloadTrack>) {
+    socialActions.DOWNLOAD_AGREEMENT,
+    function* (action: ReturnType<typeof socialActions.downloadAgreement>) {
       yield* call(waitForBackendSetup)
 
       // Check if there is a logged in account and if not,
@@ -598,29 +598,29 @@ function* watchDownloadTrack() {
         yield* call(waitForValue, getUserId)
       }
 
-      const track = yield* select(getTrack, { id: action.trackId })
-      if (!track) return
+      const agreement = yield* select(getAgreement, { id: action.agreementId })
+      if (!agreement) return
 
-      const userId = track.owner_id
+      const userId = agreement.owner_id
       const user = yield* select(getUser, { id: userId })
       if (!user) return
 
       let filename
-      // Determine if this track requires a follow to download.
-      // In the case of a stem, check the parent track
+      // Determine if this agreement requires a follow to download.
+      // In the case of a stem, check the parent agreement
       let requiresFollow =
-        track.download?.requires_follow && userId !== accountUserId
-      if (track.stem_of?.parent_track_id) {
-        const parentTrack = yield* select(getTrack, {
-          id: track.stem_of?.parent_track_id
+        agreement.download?.requires_follow && userId !== accountUserId
+      if (agreement.stem_of?.parent_agreement_id) {
+        const parentAgreement = yield* select(getAgreement, {
+          id: agreement.stem_of?.parent_agreement_id
         })
         requiresFollow =
           requiresFollow ||
-          (parentTrack?.download?.requires_follow && userId !== accountUserId)
+          (parentAgreement?.download?.requires_follow && userId !== accountUserId)
 
-        filename = `${parentTrack?.title} - ${action.stemName} - ${user.name} (Coliving).mp3`
+        filename = `${parentAgreement?.title} - ${action.stemName} - ${user.name} (Coliving).mp3`
       } else {
-        filename = `${track.title} - ${user.name} (Coliving).mp3`
+        filename = `${agreement.title} - ${user.name} (Coliving).mp3`
       }
 
       // If a follow is required and the current user is not following
@@ -635,14 +635,14 @@ function* watchDownloadTrack() {
 
       if (NATIVE_MOBILE) {
         yield* call(
-          TrackDownload.downloadTrackMobile,
+          AgreementDownload.downloadAgreementMobile,
           action.cid,
           endpoints,
           filename
         )
       } else {
         yield* call(
-          TrackDownload.downloadTrack,
+          AgreementDownload.downloadAgreement,
           action.cid,
           endpoints,
           filename
@@ -654,25 +654,25 @@ function* watchDownloadTrack() {
 
 /* SHARE */
 
-function* watchShareTrack() {
+function* watchShareAgreement() {
   yield* takeEvery(
-    socialActions.SHARE_TRACK,
-    function* (action: ReturnType<typeof socialActions.shareTrack>) {
-      const { trackId } = action
+    socialActions.SHARE_AGREEMENT,
+    function* (action: ReturnType<typeof socialActions.shareAgreement>) {
+      const { agreementId } = action
 
-      const track = yield* select(getTrack, { id: trackId })
-      if (!track) return
+      const agreement = yield* select(getAgreement, { id: agreementId })
+      if (!agreement) return
 
-      const user = yield* select(getUser, { id: track.owner_id })
+      const user = yield* select(getUser, { id: agreement.owner_id })
       if (!user) return
 
-      const link = track.permalink
-      share(link, formatShareText(track.title, user.name))
+      const link = agreement.permalink
+      share(link, formatShareText(agreement.title, user.name))
 
       const event = make(Name.SHARE, {
-        kind: 'track',
+        kind: 'agreement',
         source: action.source,
-        id: trackId,
+        id: agreementId,
         url: link
       })
       yield* put(event)
@@ -682,16 +682,16 @@ function* watchShareTrack() {
 
 const sagas = () => {
   return [
-    watchRepostTrack,
-    watchUndoRepostTrack,
-    watchSaveTrack,
-    watchUnsaveTrack,
+    watchRepostAgreement,
+    watchUndoRepostAgreement,
+    watchSaveAgreement,
+    watchUnsaveAgreement,
     watchRecordListen,
     watchSetArtistPick,
     watchUnsetArtistPick,
-    watchDownloadTrack,
-    watchShareTrack,
-    watchTrackErrors
+    watchDownloadAgreement,
+    watchShareAgreement,
+    watchAgreementErrors
   ]
 }
 

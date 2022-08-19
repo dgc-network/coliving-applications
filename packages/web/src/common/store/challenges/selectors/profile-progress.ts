@@ -78,8 +78,8 @@ export const getCompletionStages = (state: CommonState) => ({
 export const getOrderedCompletionStages = (state: CommonState) => {
   const strings = {
     profileDescription: 'Profile Description',
-    favorited: 'Favorite A Track/Playlist',
-    reposted: 'Repost A Track/Playlist',
+    favorited: 'Favorite A Agreement/Playlist',
+    reposted: 'Repost A Agreement/Playlist',
     followed: 'Follow Five Accounts',
     nameAndHandle: 'Name & Handle',
     profilePicture: 'Profile Picture',

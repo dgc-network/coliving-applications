@@ -1,9 +1,9 @@
-import { Status, Collection, Track } from '@coliving/common'
+import { Status, Collection, Agreement } from '@coliving/common'
 
 export default interface ArtistDashboardState {
   status: Status
-  tracks: Track[]
-  unlistedTracks: Track[]
+  agreements: Agreement[]
+  unlistedAgreements: Agreement[]
   collections: Collection
   listenData: {
     all: {

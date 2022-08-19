@@ -3,13 +3,13 @@ import { useCallback } from 'react'
 import type { Nullable } from '@/common'
 import { getNotificationEntity } from '-client/src/common/store/notifications/selectors'
 import type {
-  TrackEntity,
-  TrendingTrack
+  AgreementEntity,
+  TrendingAgreement
 } from '-client/src/common/store/notifications/types'
 
 import IconTrending from 'app/assets/images/iconTrending.svg'
 import { isEqual, useSelectorWeb } from 'app/hooks/useSelectorWeb'
-import { getTrackRoute } from 'app/utils/routes'
+import { getAgreementRoute } from 'app/utils/routes'
 
 import {
   EntityLink,
@@ -29,37 +29,37 @@ const getRankSuffix = (rank: number) => {
 
 const messages = {
   title: 'Trending on Coliving!',
-  your: 'Your track',
+  your: 'Your agreement',
   is: 'is',
   trending: 'on Trending right now!'
 }
 
-type TrendingTrackNotificationProps = {
-  notification: TrendingTrack
+type TrendingAgreementNotificationProps = {
+  notification: TrendingAgreement
 }
 
-export const TrendingTrackNotification = (
-  props: TrendingTrackNotificationProps
+export const TrendingAgreementNotification = (
+  props: TrendingAgreementNotificationProps
 ) => {
   const { notification } = props
   const { rank } = notification
   const rankSuffix = getRankSuffix(rank)
-  const track = useSelectorWeb(
+  const agreement = useSelectorWeb(
     (state) => getNotificationEntity(state, notification),
     isEqual
-  ) as Nullable<TrackEntity>
+  ) as Nullable<AgreementEntity>
   const navigation = useDrawerNavigation()
 
   const handlePress = useCallback(() => {
-    if (track) {
+    if (agreement) {
       navigation.navigate({
-        native: { screen: 'Track', params: { id: track.track_id } },
-        web: { route: getTrackRoute(track) }
+        native: { screen: 'Agreement', params: { id: agreement.agreement_id } },
+        web: { route: getAgreementRoute(agreement) }
       })
     }
-  }, [navigation, track])
+  }, [navigation, agreement])
 
-  if (!track) return null
+  if (!agreement) return null
 
   return (
     <NotificationTile notification={notification} onPress={handlePress}>
@@ -67,7 +67,7 @@ export const TrendingTrackNotification = (
         <NotificationTitle>{messages.title}</NotificationTitle>
       </NotificationHeader>
       <NotificationText>
-        {messages.your} <EntityLink entity={track} /> {messages.is} {rank}
+        {messages.your} <EntityLink entity={agreement} /> {messages.is} {rank}
         {rankSuffix} {messages.trending}
       </NotificationText>
     </NotificationTile>

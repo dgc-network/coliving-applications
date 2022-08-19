@@ -27,16 +27,16 @@ describe('add', () => {
     const { storeState } = await expectSaga(allSagas(sagas()), actions)
       .withReducer(
         combineReducers({
-          tracks: asCache(noopReducer(), Kind.TRACKS),
+          agreements: asCache(noopReducer(), Kind.AGREEMENTS),
           confirmer: noopReducer()
         }),
         {
-          tracks: { ...initialCacheState },
+          agreements: { ...initialCacheState },
           confirmer: { ...initialConfirmerState }
         }
       )
       .dispatch(
-        actions.add(Kind.TRACKS, [
+        actions.add(Kind.AGREEMENTS, [
           {
             id: 1,
             uid: '111',
@@ -45,7 +45,7 @@ describe('add', () => {
         ])
       )
       .put(
-        actions.addSucceeded(Kind.TRACKS, [
+        actions.addSucceeded(Kind.AGREEMENTS, [
           {
             id: 1,
             uid: '111',
@@ -54,13 +54,13 @@ describe('add', () => {
         ])
       )
       .silentRun()
-    expect(storeState.tracks.entries).toEqual({
+    expect(storeState.agreements.entries).toEqual({
       1: { metadata: { data: 10 }, _timestamp: MOCK_TIMESTAMP }
     })
-    expect(storeState.tracks.uids).toEqual({
+    expect(storeState.agreements.uids).toEqual({
       111: 1
     })
-    expect(storeState.tracks.subscribers).toEqual({
+    expect(storeState.agreements.subscribers).toEqual({
       1: new Set(['111'])
     })
   })
@@ -69,11 +69,11 @@ describe('add', () => {
     const { storeState } = await expectSaga(allSagas(sagas()), actions)
       .withReducer(
         combineReducers({
-          tracks: asCache(noopReducer(), Kind.TRACKS),
+          agreements: asCache(noopReducer(), Kind.AGREEMENTS),
           confirmer: noopReducer()
         }),
         {
-          tracks: {
+          agreements: {
             ...initialCacheState,
             entries: {
               1: { metadata: { data: 10 } }
@@ -82,13 +82,13 @@ describe('add', () => {
           confirmer: {
             ...initialConfirmerState,
             confirm: {
-              [makeKindId(Kind.TRACKS, 1)]: () => {}
+              [makeKindId(Kind.AGREEMENTS, 1)]: () => {}
             }
           }
         }
       )
       .dispatch(
-        actions.add(Kind.TRACKS, [
+        actions.add(Kind.AGREEMENTS, [
           {
             id: 1,
             uid: '111',
@@ -97,7 +97,7 @@ describe('add', () => {
         ])
       )
       .put(
-        actions.subscribe(Kind.TRACKS, [
+        actions.subscribe(Kind.AGREEMENTS, [
           {
             id: 1,
             uid: '111'
@@ -105,14 +105,14 @@ describe('add', () => {
         ])
       )
       .silentRun()
-    expect(storeState.tracks.entries).toEqual({
+    expect(storeState.agreements.entries).toEqual({
       ...initialCacheState.entries,
       1: { metadata: { data: 10 } }
     })
-    expect(storeState.tracks.uids).toEqual({
+    expect(storeState.agreements.uids).toEqual({
       111: 1
     })
-    expect(storeState.tracks.subscribers).toEqual({
+    expect(storeState.agreements.subscribers).toEqual({
       1: new Set(['111'])
     })
   })
@@ -121,16 +121,16 @@ describe('add', () => {
     const { storeState } = await expectSaga(allSagas(sagas()), actions)
       .withReducer(
         combineReducers({
-          tracks: asCache(noopReducer(), Kind.TRACKS),
+          agreements: asCache(noopReducer(), Kind.AGREEMENTS),
           confirmer: noopReducer()
         }),
         {
-          tracks: { ...initialCacheState },
+          agreements: { ...initialCacheState },
           confirmer: { ...initialConfirmerState }
         }
       )
       .dispatch(
-        actions.add(Kind.TRACKS, [
+        actions.add(Kind.AGREEMENTS, [
           {
             id: 1,
             uid: '111',
@@ -144,7 +144,7 @@ describe('add', () => {
         ])
       )
       .put(
-        actions.addSucceeded(Kind.TRACKS, [
+        actions.addSucceeded(Kind.AGREEMENTS, [
           {
             id: 1,
             uid: '111',
@@ -158,7 +158,7 @@ describe('add', () => {
         ])
       )
       .dispatch(
-        actions.add(Kind.TRACKS, [
+        actions.add(Kind.AGREEMENTS, [
           {
             id: 3,
             uid: '333',
@@ -167,17 +167,17 @@ describe('add', () => {
         ])
       )
       .silentRun()
-    expect(storeState.tracks.entries).toEqual({
+    expect(storeState.agreements.entries).toEqual({
       1: { metadata: { data: 10 }, _timestamp: MOCK_TIMESTAMP },
       2: { metadata: { data: 20 }, _timestamp: MOCK_TIMESTAMP },
       3: { metadata: { data: 30 }, _timestamp: MOCK_TIMESTAMP }
     })
-    expect(storeState.tracks.uids).toEqual({
+    expect(storeState.agreements.uids).toEqual({
       111: 1,
       222: 2,
       333: 3
     })
-    expect(storeState.tracks.subscribers).toEqual({
+    expect(storeState.agreements.subscribers).toEqual({
       1: new Set(['111']),
       2: new Set(['222']),
       3: new Set(['333'])
@@ -188,16 +188,16 @@ describe('add', () => {
     const { storeState } = await expectSaga(allSagas(sagas()), actions)
       .withReducer(
         combineReducers({
-          tracks: asCache(noopReducer(), Kind.TRACKS),
+          agreements: asCache(noopReducer(), Kind.AGREEMENTS),
           confirmer: noopReducer()
         }),
         {
-          tracks: { ...initialCacheState },
+          agreements: { ...initialCacheState },
           confirmer: { ...initialConfirmerState }
         }
       )
       .dispatch(
-        actions.add(Kind.TRACKS, [
+        actions.add(Kind.AGREEMENTS, [
           {
             id: 1,
             uid: '111',
@@ -206,7 +206,7 @@ describe('add', () => {
         ])
       )
       .dispatch(
-        actions.add(Kind.TRACKS, [
+        actions.add(Kind.AGREEMENTS, [
           {
             id: 1,
             uid: '222',
@@ -215,17 +215,17 @@ describe('add', () => {
         ])
       )
       .silentRun()
-    expect(storeState.tracks.entries).toEqual({
+    expect(storeState.agreements.entries).toEqual({
       1: {
         metadata: { oldValue: 10, newValue: 20 },
         _timestamp: MOCK_TIMESTAMP
       }
     })
-    expect(storeState.tracks.uids).toEqual({
+    expect(storeState.agreements.uids).toEqual({
       111: 1,
       222: 1
     })
-    expect(storeState.tracks.subscribers).toEqual({
+    expect(storeState.agreements.subscribers).toEqual({
       1: new Set(['111', '222'])
     })
   })
@@ -234,16 +234,16 @@ describe('add', () => {
     const { storeState } = await expectSaga(allSagas(sagas()), actions)
       .withReducer(
         combineReducers({
-          tracks: asCache(noopReducer(), Kind.TRACKS),
+          agreements: asCache(noopReducer(), Kind.AGREEMENTS),
           confirmer: noopReducer()
         }),
         {
-          tracks: { ...initialCacheState },
+          agreements: { ...initialCacheState },
           confirmer: { ...initialConfirmerState }
         }
       )
       .dispatch(
-        actions.add(Kind.TRACKS, [
+        actions.add(Kind.AGREEMENTS, [
           {
             id: 1,
             uid: '111',
@@ -253,7 +253,7 @@ describe('add', () => {
       )
       .dispatch(
         actions.add(
-          Kind.TRACKS,
+          Kind.AGREEMENTS,
           [
             {
               id: 1,
@@ -265,14 +265,14 @@ describe('add', () => {
         )
       )
       .silentRun()
-    expect(storeState.tracks.entries).toEqual({
+    expect(storeState.agreements.entries).toEqual({
       1: { metadata: { newValue: 20 }, _timestamp: MOCK_TIMESTAMP }
     })
-    expect(storeState.tracks.uids).toEqual({
+    expect(storeState.agreements.uids).toEqual({
       111: 1,
       222: 1
     })
-    expect(storeState.tracks.subscribers).toEqual({
+    expect(storeState.agreements.subscribers).toEqual({
       1: new Set(['111', '222'])
     })
   })
@@ -286,10 +286,10 @@ describe('update', () => {
     )
       .withReducer(
         combineReducers({
-          tracks: asCache(noopReducer(), Kind.TRACKS)
+          agreements: asCache(noopReducer(), Kind.AGREEMENTS)
         }),
         {
-          tracks: {
+          agreements: {
             ...initialCacheState,
             entries: {
               1: { metadata: { data: 10 } },
@@ -308,7 +308,7 @@ describe('update', () => {
         }
       )
       .dispatch(
-        actions.update(Kind.TRACKS, [
+        actions.update(Kind.AGREEMENTS, [
           {
             id: 1,
             metadata: { data: 11 }
@@ -316,7 +316,7 @@ describe('update', () => {
         ])
       )
       .dispatch(
-        actions.update(Kind.TRACKS, [
+        actions.update(Kind.AGREEMENTS, [
           {
             id: 2,
             metadata: { data: 21 }
@@ -324,16 +324,16 @@ describe('update', () => {
         ])
       )
       .silentRun()
-    expect(storeState.tracks.entries).toEqual({
+    expect(storeState.agreements.entries).toEqual({
       1: { metadata: { data: 11 }, _timestamp: MOCK_TIMESTAMP },
       2: { metadata: { data: 21 }, _timestamp: MOCK_TIMESTAMP }
     })
-    expect(storeState.tracks.uids).toEqual({
+    expect(storeState.agreements.uids).toEqual({
       111: 1,
       112: 1,
       222: 2
     })
-    expect(storeState.tracks.subscribers).toEqual({
+    expect(storeState.agreements.subscribers).toEqual({
       1: new Set(['111', '112']),
       2: new Set(['222'])
     })
@@ -343,11 +343,11 @@ describe('update', () => {
     const { storeState } = await expectSaga(takeSaga(actions.UPDATE), actions)
       .withReducer(
         combineReducers({
-          tracks: asCache(noopReducer(), Kind.TRACKS),
+          agreements: asCache(noopReducer(), Kind.AGREEMENTS),
           collections: asCache(noopReducer(), Kind.COLLECTIONS)
         }),
         {
-          tracks: {
+          agreements: {
             ...initialCacheState,
             entries: {
               1: { metadata: { data: 10 } },
@@ -366,7 +366,7 @@ describe('update', () => {
           collections: {
             ...initialCacheState,
             entries: {
-              1: { tracks: [1, 2] }
+              1: { agreements: [1, 2] }
             }
           }
         }
@@ -379,7 +379,7 @@ describe('update', () => {
           [
             {
               id: 1,
-              kind: Kind.TRACKS,
+              kind: Kind.AGREEMENTS,
               uids: ['111', '222']
             }
           ]
@@ -388,8 +388,8 @@ describe('update', () => {
       .silentRun()
     expect(storeState.collections.subscriptions).toEqual({
       1: new Set([
-        { kind: Kind.TRACKS, uid: '111' },
-        { kind: Kind.TRACKS, uid: '222' }
+        { kind: Kind.AGREEMENTS, uid: '111' },
+        { kind: Kind.AGREEMENTS, uid: '222' }
       ])
     })
   })
@@ -403,10 +403,10 @@ describe('setStatus', () => {
     )
       .withReducer(
         combineReducers({
-          tracks: asCache(noopReducer(), Kind.TRACKS)
+          agreements: asCache(noopReducer(), Kind.AGREEMENTS)
         }),
         {
-          tracks: {
+          agreements: {
             ...initialCacheState,
             entries: {
               1: { metadata: { data: 10 } }
@@ -425,7 +425,7 @@ describe('setStatus', () => {
         }
       )
       .dispatch(
-        actions.setStatus(Kind.TRACKS, [
+        actions.setStatus(Kind.AGREEMENTS, [
           {
             id: 1,
             status: Status.SUCCESS
@@ -433,7 +433,7 @@ describe('setStatus', () => {
         ])
       )
       .silentRun()
-    expect(storeState.tracks.statuses).toEqual({
+    expect(storeState.agreements.statuses).toEqual({
       1: Status.SUCCESS
     })
   })
@@ -461,15 +461,15 @@ describe('remove', () => {
     const { storeState } = await expectSaga(allSagas(sagas()), actions)
       .withReducer(
         combineReducers({
-          tracks: asCache(noopReducer(), Kind.TRACKS)
+          agreements: asCache(noopReducer(), Kind.AGREEMENTS)
         }),
         {
-          tracks: initialTestState
+          agreements: initialTestState
         }
       )
-      .dispatch(actions.remove(Kind.TRACKS, [1]))
+      .dispatch(actions.remove(Kind.AGREEMENTS, [1]))
       .silentRun()
-    expect(storeState.tracks).toEqual({
+    expect(storeState.agreements).toEqual({
       ...initialCacheState
     })
   })
@@ -504,15 +504,15 @@ describe('remove with pruning', () => {
     const { storeState } = await expectSaga(allSagas(sagas()), actions)
       .withReducer(
         combineReducers({
-          tracks: asCache(noopReducer(), Kind.TRACKS)
+          agreements: asCache(noopReducer(), Kind.AGREEMENTS)
         }),
         {
-          tracks: initialTestState
+          agreements: initialTestState
         }
       )
-      .dispatch(actions.remove(Kind.TRACKS, [1]))
+      .dispatch(actions.remove(Kind.AGREEMENTS, [1]))
       .silentRun()
-    expect(storeState.tracks).toEqual({
+    expect(storeState.agreements).toEqual({
       ...initialTestState,
       idsToPrune: new Set([1])
     })
@@ -527,10 +527,10 @@ describe('subscribe', () => {
     )
       .withReducer(
         combineReducers({
-          tracks: asCache(noopReducer(), Kind.TRACKS)
+          agreements: asCache(noopReducer(), Kind.AGREEMENTS)
         }),
         {
-          tracks: {
+          agreements: {
             ...initialCacheState,
             entries: {
               1: { metadata: { data: 10 } },
@@ -546,16 +546,16 @@ describe('subscribe', () => {
           }
         }
       )
-      .dispatch(actions.subscribe(Kind.TRACKS, [{ uid: '333', id: 1 }]))
-      .dispatch(actions.subscribe(Kind.TRACKS, [{ uid: '444', id: 2 }]))
+      .dispatch(actions.subscribe(Kind.AGREEMENTS, [{ uid: '333', id: 1 }]))
+      .dispatch(actions.subscribe(Kind.AGREEMENTS, [{ uid: '444', id: 2 }]))
       .silentRun()
-    expect(storeState.tracks.uids).toEqual({
+    expect(storeState.agreements.uids).toEqual({
       111: 1,
       222: 1,
       333: 1,
       444: 2
     })
-    expect(storeState.tracks.subscribers).toEqual({
+    expect(storeState.agreements.subscribers).toEqual({
       1: new Set(['111', '222', '333']),
       2: new Set(['444'])
     })
@@ -567,10 +567,10 @@ describe('unsubscribe', () => {
     const { storeState } = await expectSaga(allSagas(sagas()), actions)
       .withReducer(
         combineReducers({
-          tracks: asCache(noopReducer(), Kind.TRACKS)
+          agreements: asCache(noopReducer(), Kind.AGREEMENTS)
         }),
         {
-          tracks: {
+          agreements: {
             ...initialCacheState,
             entries: {
               1: { metadata: { data: 10 } }
@@ -585,13 +585,13 @@ describe('unsubscribe', () => {
           }
         }
       )
-      .dispatch(actions.unsubscribe(Kind.TRACKS, [{ uid: '222', id: 1 }]))
-      .put(actions.unsubscribeSucceeded(Kind.TRACKS, [{ uid: '222', id: 1 }]))
+      .dispatch(actions.unsubscribe(Kind.AGREEMENTS, [{ uid: '222', id: 1 }]))
+      .put(actions.unsubscribeSucceeded(Kind.AGREEMENTS, [{ uid: '222', id: 1 }]))
       .silentRun()
-    expect(storeState.tracks.uids).toEqual({
+    expect(storeState.agreements.uids).toEqual({
       111: 1
     })
-    expect(storeState.tracks.subscribers).toEqual({
+    expect(storeState.agreements.subscribers).toEqual({
       1: new Set(['111'])
     })
   })
@@ -600,11 +600,11 @@ describe('unsubscribe', () => {
     const { storeState } = await expectSaga(allSagas(sagas()), actions)
       .withReducer(
         combineReducers({
-          tracks: asCache(noopReducer(), Kind.TRACKS),
+          agreements: asCache(noopReducer(), Kind.AGREEMENTS),
           collections: asCache(noopReducer(), Kind.COLLECTIONS)
         }),
         {
-          tracks: {
+          agreements: {
             ...initialCacheState,
             entries: {
               1: { metadata: { data: 10 } },
@@ -623,7 +623,7 @@ describe('unsubscribe', () => {
           collections: {
             ...initialCacheState,
             entries: {
-              1: { tracks: [1, 2] }
+              1: { agreements: [1, 2] }
             },
             uids: {
               444: 1
@@ -632,23 +632,23 @@ describe('unsubscribe', () => {
               1: new Set(['444'])
             },
             subscriptions: {
-              1: new Set([{ kind: Kind.TRACKS, uid: '222' }])
+              1: new Set([{ kind: Kind.AGREEMENTS, uid: '222' }])
             }
           }
         }
       )
       .dispatch(actions.unsubscribe(Kind.COLLECTIONS, [{ uid: '444', id: 1 }]))
-      .put(actions.unsubscribe(Kind.TRACKS, [{ uid: '222' }]))
+      .put(actions.unsubscribe(Kind.AGREEMENTS, [{ uid: '222' }]))
       .put(
         actions.unsubscribeSucceeded(Kind.COLLECTIONS, [{ uid: '444', id: 1 }])
       )
-      .put(actions.unsubscribeSucceeded(Kind.TRACKS, [{ uid: '222' }]))
+      .put(actions.unsubscribeSucceeded(Kind.AGREEMENTS, [{ uid: '222' }]))
       .silentRun()
-    expect(storeState.tracks.uids).toEqual({
+    expect(storeState.agreements.uids).toEqual({
       111: 1,
       333: 2
     })
-    expect(storeState.tracks.subscribers).toEqual({
+    expect(storeState.agreements.subscribers).toEqual({
       1: new Set(['111']),
       2: new Set(['333'])
     })
@@ -659,10 +659,10 @@ describe('unsubscribe', () => {
     const { storeState } = await expectSaga(allSagas(sagas()), actions)
       .withReducer(
         combineReducers({
-          tracks: asCache(noopReducer(), Kind.TRACKS)
+          agreements: asCache(noopReducer(), Kind.AGREEMENTS)
         }),
         {
-          tracks: {
+          agreements: {
             ...initialCacheState,
             entries: {
               1: { metadata: { data: 10 } }
@@ -677,12 +677,12 @@ describe('unsubscribe', () => {
           }
         }
       )
-      .dispatch(actions.unsubscribe(Kind.TRACKS, [{ uid: '111', id: 1 }]))
-      .put(actions.unsubscribeSucceeded(Kind.TRACKS, [{ uid: '111', id: 1 }]))
-      .dispatch(actions.unsubscribe(Kind.TRACKS, [{ uid: '222', id: 1 }]))
-      .put(actions.unsubscribeSucceeded(Kind.TRACKS, [{ uid: '222', id: 1 }]))
-      .put(actions.remove(Kind.TRACKS, [1]))
+      .dispatch(actions.unsubscribe(Kind.AGREEMENTS, [{ uid: '111', id: 1 }]))
+      .put(actions.unsubscribeSucceeded(Kind.AGREEMENTS, [{ uid: '111', id: 1 }]))
+      .dispatch(actions.unsubscribe(Kind.AGREEMENTS, [{ uid: '222', id: 1 }]))
+      .put(actions.unsubscribeSucceeded(Kind.AGREEMENTS, [{ uid: '222', id: 1 }]))
+      .put(actions.remove(Kind.AGREEMENTS, [1]))
       .silentRun()
-    expect(storeState.tracks).toEqual(initialCacheState)
+    expect(storeState.agreements).toEqual(initialCacheState)
   })
 })

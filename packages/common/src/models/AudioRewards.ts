@@ -16,7 +16,7 @@ export type UserChallenge = {
 export type Specifier = string
 
 export type ChallengeRewardID =
-  | 'track-upload'
+  | 'agreement-upload'
   | 'referrals'
   | 'ref-v'
   | 'referred'
@@ -28,7 +28,7 @@ export type ChallengeRewardID =
   | 'first-playlist'
 
 export type TrendingRewardID =
-  | 'trending-track'
+  | 'trending-agreement'
   | 'trending-playlist'
   | 'top-api'
   | 'verified-upload'
@@ -113,7 +113,7 @@ export const amounts: Record<ChallengeRewardID, number> = {
   'listen-streak': 1,
   'mobile-install': 1,
   'profile-completion': 1,
-  'track-upload': 1,
+  'agreement-upload': 1,
   'send-first-tip': 2,
   'first-playlist': 2
 }

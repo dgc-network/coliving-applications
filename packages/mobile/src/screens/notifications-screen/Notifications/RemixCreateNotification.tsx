@@ -7,14 +7,14 @@ import {
 import type {
   EntityType,
   RemixCreate,
-  TrackEntity
+  AgreementEntity
 } from '-client/src/common/store/notifications/types'
 
 import IconRemix from 'app/assets/images/iconRemix.svg'
 import { useSelectorWeb, isEqual } from 'app/hooks/useSelectorWeb'
 import { EventNames } from 'app/types/analytics'
 import { make } from 'app/utils/analytics'
-import { getTrackRoute } from 'app/utils/routes'
+import { getAgreementRoute } from 'app/utils/routes'
 
 import {
   NotificationHeader,
@@ -28,10 +28,10 @@ import {
 import { useDrawerNavigation } from '../useDrawerNavigation'
 
 const messages = {
-  title: 'New Remix of Your Track',
+  title: 'New Remix of Your Agreement',
   by: 'by',
-  shareTwitterText: (trackTitle: string, handle: string) =>
-    `New remix of ${trackTitle} by ${handle} on @dgc.network #Coliving`
+  shareTwitterText: (agreementTitle: string, handle: string) =>
+    `New remix of ${agreementTitle} by ${handle} on @dgc.network #Coliving`
 }
 
 type RemixCreateNotificationProps = {
@@ -42,45 +42,45 @@ export const RemixCreateNotification = (
   props: RemixCreateNotificationProps
 ) => {
   const { notification } = props
-  const { childTrackId, parentTrackId } = notification
+  const { childAgreementId, parentAgreementId } = notification
   const navigation = useDrawerNavigation()
   const user = useSelectorWeb((state) =>
     getNotificationUser(state, notification)
   )
-  const tracks = useSelectorWeb(
+  const agreements = useSelectorWeb(
     (state) => getNotificationEntities(state, notification),
     isEqual
   ) as EntityType[]
 
-  const childTrack = tracks?.find(
-    (track): track is TrackEntity =>
-      'track_id' in track && track.track_id === childTrackId
+  const childAgreement = agreements?.find(
+    (agreement): agreement is AgreementEntity =>
+      'agreement_id' in agreement && agreement.agreement_id === childAgreementId
   )
 
-  const parentTrack = tracks?.find(
-    (track): track is TrackEntity =>
-      'track_id' in track && track.track_id === parentTrackId
+  const parentAgreement = agreements?.find(
+    (agreement): agreement is AgreementEntity =>
+      'agreement_id' in agreement && agreement.agreement_id === parentAgreementId
   )
-  const parentTrackTitle = parentTrack?.title
+  const parentAgreementTitle = parentAgreement?.title
 
   const handlePress = useCallback(() => {
-    if (childTrack) {
+    if (childAgreement) {
       navigation.navigate({
         native: {
-          screen: 'Track',
-          params: { id: childTrack.track_id, fromNotifications: true }
+          screen: 'Agreement',
+          params: { id: childAgreement.agreement_id, fromNotifications: true }
         },
         web: {
-          route: getTrackRoute(childTrack)
+          route: getAgreementRoute(childAgreement)
         }
       })
     }
-  }, [childTrack, navigation])
+  }, [childAgreement, navigation])
 
   const handleTwitterShareData = useCallback(
     (handle: string | undefined) => {
-      if (parentTrackTitle && handle) {
-        const shareText = messages.shareTwitterText(parentTrackTitle, handle)
+      if (parentAgreementTitle && handle) {
+        const shareText = messages.shareTwitterText(parentAgreementTitle, handle)
         const analytics = make({
           eventName: EventNames.NOTIFICATIONS_CLICK_REMIX_COSIGN_TWITTER_SHARE,
           text: shareText
@@ -89,22 +89,22 @@ export const RemixCreateNotification = (
       }
       return null
     },
-    [parentTrackTitle]
+    [parentAgreementTitle]
   )
 
-  if (!user || !childTrack || !parentTrack) return null
+  if (!user || !childAgreement || !parentAgreement) return null
 
-  const twitterUrl = getTrackRoute(parentTrack, true)
+  const twitterUrl = getAgreementRoute(parentAgreement, true)
 
   return (
     <NotificationTile notification={notification} onPress={handlePress}>
       <NotificationHeader icon={IconRemix}>
         <NotificationTitle>
-          {messages.title} <EntityLink entity={parentTrack} />
+          {messages.title} <EntityLink entity={parentAgreement} />
         </NotificationTitle>
       </NotificationHeader>
       <NotificationText>
-        <EntityLink entity={childTrack} /> {messages.by}{' '}
+        <EntityLink entity={childAgreement} /> {messages.by}{' '}
         <UserNameLink user={user} />
       </NotificationText>
       <NotificationTwitterButton

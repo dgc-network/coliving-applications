@@ -10,7 +10,7 @@ import {
   changePasswordFailed
 } from 'common/store/change-password/slice'
 import ColivingBackend from 'services/ColivingBackend'
-import { make, TrackEvent } from 'store/analytics/actions'
+import { make, AgreementEvent } from 'store/analytics/actions'
 import { waitForBackendSetup } from 'store/backend/sagas'
 
 function* handleConfirmCredentials(
@@ -42,22 +42,22 @@ function* handleChangePassword(action: ReturnType<typeof changePassword>) {
       action.payload.oldPassword
     )
     yield put(changePasswordSucceeded())
-    const trackEvent: TrackEvent = make(
+    const agreementEvent: AgreementEvent = make(
       Name.SETTINGS_COMPLETE_CHANGE_PASSWORD,
       {
         status: 'success'
       }
     )
-    yield put(trackEvent)
+    yield put(agreementEvent)
   } catch {
     yield put(changePasswordFailed())
-    const trackEvent: TrackEvent = make(
+    const agreementEvent: AgreementEvent = make(
       Name.SETTINGS_COMPLETE_CHANGE_PASSWORD,
       {
         status: 'failure'
       }
     )
-    yield put(trackEvent)
+    yield put(agreementEvent)
   }
 }
 

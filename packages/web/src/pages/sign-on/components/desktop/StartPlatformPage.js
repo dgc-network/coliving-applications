@@ -12,22 +12,22 @@ const messages = {
   title: "It's Time To Start Your Coliving Journey!",
   subTitle: 'Coliving is a platform for both artists and listeners.',
   uploadMusic: {
-    button: 'Upload Track',
+    button: 'Upload Agreement',
     title: 'Why Upload My Music?',
     description:
-      'Once you’ve uploaded your music, others can discover your tracks immediately!'
+      'Once you’ve uploaded your music, others can discover your agreements immediately!'
   },
   startListening: {
     button: 'Start Listening',
     title: 'Nothing To Upload Yet?',
     description:
-      'Support artists you like by listening and sharing their tracks with your friends.'
+      'Support artists you like by listening and sharing their agreements with your friends.'
   }
 }
 
 export class StartPlatformPage extends Component {
   render() {
-    const { onUploadTrack, onStartListening } = this.props
+    const { onUploadAgreement, onStartListening } = this.props
     return (
       <div className={styles.container}>
         <div className={styles.contentContainer}>
@@ -46,7 +46,7 @@ export class StartPlatformPage extends Component {
                 type={ButtonType.PRIMARY_ALT}
                 leftIcon={<IconUpload />}
                 name='uploadMedia'
-                onClick={onUploadTrack}
+                onClick={onUploadAgreement}
               />
               <div className={styles.optionTextContainer}>
                 <div className={styles.optionTitle}>
@@ -86,7 +86,7 @@ export class StartPlatformPage extends Component {
 
 StartPlatformPage.propTypes = {
   onPrevPage: PropTypes.func,
-  onUploadTrack: PropTypes.func,
+  onUploadAgreement: PropTypes.func,
   onStartListening: PropTypes.func
 }
 

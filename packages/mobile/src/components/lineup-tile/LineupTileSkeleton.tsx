@@ -23,19 +23,19 @@ const styles = StyleSheet.create({
 })
 
 export const LineupTileSkeleton = () => {
-  const trackTileStyles = useThemedStyles(createStyles)
+  const agreementTileStyles = useThemedStyles(createStyles)
   return (
     <LineupTileRoot>
       <View style={styles.metadata}>
-        <View style={[trackTileStyles.imageContainer, trackTileStyles.image]}>
-          <Skeleton style={trackTileStyles.image} />
+        <View style={[agreementTileStyles.imageContainer, agreementTileStyles.image]}>
+          <Skeleton style={agreementTileStyles.image} />
         </View>
 
-        <View style={[trackTileStyles.titles]}>
-          <View style={trackTileStyles.title}>
+        <View style={[agreementTileStyles.titles]}>
+          <View style={agreementTileStyles.title}>
             <Skeleton style={styles.skeleton} width='80%' height='80%' />
           </View>
-          <View style={[trackTileStyles.artist, { width: '100%' }]}>
+          <View style={[agreementTileStyles.artist, { width: '100%' }]}>
             <Skeleton style={styles.skeleton} width='60%' height='80%' />
           </View>
         </View>

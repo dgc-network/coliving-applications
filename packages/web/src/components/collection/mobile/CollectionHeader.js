@@ -13,8 +13,8 @@ import DynamicImage from 'components/dynamic-image/DynamicImage'
 import Skeleton from 'components/skeleton/Skeleton'
 import UserBadges from 'components/user-badges/UserBadges'
 import { useCollectionCoverArt } from 'hooks/useCollectionCoverArt'
-import ActionButtonRow from 'pages/track-page/components/mobile/ActionButtonRow'
-import StatsButtonRow from 'pages/track-page/components/mobile/StatsButtonRow'
+import ActionButtonRow from 'pages/agreement-page/components/mobile/ActionButtonRow'
+import StatsButtonRow from 'pages/agreement-page/components/mobile/StatsButtonRow'
 import { make, useRecord } from 'store/analytics/actions'
 import { isShareToastDisabled } from 'utils/clipboardUtil'
 import { isDarkMode } from 'utils/theme/theme'
@@ -80,7 +80,7 @@ const CollectionHeader = ({
   isReposted,
   isSaved,
   modified,
-  numTracks,
+  numAgreements,
   duration,
   isPublished,
   isPublishing,
@@ -150,8 +150,8 @@ const CollectionHeader = ({
 
   const collectionLabels = [
     {
-      label: 'Tracks',
-      value: formatCount(numTracks)
+      label: 'Agreements',
+      value: formatCount(numAgreements)
     },
     duration && {
       label: 'Duration',
@@ -286,7 +286,7 @@ CollectionHeader.propTypes = {
   collectionId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   userId: PropTypes.number,
   loading: PropTypes.bool,
-  tracksLoading: PropTypes.bool,
+  agreementsLoading: PropTypes.bool,
   playing: PropTypes.bool,
   active: PropTypes.bool,
   type: PropTypes.oneOf(['playlist', 'album']),
@@ -299,7 +299,7 @@ CollectionHeader.propTypes = {
   isOwner: PropTypes.bool,
   isAlbum: PropTypes.bool,
   isReposted: PropTypes.bool,
-  hasTracks: PropTypes.bool,
+  hasAgreements: PropTypes.bool,
   isPublished: PropTypes.bool,
   isPublishing: PropTypes.bool,
   isSaved: PropTypes.bool,
@@ -328,7 +328,7 @@ CollectionHeader.defaultProps = {
 
   isOwner: false,
   isAlbum: false,
-  hasTracks: false,
+  hasAgreements: false,
   isPublished: false,
   isSaved: false,
 

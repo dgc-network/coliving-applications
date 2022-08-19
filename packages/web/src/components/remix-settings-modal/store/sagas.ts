@@ -1,60 +1,60 @@
-import { TrackMetadata } from '@coliving/common'
+import { AgreementMetadata } from '@coliving/common'
 import { takeLatest, call, put } from 'redux-saga/effects'
 
 import {
-  retrieveTrackByHandleAndSlug,
-  retrieveTracks
-} from 'common/store/cache/tracks/utils/retrieveTracks'
-import { parseTrackRoute } from 'utils/route/trackRouteParser'
+  retrieveAgreementByHandleAndSlug,
+  retrieveAgreements
+} from 'common/store/cache/agreements/utils/retrieveAgreements'
+import { parseAgreementRoute } from 'utils/route/agreementRouteParser'
 
-import { fetchTrack, fetchTrackSucceeded, fetchTrackFailed } from './slice'
+import { fetchAgreement, fetchAgreementSucceeded, fetchAgreementFailed } from './slice'
 
 const getHandleAndSlug = (url: string) => {
   // Get just the pathname part from the url
   try {
-    const trackUrl = new URL(url)
+    const agreementUrl = new URL(url)
     // Decode the extracted pathname so we don't end up
     // double encoding it later on
-    const pathname = decodeURIComponent(trackUrl.pathname)
+    const pathname = decodeURIComponent(agreementUrl.pathname)
     if (
-      trackUrl.hostname !== process.env.REACT_APP_PUBLIC_HOSTNAME &&
-      trackUrl.hostname !== window.location.hostname
+      agreementUrl.hostname !== process.env.REACT_APP_PUBLIC_HOSTNAME &&
+      agreementUrl.hostname !== window.location.hostname
     ) {
       return null
     }
-    return parseTrackRoute(pathname)
+    return parseAgreementRoute(pathname)
   } catch (err) {
     return null
   }
 }
 
-function* watchFetchTrack() {
+function* watchFetchAgreement() {
   yield takeLatest(
-    fetchTrack.type,
-    function* (action: ReturnType<typeof fetchTrack>) {
+    fetchAgreement.type,
+    function* (action: ReturnType<typeof fetchAgreement>) {
       const { url } = action.payload
       const params = getHandleAndSlug(url)
       if (params) {
-        const { handle, slug, trackId } = params
-        let track: TrackMetadata | null = null
+        const { handle, slug, agreementId } = params
+        let agreement: AgreementMetadata | null = null
         if (handle && slug) {
-          track = yield call(retrieveTrackByHandleAndSlug, {
+          agreement = yield call(retrieveAgreementByHandleAndSlug, {
             handle,
             slug
           })
-        } else if (trackId) {
-          track = yield call(retrieveTracks, { trackIds: [trackId] })
+        } else if (agreementId) {
+          agreement = yield call(retrieveAgreements, { agreementIds: [agreementId] })
         }
-        if (track) {
-          yield put(fetchTrackSucceeded({ trackId: track.track_id }))
+        if (agreement) {
+          yield put(fetchAgreementSucceeded({ agreementId: agreement.agreement_id }))
           return
         }
       }
-      yield put(fetchTrackFailed())
+      yield put(fetchAgreementFailed())
     }
   )
 }
 
 export default function sagas() {
-  return [watchFetchTrack]
+  return [watchFetchAgreement]
 }

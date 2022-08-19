@@ -3,10 +3,10 @@ import { useDispatch } from 'react-redux'
 
 import imageEmpty from 'assets/img/imageBlank2x.png'
 import { useImageSize } from 'common/hooks/useImageSize'
-import { fetchCoverArt } from 'common/store/cache/tracks/actions'
+import { fetchCoverArt } from 'common/store/cache/agreements/actions'
 
-export const useTrackCoverArt = (
-  trackId: number | null | string | undefined,
+export const useAgreementCoverArt = (
+  agreementId: number | null | string | undefined,
   coverArtSizes: CoverArtSizes | null,
   size: SquareSizes,
   defaultImage: string = imageEmpty as string,
@@ -16,7 +16,7 @@ export const useTrackCoverArt = (
   const dispatch = useDispatch()
   return useImageSize({
     dispatch,
-    id: trackId,
+    id: agreementId,
     sizes: coverArtSizes,
     size,
     action: fetchCoverArt,

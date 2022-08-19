@@ -1,6 +1,6 @@
 import { useEffect, useContext } from 'react'
 
-import { Track, User } from '@coliving/common'
+import { Agreement, User } from '@coliving/common'
 import cn from 'classnames'
 
 import { ReactComponent as IconRemixes } from 'assets/img/iconRemix.svg'
@@ -11,7 +11,7 @@ import Lineup, { LineupWithoutTile } from 'components/lineup/Lineup'
 import MobilePageContainer from 'components/mobile-page-container/MobilePageContainer'
 import { useSubPageHeader } from 'components/nav/store/context'
 import UserBadges from 'components/user-badges/UserBadges'
-import { fullTrackRemixesPage } from 'utils/route'
+import { fullAgreementRemixesPage } from 'utils/route'
 import { isMatrix } from 'utils/theme/theme'
 import { withNullGuard } from 'utils/withNullGuard'
 
@@ -21,33 +21,33 @@ const messages = {
   remixes: 'Remix',
   by: 'by',
   of: 'of',
-  getDescription: (trackName: string, artistName: string) =>
-    `${messages.remixes} ${messages.of} ${trackName} ${messages.by} ${artistName}`
+  getDescription: (agreementName: string, artistName: string) =>
+    `${messages.remixes} ${messages.of} ${agreementName} ${messages.by} ${artistName}`
 }
 
 export type RemixesPageProps = {
   title: string
   count: number | null
-  originalTrack: Track | null
+  originalAgreement: Agreement | null
   user: User | null
   getLineupProps: () => LineupWithoutTile
-  goToTrackPage: () => void
+  goToAgreementPage: () => void
   goToArtistPage: () => void
 }
 
 const g = withNullGuard(
-  ({ originalTrack, user, ...p }: RemixesPageProps) =>
-    originalTrack && user && { ...p, originalTrack, user }
+  ({ originalAgreement, user, ...p }: RemixesPageProps) =>
+    originalAgreement && user && { ...p, originalAgreement, user }
 )
 
 const RemixesPage = g(
   ({
     title,
     count,
-    originalTrack,
+    originalAgreement,
     user,
     getLineupProps,
-    goToTrackPage,
+    goToAgreementPage,
     goToArtistPage
   }) => {
     useSubPageHeader()
@@ -71,16 +71,16 @@ const RemixesPage = g(
           />
         </>
       )
-    }, [setHeader, title, originalTrack, user, goToArtistPage, goToTrackPage])
+    }, [setHeader, title, originalAgreement, user, goToArtistPage, goToAgreementPage])
 
     return (
       <MobilePageContainer
         title={title}
-        description={messages.getDescription(originalTrack.title, user.name)}
-        canonicalUrl={fullTrackRemixesPage(originalTrack.permalink)}
+        description={messages.getDescription(originalAgreement.title, user.name)}
+        canonicalUrl={fullAgreementRemixesPage(originalAgreement.permalink)}
         containerClassName={styles.container}
       >
-        <div className={styles.tracksContainer}>
+        <div className={styles.agreementsContainer}>
           <div className={styles.subHeader}>
             {`${count || ''} ${pluralize(
               messages.remixes,
@@ -88,9 +88,9 @@ const RemixesPage = g(
               'es',
               !count
             )} ${messages.of}`}
-            <div className={styles.track}>
-              <div className={styles.link} onClick={goToTrackPage}>
-                {originalTrack.title}
+            <div className={styles.agreement}>
+              <div className={styles.link} onClick={goToAgreementPage}>
+                {originalAgreement.title}
               </div>
               {messages.by}
               <div className={styles.link} onClick={goToArtistPage}>

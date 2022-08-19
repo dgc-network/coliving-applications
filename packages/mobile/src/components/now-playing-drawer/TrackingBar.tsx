@@ -18,20 +18,20 @@ const createStyles = (themeColors: ThemeColors) =>
       width: '100%',
       backgroundColor: themeColors.neutralLight7
     },
-    tracker: {
+    agreementer: {
       height: 2,
       backgroundColor: 'red'
     }
   })
 
-type TrackingBarProps = {
+type AgreementingBarProps = {
   /**
    * Animation that signals how "open" the now playing drawer is.
    */
   translationAnim: Animated.Value
 }
 
-export const TrackingBar = ({ translationAnim }: TrackingBarProps) => {
+export const AgreementingBar = ({ translationAnim }: AgreementingBarProps) => {
   const styles = useThemedStyles(createStyles)
   const { primaryLight2, primaryDark2 } = useThemeColors()
 
@@ -60,12 +60,12 @@ export const TrackingBar = ({ translationAnim }: TrackingBarProps) => {
         styles.rail,
         {
           opacity: translationAnim.interpolate({
-            // Interpolate the animation such that the tracker fades out
+            // Interpolate the animation such that the agreementer fades out
             // at 5% up the screen.
-            // The tracker is important to fade away shortly after
+            // The agreementer is important to fade away shortly after
             // the now playing drawer is opened so that the drawer may
             // animate in corner radius without showing at the same time
-            // as the tracker.
+            // as the agreementer.
             inputRange: [0, 0.9 * NOW_PLAYING_HEIGHT, NOW_PLAYING_HEIGHT],
             outputRange: [0, 0, 2]
           })
@@ -74,7 +74,7 @@ export const TrackingBar = ({ translationAnim }: TrackingBarProps) => {
     >
       <View
         style={[
-          styles.tracker,
+          styles.agreementer,
           {
             width: `${percentComplete * 100}%`
           }

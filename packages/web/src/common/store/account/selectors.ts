@@ -43,9 +43,9 @@ export const getAccountVerified = createSelector(
   [internalGetAccountUser],
   (user) => (user ? user.is_verified : false)
 )
-export const getAccountHasTracks = createSelector(
+export const getAccountHasAgreements = createSelector(
   [internalGetAccountUser],
-  (user) => (user ? user.track_count > 0 : false)
+  (user) => (user ? user.agreement_count > 0 : false)
 )
 export const getAccountCollectibles = createSelector(
   [internalGetAccountUser],
@@ -125,12 +125,12 @@ export const getAccountCollections = createSelector(
   [internalGetAccountCollections, getCollections],
   (accountCollections, collections) => {
     return Object.keys(accountCollections).reduce((acc, cur) => {
-      const track = accountCollections[cur as unknown as number]
-      if (!collections[track.id] || collections[track.id]._marked_deleted)
+      const agreement = accountCollections[cur as unknown as number]
+      if (!collections[agreement.id] || collections[agreement.id]._marked_deleted)
         return acc
       return {
         ...acc,
-        [track.id]: track
+        [agreement.id]: agreement
       }
     }, {} as { [id: number]: AccountCollection })
   }

@@ -4,7 +4,7 @@ import { OpenPayload, OverflowSource, MobileOverflowModalState } from './types'
 
 const initialState: MobileOverflowModalState = {
   id: null,
-  source: OverflowSource.TRACKS,
+  source: OverflowSource.AGREEMENTS,
   overflowActions: [],
   overflowActionCallbacks: {}
 }

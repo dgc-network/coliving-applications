@@ -13,8 +13,8 @@ import {
 } from 'common/store/cache/actions'
 
 /**
- * The cache is implemented as primarily a map of ids to metadata (track, playlist, collection).
- * Each entry can have N number of uids that point to it, e.g. a track may appear
+ * The cache is implemented as primarily a map of ids to metadata (agreement, playlist, collection).
+ * Each entry can have N number of uids that point to it, e.g. a agreement may appear
  * on the page twice, only cached once, but referenced to by different uids.
  *
  * The cache adheres to a subscription model where each uid counts as a subscription to an entry.
@@ -81,35 +81,35 @@ export const mergeCustomizer = (objValue, srcValue, key) => {
 
   // For playlist_contents, this is trickier.
   // We want to never merge because playlists can have
-  // tracks be deleted since last time, but
+  // agreements be deleted since last time, but
   // new fetches won't have UIDs, so we need to preserve those.
   if (objValue && key === 'playlist_contents') {
-    // Map out tracks keyed by id, but store as an array-value
-    // because a playlist can contain multiple of the same track id
-    const trackMap = {}
-    objValue.track_ids.forEach((t) => {
-      const id = t.track
-      if (id in trackMap) {
-        trackMap[id].push(t)
+    // Map out agreements keyed by id, but store as an array-value
+    // because a playlist can contain multiple of the same agreement id
+    const agreementMap = {}
+    objValue.agreement_ids.forEach((t) => {
+      const id = t.agreement
+      if (id in agreementMap) {
+        agreementMap[id].push(t)
       } else {
-        trackMap[id] = [t]
+        agreementMap[id] = [t]
       }
     })
 
-    const trackIds = srcValue.track_ids.map((t) => {
-      const mappedList = trackMap[t.track]
+    const agreementIds = srcValue.agreement_ids.map((t) => {
+      const mappedList = agreementMap[t.agreement]
       if (!mappedList) return t
 
-      const mappedTrack = mappedList.shift()
-      if (!mappedTrack?.uid) return t
+      const mappedAgreement = mappedList.shift()
+      if (!mappedAgreement?.uid) return t
 
       return {
         ...t,
-        uid: mappedTrack.uid
+        uid: mappedAgreement.uid
       }
     })
 
-    return { ...srcValue, track_ids: trackIds }
+    return { ...srcValue, agreement_ids: agreementIds }
   }
 }
 

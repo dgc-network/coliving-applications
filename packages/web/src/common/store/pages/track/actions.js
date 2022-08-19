@@ -1,65 +1,65 @@
-export const SET_TRACK_RANK = 'TRACK_PAGE/SET_TRACK_RANK'
-export const GET_TRACK_RANKS = 'TRACK_PAGE/GET_TRACK_RANKS'
-export const RESET = 'TRACK_PAGE/RESET'
-export const SET_TRACK_ID = 'TRACK_PAGE/SET_TRACK_ID'
-export const SET_TRACK_PERMALINK = 'TRACK_PAGE/SET_TRACK_PERMALINK'
-export const MAKE_TRACK_PUBLIC = 'TRACK_PAGE/MAKE_TRACK_PUBLIC'
-export const SET_TRACK_TRENDING_RANKS = 'TRACK_PAGE/SET_TRACK_TRENDING_RANKS'
+export const SET_AGREEMENT_RANK = 'AGREEMENT_PAGE/SET_AGREEMENT_RANK'
+export const GET_AGREEMENT_RANKS = 'AGREEMENT_PAGE/GET_AGREEMENT_RANKS'
+export const RESET = 'AGREEMENT_PAGE/RESET'
+export const SET_AGREEMENT_ID = 'AGREEMENT_PAGE/SET_AGREEMENT_ID'
+export const SET_AGREEMENT_PERMALINK = 'AGREEMENT_PAGE/SET_AGREEMENT_PERMALINK'
+export const MAKE_AGREEMENT_PUBLIC = 'AGREEMENT_PAGE/MAKE_AGREEMENT_PUBLIC'
+export const SET_AGREEMENT_TRENDING_RANKS = 'AGREEMENT_PAGE/SET_AGREEMENT_TRENDING_RANKS'
 
-export const FETCH_TRACK = 'TRACK_PAGE/FETCH_TRACK'
-export const FETCH_TRACK_SUCCEEDED = 'TRACK_PAGE/FETCH_TRACK_SUCCEEDED'
-export const FETCH_TRACK_FAILED = 'TRACK_PAGE/FETCH_TRACK_FAILED'
+export const FETCH_AGREEMENT = 'AGREEMENT_PAGE/FETCH_AGREEMENT'
+export const FETCH_AGREEMENT_SUCCEEDED = 'AGREEMENT_PAGE/FETCH_AGREEMENT_SUCCEEDED'
+export const FETCH_AGREEMENT_FAILED = 'AGREEMENT_PAGE/FETCH_AGREEMENT_FAILED'
 
 export const GO_TO_REMIXES_OF_PARENT_PAGE =
-  'TRACK_PAGE/GO_TO_REMIXES_OF_PARENT_PAGE'
+  'AGREEMENT_PAGE/GO_TO_REMIXES_OF_PARENT_PAGE'
 
-export const REFETCH_LINEUP = 'TRACK_PAGE/REFETCH_LINEUP'
+export const REFETCH_LINEUP = 'AGREEMENT_PAGE/REFETCH_LINEUP'
 
-export const getTrackRanks = (trackId) => ({ type: GET_TRACK_RANKS, trackId })
-export const setTrackRank = (duration, rank) => ({
-  type: SET_TRACK_RANK,
+export const getAgreementRanks = (agreementId) => ({ type: GET_AGREEMENT_RANKS, agreementId })
+export const setAgreementRank = (duration, rank) => ({
+  type: SET_AGREEMENT_RANK,
   duration,
   rank
 })
-export const resetTrackPage = (rank) => ({ type: RESET })
-export const setTrackId = (trackId) => ({ type: SET_TRACK_ID, trackId })
-export const setTrackPermalink = (permalink) => ({
-  type: SET_TRACK_PERMALINK,
+export const resetAgreementPage = (rank) => ({ type: RESET })
+export const setAgreementId = (agreementId) => ({ type: SET_AGREEMENT_ID, agreementId })
+export const setAgreementPermalink = (permalink) => ({
+  type: SET_AGREEMENT_PERMALINK,
   permalink
 })
-export const makeTrackPublic = (trackId) => ({
-  type: MAKE_TRACK_PUBLIC,
-  trackId
+export const makeAgreementPublic = (agreementId) => ({
+  type: MAKE_AGREEMENT_PUBLIC,
+  agreementId
 })
 
-export const fetchTrack = (trackId, slug, handle, canBeUnlisted) => ({
-  type: FETCH_TRACK,
-  trackId,
+export const fetchAgreement = (agreementId, slug, handle, canBeUnlisted) => ({
+  type: FETCH_AGREEMENT,
+  agreementId,
   slug,
   handle,
   canBeUnlisted
 })
-export const fetchTrackSucceeded = (trackId) => ({
-  type: FETCH_TRACK_SUCCEEDED,
-  trackId
+export const fetchAgreementSucceeded = (agreementId) => ({
+  type: FETCH_AGREEMENT_SUCCEEDED,
+  agreementId
 })
-export const fetchTrackFailed = (trackId) => ({ type: FETCH_TRACK_FAILED })
+export const fetchAgreementFailed = (agreementId) => ({ type: FETCH_AGREEMENT_FAILED })
 
-export const goToRemixesOfParentPage = (parentTrackId) => ({
+export const goToRemixesOfParentPage = (parentAgreementId) => ({
   type: GO_TO_REMIXES_OF_PARENT_PAGE,
-  parentTrackId
+  parentAgreementId
 })
 
 /**
- * Refreshes the lineup based on the track that's currently set.
+ * Refreshes the lineup based on the agreement that's currently set.
  * Useful when the lineup's content depends on changes that may
- * happen to the track in view on the track page.
+ * happen to the agreement in view on the agreement page.
  */
 export const refetchLineup = () => ({
   type: REFETCH_LINEUP
 })
 
-export const setTrackTrendingRanks = (trendingTrackRanks) => ({
-  type: SET_TRACK_TRENDING_RANKS,
-  trendingTrackRanks
+export const setAgreementTrendingRanks = (trendingAgreementRanks) => ({
+  type: SET_AGREEMENT_TRENDING_RANKS,
+  trendingAgreementRanks
 })

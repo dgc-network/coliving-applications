@@ -6,14 +6,14 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 
 import { HapticFeedbackMessage } from 'services/native-mobile-interface/haptics'
 
-import TrackListItem from './ConnectedTrackListItem'
-import styles from './TrackList.module.css'
-import { TrackItemAction } from './TrackListItem'
+import AgreementListItem from './ConnectedAgreementListItem'
+import styles from './AgreementList.module.css'
+import { AgreementItemAction } from './AgreementListItem'
 
-type TrackListProps = {
+type AgreementListProps = {
   containerClassName?: string
   itemClassName?: string
-  tracks: Array<{
+  agreements: Array<{
     isLoading: boolean
     isSaved?: boolean
     isReposted?: boolean
@@ -22,8 +22,8 @@ type TrackListProps = {
     isRemoveActive?: boolean
     artistHandle: string
     artistName: string
-    trackTitle: string
-    trackId: ID
+    agreementTitle: string
+    agreementId: ID
     uid?: string
     time?: number
     coverArtSizes?: CoverArtSizes
@@ -33,18 +33,18 @@ type TrackListProps = {
   showDivider?: boolean
   noDividerMargin?: boolean
   showBorder?: boolean
-  onSave?: (isSaved: boolean, trackId: ID) => void
+  onSave?: (isSaved: boolean, agreementId: ID) => void
   onRemove?: (index: number) => void
-  togglePlay?: (uid: string, trackId: ID) => void
-  trackItemAction?: TrackItemAction
+  togglePlay?: (uid: string, agreementId: ID) => void
+  agreementItemAction?: AgreementItemAction
   isReorderable?: boolean
   onReorder?: (index1: number, index2: number) => void
 }
 
-const TrackList = ({
+const AgreementList = ({
   containerClassName = '',
   itemClassName,
-  tracks,
+  agreements,
   onSave,
   onRemove,
   showTopDivider,
@@ -52,10 +52,10 @@ const TrackList = ({
   noDividerMargin,
   showBorder,
   togglePlay,
-  trackItemAction,
+  agreementItemAction,
   isReorderable = false,
   onReorder = () => {}
-}: TrackListProps) => {
+}: AgreementListProps) => {
   const onDragEnd = useCallback(
     (result: any) => {
       const { source, destination } = result
@@ -79,14 +79,14 @@ const TrackList = ({
     message.send()
   }
 
-  // The dividers above and belove the active track should be hidden
-  const activeIndex = tracks.findIndex((track) => track.isActive)
+  // The dividers above and belove the active agreement should be hidden
+  const activeIndex = agreements.findIndex((agreement) => agreement.isActive)
   const hideDivider = (idx: number) =>
     activeIndex >= 0 && (activeIndex === idx || activeIndex === idx - 1)
 
-  const renderedTracks = tracks.map((track, idx) => {
+  const renderedAgreements = agreements.map((agreement, idx) => {
     const listItem = (isDragging?: boolean) => (
-      <div key={track.uid}>
+      <div key={agreement.uid}>
         {showDivider && (showTopDivider || idx > 0) ? (
           <div
             className={cn(styles.divider, {
@@ -95,34 +95,34 @@ const TrackList = ({
             })}
           ></div>
         ) : null}
-        <TrackListItem
+        <AgreementListItem
           index={idx}
-          trackId={track.trackId}
+          agreementId={agreement.agreementId}
           className={itemClassName}
-          isLoading={track.isLoading}
-          isSaved={track.isSaved}
-          isReposted={track.isReposted}
-          isActive={track.isActive}
-          isPlaying={track.isPlaying}
-          artistHandle={track.artistHandle}
-          artistName={track.artistName}
-          trackTitle={track.trackTitle}
-          coverArtSizes={track.coverArtSizes}
-          uid={track.uid}
-          isDeleted={track.isDeleted}
+          isLoading={agreement.isLoading}
+          isSaved={agreement.isSaved}
+          isReposted={agreement.isReposted}
+          isActive={agreement.isActive}
+          isPlaying={agreement.isPlaying}
+          artistHandle={agreement.artistHandle}
+          artistName={agreement.artistName}
+          agreementTitle={agreement.agreementTitle}
+          coverArtSizes={agreement.coverArtSizes}
+          uid={agreement.uid}
+          isDeleted={agreement.isDeleted}
           onSave={onSave}
-          isRemoveActive={track.isRemoveActive}
+          isRemoveActive={agreement.isRemoveActive}
           onRemove={onRemove}
           togglePlay={togglePlay}
-          trackItemAction={trackItemAction}
+          agreementItemAction={agreementItemAction}
           isReorderable={isReorderable}
           isDragging={isDragging}
         />
       </div>
     )
-    const key = track?.time
-      ? `${track.trackId}:${track.time}`
-      : track.trackId.toString()
+    const key = agreement?.time
+      ? `${agreement.agreementId}:${agreement.time}`
+      : agreement.agreementId.toString()
     return isReorderable ? (
       <Draggable key={key} draggableId={key} index={idx}>
         {(provided: any, snapshot: any) => {
@@ -157,7 +157,7 @@ const TrackList = ({
 
   return (
     <div
-      className={cn(styles.trackListContainer, containerClassName, {
+      className={cn(styles.agreementListContainer, containerClassName, {
         [styles.border]: showBorder
       })}
     >
@@ -167,25 +167,25 @@ const TrackList = ({
           onDragStart={onDragStart}
           onDragUpdate={onDragUpdate}
         >
-          <Droppable droppableId='track-list-droppable' type='TRACK'>
+          <Droppable droppableId='agreement-list-droppable' type='AGREEMENT'>
             {(provided: any, snapshot: any) => (
               <div ref={provided.innerRef} {...provided.droppableProps}>
-                {renderedTracks}
+                {renderedAgreements}
               </div>
             )}
           </Droppable>
         </DragDropContext>
       ) : (
-        renderedTracks
+        renderedAgreements
       )}
     </div>
   )
 }
 
-TrackList.defaultProps = {
+AgreementList.defaultProps = {
   hasTopDivider: false,
   showDivider: true,
   showBorder: false
 }
 
-export default memo(TrackList)
+export default memo(AgreementList)

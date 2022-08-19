@@ -50,10 +50,10 @@ class InlineFormTile extends Component {
           <div className={styles.handle}>
             <IconDrag />
           </div>
-          <div className={styles.trackName}>
+          <div className={styles.agreementName}>
             <LabeledInput
-              placeholder='What should we call this track?'
-              label='Track Name'
+              placeholder='What should we call this agreement?'
+              label='Agreement Name'
               size='small'
               layout='horizontal'
               defaultValue={defaultFields.title}
@@ -96,7 +96,7 @@ class InlineFormTile extends Component {
               }
             />
             <DropdownInput
-              placeholder='Describe the mood of your track, e.g. Upbeat'
+              placeholder='Describe the mood of your agreement, e.g. Upbeat'
               menu={{ items: MOODS }}
               defaultValue={defaultFields.genre || ''}
               label='Mood'
@@ -109,7 +109,7 @@ class InlineFormTile extends Component {
           <div className={styles.row}>
             <LabeledInput
               placeholder='e.g. CC-XXX-YY-NNNNNN'
-              label='Track ISRC'
+              label='Agreement ISRC'
               size='small'
               labelStyle={styles.label}
               layout='horizontal'
@@ -117,7 +117,7 @@ class InlineFormTile extends Component {
             />
             <LabeledInput
               placeholder='e.g. T-345246800-1'
-              label='Track ISWC'
+              label='Agreement ISWC'
               size='small'
               labelStyle={styles.label}
               layout='horizontal'

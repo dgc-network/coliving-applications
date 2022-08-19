@@ -1,7 +1,7 @@
-import type { Repost, TrackSegment, User } from '@/common'
+import type { Repost, AgreementSegment, User } from '@/common'
 
 import type { CollectionImage } from 'app/models/Collection'
-import type { TrackImage } from 'app/models/Track'
+import type { AgreementImage } from 'app/models/Agreement'
 import type { UserImage, UserMultihash } from 'app/models/User'
 
 type BaseUser = Pick<
@@ -22,7 +22,7 @@ export type SearchUser = UserMultihash &
     name: string
     playlist_count: null
     repost_count: null
-    track_count: null
+    agreement_count: null
     blocknumber: number
     wallet: string
     created_at: string
@@ -34,7 +34,7 @@ export type SearchUser = UserMultihash &
     user_id: number
   }
 
-export type SearchTrack = TrackImage & {
+export type SearchAgreement = AgreementImage & {
   _co_sign: undefined
   _cover_art_sizes: null
   description: string | null
@@ -75,11 +75,11 @@ export type SearchTrack = TrackImage & {
   stem_of: null
   updated_at: string
   is_delete: boolean
-  track_id: number
+  agreement_id: number
   owner_id: number
   followee_saves: []
   save_count: undefined
-  track_segments: TrackSegment[]
+  agreement_segments: AgreementSegment[]
   followee_favorites: null
   user_id: number
   permalink: string
@@ -104,16 +104,16 @@ export type SearchPlaylist = CollectionImage & {
   is_delete: boolean
   is_private: boolean
   updated_at: string
-  tracks: []
-  track_count: number
+  agreements: []
+  agreement_count: number
   variant: string
   playlist_id: number
   playlist_owner_id: number
   followee_saves: []
   save_count: undefined
   playlist_contents: {
-    track_ids: {
-      track: number
+    agreement_ids: {
+      agreement: number
       time: number
     }[]
   }
@@ -121,7 +121,7 @@ export type SearchPlaylist = CollectionImage & {
 
 export type SearchResults = {
   users: SearchUser[]
-  tracks: SearchTrack[]
+  agreements: SearchAgreement[]
   playlists: SearchPlaylist[]
   albums: SearchPlaylist[]
 }

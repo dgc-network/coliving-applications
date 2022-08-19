@@ -5,12 +5,12 @@ import { SquareSizes } from '@/common'
 import {
   editPlaylist,
   orderPlaylist,
-  removeTrackFromPlaylist
+  removeAgreementFromPlaylist
 } from 'common/store/cache/collections/actions'
-import { tracksActions } from 'common/store/pages/collection/lineup/actions'
+import { agreementsActions } from 'common/store/pages/collection/lineup/actions'
 import {
   getMetadata,
-  getTracks
+  getAgreements
 } from 'common/store/ui/createPlaylistModal/selectors'
 import type { FormikProps } from 'formik'
 import { Formik } from 'formik'
@@ -18,7 +18,7 @@ import { isEqual } from 'lodash'
 import { View } from 'react-native'
 
 import { FormScreen } from 'app/components/form-screen'
-import { TrackList } from 'app/components/track-list'
+import { AgreementList } from 'app/components/agreement-list'
 import { useCollectionCoverArt } from 'app/hooks/useCollectionCoverArt'
 import { useDispatchWeb } from 'app/hooks/useDispatchWeb'
 import { useSelectorWeb } from 'app/hooks/useSelectorWeb'
@@ -41,41 +41,41 @@ const EditPlaylistForm = (props: FormikProps<PlaylistValues>) => {
 
   const handleReorder = useCallback(
     ({ data, from, to }) => {
-      const reorder = [...values.track_ids]
+      const reorder = [...values.agreement_ids]
       const tmp = reorder[from]
       reorder.splice(from, 1)
       reorder.splice(to, 0, tmp)
 
-      setFieldValue('track_ids', reorder)
-      setFieldValue('tracks', data)
+      setFieldValue('agreement_ids', reorder)
+      setFieldValue('agreements', data)
     },
-    [setFieldValue, values.track_ids]
+    [setFieldValue, values.agreement_ids]
   )
 
   const handleRemove = useCallback(
     (index: number) => {
-      if ((values.track_ids.length ?? 0) <= index) {
+      if ((values.agreement_ids.length ?? 0) <= index) {
         return
       }
-      const { track: trackId, time } = values.track_ids[index]
+      const { agreement: agreementId, time } = values.agreement_ids[index]
 
-      const trackMetadata = values.tracks?.find(
-        ({ track_id }) => track_id === trackId
+      const agreementMetadata = values.agreements?.find(
+        ({ agreement_id }) => agreement_id === agreementId
       )
 
-      if (!trackMetadata) return
+      if (!agreementMetadata) return
 
-      setFieldValue('removedTracks', [
-        ...values.removedTracks,
-        { trackId, timestamp: time }
+      setFieldValue('removedAgreements', [
+        ...values.removedAgreements,
+        { agreementId, timestamp: time }
       ])
 
-      const tracks = [...(values.tracks ?? [])]
-      tracks.splice(index, 1)
+      const agreements = [...(values.agreements ?? [])]
+      agreements.splice(index, 1)
 
-      setFieldValue('tracks', tracks)
+      setFieldValue('agreements', agreements)
     },
-    [values.track_ids, values.tracks, values.removedTracks, setFieldValue]
+    [values.agreement_ids, values.agreements, values.removedAgreements, setFieldValue]
   )
 
   const header = (
@@ -88,14 +88,14 @@ const EditPlaylistForm = (props: FormikProps<PlaylistValues>) => {
 
   return (
     <FormScreen onSubmit={handleSubmit} onReset={handleReset} goBackOnSubmit>
-      {values.tracks ? (
-        <TrackList
+      {values.agreements ? (
+        <AgreementList
           hideArt
           isReorderable
           onReorder={handleReorder}
           onRemove={handleRemove}
-          tracks={values.tracks}
-          trackItemAction='remove'
+          agreements={values.agreements}
+          agreementItemAction='remove'
           ListHeaderComponent={header}
           ListFooterComponent={<View style={styles.footer} />}
         />
@@ -109,7 +109,7 @@ const EditPlaylistForm = (props: FormikProps<PlaylistValues>) => {
 export const EditPlaylistScreen = () => {
   const playlist = useSelectorWeb(getMetadata)
   const dispatchWeb = useDispatchWeb()
-  const tracks = useSelectorWeb(getTracks)
+  const agreements = useSelectorWeb(getAgreements)
 
   const coverArt = useCollectionCoverArt({
     id: playlist?.playlist_id,
@@ -120,23 +120,23 @@ export const EditPlaylistScreen = () => {
   const handleSubmit = useCallback(
     (values: PlaylistValues) => {
       if (playlist) {
-        values.removedTracks.forEach(({ trackId, timestamp }) => {
+        values.removedAgreements.forEach(({ agreementId, timestamp }) => {
           dispatchWeb(
-            removeTrackFromPlaylist(trackId, playlist.playlist_id, timestamp)
+            removeAgreementFromPlaylist(agreementId, playlist.playlist_id, timestamp)
           )
         })
-        if (!isEqual(playlist?.playlist_contents.track_ids, values.track_ids)) {
+        if (!isEqual(playlist?.playlist_contents.agreement_ids, values.agreement_ids)) {
           dispatchWeb(
             orderPlaylist(
               playlist?.playlist_id,
-              values.track_ids.map(({ track, time }) => ({ id: track, time }))
+              values.agreement_ids.map(({ agreement, time }) => ({ id: agreement, time }))
             )
           )
         }
         dispatchWeb(
           editPlaylist(playlist.playlist_id, values as unknown as Collection)
         )
-        dispatchWeb(tracksActions.fetchLineupMetadatas())
+        dispatchWeb(agreementsActions.fetchLineupMetadatas())
       }
     },
     [dispatchWeb, playlist]
@@ -150,9 +150,9 @@ export const EditPlaylistScreen = () => {
     playlist_name,
     description,
     artwork: { url: coverArt ?? '' },
-    removedTracks: [],
-    tracks,
-    track_ids: playlist.playlist_contents.track_ids
+    removedAgreements: [],
+    agreements,
+    agreement_ids: playlist.playlist_contents.agreement_ids
   }
 
   return (

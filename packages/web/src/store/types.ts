@@ -39,7 +39,7 @@ import PlaylistLibraryReducer from 'store/playlist-library/slice'
 import { CookieBannerState } from './application/ui/cookieBanner/types'
 import { EditFolderModalState } from './application/ui/editFolderModal/slice'
 import { EditPlaylistModalState } from './application/ui/editPlaylistModal/slice'
-import EditTrackModalState from './application/ui/editTrackModal/types'
+import EditAgreementModalState from './application/ui/editAgreementModal/types'
 import { MobileKeyboardState } from './application/ui/mobileKeyboard/types'
 import { ScrollLockState } from './application/ui/scrollLock/types'
 import { SetAsArtistPickConfirmationState } from './application/ui/setAsArtistPickConfirmation/types'
@@ -72,7 +72,7 @@ export type AppState = CommonState & {
       createPlaylistModal: CreatePlaylistModalState
       editPlaylistModal: EditPlaylistModalState
       editFolderModal: EditFolderModalState
-      editTrackModal: EditTrackModalState
+      editAgreementModal: EditAgreementModalState
       embedModal: EmbedModalState
       deactivateAccount: DeactivateAccountState
       firstUploadModal: FirstUploadModalState

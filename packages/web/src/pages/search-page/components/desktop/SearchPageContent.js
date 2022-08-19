@@ -4,7 +4,7 @@ import { Status } from '@coliving/common'
 import { Redirect } from 'react-router'
 
 import { ReactComponent as IconBigSearch } from 'assets/img/iconBigSearch.svg'
-import { tracksActions } from 'common/store/pages/search-results/lineup/tracks/actions'
+import { agreementsActions } from 'common/store/pages/search-results/lineup/agreements/actions'
 import { formatCount } from 'common/utils/formatUtil'
 import Card from 'components/card/desktop/Card'
 import CategoryHeader from 'components/header/desktop/CategoryHeader'
@@ -106,7 +106,7 @@ class SearchPageContent extends Component {
   render() {
     const {
       userId,
-      tracks,
+      agreements,
       currentQueueItem,
       playing,
       buffering,
@@ -209,8 +209,8 @@ class SearchPageContent extends Component {
             imageSize={playlist._cover_art_sizes}
             primaryText={playlist.playlist_name}
             secondaryText={`${playlist.user.name} • ${
-              playlist.trackCount
-            } Track${playlist.trackCount > 1 ? 's' : ''}`}
+              playlist.agreementCount
+            } Agreement${playlist.agreementCount > 1 ? 's' : ''}`}
             onClick={onClick}
             menu={{
               type: 'playlist',
@@ -294,7 +294,7 @@ class SearchPageContent extends Component {
 
     const foundResults =
       artistCards.length > 0 ||
-      tracks.entries.length > 0 ||
+      agreements.entries.length > 0 ||
       playlistCards.length > 0 ||
       albumCards.length > 0
     let content
@@ -309,33 +309,33 @@ class SearchPageContent extends Component {
         />
       )
       header = <SearchHeader searchText={searchText} title={searchTitle} />
-    } else if (searchResultsCategory === 'tracks') {
+    } else if (searchResultsCategory === 'agreements') {
       content = (
         <>
-          <div className={styles.trackSearchResultsContainer}>
-            <CategoryHeader categoryName='Tracks' />
+          <div className={styles.agreementSearchResultsContainer}>
+            <CategoryHeader categoryName='Agreements' />
             <Lineup
               search
-              key='searchTracks'
+              key='searchAgreements'
               selfLoad
               variant='section'
-              lineup={tracks}
+              lineup={agreements}
               playingSource={currentQueueItem.source}
               playingUid={currentQueueItem.uid}
-              playingTrackId={
-                currentQueueItem.track && currentQueueItem.track.track_id
+              playingAgreementId={
+                currentQueueItem.agreement && currentQueueItem.agreement.agreement_id
               }
               playing={playing}
               buffering={buffering}
               scrollParent={this.props.containerRef}
               loadMore={(offset, limit) =>
                 this.props.dispatch(
-                  tracksActions.fetchLineupMetadatas(offset, limit)
+                  agreementsActions.fetchLineupMetadatas(offset, limit)
                 )
               }
-              playTrack={(uid) => this.props.dispatch(tracksActions.play(uid))}
-              pauseTrack={() => this.props.dispatch(tracksActions.pause())}
-              actions={tracksActions}
+              playAgreement={(uid) => this.props.dispatch(agreementsActions.play(uid))}
+              pauseAgreement={() => this.props.dispatch(agreementsActions.pause())}
+              actions={agreementsActions}
             />
           </div>
         </>
@@ -386,41 +386,41 @@ class SearchPageContent extends Component {
               cardsClassName={styles.cardsContainer}
             />
           ) : null}
-          {tracks.entries.length > 0 ? (
-            <div className={styles.trackSearchResultsContainer}>
+          {agreements.entries.length > 0 ? (
+            <div className={styles.agreementSearchResultsContainer}>
               <CategoryHeader
-                categoryName='Tracks'
-                onMore={handleViewMoreResults('tracks')}
+                categoryName='Agreements'
+                onMore={handleViewMoreResults('agreements')}
               />
               <Lineup
                 search
                 variant='section'
                 count={4}
                 selfLoad={false}
-                lineup={tracks}
+                lineup={agreements}
                 playingSource={currentQueueItem.source}
                 playingUid={currentQueueItem.uid}
-                playingTrackId={
-                  currentQueueItem.track && currentQueueItem.track.track_id
+                playingAgreementId={
+                  currentQueueItem.agreement && currentQueueItem.agreement.agreement_id
                 }
                 playing={playing}
                 buffering={buffering}
                 scrollParent={this.props.containerRef}
                 onMore={
-                  tracks.entries.length >= 4
-                    ? handleViewMoreResults('tracks')
+                  agreements.entries.length >= 4
+                    ? handleViewMoreResults('agreements')
                     : null
                 }
                 loadMore={(offset, limit) =>
                   this.props.dispatch(
-                    tracksActions.fetchLineupMetadatas(offset, limit)
+                    agreementsActions.fetchLineupMetadatas(offset, limit)
                   )
                 }
-                playTrack={(uid) =>
-                  this.props.dispatch(tracksActions.play(uid))
+                playAgreement={(uid) =>
+                  this.props.dispatch(agreementsActions.play(uid))
                 }
-                pauseTrack={(uid) => this.props.dispatch(tracksActions.pause())}
-                actions={tracksActions}
+                pauseAgreement={(uid) => this.props.dispatch(agreementsActions.pause())}
+                actions={agreementsActions}
               />
             </div>
           ) : null}

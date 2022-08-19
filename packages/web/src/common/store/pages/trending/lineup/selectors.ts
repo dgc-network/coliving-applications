@@ -1,10 +1,10 @@
-import { LineupStateTrack, TimeRange } from '@coliving/common'
+import { LineupStateAgreement, TimeRange } from '@coliving/common'
 
 import { AppState } from 'store/types'
 
 export const getTrendingEntries =
   (timeRange: TimeRange) =>
-  (state: AppState): LineupStateTrack<{ id: number }>[] => {
+  (state: AppState): LineupStateAgreement<{ id: number }>[] => {
     if (timeRange === TimeRange.WEEK) {
       return state.pages.trending.trendingWeek.entries
     } else if (timeRange === TimeRange.MONTH) {

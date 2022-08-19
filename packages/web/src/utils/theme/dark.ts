@@ -116,8 +116,8 @@ const theme = {
 
   '--play-button-triangle': 'var(--static-white)',
   '--action-sheet-text': 'var(--secondary)',
-  '--track-slider-rail': 'var(--neutral)',
-  '--track-slider-handle': 'var(--static-white)',
+  '--agreement-slider-rail': 'var(--neutral)',
+  '--agreement-slider-handle': 'var(--static-white)',
   '--stat-tile-text': 'var(--secondary-dark-1)'
 }
 

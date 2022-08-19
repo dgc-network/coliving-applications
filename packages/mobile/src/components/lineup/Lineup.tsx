@@ -10,13 +10,13 @@ import { Dimensions, StyleSheet, View } from 'react-native'
 import { SectionList } from 'app/components/core'
 import {
   CollectionTile,
-  TrackTile,
+  AgreementTile,
   LineupTileSkeleton
 } from 'app/components/lineup-tile'
 import { useDispatchWeb } from 'app/hooks/useDispatchWeb'
 import { useScrollToTop } from 'app/hooks/useScrollToTop'
 import { useSelectorWeb } from 'app/hooks/useSelectorWeb'
-import { make, track } from 'app/utils/analytics'
+import { make, agreement } from 'app/utils/analytics'
 
 import { FeedTipTile } from '../feed-tip-tile/FeedTipTile'
 
@@ -36,22 +36,22 @@ const MAX_TILES_COUNT = 1000
 // The max number of loading tiles to display if count prop passes
 const MAX_COUNT_LOADING_TILES = 18
 
-// The inital multiplier for number of tracks to fetch on lineup load
-// multiplied by the number of tracks that fit the screen height
-export const INITIAL_LOAD_TRACKS_MULTIPLIER = 1.75
+// The inital multiplier for number of agreements to fetch on lineup load
+// multiplied by the number of agreements that fit the screen height
+export const INITIAL_LOAD_AGREEMENTS_MULTIPLIER = 1.75
 export const INITIAL_PLAYLISTS_MULTIPLER = 1
 
 // A multiplier for the number of tiles to fill a page to be
 // loaded in on each call (after the intial call)
-const TRACKS_AHEAD_MULTIPLIER = 0.75
+const AGREEMENTS_AHEAD_MULTIPLIER = 0.75
 
 // Threshold for how far away from the bottom (of the list) the user has to be
-// before fetching more tracks as a percentage of the list height
+// before fetching more agreements as a percentage of the list height
 const LOAD_MORE_THRESHOLD = 0.5
 
-// The minimum inital multiplier for tracks to fetch on lineup load
+// The minimum inital multiplier for agreements to fetch on lineup load
 // use so that multiple lineups on the same page can switch w/out a reload
-const MINIMUM_INITIAL_LOAD_TRACKS_MULTIPLIER = 1
+const MINIMUM_INITIAL_LOAD_AGREEMENTS_MULTIPLIER = 1
 
 // tile height + margin
 const totalTileHeight = {
@@ -77,14 +77,14 @@ const useItemCounts = (variant: LineupVariant) =>
         variant === LineupVariant.PLAYLIST
           ? LineupVariant.PLAYLIST
           : LineupVariant.MAIN,
-        MINIMUM_INITIAL_LOAD_TRACKS_MULTIPLIER
+        MINIMUM_INITIAL_LOAD_AGREEMENTS_MULTIPLIER
       ),
       initial: getItemCount(variant, () =>
         variant === LineupVariant.PLAYLIST
           ? INITIAL_PLAYLISTS_MULTIPLER
-          : INITIAL_LOAD_TRACKS_MULTIPLIER
+          : INITIAL_LOAD_AGREEMENTS_MULTIPLIER
       ),
-      loadMore: getItemCount(variant, TRACKS_AHEAD_MULTIPLIER)
+      loadMore: getItemCount(variant, AGREEMENTS_AHEAD_MULTIPLIER)
     }),
     [variant]
   )
@@ -106,7 +106,7 @@ type Section = {
   data: Array<LineupItem | LoadingLineupItem | FeedTipLineupItem>
 }
 
-/** `Lineup` encapsulates the logic for displaying a list of items such as Tracks (e.g. prefetching items
+/** `Lineup` encapsulates the logic for displaying a list of items such as Agreements (e.g. prefetching items
  * displaying loading states, etc).
  */
 export const Lineup = ({
@@ -242,20 +242,20 @@ export const Lineup = ({
       setImmediate(() => {
         if (!isPlayingUid || !isPlaying) {
           dispatchWeb(actions.play(uid))
-          track(
+          agreement(
             make({
               eventName: Name.PLAYBACK_PLAY,
               id: `${id}`,
-              source: source || PlaybackSource.TRACK_TILE
+              source: source || PlaybackSource.AGREEMENT_TILE
             })
           )
         } else {
           dispatchWeb(actions.pause())
-          track(
+          agreement(
             make({
               eventName: Name.PLAYBACK_PAUSE,
               id: `${id}`,
-              source: source || PlaybackSource.TRACK_TILE
+              source: source || PlaybackSource.AGREEMENT_TILE
             })
           )
         }
@@ -265,11 +265,11 @@ export const Lineup = ({
   )
 
   const getLineupTileComponent = (item: LineupItem) => {
-    if (item.kind === Kind.TRACKS || item.track_id) {
+    if (item.kind === Kind.AGREEMENTS || item.agreement_id) {
       if (item._marked_deleted) {
         return null
       }
-      return TrackTile
+      return AgreementTile
     } else if (item.kind === Kind.COLLECTIONS || item.playlist_id) {
       return CollectionTile
     }

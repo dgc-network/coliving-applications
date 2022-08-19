@@ -1,4 +1,4 @@
-import { ID, Collection, FeedFilter, Track, UserTrack } from '@coliving/common'
+import { ID, Collection, FeedFilter, Agreement, UserAgreement } from '@coliving/common'
 
 import ColivingBackend, {
   IDENTITY_SERVICE,
@@ -16,7 +16,7 @@ const scoreComparator = <T extends { score: number }>(a: T, b: T) =>
 
 type TopUserListen = {
   userId: number
-  trackId: number
+  agreementId: number
 }
 
 type UserListens = {
@@ -24,7 +24,7 @@ type UserListens = {
 }
 
 class Explore {
-  /** TRACKS ENDPOINTS */
+  /** AGREEMENTS ENDPOINTS */
   static async getTopUserListens(): Promise<TopUserListen[]> {
     try {
       const { data, signature } = await ColivingBackend.signData()
@@ -42,10 +42,10 @@ class Explore {
     }
   }
 
-  static async getUserListens(trackIds: ID[]): Promise<UserListens> {
+  static async getUserListens(agreementIds: ID[]): Promise<UserListens> {
     try {
       const { data, signature } = await ColivingBackend.signData()
-      const idQuery = trackIds.map((id) => `&trackIdList=${id}`).join('')
+      const idQuery = agreementIds.map((id) => `&agreementIdList=${id}`).join('')
       return fetch(`${IDENTITY_SERVICE}/users/listens?${idQuery}`, {
         headers: {
           [AuthHeaders.Message]: data,
@@ -60,18 +60,18 @@ class Explore {
     }
   }
 
-  static async getTopFolloweeTracksFromWindow(
+  static async getTopFolloweeAgreementsFromWindow(
     window: string,
     limit = 25
-  ): Promise<UserTrack[]> {
+  ): Promise<UserAgreement[]> {
     try {
-      const tracks = await libs().discoveryProvider.getTopFolloweeWindowed(
-        'track',
+      const agreements = await libs().discoveryProvider.getTopFolloweeWindowed(
+        'agreement',
         window,
         limit,
         true
       )
-      return tracks
+      return agreements
     } catch (e) {
       console.error(e)
       return []
@@ -80,22 +80,22 @@ class Explore {
 
   static async getFeedNotListenedTo(limit = 25) {
     try {
-      const tracks: UserTrack[] = await ColivingBackend.getSocialFeed({
+      const agreements: UserAgreement[] = await ColivingBackend.getSocialFeed({
         filter: FeedFilter.ORIGINAL,
         offset: 0,
         limit: 100,
         withUsers: true,
-        tracksOnly: true
+        agreementsOnly: true
       })
-      const trackIds = tracks
-        .map((track: Track) => track.track_id)
+      const agreementIds = agreements
+        .map((agreement: Agreement) => agreement.agreement_id)
         .filter(Boolean)
-      const listens: any = await Explore.getUserListens(trackIds)
+      const listens: any = await Explore.getUserListens(agreementIds)
 
-      const notListenedToTracks = tracks.filter(
-        (track: Track) => !listens[track.track_id]
+      const notListenedToAgreements = agreements.filter(
+        (agreement: Agreement) => !listens[agreement.agreement_id]
       )
-      return notListenedToTracks.slice(0, limit)
+      return notListenedToAgreements.slice(0, limit)
     } catch (e) {
       console.error(e)
       return []
@@ -104,12 +104,12 @@ class Explore {
 
   static async getRemixables(currentUserId: ID, limit = 25) {
     try {
-      const tracks = await apiClient.getRemixables({
+      const agreements = await apiClient.getRemixables({
         limit,
         currentUserId
       })
 
-      return tracks
+      return agreements
     } catch (e) {
       console.error(e)
       return []
@@ -118,19 +118,19 @@ class Explore {
 
   static async getTopFolloweeSaves(limit = 25) {
     try {
-      const tracks: UserTrack[] =
-        await libs().discoveryProvider.getTopFolloweeSaves('track', limit, true)
-      return tracks
+      const agreements: UserAgreement[] =
+        await libs().discoveryProvider.getTopFolloweeSaves('agreement', limit, true)
+      return agreements
     } catch (e) {
       console.error(e)
       return []
     }
   }
 
-  static async getLatestTrackID(): Promise<number> {
+  static async getLatestAgreementID(): Promise<number> {
     try {
-      const latestTrackID = await libs().discoveryProvider.getLatest('track')
-      return latestTrackID
+      const latestAgreementID = await libs().discoveryProvider.getLatest('agreement')
+      return latestAgreementID
     } catch (e) {
       console.error(e)
       return 0

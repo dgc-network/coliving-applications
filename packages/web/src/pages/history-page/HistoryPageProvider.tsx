@@ -23,10 +23,10 @@ import { Dispatch } from 'redux'
 
 import { getUserId } from 'common/store/account/selectors'
 import { makeGetTableMetadatas } from 'common/store/lineup/selectors'
-import { tracksActions } from 'common/store/pages/history-page/lineups/tracks/actions'
-import { getHistoryTracksLineup } from 'common/store/pages/history-page/selectors'
+import { agreementsActions } from 'common/store/pages/history-page/lineups/agreements/actions'
+import { getHistoryAgreementsLineup } from 'common/store/pages/history-page/selectors'
 import { makeGetCurrent } from 'common/store/queue/selectors'
-import * as socialActions from 'common/store/social/tracks/actions'
+import * as socialActions from 'common/store/social/agreements/actions'
 import { useRecord, make } from 'store/analytics/actions'
 import { getPlaying, getBuffering } from 'store/player/selectors'
 import { AppState } from 'store/types'
@@ -63,17 +63,17 @@ const HistoryPage = g((props) => {
     playing,
     userId,
     goToRoute,
-    tracks,
+    agreements,
     currentQueueItem,
     updateLineupOrder,
-    fetchHistoryTrackMetadata,
-    saveTrack,
-    unsaveTrack,
-    repostTrack,
-    undoRepostTrack
+    fetchHistoryAgreementMetadata,
+    saveAgreement,
+    unsaveAgreement,
+    repostAgreement,
+    undoRepostAgreement
   } = props
 
-  const { entries, status } = tracks
+  const { entries, status } = agreements
   const record = useRecord()
 
   const [filterText, setFilterText] = useState('')
@@ -85,8 +85,8 @@ const HistoryPage = g((props) => {
   )
 
   useEffect(() => {
-    fetchHistoryTrackMetadata()
-  }, [fetchHistoryTrackMetadata])
+    fetchHistoryAgreementMetadata()
+  }, [fetchHistoryAgreementMetadata])
 
   const formatMetadata = (lineupEntries: any) => {
     return lineupEntries.map((entry: any, i: number) => ({
@@ -102,8 +102,8 @@ const HistoryPage = g((props) => {
   }
 
   const getFilteredData = useCallback(
-    (trackMetadatas: any) => {
-      const filteredMetadata = formatMetadata(trackMetadatas).filter(
+    (agreementMetadatas: any) => {
+      const filteredMetadata = formatMetadata(agreementMetadatas).filter(
         (entry: any) =>
           entry.title.toLowerCase().indexOf(filterText.toLowerCase()) > -1 ||
           entry.user.name.toLowerCase().indexOf(filterText.toLowerCase()) > -1
@@ -130,20 +130,20 @@ const HistoryPage = g((props) => {
   }, [status, dataSource])
 
   const onClickRow = useCallback(
-    (trackRecord: any) => {
-      if (playing && trackRecord.uid === currentQueueItem.uid) {
+    (agreementRecord: any) => {
+      if (playing && agreementRecord.uid === currentQueueItem.uid) {
         pause()
         record(
           make(Name.PLAYBACK_PAUSE, {
-            id: `${trackRecord.track_id}`,
+            id: `${agreementRecord.agreement_id}`,
             source: PlaybackSource.HISTORY_PAGE
           })
         )
       } else {
-        play(trackRecord.uid)
+        play(agreementRecord.uid)
         record(
           make(Name.PLAYBACK_PLAY, {
-            id: `${trackRecord.track_id}`,
+            id: `${agreementRecord.agreement_id}`,
             source: PlaybackSource.HISTORY_PAGE
           })
         )
@@ -155,32 +155,32 @@ const HistoryPage = g((props) => {
   const onClickSave = useCallback(
     (record) => {
       if (!record.has_current_user_saved) {
-        saveTrack(record.track_id)
+        saveAgreement(record.agreement_id)
       } else {
-        unsaveTrack(record.track_id)
+        unsaveAgreement(record.agreement_id)
       }
     },
-    [saveTrack, unsaveTrack]
+    [saveAgreement, unsaveAgreement]
   )
 
   const onToggleSave = useCallback(
-    (isSaved: boolean, trackId: ID) => {
+    (isSaved: boolean, agreementId: ID) => {
       if (!isSaved) {
-        saveTrack(trackId)
+        saveAgreement(agreementId)
       } else {
-        unsaveTrack(trackId)
+        unsaveAgreement(agreementId)
       }
     },
-    [saveTrack, unsaveTrack]
+    [saveAgreement, unsaveAgreement]
   )
 
   const onTogglePlay = useCallback(
-    (uid: UID, trackId: ID) => {
+    (uid: UID, agreementId: ID) => {
       if (playing && uid === currentQueueItem.uid) {
         pause()
         record(
           make(Name.PLAYBACK_PAUSE, {
-            id: `${trackId}`,
+            id: `${agreementId}`,
             source: PlaybackSource.HISTORY_PAGE
           })
         )
@@ -188,7 +188,7 @@ const HistoryPage = g((props) => {
         play(uid)
         record(
           make(Name.PLAYBACK_PLAY, {
-            id: `${trackId}`,
+            id: `${agreementId}`,
             source: PlaybackSource.HISTORY_PAGE
           })
         )
@@ -197,7 +197,7 @@ const HistoryPage = g((props) => {
     [playing, play, pause, currentQueueItem, record]
   )
 
-  const onClickTrackName = useCallback(
+  const onClickAgreementName = useCallback(
     (record) => {
       goToRoute(record.permalink)
     },
@@ -214,19 +214,19 @@ const HistoryPage = g((props) => {
   const onClickRepost = useCallback(
     (record) => {
       if (!record.has_current_user_reposted) {
-        repostTrack(record.track_id)
+        repostAgreement(record.agreement_id)
       } else {
-        undoRepostTrack(record.track_id)
+        undoRepostAgreement(record.agreement_id)
       }
     },
-    [repostTrack, undoRepostTrack]
+    [repostAgreement, undoRepostAgreement]
   )
 
   const isQueued = useCallback(() => {
-    return tracks.entries.some(
+    return agreements.entries.some(
       (entry: any) => currentQueueItem.uid === entry.uid
     )
-  }, [tracks, currentQueueItem])
+  }, [agreements, currentQueueItem])
 
   const getPlayingUid = useCallback(() => {
     return currentQueueItem.uid
@@ -243,7 +243,7 @@ const HistoryPage = g((props) => {
     }
   }, [isQueued, pause, play, playing, entries])
 
-  const onSortTracks = (sorters: any) => {
+  const onSortAgreements = (sorters: any) => {
     const { column, order } = sorters
     const dataSource = formatMetadata(entries)
     let updatedOrder
@@ -297,9 +297,9 @@ const HistoryPage = g((props) => {
     getFilteredData,
     onClickSave,
     onClickRow,
-    onClickTrackName,
+    onClickAgreementName,
     onClickArtistName,
-    onSortTracks
+    onSortAgreements
   }
 
   return (
@@ -313,11 +313,11 @@ const HistoryPage = g((props) => {
 })
 
 const makeMapStateToProps = () => {
-  const getLineupMetadatas = makeGetTableMetadatas(getHistoryTracksLineup)
+  const getLineupMetadatas = makeGetTableMetadatas(getHistoryAgreementsLineup)
   const getCurrentQueueItem = makeGetCurrent()
   const mapStateToProps = (state: AppState) => ({
     userId: getUserId(state),
-    tracks: getLineupMetadatas(state),
+    agreements: getLineupMetadatas(state),
     currentQueueItem: getCurrentQueueItem(state),
     playing: getPlaying(state),
     buffering: getBuffering(state)
@@ -326,21 +326,21 @@ const makeMapStateToProps = () => {
 }
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  fetchHistoryTrackMetadata: () =>
-    dispatch(tracksActions.fetchLineupMetadatas()),
-  play: (uid?: UID) => dispatch(tracksActions.play(uid)),
-  pause: () => dispatch(tracksActions.pause()),
+  fetchHistoryAgreementMetadata: () =>
+    dispatch(agreementsActions.fetchLineupMetadatas()),
+  play: (uid?: UID) => dispatch(agreementsActions.play(uid)),
+  pause: () => dispatch(agreementsActions.pause()),
   goToRoute: (route: string) => dispatch(pushRoute(route)),
   updateLineupOrder: (updatedOrderIndices: any) =>
-    dispatch(tracksActions.updateLineupOrder(updatedOrderIndices)),
-  repostTrack: (trackId: ID) =>
-    dispatch(socialActions.repostTrack(trackId, RepostSource.HISTORY_PAGE)),
-  undoRepostTrack: (trackId: ID) =>
-    dispatch(socialActions.undoRepostTrack(trackId, RepostSource.HISTORY_PAGE)),
-  saveTrack: (trackId: ID) =>
-    dispatch(socialActions.saveTrack(trackId, FavoriteSource.HISTORY_PAGE)),
-  unsaveTrack: (trackId: ID) =>
-    dispatch(socialActions.unsaveTrack(trackId, FavoriteSource.HISTORY_PAGE))
+    dispatch(agreementsActions.updateLineupOrder(updatedOrderIndices)),
+  repostAgreement: (agreementId: ID) =>
+    dispatch(socialActions.repostAgreement(agreementId, RepostSource.HISTORY_PAGE)),
+  undoRepostAgreement: (agreementId: ID) =>
+    dispatch(socialActions.undoRepostAgreement(agreementId, RepostSource.HISTORY_PAGE)),
+  saveAgreement: (agreementId: ID) =>
+    dispatch(socialActions.saveAgreement(agreementId, FavoriteSource.HISTORY_PAGE)),
+  unsaveAgreement: (agreementId: ID) =>
+    dispatch(socialActions.unsaveAgreement(agreementId, FavoriteSource.HISTORY_PAGE))
 })
 
 export default withRouter(

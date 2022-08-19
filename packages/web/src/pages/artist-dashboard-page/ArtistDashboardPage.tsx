@@ -1,6 +1,6 @@
 import { Suspense, Component, useMemo, ReactNode } from 'react'
 
-import { ID, Status, Theme, Track, User } from '@coliving/common'
+import { ID, Status, Theme, Agreement, User } from '@coliving/common'
 import cn from 'classnames'
 import { push as pushRoute } from 'connected-react-router'
 import { each } from 'lodash'
@@ -14,8 +14,8 @@ import { formatCount } from 'common/utils/formatUtil'
 import Header from 'components/header/desktop/Header'
 import LoadingSpinner from 'components/loading-spinner/LoadingSpinner'
 import Page from 'components/page/Page'
-import TableOptionsButton from 'components/tracks-table/TableOptionsButton'
-import TracksTable, { alphaSortFn } from 'components/tracks-table/TracksTable'
+import TableOptionsButton from 'components/agreements-table/TableOptionsButton'
+import AgreementsTable, { alphaSortFn } from 'components/agreements-table/AgreementsTable'
 import useTabs, { useTabRecalculator } from 'hooks/useTabs/useTabs'
 import { AppState } from 'store/types'
 import lazyWithPreload from 'utils/lazyWithPreload'
@@ -61,7 +61,7 @@ const getNumericColumn = (field: any, overrideTitle?: string) => {
   }
 }
 
-type DataSourceTrack = Track & {
+type DataSourceAgreement = Agreement & {
   key: string
   name: string
   date: string
@@ -71,16 +71,16 @@ type DataSourceTrack = Track & {
   plays: number
 }
 
-type TracksTableProps = {
+type AgreementsTableProps = {
   onClickRow: (record: any) => void
-  unlistedDataSource: DataSourceTrack[]
-  listedDataSource: DataSourceTrack[]
+  unlistedDataSource: DataSourceAgreement[]
+  listedDataSource: DataSourceAgreement[]
   account: User
 }
 
 export const messages = {
-  publicTracksTabTitle: 'PUBLIC TRACKS',
-  unlistedTracksTabTitle: 'HIDDEN TRACKS',
+  publicAgreementsTabTitle: 'PUBLIC AGREEMENTS',
+  unlistedAgreementsTabTitle: 'HIDDEN AGREEMENTS',
   thisYear: 'This Year'
 }
 
@@ -93,8 +93,8 @@ const makeColumns = (account: User, isUnlisted: boolean) => {
       width: 350,
       className: cn(styles.col, 'colName'),
       sorter: (a: any, b: any) => alphaSortFn(a.name, b.name),
-      render: (val: string, record: DataSourceTrack) => (
-        <div className={styles.trackName}>
+      render: (val: string, record: DataSourceAgreement) => (
+        <div className={styles.agreementName}>
           {val}
           {record.is_delete ? ' [Deleted By Artist]' : ''}
         </div>
@@ -132,14 +132,14 @@ const makeColumns = (account: User, isUnlisted: boolean) => {
             includeEdit={false}
             handle={account.handle}
             onClick={(e: any) => e.stopPropagation()}
-            trackId={val.track_id}
+            agreementId={val.agreement_id}
             isFavorited={val.has_current_user_saved}
             isOwner
-            isArtistPick={account._artist_pick === val.track_id}
+            isArtistPick={account._artist_pick === val.agreement_id}
             isUnlisted={record.is_unlisted}
             index={index}
-            trackTitle={val.name}
-            trackPermalink={val.permalink}
+            agreementTitle={val.name}
+            agreementPermalink={val.permalink}
             hiddenUntilHover={false}
             includeEmbed={!isUnlisted && !record.is_delete}
             includeAddToPlaylist={!isUnlisted}
@@ -153,23 +153,23 @@ const makeColumns = (account: User, isUnlisted: boolean) => {
   return [...columns, overflowColumn]
 }
 
-const TracksTableContainer = ({
+const AgreementsTableContainer = ({
   onClickRow,
   listedDataSource,
   unlistedDataSource,
   account
-}: TracksTableProps) => {
+}: AgreementsTableProps) => {
   const tabRecalculator = useTabRecalculator()
 
   const tabHeaders = useMemo(
     () => [
       {
-        text: messages.publicTracksTabTitle,
-        label: messages.publicTracksTabTitle
+        text: messages.publicAgreementsTabTitle,
+        label: messages.publicAgreementsTabTitle
       },
       {
-        text: messages.unlistedTracksTabTitle,
-        label: messages.unlistedTracksTabTitle
+        text: messages.unlistedAgreementsTabTitle,
+        label: messages.unlistedAgreementsTabTitle
       }
     ],
     []
@@ -181,12 +181,12 @@ const TracksTableContainer = ({
         key='listed'
         className={cn(styles.sectionContainer, styles.tabBodyWrapper)}
       >
-        <TracksTable
+        <AgreementsTable
           dataSource={listedDataSource}
           limit={5}
           columns={makeColumns(account, false)}
           onClickRow={onClickRow}
-          didToggleShowTracks={() => {
+          didToggleShowAgreements={() => {
             tabRecalculator.recalculate()
           }}
           animateTransitions={false}
@@ -196,12 +196,12 @@ const TracksTableContainer = ({
         key='unlisted'
         className={cn(styles.sectionContainer, styles.tabBodyWrapper)}
       >
-        <TracksTable
+        <AgreementsTable
           dataSource={unlistedDataSource}
           limit={5}
           columns={makeColumns(account, true)}
           onClickRow={onClickRow}
-          didToggleShowTracks={() => tabRecalculator.recalculate()}
+          didToggleShowAgreements={() => tabRecalculator.recalculate()}
           animateTransitions={false}
         />
       </div>
@@ -240,7 +240,7 @@ export class ArtistDashboardPage extends Component<
   NonNullable<ReturnType<typeof mapper>>
 > {
   state = {
-    selectedTrack: -1 // all tracks
+    selectedAgreement: -1 // all agreements
   }
 
   componentDidMount() {
@@ -249,8 +249,8 @@ export class ArtistDashboardPage extends Component<
   }
 
   componentDidUpdate() {
-    const trackCount = this.props.account?.track_count || 0
-    if (!(trackCount > 0)) {
+    const agreementCount = this.props.account?.agreement_count || 0
+    if (!(agreementCount > 0)) {
       this.props.goToRoute(TRENDING_PAGE)
     }
   }
@@ -259,8 +259,8 @@ export class ArtistDashboardPage extends Component<
     this.props.resetDashboard()
   }
 
-  formatMetadata(trackMetadatas: Track[]): DataSourceTrack[] {
-    return trackMetadatas
+  formatMetadata(agreementMetadatas: Agreement[]): DataSourceAgreement[] {
+    return agreementMetadatas
       .map((metadata, i) => ({
         ...metadata,
         key: `${metadata.title}_${metadata.dateListened}_${i}`,
@@ -280,8 +280,8 @@ export class ArtistDashboardPage extends Component<
     goToRoute(record.permalink)
   }
 
-  onSetTrackOption = (trackId: ID) => {
-    this.setState({ selectedTrack: trackId })
+  onSetAgreementOption = (agreementId: ID) => {
+    this.setState({ selectedAgreement: agreementId })
   }
 
   onSetYearOption = (year: string) => {
@@ -296,19 +296,19 @@ export class ArtistDashboardPage extends Component<
       end = start.clone().add(1, 'year')
     }
     this.props.fetchDashboardListenData(
-      this.props.tracks.map((t) => t.track_id),
+      this.props.agreements.map((t) => t.agreement_id),
       start.toISOString(),
       end.toISOString()
     )
   }
 
   renderCreatorContent() {
-    const { account, listenData, tracks, unlistedTracks, stats, isMatrix } =
+    const { account, listenData, agreements, unlistedAgreements, stats, isMatrix } =
       this.props
-    const trackCount = this.props.account?.track_count || 0
-    if (!account || !(trackCount > 0)) return null
+    const agreementCount = this.props.account?.agreement_count || 0
+    if (!account || !(agreementCount > 0)) return null
 
-    const { selectedTrack } = this.state
+    const { selectedAgreement } = this.state
 
     const statTiles: ReactNode[] = []
     each(stats, (stat, title) =>
@@ -316,15 +316,15 @@ export class ArtistDashboardPage extends Component<
     )
 
     const chartData =
-      selectedTrack === -1 ? listenData.all : listenData[selectedTrack]
+      selectedAgreement === -1 ? listenData.all : listenData[selectedAgreement]
 
-    const chartTracks = tracks.map((track: any) => ({
-      id: track.track_id,
-      name: track.title
+    const chartAgreements = agreements.map((agreement: any) => ({
+      id: agreement.agreement_id,
+      name: agreement.title
     }))
 
-    const listedDataSource = this.formatMetadata(tracks)
-    const unlistedDataSource = this.formatMetadata(unlistedTracks)
+    const listedDataSource = this.formatMetadata(agreements)
+    const unlistedDataSource = this.formatMetadata(unlistedAgreements)
     return (
       <>
         <div className={styles.sectionContainer}>
@@ -332,10 +332,10 @@ export class ArtistDashboardPage extends Component<
             <TotalPlaysChart
               data={chartData}
               isMatrix={isMatrix}
-              tracks={chartTracks}
-              selectedTrack={selectedTrack}
+              agreements={chartAgreements}
+              selectedAgreement={selectedAgreement}
               onSetYearOption={this.onSetYearOption}
-              onSetTrackOption={this.onSetTrackOption}
+              onSetAgreementOption={this.onSetAgreementOption}
               accountCreatedAt={account.created_at}
             />
           </Suspense>
@@ -343,8 +343,8 @@ export class ArtistDashboardPage extends Component<
         <div className={cn(styles.sectionContainer, styles.statsContainer)}>
           {statTiles}
         </div>
-        <div className={styles.tracksTableWrapper}>
-          <TracksTableContainer
+        <div className={styles.agreementsTableWrapper}>
+          <AgreementsTableContainer
             onClickRow={this.onClickRow}
             listedDataSource={listedDataSource}
             unlistedDataSource={unlistedDataSource}
@@ -409,8 +409,8 @@ const makeMapStateToProps = () => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   fetchDashboard: () => dispatch(fetchDashboard()),
-  fetchDashboardListenData: (trackIds: ID[], start: string, end: string) =>
-    dispatch(fetchDashboardListenData(trackIds, start, end, 'month')),
+  fetchDashboardListenData: (agreementIds: ID[], start: string, end: string) =>
+    dispatch(fetchDashboardListenData(agreementIds, start, end, 'month')),
   resetDashboard: () => dispatch(resetDashboard()),
   goToRoute: (route: string) => dispatch(pushRoute(route))
 })

@@ -265,7 +265,7 @@ const DraggableDrawer = ({
           }
         }
       } else if (!first) {
-        // Otherwise track the touch events with the drawer
+        // Otherwise agreement the touch events with the drawer
         setDrawerSlideProps({
           to: {
             y: newY

@@ -2,15 +2,15 @@ import {
   ID,
   stemCategoryFriendlyNames,
   StemCategory,
-  Track,
-  StemTrack
+  Agreement,
+  StemAgreement
 } from '@coliving/common'
 import moment from 'moment'
 import { useSelector as reduxUseSelector, shallowEqual } from 'react-redux'
 
 import { CommonState } from 'common/store'
 import { getHasAccount } from 'common/store/account/selectors'
-import { getTrack, getTracks } from 'common/store/cache/tracks/selectors'
+import { getAgreement, getAgreements } from 'common/store/cache/agreements/selectors'
 import { getCurrentUploads } from 'common/store/stems-upload/selectors'
 
 export type DownloadButtonConfig = {
@@ -29,7 +29,7 @@ export enum ButtonState {
 
 export enum ButtonType {
   STEM,
-  TRACK
+  AGREEMENT
 }
 
 type Stem = {
@@ -41,20 +41,20 @@ type Stem = {
 
 type LabeledStem = Omit<Stem, 'category'> & { label: string }
 
-type UseDownloadTrackButtonsArgs = {
+type UseDownloadAgreementButtonsArgs = {
   following: boolean
   isOwner: boolean
   onDownload: (
-    trackID: number,
+    agreementID: number,
     cid: string,
     category?: string,
-    parentTrackId?: ID
+    parentAgreementId?: ID
   ) => void
   onNotLoggedInClick?: () => void
 }
 
 const messages = {
-  getDownloadTrack: (stemCount: number) => `${stemCount ? 'Original' : ''}`,
+  getDownloadAgreement: (stemCount: number) => `${stemCount ? 'Original' : ''}`,
   getDownloadStem: (friendlyName: string, categoryCount: number) =>
     `${friendlyName} ${categoryCount || ''}`
 }
@@ -62,28 +62,28 @@ const messages = {
 const doesRequireFollow = (
   isOwner: boolean,
   following: boolean,
-  track: Track
-) => !isOwner && !following && track.download?.requires_follow
+  agreement: Agreement
+) => !isOwner && !following && agreement.download?.requires_follow
 
 const useCurrentStems = ({
-  trackId,
+  agreementId,
   useSelector
 }: {
-  trackId: ID
+  agreementId: ID
   useSelector: typeof reduxUseSelector
 }) => {
-  const track: Track | null = useSelector(
-    (state: CommonState) => getTrack(state, { id: trackId }),
+  const agreement: Agreement | null = useSelector(
+    (state: CommonState) => getAgreement(state, { id: agreementId }),
     shallowEqual
   )
-  const stemIds = (track?._stems ?? []).map((s) => s.track_id)
-  const stemTracksMap = useSelector(
-    (state: CommonState) => getTracks(state, { ids: stemIds }),
+  const stemIds = (agreement?._stems ?? []).map((s) => s.agreement_id)
+  const stemAgreementsMap = useSelector(
+    (state: CommonState) => getAgreements(state, { ids: stemIds }),
     shallowEqual
-  ) as { [id: number]: StemTrack }
+  ) as { [id: number]: StemAgreement }
 
   // Sort the stems, filter deletes
-  const stemTracks = Object.values(stemTracksMap)
+  const stemAgreements = Object.values(stemAgreementsMap)
     .filter((t) => !t._marked_deleted && !t.is_delete)
     .sort(
       (a, b) =>
@@ -94,34 +94,34 @@ const useCurrentStems = ({
       downloadURL: t.download?.cid,
       category: t.stem_of.category,
       downloadable: true,
-      id: t.track_id
+      id: t.agreement_id
     }))
     .filter((t) => t.downloadURL)
-  return { stemTracks, track }
+  return { stemAgreements, agreement }
 }
 
 const useUploadingStems = ({
-  trackId,
+  agreementId,
   useSelector
 }: {
-  trackId: ID
+  agreementId: ID
   useSelector: typeof reduxUseSelector
 }) => {
   const currentUploads = useSelector(
-    (state: CommonState) => getCurrentUploads(state, trackId),
+    (state: CommonState) => getCurrentUploads(state, agreementId),
     shallowEqual
   )
-  const uploadingTracks = currentUploads.map((u) => ({
+  const uploadingAgreements = currentUploads.map((u) => ({
     category: u.category,
     downloadable: false
   }))
-  return { uploadingTracks }
+  return { uploadingAgreements }
 }
 
 const getFriendlyNames = (stems: Stem[]): LabeledStem[] => {
   // Make a map of counts of the shape { category: { count, index }}
   // where count is the number of occurences of a category, and index
-  // tracks which instance you're pointing at when naming.
+  // agreements which instance you're pointing at when naming.
   const catCounts = stems.reduce((acc, cur) => {
     const { category } = cur
     if (!acc[category]) {
@@ -157,20 +157,20 @@ const getStemButtons = ({
   isOwner,
   onDownload,
   onNotLoggedInClick,
-  parentTrackId,
+  parentAgreementId,
   stems,
-  track
-}: UseDownloadTrackButtonsArgs & {
+  agreement
+}: UseDownloadAgreementButtonsArgs & {
   isLoggedIn: boolean
   stems: LabeledStem[]
-  parentTrackId: ID
-  track: Track
+  parentAgreementId: ID
+  agreement: Agreement
 }) => {
   return stems.map((u) => {
     const state = (() => {
       if (!isLoggedIn) return ButtonState.LOG_IN_REQUIRED
 
-      const requiresFollow = doesRequireFollow(isOwner, following, track)
+      const requiresFollow = doesRequireFollow(isOwner, following, agreement)
       if (requiresFollow) return ButtonState.REQUIRES_FOLLOW
 
       return u.downloadable ? ButtonState.DOWNLOADABLE : ButtonState.PROCESSING
@@ -183,7 +183,7 @@ const getStemButtons = ({
           if (!isLoggedIn) {
             onNotLoggedInClick?.()
           }
-          onDownload(id, downloadURL, u.label, parentTrackId)
+          onDownload(id, downloadURL, u.label, parentAgreementId)
         }
     })()
 
@@ -204,24 +204,24 @@ const makeDownloadOriginalButton = ({
   onNotLoggedInClick,
   onDownload,
   stemButtonsLength,
-  track
-}: UseDownloadTrackButtonsArgs & {
+  agreement
+}: UseDownloadAgreementButtonsArgs & {
   isLoggedIn: boolean
-  track: Track | null
+  agreement: Agreement | null
   stemButtonsLength: number
 }) => {
-  if (!track?.download?.is_downloadable) {
+  if (!agreement?.download?.is_downloadable) {
     return undefined
   }
 
-  const label = messages.getDownloadTrack(stemButtonsLength)
+  const label = messages.getDownloadAgreement(stemButtonsLength)
   const config: DownloadButtonConfig = {
     state: ButtonState.PROCESSING,
     label,
-    type: ButtonType.TRACK
+    type: ButtonType.AGREEMENT
   }
 
-  const requiresFollow = doesRequireFollow(isOwner, following, track)
+  const requiresFollow = doesRequireFollow(isOwner, following, agreement)
   if (isLoggedIn && requiresFollow) {
     return {
       ...config,
@@ -229,7 +229,7 @@ const makeDownloadOriginalButton = ({
     }
   }
 
-  const { cid } = track.download
+  const { cid } = agreement.download
   if (cid) {
     return {
       ...config,
@@ -240,7 +240,7 @@ const makeDownloadOriginalButton = ({
         if (!isLoggedIn) {
           onNotLoggedInClick?.()
         }
-        onDownload(track.track_id, cid)
+        onDownload(agreement.agreement_id, cid)
       }
     }
   }
@@ -248,28 +248,28 @@ const makeDownloadOriginalButton = ({
   return config
 }
 
-export const useDownloadTrackButtons = ({
+export const useDownloadAgreementButtons = ({
   following,
   isOwner,
   onDownload,
   onNotLoggedInClick,
-  trackId,
+  agreementId,
   useSelector
-}: UseDownloadTrackButtonsArgs & {
-  trackId: ID
+}: UseDownloadAgreementButtonsArgs & {
+  agreementId: ID
   useSelector: typeof reduxUseSelector
 }) => {
   const isLoggedIn = useSelector(getHasAccount)
 
-  // Get already uploaded stems and parent track
-  const { stemTracks, track } = useCurrentStems({ trackId, useSelector })
+  // Get already uploaded stems and parent agreement
+  const { stemAgreements, agreement } = useCurrentStems({ agreementId, useSelector })
 
   // Get the currently uploading stems
-  const { uploadingTracks } = useUploadingStems({ trackId, useSelector })
-  if (!track) return []
+  const { uploadingAgreements } = useUploadingStems({ agreementId, useSelector })
+  if (!agreement) return []
 
   // Combine uploaded and uploading stems
-  const combinedStems = [...stemTracks, ...uploadingTracks] as Stem[]
+  const combinedStems = [...stemAgreements, ...uploadingAgreements] as Stem[]
 
   // Give the stems friendly names
   const combinedFriendly = getFriendlyNames(combinedStems)
@@ -281,21 +281,21 @@ export const useDownloadTrackButtons = ({
     isOwner,
     onDownload,
     onNotLoggedInClick,
-    parentTrackId: trackId,
+    parentAgreementId: agreementId,
     stems: combinedFriendly,
-    track
+    agreement
   })
 
   // Make download original button
-  const originalTrackButton = makeDownloadOriginalButton({
+  const originalAgreementButton = makeDownloadOriginalButton({
     following,
     isLoggedIn,
     isOwner,
     onDownload,
     onNotLoggedInClick,
     stemButtonsLength: stemButtons.length,
-    track
+    agreement
   })
 
-  return [...(originalTrackButton ? [originalTrackButton] : []), ...stemButtons]
+  return [...(originalAgreementButton ? [originalAgreementButton] : []), ...stemButtons]
 }

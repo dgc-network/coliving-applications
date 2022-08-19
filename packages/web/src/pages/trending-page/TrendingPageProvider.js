@@ -112,12 +112,12 @@ class TrendingPageProvider extends PureComponent {
 
   getLineupProps = (lineup) => {
     const { currentQueueItem, playing, buffering } = this.props
-    const { uid: playingUid, track, source } = currentQueueItem
+    const { uid: playingUid, agreement, source } = currentQueueItem
     return {
       lineup,
       playingUid,
       playingSource: source,
-      playingTrackId: track ? track.track_id : null,
+      playingAgreementId: agreement ? agreement.agreement_id : null,
       playing,
       buffering,
       scrollParent: this.props.containerRef,
@@ -173,8 +173,8 @@ class TrendingPageProvider extends PureComponent {
       trendingWeek: this.props.trendingWeek,
       trendingMonth: this.props.trendingMonth,
       trendingAllTime: this.props.trendingAllTime,
-      playTrendingTrack: this.props.playTrendingTrack,
-      pauseTrendingTrack: this.props.pauseTrendingTrack,
+      playTrendingAgreement: this.props.playTrendingAgreement,
+      pauseTrendingAgreement: this.props.pauseTrendingAgreement,
       refreshTrendingInView: this.props.refreshTrendingInView,
       hasAccount: this.props.hasAccount,
       goToTrending: this.goToTrending,
@@ -190,8 +190,8 @@ class TrendingPageProvider extends PureComponent {
       lastFetchedTrendingGenre: this.props.lastFetchedTrendingGenre,
 
       makeLoadMore: this.props.makeLoadMore,
-      makePlayTrack: this.props.makePlayTrack,
-      makePauseTrack: this.props.makePauseTrack,
+      makePlayAgreement: this.props.makePlayAgreement,
+      makePauseAgreement: this.props.makePauseAgreement,
       makeSetInView: this.props.makeSetInView,
       makeRefreshTrendingInView: this.props.makeRefreshTrendingInView,
       makeResetTrending: this.props.makeResetTrending,
@@ -240,8 +240,8 @@ const mapDispatchToProps = (dispatch) => ({
   // Trending Lineup Actions
   refreshTrendingInView: (overwrite) =>
     dispatch(trendingActions.refreshInView(overwrite)),
-  playTrendingTrack: (uid) => dispatch(trendingActions.play(uid)),
-  pauseTrendingTrack: () => dispatch(trendingActions.pause()),
+  playTrendingAgreement: (uid) => dispatch(trendingActions.play(uid)),
+  pauseTrendingAgreement: () => dispatch(trendingActions.pause()),
   setTrendingGenre: (genre) =>
     dispatch(trendingPageActions.setTrendingGenre(genre)),
   setTrendingTimeRange: (timeRange) =>
@@ -264,16 +264,16 @@ const mapDispatchToProps = (dispatch) => ({
           overwrite
         )
       )
-      const trackEvent = make(Name.TRENDING_PAGINATE, { offset, limit })
-      dispatch(trackEvent)
+      const agreementEvent = make(Name.TRENDING_PAGINATE, { offset, limit })
+      dispatch(agreementEvent)
     }
   },
-  makePlayTrack: (timeRange) => {
+  makePlayAgreement: (timeRange) => {
     return (uid) => {
       dispatch(callLineupAction(timeRange, 'play', uid))
     }
   },
-  makePauseTrack: (timeRange) => {
+  makePauseAgreement: (timeRange) => {
     return () => {
       dispatch(callLineupAction(timeRange, 'pause'))
     }

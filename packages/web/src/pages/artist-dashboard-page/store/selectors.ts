@@ -5,22 +5,22 @@ import { AppState } from 'store/types'
 
 // Dashboard selectors
 export const getDashboardStatus = (state: AppState) => state.dashboard.status
-export const getDashboardTracks = (state: AppState) => state.dashboard.tracks
-export const getUnlistedDashboardTracks = (state: AppState) =>
-  state.dashboard.unlistedTracks
+export const getDashboardAgreements = (state: AppState) => state.dashboard.agreements
+export const getUnlistedDashboardAgreements = (state: AppState) =>
+  state.dashboard.unlistedAgreements
 export const getDashboardListenData = (state: AppState) =>
   state.dashboard.listenData
 
 export const makeGetDashboard = () => {
   return createSelector(
-    [getAccountUser, getDashboardTracks, getUnlistedDashboardTracks],
-    (account, tracks, unlistedTracks) => {
+    [getAccountUser, getDashboardAgreements, getUnlistedDashboardAgreements],
+    (account, agreements, unlistedAgreements) => {
       const stats = {
-        tracks: account ? account.track_count : 0,
+        agreements: account ? account.agreement_count : 0,
         playlists: account ? account.playlist_count : 0,
         // albums: account ? account.album_count : 0,
-        plays: tracks.reduce(
-          (totalPlays, track) => totalPlays + (track.play_count || 0),
+        plays: agreements.reduce(
+          (totalPlays, agreement) => totalPlays + (agreement.play_count || 0),
           0
         ),
         reposts: account ? account.repost_count : 0,
@@ -29,8 +29,8 @@ export const makeGetDashboard = () => {
       }
       return {
         account,
-        tracks,
-        unlistedTracks,
+        agreements,
+        unlistedAgreements,
         stats
       }
     }

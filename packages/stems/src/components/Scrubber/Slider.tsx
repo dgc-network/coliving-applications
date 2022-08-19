@@ -47,11 +47,11 @@ export const Slider = ({
 
   // Div refs
   const railRef = useRef<HTMLDivElement>(null)
-  const trackRef = useRef<HTMLDivElement>(null)
+  const agreementRef = useRef<HTMLDivElement>(null)
   const handleRef = useRef<HTMLDivElement>(null)
 
   const { play, pause, setPercent } = useAnimations(
-    trackRef,
+    agreementRef,
     handleRef,
     elapsedSeconds,
     totalSeconds
@@ -249,7 +249,7 @@ export const Slider = ({
     return s
   }
 
-  const getTrackStyle = () => {
+  const getAgreementStyle = () => {
     const s: CSSProperties = {}
     if (style && style.railListenedColor) {
       s.background = style.railListenedColor
@@ -288,11 +288,11 @@ export const Slider = ({
       style={getSliderStyle()}
     >
       <div ref={railRef} className={styles.rail} style={getRailStyle()}>
-        <div ref={trackRef} className={styles.trackWrapper}>
+        <div ref={agreementRef} className={styles.agreementWrapper}>
           <div
-            ref={trackRef}
-            className={styles.track}
-            style={getTrackStyle()}
+            ref={agreementRef}
+            className={styles.agreement}
+            style={getAgreementStyle()}
           />
         </div>
       </div>

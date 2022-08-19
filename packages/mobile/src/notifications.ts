@@ -11,7 +11,7 @@ import { dispatch } from 'app/App'
 import { open } from 'app/store/notifications/actions'
 import type { MessagePostingWebView } from 'app/types/MessagePostingWebView'
 import { EventNames } from 'app/types/analytics'
-import { track, make } from 'app/utils/analytics'
+import { agreement, make } from 'app/utils/analytics'
 
 type Token = {
   token: string
@@ -66,7 +66,7 @@ class PushNotifications {
   onNotification(notification: any) {
     console.info(`Received notification ${JSON.stringify(notification)}`)
     if (notification.userInteraction || Platform.OS === 'android') {
-      track(
+      agreement(
         make({
           eventName: EventNames.NOTIFICATIONS_OPEN_PUSH_NOTIFICATION,
           ...(notification.message

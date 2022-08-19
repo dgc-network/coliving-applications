@@ -72,7 +72,7 @@ type CardProps = {
   favorites?: number
   onClickReposts?: () => void
   onClickFavorites?: () => void
-  trackCount?: number
+  agreementCount?: number
   onClick: () => void
 }
 
@@ -142,7 +142,7 @@ const Card = ({
   menu,
   reposts,
   favorites,
-  trackCount,
+  agreementCount,
   onClickReposts,
   onClickFavorites,
   onClick
@@ -256,9 +256,9 @@ const Card = ({
               onClickFavorites={onClickFavorites!}
               className={styles.statsWrapper}
             />
-            {trackCount !== undefined && (
-              <div className={styles.trackCount}>
-                {`${trackCount} ${pluralize('Track', trackCount)}`}
+            {agreementCount !== undefined && (
+              <div className={styles.agreementCount}>
+                {`${agreementCount} ${pluralize('Agreement', agreementCount)}`}
               </div>
             )}
           </div>

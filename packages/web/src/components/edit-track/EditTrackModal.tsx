@@ -4,7 +4,7 @@ import {
   ID,
   StemCategory,
   StemUploadWithFile,
-  Track,
+  Agreement,
   removeNullable,
   uuid
 } from '@coliving/common'
@@ -14,34 +14,34 @@ import { matchPath } from 'react-router'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { Dispatch } from 'redux'
 
-import * as cacheTrackActions from 'common/store/cache/tracks/actions'
+import * as cacheAgreementActions from 'common/store/cache/agreements/actions'
 import { getCurrentUploads } from 'common/store/stems-upload/selectors'
 import { startStemUploads } from 'common/store/stems-upload/slice'
 import DeleteConfirmationModal from 'components/delete-confirmation/DeleteConfirmationModal'
 import { dropdownRows } from 'components/source-files-modal/SourceFilesModal'
-import EditTrackModalComponent from 'components/track/EditTrackModal'
+import EditAgreementModalComponent from 'components/agreement/EditAgreementModal'
 import { processFiles } from 'pages/upload-page/store/utils/processFiles'
-import * as editTrackModalActions from 'store/application/ui/editTrackModal/actions'
+import * as editAgreementModalActions from 'store/application/ui/editAgreementModal/actions'
 import {
   getMetadata,
   getIsOpen,
   getStems
-} from 'store/application/ui/editTrackModal/selectors'
+} from 'store/application/ui/editAgreementModal/selectors'
 import { AppState } from 'store/types'
 import { FEED_PAGE, getPathname } from 'utils/route'
 
 const messages = {
-  deleteTrack: 'DELETE TRACK'
+  deleteAgreement: 'DELETE AGREEMENT'
 }
 
 type OwnProps = {}
 
-type EditTrackModalProps = OwnProps &
+type EditAgreementModalProps = OwnProps &
   ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
   RouteComponentProps
 
-const EditTrackModal = ({
+const EditAgreementModal = ({
   isOpen,
   metadata,
   onEdit,
@@ -52,10 +52,10 @@ const EditTrackModal = ({
   stems,
   uploadStems,
   currentUploads
-}: EditTrackModalProps) => {
+}: EditAgreementModalProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   useEffect(() => {
-    // Delay opening the modal until after we have track metadata as well
+    // Delay opening the modal until after we have agreement metadata as well
     if (isOpen && metadata) {
       setIsModalOpen(true)
     }
@@ -68,11 +68,11 @@ const EditTrackModal = ({
 
   const [pendingUploads, setPendingUploads] = useState<StemUploadWithFile[]>([])
   const [pendingDeletes, setPendingDeletes] = useState<ID[]>([])
-  const onSaveEdit = (formFields: Track) => {
+  const onSaveEdit = (formFields: Agreement) => {
     if (!metadata) return
-    onEdit(metadata.track_id, formFields)
+    onEdit(metadata.agreement_id, formFields)
     if (pendingUploads.length) {
-      uploadStems(metadata.track_id, pendingUploads)
+      uploadStems(metadata.agreement_id, pendingUploads)
       setPendingUploads([])
     }
     if (pendingDeletes.length) {
@@ -92,9 +92,9 @@ const EditTrackModal = ({
     close()
   }
 
-  const onDeleteTrack = () => {
+  const onDeleteAgreement = () => {
     if (!metadata) return
-    onDelete(metadata.track_id)
+    onDelete(metadata.agreement_id)
     setShowDeleteConfirmation(false)
     close()
     const match = matchPath<{ name: string; handle: string }>(
@@ -110,7 +110,7 @@ const EditTrackModal = ({
   }
 
   const getStemsFilteringPendingDeletes = () =>
-    stems.filter((s) => !pendingDeletes.includes(s.track_id))
+    stems.filter((s) => !pendingDeletes.includes(s.agreement_id))
 
   const onSelectStemCategory = (category: StemCategory, stemIndex: number) => {
     setPendingUploads((u) => {
@@ -169,7 +169,7 @@ const EditTrackModal = ({
     const onDeleteStem = (index: number) => {
       if (index < existingStems.length) {
         // If it's an existing stem, set is as a pending delete
-        const id = existingStems[index].metadata.track_id
+        const id = existingStems[index].metadata.agreement_id
         setPendingDeletes((s) => [...s, id])
       } else {
         // If it's a pending stem, delete it from local state
@@ -187,7 +187,7 @@ const EditTrackModal = ({
 
   return (
     <>
-      <EditTrackModalComponent
+      <EditAgreementModalComponent
         visible={isModalOpen}
         metadata={metadata}
         onSave={onSaveEdit}
@@ -200,10 +200,10 @@ const EditTrackModal = ({
         onAddStems={onAddStems}
       />
       <DeleteConfirmationModal
-        title={messages.deleteTrack}
-        entity='Track'
+        title={messages.deleteAgreement}
+        entity='Agreement'
         visible={showDeleteConfirmation}
-        onDelete={onDeleteTrack}
+        onDelete={onDeleteAgreement}
         onCancel={() => setShowDeleteConfirmation(false)}
       />
     </>
@@ -216,8 +216,8 @@ function mapStateToProps(state: AppState, ownProps: OwnProps) {
     metadata,
     isOpen: getIsOpen(state),
     stems: getStems(state),
-    currentUploads: metadata?.track_id
-      ? getCurrentUploads(state, metadata.track_id)
+    currentUploads: metadata?.agreement_id
+      ? getCurrentUploads(state, metadata.agreement_id)
       : []
   }
 }
@@ -225,15 +225,15 @@ function mapStateToProps(state: AppState, ownProps: OwnProps) {
 function mapDispatchToProps(dispatch: Dispatch) {
   return {
     goToRoute: (route: string) => dispatch(pushRoute(route)),
-    onEdit: (trackId: ID, formFields: any) =>
-      dispatch(cacheTrackActions.editTrack(trackId, formFields)),
-    onDelete: (trackId: ID) => dispatch(cacheTrackActions.deleteTrack(trackId)),
-    close: () => dispatch(editTrackModalActions.close()),
+    onEdit: (agreementId: ID, formFields: any) =>
+      dispatch(cacheAgreementActions.editAgreement(agreementId, formFields)),
+    onDelete: (agreementId: ID) => dispatch(cacheAgreementActions.deleteAgreement(agreementId)),
+    close: () => dispatch(editAgreementModalActions.close()),
     uploadStems: (parentId: ID, uploads: StemUploadWithFile[]) =>
       dispatch(startStemUploads({ parentId, uploads, batchUID: uuid() }))
   }
 }
 
 export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(EditTrackModal)
+  connect(mapStateToProps, mapDispatchToProps)(EditAgreementModal)
 )

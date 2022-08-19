@@ -1,9 +1,9 @@
-.trackContent {
+.agreementContent {
   padding: 14px 12px 0px;
   width: 100%;
 }
 
-.tracksContainer {
+.agreementsContainer {
   padding-top: 41px;
 }
 
@@ -22,6 +22,6 @@
   text-transform: uppercase;
 }
 
-.originalTrack {
+.originalAgreement {
   margin-bottom: 16px !important;
 }

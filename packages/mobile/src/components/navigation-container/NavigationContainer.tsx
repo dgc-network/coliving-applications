@@ -51,7 +51,7 @@ const NavigationContainer = ({ children }: Props) => {
                   screens: {
                     Feed: 'feed',
                     Collection: '*/playlist/*',
-                    Track: 'track',
+                    Agreement: 'agreement',
                     // Unfortunately routes like username/playlists
                     // don't load properly on web. So for now deep linking
                     // to profile tabs (other than for your own account) isn't
@@ -59,7 +59,7 @@ const NavigationContainer = ({ children }: Props) => {
                     Profile: {
                       path: ':handle',
                       screens: {
-                        Tracks: 'tracks',
+                        Agreements: 'agreements',
                         Albums: 'albums',
                         Playlists: 'playlists',
                         Reposts: 'reposts',
@@ -105,7 +105,7 @@ const NavigationContainer = ({ children }: Props) => {
                     UserProfile: {
                       path: 'profile',
                       screens: {
-                        Tracks: 'tracks',
+                        Agreements: 'agreements',
                         Albums: 'albums',
                         Playlists: 'playlists',
                         Reposts: 'reposts',
@@ -139,13 +139,13 @@ const NavigationContainer = ({ children }: Props) => {
           if (path.match(/^\/[^/]+\/live-nft-playlist$/)) {
             path = '/feed'
           }
-          // If the path doesn't match a profile tab, it's a track
+          // If the path doesn't match a profile tab, it's a agreement
           else if (
             !path.match(
-              /^\/[^/]+\/(tracks|albums|playlists|reposts|collectibles)$/
+              /^\/[^/]+\/(agreements|albums|playlists|reposts|collectibles)$/
             )
           ) {
-            path = '/track'
+            path = '/agreement'
           }
         }
       }

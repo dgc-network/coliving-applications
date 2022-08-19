@@ -1,14 +1,14 @@
 import { useCallback, useLayoutEffect } from 'react'
 
-import type { Track } from '@/common'
+import type { Agreement } from '@/common'
 import { FavoriteSource, RepostSource, ShareSource } from '@/common'
 import { updateMethod } from '-client/src/common/store/cast/slice'
 import {
-  repostTrack,
-  saveTrack,
-  undoRepostTrack,
-  unsaveTrack
-} from '-client/src/common/store/social/tracks/actions'
+  repostAgreement,
+  saveAgreement,
+  undoRepostAgreement,
+  unsaveAgreement
+} from '-client/src/common/store/social/agreements/actions'
 import { getUserId } from 'common/store/account/selectors'
 import {
   getMethod as getCastMethod,
@@ -61,10 +61,10 @@ const useStyles = makeStyles(({ palette, spacing }) => ({
 }))
 
 type ActionsBarProps = {
-  track: Track
+  agreement: Agreement
 }
 
-export const ActionsBar = ({ track }: ActionsBarProps) => {
+export const ActionsBar = ({ agreement }: ActionsBarProps) => {
   const styles = useStyles()
   const currentUserId = useSelectorWeb(getUserId)
   const castMethod = useSelectorWeb(getCastMethod)
@@ -79,66 +79,66 @@ export const ActionsBar = ({ track }: ActionsBarProps) => {
   }, [castMethod, dispatchWeb])
 
   const onToggleFavorite = useCallback(() => {
-    if (track) {
-      if (track.has_current_user_saved) {
-        dispatchWeb(unsaveTrack(track.track_id, FavoriteSource.NOW_PLAYING))
+    if (agreement) {
+      if (agreement.has_current_user_saved) {
+        dispatchWeb(unsaveAgreement(agreement.agreement_id, FavoriteSource.NOW_PLAYING))
       } else {
-        dispatchWeb(saveTrack(track.track_id, FavoriteSource.NOW_PLAYING))
+        dispatchWeb(saveAgreement(agreement.agreement_id, FavoriteSource.NOW_PLAYING))
       }
     }
-  }, [dispatchWeb, track])
+  }, [dispatchWeb, agreement])
 
   const onToggleRepost = useCallback(() => {
-    if (track) {
-      if (track.has_current_user_reposted) {
-        dispatchWeb(undoRepostTrack(track.track_id, RepostSource.NOW_PLAYING))
+    if (agreement) {
+      if (agreement.has_current_user_reposted) {
+        dispatchWeb(undoRepostAgreement(agreement.agreement_id, RepostSource.NOW_PLAYING))
       } else {
-        dispatchWeb(repostTrack(track.track_id, RepostSource.NOW_PLAYING))
+        dispatchWeb(repostAgreement(agreement.agreement_id, RepostSource.NOW_PLAYING))
       }
     }
-  }, [dispatchWeb, track])
+  }, [dispatchWeb, agreement])
 
   const onPressShare = useCallback(() => {
-    if (track) {
+    if (agreement) {
       dispatchWeb(
         requestOpenShareModal({
-          type: 'track',
-          trackId: track.track_id,
+          type: 'agreement',
+          agreementId: agreement.agreement_id,
           source: ShareSource.NOW_PLAYING
         })
       )
     }
-  }, [dispatchWeb, track])
+  }, [dispatchWeb, agreement])
 
   const onPressOverflow = useCallback(() => {
-    if (track) {
-      const isOwner = currentUserId === track.owner_id
+    if (agreement) {
+      const isOwner = currentUserId === agreement.owner_id
       const overflowActions = [
         !isOwner
-          ? track.has_current_user_reposted
+          ? agreement.has_current_user_reposted
             ? OverflowAction.UNREPOST
             : OverflowAction.REPOST
           : null,
         !isOwner
-          ? track.has_current_user_saved
+          ? agreement.has_current_user_saved
             ? OverflowAction.UNFAVORITE
             : OverflowAction.FAVORITE
           : null,
         OverflowAction.SHARE,
         OverflowAction.ADD_TO_PLAYLIST,
-        OverflowAction.VIEW_TRACK_PAGE,
+        OverflowAction.VIEW_AGREEMENT_PAGE,
         OverflowAction.VIEW_ARTIST_PAGE
       ].filter(Boolean) as OverflowAction[]
 
       dispatchWeb(
         openOverflowMenu({
-          source: OverflowSource.TRACKS,
-          id: track.track_id,
+          source: OverflowSource.AGREEMENTS,
+          id: agreement.agreement_id,
           overflowActions
         })
       )
     }
-  }, [track, currentUserId, dispatchWeb])
+  }, [agreement, currentUserId, dispatchWeb])
 
   const { openAirplayDialog } = useAirplay()
 
@@ -167,7 +167,7 @@ export const ActionsBar = ({ track }: ActionsBarProps) => {
   const renderRepostButton = () => {
     return (
       <RepostButton
-        iconIndex={track.has_current_user_reposted ? 1 : 0}
+        iconIndex={agreement.has_current_user_reposted ? 1 : 0}
         onPress={onToggleRepost}
         style={styles.button}
         wrapperStyle={styles.animatedIcon}
@@ -178,7 +178,7 @@ export const ActionsBar = ({ track }: ActionsBarProps) => {
   const renderFavoriteButton = () => {
     return (
       <FavoriteButton
-        iconIndex={track.has_current_user_saved ? 1 : 0}
+        iconIndex={agreement.has_current_user_saved ? 1 : 0}
         onPress={onToggleFavorite}
         style={styles.button}
         wrapperStyle={styles.animatedIcon}

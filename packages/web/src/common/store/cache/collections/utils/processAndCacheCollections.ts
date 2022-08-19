@@ -3,33 +3,33 @@ import { put, call } from 'redux-saga/effects'
 
 import * as cacheActions from 'common/store/cache/actions'
 
-import { addTracksFromCollections } from './addTracksFromCollections'
+import { addAgreementsFromCollections } from './addAgreementsFromCollections'
 import { addUsersFromCollections } from './addUsersFromCollections'
 import { reformat } from './reformat'
-import { retrieveTracksForCollections } from './retrieveCollections'
+import { retrieveAgreementsForCollections } from './retrieveCollections'
 
 /**
  * Processes and caches a collection
  * @param {Collection} collections collections to cache
- * @param {boolean} shouldRetrieveTracks whether or not to retrieve the tracks inside the collection (we don't need
+ * @param {boolean} shouldRetrieveAgreements whether or not to retrieve the agreements inside the collection (we don't need
  *  to do this for displaying collection cards)
- * @param {Array<ID>} excludedTrackIds optional track ids to exclude from retrieve
+ * @param {Array<ID>} excludedAgreementIds optional agreement ids to exclude from retrieve
  */
 export function* processAndCacheCollections(
   collections: UserCollectionMetadata[],
-  shouldRetrieveTracks = true,
-  excludedTrackIds: ID[] = []
+  shouldRetrieveAgreements = true,
+  excludedAgreementIds: ID[] = []
 ) {
   yield addUsersFromCollections(collections)
-  yield addTracksFromCollections(collections)
+  yield addAgreementsFromCollections(collections)
 
   let reformattedCollections = collections.map((c) => reformat(c))
 
-  if (shouldRetrieveTracks) {
-    // Retrieve the tracks
-    const excludedSet = new Set(excludedTrackIds)
+  if (shouldRetrieveAgreements) {
+    // Retrieve the agreements
+    const excludedSet = new Set(excludedAgreementIds)
     reformattedCollections = yield call(
-      retrieveTracksForCollections,
+      retrieveAgreementsForCollections,
       reformattedCollections,
       excludedSet
     )

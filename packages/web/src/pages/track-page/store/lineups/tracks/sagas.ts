@@ -1,90 +1,90 @@
 import { call, select } from 'typed-redux-saga'
 
 import { getUserId } from 'common/store/account/selectors'
-import { getTrack } from 'common/store/cache/tracks/selectors'
-import { retrieveUserTracks } from 'common/store/pages/profile/lineups/tracks/retrieveUserTracks'
-import { PREFIX, tracksActions } from 'common/store/pages/track/lineup/actions'
+import { getAgreement } from 'common/store/cache/agreements/selectors'
+import { retrieveUserAgreements } from 'common/store/pages/profile/lineups/agreements/retrieveUserAgreements'
+import { PREFIX, agreementsActions } from 'common/store/pages/agreement/lineup/actions'
 import {
   getLineup,
   getSourceSelector as sourceSelector
-} from 'common/store/pages/track/selectors'
+} from 'common/store/pages/agreement/selectors'
 import { LineupSagas } from 'store/lineup/sagas'
 import { waitForValue } from 'utils/sagaHelpers'
 
-function* getTracks({
+function* getAgreements({
   payload,
   offset = 0,
   limit = 6
 }: {
   payload: {
     ownerHandle: string
-    /** Permalink of track that should be loaded first */
-    heroTrackPermalink: string
+    /** Permalink of agreement that should be loaded first */
+    heroAgreementPermalink: string
   }
   offset?: number
   limit?: number
 }) {
-  const { ownerHandle, heroTrackPermalink } = payload
+  const { ownerHandle, heroAgreementPermalink } = payload
   const currentUserId = yield* select(getUserId)
 
   const lineup = []
-  const heroTrack = yield* call(
+  const heroAgreement = yield* call(
     waitForValue,
-    getTrack,
-    { permalink: heroTrackPermalink },
-    // Wait for the track to have a track_id (e.g. remix children could get fetched first)
-    (track) => track.track_id
+    getAgreement,
+    { permalink: heroAgreementPermalink },
+    // Wait for the agreement to have a agreement_id (e.g. remix children could get fetched first)
+    (agreement) => agreement.agreement_id
   )
   if (offset === 0) {
-    lineup.push(heroTrack)
+    lineup.push(heroAgreement)
   }
-  const heroTrackRemixParentTrackId =
-    heroTrack.remix_of?.tracks?.[0]?.parent_track_id
-  if (heroTrackRemixParentTrackId) {
-    const remixParentTrack = yield* call(waitForValue, getTrack, {
-      id: heroTrackRemixParentTrackId
+  const heroAgreementRemixParentAgreementId =
+    heroAgreement.remix_of?.agreements?.[0]?.parent_agreement_id
+  if (heroAgreementRemixParentAgreementId) {
+    const remixParentAgreement = yield* call(waitForValue, getAgreement, {
+      id: heroAgreementRemixParentAgreementId
     })
     if (offset <= 1) {
-      lineup.push(remixParentTrack)
+      lineup.push(remixParentAgreement)
     }
   }
 
-  let moreByArtistTracksOffset: number
-  if (heroTrackRemixParentTrackId) {
-    moreByArtistTracksOffset = offset <= 1 ? 0 : offset - 2
+  let moreByArtistAgreementsOffset: number
+  if (heroAgreementRemixParentAgreementId) {
+    moreByArtistAgreementsOffset = offset <= 1 ? 0 : offset - 2
   } else {
-    moreByArtistTracksOffset = offset === 0 ? 0 : offset - 1
+    moreByArtistAgreementsOffset = offset === 0 ? 0 : offset - 1
   }
 
-  const processed = yield* call(retrieveUserTracks, {
+  const processed = yield* call(retrieveUserAgreements, {
     handle: ownerHandle,
     currentUserId,
     sort: 'plays',
     limit: limit + 2,
-    // The hero track is always our first track and the remix parent is always the second track (if any):
-    offset: moreByArtistTracksOffset
+    // The hero agreement is always our first agreement and the remix parent is always the second agreement (if any):
+    offset: moreByArtistAgreementsOffset
   })
 
   return lineup
     .concat(
       processed
-        // Filter out any track that matches the `excludePermalink` + the remix parent track (if any)
+        // Filter out any agreement that matches the `excludePermalink` + the remix parent agreement (if any)
         .filter(
           (t) =>
-            t.permalink !== heroTrackPermalink &&
-            t.track_id !== heroTrackRemixParentTrackId
+            t.permalink !== heroAgreementPermalink &&
+            t.agreement_id !== heroAgreementRemixParentAgreementId
         )
     )
     .slice(0, limit)
 }
 
-class TracksSagas extends LineupSagas {
+class AgreementsSagas extends LineupSagas {
   constructor() {
     super(
       PREFIX,
-      tracksActions,
+      agreementsActions,
       getLineup,
-      getTracks,
+      getAgreements,
       undefined,
       undefined,
       sourceSelector
@@ -93,5 +93,5 @@ class TracksSagas extends LineupSagas {
 }
 
 export default function sagas() {
-  return new TracksSagas().getSagas()
+  return new AgreementsSagas().getSagas()
 }

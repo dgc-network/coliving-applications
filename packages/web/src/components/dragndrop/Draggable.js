@@ -105,13 +105,13 @@ Draggable.propTypes = {
   text: PropTypes.string,
   link: PropTypes.string,
   kind: PropTypes.oneOf([
-    'track',
+    'agreement',
     'album',
     'playlist',
     'library-playlist',
     'playlist-folder'
   ]),
-  id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]), // One of trackId, collectionId, userId
+  id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]), // One of agreementId, collectionId, userId
   children: PropTypes.element,
   onDrag: PropTypes.func,
   onDrop: PropTypes.func

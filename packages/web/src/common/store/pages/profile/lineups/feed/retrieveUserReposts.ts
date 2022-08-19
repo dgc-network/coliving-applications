@@ -1,22 +1,22 @@
-import { ID, UserCollection, Track, UserTrackMetadata } from '@coliving/common'
+import { ID, UserCollection, Agreement, UserAgreementMetadata } from '@coliving/common'
 import { all } from 'redux-saga/effects'
 
 import { processAndCacheCollections } from 'common/store/cache/collections/utils'
-import { processAndCacheTracks } from 'common/store/cache/tracks/utils'
+import { processAndCacheAgreements } from 'common/store/cache/agreements/utils'
 import apiClient from 'services/coliving-api-client/ColivingAPIClient'
 
-const getTracksAndCollections = (
-  feed: (UserTrackMetadata | UserCollection)[]
+const getAgreementsAndCollections = (
+  feed: (UserAgreementMetadata | UserCollection)[]
 ) =>
   feed.reduce(
     (
-      acc: [UserTrackMetadata[], UserCollection[]],
-      cur: UserTrackMetadata | UserCollection
+      acc: [UserAgreementMetadata[], UserCollection[]],
+      cur: UserAgreementMetadata | UserCollection
     ) =>
-      ('track_id' in cur
+      ('agreement_id' in cur
         ? [[...acc[0], cur], acc[1]]
         : [acc[0], [...acc[1], cur]]) as [
-        UserTrackMetadata[],
+        UserAgreementMetadata[],
         UserCollection[]
       ],
     [[], []]
@@ -34,25 +34,25 @@ export function* retrieveUserReposts({
   currentUserId,
   offset,
   limit
-}: RetrieveUserRepostsArgs): Generator<any, Track[], any> {
+}: RetrieveUserRepostsArgs): Generator<any, Agreement[], any> {
   const reposts = yield apiClient.getUserRepostsByHandle({
     handle,
     currentUserId,
     limit,
     offset
   })
-  const [tracks, collections] = getTracksAndCollections(reposts)
-  const trackIds = tracks.map((t) => t.track_id)
-  const [processedTracks, processedCollections] = yield all([
-    processAndCacheTracks(tracks),
+  const [agreements, collections] = getAgreementsAndCollections(reposts)
+  const agreementIds = agreements.map((t) => t.agreement_id)
+  const [processedAgreements, processedCollections] = yield all([
+    processAndCacheAgreements(agreements),
     processAndCacheCollections(
       collections,
-      /* shouldRetrieveTracks */ false,
-      trackIds
+      /* shouldRetrieveAgreements */ false,
+      agreementIds
     )
   ])
-  const processedTracksMap = processedTracks.reduce(
-    (acc: any, cur: any) => ({ ...acc, [cur.track_id]: cur }),
+  const processedAgreementsMap = processedAgreements.reduce(
+    (acc: any, cur: any) => ({ ...acc, [cur.agreement_id]: cur }),
     {}
   )
   const processedCollectionsMap = processedCollections.reduce(
@@ -60,8 +60,8 @@ export function* retrieveUserReposts({
     {}
   )
   const processed = reposts.map((m: any) =>
-    m.track_id
-      ? processedTracksMap[m.track_id]
+    m.agreement_id
+      ? processedAgreementsMap[m.agreement_id]
       : processedCollectionsMap[m.playlist_id]
   )
 

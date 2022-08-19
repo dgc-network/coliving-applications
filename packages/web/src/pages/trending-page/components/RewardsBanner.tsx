@@ -15,15 +15,15 @@ import styles from './RewardsBanner.module.css'
 
 const messages = {
   rewards: '$LIVE REWARDS',
-  tracksDescription: 'TOP 5 TRACKS EACH WEEK WIN $LIVE',
+  agreementsDescription: 'TOP 5 AGREEMENTS EACH WEEK WIN $LIVE',
   playlistsDescription: 'TOP 5 PLAYLISTS EACH WEEK WIN $LIVE',
-  undergroundDescription: 'TOP 5 TRACKS EACH WEEK WIN $LIVE',
+  undergroundDescription: 'TOP 5 AGREEMENTS EACH WEEK WIN $LIVE',
   learnMore: 'LEARN MORE'
 }
 
 const messageMap = {
-  tracks: {
-    description: messages.tracksDescription
+  agreements: {
+    description: messages.agreementsDescription
   },
   playlists: {
     description: messages.playlistsDescription
@@ -34,7 +34,7 @@ const messageMap = {
 }
 
 type RewardsBannerProps = {
-  bannerType: 'tracks' | 'playlists' | 'underground'
+  bannerType: 'agreements' | 'playlists' | 'underground'
 }
 
 const useHandleBannerClick = () => {

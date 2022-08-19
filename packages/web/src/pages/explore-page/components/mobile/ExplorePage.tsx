@@ -68,7 +68,7 @@ const messages = {
   featuredArtists: 'Featured Artists',
   justForYou: 'Just For You',
   justForYouDescription: `Content curated for
-you based on your likes, reposts, and follows. Refreshes often so if you like a track, favorite it.`,
+you based on your likes, reposts, and follows. Refreshes often so if you like a agreement, favorite it.`,
   moodPlaylists: 'Playlists to Fit Your Mood',
   moodPlaylistsDescription:
     'Playlists made by Coliving users, sorted by mood and feel.'
@@ -119,7 +119,7 @@ export type ExplorePageProps = {
   playlists: UserCollection[]
   profiles: User[]
   status: Status
-  formatPlaylistCardSecondaryText: (saves: number, tracks: number) => string
+  formatPlaylistCardSecondaryText: (saves: number, agreements: number) => string
   formatProfileCardSecondaryText: (followerCount: number) => string
   goToRoute: (route: string) => void
 }
@@ -205,7 +205,7 @@ const ExplorePage = ({
           primaryText={playlist.playlist_name}
           secondaryText={formatPlaylistCardSecondaryText(
             playlist.save_count,
-            playlist.playlist_contents.track_ids.length
+            playlist.playlist_contents.agreement_ids.length
           )}
           onClick={() =>
             playlist.is_album

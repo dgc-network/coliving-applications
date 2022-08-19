@@ -8,12 +8,12 @@ import CoSign from 'components/co-sign/CoSign'
 import { Size } from 'components/co-sign/types'
 import DynamicImage from 'components/dynamic-image/DynamicImage'
 import { useCollectionCoverArt } from 'hooks/useCollectionCoverArt'
-import { useTrackCoverArt } from 'hooks/useTrackCoverArt'
+import { useAgreementCoverArt } from 'hooks/useAgreementCoverArt'
 
-import styles from './TrackTileArt.module.css'
+import styles from './AgreementTileArt.module.css'
 
-type TrackTileArtProps = {
-  isTrack: boolean
+type AgreementTileArtProps = {
+  isAgreement: boolean
   id: ID
   coverArtSizes: CoverArtSizes
   className?: string
@@ -23,16 +23,16 @@ type TrackTileArtProps = {
   callback: () => void
 }
 
-const TrackTileArt = ({
+const AgreementTileArt = ({
   id,
-  isTrack,
+  isAgreement,
   className,
   coverArtSizes,
   showSkeleton,
   coSign,
   callback
-}: TrackTileArtProps) => {
-  const useImage = isTrack ? useTrackCoverArt : useCollectionCoverArt
+}: AgreementTileArtProps) => {
+  const useImage = isAgreement ? useAgreementCoverArt : useCollectionCoverArt
   const image = useImage(id, coverArtSizes, SquareSizes.SIZE_150_BY_150)
 
   useLoadImageWithTimeout(image, callback)
@@ -59,4 +59,4 @@ const TrackTileArt = ({
   )
 }
 
-export default memo(TrackTileArt)
+export default memo(AgreementTileArt)

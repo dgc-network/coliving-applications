@@ -1,4 +1,4 @@
-.playlistTrack {
+.playlistAgreement {
   border-bottom: 1px solid rgba(133, 129, 153, 0.1);
   border-left: 1px solid rgba(133, 129, 153, 0.1);
   border-right: 1px solid rgba(133, 129, 153, 0.1);
@@ -13,39 +13,39 @@
   align-items: center;
 }
 
-.playlistTrack.noBorder {
+.playlistAgreement.noBorder {
   border: none;
 }
 
-.playlistTrack.disabled {
+.playlistAgreement.disabled {
   cursor: default;
 }
 
-.playlistTrack.deleted:hover,
-.playlistTrack.deleted {
+.playlistAgreement.deleted:hover,
+.playlistAgreement.deleted {
   background-color: var(--neutral-light-9);
   color: var(--neutral-light-4);
 }
 
-.large.playlistTrack,
-.small.playlistTrack {
+.large.playlistAgreement,
+.small.playlistAgreement {
   height: 40px;
   padding: 8px;
 }
 
-.playlistTrack:not(.disabled):hover {
+.playlistAgreement:not(.disabled):hover {
   background: var(--neutral-light-9);
 }
 
-.playlistTrack:not(.disabled):hover .more {
+.playlistAgreement:not(.disabled):hover .more {
   opacity: 1;
 }
 
-.playlistTrack:not(.disabled):hover .listButton {
+.playlistAgreement:not(.disabled):hover .listButton {
   opacity: 1;
 }
 
-.playlistTrack.active .listButton {
+.playlistAgreement.active .listButton {
   opacity: 1;
 }
 
@@ -78,7 +78,7 @@
   opacity: 0;
 }
 
-.trackNumber {
+.agreementNumber {
   color: var(--neutral-light-4);
   flex: 0 0 21px;
   text-align: right;
@@ -94,7 +94,7 @@
   overflow: hidden;
 }
 
-.trackTitle {
+.agreementTitle {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
@@ -106,7 +106,7 @@
   font-weight: var(--font-medium);
 }
 
-.trackTitle,
+.agreementTitle,
 .artistName {
   align-items: center;
   padding-right: 8px;
@@ -134,21 +134,21 @@
   color: var(--primary);
 }
 
-.trackTitle > span {
+.agreementTitle > span {
   transition: all 0.04s ease-in-out;
 }
 
-.trackTitle > span:hover {
+.agreementTitle > span:hover {
   text-decoration: underline;
   color: var(--primary);
 }
 
-.disabled .trackTitle > span:hover {
+.disabled .agreementTitle > span:hover {
   color: inherit;
   text-decoration: none;
 }
 
-.active .trackTitle {
+.active .agreementTitle {
   color: var(--primary);
 }
 

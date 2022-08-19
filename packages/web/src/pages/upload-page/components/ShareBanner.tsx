@@ -20,7 +20,7 @@ import {
   fullAlbumPage,
   fullPlaylistPage,
   fullProfilePage,
-  fullTrackPage,
+  fullAgreementPage,
   profilePage,
   albumPage,
   playlistPage
@@ -31,8 +31,8 @@ import { UploadPageState } from '../store/types'
 
 import styles from './ShareBanner.module.css'
 
-type UploadType = 'Track' | 'Tracks' | 'Album' | 'Playlist' | 'Remix'
-type ContinuePage = 'Track' | 'Profile' | 'Album' | 'Playlist' | 'Remix'
+type UploadType = 'Agreement' | 'Agreements' | 'Album' | 'Playlist' | 'Remix'
+type ContinuePage = 'Agreement' | 'Profile' | 'Album' | 'Playlist' | 'Remix'
 
 type ShareBannerProps = {
   isHidden: boolean
@@ -43,7 +43,7 @@ type ShareBannerProps = {
 
 const messages = {
   title: (type: UploadType) =>
-    `Your ${type} ${type === 'Tracks' ? 'Are' : 'Is'} Live!`,
+    `Your ${type} ${type === 'Agreements' ? 'Are' : 'Is'} Live!`,
   description: 'Now it’s time to spread the word and share it with your fans!',
   share: 'Share With Your Fans',
   shareToTikTok: 'Share Sound to TikTok',
@@ -52,7 +52,7 @@ const messages = {
 }
 
 const getContinuePage = (uploadType: UploadType) => {
-  if (uploadType === 'Tracks') return 'Profile'
+  if (uploadType === 'Agreements') return 'Profile'
   return uploadType
 }
 
@@ -70,41 +70,41 @@ const getShareTextUrl = async (
   fullUrl = true
 ) => {
   switch (uploadType) {
-    case 'Track': {
-      const { title, permalink } = upload.tracks[0].metadata
-      const url = fullUrl ? fullTrackPage(permalink) : permalink
+    case 'Agreement': {
+      const { title, permalink } = upload.agreements[0].metadata
+      const url = fullUrl ? fullAgreementPage(permalink) : permalink
       return {
-        text: `Check out my new track, ${title} on @dgc.network #Coliving`,
+        text: `Check out my new agreement, ${title} on @dgc.network #Coliving`,
         url
       }
     }
     case 'Remix': {
-      const { permalink } = upload.tracks[0].metadata
-      const parent_track_id =
-        upload.tracks[0].metadata?.remix_of?.tracks[0].parent_track_id
-      if (!parent_track_id) return { text: '', url: '' }
+      const { permalink } = upload.agreements[0].metadata
+      const parent_agreement_id =
+        upload.agreements[0].metadata?.remix_of?.agreements[0].parent_agreement_id
+      if (!parent_agreement_id) return { text: '', url: '' }
 
-      const url = fullUrl ? fullTrackPage(permalink) : permalink
-      const parentTrack = await apiClient.getTrack({ id: parent_track_id })
-      if (!parentTrack) return { text: '', url: '' }
+      const url = fullUrl ? fullAgreementPage(permalink) : permalink
+      const parentAgreement = await apiClient.getAgreement({ id: parent_agreement_id })
+      if (!parentAgreement) return { text: '', url: '' }
 
-      const parentTrackUser = parentTrack.user
+      const parentAgreementUser = parentAgreement.user
 
       let twitterHandle = await getTwitterHandleByUserHandle(
-        parentTrackUser.handle
+        parentAgreementUser.handle
       )
-      if (!twitterHandle) twitterHandle = parentTrackUser.name
+      if (!twitterHandle) twitterHandle = parentAgreementUser.name
       else twitterHandle = `@${twitterHandle}`
 
       return {
-        text: `Check out my new remix of ${parentTrack.title} by ${twitterHandle} on @dgc.network #Coliving`,
+        text: `Check out my new remix of ${parentAgreement.title} by ${twitterHandle} on @dgc.network #Coliving`,
         url
       }
     }
-    case 'Tracks': {
+    case 'Agreements': {
       const getPage = fullUrl ? fullProfilePage : profilePage
       const url = getPage(user.handle)
-      return { text: `Check out my new tracks on @dgc.network #Coliving`, url }
+      return { text: `Check out my new agreements on @dgc.network #Coliving`, url }
     }
     case 'Album': {
       // @ts-ignore
@@ -143,7 +143,7 @@ const ShareBanner = ({ isHidden, type, upload, user }: ShareBannerProps) => {
     const { url, text } = await getShareTextUrl(type, user, upload)
     openTwitterLink(url, text)
     record(
-      make(Name.TRACK_UPLOAD_SHARE_WITH_FANS, {
+      make(Name.AGREEMENT_UPLOAD_SHARE_WITH_FANS, {
         uploadType: type,
         text
       })
@@ -151,28 +151,28 @@ const ShareBanner = ({ isHidden, type, upload, user }: ShareBannerProps) => {
   }, [type, user, upload, record])
 
   const onClickTikTok = useCallback(async () => {
-    // Sharing to TikTok is currently only enabled for single track uploads
-    const track = upload.tracks[0]
-    if (track.metadata) {
+    // Sharing to TikTok is currently only enabled for single agreement uploads
+    const agreement = upload.agreements[0]
+    if (agreement.metadata) {
       dispatch(
         openTikTokModal({
-          track: {
-            id: track.metadata.track_id,
-            title: track.metadata.title,
-            duration: track.metadata.duration
+          agreement: {
+            id: agreement.metadata.agreement_id,
+            title: agreement.metadata.title,
+            duration: agreement.metadata.duration
           }
         })
       )
       setIsTikTokModalOpen(true)
     }
-    record(make(Name.TRACK_UPLOAD_SHARE_SOUND_TO_TIKTOK, {}))
+    record(make(Name.AGREEMENT_UPLOAD_SHARE_SOUND_TO_TIKTOK, {}))
   }, [upload, record, dispatch, setIsTikTokModalOpen])
 
   const onCopy = useCallback(async () => {
     const { url } = await getShareTextUrl(type, user, upload, false)
     copyLinkToClipboard(url)
     record(
-      make(Name.TRACK_UPLOAD_COPY_LINK, {
+      make(Name.AGREEMENT_UPLOAD_COPY_LINK, {
         uploadType: type,
         url
       })
@@ -181,9 +181,9 @@ const ShareBanner = ({ isHidden, type, upload, user }: ShareBannerProps) => {
 
   const shouldShowShareToTikTok = () => {
     return (
-      type === 'Track' &&
+      type === 'Agreement' &&
       isShareSoundToTikTokEnabled &&
-      !upload.tracks[0]?.metadata.is_unlisted
+      !upload.agreements[0]?.metadata.is_unlisted
     )
   }
 

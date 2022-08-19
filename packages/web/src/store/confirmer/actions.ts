@@ -61,7 +61,7 @@ const validateConfirmationOptions = ({
  *  - consider retries/timeout backoff
  *  - consider other mechanisms for failure other than timeout
  *
- * @param uid (string) A unique identifier for this confirmation (e.g. track id)
+ * @param uid (string) A unique identifier for this confirmation (e.g. agreement id)
  * @param confirmationCall (function * | async function) The confirmation call to make. Can optionally receive the previous
  *  confirmation's result.
  * @param successCall (function * | async function | any An optional async call to make on success.

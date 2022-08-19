@@ -19,13 +19,13 @@ import {
   createPlaylist,
   editPlaylist,
   orderPlaylist,
-  removeTrackFromPlaylist
+  removeAgreementFromPlaylist
 } from 'common/store/cache/collections/actions'
-import { tracksActions } from 'common/store/pages/collection/lineup/actions'
+import { agreementsActions } from 'common/store/pages/collection/lineup/actions'
 import * as createPlaylistActions from 'common/store/ui/createPlaylistModal/actions'
 import {
   getMetadata,
-  getTracks
+  getAgreements
 } from 'common/store/ui/createPlaylistModal/selectors'
 import DynamicImage from 'components/dynamic-image/DynamicImage'
 import EditableRow, { Format } from 'components/groupable-list/EditableRow'
@@ -34,7 +34,7 @@ import Grouping from 'components/groupable-list/Grouping'
 import TextElement, { Type } from 'components/nav/mobile/TextElement'
 import { useTemporaryNavContext } from 'components/nav/store/context'
 import { ToastContext } from 'components/toast/ToastContext'
-import TrackList from 'components/track/mobile/TrackList'
+import AgreementList from 'components/agreement/mobile/AgreementList'
 import { useCollectionCoverArt } from 'hooks/useCollectionCoverArt'
 import useHasChangedRoute from 'hooks/useHasChangedRoute'
 import UploadStub from 'pages/profile-page/components/mobile/UploadStub'
@@ -45,7 +45,7 @@ import { playlistPage } from 'utils/route'
 import { withNullGuard } from 'utils/withNullGuard'
 
 import styles from './EditPlaylistPage.module.css'
-import RemovePlaylistTrackDrawer from './RemovePlaylistTrackDrawer'
+import RemovePlaylistAgreementDrawer from './RemovePlaylistAgreementDrawer'
 
 const IS_NATIVE_MOBILE = process.env.REACT_APP_NATIVE_MOBILE
 
@@ -78,8 +78,8 @@ const EditPlaylistPage = g(
     account,
     createPlaylist,
     metadata,
-    tracks,
-    removeTrack,
+    agreements,
+    removeAgreement,
     editPlaylist,
     orderPlaylist,
     refreshLineup
@@ -96,28 +96,28 @@ const EditPlaylistPage = g(
       initialMetadata || initialFormFields
     )
 
-    const [showRemoveTrackDrawer, setShowRemoveTrackDrawer] = useState(false)
-    const onDrawerClose = () => setShowRemoveTrackDrawer(false)
+    const [showRemoveAgreementDrawer, setShowRemoveAgreementDrawer] = useState(false)
+    const onDrawerClose = () => setShowRemoveAgreementDrawer(false)
 
-    // Holds all tracks to be removed on save
-    const [removedTracks, setRemovedTracks] = useState<
-      { timestamp: number; trackId: ID }[]
+    // Holds all agreements to be removed on save
+    const [removedAgreements, setRemovedAgreements] = useState<
+      { timestamp: number; agreementId: ID }[]
     >([])
 
-    // Holds track to be removed if confirmed
-    const [confirmRemoveTrack, setConfirmRemoveTrack] =
-      useState<Nullable<{ title: string; trackId: ID; timestamp: number }>>(
+    // Holds agreement to be removed if confirmed
+    const [confirmRemoveAgreement, setConfirmRemoveAgreement] =
+      useState<Nullable<{ title: string; agreementId: ID; timestamp: number }>>(
         null
       )
 
-    // State to keep track of reordering
-    const [reorderedTracks, setReorderedTracks] = useState<number[]>([])
+    // State to keep agreement of reordering
+    const [reorderedAgreements, setReorderedAgreements] = useState<number[]>([])
     const [hasReordered, setHasReordered] = useState(false)
     useEffect(() => {
-      if (reorderedTracks.length === 0 && tracks && tracks.length !== 0) {
-        setReorderedTracks(tracks.map((_: any, i: number) => i))
+      if (reorderedAgreements.length === 0 && agreements && agreements.length !== 0) {
+        setReorderedAgreements(agreements.map((_: any, i: number) => i))
       }
-    }, [setReorderedTracks, reorderedTracks, tracks])
+    }, [setReorderedAgreements, reorderedAgreements, agreements])
 
     const existingImage = useCollectionCoverArt(
       formFields.playlist_id,
@@ -180,25 +180,25 @@ const EditPlaylistPage = g(
 
     const onReorderPlaylist = useCallback(
       (source: number, destination: number) => {
-        const reorder = [...reorderedTracks]
+        const reorder = [...reorderedAgreements]
         const tmp = reorder[source]
         reorder.splice(source, 1)
         reorder.splice(destination, 0, tmp)
 
         setHasReordered(true)
-        setReorderedTracks(reorder)
+        setReorderedAgreements(reorder)
       },
-      [setHasReordered, reorderedTracks, setReorderedTracks]
+      [setHasReordered, reorderedAgreements, setReorderedAgreements]
     )
 
     const formatReorder = (
-      trackIds: { track: ID; time: number }[],
+      agreementIds: { agreement: ID; time: number }[],
       reorder: number[]
     ) => {
       return reorder.map((i) => {
-        const { track, time } = trackIds[i]
+        const { agreement, time } = agreementIds[i]
         return {
-          id: track,
+          id: agreement,
           time
         }
       })
@@ -210,14 +210,14 @@ const EditPlaylistPage = g(
         formFields.description = null
       }
       // Copy the metadata playlist contents so that a reference is not changed between
-      // removing tracks, updating track order, and edit playlist
-      const playlistTrackIds = [
-        ...(metadata?.playlist_contents?.track_ids ?? [])
+      // removing agreements, updating agreement order, and edit playlist
+      const playlistAgreementIds = [
+        ...(metadata?.playlist_contents?.agreement_ids ?? [])
       ]
 
-      for (const removedTrack of removedTracks) {
+      for (const removedAgreement of removedAgreements) {
         const { playlist_id } = metadata!
-        removeTrack(removedTrack.trackId, playlist_id, removedTrack.timestamp)
+        removeAgreement(removedAgreement.agreementId, playlist_id, removedAgreement.timestamp)
       }
 
       if (metadata && formFields.playlist_id) {
@@ -227,12 +227,12 @@ const EditPlaylistPage = g(
           // in the view behind the edit playlist page.
           orderPlaylist(
             metadata.playlist_id,
-            formatReorder(playlistTrackIds, reorderedTracks)
+            formatReorder(playlistAgreementIds, reorderedAgreements)
           )
-          // Update the playlist content track_ids so that the editPlaylist
-          // optimistically update the cached collection trackIds
-          formFields.playlist_contents.track_ids = reorderedTracks.map(
-            (idx) => playlistTrackIds[idx]
+          // Update the playlist content agreement_ids so that the editPlaylist
+          // optimistically update the cached collection agreementIds
+          formFields.playlist_contents.agreement_ids = reorderedAgreements.map(
+            (idx) => playlistAgreementIds[idx]
           )
         }
         refreshLineup()
@@ -258,69 +258,69 @@ const EditPlaylistPage = g(
       metadata,
       editPlaylist,
       hasReordered,
-      reorderedTracks,
+      reorderedAgreements,
       orderPlaylist,
       refreshLineup,
       toast,
-      removeTrack,
-      removedTracks
+      removeAgreement,
+      removedAgreements
     ])
 
     /**
-     * Stores the track to be removed if confirmed
-     * Opens the drawer to confirm removal of the track
+     * Stores the agreement to be removed if confirmed
+     * Opens the drawer to confirm removal of the agreement
      */
-    const onRemoveTrack = useCallback(
+    const onRemoveAgreement = useCallback(
       (index: number) => {
-        if ((metadata?.playlist_contents?.track_ids.length ?? 0) <= index)
+        if ((metadata?.playlist_contents?.agreement_ids.length ?? 0) <= index)
           return
-        const reorderedIndex = reorderedTracks[index]
+        const reorderedIndex = reorderedAgreements[index]
         const { playlist_contents } = metadata!
-        const { track: trackId, time } =
-          playlist_contents.track_ids[reorderedIndex]
-        const trackMetadata = tracks?.find(
-          (track) => track.track_id === trackId
+        const { agreement: agreementId, time } =
+          playlist_contents.agreement_ids[reorderedIndex]
+        const agreementMetadata = agreements?.find(
+          (agreement) => agreement.agreement_id === agreementId
         )
-        if (!trackMetadata) return
-        setConfirmRemoveTrack({
-          title: trackMetadata.title,
-          trackId,
+        if (!agreementMetadata) return
+        setConfirmRemoveAgreement({
+          title: agreementMetadata.title,
+          agreementId,
           timestamp: time
         })
-        setShowRemoveTrackDrawer(true)
+        setShowRemoveAgreementDrawer(true)
       },
       [
-        reorderedTracks,
-        setShowRemoveTrackDrawer,
+        reorderedAgreements,
+        setShowRemoveAgreementDrawer,
         metadata,
-        tracks,
-        setConfirmRemoveTrack
+        agreements,
+        setConfirmRemoveAgreement
       ]
     )
 
     /**
-     * Moves the track to be removed to the removedTracks array
-     * Closes the drawer to confirm removal of the track
+     * Moves the agreement to be removed to the removedAgreements array
+     * Closes the drawer to confirm removal of the agreement
      */
     const onConfirmRemove = useCallback(() => {
-      if (!confirmRemoveTrack) return
-      const removeIdx = metadata?.playlist_contents.track_ids.findIndex(
+      if (!confirmRemoveAgreement) return
+      const removeIdx = metadata?.playlist_contents.agreement_ids.findIndex(
         (t) =>
-          t.track === confirmRemoveTrack.trackId &&
-          t.time === confirmRemoveTrack.timestamp
+          t.agreement === confirmRemoveAgreement.agreementId &&
+          t.time === confirmRemoveAgreement.timestamp
       )
       if (removeIdx === -1) return
-      setRemovedTracks((removed) =>
+      setRemovedAgreements((removed) =>
         removed.concat({
-          trackId: confirmRemoveTrack.trackId,
-          timestamp: confirmRemoveTrack.timestamp
+          agreementId: confirmRemoveAgreement.agreementId,
+          timestamp: confirmRemoveAgreement.timestamp
         })
       )
-      setReorderedTracks((tracks) =>
-        tracks.filter((trackIndex) => trackIndex !== removeIdx)
+      setReorderedAgreements((agreements) =>
+        agreements.filter((agreementIndex) => agreementIndex !== removeIdx)
       )
       onDrawerClose()
-    }, [metadata, confirmRemoveTrack, setRemovedTracks, setReorderedTracks])
+    }, [metadata, confirmRemoveAgreement, setRemovedAgreements, setReorderedAgreements])
 
     const setters = useCallback(
       () => ({
@@ -344,24 +344,24 @@ const EditPlaylistPage = g(
 
     useTemporaryNavContext(setters)
 
-    // Put together track list if necessary
-    let trackList = null
-    if (tracks && reorderedTracks.length > 0) {
-      trackList = reorderedTracks.map((i) => {
-        const t = tracks[i]
-        const playlistTrack = metadata?.playlist_contents.track_ids[i]
+    // Put together agreement list if necessary
+    let agreementList = null
+    if (agreements && reorderedAgreements.length > 0) {
+      agreementList = reorderedAgreements.map((i) => {
+        const t = agreements[i]
+        const playlistAgreement = metadata?.playlist_contents.agreement_ids[i]
         const isRemoveActive =
-          showRemoveTrackDrawer &&
-          t.track_id === confirmRemoveTrack?.trackId &&
-          playlistTrack?.time === confirmRemoveTrack?.timestamp
+          showRemoveAgreementDrawer &&
+          t.agreement_id === confirmRemoveAgreement?.agreementId &&
+          playlistAgreement?.time === confirmRemoveAgreement?.timestamp
 
         return {
           isLoading: false,
           artistName: t.user.name,
           artistHandle: t.user.handle,
-          trackTitle: t.title,
-          trackId: t.track_id,
-          time: playlistTrack?.time,
+          agreementTitle: t.title,
+          agreementId: t.agreement_id,
+          time: playlistAgreement?.time,
           isDeleted: t.is_delete || !!t.user.is_deactivated,
           isRemoveActive
         }
@@ -414,26 +414,26 @@ const EditPlaylistPage = g(
                 maxLength={256}
               />
             </Grouping>
-            {/** Don't render tracklist on native mobile. Errors
+            {/** Don't render agreementlist on native mobile. Errors
              * get thrown because of the null renderer
              */}
-            {!IS_NATIVE_MOBILE && trackList && trackList.length > 0 && (
+            {!IS_NATIVE_MOBILE && agreementList && agreementList.length > 0 && (
               <Grouping>
-                <TrackList
-                  tracks={trackList}
+                <AgreementList
+                  agreements={agreementList}
                   showDivider
                   noDividerMargin
                   isReorderable
-                  onRemove={onRemoveTrack}
+                  onRemove={onRemoveAgreement}
                   onReorder={onReorderPlaylist}
                 />
               </Grouping>
             )}
           </GroupableList>
         </div>
-        <RemovePlaylistTrackDrawer
-          isOpen={showRemoveTrackDrawer}
-          trackTitle={confirmRemoveTrack?.title}
+        <RemovePlaylistAgreementDrawer
+          isOpen={showRemoveAgreementDrawer}
+          agreementTitle={confirmRemoveAgreement?.title}
           onClose={onDrawerClose}
           onConfirm={onConfirmRemove}
         />
@@ -446,7 +446,7 @@ function mapStateToProps(state: AppState) {
   return {
     metadata: getMetadata(state),
     account: getAccountUser(state),
-    tracks: getTracks(state)
+    agreements: getAgreements(state)
   }
 }
 
@@ -461,9 +461,9 @@ function mapDispatchToProps(dispatch: Dispatch) {
       dispatch(editPlaylist(id, metadata)),
     orderPlaylist: (playlistId: ID, idsAndTimes: any) =>
       dispatch(orderPlaylist(playlistId, idsAndTimes)),
-    removeTrack: (trackId: ID, playlistId: ID, timestamp: number) =>
-      dispatch(removeTrackFromPlaylist(trackId, playlistId, timestamp)),
-    refreshLineup: () => dispatch(tracksActions.fetchLineupMetadatas()),
+    removeAgreement: (agreementId: ID, playlistId: ID, timestamp: number) =>
+      dispatch(removeAgreementFromPlaylist(agreementId, playlistId, timestamp)),
+    refreshLineup: () => dispatch(agreementsActions.fetchLineupMetadatas()),
     goToRoute: (route: string) => dispatch(pushRoute(route))
   }
 }

@@ -2,8 +2,8 @@ import { useMemo } from 'react'
 
 import { StyleSheet } from 'react-native'
 
-import IconFavoriteOffLight from 'app/assets/animations/iconFavoriteTrackTileOffLight.json'
-import IconFavoriteOnLight from 'app/assets/animations/iconFavoriteTrackTileOnLight.json'
+import IconFavoriteOffLight from 'app/assets/animations/iconFavoriteAgreementTileOffLight.json'
+import IconFavoriteOnLight from 'app/assets/animations/iconFavoriteAgreementTileOnLight.json'
 import type { AnimatedButtonProps } from 'app/components/core'
 import { AnimatedButton } from 'app/components/core'
 import { colorize } from 'app/utils/colorizeLottie'

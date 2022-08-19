@@ -8,16 +8,16 @@ import Lottie from 'react-lottie'
 import loadingSpinner from 'assets/animations/loadingSpinner.json'
 import { ReactComponent as IconDrag } from 'assets/img/iconDrag.svg'
 import { ReactComponent as IconHeart } from 'assets/img/iconHeart.svg'
-import { ReactComponent as IconRemoveTrack } from 'assets/img/iconRemoveTrack.svg'
+import { ReactComponent as IconRemoveAgreement } from 'assets/img/iconRemoveAgreement.svg'
 import { ReactComponent as IconPause } from 'assets/img/pbIconPause.svg'
 import { ReactComponent as IconPlay } from 'assets/img/pbIconPlay.svg'
-import TablePlayButton from 'components/tracks-table/TablePlayButton'
+import TablePlayButton from 'components/agreements-table/TablePlayButton'
 import UserBadges from 'components/user-badges/UserBadges'
-import { useTrackCoverArt } from 'hooks/useTrackCoverArt'
+import { useAgreementCoverArt } from 'hooks/useAgreementCoverArt'
 
-import styles from './TrackListItem.module.css'
+import styles from './AgreementListItem.module.css'
 
-export enum TrackItemAction {
+export enum AgreementItemAction {
   Save = 'save',
   Overflow = 'overflow'
 }
@@ -50,21 +50,21 @@ const ArtworkIcon = ({ isLoading, isPlaying }: ArtworkIconProps) => {
 }
 
 type ArtworkProps = {
-  trackId: ID
+  agreementId: ID
   isLoading: boolean
   isActive?: boolean
   isPlaying: boolean
   coverArtSizes: CoverArtSizes
 }
 const Artwork = ({
-  trackId,
+  agreementId,
   isPlaying,
   isActive,
   isLoading,
   coverArtSizes
 }: ArtworkProps) => {
-  const image = useTrackCoverArt(
-    trackId,
+  const image = useAgreementCoverArt(
+    agreementId,
     coverArtSizes,
     SquareSizes.SIZE_150_BY_150
   )
@@ -93,7 +93,7 @@ const getMessages = ({ isDeleted = false }: { isDeleted?: boolean } = {}) => ({
   deleted: isDeleted ? ' [Deleted By Artist]' : ''
 })
 
-export type TrackListItemProps = {
+export type AgreementListItemProps = {
   className?: string
   index: number
   isLoading: boolean
@@ -106,20 +106,20 @@ export type TrackListItemProps = {
   coverArtSizes?: CoverArtSizes
   artistName: string
   artistHandle: string
-  trackTitle: string
-  trackId: ID
+  agreementTitle: string
+  agreementId: ID
   userId: ID
   uid?: string
   isReorderable?: boolean
   isDragging?: boolean
-  onSave?: (isSaved: boolean, trackId: ID) => void
-  onRemove?: (trackId: ID) => void
-  togglePlay?: (uid: string, trackId: ID) => void
+  onSave?: (isSaved: boolean, agreementId: ID) => void
+  onRemove?: (agreementId: ID) => void
+  togglePlay?: (uid: string, agreementId: ID) => void
   onClickOverflow?: () => void
-  trackItemAction?: TrackItemAction
+  agreementItemAction?: AgreementItemAction
 }
 
-const TrackListItem = ({
+const AgreementListItem = ({
   className,
   isLoading,
   index,
@@ -128,8 +128,8 @@ const TrackListItem = ({
   isPlaying = false,
   isRemoveActive = false,
   artistName,
-  trackTitle,
-  trackId,
+  agreementTitle,
+  agreementId,
   userId,
   uid,
   coverArtSizes,
@@ -137,42 +137,42 @@ const TrackListItem = ({
   onSave,
   onRemove,
   togglePlay,
-  trackItemAction,
+  agreementItemAction,
   onClickOverflow,
   isReorderable = false,
   isDragging = false
-}: TrackListItemProps) => {
+}: AgreementListItemProps) => {
   const messages = getMessages({ isDeleted })
 
-  const onClickTrack = () => {
-    if (uid && !isDeleted && togglePlay) togglePlay(uid, trackId)
+  const onClickAgreement = () => {
+    if (uid && !isDeleted && togglePlay) togglePlay(uid, agreementId)
   }
 
-  const onSaveTrack = (e: MouseEvent) => {
+  const onSaveAgreement = (e: MouseEvent) => {
     e.stopPropagation()
     if (isDeleted && !isSaved) return
-    if (onSave) onSave(isSaved, trackId)
+    if (onSave) onSave(isSaved, agreementId)
   }
 
-  const onRemoveTrack = (e: MouseEvent<Element>) => {
+  const onRemoveAgreement = (e: MouseEvent<Element>) => {
     e.stopPropagation()
     if (onRemove) onRemove(index)
   }
 
   return (
     <div
-      className={cn(styles.trackContainer, className, {
+      className={cn(styles.agreementContainer, className, {
         [styles.isActive]: isActive,
         [styles.isDeleted]: isDeleted,
         [styles.isReorderable]: isReorderable,
         [styles.isDragging]: isDragging
       })}
-      onClick={onClickTrack}
+      onClick={onClickAgreement}
     >
       {coverArtSizes ? (
         <div>
           <Artwork
-            trackId={trackId}
+            agreementId={agreementId}
             coverArtSizes={coverArtSizes}
             isActive={isActive}
             isLoading={isLoading}
@@ -191,8 +191,8 @@ const TrackListItem = ({
       {isReorderable && <IconDrag className={styles.dragIcon} />}
 
       <div className={styles.nameArtistContainer}>
-        <div className={styles.trackTitle}>
-          {trackTitle}
+        <div className={styles.agreementTitle}>
+          {agreementTitle}
           {messages.deleted}
         </div>
         <div className={styles.artistName}>
@@ -204,14 +204,14 @@ const TrackListItem = ({
           />
         </div>
       </div>
-      {onSaveTrack && trackItemAction === TrackItemAction.Save && (
-        <div className={styles.iconContainer} onClick={onSaveTrack}>
+      {onSaveAgreement && agreementItemAction === AgreementItemAction.Save && (
+        <div className={styles.iconContainer} onClick={onSaveAgreement}>
           <IconHeart
             className={cn(styles.heartIcon, { [styles.isSaved]: isSaved })}
           />
         </div>
       )}
-      {onClickOverflow && trackItemAction === TrackItemAction.Overflow && (
+      {onClickOverflow && agreementItemAction === AgreementItemAction.Overflow && (
         <div className={styles.iconContainer}>
           <IconButton
             aria-label='more actions'
@@ -227,12 +227,12 @@ const TrackListItem = ({
       {onRemove && (
         <div className={styles.iconContainer}>
           <IconButton
-            aria-label='remove track'
-            icon={<IconRemoveTrack />}
-            className={cn(styles.removeTrackContainer, {
+            aria-label='remove agreement'
+            icon={<IconRemoveAgreement />}
+            className={cn(styles.removeAgreementContainer, {
               [styles.isRemoveActive]: isRemoveActive
             })}
-            onClick={onRemoveTrack}
+            onClick={onRemoveAgreement}
           />
         </div>
       )}
@@ -240,4 +240,4 @@ const TrackListItem = ({
   )
 }
 
-export default memo(TrackListItem)
+export default memo(AgreementListItem)

@@ -162,7 +162,7 @@ const reducer = (
       return {
         ...state,
         accountAvailable: action.isAvailable,
-        // for analytics tracking purposes
+        // for analytics agreementing purposes
         finalEmail: action.finalEmail,
         finalHandle: action.finalHandle
       }

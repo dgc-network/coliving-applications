@@ -3,7 +3,7 @@ import { useMemo } from 'react'
 import type { Nullable } from '@/common'
 import {
   getStatus,
-  getTrack
+  getAgreement
 } from '-client/src/common/store/ui/share-sound-to-tiktok-modal/selectors'
 import {
   authenticated,
@@ -34,13 +34,13 @@ const MODAL_NAME = 'ShareSoundToTikTok'
 
 const messages = {
   completeButton: 'Done',
-  confirmation: 'Are you sure you want to share "[Track Name]" to TikTok?',
+  confirmation: 'Are you sure you want to share "[Agreement Name]" to TikTok?',
   error: 'Something went wrong, please try again',
   errorMaxLength: 'Maximum Length for TikTok Sounds is 5 Minutes',
   errorMinLength: 'Minimum Length for TikTok Sounds is 10 Seconds',
-  inProgress: 'Sharing "[Track Name]" to TikTok',
+  inProgress: 'Sharing "[Agreement Name]" to TikTok',
   shareButton: 'Share Sound to TikTok',
-  success: '"[Track Name]" has been shared to TikTok!',
+  success: '"[Agreement Name]" has been shared to TikTok!',
   title: 'Share to TikTok'
 }
 
@@ -94,7 +94,7 @@ export const ShareToTikTokDrawer = () => {
 
   const dispatchWeb = useDispatchWeb()
 
-  const track = useSelectorWeb(getTrack)
+  const agreement = useSelectorWeb(getAgreement)
   const status = useSelectorWeb(getStatus)
 
   const withTikTokAuth = useTikTokAuth({
@@ -102,20 +102,20 @@ export const ShareToTikTokDrawer = () => {
   })
 
   const fileRequirementError: Nullable<FileRequirementError> = useMemo(() => {
-    if (track) {
-      if (track.duration > 300) {
+    if (agreement) {
+      if (agreement.duration > 300) {
         return FileRequirementError.MAX_LENGTH
       }
-      if (track.duration < 10) {
+      if (agreement.duration < 10) {
         return FileRequirementError.MIN_LENGTH
       }
     }
     return null
-  }, [track])
+  }, [agreement])
 
   const handleShareButtonClick = () => {
-    if (track) {
-      // Trigger the share process, which initially downloads the track to the client
+    if (agreement) {
+      // Trigger the share process, which initially downloads the agreement to the client
       dispatchWeb(share())
 
       // Trigger the authentication process
@@ -151,7 +151,7 @@ export const ShareToTikTokDrawer = () => {
     } else {
       return (
         <Text style={styles.message}>
-          {rawMessage.replace('[Track Name]', track?.title ?? '')}
+          {rawMessage.replace('[Agreement Name]', agreement?.title ?? '')}
         </Text>
       )
     }

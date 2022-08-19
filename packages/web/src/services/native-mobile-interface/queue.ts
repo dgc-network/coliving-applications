@@ -6,7 +6,7 @@ import { NativeMobileMessage } from './helpers'
 import { MessageType } from './types'
 
 // Array of m3u8 "data" files
-type TrackInfo = {
+type AgreementInfo = {
   uri: string
   title: string
   artist: string
@@ -16,11 +16,11 @@ type TrackInfo = {
   currentListenCount: number
   uid: UID
 }
-export type Tracks = TrackInfo[]
+export type Agreements = AgreementInfo[]
 
 export class PersistQueueMessage extends NativeMobileMessage {
   constructor(
-    tracks: Tracks,
+    agreements: Agreements,
     index: number,
     shuffle: boolean,
     shuffleIndex: number,
@@ -28,7 +28,7 @@ export class PersistQueueMessage extends NativeMobileMessage {
     queueAutoplay: boolean
   ) {
     super(MessageType.PERSIST_QUEUE, {
-      tracks,
+      agreements,
       index,
       shuffle,
       shuffleIndex,

@@ -9,17 +9,17 @@ export const getLocalSaves = (state: CommonState) =>
 export const getLocalSave = (state: CommonState, props: { id: ID }) =>
   state.pages.savedPage.localSaves[props.id]
 
-export const getSavedTracksStatus = (state: CommonState) =>
-  state.pages.savedPage.tracks.status
-export const getSavedTracksLineup = (state: CommonState) =>
-  state.pages.savedPage.tracks
-export const getSavedTracksLineupUid = (
+export const getSavedAgreementsStatus = (state: CommonState) =>
+  state.pages.savedPage.agreements.status
+export const getSavedAgreementsLineup = (state: CommonState) =>
+  state.pages.savedPage.agreements
+export const getSavedAgreementsLineupUid = (
   state: CommonState,
   props: { id: ID }
 ) => {
-  const track = state.pages.savedPage.tracks.entries.find(
+  const agreement = state.pages.savedPage.agreements.entries.find(
     // @ts-ignore
     (t) => t.id === props.id
   )
-  return track ? track.uid : null
+  return agreement ? agreement.uid : null
 }

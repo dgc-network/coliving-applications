@@ -1,7 +1,7 @@
 import {
   ID,
   TimeRange,
-  StemTrackMetadata,
+  StemAgreementMetadata,
   Nullable,
   removeNullable,
   IntKeys,
@@ -28,7 +28,7 @@ import {
   APISearch,
   APISearchAutocomplete,
   APIStem,
-  APITrack,
+  APIAgreement,
   APIUser,
   OpaqueID
 } from './types'
@@ -53,43 +53,43 @@ const ROOT_ENDPOINT_MAP = {
 
 const FULL_ENDPOINT_MAP = {
   trending: (experiment: string | null) =>
-    experiment ? `/tracks/trending/${experiment}` : '/tracks/trending',
+    experiment ? `/agreements/trending/${experiment}` : '/agreements/trending',
   trendingIds: (experiment: string | null) =>
-    experiment ? `/tracks/trending/ids/${experiment}` : '/tracks/trending/ids',
+    experiment ? `/agreements/trending/ids/${experiment}` : '/agreements/trending/ids',
   trendingUnderground: (experiment: string | null) =>
     experiment
-      ? `/tracks/trending/underground/${experiment}`
-      : '/tracks/trending/underground',
+      ? `/agreements/trending/underground/${experiment}`
+      : '/agreements/trending/underground',
   trendingPlaylists: (experiment: string | null) =>
     experiment ? `/playlists/trending/${experiment}` : '/playlists/trending',
-  recommended: '/tracks/recommended',
-  remixables: '/tracks/remixables',
+  recommended: '/agreements/recommended',
+  remixables: '/agreements/remixables',
   following: (userId: OpaqueID) => `/users/${userId}/following`,
   followers: (userId: OpaqueID) => `/users/${userId}/followers`,
-  trackRepostUsers: (trackId: OpaqueID) => `/tracks/${trackId}/reposts`,
-  trackFavoriteUsers: (trackId: OpaqueID) => `/tracks/${trackId}/favorites`,
+  agreementRepostUsers: (agreementId: OpaqueID) => `/agreements/${agreementId}/reposts`,
+  agreementFavoriteUsers: (agreementId: OpaqueID) => `/agreements/${agreementId}/favorites`,
   playlistRepostUsers: (playlistId: OpaqueID) =>
     `/playlists/${playlistId}/reposts`,
   playlistFavoriteUsers: (playlistId: OpaqueID) =>
     `/playlists/${playlistId}/favorites`,
   getUser: (userId: OpaqueID) => `/users/${userId}`,
   userByHandle: (handle: OpaqueID) => `/users/handle/${handle}`,
-  userTracksByHandle: (handle: OpaqueID) => `/users/handle/${handle}/tracks`,
-  userFavoritedTracks: (userId: OpaqueID) =>
-    `/users/${userId}/favorites/tracks`,
+  userAgreementsByHandle: (handle: OpaqueID) => `/users/handle/${handle}/agreements`,
+  userFavoritedAgreements: (userId: OpaqueID) =>
+    `/users/${userId}/favorites/agreements`,
   userRepostsByHandle: (handle: OpaqueID) => `/users/handle/${handle}/reposts`,
   getRelatedArtists: (userId: OpaqueID) => `/users/${userId}/related`,
   getPlaylist: (playlistId: OpaqueID) => `/playlists/${playlistId}`,
   topGenreUsers: '/users/genre/top',
   topArtists: '/users/top',
-  getTrack: (trackId: OpaqueID) => `/tracks/${trackId}`,
-  getTrackByHandleAndSlug: `/tracks`,
-  getStems: (trackId: OpaqueID) => `/tracks/${trackId}/stems`,
-  getRemixes: (trackId: OpaqueID) => `/tracks/${trackId}/remixes`,
-  getRemixing: (trackId: OpaqueID) => `/tracks/${trackId}/remixing`,
+  getAgreement: (agreementId: OpaqueID) => `/agreements/${agreementId}`,
+  getAgreementByHandleAndSlug: `/agreements`,
+  getStems: (agreementId: OpaqueID) => `/agreements/${agreementId}/stems`,
+  getRemixes: (agreementId: OpaqueID) => `/agreements/${agreementId}/remixes`,
+  getRemixing: (agreementId: OpaqueID) => `/agreements/${agreementId}/remixing`,
   searchFull: `/search/full`,
   searchAutocomplete: `/search/autocomplete`,
-  getUserTrackHistory: (userId: OpaqueID) => `/users/${userId}/history/tracks`,
+  getUserAgreementHistory: (userId: OpaqueID) => `/users/${userId}/history/agreements`,
   getUserSupporter: (userId: OpaqueID, supporterUserId: OpaqueID) =>
     `/users/${userId}/supporters/${supporterUserId}`,
   getUserSupporting: (userId: OpaqueID, supporterUserId: OpaqueID) =>
@@ -110,7 +110,7 @@ type QueryParams = {
   [key: string]: string | number | undefined | boolean | string[] | null
 }
 
-export type GetTrackArgs = {
+export type GetAgreementArgs = {
   id: ID
   currentUserId?: Nullable<ID>
   unlistedArgs?: {
@@ -119,7 +119,7 @@ export type GetTrackArgs = {
   }
 }
 
-type GetTrackByHandleAndSlugArgs = {
+type GetAgreementByHandleAndSlugArgs = {
   handle: string
   slug: string
   currentUserId: Nullable<ID>
@@ -178,15 +178,15 @@ type GetFollowersArgs = {
   limit?: number
 }
 
-type GetTrackRepostUsersArgs = {
-  trackId: ID
+type GetAgreementRepostUsersArgs = {
+  agreementId: ID
   currentUserId: Nullable<ID>
   limit?: number
   offset?: number
 }
 
-type GetTrackFavoriteUsersArgs = {
-  trackId: ID
+type GetAgreementFavoriteUsersArgs = {
+  agreementId: ID
   currentUserId: Nullable<ID>
   limit?: number
   offset?: number
@@ -216,7 +216,7 @@ type GetUserByHandleArgs = {
   currentUserId: Nullable<ID>
 }
 
-type GetUserTracksByHandleArgs = {
+type GetUserAgreementsByHandleArgs = {
   handle: string
   currentUserId: Nullable<ID>
   sort?: 'date' | 'plays'
@@ -256,23 +256,23 @@ type GetPlaylistArgs = {
 }
 
 type GetStemsArgs = {
-  trackId: ID
+  agreementId: ID
 }
 
 type GetRemixesArgs = {
-  trackId: ID
+  agreementId: ID
   currentUserId: Nullable<ID>
   limit: number
   offset: number
 }
 
 type RemixesResponse = {
-  tracks: APITrack[]
+  agreements: APIAgreement[]
   count: number
 }
 
 type GetRemixingArgs = {
-  trackId: ID
+  agreementId: ID
   currentUserId: Nullable<ID>
   limit: number
   offset: number
@@ -357,14 +357,14 @@ type UndisbursedUserChallengesResponse = [
 export type GetSocialFeedArgs = QueryParams & {
   filter: string
   with_users?: boolean
-  tracks_only?: boolean
+  agreements_only?: boolean
   followee_user_ids?: ID[]
   current_user_id?: ID
 }
 
 type GetSocialFeedResponse = {}
 
-type GetUserTrackHistoryArgs = {
+type GetUserAgreementHistoryArgs = {
   userId: ID
   currentUserId: Nullable<ID>
   limit?: number
@@ -403,8 +403,8 @@ const emptySearchResponse: APIResponse<APISearch> = {
   data: {
     users: [],
     followed_users: [],
-    tracks: [],
-    saved_tracks: [],
+    agreements: [],
+    saved_agreements: [],
     playlists: [],
     saved_playlists: [],
     saved_albums: [],
@@ -448,13 +448,13 @@ class ColivingAPIClient {
     const experiment = remoteConfigInstance.getRemoteVar(
       StringKeys.TRENDING_EXPERIMENT
     )
-    const trendingResponse: Nullable<APIResponse<APITrack[]>> =
+    const trendingResponse: Nullable<APIResponse<APIAgreement[]>> =
       await this._getResponse(FULL_ENDPOINT_MAP.trending(experiment), params)
 
     if (!trendingResponse) return []
 
     const adapted = trendingResponse.data
-      .map(adapter.makeTrack)
+      .map(adapter.makeAgreement)
       .filter(removeNullable)
     return adapted
   }
@@ -474,7 +474,7 @@ class ColivingAPIClient {
     const experiment = remoteConfigInstance.getRemoteVar(
       StringKeys.UNDERGROUND_TRENDING_EXPERIMENT
     )
-    const trendingResponse: Nullable<APIResponse<APITrack[]>> =
+    const trendingResponse: Nullable<APIResponse<APIAgreement[]>> =
       await this._getResponse(
         FULL_ENDPOINT_MAP.trendingUnderground(experiment),
         params
@@ -483,7 +483,7 @@ class ColivingAPIClient {
     if (!trendingResponse) return []
 
     const adapted = trendingResponse.data
-      .map(adapter.makeTrack)
+      .map(adapter.makeAgreement)
       .filter(removeNullable)
     return adapted
   }
@@ -511,7 +511,7 @@ class ColivingAPIClient {
     const res = timeRanges.reduce(
       (acc: TrendingIds, timeRange: TimeRange) => {
         acc[timeRange] = trendingIdsResponse.data[timeRange]
-          .map(adapter.makeTrackId)
+          .map(adapter.makeAgreementId)
           .filter(Boolean) as ID[]
         return acc
       },
@@ -538,13 +538,13 @@ class ColivingAPIClient {
         exclusionList.length > 0 ? exclusionList.map(String) : undefined,
       user_id: encodedCurrentUserId || undefined
     }
-    const recommendedResponse: Nullable<APIResponse<APITrack[]>> =
+    const recommendedResponse: Nullable<APIResponse<APIAgreement[]>> =
       await this._getResponse(FULL_ENDPOINT_MAP.recommended, params)
 
     if (!recommendedResponse) return []
 
     const adapted = recommendedResponse.data
-      .map(adapter.makeTrack)
+      .map(adapter.makeAgreement)
       .filter(removeNullable)
     return adapted
   }
@@ -557,13 +557,13 @@ class ColivingAPIClient {
       user_id: encodedCurrentUserId || undefined,
       with_users: true
     }
-    const remixablesResponse: Nullable<APIResponse<APITrack[]>> =
+    const remixablesResponse: Nullable<APIResponse<APIAgreement[]>> =
       await this._getResponse(FULL_ENDPOINT_MAP.remixables, params)
 
     if (!remixablesResponse) return []
 
     const adapted = remixablesResponse.data
-      .map(adapter.makeTrack)
+      .map(adapter.makeAgreement)
       .filter(removeNullable)
 
     return adapted
@@ -625,15 +625,15 @@ class ColivingAPIClient {
     return adapted
   }
 
-  async getTrackRepostUsers({
+  async getAgreementRepostUsers({
     currentUserId,
-    trackId,
+    agreementId,
     limit,
     offset
-  }: GetTrackRepostUsersArgs) {
+  }: GetAgreementRepostUsersArgs) {
     this._assertInitialized()
     const encodedCurrentUserId = encodeHashId(currentUserId)
-    const encodedTrackId = this._encodeOrThrow(trackId)
+    const encodedAgreementId = this._encodeOrThrow(agreementId)
     const params = {
       user_id: encodedCurrentUserId || undefined,
       limit,
@@ -642,7 +642,7 @@ class ColivingAPIClient {
 
     const repostUsers: Nullable<APIResponse<APIUser[]>> =
       await this._getResponse(
-        FULL_ENDPOINT_MAP.trackRepostUsers(encodedTrackId),
+        FULL_ENDPOINT_MAP.agreementRepostUsers(encodedAgreementId),
         params
       )
 
@@ -654,15 +654,15 @@ class ColivingAPIClient {
     return adapted
   }
 
-  async getTrackFavoriteUsers({
+  async getAgreementFavoriteUsers({
     currentUserId,
-    trackId,
+    agreementId,
     limit,
     offset
-  }: GetTrackFavoriteUsersArgs) {
+  }: GetAgreementFavoriteUsersArgs) {
     this._assertInitialized()
     const encodedCurrentUserId = encodeHashId(currentUserId)
-    const encodedTrackId = this._encodeOrThrow(trackId)
+    const encodedAgreementId = this._encodeOrThrow(agreementId)
     const params = {
       user_id: encodedCurrentUserId || undefined,
       limit,
@@ -671,7 +671,7 @@ class ColivingAPIClient {
 
     const followingResponse: Nullable<APIResponse<APIUser[]>> =
       await this._getResponse(
-        FULL_ENDPOINT_MAP.trackFavoriteUsers(encodedTrackId),
+        FULL_ENDPOINT_MAP.agreementFavoriteUsers(encodedAgreementId),
         params
       )
 
@@ -741,11 +741,11 @@ class ColivingAPIClient {
     return adapted
   }
 
-  async getTrack(
-    { id, currentUserId, unlistedArgs }: GetTrackArgs,
+  async getAgreement(
+    { id, currentUserId, unlistedArgs }: GetAgreementArgs,
     retry = true
   ) {
-    const encodedTrackId = this._encodeOrThrow(id)
+    const encodedAgreementId = this._encodeOrThrow(id)
     const encodedCurrentUserId = encodeHashId(currentUserId)
 
     this._assertInitialized()
@@ -757,23 +757,23 @@ class ColivingAPIClient {
       show_unlisted: !!unlistedArgs
     }
 
-    const trackResponse: Nullable<APIResponse<APITrack>> =
+    const agreementResponse: Nullable<APIResponse<APIAgreement>> =
       await this._getResponse(
-        FULL_ENDPOINT_MAP.getTrack(encodedTrackId),
+        FULL_ENDPOINT_MAP.getAgreement(encodedAgreementId),
         args,
         retry
       )
 
-    if (!trackResponse) return null
-    const adapted = adapter.makeTrack(trackResponse.data)
+    if (!agreementResponse) return null
+    const adapted = adapter.makeAgreement(agreementResponse.data)
     return adapted
   }
 
-  async getTrackByHandleAndSlug({
+  async getAgreementByHandleAndSlug({
     handle,
     slug,
     currentUserId
-  }: GetTrackByHandleAndSlugArgs) {
+  }: GetAgreementByHandleAndSlugArgs) {
     this._assertInitialized()
     const encodedCurrentUserId = encodeHashId(currentUserId)
     const params = {
@@ -782,36 +782,36 @@ class ColivingAPIClient {
       user_id: encodedCurrentUserId || undefined
     }
 
-    const trackResponse: Nullable<APIResponse<APITrack>> =
+    const agreementResponse: Nullable<APIResponse<APIAgreement>> =
       await this._getResponse(
-        FULL_ENDPOINT_MAP.getTrackByHandleAndSlug,
+        FULL_ENDPOINT_MAP.getAgreementByHandleAndSlug,
         params,
         true
       )
-    if (!trackResponse) {
+    if (!agreementResponse) {
       return null
     }
-    return adapter.makeTrack(trackResponse.data)
+    return adapter.makeAgreement(agreementResponse.data)
   }
 
-  async getStems({ trackId }: GetStemsArgs): Promise<StemTrackMetadata[]> {
+  async getStems({ agreementId }: GetStemsArgs): Promise<StemAgreementMetadata[]> {
     this._assertInitialized()
-    const encodedTrackId = this._encodeOrThrow(trackId)
+    const encodedAgreementId = this._encodeOrThrow(agreementId)
     const response: Nullable<APIResponse<APIStem[]>> = await this._getResponse(
-      FULL_ENDPOINT_MAP.getStems(encodedTrackId)
+      FULL_ENDPOINT_MAP.getStems(encodedAgreementId)
     )
 
     if (!response) return []
 
     const adapted = response.data
-      .map(adapter.makeStemTrack)
+      .map(adapter.makeStemAgreement)
       .filter(removeNullable)
     return adapted
   }
 
-  async getRemixes({ trackId, limit, offset, currentUserId }: GetRemixesArgs) {
+  async getRemixes({ agreementId, limit, offset, currentUserId }: GetRemixesArgs) {
     this._assertInitialized()
-    const encodedTrackId = this._encodeOrThrow(trackId)
+    const encodedAgreementId = this._encodeOrThrow(agreementId)
     const encodedUserId = encodeHashId(currentUserId)
     const params = {
       userId: encodedUserId ?? undefined,
@@ -821,26 +821,26 @@ class ColivingAPIClient {
 
     const remixesResponse: Nullable<APIResponse<RemixesResponse>> =
       await this._getResponse(
-        FULL_ENDPOINT_MAP.getRemixes(encodedTrackId),
+        FULL_ENDPOINT_MAP.getRemixes(encodedAgreementId),
         params
       )
 
-    if (!remixesResponse) return { count: 0, tracks: [] }
+    if (!remixesResponse) return { count: 0, agreements: [] }
 
-    const tracks = remixesResponse.data.tracks
-      .map(adapter.makeTrack)
+    const agreements = remixesResponse.data.agreements
+      .map(adapter.makeAgreement)
       .filter(removeNullable)
-    return { count: remixesResponse.data.count, tracks }
+    return { count: remixesResponse.data.count, agreements }
   }
 
   async getRemixing({
-    trackId,
+    agreementId,
     limit,
     offset,
     currentUserId
   }: GetRemixingArgs) {
     this._assertInitialized()
-    const encodedTrackId = this._encodeOrThrow(trackId)
+    const encodedAgreementId = this._encodeOrThrow(agreementId)
     const encodedUserId = encodeHashId(currentUserId)
     const params = {
       userId: encodedUserId ?? undefined,
@@ -848,16 +848,16 @@ class ColivingAPIClient {
       offset
     }
 
-    const remixingResponse: Nullable<APIResponse<APITrack[]>> =
+    const remixingResponse: Nullable<APIResponse<APIAgreement[]>> =
       await this._getResponse(
-        FULL_ENDPOINT_MAP.getRemixing(encodedTrackId),
+        FULL_ENDPOINT_MAP.getRemixing(encodedAgreementId),
         params
       )
 
     if (!remixingResponse) return []
 
-    const tracks = remixingResponse.data.map(adapter.makeTrack)
-    return tracks
+    const agreements = remixingResponse.data.map(adapter.makeAgreement)
+    return agreements
   }
 
   async getUser({ userId, currentUserId }: GetUserArgs) {
@@ -897,14 +897,14 @@ class ColivingAPIClient {
     return adapted
   }
 
-  async getUserTracksByHandle({
+  async getUserAgreementsByHandle({
     handle,
     currentUserId,
     sort = 'date',
     limit,
     offset,
     getUnlisted
-  }: GetUserTracksByHandleArgs) {
+  }: GetUserAgreementsByHandleArgs) {
     this._assertInitialized()
     const encodedCurrentUserId = encodeHashId(currentUserId)
     const params = {
@@ -923,8 +923,8 @@ class ColivingAPIClient {
       }
     }
 
-    const response: Nullable<APIResponse<APITrack[]>> = await this._getResponse(
-      FULL_ENDPOINT_MAP.userTracksByHandle(handle),
+    const response: Nullable<APIResponse<APIAgreement[]>> = await this._getResponse(
+      FULL_ENDPOINT_MAP.userAgreementsByHandle(handle),
       params,
       true,
       PathType.VersionFullPath,
@@ -933,11 +933,11 @@ class ColivingAPIClient {
 
     if (!response) return []
 
-    const adapted = response.data.map(adapter.makeTrack).filter(removeNullable)
+    const adapted = response.data.map(adapter.makeAgreement).filter(removeNullable)
     return adapted
   }
 
-  async getFavoritedTracks({
+  async getFavoritedAgreements({
     profileUserId,
     currentUserId,
     limit,
@@ -954,7 +954,7 @@ class ColivingAPIClient {
 
     const response: Nullable<APIResponse<APIActivity[]>> =
       await this._getResponse(
-        FULL_ENDPOINT_MAP.userFavoritedTracks(encodedProfileUserId),
+        FULL_ENDPOINT_MAP.userFavoritedAgreements(encodedProfileUserId),
         params
       )
 
@@ -962,7 +962,7 @@ class ColivingAPIClient {
 
     const adapted = response.data.map(({ item, ...props }) => ({
       timestamp: props.timestamp,
-      track: adapter.makeTrack(item as APITrack)
+      agreement: adapter.makeAgreement(item as APIAgreement)
     }))
     return adapted
   }
@@ -1022,12 +1022,12 @@ class ColivingAPIClient {
       offset
     }
 
-    const favoritedTrackResponse: Nullable<APIResponse<APIUser[]>> =
+    const favoritedAgreementResponse: Nullable<APIResponse<APIUser[]>> =
       await this._getResponse(FULL_ENDPOINT_MAP.topGenreUsers, params)
 
-    if (!favoritedTrackResponse) return []
+    if (!favoritedAgreementResponse) return []
 
-    const adapted = favoritedTrackResponse.data
+    const adapted = favoritedAgreementResponse.data
       .map(adapter.makeUser)
       .filter(removeNullable)
     return adapted
@@ -1270,7 +1270,7 @@ class ColivingAPIClient {
     limit,
     with_users,
     filter,
-    tracks_only,
+    agreements_only,
     followee_user_ids,
     current_user_id
   }: GetSocialFeedArgs) {
@@ -1288,7 +1288,7 @@ class ColivingAPIClient {
           limit,
           with_users,
           filter,
-          tracks_only,
+          agreements_only,
           followee_user_id: followee_user_ids
             ? followee_user_ids.map((id) => id.toString())
             : undefined
@@ -1301,12 +1301,12 @@ class ColivingAPIClient {
     return response.data
   }
 
-  async getUserTrackHistory({
+  async getUserAgreementHistory({
     currentUserId,
     userId,
     offset,
     limit
-  }: GetUserTrackHistoryArgs) {
+  }: GetUserAgreementHistoryArgs) {
     const encodedUserId = this._encodeOrThrow(userId)
     const encodedCurrentUserId = encodeHashId(currentUserId)
     limit = limit || 100
@@ -1317,7 +1317,7 @@ class ColivingAPIClient {
 
     const response: Nullable<APIResponse<APIActivity[]>> =
       await this._getResponse(
-        FULL_ENDPOINT_MAP.getUserTrackHistory(encodedUserId),
+        FULL_ENDPOINT_MAP.getUserAgreementHistory(encodedUserId),
         params
       )
 
@@ -1325,7 +1325,7 @@ class ColivingAPIClient {
 
     const adapted = response.data.map(({ item, ...props }) => ({
       timestamp: props.timestamp,
-      track: adapter.makeTrack(item as APITrack)
+      agreement: adapter.makeAgreement(item as APIAgreement)
     }))
     return adapted
   }

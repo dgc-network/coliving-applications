@@ -8,7 +8,7 @@ import { ALLOWED_IMAGE_FILE_TYPES } from 'utils/imageProcessingUtil'
 import styles from './Dropzone.module.css'
 
 const messages = {
-  track: 'Drag-and-drop a track here, or ',
+  agreement: 'Drag-and-drop a agreement here, or ',
   image: 'Drag-and-drop an image here, or ',
   stem: 'Drag-and-drop live files here, or ',
   browse: 'browse to upload'
@@ -31,8 +31,8 @@ const Dropzone = ({
     if (subtitle) return subtitle
     let message
     switch (type) {
-      case 'track':
-        message = messages.track
+      case 'agreement':
+        message = messages.agreement
         break
       case 'image':
         message = messages.image
@@ -84,7 +84,7 @@ Dropzone.propTypes = {
   messageClassName: PropTypes.string,
   titleTextClassName: PropTypes.string,
   iconClassName: PropTypes.string,
-  type: PropTypes.oneOf(['track', 'image', 'stem']).isRequired,
+  type: PropTypes.oneOf(['agreement', 'image', 'stem']).isRequired,
   // Extra text content to be displayed inside the dropzone.
   textAboveIcon: PropTypes.string,
   subtitle: PropTypes.string,
@@ -94,7 +94,7 @@ Dropzone.propTypes = {
 }
 
 Dropzone.defaultProps = {
-  type: 'track',
+  type: 'agreement',
   allowMultiple: true,
   disabled: false
 }

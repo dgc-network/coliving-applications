@@ -50,14 +50,14 @@ const DeletedPageProvider = ({
   play,
   loadMore,
   goToRoute,
-  resetTracks,
+  resetAgreements,
   moreBy
 }: DeletedPageProviderProps) => {
   useEffect(() => {
     return function cleanup() {
-      resetTracks()
+      resetAgreements()
     }
-  }, [resetTracks])
+  }, [resetAgreements])
 
   const goToArtistPage = useCallback(() => {
     goToRoute(profilePage(user?.handle))
@@ -71,11 +71,11 @@ const DeletedPageProvider = ({
       count: 5,
       playingUid: currentQueueItem.uid,
       playingSource: currentQueueItem.source,
-      playingTrackId: currentQueueItem.track && currentQueueItem.track.track_id,
+      playingAgreementId: currentQueueItem.agreement && currentQueueItem.agreement.agreement_id,
       playing: isPlaying,
       buffering: isBuffering,
-      pauseTrack: pause,
-      playTrack: play,
+      pauseAgreement: pause,
+      playAgreement: play,
       actions: moreByActions,
       loadMore: (offset: number, limit: number) => {
         loadMore(offset, limit, { handle: user?.handle })
@@ -121,7 +121,7 @@ function mapDispatchToProps(dispatch: Dispatch) {
       ),
     pause: () => dispatch(moreByActions.pause()),
     play: (uid?: string) => dispatch(moreByActions.play(uid)),
-    resetTracks: () => dispatch(moreByActions.reset())
+    resetAgreements: () => dispatch(moreByActions.reset())
   }
 }
 

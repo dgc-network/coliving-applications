@@ -29,7 +29,7 @@ import {
 } from 'app/store/oauth/selectors'
 import { getHandleError, getHandleIsValid } from 'app/store/signon/selectors'
 import { EventNames } from 'app/types/analytics'
-import { track, make } from 'app/utils/analytics'
+import { agreement, make } from 'app/utils/analytics'
 import { useColor } from 'app/utils/theme'
 
 import SignupHeader from './SignupHeader'
@@ -304,7 +304,7 @@ const ProfileAuto = ({ navigation, route }: ProfileAutoProps) => {
     [dispatchWeb, twitterInfo, instagramInfo]
   )
 
-  const trackOAuthComplete = useCallback(
+  const agreementOAuthComplete = useCallback(
     (type: 'twitter' | 'instagram') => {
       const info = type === 'twitter' ? twitterInfo : instagramInfo
       if (!info) {
@@ -320,7 +320,7 @@ const ProfileAuto = ({ navigation, route }: ProfileAutoProps) => {
           ? EventNames.CREATE_ACCOUNT_COMPLETE_TWITTER
           : EventNames.CREATE_ACCOUNT_COMPLETE_INSTAGRAM
 
-      track(
+      agreement(
         make({
           eventName,
           isVerified,
@@ -370,12 +370,12 @@ const ProfileAuto = ({ navigation, route }: ProfileAutoProps) => {
         validateHandle('twitter')
         setDidValidateHandle(true)
       } else if (handleError || twitterInfo.requiresUserReview) {
-        trackOAuthComplete('twitter')
+        agreementOAuthComplete('twitter')
         goTo('ProfileManual')
         setHasNavigatedAway(true)
         setIsLoading(false)
       } else if (handleIsValid) {
-        trackOAuthComplete('twitter')
+        agreementOAuthComplete('twitter')
         signUp()
         goTo('FirstFollows')
         setHasNavigatedAway(true)
@@ -391,7 +391,7 @@ const ProfileAuto = ({ navigation, route }: ProfileAutoProps) => {
     validateHandle,
     signUp,
     goTo,
-    trackOAuthComplete
+    agreementOAuthComplete
   ])
 
   useEffect(() => {
@@ -406,12 +406,12 @@ const ProfileAuto = ({ navigation, route }: ProfileAutoProps) => {
         validateHandle('instagram')
         setDidValidateHandle(true)
       } else if (handleError || instagramInfo.requiresUserReview) {
-        trackOAuthComplete('instagram')
+        agreementOAuthComplete('instagram')
         goTo('ProfileManual')
         setHasNavigatedAway(true)
         setIsLoading(false)
       } else if (handleIsValid) {
-        trackOAuthComplete('instagram')
+        agreementOAuthComplete('instagram')
         signUp()
         goTo('FirstFollows')
         setHasNavigatedAway(true)
@@ -427,7 +427,7 @@ const ProfileAuto = ({ navigation, route }: ProfileAutoProps) => {
     validateHandle,
     signUp,
     goTo,
-    trackOAuthComplete
+    agreementOAuthComplete
   ])
 
   useEffect(() => {
@@ -443,7 +443,7 @@ const ProfileAuto = ({ navigation, route }: ProfileAutoProps) => {
       type: MessageType.REQUEST_TWITTER_AUTH,
       isAction: true
     })
-    track(
+    agreement(
       make({
         eventName: EventNames.CREATE_ACCOUNT_START_TWITTER,
         emailAddress: email
@@ -458,7 +458,7 @@ const ProfileAuto = ({ navigation, route }: ProfileAutoProps) => {
       type: MessageType.REQUEST_INSTAGRAM_AUTH,
       isAction: true
     })
-    track(
+    agreement(
       make({
         eventName: EventNames.CREATE_ACCOUNT_START_INSTAGRAM,
         emailAddress: email

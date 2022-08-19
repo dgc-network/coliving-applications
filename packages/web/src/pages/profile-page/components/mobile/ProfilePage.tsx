@@ -19,7 +19,7 @@ import { ReactComponent as IconPlaylists } from 'assets/img/iconPlaylists.svg'
 import { ReactComponent as IconReposts } from 'assets/img/iconRepost.svg'
 import { useSelectTierInfo } from 'common/hooks/wallet'
 import { feedActions } from 'common/store/pages/profile/lineups/feed/actions'
-import { tracksActions } from 'common/store/pages/profile/lineups/tracks/actions'
+import { agreementsActions } from 'common/store/pages/profile/lineups/agreements/actions'
 import { Tabs, ProfileUser } from 'common/store/pages/profile/types'
 import { badgeTiers } from 'common/store/wallet/utils'
 import Card from 'components/card/mobile/Card'
@@ -85,7 +85,7 @@ export type ProfilePageProps = {
   onSave: () => void
   onCancel: () => void
   stats: Array<{ number: number; title: string; key: string }>
-  trackIsActive: boolean
+  agreementIsActive: boolean
   isUserConfirming: boolean
 
   profile: ProfileUser | null
@@ -93,12 +93,12 @@ export type ProfilePageProps = {
   playlists: Collection[] | null
   status: Status
   goToRoute: (route: string) => void
-  artistTracks: LineupState<{ id: ID }>
+  artistAgreements: LineupState<{ id: ID }>
   userFeed: LineupState<{ id: ID }>
-  playArtistTrack: (uid: UID) => void
-  pauseArtistTrack: () => void
-  playUserFeedTrack: (uid: UID) => void
-  pauseUserFeedTrack: () => void
+  playArtistAgreement: (uid: UID) => void
+  pauseArtistAgreement: () => void
+  playUserFeedAgreement: (uid: UID) => void
+  pauseUserFeedAgreement: () => void
   refreshProfile: () => void
 
   // Updates
@@ -108,11 +108,11 @@ export type ProfilePageProps = {
   // Methods
   changeTab: (tab: Tabs) => void
   getLineupProps: (lineup: any) => any
-  loadMoreArtistTracks: (offset: number, limit: number) => void
+  loadMoreArtistAgreements: (offset: number, limit: number) => void
   loadMoreUserFeed: (offset: number, limit: number) => void
   formatCardSecondaryText: (
     saves: number,
-    tracks: number,
+    agreements: number,
     isPrivate?: boolean
   ) => string
   fetchFollowers: () => void
@@ -149,7 +149,7 @@ export const EmptyTab = (props: EmptyTabProps) => {
 }
 
 const artistTabs = [
-  { icon: <IconNote />, text: 'Tracks', label: Tabs.TRACKS },
+  { icon: <IconNote />, text: 'Agreements', label: Tabs.AGREEMENTS },
   { icon: <IconAlbum />, text: 'Albums', label: Tabs.ALBUMS },
   { icon: <IconPlaylists />, text: 'Playlists', label: Tabs.PLAYLISTS },
   {
@@ -184,9 +184,9 @@ const getMessages = ({
   name: string
   isOwner: boolean
 }) => ({
-  emptyTracks: isOwner
-    ? "You haven't created any tracks yet"
-    : `${name} hasn't created any tracks yet`,
+  emptyAgreements: isOwner
+    ? "You haven't created any agreements yet"
+    : `${name} hasn't created any agreements yet`,
   emptyAlbums: isOwner
     ? "You haven't created any albums yet"
     : `${name} hasn't created any albums yet`,
@@ -231,16 +231,16 @@ const ProfilePage = g(
     donation,
     albums,
     playlists,
-    artistTracks,
+    artistAgreements,
     userFeed,
     isUserConfirming,
     getLineupProps,
-    loadMoreArtistTracks,
+    loadMoreArtistAgreements,
     loadMoreUserFeed,
-    playArtistTrack,
-    pauseArtistTrack,
-    playUserFeedTrack,
-    pauseUserFeedTrack,
+    playArtistAgreement,
+    pauseArtistAgreement,
+    playUserFeedAgreement,
+    pauseUserFeedAgreement,
     formatCardSecondaryText,
     setFollowingUserId,
     setFollowersUserId,
@@ -377,7 +377,7 @@ const ProfilePage = g(
           primaryText={playlist.playlist_name}
           secondaryText={formatCardSecondaryText(
             playlist.save_count,
-            playlist.playlist_contents.track_ids.length,
+            playlist.playlist_contents.agreement_ids.length,
             playlist.is_private
           )}
           onClick={() =>
@@ -401,7 +401,7 @@ const ProfilePage = g(
             primaryText={album.playlist_name}
             secondaryText={formatCardSecondaryText(
               album.save_count,
-              album.playlist_contents.track_ids.length
+              album.playlist_contents.agreement_ids.length
             )}
             onClick={() =>
               goToRoute(
@@ -417,12 +417,12 @@ const ProfilePage = g(
 
         profileTabs = artistTabs
         profileElements = [
-          <div className={styles.tracksLineupContainer} key='artistTracks'>
-            {profile.track_count === 0 ? (
+          <div className={styles.agreementsLineupContainer} key='artistAgreements'>
+            {profile.agreement_count === 0 ? (
               <EmptyTab
                 message={
                   <>
-                    {messages.emptyTracks}
+                    {messages.emptyAgreements}
                     <i
                       className={cn('emoji', 'face-with-monocle', styles.emoji)}
                     />
@@ -431,13 +431,13 @@ const ProfilePage = g(
               />
             ) : (
               <Lineup
-                {...getLineupProps(artistTracks)}
+                {...getLineupProps(artistAgreements)}
                 leadingElementId={profile._artist_pick}
-                limit={profile.track_count}
-                loadMore={loadMoreArtistTracks}
-                playTrack={playArtistTrack}
-                pauseTrack={pauseArtistTrack}
-                actions={tracksActions}
+                limit={profile.agreement_count}
+                loadMore={loadMoreArtistAgreements}
+                playAgreement={playArtistAgreement}
+                pauseAgreement={pauseArtistAgreement}
+                actions={agreementsActions}
               />
             )}
           </div>,
@@ -479,7 +479,7 @@ const ProfilePage = g(
               />
             )}
           </div>,
-          <div className={styles.tracksLineupContainer} key='artistUsers'>
+          <div className={styles.agreementsLineupContainer} key='artistUsers'>
             {profile.repost_count === 0 ? (
               <EmptyTab
                 message={
@@ -496,8 +496,8 @@ const ProfilePage = g(
                 {...getLineupProps(userFeed)}
                 count={profile.repost_count}
                 loadMore={loadMoreUserFeed}
-                playTrack={playUserFeedTrack}
-                pauseTrack={pauseUserFeedTrack}
+                playAgreement={playUserFeedAgreement}
+                pauseAgreement={pauseUserFeedAgreement}
                 actions={feedActions}
               />
             )}
@@ -506,7 +506,7 @@ const ProfilePage = g(
       } else {
         profileTabs = userTabs
         profileElements = [
-          <div className={styles.tracksLineupContainer} key='tracks'>
+          <div className={styles.agreementsLineupContainer} key='agreements'>
             {profile.repost_count === 0 ? (
               <EmptyTab
                 message={
@@ -523,8 +523,8 @@ const ProfilePage = g(
                 {...getLineupProps(userFeed)}
                 count={profile.repost_count}
                 loadMore={loadMoreUserFeed}
-                playTrack={playUserFeedTrack}
-                pauseTrack={pauseUserFeedTrack}
+                playAgreement={playUserFeedAgreement}
+                pauseAgreement={pauseUserFeedAgreement}
                 actions={feedActions}
               />
             )}
@@ -564,7 +564,7 @@ const ProfilePage = g(
           ? artistTabsWithCollectibles
           : userTabsWithCollectibles
         profileElements.push(
-          <div key='collectibles' className={styles.tracksLineupContainer}>
+          <div key='collectibles' className={styles.agreementsLineupContainer}>
             <CollectiblesPage
               userId={userId}
               name={name}
@@ -638,7 +638,7 @@ const ProfilePage = g(
                 profilePictureSizes={profilePictureSizes}
                 hasProfilePicture={hasProfilePicture}
                 playlistCount={profile.playlist_count}
-                trackCount={profile.track_count}
+                agreementCount={profile.agreement_count}
                 followerCount={profile.follower_count}
                 followingCount={profile.followee_count}
                 doesFollowCurrentUser={!!profile.does_follow_current_user}

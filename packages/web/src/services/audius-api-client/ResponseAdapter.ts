@@ -5,9 +5,9 @@ import {
   Favorite,
   Repost,
   Remix,
-  StemTrackMetadata,
-  TrackMetadata,
-  UserTrackMetadata,
+  StemAgreementMetadata,
+  AgreementMetadata,
+  UserAgreementMetadata,
   UserMetadata,
   StringWei,
   removeNullable
@@ -20,14 +20,14 @@ import {
   APIFavorite,
   APIRemix,
   APIRepost,
-  APITrack,
+  APIAgreement,
   APIPlaylist,
   APISearchUser,
   APIUser,
   APIStem,
   APIResponse,
   APISearch,
-  APISearchTrack,
+  APISearchAgreement,
   APISearchAutocomplete,
   APISearchPlaylist
 } from './types'
@@ -48,7 +48,7 @@ export const makeUser = (
   const follower_count = 'follower_count' in user ? user.follower_count : 0
   const playlist_count = 'playlist_count' in user ? user.playlist_count : 0
   const repost_count = 'repost_count' in user ? user.repost_count : 0
-  const track_count = 'track_count' in user ? user.track_count : 0
+  const agreement_count = 'agreement_count' in user ? user.agreement_count : 0
   const current_user_followee_follow_count =
     'current_user_followee_follow_count' in user
       ? user.current_user_followee_follow_count
@@ -67,7 +67,7 @@ export const makeUser = (
     follower_count,
     playlist_count,
     repost_count,
-    track_count,
+    agreement_count,
     current_user_followee_follow_count,
     does_current_user_follow,
     user_id: decodedUserId,
@@ -112,50 +112,50 @@ const makeRepost = (repost: APIRepost): Repost | undefined => {
 }
 
 const makeRemix = (remix: APIRemix): Remix | undefined => {
-  const decodedTrackId = decodeHashId(remix.parent_track_id)
+  const decodedAgreementId = decodeHashId(remix.parent_agreement_id)
   const user = makeUser(remix.user)
-  if (!decodedTrackId || !user) {
+  if (!decodedAgreementId || !user) {
     return undefined
   }
 
   return {
     ...remix,
-    parent_track_id: decodedTrackId,
+    parent_agreement_id: decodedAgreementId,
     user
   }
 }
 
-export const makeUserlessTrack = (
-  track: APITrack | APISearchTrack
-): TrackMetadata | undefined => {
-  const decodedTrackId = decodeHashId(track.id)
-  const decodedOwnerId = decodeHashId(track.user_id)
-  if (!decodedTrackId || !decodedOwnerId) return undefined
+export const makeUserlessAgreement = (
+  agreement: APIAgreement | APISearchAgreement
+): AgreementMetadata | undefined => {
+  const decodedAgreementId = decodeHashId(agreement.id)
+  const decodedOwnerId = decodeHashId(agreement.user_id)
+  if (!decodedAgreementId || !decodedOwnerId) return undefined
 
   const saves =
-    'followee_favorites' in track
-      ? track.followee_favorites?.map(makeFavorite).filter(removeNullable) ?? []
+    'followee_favorites' in agreement
+      ? agreement.followee_favorites?.map(makeFavorite).filter(removeNullable) ?? []
       : []
 
   const reposts =
-    'followee_reposts' in track
-      ? track.followee_reposts?.map(makeRepost).filter(removeNullable) ?? []
+    'followee_reposts' in agreement
+      ? agreement.followee_reposts?.map(makeRepost).filter(removeNullable) ?? []
       : []
 
   const remixes =
-    track.remix_of.tracks?.map(makeRemix).filter(removeNullable) ?? []
-  const play_count = 'play_count' in track ? track.play_count : 0
-  const save_count = 'favorite_count' in track ? track.favorite_count : 0
-  const repost_count = 'repost_count' in track ? track.repost_count : 0
+    agreement.remix_of.agreements?.map(makeRemix).filter(removeNullable) ?? []
+  const play_count = 'play_count' in agreement ? agreement.play_count : 0
+  const save_count = 'favorite_count' in agreement ? agreement.favorite_count : 0
+  const repost_count = 'repost_count' in agreement ? agreement.repost_count : 0
   const has_current_user_reposted =
-    'has_current_user_reposted' in track
-      ? track.has_current_user_reposted
+    'has_current_user_reposted' in agreement
+      ? agreement.has_current_user_reposted
       : false
   const has_current_user_saved =
-    'has_current_user_saved' in track ? track.has_current_user_saved : false
+    'has_current_user_saved' in agreement ? agreement.has_current_user_saved : false
   const marshalled = {
-    ...track,
-    track_id: decodedTrackId,
+    ...agreement,
+    agreement_id: decodedAgreementId,
     owner_id: decodedOwnerId,
     followee_saves: saves,
     followee_reposts: reposts,
@@ -167,11 +167,11 @@ export const makeUserlessTrack = (
     remix_of:
       remixes.length > 0
         ? {
-            tracks: remixes
+            agreements: remixes
           }
         : null,
 
-    stem_of: track.stem_of.parent_track_id === null ? null : track.stem_of,
+    stem_of: agreement.stem_of.parent_agreement_id === null ? null : agreement.stem_of,
 
     // Fields to prune
     id: undefined,
@@ -192,41 +192,41 @@ export const makeUserlessTrack = (
   return marshalled
 }
 
-export const makeTrack = (
-  track: APITrack | APISearchTrack
-): UserTrackMetadata | undefined => {
-  const decodedTrackId = decodeHashId(track.id)
-  const decodedOwnerId = decodeHashId(track.user_id)
-  const user = makeUser(track.user)
-  if (!decodedTrackId || !decodedOwnerId || !user) {
+export const makeAgreement = (
+  agreement: APIAgreement | APISearchAgreement
+): UserAgreementMetadata | undefined => {
+  const decodedAgreementId = decodeHashId(agreement.id)
+  const decodedOwnerId = decodeHashId(agreement.user_id)
+  const user = makeUser(agreement.user)
+  if (!decodedAgreementId || !decodedOwnerId || !user) {
     return undefined
   }
 
   const saves =
-    'followee_favorites' in track
-      ? track.followee_favorites?.map(makeFavorite).filter(removeNullable) ?? []
+    'followee_favorites' in agreement
+      ? agreement.followee_favorites?.map(makeFavorite).filter(removeNullable) ?? []
       : []
 
   const reposts =
-    'followee_reposts' in track
-      ? track.followee_reposts?.map(makeRepost).filter(removeNullable) ?? []
+    'followee_reposts' in agreement
+      ? agreement.followee_reposts?.map(makeRepost).filter(removeNullable) ?? []
       : []
 
   const remixes =
-    track.remix_of.tracks?.map(makeRemix).filter(removeNullable) ?? []
-  const play_count = 'play_count' in track ? track.play_count : 0
-  const save_count = 'favorite_count' in track ? track.favorite_count : 0
-  const repost_count = 'repost_count' in track ? track.repost_count : 0
+    agreement.remix_of.agreements?.map(makeRemix).filter(removeNullable) ?? []
+  const play_count = 'play_count' in agreement ? agreement.play_count : 0
+  const save_count = 'favorite_count' in agreement ? agreement.favorite_count : 0
+  const repost_count = 'repost_count' in agreement ? agreement.repost_count : 0
   const has_current_user_reposted =
-    'has_current_user_reposted' in track
-      ? track.has_current_user_reposted
+    'has_current_user_reposted' in agreement
+      ? agreement.has_current_user_reposted
       : false
   const has_current_user_saved =
-    'has_current_user_saved' in track ? track.has_current_user_saved : false
+    'has_current_user_saved' in agreement ? agreement.has_current_user_saved : false
   const marshalled = {
-    ...track,
+    ...agreement,
     user,
-    track_id: decodedTrackId,
+    agreement_id: decodedAgreementId,
     owner_id: decodedOwnerId,
     followee_saves: saves,
     followee_reposts: reposts,
@@ -238,11 +238,11 @@ export const makeTrack = (
     remix_of:
       remixes.length > 0
         ? {
-            tracks: remixes
+            agreements: remixes
           }
         : null,
 
-    stem_of: track.stem_of.parent_track_id === null ? null : track.stem_of,
+    stem_of: agreement.stem_of.parent_agreement_id === null ? null : agreement.stem_of,
 
     // Fields to prune
     id: undefined,
@@ -263,12 +263,12 @@ export const makeTrack = (
   return marshalled
 }
 
-export const makeTrackId = (track: { id: string }): ID | undefined => {
-  const decodedTrackId = decodeHashId(track.id)
-  if (!decodedTrackId) {
+export const makeAgreementId = (agreement: { id: string }): ID | undefined => {
+  const decodedAgreementId = decodeHashId(agreement.id)
+  if (!decodedAgreementId) {
     return undefined
   }
-  return decodedTrackId
+  return decodedAgreementId
 }
 
 export const makePlaylist = (
@@ -303,15 +303,15 @@ export const makePlaylist = (
   const repost_count = 'repost_count' in playlist ? playlist.repost_count : 0
   const total_play_count =
     'total_play_count' in playlist ? playlist.total_play_count : 0
-  const track_count = 'track_count' in playlist ? playlist.track_count : 0
+  const agreement_count = 'agreement_count' in playlist ? playlist.agreement_count : 0
 
   const playlistContents = {
-    track_ids: playlist.added_timestamps
+    agreement_ids: playlist.added_timestamps
       .map((ts) => {
-        const decoded = decodeHashId(ts.track_id)
+        const decoded = decodeHashId(ts.agreement_id)
         if (decoded) {
           return {
-            track: decoded,
+            agreement: decoded,
             time: ts.timestamp
           }
         }
@@ -320,10 +320,10 @@ export const makePlaylist = (
       .filter(removeNullable)
   }
 
-  const tracks =
-    'tracks' in playlist
-      ? playlist.tracks
-          ?.map((track) => makeTrack(track))
+  const agreements =
+    'agreements' in playlist
+      ? playlist.agreements
+          ?.map((agreement) => makeAgreement(agreement))
           .filter(removeNullable) ?? []
       : []
 
@@ -331,7 +331,7 @@ export const makePlaylist = (
     ...playlist,
     variant: Variant.USER_GENERATED,
     user,
-    tracks,
+    agreements,
     playlist_id: decodedPlaylistId,
     playlist_owner_id: decodedOwnerId,
     followee_saves: saves,
@@ -340,7 +340,7 @@ export const makePlaylist = (
     has_current_user_saved,
     save_count,
     repost_count,
-    track_count,
+    agreement_count,
     total_play_count,
     playlist_contents: playlistContents,
 
@@ -365,16 +365,16 @@ export const makePlaylist = (
 
 export const makeActivity = (
   activity: APIActivity
-): UserTrackMetadata | UserCollectionMetadata | undefined => {
+): UserAgreementMetadata | UserCollectionMetadata | undefined => {
   switch (activity.item_type) {
-    case 'track':
-      return makeTrack(activity.item)
+    case 'agreement':
+      return makeAgreement(activity.item)
     case 'playlist':
       return makePlaylist(activity.item)
   }
 }
 
-export const makeStemTrack = (stem: APIStem): StemTrackMetadata | undefined => {
+export const makeStemAgreement = (stem: APIStem): StemAgreementMetadata | undefined => {
   const [id, parentId, ownerId] = [stem.id, stem.parent_id, stem.user_id].map(
     decodeHashId
   )
@@ -383,7 +383,7 @@ export const makeStemTrack = (stem: APIStem): StemTrackMetadata | undefined => {
   return {
     blocknumber: stem.blocknumber,
     is_delete: false,
-    track_id: id,
+    agreement_id: id,
     created_at: '',
     isrc: null,
     iswc: null,
@@ -408,12 +408,12 @@ export const makeStemTrack = (stem: APIStem): StemTrackMetadata | undefined => {
     save_count: 0,
     tags: null,
     title: '',
-    track_segments: [],
+    agreement_segments: [],
     cover_art: null,
     cover_art_sizes: null,
     is_unlisted: false,
     stem_of: {
-      parent_track_id: parentId,
+      parent_agreement_id: parentId,
       category: stem.category
     },
     remix_of: null,
@@ -426,11 +426,11 @@ export const makeStemTrack = (stem: APIStem): StemTrackMetadata | undefined => {
 
 export const adaptSearchResponse = (searchResponse: APIResponse<APISearch>) => {
   return {
-    tracks:
-      searchResponse.data.tracks?.map(makeTrack).filter(removeNullable) ??
+    agreements:
+      searchResponse.data.agreements?.map(makeAgreement).filter(removeNullable) ??
       undefined,
-    saved_tracks:
-      searchResponse.data.saved_tracks?.map(makeTrack).filter(removeNullable) ??
+    saved_agreements:
+      searchResponse.data.saved_agreements?.map(makeAgreement).filter(removeNullable) ??
       undefined,
     users:
       searchResponse.data.users?.map(makeUser).filter(removeNullable) ??
@@ -460,11 +460,11 @@ export const adaptSearchAutocompleteResponse = (
   searchResponse: APIResponse<APISearchAutocomplete>
 ) => {
   return {
-    tracks:
-      searchResponse.data.tracks?.map(makeTrack).filter(removeNullable) ??
+    agreements:
+      searchResponse.data.agreements?.map(makeAgreement).filter(removeNullable) ??
       undefined,
-    saved_tracks:
-      searchResponse.data.saved_tracks?.map(makeTrack).filter(removeNullable) ??
+    saved_agreements:
+      searchResponse.data.saved_agreements?.map(makeAgreement).filter(removeNullable) ??
       undefined,
     users:
       searchResponse.data.users?.map(makeUser).filter(removeNullable) ??

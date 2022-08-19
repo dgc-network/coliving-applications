@@ -6,13 +6,13 @@ import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 
 import { getUserId } from 'common/store/account/selectors'
-import { getUserFromTrack } from 'common/store/cache/users/selectors'
+import { getUserFromAgreement } from 'common/store/cache/users/selectors'
 import {
-  saveTrack,
-  unsaveTrack,
-  repostTrack,
-  undoRepostTrack
-} from 'common/store/social/tracks/actions'
+  saveAgreement,
+  unsaveAgreement,
+  repostAgreement,
+  undoRepostAgreement
+} from 'common/store/social/agreements/actions'
 import { open } from 'common/store/ui/mobile-overflow-menu/slice'
 import {
   OverflowAction,
@@ -20,28 +20,28 @@ import {
 } from 'common/store/ui/mobile-overflow-menu/types'
 import { AppState } from 'store/types'
 
-import TrackListItem, { TrackListItemProps } from './TrackListItem'
+import AgreementListItem, { AgreementListItemProps } from './AgreementListItem'
 
-type OwnProps = Omit<TrackListItemProps, 'userId'>
+type OwnProps = Omit<AgreementListItemProps, 'userId'>
 type StateProps = ReturnType<typeof mapStateToProps>
 type DispatchProps = ReturnType<typeof mapDispatchToProps>
 
-type ConnectedTrackListItemProps = OwnProps & StateProps & DispatchProps
+type ConnectedAgreementListItemProps = OwnProps & StateProps & DispatchProps
 
-const ConnectedTrackListItem = (props: ConnectedTrackListItemProps) => {
+const ConnectedAgreementListItem = (props: ConnectedAgreementListItemProps) => {
   const onClickOverflow = () => {
     const overflowActions = [
       props.isReposted ? OverflowAction.UNREPOST : OverflowAction.REPOST,
       props.isSaved ? OverflowAction.UNFAVORITE : OverflowAction.FAVORITE,
       OverflowAction.ADD_TO_PLAYLIST,
-      OverflowAction.VIEW_TRACK_PAGE,
+      OverflowAction.VIEW_AGREEMENT_PAGE,
       OverflowAction.VIEW_ARTIST_PAGE
     ].filter(Boolean) as OverflowAction[]
-    props.clickOverflow(props.trackId, overflowActions)
+    props.clickOverflow(props.agreementId, overflowActions)
   }
 
   return (
-    <TrackListItem
+    <AgreementListItem
       {...props}
       userId={props.user?.user_id ?? 0}
       onClickOverflow={onClickOverflow}
@@ -51,7 +51,7 @@ const ConnectedTrackListItem = (props: ConnectedTrackListItemProps) => {
 
 function mapStateToProps(state: AppState, ownProps: OwnProps) {
   return {
-    user: getUserFromTrack(state, { id: ownProps.trackId }),
+    user: getUserFromAgreement(state, { id: ownProps.agreementId }),
     currentUserId: getUserId(state)
   }
 }
@@ -59,17 +59,17 @@ function mapStateToProps(state: AppState, ownProps: OwnProps) {
 function mapDispatchToProps(dispatch: Dispatch) {
   return {
     goToRoute: (route: string) => dispatch(pushRoute(route)),
-    saveTrack: (trackId: ID) =>
-      dispatch(saveTrack(trackId, FavoriteSource.TRACK_LIST)),
-    unsaveTrack: (trackId: ID) =>
-      dispatch(unsaveTrack(trackId, FavoriteSource.TRACK_LIST)),
-    repostTrack: (trackId: ID) =>
-      dispatch(repostTrack(trackId, RepostSource.TRACK_LIST)),
-    unrepostTrack: (trackId: ID) =>
-      dispatch(undoRepostTrack(trackId, RepostSource.TRACK_LIST)),
-    clickOverflow: (trackId: ID, overflowActions: OverflowAction[]) =>
+    saveAgreement: (agreementId: ID) =>
+      dispatch(saveAgreement(agreementId, FavoriteSource.AGREEMENT_LIST)),
+    unsaveAgreement: (agreementId: ID) =>
+      dispatch(unsaveAgreement(agreementId, FavoriteSource.AGREEMENT_LIST)),
+    repostAgreement: (agreementId: ID) =>
+      dispatch(repostAgreement(agreementId, RepostSource.AGREEMENT_LIST)),
+    unrepostAgreement: (agreementId: ID) =>
+      dispatch(undoRepostAgreement(agreementId, RepostSource.AGREEMENT_LIST)),
+    clickOverflow: (agreementId: ID, overflowActions: OverflowAction[]) =>
       dispatch(
-        open({ source: OverflowSource.TRACKS, id: trackId, overflowActions })
+        open({ source: OverflowSource.AGREEMENTS, id: agreementId, overflowActions })
       )
   }
 }
@@ -77,4 +77,4 @@ function mapDispatchToProps(dispatch: Dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(memo(ConnectedTrackListItem))
+)(memo(ConnectedAgreementListItem))

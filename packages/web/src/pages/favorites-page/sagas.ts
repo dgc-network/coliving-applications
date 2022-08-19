@@ -1,10 +1,10 @@
-import { ID, Collection, FavoriteType, Track } from '@coliving/common'
+import { ID, Collection, FavoriteType, Agreement } from '@coliving/common'
 import { select, put } from 'typed-redux-saga/macro'
 
 import { getCollection } from 'common/store/cache/collections/selectors'
-import { getTrack } from 'common/store/cache/tracks/selectors'
+import { getAgreement } from 'common/store/cache/agreements/selectors'
 import {
-  trackFavoriteError,
+  agreementFavoriteError,
   playlistFavoriteError
 } from 'common/store/user-list/favorites/actions'
 import { watchFavoriteError } from 'common/store/user-list/favorites/errorSagas'
@@ -44,27 +44,27 @@ const getPlaylistFavorites = createUserListProvider<Collection>({
   includeCurrentUser: (p) => p.has_current_user_saved
 })
 
-const getTrackFavorites = createUserListProvider<Track>({
-  getExistingEntity: getTrack,
-  extractUserIDSubsetFromEntity: (track: Track) =>
-    track.followee_saves.map((r) => r.user_id),
+const getAgreementFavorites = createUserListProvider<Agreement>({
+  getExistingEntity: getAgreement,
+  extractUserIDSubsetFromEntity: (agreement: Agreement) =>
+    agreement.followee_saves.map((r) => r.user_id),
   fetchAllUsersForEntity: async ({
     limit,
     offset,
     entityId,
     currentUserId
   }) => {
-    const users = await apiClient.getTrackFavoriteUsers({
+    const users = await apiClient.getAgreementFavoriteUsers({
       limit,
       offset,
-      trackId: entityId,
+      agreementId: entityId,
       currentUserId
     })
     return { users }
   },
   selectCurrentUserIDsInList: getUserIds,
-  canFetchMoreUsers: (track: Track, combinedUserIDs: ID[]) =>
-    combinedUserIDs.length < track.save_count,
+  canFetchMoreUsers: (agreement: Agreement, combinedUserIDs: ID[]) =>
+    combinedUserIDs.length < agreement.save_count,
   includeCurrentUser: (t) => t.has_current_user_saved
 })
 
@@ -73,8 +73,8 @@ function* errorDispatcher(error: Error) {
   const id = yield* select(getId)
   if (!id) return
 
-  if (favoriteType === FavoriteType.TRACK) {
-    yield* put(trackFavoriteError(id, error.message))
+  if (favoriteType === FavoriteType.AGREEMENT) {
+    yield* put(agreementFavoriteError(id, error.message))
   } else {
     yield* put(playlistFavoriteError(id, error.message))
   }
@@ -85,8 +85,8 @@ function* getFavorites(currentPage: number, pageSize: number) {
   if (!id) return { userIds: [], hasMore: false }
   const favoriteType = yield* select(getFavoriteType)
   return yield* (
-    favoriteType === FavoriteType.TRACK
-      ? getTrackFavorites
+    favoriteType === FavoriteType.AGREEMENT
+      ? getAgreementFavorites
       : getPlaylistFavorites
   )({ id, currentPage, pageSize })
 }

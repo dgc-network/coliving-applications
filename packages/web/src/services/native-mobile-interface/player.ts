@@ -1,15 +1,15 @@
 import { NativeMobileMessage } from './helpers'
 import { MessageType } from './types'
 
-export class PlayTrackMessage extends NativeMobileMessage {
+export class PlayAgreementMessage extends NativeMobileMessage {
   constructor(m3u8: string) {
-    super(MessageType.PLAY_TRACK, { m3u8 })
+    super(MessageType.PLAY_AGREEMENT, { m3u8 })
   }
 }
 
-export class PauseTrackMessage extends NativeMobileMessage {
+export class PauseAgreementMessage extends NativeMobileMessage {
   constructor() {
-    super(MessageType.PAUSE_TRACK, {})
+    super(MessageType.PAUSE_AGREEMENT, {})
   }
 }
 
@@ -21,6 +21,6 @@ export class GetPositionMessage extends NativeMobileMessage {
 
 export class SeekMessage extends NativeMobileMessage {
   constructor(seconds: number) {
-    super(MessageType.SEEK_TRACK, { seconds })
+    super(MessageType.SEEK_AGREEMENT, { seconds })
   }
 }

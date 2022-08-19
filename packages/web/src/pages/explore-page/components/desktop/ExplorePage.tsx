@@ -50,7 +50,7 @@ const messages = {
   exploreMoreProfiles: 'Explore More Artists',
   justForYou: 'Just For You',
   justForYouSubtitle: `Content curated for you based on your likes,
-reposts, and follows. Refreshes often so if you like a track, favorite it.`,
+reposts, and follows. Refreshes often so if you like a agreement, favorite it.`,
   lifestyle: 'Playlists to Fit Your Mood',
   lifestyleSubtitle: 'Playlists made by Coliving users, sorted by mood and feel'
 }

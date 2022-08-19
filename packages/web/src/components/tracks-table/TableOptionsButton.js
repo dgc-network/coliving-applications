@@ -14,7 +14,7 @@ class TableOptionsButton extends Component {
     const {
       onClick,
       className,
-      trackId,
+      agreementId,
       index,
       uid,
       date,
@@ -29,12 +29,12 @@ class TableOptionsButton extends Component {
 
     const removeMenuItem = {
       text: removeText,
-      onClick: () => onRemove(trackId, index, uid, date.unix())
+      onClick: () => onRemove(agreementId, index, uid, date.unix())
     }
 
     const overflowMenu = {
       menu: {
-        type: 'track',
+        type: 'agreement',
         mount: 'page',
         includeShare: true,
         isOwner,
@@ -82,12 +82,12 @@ class TableOptionsButton extends Component {
 TableOptionsButton.propTypes = {
   className: PropTypes.string,
   handle: PropTypes.string,
-  trackId: PropTypes.number,
+  agreementId: PropTypes.number,
   index: PropTypes.number,
   isFavorited: PropTypes.bool,
   isReposted: PropTypes.bool,
   isDeleted: PropTypes.bool,
-  trackTitle: PropTypes.string,
+  agreementTitle: PropTypes.string,
   albumId: PropTypes.number,
   albumName: PropTypes.string,
   date: PropTypes.object,
@@ -98,7 +98,7 @@ TableOptionsButton.propTypes = {
   isOwner: PropTypes.bool,
   isOwnerDeactivated: PropTypes.bool,
   hiddenUntilHover: PropTypes.bool,
-  trackPermalink: PropTypes.string
+  agreementPermalink: PropTypes.string
 }
 
 TableOptionsButton.defaultProps = {

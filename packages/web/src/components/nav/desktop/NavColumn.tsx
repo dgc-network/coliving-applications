@@ -29,9 +29,9 @@ import {
   getAccountUser,
   getPlaylistLibrary
 } from 'common/store/account/selectors'
-import { getDominantColorsByTrack } from 'common/store/average-color/slice'
+import { getDominantColorsByAgreement } from 'common/store/average-color/slice'
 import {
-  addTrackToPlaylist,
+  addAgreementToPlaylist,
   createPlaylist
 } from 'common/store/cache/collections/actions'
 import {
@@ -48,7 +48,7 @@ import {
 } from 'common/store/playlist-library/helpers'
 import { makeGetCurrent } from 'common/store/queue/selectors'
 import { saveCollection } from 'common/store/social/collections/actions'
-import { saveTrack } from 'common/store/social/tracks/actions'
+import { saveAgreement } from 'common/store/social/agreements/actions'
 import * as createPlaylistModalActions from 'common/store/ui/createPlaylistModal/actions'
 import {
   getHideFolderTab,
@@ -80,7 +80,7 @@ import {
   DASHBOARD_PAGE,
   EXPLORE_PAGE,
   FEED_PAGE,
-  fullTrackPage,
+  fullAgreementPage,
   HISTORY_PAGE,
   playlistPage,
   profilePage,
@@ -125,7 +125,7 @@ const NavColumn = ({
   currentQueueItem,
   currentPlayerItem,
   dragging: { dragging, kind, isOwner: draggingIsOwner },
-  saveTrack,
+  saveAgreement,
   saveCollection,
   upload,
   accountStatus,
@@ -243,12 +243,12 @@ const NavColumn = ({
   }, [])
 
   /** @param {bool} full whether or not to get the full page link */
-  const getTrackPageLink = useCallback(
+  const getAgreementPageLink = useCallback(
     (full = false) => {
-      if (currentQueueItem && currentQueueItem.user && currentQueueItem.track) {
+      if (currentQueueItem && currentQueueItem.user && currentQueueItem.agreement) {
         return full
-          ? fullTrackPage(currentQueueItem.track.permalink)
-          : currentQueueItem.track.permalink
+          ? fullAgreementPage(currentQueueItem.agreement.permalink)
+          : currentQueueItem.agreement.permalink
       }
       return null
     },
@@ -256,9 +256,9 @@ const NavColumn = ({
   )
 
   const onClickArtwork = useCallback(() => {
-    const route = getTrackPageLink()
+    const route = getAgreementPageLink()
     if (route) goToRoute(route)
-  }, [goToRoute, getTrackPageLink])
+  }, [goToRoute, getAgreementPageLink])
 
   const onShowVisualizer = useCallback(
     (e) => {
@@ -272,7 +272,7 @@ const NavColumn = ({
   const onClickUpload = useCallback(() => {
     if (!upload.uploading) resetUploadState()
     goToUpload()
-    record(make(Name.TRACK_UPLOAD_OPEN, { source: 'nav' }))
+    record(make(Name.AGREEMENT_UPLOAD_OPEN, { source: 'nav' }))
   }, [goToUpload, upload, resetUploadState, record])
 
   const profileCompletionMeter = (
@@ -416,9 +416,9 @@ const NavColumn = ({
                 <Droppable
                   className={styles.droppable}
                   hoverClassName={styles.droppableHover}
-                  acceptedKinds={['track', 'album']}
+                  acceptedKinds={['agreement', 'album']}
                   acceptOwner={false}
-                  onDrop={kind === 'album' ? saveCollection : saveTrack}
+                  onDrop={kind === 'album' ? saveCollection : saveAgreement}
                 >
                   <NavLink
                     to={SAVED_PAGE}
@@ -431,7 +431,7 @@ const NavColumn = ({
                       [styles.droppableLink]:
                         dragging &&
                         !draggingIsOwner &&
-                        (kind === 'track' || kind === 'album')
+                        (kind === 'agreement' || kind === 'album')
                     })}
                     onClick={onClickNavLinkWithAccount}
                   >
@@ -505,22 +505,22 @@ const NavColumn = ({
           onUpload={onClickUpload}
         />
         <CurrentlyPlaying
-          trackId={currentQueueItem.track?.track_id ?? null}
-          trackTitle={currentQueueItem.track?.title ?? null}
-          isUnlisted={currentQueueItem.track?.is_unlisted ?? false}
+          agreementId={currentQueueItem.agreement?.agreement_id ?? null}
+          agreementTitle={currentQueueItem.agreement?.title ?? null}
+          isUnlisted={currentQueueItem.agreement?.is_unlisted ?? false}
           isOwner={
             // Note: if neither are defined, it should eval to false, so setting default to different values
             (currentQueueItem?.user?.handle ?? null) ===
             (account?.handle ?? undefined)
           }
           coverArtColor={dominantColors ? dominantColors[0] : null}
-          coverArtSizes={currentQueueItem.track?._cover_art_sizes ?? null}
+          coverArtSizes={currentQueueItem.agreement?._cover_art_sizes ?? null}
           artworkLink={
             currentPlayerItem.collectible?.imageUrl ||
             currentPlayerItem.collectible?.frameUrl ||
             currentPlayerItem.collectible?.gifUrl
           }
-          draggableLink={getTrackPageLink()}
+          draggableLink={getAgreementPageLink()}
           onClick={onClickArtwork}
           onShowVisualizer={onShowVisualizer}
         />
@@ -547,8 +547,8 @@ const mapStateToProps = (state: AppState) => {
     library: getPlaylistLibrary(state),
     showCreatePlaylistModal: getIsOpen(state),
     hideCreatePlaylistModalFolderTab: getHideFolderTab(state),
-    dominantColors: getDominantColorsByTrack(state, {
-      track: currentQueueItem.track
+    dominantColors: getDominantColorsByAgreement(state, {
+      agreement: currentQueueItem.agreement
     })
   }
 }
@@ -558,12 +558,12 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   createPlaylist: (tempId: string, metadata: Record<string, unknown>) =>
     dispatch(createPlaylist(tempId, metadata, CreatePlaylistSource.NAV)),
   goToRoute: (route: string) => dispatch(pushRoute(route)),
-  saveTrack: (trackId: number) =>
-    dispatch(saveTrack(trackId, FavoriteSource.NAVIGATOR)),
+  saveAgreement: (agreementId: number) =>
+    dispatch(saveAgreement(agreementId, FavoriteSource.NAVIGATOR)),
   saveCollection: (collectionId: number) =>
     dispatch(saveCollection(collectionId, FavoriteSource.NAVIGATOR)),
-  addTrackToPlaylist: (trackId: number, playlistId: number) =>
-    dispatch(addTrackToPlaylist(trackId, playlistId)),
+  addAgreementToPlaylist: (agreementId: number, playlistId: number) =>
+    dispatch(addAgreementToPlaylist(agreementId, playlistId)),
   showActionRequiresAccount: () =>
     dispatch(signOnActions.showRequiresAccountModal()),
   toggleNotificationPanel: () => dispatch(toggleNotificationPanel()),

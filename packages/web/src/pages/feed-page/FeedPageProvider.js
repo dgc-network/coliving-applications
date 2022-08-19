@@ -62,12 +62,12 @@ class FeedPageProvider extends PureComponent {
 
   getLineupProps = (lineup) => {
     const { currentQueueItem, playing, buffering } = this.props
-    const { uid: playingUid, track, source } = currentQueueItem
+    const { uid: playingUid, agreement, source } = currentQueueItem
     return {
       lineup,
       playingUid,
       playingSource: source,
-      playingTrackId: track ? track.track_id : null,
+      playingAgreementId: agreement ? agreement.agreement_id : null,
       playing,
       buffering,
       scrollParent: this.props.containerRef,
@@ -91,8 +91,8 @@ class FeedPageProvider extends PureComponent {
       goToGenreSelection: this.goToGenreSelection,
       setFeedInView: this.props.setFeedInView,
       loadMoreFeed: this.props.loadMoreFeed,
-      playFeedTrack: this.props.playFeedTrack,
-      pauseFeedTrack: this.props.pauseFeedTrack,
+      playFeedAgreement: this.props.playFeedAgreement,
+      pauseFeedAgreement: this.props.pauseFeedAgreement,
       switchView: this.switchView,
       getLineupProps: this.getLineupProps,
       setFeedFilter: this.props.setFeedFilter,
@@ -100,8 +100,8 @@ class FeedPageProvider extends PureComponent {
       resetFeedLineup: this.props.resetFeedLineup,
 
       makeLoadMore: this.props.makeLoadMore,
-      makePlayTrack: this.props.makePlayTrack,
-      makePauseTrack: this.props.makePauseTrack,
+      makePlayAgreement: this.props.makePlayAgreement,
+      makePauseAgreement: this.props.makePauseAgreement,
       makeSetInView: this.props.makeSetInView
     }
 
@@ -142,13 +142,13 @@ const mapDispatchToProps = (dispatch) => ({
   setFeedInView: (inView) => dispatch(feedActions.setInView(inView)),
   loadMoreFeed: (offset, limit, overwrite) => {
     dispatch(feedActions.fetchLineupMetadatas(offset, limit, overwrite))
-    const trackEvent = make(Name.FEED_PAGINATE, { offset, limit })
-    dispatch(trackEvent)
+    const agreementEvent = make(Name.FEED_PAGINATE, { offset, limit })
+    dispatch(agreementEvent)
   },
   refreshFeedInView: (overwrite, limit) =>
     dispatch(feedActions.refreshInView(overwrite, null, limit)),
-  playFeedTrack: (uid) => dispatch(feedActions.play(uid)),
-  pauseFeedTrack: () => dispatch(feedActions.pause())
+  playFeedAgreement: (uid) => dispatch(feedActions.play(uid)),
+  pauseFeedAgreement: () => dispatch(feedActions.pause())
 })
 
 export default withRouter(

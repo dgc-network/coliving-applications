@@ -1,8 +1,8 @@
 import { useEffect, useContext } from 'react'
 
-import { CID, ID, LineupState, Track, User } from '@coliving/common'
+import { CID, ID, LineupState, Agreement, User } from '@coliving/common'
 
-import { tracksActions } from 'common/store/pages/track/lineup/actions'
+import { agreementsActions } from 'common/store/pages/agreement/lineup/actions'
 import { QueueItem } from 'common/store/queue/types'
 import { OverflowAction } from 'common/store/ui/mobile-overflow-menu/types'
 import { HeaderContext } from 'components/header/mobile/HeaderContextProvider'
@@ -16,15 +16,15 @@ import NavContext, {
 } from 'components/nav/store/context'
 import NetworkConnectivityMonitor from 'components/network-connectivity/NetworkConnectivityMonitor'
 import SectionButton from 'components/section-button/SectionButton'
-import { getTrackDefaults, emptyStringGuard } from 'pages/track-page/utils'
+import { getAgreementDefaults, emptyStringGuard } from 'pages/agreement-page/utils'
 
 import Remixes from './Remixes'
-import TrackPageHeader from './TrackHeader'
-import styles from './TrackPage.module.css'
+import AgreementPageHeader from './AgreementHeader'
+import styles from './AgreementPage.module.css'
 
 const messages = {
   moreBy: 'More By',
-  originalTrack: 'Original Track',
+  originalAgreement: 'Original Agreement',
   viewOtherRemixes: 'View Other Remixes'
 }
 
@@ -33,49 +33,49 @@ export type OwnProps = {
   description: string
   canonicalUrl: string
   hasValidRemixParent: boolean
-  // Hero Track Props
-  heroTrack: Track | null
+  // Hero Agreement Props
+  heroAgreement: Agreement | null
   user: User | null
   heroPlaying: boolean
   userId: ID | null
   onHeroPlay: (isPlaying: boolean) => void
-  onHeroShare: (trackId: ID) => void
+  onHeroShare: (agreementId: ID) => void
   goToProfilePage: (handle: string) => void
   goToSearchResultsPage: (tag: string) => void
   goToAllRemixesPage: () => void
   goToParentRemixesPage: () => void
-  onHeroRepost: (isReposted: boolean, trackId: number) => void
+  onHeroRepost: (isReposted: boolean, agreementId: number) => void
   onClickMobileOverflow: (
-    trackId: ID,
+    agreementId: ID,
     overflowActions: OverflowAction[]
   ) => void
 
-  onSaveTrack: (isSaved: boolean, trackId: ID) => void
-  onDownloadTrack: (
-    trackId: ID,
+  onSaveAgreement: (isSaved: boolean, agreementId: ID) => void
+  onDownloadAgreement: (
+    agreementId: ID,
     cid: CID,
     contentNodeEndpoints: string,
     category?: string,
-    parentTrackId?: ID
+    parentAgreementId?: ID
   ) => void
-  // Tracks Lineup Props
-  tracks: LineupState<{ id: ID }>
+  // Agreements Lineup Props
+  agreements: LineupState<{ id: ID }>
   currentQueueItem: QueueItem
   isPlaying: boolean
   isBuffering: boolean
   play: (uid?: string) => void
   pause: () => void
-  goToFavoritesPage: (trackId: ID) => void
-  goToRepostsPage: (trackId: ID) => void
+  goToFavoritesPage: (agreementId: ID) => void
+  goToRepostsPage: (agreementId: ID) => void
 }
 
-const TrackPage = ({
+const AgreementPage = ({
   title,
   description,
   canonicalUrl,
   hasValidRemixParent,
-  // Hero Track Props
-  heroTrack,
+  // Hero Agreement Props
+  heroAgreement,
   user,
   heroPlaying,
   userId,
@@ -85,13 +85,13 @@ const TrackPage = ({
   goToSearchResultsPage,
   goToAllRemixesPage,
   goToParentRemixesPage,
-  onSaveTrack,
-  onDownloadTrack,
+  onSaveAgreement,
+  onDownloadAgreement,
   onHeroRepost,
   onClickMobileOverflow,
 
-  // Tracks Lineup Props
-  tracks,
+  // Agreements Lineup Props
+  agreements,
   currentQueueItem,
   isPlaying,
   isBuffering,
@@ -112,55 +112,55 @@ const TrackPage = ({
     setHeader(null)
   }, [setHeader])
 
-  const { entries } = tracks
-  const isOwner = heroTrack ? heroTrack.owner_id === userId : false
-  const isSaved = heroTrack ? heroTrack.has_current_user_saved : false
-  const isReposted = heroTrack ? heroTrack.has_current_user_reposted : false
+  const { entries } = agreements
+  const isOwner = heroAgreement ? heroAgreement.owner_id === userId : false
+  const isSaved = heroAgreement ? heroAgreement.has_current_user_saved : false
+  const isReposted = heroAgreement ? heroAgreement.has_current_user_reposted : false
   const isFollowing = user ? user.does_current_user_follow : false
 
-  const loading = !heroTrack
+  const loading = !heroAgreement
 
   const onPlay = () => onHeroPlay(heroPlaying)
   const onSave = isOwner
     ? () => {}
-    : () => heroTrack && onSaveTrack(isSaved, heroTrack.track_id)
+    : () => heroAgreement && onSaveAgreement(isSaved, heroAgreement.agreement_id)
   const onRepost = isOwner
     ? () => {}
-    : () => heroTrack && onHeroRepost(isReposted, heroTrack.track_id)
+    : () => heroAgreement && onHeroRepost(isReposted, heroAgreement.agreement_id)
   const onClickArtistName = () => goToProfilePage(user ? user.handle : '')
   const onShare = () => {
-    heroTrack && onHeroShare(heroTrack.track_id)
+    heroAgreement && onHeroShare(heroAgreement.agreement_id)
   }
 
   const onClickTag = (tag: string) => goToSearchResultsPage(`#${tag}`)
 
-  const defaults = getTrackDefaults(heroTrack)
+  const defaults = getAgreementDefaults(heroAgreement)
 
-  const renderOriginalTrackTitle = () => (
-    <div className={styles.lineupHeader}>{messages.originalTrack}</div>
+  const renderOriginalAgreementTitle = () => (
+    <div className={styles.lineupHeader}>{messages.originalAgreement}</div>
   )
 
   const onDownload = (
-    trackId: ID,
+    agreementId: ID,
     cid: CID,
     category?: string,
-    parentTrackId?: ID
+    parentAgreementId?: ID
   ) => {
     if (!user) return
     const { creator_node_endpoint } = user
     if (!creator_node_endpoint) return
-    onDownloadTrack(
-      trackId,
+    onDownloadAgreement(
+      agreementId,
       cid,
       creator_node_endpoint,
       category,
-      parentTrackId
+      parentAgreementId
     )
   }
 
   const renderMoreByTitle = () =>
-    (defaults.remixParentTrackId && entries.length > 2) ||
-    (!defaults.remixParentTrackId && entries.length > 1) ? (
+    (defaults.remixParentAgreementId && entries.length > 2) ||
+    (!defaults.remixParentAgreementId && entries.length > 1) ? (
       <div
         className={styles.lineupHeader}
       >{`${messages.moreBy} ${user?.name}`}</div>
@@ -173,15 +173,15 @@ const TrackPage = ({
         description={description}
         canonicalUrl={canonicalUrl}
       >
-        <div className={styles.trackContent}>
-          <TrackPageHeader
+        <div className={styles.agreementContent}>
+          <AgreementPageHeader
             isLoading={loading}
             isPlaying={heroPlaying}
             isReposted={isReposted}
             isFollowing={isFollowing}
             title={defaults.title}
-            trackId={defaults.trackId}
-            userId={heroTrack?.owner_id ?? 0}
+            agreementId={defaults.agreementId}
+            userId={heroAgreement?.owner_id ?? 0}
             artistName={emptyStringGuard(user?.name)}
             artistVerified={user?.is_verified ?? false}
             coverArtSizes={defaults.coverArtSizes}
@@ -208,31 +208,31 @@ const TrackPage = ({
             onRepost={onRepost}
             onDownload={onDownload}
             isUnlisted={defaults.isUnlisted}
-            isRemix={!!defaults.remixParentTrackId}
+            isRemix={!!defaults.remixParentAgreementId}
             fieldVisibility={defaults.fieldVisibility}
             goToFavoritesPage={goToFavoritesPage}
             goToRepostsPage={goToRepostsPage}
           />
           {defaults.fieldVisibility.remixes &&
-            defaults.remixTrackIds &&
-            defaults.remixTrackIds.length > 0 && (
+            defaults.remixAgreementIds &&
+            defaults.remixAgreementIds.length > 0 && (
               <div className={styles.remixes}>
                 <Remixes
-                  trackIds={defaults.remixTrackIds}
+                  agreementIds={defaults.remixAgreementIds}
                   goToAllRemixes={goToAllRemixesPage}
                   count={defaults.remixesCount}
                 />
               </div>
             )}
-          <div className={styles.tracksContainer}>
+          <div className={styles.agreementsContainer}>
             {!hasValidRemixParent && renderMoreByTitle()}
-            {hasValidRemixParent && renderOriginalTrackTitle()}
+            {hasValidRemixParent && renderOriginalAgreementTitle()}
             <Lineup
-              lineup={tracks}
-              // Styles for leading element (original track if remix).
-              leadingElementId={defaults.remixParentTrackId}
+              lineup={agreements}
+              // Styles for leading element (original agreement if remix).
+              leadingElementId={defaults.remixParentAgreementId}
               leadingElementDelineator={
-                <div className={styles.originalTrackDelineator}>
+                <div className={styles.originalAgreementDelineator}>
                   <SectionButton
                     isMobile
                     text={messages.viewOtherRemixes}
@@ -241,7 +241,7 @@ const TrackPage = ({
                   {renderMoreByTitle()}
                 </div>
               }
-              leadingElementClassName={styles.originalTrack}
+              leadingElementClassName={styles.originalAgreement}
               showLeadingElementArtistPick={false}
               // Don't render the first tile in the lineup.
               start={1}
@@ -252,14 +252,14 @@ const TrackPage = ({
               variant={LineupVariant.CONDENSED}
               playingUid={currentQueueItem.uid}
               playingSource={currentQueueItem.source}
-              playingTrackId={
-                currentQueueItem.track && currentQueueItem.track.track_id
+              playingAgreementId={
+                currentQueueItem.agreement && currentQueueItem.agreement.agreement_id
               }
               playing={isPlaying}
               buffering={isBuffering}
-              playTrack={play}
-              pauseTrack={pause}
-              actions={tracksActions}
+              playAgreement={play}
+              pauseAgreement={pause}
+              actions={agreementsActions}
             />
           </div>
         </div>
@@ -268,4 +268,4 @@ const TrackPage = ({
   )
 }
 
-export default TrackPage
+export default AgreementPage

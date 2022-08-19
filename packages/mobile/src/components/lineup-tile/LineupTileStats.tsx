@@ -22,7 +22,7 @@ import type { ThemeColors } from 'app/utils/theme'
 import { useThemeColors } from 'app/utils/theme'
 
 import { LineupTileRankIcon } from './LineupTileRankIcon'
-import { createStyles as createTrackTileStyles } from './styles'
+import { createStyles as createAgreementTileStyles } from './styles'
 
 const formatPlayCount = (playCount?: number) => {
   if (!playCount) {
@@ -94,7 +94,7 @@ export const LineupTileStats = ({
   showRankIcon
 }: Props) => {
   const styles = useThemedStyles(createStyles)
-  const trackTileStyles = useThemedStyles(createTrackTileStyles)
+  const agreementTileStyles = useThemedStyles(createAgreementTileStyles)
   const { neutralLight4 } = useThemeColors()
   const dispatchWeb = useDispatchWeb()
   const navigation = useNavigation()
@@ -129,13 +129,13 @@ export const LineupTileStats = ({
         <View style={styles.leftStats}>
           <Pressable
             style={[
-              trackTileStyles.statItem,
+              agreementTileStyles.statItem,
               !repostCount ? styles.disabledStatItem : {}
             ]}
             disabled={!repostCount}
             onPress={handlePressReposts}
           >
-            <Text style={trackTileStyles.statText}>
+            <Text style={agreementTileStyles.statText}>
               {formatCount(repostCount)}
             </Text>
             <IconRepost
@@ -147,13 +147,13 @@ export const LineupTileStats = ({
           </Pressable>
           <Pressable
             style={[
-              trackTileStyles.statItem,
+              agreementTileStyles.statItem,
               !saveCount ? styles.disabledStatItem : {}
             ]}
             disabled={!saveCount}
             onPress={handlePressFavorites}
           >
-            <Text style={trackTileStyles.statText}>
+            <Text style={agreementTileStyles.statText}>
               {formatCount(saveCount)}
             </Text>
             <IconHeart
@@ -166,7 +166,7 @@ export const LineupTileStats = ({
         </View>
       )}
       {!hidePlays && (
-        <Text style={[trackTileStyles.statText, styles.listenCount]}>
+        <Text style={[agreementTileStyles.statText, styles.listenCount]}>
           {formatPlayCount(playCount)}
         </Text>
       )}

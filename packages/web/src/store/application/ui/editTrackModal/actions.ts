@@ -1,11 +1,11 @@
 import { ID } from '@coliving/common'
 
-export const OPEN = 'APPLICATION/UI/EDIT_TRACK_MODAL/OPEN'
-export const CLOSE = 'APPLICATION/UI/EDIT_TRACK_MODAL/CLOSE'
+export const OPEN = 'APPLICATION/UI/EDIT_AGREEMENT_MODAL/OPEN'
+export const CLOSE = 'APPLICATION/UI/EDIT_AGREEMENT_MODAL/CLOSE'
 
-type OpenAction = { type: typeof OPEN; trackId: ID }
+type OpenAction = { type: typeof OPEN; agreementId: ID }
 type CloseAction = { type: typeof CLOSE }
-export type EditTrackModalActions = OpenAction | CloseAction
+export type EditAgreementModalActions = OpenAction | CloseAction
 
-export const open = (trackId: ID) => ({ type: OPEN, trackId })
+export const open = (agreementId: ID) => ({ type: OPEN, agreementId })
 export const close = () => ({ type: CLOSE })

@@ -15,7 +15,7 @@ import { ProfileInfo } from '../ProfileInfo'
 import { ProfileMetrics } from '../ProfileMetrics'
 import { ProfilePicture } from '../ProfilePicture'
 import { TipArtistButton } from '../TipArtistButton'
-import { UploadTrackButton } from '../UploadTrackButton'
+import { UploadAgreementButton } from '../UploadAgreementButton'
 import { useSelectProfileRoot } from '../selectors'
 
 import { CollapsedSection } from './CollapsedSection'
@@ -85,7 +85,7 @@ export const ProfileHeaderV2 = (props: ProfileHeaderV2Props) => {
         {!hasUserFollowed ? null : (
           <ArtistRecommendations onClose={handleCloseArtistRecs} />
         )}
-        {isOwner ? <UploadTrackButton /> : <TipArtistButton />}
+        {isOwner ? <UploadAgreementButton /> : <TipArtistButton />}
         <TopSupporters />
         <Divider style={styles.bottomDivider} />
       </View>

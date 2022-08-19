@@ -1,8 +1,8 @@
 import { NativeMobileMessage } from './helpers'
 import { MessageType } from './types'
 
-export class DownloadTrackMessage extends NativeMobileMessage {
+export class DownloadAgreementMessage extends NativeMobileMessage {
   constructor(downloadProps: { filename: string; urls: string }) {
-    super(MessageType.DOWNLOAD_TRACK, { ...downloadProps, saveToFiles: true })
+    super(MessageType.DOWNLOAD_AGREEMENT, { ...downloadProps, saveToFiles: true })
   }
 }

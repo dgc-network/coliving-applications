@@ -1,33 +1,33 @@
 import { ActionsMap } from 'utils/reducer'
 
-import { OPEN, CLOSE, EditTrackModalActions } from './actions'
-import EditTrackModalState from './types'
+import { OPEN, CLOSE, EditAgreementModalActions } from './actions'
+import EditAgreementModalState from './types'
 
 const initialState = {
   isOpen: false,
-  trackId: null
+  agreementId: null
 }
 
-const actionsMap: ActionsMap<EditTrackModalState> = {
+const actionsMap: ActionsMap<EditAgreementModalState> = {
   [OPEN](state, action) {
     return {
       ...state,
       isOpen: true,
-      trackId: action.trackId
+      agreementId: action.agreementId
     }
   },
   [CLOSE](state, action) {
     return {
       ...state,
       isOpen: false,
-      trackId: null
+      agreementId: null
     }
   }
 }
 
 export default function search(
   state = initialState,
-  action: EditTrackModalActions
+  action: EditAgreementModalActions
 ) {
   const matchingReduceFunction = actionsMap[action.type]
   if (!matchingReduceFunction) return state

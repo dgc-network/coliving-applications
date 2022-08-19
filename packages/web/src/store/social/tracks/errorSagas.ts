@@ -1,22 +1,22 @@
-import * as socialTrackActions from 'common/store/social/tracks/actions'
+import * as socialAgreementActions from 'common/store/social/agreements/actions'
 import createErrorSagas from 'common/utils/errorSagas'
 
-type TrackRepostErrors =
-  | ReturnType<typeof socialTrackActions.trackRepostFailed>
-  | ReturnType<typeof socialTrackActions.saveTrackFailed>
-  | ReturnType<typeof socialTrackActions.unsaveTrackFailed>
+type AgreementRepostErrors =
+  | ReturnType<typeof socialAgreementActions.agreementRepostFailed>
+  | ReturnType<typeof socialAgreementActions.saveAgreementFailed>
+  | ReturnType<typeof socialAgreementActions.unsaveAgreementFailed>
 
-const errorSagas = createErrorSagas<TrackRepostErrors>({
+const errorSagas = createErrorSagas<AgreementRepostErrors>({
   errorTypes: [
-    socialTrackActions.REPOST_FAILED,
-    socialTrackActions.UNSAVE_TRACK_FAILED,
-    socialTrackActions.SAVE_TRACK_FAILED
+    socialAgreementActions.REPOST_FAILED,
+    socialAgreementActions.UNSAVE_AGREEMENT_FAILED,
+    socialAgreementActions.SAVE_AGREEMENT_FAILED
   ],
   getShouldRedirect: () => false,
   getShouldReport: () => true,
-  getAdditionalInfo: (action: TrackRepostErrors) => ({
+  getAdditionalInfo: (action: AgreementRepostErrors) => ({
     error: action.error,
-    trackId: action.trackId
+    agreementId: action.agreementId
   })
 })
 

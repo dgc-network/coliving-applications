@@ -33,30 +33,30 @@ import styles from './TrendingRewards.module.css'
 const IS_NATIVE_MOBILE = process.env.REACT_APP_NATIVE_MOBILE
 
 const messages = {
-  tracksTitle: 'Top 5 Tracks Each Week Receive 100 $LIVE',
+  agreementsTitle: 'Top 5 Agreements Each Week Receive 100 $LIVE',
   playlistTitle: 'Top 5 Playlists Each Week Receive 100 $LIVE',
-  undergroundTitle: 'Top 5 Tracks Each Week Receive 100 $LIVE',
+  undergroundTitle: 'Top 5 Agreements Each Week Receive 100 $LIVE',
   winners: 'Winners are selected every Friday at Noon PT!',
   lastWeek: "LAST WEEK'S WINNERS",
-  tracks: 'TRACKS',
-  topTracks: 'TOP TRACKS',
+  agreements: 'AGREEMENTS',
+  topAgreements: 'TOP AGREEMENTS',
   playlists: 'PLAYLISTS',
   topPlaylists: 'TOP PLAYLISTS',
   underground: 'UNDERGROUND',
   terms: 'Terms and Conditions Apply',
-  tracksModalTitle: 'Top 5 Trending Tracks',
+  agreementsModalTitle: 'Top 5 Trending Agreements',
   playlistsModalTitle: 'Top 5 Trending Playlists',
-  undergroundModalTitle: 'Top 5 Underground Trending Tracks',
-  buttonTextTracks: 'Current Trending Tracks',
+  undergroundModalTitle: 'Top 5 Underground Trending Agreements',
+  buttonTextAgreements: 'Current Trending Agreements',
   buttonTextPlaylists: 'Current Trending Playlists',
-  buttonTextUnderground: 'Current Underground Trending Tracks',
-  mobileButtonTextTracks: 'Trending Tracks',
+  buttonTextUnderground: 'Current Underground Trending Agreements',
+  mobileButtonTextAgreements: 'Trending Agreements',
   mobileButtonTextPlaylists: 'Trending Playlists',
-  mobileButtonTextUnderground: 'Underground Trending Tracks'
+  mobileButtonTextUnderground: 'Underground Trending Agreements'
 }
 
 const TRENDING_PAGES = {
-  tracks: TRENDING_PAGE,
+  agreements: TRENDING_PAGE,
   playlists: TRENDING_PLAYLISTS_PAGE,
   underground: TRENDING_UNDERGROUND_PAGE
 }
@@ -68,11 +68,11 @@ const textMap = {
     button: messages.buttonTextPlaylists,
     buttonMobile: messages.mobileButtonTextPlaylists
   },
-  tracks: {
-    modalTitle: messages.tracksModalTitle,
-    title: messages.tracksTitle,
-    button: messages.buttonTextTracks,
-    buttonMobile: messages.mobileButtonTextTracks
+  agreements: {
+    modalTitle: messages.agreementsModalTitle,
+    title: messages.agreementsTitle,
+    button: messages.buttonTextAgreements,
+    buttonMobile: messages.mobileButtonTextAgreements
   },
   underground: {
     modalTitle: messages.undergroundModalTitle,
@@ -85,7 +85,7 @@ const textMap = {
 const TOS_URL = 'https://blog.coliving.co/posts/live-rewards'
 
 // Getters and setters for whether we're looking at
-// trending playlists or trending tracks
+// trending playlists or trending agreements
 const useRewardsType = (): [
   TrendingRewardsModalType,
   (type: TrendingRewardsModalType) => void
@@ -102,11 +102,11 @@ const useRewardsType = (): [
 }
 
 const useTweetId = (type: TrendingRewardsModalType) => {
-  const tracksId = useRemoteVar(StringKeys.REWARDS_TWEET_ID_TRACKS)
+  const agreementsId = useRemoteVar(StringKeys.REWARDS_TWEET_ID_AGREEMENTS)
   const playlistsId = useRemoteVar(StringKeys.REWARDS_TWEET_ID_PLAYLISTS)
   const undergroundId = useRemoteVar(StringKeys.REWARDS_TWEET_ID_UNDERGROUND)
   return {
-    tracks: tracksId,
+    agreements: agreementsId,
     playlists: playlistsId,
     underground: undergroundId
   }[type]
@@ -130,8 +130,8 @@ const TrendingRewardsBody = ({
   const mobile = isMobile()
   const tabOptions = [
     {
-      key: 'tracks',
-      text: mobile ? messages.tracks : messages.topTracks
+      key: 'agreements',
+      text: mobile ? messages.agreements : messages.topAgreements
     },
     {
       key: 'playlists',

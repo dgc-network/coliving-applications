@@ -3,7 +3,7 @@
   flex-direction: column;
 }
 
-.hideTracksSection {
+.hideAgreementsSection {
   border-bottom: 1px solid var(--neutral-light-6);
   padding: 8px 0px;
   margin-bottom: 8px;

@@ -267,10 +267,10 @@ function* checkEmail(action) {
       // let mobile client know that email is in use
       yield put(signOnActions.validateEmailSucceeded(false))
     } else {
-      const trackEvent = make(Name.CREATE_ACCOUNT_COMPLETE_EMAIL, {
+      const agreementEvent = make(Name.CREATE_ACCOUNT_COMPLETE_EMAIL, {
         emailAddress: action.email
       })
-      yield put(trackEvent)
+      yield put(agreementEvent)
       yield put(signOnActions.validateEmailSucceeded(true))
       yield put(signOnActions.goToPage(Pages.PASSWORD))
     }
@@ -450,10 +450,10 @@ function* signIn(action) {
             failure.payload.reason === 'ACCOUNT_DEACTIVATED'
           )
         )
-        const trackEvent = make(Name.SIGN_IN_FINISH, {
+        const agreementEvent = make(Name.SIGN_IN_FINISH, {
           status: 'fetch account failed'
         })
-        yield put(trackEvent)
+        yield put(agreementEvent)
         return
       }
 
@@ -467,8 +467,8 @@ function* signIn(action) {
 
       yield put(pushRoute(route || FEED_PAGE))
 
-      const trackEvent = make(Name.SIGN_IN_FINISH, { status: 'success' })
-      yield put(trackEvent)
+      const agreementEvent = make(Name.SIGN_IN_FINISH, { status: 'success' })
+      yield put(agreementEvent)
 
       // Reset the sign on in the background after page load as to relieve the UI loading
       yield delay(1000)
@@ -492,10 +492,10 @@ function* signIn(action) {
       )
       yield put(signOnActions.showToast(messages.incompleteAccount))
 
-      const trackEvent = make(Name.SIGN_IN_WITH_INCOMPLETE_ACCOUNT, {
+      const agreementEvent = make(Name.SIGN_IN_WITH_INCOMPLETE_ACCOUNT, {
         handle: signInResponse.handle
       })
-      yield put(trackEvent)
+      yield put(agreementEvent)
     } else if (signInResponse.error && signInResponse.phase === 'FIND_USER') {
       // Go to sign up flow because the account is incomplete
       yield put(
@@ -512,10 +512,10 @@ function* signIn(action) {
           false
         )
       )
-      const trackEvent = make(Name.SIGN_IN_FINISH, {
+      const agreementEvent = make(Name.SIGN_IN_FINISH, {
         status: 'invalid credentials'
       })
-      yield put(trackEvent)
+      yield put(agreementEvent)
     }
   } catch (err) {
     yield put(signOnActions.signInFailed(err))

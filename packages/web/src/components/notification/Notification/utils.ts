@@ -5,14 +5,14 @@ import {
   albumPage,
   fullAlbumPage,
   fullPlaylistPage,
-  fullTrackPage,
+  fullAgreementPage,
   playlistPage
 } from 'utils/route'
 
 export const getEntityLink = (entity: EntityType, fullRoute = false) => {
   if (!entity.user) return ''
-  if ('track_id' in entity) {
-    return fullRoute ? fullTrackPage(entity.permalink) : entity.permalink
+  if ('agreement_id' in entity) {
+    return fullRoute ? fullAgreementPage(entity.permalink) : entity.permalink
   } else if (entity.user && entity.playlist_id && entity.is_album) {
     const getRoute = fullRoute ? fullAlbumPage : albumPage
     return getRoute(
@@ -49,7 +49,7 @@ export const getTwitterHandleByUserHandle = async (userHandle: string) => {
 export const USER_LENGTH_LIMIT = 9
 
 export const entityToUserListEntity = {
-  [Entity.Track]: UserListEntityType.TRACK,
+  [Entity.Agreement]: UserListEntityType.AGREEMENT,
   [Entity.User]: UserListEntityType.USER,
   [Entity.Album]: UserListEntityType.COLLECTION,
   [Entity.Playlist]: UserListEntityType.COLLECTION

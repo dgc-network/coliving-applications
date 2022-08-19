@@ -348,7 +348,7 @@ export const removePlaylistLibraryTempPlaylists = (
 /**
  * Removes duplicates in a playlist library
  * @param library
- * @param ids ids to keep track of as we recurse
+ * @param ids ids to keep agreement of as we recurse
  */
 export const removePlaylistLibraryDuplicates = (
   library: PlaylistLibrary | PlaylistLibraryFolder,

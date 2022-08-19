@@ -1,12 +1,12 @@
 import { makeGetLineupMetadatas } from '-client/src/common/store/lineup/selectors'
-import { tracksActions } from '-client/src/common/store/pages/track/lineup/actions'
+import { agreementsActions } from '-client/src/common/store/pages/agreement/lineup/actions'
 import {
   getLineup,
-  getRemixParentTrack,
-  getTrack,
+  getRemixParentAgreement,
+  getAgreement,
   getUser
-} from '-client/src/common/store/pages/track/selectors'
-import { trackRemixesPage } from '-client/src/utils/route'
+} from '-client/src/common/store/pages/agreement/selectors'
+import { agreementRemixesPage } from '-client/src/utils/route'
 import { omit } from 'lodash'
 import { Text, View } from 'react-native'
 
@@ -18,13 +18,13 @@ import { useRoute } from 'app/hooks/useRoute'
 import { isEqual, useSelectorWeb } from 'app/hooks/useSelectorWeb'
 import { makeStyles } from 'app/styles'
 
-import { TrackScreenMainContent } from './TrackScreenMainContent'
+import { AgreementScreenMainContent } from './AgreementScreenMainContent'
 
 const getMoreByArtistLineup = makeGetLineupMetadatas(getLineup)
 
 const messages = {
   moreBy: 'More By',
-  originalTrack: 'Original Track',
+  originalAgreement: 'Original Agreement',
   viewOtherRemixes: 'View Other Remixes'
 }
 
@@ -45,20 +45,20 @@ const useStyles = makeStyles(({ palette, spacing, typography }) => ({
 }))
 
 /**
- * `TrackScreen` displays a single track and a Lineup of more tracks by the artist
+ * `AgreementScreen` displays a single agreement and a Lineup of more agreements by the artist
  */
-export const TrackScreen = () => {
+export const AgreementScreen = () => {
   const styles = useStyles()
   const navigation = useNavigation()
-  const { params } = useRoute<'Track'>()
+  const { params } = useRoute<'Agreement'>()
 
   // params is incorrectly typed and can sometimes be undefined
-  const { searchTrack } = params ?? {}
+  const { searchAgreement } = params ?? {}
 
-  const cachedTrack = useSelectorWeb(
-    (state) => getTrack(state, params),
+  const cachedAgreement = useSelectorWeb(
+    (state) => getAgreement(state, params),
     // Omitting uneeded fields from the equality check because they are
-    // causing extra renders when added to the `track` object
+    // causing extra renders when added to the `agreement` object
     (a, b) => {
       const omitUneeded = <T extends object | null>(o: T) =>
         omit(o, ['_stems', '_remix_parents'])
@@ -66,14 +66,14 @@ export const TrackScreen = () => {
     }
   )
 
-  const track = cachedTrack ?? searchTrack
+  const agreement = cachedAgreement ?? searchAgreement
 
   const cachedUser = useSelectorWeb(
-    (state) => getUser(state, { id: track?.owner_id }),
+    (state) => getUser(state, { id: agreement?.owner_id }),
     isEqual
   )
 
-  const user = cachedUser ?? searchTrack?.user
+  const user = cachedUser ?? searchAgreement?.user
 
   const lineup = useSelectorWeb(
     getMoreByArtistLineup,
@@ -81,38 +81,38 @@ export const TrackScreen = () => {
     // lineup reset state changes cause extra renders
     (a, b) => (!a.entries && !b.entries) || isEqual(a.entries, b.entries)
   )
-  const remixParentTrack = useSelectorWeb(getRemixParentTrack)
+  const remixParentAgreement = useSelectorWeb(getRemixParentAgreement)
 
-  if (!track || !user) {
+  if (!agreement || !user) {
     console.warn(
-      'Track, user, or lineup missing for TrackScreen, preventing render'
+      'Agreement, user, or lineup missing for AgreementScreen, preventing render'
     )
     return null
   }
 
   const handlePressGoToRemixes = () => {
-    if (!remixParentTrack) {
+    if (!remixParentAgreement) {
       return
     }
     navigation.push({
       native: {
-        screen: 'TrackRemixes',
-        params: { id: remixParentTrack.track_id }
+        screen: 'AgreementRemixes',
+        params: { id: remixParentAgreement.agreement_id }
       },
-      web: { route: trackRemixesPage(remixParentTrack.permalink) }
+      web: { route: agreementRemixesPage(remixParentAgreement.permalink) }
     })
   }
 
-  const remixParentTrackId = track.remix_of?.tracks?.[0]?.parent_track_id
+  const remixParentAgreementId = agreement.remix_of?.agreements?.[0]?.parent_agreement_id
   const showMoreByArtistTitle =
-    (remixParentTrackId && lineup.entries.length > 2) ||
-    (!remixParentTrackId && lineup.entries.length > 1)
+    (remixParentAgreementId && lineup.entries.length > 2) ||
+    (!remixParentAgreementId && lineup.entries.length > 1)
 
   const hasValidRemixParent =
-    !!remixParentTrackId &&
-    !!remixParentTrack &&
-    remixParentTrack.is_delete === false &&
-    !remixParentTrack.user?.is_deactivated
+    !!remixParentAgreementId &&
+    !!remixParentAgreement &&
+    remixParentAgreement.is_delete === false &&
+    !remixParentAgreement.user?.is_deactivated
 
   const moreByArtistTitle = showMoreByArtistTitle ? (
     <Text
@@ -120,27 +120,27 @@ export const TrackScreen = () => {
     >{`${messages.moreBy} ${user?.name}`}</Text>
   ) : null
 
-  const originalTrackTitle = (
-    <Text style={styles.lineupHeader}>{messages.originalTrack}</Text>
+  const originalAgreementTitle = (
+    <Text style={styles.lineupHeader}>{messages.originalAgreement}</Text>
   )
 
   return (
     <Screen>
       <Lineup
-        actions={tracksActions}
+        actions={agreementsActions}
         count={6}
         header={
-          <TrackScreenMainContent
+          <AgreementScreenMainContent
             lineup={lineup}
-            remixParentTrack={remixParentTrack}
-            track={track}
+            remixParentAgreement={remixParentAgreement}
+            agreement={agreement}
             user={user}
             lineupHeader={
-              hasValidRemixParent ? originalTrackTitle : moreByArtistTitle
+              hasValidRemixParent ? originalAgreementTitle : moreByArtistTitle
             }
           />
         }
-        leadingElementId={remixParentTrack?.track_id}
+        leadingElementId={remixParentAgreement?.agreement_id}
         leadingElementDelineator={
           <>
             <View style={styles.buttonContainer}>

@@ -18,29 +18,29 @@ import Page from 'components/page/Page'
 import StatBanner from 'components/stat-banner/StatBanner'
 import UserBadges from 'components/user-badges/UserBadges'
 import { useCollectionCoverArt } from 'hooks/useCollectionCoverArt'
-import { useTrackCoverArt } from 'hooks/useTrackCoverArt'
+import { useAgreementCoverArt } from 'hooks/useAgreementCoverArt'
 import { withNullGuard } from 'utils/withNullGuard'
 
 import styles from './DeletedPage.module.css'
 
 const messages = {
-  trackDeleted: 'Track [Deleted]',
-  trackDeletedByArtist: 'Track [Deleted By Artist]',
+  agreementDeleted: 'Agreement [Deleted]',
+  agreementDeletedByArtist: 'Agreement [Deleted By Artist]',
   playlistDeleted: 'Playlist [Deleted by Artist]',
   albumDeleted: 'Album [Deleted By Artist]',
   checkOut: (name: string) => `Check out more by ${name}`,
   moreBy: (name: string) => `More by ${name}`
 }
 
-const TrackArt = ({
-  trackId,
+const AgreementArt = ({
+  agreementId,
   coverArtSizes
 }: {
-  trackId: ID
+  agreementId: ID
   coverArtSizes: CoverArtSizes
 }) => {
-  const image = useTrackCoverArt(
-    trackId,
+  const image = useAgreementCoverArt(
+    agreementId,
     coverArtSizes,
     SquareSizes.SIZE_480_BY_480
   )
@@ -101,8 +101,8 @@ const DeletedPage = g(
         ? messages.albumDeleted
         : messages.playlistDeleted
       : deletedByArtist
-      ? messages.trackDeletedByArtist
-      : messages.trackDeleted
+      ? messages.agreementDeletedByArtist
+      : messages.agreementDeleted
 
     const renderTile = () => {
       return (
@@ -114,8 +114,8 @@ const DeletedPage = g(
               coverArtSizes={playable.metadata._cover_art_sizes}
             />
           ) : (
-            <TrackArt
-              trackId={playable.metadata.track_id}
+            <AgreementArt
+              agreementId={playable.metadata.agreement_id}
               coverArtSizes={playable.metadata._cover_art_sizes}
             />
           )}

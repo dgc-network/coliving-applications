@@ -1,47 +1,47 @@
 import { takeLatest, call, put, fork, select } from 'redux-saga/effects'
 
 import { getAccountUser } from 'common/store/account/selectors'
-import { processAndCacheTracks } from 'common/store/cache/tracks/utils'
+import { processAndCacheAgreements } from 'common/store/cache/agreements/utils'
 import * as actions from 'common/store/pages/saved-page/actions'
-import { tracksActions } from 'common/store/pages/saved-page/lineups/tracks/actions'
+import { agreementsActions } from 'common/store/pages/saved-page/lineups/agreements/actions'
 import { getSaves } from 'common/store/pages/saved-page/selectors'
 import apiClient from 'services/coliving-api-client/ColivingAPIClient'
 import { waitForValue } from 'utils/sagaHelpers'
 
-import tracksSagas from './lineups/tracks/sagas'
+import agreementsSagas from './lineups/agreements/sagas'
 
-function* fetchTracksLineup() {
-  yield put(tracksActions.fetchLineupMetadatas())
+function* fetchAgreementsLineup() {
+  yield put(agreementsActions.fetchLineupMetadatas())
 }
 
 function* watchFetchSaves() {
   yield takeLatest(actions.FETCH_SAVES, function* () {
     const account = yield call(waitForValue, getAccountUser)
     const userId = account.user_id
-    const limit = account.track_save_count
+    const limit = account.agreement_save_count
     const saves = yield select(getSaves)
     // Don't refetch saves in the same session
     if (saves && saves.length) {
-      yield fork(fetchTracksLineup)
+      yield fork(fetchAgreementsLineup)
     } else {
       try {
-        const savedTracks = yield apiClient.getFavoritedTracks({
+        const savedAgreements = yield apiClient.getFavoritedAgreements({
           currentUserId: userId,
           profileUserId: userId,
           offset: 0,
           limit
         })
-        const tracks = savedTracks.map((save) => save.track)
+        const agreements = savedAgreements.map((save) => save.agreement)
 
-        yield processAndCacheTracks(tracks)
+        yield processAndCacheAgreements(agreements)
 
-        const saves = savedTracks.map((save) => ({
+        const saves = savedAgreements.map((save) => ({
           created_at: save.timestamp,
-          save_item_id: save.track.track_id
+          save_item_id: save.agreement.agreement_id
         }))
         yield put(actions.fetchSavesSucceeded(saves))
 
-        yield fork(fetchTracksLineup)
+        yield fork(fetchAgreementsLineup)
       } catch (e) {
         yield put(actions.fetchSavesFailed())
       }
@@ -50,5 +50,5 @@ function* watchFetchSaves() {
 }
 
 export default function sagas() {
-  return [...tracksSagas(), watchFetchSaves]
+  return [...agreementsSagas(), watchFetchSaves]
 }

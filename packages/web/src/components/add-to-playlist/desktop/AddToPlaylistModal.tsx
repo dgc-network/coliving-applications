@@ -9,13 +9,13 @@ import { ReactComponent as IconMultiselectAdd } from 'assets/img/iconMultiselect
 import { useModalState } from 'common/hooks/useModalState'
 import { getAccountWithOwnPlaylists } from 'common/store/account/selectors'
 import {
-  addTrackToPlaylist,
+  addAgreementToPlaylist,
   createPlaylist
 } from 'common/store/cache/collections/actions'
 import { getCollectionId } from 'common/store/pages/collection/selectors'
 import {
-  getTrackId,
-  getTrackTitle
+  getAgreementId,
+  getAgreementTitle
 } from 'common/store/ui/add-to-playlist/selectors'
 import DynamicImage from 'components/dynamic-image/DynamicImage'
 import SearchBar from 'components/search-bar/SearchBar'
@@ -42,8 +42,8 @@ const AddToPlaylistModal = () => {
   const { toast } = useContext(ToastContext)
 
   const [isOpen, setIsOpen] = useModalState('AddToPlaylist')
-  const trackId = useSelector(getTrackId)
-  const trackTitle = useSelector(getTrackTitle)
+  const agreementId = useSelector(getAgreementId)
+  const agreementTitle = useSelector(getAgreementTitle)
   const currentCollectionId = useSelector(getCollectionId)
   const account = useSelector((state: AppState) =>
     getAccountWithOwnPlaylists(state)
@@ -65,13 +65,13 @@ const AddToPlaylistModal = () => {
   }, [searchValue, account, currentCollectionId])
 
   const handlePlaylistClick = (playlist: Collection) => {
-    dispatch(addTrackToPlaylist(trackId, playlist.playlist_id))
-    if (account && trackTitle) {
+    dispatch(addAgreementToPlaylist(agreementId, playlist.playlist_id))
+    if (account && agreementTitle) {
       toast(
         <ToastLinkContent
           text={messages.addedToast}
           linkText={messages.view}
-          link={playlistPage(account.handle, trackTitle, playlist.playlist_id)}
+          link={playlistPage(account.handle, agreementTitle, playlist.playlist_id)}
         />
       )
     }
@@ -80,20 +80,20 @@ const AddToPlaylistModal = () => {
 
   const handleCreatePlaylist = () => {
     const metadata = newCollectionMetadata({
-      playlist_name: trackTitle,
+      playlist_name: agreementTitle,
       is_private: false
     })
     const tempId = `${Date.now()}`
     dispatch(
-      createPlaylist(tempId, metadata, CreatePlaylistSource.FROM_TRACK, trackId)
+      createPlaylist(tempId, metadata, CreatePlaylistSource.FROM_AGREEMENT, agreementId)
     )
-    dispatch(addTrackToPlaylist(trackId, tempId))
-    if (account && trackTitle) {
+    dispatch(addAgreementToPlaylist(agreementId, tempId))
+    if (account && agreementTitle) {
       toast(
         <ToastLinkContent
           text={messages.createdToast}
           linkText={messages.view}
-          link={playlistPage(account.handle, trackTitle, tempId)}
+          link={playlistPage(account.handle, agreementTitle, tempId)}
         />
       )
     }

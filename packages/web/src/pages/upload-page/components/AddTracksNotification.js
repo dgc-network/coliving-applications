@@ -3,14 +3,14 @@ import { memo } from 'react'
 import cn from 'classnames'
 import PropTypes from 'prop-types'
 
-import styles from './AddTracksNotification.module.css'
+import styles from './AddAgreementsNotification.module.css'
 
 const messages = {
-  notice: 'Add more tracks to create an album or a playlist!',
+  notice: 'Add more agreements to create an album or a playlist!',
   dismiss: 'Got it!'
 }
 
-const AddTracksNotification = (props) => {
+const AddAgreementsNotification = (props) => {
   return (
     <div
       className={cn(styles.container, {
@@ -26,10 +26,10 @@ const AddTracksNotification = (props) => {
   )
 }
 
-AddTracksNotification.propTypes = {
+AddAgreementsNotification.propTypes = {
   className: PropTypes.string,
   onDismiss: PropTypes.func,
   show: PropTypes.bool
 }
 
-export default memo(AddTracksNotification)
+export default memo(AddAgreementsNotification)

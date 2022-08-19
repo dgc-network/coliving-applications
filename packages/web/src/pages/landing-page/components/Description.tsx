@@ -15,7 +15,7 @@ const messages = {
   description:
     'Coliving is a brand-new streaming platform built for all musicians, not just those signed to labels.',
   features:
-    'Build a fanbase, share your works in progress, and then publish your completed tracks for all the world to hear. Create, grow, and monetize, all without the need to graduate off the platform or sign a record deal.'
+    'Build a fanbase, share your works in progress, and then publish your completed agreements for all the world to hear. Create, grow, and monetize, all without the need to graduate off the platform or sign a record deal.'
 }
 
 const title1Items = messages.title1.split(' ')

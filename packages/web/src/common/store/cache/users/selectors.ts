@@ -8,7 +8,7 @@ import {
 } from 'common/store/cache/selectors'
 
 import { getCollection } from '../collections/selectors'
-import { getTrack } from '../tracks/selectors'
+import { getAgreement } from '../agreements/selectors'
 
 export const getUser = (
   state: CommonState,
@@ -116,12 +116,12 @@ export const getStatuses = (state: CommonState, props: { ids: ID[] }) => {
   return statuses
 }
 
-export const getUserFromTrack = (
+export const getUserFromAgreement = (
   state: CommonState,
   props: { id?: ID | null; uid?: UID | null }
 ) => {
-  const track = getTrack(state, props)
-  if (track && track.owner_id) return getUser(state, { id: track.owner_id })
+  const agreement = getAgreement(state, props)
+  if (agreement && agreement.owner_id) return getUser(state, { id: agreement.owner_id })
   return null
 }
 

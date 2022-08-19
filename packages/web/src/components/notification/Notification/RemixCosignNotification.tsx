@@ -8,7 +8,7 @@ import {
   getNotificationEntities,
   getNotificationUser
 } from 'common/store/notifications/selectors'
-import { RemixCosign, TrackEntity } from 'common/store/notifications/types'
+import { RemixCosign, AgreementEntity } from 'common/store/notifications/types'
 import { make } from 'store/analytics/actions'
 import { useSelector } from 'utils/reducer'
 
@@ -18,7 +18,7 @@ import { NotificationFooter } from './components/NotificationFooter'
 import { NotificationHeader } from './components/NotificationHeader'
 import { NotificationTile } from './components/NotificationTile'
 import { NotificationTitle } from './components/NotificationTitle'
-import { TrackContent } from './components/TrackContent'
+import { AgreementContent } from './components/AgreementContent'
 import { TwitterShareButton } from './components/TwitterShareButton'
 import { UserNameLink } from './components/UserNameLink'
 import { IconRemix } from './components/icons'
@@ -27,8 +27,8 @@ import { getEntityLink } from './utils'
 const messages = {
   title: 'Remix Co-sign',
   cosign: 'Co-signed your Remix of',
-  shareTwitterText: (trackTitle: string, handle: string) =>
-    `My remix of ${trackTitle} was Co-Signed by ${handle} on @dgc.network #Coliving`
+  shareTwitterText: (agreementTitle: string, handle: string) =>
+    `My remix of ${agreementTitle} was Co-Signed by ${handle} on @dgc.network #Coliving`
 }
 
 type RemixCosignNotificationProps = {
@@ -39,35 +39,35 @@ export const RemixCosignNotification = (
   props: RemixCosignNotificationProps
 ) => {
   const { notification } = props
-  const { entityType, timeLabel, isViewed, childTrackId, parentTrackUserId } =
+  const { entityType, timeLabel, isViewed, childAgreementId, parentAgreementUserId } =
     notification
 
   const user = useSelector((state) => getNotificationUser(state, notification))
 
-  // TODO: casting from EntityType to TrackEntity here, but
+  // TODO: casting from EntityType to AgreementEntity here, but
   // getNotificationEntities should be smart enough based on notif type
-  const tracks = useSelector((state) =>
+  const agreements = useSelector((state) =>
     getNotificationEntities(state, notification)
-  ) as Nullable<TrackEntity[]>
+  ) as Nullable<AgreementEntity[]>
 
   const dispatch = useDispatch()
 
-  const childTrack = tracks?.find((track) => track.track_id === childTrackId)
+  const childAgreement = agreements?.find((agreement) => agreement.agreement_id === childAgreementId)
 
-  const parentTrack = tracks?.find(
-    (track) => track.owner_id === parentTrackUserId
+  const parentAgreement = agreements?.find(
+    (agreement) => agreement.owner_id === parentAgreementUserId
   )
-  const parentTrackTitle = parentTrack?.title
+  const parentAgreementTitle = parentAgreement?.title
 
   const handleClick = useCallback(() => {
-    if (!childTrack) return
-    dispatch(push(getEntityLink(childTrack)))
-  }, [childTrack, dispatch])
+    if (!childAgreement) return
+    dispatch(push(getEntityLink(childAgreement)))
+  }, [childAgreement, dispatch])
 
   const handleTwitterShare = useCallback(
     (handle: string) => {
-      if (!parentTrackTitle) return null
-      const shareText = messages.shareTwitterText(parentTrackTitle, handle)
+      if (!parentAgreementTitle) return null
+      const shareText = messages.shareTwitterText(parentAgreementTitle, handle)
       const analytics = make(
         Name.NOTIFICATIONS_CLICK_REMIX_COSIGN_TWITTER_SHARE,
         {
@@ -76,10 +76,10 @@ export const RemixCosignNotification = (
       )
       return { shareText, analytics }
     },
-    [parentTrackTitle]
+    [parentAgreementTitle]
   )
 
-  if (!user || !parentTrack || !childTrack) return null
+  if (!user || !parentAgreement || !childAgreement) return null
 
   return (
     <NotificationTile notification={notification} onClick={handleClick}>
@@ -89,16 +89,16 @@ export const RemixCosignNotification = (
       <NotificationBody>
         <UserNameLink user={user} notification={notification} />{' '}
         {messages.cosign}{' '}
-        <EntityLink entity={parentTrack} entityType={entityType} />
+        <EntityLink entity={parentAgreement} entityType={entityType} />
       </NotificationBody>
       <div>
-        <TrackContent track={childTrack} />
+        <AgreementContent agreement={childAgreement} />
       </div>
       <TwitterShareButton
         type='dynamic'
         handle={user.handle}
         shareData={handleTwitterShare}
-        url={getEntityLink(childTrack, true)}
+        url={getEntityLink(childAgreement, true)}
       />
       <NotificationFooter timeLabel={timeLabel} isViewed={isViewed} />
     </NotificationTile>

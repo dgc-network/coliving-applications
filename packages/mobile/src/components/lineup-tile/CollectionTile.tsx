@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from 'react'
 
-import type { Collection, Track, User } from '@/common'
+import type { Collection, Agreement, User } from '@/common'
 import {
   FavoriteSource,
   PlaybackSource,
@@ -10,10 +10,10 @@ import {
   SquareSizes
 } from '@/common'
 import { getUserId } from '-client/src/common/store/account/selectors'
-import type { EnhancedCollectionTrack } from '-client/src/common/store/cache/collections/selectors'
+import type { EnhancedCollectionAgreement } from '-client/src/common/store/cache/collections/selectors'
 import {
   getCollection,
-  getTracksFromCollection
+  getAgreementsFromCollection
 } from '-client/src/common/store/cache/collections/selectors'
 import { getUserFromCollection } from '-client/src/common/store/cache/users/selectors'
 import {
@@ -39,7 +39,7 @@ import { isEqual, useSelectorWeb } from 'app/hooks/useSelectorWeb'
 import type { AppState } from 'app/store'
 import { getPlayingUid } from 'app/store/live/selectors'
 
-import { CollectionTileTrackList } from './CollectionTileTrackList'
+import { CollectionTileAgreementList } from './CollectionTileAgreementList'
 import { LineupTile } from './LineupTile'
 import type { LineupItemProps } from './types'
 
@@ -51,8 +51,8 @@ export const CollectionTile = (props: LineupItemProps) => {
     isEqual
   )
 
-  const tracks = useSelectorWeb(
-    (state) => getTracksFromCollection(state, { uid }),
+  const agreements = useSelectorWeb(
+    (state) => getAgreementsFromCollection(state, { uid }),
     isEqual
   )
 
@@ -61,9 +61,9 @@ export const CollectionTile = (props: LineupItemProps) => {
     isEqual
   )
 
-  if (!collection || !tracks || !user) {
+  if (!collection || !agreements || !user) {
     console.warn(
-      'Collection, tracks, or user missing for CollectionTile, preventing render'
+      'Collection, agreements, or user missing for CollectionTile, preventing render'
     )
     return null
   }
@@ -76,7 +76,7 @@ export const CollectionTile = (props: LineupItemProps) => {
     <CollectionTileComponent
       {...props}
       collection={collection}
-      tracks={tracks}
+      agreements={agreements}
       user={user}
     />
   )
@@ -84,27 +84,27 @@ export const CollectionTile = (props: LineupItemProps) => {
 
 type CollectionTileProps = LineupItemProps & {
   collection: Collection
-  tracks: EnhancedCollectionTrack[]
+  agreements: EnhancedCollectionAgreement[]
   user: User
 }
 
 const CollectionTileComponent = ({
   collection,
   togglePlay,
-  tracks,
+  agreements,
   user,
   ...lineupTileProps
 }: CollectionTileProps) => {
   const dispatchWeb = useDispatchWeb()
   const navigation = useNavigation()
   const currentUserId = useSelectorWeb(getUserId)
-  const currentTrack = useSelector((state: AppState) => {
+  const currentAgreement = useSelector((state: AppState) => {
     const uid = getPlayingUid(state)
-    return tracks.find((track) => track.uid === uid) ?? null
+    return agreements.find((agreement) => agreement.uid === uid) ?? null
   })
   const isPlayingUid = useSelector((state: AppState) => {
     const uid = getPlayingUid(state)
-    return tracks.some((track) => track.uid === uid)
+    return agreements.some((agreement) => agreement.uid === uid)
   })
 
   const {
@@ -137,17 +137,17 @@ const CollectionTileComponent = ({
 
   const handlePress = useCallback(
     ({ isPlaying }) => {
-      if (!tracks.length) return
+      if (!agreements.length) return
 
       togglePlay({
-        uid: currentTrack?.uid ?? tracks[0]?.uid ?? null,
-        id: currentTrack?.track_id ?? tracks[0]?.track_id ?? null,
-        source: PlaybackSource.PLAYLIST_TILE_TRACK,
+        uid: currentAgreement?.uid ?? agreements[0]?.uid ?? null,
+        id: currentAgreement?.agreement_id ?? agreements[0]?.agreement_id ?? null,
+        source: PlaybackSource.PLAYLIST_TILE_AGREEMENT,
         isPlaying,
         isPlayingUid
       })
     },
-    [isPlayingUid, currentTrack, togglePlay, tracks]
+    [isPlayingUid, currentAgreement, togglePlay, agreements]
   )
 
   const handlePressTitle = useCallback(() => {
@@ -158,11 +158,11 @@ const CollectionTileComponent = ({
   }, [playlist_id, routeWeb, navigation])
 
   const duration = useMemo(() => {
-    return tracks.reduce(
-      (duration: number, track: Track) => duration + track.duration,
+    return agreements.reduce(
+      (duration: number, agreement: Agreement) => duration + agreement.duration,
       0
     )
-  }, [tracks])
+  }, [agreements])
 
   const handlePressOverflow = useCallback(() => {
     if (playlist_id === undefined) {
@@ -253,7 +253,7 @@ const CollectionTileComponent = ({
       item={collection}
       user={user}
     >
-      <CollectionTileTrackList tracks={tracks} onPress={handlePressTitle} />
+      <CollectionTileAgreementList agreements={agreements} onPress={handlePressTitle} />
     </LineupTile>
   )
 }

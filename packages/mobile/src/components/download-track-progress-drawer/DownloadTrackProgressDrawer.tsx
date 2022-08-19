@@ -65,7 +65,7 @@ const messages = {
   title: 'Downloading'
 }
 
-export const DownloadTrackProgressDrawer = () => {
+export const DownloadAgreementProgressDrawer = () => {
   const downloadPercentage = useSelector(getDownloadedPercentage)
   const fetchCancel = useSelector(getFetchCancel)
   const fileName = useSelector(getFileName)
@@ -78,7 +78,7 @@ export const DownloadTrackProgressDrawer = () => {
   const spinnerColor = useColor('actionSheetText')
 
   return (
-    <NativeDrawer drawerName='DownloadTrackProgress' onClose={handleClose}>
+    <NativeDrawer drawerName='DownloadAgreementProgress' onClose={handleClose}>
       <View style={styles.view}>
         <Text style={styles.title} weight='bold'>
           {messages.title}

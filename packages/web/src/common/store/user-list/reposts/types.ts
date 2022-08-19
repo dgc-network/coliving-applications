@@ -3,7 +3,7 @@ import { ID } from '@coliving/common'
 import { UserListStoreState } from 'common/store/user-list/types'
 
 export enum RepostType {
-  TRACK = 'TRACK',
+  AGREEMENT = 'AGREEMENT',
   COLLECTION = 'COLLECTION'
 }
 

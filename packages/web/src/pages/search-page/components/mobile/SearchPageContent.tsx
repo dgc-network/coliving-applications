@@ -17,7 +17,7 @@ import { ReactComponent as IconBigSearch } from 'assets/img/iconBigSearch.svg'
 import { ReactComponent as IconNote } from 'assets/img/iconNote.svg'
 import { ReactComponent as IconPlaylists } from 'assets/img/iconPlaylists.svg'
 import { ReactComponent as IconUser } from 'assets/img/iconUser.svg'
-import { tracksActions } from 'common/store/pages/search-results/lineup/tracks/actions'
+import { agreementsActions } from 'common/store/pages/search-results/lineup/agreements/actions'
 import Card from 'components/card/mobile/Card'
 import Header from 'components/header/mobile/Header'
 import { HeaderContext } from 'components/header/mobile/HeaderContextProvider'
@@ -47,7 +47,7 @@ import styles from './SearchPageContent.module.css'
 const NATIVE_MOBILE = process.env.REACT_APP_NATIVE_MOBILE
 
 type SearchPageContentProps = {
-  tracks: LineupState<{}>
+  agreements: LineupState<{}>
   playlists: UserCollection[]
   albums: UserCollection[]
   artists: User[]
@@ -59,7 +59,7 @@ type SearchPageContentProps = {
   containerRef: HTMLElement | null
   currentQueueItem: {
     source: any
-    track: any
+    agreement: any
     user: any
     uid: UID
   }
@@ -67,16 +67,16 @@ type SearchPageContentProps = {
     albumUids: UID[]
     artistUids: UID[]
     playlistUids: UID[]
-    trackUids: UID[]
+    agreementUids: UID[]
     searchText: string
     status: Status
-    tracks: any
+    agreements: any
   }
   isTagSearch: boolean
   goToRoute: (route: string) => void
 }
 
-const TrackSearchPageMessages = {
+const AgreementSearchPageMessages = {
   title1: "Sorry, we couldn't find anything matching",
   title1Tag: "Sorry, we couldn't find any tags matching",
   title2: 'Please check your spelling or try broadening your search.'
@@ -94,11 +94,11 @@ const NoResults = ({
       <IconBigSearch />
       <div>
         {isTagSearch
-          ? TrackSearchPageMessages.title1Tag
-          : TrackSearchPageMessages.title1}
+          ? AgreementSearchPageMessages.title1Tag
+          : AgreementSearchPageMessages.title1}
       </div>
       <span>{`"${searchText}"`}</span>
-      <div>{TrackSearchPageMessages.title2}</div>
+      <div>{AgreementSearchPageMessages.title2}</div>
     </div>
   </div>
 )
@@ -121,10 +121,10 @@ const SearchStatusWrapper = memo(
   }
 )
 
-const TracksSearchPage = ({
+const AgreementsSearchPage = ({
   search,
   searchText,
-  tracks,
+  agreements,
   dispatch,
   buffering,
   playing,
@@ -132,19 +132,19 @@ const TracksSearchPage = ({
   containerRef,
   isTagSearch
 }: SearchPageContentProps) => {
-  const numTracks = Object.keys(tracks.entries).length
+  const numAgreements = Object.keys(agreements.entries).length
   const loadingStatus = (() => {
     // We need to account for the odd case where search.status === success but
-    // the tracks are still loading in (tracks.status === loading && tracks.entries === 0),
+    // the agreements are still loading in (agreements.status === loading && agreements.entries === 0),
     // and in this case still show a loading screen.
-    const searchAndTracksSuccess =
-      search.status === Status.SUCCESS && tracks.status === Status.SUCCESS
-    const searchSuccessTracksLoadingMore =
+    const searchAndAgreementsSuccess =
+      search.status === Status.SUCCESS && agreements.status === Status.SUCCESS
+    const searchSuccessAgreementsLoadingMore =
       search.status === Status.SUCCESS &&
-      tracks.status === Status.LOADING &&
-      numTracks > 0
+      agreements.status === Status.LOADING &&
+      numAgreements > 0
 
-    if (searchAndTracksSuccess || searchSuccessTracksLoadingMore) {
+    if (searchAndAgreementsSuccess || searchSuccessAgreementsLoadingMore) {
       return Status.SUCCESS
     } else if (search.status === Status.ERROR) {
       return Status.ERROR
@@ -155,25 +155,25 @@ const TracksSearchPage = ({
 
   return (
     <SearchStatusWrapper status={loadingStatus}>
-      {numTracks ? (
+      {numAgreements ? (
         <div className={styles.lineupContainer}>
           <Lineup
             selfLoad
-            lineup={tracks}
+            lineup={agreements}
             playingSource={currentQueueItem.source}
             playingUid={currentQueueItem.uid}
-            playingTrackId={
-              currentQueueItem.track && currentQueueItem.track.track_id
+            playingAgreementId={
+              currentQueueItem.agreement && currentQueueItem.agreement.agreement_id
             }
             playing={playing}
             buffering={buffering}
             scrollParent={containerRef}
             loadMore={(offset: number, limit: number) =>
-              dispatch(tracksActions.fetchLineupMetadatas(offset, limit))
+              dispatch(agreementsActions.fetchLineupMetadatas(offset, limit))
             }
-            playTrack={(uid: UID) => dispatch(tracksActions.play(uid))}
-            pauseTrack={() => dispatch(tracksActions.pause())}
-            actions={tracksActions}
+            playAgreement={(uid: UID) => dispatch(agreementsActions.play(uid))}
+            pauseAgreement={() => dispatch(agreementsActions.pause())}
+            actions={agreementsActions}
           />
         </div>
       ) : (
@@ -291,14 +291,14 @@ const CardSearchPage = ({
 const messages = {
   title: 'More Results',
   tagSearchTitle: 'Tag Search',
-  tracksTitle: 'Tracks',
+  agreementsTitle: 'Agreements',
   albumsTitle: 'Albums',
   playlistsTitle: 'Playlists',
   peopleTitle: 'Profiles'
 }
 
 enum Tabs {
-  TRACKS = 'TRACKS',
+  AGREEMENTS = 'AGREEMENTS',
   ALBUMS = 'ALBUMS',
   PLAYLISTS = 'PLAYLISTS',
   PEOPLE = 'PEOPLE'
@@ -333,7 +333,7 @@ const SearchPageContent = (props: SearchPageContentProps) => {
             term: searchText,
             tab: to.toLowerCase() as
               | 'people'
-              | 'tracks'
+              | 'agreements'
               | 'albums'
               | 'playlists'
           })
@@ -350,8 +350,8 @@ const SearchPageContent = (props: SearchPageContentProps) => {
           tabs: [
             {
               icon: <IconNote />,
-              text: messages.tracksTitle,
-              label: Tabs.TRACKS
+              text: messages.agreementsTitle,
+              label: Tabs.AGREEMENTS
             },
             {
               icon: <IconUser />,
@@ -360,7 +360,7 @@ const SearchPageContent = (props: SearchPageContentProps) => {
             }
           ],
           elements: [
-            <TracksSearchPage key='tagTrackSearch' {...props} />,
+            <AgreementsSearchPage key='tagAgreementSearch' {...props} />,
             <CardSearchPage
               key='tagUserSearch'
               {...props}
@@ -378,8 +378,8 @@ const SearchPageContent = (props: SearchPageContentProps) => {
             },
             {
               icon: <IconNote />,
-              text: messages.tracksTitle,
-              label: Tabs.TRACKS
+              text: messages.agreementsTitle,
+              label: Tabs.AGREEMENTS
             },
             {
               icon: <IconAlbum />,
@@ -398,7 +398,7 @@ const SearchPageContent = (props: SearchPageContentProps) => {
               {...props}
               cardType={CardType.USER}
             />,
-            <TracksSearchPage key='trackSearch' {...props} />,
+            <AgreementsSearchPage key='agreementSearch' {...props} />,
             <CardSearchPage
               key='albumSearch'
               {...props}

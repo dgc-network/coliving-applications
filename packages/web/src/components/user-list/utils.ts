@@ -6,16 +6,16 @@ import { processAndCacheUsers } from 'common/store/cache/users/utils'
 import { AppState } from 'store/types'
 
 export type UserListProviderArgs<T, U = void> = {
-  // Gets the track or playlist we're referencing.
+  // Gets the agreement or playlist we're referencing.
   getExistingEntity: (state: AppState, props: { id: ID }) => T | null
 
   // Pull out a subset of IDs from the entity that
   // we want to sort to the top of the user list.
-  // e.g. followee reposts on a track
+  // e.g. followee reposts on a agreement
   extractUserIDSubsetFromEntity: (entity: T) => ID[]
 
   // Fetch all the relevant users for the entity.
-  // e.g. all users who've reposted a track.
+  // e.g. all users who've reposted a agreement.
   fetchAllUsersForEntity: (args: {
     limit: number
     offset: number
@@ -36,10 +36,10 @@ export type UserListProviderArgs<T, U = void> = {
 }
 
 // Helper function to provide users from multiple sources. Super useful
-// when you follow a pattern of pulling a subset of users out of an entity (track/collection)
+// when you follow a pattern of pulling a subset of users out of an entity (agreement/collection)
 // that should be on the top of the list, and then combining it with all users.
 //
-// e.g. sort followee_reposts on the top of the track repost list.
+// e.g. sort followee_reposts on the top of the agreement repost list.
 //
 // This is not included in the UserList fetching logic itself because UserList
 // should support usecases that don't require this type of combining logic.

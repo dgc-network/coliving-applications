@@ -23,7 +23,7 @@ import {
 } from 'app/store/tipping/storageUtils'
 import { makeStyles } from 'app/styles'
 import { EventNames } from 'app/types/analytics'
-import { make, track } from 'app/utils/analytics'
+import { make, agreement } from 'app/utils/analytics'
 
 import { LineupTileSkeleton } from '../lineup-tile'
 
@@ -91,7 +91,7 @@ export const FeedTipTile = () => {
     dismissRecentTip()
     dispatchWeb(hideTip())
     if (account && tipToDisplay) {
-      track(
+      agreement(
         make({
           eventName: EventNames.TIP_FEED_TILE_DISMISS,
           accountId: `${account.user_id}`,

@@ -1,1 +1,1 @@
-export { TrackScreen } from './TrackScreen'
+export { AgreementScreen } from './AgreementScreen'

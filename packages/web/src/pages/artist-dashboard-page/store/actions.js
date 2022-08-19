@@ -15,12 +15,12 @@ export function fetchDashboard() {
   return { type: FETCH_DASHBOARD }
 }
 
-export function fetchDashboardSucceeded(tracks, collections, unlistedTracks) {
+export function fetchDashboardSucceeded(agreements, collections, unlistedAgreements) {
   return {
     type: FETCH_DASHBOARD_SUCCEEDED,
-    tracks,
+    agreements,
     collections,
-    unlistedTracks
+    unlistedAgreements
   }
 }
 
@@ -29,12 +29,12 @@ export function fetchDashboardFailed() {
 }
 
 export function fetchDashboardListenData(
-  trackIds,
+  agreementIds,
   start,
   end,
   period = 'month'
 ) {
-  return { type: FETCH_DASHBOARD_LISTEN_DATA, trackIds, start, end, period }
+  return { type: FETCH_DASHBOARD_LISTEN_DATA, agreementIds, start, end, period }
 }
 
 export function fetchDashboardListenDataSucceeded(listenData) {

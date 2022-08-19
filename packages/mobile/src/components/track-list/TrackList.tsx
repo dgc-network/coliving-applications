@@ -11,26 +11,26 @@ import * as haptics from 'app/haptics'
 import { getPlaying, getPlayingUid } from 'app/store/live/selectors'
 import { makeStyles } from 'app/styles'
 
-import type { TrackItemAction } from './TrackListItem'
-import { TrackListItem } from './TrackListItem'
-import { TrackListItemSkeleton } from './TrackListItemSkeleton'
-import type { TrackMetadata, TracksMetadata } from './types'
+import type { AgreementItemAction } from './AgreementListItem'
+import { AgreementListItem } from './AgreementListItem'
+import { AgreementListItemSkeleton } from './AgreementListItemSkeleton'
+import type { AgreementMetadata, AgreementsMetadata } from './types'
 
-type TrackListProps = {
+type AgreementListProps = {
   hideArt?: boolean
   isReorderable?: boolean
   noDividerMargin?: boolean
   onRemove?: (index: number) => void
-  onReorder?: DraggableFlatListProps<TrackMetadata>['onDragEnd']
-  onSave?: (isSaved: boolean, trackId: ID) => void
+  onReorder?: DraggableFlatListProps<AgreementMetadata>['onDragEnd']
+  onSave?: (isSaved: boolean, agreementId: ID) => void
   playingUid?: UID
   showDivider?: boolean
   showSkeleton?: boolean
   showTopDivider?: boolean
-  togglePlay?: (uid: string, trackId: ID) => void
-  trackItemAction?: TrackItemAction
-  tracks: TracksMetadata
-} & Partial<FlatListProps<TrackMetadata>>
+  togglePlay?: (uid: string, agreementId: ID) => void
+  agreementItemAction?: AgreementItemAction
+  agreements: AgreementsMetadata
+} & Partial<FlatListProps<AgreementMetadata>>
 
 const useStyles = makeStyles(({ palette, spacing }) => ({
   divider: {
@@ -49,12 +49,12 @@ const useStyles = makeStyles(({ palette, spacing }) => ({
 }))
 
 /**
- * A FlatList of tracks
+ * A FlatList of agreements
  *
- * If isReorderable === true, make sure the TrackList is not nested in a ScrollView,
+ * If isReorderable === true, make sure the AgreementList is not nested in a ScrollView,
  * otherwise certain features like auto scroll while dragging will not work
  */
-export const TrackList = ({
+export const AgreementList = ({
   hideArt,
   isReorderable,
   noDividerMargin,
@@ -65,32 +65,32 @@ export const TrackList = ({
   showSkeleton,
   showTopDivider,
   togglePlay,
-  trackItemAction,
-  tracks,
+  agreementItemAction,
+  agreements,
   ...otherProps
-}: TrackListProps) => {
+}: AgreementListProps) => {
   const styles = useStyles()
 
   const isPlaying = useSelector(getPlaying)
   const playingUid = useSelector(getPlayingUid)
 
-  const renderSkeletonTrack = ({ index }) => (
+  const renderSkeletonAgreement = ({ index }) => (
     <View>
       {showDivider && (showTopDivider || index > 0) ? (
         <View
           style={[styles.divider, noDividerMargin && styles.noMarginDivider]}
         />
       ) : null}
-      <TrackListItemSkeleton />
+      <AgreementListItemSkeleton />
     </View>
   )
 
-  const renderDraggableTrack: DraggableFlatListProps<TrackMetadata>['renderItem'] =
-    ({ item: track, index = -1, drag, isActive: isDragActive }) => {
-      const isActive = track.uid !== undefined && track.uid === playingUid
+  const renderDraggableAgreement: DraggableFlatListProps<AgreementMetadata>['renderItem'] =
+    ({ item: agreement, index = -1, drag, isActive: isDragActive }) => {
+      const isActive = agreement.uid !== undefined && agreement.uid === playingUid
 
-      // The dividers above and belove the active track should be hidden
-      const hideDivider = isActive || tracks[index - 1]?.uid === playingUid
+      // The dividers above and belove the active agreement should be hidden
+      const hideDivider = isActive || agreements[index - 1]?.uid === playingUid
 
       return (
         <View>
@@ -103,7 +103,7 @@ export const TrackList = ({
               ]}
             />
           ) : null}
-          <TrackListItem
+          <AgreementListItem
             index={index}
             drag={drag}
             hideArt={hideArt}
@@ -111,22 +111,22 @@ export const TrackList = ({
             isDragging={isDragActive}
             isPlaying={isPlaying}
             isReorderable={isReorderable}
-            track={track}
-            key={track.track_id}
+            agreement={agreement}
+            key={agreement.agreement_id}
             onSave={onSave}
             togglePlay={togglePlay}
-            trackItemAction={trackItemAction}
+            agreementItemAction={agreementItemAction}
             onRemove={onRemove}
           />
         </View>
       )
     }
 
-  const renderTrack: FlatListProps<TrackMetadata>['renderItem'] = ({
+  const renderAgreement: FlatListProps<AgreementMetadata>['renderItem'] = ({
     item,
     index
   }) =>
-    renderDraggableTrack({
+    renderDraggableAgreement({
       item,
       index,
       drag: () => {},
@@ -137,8 +137,8 @@ export const TrackList = ({
     return (
       <FlatList
         {...otherProps}
-        data={tracks}
-        renderItem={renderSkeletonTrack}
+        data={agreements}
+        renderItem={renderSkeletonAgreement}
       />
     )
 
@@ -146,8 +146,8 @@ export const TrackList = ({
     <DraggableFlatList
       {...otherProps}
       autoscrollThreshold={200}
-      data={tracks}
-      keyExtractor={(track, index) => `${track.track_id} ${index}`}
+      data={agreements}
+      keyExtractor={(agreement, index) => `${agreement.agreement_id} ${index}`}
       onDragBegin={() => {
         haptics.light()
       }}
@@ -157,10 +157,10 @@ export const TrackList = ({
       onDragEnd={(p) => {
         onReorder?.(p)
       }}
-      renderItem={renderDraggableTrack}
+      renderItem={renderDraggableAgreement}
       renderPlaceholder={() => <View />}
     />
   ) : (
-    <FlatList {...otherProps} data={tracks} renderItem={renderTrack} />
+    <FlatList {...otherProps} data={agreements} renderItem={renderAgreement} />
   )
 }

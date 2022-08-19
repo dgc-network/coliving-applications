@@ -20,12 +20,12 @@ import { LineupActions } from 'common/store/lineup/actions'
 import { getShowTip } from 'common/store/tipping/selectors'
 import { FeedTipTile } from 'components/tipping/feed-tip-tile/FeedTipTile'
 import {
-  TrackTileProps,
+  AgreementTileProps,
   PlaylistTileProps,
-  TrackTileSize,
+  AgreementTileSize,
   TileProps
-} from 'components/track/types'
-import { TrackEvent, make } from 'store/analytics/actions'
+} from 'components/agreement/types'
+import { AgreementEvent, make } from 'store/analytics/actions'
 import { AppState } from 'store/types'
 import { isMobile } from 'utils/clientUtil'
 
@@ -39,22 +39,22 @@ const MAX_TILES_COUNT = 1000
 // The max number of loading tiles to display if count prop passes
 const MAX_COUNT_LOADING_TILES = 18
 
-// The inital multiplier for number of tracks to fetch on lineup load
-// multiplied by the number of tracks that fit the browser height
-export const INITIAL_LOAD_TRACKS_MULTIPLIER = 1.75
+// The inital multiplier for number of agreements to fetch on lineup load
+// multiplied by the number of agreements that fit the browser height
+export const INITIAL_LOAD_AGREEMENTS_MULTIPLIER = 1.75
 export const INITIAL_PLAYLISTS_MULTIPLER = 1
 
 // A multiplier for the number of tiles to fill a page to be
 // loaded in on each call (after the intial call)
-const TRACKS_AHEAD_MULTIPLIER = 0.75
+const AGREEMENTS_AHEAD_MULTIPLIER = 0.75
 
 // Threshold for how far away from the bottom (of the list) the user has to be
-// before fetching more tracks as a percentage of the page size
+// before fetching more agreements as a percentage of the page size
 const LOAD_MORE_PAGE_THRESHOLD = 3 / 5
 
-// The minimum inital multiplier for tracks to fetch on lineup load
+// The minimum inital multiplier for agreements to fetch on lineup load
 // use so that multiple lineups on the same page can switch w/out a reload
-const MINIMUM_INITIAL_LOAD_TRACKS_MULTIPLIER = 1
+const MINIMUM_INITIAL_LOAD_AGREEMENTS_MULTIPLIER = 1
 
 // tile height + margin
 const totalTileHeight = {
@@ -64,8 +64,8 @@ const totalTileHeight = {
   playlist: 350
 }
 
-// Load TRACKS_AHEAD x the number of tiles to be displayed on the screen
-export const getLoadMoreTrackCount = (
+// Load AGREEMENTS_AHEAD x the number of tiles to be displayed on the screen
+export const getLoadMoreAgreementCount = (
   variant: LineupVariant,
   multiplier: number | (() => number)
 ) =>
@@ -94,35 +94,35 @@ const shouldLoadMore = (
 
 const getInitPage = (
   lineupLen: number,
-  initialTrackLoadCount: number,
-  trackLoadMoreCount: number
+  initialAgreementLoadCount: number,
+  agreementLoadMoreCount: number
 ) => {
-  if (lineupLen < initialTrackLoadCount) return 0
+  if (lineupLen < initialAgreementLoadCount) return 0
   return (
-    Math.floor((lineupLen - initialTrackLoadCount) / trackLoadMoreCount) + 1
+    Math.floor((lineupLen - initialAgreementLoadCount) / agreementLoadMoreCount) + 1
   )
 }
 
 export interface LineupProviderProps {
   'aria-label'?: string
   // Tile components
-  trackTile: ComponentType<TrackTileProps> | any
+  agreementTile: ComponentType<AgreementTileProps> | any
   playlistTile: ComponentType<PlaylistTileProps> | any
 
   // Other props
 
-  /** The number of tracks to fetch */
+  /** The number of agreements to fetch */
   count?: number
 
-  /** The maximum number of tracks to fetch while paginating */
+  /** The maximum number of agreements to fetch while paginating */
   limit?: number
   start?: number
   lineup: Lineup<any>
   playingUid: UID | null
-  playingTrackId: ID | null
+  playingAgreementId: ID | null
   playing: boolean
-  playTrack: (uid: UID) => void
-  pauseTrack: () => void
+  playAgreement: (uid: UID) => void
+  pauseAgreement: () => void
   variant: LineupVariant
   loadMore?: (offset: number, limit: number, overwrite: boolean) => void
   selfLoad: boolean
@@ -135,7 +135,7 @@ export interface LineupProviderProps {
   delineate?: boolean
 
   /**
-   * Indicator if a track should be displayed differently (ie. artist pick)
+   * Indicator if a agreement should be displayed differently (ie. artist pick)
    * The leadingElementId is displayed at the top of the lineup
    */
   leadingElementId?: ID
@@ -146,7 +146,7 @@ export interface LineupProviderProps {
   leadingElementDelineator?: JSX.Element | null
 
   /**
-   * Track tile properties to optionally pass to the leading element track tile
+   * Agreement tile properties to optionally pass to the leading element agreement tile
    */
   leadingElementTileProps?: Partial<TileProps>
 
@@ -207,9 +207,9 @@ export interface LineupProviderProps {
 interface LineupProviderState {
   scrollParent: HTMLElement | null
   loadMoreThreshold: number
-  minimumTrackLoadCount: number
-  initialTrackLoadCount: number
-  trackLoadMoreCount: number
+  minimumAgreementLoadCount: number
+  initialAgreementLoadCount: number
+  agreementLoadMoreCount: number
   // Used to artificially enforce the ordering at which tiles are rendered to the user
   // Because tiles are connected themselves and are in charge of retrieving their own content
   // from the store/BE, they could appear in a non-progressive order. This ensures that the first
@@ -223,7 +223,7 @@ type CombinedProps = LineupProviderProps &
 
 /** `LineupProvider` encapsulates the logic for displaying a Lineup (e.g. prefetching items)
  * displaying loading states, etc). This is decoupled from the rendering logic, which
- * is controlled by injecting tiles conforming to `Track/Playlist/SkeletonProps interfaces.
+ * is controlled by injecting tiles conforming to `Agreement/Playlist/SkeletonProps interfaces.
  */
 class LineupProvider extends PureComponent<CombinedProps, LineupProviderState> {
   scrollContainer = createRef<HTMLDivElement>()
@@ -231,64 +231,64 @@ class LineupProvider extends PureComponent<CombinedProps, LineupProviderState> {
   constructor(props: any) {
     super(props)
     const loadMoreThreshold = getLoadMoreThreshold()
-    const minimumTrackLoadCount = getLoadMoreTrackCount(
+    const minimumAgreementLoadCount = getLoadMoreAgreementCount(
       this.props.variant === LineupVariant.PLAYLIST
         ? LineupVariant.PLAYLIST
         : LineupVariant.MAIN,
-      MINIMUM_INITIAL_LOAD_TRACKS_MULTIPLIER
+      MINIMUM_INITIAL_LOAD_AGREEMENTS_MULTIPLIER
     )
-    const initialTrackLoadCount = getLoadMoreTrackCount(
+    const initialAgreementLoadCount = getLoadMoreAgreementCount(
       this.props.variant,
       () =>
         this.props.variant === LineupVariant.PLAYLIST
           ? INITIAL_PLAYLISTS_MULTIPLER
-          : INITIAL_LOAD_TRACKS_MULTIPLIER
+          : INITIAL_LOAD_AGREEMENTS_MULTIPLIER
     )
-    const trackLoadMoreCount = getLoadMoreTrackCount(
+    const agreementLoadMoreCount = getLoadMoreAgreementCount(
       this.props.variant,
-      TRACKS_AHEAD_MULTIPLIER
+      AGREEMENTS_AHEAD_MULTIPLIER
     )
     const page = getInitPage(
       this.props.lineup.entries.length,
-      initialTrackLoadCount,
-      trackLoadMoreCount
+      initialAgreementLoadCount,
+      agreementLoadMoreCount
     )
     props.setPage(page, props.actions.setPage)
     this.state = {
       scrollParent: this.props.scrollParent || null,
       loadMoreThreshold,
-      minimumTrackLoadCount,
-      initialTrackLoadCount,
-      trackLoadMoreCount,
+      minimumAgreementLoadCount,
+      initialAgreementLoadCount,
+      agreementLoadMoreCount,
       loadedTiles: new Array(200)
     }
   }
 
-  togglePlay = (uid: UID, trackId: ID, source?: PlaybackSource) => {
-    const { playTrack, pauseTrack, playing, playingUid, record } = this.props
+  togglePlay = (uid: UID, agreementId: ID, source?: PlaybackSource) => {
+    const { playAgreement, pauseAgreement, playing, playingUid, record } = this.props
     if (uid !== playingUid || (uid === playingUid && !playing)) {
-      playTrack(uid)
+      playAgreement(uid)
       record(
         make(Name.PLAYBACK_PLAY, {
-          id: `${trackId}`,
-          source: source || PlaybackSource.TRACK_TILE
+          id: `${agreementId}`,
+          source: source || PlaybackSource.AGREEMENT_TILE
         })
       )
     } else if (uid === playingUid && playing) {
-      pauseTrack()
+      pauseAgreement()
       record(
         make(Name.PLAYBACK_PAUSE, {
-          id: `${trackId}`,
-          source: source || PlaybackSource.TRACK_TILE
+          id: `${agreementId}`,
+          source: source || PlaybackSource.AGREEMENT_TILE
         })
       )
     }
   }
 
-  pageTrackCount = () => {
+  pageAgreementCount = () => {
     return (
-      this.state.initialTrackLoadCount +
-      (this.props.lineup.page - 1) * this.state.trackLoadMoreCount
+      this.state.initialAgreementLoadCount +
+      (this.props.lineup.page - 1) * this.state.agreementLoadMoreCount
     )
   }
 
@@ -300,7 +300,7 @@ class LineupProvider extends PureComponent<CombinedProps, LineupProviderState> {
       lineup: { page },
       loadMore
     } = this.props
-    const { minimumTrackLoadCount, trackLoadMoreCount, initialTrackLoadCount } =
+    const { minimumAgreementLoadCount, agreementLoadMoreCount, initialAgreementLoadCount } =
       this.state
     const lineupLength = lineup.entries.length
     const offset = lineupLength + lineup.deleted + lineup.nullCount
@@ -308,15 +308,15 @@ class LineupProvider extends PureComponent<CombinedProps, LineupProviderState> {
       (!limit || lineupLength !== limit) &&
       loadMore &&
       lineupLength < count &&
-      (page === 0 || this.pageTrackCount() <= offset)
+      (page === 0 || this.pageAgreementCount() <= offset)
     ) {
-      const trackLoadCount =
+      const agreementLoadCount =
         page === 0
-          ? initialTrackLoadCount
-          : initialTrackLoadCount + page * trackLoadMoreCount
+          ? initialAgreementLoadCount
+          : initialAgreementLoadCount + page * agreementLoadMoreCount
       this.props.setPage(page + 1, this.props.actions.setPage)
       const limit =
-        Math.min(trackLoadCount, Math.max(count, minimumTrackLoadCount)) -
+        Math.min(agreementLoadCount, Math.max(count, minimumAgreementLoadCount)) -
         offset
       loadMore(offset, limit, page === 0)
     }
@@ -326,7 +326,7 @@ class LineupProvider extends PureComponent<CombinedProps, LineupProviderState> {
     const lineupLength = this.props.lineup.entries.length
     if (
       this.props.selfLoad &&
-      lineupLength < this.state.minimumTrackLoadCount
+      lineupLength < this.state.minimumAgreementLoadCount
     ) {
       this.loadMore()
     }
@@ -349,9 +349,9 @@ class LineupProvider extends PureComponent<CombinedProps, LineupProviderState> {
       const scrollParent = this.props.scrollParent
       this.setState({
         scrollParent,
-        trackLoadMoreCount: getLoadMoreTrackCount(
+        agreementLoadMoreCount: getLoadMoreAgreementCount(
           this.props.variant,
-          TRACKS_AHEAD_MULTIPLIER
+          AGREEMENTS_AHEAD_MULTIPLIER
         )
       })
       if (
@@ -368,11 +368,11 @@ class LineupProvider extends PureComponent<CombinedProps, LineupProviderState> {
       }
     }
 
-    // Currently when requesting tracks with a limit, the backend may return more than the requested number of tracks.
-    // So, for pagination and loading more tracks, the lineup metadatas may have more than the 'pageTrackCount'
+    // Currently when requesting agreements with a limit, the backend may return more than the requested number of agreements.
+    // So, for pagination and loading more agreements, the lineup metadatas may have more than the 'pageAgreementCount'
     if (
       prevProps.lineup.isMetadataLoading &&
-      this.props.lineup.entries.length >= this.pageTrackCount()
+      this.props.lineup.entries.length >= this.pageAgreementCount()
     ) {
       const container = this.scrollContainer.current
       const { scrollParent: parent, loadMoreThreshold: threshold } = this.state
@@ -404,23 +404,23 @@ class LineupProvider extends PureComponent<CombinedProps, LineupProviderState> {
     }
   }
 
-  // If the uid of the currently playing track is not in the lineup, check if the track and is playing
-  // then return the first uid of the first track that matches else the uid
+  // If the uid of the currently playing agreement is not in the lineup, check if the agreement and is playing
+  // then return the first uid of the first agreement that matches else the uid
   getPlayingUid = () => {
-    const { lineup, playingTrackId, playingSource, playingUid } = this.props
+    const { lineup, playingAgreementId, playingSource, playingUid } = this.props
 
     const isLineupPlaying = lineup.entries.some((entry) => {
-      if (entry.track_id) return playingUid === entry.uid
+      if (entry.agreement_id) return playingUid === entry.uid
       else if (entry.playlist_id)
-        return entry.tracks.some((track: any) => track.uid === playingUid)
+        return entry.agreements.some((agreement: any) => agreement.uid === playingUid)
       return false
     })
-    if (playingTrackId && !isLineupPlaying && lineup.prefix === playingSource) {
+    if (playingAgreementId && !isLineupPlaying && lineup.prefix === playingSource) {
       for (const entry of lineup.entries) {
-        if (entry.track_id === playingTrackId) return entry.uid
+        if (entry.agreement_id === playingAgreementId) return entry.uid
         if (entry.playlist_id) {
-          for (const track of entry.tracks) {
-            if (track.track_id === playingTrackId) return track.uid
+          for (const agreement of entry.agreements) {
+            if (agreement.agreement_id === playingAgreementId) return agreement.uid
           }
         }
       }
@@ -458,10 +458,10 @@ class LineupProvider extends PureComponent<CombinedProps, LineupProviderState> {
       lineup,
       variant,
       ordered,
-      playTrack,
-      pauseTrack,
+      playAgreement,
+      pauseAgreement,
       delineate,
-      playingTrackId,
+      playingAgreementId,
       leadingElementId,
       leadingElementDelineator,
       leadingElementTileProps,
@@ -484,39 +484,39 @@ class LineupProvider extends PureComponent<CombinedProps, LineupProviderState> {
     const status = lineup.status
     const {
       loadMoreThreshold,
-      initialTrackLoadCount,
-      trackLoadMoreCount,
+      initialAgreementLoadCount,
+      agreementLoadMoreCount,
       scrollParent
     } = this.state
 
-    let tileSize: TrackTileSize
+    let tileSize: AgreementTileSize
     let lineupStyle = {}
     let containerClassName: string
     if (variant === LineupVariant.MAIN || variant === LineupVariant.PLAYLIST) {
-      tileSize = TrackTileSize.LARGE
+      tileSize = AgreementTileSize.LARGE
       lineupStyle = styles.main
     } else if (variant === LineupVariant.SECTION) {
-      tileSize = TrackTileSize.SMALL
+      tileSize = AgreementTileSize.SMALL
       lineupStyle = styles.section
-      containerClassName = styles.searchTrackTileContainer
+      containerClassName = styles.searchAgreementTileContainer
     } else if (variant === LineupVariant.CONDENSED) {
-      tileSize = TrackTileSize.SMALL
+      tileSize = AgreementTileSize.SMALL
       lineupStyle = styles.section
     }
 
     lineup.entries = lineup.entries || []
 
     // If the lineup is supposed to display a fixed count, make sure to skip over deleted
-    // tracks. E.g. if a lineup is supposed to show a count of 5, but two entries are deleted
+    // agreements. E.g. if a lineup is supposed to show a count of 5, but two entries are deleted
     // show 7 instead.
     const lineupCount = count !== undefined ? count : lineup.entries.length
     let tiles = lineup.entries
       .map((entry, index) => {
-        if (entry.kind === Kind.TRACKS || entry.track_id) {
-          // Render a track tile if the kind tracks or there's a track id present
+        if (entry.kind === Kind.AGREEMENTS || entry.agreement_id) {
+          // Render a agreement tile if the kind agreements or there's a agreement id present
 
           if (entry._marked_deleted) return null
-          let trackProps = {
+          let agreementProps = {
             ...entry,
             key: index,
             index,
@@ -532,11 +532,11 @@ class LineupProvider extends PureComponent<CombinedProps, LineupProviderState> {
             showRankIcon: index < rankIconCount
           }
           if (entry.id === leadingElementId) {
-            trackProps = { ...trackProps, ...leadingElementTileProps }
+            agreementProps = { ...agreementProps, ...leadingElementTileProps }
           }
-          return <this.props.trackTile key={index} {...trackProps} />
+          return <this.props.agreementTile key={index} {...agreementProps} />
         } else if (entry.kind === Kind.COLLECTIONS || entry.playlist_id) {
-          // Render a track tile if the kind tracks or there's a track id present
+          // Render a agreement tile if the kind agreements or there's a agreement id present
 
           const playlistProps = {
             ...entry,
@@ -545,9 +545,9 @@ class LineupProvider extends PureComponent<CombinedProps, LineupProviderState> {
             uid: entry.uid,
             size: tileSize,
             ordered,
-            playTrack,
-            pauseTrack,
-            playingTrackId,
+            playAgreement,
+            pauseAgreement,
+            playingAgreementId,
             togglePlay: this.togglePlay,
             isLoading: !this.canLoad(index),
             hasLoaded: this.hasLoaded,
@@ -558,15 +558,15 @@ class LineupProvider extends PureComponent<CombinedProps, LineupProviderState> {
 
           return <this.props.playlistTile key={index} {...playlistProps} />
         }
-        // Poorly formed track or playlist metatdata.
+        // Poorly formed agreement or playlist metatdata.
         return null
       })
-      // Remove nulls (invalid playlists or tracks)
+      // Remove nulls (invalid playlists or agreements)
       .filter(Boolean)
       .slice(start, lineupCount)
 
     const tilesDisplayCount =
-      page <= 1 ? initialTrackLoadCount : this.pageTrackCount()
+      page <= 1 ? initialAgreementLoadCount : this.pageAgreementCount()
     if (
       isMetadataLoading &&
       lineup.hasMore &&
@@ -599,7 +599,7 @@ class LineupProvider extends PureComponent<CombinedProps, LineupProviderState> {
         const SkeletonTileElement =
           variant === LineupVariant.PLAYLIST
             ? this.props.playlistTile
-            : this.props.trackTile
+            : this.props.agreementTile
         // If elected to apply leading element styles to the skeletons
         // Create featured content structure around firest skeleton tile
         if (
@@ -647,8 +647,8 @@ class LineupProvider extends PureComponent<CombinedProps, LineupProviderState> {
     }
 
     if (status === Status.ERROR) {
-      // Error could mean no tracks or some tracks had an error loading.
-      // TODO: Distinguish between no tracks and error'd tracks
+      // Error could mean no agreements or some agreements had an error loading.
+      // TODO: Distinguish between no agreements and error'd agreements
       tiles = []
     }
 
@@ -673,21 +673,21 @@ class LineupProvider extends PureComponent<CombinedProps, LineupProviderState> {
       featuredTiles = featured
     }
     const allTiles = featuredTiles.concat(tiles)
-    const featuredTrackUid =
+    const featuredAgreementUid =
       featuredTiles.length > 0 ? featuredTiles[0].props.uid : null
-    const allTracks = allTiles.reduce((acc, track) => {
-      acc[track.props.uid] = track
+    const allAgreements = allTiles.reduce((acc, agreement) => {
+      acc[agreement.props.uid] = agreement
       return acc
     }, {})
 
     // Can load more:
-    // If (the limit is not set OR the number of track in the lineup is not equal to the limit)
+    // If (the limit is not set OR the number of agreement in the lineup is not equal to the limit)
     // AND (the lineup count is less than the count or less than the max tile count if not set)
-    // AND (the number of tracks requested is less than the number of tracks in total (in the lineup + deleted))
+    // AND (the number of agreements requested is less than the number of agreements in total (in the lineup + deleted))
     const canLoadMore =
       (!limit || limit !== lineupCount) &&
       lineupCount <= (count !== undefined ? count : MAX_TILES_COUNT) &&
-      page * trackLoadMoreCount <= lineupCount + lineup.deleted
+      page * agreementLoadMoreCount <= lineupCount + lineup.deleted
 
     const endLineup =
       !lineup.hasMore && !count && endOfLineup ? endOfLineup : null
@@ -700,10 +700,10 @@ class LineupProvider extends PureComponent<CombinedProps, LineupProviderState> {
         key='lineup'
       >
         <Transition
-          items={featuredTrackUid}
+          items={featuredAgreementUid}
           from={{ opacity: 0, marginBottom: 0, maxHeight: 0 }}
           // Set the `initial` value to the same as `enter` signifying that component mounts
-          // of the lineup do not trigger an animation, rather  updates to the featuredTrackUid do.
+          // of the lineup do not trigger an animation, rather  updates to the featuredAgreementUid do.
           initial={{
             opacity: 1,
             marginBottom: 12,
@@ -740,7 +740,7 @@ class LineupProvider extends PureComponent<CombinedProps, LineupProviderState> {
                         maxHeight: props.maxHeight
                       }}
                     >
-                      {allTracks[featuredId]}
+                      {allAgreements[featuredId]}
                     </div>
                   </div>
                 )
@@ -798,7 +798,7 @@ function mapDispatchToProps(dispatch: Dispatch) {
     goToRoute: (route: string) => dispatch(pushRoute(route)),
     setPage: (page: number, setPageAction: (page: number) => any) =>
       dispatch(setPageAction(page)),
-    record: (event: TrackEvent) => dispatch(event)
+    record: (event: AgreementEvent) => dispatch(event)
   }
 }
 

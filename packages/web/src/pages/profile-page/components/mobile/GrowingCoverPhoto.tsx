@@ -37,7 +37,7 @@ const GrowingCoverPhoto = ({
   wrapperClassName,
   children
 }: DynamicImageProps) => {
-  const [getShouldTrackScroll, setShouldTrackScroll] = useInstanceVar(false)
+  const [getShouldAgreementScroll, setShouldAgreementScroll] = useInstanceVar(false)
   const [springProps, setSpringProps] = useSpring(() => ({
     to: {
       y: 0
@@ -48,7 +48,7 @@ const GrowingCoverPhoto = ({
   }))
 
   const handleScrollEvent = useCallback(() => {
-    if (getShouldTrackScroll()) {
+    if (getShouldAgreementScroll()) {
       const scrollY = window.scrollY
       if (scrollY <= 0) {
         setSpringProps({
@@ -61,9 +61,9 @@ const GrowingCoverPhoto = ({
         })
       }
     }
-  }, [setSpringProps, getShouldTrackScroll])
+  }, [setSpringProps, getShouldAgreementScroll])
 
-  // The cover photo tracks the users scrolling most of the time, except
+  // The cover photo agreements the users scrolling most of the time, except
   // when they release their finger, we just rely on the spring to reset
   // the grown photo.
   const handleReset = useCallback(() => {
@@ -75,22 +75,22 @@ const GrowingCoverPhoto = ({
         config: {
           ...springConfig,
           // Base the tension back in off of the scroll Y offset, this heuristic
-          // feels ok and is more performant than tracking the Y scroll back down.
+          // feels ok and is more performant than agreementing the Y scroll back down.
           tension: (Math.max(Math.abs(window.scrollY) + 10), 60) * 2,
           clamp: true
         },
         immediate: false,
         onRest: () => {
-          setShouldTrackScroll(true)
+          setShouldAgreementScroll(true)
         }
       })
-      setImmediate(() => setShouldTrackScroll(false))
+      setImmediate(() => setShouldAgreementScroll(false))
     }
-  }, [setSpringProps, setShouldTrackScroll])
+  }, [setSpringProps, setShouldAgreementScroll])
 
   const handleTouch = useCallback(() => {
-    setShouldTrackScroll(true)
-  }, [setShouldTrackScroll])
+    setShouldAgreementScroll(true)
+  }, [setShouldAgreementScroll])
 
   useEffect(() => {
     window.addEventListener('scroll', handleScrollEvent)

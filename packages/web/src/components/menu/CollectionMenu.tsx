@@ -168,7 +168,7 @@ function mapStateToProps(state: AppState, props: OwnProps) {
     handle: props.handle ? props.handle.toLowerCase() : null
   })
   return {
-    isArtist: user ? user.track_count > 0 : false
+    isArtist: user ? user.agreement_count > 0 : false
   }
 }
 

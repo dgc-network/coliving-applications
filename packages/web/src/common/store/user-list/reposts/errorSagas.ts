@@ -3,14 +3,14 @@ import { put, takeEvery } from 'redux-saga/effects'
 import * as errorActions from 'common/store/errors/actions'
 
 import {
-  GET_TRACK_REPOST_ERROR,
+  GET_AGREEMENT_REPOST_ERROR,
   GET_PLAYLIST_REPOST_ERROR,
-  trackRepostError,
+  agreementRepostError,
   playlistRepostError
 } from './actions'
 
 type ErrorActions =
-  | ReturnType<typeof trackRepostError>
+  | ReturnType<typeof agreementRepostError>
   | ReturnType<typeof playlistRepostError>
 
 export function* handleRepostError(action: ErrorActions) {
@@ -29,7 +29,7 @@ export function* handleRepostError(action: ErrorActions) {
 
 export function* watchRepostsError() {
   yield takeEvery(
-    [GET_TRACK_REPOST_ERROR, GET_PLAYLIST_REPOST_ERROR],
+    [GET_AGREEMENT_REPOST_ERROR, GET_PLAYLIST_REPOST_ERROR],
     handleRepostError
   )
 }

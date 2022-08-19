@@ -9,7 +9,7 @@ import Dropzone from 'components/upload/Dropzone'
 import InvalidFileType from 'components/upload/InvalidFileType'
 
 import styles from './SelectPage.module.css'
-import TracksPreview from './TracksPreview'
+import AgreementsPreview from './AgreementsPreview'
 import UploadType from './uploadType'
 
 class SelectPage extends Component {
@@ -36,7 +36,7 @@ class SelectPage extends Component {
 
   render() {
     const {
-      tracks = [],
+      agreements = [],
       previewIndex,
       onSelect,
       onRemove,
@@ -49,7 +49,7 @@ class SelectPage extends Component {
     } = this.props
     const { showSelectServices } = this.state
 
-    const textAboveIcon = tracks.length > 0 ? 'More to Upload?' : null
+    const textAboveIcon = agreements.length > 0 ? 'More to Upload?' : null
 
     return (
       <div className={cn(styles.page)}>
@@ -65,13 +65,13 @@ class SelectPage extends Component {
           </div>
           <div
             className={cn(styles.uploaded, {
-              [styles.hide]: tracks.length === 0
+              [styles.hide]: agreements.length === 0
             })}
           >
-            {tracks.length > 0 ? (
+            {agreements.length > 0 ? (
               <div>
-                <TracksPreview
-                  tracks={tracks}
+                <AgreementsPreview
+                  agreements={agreements}
                   uploadType={uploadType}
                   previewIndex={previewIndex}
                   onRemove={onRemove}
@@ -80,9 +80,9 @@ class SelectPage extends Component {
                   stopPreview={stopPreview}
                 />
                 <div className={styles.count}>
-                  {tracks.length === 1
-                    ? `${tracks.length} track uploaded`
-                    : `${tracks.length} tracks uploaded`}
+                  {agreements.length === 1
+                    ? `${agreements.length} agreement uploaded`
+                    : `${agreements.length} agreements uploaded`}
                 </div>
                 <div className={styles.continue}>
                   <Button
@@ -108,13 +108,13 @@ class SelectPage extends Component {
 SelectPage.propTypes = {
   account: PropTypes.object,
   uploadType: PropTypes.oneOf([
-    UploadType.INDIVIDUAL_TRACK,
-    UploadType.INDIVIDUAL_TRACKS,
+    UploadType.INDIVIDUAL_AGREEMENT,
+    UploadType.INDIVIDUAL_AGREEMENTS,
     UploadType.PLAYLIST,
     UploadType.ALBUM
   ]),
-  onCloseMultiTrackNotification: PropTypes.func,
-  tracks: PropTypes.array,
+  onCloseMultiAgreementNotification: PropTypes.func,
+  agreements: PropTypes.array,
   previewIndex: PropTypes.number,
   dropdownMenu: PropTypes.object,
   onSelect: PropTypes.func,

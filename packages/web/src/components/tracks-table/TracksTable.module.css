@@ -1,13 +1,13 @@
-.tracksTableContainer {
+.agreementsTableContainer {
   width: 100%;
 }
 
-.tracksTableContainer :global(.ant-table) {
+.agreementsTableContainer :global(.ant-table) {
   background-color: unset;
 }
 
-.tracksTableContainer :global(.ant-table .ant-table-container:before),
-.tracksTableContainer :global(.ant-table .ant-table-container:after) {
+.agreementsTableContainer :global(.ant-table .ant-table-container:before),
+.agreementsTableContainer :global(.ant-table .ant-table-container:after) {
   display: none;
 }
 
@@ -213,19 +213,19 @@
   width: 32px !important;
 }
 
-:global(.colTrackName) {
+:global(.colAgreementName) {
   min-width: 200px !important;
   width: 350px !important;
   max-width: 350px;
   vertical-align: bottom;
 }
 
-.trackName {
+.agreementName {
   /* The width at which ellipsis start */
   max-width: 350px;
 }
 
-:global(.colTrackName) > div:hover .trackName {
+:global(.colAgreementName) > div:hover .agreementName {
   transition: color 0.07s ease-out;
   color: var(--primary);
   text-decoration: underline;
@@ -296,7 +296,7 @@ tr.deleted:hover td {
   background-color: var(--neutral-light-9);
 }
 
-.activeRow :global(.colTrackName),
+.activeRow :global(.colAgreementName),
 .activeRow :global(.colArtistName),
 .activeRow :global(.colDate),
 .activeRow :global(.colTime),

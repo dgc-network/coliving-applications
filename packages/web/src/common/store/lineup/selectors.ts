@@ -1,14 +1,14 @@
 import { LineupState, removeNullable } from '@coliving/common'
 import { createSelector } from 'reselect'
 
-import { getTracksByUid } from 'common/store/cache/tracks/selectors'
+import { getAgreementsByUid } from 'common/store/cache/agreements/selectors'
 import { getUsers } from 'common/store/cache/users/selectors'
 
 // Some lineups can have additional properties (T)
 // e.g. collections have dateAdded in entries
 type LineupSelector<T, State> = (state: State) => LineupState<T>
 
-export const getLineupHasTracks = <T, State>(
+export const getLineupHasAgreements = <T, State>(
   selector: LineupSelector<T, State>,
   state: State
 ) => {
@@ -21,19 +21,19 @@ export const makeGetTableMetadatas = <T, State>(
 ) => {
   return createSelector(
     lineupSelector,
-    getTracksByUid,
+    getAgreementsByUid,
     getUsers,
-    (lineup, trackUids, users) => {
+    (lineup, agreementUids, users) => {
       let deleted = lineup.deleted
       const entries = lineup.entries
         .map((entry) => {
-          const track = trackUids[entry.uid]
-          if (track) {
+          const agreement = agreementUids[entry.uid]
+          if (agreement) {
             return {
               ...entry,
-              ...track,
+              ...agreement,
               uid: entry.uid,
-              followeeReposts: track.followee_reposts
+              followeeReposts: agreement.followee_reposts
                 .map((repost) => ({ ...repost, user: users[repost.user_id] }))
                 .filter((repost) => !!repost.user)
             }

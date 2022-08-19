@@ -10,7 +10,7 @@ const NATIVE_MOBILE = process.env.REACT_APP_NATIVE_MOBILE
 type State = {
   // Identifiers for the live that's playing.
   uid: UID | null
-  trackId: ID | null
+  agreementId: ID | null
 
   collectible: Collectible | null
 
@@ -25,13 +25,13 @@ type State = {
   buffering: boolean
 
   // Unique integer that increments every time something is "played."
-  // E.g. replaying a track doesn't change uid or trackId, but counter changes.
+  // E.g. replaying a agreement doesn't change uid or agreementId, but counter changes.
   counter: number
 }
 
 export const initialState: State = {
   uid: null,
-  trackId: null,
+  agreementId: null,
 
   collectible: null,
 
@@ -50,13 +50,13 @@ type SetAudioStreamPayload = {
 
 type PlayPayload = {
   uid?: Nullable<UID>
-  trackId?: ID
+  agreementId?: ID
   onEnd?: (...args: any) => any
 }
 
 type PlaySucceededPayload = {
   uid?: Nullable<UID>
-  trackId?: ID
+  agreementId?: ID
 }
 
 type PlayCollectiblePayload = {
@@ -83,7 +83,7 @@ type SetBufferingPayload = {
 
 type SetPayload = {
   uid: UID
-  trackId: ID
+  agreementId: ID
 }
 
 type SeekPayload = {
@@ -92,7 +92,7 @@ type SeekPayload = {
 
 type ErrorPayload = {
   error: string
-  trackId: ID
+  agreementId: ID
   info: string
 }
 
@@ -115,11 +115,11 @@ const slice = createSlice({
     },
     play: (state, action: PayloadAction<PlayPayload>) => {},
     playSucceeded: (state, action: PayloadAction<PlaySucceededPayload>) => {
-      const { uid, trackId } = action.payload
+      const { uid, agreementId } = action.payload
       state.playing = true
-      if (!uid || !trackId) return
+      if (!uid || !agreementId) return
       state.uid = uid || state.uid
-      state.trackId = trackId || state.trackId
+      state.agreementId = agreementId || state.agreementId
       state.collectible = null
     },
     playCollectible: (
@@ -133,7 +133,7 @@ const slice = createSlice({
       const { collectible } = action.payload
       state.playing = true
       state.uid = null
-      state.trackId = null
+      state.agreementId = null
       state.collectible = collectible || state.collectible
     },
     pause: (state, action: PayloadAction<PausePayload>) => {
@@ -146,13 +146,13 @@ const slice = createSlice({
     stop: (state, action: PayloadAction<StopPayload>) => {
       state.playing = false
       state.uid = null
-      state.trackId = null
+      state.agreementId = null
       state.counter = state.counter + 1
     },
     set: (state, action: PayloadAction<SetPayload>) => {
-      const { uid, trackId } = action.payload
+      const { uid, agreementId } = action.payload
       state.uid = uid
-      state.trackId = trackId
+      state.agreementId = agreementId
     },
     reset: (state, action: PayloadAction<ResetPayload>) => {},
     resetSuceeded: (state, action: PayloadAction<ResetSucceededPayload>) => {

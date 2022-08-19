@@ -1,13 +1,13 @@
 import { select, all, call } from 'redux-saga/effects'
 
-import { getTracks } from 'common/store/cache/tracks/selectors'
+import { getAgreements } from 'common/store/cache/agreements/selectors'
 import {
   PREFIX,
-  tracksActions
-} from 'common/store/pages/search-results/lineup/tracks/actions'
+  agreementsActions
+} from 'common/store/pages/search-results/lineup/agreements/actions'
 import {
-  getSearchTracksLineup,
-  getSearchResultsPageTracks
+  getSearchAgreementsLineup,
+  getSearchResultsPageAgreements
 } from 'common/store/pages/search-results/selectors'
 import { SearchKind } from 'common/store/pages/search-results/types'
 import {
@@ -23,48 +23,48 @@ import {
 import { LineupSagas } from 'store/lineup/sagas'
 import { isMobile } from 'utils/clientUtil'
 
-function* getSearchPageResultsTracks({ offset, limit, payload }) {
+function* getSearchPageResultsAgreements({ offset, limit, payload }) {
   const category = getCategory()
 
-  if (category === SearchKind.TRACKS || isMobile()) {
-    // If we are on the tracks sub-page of search or mobile, which we should paginate on
+  if (category === SearchKind.AGREEMENTS || isMobile()) {
+    // If we are on the agreements sub-page of search or mobile, which we should paginate on
     let results
     if (isTagSearch()) {
       const tag = getSearchTag()
-      const { tracks } = yield call(
+      const { agreements } = yield call(
         getTagSearchResults,
         tag,
         category,
         limit,
         offset
       )
-      results = tracks
+      results = agreements
     } else {
       const query = getQuery()
-      const { tracks } = yield call(
+      const { agreements } = yield call(
         getSearchResults,
         query,
         category,
         limit,
         offset
       )
-      results = tracks
+      results = agreements
     }
     if (results) return results
     return []
   } else {
     // If we are part of the all results search page
     try {
-      const trackIds = yield select(getSearchResultsPageTracks)
+      const agreementIds = yield select(getSearchResultsPageAgreements)
 
-      // getTracks returns an unsorted map of ID to track metadata.
-      // We sort this object by trackIds, which is returned sorted by discprov.
-      const [tracks, sortedIds] = yield all([
-        select(getTracks, { ids: trackIds }),
-        select(getSearchResultsPageTracks)
+      // getAgreements returns an unsorted map of ID to agreement metadata.
+      // We sort this object by agreementIds, which is returned sorted by discprov.
+      const [agreements, sortedIds] = yield all([
+        select(getAgreements, { ids: agreementIds }),
+        select(getSearchResultsPageAgreements)
       ])
-      const sortedTracks = sortedIds.map((id) => tracks[id])
-      return sortedTracks
+      const sortedAgreements = sortedIds.map((id) => agreements[id])
+      return sortedAgreements
     } catch (e) {
       console.error(e)
       return []
@@ -76,9 +76,9 @@ class SearchPageResultsSagas extends LineupSagas {
   constructor() {
     super(
       PREFIX,
-      tracksActions,
-      getSearchTracksLineup,
-      getSearchPageResultsTracks
+      agreementsActions,
+      getSearchAgreementsLineup,
+      getSearchPageResultsAgreements
     )
   }
 }

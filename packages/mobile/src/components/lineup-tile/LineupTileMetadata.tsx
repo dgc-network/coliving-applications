@@ -14,7 +14,7 @@ import type { ThemeColors } from 'app/utils/theme'
 import { useThemeColors } from 'app/utils/theme'
 
 import { LineupTileArt } from './LineupTileArt'
-import { createStyles as createTrackTileStyles } from './styles'
+import { createStyles as createAgreementTileStyles } from './styles'
 
 const createStyles = (themeColors: ThemeColors) =>
   StyleSheet.create({
@@ -75,7 +75,7 @@ export const LineupTileMetadata = ({
 }: Props) => {
   const navigation = useNavigation()
   const styles = useThemedStyles(createStyles)
-  const trackTileStyles = useThemedStyles(createTrackTileStyles)
+  const agreementTileStyles = useThemedStyles(createAgreementTileStyles)
   const { primary } = useThemeColors()
 
   const handleArtistPress = useCallback(() => {
@@ -91,10 +91,10 @@ export const LineupTileMetadata = ({
         imageUrl={imageUrl}
         onLoad={() => setArtworkLoaded(true)}
         coSign={coSign}
-        style={trackTileStyles.imageContainer}
+        style={agreementTileStyles.imageContainer}
       />
-      <View style={trackTileStyles.titles}>
-        <Pressable style={trackTileStyles.title} onPress={onPressTitle}>
+      <View style={agreementTileStyles.titles}>
+        <Pressable style={agreementTileStyles.title} onPress={onPressTitle}>
           {({ pressed }) => (
             <>
               <Text
@@ -114,7 +114,7 @@ export const LineupTileMetadata = ({
             </>
           )}
         </Pressable>
-        <Pressable style={trackTileStyles.artist} onPress={handleArtistPress}>
+        <Pressable style={agreementTileStyles.artist} onPress={handleArtistPress}>
           {({ pressed }) => (
             <>
               <Text

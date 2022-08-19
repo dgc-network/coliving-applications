@@ -1,14 +1,14 @@
 import { EventNames } from 'app/types/analytics'
-import { track, make } from 'app/utils/analytics'
+import { agreement, make } from 'app/utils/analytics'
 
 const IDENTITY_SERVICE_ENDPOINT = 'https://identityservice..co'
 
 export const logListen = async (
-  trackId: number,
+  agreementId: number,
   userId: number,
   onFailure: () => void
 ) => {
-  const url = `${IDENTITY_SERVICE_ENDPOINT}/tracks/${trackId}/listen`
+  const url = `${IDENTITY_SERVICE_ENDPOINT}/agreements/${agreementId}/listen`
   const method = 'POST'
   const headers = {
     Accept: 'application/json',
@@ -21,9 +21,9 @@ export const logListen = async (
   fetch(url, { method, headers, body })
     .then((resp) => {
       console.info(
-        `Logged a listen for ${trackId} for user ${userId}: ${resp.status}`
+        `Logged a listen for ${agreementId} for user ${userId}: ${resp.status}`
       )
-      track(make({ eventName: EventNames.LISTEN, trackId: `${trackId}` }))
+      agreement(make({ eventName: EventNames.LISTEN, agreementId: `${agreementId}` }))
     })
     .catch((e) => {
       console.error(e)

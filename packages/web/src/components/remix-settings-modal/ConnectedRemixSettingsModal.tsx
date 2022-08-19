@@ -7,16 +7,16 @@ import { Dispatch } from 'redux'
 import RemixSettingsModal from 'components/remix-settings-modal/RemixSettingsModal'
 import { AppState } from 'store/types'
 
-import { getTrack, getUser, getStatus } from './store/selectors'
-import { fetchTrack, fetchTrackSucceeded, reset } from './store/slice'
+import { getAgreement, getUser, getStatus } from './store/selectors'
+import { fetchAgreement, fetchAgreementSucceeded, reset } from './store/slice'
 
 type OwnProps = {
   isOpen: boolean
   onClose: () => void
-  // When opening the modal from a track that already has remix_of set,
-  // the initial track id should be set to the first remix parent's track id.
-  // This is used in the "edit track" flow.
-  initialTrackId?: ID
+  // When opening the modal from a agreement that already has remix_of set,
+  // the initial agreement id should be set to the first remix parent's agreement id.
+  // This is used in the "edit agreement" flow.
+  initialAgreementId?: ID
 }
 
 type ConnectedRemixSettingsModalProps = OwnProps &
@@ -24,21 +24,21 @@ type ConnectedRemixSettingsModalProps = OwnProps &
   ReturnType<typeof mapDispatchToProps>
 
 const ConnectedRemixSettingsModal = ({
-  initialTrackId,
+  initialAgreementId,
   isOpen,
   onClose,
-  track,
+  agreement,
   user,
   status,
-  setInitialTrackId,
+  setInitialAgreementId,
   reset,
   onEditUrl
 }: ConnectedRemixSettingsModalProps) => {
   useEffect(() => {
-    if (isOpen && initialTrackId) {
-      setInitialTrackId(initialTrackId)
+    if (isOpen && initialAgreementId) {
+      setInitialAgreementId(initialAgreementId)
     }
-  }, [isOpen, initialTrackId, setInitialTrackId])
+  }, [isOpen, initialAgreementId, setInitialAgreementId])
 
   // Reset the connected modal state as soon as it closes
   useEffect(() => {
@@ -51,9 +51,9 @@ const ConnectedRemixSettingsModal = ({
     <RemixSettingsModal
       isOpen={isOpen}
       onClose={onClose}
-      track={track}
+      agreement={agreement}
       user={user}
-      isInvalidTrack={status === Status.ERROR}
+      isInvalidAgreement={status === Status.ERROR}
       onEditUrl={onEditUrl}
     />
   )
@@ -61,7 +61,7 @@ const ConnectedRemixSettingsModal = ({
 
 function mapStateToProps(state: AppState) {
   return {
-    track: getTrack(state),
+    agreement: getAgreement(state),
     user: getUser(state),
     status: getStatus(state)
   }
@@ -69,9 +69,9 @@ function mapStateToProps(state: AppState) {
 
 function mapDispatchToProps(dispatch: Dispatch) {
   return {
-    onEditUrl: (url: string) => dispatch(fetchTrack({ url })),
-    setInitialTrackId: (trackId: ID) =>
-      dispatch(fetchTrackSucceeded({ trackId })),
+    onEditUrl: (url: string) => dispatch(fetchAgreement({ url })),
+    setInitialAgreementId: (agreementId: ID) =>
+      dispatch(fetchAgreementSucceeded({ agreementId })),
     reset: () => dispatch(reset())
   }
 }

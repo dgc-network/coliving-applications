@@ -1,6 +1,6 @@
 import { ID } from '@coliving/common'
 
-export default interface EditTrackModalState {
+export default interface EditAgreementModalState {
   isOpen: boolean
-  trackId: ID | null
+  agreementId: ID | null
 }

@@ -119,7 +119,7 @@ export const processFiles = (
     } catch (error) {
       // Unable to read tags, but continue on anyways
       console.warn(
-        `Unable to parse tags from uploaded track: ${title}\n NOTE: if a picture was attached to the track, it will not be added`,
+        `Unable to parse tags from uploaded agreement: ${title}\n NOTE: if a picture was attached to the agreement, it will not be added`,
         error
       )
     }
@@ -129,7 +129,7 @@ export const processFiles = (
     return {
       file,
       preview: live,
-      metadata: schemas.newTrackMetadata({
+      metadata: schemas.newAgreementMetadata({
         title,
         artwork
       })

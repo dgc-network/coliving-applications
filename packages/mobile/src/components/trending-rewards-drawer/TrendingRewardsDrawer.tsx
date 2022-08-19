@@ -36,25 +36,25 @@ const TRENDING_REWARDS_DRAWER_NAME = 'TrendingRewardsExplainer'
 const TOS_URL = 'https://blog..co/article/live-rewards'
 
 const messages = {
-  tracksTitle: 'Top 5 Tracks Each Week Receive 100 $LIVE',
+  agreementsTitle: 'Top 5 Agreements Each Week Receive 100 $LIVE',
   playlistTitle: 'Top 5 Playlists Each Week Receive 100 $LIVE',
-  undergroundTitle: 'Top 5 Tracks Each Week Receive 100 $LIVE',
+  undergroundTitle: 'Top 5 Agreements Each Week Receive 100 $LIVE',
   winners: 'Winners are selected every Friday at Noon PT!',
   lastWeek: "LAST WEEK'S WINNERS",
-  tracks: 'TRACKS',
+  agreements: 'AGREEMENTS',
   playlists: 'PLAYLISTS',
   underground: 'UNDERGROUND',
   terms: 'Terms and Conditions Apply',
-  tracksModalTitle: 'Top 5 Trending Tracks',
+  agreementsModalTitle: 'Top 5 Trending Agreements',
   playlistsModalTitle: 'Top 5 Trending Playlists',
-  undergroundModalTitle: 'Top 5 Underground Trending Tracks',
-  buttonTextTracks: 'Trending Tracks',
+  undergroundModalTitle: 'Top 5 Underground Trending Agreements',
+  buttonTextAgreements: 'Trending Agreements',
   buttonTextPlaylists: 'Trending Playlists',
-  buttonTextUnderground: 'Underground Trending Tracks'
+  buttonTextUnderground: 'Underground Trending Agreements'
 }
 
 const TRENDING_PAGES = {
-  tracks: {
+  agreements: {
     native: { screen: 'trending' as const },
     web: { route: TRENDING_PAGE }
   },
@@ -80,10 +80,10 @@ const textMap = {
     title: messages.playlistTitle,
     button: messages.buttonTextPlaylists
   },
-  tracks: {
-    modalTitle: messages.tracksModalTitle,
-    title: messages.tracksTitle,
-    button: messages.buttonTextTracks
+  agreements: {
+    modalTitle: messages.agreementsModalTitle,
+    title: messages.agreementsTitle,
+    button: messages.buttonTextAgreements
   },
   underground: {
     modalTitle: messages.undergroundModalTitle,
@@ -149,7 +149,7 @@ const useStyles = makeStyles(({ palette, spacing, typography }) => ({
 }))
 
 // Getters and setters for whether we're looking at
-// trending playlists or trending tracks
+// trending playlists or trending agreements
 const useRewardsType = (): [
   TrendingRewardsModalType,
   (type: TrendingRewardsModalType) => void
@@ -162,15 +162,15 @@ const useRewardsType = (): [
     },
     [dispatch]
   )
-  return [rewardsType ?? 'tracks', setTrendingRewardsType]
+  return [rewardsType ?? 'agreements', setTrendingRewardsType]
 }
 
 const useTweetId = (type: TrendingRewardsModalType) => {
-  const tracksId = useRemoteVar(StringKeys.REWARDS_TWEET_ID_TRACKS)
+  const agreementsId = useRemoteVar(StringKeys.REWARDS_TWEET_ID_AGREEMENTS)
   const playlistsId = useRemoteVar(StringKeys.REWARDS_TWEET_ID_PLAYLISTS)
   const undergroundId = useRemoteVar(StringKeys.REWARDS_TWEET_ID_UNDERGROUND)
   return {
-    tracks: tracksId,
+    agreements: agreementsId,
     playlists: playlistsId,
     underground: undergroundId
   }[type]
@@ -192,8 +192,8 @@ export const TrendingRewardsDrawer = () => {
 
   const tabOptions = [
     {
-      key: 'tracks',
-      text: messages.tracks
+      key: 'agreements',
+      text: messages.agreements
     },
     {
       key: 'playlists',

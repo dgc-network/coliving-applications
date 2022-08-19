@@ -8,18 +8,18 @@ const getBase = (state: CommonState) => state.stemsUpload
 export const selectCurrentUploads = createSelector(
   [
     (state: CommonState) => getBase(state).uploadsInProgress,
-    (_: CommonState, trackId: ID | undefined) => trackId
+    (_: CommonState, agreementId: ID | undefined) => agreementId
   ],
-  (uploadsInProgress, trackId) => {
-    if (!trackId) return []
-    const uploads = uploadsInProgress[trackId]
+  (uploadsInProgress, agreementId) => {
+    if (!agreementId) return []
+    const uploads = uploadsInProgress[agreementId]
     if (!uploads) return []
     return Object.values(uploads).flat()
   }
 )
 
-export const getCurrentUploads = (state: CommonState, parentTrackId: ID) => {
-  const uploads = getBase(state).uploadsInProgress[parentTrackId]
+export const getCurrentUploads = (state: CommonState, parentAgreementId: ID) => {
+  const uploads = getBase(state).uploadsInProgress[parentAgreementId]
   if (!uploads) return []
   return Object.values(uploads).flat()
 }

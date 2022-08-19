@@ -1,10 +1,10 @@
 import { Status } from '@coliving/common'
 import { connect } from 'react-redux'
 
-import DesktopPlaylistTile from 'components/track/desktop/ConnectedPlaylistTile'
-import DesktopTrackTile from 'components/track/desktop/ConnectedTrackTile'
-import MobilePlaylistTile from 'components/track/mobile/ConnectedPlaylistTile'
-import MobileTrackTile from 'components/track/mobile/ConnectedTrackTile'
+import DesktopPlaylistTile from 'components/agreement/desktop/ConnectedPlaylistTile'
+import DesktopAgreementTile from 'components/agreement/desktop/ConnectedAgreementTile'
+import MobilePlaylistTile from 'components/agreement/mobile/ConnectedPlaylistTile'
+import MobileAgreementTile from 'components/agreement/mobile/ConnectedAgreementTile'
 import { AppState } from 'store/types'
 import { isMobile } from 'utils/clientUtil'
 
@@ -13,7 +13,7 @@ import { LineupVariant } from './types'
 
 export type LineupWithoutTile = Omit<
   LineupProviderProps,
-  'trackTile' | 'skeletonTile' | 'playlistTile'
+  'agreementTile' | 'skeletonTile' | 'playlistTile'
 >
 type LineupProps = LineupWithoutTile & ReturnType<typeof mapStateToProps>
 
@@ -22,13 +22,13 @@ type LineupProps = LineupWithoutTile & ReturnType<typeof mapStateToProps>
  */
 const Lineup = (props: LineupProps) => {
   const mobile = props.isMobile
-  const trackTile = mobile ? MobileTrackTile : DesktopTrackTile
+  const agreementTile = mobile ? MobileAgreementTile : DesktopAgreementTile
   const playlistTile = mobile ? MobilePlaylistTile : DesktopPlaylistTile
 
   return (
     <LineupProvider
       {...props}
-      trackTile={trackTile}
+      agreementTile={agreementTile}
       playlistTile={playlistTile}
     />
   )

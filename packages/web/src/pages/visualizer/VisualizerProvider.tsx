@@ -15,24 +15,24 @@ import { MountPlacement, ComponentPlacement } from 'components/types'
 import { getTheme } from 'common/store/ui/theme/selectors'
 import { shouldShowDark } from 'utils/theme/theme'
 import { profilePage } from 'utils/route'
-import { make, TrackEvent } from 'store/analytics/actions'
+import { make, AgreementEvent } from 'store/analytics/actions'
 import { Name } from '@coliving/common'
-import { Track } from '@coliving/common'
+import { Agreement } from '@coliving/common'
 import { SquareSizes } from '@coliving/common'
 import DynamicImage from 'components/dynamic-image/DynamicImage'
-import PlayingTrackInfo from 'components/play-bar/desktop/components/PlayingTrackInfo'
+import PlayingAgreementInfo from 'components/play-bar/desktop/components/PlayingAgreementInfo'
 import AudioStream from 'live/AudioStream'
 import { webglSupported } from './utils'
-import { getDominantColorsByTrack } from 'common/store/average-color/slice'
+import { getDominantColorsByAgreement } from 'common/store/average-color/slice'
 import { ReactComponent as IconRemove } from 'assets/img/iconRemove.svg'
 import { ReactComponent as ColivingLogoHorizontal } from 'assets/img/colivingLogoHorizontal.svg'
-import { useTrackCoverArt } from 'hooks/useTrackCoverArt'
+import { useAgreementCoverArt } from 'hooks/useAgreementCoverArt'
 
-const Artwork = ({ track }: { track?: Track | null }) => {
-  const { track_id, _cover_art_sizes } = track || {}
+const Artwork = ({ agreement }: { agreement?: Agreement | null }) => {
+  const { agreement_id, _cover_art_sizes } = agreement || {}
 
-  const image = useTrackCoverArt(
-    track_id || -1,
+  const image = useAgreementCoverArt(
+    agreement_id || -1,
     _cover_art_sizes || null,
     SquareSizes.SIZE_480_BY_480
   )
@@ -127,10 +127,10 @@ const Visualizer = ({
     }
   }, [fadeVisualizer])
 
-  const goToTrackPage = useCallback(() => {
-    const { track, user } = currentQueueItem
-    if (track && user) {
-      goToRoute(track.permalink)
+  const goToAgreementPage = useCallback(() => {
+    const { agreement, user } = currentQueueItem
+    if (agreement && user) {
+      goToRoute(agreement.permalink)
     }
   }, [currentQueueItem])
 
@@ -141,26 +141,26 @@ const Visualizer = ({
     }
   }, [currentQueueItem])
 
-  const renderTrackInfo = () => {
-    const { uid, track, user } = currentQueueItem
+  const renderAgreementInfo = () => {
+    const { uid, agreement, user } = currentQueueItem
     const dominantColor = dominantColors
       ? dominantColors[0]
       : { r: 0, g: 0, b: 0 }
-    return track && user && uid ? (
-      <div className={styles.trackInfoWrapper}>
-        <PlayingTrackInfo
+    return agreement && user && uid ? (
+      <div className={styles.agreementInfoWrapper}>
+        <PlayingAgreementInfo
           profilePictureSizes={user._profile_picture_sizes}
-          trackId={track.track_id}
-          isOwner={track.owner_id === user.user_id}
-          trackTitle={track.title}
-          trackPermalink={track.permalink}
+          agreementId={agreement.agreement_id}
+          isOwner={agreement.owner_id === user.user_id}
+          agreementTitle={agreement.title}
+          agreementPermalink={agreement.permalink}
           artistName={user.name}
           artistHandle={user.handle}
           artistUserId={user.user_id}
           isVerified={user.is_verified}
-          isTrackUnlisted={track.is_unlisted}
-          onClickTrackTitle={() => {
-            goToTrackPage()
+          isAgreementUnlisted={agreement.is_unlisted}
+          onClickAgreementTitle={() => {
+            goToAgreementPage()
             onClose()
           }}
           onClickArtistName={() => {
@@ -172,11 +172,11 @@ const Visualizer = ({
         />
       </div>
     ) : (
-      <div className={styles.emptyTrackInfoWrapper}></div>
+      <div className={styles.emptyAgreementInfoWrapper}></div>
     )
   }
 
-  const { track } = currentQueueItem
+  const { agreement } = currentQueueItem
   return (
     <div
       className={cn(styles.visualizer, {
@@ -192,15 +192,15 @@ const Visualizer = ({
       <div className={styles.infoOverlayTile}>
         <div
           className={cn(styles.artworkWrapper, {
-            [styles.playing]: track
+            [styles.playing]: agreement
           })}
           onClick={() => {
-            goToTrackPage()
+            goToAgreementPage()
             onClose()
           }}>
-          <Artwork track={track} />
+          <Artwork agreement={agreement} />
         </div>
-        {renderTrackInfo()}
+        {renderAgreementInfo()}
       </div>
       <Toast
         useCaret={false}
@@ -223,8 +223,8 @@ const makeMapStateToProps = () => {
       live: getAudio(state),
       playing: getPlaying(state),
       theme: getTheme(state),
-      dominantColors: getDominantColorsByTrack(state, {
-        track: currentQueueItem.track
+      dominantColors: getDominantColorsByAgreement(state, {
+        agreement: currentQueueItem.agreement
       })
     }
   }
@@ -233,12 +233,12 @@ const makeMapStateToProps = () => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   recordOpen: () => {
-    const trackEvent: TrackEvent = make(Name.VISUALIZER_OPEN, {})
-    dispatch(trackEvent)
+    const agreementEvent: AgreementEvent = make(Name.VISUALIZER_OPEN, {})
+    dispatch(agreementEvent)
   },
   recordClose: () => {
-    const trackEvent: TrackEvent = make(Name.VISUALIZER_CLOSE, {})
-    dispatch(trackEvent)
+    const agreementEvent: AgreementEvent = make(Name.VISUALIZER_CLOSE, {})
+    dispatch(agreementEvent)
   },
   goToRoute: (route: string) => dispatch(pushRoute(route))
 })

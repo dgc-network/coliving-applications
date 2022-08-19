@@ -1,11 +1,11 @@
 import { LineupActions } from 'common/store/lineup/actions'
 
-export const PREFIX = 'SEARCH_TRACKS'
+export const PREFIX = 'SEARCH_AGREEMENTS'
 
-class TracksActions extends LineupActions {
+class AgreementsActions extends LineupActions {
   constructor() {
     super(PREFIX)
   }
 }
 
-export const tracksActions = new TracksActions()
+export const agreementsActions = new AgreementsActions()

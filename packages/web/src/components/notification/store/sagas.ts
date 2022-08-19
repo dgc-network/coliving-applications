@@ -2,7 +2,7 @@ import {
   ID,
   Name,
   Status,
-  Track,
+  Agreement,
   FeatureFlags,
   IntKeys,
   remoteConfigIntDefaults
@@ -23,7 +23,7 @@ import {
 
 import { getUserId, getHasAccount } from 'common/store/account/selectors'
 import { retrieveCollections } from 'common/store/cache/collections/utils'
-import { retrieveTracks } from 'common/store/cache/tracks/utils'
+import { retrieveAgreements } from 'common/store/cache/agreements/utils'
 import { fetchUsers } from 'common/store/cache/users/sagas'
 import * as notificationActions from 'common/store/notifications/actions'
 import {
@@ -184,20 +184,20 @@ export function* parseAndProcessNotifications(
   notifications: Notification[]
 ): Generator<any, Notification[], any> {
   /**
-   * Parse through the notifications & collect user /track / collection IDs
+   * Parse through the notifications & collect user /agreement / collection IDs
    * that the notification references to fetch
    */
-  const trackIdsToFetch: ID[] = []
+  const agreementIdsToFetch: ID[] = []
   const collectionIdsToFetch: ID[] = []
   const userIdsToFetch: ID[] = []
   const reactionSignatureToFetch: string[] = []
 
   notifications.forEach((notification) => {
     if (notification.type === NotificationType.UserSubscription) {
-      if (notification.entityType === Entity.Track) {
+      if (notification.entityType === Entity.Agreement) {
         // @ts-ignore
         notification.entityIds = [...new Set(notification.entityIds)]
-        trackIdsToFetch.push(...notification.entityIds)
+        agreementIdsToFetch.push(...notification.entityIds)
       } else if (
         notification.entityType === Entity.Playlist ||
         notification.entityType === Entity.Album
@@ -214,8 +214,8 @@ export function* parseAndProcessNotifications(
       (notification.type === NotificationType.Milestone &&
         'entityType' in notification)
     ) {
-      if (notification.entityType === Entity.Track) {
-        trackIdsToFetch.push(notification.entityId)
+      if (notification.entityType === Entity.Agreement) {
+        agreementIdsToFetch.push(notification.entityId)
       } else if (
         notification.entityType === Entity.Playlist ||
         notification.entityType === Entity.Album
@@ -237,25 +237,25 @@ export function* parseAndProcessNotifications(
       )
     }
     if (notification.type === NotificationType.RemixCreate) {
-      trackIdsToFetch.push(
-        notification.parentTrackId,
-        notification.childTrackId
+      agreementIdsToFetch.push(
+        notification.parentAgreementId,
+        notification.childAgreementId
       )
-      notification.entityType = Entity.Track
+      notification.entityType = Entity.Agreement
       notification.entityIds = [
-        notification.parentTrackId,
-        notification.childTrackId
+        notification.parentAgreementId,
+        notification.childAgreementId
       ]
     }
     if (notification.type === NotificationType.RemixCosign) {
-      trackIdsToFetch.push(notification.childTrackId)
-      userIdsToFetch.push(notification.parentTrackUserId)
-      notification.entityType = Entity.Track
-      notification.entityIds = [notification.childTrackId]
-      notification.userId = notification.parentTrackUserId
+      agreementIdsToFetch.push(notification.childAgreementId)
+      userIdsToFetch.push(notification.parentAgreementUserId)
+      notification.entityType = Entity.Agreement
+      notification.entityIds = [notification.childAgreementId]
+      notification.userId = notification.parentAgreementUserId
     }
-    if (notification.type === NotificationType.TrendingTrack) {
-      trackIdsToFetch.push(notification.entityId)
+    if (notification.type === NotificationType.TrendingAgreement) {
+      agreementIdsToFetch.push(notification.entityId)
     }
     if (
       notification.type === NotificationType.TipSend ||
@@ -269,20 +269,20 @@ export function* parseAndProcessNotifications(
     if (notification.type === NotificationType.TipReceive) {
       reactionSignatureToFetch.push(notification.tipTxSignature)
     }
-    if (notification.type === NotificationType.AddTrackToPlaylist) {
-      trackIdsToFetch.push(notification.trackId)
+    if (notification.type === NotificationType.AddAgreementToPlaylist) {
+      agreementIdsToFetch.push(notification.agreementId)
       userIdsToFetch.push(notification.playlistOwnerId)
       collectionIdsToFetch.push(notification.playlistId)
     }
   })
 
-  const [tracks]: Track[][] = yield* all([
-    call(retrieveTracks, { trackIds: trackIdsToFetch }),
+  const [agreements]: Agreement[][] = yield* all([
+    call(retrieveAgreements, { agreementIds: agreementIdsToFetch }),
     call(
       retrieveCollections,
       null, // userId
       collectionIdsToFetch, // collection ids
-      false // fetchTracks
+      false // fetchAgreements
     ),
     call(
       fetchUsers,
@@ -297,13 +297,13 @@ export function* parseAndProcessNotifications(
 
   /**
    * For Milestone and Followers, update the notification entityId as the userId
-   * For Remix Create, add the userId as the track owner id of the fetched child track
+   * For Remix Create, add the userId as the agreement owner id of the fetched child agreement
    * Attach a `timeLabel` to each notification as well to be displayed ie. 2 Hours Ago
    */
   const now = moment()
   const userId = yield* select(getUserId)
   if (!userId) return []
-  const remixTrackParents: Array<ID> = []
+  const remixAgreementParents: Array<ID> = []
   const processedNotifications = notifications.map((notif) => {
     if (
       notif.type === NotificationType.Milestone &&
@@ -311,29 +311,29 @@ export function* parseAndProcessNotifications(
     ) {
       notif.entityId = userId
     } else if (notif.type === NotificationType.RemixCreate) {
-      const childTrack = tracks.find(
-        (track) => track.track_id === notif.childTrackId
+      const childAgreement = agreements.find(
+        (agreement) => agreement.agreement_id === notif.childAgreementId
       )
-      if (childTrack) {
-        notif.userId = childTrack.owner_id
+      if (childAgreement) {
+        notif.userId = childAgreement.owner_id
       }
     } else if (notif.type === NotificationType.RemixCosign) {
-      const childTrack = tracks.find(
-        (track) => track.track_id === notif.childTrackId
+      const childAgreement = agreements.find(
+        (agreement) => agreement.agreement_id === notif.childAgreementId
       )
-      if (childTrack && childTrack.remix_of) {
-        const parentTrackIds = childTrack.remix_of.tracks.map(
-          (t) => t.parent_track_id
+      if (childAgreement && childAgreement.remix_of) {
+        const parentAgreementIds = childAgreement.remix_of.agreements.map(
+          (t) => t.parent_agreement_id
         )
-        remixTrackParents.push(...parentTrackIds)
-        notif.entityIds.push(...parentTrackIds)
+        remixAgreementParents.push(...parentAgreementIds)
+        notif.entityIds.push(...parentAgreementIds)
       }
     }
     notif.timeLabel = getTimeAgo(now, notif.timestamp)
     return notif
   })
-  if (remixTrackParents.length > 0)
-    yield* call(retrieveTracks, { trackIds: remixTrackParents })
+  if (remixAgreementParents.length > 0)
+    yield* call(retrieveAgreements, { agreementIds: remixAgreementParents })
   return processedNotifications
 }
 

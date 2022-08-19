@@ -7,13 +7,13 @@ import { createShallowSelector } from 'common/utils/selectorHelpers'
 
 // Search Results selectors
 export const getBaseState = (state: CommonState) => state.pages.searchResults
-export const getSearchTracksLineup = (state: CommonState) =>
-  getBaseState(state).tracks
+export const getSearchAgreementsLineup = (state: CommonState) =>
+  getBaseState(state).agreements
 export const getSearchResults = (state: CommonState) => getBaseState(state)
 export const getSearchStatus = (state: CommonState) =>
   getBaseState(state).status
-export const getSearchResultsPageTracks = (state: CommonState) =>
-  getBaseState(state).trackIds || []
+export const getSearchResultsPageAgreements = (state: CommonState) =>
+  getBaseState(state).agreementIds || []
 
 const getSearchArtistsIds = (state: CommonState) =>
   getBaseState(state).artistIds || []
@@ -55,7 +55,7 @@ export const makeGetSearchPlaylists = () => {
           return {
             ...playlist,
             user: users[playlist.playlist_owner_id],
-            trackCount: (playlist.playlist_contents.track_ids || []).length
+            agreementCount: (playlist.playlist_contents.agreement_ids || []).length
           }
         })
         .filter((playlist) => !!playlist.user && !playlist.user.is_deactivated)

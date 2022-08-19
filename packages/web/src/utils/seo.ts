@@ -2,7 +2,7 @@
  * SEO Utlity functions to generate titles and descriptions
  */
 
-export const getTrackPageTitle = ({
+export const getAgreementPageTitle = ({
   title,
   handle
 }: {
@@ -14,7 +14,7 @@ export const getTrackPageTitle = ({
   return `${title} by ${handle}`
 }
 
-type getTrackPageDescriptionProps = {
+type getAgreementPageDescriptionProps = {
   releaseDate: string
   duration: string
   tags: string[]
@@ -22,15 +22,15 @@ type getTrackPageDescriptionProps = {
   mood: string
   description: string
 }
-export const getTrackPageDescription = ({
+export const getAgreementPageDescription = ({
   releaseDate,
   tags,
   duration,
   genre,
   mood,
   description
-}: getTrackPageDescriptionProps) => {
-  // Note, release date and duration will be defined if the track metadata is fetched.
+}: getAgreementPageDescriptionProps) => {
+  // Note, release date and duration will be defined if the agreement metadata is fetched.
   if (!releaseDate) return ''
   const tagText =
     Array.isArray(tags) && tags.length > 0 ? ` | Tags: ${tags.join(', ')}` : ''

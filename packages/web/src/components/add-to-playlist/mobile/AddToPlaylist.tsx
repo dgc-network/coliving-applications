@@ -7,13 +7,13 @@ import { Dispatch } from 'redux'
 
 import { getAccountWithOwnPlaylists } from 'common/store/account/selectors'
 import {
-  addTrackToPlaylist,
+  addAgreementToPlaylist,
   createPlaylist
 } from 'common/store/cache/collections/actions'
 import { close } from 'common/store/ui/add-to-playlist/actions'
 import {
-  getTrackId,
-  getTrackTitle
+  getAgreementId,
+  getAgreementTitle
 } from 'common/store/ui/add-to-playlist/selectors'
 import Card from 'components/card/mobile/Card'
 import CardLineup from 'components/lineup/CardLineup'
@@ -40,12 +40,12 @@ export type AddToPlaylistProps = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>
 
 const g = withNullGuard((props: AddToPlaylistProps) => {
-  const { account, trackTitle } = props
-  if (account && trackTitle) {
+  const { account, agreementTitle } = props
+  if (account && agreementTitle) {
     return {
       ...props,
       account,
-      trackTitle
+      agreementTitle
     }
   }
 })
@@ -53,11 +53,11 @@ const g = withNullGuard((props: AddToPlaylistProps) => {
 const AddToPlaylist = g(
   ({
     account,
-    trackId,
-    trackTitle,
+    agreementId,
+    agreementTitle,
     goToRoute,
     close,
-    addTrackToPlaylist,
+    addAgreementToPlaylist,
     createPlaylist
   }) => {
     // Close the page if the route was changed
@@ -87,7 +87,7 @@ const AddToPlaylist = g(
           secondaryText={playlist.ownerName}
           onClick={() => {
             toast(messages.addedToast)
-            addTrackToPlaylist(trackId!, playlist.playlist_id)
+            addAgreementToPlaylist(agreementId!, playlist.playlist_id)
             close()
           }}
         />
@@ -96,21 +96,21 @@ const AddToPlaylist = g(
 
     const addToNewPlaylist = useCallback(() => {
       const metadata = newCollectionMetadata({
-        playlist_name: trackTitle,
+        playlist_name: agreementTitle,
         is_private: false
       })
       const tempId = `${Date.now()}`
-      createPlaylist(tempId, metadata, trackId!)
-      addTrackToPlaylist(trackId!, tempId)
+      createPlaylist(tempId, metadata, agreementId!)
+      addAgreementToPlaylist(agreementId!, tempId)
       toast(messages.createdToast)
-      goToRoute(playlistPage(account.handle, trackTitle, tempId))
+      goToRoute(playlistPage(account.handle, agreementTitle, tempId))
       close()
     }, [
       account,
-      trackId,
-      trackTitle,
+      agreementId,
+      agreementTitle,
       createPlaylist,
-      addTrackToPlaylist,
+      addAgreementToPlaylist,
       goToRoute,
       close,
       toast
@@ -132,23 +132,23 @@ const AddToPlaylist = g(
 function mapStateToProps(state: AppState) {
   return {
     account: getAccountWithOwnPlaylists(state),
-    trackId: getTrackId(state),
-    trackTitle: getTrackTitle(state)
+    agreementId: getAgreementId(state),
+    agreementTitle: getAgreementTitle(state)
   }
 }
 
 function mapDispatchToProps(dispatch: Dispatch) {
   return {
     goToRoute: (route: string) => dispatch(pushRoute(route)),
-    addTrackToPlaylist: (trackId: ID, playlistId: ID | string) =>
-      dispatch(addTrackToPlaylist(trackId, playlistId)),
-    createPlaylist: (tempId: string, metadata: Collection, trackId: ID) =>
+    addAgreementToPlaylist: (agreementId: ID, playlistId: ID | string) =>
+      dispatch(addAgreementToPlaylist(agreementId, playlistId)),
+    createPlaylist: (tempId: string, metadata: Collection, agreementId: ID) =>
       dispatch(
         createPlaylist(
           tempId,
           metadata,
-          CreatePlaylistSource.FROM_TRACK,
-          trackId
+          CreatePlaylistSource.FROM_AGREEMENT,
+          agreementId
         )
       ),
     close: () => dispatch(close())

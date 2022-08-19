@@ -3,7 +3,7 @@
   display: flex;
 }
 
-.hiddenTrackLabel {
+.hiddenAgreementLabel {
   color: var(--accent-orange);
   font-weight: var(--font-demi-bold);
   font-size: var(--font-s);

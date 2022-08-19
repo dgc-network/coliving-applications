@@ -1,7 +1,7 @@
 import { Status } from '@coliving/common'
 
 import { asLineup } from 'common/store/lineup/reducer'
-import tracksReducer from 'common/store/pages/collection/lineup/reducer'
+import agreementsReducer from 'common/store/pages/collection/lineup/reducer'
 
 import {
   FETCH_COLLECTION,
@@ -10,7 +10,7 @@ import {
   RESET_COLLECTION,
   SET_SMART_COLLECTION
 } from './actions'
-import { PREFIX as tracksPrefix } from './lineup/actions'
+import { PREFIX as agreementsPrefix } from './lineup/actions'
 
 export const initialState = {
   collectionId: null,
@@ -58,11 +58,11 @@ const actionsMap = {
   }
 }
 
-const tracksLineupReducer = asLineup(tracksPrefix, tracksReducer)
+const agreementsLineupReducer = asLineup(agreementsPrefix, agreementsReducer)
 
 const reducer = (state = initialState, action) => {
-  const updatedTracks = tracksLineupReducer(state.tracks, action)
-  if (updatedTracks !== state.tracks) return { ...state, tracks: updatedTracks }
+  const updatedAgreements = agreementsLineupReducer(state.agreements, action)
+  if (updatedAgreements !== state.agreements) return { ...state, agreements: updatedAgreements }
   const matchingReduceFunction = actionsMap[action.type]
   if (!matchingReduceFunction) return state
   return matchingReduceFunction(state, action)

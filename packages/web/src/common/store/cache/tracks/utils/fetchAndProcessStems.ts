@@ -1,46 +1,46 @@
-import { ID, Kind, StemCategory, Stem, StemTrackMetadata } from '@coliving/common'
+import { ID, Kind, StemCategory, Stem, StemAgreementMetadata } from '@coliving/common'
 import { call, put } from 'redux-saga/effects'
 
 import * as cacheActions from 'common/store/cache/actions'
 import apiClient from 'services/coliving-api-client/ColivingAPIClient'
 import { waitForValue } from 'utils/sagaHelpers'
 
-import { getTrack } from '../selectors'
+import { getAgreement } from '../selectors'
 
-import { processAndCacheTracks } from './processAndCacheTracks'
+import { processAndCacheAgreements } from './processAndCacheAgreements'
 
 /**
- * Fetches stems for a parent track.
- * Caches the stems as tracks, and updates the parent
- * track with a reference to the stems.
+ * Fetches stems for a parent agreement.
+ * Caches the stems as agreements, and updates the parent
+ * agreement with a reference to the stems.
  *
- * @param trackId the parent track for which to fetch stems
+ * @param agreementId the parent agreement for which to fetch stems
  */
-export function* fetchAndProcessStems(trackId: ID) {
-  const stems: StemTrackMetadata[] = yield call(
+export function* fetchAndProcessStems(agreementId: ID) {
+  const stems: StemAgreementMetadata[] = yield call(
     (args) => apiClient.getStems(args),
     {
-      trackId
+      agreementId
     }
   )
 
   if (stems.length) {
-    yield call(processAndCacheTracks, stems)
+    yield call(processAndCacheAgreements, stems)
   }
 
-  // Don't update the original track with stems until it's in the cache
-  yield call(waitForValue, getTrack, { id: trackId })
+  // Don't update the original agreement with stems until it's in the cache
+  yield call(waitForValue, getAgreement, { id: agreementId })
 
   // Create the update
   const stemsUpdate: Stem[] = stems.map((s) => ({
-    track_id: s.track_id,
+    agreement_id: s.agreement_id,
     category: StemCategory[s.stem_of.category]
   }))
 
   yield put(
-    cacheActions.update(Kind.TRACKS, [
+    cacheActions.update(Kind.AGREEMENTS, [
       {
-        id: trackId,
+        id: agreementId,
         metadata: {
           _stems: stemsUpdate
         }

@@ -40,7 +40,7 @@ const createStyles = (themeColors: ThemeColors) =>
   })
 
 /**
- * The stats displayed on track and playlist screens
+ * The stats displayed on agreement and playlist screens
  */
 export const DetailsTileStats = ({
   favoriteCount,

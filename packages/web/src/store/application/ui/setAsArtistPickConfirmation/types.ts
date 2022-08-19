@@ -1,6 +1,6 @@
 import { ID } from '@coliving/common'
 
-export enum PinTrackAction {
+export enum PinAgreementAction {
   ADD = 'ADD',
   REMOVE = 'REMOVE',
   UPDATE = 'UPDATE'
@@ -8,5 +8,5 @@ export enum PinTrackAction {
 
 export interface SetAsArtistPickConfirmationState {
   isVisible: boolean
-  trackId?: ID
+  agreementId?: ID
 }

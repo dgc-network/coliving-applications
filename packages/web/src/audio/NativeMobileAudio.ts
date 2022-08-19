@@ -1,8 +1,8 @@
-import { TrackSegment } from '@coliving/common'
+import { AgreementSegment } from '@coliving/common'
 
 import {
-  PlayTrackMessage,
-  PauseTrackMessage,
+  PlayAgreementMessage,
+  PauseAgreementMessage,
   GetPositionMessage,
   SeekMessage
 } from 'services/native-mobile-interface/player'
@@ -27,7 +27,7 @@ class NativeMobileAudio {
   }
 
   load = (
-    segments: TrackSegment[],
+    segments: AgreementSegment[],
     onEnd: () => void,
     prefetchedSegments: string[],
     gateways: string[],
@@ -38,12 +38,12 @@ class NativeMobileAudio {
   }
 
   play = () => {
-    const message = new PlayTrackMessage(this.m3u8)
+    const message = new PlayAgreementMessage(this.m3u8)
     message.send()
   }
 
   pause = () => {
-    const message = new PauseTrackMessage()
+    const message = new PauseAgreementMessage()
     message.send()
   }
 

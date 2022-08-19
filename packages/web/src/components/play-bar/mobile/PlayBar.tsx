@@ -15,15 +15,15 @@ import { makeGetCurrent } from 'common/store/queue/selectors'
 import { pause, play } from 'common/store/queue/slice'
 import {
   recordListen,
-  saveTrack,
-  unsaveTrack
-} from 'common/store/social/tracks/actions'
+  saveAgreement,
+  unsaveAgreement
+} from 'common/store/social/agreements/actions'
 import FavoriteButton from 'components/alt-button/FavoriteButton'
 import CoSign, { Size } from 'components/co-sign/CoSign'
 import PlayButton from 'components/play-bar/PlayButton'
-import TrackingBar from 'components/play-bar/TrackingBar'
+import AgreementingBar from 'components/play-bar/AgreementingBar'
 import { PlayButtonStatus } from 'components/play-bar/types'
-import { useTrackCoverArt } from 'hooks/useTrackCoverArt'
+import { useAgreementCoverArt } from 'hooks/useAgreementCoverArt'
 import { make, useRecord } from 'store/analytics/actions'
 import {
   getAudio,
@@ -59,7 +59,7 @@ const PlayBar = ({
   unsave,
   onClickInfo
 }: PlayBarProps) => {
-  const { uid, track, user, collectible } = currentQueueItem
+  const { uid, agreement, user, collectible } = currentQueueItem
 
   const [percentComplete, setPercentComplete] = useState(0)
   const record = useRecord()
@@ -78,30 +78,30 @@ const PlayBar = ({
   })
 
   const image =
-    (useTrackCoverArt(
-      track ? track.track_id : null,
-      track ? track._cover_art_sizes : null,
+    (useAgreementCoverArt(
+      agreement ? agreement.agreement_id : null,
+      agreement ? agreement._cover_art_sizes : null,
       SquareSizes.SIZE_150_BY_150
     ) ||
       collectible?.imageUrl) ??
     collectible?.frameUrl ??
     collectible?.gifUrl
 
-  if (!live || ((!uid || !track) && !collectible) || !user) return null
+  if (!live || ((!uid || !agreement) && !collectible) || !user) return null
 
   const getDisplayInfo = () => {
-    if (track && !collectible) {
-      return track
+    if (agreement && !collectible) {
+      return agreement
     }
     return {
       title: collectible?.name,
-      track_id: collectible?.id,
+      agreement_id: collectible?.id,
       has_current_user_saved: false,
       _co_sign: null
     }
   }
 
-  const { title, track_id, has_current_user_saved, _co_sign } = getDisplayInfo()
+  const { title, agreement_id, has_current_user_saved, _co_sign } = getDisplayInfo()
 
   const { name } = user
 
@@ -119,7 +119,7 @@ const PlayBar = ({
       pause()
       record(
         make(Name.PLAYBACK_PAUSE, {
-          id: `${track_id}`,
+          id: `${agreement_id}`,
           source: PlaybackSource.PLAYBAR
         })
       )
@@ -127,7 +127,7 @@ const PlayBar = ({
       play()
       record(
         make(Name.PLAYBACK_PLAY, {
-          id: `${track_id}`,
+          id: `${agreement_id}`,
           source: PlaybackSource.PLAYBAR
         })
       )
@@ -135,15 +135,15 @@ const PlayBar = ({
   }
 
   const toggleFavorite = () => {
-    if (track && track_id && typeof track_id === 'number') {
-      has_current_user_saved ? unsave(track_id) : save(track_id)
+    if (agreement && agreement_id && typeof agreement_id === 'number') {
+      has_current_user_saved ? unsave(agreement_id) : save(agreement_id)
     }
   }
 
   return (
     <>
       <div className={styles.playBar}>
-        <TrackingBar percentComplete={percentComplete} />
+        <AgreementingBar percentComplete={percentComplete} />
         <div className={styles.controls}>
           <FavoriteButton
             onClick={toggleFavorite}
@@ -215,10 +215,10 @@ function mapDispatchToProps(dispatch: Dispatch) {
     pause: () => {
       dispatch(pause({}))
     },
-    save: (trackId: ID) => dispatch(saveTrack(trackId, FavoriteSource.PLAYBAR)),
-    unsave: (trackId: ID) =>
-      dispatch(unsaveTrack(trackId, FavoriteSource.PLAYBAR)),
-    recordListen: (trackId: ID) => dispatch(recordListen(trackId))
+    save: (agreementId: ID) => dispatch(saveAgreement(agreementId, FavoriteSource.PLAYBAR)),
+    unsave: (agreementId: ID) =>
+      dispatch(unsaveAgreement(agreementId, FavoriteSource.PLAYBAR)),
+    recordListen: (agreementId: ID) => dispatch(recordListen(agreementId))
   }
 }
 

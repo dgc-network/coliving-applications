@@ -23,11 +23,11 @@ import { getUserId } from 'common/store/account/selectors'
 import * as cacheActions from 'common/store/cache/actions'
 import { getCollection } from 'common/store/cache/collections/selectors'
 import { getId } from 'common/store/cache/selectors'
-import { getTrack } from 'common/store/cache/tracks/selectors'
+import { getAgreement } from 'common/store/cache/agreements/selectors'
 import { getUser } from 'common/store/cache/users/selectors'
 import {
   getCollectible,
-  getId as getQueueTrackId,
+  getId as getQueueAgreementId,
   getIndex,
   getLength,
   getOvershot,
@@ -53,12 +53,12 @@ import { RepeatMode, Source } from 'common/store/queue/types'
 import { make } from 'store/analytics/actions'
 import { getLineupSelectorForRoute } from 'store/lineup/lineupForRoute'
 import {
-  getTrackId as getPlayerTrackId,
+  getAgreementId as getPlayerAgreementId,
   getUid as getPlayerUid
 } from 'store/player/selectors'
 import * as playerActions from 'store/player/slice'
 
-import { getRecommendedTracks } from '../recommendation/sagas'
+import { getRecommendedAgreements } from '../recommendation/sagas'
 
 import mobileSagas from './mobileSagas'
 
@@ -71,29 +71,29 @@ export function* getToQueue(prefix: string, entry: { kind: Kind; uid: UID }) {
     if (!collection) return
 
     const {
-      playlist_contents: { track_ids: trackIds }
+      playlist_contents: { agreement_ids: agreementIds }
     } = collection
-    // Replace the track uid source w/ the full source including collection source
-    // Replace the track count w/ it's index in the array
+    // Replace the agreement uid source w/ the full source including collection source
+    // Replace the agreement count w/ it's index in the array
     const collectionUid = Uid.fromString(entry.uid)
     const collectionSource = collectionUid.source
 
-    return trackIds.map(({ track, uid }, idx: number) => {
-      const trackUid = Uid.fromString(uid ?? '')
-      trackUid.source = `${collectionSource}:${trackUid.source}`
-      trackUid.count = idx
+    return agreementIds.map(({ agreement, uid }, idx: number) => {
+      const agreementUid = Uid.fromString(uid ?? '')
+      agreementUid.source = `${collectionSource}:${agreementUid.source}`
+      agreementUid.count = idx
 
       return {
-        id: track,
-        uid: trackUid.toString(),
+        id: agreement,
+        uid: agreementUid.toString(),
         source: prefix
       }
     })
-  } else if (entry.kind === Kind.TRACKS) {
-    const track = yield* select(getTrack, { uid: entry.uid })
-    if (!track) return {}
+  } else if (entry.kind === Kind.AGREEMENTS) {
+    const agreement = yield* select(getAgreement, { uid: entry.uid })
+    if (!agreement) return {}
     return {
-      id: track.track_id,
+      id: agreement.agreement_id,
       uid: entry.uid,
       source: prefix
     }
@@ -106,11 +106,11 @@ const flatten = (list: any[]): any[] =>
 function* handleQueueAutoplay({
   skip,
   ignoreSkip,
-  track
+  agreement
 }: {
   skip: boolean
   ignoreSkip: boolean
-  track: any
+  agreement: any
 }) {
   const isQueueAutoplayEnabled = yield* select(getQueueAutoplay)
   const index = yield* select(getIndex)
@@ -118,7 +118,7 @@ function* handleQueueAutoplay({
     return
   }
 
-  // Get recommended tracks if not in shuffle mode
+  // Get recommended agreements if not in shuffle mode
   // and not in repeat mode and
   // - close to end of queue, or
   // - playing first song of lineup and lineup has only one song
@@ -138,8 +138,8 @@ function* handleQueueAutoplay({
     const userId = yield* select(getUserId)
     yield* put(
       queueAutoplay({
-        genre: track?.genre,
-        exclusionList: track ? [track.track_id] : [],
+        genre: agreement?.genre,
+        exclusionList: agreement ? [agreement.agreement_id] : [],
         currentUserId: userId
       })
     )
@@ -158,32 +158,32 @@ export function* watchPlay() {
   yield* takeLatest(play.type, function* (action: ReturnType<typeof play>) {
     // persist queue in mobile layer
     yield* put(persist({}))
-    const { uid, trackId, collectible } = action.payload
+    const { uid, agreementId, collectible } = action.payload
 
     // Play a specific uid
     const playerUid = yield* select(getPlayerUid)
-    const playerTrackId = yield* select(getPlayerTrackId)
-    if (uid || trackId) {
-      const playActionTrack = yield* select(
-        getTrack,
-        trackId ? { id: trackId } : { uid }
+    const playerAgreementId = yield* select(getPlayerAgreementId)
+    if (uid || agreementId) {
+      const playActionAgreement = yield* select(
+        getAgreement,
+        agreementId ? { id: agreementId } : { uid }
       )
 
-      if (!playActionTrack) return
+      if (!playActionAgreement) return
 
       yield* call(handleQueueAutoplay, {
         skip: false,
         ignoreSkip: true,
-        track: playActionTrack
+        agreement: playActionAgreement
       })
 
-      const user: User | null = playActionTrack
-        ? yield* select(getUser, { id: playActionTrack.owner_id })
+      const user: User | null = playActionAgreement
+        ? yield* select(getUser, { id: playActionAgreement.owner_id })
         : null
 
-      // Skip deleted tracks
+      // Skip deleted agreements
       if (
-        (playActionTrack && playActionTrack.is_delete) ||
+        (playActionAgreement && playActionAgreement.is_delete) ||
         // @ts-ignore user incorrectly typed as `null`. ignoring until we implement typed-redux-saga
         user?.is_deactivated
       ) {
@@ -193,24 +193,24 @@ export function* watchPlay() {
 
       // Make sure that we should actually play
       const repeatMode = yield* select(getRepeat)
-      const noTrackPlaying = !playerTrackId
-      const trackIsDifferent = playerTrackId !== playActionTrack.track_id
-      const trackIsSameButDifferentUid =
-        playerTrackId === playActionTrack.track_id && uid !== playerUid
-      const trackIsSameAndRepeatSingle =
-        playerTrackId === playActionTrack.track_id &&
+      const noAgreementPlaying = !playerAgreementId
+      const agreementIsDifferent = playerAgreementId !== playActionAgreement.agreement_id
+      const agreementIsSameButDifferentUid =
+        playerAgreementId === playActionAgreement.agreement_id && uid !== playerUid
+      const agreementIsSameAndRepeatSingle =
+        playerAgreementId === playActionAgreement.agreement_id &&
         repeatMode === RepeatMode.SINGLE
       if (
-        noTrackPlaying ||
-        trackIsDifferent ||
-        trackIsSameButDifferentUid ||
-        trackIsSameAndRepeatSingle
+        noAgreementPlaying ||
+        agreementIsDifferent ||
+        agreementIsSameButDifferentUid ||
+        agreementIsSameAndRepeatSingle
       ) {
         yield* put(playerActions.stop({}))
         yield* put(
           playerActions.play({
             uid,
-            trackId: playActionTrack.track_id,
+            agreementId: playActionAgreement.agreement_id,
             onEnd: next
           })
         )
@@ -244,27 +244,27 @@ export function* watchPlay() {
           const flattenedQueue = flatten(toQueue)
           yield* put(add({ entries: flattenedQueue }))
 
-          const playTrack = yield* select(getTrack, {
+          const playAgreement = yield* select(getAgreement, {
             uid: flattenedQueue[0].uid
           })
 
-          if (!playTrack) return
+          if (!playAgreement) return
 
           yield* put(
             play({
               uid: flattenedQueue[0].uid,
-              trackId: playTrack.track_id,
+              agreementId: playAgreement.agreement_id,
               source: lineup.prefix
             })
           )
         }
       } else {
         const queueUid = yield* select(getPlayerUid)
-        const playerTrackId = yield* select(getPlayerTrackId)
-        if (queueUid && playerTrackId && queueUid !== playerUid) {
+        const playerAgreementId = yield* select(getPlayerAgreementId)
+        if (queueUid && playerAgreementId && queueUid !== playerUid) {
           yield* put(playerActions.stop({}))
           yield* put(
-            playerActions.play({ uid: queueUid, trackId: playerTrackId })
+            playerActions.play({ uid: queueUid, agreementId: playerAgreementId })
           )
         } else {
           // Play whatever is/was playing
@@ -308,11 +308,11 @@ export function* watchNext() {
       return
     }
 
-    const id = (yield* select(getQueueTrackId)) as ID
-    const track = yield* select(getTrack, { id })
-    const user = yield* select(getUser, { id: track?.owner_id })
-    // Skip deleted or owner deactivated track
-    if (track && (track.is_delete || user?.is_deactivated)) {
+    const id = (yield* select(getQueueAgreementId)) as ID
+    const agreement = yield* select(getAgreement, { id })
+    const user = yield* select(getUser, { id: agreement?.owner_id })
+    // Skip deleted or owner deactivated agreement
+    if (agreement && (agreement.is_delete || user?.is_deactivated)) {
       yield* put(next({ skip }))
     } else {
       const uid = yield* select(getUid)
@@ -321,11 +321,11 @@ export function* watchNext() {
       yield* call(handleQueueAutoplay, {
         skip: !!skip,
         ignoreSkip: false,
-        track
+        agreement
       })
 
-      if (track) {
-        yield* put(play({ uid, trackId: id, source }))
+      if (agreement) {
+        yield* put(play({ uid, agreementId: id, source }))
 
         const event = make(Name.PLAYBACK_PLAY, {
           id: `${id}`,
@@ -344,18 +344,18 @@ export function* watchQueueAutoplay() {
     queueAutoplay.type,
     function* (action: ReturnType<typeof queueAutoplay>) {
       const { genre, exclusionList, currentUserId } = action.payload
-      const tracks = yield* call(
-        getRecommendedTracks,
+      const agreements = yield* call(
+        getRecommendedAgreements,
         genre,
         exclusionList,
         currentUserId
       )
-      const recommendedTracks = tracks.map(({ track_id }) => ({
-        id: track_id,
-        uid: makeUid(Kind.TRACKS, track_id),
-        source: Source.RECOMMENDED_TRACKS
+      const recommendedAgreements = agreements.map(({ agreement_id }) => ({
+        id: agreement_id,
+        uid: makeUid(Kind.AGREEMENTS, agreement_id),
+        source: Source.RECOMMENDED_AGREEMENTS
       }))
-      yield* put(add({ entries: recommendedTracks }))
+      yield* put(add({ entries: recommendedAgreements }))
     }
   )
 }
@@ -388,19 +388,19 @@ export function* watchPrevious() {
       }
 
       const uid = yield* select(getUid)
-      const id = (yield* select(getQueueTrackId)) as Nullable<ID>
-      const track = yield* select(getTrack, { id })
+      const id = (yield* select(getQueueAgreementId)) as Nullable<ID>
+      const agreement = yield* select(getAgreement, { id })
       const source = yield* select(getSource)
-      const user = yield* select(getUser, { id: track?.owner_id })
+      const user = yield* select(getUser, { id: agreement?.owner_id })
 
       // If we move to a previous song that's been
       // deleted, skip over it.
-      if (track && (track.is_delete || user?.is_deactivated)) {
+      if (agreement && (agreement.is_delete || user?.is_deactivated)) {
         yield* put(previous({}))
       } else {
         const index = yield* select(getIndex)
         if (index >= 0) {
-          yield* put(play({ uid, trackId: id, source }))
+          yield* put(play({ uid, agreementId: id, source }))
           const event = make(Name.PLAYBACK_PLAY, {
             id: `${id}`,
             source: PlaybackSource.PASSIVE
@@ -422,7 +422,7 @@ export function* watchAdd() {
       uid: QUEUE_SUBSCRIBER_NAME,
       id: entry.id
     }))
-    yield* put(cacheActions.subscribe(Kind.TRACKS, subscribers))
+    yield* put(cacheActions.subscribe(Kind.AGREEMENTS, subscribers))
     // persist queue in mobile layer
     yield* put(persist({}))
   })
@@ -432,9 +432,9 @@ export function* watchRemove() {
   yield* takeEvery(remove.type, function* (action: ReturnType<typeof remove>) {
     const { uid } = action.payload
 
-    const id = yield* select(getId, { kind: Kind.TRACKS, uid })
+    const id = yield* select(getId, { kind: Kind.AGREEMENTS, uid })
     yield* put(
-      cacheActions.unsubscribe(Kind.TRACKS, [
+      cacheActions.unsubscribe(Kind.AGREEMENTS, [
         { uid: QUEUE_SUBSCRIBER_NAME, id }
       ])
     )

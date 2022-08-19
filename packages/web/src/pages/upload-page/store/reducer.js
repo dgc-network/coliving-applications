@@ -1,9 +1,9 @@
 import {
-  TOGGLE_MULTI_TRACK_NOTIFICATION,
-  UPLOAD_TRACKS_REQUESTED,
-  UPLOAD_TRACKS_SUCCEEDED,
-  UPLOAD_TRACKS_FAILED,
-  UPLOAD_SINGLE_TRACK_FAILED,
+  TOGGLE_MULTI_AGREEMENT_NOTIFICATION,
+  UPLOAD_AGREEMENTS_REQUESTED,
+  UPLOAD_AGREEMENTS_SUCCEEDED,
+  UPLOAD_AGREEMENTS_FAILED,
+  UPLOAD_SINGLE_AGREEMENT_FAILED,
   UPDATE_PROGRESS,
   RESET,
   RESET_STATE,
@@ -11,8 +11,8 @@ import {
 } from './actions'
 
 const initialState = {
-  openMultiTrackNotification: true,
-  tracks: null,
+  openMultiAgreementNotification: true,
+  agreements: null,
   metadata: null,
   uploadType: null,
   stems: [],
@@ -21,33 +21,33 @@ const initialState = {
   success: false,
   shouldReset: false,
 
-  // For multitrack upload, we allow some tracks to
+  // For multiagreement upload, we allow some agreements to
   // fail without aborting the whole thing
-  failedTrackIndices: [],
+  failedAgreementIndices: [],
 
   // Id to take the user to after completing upload.
-  // Can be either a track or playlist/album.
+  // Can be either a agreement or playlist/album.
   completionId: null
 }
 
 const actionsMap = {
-  [TOGGLE_MULTI_TRACK_NOTIFICATION](state, action) {
+  [TOGGLE_MULTI_AGREEMENT_NOTIFICATION](state, action) {
     return {
       ...state,
-      openMultiTrackNotification: action.open
+      openMultiAgreementNotification: action.open
     }
   },
-  [UPLOAD_TRACKS_REQUESTED](state, action) {
+  [UPLOAD_AGREEMENTS_REQUESTED](state, action) {
     const newState = { ...state }
     newState.uploading = true
-    newState.tracks = action.tracks
-    newState.uploadProgress = action.tracks.map((t) => ({}))
+    newState.agreements = action.agreements
+    newState.uploadProgress = action.agreements.map((t) => ({}))
     newState.metadata = action.metadata
     newState.uploadType = action.uploadType
     newState.stems = action.stems
     return newState
   },
-  [UPLOAD_TRACKS_SUCCEEDED](state, action) {
+  [UPLOAD_AGREEMENTS_SUCCEEDED](state, action) {
     const newState = { ...state }
     newState.uploading = false
     newState.success = true
@@ -55,20 +55,20 @@ const actionsMap = {
     newState.uploadType = null
     newState.stems = []
 
-    // Update the upload tracks with resulting metadata. This is used for TikTok sharing
-    if (action.trackMetadatas) {
-      newState.tracks = state.tracks.map((t, i) => ({
+    // Update the upload agreements with resulting metadata. This is used for TikTok sharing
+    if (action.agreementMetadatas) {
+      newState.agreements = state.agreements.map((t, i) => ({
         ...t,
-        metadata: action.trackMetadatas[i]
+        metadata: action.agreementMetadatas[i]
       }))
     }
     return newState
   },
-  [UPLOAD_TRACKS_FAILED](state, action) {
+  [UPLOAD_AGREEMENTS_FAILED](state, action) {
     const newState = { ...state }
     newState.uploading = false
     newState.uploadType = null
-    newState.tracks = null
+    newState.agreements = null
     newState.metadata = null
     newState.stems = []
     return newState
@@ -85,7 +85,7 @@ const actionsMap = {
   [RESET](state, action) {
     return {
       ...initialState,
-      openMultiTrackNotification: state.openMultiTrackNotification
+      openMultiAgreementNotification: state.openMultiAgreementNotification
     }
   },
   [RESET_STATE](state) {
@@ -100,10 +100,10 @@ const actionsMap = {
       shouldReset: false
     }
   },
-  [UPLOAD_SINGLE_TRACK_FAILED](state, action) {
+  [UPLOAD_SINGLE_AGREEMENT_FAILED](state, action) {
     return {
       ...state,
-      failedTrackIndices: [...state.failedTrackIndices, action.index]
+      failedAgreementIndices: [...state.failedAgreementIndices, action.index]
     }
   }
 }

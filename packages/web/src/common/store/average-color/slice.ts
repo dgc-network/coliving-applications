@@ -1,4 +1,4 @@
-import { CID, Color, Track, Nullable } from '@coliving/common'
+import { CID, Color, Agreement, Nullable } from '@coliving/common'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import { CommonState } from 'common/store'
@@ -12,7 +12,7 @@ const initialState: {
 }
 
 /**
- * This slice tracks computed average colors and dominant colors for a given track art CID.
+ * This slice agreements computed average colors and dominant colors for a given agreement art CID.
  * Colors is a map of art cid -> Color
  */
 const slice = createSlice({
@@ -44,20 +44,20 @@ export const getAverageColor = (
 ): Nullable<Color> =>
   (multihash && state.ui.averageColor.averageColor[multihash]) || null
 
-export const getAverageColorByTrack = (
+export const getAverageColorByAgreement = (
   state: CommonState,
-  { track }: { track: Nullable<Track> }
+  { agreement }: { agreement: Nullable<Agreement> }
 ): Nullable<Color> => {
-  const multihash = track?.cover_art_sizes ?? track?.cover_art
+  const multihash = agreement?.cover_art_sizes ?? agreement?.cover_art
   if (!multihash) return null
   return state.ui.averageColor.averageColor[multihash] ?? null
 }
 
-export const getDominantColorsByTrack = (
+export const getDominantColorsByAgreement = (
   state: CommonState,
-  { track }: { track: Nullable<Track> }
+  { agreement }: { agreement: Nullable<Agreement> }
 ): Nullable<Color[]> => {
-  const multihash = track?.cover_art_sizes ?? track?.cover_art
+  const multihash = agreement?.cover_art_sizes ?? agreement?.cover_art
   if (!multihash) return null
   return state.ui.averageColor.dominantColors[multihash] ?? null
 }

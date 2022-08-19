@@ -2,13 +2,13 @@ import {
   SmartCollection,
   SmartCollectionVariant,
   Status,
-  Track,
-  UserTrack
+  Agreement,
+  UserAgreement
 } from '@coliving/common'
 import { takeEvery, put, call, select } from 'typed-redux-saga/macro'
 
 import { getAccountStatus, getUserId } from 'common/store/account/selectors'
-import { processAndCacheTracks } from 'common/store/cache/tracks/utils'
+import { processAndCacheAgreements } from 'common/store/cache/agreements/utils'
 import { fetchUsers as retrieveUsers } from 'common/store/cache/users/sagas'
 import { setSmartCollection } from 'common/store/pages/collection/actions'
 import {
@@ -17,7 +17,7 @@ import {
 } from 'common/store/pages/smart-collection/slice'
 import Explore from 'services/coliving-backend/Explore'
 import { waitForBackendSetup } from 'store/backend/sagas'
-import { getLuckyTracks } from 'store/recommendation/sagas'
+import { getLuckyAgreements } from 'store/recommendation/sagas'
 import { EXPLORE_PAGE } from 'utils/route'
 import { requiresAccount, waitForValue } from 'utils/sagaHelpers'
 
@@ -39,99 +39,99 @@ function* fetchHeavyRotation() {
     retrieveUsers,
     topListens.map((t) => t.userId)
   )
-  const trackIds = topListens
+  const agreementIds = topListens
     .filter(
-      (track) =>
-        users.entries[track.userId] &&
-        !users.entries[track.userId].is_deactivated
+      (agreement) =>
+        users.entries[agreement.userId] &&
+        !users.entries[agreement.userId].is_deactivated
     )
     .map((listen) => ({
-      track: listen.trackId
+      agreement: listen.agreementId
     }))
 
   return {
     ...HEAVY_ROTATION,
     playlist_contents: {
-      track_ids: trackIds
+      agreement_ids: agreementIds
     }
   }
 }
 
 function* fetchBestNewReleases() {
-  const tracks = yield* call(Explore.getTopFolloweeTracksFromWindow, 'month')
+  const agreements = yield* call(Explore.getTopFolloweeAgreementsFromWindow, 'month')
 
-  const trackIds = tracks
-    .filter((track) => !track.user.is_deactivated)
-    .map((track: Track) => ({
-      time: track.created_at,
-      track: track.track_id
+  const agreementIds = agreements
+    .filter((agreement) => !agreement.user.is_deactivated)
+    .map((agreement: Agreement) => ({
+      time: agreement.created_at,
+      agreement: agreement.agreement_id
     }))
 
-  yield* call(processAndCacheTracks, tracks)
+  yield* call(processAndCacheAgreements, agreements)
 
   return {
     ...BEST_NEW_RELEASES,
     playlist_contents: {
-      track_ids: trackIds
+      agreement_ids: agreementIds
     }
   }
 }
 
 function* fetchUnderTheRadar() {
-  const tracks = yield* call(Explore.getFeedNotListenedTo)
+  const agreements = yield* call(Explore.getFeedNotListenedTo)
 
-  const trackIds = tracks
-    .filter((track: UserTrack) => !track.user.is_deactivated)
-    .map((track: Track) => ({
-      time: track.activity_timestamp,
-      track: track.track_id
+  const agreementIds = agreements
+    .filter((agreement: UserAgreement) => !agreement.user.is_deactivated)
+    .map((agreement: Agreement) => ({
+      time: agreement.activity_timestamp,
+      agreement: agreement.agreement_id
     }))
 
-  yield* call(processAndCacheTracks, tracks)
+  yield* call(processAndCacheAgreements, agreements)
 
   // feed minus listened
   return {
     ...UNDER_THE_RADAR,
     playlist_contents: {
-      track_ids: trackIds
+      agreement_ids: agreementIds
     }
   }
 }
 
 function* fetchMostLoved() {
-  const tracks = yield* call(Explore.getTopFolloweeSaves)
+  const agreements = yield* call(Explore.getTopFolloweeSaves)
 
-  const trackIds = tracks
-    .filter((track) => !track.user.is_deactivated)
-    .map((track: Track) => ({
-      time: track.created_at,
-      track: track.track_id
+  const agreementIds = agreements
+    .filter((agreement) => !agreement.user.is_deactivated)
+    .map((agreement: Agreement) => ({
+      time: agreement.created_at,
+      agreement: agreement.agreement_id
     }))
 
-  yield call(processAndCacheTracks, tracks)
+  yield call(processAndCacheAgreements, agreements)
 
   return {
     ...MOST_LOVED,
     playlist_contents: {
-      track_ids: trackIds
+      agreement_ids: agreementIds
     }
   }
 }
 
 function* fetchFeelingLucky() {
-  const tracks = yield* call(getLuckyTracks, COLLECTIONS_LIMIT)
+  const agreements = yield* call(getLuckyAgreements, COLLECTIONS_LIMIT)
 
-  const trackIds = tracks
-    .filter((track) => !track.user.is_deactivated)
-    .map((track: Track) => ({
-      time: track.created_at,
-      track: track.track_id
+  const agreementIds = agreements
+    .filter((agreement) => !agreement.user.is_deactivated)
+    .map((agreement: Agreement) => ({
+      time: agreement.created_at,
+      agreement: agreement.agreement_id
     }))
 
   return {
     ...FEELING_LUCKY,
     playlist_contents: {
-      track_ids: trackIds
+      agreement_ids: agreementIds
     }
   }
 }
@@ -141,7 +141,7 @@ function* fetchRemixables() {
   if (currentUserId == null) {
     return
   }
-  const tracks = yield* call(
+  const agreements = yield* call(
     Explore.getRemixables,
     currentUserId,
     75 // limit
@@ -151,11 +151,11 @@ function* fetchRemixables() {
   const artistLimit = 3
   const artistCount: Record<number, number> = {}
 
-  const filteredTracks = tracks.filter((trackMetadata) => {
-    if (trackMetadata.user?.is_deactivated) {
+  const filteredAgreements = agreements.filter((agreementMetadata) => {
+    if (agreementMetadata.user?.is_deactivated) {
       return false
     }
-    const id = trackMetadata.owner_id
+    const id = agreementMetadata.owner_id
     if (!artistCount[id]) {
       artistCount[id] = 0
     }
@@ -163,20 +163,20 @@ function* fetchRemixables() {
     return artistCount[id] <= artistLimit
   })
 
-  const processedTracks = yield* call(
-    processAndCacheTracks,
-    filteredTracks.slice(0, COLLECTIONS_LIMIT)
+  const processedAgreements = yield* call(
+    processAndCacheAgreements,
+    filteredAgreements.slice(0, COLLECTIONS_LIMIT)
   )
 
-  const trackIds = processedTracks.map((track: Track) => ({
-    time: track.created_at,
-    track: track.track_id
+  const agreementIds = processedAgreements.map((agreement: Agreement) => ({
+    time: agreement.created_at,
+    agreement: agreement.agreement_id
   }))
 
   return {
     ...REMIXABLES,
     playlist_contents: {
-      track_ids: trackIds
+      agreement_ids: agreementIds
     }
   }
 }

@@ -46,7 +46,7 @@ const createStyles = (themeColors: ThemeColors) =>
 type ScrubberProps = {
   /**
    * A unique key to represent this instances of playback.
-   * If the user replays the same track, mediaKey should change
+   * If the user replays the same agreement, mediaKey should change
    */
   mediaKey: string
   /**
@@ -54,7 +54,7 @@ type ScrubberProps = {
    */
   isPlaying: boolean
   /**
-   * The duration of the currently playing track
+   * The duration of the currently playing agreement
    */
   duration: number
   /**
@@ -68,7 +68,7 @@ type ScrubberProps = {
 }
 
 /**
- * Scrubber component to control track playback & seek.
+ * Scrubber component to control agreement playback & seek.
  */
 export const Scrubber = ({
   mediaKey,

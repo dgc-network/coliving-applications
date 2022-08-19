@@ -19,18 +19,18 @@ import { makeGetTableMetadatas } from 'common/store/lineup/selectors'
 import { updatePlaylistLastViewedAt } from 'common/store/notifications/actions'
 import { getPlaylistUpdates } from 'common/store/notifications/selectors'
 import * as saveActions from 'common/store/pages/saved-page/actions'
-import { tracksActions } from 'common/store/pages/saved-page/lineups/tracks/actions'
-import { getSavedTracksLineup } from 'common/store/pages/saved-page/selectors'
+import { agreementsActions } from 'common/store/pages/saved-page/lineups/agreements/actions'
+import { getSavedAgreementsLineup } from 'common/store/pages/saved-page/selectors'
 import {
   Tabs as ProfileTabs,
-  SavedPageTrack,
-  TrackRecord,
+  SavedPageAgreement,
+  AgreementRecord,
   SavedPageCollection
 } from 'common/store/pages/saved-page/types'
 import { makeGetCurrent } from 'common/store/queue/selectors'
-import * as socialActions from 'common/store/social/tracks/actions'
+import * as socialActions from 'common/store/social/agreements/actions'
 import { formatCount } from 'common/utils/formatUtil'
-import { TrackEvent, make } from 'store/analytics/actions'
+import { AgreementEvent, make } from 'store/analytics/actions'
 import { getPlaying, getBuffering } from 'store/player/selectors'
 import { AppState } from 'store/types'
 import { isMobile } from 'utils/clientUtil'
@@ -43,7 +43,7 @@ const IS_NATIVE_MOBILE = process.env.REACT_APP_NATIVE_MOBILE
 
 const messages = {
   title: 'Favorites',
-  description: "View tracks that you've favorited"
+  description: "View agreements that you've favorited"
 }
 
 type OwnProps = {
@@ -69,11 +69,11 @@ class SavedPage extends PureComponent<SavedPageProps, SavedPageState> {
   state: SavedPageState = {
     filterText: '',
     initialOrder: null,
-    currentTab: ProfileTabs.TRACKS
+    currentTab: ProfileTabs.AGREEMENTS
   }
 
   componentDidMount() {
-    this.props.fetchSavedTracks()
+    this.props.fetchSavedAgreements()
     this.props.fetchSavedAlbums()
     if (isMobile()) {
       this.props.fetchSavedPlaylists()
@@ -82,15 +82,15 @@ class SavedPage extends PureComponent<SavedPageProps, SavedPageState> {
 
   componentWillUnmount() {
     if (!IS_NATIVE_MOBILE) {
-      this.props.resetSavedTracks()
+      this.props.resetSavedAgreements()
     }
   }
 
   componentDidUpdate() {
-    const { tracks } = this.props
+    const { agreements } = this.props
 
-    if (!this.state.initialOrder && tracks.entries.length > 0) {
-      const initialOrder = tracks.entries.map((track: any) => track.uid)
+    if (!this.state.initialOrder && agreements.entries.length > 0) {
+      const initialOrder = agreements.entries.map((agreement: any) => agreement.uid)
       this.setState({
         initialOrder,
         reordering: initialOrder
@@ -102,8 +102,8 @@ class SavedPage extends PureComponent<SavedPageProps, SavedPageState> {
     this.setState({ filterText: e.target.value })
   }
 
-  formatMetadata = (trackMetadatas: SavedPageTrack[]) => {
-    return trackMetadatas.map((entry, i) => ({
+  formatMetadata = (agreementMetadatas: SavedPageAgreement[]) => {
+    return agreementMetadatas.map((entry, i) => ({
       ...entry,
       key: `${entry.title}_${entry.uid}_${i}`,
       name: entry.title,
@@ -116,8 +116,8 @@ class SavedPage extends PureComponent<SavedPageProps, SavedPageState> {
   }
 
   isQueued = () => {
-    const { tracks, currentQueueItem } = this.props
-    return tracks.entries.some(
+    const { agreements, currentQueueItem } = this.props
+    return agreements.entries.some(
       (entry: any) => currentQueueItem.uid === entry.uid
     )
   }
@@ -129,19 +129,19 @@ class SavedPage extends PureComponent<SavedPageProps, SavedPageState> {
 
   getPlayingId = () => {
     const { currentQueueItem } = this.props
-    return currentQueueItem.track ? currentQueueItem.track.track_id : null
+    return currentQueueItem.agreement ? currentQueueItem.agreement.agreement_id : null
   }
 
   getFilteredData = (
-    trackMetadatas: SavedPageTrack[]
-  ): [SavedPageTrack[], number] => {
+    agreementMetadatas: SavedPageAgreement[]
+  ): [SavedPageAgreement[], number] => {
     const filterText = this.state.filterText
-    const { tracks } = this.props
+    const { agreements } = this.props
     const playingUid = this.getPlayingUid()
-    const playingIndex = tracks.entries.findIndex(
+    const playingIndex = agreements.entries.findIndex(
       ({ uid }: any) => uid === playingUid
     )
-    const filteredMetadata = this.formatMetadata(trackMetadatas).filter(
+    const filteredMetadata = this.formatMetadata(agreementMetadatas).filter(
       (item) =>
         item.title.toLowerCase().indexOf(filterText.toLowerCase()) > -1 ||
         item.user.name.toLowerCase().indexOf(filterText.toLowerCase()) > -1
@@ -177,22 +177,22 @@ class SavedPage extends PureComponent<SavedPageProps, SavedPageState> {
     )
   }
 
-  onClickRow = (trackRecord: TrackRecord) => {
+  onClickRow = (agreementRecord: AgreementRecord) => {
     const { playing, play, pause, record } = this.props
     const playingUid = this.getPlayingUid()
-    if (playing && playingUid === trackRecord.uid) {
+    if (playing && playingUid === agreementRecord.uid) {
       pause()
       record(
         make(Name.PLAYBACK_PAUSE, {
-          id: `${trackRecord.track_id}`,
+          id: `${agreementRecord.agreement_id}`,
           source: PlaybackSource.FAVORITES_PAGE
         })
       )
-    } else if (playingUid !== trackRecord.uid) {
-      play(trackRecord.uid)
+    } else if (playingUid !== agreementRecord.uid) {
+      play(agreementRecord.uid)
       record(
         make(Name.PLAYBACK_PLAY, {
-          id: `${trackRecord.track_id}`,
+          id: `${agreementRecord.agreement_id}`,
           source: PlaybackSource.FAVORITES_PAGE
         })
       )
@@ -200,21 +200,21 @@ class SavedPage extends PureComponent<SavedPageProps, SavedPageState> {
       play()
       record(
         make(Name.PLAYBACK_PLAY, {
-          id: `${trackRecord.track_id}`,
+          id: `${agreementRecord.agreement_id}`,
           source: PlaybackSource.FAVORITES_PAGE
         })
       )
     }
   }
 
-  onTogglePlay = (uid: string, trackId: ID) => {
+  onTogglePlay = (uid: string, agreementId: ID) => {
     const { playing, play, pause, record } = this.props
     const playingUid = this.getPlayingUid()
     if (playing && playingUid === uid) {
       pause()
       record(
         make(Name.PLAYBACK_PAUSE, {
-          id: `${trackId}`,
+          id: `${agreementId}`,
           source: PlaybackSource.FAVORITES_PAGE
         })
       )
@@ -222,7 +222,7 @@ class SavedPage extends PureComponent<SavedPageProps, SavedPageState> {
       play(uid)
       record(
         make(Name.PLAYBACK_PLAY, {
-          id: `${trackId}`,
+          id: `${agreementId}`,
           source: PlaybackSource.FAVORITES_PAGE
         })
       )
@@ -230,42 +230,42 @@ class SavedPage extends PureComponent<SavedPageProps, SavedPageState> {
       play()
       record(
         make(Name.PLAYBACK_PLAY, {
-          id: `${trackId}`,
+          id: `${agreementId}`,
           source: PlaybackSource.FAVORITES_PAGE
         })
       )
     }
   }
 
-  onClickSave = (record: TrackRecord) => {
+  onClickSave = (record: AgreementRecord) => {
     if (!record.has_current_user_saved) {
-      this.props.saveTrack(record.track_id)
+      this.props.saveAgreement(record.agreement_id)
     } else {
-      this.props.unsaveTrack(record.track_id)
+      this.props.unsaveAgreement(record.agreement_id)
     }
   }
 
-  onSave = (isSaved: boolean, trackId: ID) => {
+  onSave = (isSaved: boolean, agreementId: ID) => {
     if (!isSaved) {
-      this.props.saveTrack(trackId)
+      this.props.saveAgreement(agreementId)
     } else {
-      this.props.unsaveTrack(trackId)
+      this.props.unsaveAgreement(agreementId)
     }
   }
 
-  onClickTrackName = (record: TrackRecord) => {
+  onClickAgreementName = (record: AgreementRecord) => {
     this.props.goToRoute(record.permalink)
   }
 
-  onClickArtistName = (record: TrackRecord) => {
+  onClickArtistName = (record: AgreementRecord) => {
     this.props.goToRoute(profilePage(record.handle))
   }
 
-  onClickRepost = (record: TrackRecord) => {
+  onClickRepost = (record: AgreementRecord) => {
     if (!record.has_current_user_reposted) {
-      this.props.repostTrack(record.track_id)
+      this.props.repostAgreement(record.agreement_id)
     } else {
-      this.props.undoRepostTrack(record.track_id)
+      this.props.undoRepostAgreement(record.agreement_id)
     }
   }
 
@@ -274,7 +274,7 @@ class SavedPage extends PureComponent<SavedPageProps, SavedPageState> {
       playing,
       play,
       pause,
-      tracks: { entries },
+      agreements: { entries },
       record
     } = this.props
     const isQueued = this.isQueued()
@@ -306,10 +306,10 @@ class SavedPage extends PureComponent<SavedPageProps, SavedPageState> {
     }
   }
 
-  onSortTracks = (sorters: any) => {
+  onSortAgreements = (sorters: any) => {
     const { column, order } = sorters
     const {
-      tracks: { entries }
+      agreements: { entries }
     } = this.props
     // @ts-ignore
     const dataSource = this.formatMetadata(entries)
@@ -334,10 +334,10 @@ class SavedPage extends PureComponent<SavedPageProps, SavedPageState> {
     })
   }
 
-  formatCardSecondaryText = (saves: number, tracks: number) => {
+  formatCardSecondaryText = (saves: number, agreements: number) => {
     const savesText = saves === 1 ? 'Favorite' : 'Favorites'
-    const tracksText = tracks === 1 ? 'Track' : 'Tracks'
-    return `${formatCount(saves)} ${savesText} • ${tracks} ${tracksText}`
+    const agreementsText = agreements === 1 ? 'Agreement' : 'Agreements'
+    return `${formatCount(saves)} ${savesText} • ${agreements} ${agreementsText}`
   }
 
   render() {
@@ -357,23 +357,23 @@ class SavedPage extends PureComponent<SavedPageProps, SavedPageState> {
 
       // Props from AppState
       account: this.props.account,
-      tracks: this.props.tracks,
+      agreements: this.props.agreements,
       currentQueueItem: this.props.currentQueueItem,
       playing: this.props.playing,
       buffering: this.props.buffering,
 
       // Props from dispatch
-      fetchSavedTracks: this.props.fetchSavedTracks,
-      resetSavedTracks: this.props.resetSavedTracks,
+      fetchSavedAgreements: this.props.fetchSavedAgreements,
+      resetSavedAgreements: this.props.resetSavedAgreements,
       updateLineupOrder: this.props.updateLineupOrder,
       fetchSavedAlbums: this.props.fetchSavedAlbums,
       goToRoute: this.props.goToRoute,
       play: this.props.play,
       pause: this.props.pause,
-      repostTrack: this.props.repostTrack,
-      undoRepostTrack: this.props.undoRepostTrack,
-      saveTrack: this.props.saveTrack,
-      unsaveTrack: this.props.unsaveTrack,
+      repostAgreement: this.props.repostAgreement,
+      undoRepostAgreement: this.props.undoRepostAgreement,
+      saveAgreement: this.props.saveAgreement,
+      unsaveAgreement: this.props.unsaveAgreement,
 
       // Calculated Props
       isQueued,
@@ -384,10 +384,10 @@ class SavedPage extends PureComponent<SavedPageProps, SavedPageState> {
       formatMetadata: this.formatMetadata,
       getFilteredData: this.getFilteredData,
       onPlay: this.onPlay,
-      onSortTracks: this.onSortTracks,
+      onSortAgreements: this.onSortAgreements,
       onChangeTab: this.onChangeTab,
       formatCardSecondaryText: this.formatCardSecondaryText,
-      onReorderTracks: () => {},
+      onReorderAgreements: () => {},
       onClickRemove: null
     }
 
@@ -404,7 +404,7 @@ class SavedPage extends PureComponent<SavedPageProps, SavedPageState> {
     const desktopProps = {
       onClickRow: this.onClickRow,
       onClickSave: this.onClickSave,
-      onClickTrackName: this.onClickTrackName,
+      onClickAgreementName: this.onClickAgreementName,
       onClickArtistName: this.onClickArtistName,
       onClickRepost: this.onClickRepost
     }
@@ -417,12 +417,12 @@ class SavedPage extends PureComponent<SavedPageProps, SavedPageState> {
 }
 
 function makeMapStateToProps() {
-  const getLineupMetadatas = makeGetTableMetadatas(getSavedTracksLineup)
+  const getLineupMetadatas = makeGetTableMetadatas(getSavedAgreementsLineup)
   const getCurrentQueueItem = makeGetCurrent()
   const mapStateToProps = (state: AppState) => {
     return {
       account: getAccountWithSavedPlaylistsAndAlbums(state),
-      tracks: getLineupMetadatas(state),
+      agreements: getLineupMetadatas(state),
       currentQueueItem: getCurrentQueueItem(state),
       playing: getPlaying(state),
       buffering: getBuffering(state),
@@ -434,30 +434,30 @@ function makeMapStateToProps() {
 
 function mapDispatchToProps(dispatch: Dispatch) {
   return {
-    fetchSavedTracks: () => dispatch(saveActions.fetchSaves()),
-    resetSavedTracks: () => dispatch(tracksActions.reset()),
+    fetchSavedAgreements: () => dispatch(saveActions.fetchSaves()),
+    resetSavedAgreements: () => dispatch(agreementsActions.reset()),
     updateLineupOrder: (updatedOrderIndices: UID[]) =>
-      dispatch(tracksActions.updateLineupOrder(updatedOrderIndices)),
+      dispatch(agreementsActions.updateLineupOrder(updatedOrderIndices)),
     fetchSavedAlbums: () => dispatch(accountActions.fetchSavedAlbums()),
     fetchSavedPlaylists: () => dispatch(accountActions.fetchSavedPlaylists()),
     updatePlaylistLastViewedAt: (playlistId: number) =>
       dispatch(updatePlaylistLastViewedAt(playlistId)),
     goToRoute: (route: string) => dispatch(pushRoute(route)),
-    play: (uid?: UID) => dispatch(tracksActions.play(uid)),
-    pause: () => dispatch(tracksActions.pause()),
-    repostTrack: (trackId: ID) =>
-      dispatch(socialActions.repostTrack(trackId, RepostSource.FAVORITES_PAGE)),
-    undoRepostTrack: (trackId: ID) =>
+    play: (uid?: UID) => dispatch(agreementsActions.play(uid)),
+    pause: () => dispatch(agreementsActions.pause()),
+    repostAgreement: (agreementId: ID) =>
+      dispatch(socialActions.repostAgreement(agreementId, RepostSource.FAVORITES_PAGE)),
+    undoRepostAgreement: (agreementId: ID) =>
       dispatch(
-        socialActions.undoRepostTrack(trackId, RepostSource.FAVORITES_PAGE)
+        socialActions.undoRepostAgreement(agreementId, RepostSource.FAVORITES_PAGE)
       ),
-    saveTrack: (trackId: ID) =>
-      dispatch(socialActions.saveTrack(trackId, FavoriteSource.FAVORITES_PAGE)),
-    unsaveTrack: (trackId: ID) =>
+    saveAgreement: (agreementId: ID) =>
+      dispatch(socialActions.saveAgreement(agreementId, FavoriteSource.FAVORITES_PAGE)),
+    unsaveAgreement: (agreementId: ID) =>
       dispatch(
-        socialActions.unsaveTrack(trackId, FavoriteSource.FAVORITES_PAGE)
+        socialActions.unsaveAgreement(agreementId, FavoriteSource.FAVORITES_PAGE)
       ),
-    record: (event: TrackEvent) => dispatch(event)
+    record: (event: AgreementEvent) => dispatch(event)
   }
 }
 

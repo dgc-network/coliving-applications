@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 
 import useInstanceVar from 'common/hooks/useInstanceVar'
 import { ScrollContext } from 'components/scroll-provider/ScrollProvider'
-import { getHasTrack } from 'store/player/selectors'
+import { getHasAgreement } from 'store/player/selectors'
 import { AppState } from 'store/types'
 import { getPathname } from 'utils/route'
 import { getSafeArea, SafeAreaDirection } from 'utils/safeArea'
@@ -139,7 +139,7 @@ const MobilePageContainer = ({
 
 function mapStateToProps(state: AppState) {
   return {
-    hasPlayBar: getHasTrack(state)
+    hasPlayBar: getHasAgreement(state)
   }
 }
 

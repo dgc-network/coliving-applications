@@ -1,17 +1,17 @@
-import { ID, LineupState, Status, Track } from '@coliving/common'
+import { ID, LineupState, Status, Agreement } from '@coliving/common'
 
 export type SearchPageState = {
   status: Status
   searchText: string
-  trackIds: ID[]
+  agreementIds: ID[]
   albumIds: ID[]
   playlistIds: ID[]
   artistIds: ID[]
-  tracks: LineupState<Track>
+  agreements: LineupState<Agreement>
 }
 
 export enum SearchKind {
-  TRACKS = 'tracks',
+  AGREEMENTS = 'agreements',
   USERS = 'users',
   PLAYLISTS = 'playlists',
   ALBUMS = 'albums',

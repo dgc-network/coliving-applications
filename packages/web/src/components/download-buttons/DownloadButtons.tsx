@@ -9,8 +9,8 @@ import { useHistory } from 'react-router-dom'
 import {
   ButtonState,
   ButtonType,
-  useDownloadTrackButtons
-} from 'common/hooks/useDownloadTrackButtons'
+  useDownloadAgreementButtons
+} from 'common/hooks/useDownloadAgreementButtons'
 import { toast } from 'common/store/ui/toast/slice'
 import LoadingSpinner from 'components/loading-spinner/LoadingSpinner'
 import Tooltip from 'components/tooltip/Tooltip'
@@ -32,10 +32,10 @@ export type DownloadButtonProps = {
 }
 
 export const messages = {
-  downloadableTrack: 'Download this Track',
+  downloadableAgreement: 'Download this Agreement',
   downloadableStem: 'Download this source file',
   followToDownload: 'Must follow artist to download',
-  processingTrack: 'Processing',
+  processingAgreement: 'Processing',
   processingStem: 'Uploading',
   addDownloadPrefix: (label: string) => `Download ${label}`
 }
@@ -56,7 +56,7 @@ const DownloadButton = ({
       case ButtonState.PROCESSING:
         return type === ButtonType.STEM
           ? messages.processingStem
-          : messages.processingTrack
+          : messages.processingAgreement
       case ButtonState.REQUIRES_FOLLOW:
         return messages.followToDownload
       case ButtonState.LOG_IN_REQUIRED:
@@ -64,8 +64,8 @@ const DownloadButton = ({
         switch (type) {
           case ButtonType.STEM:
             return messages.downloadableStem
-          case ButtonType.TRACK:
-            return messages.downloadableTrack
+          case ButtonType.AGREEMENT:
+            return messages.downloadableAgreement
         }
     }
   }, [state, type])
@@ -125,12 +125,12 @@ const DownloadButton = ({
 }
 
 type DownloadButtonsProps = {
-  trackId: ID
+  agreementId: ID
   onDownload: (
-    trackId: ID,
+    agreementId: ID,
     cid: string,
     category?: string,
-    parentTrackId?: ID
+    parentAgreementId?: ID
   ) => void
   isOwner: boolean
   following: boolean
@@ -139,7 +139,7 @@ type DownloadButtonsProps = {
 }
 
 const DownloadButtons = ({
-  trackId,
+  agreementId,
   isOwner,
   following,
   onDownload,
@@ -156,12 +156,12 @@ const DownloadButtons = ({
     dispatch(showRequiresAccountModal())
   }, [dispatch, pathname])
 
-  const buttons = useDownloadTrackButtons({
+  const buttons = useDownloadAgreementButtons({
     following,
     isOwner,
     onDownload,
     onNotLoggedInClick,
-    trackId,
+    agreementId,
     useSelector
   })
   const shouldHide = buttons.length === 0

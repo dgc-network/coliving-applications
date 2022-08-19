@@ -7,7 +7,7 @@ import {
   StemCategory,
   Download,
   FieldVisibility,
-  TrackSegment,
+  AgreementSegment,
   SolanaWalletAddress,
   WalletAddress,
   Nullable
@@ -33,7 +33,7 @@ export type APIUser = {
   playlist_count: number
   profile_picture: ProfilePictureSizes
   repost_count: number
-  track_count: number
+  agreement_count: number
   created_at: string
   creator_node_endpoint: Nullable<string>
   current_user_followee_follow_count: number
@@ -59,7 +59,7 @@ export type APISearchUser = Omit<
   | 'follower_count'
   | 'playlist_count'
   | 'repost_count'
-  | 'track_count'
+  | 'agreement_count'
   | 'current_user_followee_follow_count'
   | 'does_current_user_follow'
 >
@@ -77,13 +77,13 @@ export type APIFavorite = {
 }
 
 export type APIRemix = {
-  parent_track_id: OpaqueID
+  parent_agreement_id: OpaqueID
   user: APIUser
   has_remix_author_reposted: boolean
   has_remix_author_saved: boolean
 }
 
-export type APITrack = {
+export type APIAgreement = {
   blocknumber: number
   artwork: CoverArtSizes
   description: Nullable<string>
@@ -92,7 +92,7 @@ export type APITrack = {
   mood: Nullable<string>
   release_date: Nullable<string>
   remix_of: {
-    tracks: null | APIRemix[]
+    agreements: null | APIRemix[]
   }
   repost_count: number
   favorite_count: number
@@ -117,7 +117,7 @@ export type APITrack = {
   followee_favorites: APIFavorite[]
   route_id: string
   stem_of: any
-  track_segments: TrackSegment[]
+  agreement_segments: AgreementSegment[]
   updated_at: string
   user_id: OpaqueID
   is_delete: boolean
@@ -127,8 +127,8 @@ export type APITrack = {
   is_available: boolean
 }
 
-export type APISearchTrack = Omit<
-  APITrack,
+export type APISearchAgreement = Omit<
+  APIAgreement,
   | 'repost_count'
   | 'favorite_count'
   | 'has_current_user_reposted'
@@ -149,7 +149,7 @@ export type APIStem = {
 
 export type APIPlaylistAddedTimestamp = {
   timestamp: number
-  track_id: OpaqueID
+  agreement_id: OpaqueID
 }
 
 export type APIPlaylist = {
@@ -173,8 +173,8 @@ export type APIPlaylist = {
   is_delete: boolean
   is_private: boolean
   added_timestamps: APIPlaylistAddedTimestamp[]
-  tracks: APITrack[]
-  track_count: number
+  agreements: APIAgreement[]
+  agreement_count: number
   cover_art: Nullable<string>
   cover_art_sizes: Nullable<string>
 }
@@ -188,21 +188,21 @@ export type APISearchPlaylist = Omit<
   | 'followee_favorites'
   | 'has_current_user_reposted'
   | 'has_current_user_saved'
-  | 'tracks'
+  | 'agreements'
 >
 
-export type APIItemType = 'track' | 'playlist'
+export type APIItemType = 'agreement' | 'playlist'
 
 export type APIActivity = { timestamp: string } & (
-  | { item_type: 'track'; item: APITrack }
+  | { item_type: 'agreement'; item: APIAgreement }
   | { item_type: 'playlist'; item: APIPlaylist }
 )
 
 export type APISearch = {
   users?: APIUser[]
   followed_users?: APIUser[]
-  tracks?: APITrack[]
-  saved_tracks?: APITrack[]
+  agreements?: APIAgreement[]
+  saved_agreements?: APIAgreement[]
   playlists?: APIPlaylist[]
   saved_playlists?: APIPlaylist[]
   albums?: APIPlaylist[]
@@ -212,8 +212,8 @@ export type APISearch = {
 export type APISearchAutocomplete = {
   users?: APISearchUser[]
   followed_users?: APISearchUser[]
-  tracks?: APISearchTrack[]
-  saved_tracks?: APISearchTrack[]
+  agreements?: APISearchAgreement[]
+  saved_agreements?: APISearchAgreement[]
   playlists?: APISearchPlaylist[]
   saved_playlists?: APISearchPlaylist[]
   albums?: APISearchPlaylist[]

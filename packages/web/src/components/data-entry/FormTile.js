@@ -21,7 +21,7 @@ import Dropdown from 'components/navigation/Dropdown'
 import ConnectedRemixSettingsModal from 'components/remix-settings-modal/ConnectedRemixSettingsModal'
 import SourceFilesModal from 'components/source-files-modal/SourceFilesModal'
 import Switch from 'components/switch/Switch'
-import UnlistedTrackModal from 'components/unlisted-track-modal/UnlistedTrackModal'
+import UnlistedAgreementModal from 'components/unlisted-agreement-modal/UnlistedAgreementModal'
 import PreviewButton from 'components/upload/PreviewButton'
 import UploadArtwork from 'components/upload/UploadArtwork'
 import { createRemixOfMetadata } from 'pages/upload-page/store/utils/remixes'
@@ -46,7 +46,7 @@ const messages = {
   public: 'Public (default)',
   thisIsARemix: 'This is a Remix',
   editRemix: 'Edit',
-  hideRemixes: 'Hide Remixes on Track Page'
+  hideRemixes: 'Hide Remixes on Agreement Page'
 }
 
 const Divider = (props) => {
@@ -81,10 +81,10 @@ const BasicForm = (props) => {
           />
         </div>
         <div className={styles.form}>
-          <div className={styles.trackName}>
+          <div className={styles.agreementName}>
             <Input
               name='name'
-              id='track-name-input'
+              id='agreement-name-input'
               placeholder={`${
                 props.type.charAt(0).toUpperCase() + props.type.slice(1)
               } Name`}
@@ -172,18 +172,18 @@ const BasicForm = (props) => {
   const renderRemixSettingsModal = () => {
     return (
       <ConnectedRemixSettingsModal
-        initialTrackId={
-          props.defaultFields.remix_of?.tracks?.[0]?.parent_track_id
+        initialAgreementId={
+          props.defaultFields.remix_of?.agreements?.[0]?.parent_agreement_id
         }
         isOpen={remixSettingsModalVisible}
-        onClose={(trackId) => {
-          if (!trackId) {
+        onClose={(agreementId) => {
+          if (!agreementId) {
             setIsRemix(false)
             props.onChangeField('remix_of', null)
           } else {
             props.onChangeField(
               'remix_of',
-              createRemixOfMetadata({ parentTrackId: trackId })
+              createRemixOfMetadata({ parentAgreementId: agreementId })
             )
           }
           setRemixSettingsModalVisible(false)
@@ -202,7 +202,7 @@ const BasicForm = (props) => {
   }, [isRemix, setIsRemix, onChangeField])
 
   const renderRemixSwitch = () => {
-    const shouldRender = props.type === 'track'
+    const shouldRender = props.type === 'agreement'
     return (
       shouldRender && (
         <div className={styles.remixSwitch}>
@@ -241,7 +241,7 @@ const BasicForm = (props) => {
   }
 
   const renderDownloadButton = () => {
-    const shouldRender = props.type === 'track'
+    const shouldRender = props.type === 'agreement'
     return (
       shouldRender && (
         <Button
@@ -276,7 +276,7 @@ const BasicForm = (props) => {
   const renderBottomMenu = () => {
     return (
       <div className={styles.menu}>
-        {props.type === 'track' && props.showPreview ? (
+        {props.type === 'agreement' && props.showPreview ? (
           <div>
             <PreviewButton playing={props.playing} onClick={onPreviewClick} />
           </div>
@@ -307,7 +307,7 @@ const BasicForm = (props) => {
 const AdvancedForm = (props) => {
   let unlistedState
   let unlistedButtonTitle
-  const showUnlisted = props.type === 'track' && props.showUnlistedToggle
+  const showUnlisted = props.type === 'agreement' && props.showUnlistedToggle
   if (showUnlisted) {
     unlistedState = {
       unlisted: props.defaultFields.is_unlisted,
@@ -370,8 +370,8 @@ const AdvancedForm = (props) => {
   return (
     <>
       {showUnlisted && (
-        <UnlistedTrackModal
-          showHideTrackSwitch={props.showHideTrackSectionInModal}
+        <UnlistedAgreementModal
+          showHideAgreementSwitch={props.showHideAgreementSectionInModal}
           isOpen={isUnlistedModalOpen}
           onClose={() => setIsUnlistedModalOpen(false)}
           didUpdateState={didUpdateUnlistedState}
@@ -391,9 +391,9 @@ const AdvancedForm = (props) => {
               type={ButtonType.COMMON_ALT}
               name='setUnlisted'
               text={unlistedButtonTitle}
-              label='Track Visibility'
-              className={styles.hiddenTrackButton}
-              textClassName={styles.hiddenTrackButtonText}
+              label='Agreement Visibility'
+              className={styles.hiddenAgreementButton}
+              textClassName={styles.hiddenAgreementButtonText}
               onClick={() => {
                 setIsUnlistedModalOpen(true)
               }}
@@ -410,7 +410,7 @@ const AdvancedForm = (props) => {
               }
             />
           </div>
-          {props.type === 'track' ? (
+          {props.type === 'agreement' ? (
             <div className={styles.hideRemixes}>
               <div className={styles.hideRemixesText}>
                 {messages.hideRemixes}
@@ -430,17 +430,17 @@ const AdvancedForm = (props) => {
             />
           )}
         </div>
-        {props.type === 'track' ? (
-          <div className={styles.trackId}>
+        {props.type === 'agreement' ? (
+          <div className={styles.agreementId}>
             <LabeledInput
-              label='Track ISRC'
+              label='Agreement ISRC'
               placeholder='e.g. CC-XXX-YY-NNNNN'
               defaultValue={props.defaultFields.isrc || ''}
               onChange={(value) => props.onChangeField('isrc', value)}
               size='small'
             />
             <LabeledInput
-              label='Track ISWC'
+              label='Agreement ISWC'
               placeholder='e.g. T-345246800-1'
               defaultValue={props.defaultFields.iswc || ''}
               onChange={(value) => props.onChangeField('iswc', value)}
@@ -674,7 +674,7 @@ class FormTile extends Component {
         {this.props.children.length > 0 ? (
           <DragDropContext onDragEnd={this.onDragEnd}>
             <div className={styles.children}>
-              <Droppable droppableId='droppable-1' type='TRACK'>
+              <Droppable droppableId='droppable-1' type='AGREEMENT'>
                 {(provided, snapshot) => (
                   <div ref={provided.innerRef} {...provided.droppableProps}>
                     {this.state.childrenOrder.map((index, i) => {
@@ -711,7 +711,7 @@ FormTile.propTypes = {
   defaultFields: PropTypes.object,
   invalidFields: PropTypes.object,
   requiredFields: PropTypes.object,
-  /** The image returned from useTrackCoverArt */
+  /** The image returned from useAgreementCoverArt */
   coverArt: PropTypes.string,
   /** If image processing resulted in an error. */
   imageProcessingError: PropTypes.bool,
@@ -722,7 +722,7 @@ FormTile.propTypes = {
   showPreview: PropTypes.bool,
   /** Whether or not the preview is playing. */
   playing: PropTypes.bool,
-  type: PropTypes.oneOf(['track', 'album', 'playlist']),
+  type: PropTypes.oneOf(['agreement', 'album', 'playlist']),
   /** Transform artwork function to apply. */
   transformArtworkFunction: PropTypes.func,
 
@@ -731,7 +731,7 @@ FormTile.propTypes = {
   /** In the unlisted visibility modal, do we let the user toggle
    * unlisted/public, or just set field visibility?
    */
-  showHideTrackSectionInModal: PropTypes.bool,
+  showHideAgreementSectionInModal: PropTypes.bool,
 
   /**
    * Handle stem selection.
@@ -763,13 +763,13 @@ FormTile.propTypes = {
 
 FormTile.defaultProps = {
   showPreview: true,
-  type: 'track',
+  type: 'agreement',
   isPlaylist: false,
   transformArtworkFunction: resizeImage,
   onChangeOrder: () => {},
   onChangeField: () => {},
   showUnlistedToggle: true,
-  showHideTrackSectionInModal: true,
+  showHideAgreementSectionInModal: true,
   children: [],
   stems: [],
   onSelectStemCategory: () => {}

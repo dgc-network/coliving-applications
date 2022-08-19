@@ -6,7 +6,7 @@ import cn from 'classnames'
 import { useDispatch } from 'react-redux'
 
 import { ReactComponent as IconCopy } from 'assets/img/iconCopy.svg'
-import { ReactComponent as IconRemove } from 'assets/img/iconRemoveTrack.svg'
+import { ReactComponent as IconRemove } from 'assets/img/iconRemoveAgreement.svg'
 import {
   getAssociatedWallets,
   getRemoveWallet

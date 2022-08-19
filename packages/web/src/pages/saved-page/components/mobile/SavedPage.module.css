@@ -41,7 +41,7 @@
   padding: 12px 11px 12px;
 }
 
-.tracksLineupContainer {
+.agreementsLineupContainer {
   -webkit-overflow-scrolling: touch;
   width: 100%;
 }
@@ -101,7 +101,7 @@
   fill: var(--neutral-light-4);
 }
 
-.trackListContainer {
+.agreementListContainer {
   margin: 16px 12px;
   border: 1px solid var(--neutral-light-8);
   overflow: hidden;

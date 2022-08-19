@@ -12,14 +12,14 @@ import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 
 import { getUserId } from 'common/store/account/selectors'
-import { getTrack } from 'common/store/cache/tracks/selectors'
-import { getUserFromTrack } from 'common/store/cache/users/selectors'
+import { getAgreement } from 'common/store/cache/agreements/selectors'
+import { getUserFromAgreement } from 'common/store/cache/users/selectors'
 import {
-  saveTrack,
-  unsaveTrack,
-  repostTrack,
-  undoRepostTrack
-} from 'common/store/social/tracks/actions'
+  saveAgreement,
+  unsaveAgreement,
+  repostAgreement,
+  undoRepostAgreement
+} from 'common/store/social/agreements/actions'
 import { open } from 'common/store/ui/mobile-overflow-menu/slice'
 import {
   OverflowAction,
@@ -30,7 +30,7 @@ import { getTheme } from 'common/store/ui/theme/selectors'
 import { setFavorite } from 'common/store/user-list/favorites/actions'
 import { setRepost } from 'common/store/user-list/reposts/actions'
 import { RepostType } from 'common/store/user-list/reposts/types'
-import { TrackTileProps } from 'components/track/types'
+import { AgreementTileProps } from 'components/agreement/types'
 import { getUid, getPlaying, getBuffering } from 'store/player/selectors'
 import { AppState } from 'store/types'
 import {
@@ -40,23 +40,23 @@ import {
 } from 'utils/route'
 import { isMatrix, shouldShowDark } from 'utils/theme/theme'
 
-import { getTrackWithFallback, getUserWithFallback } from '../helpers'
+import { getAgreementWithFallback, getUserWithFallback } from '../helpers'
 
-import TrackTile from './TrackTile'
+import AgreementTile from './AgreementTile'
 
-type ConnectedTrackTileProps = TrackTileProps &
+type ConnectedAgreementTileProps = AgreementTileProps &
   ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>
 
-const ConnectedTrackTile = memo(
+const ConnectedAgreementTile = memo(
   ({
     uid,
     index,
     size,
-    track,
+    agreement,
     user,
     ordered,
-    trackTileStyles,
+    agreementTileStyles,
     showArtistPick,
     goToRoute,
     togglePlay,
@@ -66,22 +66,22 @@ const ConnectedTrackTile = memo(
     isLoading,
     hasLoaded,
     currentUserId,
-    saveTrack,
-    unsaveTrack,
-    repostTrack,
-    unrepostTrack,
-    shareTrack,
-    setRepostTrackId,
-    setFavoriteTrackId,
+    saveAgreement,
+    unsaveAgreement,
+    repostAgreement,
+    unrepostAgreement,
+    shareAgreement,
+    setRepostAgreementId,
+    setFavoriteAgreementId,
     clickOverflow,
     darkMode,
     isTrending,
     showRankIcon
-  }: ConnectedTrackTileProps) => {
+  }: ConnectedAgreementTileProps) => {
     const {
       is_delete,
       is_unlisted,
-      track_id,
+      agreement_id,
       title,
       permalink,
       repost_count,
@@ -96,30 +96,30 @@ const ConnectedTrackTile = memo(
       play_count,
       _co_sign,
       duration
-    } = getTrackWithFallback(track)
+    } = getAgreementWithFallback(agreement)
 
     const { _artist_pick, user_id, handle, name, is_verified } =
       getUserWithFallback(user)
 
     const isOwner = user_id === currentUserId
 
-    const toggleSave = (trackId: ID) => {
+    const toggleSave = (agreementId: ID) => {
       if (has_current_user_saved) {
-        unsaveTrack(trackId)
+        unsaveAgreement(agreementId)
       } else {
-        saveTrack(trackId)
+        saveAgreement(agreementId)
       }
     }
 
-    const toggleRepost = (trackId: ID) => {
+    const toggleRepost = (agreementId: ID) => {
       if (has_current_user_reposted) {
-        unrepostTrack(trackId)
+        unrepostAgreement(agreementId)
       } else {
-        repostTrack(trackId)
+        repostAgreement(agreementId)
       }
     }
 
-    const goToTrackPage = (e: MouseEvent<HTMLElement>) => {
+    const goToAgreementPage = (e: MouseEvent<HTMLElement>) => {
       e.stopPropagation()
       goToRoute(permalink)
     }
@@ -130,24 +130,24 @@ const ConnectedTrackTile = memo(
     }
 
     const onShare = (id: ID) => {
-      shareTrack(id)
+      shareAgreement(id)
     }
 
     const makeGoToRepostsPage =
-      (trackId: ID) => (e: MouseEvent<HTMLElement>) => {
+      (agreementId: ID) => (e: MouseEvent<HTMLElement>) => {
         e.stopPropagation()
-        setRepostTrackId(trackId)
+        setRepostAgreementId(agreementId)
         goToRoute(REPOSTING_USERS_ROUTE)
       }
 
     const makeGoToFavoritesPage =
-      (trackId: ID) => (e: MouseEvent<HTMLElement>) => {
+      (agreementId: ID) => (e: MouseEvent<HTMLElement>) => {
         e.stopPropagation()
-        setFavoriteTrackId(trackId)
+        setFavoriteAgreementId(agreementId)
         goToRoute(FAVORITING_USERS_ROUTE)
       }
 
-    const onClickOverflow = (trackId: ID) => {
+    const onClickOverflow = (agreementId: ID) => {
       const overflowActions = [
         !isOwner
           ? has_current_user_reposted
@@ -160,19 +160,19 @@ const ConnectedTrackTile = memo(
             : OverflowAction.FAVORITE
           : null,
         OverflowAction.ADD_TO_PLAYLIST,
-        OverflowAction.VIEW_TRACK_PAGE,
+        OverflowAction.VIEW_AGREEMENT_PAGE,
         OverflowAction.VIEW_ARTIST_PAGE
       ].filter(Boolean) as OverflowAction[]
 
-      clickOverflow(trackId, overflowActions)
+      clickOverflow(agreementId, overflowActions)
     }
 
     if (is_delete || user?.is_deactivated) return null
 
     return (
-      <TrackTile
+      <AgreementTile
         uid={uid}
-        id={track_id}
+        id={agreement_id}
         userId={user_id}
         index={index}
         key={`${index}`}
@@ -189,14 +189,14 @@ const ConnectedTrackTile = memo(
         duration={duration}
         coverArtSizes={_cover_art_sizes}
         activityTimestamp={activity_timestamp}
-        trackTileStyles={trackTileStyles}
+        agreementTileStyles={agreementTileStyles}
         size={size}
         listenCount={play_count}
         fieldVisibility={field_visibility}
         coSign={_co_sign}
         // Artist Pick
         showArtistPick={showArtistPick}
-        isArtistPick={_artist_pick === track_id}
+        isArtistPick={_artist_pick === agreement_id}
         // Artist
         artistHandle={handle}
         artistName={name}
@@ -207,7 +207,7 @@ const ConnectedTrackTile = memo(
         isLoading={isBuffering}
         isPlaying={uid === playingUid && isPlaying}
         goToArtistPage={goToArtistPage}
-        goToTrackPage={goToTrackPage}
+        goToAgreementPage={goToAgreementPage}
         toggleSave={toggleSave}
         onShare={onShare}
         onClickOverflow={onClickOverflow}
@@ -226,10 +226,10 @@ const ConnectedTrackTile = memo(
   }
 )
 
-function mapStateToProps(state: AppState, ownProps: TrackTileProps) {
+function mapStateToProps(state: AppState, ownProps: AgreementTileProps) {
   return {
-    track: getTrack(state, { uid: ownProps.uid }),
-    user: getUserFromTrack(state, { uid: ownProps.uid }),
+    agreement: getAgreement(state, { uid: ownProps.uid }),
+    user: getUserFromAgreement(state, { uid: ownProps.uid }),
     playingUid: getUid(state),
     isBuffering: getBuffering(state),
     isPlaying: getPlaying(state),
@@ -241,32 +241,32 @@ function mapStateToProps(state: AppState, ownProps: TrackTileProps) {
 
 function mapDispatchToProps(dispatch: Dispatch) {
   return {
-    shareTrack: (trackId: ID) =>
+    shareAgreement: (agreementId: ID) =>
       dispatch(
         requestOpenShareModal({
-          type: 'track',
-          trackId,
+          type: 'agreement',
+          agreementId,
           source: ShareSource.TILE
         })
       ),
-    saveTrack: (trackId: ID) =>
-      dispatch(saveTrack(trackId, FavoriteSource.TILE)),
-    unsaveTrack: (trackId: ID) =>
-      dispatch(unsaveTrack(trackId, FavoriteSource.TILE)),
-    repostTrack: (trackId: ID) =>
-      dispatch(repostTrack(trackId, RepostSource.TILE)),
-    unrepostTrack: (trackId: ID) =>
-      dispatch(undoRepostTrack(trackId, RepostSource.TILE)),
-    clickOverflow: (trackId: ID, overflowActions: OverflowAction[]) =>
+    saveAgreement: (agreementId: ID) =>
+      dispatch(saveAgreement(agreementId, FavoriteSource.TILE)),
+    unsaveAgreement: (agreementId: ID) =>
+      dispatch(unsaveAgreement(agreementId, FavoriteSource.TILE)),
+    repostAgreement: (agreementId: ID) =>
+      dispatch(repostAgreement(agreementId, RepostSource.TILE)),
+    unrepostAgreement: (agreementId: ID) =>
+      dispatch(undoRepostAgreement(agreementId, RepostSource.TILE)),
+    clickOverflow: (agreementId: ID, overflowActions: OverflowAction[]) =>
       dispatch(
-        open({ source: OverflowSource.TRACKS, id: trackId, overflowActions })
+        open({ source: OverflowSource.AGREEMENTS, id: agreementId, overflowActions })
       ),
-    setRepostTrackId: (trackId: ID) =>
-      dispatch(setRepost(trackId, RepostType.TRACK)),
-    setFavoriteTrackId: (trackId: ID) =>
-      dispatch(setFavorite(trackId, FavoriteType.TRACK)),
+    setRepostAgreementId: (agreementId: ID) =>
+      dispatch(setRepost(agreementId, RepostType.AGREEMENT)),
+    setFavoriteAgreementId: (agreementId: ID) =>
+      dispatch(setFavorite(agreementId, FavoriteType.AGREEMENT)),
     goToRoute: (route: string) => dispatch(pushRoute(route))
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ConnectedTrackTile)
+export default connect(mapStateToProps, mapDispatchToProps)(ConnectedAgreementTile)

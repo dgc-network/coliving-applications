@@ -130,8 +130,8 @@ const theme = {
     'linear-gradient(180deg, #833BFB 0%, #4600BC 100%)',
   '--play-button-triangle': 'var(--static-white)',
   '--action-sheet-text': 'var(--secondary)',
-  '--track-slider-rail': 'var(--neutral)',
-  '--track-slider-handle': 'var(--static-white)',
+  '--agreement-slider-rail': 'var(--neutral)',
+  '--agreement-slider-handle': 'var(--static-white)',
   '--stat-tile-text': '#C675FF'
 }
 

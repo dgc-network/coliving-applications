@@ -11,7 +11,7 @@ const messages = {
   appCTA: 'Get The App',
   description: `
     Take Coliving with you! Download the Coliving
-    mobile app and listen to remixes, tracks, and
+    mobile app and listen to remixes, agreements, and
     playlists in incredible quality from anywhere.
   `,
   qrInstruction: `

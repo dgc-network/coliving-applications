@@ -48,9 +48,9 @@ export const identify = (
   if (callback) callback()
 }
 
-// Track Event
+// Agreement Event
 // Docs: https://developers.amplitude.com/docs/javascript#sending-events
-export const track = (
+export const agreement = (
   event: string,
   properties?: Record<string, any>,
   callback?: () => void

@@ -7,7 +7,7 @@ import {
 } from '-client/src/common/store/notifications/selectors'
 import type {
   RemixCosign,
-  TrackEntity
+  AgreementEntity
 } from '-client/src/common/store/notifications/types'
 import { View } from 'react-native'
 
@@ -15,7 +15,7 @@ import IconRemix from 'app/assets/images/iconRemix.svg'
 import { isEqual, useSelectorWeb } from 'app/hooks/useSelectorWeb'
 import { EventNames } from 'app/types/analytics'
 import { make } from 'app/utils/analytics'
-import { getTrackRoute } from 'app/utils/routes'
+import { getAgreementRoute } from 'app/utils/routes'
 
 import {
   NotificationHeader,
@@ -32,8 +32,8 @@ import { useDrawerNavigation } from '../useDrawerNavigation'
 const messages = {
   title: 'Remix Co-sign',
   cosign: 'Co-signed your Remix of',
-  shareTwitterText: (trackTitle: string, handle: string) =>
-    `My remix of ${trackTitle} was Co-Signed by ${handle} on @dgc.network #Coliving`
+  shareTwitterText: (agreementTitle: string, handle: string) =>
+    `My remix of ${agreementTitle} was Co-Signed by ${handle} on @dgc.network #Coliving`
 }
 
 type RemixCosignNotificationProps = {
@@ -45,41 +45,41 @@ export const RemixCosignNotification = (
 ) => {
   const { notification } = props
   const navigation = useDrawerNavigation()
-  const { childTrackId, parentTrackUserId } = notification
+  const { childAgreementId, parentAgreementUserId } = notification
   const user = useSelectorWeb((state) =>
     getNotificationUser(state, notification)
   )
-  // TODO: casting from EntityType to TrackEntity here, but
+  // TODO: casting from EntityType to AgreementEntity here, but
   // getNotificationEntities should be smart enough based on notif type
-  const tracks = useSelectorWeb(
+  const agreements = useSelectorWeb(
     (state) => getNotificationEntities(state, notification),
     isEqual
-  ) as Nullable<TrackEntity[]>
+  ) as Nullable<AgreementEntity[]>
 
-  const childTrack = tracks?.find(({ track_id }) => track_id === childTrackId)
-  const parentTrack = tracks?.find(
-    ({ owner_id }) => owner_id === parentTrackUserId
+  const childAgreement = agreements?.find(({ agreement_id }) => agreement_id === childAgreementId)
+  const parentAgreement = agreements?.find(
+    ({ owner_id }) => owner_id === parentAgreementUserId
   )
-  const parentTrackTitle = parentTrack?.title
+  const parentAgreementTitle = parentAgreement?.title
 
   const handlePress = useCallback(() => {
-    if (childTrack) {
+    if (childAgreement) {
       navigation.navigate({
         native: {
-          screen: 'Track',
-          params: { id: childTrack.track_id, fromNotifications: true }
+          screen: 'Agreement',
+          params: { id: childAgreement.agreement_id, fromNotifications: true }
         },
         web: {
-          route: getTrackRoute(childTrack)
+          route: getAgreementRoute(childAgreement)
         }
       })
     }
-  }, [childTrack, navigation])
+  }, [childAgreement, navigation])
 
   const handleTwitterShareData = useCallback(
     (handle: string | undefined) => {
-      if (parentTrackTitle && handle) {
-        const shareText = messages.shareTwitterText(parentTrackTitle, handle)
+      if (parentAgreementTitle && handle) {
+        const shareText = messages.shareTwitterText(parentAgreementTitle, handle)
         const analytics = make({
           eventName: EventNames.NOTIFICATIONS_CLICK_REMIX_COSIGN_TWITTER_SHARE,
           text: shareText
@@ -88,12 +88,12 @@ export const RemixCosignNotification = (
       }
       return null
     },
-    [parentTrackTitle]
+    [parentAgreementTitle]
   )
 
-  if (!user || !childTrack || !parentTrack) return null
+  if (!user || !childAgreement || !parentAgreement) return null
 
-  const twitterUrl = getTrackRoute(childTrack, true)
+  const twitterUrl = getAgreementRoute(childAgreement, true)
 
   return (
     <NotificationTile notification={notification} onPress={handlePress}>
@@ -105,7 +105,7 @@ export const RemixCosignNotification = (
         <View style={{ flex: 1 }}>
           <NotificationText>
             <UserNameLink user={user} /> {messages.cosign}{' '}
-            <EntityLink entity={parentTrack} />
+            <EntityLink entity={parentAgreement} />
           </NotificationText>
         </View>
       </View>

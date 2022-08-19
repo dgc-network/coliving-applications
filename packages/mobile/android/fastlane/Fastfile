@@ -19,7 +19,7 @@ platform :android do
   desc "Deploy a new version to the Google Play"
   lane :bounce do
     upload_to_play_store(
-      track: "alpha",
+      agreement: "alpha",
       package_name: "co..app.bounce",
       aab: "./app/build/outputs/bundle/bounceRelease/app-bounce-release.aab",
       skip_upload_metadata: true,
@@ -31,7 +31,7 @@ platform :android do
 
   lane :alpha do
     upload_to_play_store(
-      track: "alpha",
+      agreement: "alpha",
       aab: "./app/build/outputs/bundle/prodRelease/app-prod-release.aab",
       skip_upload_metadata: true,
       skip_upload_changelogs: true,
@@ -42,7 +42,7 @@ platform :android do
 
   lane :beta do
     upload_to_play_store(
-      track: "beta",
+      agreement: "beta",
       aab: "./app/build/outputs/bundle/prodRelease/app-prod-release.aab",
       skip_upload_metadata: true,
       skip_upload_changelogs: true,
@@ -53,7 +53,7 @@ platform :android do
 
   lane :deploy do
     upload_to_play_store(
-      track: "production",
+      agreement: "production",
       aab: "./app/build/outputs/bundle/prodRelease/app-prod-release.aab",
       skip_upload_metadata: true,
       skip_upload_changelogs: true,
@@ -65,9 +65,9 @@ platform :android do
 
   lane :incrementVersionCode do |options|
       # Get the max existing version code
-      previousVersion = google_play_track_version_codes(
+      previousVersion = google_play_agreement_version_codes(
         package_name: options[:package_name],
-        track: options[:track]
+        agreement: options[:agreement]
       ).max
 
       # Increment the version code in build.gradle by 1
@@ -82,9 +82,9 @@ platform :android do
 
   lane :incrementVersionName do |options|
       # Get the max existing version name
-      previousVersionName = google_play_track_release_names(
+      previousVersionName = google_play_agreement_release_names(
         package_name: options[:package_name],
-        track: options[:track]
+        agreement: options[:agreement]
       ).map {|v| Gem::Version.new v}.max
 
       re = /versionName\s+"([\d\.]+)"/

@@ -542,7 +542,7 @@ describe('Rewards Page Sagas', () => {
         user_id: '1'
       },
       {
-        challenge_id: 'track-upload',
+        challenge_id: 'agreement-upload',
         is_complete: true,
         is_disbursed: true,
         is_active: true,

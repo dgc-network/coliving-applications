@@ -3,38 +3,38 @@ import { push as pushRoute } from 'connected-react-router'
 import moment from 'moment'
 import { call, fork, put, select, takeEvery } from 'redux-saga/effects'
 
-import * as trackCacheActions from 'common/store/cache/tracks/actions'
-import { getTrack as getCachedTrack } from 'common/store/cache/tracks/selectors'
-import { retrieveTracks } from 'common/store/cache/tracks/utils'
-import { retrieveTrackByHandleAndSlug } from 'common/store/cache/tracks/utils/retrieveTracks'
+import * as agreementCacheActions from 'common/store/cache/agreements/actions'
+import { getAgreement as getCachedAgreement } from 'common/store/cache/agreements/selectors'
+import { retrieveAgreements } from 'common/store/cache/agreements/utils'
+import { retrieveAgreementByHandleAndSlug } from 'common/store/cache/agreements/utils/retrieveAgreements'
 import { getUsers } from 'common/store/cache/users/selectors'
-import * as trackPageActions from 'common/store/pages/track/actions'
-import { tracksActions } from 'common/store/pages/track/lineup/actions'
+import * as agreementPageActions from 'common/store/pages/agreement/actions'
+import { agreementsActions } from 'common/store/pages/agreement/lineup/actions'
 import {
   getSourceSelector,
-  getTrack,
-  getTrendingTrackRanks,
+  getAgreement,
+  getTrendingAgreementRanks,
   getUser
-} from 'common/store/pages/track/selectors'
+} from 'common/store/pages/agreement/selectors'
 import { getIsReachable } from 'common/store/reachability/selectors'
-import tracksSagas from 'pages/track-page/store/lineups/tracks/sagas'
+import agreementsSagas from 'pages/agreement-page/store/lineups/agreements/sagas'
 import apiClient from 'services/coliving-api-client/ColivingAPIClient'
 import { remoteConfigInstance } from 'services/remote-config/remote-config-instance'
 import { waitForBackendSetup } from 'store/backend/sagas'
-import { NOT_FOUND_PAGE, trackRemixesPage } from 'utils/route'
+import { NOT_FOUND_PAGE, agreementRemixesPage } from 'utils/route'
 
 export const TRENDING_BADGE_LIMIT = 10
 
-function* watchTrackBadge() {
-  yield takeEvery(trackPageActions.GET_TRACK_RANKS, function* (action) {
+function* watchAgreementBadge() {
+  yield takeEvery(agreementPageActions.GET_AGREEMENT_RANKS, function* (action) {
     try {
       yield call(waitForBackendSetup)
       yield call(remoteConfigInstance.waitForRemoteConfig)
       const TF = new Set(
         remoteConfigInstance.getRemoteVar(StringKeys.TF)?.split(',') ?? []
       )
-      let trendingTrackRanks = yield select(getTrendingTrackRanks)
-      if (!trendingTrackRanks) {
+      let trendingAgreementRanks = yield select(getTrendingAgreementRanks)
+      if (!trendingAgreementRanks) {
         const trendingRanks = yield apiClient.getTrendingIds({
           limit: TRENDING_BADGE_LIMIT
         })
@@ -53,77 +53,77 @@ function* watchTrackBadge() {
           })
         }
 
-        yield put(trackPageActions.setTrackTrendingRanks(trendingRanks))
-        trendingTrackRanks = yield select(getTrendingTrackRanks)
+        yield put(agreementPageActions.setAgreementTrendingRanks(trendingRanks))
+        trendingAgreementRanks = yield select(getTrendingAgreementRanks)
       }
 
-      const weeklyTrackIndex = trendingTrackRanks.week.findIndex(
-        (trackId) => trackId === action.trackId
+      const weeklyAgreementIndex = trendingAgreementRanks.week.findIndex(
+        (agreementId) => agreementId === action.agreementId
       )
-      const monthlyTrackIndex = trendingTrackRanks.month.findIndex(
-        (trackId) => trackId === action.trackId
+      const monthlyAgreementIndex = trendingAgreementRanks.month.findIndex(
+        (agreementId) => agreementId === action.agreementId
       )
-      const yearlyTrackIndex = trendingTrackRanks.year.findIndex(
-        (trackId) => trackId === action.trackId
+      const yearlyAgreementIndex = trendingAgreementRanks.year.findIndex(
+        (agreementId) => agreementId === action.agreementId
       )
 
       yield put(
-        trackPageActions.setTrackRank(
+        agreementPageActions.setAgreementRank(
           'week',
-          weeklyTrackIndex !== -1 ? weeklyTrackIndex + 1 : null
+          weeklyAgreementIndex !== -1 ? weeklyAgreementIndex + 1 : null
         )
       )
       yield put(
-        trackPageActions.setTrackRank(
+        agreementPageActions.setAgreementRank(
           'month',
-          monthlyTrackIndex !== -1 ? monthlyTrackIndex + 1 : null
+          monthlyAgreementIndex !== -1 ? monthlyAgreementIndex + 1 : null
         )
       )
       yield put(
-        trackPageActions.setTrackRank(
+        agreementPageActions.setAgreementRank(
           'year',
-          yearlyTrackIndex !== -1 ? yearlyTrackIndex + 1 : null
+          yearlyAgreementIndex !== -1 ? yearlyAgreementIndex + 1 : null
         )
       )
     } catch (error) {
-      console.error(`Unable to fetch track badge: ${error.message}`)
+      console.error(`Unable to fetch agreement badge: ${error.message}`)
     }
   })
 }
 
-function* getTrackRanks(trackId) {
-  yield put(trackPageActions.getTrackRanks(trackId))
+function* getAgreementRanks(agreementId) {
+  yield put(agreementPageActions.getAgreementRanks(agreementId))
 }
 
-function* addTrackToLineup(track) {
+function* addAgreementToLineup(agreement) {
   const source = yield select(getSourceSelector)
-  const formattedTrack = {
-    kind: Kind.TRACKS,
-    id: track.track_id,
-    uid: makeUid(Kind.TRACKS, track.track_id, source)
+  const formattedAgreement = {
+    kind: Kind.AGREEMENTS,
+    id: agreement.agreement_id,
+    uid: makeUid(Kind.AGREEMENTS, agreement.agreement_id, source)
   }
 
-  yield put(tracksActions.add(formattedTrack, track.track_id))
+  yield put(agreementsActions.add(formattedAgreement, agreement.agreement_id))
 }
 
 /** Get "more by this artist" and put into the lineup + queue */
 function* getRestOfLineup(permalink, ownerHandle) {
   yield put(
-    tracksActions.fetchLineupMetadatas(1, 5, false, {
+    agreementsActions.fetchLineupMetadatas(1, 5, false, {
       ownerHandle,
-      heroTrackPermalink: permalink
+      heroAgreementPermalink: permalink
     })
   )
 }
 
-function* watchFetchTrack() {
-  yield takeEvery(trackPageActions.FETCH_TRACK, function* (action) {
-    const { trackId, handle, slug, canBeUnlisted } = action
+function* watchFetchAgreement() {
+  yield takeEvery(agreementPageActions.FETCH_AGREEMENT, function* (action) {
+    const { agreementId, handle, slug, canBeUnlisted } = action
     const permalink = `/${handle}/${slug}`
     try {
-      let track
-      if (!trackId) {
-        track = yield call(retrieveTrackByHandleAndSlug, {
+      let agreement
+      if (!agreementId) {
+        agreement = yield call(retrieveAgreementByHandleAndSlug, {
           handle,
           slug,
           withStems: true,
@@ -132,76 +132,76 @@ function* watchFetchTrack() {
         })
       } else {
         const ids = canBeUnlisted
-          ? [{ id: trackId, url_title: slug, handle }]
-          : [trackId]
-        const tracks = yield call(retrieveTracks, {
-          trackIds: ids,
+          ? [{ id: agreementId, url_title: slug, handle }]
+          : [agreementId]
+        const agreements = yield call(retrieveAgreements, {
+          agreementIds: ids,
           canBeUnlisted,
           withStems: true,
           withRemixes: true,
           withRemixParents: true
         })
-        track = tracks && tracks.length === 1 ? tracks[0] : null
+        agreement = agreements && agreements.length === 1 ? agreements[0] : null
       }
-      if (!track) {
+      if (!agreement) {
         const isReachable = yield select(getIsReachable)
         if (isReachable) {
           yield put(pushRoute(NOT_FOUND_PAGE))
           return
         }
       } else {
-        yield put(trackPageActions.setTrackId(track.track_id))
-        // Add hero track to lineup early so that we can play it ASAP
+        yield put(agreementPageActions.setAgreementId(agreement.agreement_id))
+        // Add hero agreement to lineup early so that we can play it ASAP
         // (instead of waiting for the entire lineup to load)
-        yield call(addTrackToLineup, track)
+        yield call(addAgreementToLineup, agreement)
         yield fork(getRestOfLineup, permalink, handle)
-        yield fork(getTrackRanks, track.track_id)
-        yield put(trackPageActions.fetchTrackSucceeded(track.track_id))
+        yield fork(getAgreementRanks, agreement.agreement_id)
+        yield put(agreementPageActions.fetchAgreementSucceeded(agreement.agreement_id))
       }
     } catch (e) {
       console.error(e)
       yield put(
-        trackPageActions.fetchTrackFailed(trackId ?? `/${handle}/${slug}`)
+        agreementPageActions.fetchAgreementFailed(agreementId ?? `/${handle}/${slug}`)
       )
     }
   })
 }
 
-function* watchFetchTrackSucceeded() {
-  yield takeEvery(trackPageActions.FETCH_TRACK_SUCCEEDED, function* (action) {
-    const { trackId } = action
-    const track = yield select(getCachedTrack, { id: trackId })
+function* watchFetchAgreementSucceeded() {
+  yield takeEvery(agreementPageActions.FETCH_AGREEMENT_SUCCEEDED, function* (action) {
+    const { agreementId } = action
+    const agreement = yield select(getCachedAgreement, { id: agreementId })
     if (
-      track.download &&
-      track.download.is_downloadable &&
-      !track.download.cid
+      agreement.download &&
+      agreement.download.is_downloadable &&
+      !agreement.download.cid
     ) {
-      yield put(trackCacheActions.checkIsDownloadable(track.track_id))
+      yield put(agreementCacheActions.checkIsDownloadable(agreement.agreement_id))
     }
   })
 }
 
 function* watchRefetchLineup() {
-  yield takeEvery(trackPageActions.REFETCH_LINEUP, function* (action) {
-    const { permalink } = yield select(getTrack)
+  yield takeEvery(agreementPageActions.REFETCH_LINEUP, function* (action) {
+    const { permalink } = yield select(getAgreement)
     const { handle } = yield select(getUser)
-    yield put(tracksActions.reset())
+    yield put(agreementsActions.reset())
     yield put(
-      tracksActions.fetchLineupMetadatas(0, 6, false, {
+      agreementsActions.fetchLineupMetadatas(0, 6, false, {
         ownerHandle: handle,
-        heroTrackPermalink: permalink
+        heroAgreementPermalink: permalink
       })
     )
   })
 }
 
-function* watchTrackPageMakePublic() {
-  yield takeEvery(trackPageActions.MAKE_TRACK_PUBLIC, function* (action) {
-    const { trackId } = action
-    let track = yield select(getCachedTrack, { id: trackId })
+function* watchAgreementPageMakePublic() {
+  yield takeEvery(agreementPageActions.MAKE_AGREEMENT_PUBLIC, function* (action) {
+    const { agreementId } = action
+    let agreement = yield select(getCachedAgreement, { id: agreementId })
 
-    track = {
-      ...track,
+    agreement = {
+      ...agreement,
       is_unlisted: false,
       release_date: moment().toString(),
       field_visibility: {
@@ -210,29 +210,29 @@ function* watchTrackPageMakePublic() {
         tags: true,
         share: true,
         play_count: true,
-        remixes: track.field_visibility?.remixes ?? true
+        remixes: agreement.field_visibility?.remixes ?? true
       }
     }
 
-    yield put(trackCacheActions.editTrack(trackId, track))
+    yield put(agreementCacheActions.editAgreement(agreementId, agreement))
   })
 }
 
 function* watchGoToRemixesOfParentPage() {
   yield takeEvery(
-    trackPageActions.GO_TO_REMIXES_OF_PARENT_PAGE,
+    agreementPageActions.GO_TO_REMIXES_OF_PARENT_PAGE,
     function* (action) {
-      const { parentTrackId } = action
-      if (parentTrackId) {
-        const parentTrack = (yield call(retrieveTracks, {
-          trackIds: [parentTrackId]
+      const { parentAgreementId } = action
+      if (parentAgreementId) {
+        const parentAgreement = (yield call(retrieveAgreements, {
+          agreementIds: [parentAgreementId]
         }))[0]
-        if (parentTrack) {
-          const parentTrackUser = (yield select(getUsers, {
-            ids: [parentTrack.owner_id]
-          }))[parentTrack.owner_id]
-          if (parentTrackUser) {
-            const route = trackRemixesPage(parentTrack.permalink)
+        if (parentAgreement) {
+          const parentAgreementUser = (yield select(getUsers, {
+            ids: [parentAgreement.owner_id]
+          }))[parentAgreement.owner_id]
+          if (parentAgreementUser) {
+            const route = agreementRemixesPage(parentAgreement.permalink)
             yield put(pushRoute(route))
           }
         }
@@ -243,12 +243,12 @@ function* watchGoToRemixesOfParentPage() {
 
 export default function sagas() {
   return [
-    ...tracksSagas(),
-    watchFetchTrack,
-    watchFetchTrackSucceeded,
+    ...agreementsSagas(),
+    watchFetchAgreement,
+    watchFetchAgreementSucceeded,
     watchRefetchLineup,
-    watchTrackBadge,
-    watchTrackPageMakePublic,
+    watchAgreementBadge,
+    watchAgreementPageMakePublic,
     watchGoToRemixesOfParentPage
   ]
 }

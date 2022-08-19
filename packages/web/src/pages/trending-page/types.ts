@@ -1,4 +1,4 @@
-import { ID, Lineup, TimeRange, Track, UID, User } from '@coliving/common'
+import { ID, Lineup, TimeRange, Agreement, UID, User } from '@coliving/common'
 
 type ExtraTrendingLineupProps = {}
 
@@ -13,8 +13,8 @@ export interface TrendingPageContentProps {
   fetchSuggestedFollowUsers: () => void
   followUsers: (userIDs: ID[]) => void
   suggestedFollows: User[]
-  playTrendingTrack: (uid: UID) => void
-  pauseTrendingTrack: () => void
+  playTrendingAgreement: (uid: UID) => void
+  pauseTrendingAgreement: () => void
   refreshTrendingInView: (overwrite: boolean) => void
   hasAccount: boolean
   goToTrending: () => void
@@ -26,7 +26,7 @@ export interface TrendingPageContentProps {
     lineup: Lineup<any>
     playingUid: UID
     playingSource: string
-    playingTrackId: ID | null
+    playingAgreementId: ID | null
     playing: boolean
     buffering: boolean
     scrollParent: HTMLElement | null
@@ -43,8 +43,8 @@ export interface TrendingPageContentProps {
   makeLoadMore: (
     timeRange: TimeRange
   ) => (offset: number, limit: number, overwrite: boolean) => void
-  makePlayTrack: (timeRange: TimeRange) => (uid: string) => void
-  makePauseTrack: (timeRange: TimeRange) => () => void
+  makePlayAgreement: (timeRange: TimeRange) => (uid: string) => void
+  makePauseAgreement: (timeRange: TimeRange) => () => void
   makeSetInView: (timeRange: TimeRange) => (inView: boolean) => void
   makeRefreshTrendingInView: (
     timeRange: TimeRange
@@ -53,9 +53,9 @@ export interface TrendingPageContentProps {
 
   getLineupForRange: (timeRange: TimeRange) => {
     playingUid: UID
-    lineup: Lineup<Track>
+    lineup: Lineup<Agreement>
     playingSource: any
-    playingTrackId: ID | null
+    playingAgreementId: ID | null
     playing: boolean
     buffering: boolean
     scrollParent: HTMLElement | null

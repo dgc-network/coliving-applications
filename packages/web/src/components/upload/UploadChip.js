@@ -7,8 +7,8 @@ import { ReactComponent as IconUpload } from 'assets/img/iconUpload.svg'
 import styles from './UploadChip.module.css'
 
 const messages = {
-  track: 'Upload Track',
-  aTrack: 'Upload A Track',
+  agreement: 'Upload Agreement',
+  aAgreement: 'Upload A Agreement',
   album: 'Upload New Album',
   playlist: 'Create New Playlist',
   artistPlaylist: 'Upload New Playlist',
@@ -19,7 +19,7 @@ const messages = {
 
 const UploadChip = ({ type, variant, isArtist = false, isFirst, onClick }) => {
   const icon =
-    type === 'track' || type === 'album' ? (
+    type === 'agreement' || type === 'album' ? (
       <IconUpload className={styles.iconUpload} />
     ) : (
       <IconPlus className={styles.iconPlus} />
@@ -27,8 +27,8 @@ const UploadChip = ({ type, variant, isArtist = false, isFirst, onClick }) => {
 
   let text
   switch (type) {
-    case 'track':
-      text = variant === 'nav' ? messages.track : messages.aTrack
+    case 'agreement':
+      text = variant === 'nav' ? messages.agreement : messages.aAgreement
       break
     case 'album':
       text = isFirst ? messages.firstAlbum : messages.album
@@ -60,10 +60,10 @@ const UploadChip = ({ type, variant, isArtist = false, isFirst, onClick }) => {
 }
 
 UploadChip.propTypes = {
-  type: PropTypes.oneOf(['track', 'album', 'playlist']).isRequired,
+  type: PropTypes.oneOf(['agreement', 'album', 'playlist']).isRequired,
   // nav: For display in a nav-like column
   // card: Looks like a 'Card'
-  // tile: Looks like a 'TrackTile'
+  // tile: Looks like a 'AgreementTile'
   variant: PropTypes.oneOf(['nav', 'card', 'tile']).isRequired,
   // Is this upload the user's first of this type
   isFirst: PropTypes.bool,
@@ -71,7 +71,7 @@ UploadChip.propTypes = {
 }
 
 UploadChip.defaultProps = {
-  type: 'track',
+  type: 'agreement',
   variant: 'tile',
   onClick: () => {}
 }

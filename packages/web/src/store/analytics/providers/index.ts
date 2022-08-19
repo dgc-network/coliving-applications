@@ -2,7 +2,7 @@ import { Nullable, BooleanKeys } from '@coliving/common'
 
 import {
   SetAnalyticsUser,
-  TrackAnalyticsEvent
+  AgreementAnalyticsEvent
 } from 'services/native-mobile-interface/analytics'
 import { remoteConfigInstance } from 'services/remote-config/remote-config-instance'
 
@@ -44,11 +44,11 @@ export const init = async () => {
   }
 }
 
-let trackCounter = 0
+let agreementCounter = 0
 
-const TRACK_LIMIT = 10000
+const AGREEMENT_LIMIT = 10000
 
-export const track = async (
+export const agreement = async (
   event: string,
   properties?: Record<string, any>,
   callback?: () => void
@@ -60,28 +60,28 @@ export const track = async (
 
     if (!IS_PRODUCTION_BUILD) {
       console.info(
-        `${useAmplitude ? 'Amplitude' : 'Segment'} | track`,
+        `${useAmplitude ? 'Amplitude' : 'Segment'} | agreement`,
         event,
         properties
       )
     }
-    // stop tracking analytics after we reach session limit
-    if (trackCounter++ >= TRACK_LIMIT) return
+    // stop agreementing analytics after we reach session limit
+    if (agreementCounter++ >= AGREEMENT_LIMIT) return
 
-    // Add generic track event context for every event
+    // Add generic agreement event context for every event
     const propertiesWithContext = {
       ...properties,
       clientVersion: version
     }
 
     if (NATIVE_MOBILE) {
-      const message = new TrackAnalyticsEvent(event, propertiesWithContext)
+      const message = new AgreementAnalyticsEvent(event, propertiesWithContext)
       message.send()
     } else {
       await didInit
       if (useAmplitude)
-        return amplitude.track(event, propertiesWithContext, callback)
-      return segment.track(event, propertiesWithContext, {}, callback)
+        return amplitude.agreement(event, propertiesWithContext, callback)
+      return segment.agreement(event, propertiesWithContext, {}, callback)
     }
   } catch (err) {
     console.error(err)

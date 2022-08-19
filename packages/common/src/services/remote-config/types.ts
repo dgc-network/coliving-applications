@@ -56,7 +56,7 @@ export enum IntKeys {
   INSTAGRAM_HANDLE_CHECK_TIMEOUT = 'INSTAGRAM_HANDLE_CHECK_TIMEOUT',
 
   /**
-   * Number of random (recommended) tracks to fetch and add to the autoplay queue
+   * Number of random (recommended) agreements to fetch and add to the autoplay queue
    */
   AUTOPLAY_LIMIT = 'AUTOPLAY_LIMIT',
 
@@ -152,7 +152,7 @@ export enum BooleanKeys {
   SKIP_ROLLOVER_NODES_SANITY_CHECK = 'SKIP_ROLLOVER_NODES_SANITY_CHECK',
 
   /**
-   * Boolean to use amplitude as the metrics tracking.
+   * Boolean to use amplitude as the metrics agreementing.
    */
   USE_AMPLITUDE = 'USE_AMPLITUDE'
 }
@@ -222,8 +222,8 @@ export enum StringKeys {
   TRENDING_REWARD_IDS = 'TRENDING_REWARD_IDS',
   CHALLENGE_REWARD_IDS = 'CHALLENGE_REWARD_IDS',
 
-  /** Embedded tweet for trending rewards UI tracks */
-  REWARDS_TWEET_ID_TRACKS = 'REWARDS_TWEET_ID_TRACKS',
+  /** Embedded tweet for trending rewards UI agreements */
+  REWARDS_TWEET_ID_AGREEMENTS = 'REWARDS_TWEET_ID_AGREEMENTS',
 
   /** Embedded tweet for trending rewards UI playlists */
   REWARDS_TWEET_ID_PLAYLISTS = 'REWARDS_TWEET_ID_PLAYLISTS',
@@ -232,7 +232,7 @@ export enum StringKeys {
   REWARDS_TWEET_ID_UNDERGROUND = 'REWARDS_TWEET_ID_UNDERGROUND',
 
   /** Audio that should be streamed via mp3 rather than HLS. Comma separated hash ids. */
-  FORCE_MP3_STREAM_TRACK_IDS = 'FORCE_MP3_STREAM_TRACK_IDS',
+  FORCE_MP3_STREAM_AGREEMENT_IDS = 'FORCE_MP3_STREAM_AGREEMENT_IDS',
 
   /** TF */
   TF = 'TF',

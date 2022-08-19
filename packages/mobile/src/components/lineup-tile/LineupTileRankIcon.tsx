@@ -7,7 +7,7 @@ import { useThemedStyles } from 'app/hooks/useThemedStyles'
 import type { ThemeColors } from 'app/utils/theme'
 import { useThemeColors } from 'app/utils/theme'
 
-import { createStyles as createTrackTileStyles } from './styles'
+import { createStyles as createAgreementTileStyles } from './styles'
 
 type Props = {
   /** Whether or not to show the crown icon */
@@ -28,13 +28,13 @@ const createStyles = (themeColors: ThemeColors) =>
 
 export const LineupTileRankIcon = ({ showCrown, index }: Props) => {
   const styles = useThemedStyles(createStyles)
-  const trackTileStyles = useThemedStyles(createTrackTileStyles)
+  const agreementTileStyles = useThemedStyles(createAgreementTileStyles)
   const { secondary } = useThemeColors()
   const Icon = showCrown ? IconCrown : IconTrending
   return (
-    <View style={trackTileStyles.statItem}>
+    <View style={agreementTileStyles.statItem}>
       <Icon fill={secondary} style={styles.icon} height={14} width={14} />
-      <Text style={[trackTileStyles.statText, styles.text]}>{index + 1}</Text>
+      <Text style={[agreementTileStyles.statText, styles.text]}>{index + 1}</Text>
     </View>
   )
 }

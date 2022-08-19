@@ -11,22 +11,22 @@ import {
   trendingAllTimeActions
 } from 'common/store/pages/trending/lineup/actions'
 import { getTrendingGenre } from 'common/store/pages/trending/selectors'
-import { retrieveTrending } from 'pages/track-page/store/retrieveTrending'
+import { retrieveTrending } from 'pages/agreement-page/store/retrieveTrending'
 import { LineupSagas } from 'store/lineup/sagas'
 
-function getTracks(timeRange) {
+function getAgreements(timeRange) {
   return function* ({ offset, limit }) {
     const genreAtStart = yield select(getTrendingGenre)
     const userId = yield select(getUserId)
     try {
-      const tracks = yield retrieveTrending({
+      const agreements = yield retrieveTrending({
         timeRange,
         limit,
         offset,
         genre: genreAtStart,
         currentUserId: userId
       })
-      return tracks
+      return agreements
     } catch (e) {
       console.error(`Trending error: ${e.message}`)
       return []
@@ -40,7 +40,7 @@ class TrendingWeekSagas extends LineupSagas {
       TRENDING_WEEK_PREFIX,
       trendingWeekActions,
       (store) => store.pages.trending.trendingWeek,
-      getTracks(TimeRange.WEEK)
+      getAgreements(TimeRange.WEEK)
     )
   }
 }
@@ -51,7 +51,7 @@ class TrendingMonthSagas extends LineupSagas {
       TRENDING_MONTH_PREFIX,
       trendingMonthActions,
       (store) => store.pages.trending.trendingMonth,
-      getTracks(TimeRange.MONTH)
+      getAgreements(TimeRange.MONTH)
     )
   }
 }
@@ -62,7 +62,7 @@ class TrendingAllTimeSagas extends LineupSagas {
       TRENDING_ALL_TIME_PREFIX,
       trendingAllTimeActions,
       (store) => store.pages.trending.trendingAllTime,
-      getTracks(TimeRange.ALL_TIME)
+      getAgreements(TimeRange.ALL_TIME)
     )
   }
 }

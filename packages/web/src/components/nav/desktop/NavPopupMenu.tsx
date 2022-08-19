@@ -10,7 +10,7 @@ import {
 import cn from 'classnames'
 
 import { ReactComponent as IconKebabHorizontal } from 'assets/img/iconKebabHorizontalAlt.svg'
-import { getAccountHasTracks } from 'common/store/account/selectors'
+import { getAccountHasAgreements } from 'common/store/account/selectors'
 import { useNavigateToPage } from 'hooks/useNavigateToPage'
 import { useSelector } from 'utils/reducer'
 import { LIVE_PAGE, DASHBOARD_PAGE, SETTINGS_PAGE } from 'utils/route'
@@ -24,13 +24,13 @@ const messages = {
   live: '$LIVE & Rewards'
 }
 
-const useAccountHasTracks = () => {
-  return useSelector(getAccountHasTracks)
+const useAccountHasAgreements = () => {
+  return useSelector(getAccountHasAgreements)
 }
 
 const NavPopupMenu = () => {
   const navigate = useNavigateToPage()
-  const hasTracks = useAccountHasTracks()
+  const hasAgreements = useAccountHasAgreements()
 
   const menuItems: PopupMenuItem[] = [
     {
@@ -39,7 +39,7 @@ const NavPopupMenu = () => {
       icon: <IconSettings />,
       iconClassName: styles.menuItemIcon
     },
-    hasTracks
+    hasAgreements
       ? {
           text: messages.dashboard,
           onClick: () => navigate(DASHBOARD_PAGE),

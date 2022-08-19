@@ -17,7 +17,7 @@ import {
   TagSearchScreen
 } from 'app/screens/search-results-screen'
 import { SearchScreen } from 'app/screens/search-screen'
-import { TrackScreen } from 'app/screens/track-screen'
+import { AgreementScreen } from 'app/screens/agreement-screen'
 import {
   FavoritedScreen,
   FollowersScreen,
@@ -28,18 +28,18 @@ import {
   TopSupportersScreen,
   SupportingUsersScreen
 } from 'app/screens/user-list-screen'
-import type { SearchPlaylist, SearchTrack } from 'app/store/search/types'
+import type { SearchPlaylist, SearchAgreement } from 'app/store/search/types'
 
 import { EditPlaylistScreen } from '../edit-playlist-screen/EditPlaylistScreen'
 import { NotificationsDrawerNavigationContext } from '../notifications-screen/NotificationsDrawerNavigationContext'
 import { TipArtistModal } from '../tip-artist-screen'
-import { TrackRemixesScreen } from '../track-screen/TrackRemixesScreen'
+import { AgreementRemixesScreen } from '../agreement-screen/AgreementRemixesScreen'
 
 import { useAppScreenOptions } from './useAppScreenOptions'
 
 export type AppTabScreenParamList = {
-  Track: { id: ID; searchTrack?: SearchTrack }
-  TrackRemixes: { id: ID }
+  Agreement: { id: ID; searchAgreement?: SearchAgreement }
+  AgreementRemixes: { id: ID }
   Profile: { handle: string }
   Collection: { id: ID; searchCollection?: SearchPlaylist }
   EditPlaylist: { id: ID }
@@ -82,7 +82,7 @@ type AppTabScreenProps = {
 
 /**
  * This is the base tab screen that includes common screens
- * like track and profile
+ * like agreement and profile
  */
 export const AppTabScreen = ({ baseScreen, Stack }: AppTabScreenProps) => {
   const dispatchWeb = useDispatchWeb()
@@ -141,13 +141,13 @@ export const AppTabScreen = ({ baseScreen, Stack }: AppTabScreenProps) => {
     >
       {baseScreen(Stack)}
       <Stack.Screen
-        name='Track'
-        component={TrackScreen}
+        name='Agreement'
+        component={AgreementScreen}
         options={screenOptions}
       />
       <Stack.Screen
-        name='TrackRemixes'
-        component={TrackRemixesScreen}
+        name='AgreementRemixes'
+        component={AgreementRemixesScreen}
         options={screenOptions}
       />
       <Stack.Screen

@@ -29,7 +29,7 @@ import RepostFavoritesStats from 'components/repost-favorites-stats/RepostFavori
 import Skeleton from 'components/skeleton/Skeleton'
 import Toast from 'components/toast/Toast'
 import Tooltip from 'components/tooltip/Tooltip'
-import InfoLabel from 'components/track/InfoLabel'
+import InfoLabel from 'components/agreement/InfoLabel'
 import UserBadges from 'components/user-badges/UserBadges'
 import { useCollectionCoverArt } from 'hooks/useCollectionCoverArt'
 
@@ -60,7 +60,7 @@ const messages = {
   favorite: 'Favorite',
   unfavorite: 'Unfavorite',
   playlistViewable: 'Your playlist can now be viewed by others!',
-  filter: 'Filter Tracks'
+  filter: 'Filter Agreements'
 }
 
 const PlayButton = (props) => {
@@ -98,7 +98,7 @@ const repostButtonText = (isReposted) =>
 const favoriteButtonText = (isFavorited) =>
   isFavorited ? messages.favoriteButtonFavorited : messages.favoriteButton
 
-const ViewerHasTracksButtons = (props) => {
+const ViewerHasAgreementsButtons = (props) => {
   return (
     <>
       <PlayButton playing={props.playing} onPlay={props.onPlay} />
@@ -170,7 +170,7 @@ const ViewerHasTracksButtons = (props) => {
   )
 }
 
-const ViewerNoTracksButtons = (props) => {
+const ViewerNoAgreementsButtons = (props) => {
   return (
     <>
       <Button
@@ -259,7 +259,7 @@ const SmartCollectionButtons = (props) => {
   )
 }
 
-const OwnerNoTracksButtons = (props) => {
+const OwnerNoAgreementsButtons = (props) => {
   return (
     <>
       <Button
@@ -417,18 +417,18 @@ const Buttons = (props) => {
     buttons = <SmartCollectionButtons {...buttonProps} />
   } else {
     if (props.isOwner) {
-      if (props.hasTracks && props.isPublished) {
+      if (props.hasAgreements && props.isPublished) {
         buttons = <OwnerPublishedButtons {...buttonProps} />
-      } else if (props.hasTracks && !props.isPublished) {
+      } else if (props.hasAgreements && !props.isPublished) {
         buttons = <OwnerNotPublishedButtons {...buttonProps} />
       } else {
-        buttons = <OwnerNoTracksButtons {...buttonProps} />
+        buttons = <OwnerNoAgreementsButtons {...buttonProps} />
       }
     } else {
-      if (props.hasTracks) {
-        buttons = <ViewerHasTracksButtons {...buttonProps} />
+      if (props.hasAgreements) {
+        buttons = <ViewerHasAgreementsButtons {...buttonProps} />
       } else {
-        buttons = <ViewerNoTracksButtons {...buttonProps} />
+        buttons = <ViewerNoAgreementsButtons {...buttonProps} />
       }
     }
   }
@@ -523,11 +523,11 @@ class CollectionHeader extends PureComponent {
       isOwner,
       isAlbum,
       modified,
-      numTracks,
+      numAgreements,
       duration,
       isPublished,
       isPublishing,
-      tracksLoading,
+      agreementsLoading,
       loading,
       playing,
       isReposted,
@@ -614,8 +614,8 @@ class CollectionHeader extends PureComponent {
               ) : null}
               <InfoLabel
                 className={styles.infoLabelPlacement}
-                labelName='tracks'
-                labelValue={numTracks}
+                labelName='agreements'
+                labelValue={numAgreements}
               />
             </div>
             <div className={cn(styles.description, fadeIn)}>
@@ -632,11 +632,11 @@ class CollectionHeader extends PureComponent {
             </div>
             <div
               className={cn(styles.buttonSection, {
-                [styles.show]: !tracksLoading,
-                [styles.hide]: tracksLoading
+                [styles.show]: !agreementsLoading,
+                [styles.hide]: agreementsLoading
               })}
             >
-              {!tracksLoading && (
+              {!agreementsLoading && (
                 <Buttons
                   variant={variant}
                   playlistId={collectionId}
@@ -645,7 +645,7 @@ class CollectionHeader extends PureComponent {
                   type={type}
                   ownerHandle={artistHandle}
                   isAlbum={isAlbum}
-                  hasTracks={numTracks > 0}
+                  hasAgreements={numAgreements > 0}
                   isPublished={isPublished}
                   isPreviouslyUnpublished={this.state.previouslyUnpublished}
                   unsetPreviouslyPublished={this.unsetPreviouslyPublished}
@@ -691,7 +691,7 @@ CollectionHeader.propTypes = {
   collectionId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   index: PropTypes.number,
   loading: PropTypes.bool,
-  tracksLoading: PropTypes.bool,
+  agreementsLoading: PropTypes.bool,
   playing: PropTypes.bool,
   active: PropTypes.bool,
   type: PropTypes.oneOf(['playlist', 'album']),
@@ -705,7 +705,7 @@ CollectionHeader.propTypes = {
 
   isOwner: PropTypes.bool,
   isAlbum: PropTypes.bool,
-  hasTracks: PropTypes.bool,
+  hasAgreements: PropTypes.bool,
   isPublished: PropTypes.bool,
   isPublishing: PropTypes.bool,
   isSaved: PropTypes.bool,
@@ -737,7 +737,7 @@ CollectionHeader.defaultProps = {
 
   isOwner: false,
   isAlbum: false,
-  hasTracks: false,
+  hasAgreements: false,
   isPublished: false,
   isPublishing: false,
   isSaved: false,

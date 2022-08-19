@@ -6,7 +6,7 @@ import UserBadges from 'app/components/user-badges/UserBadges'
 import { useThemedStyles } from 'app/hooks/useThemedStyles'
 import { flexRowCentered } from 'app/styles'
 
-import { createStyles as createTrackTileStyles } from './styles'
+import { createStyles as createAgreementTileStyles } from './styles'
 
 const messages = {
   coSign: 'Co-Sign',
@@ -54,11 +54,11 @@ type Props = {
 }
 
 export const LineupTileCoSign = ({ coSign }: Props) => {
-  const trackTileStyles = useThemedStyles(createTrackTileStyles)
+  const agreementTileStyles = useThemedStyles(createAgreementTileStyles)
   return (
     <View style={styles.coSignText}>
       <View style={styles.coSignName}>
-        <Text style={trackTileStyles.statText}>{coSign.user.name}</Text>
+        <Text style={agreementTileStyles.statText}>{coSign.user.name}</Text>
         <UserBadges
           user={coSign.user}
           style={styles.coSignIcon}
@@ -66,7 +66,7 @@ export const LineupTileCoSign = ({ coSign }: Props) => {
           hideName
         />
       </View>
-      <Text style={trackTileStyles.statText}>
+      <Text style={agreementTileStyles.statText}>
         {formatCoSign({
           hasReposted: coSign.has_remix_author_reposted,
           hasFavorited: coSign.has_remix_author_saved

@@ -91,10 +91,10 @@ export const SEARCH_CATEGORY_PAGE = '/search/:query/:category'
 export const SEARCH_PAGE = '/search/:query?'
 export const PLAYLIST_PAGE = '/:handle/playlist/:playlistName'
 export const ALBUM_PAGE = '/:handle/album/:albumName'
-export const TRACK_PAGE = '/:handle/:slug'
-export const TRACK_REMIXES_PAGE = '/:handle/:slug/remixes'
+export const AGREEMENT_PAGE = '/:handle/:slug'
+export const AGREEMENT_REMIXES_PAGE = '/:handle/:slug/remixes'
 export const PROFILE_PAGE = '/:handle'
-export const PROFILE_PAGE_TRACKS = '/:handle/tracks'
+export const PROFILE_PAGE_AGREEMENTS = '/:handle/agreements'
 export const PROFILE_PAGE_ALBUMS = '/:handle/albums'
 export const PROFILE_PAGE_PLAYLISTS = '/:handle/playlists'
 export const PROFILE_PAGE_REPOSTS = '/:handle/reposts'
@@ -102,7 +102,7 @@ export const PROFILE_PAGE_COLLECTIBLES = '/:handle/collectibles'
 export const PROFILE_PAGE_COLLECTIBLE_DETAILS =
   '/:handle/collectibles/:collectibleId'
 // Opaque id routes
-export const TRACK_ID_PAGE = '/tracks/:id'
+export const AGREEMENT_ID_PAGE = '/agreements/:id'
 export const USER_ID_PAGE = '/users/:id'
 export const PLAYLIST_ID_PAGE = '/playlists/:id'
 
@@ -197,7 +197,7 @@ export const orderedRoutes = [
   HOME_PAGE,
   PLAYLIST_PAGE,
   ALBUM_PAGE,
-  TRACK_PAGE,
+  AGREEMENT_PAGE,
   REPOSTING_USERS_ROUTE,
   FAVORITING_USERS_ROUTE,
   FOLLOWING_USERS_ROUTE,
@@ -254,15 +254,15 @@ export const findRoute = (pathname: string) => {
 }
 
 // Create full formed urls for routes.
-export const fullTrackPage = (permalink: string) => {
+export const fullAgreementPage = (permalink: string) => {
   return `${BASE_URL}${permalink}`
 }
 
-export const trackRemixesPage = (permalink: string) => {
+export const agreementRemixesPage = (permalink: string) => {
   return `${permalink}/remixes`
 }
-export const fullTrackRemixesPage = (permalink: string) => {
-  return `${fullTrackPage(permalink)}/remixes`
+export const fullAgreementRemixesPage = (permalink: string) => {
+  return `${fullAgreementPage(permalink)}/remixes`
 }
 
 export const albumPage = (handle: string, title: string, id: ID) => {
@@ -369,7 +369,7 @@ export const doesRenderPage = (pageRoute: string) => {
 
 export const recordGoToSignup = (callback: () => void) => {
   if ((window as any).analytics) {
-    ;(window as any).analytics.track(
+    ;(window as any).analytics.agreement(
       'Create Account: Open',
       { source: 'landing page' },
       null,

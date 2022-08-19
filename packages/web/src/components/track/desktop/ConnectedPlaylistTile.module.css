@@ -2,33 +2,33 @@
   opacity: 0.75;
 }
 
-.tracksContainer {
+.agreementsContainer {
   overflow-y: auto;
   max-height: 240px;
   background: var(--white);
 }
 
-.loading .tracksContainer {
+.loading .agreementsContainer {
   padding-bottom: 24px;
 }
 
-.small .tracksContainer {
+.small .agreementsContainer {
   max-height: 100px;
 }
 
-.medium .tracksContainer {
+.medium .agreementsContainer {
   max-height: 120px;
 }
 
-.tracksContainer::-webkit-scrollbar {
+.agreementsContainer::-webkit-scrollbar {
   display: none;
 }
 
-.trackTile:hover {
+.agreementTile:hover {
   background: var(--neutral-light-10) !important;
 }
 
-.container:hover .tracksContainer {
+.container:hover .agreementsContainer {
   background: var(--neutral-light-10);
 }
 

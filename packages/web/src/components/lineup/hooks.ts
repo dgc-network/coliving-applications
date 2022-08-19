@@ -56,8 +56,8 @@ export const useLineupProps = ({
   const isBuffering = useSelector(getBuffering)
 
   // Actions
-  const pauseTrack = () => dispatch(actions.pause())
-  const playTrack = (uid: string) => dispatch(actions.play(uid))
+  const pauseAgreement = () => dispatch(actions.pause())
+  const playAgreement = (uid: string) => dispatch(actions.play(uid))
   const loadMore = (offset: number, limit: number, overwrite: boolean) => {
     dispatch(actions.fetchLineupMetadatas(offset, limit, overwrite))
   }
@@ -68,11 +68,11 @@ export const useLineupProps = ({
     variant: variant ?? LineupVariant.MAIN,
     playingUid: currentQueueItem?.uid,
     playingSource: currentQueueItem?.source,
-    playingTrackId: currentQueueItem?.track?.track_id ?? null,
+    playingAgreementId: currentQueueItem?.agreement?.agreement_id ?? null,
     playing: isPlaying,
     buffering: isBuffering,
-    pauseTrack,
-    playTrack,
+    pauseAgreement,
+    playAgreement,
     actions,
     loadMore,
     numPlaylistSkeletonRows,

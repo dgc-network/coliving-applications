@@ -1,32 +1,32 @@
 import { call, put, select } from 'typed-redux-saga'
 
 import { getUserId } from 'common/store/account/selectors'
-import { processAndCacheTracks } from 'common/store/cache/tracks/utils'
+import { processAndCacheAgreements } from 'common/store/cache/agreements/utils'
 import {
   PREFIX,
-  tracksActions
+  agreementsActions
 } from 'common/store/pages/remixes/lineup/actions'
-import { getTrackId, getLineup } from 'common/store/pages/remixes/selectors'
+import { getAgreementId, getLineup } from 'common/store/pages/remixes/selectors'
 import { setCount } from 'common/store/pages/remixes/slice'
 import apiClient from 'services/coliving-api-client/ColivingAPIClient'
 import { LineupSagas } from 'store/lineup/sagas'
 import { AppState } from 'store/types'
 
-function* getTracks({
+function* getAgreements({
   offset,
   limit,
   payload
 }: {
   offset: number
   limit: number
-  payload: { trackId: number | null }
+  payload: { agreementId: number | null }
 }) {
-  const { trackId } = payload
-  if (!trackId) return []
+  const { agreementId } = payload
+  if (!agreementId) return []
 
   const currentUserId = yield* select(getUserId)
-  const { tracks, count } = yield* call([apiClient, 'getRemixes'], {
-    trackId,
+  const { agreements, count } = yield* call([apiClient, 'getRemixes'], {
+    agreementId,
     offset,
     limit,
     currentUserId
@@ -34,20 +34,20 @@ function* getTracks({
 
   yield* put(setCount({ count }))
 
-  const processedTracks = yield* call(processAndCacheTracks, tracks)
+  const processedAgreements = yield* call(processAndCacheAgreements, agreements)
 
-  return processedTracks
+  return processedAgreements
 }
 
-const sourceSelector = (state: AppState) => `${PREFIX}:${getTrackId(state)}`
+const sourceSelector = (state: AppState) => `${PREFIX}:${getAgreementId(state)}`
 
-class TracksSagas extends LineupSagas {
+class AgreementsSagas extends LineupSagas {
   constructor() {
     super(
       PREFIX,
-      tracksActions,
+      agreementsActions,
       getLineup,
-      getTracks,
+      getAgreements,
       undefined,
       undefined,
       sourceSelector
@@ -56,5 +56,5 @@ class TracksSagas extends LineupSagas {
 }
 
 export default function sagas() {
-  return new TracksSagas().getSagas()
+  return new AgreementsSagas().getSagas()
 }

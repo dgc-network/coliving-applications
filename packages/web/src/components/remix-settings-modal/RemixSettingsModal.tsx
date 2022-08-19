@@ -1,14 +1,14 @@
 import { useCallback, useState, useEffect, useRef } from 'react'
 
-import { ID, SquareSizes, Track, User } from '@coliving/common'
+import { ID, SquareSizes, Agreement, User } from '@coliving/common'
 import { Modal, Button, ButtonSize, ButtonType } from '@coliving/stems'
 import { debounce } from 'lodash'
 
 import Input from 'components/data-entry/Input'
 import DynamicImage from 'components/dynamic-image/DynamicImage'
 import UserBadges from 'components/user-badges/UserBadges'
-import { useTrackCoverArt } from 'hooks/useTrackCoverArt'
-import { fullTrackPage } from 'utils/route'
+import { useAgreementCoverArt } from 'hooks/useAgreementCoverArt'
+import { fullAgreementPage } from 'utils/route'
 import { withNullGuard } from 'utils/withNullGuard'
 
 import styles from './RemixSettingsModal.module.css'
@@ -18,32 +18,32 @@ const INPUT_DEBOUNCE_MS = 1000
 const messages = {
   done: 'DONE',
   title: 'REMIX SETTINGS',
-  subtitle: 'Specify what track you remixed here',
-  remixOf: 'This is a Remix of: (Paste Coliving Track URL)',
-  error: 'Please paste a valid Coliving track URL',
+  subtitle: 'Specify what agreement you remixed here',
+  remixOf: 'This is a Remix of: (Paste Coliving Agreement URL)',
+  error: 'Please paste a valid Coliving agreement URL',
   by: 'by'
 }
 
-type TrackInfoProps = {
-  track: Track | null
+type AgreementInfoProps = {
+  agreement: Agreement | null
   user: User | null
 }
 
 const g = withNullGuard(
-  ({ track, user, ...p }: TrackInfoProps) =>
-    track && user && { ...p, track, user }
+  ({ agreement, user, ...p }: AgreementInfoProps) =>
+    agreement && user && { ...p, agreement, user }
 )
 
-const TrackInfo = g(({ track, user }) => {
-  const image = useTrackCoverArt(
-    track.track_id,
-    track._cover_art_sizes,
+const AgreementInfo = g(({ agreement, user }) => {
+  const image = useAgreementCoverArt(
+    agreement.agreement_id,
+    agreement._cover_art_sizes,
     SquareSizes.SIZE_150_BY_150
   )
   return (
-    <div className={styles.track}>
+    <div className={styles.agreement}>
       <DynamicImage wrapperClassName={styles.artwork} image={image} />
-      {track.title}
+      {agreement.title}
       <div className={styles.by}>{messages.by}</div>
       <div className={styles.artistName}>
         {user.name}
@@ -59,10 +59,10 @@ const TrackInfo = g(({ track, user }) => {
 
 type RemixSettingsModalProps = {
   isOpen: boolean
-  onClose: (trackId: ID | null) => void
+  onClose: (agreementId: ID | null) => void
   onEditUrl: (url: string) => void
-  isInvalidTrack: boolean
-  track: Track | null
+  isInvalidAgreement: boolean
+  agreement: Agreement | null
   user: User | null
 }
 
@@ -70,19 +70,19 @@ const RemixSettingsModal = ({
   isOpen,
   onClose,
   onEditUrl,
-  track,
+  agreement,
   user,
-  isInvalidTrack
+  isInvalidAgreement
 }: RemixSettingsModalProps) => {
   const inputRef = useRef<HTMLInputElement>(null)
 
   const [url, setUrl] = useState<string | null>(null)
 
   useEffect(() => {
-    if (url === null && track && isOpen) {
-      setUrl(fullTrackPage(track.permalink))
+    if (url === null && agreement && isOpen) {
+      setUrl(fullAgreementPage(agreement.permalink))
     }
-  }, [isOpen, track, url, setUrl])
+  }, [isOpen, agreement, url, setUrl])
 
   useEffect(() => {
     if (!isOpen) setUrl(null)
@@ -110,9 +110,9 @@ const RemixSettingsModal = ({
   )
 
   const onCloseModal = useCallback(() => {
-    const trackId = url && track && !isInvalidTrack ? track.track_id : null
-    onClose(trackId)
-  }, [onClose, track, isInvalidTrack, url])
+    const agreementId = url && agreement && !isInvalidAgreement ? agreement.agreement_id : null
+    onClose(agreementId)
+  }, [onClose, agreement, isInvalidAgreement, url])
 
   return (
     <Modal
@@ -123,7 +123,7 @@ const RemixSettingsModal = ({
       subtitle={messages.subtitle}
       dismissOnClickOutside
       showDismissButton
-      // Since this can be nested in the edit track modal
+      // Since this can be nested in the edit agreement modal
       // Appear on top of it
       zIndex={1002}
       bodyClassName={styles.modalContainer}
@@ -142,10 +142,10 @@ const RemixSettingsModal = ({
         />
         {url && (
           <div className={styles.bottom}>
-            {isInvalidTrack ? (
+            {isInvalidAgreement ? (
               <div className={styles.error}>{messages.error}</div>
             ) : (
-              <TrackInfo user={user} track={track} />
+              <AgreementInfo user={user} agreement={agreement} />
             )}
           </div>
         )}

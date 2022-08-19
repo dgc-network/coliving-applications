@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 
-import { getTrack } from '-client/src/common/store/cache/tracks/selectors'
+import { getAgreement } from '-client/src/common/store/cache/agreements/selectors'
 import { getUser } from '-client/src/common/store/cache/users/selectors'
 import { next, previous } from '-client/src/common/store/queue/slice'
 import { Genre } from '-client/src/common/utils/genres'
@@ -27,7 +27,7 @@ import { useSelectorWeb } from 'app/hooks/useSelectorWeb'
 import { SEEK, seek } from 'app/store/live/actions'
 import {
   getPlaying,
-  getTrack as getNativeTrack
+  getAgreement as getNativeAgreement
 } from 'app/store/live/selectors'
 import { makeStyles } from 'app/styles'
 
@@ -37,7 +37,7 @@ import { AudioControls } from './AudioControls'
 import { Logo } from './Logo'
 import { PlayBar } from './PlayBar'
 import { TitleBar } from './TitleBar'
-import { TrackInfo } from './TrackInfo'
+import { AgreementInfo } from './AgreementInfo'
 import { PLAY_BAR_HEIGHT } from './constants'
 
 const STATUS_BAR_FADE_CUTOFF = 0.6
@@ -68,7 +68,7 @@ const useStyles = makeStyles(({ spacing }) => ({
     flexShrink: 1,
     marginBottom: spacing(5)
   },
-  trackInfoContainer: {
+  agreementInfoContainer: {
     marginHorizontal: spacing(6),
     marginBottom: spacing(3)
   },
@@ -163,39 +163,39 @@ const NowPlayingDrawer = ({ translationAnim }: NowPlayingDrawerProps) => {
   const [isGestureEnabled, setIsGestureEnabled] = useState(true)
 
   // TODO: As we move away from the live store slice in mobile-client
-  // in favor of player/queue selectors in common, getNativeTrack calls
+  // in favor of player/queue selectors in common, getNativeAgreement calls
   // should be replaced
-  const trackInfo = useSelector(getNativeTrack)
-  const track = useSelectorWeb((state) =>
-    getTrack(state, trackInfo ? { id: trackInfo.trackId } : {})
+  const agreementInfo = useSelector(getNativeAgreement)
+  const agreement = useSelectorWeb((state) =>
+    getAgreement(state, agreementInfo ? { id: agreementInfo.agreementId } : {})
   )
   const user = useSelectorWeb((state) =>
-    getUser(state, track ? { id: track.owner_id } : {})
+    getUser(state, agreement ? { id: agreement.owner_id } : {})
   )
 
-  const trackId = trackInfo?.trackId
+  const agreementId = agreementInfo?.agreementId
   const [mediaKey, setMediaKey] = useState(0)
   useEffect(() => {
     setMediaKey((mediaKey) => mediaKey + 1)
-  }, [trackId])
+  }, [agreementId])
 
   const onNext = useCallback(() => {
-    if (track?.genre === Genre.PODCASTS) {
+    if (agreement?.genre === Genre.PODCASTS) {
       if (global.progress) {
         const { currentTime } = global.progress
         const newPosition = currentTime + SKIP_DURATION_SEC
         dispatch(
-          seek({ type: SEEK, seconds: Math.min(track.duration, newPosition) })
+          seek({ type: SEEK, seconds: Math.min(agreement.duration, newPosition) })
         )
       }
     } else {
       dispatchWeb(next({ skip: true }))
       setMediaKey((mediaKey) => mediaKey + 1)
     }
-  }, [dispatch, dispatchWeb, setMediaKey, track])
+  }, [dispatch, dispatchWeb, setMediaKey, agreement])
 
   const onPrevious = useCallback(() => {
-    if (track?.genre === Genre.PODCASTS) {
+    if (agreement?.genre === Genre.PODCASTS) {
       if (global.progress) {
         const { currentTime } = global.progress
         const newPosition = currentTime - SKIP_DURATION_SEC
@@ -205,7 +205,7 @@ const NowPlayingDrawer = ({ translationAnim }: NowPlayingDrawerProps) => {
       dispatchWeb(previous({}))
       setMediaKey((mediaKey) => mediaKey + 1)
     }
-  }, [dispatch, dispatchWeb, setMediaKey, track])
+  }, [dispatch, dispatchWeb, setMediaKey, agreement])
 
   const onPressScrubberIn = useCallback(() => {
     setIsGestureEnabled(false)
@@ -227,15 +227,15 @@ const NowPlayingDrawer = ({ translationAnim }: NowPlayingDrawerProps) => {
   }, [handleDrawerCloseFromSwipe, navigation, user])
 
   const handlePressTitle = useCallback(() => {
-    if (!track) {
+    if (!agreement) {
       return
     }
     navigation.push({
-      native: { screen: 'Track', params: { id: track.track_id } },
-      web: { route: track.permalink }
+      native: { screen: 'Agreement', params: { id: agreement.agreement_id } },
+      web: { route: agreement.permalink }
     })
     handleDrawerCloseFromSwipe()
-  }, [handleDrawerCloseFromSwipe, navigation, track])
+  }, [handleDrawerCloseFromSwipe, navigation, agreement])
 
   return (
     <Drawer
@@ -265,11 +265,11 @@ const NowPlayingDrawer = ({ translationAnim }: NowPlayingDrawerProps) => {
           { paddingTop: staticTopInset.current, paddingBottom: insets.bottom }
         ]}
       >
-        {track && user && (
+        {agreement && user && (
           <>
             <View style={styles.playBarContainer}>
               <PlayBar
-                track={track}
+                agreement={agreement}
                 user={user}
                 onPress={onDrawerOpen}
                 translationAnim={translationAnim}
@@ -283,13 +283,13 @@ const NowPlayingDrawer = ({ translationAnim }: NowPlayingDrawerProps) => {
               onPress={handlePressTitle}
               style={styles.artworkContainer}
             >
-              <Artwork track={track} />
+              <Artwork agreement={agreement} />
             </Pressable>
-            <View style={styles.trackInfoContainer}>
-              <TrackInfo
+            <View style={styles.agreementInfoContainer}>
+              <AgreementInfo
                 onPressArtist={handlePressArtist}
                 onPressTitle={handlePressTitle}
-                track={track}
+                agreement={agreement}
                 user={user}
               />
             </View>
@@ -299,16 +299,16 @@ const NowPlayingDrawer = ({ translationAnim }: NowPlayingDrawerProps) => {
                 isPlaying={isPlaying}
                 onPressIn={onPressScrubberIn}
                 onPressOut={onPressScrubberOut}
-                duration={track.duration}
+                duration={agreement.duration}
               />
             </View>
             <View style={styles.controlsContainer}>
               <AudioControls
                 onNext={onNext}
                 onPrevious={onPrevious}
-                isPodcast={track.genre === Genre.PODCASTS}
+                isPodcast={agreement.genre === Genre.PODCASTS}
               />
-              <ActionsBar track={track} />
+              <ActionsBar agreement={agreement} />
             </View>
           </>
         )}

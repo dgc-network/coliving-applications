@@ -37,11 +37,11 @@ export const encodeUrlName = (name: string) => {
 
 const COLIVING_URL = Config.COLIVING_URL
 
-export const getTrackRoute = (
-  track: { permalink: string },
+export const getAgreementRoute = (
+  agreement: { permalink: string },
   fullUrl = false
 ) => {
-  const route = track.permalink
+  const route = agreement.permalink
   return fullUrl ? `${COLIVING_URL}${route}` : route
 }
 

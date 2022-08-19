@@ -11,7 +11,7 @@ import { Dispatch } from 'redux'
 
 import { publishPlaylist } from 'common/store/cache/collections/actions'
 import { getCollection } from 'common/store/cache/collections/selectors'
-import { getTrack } from 'common/store/cache/tracks/selectors'
+import { getAgreement } from 'common/store/cache/agreements/selectors'
 import { getUser } from 'common/store/cache/users/selectors'
 import { unsubscribeUser } from 'common/store/notifications/actions'
 import { getNotificationById } from 'common/store/notifications/selectors'
@@ -28,11 +28,11 @@ import {
   unsaveCollection
 } from 'common/store/social/collections/actions'
 import {
-  repostTrack,
-  saveTrack,
-  undoRepostTrack,
-  unsaveTrack
-} from 'common/store/social/tracks/actions'
+  repostAgreement,
+  saveAgreement,
+  undoRepostAgreement,
+  unsaveAgreement
+} from 'common/store/social/agreements/actions'
 import {
   followUser,
   shareUser,
@@ -77,10 +77,10 @@ const ConnectedMobileOverflowModal = ({
   permalink,
   isAlbum,
   shareCollection,
-  repostTrack,
-  unrepostTrack,
-  saveTrack,
-  unsaveTrack,
+  repostAgreement,
+  unrepostAgreement,
+  saveAgreement,
+  unsaveAgreement,
   repostCollection,
   unrepostCollection,
   saveCollection,
@@ -89,7 +89,7 @@ const ConnectedMobileOverflowModal = ({
   editPlaylist,
   deletePlaylist,
   publishPlaylist,
-  visitTrackPage,
+  visitAgreementPage,
   visitArtistPage,
   visitCollectiblePage,
   visitPlaylistPage,
@@ -110,7 +110,7 @@ const ConnectedMobileOverflowModal = ({
     onEditPlaylist,
     onPublishPlaylist,
     onDeletePlaylist,
-    onVisitTrackPage,
+    onVisitAgreementPage,
     onVisitArtistPage,
     onVisitCollectionPage,
     onVisitCollectiblePage,
@@ -127,7 +127,7 @@ const ConnectedMobileOverflowModal = ({
     onEditPlaylist?: () => void
     onPublishPlaylist?: () => void
     onDeletePlaylist?: () => void
-    onVisitTrackPage?: () => void
+    onVisitAgreementPage?: () => void
     onVisitArtistPage?: () => void
     onVisitCollectiblePage?: () => void
     onVisitCollectionPage?: () => void
@@ -136,22 +136,22 @@ const ConnectedMobileOverflowModal = ({
     onUnfollow?: () => void
   } => {
     switch (source) {
-      case OverflowSource.TRACKS: {
+      case OverflowSource.AGREEMENTS: {
         if (!id || !ownerId || !handle || !title || isAlbum === undefined)
           return {}
         return {
-          onRepost: () => repostTrack(id as ID),
-          onUnrepost: () => unrepostTrack(id as ID),
-          onFavorite: () => saveTrack(id as ID),
-          onUnfavorite: () => unsaveTrack(id as ID),
+          onRepost: () => repostAgreement(id as ID),
+          onUnrepost: () => unrepostAgreement(id as ID),
+          onFavorite: () => saveAgreement(id as ID),
+          onUnfavorite: () => unsaveAgreement(id as ID),
           onAddToPlaylist: () => addToPlaylist(id as ID, title),
           onVisitCollectiblePage: () => {
             visitCollectiblePage(handle, id as string)
           },
-          onVisitTrackPage: () =>
+          onVisitAgreementPage: () =>
             permalink === undefined
-              ? console.error(`Permalink missing for track ${id}`)
-              : visitTrackPage(permalink),
+              ? console.error(`Permalink missing for agreement ${id}`)
+              : visitAgreementPage(permalink),
           onVisitArtistPage: () => visitArtistPage(handle),
           onFollow: () => follow(ownerId),
           onUnfollow: () => unfollow(ownerId)
@@ -215,7 +215,7 @@ const ConnectedMobileOverflowModal = ({
       onUnfavorite={onUnfavorite}
       onShare={onShare}
       onAddToPlaylist={onAddToPlaylist}
-      onVisitTrackPage={onVisitTrackPage}
+      onVisitAgreementPage={onVisitAgreementPage}
       onEditPlaylist={onEditPlaylist}
       onPublishPlaylist={onPublishPlaylist}
       onDeletePlaylist={onDeletePlaylist}
@@ -251,9 +251,9 @@ const getAdditionalInfo = ({
   if (!id) return {}
 
   switch (source) {
-    case OverflowSource.TRACKS: {
-      const track = getTrack(state, { id: id as number })
-      if (!track) {
+    case OverflowSource.AGREEMENTS: {
+      const agreement = getAgreement(state, { id: id as number })
+      if (!agreement) {
         const { collectible, user } = getCurrent(state)
         if (!collectible || !user) return {}
 
@@ -268,15 +268,15 @@ const getAdditionalInfo = ({
         }
       }
 
-      const user = getUser(state, { id: track.owner_id })
+      const user = getUser(state, { id: agreement.owner_id })
       if (!user) return {}
       return {
         handle: user.handle,
         artistName: user.name,
-        title: track.title,
-        permalink: track.permalink,
+        title: agreement.title,
+        permalink: agreement.permalink,
         isAlbum: false,
-        ownerId: track.owner_id
+        ownerId: agreement.owner_id
       }
     }
     case OverflowSource.COLLECTIONS: {
@@ -326,15 +326,15 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
   return {
     onClose: () =>
       dispatch(setVisibility({ modal: 'Overflow', visible: false })),
-    // Tracks
-    repostTrack: (trackId: ID) =>
-      dispatch(repostTrack(trackId, RepostSource.OVERFLOW)),
-    unrepostTrack: (trackId: ID) =>
-      dispatch(undoRepostTrack(trackId, RepostSource.OVERFLOW)),
-    saveTrack: (trackId: ID) =>
-      dispatch(saveTrack(trackId, FavoriteSource.OVERFLOW)),
-    unsaveTrack: (trackId: ID) =>
-      dispatch(unsaveTrack(trackId, FavoriteSource.OVERFLOW)),
+    // Agreements
+    repostAgreement: (agreementId: ID) =>
+      dispatch(repostAgreement(agreementId, RepostSource.OVERFLOW)),
+    unrepostAgreement: (agreementId: ID) =>
+      dispatch(undoRepostAgreement(agreementId, RepostSource.OVERFLOW)),
+    saveAgreement: (agreementId: ID) =>
+      dispatch(saveAgreement(agreementId, FavoriteSource.OVERFLOW)),
+    unsaveAgreement: (agreementId: ID) =>
+      dispatch(unsaveAgreement(agreementId, FavoriteSource.OVERFLOW)),
 
     // Collections
     shareCollection: (collectionId: ID) =>
@@ -363,9 +363,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
     unsubscribeUser: (userId: ID) => dispatch(unsubscribeUser(userId)),
 
     // Routes
-    addToPlaylist: (trackId: ID, title: string) =>
-      dispatch(openAddToPlaylist(trackId, title)),
-    visitTrackPage: (permalink: string) => dispatch(pushRoute(permalink)),
+    addToPlaylist: (agreementId: ID, title: string) =>
+      dispatch(openAddToPlaylist(agreementId, title)),
+    visitAgreementPage: (permalink: string) => dispatch(pushRoute(permalink)),
     visitArtistPage: (handle: string) =>
       dispatch(pushRoute(profilePage(handle))),
     visitCollectiblePage: (handle: string, id: string) => {

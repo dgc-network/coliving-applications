@@ -2,12 +2,12 @@ import { ID, Status } from '@coliving/common'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 type State = {
-  trackId: ID | null
+  agreementId: ID | null
   status: Status
 }
 
 const initialState: State = {
-  trackId: null,
+  agreementId: null,
   status: Status.SUCCESS
 }
 
@@ -15,23 +15,23 @@ const slice = createSlice({
   name: 'application/ui/remixSettingsModal',
   initialState,
   reducers: {
-    fetchTrack: (state, action: PayloadAction<{ url: string }>) => {
+    fetchAgreement: (state, action: PayloadAction<{ url: string }>) => {
       state.status = Status.LOADING
     },
-    fetchTrackSucceeded: (state, action: PayloadAction<{ trackId: ID }>) => {
-      const { trackId } = action.payload
+    fetchAgreementSucceeded: (state, action: PayloadAction<{ agreementId: ID }>) => {
+      const { agreementId } = action.payload
 
       state.status = Status.SUCCESS
-      state.trackId = trackId
+      state.agreementId = agreementId
     },
-    fetchTrackFailed: (state) => {
+    fetchAgreementFailed: (state) => {
       state.status = Status.ERROR
     },
     reset: () => initialState
   }
 })
 
-export const { fetchTrack, fetchTrackSucceeded, fetchTrackFailed, reset } =
+export const { fetchAgreement, fetchAgreementSucceeded, fetchAgreementFailed, reset } =
   slice.actions
 
 export default slice.reducer

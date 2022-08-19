@@ -2,22 +2,22 @@ import {
   ID,
   ShareSource,
   Collection,
-  Track,
+  Agreement,
   User,
   Nullable
 } from '@coliving/common'
 import { PayloadAction } from '@reduxjs/toolkit'
 
 export type ShareType =
-  | 'track'
+  | 'agreement'
   | 'profile'
   | 'album'
   | 'playlist'
   | 'liveNftPlaylist'
 
-type ShareTrackContent = {
-  type: 'track'
-  track: Track
+type ShareAgreementContent = {
+  type: 'agreement'
+  agreement: Agreement
   artist: User
 }
 
@@ -44,7 +44,7 @@ type ShareAudioNftPlaylistContent = {
 }
 
 export type ShareModalContent =
-  | ShareTrackContent
+  | ShareAgreementContent
   | ShareProfileContent
   | ShareAlbumContent
   | SharePlaylistContent
@@ -56,7 +56,7 @@ export type ShareModalState = {
 }
 
 type RequestOpenPayload = { source: ShareSource } & (
-  | { type: 'track'; trackId: ID }
+  | { type: 'agreement'; agreementId: ID }
   | { type: 'profile'; profileId: ID }
   | { type: 'collection'; collectionId: ID }
   | { type: 'liveNftPlaylist'; userId: ID }
@@ -65,7 +65,7 @@ type RequestOpenPayload = { source: ShareSource } & (
 export type RequestOpenAction = PayloadAction<RequestOpenPayload>
 
 type OpenPayload = { source: ShareSource } & (
-  | ShareTrackContent
+  | ShareAgreementContent
   | ShareProfileContent
   | ShareAlbumContent
   | SharePlaylistContent

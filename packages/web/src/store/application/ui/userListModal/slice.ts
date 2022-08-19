@@ -8,7 +8,7 @@ import { UserListModalState, UserListType, UserListEntityType } from './types'
 const initialState: UserListModalState = {
   userListType: UserListType.REPOST,
   isOpen: false,
-  entityType: UserListEntityType.TRACK
+  entityType: UserListEntityType.AGREEMENT
 }
 
 type SetUsersPayload = {

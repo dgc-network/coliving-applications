@@ -1,20 +1,20 @@
 import { ReactComponent as IconHidden } from 'assets/img/iconHidden.svg'
 
-import styles from './HiddenTrackHeader.module.css'
+import styles from './HiddenAgreementHeader.module.css'
 
 const messages = {
-  hiddenTrackTitle: 'HIDDEN TRACK'
+  hiddenAgreementTitle: 'HIDDEN AGREEMENT'
 }
 
-// Presents the Hidden Track title. Extracted for use in mobile and desktop
-// track pages.
-const HiddenTrackHeader = () => {
+// Presents the Hidden Agreement title. Extracted for use in mobile and desktop
+// agreement pages.
+const HiddenAgreementHeader = () => {
   return (
     <div className={styles.hiddenHeaderContainer}>
       <IconHidden />
-      <div className={styles.hiddenTrackLabel}>{messages.hiddenTrackTitle}</div>
+      <div className={styles.hiddenAgreementLabel}>{messages.hiddenAgreementTitle}</div>
     </div>
   )
 }
 
-export default HiddenTrackHeader
+export default HiddenAgreementHeader

@@ -57,6 +57,6 @@ export const IconAnnouncement = () => {
   return <IconColiving className={styles.iconAnnouncement} />
 }
 
-export const IconAddTrackToPlaylist = () => {
-  return <IconPlaylist className={styles.iconAddTrackToPlaylist} />
+export const IconAddAgreementToPlaylist = () => {
+  return <IconPlaylist className={styles.iconAddAgreementToPlaylist} />
 }

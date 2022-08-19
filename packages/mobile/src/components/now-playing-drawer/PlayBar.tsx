@@ -1,22 +1,22 @@
 import { useCallback } from 'react'
 
-import type { Track, User } from '@/common'
+import type { Agreement, User } from '@/common'
 import { FavoriteSource, SquareSizes } from '@/common'
 import {
-  saveTrack,
-  unsaveTrack
-} from '-client/src/common/store/social/tracks/actions'
+  saveAgreement,
+  unsaveAgreement
+} from '-client/src/common/store/social/agreements/actions'
 import { TouchableOpacity, Animated, View, Dimensions } from 'react-native'
 
 import { DynamicImage } from 'app/components/core'
 import { FavoriteButton } from 'app/components/favorite-button'
 import Text from 'app/components/text'
 import { useDispatchWeb } from 'app/hooks/useDispatchWeb'
-import { useTrackCoverArt } from 'app/hooks/useTrackCoverArt'
+import { useAgreementCoverArt } from 'app/hooks/useAgreementCoverArt'
 import { makeStyles } from 'app/styles'
 
 import { PlayButton } from './PlayButton'
-import { TrackingBar } from './TrackingBar'
+import { AgreementingBar } from './AgreementingBar'
 import { NOW_PLAYING_HEIGHT, PLAY_BAR_HEIGHT } from './constants'
 
 const useStyles = makeStyles(({ palette, spacing }) => ({
@@ -42,7 +42,7 @@ const useStyles = makeStyles(({ palette, spacing }) => ({
     width: 28,
     height: 28
   },
-  trackInfo: {
+  agreementInfo: {
     height: '100%',
     flexShrink: 1,
     flexGrow: 1,
@@ -57,7 +57,7 @@ const useStyles = makeStyles(({ palette, spacing }) => ({
     backgroundColor: palette.neutralLight7,
     borderRadius: 2
   },
-  trackText: {
+  agreementText: {
     alignItems: 'center',
     marginLeft: spacing(3),
     flexDirection: 'row'
@@ -81,23 +81,23 @@ const useStyles = makeStyles(({ palette, spacing }) => ({
 }))
 
 type PlayBarProps = {
-  track: Track
+  agreement: Agreement
   user: User
   onPress: () => void
   translationAnim: Animated.Value
 }
 
-const PlayBarArtwork = ({ track }: { track: Track }) => {
-  const image = useTrackCoverArt({
-    id: track.track_id,
-    sizes: track._cover_art_sizes,
+const PlayBarArtwork = ({ agreement }: { agreement: Agreement }) => {
+  const image = useAgreementCoverArt({
+    id: agreement.agreement_id,
+    sizes: agreement._cover_art_sizes,
     size: SquareSizes.SIZE_150_BY_150
   })
   return <DynamicImage uri={image} />
 }
 
 export const PlayBar = ({
-  track,
+  agreement,
   user,
   onPress,
   translationAnim
@@ -106,20 +106,20 @@ export const PlayBar = ({
   const dispatchWeb = useDispatchWeb()
 
   const onPressFavoriteButton = useCallback(() => {
-    if (track) {
-      if (track.has_current_user_saved) {
-        dispatchWeb(unsaveTrack(track.track_id, FavoriteSource.PLAYBAR))
+    if (agreement) {
+      if (agreement.has_current_user_saved) {
+        dispatchWeb(unsaveAgreement(agreement.agreement_id, FavoriteSource.PLAYBAR))
       } else {
-        dispatchWeb(saveTrack(track.track_id, FavoriteSource.PLAYBAR))
+        dispatchWeb(saveAgreement(agreement.agreement_id, FavoriteSource.PLAYBAR))
       }
     }
-  }, [dispatchWeb, track])
+  }, [dispatchWeb, agreement])
 
   const renderFavoriteButton = () => {
     return (
       <FavoriteButton
         onPress={onPressFavoriteButton}
-        isActive={track?.has_current_user_saved ?? false}
+        isActive={agreement?.has_current_user_saved ?? false}
         wrapperStyle={styles.icon}
       />
     )
@@ -144,27 +144,27 @@ export const PlayBar = ({
         }
       ]}
     >
-      <TrackingBar translationAnim={translationAnim} />
+      <AgreementingBar translationAnim={translationAnim} />
       <View style={styles.container}>
         {renderFavoriteButton()}
         <TouchableOpacity
           activeOpacity={1}
-          style={styles.trackInfo}
+          style={styles.agreementInfo}
           onPress={onPress}
         >
           <View style={styles.artwork}>
-            {track && <PlayBarArtwork track={track} />}
+            {agreement && <PlayBarArtwork agreement={agreement} />}
           </View>
-          <View style={styles.trackText}>
+          <View style={styles.agreementText}>
             <Text numberOfLines={1} weight='bold' style={styles.title}>
-              {track?.title ?? ''}
+              {agreement?.title ?? ''}
             </Text>
             <Text
               weight='bold'
               style={styles.separator}
               accessibilityElementsHidden
             >
-              {track ? '•' : ''}
+              {agreement ? '•' : ''}
             </Text>
             <Text numberOfLines={1} weight='medium' style={styles.artist}>
               {user?.name ?? ''}

@@ -6,15 +6,15 @@ import cn from 'classnames'
 import { ReactComponent as IconVisualizer } from 'assets/img/iconVisualizer.svg'
 import Draggable from 'components/dragndrop/Draggable'
 import DynamicImage from 'components/dynamic-image/DynamicImage'
-import { useTrackCoverArt } from 'hooks/useTrackCoverArt'
+import { useAgreementCoverArt } from 'hooks/useAgreementCoverArt'
 
 import styles from './CurrentlyPlaying.module.css'
 
 type CurrentlyPlayingProps = {
   isOwner: boolean
   isUnlisted: boolean
-  trackId: Nullable<number>
-  trackTitle: Nullable<string>
+  agreementId: Nullable<number>
+  agreementTitle: Nullable<string>
   coverArtSizes: Nullable<CoverArtSizes>
   coverArtColor: Nullable<Color>
   artworkLink?: Nullable<string>
@@ -35,8 +35,8 @@ type WrapperStyle = {
 const CurrentlyPlaying = ({
   isOwner,
   isUnlisted,
-  trackId,
-  trackTitle,
+  agreementId,
+  agreementTitle,
   coverArtSizes,
   coverArtColor,
   artworkLink,
@@ -44,24 +44,24 @@ const CurrentlyPlaying = ({
   onClick,
   onShowVisualizer
 }: CurrentlyPlayingProps) => {
-  const previousTrackId = useRef(0)
+  const previousAgreementId = useRef(0)
 
-  const image = useTrackCoverArt(
-    trackId,
+  const image = useAgreementCoverArt(
+    agreementId,
     coverArtSizes,
     SquareSizes.SIZE_480_BY_480,
     ''
   )
 
-  let newTrack = false
-  if (trackId && trackId !== previousTrackId.current) {
-    newTrack = true
-    previousTrackId.current = trackId
+  let newAgreement = false
+  if (agreementId && agreementId !== previousAgreementId.current) {
+    newAgreement = true
+    previousAgreementId.current = agreementId
   }
 
   let wrapperStyle: WrapperStyle
   let artworkStyle: ArtworkStyle
-  if (trackId) {
+  if (agreementId) {
     const artworkAverageColor = coverArtColor ?? { r: 13, g: 16, b: 18 }
     wrapperStyle = {
       boxShadow: `0 1px 20px -3px rgba(
@@ -82,16 +82,16 @@ const CurrentlyPlaying = ({
 
   return (
     <Draggable
-      isDisabled={!trackId || isUnlisted}
-      text={trackTitle}
-      kind='track'
-      id={trackId}
+      isDisabled={!agreementId || isUnlisted}
+      text={agreementTitle}
+      kind='agreement'
+      id={agreementId}
       isOwner={isOwner}
       link={draggableLink}
     >
       <div
         className={cn(styles.artworkWrapper, {
-          [styles.playing]: !!trackId
+          [styles.playing]: !!agreementId
         })}
         style={wrapperStyle}
         onClick={onClick}
@@ -99,13 +99,13 @@ const CurrentlyPlaying = ({
         <DynamicImage
           useSkeleton={false}
           image={artworkLink ?? image}
-          immediate={newTrack}
+          immediate={newAgreement}
           className={styles.artwork}
           imageStyle={artworkStyle}
         >
           <div
             className={cn(styles.bottomRightContainer, {
-              [styles.hide]: !trackId
+              [styles.hide]: !agreementId
             })}
           >
             <div

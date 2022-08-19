@@ -1,15 +1,15 @@
 import type { ReactNode } from 'react'
 
-import type { ID, LineupState, Track, User, Nullable } from '@/common'
-import { trackRemixesPage } from '-client/src/utils/route'
+import type { ID, LineupState, Agreement, User, Nullable } from '@/common'
+import { agreementRemixesPage } from '-client/src/utils/route'
 import { View } from 'react-native'
 
 import { useNavigation } from 'app/hooks/useNavigation'
-import type { SearchTrack, SearchUser } from 'app/store/search/types'
+import type { SearchAgreement, SearchUser } from 'app/store/search/types'
 import { makeStyles } from 'app/styles'
 
-import { TrackScreenDetailsTile } from './TrackScreenDetailsTile'
-import { TrackScreenRemixes } from './TrackScreenRemixes'
+import { AgreementScreenDetailsTile } from './AgreementScreenDetailsTile'
+import { AgreementScreenRemixes } from './AgreementScreenRemixes'
 
 const useStyles = makeStyles(({ spacing }) => ({
   root: {
@@ -21,53 +21,53 @@ const useStyles = makeStyles(({ spacing }) => ({
   }
 }))
 
-type TrackScreenMainContentProps = {
+type AgreementScreenMainContentProps = {
   lineup: LineupState<{ id: ID }>
   lineupHeader: ReactNode
-  remixParentTrack: Nullable<Track & { user: User }>
-  track: Track | SearchTrack
+  remixParentAgreement: Nullable<Agreement & { user: User }>
+  agreement: Agreement | SearchAgreement
   user: User | SearchUser
 }
 
 /**
- * `TrackScreenMainContent` includes everything above the Lineup
+ * `AgreementScreenMainContent` includes everything above the Lineup
  */
-export const TrackScreenMainContent = ({
+export const AgreementScreenMainContent = ({
   lineup,
   lineupHeader,
-  track,
+  agreement,
   user
-}: TrackScreenMainContentProps) => {
+}: AgreementScreenMainContentProps) => {
   const navigation = useNavigation()
   const styles = useStyles()
 
-  const remixTrackIds = track._remixes?.map(({ track_id }) => track_id) ?? null
+  const remixAgreementIds = agreement._remixes?.map(({ agreement_id }) => agreement_id) ?? null
 
   const handlePressGoToRemixes = () => {
     navigation.push({
-      native: { screen: 'TrackRemixes', params: { id: track.track_id } },
-      web: { route: trackRemixesPage(track.permalink) }
+      native: { screen: 'AgreementRemixes', params: { id: agreement.agreement_id } },
+      web: { route: agreementRemixesPage(agreement.permalink) }
     })
   }
 
   return (
     <View style={styles.root}>
       <View style={styles.headerContainer}>
-        <TrackScreenDetailsTile
-          track={track}
+        <AgreementScreenDetailsTile
+          agreement={agreement}
           user={user}
           uid={lineup?.entries?.[0]?.uid}
           isLineupLoading={!lineup?.entries?.[0]}
         />
       </View>
 
-      {track.field_visibility?.remixes &&
-        remixTrackIds &&
-        remixTrackIds.length > 0 && (
-          <TrackScreenRemixes
-            trackIds={remixTrackIds}
+      {agreement.field_visibility?.remixes &&
+        remixAgreementIds &&
+        remixAgreementIds.length > 0 && (
+          <AgreementScreenRemixes
+            agreementIds={remixAgreementIds}
             onPressGoToRemixes={handlePressGoToRemixes}
-            count={track._remixes_count ?? null}
+            count={agreement._remixes_count ?? null}
           />
         )}
       {lineupHeader}

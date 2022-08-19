@@ -23,10 +23,10 @@ import FinishPage from './components/FinishPage'
 import SelectPage from './components/SelectPage'
 import UploadType from './components/uploadType'
 import {
-  uploadTracks,
+  uploadAgreements,
   reset,
   undoResetState,
-  toggleMultiTrackNotification
+  toggleMultiAgreementNotification
 } from './store/actions'
 
 const Pages = Object.freeze({
@@ -63,21 +63,21 @@ class Upload extends Component {
     uploadType:
       this.props.uploadType ||
       this.props.upload.uploadType ||
-      UploadType.INDIVIDUAL_TRACK,
+      UploadType.INDIVIDUAL_AGREEMENT,
 
-    tracks: this.props.upload.uploading ? this.props.upload.tracks : [],
+    agreements: this.props.upload.uploading ? this.props.upload.agreements : [],
 
-    // Contains metadata related to the upload itself, e.g. playlist vs. track.
+    // Contains metadata related to the upload itself, e.g. playlist vs. agreement.
     metadata: this.props.upload.metadata
       ? this.props.upload.metadata
       : schemas.newCollectionMetadata({ artwork: { file: null, url: '' } }),
 
-    // An array of array of tracks representing stems per track.
+    // An array of array of agreements representing stems per agreement.
     stems: [],
 
     preview: null,
     previewIndex: -1,
-    uploadTrackerror: null,
+    uploadAgreementerror: null,
     isFirstUpload: false
   }
 
@@ -85,10 +85,10 @@ class Upload extends Component {
     if (this.state.preview !== null && this.props.playing) {
       this.stopPreview()
     }
-    // If the account is defined and has 0 tracks and we haven't set isFirstUpload yet
+    // If the account is defined and has 0 agreements and we haven't set isFirstUpload yet
     if (
       this.props.account &&
-      !this.props.account.track_count &&
+      !this.props.account.agreement_count &&
       !this.state.isFirstUpload
     ) {
       this.setState({ isFirstUpload: true })
@@ -118,15 +118,15 @@ class Upload extends Component {
   }
 
   invalidAudioFile = (name, reason) => {
-    this.setState({ uploadTrackerror: { reason } })
+    this.setState({ uploadAgreementerror: { reason } })
   }
 
-  onSelectTracks = async (selectedFiles) => {
-    // Disallow duplicate tracks:
-    // Filter out any tracks that already exist in `state.tracks`
+  onSelectAgreements = async (selectedFiles) => {
+    // Disallow duplicate agreements:
+    // Filter out any agreements that already exist in `state.agreements`
     // and any that exist multiple times in `selectedFiles`
     const existing = new Set(
-      this.state.tracks.map(({ file }) => `${file.name}-${file.lastModified}`)
+      this.state.agreements.map(({ file }) => `${file.name}-${file.lastModified}`)
     )
     selectedFiles = selectedFiles.filter(({ name, lastModified }) => {
       const id = `${name}-${lastModified}`
@@ -140,26 +140,26 @@ class Upload extends Component {
       false,
       this.invalidAudioFile
     )
-    const tracks = (await Promise.all(processedFiles)).filter(Boolean)
-    if (tracks.length === processedFiles.length) {
-      this.setState({ uploadTrackerror: null })
+    const agreements = (await Promise.all(processedFiles)).filter(Boolean)
+    if (agreements.length === processedFiles.length) {
+      this.setState({ uploadAgreementerror: null })
     }
 
     let uploadType = this.state.uploadType
     if (
-      this.state.uploadType === UploadType.INDIVIDUAL_TRACK &&
-      this.state.tracks.length + tracks.length > 1
+      this.state.uploadType === UploadType.INDIVIDUAL_AGREEMENT &&
+      this.state.agreements.length + agreements.length > 1
     ) {
-      uploadType = UploadType.INDIVIDUAL_TRACKS
+      uploadType = UploadType.INDIVIDUAL_AGREEMENTS
     }
 
     this.setState({
-      tracks: [...this.state.tracks, ...tracks],
+      agreements: [...this.state.agreements, ...agreements],
       uploadType
     })
   }
 
-  onAddStemsToTrack = async (selectedStems, trackIndex) => {
+  onAddStemsToAgreement = async (selectedStems, agreementIndex) => {
     const processedFiles = processFiles(
       selectedStems,
       true,
@@ -175,38 +175,38 @@ class Upload extends Component {
       }))
     this.setState((s) => {
       const newState = { ...s }
-      newState.stems[trackIndex] = [
-        ...(newState.stems[trackIndex] ?? []),
+      newState.stems[agreementIndex] = [
+        ...(newState.stems[agreementIndex] ?? []),
         ...stems
       ]
       return newState
     })
   }
 
-  onDeleteStem = (trackIndex, stemIndex) => {
+  onDeleteStem = (agreementIndex, stemIndex) => {
     this.setState((s) => {
       const newState = { ...s }
-      const newStems = [...newState.stems[trackIndex]]
+      const newStems = [...newState.stems[agreementIndex]]
       newStems.splice(stemIndex, 1)
-      newState.stems[trackIndex] = newStems
+      newState.stems[agreementIndex] = newStems
       return newState
     })
   }
 
-  onSelectStemCategory = (category, trackIndex, stemIndex) => {
+  onSelectStemCategory = (category, agreementIndex, stemIndex) => {
     this.setState((s) => {
       const newState = { ...s }
-      newState.stems[trackIndex][stemIndex].category = category
+      newState.stems[agreementIndex][stemIndex].category = category
       return newState
     })
   }
 
-  removeTrack = (index) => {
+  removeAgreement = (index) => {
     this.setState({
-      tracks: this.state.tracks.filter((_, i) => i !== index),
+      agreements: this.state.agreements.filter((_, i) => i !== index),
       uploadType:
-        this.state.tracks.length === 2
-          ? UploadType.INDIVIDUAL_TRACK
+        this.state.agreements.length === 2
+          ? UploadType.INDIVIDUAL_AGREEMENT
           : this.state.uploadType
     })
   }
@@ -218,7 +218,7 @@ class Upload extends Component {
     }
 
     if (this.state.preview) this.stopPreview()
-    const live = this.state.tracks[index].preview
+    const live = this.state.agreements[index].preview
     live.play()
     this.setState({ preview: live, previewIndex: index })
   }
@@ -232,15 +232,15 @@ class Upload extends Component {
     this.setState({ preview: null, previewIndex: -1 })
   }
 
-  updateTrack = (field, value, i) => {
-    if (i >= this.state.tracks.length) {
+  updateAgreement = (field, value, i) => {
+    if (i >= this.state.agreements.length) {
       return
     }
-    const track = { ...this.state.tracks[i] }
-    track.metadata[field] = value
-    const newTracks = [...this.state.tracks]
-    newTracks[i] = track
-    this.setState({ tracks: newTracks })
+    const agreement = { ...this.state.agreements[i] }
+    agreement.metadata[field] = value
+    const newAgreements = [...this.state.agreements]
+    newAgreements[i] = agreement
+    this.setState({ agreements: newAgreements })
   }
 
   updateMetadata = (field, value) => {
@@ -250,8 +250,8 @@ class Upload extends Component {
   }
 
   publish = () => {
-    this.props.uploadTracks(
-      this.state.tracks,
+    this.props.uploadAgreements(
+      this.state.agreements,
       this.state.metadata,
       this.state.uploadType,
       this.state.stems
@@ -262,14 +262,14 @@ class Upload extends Component {
   reset = () => {
     this.setState({
       page: Pages.SELECT,
-      tracks: [],
+      agreements: [],
       preview: null,
       previewIndex: -1,
-      uploadType: UploadType.INDIVIDUAL_TRACK,
+      uploadType: UploadType.INDIVIDUAL_AGREEMENT,
       metadata: schemas.newCollectionMetadata({
         artwork: { file: null, url: '' }
       }),
-      uploadTrackerror: null
+      uploadAgreementerror: null
     })
     this.props.resetUpload()
   }
@@ -279,16 +279,16 @@ class Upload extends Component {
   }
 
   onChangeOrder = (source, destination) => {
-    const movedElement = this.state.tracks[source]
-    const newTracks = [...this.state.tracks]
+    const movedElement = this.state.agreements[source]
+    const newAgreements = [...this.state.agreements]
 
     // Remove the element from it's source location
-    newTracks.splice(source, 1)
+    newAgreements.splice(source, 1)
 
     // Put the moved guy back in
-    newTracks.splice(destination, 0, movedElement)
+    newAgreements.splice(destination, 0, movedElement)
 
-    this.setState({ tracks: newTracks })
+    this.setState({ agreements: newAgreements })
   }
 
   onVisitCompletionPage = () => {
@@ -304,9 +304,9 @@ class Upload extends Component {
     let uploadType = ''
     if (upload.completionId) {
       switch (this.state.uploadType) {
-        case UploadType.INDIVIDUAL_TRACK: {
-          route = upload.tracks[0].metadata.permalink
-          uploadType = 'track'
+        case UploadType.INDIVIDUAL_AGREEMENT: {
+          route = upload.agreements[0].metadata.permalink
+          uploadType = 'agreement'
           break
         }
         case UploadType.PLAYLIST: {
@@ -329,10 +329,10 @@ class Upload extends Component {
           break
       }
     } else {
-      uploadType = 'tracks'
+      uploadType = 'agreements'
       route = profilePage(account.handle)
     }
-    const areAnyPublic = upload.tracks.some((t) => !t.metadata.is_unlisted)
+    const areAnyPublic = upload.agreements.some((t) => !t.metadata.is_unlisted)
     if (isFirstUpload && areAnyPublic) {
       openFirstUploadModal(SHOW_FIRST_UPLOAD_MODAL_DELAY)
     }
@@ -343,51 +343,51 @@ class Upload extends Component {
   render() {
     const {
       account,
-      onCloseMultiTrackNotification,
-      upload: { uploadProgress, openMultiTrackNotification, failedTrackIndices }
+      onCloseMultiAgreementNotification,
+      upload: { uploadProgress, openMultiAgreementNotification, failedAgreementIndices }
     } = this.props
     const {
       page,
-      tracks,
+      agreements,
       metadata,
       uploadType,
-      uploadTrackerror,
+      uploadAgreementerror,
       isFirstUpload
     } = this.state
 
-    // Only show errored tracks if we're not uploading
+    // Only show errored agreements if we're not uploading
     // a collection
-    const erroredTracks =
-      uploadType === UploadType.INDIVIDUAL_TRACKS ? failedTrackIndices : []
+    const erroredAgreements =
+      uploadType === UploadType.INDIVIDUAL_AGREEMENTS ? failedAgreementIndices : []
 
     let headerText
-    if (uploadType === UploadType.INDIVIDUAL_TRACKS) {
-      headerText = 'Tracks'
+    if (uploadType === UploadType.INDIVIDUAL_AGREEMENTS) {
+      headerText = 'Agreements'
     } else if (uploadType === UploadType.PLAYLIST) {
       headerText = 'Playlist'
     } else if (uploadType === UploadType.ALBUM) {
       headerText = 'Album'
     } else {
-      headerText = 'Track'
+      headerText = 'Agreement'
     }
 
     let currentPage
     let header
     switch (page) {
       case Pages.SELECT:
-        header = <Header primary={'Upload Tracks'} />
+        header = <Header primary={'Upload Agreements'} />
         currentPage = (
           <SelectPage
             account={account}
-            tracks={tracks}
-            error={uploadTrackerror}
+            agreements={agreements}
+            error={uploadAgreementerror}
             uploadType={uploadType}
             setUploadType={this.setUploadType}
-            openMultiTrackNotification={openMultiTrackNotification}
-            onCloseMultiTrackNotification={onCloseMultiTrackNotification}
+            openMultiAgreementNotification={openMultiAgreementNotification}
+            onCloseMultiAgreementNotification={onCloseMultiAgreementNotification}
             previewIndex={this.state.previewIndex}
-            onSelect={this.onSelectTracks}
-            onRemove={this.removeTrack}
+            onSelect={this.onSelectAgreements}
+            onRemove={this.removeAgreement}
             playPreview={this.playPreview}
             stopPreview={this.stopPreview}
             onContinue={() => this.changePage(Pages.EDIT)}
@@ -405,16 +405,16 @@ class Upload extends Component {
         currentPage = (
           <EditPage
             metadata={metadata}
-            tracks={tracks}
+            agreements={agreements}
             uploadType={uploadType}
             previewIndex={this.state.previewIndex}
             onPlayPreview={this.playPreview}
             onStopPreview={this.stopPreview}
-            updateTrack={this.updateTrack}
+            updateAgreement={this.updateAgreement}
             updateMetadata={this.updateMetadata}
             onChangeOrder={this.onChangeOrder}
             onContinue={this.publish}
-            onAddStems={this.onAddStemsToTrack}
+            onAddStems={this.onAddStemsToAgreement}
             onSelectStemCategory={this.onSelectStemCategory}
             stems={this.state.stems}
             onDeleteStem={this.onDeleteStem}
@@ -432,14 +432,14 @@ class Upload extends Component {
         currentPage = (
           <FinishPage
             account={this.props.account ? this.props.account : {}}
-            tracks={tracks}
+            agreements={agreements}
             uploadProgress={uploadProgress}
             metadata={metadata}
             uploadType={uploadType}
             inProgress={inProgress}
             upload={this.props.upload}
             onContinue={this.onVisitCompletionPage}
-            erroredTracks={erroredTracks}
+            erroredAgreements={erroredAgreements}
             isFirstUpload={isFirstUpload}
           />
         )
@@ -471,15 +471,15 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   onRecordViewCompletionPage: (uploadType) =>
-    dispatch(make(Name.TRACK_UPLOAD_VIEW_TRACK_PAGE, { uploadType })),
+    dispatch(make(Name.AGREEMENT_UPLOAD_VIEW_AGREEMENT_PAGE, { uploadType })),
   goToRoute: (route) => dispatch(pushRoute(route)),
   undoResetState: () => dispatch(undoResetState()),
   pauseQueue: () => dispatch(pauseQueue({})),
-  onCloseMultiTrackNotification: () =>
-    dispatch(toggleMultiTrackNotification(false)),
+  onCloseMultiAgreementNotification: () =>
+    dispatch(toggleMultiAgreementNotification(false)),
   resetUpload: () => dispatch(reset()),
-  uploadTracks: (tracks, metadata, uploadType, stems) =>
-    dispatch(uploadTracks(tracks, metadata, uploadType, stems)),
+  uploadAgreements: (agreements, metadata, uploadType, stems) =>
+    dispatch(uploadAgreements(agreements, metadata, uploadType, stems)),
   openFirstUploadModal: (delay) => dispatch(openWithDelay({ delay }))
 })
 

@@ -1,7 +1,7 @@
 import { makeGetLineupMetadatas } from '-client/src/common/store/lineup/selectors'
-import { tracksActions } from '-client/src/common/store/pages/remixes/lineup/actions'
+import { agreementsActions } from '-client/src/common/store/pages/remixes/lineup/actions'
 import {
-  getTrack,
+  getAgreement,
   getUser,
   getLineup,
   getCount
@@ -17,7 +17,7 @@ import { useNavigation } from 'app/hooks/useNavigation'
 import { useSelectorWeb } from 'app/hooks/useSelectorWeb'
 import { flexRowCentered, makeStyles } from 'app/styles'
 
-const getRemixesTracksLineup = makeGetLineupMetadatas(getLineup)
+const getRemixesAgreementsLineup = makeGetLineupMetadatas(getLineup)
 
 const messages = {
   remix: 'Remix',
@@ -32,7 +32,7 @@ const useStyles = makeStyles(({ spacing, palette, typography }) => ({
     margin: spacing(4),
     marginTop: spacing(6)
   },
-  track: {
+  agreement: {
     ...flexRowCentered()
   },
   text: {
@@ -45,22 +45,22 @@ const useStyles = makeStyles(({ spacing, palette, typography }) => ({
   }
 }))
 
-export const TrackRemixesScreen = () => {
+export const AgreementRemixesScreen = () => {
   const navigation = useNavigation()
-  const lineup = useSelectorWeb(getRemixesTracksLineup)
+  const lineup = useSelectorWeb(getRemixesAgreementsLineup)
   const count = useSelectorWeb(getCount)
-  const track = useSelectorWeb(getTrack)
+  const agreement = useSelectorWeb(getAgreement)
   const user = useSelectorWeb(getUser)
 
   const styles = useStyles()
 
-  const handlePressTrack = () => {
-    if (!track) {
+  const handlePressAgreement = () => {
+    if (!agreement) {
       return
     }
     navigation.push({
-      native: { screen: 'Track', params: { id: track.track_id } },
-      web: { route: track.permalink }
+      native: { screen: 'Agreement', params: { id: agreement.agreement_id } },
+      web: { route: agreement.permalink }
     })
   }
 
@@ -83,14 +83,14 @@ export const TrackRemixesScreen = () => {
       <Header text={messages.header} />
       <Lineup
         lineup={lineup}
-        fetchPayload={{ trackId: track?.track_id }}
+        fetchPayload={{ agreementId: agreement?.agreement_id }}
         header={
-          track && user ? (
+          agreement && user ? (
             <View style={styles.header}>
               <Text style={styles.text}>{remixesCountText}</Text>
               <Text style={styles.text}>
-                <Text style={styles.link} onPress={handlePressTrack}>
-                  {track.title}
+                <Text style={styles.link} onPress={handlePressAgreement}>
+                  {agreement.title}
                 </Text>{' '}
                 <Text>{messages.by}</Text>{' '}
                 <Text onPress={handlePressArtistName}>
@@ -103,7 +103,7 @@ export const TrackRemixesScreen = () => {
             </View>
           ) : null
         }
-        actions={tracksActions}
+        actions={agreementsActions}
       />
     </Screen>
   )

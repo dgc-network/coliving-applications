@@ -5,10 +5,10 @@ import type { AnalyticsMessage } from '../types/analytics'
 
 export enum MessageType {
   LOADED = 'loaded',
-  PLAY_TRACK = 'play-track',
-  PAUSE_TRACK = 'pause-track',
+  PLAY_AGREEMENT = 'play-agreement',
+  PAUSE_AGREEMENT = 'pause-agreement',
   GET_POSITION = 'get-position',
-  SEEK_TRACK = 'seek-track',
+  SEEK_AGREEMENT = 'seek-agreement',
   SET_INFO = 'set-info',
   PERSIST_QUEUE = 'persist-queue',
   SET_REPEAT_MODE = 'set-repeat-mode',
@@ -108,11 +108,11 @@ export enum MessageType {
   SHARE = 'share',
 
   // Download
-  DOWNLOAD_TRACK = 'download-track',
+  DOWNLOAD_AGREEMENT = 'download-agreement',
 
   // Analytics
   ANALYTICS_IDENTIFY = 'analytics-identify',
-  ANALYTICS_TRACK = 'analytics-track',
+  ANALYTICS_AGREEMENT = 'analytics-agreement',
   ANALYTICS_SCREEN = 'analytics-screen',
 
   // Logging

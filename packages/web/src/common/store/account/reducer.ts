@@ -4,7 +4,7 @@ import { keyBy } from 'lodash'
 
 const initialState = {
   collections: {} as { [id: number]: AccountCollection },
-  // Used to track the ordering of playlists in the user's left nav
+  // Used to agreement the ordering of playlists in the user's left nav
   // Array of strings that are either smart collection identifiers or user-generated collection ids
   orderedPlaylists: [] as string[],
   userId: null as number | null,

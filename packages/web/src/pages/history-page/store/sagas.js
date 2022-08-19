@@ -1,5 +1,5 @@
-import tracksSagas from 'pages/history-page/store/lineups/tracks/sagas.js'
+import agreementsSagas from 'pages/history-page/store/lineups/agreements/sagas.js'
 
 export default function sagas() {
-  return [...tracksSagas()]
+  return [...agreementsSagas()]
 }

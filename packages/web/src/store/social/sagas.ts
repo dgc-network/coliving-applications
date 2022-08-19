@@ -1,7 +1,7 @@
 import collectionsSagas from './collections/sagas'
-import tracksSagas from './tracks/sagas'
+import agreementsSagas from './agreements/sagas'
 import usersSagas from './users/sagas'
 
 export default function sagas() {
-  return [...tracksSagas(), ...collectionsSagas(), ...usersSagas()]
+  return [...agreementsSagas(), ...collectionsSagas(), ...usersSagas()]
 }

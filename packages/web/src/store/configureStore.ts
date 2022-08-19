@@ -12,7 +12,7 @@ import { Level } from 'common/store/errors/level'
 import { reportToSentry } from 'common/store/errors/reportToSentry'
 import { postMessage } from 'services/native-mobile-interface/helpers'
 import { MessageType } from 'services/native-mobile-interface/types'
-import { track as amplitudeTrack } from 'store/analytics/providers/amplitude'
+import { agreement as amplitudeAgreement } from 'store/analytics/providers/amplitude'
 import createRootReducer, { commonStoreReducers } from 'store/reducers'
 import rootSaga from 'store/sagas'
 import history from 'utils/history'
@@ -48,7 +48,7 @@ const onSagaError = (
     error,
     additionalInfo: errorInfo
   })
-  amplitudeTrack(ERROR_PAGE, errorInfo)
+  amplitudeAgreement(ERROR_PAGE, errorInfo)
 }
 
 // Can't send up the entire Redux state b/c it's too fat
@@ -91,10 +91,10 @@ const statePruner = (state: AppState) => {
     },
     upload: {
       completionId: state.upload.completionId,
-      failedTrackIndices: state.upload.failedTrackIndices,
+      failedAgreementIndices: state.upload.failedAgreementIndices,
       metadata: state.upload.metadata,
       success: state.upload.success,
-      tracks: (state.upload.tracks || []).map((t) => ({
+      agreements: (state.upload.agreements || []).map((t) => ({
         metadata: t.metadata
       })),
       uploading: state.upload.uploading,

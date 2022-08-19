@@ -28,7 +28,7 @@
   flex-wrap: wrap;
 }
 
-.subHeader .track {
+.subHeader .agreement {
   display: inline-flex;
   align-items: center;
   flex-wrap: wrap;
@@ -40,11 +40,11 @@
   line-height: 20px;
 }
 
-.subHeader .track .iconVerified {
+.subHeader .agreement .iconVerified {
   margin-left: 4px;
 }
 
-.subHeader .track .link {
+.subHeader .agreement .link {
   margin: 0px 4px;
   color: var(--secondary);
   display: flex;
@@ -56,7 +56,7 @@
   width: 100%;
 }
 
-.tracksContainer {
+.agreementsContainer {
   width: 100%;
   padding-top: 48px;
 }

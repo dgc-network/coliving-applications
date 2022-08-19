@@ -250,7 +250,7 @@
   justify-content: flex-start;
 }
 
-/* Right side of the track tile */
+/* Right side of the agreement tile */
 .topRight {
   position: absolute;
   top: 0;
@@ -317,7 +317,7 @@
   color: var(--neutral-light-4);
 }
 
-/* Track Tile Divider */
+/* Agreement Tile Divider */
 .divider {
   height: 1px;
   min-height: 1px;
@@ -338,7 +338,7 @@
   margin: 2px 13px 6px 0px;
 }
 
-/* Bottom Row Track TIle */
+/* Bottom Row Agreement TIle */
 .bottomRow {
   display: inline-flex;
   justify-content: space-between;

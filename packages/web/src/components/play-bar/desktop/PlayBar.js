@@ -11,7 +11,7 @@ import { push as pushRoute } from 'connected-react-router'
 import { connect } from 'react-redux'
 
 import { getAccountUser, getUserId } from 'common/store/account/selectors'
-import { getLineupHasTracks } from 'common/store/lineup/selectors'
+import { getLineupHasAgreements } from 'common/store/lineup/selectors'
 import { makeGetCurrent } from 'common/store/queue/selectors'
 import {
   play,
@@ -23,11 +23,11 @@ import {
 } from 'common/store/queue/slice'
 import { RepeatMode } from 'common/store/queue/types'
 import {
-  repostTrack,
-  undoRepostTrack,
-  saveTrack,
-  unsaveTrack
-} from 'common/store/social/tracks/actions'
+  repostAgreement,
+  undoRepostAgreement,
+  saveAgreement,
+  unsaveAgreement
+} from 'common/store/social/agreements/actions'
 import { getTheme } from 'common/store/ui/theme/selectors'
 import { Genre } from 'common/utils/genres'
 import FavoriteButton from 'components/alt-button/FavoriteButton'
@@ -55,7 +55,7 @@ import { collectibleDetailsPage, profilePage } from 'utils/route'
 import { isMatrix, shouldShowDark } from 'utils/theme/theme'
 
 import styles from './PlayBar.module.css'
-import PlayingTrackInfo from './components/PlayingTrackInfo'
+import PlayingAgreementInfo from './components/PlayingAgreementInfo'
 
 const VOLUME_GRANULARITY = 100.0
 const SEEK_INTERVAL = 200
@@ -76,9 +76,9 @@ class PlayBar extends Component {
     // State used to manage time on left of playbar.
     this.state = {
       seeking: false,
-      trackPosition: 0,
+      agreementPosition: 0,
       playCounter: null,
-      trackId: null,
+      agreementId: null,
       // Capture intent to set initial volume before live is playing
       initialVolume: null,
       mediaKey: 0
@@ -106,8 +106,8 @@ class PlayBar extends Component {
 
     if (isPlaying && !this.seekInterval) {
       this.seekInterval = setInterval(() => {
-        const trackPosition = live.getPosition()
-        this.setState({ trackPosition })
+        const agreementPosition = live.getPosition()
+        this.setState({ agreementPosition })
       }, SEEK_INTERVAL)
     }
 
@@ -115,7 +115,7 @@ class PlayBar extends Component {
       this.setState({
         mediaKey: this.state.mediaKey + 1,
         playCounter,
-        trackPosition: 0,
+        agreementPosition: 0,
         listenRecorded: false
       })
     }
@@ -134,15 +134,15 @@ class PlayBar extends Component {
     clearInterval(this.seekInterval)
   }
 
-  goToTrackPage = () => {
+  goToAgreementPage = () => {
     const {
-      currentQueueItem: { track, user },
+      currentQueueItem: { agreement, user },
       collectible,
       goToRoute
     } = this.props
 
-    if (track && user) {
-      goToRoute(track.permalink)
+    if (agreement && user) {
+      goToRoute(agreement.permalink)
     } else if (collectible && user) {
       goToRoute(collectibleDetailsPage(user.handle, collectible.id))
     }
@@ -161,7 +161,7 @@ class PlayBar extends Component {
 
   togglePlay = () => {
     const {
-      currentQueueItem: { track },
+      currentQueueItem: { agreement },
       live,
       isPlaying,
       play,
@@ -173,7 +173,7 @@ class PlayBar extends Component {
       pause()
       record(
         make(Name.PLAYBACK_PAUSE, {
-          id: track ? track.track_id : null,
+          id: agreement ? agreement.agreement_id : null,
           source: PlaybackSource.PLAYBAR
         })
       )
@@ -181,26 +181,26 @@ class PlayBar extends Component {
       play()
       record(
         make(Name.PLAYBACK_PLAY, {
-          id: track ? track.track_id : null,
+          id: agreement ? agreement.agreement_id : null,
           source: PlaybackSource.PLAYBAR
         })
       )
     }
   }
 
-  onToggleFavorite = (favorited, trackId) => {
-    if (trackId) {
+  onToggleFavorite = (favorited, agreementId) => {
+    if (agreementId) {
       favorited
-        ? this.props.unsaveTrack(trackId)
-        : this.props.saveTrack(trackId)
+        ? this.props.unsaveAgreement(agreementId)
+        : this.props.saveAgreement(agreementId)
     }
   }
 
-  onToggleRepost = (reposted, trackId) => {
-    if (trackId) {
+  onToggleRepost = (reposted, agreementId) => {
+    if (agreementId) {
       reposted
-        ? this.props.undoRepostTrack(trackId)
-        : this.props.repostTrack(trackId)
+        ? this.props.undoRepostAgreement(agreementId)
+        : this.props.repostAgreement(agreementId)
     }
   }
 
@@ -243,9 +243,9 @@ class PlayBar extends Component {
       seek,
       previous,
       reset,
-      currentQueueItem: { track }
+      currentQueueItem: { agreement }
     } = this.props
-    if (track?.genre === Genre.PODCASTS) {
+    if (agreement?.genre === Genre.PODCASTS) {
       const position = live.getPosition()
       const newPosition = position - SKIP_DURATION_SEC
       seek(Math.max(0, newPosition))
@@ -254,7 +254,7 @@ class PlayBar extends Component {
       })
     } else {
       const shouldGoToPrevious =
-        this.state.trackPosition < RESTART_THRESHOLD_SEC
+        this.state.agreementPosition < RESTART_THRESHOLD_SEC
       if (shouldGoToPrevious) {
         previous()
       } else {
@@ -268,9 +268,9 @@ class PlayBar extends Component {
       live,
       seek,
       next,
-      currentQueueItem: { track }
+      currentQueueItem: { agreement }
     } = this.props
-    if (track?.genre === Genre.PODCASTS) {
+    if (agreement?.genre === Genre.PODCASTS) {
       const duration = live.getDuration()
       const position = live.getPosition()
       const newPosition = position + SKIP_DURATION_SEC
@@ -285,12 +285,12 @@ class PlayBar extends Component {
 
   playable = () =>
     !!this.props.currentQueueItem.uid ||
-    this.props.lineupHasTracks ||
+    this.props.lineupHasAgreements ||
     this.props.collectible
 
   render() {
     const {
-      currentQueueItem: { uid, track, user },
+      currentQueueItem: { uid, agreement, user },
       live,
       collectible,
       isPlaying,
@@ -300,38 +300,38 @@ class PlayBar extends Component {
     } = this.props
     const { mediaKey } = this.state
 
-    let trackTitle = ''
+    let agreementTitle = ''
     let artistName = ''
     let artistHandle = ''
     let artistUserId = null
     let isVerified = false
     let profilePictureSizes = null
-    let trackId = null
+    let agreementId = null
     let duration = null
     let reposted = false
     let favorited = false
     let isOwner = false
-    let isTrackUnlisted = false
-    let trackPermalink = ''
+    let isAgreementUnlisted = false
+    let agreementPermalink = ''
 
-    if (uid && track && user) {
-      trackTitle = track.title
+    if (uid && agreement && user) {
+      agreementTitle = agreement.title
       artistName = user.name
       artistHandle = user.handle
       artistUserId = user.user_id
       isVerified = user.is_verified
       profilePictureSizes = user._profile_picture_sizes
-      isOwner = track.owner_id === userId
-      trackPermalink = track.permalink
+      isOwner = agreement.owner_id === userId
+      agreementPermalink = agreement.permalink
 
       duration = live.getDuration()
-      trackId = track.track_id
-      reposted = track.has_current_user_reposted
-      favorited = track.has_current_user_saved || false
-      isTrackUnlisted = track.is_unlisted
+      agreementId = agreement.agreement_id
+      reposted = agreement.has_current_user_reposted
+      favorited = agreement.has_current_user_saved || false
+      isAgreementUnlisted = agreement.is_unlisted
     } else if (collectible && user) {
       // Special case for live nft playlist
-      trackTitle = collectible.name
+      agreementTitle = collectible.name
       artistName = user.name
       artistHandle = user.handle
       artistUserId = user.user_id
@@ -362,18 +362,18 @@ class PlayBar extends Component {
       <div className={styles.playBar}>
         <div className={styles.playBarContentWrapper}>
           <div className={styles.playBarPlayingInfo}>
-            <PlayingTrackInfo
+            <PlayingAgreementInfo
               profilePictureSizes={profilePictureSizes}
-              trackId={trackId}
+              agreementId={agreementId}
               isOwner={isOwner}
-              trackTitle={trackTitle}
-              trackPermalink={trackPermalink}
+              agreementTitle={agreementTitle}
+              agreementPermalink={agreementPermalink}
               artistName={artistName}
               artistHandle={artistHandle}
               artistUserId={artistUserId}
               isVerified={isVerified}
-              isTrackUnlisted={isTrackUnlisted}
-              onClickTrackTitle={this.goToTrackPage}
+              isAgreementUnlisted={isAgreementUnlisted}
+              onClickAgreementTitle={this.goToAgreementPage}
               onClickArtistName={this.goToArtistPage}
               hasShadow={false}
             />
@@ -389,8 +389,8 @@ class PlayBar extends Component {
                 elapsedSeconds={live?.getPosition()}
                 totalSeconds={duration}
                 style={{
-                  railListenedColor: 'var(--track-slider-rail)',
-                  handleColor: 'var(--track-slider-handle)'
+                  railListenedColor: 'var(--agreement-slider-rail)',
+                  handleColor: 'var(--agreement-slider-handle)'
                 }}
                 onScrubRelease={this.props.seek}
               />
@@ -446,7 +446,7 @@ class PlayBar extends Component {
                 <span>
                   <RepostButton
                     aria-label={repostText}
-                    onClick={() => this.onToggleRepost(reposted, trackId)}
+                    onClick={() => this.onToggleRepost(reposted, agreementId)}
                     isActive={reposted}
                     isDisabled={isFavoriteAndRepostDisabled}
                     isDarkMode={shouldShowDark(theme)}
@@ -469,7 +469,7 @@ class PlayBar extends Component {
                     isMatrixMode={matrix}
                     isActive={favorited}
                     isDarkMode={shouldShowDark(theme)}
-                    onClick={() => this.onToggleFavorite(favorited, trackId)}
+                    onClick={() => this.onToggleFavorite(favorited, agreementId)}
                   />
                 </span>
               </Tooltip>
@@ -493,7 +493,7 @@ const makeMapStateToProps = () => {
     isPlaying: getPlaying(state),
     isBuffering: getBuffering(state),
     playingUid: getPlayingUid(state),
-    lineupHasTracks: getLineupHasTracks(
+    lineupHasAgreements: getLineupHasAgreements(
       getLineupSelectorForRoute(state),
       state
     ),
@@ -528,13 +528,13 @@ const mapDispatchToProps = (dispatch) => ({
   shuffle: (enable) => {
     dispatch(shuffle({ enable }))
   },
-  repostTrack: (trackId) =>
-    dispatch(repostTrack(trackId, RepostSource.PLAYBAR)),
-  undoRepostTrack: (trackId) =>
-    dispatch(undoRepostTrack(trackId, RepostSource.PLAYBAR)),
-  saveTrack: (trackId) => dispatch(saveTrack(trackId, FavoriteSource.PLAYBAR)),
-  unsaveTrack: (trackId) =>
-    dispatch(unsaveTrack(trackId, FavoriteSource.PLAYBAR)),
+  repostAgreement: (agreementId) =>
+    dispatch(repostAgreement(agreementId, RepostSource.PLAYBAR)),
+  undoRepostAgreement: (agreementId) =>
+    dispatch(undoRepostAgreement(agreementId, RepostSource.PLAYBAR)),
+  saveAgreement: (agreementId) => dispatch(saveAgreement(agreementId, FavoriteSource.PLAYBAR)),
+  unsaveAgreement: (agreementId) =>
+    dispatch(unsaveAgreement(agreementId, FavoriteSource.PLAYBAR)),
   goToRoute: (route) => dispatch(pushRoute(route)),
   record: (event) => dispatch(event)
 })

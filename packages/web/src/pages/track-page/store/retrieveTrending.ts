@@ -1,15 +1,15 @@
 import {
   ID,
   TimeRange,
-  Track,
-  UserTrackMetadata,
+  Agreement,
+  UserAgreementMetadata,
   Nullable,
   StringKeys
 } from '@coliving/common'
 import { call, put, select } from 'redux-saga/effects'
 
-import { getTracks } from 'common/store/cache/tracks/selectors'
-import { processAndCacheTracks } from 'common/store/cache/tracks/utils'
+import { getAgreements } from 'common/store/cache/agreements/selectors'
+import { processAndCacheAgreements } from 'common/store/cache/agreements/utils'
 import { setLastFetchedTrendingGenre } from 'common/store/pages/trending/actions'
 import { getTrendingEntries } from 'common/store/pages/trending/lineup/selectors'
 import {
@@ -35,30 +35,30 @@ export function* retrieveTrending({
   offset,
   limit,
   currentUserId
-}: RetrieveTrendingArgs): Generator<any, Track[], any> {
+}: RetrieveTrendingArgs): Generator<any, Agreement[], any> {
   yield call(remoteConfigInstance.waitForRemoteConfig)
   const TF = new Set(
     remoteConfigInstance.getRemoteVar(StringKeys.TF)?.split(',') ?? []
   )
 
-  const cachedTracks: ReturnType<ReturnType<typeof getTrendingEntries>> =
+  const cachedAgreements: ReturnType<ReturnType<typeof getTrendingEntries>> =
     yield select(getTrendingEntries(timeRange))
 
   const lastGenre = yield select(getLastFetchedTrendingGenre)
   yield put(setLastFetchedTrendingGenre(genre))
 
-  const useCached = lastGenre === genre && cachedTracks.length > offset + limit
+  const useCached = lastGenre === genre && cachedAgreements.length > offset + limit
 
   if (useCached) {
-    const trackIds = cachedTracks.slice(offset, limit + offset).map((t) => t.id)
-    const tracksMap: ReturnType<typeof getTracks> = yield select(
-      (state: AppState) => getTracks(state, { ids: trackIds })
+    const agreementIds = cachedAgreements.slice(offset, limit + offset).map((t) => t.id)
+    const agreementsMap: ReturnType<typeof getAgreements> = yield select(
+      (state: AppState) => getAgreements(state, { ids: agreementIds })
     )
-    const tracks = trackIds.map((id) => tracksMap[id])
-    return tracks
+    const agreements = agreementIds.map((id) => agreementsMap[id])
+    return agreements
   }
 
-  let apiTracks: UserTrackMetadata[] = yield apiClient.getTrending({
+  let apiAgreements: UserAgreementMetadata[] = yield apiClient.getTrending({
     genre,
     offset,
     limit,
@@ -66,8 +66,8 @@ export function* retrieveTrending({
     timeRange
   })
   if (TF.size > 0) {
-    apiTracks = apiTracks.filter((t) => {
-      const shaId = window.Web3.utils.sha3(t.track_id.toString())
+    apiAgreements = apiAgreements.filter((t) => {
+      const shaId = window.Web3.utils.sha3(t.agreement_id.toString())
       return !TF.has(shaId)
     })
   }
@@ -77,6 +77,6 @@ export function* retrieveTrending({
   // If we changed genres, do nothing
   if (currentGenre !== genre) return []
 
-  const processed: Track[] = yield processAndCacheTracks(apiTracks)
+  const processed: Agreement[] = yield processAndCacheAgreements(apiAgreements)
   return processed
 }

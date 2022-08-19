@@ -18,7 +18,7 @@ const userListReducer = UserListReducerFactory.createReducer({
 
 const initialState = {
   id: null,
-  favoriteType: FavoriteType.TRACK
+  favoriteType: FavoriteType.AGREEMENT
 }
 
 const favoritesPageReducer = createReducer<FavoritesOwnState, FavoriteActions>(

@@ -5,8 +5,8 @@ import { ReactComponent as IconAlbum } from 'assets/img/iconAlbum.svg'
 import { ReactComponent as IconNote } from 'assets/img/iconNote.svg'
 import {
   Tabs as ProfileTabs,
-  TrackRecord,
-  SavedPageTrack,
+  AgreementRecord,
+  SavedPageAgreement,
   SavedPageCollection
 } from 'common/store/pages/saved-page/types'
 import { QueueItem } from 'common/store/queue/types'
@@ -15,8 +15,8 @@ import FilterInput from 'components/filter-input/FilterInput'
 import Header from 'components/header/desktop/Header'
 import CardLineup from 'components/lineup/CardLineup'
 import Page from 'components/page/Page'
-import EmptyTable from 'components/tracks-table/EmptyTable'
-import TracksTable from 'components/tracks-table/TracksTable'
+import EmptyTable from 'components/agreements-table/EmptyTable'
+import AgreementsTable from 'components/agreements-table/AgreementsTable'
 import { useOrderedLoad } from 'hooks/useOrderedLoad'
 import useTabs from 'hooks/useTabs/useTabs'
 import { albumPage } from 'utils/route'
@@ -24,7 +24,7 @@ import { albumPage } from 'utils/route'
 import styles from './SavedPage.module.css'
 
 const messages = {
-  filterPlaceholder: 'Filter Tracks'
+  filterPlaceholder: 'Filter Agreements'
 }
 
 export type SavedPageProps = {
@@ -34,45 +34,45 @@ export type SavedPageProps = {
   isQueued: boolean
   playingUid: UID | null
   getFilteredData: (
-    trackMetadatas: SavedPageTrack[]
-  ) => [SavedPageTrack[], number]
-  onClickRow: (record: TrackRecord) => void
-  onClickSave: (record: TrackRecord) => void
-  onClickTrackName: (record: TrackRecord) => void
-  onClickArtistName: (record: TrackRecord) => void
-  onClickRepost: (record: TrackRecord) => void
+    agreementMetadatas: SavedPageAgreement[]
+  ) => [SavedPageAgreement[], number]
+  onClickRow: (record: AgreementRecord) => void
+  onClickSave: (record: AgreementRecord) => void
+  onClickAgreementName: (record: AgreementRecord) => void
+  onClickArtistName: (record: AgreementRecord) => void
+  onClickRepost: (record: AgreementRecord) => void
   onPlay: () => void
-  onSortTracks: (sorters: any) => void
+  onSortAgreements: (sorters: any) => void
   onChangeTab: (tab: ProfileTabs) => void
-  formatCardSecondaryText: (saves: number, tracks: number) => string
+  formatCardSecondaryText: (saves: number, agreements: number) => string
   filterText: string
   initialOrder: UID[] | null
   currentTab: ProfileTabs
   account: (User & { albums: SavedPageCollection[] }) | undefined
-  tracks: Lineup<SavedPageTrack>
+  agreements: Lineup<SavedPageAgreement>
   currentQueueItem: QueueItem
   playing: boolean
   buffering: boolean
-  fetchSavedTracks: () => void
-  resetSavedTracks: () => void
+  fetchSavedAgreements: () => void
+  resetSavedAgreements: () => void
   updateLineupOrder: (updatedOrderIndices: UID[]) => void
   fetchSavedAlbums: () => void
   goToRoute: (route: string) => void
   play: (uid?: UID) => void
   pause: () => void
-  repostTrack: (trackId: ID) => void
-  undoRepostTrack: (trackId: ID) => void
-  saveTrack: (trackId: ID) => void
-  unsaveTrack: (trackId: ID) => void
+  repostAgreement: (agreementId: ID) => void
+  undoRepostAgreement: (agreementId: ID) => void
+  saveAgreement: (agreementId: ID) => void
+  unsaveAgreement: (agreementId: ID) => void
   onClickRemove: any
-  onReorderTracks: any
+  onReorderAgreements: any
 }
 
 const SavedPage = ({
   title,
   description,
   account,
-  tracks: { status, entries },
+  agreements: { status, entries },
   goToRoute,
   playing,
   currentTab,
@@ -85,23 +85,23 @@ const SavedPage = ({
   onChangeTab,
   onClickRow,
   onClickSave,
-  onClickTrackName,
+  onClickAgreementName,
   onClickArtistName,
   onClickRepost,
   onClickRemove,
-  onSortTracks,
-  onReorderTracks
+  onSortAgreements,
+  onReorderAgreements
 }: SavedPageProps) => {
   const [dataSource, playingIndex] =
     status === Status.SUCCESS ? getFilteredData(entries) : [[], -1]
   const { isLoading: isLoadingAlbums, setDidLoad: setDidLoadAlbums } =
     useOrderedLoad(account ? account.albums.length : 0)
   const isEmpty = entries.length === 0
-  const tracksLoading = status === Status.LOADING
+  const agreementsLoading = status === Status.LOADING
   const queuedAndPlaying = playing && isQueued
 
   // Setup play button
-  const playButtonActive = currentTab === ProfileTabs.TRACKS && !tracksLoading
+  const playButtonActive = currentTab === ProfileTabs.AGREEMENTS && !agreementsLoading
   const playAllButton = (
     <div
       className={styles.playButtonContainer}
@@ -123,7 +123,7 @@ const SavedPage = ({
   )
 
   // Setup filter
-  const filterActive = currentTab === ProfileTabs.TRACKS
+  const filterActive = currentTab === ProfileTabs.AGREEMENTS
   const filter = (
     <div
       className={styles.filterContainer}
@@ -160,7 +160,7 @@ const SavedPage = ({
             primaryText={album.playlist_name}
             secondaryText={formatCardSecondaryText(
               album.save_count,
-              album.playlist_contents.track_ids.length
+              album.playlist_contents.agreement_ids.length
             )}
             isReposted={album.has_current_user_reposted}
             isSaved={album.has_current_user_saved}
@@ -189,8 +189,8 @@ const SavedPage = ({
     tabs: [
       {
         icon: <IconNote />,
-        text: ProfileTabs.TRACKS,
-        label: ProfileTabs.TRACKS
+        text: ProfileTabs.AGREEMENTS,
+        label: ProfileTabs.AGREEMENTS
       },
       {
         icon: <IconAlbum />,
@@ -199,31 +199,31 @@ const SavedPage = ({
       }
     ],
     elements: [
-      isEmpty && !tracksLoading ? (
+      isEmpty && !agreementsLoading ? (
         <EmptyTable
-          primaryText='You haven’t favorited any tracks yet.'
+          primaryText='You haven’t favorited any agreements yet.'
           secondaryText='Once you have, this is where you’ll find them!'
           buttonLabel='Go to Trending'
           onClick={() => goToRoute('/trending')}
         />
       ) : (
         <div className={styles.tableWrapper}>
-          <TracksTable
+          <AgreementsTable
             key='favorites'
             userId={account ? account.user_id : 0}
-            loading={tracksLoading}
-            loadingRowsCount={account ? account.track_save_count : 0}
+            loading={agreementsLoading}
+            loadingRowsCount={account ? account.agreement_save_count : 0}
             playing={queuedAndPlaying}
             playingIndex={playingIndex}
             dataSource={dataSource}
             onClickRow={onClickRow}
             onClickFavorite={onClickSave}
-            onClickTrackName={onClickTrackName}
+            onClickAgreementName={onClickAgreementName}
             onClickArtistName={onClickArtistName}
             onClickRepost={onClickRepost}
             onClickRemove={onClickRemove}
-            onSortTracks={onSortTracks}
-            onReorderTracks={onReorderTracks}
+            onSortAgreements={onSortAgreements}
+            onReorderAgreements={onReorderAgreements}
           />
         </div>
       ),

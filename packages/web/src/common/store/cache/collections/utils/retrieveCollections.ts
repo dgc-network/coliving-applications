@@ -4,7 +4,7 @@ import {
   CollectionMetadata,
   UserCollectionMetadata,
   Kind,
-  Track,
+  Agreement,
   makeUid
 } from '@coliving/common'
 import { call, select } from 'redux-saga/effects'
@@ -14,11 +14,11 @@ import { getUserId } from 'common/store/account/selectors'
 import { getCollections } from 'common/store/cache/collections/selectors'
 import { retrieve } from 'common/store/cache/sagas'
 import { getEntryTimestamp } from 'common/store/cache/selectors'
-import { retrieveTracks } from 'common/store/cache/tracks/utils'
+import { retrieveAgreements } from 'common/store/cache/agreements/utils'
 import ColivingBackend from 'services/ColivingBackend'
 import apiClient from 'services/coliving-api-client/ColivingAPIClient'
 
-import { addTracksFromCollections } from './addTracksFromCollections'
+import { addAgreementsFromCollections } from './addAgreementsFromCollections'
 import { addUsersFromCollections } from './addUsersFromCollections'
 import { reformat } from './reformat'
 
@@ -37,46 +37,46 @@ function* markCollectionDeleted(
   })
 }
 
-export function* retrieveTracksForCollections(
+export function* retrieveAgreementsForCollections(
   collections: CollectionMetadata[],
-  excludedTrackIdSet: Set<ID>
+  excludedAgreementIdSet: Set<ID>
 ) {
-  const allTrackIds = collections.reduce((acc, cur) => {
-    const trackIds = cur.playlist_contents.track_ids.map((t) => t.track)
-    return [...acc, ...trackIds]
+  const allAgreementIds = collections.reduce((acc, cur) => {
+    const agreementIds = cur.playlist_contents.agreement_ids.map((t) => t.agreement)
+    return [...acc, ...agreementIds]
   }, [] as ID[])
-  const filteredTrackIds = [
-    ...new Set(allTrackIds.filter((id) => !excludedTrackIdSet.has(id)))
+  const filteredAgreementIds = [
+    ...new Set(allAgreementIds.filter((id) => !excludedAgreementIdSet.has(id)))
   ]
-  const tracks: Track[] = yield call(retrieveTracks, {
-    trackIds: filteredTrackIds
+  const agreements: Agreement[] = yield call(retrieveAgreements, {
+    agreementIds: filteredAgreementIds
   })
 
-  // If any tracks failed to be retrieved for some reason,
+  // If any agreements failed to be retrieved for some reason,
   // remove them from their collection.
   const unfetchedIdSet = new Set()
-  for (let i = 0; i < tracks.length; i++) {
-    if (!tracks[i]) {
-      unfetchedIdSet.add(filteredTrackIds[i])
+  for (let i = 0; i < agreements.length; i++) {
+    if (!agreements[i]) {
+      unfetchedIdSet.add(filteredAgreementIds[i])
     }
   }
 
   return collections.map((c) => {
-    // Filter out unfetched tracks
-    const filteredIds = c.playlist_contents.track_ids.filter(
-      (t) => !unfetchedIdSet.has(t.track)
+    // Filter out unfetched agreements
+    const filteredIds = c.playlist_contents.agreement_ids.filter(
+      (t) => !unfetchedIdSet.has(t.agreement)
     )
     // Add UIDs
     const withUids = filteredIds.map((t) => ({
       ...t,
       // Make a new UID if one doesn't already exist
-      uid: t.uid || makeUid(Kind.TRACKS, t.track, `collection:${c.playlist_id}`)
+      uid: t.uid || makeUid(Kind.AGREEMENTS, t.agreement, `collection:${c.playlist_id}`)
     }))
 
     return {
       ...c,
       playlist_contents: {
-        track_ids: withUids
+        agreement_ids: withUids
       }
     }
   })
@@ -99,16 +99,16 @@ export function* retrieveCollection(playlistId: ID) {
  * Retrieves collections from the cache or from source
  * @param userId optional owner of collections to fetch (TODO: to be removed)
  * @param collectionIds ids to retrieve
- * @param fetchTracks whether or not to fetch the tracks inside the playlist
- * @param requiresAllTracks whether or not fetching this collection requires it to have all its tracks.
- * In the case where a collection is already cached with partial tracks, use this flag to refetch from source.
+ * @param fetchAgreements whether or not to fetch the agreements inside the playlist
+ * @param requiresAllAgreements whether or not fetching this collection requires it to have all its agreements.
+ * In the case where a collection is already cached with partial agreements, use this flag to refetch from source.
  * @returns
  */
 export function* retrieveCollections(
   userId: ID | null,
   collectionIds: ID[],
-  fetchTracks = false,
-  requiresAllTracks = false
+  fetchAgreements = false,
+  requiresAllAgreements = false
 ) {
   // @ts-ignore retrieve should be refactored to ts first
   const { entries, uids } = yield call(retrieve, {
@@ -117,12 +117,12 @@ export function* retrieveCollections(
       const res: {
         [id: number]: Collection
       } = yield select(getCollections, { ids })
-      if (requiresAllTracks) {
+      if (requiresAllAgreements) {
         const keys = Object.keys(res) as any
         keys.forEach((collectionId: number) => {
-          const fullTrackCount = res[collectionId].track_count
-          const currentTrackCount = res[collectionId].tracks?.length ?? 0
-          if (currentTrackCount < fullTrackCount) {
+          const fullAgreementCount = res[collectionId].agreement_count
+          const currentAgreementCount = res[collectionId].agreements?.length ?? 0
+          if (currentAgreementCount < fullAgreementCount) {
             // Remove the collection from the res so retrieve knows to get it from source
             delete res[collectionId]
           }
@@ -159,10 +159,10 @@ export function* retrieveCollections(
     },
     onBeforeAddToCache: function* (metadatas: UserCollectionMetadata[]) {
       yield addUsersFromCollections(metadatas)
-      yield addTracksFromCollections(metadatas)
+      yield addAgreementsFromCollections(metadatas)
 
-      if (fetchTracks) {
-        yield call(retrieveTracksForCollections, metadatas, new Set())
+      if (fetchAgreements) {
+        yield call(retrieveAgreementsForCollections, metadatas, new Set())
       }
 
       const reformattedCollections = metadatas.map((c) => reformat(c))

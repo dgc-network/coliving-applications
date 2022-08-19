@@ -229,14 +229,14 @@ export class TotalPlaysChart extends Component {
   }
 
   render() {
-    const { data, tracks, onSetTrackOption, onSetYearOption, isMatrix } =
+    const { data, agreements, onSetAgreementOption, onSetYearOption, isMatrix } =
       this.props
     const { chartSize, yearOptions } = this.state
 
-    const trackOptions = [{ name: 'All Tracks', id: -1 }].concat(tracks)
+    const agreementOptions = [{ name: 'All Agreements', id: -1 }].concat(agreements)
 
-    const tracksMenu = {
-      items: trackOptions.map((t) => ({ id: t.id, text: t.name }))
+    const agreementsMenu = {
+      items: agreementOptions.map((t) => ({ id: t.id, text: t.name }))
     }
     const yearsMenu = { items: yearOptions }
 
@@ -247,13 +247,13 @@ export class TotalPlaysChart extends Component {
       <div className={styles.playsTileContainer}>
         <div className={styles.playsTileHeading}>
           <div className={styles.playsTileHeader}>Total Plays</div>
-          <div className={styles.playsTrackDropdown}>
+          <div className={styles.playsAgreementDropdown}>
             <DropdownInput
               size='small'
               variant='alternative'
-              onSelect={onSetTrackOption}
-              placeholder='All Tracks'
-              menu={tracksMenu}
+              onSelect={onSetAgreementOption}
+              placeholder='All Agreements'
+              menu={agreementsMenu}
             />
           </div>
           <div className={styles.playsYearDropdown}>
@@ -284,7 +284,7 @@ export class TotalPlaysChart extends Component {
 }
 
 TotalPlaysChart.propTypes = {
-  tracks: PropTypes.arrayOf(
+  agreements: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string
     })
@@ -293,9 +293,9 @@ TotalPlaysChart.propTypes = {
     values: PropTypes.arrayOf(PropTypes.number),
     labels: PropTypes.arrayOf(PropTypes.string)
   }),
-  selectedTrack: PropTypes.number,
+  selectedAgreement: PropTypes.number,
   selectedYear: PropTypes.string,
-  onSetTrackOption: PropTypes.func,
+  onSetAgreementOption: PropTypes.func,
   onSetYearOption: PropTypes.func,
   accountCreatedAt: PropTypes.string
 }
@@ -318,10 +318,10 @@ TotalPlaysChart.defaultProps = {
     ],
     values: Array(12).fill(0)
   },
-  tracks: [],
-  selectedTrack: -1,
+  agreements: [],
+  selectedAgreement: -1,
   selectedYear: 'All Years',
-  onSetTrackOption: () => {},
+  onSetAgreementOption: () => {},
   onSetYearOption: () => {}
 }
 

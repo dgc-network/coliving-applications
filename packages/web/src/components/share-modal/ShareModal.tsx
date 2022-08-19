@@ -8,7 +8,7 @@ import {
   shareAudioNftPlaylist,
   shareCollection
 } from 'common/store/social/collections/actions'
-import { shareTrack } from 'common/store/social/tracks/actions'
+import { shareAgreement } from 'common/store/social/agreements/actions'
 import { shareUser } from 'common/store/social/users/actions'
 import { getShareState } from 'common/store/ui/share-modal/selectors'
 import { requestOpen as requestOpenTikTokModal } from 'common/store/ui/share-sound-to-tiktok-modal/slice'
@@ -40,7 +40,7 @@ export const ShareModal = () => {
   )
 
   const isOwner =
-    content?.type === 'track' && account?.user_id === content.artist.user_id
+    content?.type === 'agreement' && account?.user_id === content.artist.user_id
 
   const handleShareToTwitter = useCallback(() => {
     if (!source || !content) return
@@ -57,19 +57,19 @@ export const ShareModal = () => {
   }, [source, content, account, record, onClose])
 
   const handleShareToTikTok = useCallback(() => {
-    if (content?.type === 'track') {
-      dispatch(requestOpenTikTokModal({ id: content.track.track_id }))
+    if (content?.type === 'agreement') {
+      dispatch(requestOpenTikTokModal({ id: content.agreement.agreement_id }))
       onClose()
     } else {
-      console.error('Tried to share sound to TikTok but track was missing')
+      console.error('Tried to share sound to TikTok but agreement was missing')
     }
   }, [content, dispatch, onClose])
 
   const handleCopyLink = useCallback(() => {
     if (!source || !content) return
     switch (content.type) {
-      case 'track':
-        dispatch(shareTrack(content.track.track_id, source))
+      case 'agreement':
+        dispatch(shareAgreement(content.agreement.agreement_id, source))
         break
       case 'profile':
         dispatch(shareUser(content.profile.user_id, source))
@@ -97,13 +97,13 @@ export const ShareModal = () => {
     onClose,
     onClosed,
     showTikTokShareAction: Boolean(
-      content?.type === 'track' &&
+      content?.type === 'agreement' &&
         isShareSoundToTikTokEnabled &&
         isOwner &&
-        !content.track.is_unlisted &&
-        !content.track.is_delete
+        !content.agreement.is_unlisted &&
+        !content.agreement.is_delete
     ),
-    shareType: content?.type ?? 'track'
+    shareType: content?.type ?? 'agreement'
   }
 
   if (isMobile()) return <ShareDrawer {...shareProps} />

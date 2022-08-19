@@ -1,28 +1,28 @@
-import { Kind, ID, UID, Status, Track } from '@coliving/common'
+import { Kind, ID, UID, Status, Agreement } from '@coliving/common'
 
 import { CommonState } from 'common/store'
 import { getEntry, getAllEntries } from 'common/store/cache/selectors'
 
-export const getTrack = (
+export const getAgreement = (
   state: CommonState,
   props: { id?: ID | null; uid?: UID | null; permalink?: string | null }
 ) => {
   if (
     props.permalink &&
-    state.tracks.permalinks[props.permalink.toLowerCase()]
+    state.agreements.permalinks[props.permalink.toLowerCase()]
   ) {
-    props.id = state.tracks.permalinks[props.permalink.toLowerCase()].id
+    props.id = state.agreements.permalinks[props.permalink.toLowerCase()].id
   }
   return getEntry(state, {
     ...props,
-    kind: Kind.TRACKS
+    kind: Kind.AGREEMENTS
   })
 }
 
 export const getStatus = (state: CommonState, props: { id?: ID | null }) =>
-  (props.id && state.tracks.statuses[props.id]) || null
+  (props.id && state.agreements.statuses[props.id]) || null
 
-export const getTracks = (
+export const getAgreements = (
   state: CommonState,
   props: {
     ids?: ID[] | null
@@ -31,40 +31,40 @@ export const getTracks = (
   }
 ) => {
   if (props && props.ids) {
-    const tracks: { [id: number]: Track } = {}
+    const agreements: { [id: number]: Agreement } = {}
     props.ids.forEach((id) => {
-      const track = getTrack(state, { id })
-      if (track) {
-        tracks[id] = track
+      const agreement = getAgreement(state, { id })
+      if (agreement) {
+        agreements[id] = agreement
       }
     })
-    return tracks
+    return agreements
   } else if (props && props.uids) {
-    const tracks: { [id: number]: Track } = {}
+    const agreements: { [id: number]: Agreement } = {}
     props.uids.forEach((uid) => {
-      const track = getTrack(state, { uid })
-      if (track) {
-        tracks[track.track_id] = track
+      const agreement = getAgreement(state, { uid })
+      if (agreement) {
+        agreements[agreement.agreement_id] = agreement
       }
     })
-    return tracks
+    return agreements
   } else if (props && props.permalinks) {
-    const tracks: { [permalink: string]: Track } = {}
+    const agreements: { [permalink: string]: Agreement } = {}
     props.permalinks.forEach((permalink) => {
-      const track = getTrack(state, { permalink })
-      if (track) tracks[permalink] = track
+      const agreement = getAgreement(state, { permalink })
+      if (agreement) agreements[permalink] = agreement
     })
-    return tracks
+    return agreements
   }
-  return getAllEntries(state, { kind: Kind.TRACKS })
+  return getAllEntries(state, { kind: Kind.AGREEMENTS })
 }
 
 // TODO:
-export const getTracksByUid = (state: CommonState) => {
-  return Object.keys(state.tracks.uids).reduce((entries, uid) => {
-    entries[uid] = getTrack(state, { uid })
+export const getAgreementsByUid = (state: CommonState) => {
+  return Object.keys(state.agreements.uids).reduce((entries, uid) => {
+    entries[uid] = getAgreement(state, { uid })
     return entries
-  }, {} as { [uid: string]: Track | null })
+  }, {} as { [uid: string]: Agreement | null })
 }
 
 export const getStatuses = (state: CommonState, props: { ids: ID[] }) => {

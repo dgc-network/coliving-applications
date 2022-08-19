@@ -6,7 +6,7 @@ import type {
   PlaybackSource,
   Collection,
   FavoriteType,
-  Track,
+  Agreement,
   User
 } from '@/common'
 import type { RepostType } from '-client/src/common/store/user-list/reposts/types'
@@ -32,7 +32,7 @@ export type LineupItemProps = {
   /** Whether to show an icon indicating rank in lineup */
   showRankIcon?: boolean
 
-  /** Function that will toggle play of a track */
+  /** Function that will toggle play of a agreement */
   togglePlay: (args: {
     uid: UID
     id: ID
@@ -49,9 +49,9 @@ export type LineupTileProps = Omit<LineupItemProps, 'togglePlay'> & {
   children?: ReactNode
 
   /** Cosign information */
-  coSign?: Track['_co_sign']
+  coSign?: Agreement['_co_sign']
 
-  /** Duration of the tile's tracks */
+  /** Duration of the tile's agreements */
   duration?: number
 
   /** Favorite type used for the favorited user list */
@@ -72,8 +72,8 @@ export type LineupTileProps = Omit<LineupItemProps, 'togglePlay'> & {
   /** Does the tile uid match the playing uid */
   isPlayingUid: boolean
 
-  /** The item (track or collection) */
-  item: Track | Collection
+  /** The item (agreement or collection) */
+  item: Agreement | Collection
 
   /** Function to call when tile is pressed */
   onPress?: (args: { isPlaying: boolean }) => void

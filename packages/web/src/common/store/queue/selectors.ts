@@ -2,11 +2,11 @@ import { UID } from '@coliving/common'
 import { createSelector } from 'reselect'
 
 import { CommonState } from 'common/store'
-import { getTrack } from 'common/store/cache/tracks/selectors'
+import { getAgreement } from 'common/store/cache/agreements/selectors'
 import { getUser } from 'common/store/cache/users/selectors'
 import {
   getUid as getPlayerUid,
-  getTrackId as getPlayerTrackId
+  getAgreementId as getPlayerAgreementId
 } from 'store/player/selectors'
 import { AppState } from 'store/types'
 
@@ -41,24 +41,24 @@ export const getCollectible = (state: CommonState) => {
   return state.queue.order[state.queue.index].collectible ?? null
 }
 
-const getCurrentTrack = (state: AppState) =>
-  getTrack(state, { id: getPlayerTrackId(state) })
+const getCurrentAgreement = (state: AppState) =>
+  getAgreement(state, { id: getPlayerAgreementId(state) })
 const getCurrentUser = (state: AppState) => {
-  const track = getCurrentTrack(state)
+  const agreement = getCurrentAgreement(state)
   const queueable = state.queue.order[state.queue.index]
-  if (track || queueable?.artistId) {
-    return getUser(state, { id: track?.owner_id ?? queueable.artistId })
+  if (agreement || queueable?.artistId) {
+    return getUser(state, { id: agreement?.owner_id ?? queueable.artistId })
   }
   return null
 }
 
 export const makeGetCurrent = () => {
   return createSelector(
-    [getPlayerUid, getSource, getCurrentTrack, getCurrentUser, getCollectible],
-    (uid, source, track, user, collectible) => ({
+    [getPlayerUid, getSource, getCurrentAgreement, getCurrentUser, getCollectible],
+    (uid, source, agreement, user, collectible) => ({
       uid,
       source,
-      track,
+      agreement,
       user,
       collectible
     })

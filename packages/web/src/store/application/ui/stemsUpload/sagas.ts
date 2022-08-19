@@ -1,8 +1,8 @@
-import { Name, Track, User } from '@coliving/common'
+import { Name, Agreement, User } from '@coliving/common'
 import { takeEvery, put, call, select } from 'redux-saga/effects'
 
-import { getTrack } from 'common/store/cache/tracks/selectors'
-import { retrieveTracks } from 'common/store/cache/tracks/utils'
+import { getAgreement } from 'common/store/cache/agreements/selectors'
+import { retrieveAgreements } from 'common/store/cache/agreements/utils'
 import { getUser } from 'common/store/cache/users/selectors'
 import {
   startStemUploads,
@@ -17,47 +17,47 @@ function* watchUploadStems() {
     startStemUploads.type,
     function* (action: ReturnType<typeof startStemUploads>) {
       const { uploads, parentId, batchUID } = action.payload
-      const stemTracks = uploads.map((u) => {
+      const stemAgreements = uploads.map((u) => {
         const metadata = createStemMetadata({
-          parentTrackId: parentId,
-          track: u.metadata,
+          parentAgreementId: parentId,
+          agreement: u.metadata,
           stemCategory: u.category
         })
         return {
           metadata,
-          track: {
+          agreement: {
             ...u,
             metadata
           }
         }
       })
-      const { trackIds } = yield call(handleUploads, {
-        tracks: stemTracks,
+      const { agreementIds } = yield call(handleUploads, {
+        agreements: stemAgreements,
         isCollection: false,
         isStem: true
       })
 
       yield put(stemUploadsSucceeded({ parentId, batchUID }))
 
-      if (trackIds) {
-        for (let i = 0; i < trackIds.length; i += 1) {
-          const trackId = trackIds[i]
-          const category = stemTracks[i].metadata.stem_of.category
+      if (agreementIds) {
+        for (let i = 0; i < agreementIds.length; i += 1) {
+          const agreementId = agreementIds[i]
+          const category = stemAgreements[i].metadata.stem_of.category
           const recordEvent = make(Name.STEM_COMPLETE_UPLOAD, {
-            id: trackId,
-            parent_track_id: parentId,
+            id: agreementId,
+            parent_agreement_id: parentId,
             category
           })
           yield put(recordEvent)
         }
       }
 
-      // Retrieve the parent track to refresh stems
-      const track: Track = yield select(getTrack, { id: parentId })
-      const ownerUser: User = yield select(getUser, { id: track.owner_id })
-      yield call(retrieveTracks, {
-        trackIds: [
-          { id: parentId, handle: ownerUser.handle, url_title: track.title }
+      // Retrieve the parent agreement to refresh stems
+      const agreement: Agreement = yield select(getAgreement, { id: parentId })
+      const ownerUser: User = yield select(getUser, { id: agreement.owner_id })
+      yield call(retrieveAgreements, {
+        agreementIds: [
+          { id: parentId, handle: ownerUser.handle, url_title: agreement.title }
         ],
         withStems: true,
         canBeUnlisted: true

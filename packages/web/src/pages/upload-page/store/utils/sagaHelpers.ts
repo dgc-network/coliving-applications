@@ -13,7 +13,7 @@ export function* reportSuccessAndFailureEvents({
 }: {
   numSuccess: number
   numFailure: number
-  uploadType: 'single_track' | 'multi_track' | 'album' | 'playlist'
+  uploadType: 'single_agreement' | 'multi_agreement' | 'album' | 'playlist'
   errors: string[]
 }) {
   const accountUser: ReturnType<typeof getAccountUser> = yield select(
@@ -23,14 +23,14 @@ export function* reportSuccessAndFailureEvents({
   const primary = accountUser.creator_node_endpoint?.split(',')[0]
   if (!primary) return
   const successEvents = range(numSuccess).map((_) =>
-    make(Name.TRACK_UPLOAD_SUCCESS, {
+    make(Name.AGREEMENT_UPLOAD_SUCCESS, {
       endpoint: primary,
       kind: uploadType
     })
   )
 
   const failureEvents = range(numFailure).map((i) =>
-    make(Name.TRACK_UPLOAD_FAILURE, {
+    make(Name.AGREEMENT_UPLOAD_FAILURE, {
       endpoint: primary,
       kind: uploadType,
       error: errors[i]

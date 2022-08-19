@@ -4,28 +4,28 @@ import { expectSaga } from 'redux-saga-test-plan'
 import * as matchers from 'redux-saga-test-plan/matchers'
 
 import * as cacheActions from 'common/store/cache/actions'
-import * as actions from 'common/store/social/tracks/actions'
+import * as actions from 'common/store/social/agreements/actions'
 import ColivingBackend from 'services/ColivingBackend'
 import { waitForBackendSetup } from 'store/backend/sagas'
-import * as sagas from 'store/social/tracks/sagas'
+import * as sagas from 'store/social/agreements/sagas'
 import { noopReducer } from 'store/testHelper'
 
 const repostingUser = { repost_count: 0 }
 
 describe('repost', () => {
   it('reposts', async () => {
-    await expectSaga(sagas.watchRepostTrack, actions)
+    await expectSaga(sagas.watchRepostAgreement, actions)
       .withReducer(
         combineReducers({
           account: noopReducer(),
-          tracks: noopReducer(),
+          agreements: noopReducer(),
           users: noopReducer()
         }),
         {
           account: {
             userId: 1
           },
-          tracks: {
+          agreements: {
             entries: {
               1: { metadata: { repost_count: 5 } }
             }
@@ -38,10 +38,10 @@ describe('repost', () => {
         }
       )
       .provide([[matchers.call.fn(waitForBackendSetup), true]])
-      .dispatch(actions.repostTrack(1))
-      .call(sagas.confirmRepostTrack, 1, repostingUser)
+      .dispatch(actions.repostAgreement(1))
+      .call(sagas.confirmRepostAgreement, 1, repostingUser)
       .put(
-        cacheActions.update(Kind.TRACKS, [
+        cacheActions.update(Kind.AGREEMENTS, [
           {
             id: 1,
             metadata: {
@@ -55,18 +55,18 @@ describe('repost', () => {
   })
 
   it('undoes repost', async () => {
-    await expectSaga(sagas.watchUndoRepostTrack, actions)
+    await expectSaga(sagas.watchUndoRepostAgreement, actions)
       .withReducer(
         combineReducers({
           account: noopReducer(),
-          tracks: noopReducer(),
+          agreements: noopReducer(),
           users: noopReducer()
         }),
         {
           account: {
             userId: 1
           },
-          tracks: {
+          agreements: {
             entries: {
               1: { metadata: { repost_count: 5 } }
             }
@@ -79,10 +79,10 @@ describe('repost', () => {
         }
       )
       .provide([[matchers.call.fn(waitForBackendSetup), true]])
-      .dispatch(actions.undoRepostTrack(1))
-      .call(sagas.confirmUndoRepostTrack, 1, repostingUser)
+      .dispatch(actions.undoRepostAgreement(1))
+      .call(sagas.confirmUndoRepostAgreement, 1, repostingUser)
       .put(
-        cacheActions.update(Kind.TRACKS, [
+        cacheActions.update(Kind.AGREEMENTS, [
           {
             id: 1,
             metadata: {
@@ -98,17 +98,17 @@ describe('repost', () => {
 
 describe('save', () => {
   it('saves', async () => {
-    await expectSaga(sagas.watchSaveTrack, actions)
+    await expectSaga(sagas.watchSaveAgreement, actions)
       .withReducer(
         combineReducers({
           account: noopReducer(),
-          tracks: noopReducer()
+          agreements: noopReducer()
         }),
         {
           account: {
             userId: 1
           },
-          tracks: {
+          agreements: {
             entries: {
               1: { metadata: { save_count: 5 } }
             }
@@ -116,10 +116,10 @@ describe('save', () => {
         }
       )
       .provide([[matchers.call.fn(waitForBackendSetup), true]])
-      .dispatch(actions.saveTrack(1))
-      .call(sagas.confirmSaveTrack, 1)
+      .dispatch(actions.saveAgreement(1))
+      .call(sagas.confirmSaveAgreement, 1)
       .put(
-        cacheActions.update(Kind.TRACKS, [
+        cacheActions.update(Kind.AGREEMENTS, [
           {
             id: 1,
             metadata: {
@@ -133,17 +133,17 @@ describe('save', () => {
   })
 
   it('unsaves', async () => {
-    await expectSaga(sagas.watchUnsaveTrack, actions)
+    await expectSaga(sagas.watchUnsaveAgreement, actions)
       .withReducer(
         combineReducers({
           account: noopReducer(),
-          tracks: noopReducer()
+          agreements: noopReducer()
         }),
         {
           account: {
             userId: 1
           },
-          tracks: {
+          agreements: {
             entries: {
               1: { metadata: { save_count: 5 } }
             }
@@ -151,10 +151,10 @@ describe('save', () => {
         }
       )
       .provide([[matchers.call.fn(waitForBackendSetup), true]])
-      .dispatch(actions.unsaveTrack(1))
-      .call(sagas.confirmUnsaveTrack, 1)
+      .dispatch(actions.unsaveAgreement(1))
+      .call(sagas.confirmUnsaveAgreement, 1)
       .put(
-        cacheActions.update(Kind.TRACKS, [
+        cacheActions.update(Kind.AGREEMENTS, [
           {
             id: 1,
             metadata: {
@@ -174,22 +174,22 @@ describe('recordListen', () => {
       .withReducer(
         combineReducers({
           account: noopReducer(),
-          tracks: noopReducer()
+          agreements: noopReducer()
         }),
         {
           account: {
             userId: 1
           },
-          tracks: {
+          agreements: {
             entries: {
               1: { metadata: { owner_id: 2, _listen_count: 11 } }
             }
           }
         }
       )
-      .provide([[matchers.call.fn(ColivingBackend.recordTrackListen), true]])
+      .provide([[matchers.call.fn(ColivingBackend.recordAgreementListen), true]])
       .dispatch(actions.recordListen(1))
-      .call(ColivingBackend.recordTrackListen, 1)
+      .call(ColivingBackend.recordAgreementListen, 1)
       .silentRun()
   })
   it('limits listens on own account', async () => {
@@ -197,13 +197,13 @@ describe('recordListen', () => {
       .withReducer(
         combineReducers({
           account: noopReducer(),
-          tracks: noopReducer()
+          agreements: noopReducer()
         }),
         {
           account: {
             userId: 1
           },
-          tracks: {
+          agreements: {
             entries: {
               // Listens > 10 not counted
               1: { metadata: { owner_id: 1, _listen_count: 11 } }
@@ -211,9 +211,9 @@ describe('recordListen', () => {
           }
         }
       )
-      .provide([[matchers.call.fn(ColivingBackend.recordTrackListen), true]])
+      .provide([[matchers.call.fn(ColivingBackend.recordAgreementListen), true]])
       .dispatch(actions.recordListen(1))
-      .not.call.fn(ColivingBackend.recordTrackListen, 1)
+      .not.call.fn(ColivingBackend.recordAgreementListen, 1)
       .silentRun()
   })
 })

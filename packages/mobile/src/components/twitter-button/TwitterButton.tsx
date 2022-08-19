@@ -12,7 +12,7 @@ import { useDispatchWeb } from 'app/hooks/useDispatchWeb'
 import { useSelectorWeb } from 'app/hooks/useSelectorWeb'
 import { makeStyles } from 'app/styles'
 import type { make } from 'app/utils/analytics'
-import { track } from 'app/utils/analytics'
+import { agreement } from 'app/utils/analytics'
 import { getTwitterLink } from 'app/utils/twitter'
 
 const messages = {
@@ -57,7 +57,7 @@ export const TwitterButton = (props: TwitterButtonProps) => {
 
   const handlePress = useCallback(() => {
     if (other.type === 'static' && other.analytics) {
-      track(other.analytics)
+      agreement(other.analytics)
     }
     if (other.type === 'dynamic') {
       dispatchWeb(fetchUserSocials(other.handle))
@@ -71,7 +71,7 @@ export const TwitterButton = (props: TwitterButtonProps) => {
     if (twitterData) {
       const { shareText, analytics } = twitterData
       openLink(getTwitterLink(url, shareText))
-      track(analytics)
+      agreement(analytics)
       setIdle()
     }
   }

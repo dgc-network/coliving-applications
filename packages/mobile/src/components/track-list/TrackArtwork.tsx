@@ -5,7 +5,7 @@ import { View } from 'react-native'
 import IconPause from 'app/assets/images/pbIconPauseAlt.svg'
 import IconPlay from 'app/assets/images/pbIconPlayAlt.svg'
 import { DynamicImage } from 'app/components/core'
-import { useTrackCoverArt } from 'app/hooks/useTrackCoverArt'
+import { useAgreementCoverArt } from 'app/hooks/useAgreementCoverArt'
 import { makeStyles } from 'app/styles'
 
 type ArtworkIconProps = {
@@ -13,8 +13,8 @@ type ArtworkIconProps = {
   isPlaying: boolean
 }
 
-type TrackArtworkProps = {
-  trackId: ID
+type AgreementArtworkProps = {
+  agreementId: ID
   isLoading: boolean
   isActive?: boolean
   isPlaying: boolean
@@ -71,16 +71,16 @@ const ArtworkIcon = ({ isLoading, isPlaying }: ArtworkIconProps) => {
   return <View style={styles.artworkIcon}>{artworkIcon}</View>
 }
 
-export const TrackArtwork = ({
-  trackId,
+export const AgreementArtwork = ({
+  agreementId,
   isPlaying,
   isActive,
   isLoading,
   coverArtSizes
-}: TrackArtworkProps) => {
+}: AgreementArtworkProps) => {
   const styles = useStyles()
-  const image = useTrackCoverArt({
-    id: trackId,
+  const image = useAgreementCoverArt({
+    id: agreementId,
     sizes: coverArtSizes,
     size: SquareSizes.SIZE_150_BY_150
   })

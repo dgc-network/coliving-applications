@@ -87,10 +87,10 @@ class ConnectedSearchBar extends Component {
         (u) => value === profilePage(u.handle)
       )
       if (selectedUser) return { kind: 'profile', id: selectedUser.user_id }
-      const selectedTrack = this.props.search.tracks.find(
+      const selectedAgreement = this.props.search.agreements.find(
         (t) => value === (t.user ? t.permalink : '')
       )
-      if (selectedTrack) return { kind: 'track', id: selectedTrack.track_id }
+      if (selectedAgreement) return { kind: 'agreement', id: selectedAgreement.agreement_id }
       const selectedPlaylist = this.props.search.playlists.find(
         (p) =>
           value ===
@@ -119,8 +119,8 @@ class ConnectedSearchBar extends Component {
   }
 
   render() {
-    if (!this.props.search.tracks) {
-      this.props.search.tracks = []
+    if (!this.props.search.agreements) {
+      this.props.search.agreements = []
     }
     const dataSource = {
       sections: [
@@ -145,22 +145,22 @@ class ConnectedSearchBar extends Component {
           })
         },
         {
-          title: 'Tracks',
-          children: this.props.search.tracks.map((track) => {
+          title: 'Agreements',
+          children: this.props.search.agreements.map((agreement) => {
             return {
-              key: track.user ? track.permalink : '',
-              primary: track.title,
-              secondary: track.user ? track.user.name : '',
-              id: track.track_id,
-              userId: track.owner_id,
-              imageMultihash: track.cover_art_sizes || track.cover_art,
-              size: track.cover_art_sizes ? SquareSizes.SIZE_150_BY_150 : null,
-              contentNodeEndpoint: track.user
-                ? track.user.creator_node_endpoint
+              key: agreement.user ? agreement.permalink : '',
+              primary: agreement.title,
+              secondary: agreement.user ? agreement.user.name : '',
+              id: agreement.agreement_id,
+              userId: agreement.owner_id,
+              imageMultihash: agreement.cover_art_sizes || agreement.cover_art,
+              size: agreement.cover_art_sizes ? SquareSizes.SIZE_150_BY_150 : null,
+              contentNodeEndpoint: agreement.user
+                ? agreement.user.creator_node_endpoint
                 : '',
               defaultImage: placeholderArt,
-              isVerifiedUser: track.user.is_verified,
-              tier: getTierForUser(track.user)
+              isVerifiedUser: agreement.user.is_verified,
+              tier: getTierForUser(agreement.user)
             }
           })
         },

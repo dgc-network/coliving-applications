@@ -1,13 +1,13 @@
 import { Name } from '@coliving/common'
 import { takeEvery, put, call, select } from 'typed-redux-saga/macro'
 
-import { getTrack } from 'common/store/cache/tracks/selectors'
+import { getAgreement } from 'common/store/cache/agreements/selectors'
 import { setVisibility } from 'common/store/ui/modals/slice'
 import {
   getAccessToken,
   getIsAuthenticated,
   getOpenId,
-  getTrack as getTrackToShare
+  getAgreement as getAgreementToShare
 } from 'common/store/ui/share-sound-to-tiktok-modal/selectors'
 import {
   authenticated,
@@ -29,22 +29,22 @@ import { encodeHashId } from 'utils/route/hashIds'
 const TIKTOK_SHARE_SOUND_ENDPOINT =
   'https://open-api.tiktok.com/share/sound/upload/'
 
-// Because the track blob cannot live in an action (not a POJO),
+// Because the agreement blob cannot live in an action (not a POJO),
 // we are creating a singleton here to store it
-let trackBlob: Blob | null = null
+let agreementBlob: Blob | null = null
 
 function* handleRequestOpen(action: ReturnType<typeof requestOpen>) {
-  const track = yield* select((state: AppState) =>
-    getTrack(state, { id: action.payload.id })
+  const agreement = yield* select((state: AppState) =>
+    getAgreement(state, { id: action.payload.id })
   )
-  if (!track) return
+  if (!agreement) return
 
   yield* put(
     open({
-      track: {
-        id: track.track_id,
-        title: track.title,
-        duration: track.duration
+      agreement: {
+        id: agreement.agreement_id,
+        title: agreement.title,
+        duration: agreement.duration
       }
     })
   )
@@ -56,24 +56,24 @@ async function* handleShare() {
 
   yield* put(setStatus({ status: Status.SHARE_STARTED }))
 
-  const track = yield* select(getTrackToShare)
-  if (!track) return
-  const { id } = track
+  const agreement = yield* select(getAgreementToShare)
+  if (!agreement) return
+  const { id } = agreement
 
   try {
-    // Fetch the track blob
-    const encodedTrackId = encodeHashId(id)
+    // Fetch the agreement blob
+    const encodedAgreementId = encodeHashId(id)
 
     const response = yield* call(
       window.fetch,
-      apiClient.makeUrl(`/tracks/${encodedTrackId}/stream`)
+      apiClient.makeUrl(`/agreements/${encodedAgreementId}/stream`)
     )
 
     if (!response.ok) {
       throw new Error('TikTok Share sound request unsuccessful')
     }
 
-    trackBlob = await response.blob()
+    agreementBlob = await response.blob()
 
     // If already authed with TikTok, start the upload
     const authenticated = yield* select(getIsAuthenticated)
@@ -91,16 +91,16 @@ async function* handleShare() {
 function* handleAuthenticated(action: ReturnType<typeof authenticated>) {
   yield* put(setIsAuthenticated())
 
-  // If track blob already downloaded, start the upload
-  if (trackBlob) {
+  // If agreement blob already downloaded, start the upload
+  if (agreementBlob) {
     yield* put(upload())
   }
 }
 
 function* handleUpload() {
-  // Upload the track blob to TikTok api
+  // Upload the agreement blob to TikTok api
   const formData = new FormData()
-  formData.append('sound_file', trackBlob as Blob)
+  formData.append('sound_file', agreementBlob as Blob)
 
   const openId = yield* select(getOpenId)
   const accessToken = yield* select(getAccessToken)
@@ -129,7 +129,7 @@ function* handleUpload() {
     yield* put(make(Name.TIKTOK_SHARE_SOUND_ERROR, { error: errorMessage }))
     yield* put(setStatus({ status: Status.SHARE_ERROR }))
   } finally {
-    trackBlob = null
+    agreementBlob = null
   }
 }
 

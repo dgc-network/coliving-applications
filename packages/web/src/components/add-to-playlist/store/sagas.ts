@@ -7,7 +7,7 @@ import { requiresAccount } from 'utils/sagaHelpers'
 
 function* handleRequestOpen(action: ReturnType<typeof actions.requestOpen>) {
   yield put(fetchSavedPlaylists())
-  yield put(actions.open(action.trackId, action.trackTitle))
+  yield put(actions.open(action.agreementId, action.agreementTitle))
   yield put(setVisibility({ modal: 'AddToPlaylist', visible: true }))
 }
 

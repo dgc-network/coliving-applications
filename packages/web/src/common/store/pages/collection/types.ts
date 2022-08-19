@@ -5,7 +5,7 @@ import {
   LineupState,
   SmartCollectionVariant,
   Status,
-  LineupTrack
+  LineupAgreement
 } from '@coliving/common'
 import { Moment } from 'moment'
 
@@ -13,18 +13,18 @@ export type CollectionsPageState = {
   collectionId: ID | null
   collectionUid: UID | null
   status: Status | null
-  tracks: LineupState<{ dateAdded: Moment }>
+  agreements: LineupState<{ dateAdded: Moment }>
   userUid: UID | null
   smartCollectionVariant: SmartCollectionVariant
 }
 
 export type CollectionsPageType = 'playlist' | 'album'
 
-export type CollectionTrack = LineupTrack & { dateAdded: Moment } & {
+export type CollectionAgreement = LineupAgreement & { dateAdded: Moment } & {
   collectible?: Collectible
 }
 
-export type TrackRecord = CollectionTrack & {
+export type AgreementRecord = CollectionAgreement & {
   key: string
   name: string
   artist: string

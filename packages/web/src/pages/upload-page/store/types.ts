@@ -1,14 +1,14 @@
-import { TrackMetadata } from '@coliving/common'
+import { AgreementMetadata } from '@coliving/common'
 
 import UploadType from 'pages/upload-page/components/uploadType'
 
-interface UploadTrack {
+interface UploadAgreement {
   file: File
   preview: any // Basically the Howler.js API, but with underscores.
-  metadata: TrackMetadata
+  metadata: AgreementMetadata
 }
 
-interface ExtendedTrackMetadata extends TrackMetadata {
+interface ExtendedAgreementMetadata extends AgreementMetadata {
   artwork: {
     file: Blob
     url: string
@@ -28,15 +28,15 @@ export type Progress = {
 }
 
 export interface UploadPageState {
-  openMultiTrackNotification: boolean
-  tracks: UploadTrack[]
-  metadata: ExtendedTrackMetadata
+  openMultiAgreementNotification: boolean
+  agreements: UploadAgreement[]
+  metadata: ExtendedAgreementMetadata
   uploadType: UploadType
   uploading: boolean
   uploadProgress: Progress[]
   success: boolean
   error: boolean
   completionId: number
-  stems: TrackMetadata[]
-  failedTrackIndices: number[]
+  stems: AgreementMetadata[]
+  failedAgreementIndices: number[]
 }

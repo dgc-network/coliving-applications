@@ -2,12 +2,12 @@ import { useCallback } from 'react'
 
 import type { CID, ID, User } from '@/common'
 import { Name } from '@/common'
-import type { ButtonType as DownloadButtonType } from '-client/src/common/hooks/useDownloadTrackButtons'
+import type { ButtonType as DownloadButtonType } from '-client/src/common/hooks/useDownloadAgreementButtons'
 import {
   ButtonState,
-  useDownloadTrackButtons
-} from '-client/src/common/hooks/useDownloadTrackButtons'
-import { downloadTrack } from '-client/src/common/store/social/tracks/actions'
+  useDownloadAgreementButtons
+} from '-client/src/common/hooks/useDownloadAgreementButtons'
+import { downloadAgreement } from '-client/src/common/store/social/agreements/actions'
 import { View } from 'react-native'
 import type { useSelector } from 'react-redux'
 
@@ -19,7 +19,7 @@ import { useSelectorWeb } from 'app/hooks/useSelectorWeb'
 import { useToast } from 'app/hooks/useToast'
 import type { SearchUser } from 'app/store/search/types'
 import { makeStyles } from 'app/styles/makeStyles'
-import { make, track } from 'app/utils/analytics'
+import { make, agreement } from 'app/utils/analytics'
 
 export type DownloadButtonProps = {
   state: ButtonState
@@ -82,43 +82,43 @@ const DownloadButton = ({
   )
 }
 
-type TrackScreenDownloadButtonsProps = {
+type AgreementScreenDownloadButtonsProps = {
   following: boolean
   isHidden?: boolean
   isOwner: boolean
-  trackId: ID
+  agreementId: ID
   user: User | SearchUser
 }
 
-export const TrackScreenDownloadButtons = ({
+export const AgreementScreenDownloadButtons = ({
   following,
   isOwner,
-  trackId,
+  agreementId,
   user
-}: TrackScreenDownloadButtonsProps) => {
+}: AgreementScreenDownloadButtonsProps) => {
   const dispatchWeb = useDispatchWeb()
 
   const onDownload = useCallback(
-    (id: ID, cid: CID, category?: string, parentTrackId?: ID) => {
+    (id: ID, cid: CID, category?: string, parentAgreementId?: ID) => {
       const { creator_node_endpoint } = user
       if (!creator_node_endpoint) {
         return
       }
-      dispatchWeb(downloadTrack(id, cid, creator_node_endpoint, category))
-      track(
+      dispatchWeb(downloadAgreement(id, cid, creator_node_endpoint, category))
+      agreement(
         make({
-          eventName: Name.TRACK_PAGE_DOWNLOAD,
+          eventName: Name.AGREEMENT_PAGE_DOWNLOAD,
           id,
           category,
-          parent_track_id: parentTrackId
+          parent_agreement_id: parentAgreementId
         })
       )
     },
     [dispatchWeb, user]
   )
 
-  const buttons = useDownloadTrackButtons({
-    trackId,
+  const buttons = useDownloadAgreementButtons({
+    agreementId,
     onDownload,
     isOwner,
     following,

@@ -1,4 +1,4 @@
-import { Collection, Track, Nullable } from '@coliving/common'
+import { Collection, Agreement, Nullable } from '@coliving/common'
 import { createSelector } from 'reselect'
 
 import { CommonState } from 'common/store'
@@ -7,7 +7,7 @@ import {
   getCollection,
   getCollections
 } from 'common/store/cache/collections/selectors'
-import { getTrack, getTracks } from 'common/store/cache/tracks/selectors'
+import { getAgreement, getAgreements } from 'common/store/cache/agreements/selectors'
 import { getUser, getUsers } from 'common/store/cache/users/selectors'
 
 import {
@@ -17,9 +17,9 @@ import {
   Achievement,
   Announcement,
   EntityType,
-  AddTrackToPlaylist,
+  AddAgreementToPlaylist,
   CollectionEntity,
-  TrackEntity
+  AgreementEntity
 } from './types'
 
 const getBaseState = (state: CommonState) => state.pages.notifications
@@ -122,7 +122,7 @@ export const getNotificationEntity = (
     notification.entityType !== Entity.User
   ) {
     const getEntity =
-      notification.entityType === Entity.Track ? getTrack : getCollection
+      notification.entityType === Entity.Agreement ? getAgreement : getCollection
     const entity = getEntity(state, { id: notification.entityId })
     if (entity) {
       const userId =
@@ -137,35 +137,35 @@ export const getNotificationEntity = (
   return null
 }
 
-type EntityTypes<T extends AddTrackToPlaylist | Notification> =
-  T extends AddTrackToPlaylist
-    ? { track: TrackEntity; playlist: CollectionEntity }
+type EntityTypes<T extends AddAgreementToPlaylist | Notification> =
+  T extends AddAgreementToPlaylist
+    ? { agreement: AgreementEntity; playlist: CollectionEntity }
     : Nullable<EntityType[]>
 
 export const getNotificationEntities = <
-  T extends AddTrackToPlaylist | Notification
+  T extends AddAgreementToPlaylist | Notification
 >(
   state: CommonState,
   notification: T
 ): EntityTypes<T> => {
-  if (notification.type === NotificationType.AddTrackToPlaylist) {
-    const track = getTrack(state, { id: notification.trackId })
+  if (notification.type === NotificationType.AddAgreementToPlaylist) {
+    const agreement = getAgreement(state, { id: notification.agreementId })
     const currentUser = getAccountUser(state)
     const playlist = getCollection(state, { id: notification.playlistId })
     const playlistOwner = getUser(state, { id: notification.playlistOwnerId })
     return {
-      track: { ...track, user: currentUser },
+      agreement: { ...agreement, user: currentUser },
       playlist: { ...playlist, user: playlistOwner }
     } as EntityTypes<T>
   }
 
   if ('entityIds' in notification && 'entityType' in notification) {
     const getEntities =
-      notification.entityType === Entity.Track ? getTracks : getCollections
+      notification.entityType === Entity.Agreement ? getAgreements : getCollections
     const entityMap = getEntities(state, { ids: notification.entityIds })
     const entities = notification.entityIds
       .map((id: number) => (entityMap as any)[id])
-      .map((entity: Track | Collection | null) => {
+      .map((entity: Agreement | Collection | null) => {
         if (entity) {
           const userId =
             'owner_id' in entity ? entity.owner_id : entity.playlist_owner_id

@@ -3,12 +3,12 @@ import { useContext, useState } from 'react'
 import { CreatePlaylistSource } from '@/common'
 import { getAccountWithOwnPlaylists } from '-client/src/common/store/account/selectors'
 import {
-  addTrackToPlaylist,
+  addAgreementToPlaylist,
   createPlaylist
 } from '-client/src/common/store/cache/collections/actions'
 import {
-  getTrackId,
-  getTrackTitle
+  getAgreementId,
+  getAgreementTitle
 } from '-client/src/common/store/ui/add-to-playlist/selectors'
 import { newCollectionMetadata } from '-client/src/schemas'
 import { FEED_PAGE, playlistPage } from '-client/src/utils/route'
@@ -52,28 +52,28 @@ export const AddToPlaylistDrawer = () => {
   const dispatchWeb = useDispatchWeb()
   const pushRouteWeb = usePushRouteWeb()
   const { onClose } = useDrawerState('AddToPlaylist')
-  const trackId = useSelectorWeb(getTrackId)
-  const trackTitle = useSelectorWeb(getTrackTitle)
+  const agreementId = useSelectorWeb(getAgreementId)
+  const agreementTitle = useSelectorWeb(getAgreementTitle)
   const user = useSelectorWeb(getAccountWithOwnPlaylists)
   const [isDrawerGestureSupported, setIsDrawerGestureSupported] = useState(true)
 
-  if (!user || !trackId || !trackTitle) {
+  if (!user || !agreementId || !agreementTitle) {
     return null
   }
   const userPlaylists = user.playlists ?? []
 
   const addToNewPlaylist = () => {
     const metadata = newCollectionMetadata({
-      playlist_name: trackTitle,
+      playlist_name: agreementTitle,
       is_private: false
     })
     const tempId = `${Date.now()}`
     dispatchWeb(
-      createPlaylist(tempId, metadata, CreatePlaylistSource.FROM_TRACK, trackId)
+      createPlaylist(tempId, metadata, CreatePlaylistSource.FROM_AGREEMENT, agreementId)
     )
-    dispatchWeb(addTrackToPlaylist(trackId!, tempId))
+    dispatchWeb(addAgreementToPlaylist(agreementId!, tempId))
     toast({ content: messages.createdToast })
-    pushRouteWeb(playlistPage(user.handle, trackTitle, tempId), FEED_PAGE)
+    pushRouteWeb(playlistPage(user.handle, agreementTitle, tempId), FEED_PAGE)
     onClose()
   }
 
@@ -117,7 +117,7 @@ export const AddToPlaylistDrawer = () => {
               secondaryText={user.name}
               onPress={() => {
                 toast({ content: messages.addedToast })
-                dispatchWeb(addTrackToPlaylist(trackId!, item.playlist_id))
+                dispatchWeb(addAgreementToPlaylist(agreementId!, item.playlist_id))
                 onClose()
               }}
               user={user}

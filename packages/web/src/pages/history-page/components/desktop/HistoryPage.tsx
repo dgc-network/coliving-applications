@@ -7,8 +7,8 @@ import FilterInput from 'components/filter-input/FilterInput'
 import Header from 'components/header/desktop/Header'
 import LoadingSpinner from 'components/loading-spinner/LoadingSpinner'
 import Page from 'components/page/Page'
-import EmptyTable from 'components/tracks-table/EmptyTable'
-import TracksTable from 'components/tracks-table/TracksTable'
+import EmptyTable from 'components/agreements-table/EmptyTable'
+import AgreementsTable from 'components/agreements-table/AgreementsTable'
 
 import styles from './HistoryPage.module.css'
 
@@ -24,10 +24,10 @@ export type HistoryPageProps = {
   queuedAndPlaying: boolean
   onClickRow: (record: any) => void
   onClickSave: (record: any) => void
-  onClickTrackName: (record: any) => void
+  onClickAgreementName: (record: any) => void
   onClickArtistName: (record: any) => void
   onClickRepost: (record: any) => void
-  onSortTracks: (sorters: any) => void
+  onSortAgreements: (sorters: any) => void
   goToRoute: (route: string) => void
   onPlay: () => void
   onFilterChange: (e: ChangeEvent<HTMLInputElement>) => void
@@ -46,16 +46,16 @@ const HistoryPage = ({
   queuedAndPlaying,
   onClickRow,
   onClickSave,
-  onClickTrackName,
+  onClickAgreementName,
   onClickArtistName,
   onClickRepost,
-  onSortTracks,
+  onSortAgreements,
   goToRoute,
   onPlay,
   onFilterChange,
   filterText
 }: HistoryPageProps) => {
-  const tableLoading = !dataSource.every((track: any) => track.play_count > -1)
+  const tableLoading = !dataSource.every((agreement: any) => agreement.play_count > -1)
 
   const playAllButton = !loading ? (
     <Button
@@ -69,20 +69,20 @@ const HistoryPage = ({
     />
   ) : null
 
-  const trackTableActions = loading
+  const agreementTableActions = loading
     ? {}
     : {
         onClickFavorite: onClickSave,
         onClickRow,
-        onClickTrackName,
+        onClickAgreementName,
         onClickArtistName,
         onClickRepost,
-        onSortTracks
+        onSortAgreements
       }
 
   const filter = (
     <FilterInput
-      placeholder='Filter Tracks'
+      placeholder='Filter Agreements'
       onChange={onFilterChange}
       value={filterText}
     />
@@ -109,21 +109,21 @@ const HistoryPage = ({
           <LoadingSpinner className={styles.spinner} />
         ) : isEmpty && !loading && !tableLoading ? (
           <EmptyTable
-            primaryText='You haven’t listened to any tracks yet.'
+            primaryText='You haven’t listened to any agreements yet.'
             secondaryText='Once you have, this is where you’ll find them!'
             buttonLabel='Start Listening'
             onClick={() => goToRoute('/trending')}
           />
         ) : (
           <div className={styles.tableWrapper}>
-            <TracksTable
+            <AgreementsTable
               userId={userId}
               loading={tableLoading}
               loadingRowsCount={entries.length}
               playing={queuedAndPlaying}
               playingIndex={playingIndex}
               dataSource={dataSource}
-              {...trackTableActions}
+              {...agreementTableActions}
             />
           </div>
         )}

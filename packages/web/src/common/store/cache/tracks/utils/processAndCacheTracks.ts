@@ -1,35 +1,35 @@
-import { Kind, Track, TrackMetadata, makeUid } from '@coliving/common'
+import { Kind, Agreement, AgreementMetadata, makeUid } from '@coliving/common'
 import { put, call } from 'redux-saga/effects'
 
 import * as cacheActions from 'common/store/cache/actions'
 
-import { setTracksIsBlocked } from './blocklist'
-import { addUsersFromTracks } from './helpers'
+import { setAgreementsIsBlocked } from './blocklist'
+import { addUsersFromAgreements } from './helpers'
 import { reformat } from './reformat'
 
 /**
- * Processes tracks, adding users and calling `reformat`, before
- * caching the tracks.
- * @param tracks
+ * Processes agreements, adding users and calling `reformat`, before
+ * caching the agreements.
+ * @param agreements
  */
-export function* processAndCacheTracks<T extends TrackMetadata>(
-  tracks: T[]
-): Generator<any, Track[], any> {
+export function* processAndCacheAgreements<T extends AgreementMetadata>(
+  agreements: T[]
+): Generator<any, Agreement[], any> {
   // Add users
-  yield addUsersFromTracks(tracks)
+  yield addUsersFromAgreements(agreements)
 
-  const checkedTracks: T[] = yield call(setTracksIsBlocked, tracks)
+  const checkedAgreements: T[] = yield call(setAgreementsIsBlocked, agreements)
 
   // Remove users, add images
-  const reformattedTracks = checkedTracks.map(reformat)
+  const reformattedAgreements = checkedAgreements.map(reformat)
 
-  // insert tracks into cache
+  // insert agreements into cache
   yield put(
     cacheActions.add(
-      Kind.TRACKS,
-      reformattedTracks.map((t) => ({
-        id: t.track_id,
-        uid: makeUid(Kind.TRACKS, t.track_id),
+      Kind.AGREEMENTS,
+      reformattedAgreements.map((t) => ({
+        id: t.agreement_id,
+        uid: makeUid(Kind.AGREEMENTS, t.agreement_id),
         metadata: t
       })),
       false,
@@ -37,5 +37,5 @@ export function* processAndCacheTracks<T extends TrackMetadata>(
     )
   )
 
-  return reformattedTracks
+  return reformattedAgreements
 }

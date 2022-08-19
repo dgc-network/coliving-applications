@@ -9,12 +9,12 @@ import { withRouter } from 'react-router-dom'
 import { getUserId } from 'common/store/account/selectors'
 import { makeGetLineupMetadatas } from 'common/store/lineup/selectors'
 import * as searchPageActions from 'common/store/pages/search-results/actions'
-import { tracksActions } from 'common/store/pages/search-results/lineup/tracks/actions'
+import { agreementsActions } from 'common/store/pages/search-results/lineup/agreements/actions'
 import {
   makeGetSearchArtists,
   makeGetSearchPlaylists,
   makeGetSearchAlbums,
-  getSearchTracksLineup,
+  getSearchAgreementsLineup,
   getBaseState as getSearchResultsState
 } from 'common/store/pages/search-results/selectors'
 import { SearchKind } from 'common/store/pages/search-results/types'
@@ -42,7 +42,7 @@ class SearchPageProvider extends Component {
 
   componentDidMount() {
     // Listen for history changes when the component is mounted and maybe
-    // reset/reload tracks.
+    // reset/reload agreements.
     this.unlisten = this.props.history.listen((location, action) => {
       // Make sure the serach bar shows on every search-navigation
       if (window.scrollTo) window.scrollTo(0, 0)
@@ -54,8 +54,8 @@ class SearchPageProvider extends Component {
 
       if (!!searchMatch || isTagSearch) {
         const query = isTagSearch ? helpers.getSearchTag() : searchMatch
-        this.props.dispatch(tracksActions.reset())
-        if (category !== SearchKind.TRACKS) {
+        this.props.dispatch(agreementsActions.reset())
+        if (category !== SearchKind.AGREEMENTS) {
           const limit = helpers.getResultsLimit(this.props.isMobile, category)
           query && this.search(isTagSearch, query, category, limit)
         }
@@ -67,14 +67,14 @@ class SearchPageProvider extends Component {
     const isTagSearch = helpers.isTagSearch()
     const query = isTagSearch ? helpers.getSearchTag() : helpers.getSearchText()
     const category = helpers.getCategory()
-    if (category !== SearchKind.TRACKS) {
+    if (category !== SearchKind.AGREEMENTS) {
       const limit = helpers.getResultsLimit(this.props.isMobile, category)
       query && this.search(isTagSearch, query, category, limit)
     }
   }
 
   componentWillUnmount() {
-    this.props.dispatch(tracksActions.reset())
+    this.props.dispatch(agreementsActions.reset())
     this.unlisten()
   }
 
@@ -140,10 +140,10 @@ const makeMapStateToProps = (initialState, ownProps) => {
   const getAlbums = makeGetSearchAlbums()
   const getSearchArtists = makeGetSearchArtists()
   const getCurrentQueueItem = makeGetCurrent()
-  const getTracksLineup = makeGetLineupMetadatas(getSearchTracksLineup)
+  const getAgreementsLineup = makeGetLineupMetadatas(getSearchAgreementsLineup)
   const mapStateToProps = (state, props) => ({
     search: getSearchResultsState(state),
-    tracks: getTracksLineup(state),
+    agreements: getAgreementsLineup(state),
     artists: getSearchArtists(state),
     playlists: getPlaylists(state),
     albums: getAlbums(state),

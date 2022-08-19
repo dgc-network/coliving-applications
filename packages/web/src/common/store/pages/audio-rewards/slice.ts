@@ -6,7 +6,7 @@ import {
 } from '@coliving/common'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-export type TrendingRewardsModalType = 'tracks' | 'playlists' | 'underground'
+export type TrendingRewardsModalType = 'agreements' | 'playlists' | 'underground'
 export type ChallengeRewardsModalType = ChallengeRewardID
 
 export enum ClaimStatus {
@@ -71,8 +71,8 @@ type RewardsUIState = {
 }
 
 const initialState: RewardsUIState = {
-  trendingRewardsModalType: 'tracks',
-  challengeRewardsModalType: 'track-upload',
+  trendingRewardsModalType: 'agreements',
+  challengeRewardsModalType: 'agreement-upload',
   userChallenges: {},
   undisbursedChallenges: [],
   userChallengesOverrides: {},
@@ -138,7 +138,7 @@ const slice = createSlice({
 
       if (!userChallenge) return
 
-      // Keep track of individual challenges for rolled up aggregates
+      // Keep agreement of individual challenges for rolled up aggregates
       if (userChallenge.challenge_type === 'aggregate') {
         state.disbursedChallenges[challengeId] = ([] as string[]).concat(
           state.disbursedChallenges[challengeId] ?? [],

@@ -4,14 +4,14 @@ import {
   UID,
   Cache,
   Collection,
-  Track,
+  Agreement,
   User,
   Uid
 } from '@coliving/common'
 
 import { CommonState } from 'common/store'
 
-import { TracksCacheState } from './tracks/types'
+import { AgreementsCacheState } from './agreements/types'
 import { UsersCacheState } from './users/types'
 
 /**
@@ -38,11 +38,11 @@ export function getEntry(
 export function getEntry(
   state: CommonState,
   props: {
-    kind: Kind.TRACKS
+    kind: Kind.AGREEMENTS
     id?: ID | null
     uid?: UID | null
   }
-): Track | null
+): Agreement | null
 export function getEntry(
   state: CommonState,
   props: {
@@ -50,7 +50,7 @@ export function getEntry(
     id?: ID | null
     uid?: UID | null
   }
-): Track | User | Collection | null
+): Agreement | User | Collection | null
 export function getEntry(
   state: CommonState,
   props: {
@@ -103,21 +103,21 @@ export function getAllEntries(
 ): { [id: string]: Collection }
 export function getAllEntries(
   state: CommonState,
-  props: { kind: Kind.TRACKS }
-): { [id: string]: Track }
+  props: { kind: Kind.AGREEMENTS }
+): { [id: string]: Agreement }
 export function getAllEntries(
   state: CommonState,
   props: { kind: Kind.USERS }
 ):
   | { [id: string]: User }
-  | { [id: string]: Track }
+  | { [id: string]: Agreement }
   | { [id: string]: Collection }
 export function getAllEntries(state: CommonState, props: { kind: Kind }) {
   const entries = getCache(state, props).entries
   return Object.keys(entries).reduce((acc, id) => {
     acc[id] = entries[id as unknown as number].metadata
     return acc
-  }, {} as { [id: string]: Track | Collection | User })
+  }, {} as { [id: string]: Agreement | Collection | User })
 }
 
 export function getCache(
@@ -130,16 +130,16 @@ export function getCache(
 ): Cache<Collection>
 export function getCache(
   state: CommonState,
-  props: { kind: Kind.TRACKS }
-): TracksCacheState
+  props: { kind: Kind.AGREEMENTS }
+): AgreementsCacheState
 export function getCache(
   state: CommonState,
   props: { kind: Kind }
-): TracksCacheState | Cache<Collection> | UsersCacheState
+): AgreementsCacheState | Cache<Collection> | UsersCacheState
 export function getCache(state: CommonState, props: { kind: Kind }) {
   switch (props.kind) {
-    case Kind.TRACKS:
-      return state.tracks
+    case Kind.AGREEMENTS:
+      return state.agreements
     case Kind.COLLECTIONS:
       return state.collections
     case Kind.USERS:
@@ -150,8 +150,8 @@ export function getCache(state: CommonState, props: { kind: Kind }) {
 
 export function getId(state: CommonState, props: { kind: Kind; uid: UID }) {
   switch (props.kind) {
-    case Kind.TRACKS: {
-      return state.tracks.uids[props.uid]
+    case Kind.AGREEMENTS: {
+      return state.agreements.uids[props.uid]
     }
     case Kind.COLLECTIONS: {
       return state.collections.uids[props.uid]

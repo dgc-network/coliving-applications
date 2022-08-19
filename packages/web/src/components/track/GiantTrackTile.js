@@ -27,12 +27,12 @@ import Skeleton from 'components/skeleton/Skeleton'
 import Toast from 'components/toast/Toast'
 import Tooltip from 'components/tooltip/Tooltip'
 import UserBadges from 'components/user-badges/UserBadges'
-import HiddenTrackHeader from 'pages/track-page/components/HiddenTrackHeader'
+import HiddenAgreementHeader from 'pages/agreement-page/components/HiddenAgreementHeader'
 import { moodMap } from 'utils/moods'
 
 import Badge from './Badge'
 import GiantArtwork from './GiantArtwork'
-import styles from './GiantTrackTile.module.css'
+import styles from './GiantAgreementTile.module.css'
 import InfoLabel from './InfoLabel'
 import Tag from './Tag'
 
@@ -47,16 +47,16 @@ const REPOST_TIMEOUT = 1000
 const SAVED_TIMEOUT = 1000
 
 const messages = {
-  trackTitle: 'TRACK',
+  agreementTitle: 'AGREEMENT',
   remixTitle: 'REMIX',
-  hiddenTrackTooltip: 'Anyone with a link to this page will be able to see it',
+  hiddenAgreementTooltip: 'Anyone with a link to this page will be able to see it',
   makePublic: 'MAKE PUBLIC',
   isPublishing: 'PUBLISHING',
   repostButtonText: 'repost',
   repostedButtonText: 'reposted'
 }
 
-class GiantTrackTile extends PureComponent {
+class GiantAgreementTile extends PureComponent {
   state = {
     artworkLoading: true
   }
@@ -68,7 +68,7 @@ class GiantTrackTile extends PureComponent {
       return (
         <div className={cn(styles.headerContainer, className)}>
           <div className={styles.typeLabel}>
-            {isRemix ? messages.remixTitle : messages.trackTitle}
+            {isRemix ? messages.remixTitle : messages.agreementTitle}
           </div>
         </div>
       )
@@ -77,12 +77,12 @@ class GiantTrackTile extends PureComponent {
     return (
       <div className={cn(styles.headerContainer, className)}>
         <Tooltip
-          text={messages.hiddenTrackTooltip}
+          text={messages.hiddenAgreementTooltip}
           mouseEnterDelay={0}
           shouldWrapContent={false}
         >
           <div>
-            <HiddenTrackHeader />
+            <HiddenAgreementHeader />
           </div>
         </Tooltip>
       </div>
@@ -108,7 +108,7 @@ class GiantTrackTile extends PureComponent {
   }
 
   renderMakePublicButton() {
-    const { isUnlisted, isPublishing, makePublic, trackId, isOwner } =
+    const { isUnlisted, isPublishing, makePublic, agreementId, isOwner } =
       this.props
     return (
       (isUnlisted || isPublishing) &&
@@ -126,7 +126,7 @@ class GiantTrackTile extends PureComponent {
             )
           }
           widthToHideText={BUTTON_COLLAPSE_WIDTHS.second}
-          onClick={isPublishing ? () => {} : () => makePublic(trackId)}
+          onClick={isPublishing ? () => {} : () => makePublic(agreementId)}
         />
       )
     )
@@ -262,7 +262,7 @@ class GiantTrackTile extends PureComponent {
         <div className={styles.listens}>
           {listenCount === 0 ? (
             <span className={styles.firstListen}>
-              Be the first to listen to this track!
+              Be the first to listen to this agreement!
             </span>
           ) : (
             <>
@@ -343,7 +343,7 @@ class GiantTrackTile extends PureComponent {
     return (
       <DownloadButtons
         className={styles.downloadButtonsContainer}
-        trackId={this.props.trackId}
+        agreementId={this.props.agreementId}
         isOwner={this.props.isOwner}
         following={this.props.following}
         onDownload={this.props.onDownload}
@@ -354,8 +354,8 @@ class GiantTrackTile extends PureComponent {
   render() {
     const {
       playing,
-      trackId,
-      trackTitle,
+      agreementId,
+      agreementTitle,
       coverArtSizes,
       artistName,
       artistHandle,
@@ -392,15 +392,15 @@ class GiantTrackTile extends PureComponent {
 
     const overflowMenu = {
       menu: {
-        type: 'track',
-        trackId,
-        trackTitle,
+        type: 'agreement',
+        agreementId,
+        agreementTitle,
         handle: artistHandle,
         isFavorited: isSaved,
         mount: 'page',
         isOwner,
         includeFavorite: false,
-        includeTrackPage: false,
+        includeAgreementPage: false,
         isArtistPick,
         includeEmbed: !isUnlisted,
         includeArtistPick: !isUnlisted,
@@ -415,10 +415,10 @@ class GiantTrackTile extends PureComponent {
     }
 
     return (
-      <div className={styles.giantTrackTile}>
+      <div className={styles.giantAgreementTile}>
         <div className={styles.topSection}>
           <GiantArtwork
-            trackId={trackId}
+            agreementId={agreementId}
             coverArtSizes={coverArtSizes}
             coSign={coSign}
             callback={this.onArtworkLoad}
@@ -427,7 +427,7 @@ class GiantTrackTile extends PureComponent {
             <div className={styles.infoSectionHeader}>
               {this.renderCardTitle(fadeIn)}
               <div className={styles.title}>
-                <h1 className={cn(fadeIn)}>{trackTitle}</h1>
+                <h1 className={cn(fadeIn)}>{agreementTitle}</h1>
                 {isLoading && <Skeleton className={styles.skeleton} />}
               </div>
               <div className={styles.artistWrapper}>
@@ -470,7 +470,7 @@ class GiantTrackTile extends PureComponent {
             <div
               className={cn(styles.commonButtonSection, fadeIn)}
               role='group'
-              aria-label='track actions'
+              aria-label='agreement actions'
             >
               {this.renderShareButton()}
               {this.renderMakePublicButton()}
@@ -535,14 +535,14 @@ class GiantTrackTile extends PureComponent {
   }
 }
 
-GiantTrackTile.propTypes = {
+GiantAgreementTile.propTypes = {
   currentUserId: PropTypes.number,
   userId: PropTypes.number,
   loading: PropTypes.bool,
   playing: PropTypes.bool,
   active: PropTypes.bool,
-  trackTitle: PropTypes.string,
-  trackId: PropTypes.number,
+  agreementTitle: PropTypes.string,
+  agreementId: PropTypes.number,
   artistName: PropTypes.string,
   artistHandle: PropTypes.string,
   coverArtSizes: PropTypes.object,
@@ -578,7 +578,7 @@ GiantTrackTile.propTypes = {
   onDownload: PropTypes.func
 }
 
-GiantTrackTile.defaultProps = {
+GiantAgreementTile.defaultProps = {
   loading: false,
   playing: false,
   active: true,
@@ -606,4 +606,4 @@ GiantTrackTile.defaultProps = {
   onDownload: () => {}
 }
 
-export default GiantTrackTile
+export default GiantAgreementTile

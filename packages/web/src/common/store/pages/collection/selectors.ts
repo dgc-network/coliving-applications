@@ -48,5 +48,5 @@ export const makeGetCollection = () =>
     }
   )
 
-export const getCollectionTracksLineup = (state: CommonState) =>
-  state.pages.collection.tracks
+export const getCollectionAgreementsLineup = (state: CommonState) =>
+  state.pages.collection.agreements

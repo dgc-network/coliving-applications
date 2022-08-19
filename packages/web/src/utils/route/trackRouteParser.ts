@@ -1,38 +1,38 @@
 import { ID } from '@coliving/common'
 import { matchPath } from 'react-router-dom'
 
-import { TRACK_ID_PAGE, TRACK_PAGE } from 'utils/route'
+import { AGREEMENT_ID_PAGE, AGREEMENT_PAGE } from 'utils/route'
 
 import { decodeHashId } from './hashIds'
 
-export type TrackRouteParams =
-  | { slug: string; trackId: null; handle: string }
-  | { slug: null; trackId: ID; handle: null }
+export type AgreementRouteParams =
+  | { slug: string; agreementId: null; handle: string }
+  | { slug: null; agreementId: ID; handle: null }
   | null
 
 /**
- * Parses a track route into slug, track id, and handle
- * If the route is a hash id route, track title and handle are not returned, and vice versa
+ * Parses a agreement route into slug, agreement id, and handle
+ * If the route is a hash id route, agreement title and handle are not returned, and vice versa
  * @param route
  */
-export const parseTrackRoute = (route: string): TrackRouteParams => {
-  const trackIdPageMatch = matchPath<{ id: string }>(route, {
-    path: TRACK_ID_PAGE,
+export const parseAgreementRoute = (route: string): AgreementRouteParams => {
+  const agreementIdPageMatch = matchPath<{ id: string }>(route, {
+    path: AGREEMENT_ID_PAGE,
     exact: true
   })
-  if (trackIdPageMatch) {
-    const trackId = decodeHashId(trackIdPageMatch.params.id)
-    if (trackId === null) return null
-    return { slug: null, trackId, handle: null }
+  if (agreementIdPageMatch) {
+    const agreementId = decodeHashId(agreementIdPageMatch.params.id)
+    if (agreementId === null) return null
+    return { slug: null, agreementId, handle: null }
   }
 
-  const trackPageMatch = matchPath<{ slug: string; handle: string }>(route, {
-    path: TRACK_PAGE,
+  const agreementPageMatch = matchPath<{ slug: string; handle: string }>(route, {
+    path: AGREEMENT_PAGE,
     exact: true
   })
-  if (trackPageMatch) {
-    const { handle, slug } = trackPageMatch.params
-    return { slug, trackId: null, handle }
+  if (agreementPageMatch) {
+    const { handle, slug } = agreementPageMatch.params
+    return { slug, agreementId: null, handle }
   }
 
   return null

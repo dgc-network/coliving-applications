@@ -15,19 +15,19 @@ import {
   FetchSearchPageTagsSucceededAction,
   FetchSearchPageTagsFailedAction
 } from 'common/store/pages/search-results/actions'
-import { PREFIX } from 'common/store/pages/search-results/lineup/tracks/actions'
-import tracksReducer from 'common/store/pages/search-results/lineup/tracks/reducer'
+import { PREFIX } from 'common/store/pages/search-results/lineup/agreements/actions'
+import agreementsReducer from 'common/store/pages/search-results/lineup/agreements/reducer'
 
 import { SearchPageState } from './types'
 
 const initialState: SearchPageState = {
   status: Status.SUCCESS,
   searchText: '',
-  trackIds: [],
+  agreementIds: [],
   albumIds: [],
   playlistIds: [],
   artistIds: [],
-  tracks: {
+  agreements: {
     entries: [],
     order: {},
     total: 0,
@@ -62,7 +62,7 @@ const actionsMap = {
 
     if (action.results) {
       newState.searchText = action.searchText
-      newState.trackIds = action.results.tracks || []
+      newState.agreementIds = action.results.agreements || []
       newState.albumIds = action.results.albums || []
       newState.playlistIds = action.results.playlists || []
       newState.artistIds = action.results.users || []
@@ -98,7 +98,7 @@ const actionsMap = {
 
     if (action.results) {
       newState.searchText = action.tag
-      newState.trackIds = action.results.tracks || []
+      newState.agreementIds = action.results.agreements || []
       newState.artistIds = action.results.users || []
       newState.albumIds = []
       newState.playlistIds = []
@@ -117,15 +117,15 @@ const actionsMap = {
   }
 }
 
-const tracksLineupReducer = asLineup(PREFIX, tracksReducer)
+const agreementsLineupReducer = asLineup(PREFIX, agreementsReducer)
 
 function reducer(
   state: SearchPageState = initialState,
   action: SearchPageActions
 ) {
   // @ts-ignore this technically will never hit with actions typed the way they are
-  const tracks = tracksLineupReducer(state.tracks, action)
-  if (tracks !== state.tracks) return { ...state, tracks }
+  const agreements = agreementsLineupReducer(state.agreements, action)
+  if (agreements !== state.agreements) return { ...state, agreements }
 
   const matchingReduceFunction = actionsMap[action.type]
   if (!matchingReduceFunction) return state

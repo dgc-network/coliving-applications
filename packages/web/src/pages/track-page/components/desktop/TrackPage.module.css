@@ -1,4 +1,4 @@
-.trackPageWrapper {
+.agreementPageWrapper {
   position: relative;
 }
 
@@ -52,16 +52,16 @@
   font-size: var(--font-xl);
 }
 
-.originalTrackDelineator > *:first-child {
+.originalAgreementDelineator > *:first-child {
   margin-bottom: 72px;
 }
 
-.originalTrack {
+.originalAgreement {
   display: flex;
   justify-content: center;
   margin: auto -60px 0px !important;
 }
 
-.originalTrack > * {
+.originalAgreement > * {
   width: 834px;
 }

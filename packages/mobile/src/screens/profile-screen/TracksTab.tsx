@@ -2,9 +2,9 @@ import { useCallback } from 'react'
 
 import type { RouteProp } from '@react-navigation/core'
 import { useRoute } from '@react-navigation/core'
-import { tracksActions } from '-client/src/common/store/pages/profile/lineups/tracks/actions'
+import { agreementsActions } from '-client/src/common/store/pages/profile/lineups/agreements/actions'
 import {
-  getProfileTracksLineup,
+  getProfileAgreementsLineup,
   getProfileUserHandle
 } from '-client/src/common/store/pages/profile/selectors'
 
@@ -15,10 +15,10 @@ import { isEqual, useSelectorWeb } from 'app/hooks/useSelectorWeb'
 import { EmptyProfileTile } from './EmptyProfileTile'
 import { getIsOwner, useSelectProfile } from './selectors'
 
-export const TracksTab = () => {
+export const AgreementsTab = () => {
   const { params } =
-    useRoute<RouteProp<{ Tracks: { handle: string } }, 'Tracks'>>()
-  const lineup = useSelectorWeb(getProfileTracksLineup, isEqual)
+    useRoute<RouteProp<{ Agreements: { handle: string } }, 'Agreements'>>()
+  const lineup = useSelectorWeb(getProfileAgreementsLineup, isEqual)
   const dispatchWeb = useDispatchWeb()
 
   const profileHandle = useSelectorWeb(getProfileUserHandle)
@@ -28,9 +28,9 @@ export const TracksTab = () => {
     profileHandle === params?.handle ||
     (params?.handle === 'accountUser' && isOwner)
 
-  const { user_id, track_count, _artist_pick } = useSelectProfile([
+  const { user_id, agreement_count, _artist_pick } = useSelectProfile([
     'user_id',
-    'track_count',
+    'agreement_count',
     '_artist_pick'
   ])
 
@@ -38,7 +38,7 @@ export const TracksTab = () => {
   const loadMore = useCallback(
     (offset: number, limit: number) => {
       dispatchWeb(
-        tracksActions.fetchLineupMetadatas(offset, limit, false, {
+        agreementsActions.fetchLineupMetadatas(offset, limit, false, {
           userId: user_id
         })
       )
@@ -53,13 +53,13 @@ export const TracksTab = () => {
   return (
     <Lineup
       leadingElementId={_artist_pick}
-      listKey='profile-tracks'
-      actions={tracksActions}
+      listKey='profile-agreements'
+      actions={agreementsActions}
       lineup={isProfileLoaded ? lineup : { ...lineup, entries: [] }}
-      limit={track_count}
+      limit={agreement_count}
       loadMore={loadMore}
       disableTopTabScroll
-      ListEmptyComponent={<EmptyProfileTile tab='tracks' />}
+      ListEmptyComponent={<EmptyProfileTile tab='agreements' />}
       showsVerticalScrollIndicator={false}
     />
   )

@@ -1,6 +1,6 @@
 import { useState, useEffect, MouseEvent } from 'react'
 
-import { UID, ID, LineupTrack } from '@coliving/common'
+import { UID, ID, LineupAgreement } from '@coliving/common'
 import cn from 'classnames'
 import { range } from 'lodash'
 
@@ -10,42 +10,42 @@ import { formatSeconds } from 'common/utils/timeUtil'
 import FavoriteButton from 'components/alt-button/FavoriteButton'
 import RepostButton from 'components/alt-button/RepostButton'
 import Skeleton from 'components/skeleton/Skeleton'
-import { PlaylistTileProps } from 'components/track/types'
+import { PlaylistTileProps } from 'components/agreement/types'
 import UserBadges from 'components/user-badges/UserBadges'
 
 import BottomButtons from './BottomButtons'
 import styles from './PlaylistTile.module.css'
-import { RankIcon } from './TrackTile'
-import TrackTileArt from './TrackTileArt'
+import { RankIcon } from './AgreementTile'
+import AgreementTileArt from './AgreementTileArt'
 
-type TrackItemProps = {
+type AgreementItemProps = {
   index: number
-  track?: LineupTrack
+  agreement?: LineupAgreement
   active: boolean
   forceSkeleton?: boolean
 }
 
-// Max number of track to display in a playlist
-const DISPLAY_TRACK_COUNT = 5
+// Max number of agreement to display in a playlist
+const DISPLAY_AGREEMENT_COUNT = 5
 
-const TrackItem = (props: TrackItemProps) => {
+const AgreementItem = (props: AgreementItemProps) => {
   return (
     <>
-      <div className={styles.trackItemDivider}></div>
+      <div className={styles.agreementItemDivider}></div>
       <div
-        className={cn(styles.trackItem, {
-          [styles.activeTrackItem]: props.active
+        className={cn(styles.agreementItem, {
+          [styles.activeAgreementItem]: props.active
         })}
       >
         {props.forceSkeleton ? (
           <Skeleton width='100%' height='10px' />
-        ) : props.track ? (
+        ) : props.agreement ? (
           <>
             <div className={styles.index}> {props.index + 1} </div>
-            <div className={styles.trackTitle}> {props.track.title} </div>
+            <div className={styles.agreementTitle}> {props.agreement.title} </div>
             <div className={styles.byArtist}>
               {' '}
-              {`by ${props.track.user.name}`}{' '}
+              {`by ${props.agreement.user.name}`}{' '}
             </div>
           </>
         ) : null}
@@ -54,28 +54,28 @@ const TrackItem = (props: TrackItemProps) => {
   )
 }
 
-type TrackListProps = {
-  activeTrackUid: UID | null
-  tracks: LineupTrack[]
+type AgreementListProps = {
+  activeAgreementUid: UID | null
+  agreements: LineupAgreement[]
   goToCollectionPage: (e: MouseEvent<HTMLElement>) => void
   isLoading?: boolean
   numLoadingSkeletonRows?: number
-  trackCount?: number
+  agreementCount?: number
 }
 
-const TrackList = ({
-  tracks,
-  activeTrackUid,
+const AgreementList = ({
+  agreements,
+  activeAgreementUid,
   goToCollectionPage,
   isLoading,
   numLoadingSkeletonRows,
-  trackCount
-}: TrackListProps) => {
-  if (!tracks.length && isLoading && numLoadingSkeletonRows) {
+  agreementCount
+}: AgreementListProps) => {
+  if (!agreements.length && isLoading && numLoadingSkeletonRows) {
     return (
       <>
         {range(numLoadingSkeletonRows).map((i) => (
-          <TrackItem key={i} active={false} index={i} forceSkeleton />
+          <AgreementItem key={i} active={false} index={i} forceSkeleton />
         ))}
       </>
     )
@@ -83,19 +83,19 @@ const TrackList = ({
 
   return (
     <div onClick={goToCollectionPage}>
-      {tracks.slice(0, DISPLAY_TRACK_COUNT).map((track, index) => (
-        <TrackItem
-          key={track.uid}
-          active={activeTrackUid === track.uid}
+      {agreements.slice(0, DISPLAY_AGREEMENT_COUNT).map((agreement, index) => (
+        <AgreementItem
+          key={agreement.uid}
+          active={activeAgreementUid === agreement.uid}
           index={index}
-          track={track}
+          agreement={agreement}
         />
       ))}
-      {trackCount && trackCount > 5 && (
+      {agreementCount && agreementCount > 5 && (
         <>
-          <div className={styles.trackItemDivider}></div>
-          <div className={cn(styles.trackItem, styles.trackItemMore)}>
-            {`+${trackCount - tracks.length} more tracks`}
+          <div className={styles.agreementItemDivider}></div>
+          <div className={cn(styles.agreementItem, styles.agreementItemMore)}>
+            {`+${agreementCount - agreements.length} more agreements`}
           </div>
         </>
       )}
@@ -130,7 +130,7 @@ const PlaylistTile = (props: PlaylistTileProps & ExtraProps) => {
     numLoadingSkeletonRows,
     isTrending,
     showRankIcon,
-    trackCount
+    agreementCount
   } = props
   const [artworkLoaded, setArtworkLoaded] = useState(false)
   useEffect(() => {
@@ -152,9 +152,9 @@ const PlaylistTile = (props: PlaylistTileProps & ExtraProps) => {
           {formatSeconds(props.duration)}
         </div>
         <div className={styles.metadata}>
-          <TrackTileArt
+          <AgreementTileArt
             id={props.id}
-            isTrack={false}
+            isAgreement={false}
             showSkeleton={props.showSkeleton}
             callback={() => setArtworkLoaded(true)}
             coverArtSizes={props.coverArtSizes}
@@ -243,13 +243,13 @@ const PlaylistTile = (props: PlaylistTileProps & ExtraProps) => {
             </>
           )}
         </div>
-        <TrackList
-          activeTrackUid={props.activeTrackUid}
+        <AgreementList
+          activeAgreementUid={props.activeAgreementUid}
           goToCollectionPage={props.goToCollectionPage}
-          tracks={props.tracks}
+          agreements={props.agreements}
           isLoading={showSkeleton}
           numLoadingSkeletonRows={numLoadingSkeletonRows}
-          trackCount={trackCount}
+          agreementCount={agreementCount}
         />
         <div className={cn(fadeIn)}>
           <BottomButtons

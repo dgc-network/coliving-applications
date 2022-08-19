@@ -32,8 +32,8 @@ const challengeInfoMap: Record<
     title: '🎧 Listening Streak: 7 Days',
     amount: 1
   },
-  'track-upload': {
-    title: '🎶 Upload 3 Tracks',
+  'agreement-upload': {
+    title: '🎶 Upload 3 Agreements',
     amount: 1
   },
   referrals: {

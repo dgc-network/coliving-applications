@@ -1,17 +1,17 @@
 import { asLineup } from 'common/store/lineup/reducer'
 
-import { PREFIX as tracksPrefix } from './lineups/tracks/actions'
-import tracksReducer from './lineups/tracks/reducer'
+import { PREFIX as agreementsPrefix } from './lineups/agreements/actions'
+import agreementsReducer from './lineups/agreements/reducer'
 
 const initialState = {}
 
 const actionsMap = {}
 
-const tracksLineupReducer = asLineup(tracksPrefix, tracksReducer)
+const agreementsLineupReducer = asLineup(agreementsPrefix, agreementsReducer)
 
 const reducer = (state = initialState, action) => {
-  const tracks = tracksLineupReducer(state.tracks, action)
-  if (tracks !== state.tracks) return { ...state, tracks }
+  const agreements = agreementsLineupReducer(state.agreements, action)
+  if (agreements !== state.agreements) return { ...state, agreements }
 
   const matchingReduceFunction = actionsMap[action.type]
   if (!matchingReduceFunction) return state

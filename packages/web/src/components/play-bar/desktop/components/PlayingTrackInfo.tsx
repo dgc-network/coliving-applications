@@ -8,24 +8,24 @@ import Draggable from 'components/dragndrop/Draggable'
 import DynamicImage from 'components/dynamic-image/DynamicImage'
 import UserBadges from 'components/user-badges/UserBadges'
 import { useUserProfilePicture } from 'hooks/useUserProfilePicture'
-import { fullTrackPage } from 'utils/route'
+import { fullAgreementPage } from 'utils/route'
 
-import styles from './PlayingTrackInfo.module.css'
+import styles from './PlayingAgreementInfo.module.css'
 
-interface PlayingTrackInfoProps {
-  trackId: number
+interface PlayingAgreementInfoProps {
+  agreementId: number
   isOwner: boolean
-  trackTitle: string
-  trackPermalink: string
+  agreementTitle: string
+  agreementPermalink: string
   profilePictureSizes: ProfilePictureSizes
   isVerified: boolean
-  isTrackUnlisted: boolean
+  isAgreementUnlisted: boolean
   artistUserId: ID
   artistName: string
   artistHandle: string
   hasShadow: boolean
   dominantColor?: Color
-  onClickTrackTitle: () => void
+  onClickAgreementTitle: () => void
   onClickArtistName: () => void
 }
 
@@ -36,22 +36,22 @@ const springProps = {
   config: { tension: 240, friction: 25 }
 }
 
-const PlayingTrackInfo = ({
-  trackId,
+const PlayingAgreementInfo = ({
+  agreementId,
   isOwner,
-  trackTitle,
-  trackPermalink,
+  agreementTitle,
+  agreementPermalink,
   profilePictureSizes,
   artistUserId,
   artistName,
-  onClickTrackTitle,
+  onClickAgreementTitle,
   onClickArtistName,
-  isTrackUnlisted,
+  isAgreementUnlisted,
   hasShadow,
   dominantColor
-}: PlayingTrackInfoProps) => {
+}: PlayingAgreementInfoProps) => {
   const [artistSpringProps, setArtistSpringProps] = useSpring(() => springProps)
-  const [trackSpringProps, setTrackSpringProps] = useSpring(() => springProps)
+  const [agreementSpringProps, setAgreementSpringProps] = useSpring(() => springProps)
   const image = useUserProfilePicture(
     artistUserId,
     profilePictureSizes,
@@ -63,8 +63,8 @@ const PlayingTrackInfo = ({
   }, [artistUserId, setArtistSpringProps])
 
   useEffect(() => {
-    setTrackSpringProps(springProps)
-  }, [trackTitle, setTrackSpringProps])
+    setAgreementSpringProps(springProps)
+  }, [agreementTitle, setAgreementSpringProps])
 
   const boxShadowStyle =
     hasShadow && dominantColor
@@ -80,7 +80,7 @@ const PlayingTrackInfo = ({
           image={image}
           onClick={onClickArtistName}
           className={cn(styles.profilePicture, {
-            [styles.isDefault]: !!trackId
+            [styles.isDefault]: !!agreementId
           })}
           imageStyle={boxShadowStyle}
           usePlaceholder={false}
@@ -88,21 +88,21 @@ const PlayingTrackInfo = ({
       </div>
       <div className={styles.text}>
         <Draggable
-          isDisabled={!trackTitle || isTrackUnlisted}
-          text={trackTitle}
+          isDisabled={!agreementTitle || isAgreementUnlisted}
+          text={agreementTitle}
           isOwner={isOwner}
-          kind='track'
-          id={trackId}
-          link={fullTrackPage(trackPermalink)}
+          kind='agreement'
+          id={agreementId}
+          link={fullAgreementPage(agreementPermalink)}
         >
-          <animated.div style={trackSpringProps}>
+          <animated.div style={agreementSpringProps}>
             <div
-              className={cn(styles.trackTitle, {
+              className={cn(styles.agreementTitle, {
                 [styles.textShadow]: hasShadow
               })}
-              onClick={onClickTrackTitle}
+              onClick={onClickAgreementTitle}
             >
-              {trackTitle}
+              {agreementTitle}
             </div>
           </animated.div>
         </Draggable>
@@ -129,4 +129,4 @@ const PlayingTrackInfo = ({
   )
 }
 
-export default memo(PlayingTrackInfo)
+export default memo(PlayingAgreementInfo)

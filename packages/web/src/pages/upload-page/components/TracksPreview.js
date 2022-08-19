@@ -3,23 +3,23 @@ import cn from 'classnames'
 import PropTypes from 'prop-types'
 
 import TabSlider from 'components/data-entry/TabSlider'
-import TrackPreview from 'components/upload/TrackPreview'
+import AgreementPreview from 'components/upload/AgreementPreview'
 
-import styles from './TracksPreview.module.css'
+import styles from './AgreementsPreview.module.css'
 import UploadType from './uploadType'
 
 const uploadDescriptions = {
   [UploadType.PLAYLIST]:
-    'A playlist is a living thing that can change and grow over time. Playlists can contain your own tracks, as well as tracks uploaded by others.',
+    'A playlist is a living thing that can change and grow over time. Playlists can contain your own agreements, as well as agreements uploaded by others.',
   [UploadType.ALBUM]:
-    'An album is a curated listening experience that is frozen in time and does not change. Albums can only contain tracks that you upload.',
-  [UploadType.INDIVIDUAL_TRACKS]:
-    'Every track you upload will be a separate post.',
-  [UploadType.INDIVIDUAL_TRACK]:
-    'Every track you upload will be a separate post.'
+    'An album is a curated listening experience that is frozen in time and does not change. Albums can only contain agreements that you upload.',
+  [UploadType.INDIVIDUAL_AGREEMENTS]:
+    'Every agreement you upload will be a separate post.',
+  [UploadType.INDIVIDUAL_AGREEMENT]:
+    'Every agreement you upload will be a separate post.'
 }
 
-const TracksPreview = (props) => {
+const AgreementsPreview = (props) => {
   return (
     <div className={styles.container}>
       <div className={styles.headerContainer}>
@@ -29,7 +29,7 @@ const TracksPreview = (props) => {
           onSelectOption={props.setUploadType}
           selected={props.uploadType}
           options={[
-            { key: UploadType.INDIVIDUAL_TRACKS, text: 'Tracks' },
+            { key: UploadType.INDIVIDUAL_AGREEMENTS, text: 'Agreements' },
             { key: UploadType.ALBUM, text: 'Album' },
             { key: UploadType.PLAYLIST, text: 'Playlist' }
           ]}
@@ -39,17 +39,17 @@ const TracksPreview = (props) => {
         </div>
       </div>
       <Scrollbar
-        className={cn(styles.tracks, {
+        className={cn(styles.agreements, {
           [styles.shortScroll]:
-            props.uploadType !== UploadType.INDIVIDUAL_TRACKS
+            props.uploadType !== UploadType.INDIVIDUAL_AGREEMENTS
         })}
       >
-        {props.tracks.map((track, i) => (
-          <TrackPreview
-            key={track.metadata.title + i}
-            trackTitle={track.metadata.title}
-            fileType={track.file.type}
-            fileSize={track.file.size}
+        {props.agreements.map((agreement, i) => (
+          <AgreementPreview
+            key={agreement.metadata.title + i}
+            agreementTitle={agreement.metadata.title}
+            fileType={agreement.file.type}
+            fileSize={agreement.file.size}
             playing={props.previewIndex === i}
             onRemove={() => props.onRemove(i)}
             onPlayPreview={() => props.playPreview(i)}
@@ -61,14 +61,14 @@ const TracksPreview = (props) => {
   )
 }
 
-TracksPreview.propTypes = {
+AgreementsPreview.propTypes = {
   uploadType: PropTypes.oneOf([
-    UploadType.INDIVIDUAL_TRACK,
-    UploadType.INDIVIDUAL_TRACKS,
+    UploadType.INDIVIDUAL_AGREEMENT,
+    UploadType.INDIVIDUAL_AGREEMENTS,
     UploadType.PLAYLIST,
     UploadType.ALBUM
   ]),
-  tracks: PropTypes.array,
+  agreements: PropTypes.array,
   setUploadType: PropTypes.func,
   playPreview: PropTypes.func,
   stopPreview: PropTypes.func,
@@ -76,4 +76,4 @@ TracksPreview.propTypes = {
   previewIndex: PropTypes.number
 }
 
-export default TracksPreview
+export default AgreementsPreview

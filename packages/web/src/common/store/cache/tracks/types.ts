@@ -1,5 +1,5 @@
-import { Cache, Track } from '@coliving/common'
+import { Cache, Agreement } from '@coliving/common'
 
-export interface TracksCacheState extends Cache<Track> {
+export interface AgreementsCacheState extends Cache<Agreement> {
   permalinks: { [permalink: string]: { id: number } }
 }

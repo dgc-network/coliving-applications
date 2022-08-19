@@ -14,12 +14,12 @@ import {
 
 import * as cacheActions from 'common/store/cache/actions'
 import { getCollection } from 'common/store/cache/collections/selectors'
-import { getTrack, getTracks } from 'common/store/cache/tracks/selectors'
+import { getAgreement, getAgreements } from 'common/store/cache/agreements/selectors'
 import { getUsers } from 'common/store/cache/users/selectors'
 import * as baseLineupActions from 'common/store/lineup/actions'
 import { getSource, getUid, getPositions } from 'common/store/queue/selectors'
 import * as queueActions from 'common/store/queue/slice'
-import { getUid as getCurrentPlayerTrackUid } from 'store/player/selectors'
+import { getUid as getCurrentPlayerAgreementUid } from 'store/player/selectors'
 import { getToQueue } from 'store/queue/sagas'
 import { isMobile } from 'utils/clientUtil'
 
@@ -29,19 +29,19 @@ const getEntryId = (entry) => `${entry.kind}:${entry.id}`
 
 const flatten = (list) =>
   list.reduce((a, b) => a.concat(Array.isArray(b) ? flatten(b) : b), [])
-function* filterDeletes(tracksMetadata, removeDeleted) {
-  const tracks = yield select(getTracks)
+function* filterDeletes(agreementsMetadata, removeDeleted) {
+  const agreements = yield select(getAgreements)
   const users = yield select(getUsers)
-  return tracksMetadata
+  return agreementsMetadata
     .map((metadata) => {
       // If the incoming metadata is null, return null
       // This will be accounted for in `nullCount`
       if (metadata === null) {
         return null
       }
-      // If we said to remove deleted tracks and it is deleted, remove it
+      // If we said to remove deleted agreements and it is deleted, remove it
       if (removeDeleted && metadata.is_delete) return null
-      // If we said to remove deleted and the track/playlist owner is deactivated, remove it
+      // If we said to remove deleted and the agreement/playlist owner is deactivated, remove it
       else if (removeDeleted && users[metadata.owner_id]?.is_deactivated)
         return null
       else if (
@@ -49,48 +49,48 @@ function* filterDeletes(tracksMetadata, removeDeleted) {
         users[metadata.playlist_owner_id]?.is_deactivated
       )
         return null
-      // If the track was not cached, keep it
-      else if (!tracks[metadata.track_id]) return metadata
+      // If the agreement was not cached, keep it
+      else if (!agreements[metadata.agreement_id]) return metadata
       // If we said to remove deleted and it's marked deleted remove it
-      else if (removeDeleted && tracks[metadata.track_id]._marked_deleted)
+      else if (removeDeleted && agreements[metadata.agreement_id]._marked_deleted)
         return null
       return {
         ...metadata,
         // Maintain the marked deleted
-        _marked_deleted: !!tracks[metadata.track_id]._marked_deleted
+        _marked_deleted: !!agreements[metadata.agreement_id]._marked_deleted
       }
     })
     .filter(Boolean)
 }
 
-function getTrackCacheables(metadata, uid, trackSubscribers) {
-  trackSubscribers.push({ uid: metadata.uid || uid, id: metadata.track_id })
+function getAgreementCacheables(metadata, uid, agreementSubscribers) {
+  agreementSubscribers.push({ uid: metadata.uid || uid, id: metadata.agreement_id })
 }
 
 function getCollectionCacheables(
   metadata,
   uid,
   collectionsToCache,
-  trackSubscriptions,
-  trackSubscribers
+  agreementSubscriptions,
+  agreementSubscribers
 ) {
   collectionsToCache.push({ id: metadata.playlist_id, uid, metadata })
 
-  const trackIds = metadata.playlist_contents.track_ids.map((t) => t.track)
-  const trackUids = trackIds.map((id) =>
-    makeUid(Kind.TRACKS, id, `collection:${metadata.playlist_id}`)
+  const agreementIds = metadata.playlist_contents.agreement_ids.map((t) => t.agreement)
+  const agreementUids = agreementIds.map((id) =>
+    makeUid(Kind.AGREEMENTS, id, `collection:${metadata.playlist_id}`)
   )
 
-  trackSubscriptions.push({
+  agreementSubscriptions.push({
     id: metadata.playlist_id,
-    kind: Kind.TRACKS,
-    uids: trackUids
+    kind: Kind.AGREEMENTS,
+    uids: agreementUids
   })
-  metadata.playlist_contents.track_ids =
-    metadata.playlist_contents.track_ids.map((t, i) => {
-      const trackUid = t.uid || trackUids[i]
-      trackSubscribers.push({ uid: trackUid, id: t.track })
-      return { uid: trackUid, ...t }
+  metadata.playlist_contents.agreement_ids =
+    metadata.playlist_contents.agreement_ids.map((t, i) => {
+      const agreementUid = t.uid || agreementUids[i]
+      agreementSubscribers.push({ uid: agreementUid, id: t.agreement })
+      return { uid: agreementUid, ...t }
     })
 }
 
@@ -167,7 +167,7 @@ function* fetchLineupMetadatasAsync(
       )
 
       const allMetadatas = responseFilteredDeletes.map((item) => {
-        const id = item.track_id
+        const id = item.agreement_id
         if (id && uidForSource[id] && uidForSource[id].length > 0) {
           item.uid = uidForSource[id].shift()
         }
@@ -175,31 +175,31 @@ function* fetchLineupMetadatasAsync(
       })
 
       const kinds = allMetadatas.map((metadata) =>
-        metadata.track_id ? Kind.TRACKS : Kind.COLLECTIONS
+        metadata.agreement_id ? Kind.AGREEMENTS : Kind.COLLECTIONS
       )
       const ids = allMetadatas.map(
-        (metadata) => metadata.track_id || metadata.playlist_id
+        (metadata) => metadata.agreement_id || metadata.playlist_id
       )
       const uids = makeUids(kinds, ids, source)
 
-      // Cache tracks and collections.
+      // Cache agreements and collections.
       const collectionsToCache = []
 
-      const trackSubscriptions = []
-      let trackSubscribers = []
+      const agreementSubscriptions = []
+      let agreementSubscribers = []
 
       allMetadatas.forEach((metadata, i) => {
-        // Need to update the UIDs on the playlist tracks
+        // Need to update the UIDs on the playlist agreements
         if (metadata.playlist_id) {
           getCollectionCacheables(
             metadata,
             uids[i],
             collectionsToCache,
-            trackSubscriptions,
-            trackSubscribers
+            agreementSubscriptions,
+            agreementSubscribers
           )
-        } else if (metadata.track_id) {
-          getTrackCacheables(metadata, uids[i], trackSubscribers)
+        } else if (metadata.agreement_id) {
+          getAgreementCacheables(metadata, uids[i], agreementSubscribers)
         }
       })
 
@@ -208,11 +208,11 @@ function* fetchLineupMetadatasAsync(
       )
 
       lineupCollections.forEach((metadata) => {
-        const trackUids = metadata.playlist_contents.track_ids.map(
-          (track, idx) => {
-            const id = track.track
+        const agreementUids = metadata.playlist_contents.agreement_ids.map(
+          (agreement, idx) => {
+            const id = agreement.agreement
             const uid = new Uid(
-              Kind.TRACKS,
+              Kind.AGREEMENTS,
               id,
               makeCollectionSourceId(source, metadata.playlist_id),
               idx
@@ -220,19 +220,19 @@ function* fetchLineupMetadatasAsync(
             return { id, uid: uid.toString() }
           }
         )
-        trackSubscribers = trackSubscribers.concat(trackUids)
+        agreementSubscribers = agreementSubscribers.concat(agreementUids)
       })
 
-      // We rewrote the playlist tracks with new UIDs, so we need to update them
+      // We rewrote the playlist agreements with new UIDs, so we need to update them
       // in the cache.
       if (collectionsToCache.length > 0) {
         yield put(cacheActions.update(Kind.COLLECTIONS, collectionsToCache))
       }
-      if (trackSubscriptions.length > 0) {
-        yield put(cacheActions.update(Kind.COLLECTIONS, [], trackSubscriptions))
+      if (agreementSubscriptions.length > 0) {
+        yield put(cacheActions.update(Kind.COLLECTIONS, [], agreementSubscriptions))
       }
-      if (trackSubscribers.length > 0) {
-        yield put(cacheActions.subscribe(Kind.TRACKS, trackSubscribers))
+      if (agreementSubscribers.length > 0) {
+        yield put(cacheActions.subscribe(Kind.AGREEMENTS, agreementSubscribers))
       }
       // Retain specified info in the lineup itself and resolve with success.
       const lineupEntries = allMetadatas
@@ -273,7 +273,7 @@ function* fetchLineupMetadatasAsync(
     baseLineupActions.addPrefix(lineupPrefix, baseLineupActions.RESET)
   )
   // If a source is specified in the reset action, make sure it matches the lineup source
-  // If not specified, cancel the fetchTrackMetdatas
+  // If not specified, cancel the fetchAgreementMetdatas
   if (!resetSource || resetSource === initSource) {
     yield cancel(task)
   }
@@ -297,14 +297,14 @@ function* updateQueueLineup(lineupPrefix, source, lineupEntries) {
 
 function* play(lineupActions, lineupSelector, prefix, action) {
   const lineup = yield select(lineupSelector)
-  const requestedPlayTrack = yield select(getTrack, { uid: action.uid })
+  const requestedPlayAgreement = yield select(getAgreement, { uid: action.uid })
 
   if (action.uid) {
     const source = yield select(getSource)
-    const currentPlayerTrackUid = yield select(getCurrentPlayerTrackUid)
+    const currentPlayerAgreementUid = yield select(getCurrentPlayerAgreementUid)
     if (
-      !currentPlayerTrackUid ||
-      action.uid !== currentPlayerTrackUid ||
+      !currentPlayerAgreementUid ||
+      action.uid !== currentPlayerAgreementUid ||
       source !== lineup.prefix
     ) {
       const toQueue = yield all(
@@ -318,7 +318,7 @@ function* play(lineupActions, lineupSelector, prefix, action) {
   yield put(
     queueActions.play({
       uid: action.uid,
-      trackId: requestedPlayTrack && requestedPlayTrack.track_id,
+      agreementId: requestedPlayAgreement && requestedPlayAgreement.agreement_id,
       source: prefix
     })
   )
@@ -336,7 +336,7 @@ function* reset(
   action
 ) {
   const lineup = yield select(lineupSelector)
-  // Remove this lineup as a subscriber from all of its tracks and collections.
+  // Remove this lineup as a subscriber from all of its agreements and collections.
   const subscriptionsToRemove = {} // keyed by kind
   const source = sourceSelector ? yield select(sourceSelector) : lineupPrefix
 
@@ -349,20 +349,20 @@ function* reset(
     }
     if (entry.kind === Kind.COLLECTIONS) {
       const collection = yield select(getCollection, { uid: entry.uid })
-      const removeTrackIds = collection.playlist_contents.track_ids.map(
-        ({ track: trackId }, idx) => {
-          const trackUid = new Uid(
-            Kind.TRACKS,
-            trackId,
+      const removeAgreementIds = collection.playlist_contents.agreement_ids.map(
+        ({ agreement: agreementId }, idx) => {
+          const agreementUid = new Uid(
+            Kind.AGREEMENTS,
+            agreementId,
             makeCollectionSourceId(source, collection.playlist_id),
             idx
           )
-          return { UID: trackUid.toString() }
+          return { UID: agreementUid.toString() }
         }
       )
-      subscriptionsToRemove[Kind.TRACKS] = (
-        subscriptionsToRemove[Kind.TRACKS] || []
-      ).concat(removeTrackIds)
+      subscriptionsToRemove[Kind.AGREEMENTS] = (
+        subscriptionsToRemove[Kind.AGREEMENTS] || []
+      ).concat(removeAgreementIds)
     }
   }
   yield all(
@@ -390,7 +390,7 @@ function* remove(action) {
 function* updateLineupOrder(lineupPrefix, sourceSelector, action) {
   // TODO: Investigate a better way to handle reordering of the lineup and transitively
   // reordering the queue. This implementation is slightly buggy in that the source may not
-  // be set on the queue item when reordering and the next track won't resume correctly.
+  // be set on the queue item when reordering and the next agreement won't resume correctly.
   const queueSource = yield select(getSource)
   const source = yield select(sourceSelector)
   const uid = yield select(getUid)
@@ -419,8 +419,8 @@ function* refreshInView(lineupActions, lineupSelector, action) {
 
 const keepUidAndKind = (entry) => ({
   uid: entry.uid,
-  kind: entry.track_id ? Kind.TRACKS : Kind.COLLECTIONS,
-  id: entry.track_id || entry.playlist_id
+  kind: entry.agreement_id ? Kind.AGREEMENTS : Kind.COLLECTIONS,
+  id: entry.agreement_id || entry.playlist_id
 })
 
 /**
@@ -446,10 +446,10 @@ export class LineupSagas {
    * @param {object} actions the actions class instance for the lineup
    * @param {function} selector the selector for the lineup, e.g. state => state.feed
    * @param {function * | async function} lineupMetadatasCall
-   *   the backend call to make to fetch the tracks metadatas for the lineup
+   *   the backend call to make to fetch the agreements metadatas for the lineup
    * @param {?function} retainSelector a selector used to retain various metadata inside the lineup state
-   *   otherwise, the lineup will only retain the track id indexing into the cache
-   * @param {?boolean} removeDeleted whether or not to prune deleted tracks
+   *   otherwise, the lineup will only retain the agreement id indexing into the cache
+   * @param {?boolean} removeDeleted whether or not to prune deleted agreements
    * @param {?function} sourceSelector optional selector that sets the UID source for entries
    */
   constructor(
@@ -503,7 +503,7 @@ export class LineupSagas {
     }
   }
 
-  watchPauseTrack = () => {
+  watchPauseAgreement = () => {
     const instance = this
     return function* () {
       yield takeLatest(
@@ -581,7 +581,7 @@ export class LineupSagas {
     return [
       this.watchFetchLineupMetadata(),
       this.watchPlay(),
-      this.watchPauseTrack(),
+      this.watchPauseAgreement(),
       this.watchReset(),
       this.watchAdd(),
       this.watchRemove(),

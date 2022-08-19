@@ -12,13 +12,13 @@ import { MainContentContext } from 'pages/MainContentContext'
 import CollectionMenu, {
   OwnProps as CollectionMenuProps
 } from './CollectionMenu'
-import TrackMenu, { OwnProps as TrackMenuProps } from './TrackMenu'
+import AgreementMenu, { OwnProps as AgreementMenuProps } from './AgreementMenu'
 import UserMenu, { OwnProps as UserMenuProps } from './UserMenu'
 
 export type MenuOptionType =
   | UserMenuProps
   | CollectionMenuProps
-  | TrackMenuProps
+  | AgreementMenuProps
 
 export type MenuType = MenuOptionType['type']
 
@@ -57,8 +57,8 @@ const Menu = forwardRef<HTMLDivElement, MenuProps>((props, ref) => {
         {renderMenu}
       </CollectionMenu>
     )
-  } else if (menu.type === 'track') {
-    return <TrackMenu {...(menu as TrackMenuProps)}>{renderMenu}</TrackMenu>
+  } else if (menu.type === 'agreement') {
+    return <AgreementMenu {...(menu as AgreementMenuProps)}>{renderMenu}</AgreementMenu>
   } else if (menu.type === 'notification') {
   }
   return null
@@ -66,7 +66,7 @@ const Menu = forwardRef<HTMLDivElement, MenuProps>((props, ref) => {
 
 Menu.defaultProps = {
   menu: {
-    type: 'track',
+    type: 'agreement',
     handle: ''
   }
 }

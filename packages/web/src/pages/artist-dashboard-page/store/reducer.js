@@ -10,8 +10,8 @@ import {
 
 const initialState = {
   status: Status.LOADING,
-  tracks: [],
-  unlistedTracks: [],
+  agreements: [],
+  unlistedAgreements: [],
   collections: [],
   listenData: {}
 }
@@ -26,9 +26,9 @@ const actionsMap = {
   [FETCH_DASHBOARD_SUCCEEDED](state, action) {
     return {
       ...state,
-      tracks: action.tracks,
+      agreements: action.agreements,
       collections: action.collections,
-      unlistedTracks: action.unlistedTracks,
+      unlistedAgreements: action.unlistedAgreements,
       status: Status.SUCCESS
     }
   },

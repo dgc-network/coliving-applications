@@ -4,8 +4,8 @@ import { call, put, takeLatest, takeEvery } from 'redux-saga/effects'
 import * as cacheActions from 'common/store/cache/actions'
 import { retrieveCollections } from 'common/store/cache/collections/utils'
 import * as collectionActions from 'common/store/pages/collection/actions'
-import { tracksActions } from 'common/store/pages/collection/lineup/actions.js'
-import tracksSagas from 'pages/collection-page/store/lineups/tracks/sagas'
+import { agreementsActions } from 'common/store/pages/collection/lineup/actions.js'
+import agreementsSagas from 'pages/collection-page/store/lineups/agreements/sagas'
 
 function* watchFetchCollection() {
   yield takeLatest(collectionActions.FETCH_COLLECTION, function* (action) {
@@ -15,8 +15,8 @@ function* watchFetchCollection() {
       retrieveCollections,
       null,
       [collectionId],
-      /* fetchTracks */ false,
-      /* requiresAllTracks */ true
+      /* fetchAgreements */ false,
+      /* requiresAllAgreements */ true
     )
 
     if (Object.values(collections).length === 0) {
@@ -37,7 +37,7 @@ function* watchFetchCollection() {
           collection.playlist_id,
           collectionUid,
           userUid,
-          collection.playlist_contents.track_ids.length
+          collection.playlist_contents.agreement_ids.length
         )
       )
     } else {
@@ -48,7 +48,7 @@ function* watchFetchCollection() {
 
 function* watchResetCollection() {
   yield takeEvery(collectionActions.RESET_COLLECTION, function* (action) {
-    yield put(tracksActions.reset())
+    yield put(agreementsActions.reset())
     yield put(
       cacheActions.unsubscribe(Kind.COLLECTIONS, [
         { uid: action.collectionUid }
@@ -59,5 +59,5 @@ function* watchResetCollection() {
 }
 
 export default function sagas() {
-  return [...tracksSagas(), watchFetchCollection, watchResetCollection]
+  return [...agreementsSagas(), watchFetchCollection, watchResetCollection]
 }

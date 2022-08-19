@@ -126,7 +126,7 @@ export const ChallengeRewardsDrawerProvider = () => {
         <ReferralRewardContents isVerified={!!config.isVerifiedChallenge} />
       )
       break
-    case 'track-upload':
+    case 'agreement-upload':
       contents = config?.buttonInfo && (
         <Button
           containerStyle={styles.button}

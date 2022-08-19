@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 
-import type { UID, Track, User } from '@/common'
+import type { UID, Agreement, User } from '@/common'
 import {
   FavoriteSource,
   RepostSource,
@@ -11,13 +11,13 @@ import {
   SquareSizes
 } from '@/common'
 import { getUserId } from '-client/src/common/store/account/selectors'
-import { tracksActions } from '-client/src/common/store/pages/track/lineup/actions'
+import { agreementsActions } from '-client/src/common/store/pages/agreement/lineup/actions'
 import {
-  repostTrack,
-  saveTrack,
-  undoRepostTrack,
-  unsaveTrack
-} from '-client/src/common/store/social/tracks/actions'
+  repostAgreement,
+  saveAgreement,
+  undoRepostAgreement,
+  unsaveAgreement
+} from '-client/src/common/store/social/agreements/actions'
 import {
   OverflowAction,
   OverflowSource
@@ -46,25 +46,25 @@ import type { DetailsTileDetail } from 'app/components/details-tile/types'
 import { useDispatchWeb } from 'app/hooks/useDispatchWeb'
 import { useNavigation } from 'app/hooks/useNavigation'
 import { useSelectorWeb } from 'app/hooks/useSelectorWeb'
-import { useTrackCoverArt } from 'app/hooks/useTrackCoverArt'
+import { useAgreementCoverArt } from 'app/hooks/useAgreementCoverArt'
 import { getPlaying, getPlayingUid } from 'app/store/live/selectors'
-import type { SearchTrack, SearchUser } from 'app/store/search/types'
+import type { SearchAgreement, SearchUser } from 'app/store/search/types'
 import { flexRowCentered, makeStyles } from 'app/styles'
-import { make, track as record } from 'app/utils/analytics'
+import { make, agreement as record } from 'app/utils/analytics'
 import { moodMap } from 'app/utils/moods'
 import { getTagSearchRoute } from 'app/utils/routes'
 import { useThemeColors } from 'app/utils/theme'
 
-import { TrackScreenDownloadButtons } from './TrackScreenDownloadButtons'
+import { AgreementScreenDownloadButtons } from './AgreementScreenDownloadButtons'
 
 const messages = {
-  track: 'track',
+  agreement: 'agreement',
   remix: 'remix',
-  hiddenTrack: 'hidden track'
+  hiddenAgreement: 'hidden agreement'
 }
 
-type TrackScreenDetailsTileProps = {
-  track: Track | SearchTrack
+type AgreementScreenDetailsTileProps = {
+  agreement: Agreement | SearchAgreement
   user: User | SearchUser
   uid: UID
   isLineupLoading: boolean
@@ -75,7 +75,7 @@ const recordPlay = (id, play = true) => {
     make({
       eventName: play ? Name.PLAYBACK_PLAY : Name.PLAYBACK_PAUSE,
       id: String(id),
-      source: PlaybackSource.TRACK_PAGE
+      source: PlaybackSource.AGREEMENT_PAGE
     })
   )
 }
@@ -113,7 +113,7 @@ const useStyles = makeStyles(({ palette, spacing, typography }) => ({
     marginBottom: spacing(4)
   },
 
-  hiddenTrackLabel: {
+  hiddenAgreementLabel: {
     marginTop: spacing(1),
     marginLeft: spacing(2),
     color: palette.accentOrange,
@@ -128,12 +128,12 @@ const useStyles = makeStyles(({ palette, spacing, typography }) => ({
   }
 }))
 
-export const TrackScreenDetailsTile = ({
-  track,
+export const AgreementScreenDetailsTile = ({
+  agreement,
   user,
   uid,
   isLineupLoading
-}: TrackScreenDetailsTileProps) => {
+}: AgreementScreenDetailsTileProps) => {
   const styles = useStyles()
   const navigation = useNavigation()
   const { accentOrange } = useThemeColors()
@@ -165,19 +165,19 @@ export const TrackScreenDetailsTile = ({
     save_count,
     tags,
     title,
-    track_id
-  } = track
+    agreement_id
+  } = agreement
 
-  const imageUrl = useTrackCoverArt({
-    id: track_id,
+  const imageUrl = useAgreementCoverArt({
+    id: agreement_id,
     sizes: _cover_art_sizes,
     size: SquareSizes.SIZE_480_BY_480
   })
 
   const isOwner = owner_id === currentUserId
 
-  const remixParentTrackId = remix_of?.tracks?.[0]?.parent_track_id
-  const isRemix = !!remixParentTrackId
+  const remixParentAgreementId = remix_of?.agreements?.[0]?.parent_agreement_id
+  const isRemix = !!remixParentAgreementId
 
   const filteredTags = (tags || '').split(',').filter(Boolean)
 
@@ -210,38 +210,38 @@ export const TrackScreenDetailsTile = ({
     if (isLineupLoading) return
 
     if (isPlaying && isPlayingUid) {
-      dispatchWeb(tracksActions.pause())
-      recordPlay(track_id, false)
+      dispatchWeb(agreementsActions.pause())
+      recordPlay(agreement_id, false)
     } else if (!isPlayingUid) {
-      dispatchWeb(tracksActions.play(uid))
-      recordPlay(track_id)
+      dispatchWeb(agreementsActions.play(uid))
+      recordPlay(agreement_id)
     } else {
-      dispatchWeb(tracksActions.play())
-      recordPlay(track_id)
+      dispatchWeb(agreementsActions.play())
+      recordPlay(agreement_id)
     }
-  }, [track_id, uid, isPlayingUid, dispatchWeb, isPlaying, isLineupLoading])
+  }, [agreement_id, uid, isPlayingUid, dispatchWeb, isPlaying, isLineupLoading])
 
   const handlePressFavorites = useCallback(() => {
-    dispatchWeb(setFavorite(track_id, FavoriteType.TRACK))
+    dispatchWeb(setFavorite(agreement_id, FavoriteType.AGREEMENT))
     navigation.push({
       native: {
         screen: 'Favorited',
-        params: { id: track_id, favoriteType: FavoriteType.TRACK }
+        params: { id: agreement_id, favoriteType: FavoriteType.AGREEMENT }
       },
       web: { route: FAVORITING_USERS_ROUTE }
     })
-  }, [dispatchWeb, track_id, navigation])
+  }, [dispatchWeb, agreement_id, navigation])
 
   const handlePressReposts = useCallback(() => {
-    dispatchWeb(setRepost(track_id, RepostType.TRACK))
+    dispatchWeb(setRepost(agreement_id, RepostType.AGREEMENT))
     navigation.push({
       native: {
         screen: 'Reposts',
-        params: { id: track_id, repostType: RepostType.TRACK }
+        params: { id: agreement_id, repostType: RepostType.AGREEMENT }
       },
       web: { route: REPOSTING_USERS_ROUTE }
     })
-  }, [dispatchWeb, track_id, navigation])
+  }, [dispatchWeb, agreement_id, navigation])
 
   const handlePressTag = useCallback(
     (tag: string) => {
@@ -260,9 +260,9 @@ export const TrackScreenDetailsTile = ({
   const handlePressSave = () => {
     if (!isOwner) {
       if (has_current_user_saved) {
-        dispatchWeb(unsaveTrack(track_id, FavoriteSource.TRACK_PAGE))
+        dispatchWeb(unsaveAgreement(agreement_id, FavoriteSource.AGREEMENT_PAGE))
       } else {
-        dispatchWeb(saveTrack(track_id, FavoriteSource.TRACK_PAGE))
+        dispatchWeb(saveAgreement(agreement_id, FavoriteSource.AGREEMENT_PAGE))
       }
     }
   }
@@ -270,9 +270,9 @@ export const TrackScreenDetailsTile = ({
   const handlePressRepost = () => {
     if (!isOwner) {
       if (has_current_user_reposted) {
-        dispatchWeb(undoRepostTrack(track_id, RepostSource.TRACK_PAGE))
+        dispatchWeb(undoRepostAgreement(agreement_id, RepostSource.AGREEMENT_PAGE))
       } else {
-        dispatchWeb(repostTrack(track_id, RepostSource.TRACK_PAGE))
+        dispatchWeb(repostAgreement(agreement_id, RepostSource.AGREEMENT_PAGE))
       }
     }
   }
@@ -280,8 +280,8 @@ export const TrackScreenDetailsTile = ({
   const handlePressShare = () => {
     dispatchWeb(
       requestOpenShareModal({
-        type: 'track',
-        trackId: track_id,
+        type: 'agreement',
+        agreementId: agreement_id,
         source: ShareSource.PAGE
       })
     )
@@ -307,8 +307,8 @@ export const TrackScreenDetailsTile = ({
 
     dispatchWeb(
       openOverflowMenu({
-        source: OverflowSource.TRACKS,
-        id: track_id,
+        source: OverflowSource.AGREEMENTS,
+        id: agreement_id,
         overflowActions
       })
     )
@@ -318,7 +318,7 @@ export const TrackScreenDetailsTile = ({
     return (
       <View style={styles.hiddenDetailsTileWrapper}>
         <IconHidden fill={accentOrange} />
-        <Text style={styles.hiddenTrackLabel}>{messages.hiddenTrack}</Text>
+        <Text style={styles.hiddenAgreementLabel}>{messages.hiddenAgreement}</Text>
       </View>
     )
   }
@@ -343,10 +343,10 @@ export const TrackScreenDetailsTile = ({
 
   const renderDownloadButtons = () => {
     return (
-      <TrackScreenDownloadButtons
+      <AgreementScreenDownloadButtons
         following={user.does_current_user_follow}
         isOwner={isOwner}
-        trackId={track_id}
+        agreementId={agreement_id}
         user={user}
       />
     )
@@ -363,7 +363,7 @@ export const TrackScreenDetailsTile = ({
 
   return (
     <DetailsTile
-      descriptionLinkPressSource='track page'
+      descriptionLinkPressSource='agreement page'
       coSign={_co_sign}
       description={description ?? undefined}
       details={details}
@@ -373,7 +373,7 @@ export const TrackScreenDetailsTile = ({
       user={user}
       renderBottomContent={renderBottomContent}
       renderHeader={is_unlisted ? renderHiddenHeader : undefined}
-      headerText={isRemix ? messages.remix : messages.track}
+      headerText={isRemix ? messages.remix : messages.agreement}
       hideFavorite={is_unlisted}
       hideRepost={is_unlisted}
       hideShare={is_unlisted && !field_visibility?.share}

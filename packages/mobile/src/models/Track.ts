@@ -1,3 +1,3 @@
-import type { Track } from '@/common'
+import type { Agreement } from '@/common'
 
-export type TrackImage = Pick<Track, 'cover_art' | 'cover_art_sizes'>
+export type AgreementImage = Pick<Agreement, 'cover_art' | 'cover_art_sizes'>

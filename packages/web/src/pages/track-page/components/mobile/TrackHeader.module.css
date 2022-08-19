@@ -1,4 +1,4 @@
-.trackHeader {
+.agreementHeader {
   padding: 16px 24px 0px;
   width: 100%;
   display: inline-flex;
@@ -133,7 +133,7 @@
   width: 100%;
 }
 
-.trackHeader > span {
+.agreementHeader > span {
   width: 100%;
 }
 
@@ -289,6 +289,6 @@
   margin-bottom: 24px;
 }
 
-.hiddenTrackHeaderWrapper {
+.hiddenAgreementHeaderWrapper {
   margin-bottom: 12px;
 }

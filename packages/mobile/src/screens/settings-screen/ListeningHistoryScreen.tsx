@@ -3,23 +3,23 @@ import { useCallback } from 'react'
 import type { ID, UID } from '@/common'
 import { Status, Name, PlaybackSource } from '@/common'
 import { makeGetTableMetadatas } from '-client/src/common/store/lineup/selectors'
-import { tracksActions } from '-client/src/common/store/pages/history-page/lineups/tracks/actions'
-import { getHistoryTracksLineup } from '-client/src/common/store/pages/history-page/selectors'
+import { agreementsActions } from '-client/src/common/store/pages/history-page/lineups/agreements/actions'
+import { getHistoryAgreementsLineup } from '-client/src/common/store/pages/history-page/selectors'
 import { useSelector } from 'react-redux'
 
 import { Screen, Tile, VirtualizedScrollView } from 'app/components/core'
-import { TrackList } from 'app/components/track-list'
+import { AgreementList } from 'app/components/agreement-list'
 import { WithLoader } from 'app/components/with-loader/WithLoader'
 import { useDispatchWeb } from 'app/hooks/useDispatchWeb'
 import { useSelectorWeb } from 'app/hooks/useSelectorWeb'
 import { getPlaying, getPlayingUid } from 'app/store/live/selectors'
 import { makeStyles } from 'app/styles'
-import { make, track } from 'app/utils/analytics'
+import { make, agreement } from 'app/utils/analytics'
 
 const messages = {
   title: 'Listening History'
 }
-const getTracks = makeGetTableMetadatas(getHistoryTracksLineup)
+const getAgreements = makeGetTableMetadatas(getHistoryAgreementsLineup)
 
 const useStyles = makeStyles(({ palette, spacing }) => ({
   container: {
@@ -27,7 +27,7 @@ const useStyles = makeStyles(({ palette, spacing }) => ({
     marginHorizontal: spacing(3),
     borderRadius: 6
   },
-  trackListContainer: {
+  agreementListContainer: {
     backgroundColor: palette.white,
     borderRadius: 6,
     overflow: 'hidden'
@@ -39,16 +39,16 @@ export const ListeningHistoryScreen = () => {
   const dispatchWeb = useDispatchWeb()
   const isPlaying = useSelector(getPlaying)
   const playingUid = useSelector(getPlayingUid)
-  const historyTracks = useSelectorWeb(getTracks)
+  const historyAgreements = useSelectorWeb(getAgreements)
 
-  const status = historyTracks.status
+  const status = historyAgreements.status
 
   const togglePlay = useCallback(
     (uid: UID, id: ID) => {
-      const isTrackPlaying = uid === playingUid && isPlaying
-      if (!isTrackPlaying) {
-        dispatchWeb(tracksActions.play(uid))
-        track(
+      const isAgreementPlaying = uid === playingUid && isPlaying
+      if (!isAgreementPlaying) {
+        dispatchWeb(agreementsActions.play(uid))
+        agreement(
           make({
             eventName: Name.PLAYBACK_PLAY,
             id: `${id}`,
@@ -56,8 +56,8 @@ export const ListeningHistoryScreen = () => {
           })
         )
       } else {
-        dispatchWeb(tracksActions.pause())
-        track(
+        dispatchWeb(agreementsActions.pause())
+        agreement(
           make({
             eventName: Name.PLAYBACK_PAUSE,
             id: `${id}`,
@@ -76,14 +76,14 @@ export const ListeningHistoryScreen = () => {
           <Tile
             styles={{
               root: styles.container,
-              tile: styles.trackListContainer
+              tile: styles.agreementListContainer
             }}
           >
-            <TrackList
-              tracks={historyTracks.entries}
+            <AgreementList
+              agreements={historyAgreements.entries}
               showDivider
               togglePlay={togglePlay}
-              trackItemAction='overflow'
+              agreementItemAction='overflow'
             />
           </Tile>
         </VirtualizedScrollView>

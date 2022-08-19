@@ -1,5 +1,5 @@
 import type { ID, Nullable } from '@/common'
-import type { getTracks } from 'common/store/ui/createPlaylistModal/selectors'
+import type { getAgreements } from 'common/store/ui/createPlaylistModal/selectors'
 
 export type Image = {
   height?: number
@@ -15,12 +15,12 @@ export type PlaylistValues = {
   playlist_name: string
   description: Nullable<string>
   artwork: Image
-  tracks: ReturnType<typeof getTracks>
-  track_ids: {
+  agreements: ReturnType<typeof getAgreements>
+  agreement_ids: {
     time: number
-    track: ID
+    agreement: ID
   }[]
-  removedTracks: { trackId: ID; timestamp: number }[]
+  removedAgreements: { agreementId: ID; timestamp: number }[]
 }
 
 export type UpdatedPlaylist = Omit<PlaylistValues, 'cover_art'> & {

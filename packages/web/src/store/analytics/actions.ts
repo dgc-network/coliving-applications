@@ -1,11 +1,11 @@
 import { useCallback } from 'react'
 
-import { Name, AllTrackingEvents } from '@coliving/common'
+import { Name, AllAgreementingEvents } from '@coliving/common'
 import { useDispatch as useDispatchRedux } from 'react-redux'
 
 /** UI EVENTS */
 export const IDENTIFY = 'ANALYTICS/IDENTIFY'
-export const TRACK = 'ANALYTICS/TRACK'
+export const AGREEMENT = 'ANALYTICS/AGREEMENT'
 
 export const identify = (handle: string, traits?: Record<string, any>) => ({
   type: IDENTIFY,
@@ -18,21 +18,21 @@ export const make = <U extends Name, T>(
   m: T
 ): {
   eventName: U
-  type: typeof TRACK
+  type: typeof AGREEMENT
 } & T => ({
-  type: TRACK,
+  type: AGREEMENT,
   eventName,
   ...m
 })
 
-export type TrackEvent = AllTrackingEvents & {
-  type: typeof TRACK
+export type AgreementEvent = AllAgreementingEvents & {
+  type: typeof AGREEMENT
   callback?: () => void
   options?: Record<string, any>
 }
 
 export const useRecord = () => {
   const dispatch = useDispatchRedux()
-  const record = useCallback((event: TrackEvent) => dispatch(event), [dispatch])
+  const record = useCallback((event: AgreementEvent) => dispatch(event), [dispatch])
   return record
 }

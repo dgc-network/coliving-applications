@@ -30,7 +30,7 @@ import { MessageType } from 'app/message/types'
 import * as lifecycleActions from 'app/store/lifecycle/actions'
 import { getOnSignUp } from 'app/store/lifecycle/selectors'
 import { EventNames } from 'app/types/analytics'
-import { track, make } from 'app/utils/analytics'
+import { agreement, make } from 'app/utils/analytics'
 import { useThemeColors } from 'app/utils/theme'
 
 import SignupHeader from './SignupHeader'
@@ -433,7 +433,7 @@ const CreatePassword = ({ navigation, route }: CreatePasswordProps) => {
           Keyboard.dismiss()
           setisWorking(true)
           setOnSignOn()
-          track(
+          agreement(
             make({
               eventName: EventNames.CREATE_ACCOUNT_COMPLETE_PASSWORD,
               emailAddress: route.params.email

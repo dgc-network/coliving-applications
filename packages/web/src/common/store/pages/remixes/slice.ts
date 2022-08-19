@@ -4,16 +4,16 @@ import { combineReducers } from 'redux'
 
 import { asLineup } from 'common/store/lineup/reducer'
 
-import { PREFIX as remixesTracksPrefix } from './lineup/actions'
-import remixesTracksReducer from './lineup/reducer'
+import { PREFIX as remixesAgreementsPrefix } from './lineup/actions'
+import remixesAgreementsReducer from './lineup/reducer'
 
 type State = {
-  trackId: ID | null
+  agreementId: ID | null
   count: number | null
 }
 
 const initialState: State = {
-  trackId: null,
+  agreementId: null,
   count: null
 }
 
@@ -22,15 +22,15 @@ const slice = createSlice({
   initialState,
   reducers: {
     reset: (state) => {
-      state.trackId = null
+      state.agreementId = null
     },
-    fetchTrack: (
+    fetchAgreement: (
       state,
       action: PayloadAction<{ handle: string; slug: string }>
     ) => {},
-    fetchTrackSucceeded: (state, action: PayloadAction<{ trackId: ID }>) => {
-      const { trackId } = action.payload
-      state.trackId = trackId
+    fetchAgreementSucceeded: (state, action: PayloadAction<{ agreementId: ID }>) => {
+      const { agreementId } = action.payload
+      state.agreementId = agreementId
     },
     setCount: (state, action: PayloadAction<{ count: number }>) => {
       const { count } = action.payload
@@ -39,12 +39,12 @@ const slice = createSlice({
   }
 })
 
-const remixesLineupReducer = asLineup(remixesTracksPrefix, remixesTracksReducer)
+const remixesLineupReducer = asLineup(remixesAgreementsPrefix, remixesAgreementsReducer)
 
-export const { reset, setCount, fetchTrack, fetchTrackSucceeded } =
+export const { reset, setCount, fetchAgreement, fetchAgreementSucceeded } =
   slice.actions
 
 export default combineReducers({
   page: slice.reducer,
-  tracks: remixesLineupReducer
+  agreements: remixesLineupReducer
 })

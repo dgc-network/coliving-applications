@@ -9,13 +9,13 @@ const messages = {
   you: 'You',
   haveNot: "haven't",
   hasNot: "hasn't",
-  tracks: 'created any tracks yet',
+  agreements: 'created any agreements yet',
   albums: 'created any albums yet',
   playlists: 'created any playlists yet',
   reposts: 'reposted anything yet'
 }
 
-type Tab = 'tracks' | 'albums' | 'playlists' | 'reposts'
+type Tab = 'agreements' | 'albums' | 'playlists' | 'reposts'
 
 export const useEmptyProfileText = (tab: Tab) => {
   const { user_id, name } = useSelectProfile(['user_id', 'name'])

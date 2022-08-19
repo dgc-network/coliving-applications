@@ -1,48 +1,48 @@
-export const EDIT_TRACK = 'CACHE/TRACKS/EDIT_TRACK'
-export const EDIT_TRACK_SUCCEEDED = 'CACHE/TRACKS/EDIT_TRACK_SUCCEEDED'
-export const EDIT_TRACK_FAILED = 'CACHE/TRACKS/EDIT_TRACK_FAILED'
+export const EDIT_AGREEMENT = 'CACHE/AGREEMENTS/EDIT_AGREEMENT'
+export const EDIT_AGREEMENT_SUCCEEDED = 'CACHE/AGREEMENTS/EDIT_AGREEMENT_SUCCEEDED'
+export const EDIT_AGREEMENT_FAILED = 'CACHE/AGREEMENTS/EDIT_AGREEMENT_FAILED'
 
-export const DELETE_TRACK = 'CACHE/TRACKS/DELETE_TRACK'
-export const DELETE_TRACK_SUCCEEDED = 'CACHE/TRACKS/DELETE_TRACK_SUCCEEDED'
-export const DELETE_TRACK_FAILED = 'CACHE/TRACKS/DELETE_TRACK_FAILED'
+export const DELETE_AGREEMENT = 'CACHE/AGREEMENTS/DELETE_AGREEMENT'
+export const DELETE_AGREEMENT_SUCCEEDED = 'CACHE/AGREEMENTS/DELETE_AGREEMENT_SUCCEEDED'
+export const DELETE_AGREEMENT_FAILED = 'CACHE/AGREEMENTS/DELETE_AGREEMENT_FAILED'
 
-export const FETCH_COVER_ART = 'CACHE/TRACKS/FETCH_COVER_ART'
+export const FETCH_COVER_ART = 'CACHE/AGREEMENTS/FETCH_COVER_ART'
 
-export const CHECK_IS_DOWNLOADABLE = 'CACHE/TRACKS/CHECK_IS_DOWNLOADABLE'
+export const CHECK_IS_DOWNLOADABLE = 'CACHE/AGREEMENTS/CHECK_IS_DOWNLOADABLE'
 
-export const SET_PERMALINK_STATUS = 'CACHE/TRACKS/SET_PERMALINK_STATUS'
+export const SET_PERMALINK_STATUS = 'CACHE/AGREEMENTS/SET_PERMALINK_STATUS'
 
-export function editTrack(trackId, formFields) {
-  return { type: EDIT_TRACK, trackId, formFields }
+export function editAgreement(agreementId, formFields) {
+  return { type: EDIT_AGREEMENT, agreementId, formFields }
 }
 
-export function editTrackSucceeded() {
-  return { type: EDIT_TRACK_SUCCEEDED }
+export function editAgreementSucceeded() {
+  return { type: EDIT_AGREEMENT_SUCCEEDED }
 }
 
-export function editTrackFailed() {
-  return { type: EDIT_TRACK_FAILED }
+export function editAgreementFailed() {
+  return { type: EDIT_AGREEMENT_FAILED }
 }
 
-export function deleteTrack(trackId) {
-  return { type: DELETE_TRACK, trackId }
+export function deleteAgreement(agreementId) {
+  return { type: DELETE_AGREEMENT, agreementId }
 }
 
-export function deleteTrackSucceeded(trackId) {
-  return { type: DELETE_TRACK_SUCCEEDED, trackId }
+export function deleteAgreementSucceeded(agreementId) {
+  return { type: DELETE_AGREEMENT_SUCCEEDED, agreementId }
 }
 
-export function deleteTrackFailed() {
-  return { type: DELETE_TRACK_FAILED }
+export function deleteAgreementFailed() {
+  return { type: DELETE_AGREEMENT_FAILED }
 }
 
-export function fetchCoverArt(trackId, size) {
-  return { type: FETCH_COVER_ART, trackId, size }
+export function fetchCoverArt(agreementId, size) {
+  return { type: FETCH_COVER_ART, agreementId, size }
 }
 
-export const checkIsDownloadable = (trackId) => ({
+export const checkIsDownloadable = (agreementId) => ({
   type: CHECK_IS_DOWNLOADABLE,
-  trackId
+  agreementId
 })
 
 export const setPermalinkStatus = (statuses) => ({

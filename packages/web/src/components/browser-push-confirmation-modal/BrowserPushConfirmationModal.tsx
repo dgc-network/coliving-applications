@@ -35,7 +35,7 @@ const messages = {
   description:
     'Turn on browser notifications to be notified when your favorite artists release new content!',
   reason:
-    'You’ll also be notified whenever someone follows, reposts, or favorites your tracks!',
+    'You’ll also be notified whenever someone follows, reposts, or favorites your agreements!',
   close: 'Maybe Later',
   confirm: 'Enable Browser Notifications!'
 }

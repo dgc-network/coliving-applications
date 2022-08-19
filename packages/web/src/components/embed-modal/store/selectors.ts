@@ -1,7 +1,7 @@
 import { PlayableType } from '@coliving/common'
 
 import { getCollection } from 'common/store/cache/collections/selectors'
-import { getTrack } from 'common/store/cache/tracks/selectors'
+import { getAgreement } from 'common/store/cache/agreements/selectors'
 import { AppState } from 'store/types'
 
 export const getIsOpen = (state: AppState) =>
@@ -13,8 +13,8 @@ export const getMetadata = (state: AppState) => {
   const id = getId(state)
   const kind = getKind(state)
   switch (kind) {
-    case PlayableType.TRACK:
-      return getTrack(state, { id })
+    case PlayableType.AGREEMENT:
+      return getAgreement(state, { id })
     case PlayableType.ALBUM:
     case PlayableType.PLAYLIST:
       return getCollection(state, { id })

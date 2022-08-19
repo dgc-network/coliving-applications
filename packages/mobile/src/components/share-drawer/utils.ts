@@ -3,7 +3,7 @@ import type { ShareModalContent } from '-client/src/common/store/ui/share-modal/
 
 import {
   getCollectionRoute,
-  getTrackRoute,
+  getAgreementRoute,
   getUserRoute
 } from 'app/utils/routes'
 import { getTwitterLink } from 'app/utils/twitter'
@@ -12,9 +12,9 @@ import { messages } from './messages'
 
 export const getContentUrl = (content: ShareModalContent) => {
   switch (content.type) {
-    case 'track': {
-      const { track } = content
-      return getTrackRoute(track, true)
+    case 'agreement': {
+      const { agreement } = content
+      return getAgreementRoute(agreement, true)
     }
     case 'profile': {
       const { profile } = content
@@ -43,12 +43,12 @@ export const getContentUrl = (content: ShareModalContent) => {
 
 export const getTwitterShareText = (content: ShareModalContent) => {
   switch (content.type) {
-    case 'track': {
+    case 'agreement': {
       const {
-        track: { title },
+        agreement: { title },
         artist: { handle }
       } = content
-      return messages.trackShareText(title, handle)
+      return messages.agreementShareText(title, handle)
     }
     case 'profile': {
       const {

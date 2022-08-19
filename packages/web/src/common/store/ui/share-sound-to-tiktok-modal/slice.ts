@@ -25,9 +25,9 @@ const slice = createSlice({
       state.accessToken = action.payload.accessToken
     },
     open: (state, action: PayloadAction<OpenPayload>) => {
-      const { track } = action.payload
+      const { agreement } = action.payload
       state.isAuthenticated = false
-      state.track = track
+      state.agreement = agreement
       state.status = Status.SHARE_UNINITIALIZED
     },
     requestOpen: (state, action: PayloadAction<RequestOpenPayload>) => {},

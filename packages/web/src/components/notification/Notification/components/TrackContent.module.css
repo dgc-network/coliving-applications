@@ -1,4 +1,4 @@
-.trackContent {
+.agreementContent {
   display: inline-flex;
   align-items: center;
   margin-top: 12px;
@@ -9,7 +9,7 @@
   margin-right: 12px;
 }
 
-.trackContentArtwork {
+.agreementContentArtwork {
   height: 42px;
   width: 42px;
   border: 1px solid var(--neutral-light-8);
@@ -17,7 +17,7 @@
   border-radius: 3px;
 }
 
-.trackContentText {
+.agreementContentText {
   color: var(--secondary);
   font-size: var(--font-s);
   font-weight: var(--font-demi-bold);
@@ -25,6 +25,6 @@
   line-height: 21px;
 }
 
-.trackContentText:hover {
+.agreementContentText:hover {
   text-decoration: underline;
 }

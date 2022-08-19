@@ -25,8 +25,8 @@ import { matchPath } from 'react-router-dom'
 import { useModalState } from 'common/hooks/useModalState'
 import { getUser } from 'common/store/cache/users/selectors'
 import {
-  CollectionTrack,
-  TrackRecord
+  CollectionAgreement,
+  AgreementRecord
 } from 'common/store/pages/collection/types'
 import { fetchProfile } from 'common/store/pages/profile/actions'
 import { add, clear, pause, play } from 'common/store/queue/slice'
@@ -34,7 +34,7 @@ import { Source } from 'common/store/queue/types'
 import { setCollectible } from 'common/store/ui/collectible-details/slice'
 import { requestOpen as requestOpenShareModal } from 'common/store/ui/share-modal/slice'
 import { formatSeconds } from 'common/utils/timeUtil'
-import TablePlayButton from 'components/tracks-table/TablePlayButton'
+import TablePlayButton from 'components/agreements-table/TablePlayButton'
 import { LIVE_NFT_PLAYLIST } from 'pages/smart-collection/smartCollections'
 import { getPlaying, makeGetCurrent } from 'store/player/selectors'
 import { getLocationPathname } from 'store/routing/selectors'
@@ -50,7 +50,7 @@ declare global {
   interface HTMLMediaElement {
     webkitAudioDecodedByteCount: number
     mozHasAudio: boolean
-    liveTracks: unknown[]
+    liveAgreements: unknown[]
   }
 }
 
@@ -70,7 +70,7 @@ const hasAudio = (video: HTMLMediaElement) => {
     if (
       video.webkitAudioDecodedByteCount > 0 ||
       video.mozHasAudio ||
-      video.liveTracks?.length
+      video.liveAgreements?.length
     ) {
       return true
     }
@@ -236,7 +236,7 @@ export const CollectiblesPlaylistPageProvider = ({
     }
   }, [dispatch, routeMatch])
 
-  const tracksLoading = !hasFetchedAllCollectibles
+  const agreementsLoading = !hasFetchedAllCollectibles
 
   const isPlayingACollectible = useMemo(
     () =>
@@ -255,13 +255,13 @@ export const CollectiblesPlaylistPageProvider = ({
   const entries = liveCollectibles
     .filter((c) => c)
     .map((collectible) => ({
-      track_id: collectible.id,
+      agreement_id: collectible.id,
       id: collectible.id,
       uid: collectible.id,
       artistId: user?.user_id,
       collectible,
       title: collectible.name,
-      source: Source.COLLECTIBLE_PLAYLIST_TRACKS
+      source: Source.COLLECTIBLE_PLAYLIST_AGREEMENTS
     }))
 
   const onClickRow = (collectible: Collectible, index: number) => {
@@ -280,7 +280,7 @@ export const CollectiblesPlaylistPageProvider = ({
 
   const [, setIsDetailsModalOpen] = useModalState('CollectibleDetails')
 
-  const onClickTrackName = (collectible: Collectible) => {
+  const onClickAgreementName = (collectible: Collectible) => {
     dispatch(
       setCollectible({
         collectible,
@@ -292,7 +292,7 @@ export const CollectiblesPlaylistPageProvider = ({
     setIsDetailsModalOpen(true)
   }
 
-  const onHeroTrackClickArtistName = () => {
+  const onHeroAgreementClickArtistName = () => {
     if (user) dispatch(push(profilePage(user?.handle)))
   }
 
@@ -322,8 +322,8 @@ export const CollectiblesPlaylistPageProvider = ({
   }, [currentPlayerItem])
 
   const formatMetadata = useCallback(
-    (trackMetadatas: CollectionTrack[]): TrackRecord[] => {
-      return trackMetadatas.map((metadata, i) => ({
+    (agreementMetadatas: CollectionAgreement[]): AgreementRecord[] => {
+      return agreementMetadatas.map((metadata, i) => ({
         ...metadata,
         ...metadata.collectible,
         key: `${metadata.collectible?.name}_${metadata.uid}_${i}`,
@@ -339,10 +339,10 @@ export const CollectiblesPlaylistPageProvider = ({
   )
 
   const getFilteredData = useCallback(
-    (trackMetadatas: CollectionTrack[]) => {
+    (agreementMetadatas: CollectionAgreement[]) => {
       const playingUid = getPlayingUid()
       const playingIndex = entries.findIndex(({ uid }) => uid === playingUid)
-      const formattedMetadata = formatMetadata(trackMetadatas)
+      const formattedMetadata = formatMetadata(agreementMetadatas)
       const filteredIndex =
         playingIndex > -1
           ? formattedMetadata.findIndex(
@@ -377,10 +377,10 @@ export const CollectiblesPlaylistPageProvider = ({
       )
     },
     {
-      title: 'Track Name',
+      title: 'Agreement Name',
       dataIndex: 'name',
       key: 'name',
-      className: 'colTrackName',
+      className: 'colAgreementName',
       width: '70%',
       render: (val: string, record: Collectible) => (
         <div
@@ -389,7 +389,7 @@ export const CollectiblesPlaylistPageProvider = ({
           })}
           onClick={(e) => {
             e.stopPropagation()
-            onClickTrackName(record)
+            onClickAgreementName(record)
           }}
         >
           {val}
@@ -416,7 +416,7 @@ export const CollectiblesPlaylistPageProvider = ({
     }
   ]
 
-  const onHeroTrackShare = () => {
+  const onHeroAgreementShare = () => {
     if (user) {
       dispatch(
         requestOpenShareModal({
@@ -433,8 +433,8 @@ export const CollectiblesPlaylistPageProvider = ({
     playlist_name: title,
     description: LIVE_NFT_PLAYLIST.makeDescription?.(user?.name) ?? '',
     playlist_contents: {
-      track_ids: entries.map((entry) => ({
-        track: entry.id
+      agreement_ids: entries.map((entry) => ({
+        agreement: entry.id
       }))
     },
     imageOverride: (firstLoadedCollectible.current?.imageUrl ??
@@ -454,11 +454,11 @@ export const CollectiblesPlaylistPageProvider = ({
     playing,
     type: 'playlist' as const,
     collection: {
-      status: tracksLoading ? Status.LOADING : Status.SUCCESS,
+      status: agreementsLoading ? Status.LOADING : Status.SUCCESS,
       metadata,
       user
     },
-    tracks: {
+    agreements: {
       status: !firstLoadedCollectible.current ? Status.LOADING : Status.SUCCESS,
       entries
     },
@@ -468,10 +468,10 @@ export const CollectiblesPlaylistPageProvider = ({
     isQueued,
 
     onPlay: handlePlayAllClick,
-    onHeroTrackShare,
+    onHeroAgreementShare,
     onClickRow,
-    onClickTrackName,
-    onHeroTrackClickArtistName
+    onClickAgreementName,
+    onHeroAgreementClickArtistName
   }
 
   // @ts-ignore TODO: remove provider pattern

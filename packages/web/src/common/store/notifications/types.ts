@@ -4,7 +4,7 @@ import {
   BadgeTier,
   Collection,
   Status,
-  Track,
+  Agreement,
   User,
   StringWei,
   Nullable
@@ -19,7 +19,7 @@ export enum NotificationType {
   Milestone = 'Milestone',
   RemixCreate = 'RemixCreate',
   RemixCosign = 'RemixCosign',
-  TrendingTrack = 'TrendingTrack',
+  TrendingAgreement = 'TrendingAgreement',
   ChallengeReward = 'ChallengeReward',
   TierChange = 'TierChange',
   Reaction = 'Reaction',
@@ -27,21 +27,21 @@ export enum NotificationType {
   TipSend = 'TipSend',
   SupporterRankUp = 'SupporterRankUp',
   SupportingRankUp = 'SupportingRankUp',
-  AddTrackToPlaylist = 'AddTrackToPlaylist'
+  AddAgreementToPlaylist = 'AddAgreementToPlaylist'
 }
 
 export enum Entity {
-  Track = 'Track',
+  Agreement = 'Agreement',
   Playlist = 'Playlist',
   Album = 'Album',
   User = 'User'
 }
 
-export type TrackEntity = Track & { user: Nullable<User> }
+export type AgreementEntity = Agreement & { user: Nullable<User> }
 
 export type CollectionEntity = Collection & { user: Nullable<User> }
 
-export type EntityType = TrackEntity | CollectionEntity
+export type EntityType = AgreementEntity | CollectionEntity
 
 export type BaseNotification = {
   id: string
@@ -63,7 +63,7 @@ export type UserSubscription = BaseNotification & {
   entityIds: ID[]
 } & (
     | {
-        entityType: Entity.Track
+        entityType: Entity.Agreement
       }
     | {
         entityType: Entity.Playlist | Entity.Album
@@ -79,14 +79,14 @@ export type Repost = BaseNotification & {
   type: NotificationType.Repost
   entityId: ID
   userIds: ID[]
-  entityType: Entity.Playlist | Entity.Album | Entity.Track
+  entityType: Entity.Playlist | Entity.Album | Entity.Agreement
 }
 
 export type Favorite = BaseNotification & {
   type: NotificationType.Favorite
   entityId: ID
   userIds: ID[]
-  entityType: Entity.Playlist | Entity.Album | Entity.Track
+  entityType: Entity.Playlist | Entity.Album | Entity.Agreement
 }
 
 export enum Achievement {
@@ -117,27 +117,27 @@ export type Milestone = BaseNotification &
 export type RemixCreate = BaseNotification & {
   type: NotificationType.RemixCreate
   userId: ID
-  parentTrackId: ID
-  childTrackId: ID
-  entityType: Entity.Track
+  parentAgreementId: ID
+  childAgreementId: ID
+  entityType: Entity.Agreement
   entityIds: ID[]
 }
 
 export type RemixCosign = BaseNotification & {
   type: NotificationType.RemixCosign
   userId: ID
-  parentTrackUserId: ID
-  childTrackId: ID
-  entityType: Entity.Track
+  parentAgreementUserId: ID
+  childAgreementId: ID
+  entityType: Entity.Agreement
   entityIds: ID[]
 }
 
-export type TrendingTrack = BaseNotification & {
-  type: NotificationType.TrendingTrack
+export type TrendingAgreement = BaseNotification & {
+  type: NotificationType.TrendingAgreement
   rank: number
   genre: string
   time: 'week' | 'month' | 'year'
-  entityType: Entity.Track
+  entityType: Entity.Agreement
   entityId: ID
 }
 
@@ -197,9 +197,9 @@ export type SupportingRankUp = BaseNotification & {
   entityType: Entity.User
 }
 
-export type AddTrackToPlaylist = BaseNotification & {
-  type: NotificationType.AddTrackToPlaylist
-  trackId: ID
+export type AddAgreementToPlaylist = BaseNotification & {
+  type: NotificationType.AddAgreementToPlaylist
+  agreementId: ID
   playlistId: ID
   playlistOwnerId: ID
 }
@@ -213,7 +213,7 @@ export type Notification =
   | Milestone
   | RemixCreate
   | RemixCosign
-  | TrendingTrack
+  | TrendingAgreement
   | ChallengeReward
   | TierChange
   | Reaction
@@ -221,7 +221,7 @@ export type Notification =
   | TipSend
   | SupporterRankUp
   | SupportingRankUp
-  | AddTrackToPlaylist
+  | AddAgreementToPlaylist
 
 export default interface NotificationState {
   notifications: {

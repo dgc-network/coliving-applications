@@ -15,7 +15,7 @@ import { getAccountUser, getUserId } from 'common/store/account/selectors'
 import * as cacheActions from 'common/store/cache/actions'
 import * as collectionActions from 'common/store/cache/collections/actions'
 import { getCollection } from 'common/store/cache/collections/selectors'
-import { getTrack } from 'common/store/cache/tracks/selectors'
+import { getAgreement } from 'common/store/cache/agreements/selectors'
 import { fetchUsers } from 'common/store/cache/users/sagas'
 import { getUser } from 'common/store/cache/users/selectors'
 import { squashNewLines } from 'common/utils/formatUtil'
@@ -29,7 +29,7 @@ import { confirmTransaction } from 'store/confirmer/sagas'
 import { dataURLtoFile } from 'utils/fileUtils'
 import { getCreatorNodeIPFSGateways } from 'utils/gatewayUtil'
 
-import watchTrackErrors from './errorSagas'
+import watchAgreementErrors from './errorSagas'
 import { PlaylistOperations } from './types'
 import { reformat } from './utils'
 import {
@@ -37,12 +37,12 @@ import {
   retrieveCollections
 } from './utils/retrieveCollections'
 
-/** Counts instances of trackId in a playlist. */
-const countTrackIds = (playlistContents, trackId) => {
-  return playlistContents.track_ids
-    .map((t) => t.track)
+/** Counts instances of agreementId in a playlist. */
+const countAgreementIds = (playlistContents, agreementId) => {
+  return playlistContents.agreement_ids
+    .map((t) => t.agreement)
     .reduce((acc, t) => {
-      if (t === trackId) acc += 1
+      if (t === agreementId) acc += 1
       return acc
     }, 0)
 }
@@ -54,11 +54,11 @@ function* watchCreatePlaylist() {
 }
 
 function* createPlaylistAsync(action) {
-  // Potentially grab artwork from the initializing track.
-  if (action.initTrackId) {
-    const track = yield select(getTrack, { id: action.initTrackId })
-    action.formFields._cover_art_sizes = track._cover_art_sizes
-    action.formFields.cover_art_sizes = track.cover_art_sizes
+  // Potentially grab artwork from the initializing agreement.
+  if (action.initAgreementId) {
+    const agreement = yield select(getAgreement, { id: action.initAgreementId })
+    action.formFields._cover_art_sizes = agreement._cover_art_sizes
+    action.formFields.cover_art_sizes = agreement.cover_art_sizes
   }
 
   yield call(waitForBackendSetup)
@@ -93,7 +93,7 @@ function* createPlaylistAsync(action) {
   playlist.playlist_id = uid
   playlist.playlist_owner_id = userId
   playlist.is_private = true
-  playlist.playlist_contents = { track_ids: [] }
+  playlist.playlist_contents = { agreement_ids: [] }
   if (playlist.artwork) {
     playlist._cover_art_sizes = {
       ...playlist._cover_art_sizes,
@@ -363,16 +363,16 @@ function* confirmEditPlaylist(playlistId, userId, formFields) {
   )
 }
 
-/** ADD TRACK TO PLAYLIST */
+/** ADD AGREEMENT TO PLAYLIST */
 
-function* watchAddTrackToPlaylist() {
+function* watchAddAgreementToPlaylist() {
   yield takeEvery(
-    collectionActions.ADD_TRACK_TO_PLAYLIST,
-    addTrackToPlaylistAsync
+    collectionActions.ADD_AGREEMENT_TO_PLAYLIST,
+    addAgreementToPlaylistAsync
   )
 }
 
-function* addTrackToPlaylistAsync(action) {
+function* addAgreementToPlaylistAsync(action) {
   yield call(waitForBackendSetup)
   const userId = yield select(getUserId)
   if (!userId) {
@@ -380,7 +380,7 @@ function* addTrackToPlaylistAsync(action) {
     return
   }
 
-  // Retrieve tracks with the the collection so we confirm with the
+  // Retrieve agreements with the the collection so we confirm with the
   // most up-to-date information.
   const { collections } = yield call(
     retrieveCollections,
@@ -390,31 +390,31 @@ function* addTrackToPlaylistAsync(action) {
   )
   const playlist = collections[action.playlistId]
 
-  const trackUid = makeUid(
-    Kind.TRACKS,
-    action.trackId,
+  const agreementUid = makeUid(
+    Kind.AGREEMENTS,
+    action.agreementId,
     `collection:${action.playlistId}`
   )
   playlist.playlist_contents = {
-    track_ids: playlist.playlist_contents.track_ids.concat({
-      track: action.trackId,
+    agreement_ids: playlist.playlist_contents.agreement_ids.concat({
+      agreement: action.agreementId,
       time: Math.round(Date.now() / 1000),
-      uid: trackUid
+      uid: agreementUid
     })
   }
-  const count = countTrackIds(playlist.playlist_contents, action.trackId)
+  const count = countAgreementIds(playlist.playlist_contents, action.agreementId)
 
   const event = make(Name.PLAYLIST_ADD, {
-    trackId: action.trackId,
+    agreementId: action.agreementId,
     playlistId: action.playlistId
   })
   yield put(event)
 
   yield call(
-    confirmAddTrackToPlaylist,
+    confirmAddAgreementToPlaylist,
     userId,
     action.playlistId,
-    action.trackId,
+    action.agreementId,
     count
   )
   yield put(
@@ -428,26 +428,26 @@ function* addTrackToPlaylistAsync(action) {
     ])
   )
   yield put(
-    cacheActions.subscribe(Kind.TRACKS, [{ uid: trackUid, id: action.trackId }])
+    cacheActions.subscribe(Kind.AGREEMENTS, [{ uid: agreementUid, id: action.agreementId }])
   )
 }
 
-function* confirmAddTrackToPlaylist(userId, playlistId, trackId, count) {
+function* confirmAddAgreementToPlaylist(userId, playlistId, agreementId, count) {
   yield put(
     confirmerActions.requestConfirmation(
       makeKindId(Kind.COLLECTIONS, playlistId),
       function* (confirmedPlaylistId) {
         const { blockHash, blockNumber, error } = yield call(
-          ColivingBackend.addPlaylistTrack,
+          ColivingBackend.addPlaylistAgreement,
           confirmedPlaylistId,
-          trackId
+          agreementId
         )
         if (error) throw error
 
         const confirmed = yield call(confirmTransaction, blockHash, blockNumber)
         if (!confirmed) {
           throw new Error(
-            `Could not confirm add playlist track for playlist id ${playlistId} and track id ${trackId}`
+            `Could not confirm add playlist agreement for playlist id ${playlistId} and agreement id ${agreementId}`
           )
         }
         return confirmedPlaylistId
@@ -460,29 +460,29 @@ function* confirmAddTrackToPlaylist(userId, playlistId, trackId, count) {
 
         const playlist = yield select(getCollection, { id: playlistId })
 
-        /** Since "add track" calls are parallelized, tracks may be added
-         * out of order. Here we check if tracks made it in the intended order;
+        /** Since "add agreement" calls are parallelized, agreements may be added
+         * out of order. Here we check if agreements made it in the intended order;
          * if not, we reorder them into the correct order.
          */
-        const numberOfTracksMatch =
-          confirmedPlaylist.playlist_contents.track_ids.length ===
-          playlist.playlist_contents.track_ids.length
+        const numberOfAgreementsMatch =
+          confirmedPlaylist.playlist_contents.agreement_ids.length ===
+          playlist.playlist_contents.agreement_ids.length
 
-        const confirmedPlaylistHasTracks =
-          confirmedPlaylist.playlist_contents.track_ids.length > 0
+        const confirmedPlaylistHasAgreements =
+          confirmedPlaylist.playlist_contents.agreement_ids.length > 0
 
-        if (numberOfTracksMatch && confirmedPlaylistHasTracks) {
-          const confirmedPlaylistTracks =
-            confirmedPlaylist.playlist_contents.track_ids.map((t) => t.track)
-          const cachedPlaylistTracks = playlist.playlist_contents.track_ids.map(
-            (t) => t.track
+        if (numberOfAgreementsMatch && confirmedPlaylistHasAgreements) {
+          const confirmedPlaylistAgreements =
+            confirmedPlaylist.playlist_contents.agreement_ids.map((t) => t.agreement)
+          const cachedPlaylistAgreements = playlist.playlist_contents.agreement_ids.map(
+            (t) => t.agreement
           )
-          if (!isEqual(confirmedPlaylistTracks, cachedPlaylistTracks)) {
+          if (!isEqual(confirmedPlaylistAgreements, cachedPlaylistAgreements)) {
             yield call(
               confirmOrderPlaylist,
               userId,
               playlistId,
-              cachedPlaylistTracks
+              cachedPlaylistAgreements
             )
           } else {
             yield put(
@@ -499,9 +499,9 @@ function* confirmAddTrackToPlaylist(userId, playlistId, trackId, count) {
       function* ({ error, timeout, message }) {
         // Fail Call
         yield put(
-          collectionActions.addTrackToPlaylistFailed(
+          collectionActions.addAgreementToPlaylistFailed(
             message,
-            { userId, playlistId, trackId, count },
+            { userId, playlistId, agreementId, count },
             { error, timeout }
           )
         )
@@ -509,7 +509,7 @@ function* confirmAddTrackToPlaylist(userId, playlistId, trackId, count) {
       (result) => (result.playlist_id ? result.playlist_id : playlistId),
       undefined,
       {
-        operationId: PlaylistOperations.ADD_TRACK,
+        operationId: PlaylistOperations.ADD_AGREEMENT,
         parallelizable: true,
         useOnlyLastSuccessCall: true
       }
@@ -517,16 +517,16 @@ function* confirmAddTrackToPlaylist(userId, playlistId, trackId, count) {
   )
 }
 
-/** REMOVE TRACK FROM PLAYLIST */
+/** REMOVE AGREEMENT FROM PLAYLIST */
 
-function* watchRemoveTrackFromPlaylist() {
+function* watchRemoveAgreementFromPlaylist() {
   yield takeEvery(
-    collectionActions.REMOVE_TRACK_FROM_PLAYLIST,
-    removeTrackFromPlaylistAsync
+    collectionActions.REMOVE_AGREEMENT_FROM_PLAYLIST,
+    removeAgreementFromPlaylistAsync
   )
 }
 
-function* removeTrackFromPlaylistAsync(action) {
+function* removeAgreementFromPlaylistAsync(action) {
   yield call(waitForBackendSetup)
   const userId = yield select(getUserId)
   if (!userId) {
@@ -536,25 +536,25 @@ function* removeTrackFromPlaylistAsync(action) {
 
   const playlist = yield select(getCollection, { id: action.playlistId })
 
-  // Find the index of the track based on the track's id and timestamp
-  const index = playlist.playlist_contents.track_ids.findIndex(
-    (t) => t.time === action.timestamp && t.track === action.trackId
+  // Find the index of the agreement based on the agreement's id and timestamp
+  const index = playlist.playlist_contents.agreement_ids.findIndex(
+    (t) => t.time === action.timestamp && t.agreement === action.agreementId
   )
   if (index === -1) {
-    console.error('Could not find the index of to-be-deleted track')
+    console.error('Could not find the index of to-be-deleted agreement')
     return
   }
 
-  const track = playlist.playlist_contents.track_ids[index]
-  playlist.playlist_contents.track_ids.splice(index, 1)
-  const count = countTrackIds(playlist.playlist_contents, action.trackId)
+  const agreement = playlist.playlist_contents.agreement_ids[index]
+  playlist.playlist_contents.agreement_ids.splice(index, 1)
+  const count = countAgreementIds(playlist.playlist_contents, action.agreementId)
 
   yield call(
-    confirmRemoveTrackFromPlaylist,
+    confirmRemoveAgreementFromPlaylist,
     userId,
     action.playlistId,
-    action.trackId,
-    track.time,
+    action.agreementId,
+    agreement.time,
     count
   )
   yield put(
@@ -569,20 +569,20 @@ function* removeTrackFromPlaylistAsync(action) {
   )
 }
 
-// Removes the invalid track ids from the playlist by calling `dangerouslySetPlaylistOrder`
-function* fixInvalidTracksInPlaylist(playlistId, userId, invalidTrackIds) {
+// Removes the invalid agreement ids from the playlist by calling `dangerouslySetPlaylistOrder`
+function* fixInvalidAgreementsInPlaylist(playlistId, userId, invalidAgreementIds) {
   yield call(waitForBackendSetup)
-  const removedTrackIds = new Set(invalidTrackIds)
+  const removedAgreementIds = new Set(invalidAgreementIds)
 
   const playlist = yield select(getCollection, { id: playlistId })
 
-  const trackIds = playlist.playlist_contents.track_ids
-    .map(({ track }) => track)
-    .filter((id) => !removedTrackIds.has(id))
+  const agreementIds = playlist.playlist_contents.agreement_ids
+    .map(({ agreement }) => agreement)
+    .filter((id) => !removedAgreementIds.has(id))
   const { error } = yield call(
     ColivingBackend.dangerouslySetPlaylistOrder,
     playlistId,
-    trackIds
+    agreementIds
   )
   if (error) throw error
 
@@ -594,10 +594,10 @@ function* fixInvalidTracksInPlaylist(playlistId, userId, invalidTrackIds) {
   return playlists[0]
 }
 
-function* confirmRemoveTrackFromPlaylist(
+function* confirmRemoveAgreementFromPlaylist(
   userId,
   playlistId,
-  trackId,
+  agreementId,
   timestamp,
   count
 ) {
@@ -605,40 +605,40 @@ function* confirmRemoveTrackFromPlaylist(
     confirmerActions.requestConfirmation(
       makeKindId(Kind.COLLECTIONS, playlistId),
       function* (confirmedPlaylistId) {
-        // NOTE: In an attempt to fix playlists in a corrupted state, only attempt the delete playlist track once,
-        // if it fails, check if the playlist is in a corrupted state and if so fix it before re-attempting to delete track from playlist
+        // NOTE: In an attempt to fix playlists in a corrupted state, only attempt the delete playlist agreement once,
+        // if it fails, check if the playlist is in a corrupted state and if so fix it before re-attempting to delete agreement from playlist
         let { blockHash, blockNumber, error } = yield call(
-          ColivingBackend.deletePlaylistTrack,
+          ColivingBackend.deletePlaylistAgreement,
           confirmedPlaylistId,
-          trackId,
+          agreementId,
           timestamp,
           0
         )
         if (error) {
           const {
-            error: tracksInPlaylistError,
+            error: agreementsInPlaylistError,
             isValid,
-            invalidTrackIds
+            invalidAgreementIds
           } = yield call(
-            ColivingBackend.validateTracksInPlaylist,
+            ColivingBackend.validateAgreementsInPlaylist,
             confirmedPlaylistId
           )
-          if (tracksInPlaylistError) throw tracksInPlaylistError
+          if (agreementsInPlaylistError) throw agreementsInPlaylistError
           if (!isValid) {
             const updatedPlaylist = yield call(
-              fixInvalidTracksInPlaylist,
+              fixInvalidAgreementsInPlaylist,
               confirmedPlaylistId,
               userId,
-              invalidTrackIds
+              invalidAgreementIds
             )
-            const isTrackRemoved =
-              countTrackIds(updatedPlaylist.playlist_contents, trackId) <= count
-            if (isTrackRemoved) return updatedPlaylist
+            const isAgreementRemoved =
+              countAgreementIds(updatedPlaylist.playlist_contents, agreementId) <= count
+            if (isAgreementRemoved) return updatedPlaylist
           }
           const response = yield call(
-            ColivingBackend.deletePlaylistTrack,
+            ColivingBackend.deletePlaylistAgreement,
             confirmedPlaylistId,
-            trackId,
+            agreementId,
             timestamp
           )
           if (response.error) throw response.error
@@ -650,7 +650,7 @@ function* confirmRemoveTrackFromPlaylist(
         const confirmed = yield call(confirmTransaction, blockHash, blockNumber)
         if (!confirmed) {
           throw new Error(
-            `Could not confirm remove playlist track for playlist id ${playlistId} and track id ${trackId}`
+            `Could not confirm remove playlist agreement for playlist id ${playlistId} and agreement id ${agreementId}`
           )
         }
         return confirmedPlaylistId
@@ -672,9 +672,9 @@ function* confirmRemoveTrackFromPlaylist(
       function* ({ error, timeout, message }) {
         // Fail Call
         yield put(
-          collectionActions.removeTrackFromPlaylistFailed(
+          collectionActions.removeAgreementFromPlaylistFailed(
             message,
-            { userId, playlistId, trackId, timestamp, count },
+            { userId, playlistId, agreementId, timestamp, count },
             { error, timeout }
           )
         )
@@ -682,7 +682,7 @@ function* confirmRemoveTrackFromPlaylist(
       (result) => (result.playlist_id ? result.playlist_id : playlistId),
       undefined,
       {
-        operationId: PlaylistOperations.REMOVE_TRACK,
+        operationId: PlaylistOperations.REMOVE_AGREEMENT,
         parallelizable: true,
         useOnlyLastSuccessCall: true
       }
@@ -706,19 +706,19 @@ function* orderPlaylistAsync(action) {
 
   const playlist = yield select(getCollection, { id: action.playlistId })
 
-  const trackIds = []
+  const agreementIds = []
   const updatedPlaylist = {
     ...playlist,
     playlist_contents: {
       ...playlist.playlist_contents,
-      track_ids: action.trackIdsAndTimes.map(({ id, time }) => {
-        trackIds.push(id)
-        return { track: id, time }
+      agreement_ids: action.agreementIdsAndTimes.map(({ id, time }) => {
+        agreementIds.push(id)
+        return { agreement: id, time }
       })
     }
   }
 
-  yield call(confirmOrderPlaylist, userId, action.playlistId, trackIds)
+  yield call(confirmOrderPlaylist, userId, action.playlistId, agreementIds)
   yield put(
     cacheActions.update(Kind.COLLECTIONS, [
       {
@@ -729,39 +729,39 @@ function* orderPlaylistAsync(action) {
   )
 }
 
-function* confirmOrderPlaylist(userId, playlistId, trackIds) {
+function* confirmOrderPlaylist(userId, playlistId, agreementIds) {
   yield put(
     confirmerActions.requestConfirmation(
       makeKindId(Kind.COLLECTIONS, playlistId),
       function* (confirmedPlaylistId) {
-        // NOTE: In an attempt to fix playlists in a corrupted state, only attempt the order playlist tracks once,
+        // NOTE: In an attempt to fix playlists in a corrupted state, only attempt the order playlist agreements once,
         // if it fails, check if the playlist is in a corrupted state and if so fix it before re-attempting to order playlist
         let { blockHash, blockNumber, error } = yield call(
           ColivingBackend.orderPlaylist,
           confirmedPlaylistId,
-          trackIds,
+          agreementIds,
           0
         )
         if (error) {
-          const { error, isValid, invalidTrackIds } = yield call(
-            ColivingBackend.validateTracksInPlaylist,
+          const { error, isValid, invalidAgreementIds } = yield call(
+            ColivingBackend.validateAgreementsInPlaylist,
             confirmedPlaylistId
           )
           if (error) throw error
           if (!isValid) {
             yield call(
-              fixInvalidTracksInPlaylist,
+              fixInvalidAgreementsInPlaylist,
               confirmedPlaylistId,
               userId,
-              invalidTrackIds
+              invalidAgreementIds
             )
-            const invalidIds = new Set(invalidTrackIds)
-            trackIds = trackIds.filter((id) => !invalidIds.has(id))
+            const invalidIds = new Set(invalidAgreementIds)
+            agreementIds = agreementIds.filter((id) => !invalidIds.has(id))
           }
           const response = yield call(
             ColivingBackend.orderPlaylist,
             confirmedPlaylistId,
-            trackIds
+            agreementIds
           )
           if (response.error) {
             throw response.error
@@ -800,7 +800,7 @@ function* confirmOrderPlaylist(userId, playlistId, trackIds) {
         yield put(
           collectionActions.orderPlaylistFailed(
             message,
-            { userId, playlistId, trackIds },
+            { userId, playlistId, agreementIds },
             { error, timeout }
           )
         )
@@ -906,18 +906,18 @@ function* deletePlaylistAsync(action) {
   }
 
   // Depending on whether the collection is an album
-  // or playlist, we should either delete all the tracks
+  // or playlist, we should either delete all the agreements
   // or just delete the collection.
   const collection = yield select(getCollection, { id: action.playlistId })
   if (!collection) return
 
   const isAlbum = collection.is_album
   if (isAlbum) {
-    const trackIds = collection.playlist_contents.track_ids
+    const agreementIds = collection.playlist_contents.agreement_ids
 
     const event = make(Name.DELETE, { kind: 'album', id: action.playlistId })
     yield put(event)
-    yield call(confirmDeleteAlbum, action.playlistId, trackIds, userId)
+    yield call(confirmDeleteAlbum, action.playlistId, agreementIds, userId)
   } else {
     const event = make(Name.DELETE, { kind: 'playlist', id: action.playlistId })
     yield put(event)
@@ -953,7 +953,7 @@ function* deletePlaylistAsync(action) {
   )
 }
 
-function* confirmDeleteAlbum(playlistId, trackIds, userId) {
+function* confirmDeleteAlbum(playlistId, agreementIds, userId) {
   yield put(
     confirmerActions.requestConfirmation(
       makeKindId(Kind.COLLECTIONS, playlistId),
@@ -975,9 +975,9 @@ function* confirmDeleteAlbum(playlistId, trackIds, userId) {
           ),
           put(
             cacheActions.update(
-              Kind.TRACKS,
-              trackIds.map((t) => ({
-                id: t.track,
+              Kind.AGREEMENTS,
+              agreementIds.map((t) => ({
+                id: t.agreement,
                 metadata: { _marked_deleted: true }
               }))
             )
@@ -990,7 +990,7 @@ function* confirmDeleteAlbum(playlistId, trackIds, userId) {
         const { blockHash, blockNumber, error } = yield call(
           ColivingBackend.deleteAlbum,
           playlistId,
-          trackIds
+          agreementIds
         )
         if (error) throw error
 
@@ -1022,9 +1022,9 @@ function* confirmDeleteAlbum(playlistId, trackIds, userId) {
           ),
           put(
             cacheActions.update(
-              Kind.TRACKS,
-              trackIds.map((t) => ({
-                id: t.track,
+              Kind.AGREEMENTS,
+              agreementIds.map((t) => ({
+                id: t.agreement,
                 metadata: { _marked_deleted: false }
               }))
             )
@@ -1041,7 +1041,7 @@ function* confirmDeleteAlbum(playlistId, trackIds, userId) {
         yield put(
           collectionActions.deletePlaylistFailed(
             message,
-            { playlistId, trackIds, userId },
+            { playlistId, agreementIds, userId },
             { error, timeout }
           )
         )
@@ -1079,7 +1079,7 @@ function* confirmDeletePlaylist(userId, playlistId) {
         const confirmed = yield call(confirmTransaction, blockHash, blockNumber)
         if (!confirmed) {
           throw new Error(
-            `Could not confirm delete playlist track for playlist id ${playlistId}`
+            `Could not confirm delete playlist agreement for playlist id ${playlistId}`
           )
         }
         return confirmedPlaylistId
@@ -1227,12 +1227,12 @@ export default function sagas() {
     watchAdd,
     watchCreatePlaylist,
     watchEditPlaylist,
-    watchAddTrackToPlaylist,
-    watchRemoveTrackFromPlaylist,
+    watchAddAgreementToPlaylist,
+    watchRemoveAgreementFromPlaylist,
     watchOrderPlaylist,
     watchPublishPlaylist,
     watchDeletePlaylist,
     watchFetchCoverArt,
-    watchTrackErrors
+    watchAgreementErrors
   ]
 }

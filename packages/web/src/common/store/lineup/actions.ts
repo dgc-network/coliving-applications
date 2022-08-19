@@ -1,4 +1,4 @@
-import { ID, UID, TrackMetadata } from '@coliving/common'
+import { ID, UID, AgreementMetadata } from '@coliving/common'
 
 export const FETCH_LINEUP_METADATAS = 'FETCH_LINEUP_METADATAS'
 export const FETCH_LINEUP_METADATAS_REQUESTED =
@@ -7,16 +7,16 @@ export const FETCH_LINEUP_METADATAS_SUCCEEDED =
   'FETCH_LINEUP_METADATAS_SUCCEEDED'
 export const FETCH_LINEUP_METADATAS_FAILED = 'FETCH_LINEUP_METADATAS_FAILED'
 
-export const FETCH_TRACKS_METADATAS = 'FETCH_TRACKS_METADATAS'
-export const FETCH_TRACKS_METADATAS_REQUESTED =
-  'FETCH_TRACKS_METADATAS_REQUESTED'
-export const FETCH_TRACKS_METADATAS_SUCCEEDED =
-  'FETCH_TRACKS_METADATAS_SUCCEEDED'
-export const FETCH_TRACKS_METADATAS_FAILED = 'FETCH_TRACKS_METADATAS_FAILED'
+export const FETCH_AGREEMENTS_METADATAS = 'FETCH_AGREEMENTS_METADATAS'
+export const FETCH_AGREEMENTS_METADATAS_REQUESTED =
+  'FETCH_AGREEMENTS_METADATAS_REQUESTED'
+export const FETCH_AGREEMENTS_METADATAS_SUCCEEDED =
+  'FETCH_AGREEMENTS_METADATAS_SUCCEEDED'
+export const FETCH_AGREEMENTS_METADATAS_FAILED = 'FETCH_AGREEMENTS_METADATAS_FAILED'
 
-export const FETCH_TRACK_LIVE = 'FETCH_TRACK_LIVE'
-export const FETCH_TRACK_LIVE_REQUESTED = 'FETCH_TRACK_LIVE_REQUESTED'
-export const FETCH_TRACK_LIVE_SUCCEEDED = 'FETCH_TRACK_LIVE_SUCCEEDED'
+export const FETCH_AGREEMENT_LIVE = 'FETCH_AGREEMENT_LIVE'
+export const FETCH_AGREEMENT_LIVE_REQUESTED = 'FETCH_AGREEMENT_LIVE_REQUESTED'
+export const FETCH_AGREEMENT_LIVE_SUCCEEDED = 'FETCH_AGREEMENT_LIVE_SUCCEEDED'
 export const UPDATE_LINEUP_ORDER = 'UPDATE_LINEUP_ORDER'
 
 export const PLAY = 'PLAY'
@@ -28,7 +28,7 @@ export const RESET_SUCCEEDED = 'RESET_SUCCEEDED'
 export const SET_IN_VIEW = 'SET_IN_VIEW'
 export const REFRESH_IN_VIEW = 'REFRESH_IN_VIEW'
 
-export const UPDATE_TRACK_METADATA = 'UPDATE_TRACK_METADATA'
+export const UPDATE_AGREEMENT_METADATA = 'UPDATE_AGREEMENT_METADATA'
 export const REMOVE = 'REMOVE'
 export const ADD = 'ADD'
 export const SET_LOADING = 'SET_LOADING'
@@ -49,7 +49,7 @@ export const stripPrefix = (prefix: string, actionType: string) => {
  * @example
  *  // playlist.js
  *  // Creates lineup actions for a playlist, e.g.
- *  // PLAYLIST_FETCH_TRACKS_METADATAS.
+ *  // PLAYLIST_FETCH_AGREEMENTS_METADATAS.
  *  class PlaylistActions extends LineupActions {
  *    constructor () {
  *      super("PLAYLIST")
@@ -72,11 +72,11 @@ export class LineupActions {
 
   /**
    * Fetches entity metadatas for the lineup.
-   * Side-effect: Fetches relevant creators and caches loaded tracks.
-   * @param {number} [offset] the offset into the "get tracks" query
-   * @param {number} [limit] the limit for the "get tracks" query
+   * Side-effect: Fetches relevant creators and caches loaded agreements.
+   * @param {number} [offset] the offset into the "get agreements" query
+   * @param {number} [limit] the limit for the "get agreements" query
    * @param {boolean} [overwrite] a boolean indicating whether to overwrite cached entries the fetch may be refetching
-   * @param {*} [payload] keyword args payload to send to the "get tracks" query
+   * @param {*} [payload] keyword args payload to send to the "get agreements" query
    */
   fetchLineupMetadatas(
     offset = 0,
@@ -131,26 +131,26 @@ export class LineupActions {
     }
   }
 
-  fetchTrackAudio(trackMetadata: TrackMetadata) {
+  fetchAgreementAudio(agreementMetadata: AgreementMetadata) {
     return {
-      type: addPrefix(this.prefix, FETCH_TRACK_LIVE),
-      trackMetadata
+      type: addPrefix(this.prefix, FETCH_AGREEMENT_LIVE),
+      agreementMetadata
     }
   }
 
-  fetchTrackAudioRequested(index: number, trackId: ID) {
+  fetchAgreementAudioRequested(index: number, agreementId: ID) {
     return {
-      type: addPrefix(this.prefix, FETCH_TRACK_LIVE_REQUESTED),
+      type: addPrefix(this.prefix, FETCH_AGREEMENT_LIVE_REQUESTED),
       index,
-      trackId
+      agreementId
     }
   }
 
-  fetchTrackAudioSucceeded(index: number, trackId: ID) {
+  fetchAgreementAudioSucceeded(index: number, agreementId: ID) {
     return {
-      type: addPrefix(this.prefix, FETCH_TRACK_LIVE_SUCCEEDED),
+      type: addPrefix(this.prefix, FETCH_AGREEMENT_LIVE_SUCCEEDED),
       index,
-      trackId
+      agreementId
     }
   }
 
@@ -167,10 +167,10 @@ export class LineupActions {
     }
   }
 
-  updateTrackMetadata(trackId: ID, metadata: TrackMetadata) {
+  updateAgreementMetadata(agreementId: ID, metadata: AgreementMetadata) {
     return {
-      type: addPrefix(this.prefix, UPDATE_TRACK_METADATA),
-      trackId,
+      type: addPrefix(this.prefix, UPDATE_AGREEMENT_METADATA),
+      agreementId,
       metadata
     }
   }

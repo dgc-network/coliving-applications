@@ -61,7 +61,7 @@ export const initializeSentry = () => {
 
 type Traits = {
   isVerified: boolean
-  trackCount: number
+  agreementCount: number
 }
 
 /**

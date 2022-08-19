@@ -3,19 +3,19 @@ import * as React from 'react'
 
 import { TimeData } from './types'
 
-/** Sets animation properties on the handle and track. */
+/** Sets animation properties on the handle and agreement. */
 const animate = (
-  trackRef: React.MutableRefObject<HTMLDivElement | null>,
+  agreementRef: React.MutableRefObject<HTMLDivElement | null>,
   handleRef: React.MutableRefObject<HTMLDivElement | null>,
   transition: string,
   transform: string
 ) => {
-  if (handleRef.current && trackRef.current) {
+  if (handleRef.current && agreementRef.current) {
     handleRef.current.style.transition = transition
     handleRef.current.style.transform = transform
 
-    trackRef.current.style.transition = transition
-    trackRef.current.style.transform = transform
+    agreementRef.current.style.transition = transition
+    agreementRef.current.style.transform = transform
   }
 }
 
@@ -24,7 +24,7 @@ const animate = (
  * const animations = useAnimations()
  */
 export const useAnimations = (
-  trackRef: React.MutableRefObject<HTMLDivElement | null>,
+  agreementRef: React.MutableRefObject<HTMLDivElement | null>,
   handleRef: React.MutableRefObject<HTMLDivElement | null>,
   elapsedSeconds: number,
   totalSeconds: number
@@ -33,12 +33,12 @@ export const useAnimations = (
   const play = useCallback(() => {
     const timeRemaining = totalSeconds - elapsedSeconds
     animate(
-      trackRef,
+      agreementRef,
       handleRef,
       `transform ${timeRemaining}s linear`,
       'translate(100%)'
     )
-  }, [trackRef, handleRef, elapsedSeconds, totalSeconds])
+  }, [agreementRef, handleRef, elapsedSeconds, totalSeconds])
 
   /**
    * Pauses the animation at the current position.
@@ -47,34 +47,34 @@ export const useAnimations = (
    * cause jumping if elapsed seconds doesn't precisely reflect the animation.
    */
   const pause = useCallback(() => {
-    if (trackRef.current) {
-      const trackWidth = trackRef.current.offsetWidth
-      const trackTransform = window
-        .getComputedStyle(trackRef.current)
+    if (agreementRef.current) {
+      const agreementWidth = agreementRef.current.offsetWidth
+      const agreementTransform = window
+        .getComputedStyle(agreementRef.current)
         .getPropertyValue('transform')
 
-      const trackPosition = parseFloat(trackTransform.split(',')[4])
-      const percentComplete = trackPosition / trackWidth
+      const agreementPosition = parseFloat(agreementTransform.split(',')[4])
+      const percentComplete = agreementPosition / agreementWidth
       animate(
-        trackRef,
+        agreementRef,
         handleRef,
         'none',
         `translate(${percentComplete * 100}%)`
       )
     }
-  }, [trackRef, handleRef])
+  }, [agreementRef, handleRef])
 
   /** Sets the animation to a given percentage: [0, 1]. */
   const setPercent = useCallback(
     (percentComplete: number) => {
       animate(
-        trackRef,
+        agreementRef,
         handleRef,
         'none',
         `translate(${percentComplete * 100}%)`
       )
     },
-    [trackRef, handleRef]
+    [agreementRef, handleRef]
   )
 
   /**

@@ -32,8 +32,8 @@ const FeedPageMobileContent = ({
   feed,
   setFeedInView,
   loadMoreFeed,
-  playFeedTrack,
-  pauseFeedTrack,
+  playFeedAgreement,
+  pauseFeedAgreement,
   getLineupProps,
   feedFilter,
   setFeedFilter,
@@ -66,8 +66,8 @@ const FeedPageMobileContent = ({
     loadMore: (offset: number, limit: number, overwrite: boolean) =>
       loadMoreFeed(offset, limit, overwrite),
     setInView: setFeedInView,
-    playTrack: playFeedTrack,
-    pauseTrack: pauseFeedTrack,
+    playAgreement: playFeedAgreement,
+    pauseAgreement: pauseFeedAgreement,
     actions: feedActions,
     delineate: true
   }

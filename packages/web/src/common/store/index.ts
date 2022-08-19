@@ -8,9 +8,9 @@ import collectionsReducer from 'common/store/cache/collections/reducer'
 import collectionsSagas from 'common/store/cache/collections/sagas'
 import { asCache } from 'common/store/cache/reducer'
 import cacheSagas from 'common/store/cache/sagas'
-import tracksReducer from 'common/store/cache/tracks/reducer'
-import tracksSagas from 'common/store/cache/tracks/sagas'
-import { TracksCacheState } from 'common/store/cache/tracks/types'
+import agreementsReducer from 'common/store/cache/agreements/reducer'
+import agreementsSagas from 'common/store/cache/agreements/sagas'
+import { AgreementsCacheState } from 'common/store/cache/agreements/types'
 import usersReducer from 'common/store/cache/users/reducer'
 import usersSagas from 'common/store/cache/users/sagas'
 import { UsersCacheState } from 'common/store/cache/users/types'
@@ -38,8 +38,8 @@ import settings from 'common/store/pages/settings/reducer'
 import { SettingsPageState } from 'common/store/pages/settings/types'
 import smartCollection from 'common/store/pages/smart-collection/slice'
 import tokenDashboardSlice from 'common/store/pages/token-dashboard/slice'
-import track from 'common/store/pages/track/reducer'
-import TrackPageState from 'common/store/pages/track/types'
+import agreement from 'common/store/pages/agreement/reducer'
+import AgreementPageState from 'common/store/pages/agreement/types'
 import trendingPlaylists from 'common/store/pages/trending-playlists/slice'
 import trendingUnderground from 'common/store/pages/trending-underground/slice'
 import trending from 'common/store/pages/trending/reducer'
@@ -117,7 +117,7 @@ export const reducers = (ctx: CommonStoreContext) => ({
 
   // Cache
   collections: asCache(collectionsReducer, Kind.COLLECTIONS),
-  tracks: asCache(tracksReducer, Kind.TRACKS),
+  agreements: asCache(agreementsReducer, Kind.AGREEMENTS),
   users: asCache(usersReducer, Kind.USERS),
 
   // Playback
@@ -171,7 +171,7 @@ export const reducers = (ctx: CommonStoreContext) => ({
     savedPage: savedPageReducer,
     searchResults,
     tokenDashboard: tokenDashboardSlice.reducer,
-    track,
+    agreement,
     trending,
     trendingPlaylists,
     trendingUnderground,
@@ -200,7 +200,7 @@ export const sagas = (ctx: CommonStoreContext) => ({
   cache: cacheSagas,
   collectionsError: collectionsErrorSagas,
   collections: collectionsSagas,
-  tracks: tracksSagas,
+  agreements: agreementsSagas,
   users: usersSagas,
   remoteConfig: remoteConfigSagas,
   cast: castSagas(ctx),
@@ -213,7 +213,7 @@ export const sagas = (ctx: CommonStoreContext) => ({
   // common/store/pages/explore/sagas.ts
   // components/add-to-playlist/store/sagas.ts
   // components/share-sound-to-tiktok-modal/store/sagas.ts
-  // store/social/tracks/sagas.ts
+  // store/social/agreements/sagas.ts
   // store/social/users/sagas.ts
   // store/social/collections/sagas.ts
   // pages/live-rewards-page/store/sagas.ts
@@ -221,10 +221,10 @@ export const sagas = (ctx: CommonStoreContext) => ({
   // store/lineup/sagas.js
   // pages/feed/store/lineups/feed/sagas.js
   // pages/feed/store/sagas.js
-  // pages/collection/store/lineups/tracks/sagas.js
+  // pages/collection/store/lineups/agreements/sagas.js
   // pages/collection/store/sagas.js
-  // pages/track/store/lineups/tracks/sagas.js
-  // pages/track/store/sagas.js
+  // pages/agreement/store/lineups/agreements/sagas.js
+  // pages/agreement/store/sagas.js
   // store/ui/stemsUpload/sagas.ts
   // pages/user-list/followers/sagas.ts
   // pages/user-list/following/sagas.ts
@@ -238,16 +238,16 @@ export const sagas = (ctx: CommonStoreContext) => ({
   // store/solana/sagas.ts
   // pages/trending-page/store/sagas.ts
   // pages/trending-page/store/lineups/trending/sagas.ts
-  // pages/trending-underground-page/store/lineups/tracks/sagas.ts
+  // pages/trending-underground-page/store/lineups/agreements/sagas.ts
   // pages/trending-underground-page/store/sagas.ts
   // pages/smart-collection/store/sagas.ts
   // store/application/ui/theme/sagas.ts
   // pages/search-page/store/sagas.ts
-  // pages/search-page/store/lineups/tracks/sagas.ts
+  // pages/search-page/store/lineups/agreements/sagas.ts
   // notifications/store/sagas.ts
   // notifications/store/mobileSagas.ts
   // pages/remixes-page/store/sagas.ts
-  // pages/remixes-page/store/lineups/tracks/sagas.ts
+  // pages/remixes-page/store/lineups/agreements/sagas.ts
   //
   // pull in the following from web
   // once the player and dependencies are migrated
@@ -262,7 +262,7 @@ export type CommonState = {
 
   // Cache
   collections: Cache<Collection>
-  tracks: TracksCacheState
+  agreements: AgreementsCacheState
   users: UsersCacheState
 
   // Playback
@@ -311,7 +311,7 @@ export type CommonState = {
     smartCollection: ReturnType<typeof smartCollection>
     tokenDashboard: ReturnType<typeof tokenDashboardSlice.reducer>
     historyPage: ReturnType<typeof historyPageReducer>
-    track: TrackPageState
+    agreement: AgreementPageState
     profile: ProfilePageState
     savedPage: ReturnType<typeof savedPageReducer>
     searchResults: SearchPageState

@@ -1,12 +1,12 @@
 import { matchPath } from 'react-router'
 
-import { getCollectionTracksLineup } from 'common/store/pages/collection/selectors'
+import { getCollectionAgreementsLineup } from 'common/store/pages/collection/selectors'
 import { getDiscoverFeedLineup } from 'common/store/pages/feed/selectors'
-import { getHistoryTracksLineup } from 'common/store/pages/history-page/selectors'
-import { getProfileTracksLineup } from 'common/store/pages/profile/selectors'
-import { getSavedTracksLineup } from 'common/store/pages/saved-page/selectors'
-import { getSearchTracksLineup } from 'common/store/pages/search-results/selectors'
-import { getLineup } from 'common/store/pages/track/selectors'
+import { getHistoryAgreementsLineup } from 'common/store/pages/history-page/selectors'
+import { getProfileAgreementsLineup } from 'common/store/pages/profile/selectors'
+import { getSavedAgreementsLineup } from 'common/store/pages/saved-page/selectors'
+import { getSearchAgreementsLineup } from 'common/store/pages/search-results/selectors'
+import { getLineup } from 'common/store/pages/agreement/selectors'
 import { getCurrentDiscoverTrendingLineup } from 'common/store/pages/trending/selectors'
 import {
   FEED_PAGE,
@@ -17,7 +17,7 @@ import {
   SEARCH_PAGE,
   PLAYLIST_PAGE,
   ALBUM_PAGE,
-  TRACK_PAGE,
+  AGREEMENT_PAGE,
   PROFILE_PAGE,
   UPLOAD_PAGE,
   DASHBOARD_PAGE,
@@ -51,22 +51,22 @@ export const getLineupSelectorForRoute = (state) => {
     return getCurrentDiscoverTrendingLineup
   }
   if (matchPage(SEARCH_CATEGORY_PAGE) || matchPage(SEARCH_PAGE)) {
-    return getSearchTracksLineup
+    return getSearchAgreementsLineup
   }
   if (matchPage(SAVED_PAGE)) {
-    return getSavedTracksLineup
+    return getSavedAgreementsLineup
   }
   if (matchPage(HISTORY_PAGE)) {
-    return getHistoryTracksLineup
+    return getHistoryAgreementsLineup
   }
   if (matchPage(PLAYLIST_PAGE) || matchPage(ALBUM_PAGE)) {
-    return getCollectionTracksLineup
+    return getCollectionAgreementsLineup
   }
-  if (matchPage(TRACK_PAGE)) {
+  if (matchPage(AGREEMENT_PAGE)) {
     return getLineup
   }
   if (matchPage(PROFILE_PAGE)) {
-    return getProfileTracksLineup
+    return getProfileAgreementsLineup
   }
   return getDiscoverFeedLineup
 }

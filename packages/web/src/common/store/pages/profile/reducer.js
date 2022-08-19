@@ -2,7 +2,7 @@ import { Status } from '@coliving/common'
 
 import { asLineup } from 'common/store/lineup/reducer'
 import feedReducer from 'common/store/pages/profile/lineups/feed/reducer'
-import tracksReducer from 'common/store/pages/profile/lineups/tracks/reducer'
+import agreementsReducer from 'common/store/pages/profile/lineups/agreements/reducer'
 import {
   FollowType,
   CollectionSortMode
@@ -30,7 +30,7 @@ import {
   SET_NOTIFICATION_SUBSCRIPTION
 } from './actions'
 import { PREFIX as feedPrefix } from './lineups/feed/actions'
-import { PREFIX as tracksPrefix } from './lineups/tracks/actions'
+import { PREFIX as agreementsPrefix } from './lineups/agreements/actions'
 
 const initialState = {
   handle: null,
@@ -154,7 +154,7 @@ const actionsMap = {
       ...initialState,
       profileMeterDismissed: state.profileMeterDismissed,
       feed: feedLineupReducer(undefined, action),
-      tracks: tracksLineupReducer(undefined, action)
+      agreements: agreementsLineupReducer(undefined, action)
     }
   },
   [UPDATE_COLLECTION_SORT_MODE](state, action) {
@@ -198,14 +198,14 @@ const actionsMap = {
 }
 
 const feedLineupReducer = asLineup(feedPrefix, feedReducer)
-const tracksLineupReducer = asLineup(tracksPrefix, tracksReducer)
+const agreementsLineupReducer = asLineup(agreementsPrefix, agreementsReducer)
 
 const reducer = (state = initialState, action) => {
   const feed = feedLineupReducer(state.feed, action)
   if (feed !== state.feed) return { ...state, feed }
 
-  const tracks = tracksLineupReducer(state.tracks, action)
-  if (tracks !== state.tracks) return { ...state, tracks }
+  const agreements = agreementsLineupReducer(state.agreements, action)
+  if (agreements !== state.agreements) return { ...state, agreements }
 
   const matchingReduceFunction = actionsMap[action.type]
   if (!matchingReduceFunction) return state

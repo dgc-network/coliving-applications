@@ -8,17 +8,17 @@ import {
   CoverArtSizes,
   Repost,
   FieldVisibility,
-  LineupTrack,
+  LineupAgreement,
   Remix
 } from '@coliving/common'
 
-export enum TrackTileSize {
+export enum AgreementTileSize {
   LARGE = 'LARGE',
   SMALL = 'SMALL'
 }
 
 export type TileProps = {
-  size?: TrackTileSize
+  size?: AgreementTileSize
   containerClassName?: string
   index: number
   repostCount: number
@@ -29,8 +29,8 @@ export type TileProps = {
   duration: number
   coverArtSizes: CoverArtSizes
   activityTimestamp?: string
-  togglePlay: (uid: UID, trackId: ID, source?: PlaybackSource) => void
-  trackTileStyles?: {}
+  togglePlay: (uid: UID, agreementId: ID, source?: PlaybackSource) => void
+  agreementTileStyles?: {}
   uid: UID
   id: ID
   userId: ID
@@ -43,7 +43,7 @@ export type TileProps = {
   showRankIcon: boolean
 }
 
-export type TrackTileProps = TileProps & {
+export type AgreementTileProps = TileProps & {
   title: string
   showArtistPick?: boolean
   showListens?: boolean
@@ -65,12 +65,12 @@ export type TrackTileProps = TileProps & {
   isArtistPick?: boolean
   isUnlisted?: boolean
   coSign?: Remix | null
-  onClickOverflow?: (trackId: ID) => void
+  onClickOverflow?: (agreementId: ID) => void
 }
 
 export type PlaylistTileProps = TileProps & {
   playingUid?: UID | null
-  playingTrackId?: ID | null
+  playingAgreementId?: ID | null
   isAlbum: boolean
   isPublic: boolean
   contentTitle: string
@@ -78,14 +78,14 @@ export type PlaylistTileProps = TileProps & {
   artistName: string
   artistHandle: string
   artistIsVerified: boolean
-  activeTrackUid: UID | null
+  activeAgreementUid: UID | null
   saveCount: number
-  tracks: LineupTrack[]
-  trackCount: number
+  agreements: LineupAgreement[]
+  agreementCount: number
   showArtworkIcon?: boolean
   showSkeleton?: boolean
-  pauseTrack: () => void
-  playTrack: (uid: UID) => void
+  pauseAgreement: () => void
+  playAgreement: (uid: UID) => void
   disableActions?: boolean
   ordered?: boolean
   uploading?: boolean
@@ -97,35 +97,35 @@ export type PlaylistTileProps = TileProps & {
   numLoadingSkeletonRows?: number
 }
 
-export type DesktopTrackTileProps = {
-  /** Size of the track Tile Large or Small */
-  size: TrackTileSize
+export type DesktopAgreementTileProps = {
+  /** Size of the agreement Tile Large or Small */
+  size: AgreementTileSize
 
   /** Prefix order number displayed on the left side of the tile */
   order?: number
 
-  /** The number of plays for the track */
+  /** The number of plays for the agreement */
   listenCount?: number
 
   /** If there is nothing underneath, it's standalone */
   standalone?: boolean
 
-  /** If the track is currently playing */
+  /** If the agreement is currently playing */
   isActive: boolean
 
   /** If the button actions should be clickable */
   isDisabled?: boolean
 
-  /** If the track is unlisted/hidden */
+  /** If the agreement is unlisted/hidden */
   isUnlisted?: boolean
 
-  /** If track metadata is loading in */
+  /** If agreement metadata is loading in */
   isLoading?: boolean
 
   /** Number of rows to show when in loading state, if any */
   numLoadingSkeletonRows?: number
 
-  /** If the artist selected this track as featured, displays a star and artst pick label */
+  /** If the artist selected this agreement as featured, displays a star and artst pick label */
   isArtistPick?: boolean
 
   /** If in dark mode for the bottom buttons to be colored */
@@ -134,22 +134,22 @@ export type DesktopTrackTileProps = {
   /** Are we in matrix mode? */
   isMatrixMode: boolean
 
-  /** The artwork for the track tile */
+  /** The artwork for the agreement tile */
   artwork: ReactNode
 
-  /** The upper most text in the tracktile */
+  /** The upper most text in the agreementtile */
   header?: ReactNode
 
-  /** The beneath the header is the title, for the track's name */
+  /** The beneath the header is the title, for the agreement's name */
   title: ReactNode
 
-  /** The beneath the title is the username, for the track's creator */
+  /** The beneath the title is the username, for the agreement's creator */
   userName: ReactNode
 
   /** The beneath the username is the state, displays the favorite and repost counts */
   stats: ReactNode
 
-  /** The fields which are visible on the track */
+  /** The fields which are visible on the agreement */
   fieldVisibility?: FieldVisibility
 
   /** Displayed on the bottom right is the kebab icon for menu options */
@@ -158,19 +158,19 @@ export type DesktopTrackTileProps = {
   /** Optional bottom bar to be rendered in place of the favorite, repost and share icons */
   bottomBar?: ReactNode
 
-  /** The track's duration in seconds displayed in the top right */
+  /** The agreement's duration in seconds displayed in the top right */
   duration?: number
 
-  /** Class name to be added to the top level container of the tracktile */
+  /** Class name to be added to the top level container of the agreementtile */
   containerClassName?: string
 
-  /** Incdates if the current user if the creator of the track tile */
+  /** Incdates if the current user if the creator of the agreement tile */
   isOwner: boolean
 
-  /** Incdates if the current user has favorited the track */
+  /** Incdates if the current user has favorited the agreement */
   isFavorited?: boolean
 
-  /** Incdates if the current user has reposted the track */
+  /** Incdates if the current user has reposted the agreement */
   isReposted?: boolean
 
   /** Incdates if the repost, favorite, and share buttons should be rendered */
@@ -188,7 +188,7 @@ export type DesktopTrackTileProps = {
   /** on click share icon */
   onClickShare: (e?: MouseEvent) => void
 
-  /** On click track tile that's does not trigger another action (ie. button or text) */
+  /** On click agreement tile that's does not trigger another action (ie. button or text) */
   onTogglePlay: (e?: MouseEvent) => void
 
   /** Are we in a trending lineup? Allows tiles to specialize their rendering */
@@ -199,25 +199,25 @@ export type DesktopTrackTileProps = {
 }
 
 export type DesktopPlaylistTileProps = {
-  /** Size of the track Tile Large or Small */
-  size: TrackTileSize
+  /** Size of the agreement Tile Large or Small */
+  size: AgreementTileSize
 
-  /** Prefix order number displayed on the left side of the track tile */
+  /** Prefix order number displayed on the left side of the agreement tile */
   order?: number
 
-  /** If the track is currently playing */
+  /** If the agreement is currently playing */
   isActive: boolean
 
   /** If the button actions should be clickable */
   isDisabled?: boolean
 
-  /** If track metadata is loading in */
+  /** If agreement metadata is loading in */
   isLoading?: boolean
 
   /** Number of rows to show when in loading state, if any */
   numLoadingSkeletonRows?: number
 
-  /** If the artist selected this track as featured, displays a star and artst pick label */
+  /** If the artist selected this agreement as featured, displays a star and artst pick label */
   isArtistPick?: boolean
 
   /** If in dark mode for the bottom buttons to be colored */
@@ -226,16 +226,16 @@ export type DesktopPlaylistTileProps = {
   /** Are we in matrix mode? */
   isMatrixMode: boolean
 
-  /** The artwork for the track tile */
+  /** The artwork for the agreement tile */
   artwork: ReactNode
 
-  /** The upper most text in the tracktile */
+  /** The upper most text in the agreementtile */
   header?: ReactNode
 
-  /** The beneath the header is the title, for the track's name */
+  /** The beneath the header is the title, for the agreement's name */
   title: ReactNode
 
-  /** The beneath the title is the username, for the track's creator */
+  /** The beneath the title is the username, for the agreement's creator */
   userName: ReactNode
 
   /** The beneath the username is the state, displays the favorite and repost counts */
@@ -247,25 +247,25 @@ export type DesktopPlaylistTileProps = {
   /** Optional bottom bar to be rendered in place of the favorite, repost and share icons */
   bottomBar?: ReactNode
 
-  /** The track's duration in seconds displayed in the top right */
+  /** The agreement's duration in seconds displayed in the top right */
   duration?: number
 
   /** Class name to be added to the top level container of the playlist tile */
   containerClassName?: string
 
-  /** Class name to be added to the top level container of the tracktile */
+  /** Class name to be added to the top level container of the agreementtile */
   tileClassName?: string
 
-  /** Class name to be added to the top level container of the tracklist */
-  tracksContainerClassName?: string
+  /** Class name to be added to the top level container of the agreementlist */
+  agreementsContainerClassName?: string
 
-  /** Incdates if the current user if the creator of the track tile */
+  /** Incdates if the current user if the creator of the agreement tile */
   isOwner: boolean
 
-  /** Incdates if the current user has favorited the track */
+  /** Incdates if the current user has favorited the agreement */
   isFavorited?: boolean
 
-  /** Incdates if the current user has reposted the track */
+  /** Incdates if the current user has reposted the agreement */
   isReposted?: boolean
 
   /** Incdates if the repost, favorite, and share buttons should be rendered */
@@ -283,17 +283,17 @@ export type DesktopPlaylistTileProps = {
   /** on click share icon */
   onClickShare: (e?: MouseEvent) => void
 
-  /** On click track tile that's does not trigger another action (ie. button or text) */
+  /** On click agreement tile that's does not trigger another action (ie. button or text) */
   onTogglePlay: (e?: MouseEvent) => void
 
-  /** The list of tracks to be rendered under the tracktile  */
-  trackList: ReactNode[]
+  /** The list of agreements to be rendered under the agreementtile  */
+  agreementList: ReactNode[]
 
-  /** The full track count for the playlist (may include tracks not rendered) */
-  trackCount: number
+  /** The full agreement count for the playlist (may include agreements not rendered) */
+  agreementCount: number
 
-  /** The wrapper react compoenent for the track tile - can be used for drag and drop */
-  TileTrackContainer?: any
+  /** The wrapper react compoenent for the agreement tile - can be used for drag and drop */
+  TileAgreementContainer?: any
 
   /** Are we in a trending lineup? Allows tiles to specialize their rendering */
   isTrending?: boolean
@@ -305,6 +305,6 @@ export type DesktopPlaylistTileProps = {
 export type SkeletonTileProps = {
   index?: number
   key: number
-  tileSize: TrackTileSize
+  tileSize: AgreementTileSize
   ordered?: boolean
 }

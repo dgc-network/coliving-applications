@@ -21,7 +21,7 @@ export const generateM3U8 = (
   gatewayOverride = '',
   targetDuration = 6
 ) => {
-  // Special case tracks that were segmented incorrectly and only have one segment
+  // Special case agreements that were segmented incorrectly and only have one segment
   // by setting the HLS target duration to that segment's duration (fixes Safari HLS issues).
   if (segments.length === 1) {
     targetDuration = Math.round(parseFloat(segments[0].duration))

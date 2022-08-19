@@ -11,7 +11,7 @@ import CoSign from 'components/co-sign/CoSign'
 import { Size } from 'components/co-sign/types'
 import DynamicImage from 'components/dynamic-image/DynamicImage'
 import { useCollectionCoverArt } from 'hooks/useCollectionCoverArt'
-import { useTrackCoverArt } from 'hooks/useTrackCoverArt'
+import { useAgreementCoverArt } from 'hooks/useAgreementCoverArt'
 
 import styles from './Artwork.module.css'
 
@@ -132,9 +132,9 @@ const Artwork = memo(
   }
 )
 
-export const TrackArtwork = memo((props: TileArtworkProps) => {
+export const AgreementArtwork = memo((props: TileArtworkProps) => {
   const { callback } = props
-  const image = useTrackCoverArt(
+  const image = useAgreementCoverArt(
     props.id,
     props.coverArtSizes,
     SquareSizes.SIZE_150_BY_150,

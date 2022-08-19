@@ -6,17 +6,17 @@ import {
   ShareSource
 } from '@/common'
 import type { CommonState } from '-client/src/common/store'
-import { getTrack } from '-client/src/common/store/cache/tracks/selectors'
+import { getAgreement } from '-client/src/common/store/cache/agreements/selectors'
 import { getUser } from '-client/src/common/store/cache/users/selectors'
 // Importing directly from -client for now, this will be removed
 // when the profile page is implemented in RN
 import {
-  repostTrack,
-  undoRepostTrack,
-  saveTrack,
-  unsaveTrack,
-  shareTrack
-} from '-client/src/common/store/social/tracks/actions'
+  repostAgreement,
+  undoRepostAgreement,
+  saveAgreement,
+  unsaveAgreement,
+  shareAgreement
+} from '-client/src/common/store/social/agreements/actions'
 import {
   followUser,
   unfollowUser
@@ -36,23 +36,23 @@ type Props = {
   render: (callbacks: OverflowActionCallbacks) => JSX.Element
 }
 
-const TrackOverflowMenuDrawer = ({ render }: Props) => {
+const AgreementOverflowMenuDrawer = ({ render }: Props) => {
   const { onClose: closeNowPlayingDrawer } = useDrawer('NowPlaying')
   const navigation = useNavigation()
   const dispatchWeb = useDispatchWeb()
   const { id: modalId } = useSelectorWeb(getMobileOverflowModal)
   const id = modalId as ID
 
-  const track = useSelectorWeb((state: CommonState) => getTrack(state, { id }))
+  const agreement = useSelectorWeb((state: CommonState) => getAgreement(state, { id }))
 
   const user = useSelectorWeb((state: CommonState) =>
-    getUser(state, { id: track?.owner_id })
+    getUser(state, { id: agreement?.owner_id })
   )
 
-  if (!track || !user) {
+  if (!agreement || !user) {
     return null
   }
-  const { owner_id, title, permalink } = track
+  const { owner_id, title, permalink } = agreement
   const { handle } = user
 
   if (!id || !owner_id || !handle || !title) {
@@ -61,21 +61,21 @@ const TrackOverflowMenuDrawer = ({ render }: Props) => {
 
   const callbacks = {
     [OverflowAction.REPOST]: () =>
-      dispatchWeb(repostTrack(id, RepostSource.OVERFLOW)),
+      dispatchWeb(repostAgreement(id, RepostSource.OVERFLOW)),
     [OverflowAction.UNREPOST]: () =>
-      dispatchWeb(undoRepostTrack(id, RepostSource.OVERFLOW)),
+      dispatchWeb(undoRepostAgreement(id, RepostSource.OVERFLOW)),
     [OverflowAction.FAVORITE]: () =>
-      dispatchWeb(saveTrack(id, FavoriteSource.OVERFLOW)),
+      dispatchWeb(saveAgreement(id, FavoriteSource.OVERFLOW)),
     [OverflowAction.UNFAVORITE]: () =>
-      dispatchWeb(unsaveTrack(id, FavoriteSource.OVERFLOW)),
+      dispatchWeb(unsaveAgreement(id, FavoriteSource.OVERFLOW)),
     [OverflowAction.SHARE]: () =>
-      dispatchWeb(shareTrack(id, ShareSource.OVERFLOW)),
+      dispatchWeb(shareAgreement(id, ShareSource.OVERFLOW)),
     [OverflowAction.ADD_TO_PLAYLIST]: () =>
       dispatchWeb(openAddToPlaylistModal(id, title)),
-    [OverflowAction.VIEW_TRACK_PAGE]: () => {
+    [OverflowAction.VIEW_AGREEMENT_PAGE]: () => {
       closeNowPlayingDrawer()
       navigation.navigate({
-        native: { screen: 'Track', params: { id } },
+        native: { screen: 'Agreement', params: { id } },
         web: { route: permalink }
       })
     },
@@ -95,4 +95,4 @@ const TrackOverflowMenuDrawer = ({ render }: Props) => {
   return render(callbacks)
 }
 
-export default TrackOverflowMenuDrawer
+export default AgreementOverflowMenuDrawer

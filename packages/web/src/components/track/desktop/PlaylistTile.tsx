@@ -4,12 +4,12 @@ import { IconArrow, Scrollbar } from '@coliving/stems'
 import cn from 'classnames'
 
 import {
-  TrackTileSize,
+  AgreementTileSize,
   DesktopPlaylistTileProps as PlaylistTileProps
-} from 'components/track/types'
+} from 'components/agreement/types'
 
 import styles from './PlaylistTile.module.css'
-import TrackTile from './TrackTile'
+import AgreementTile from './AgreementTile'
 
 const DefaultTileContainer = ({ children }: { children: ReactChildren }) =>
   children
@@ -37,55 +37,55 @@ const PlaylistTile = memo(
     showIconButtons,
     containerClassName,
     tileClassName,
-    tracksContainerClassName,
+    agreementsContainerClassName,
     onClickTitle,
     onClickRepost,
     onClickFavorite,
     onClickShare,
     onTogglePlay,
-    trackList,
-    trackCount,
+    agreementList,
+    agreementCount,
     isTrending,
     showRankIcon,
-    TileTrackContainer = DefaultTileContainer
+    TileAgreementContainer = DefaultTileContainer
   }: PlaylistTileProps) => {
-    const renderTracks = useCallback(
+    const renderAgreements = useCallback(
       () => (
         <Scrollbar
-          className={cn(styles.playlistTracks, {
-            [tracksContainerClassName!]: !!tracksContainerClassName
+          className={cn(styles.playlistAgreements, {
+            [agreementsContainerClassName!]: !!agreementsContainerClassName
           })}
         >
-          {trackList}
+          {agreementList}
         </Scrollbar>
       ),
-      [tracksContainerClassName, trackList]
+      [agreementsContainerClassName, agreementList]
     )
 
-    const renderMoreTracks = useCallback(() => {
-      const hasMoreTracks = trackCount ? trackCount > trackList.length : false
+    const renderMoreAgreements = useCallback(() => {
+      const hasMoreAgreements = agreementCount ? agreementCount > agreementList.length : false
       return (
         !isLoading &&
-        hasMoreTracks && (
-          <div onClick={onClickTitle} className={styles.moreTracks}>
-            {`${trackCount - trackList.length} More Tracks`}
+        hasMoreAgreements && (
+          <div onClick={onClickTitle} className={styles.moreAgreements}>
+            {`${agreementCount - agreementList.length} More Agreements`}
             <IconArrow className={styles.moreArrow} />
           </div>
         )
       )
-    }, [trackCount, trackList, onClickTitle, isLoading])
+    }, [agreementCount, agreementList, onClickTitle, isLoading])
 
     return (
       <div
         className={cn(styles.container, {
           [containerClassName!]: !!containerClassName,
-          [styles.small]: size === TrackTileSize.SMALL,
-          [styles.large]: size === TrackTileSize.LARGE,
+          [styles.small]: size === AgreementTileSize.SMALL,
+          [styles.large]: size === AgreementTileSize.LARGE,
           [styles.disabled]: !!isDisabled
         })}
       >
-        <TileTrackContainer>
-          <TrackTile
+        <TileAgreementContainer>
+          <AgreementTile
             size={size}
             order={order}
             isFavorited={isFavorited}
@@ -114,9 +114,9 @@ const PlaylistTile = memo(
             showRankIcon={showRankIcon}
             isTrending={isTrending}
           />
-        </TileTrackContainer>
-        {renderTracks()}
-        {renderMoreTracks()}
+        </TileAgreementContainer>
+        {renderAgreements()}
+        {renderMoreAgreements()}
       </div>
     )
   }

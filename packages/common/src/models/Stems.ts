@@ -1,4 +1,4 @@
-import { Track } from 'models/Track'
+import { Agreement } from 'models/Agreement'
 
 export enum StemCategory {
   INSTRUMENTAL = 'INSTRUMENTAL',
@@ -31,7 +31,7 @@ export const stemCategoryFriendlyNames = {
 }
 
 export type StemUpload = {
-  metadata: Track
+  metadata: Agreement
   category: StemCategory
   allowDelete: boolean
   allowCategorySwitch: boolean

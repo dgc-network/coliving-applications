@@ -3,77 +3,77 @@
  */
 
 /**
- * Gets the track object for the current track in the queue.
+ * Gets the agreement object for the current agreement in the queue.
  * @param {Object} queue the queue redux store object.
  * @returns {?Object}
  */
-export function getCurrentTrack(queue) {
+export function getCurrentAgreement(queue) {
   if (queue.playingIndex === -1) {
     return null
   }
-  return queue.queue[queue.playingIndex].track
+  return queue.queue[queue.playingIndex].agreement
 }
 
 /**
- * Gets the track object itself (i.e. metadata) for the current track in the queue.
+ * Gets the agreement object itself (i.e. metadata) for the current agreement in the queue.
  * @param {Object} queue the queue redux store object.
  * @returns {?Object}
  */
-export function getCurrentTrackMetadata(queue) {
+export function getCurrentAgreementMetadata(queue) {
   if (queue.playingIndex === -1) {
     return null
   }
 
-  const track = queue.queue[queue.playingIndex].track
-  return track ? track.metadata : null
+  const agreement = queue.queue[queue.playingIndex].agreement
+  return agreement ? agreement.metadata : null
 }
 
 /**
- * Gets the Howler.js object for the current track in the queue.
+ * Gets the Howler.js object for the current agreement in the queue.
  * @param {Object} queue the queue redux store object.
  * @returns {?Object}
  */
-export function getCurrentTrackHowl(queue) {
+export function getCurrentAgreementHowl(queue) {
   if (queue.playingIndex === -1) {
     return null
   }
-  return queue.queue[queue.playingIndex].track.live.currentSegment()
+  return queue.queue[queue.playingIndex].agreement.live.currentSegment()
 }
 
 /**
- * Gets the HTML5 live element for the current track in the queue.
+ * Gets the HTML5 live element for the current agreement in the queue.
  * @param {Object} queue the queue redux store object.
  * @returns {?Object}
  */
-export function getCurrentTrackAudioElement(queue) {
+export function getCurrentAgreementAudioElement(queue) {
   if (
     queue.playingIndex === -1 ||
-    !queue.queue[queue.playingIndex].track ||
-    !queue.queue[queue.playingIndex].track.live
+    !queue.queue[queue.playingIndex].agreement ||
+    !queue.queue[queue.playingIndex].agreement.live
   ) {
     return null
   }
-  return queue.queue[queue.playingIndex].track.live.currentAudioElement()
+  return queue.queue[queue.playingIndex].agreement.live.currentAudioElement()
 }
 
 /**
- * Gets the song duration (seconds) for the current track in the queue.
+ * Gets the song duration (seconds) for the current agreement in the queue.
  * @param {Object} queue the queue redux store object.
  * @returns {?number}
  */
-export function getCurrentTrackDuration(queue) {
+export function getCurrentAgreementDuration(queue) {
   if (queue.playingIndex === -1) {
     return null
   }
-  return queue.queue[queue.playingIndex].track.live.getDuration()
+  return queue.queue[queue.playingIndex].agreement.live.getDuration()
 }
 
 /**
- * Gets the current playback position (seconds) for the current track in the queue.
+ * Gets the current playback position (seconds) for the current agreement in the queue.
  * @param {Object} queue the queue redux store object.
  * @returns {?number}
  */
-export function getCurrentTrackPosition(queue) {
+export function getCurrentAgreementPosition(queue) {
   if (queue.playingIndex === -1) {
     return null
   }

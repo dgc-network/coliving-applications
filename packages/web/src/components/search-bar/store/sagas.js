@@ -2,7 +2,7 @@ import { Name } from '@coliving/common'
 import { call, cancel, fork, put, race, select, take } from 'redux-saga/effects'
 
 import { getUserId } from 'common/store/account/selectors'
-import { setTracksIsBlocked } from 'common/store/cache/tracks/utils/blocklist'
+import { setAgreementsIsBlocked } from 'common/store/cache/agreements/utils/blocklist'
 import * as searchActions from 'components/search-bar/store/actions'
 import apiClient from 'services/coliving-api-client/ColivingAPIClient'
 import { make } from 'store/analytics/actions'
@@ -21,16 +21,16 @@ export function* getSearchResults(searchText) {
     offset: 0
   })
 
-  const { tracks, albums, playlists, users } = results
+  const { agreements, albums, playlists, users } = results
   const checkedUsers = users.filter((t) => !t.is_deactivated)
-  const checkedTracks = (yield call(setTracksIsBlocked, tracks)).filter(
+  const checkedAgreements = (yield call(setAgreementsIsBlocked, agreements)).filter(
     (t) => !t.is_delete && !t._blocked && !t.user.is_deactivated
   )
   const checkedPlaylists = playlists.filter((t) => !t.user?.is_deactivated)
   const checkedAlbums = albums.filter((t) => !t.user?.is_deactivated)
   return {
     users: checkedUsers,
-    tracks: checkedTracks,
+    agreements: checkedAgreements,
     albums: checkedAlbums,
     playlists: checkedPlaylists
   }
@@ -42,7 +42,7 @@ function* fetchSearchAsync(action) {
   const search = yield select(getSearch)
   if (action.searchText === search.searchText) {
     const previousResults = {
-      tracks: search.tracks,
+      agreements: search.agreements,
       albums: search.albums,
       playlists: search.playlists,
       users: search.users

@@ -21,10 +21,10 @@ import {
 } from 'utils/route'
 
 type LinkButtonType =
-  | 'trackUpload'
+  | 'agreementUpload'
   | 'profile'
   | 'verifyAccount'
-  | 'trendingTracks'
+  | 'trendingAgreements'
   | 'sendFirstTip'
   | 'firstPlaylist'
 type LinkButtonInfo = {
@@ -45,8 +45,8 @@ const GoldBadgeIconImage = () => (
 )
 
 const linkButtonMap: Record<LinkButtonType, LinkButtonInfo> = {
-  trackUpload: {
-    label: 'Upload Tracks',
+  agreementUpload: {
+    label: 'Upload Agreements',
     leftIcon: null,
     rightIcon: <IconUpload />,
     link: () => UPLOAD_PAGE
@@ -63,8 +63,8 @@ const linkButtonMap: Record<LinkButtonType, LinkButtonInfo> = {
     rightIcon: <IconCheck />,
     link: () => SETTINGS_PAGE
   },
-  trendingTracks: {
-    label: 'Trending Tracks',
+  trendingAgreements: {
+    label: 'Trending Agreements',
     leftIcon: null,
     rightIcon: <IconArrow />,
     link: () => TRENDING_PAGE
@@ -179,16 +179,16 @@ export const challengeRewardsConfig: Record<
     title: 'Listening Streak: 7 Days',
     icon: <i className='emoji large headphone' />,
     description: (challenge) =>
-      `Listen to one track a day for seven days to earn ${challenge?.amount} $LIVE`,
+      `Listen to one agreement a day for seven days to earn ${challenge?.amount} $LIVE`,
     fullDescription: () =>
-      'Sign in and listen to at least one track every day for 7 days',
+      'Sign in and listen to at least one agreement every day for 7 days',
     progressLabel: '%0/%1 Days',
     amount: amounts['listen-streak'],
     panelButtonText: 'Trending on Coliving',
     modalButtonInfo: {
-      incomplete: linkButtonMap.trendingTracks,
-      inProgress: linkButtonMap.trendingTracks,
-      complete: linkButtonMap.trendingTracks
+      incomplete: linkButtonMap.trendingAgreements,
+      inProgress: linkButtonMap.trendingAgreements,
+      complete: linkButtonMap.trendingAgreements
     }
   },
   'mobile-install': {
@@ -214,7 +214,7 @@ export const challengeRewardsConfig: Record<
     description: (challenge) =>
       `Complete your Coliving profile to earn ${challenge?.amount} $LIVE`,
     fullDescription: () =>
-      'Fill out the missing details on your Coliving profile and start interacting with tracks and artists!',
+      'Fill out the missing details on your Coliving profile and start interacting with agreements and artists!',
     progressLabel: '%0/%1 Complete',
     amount: amounts['profile-completion'],
     panelButtonText: 'More Info',
@@ -224,19 +224,19 @@ export const challengeRewardsConfig: Record<
       complete: linkButtonMap.profile
     }
   },
-  'track-upload': {
-    id: 'track-upload' as ChallengeRewardID,
-    title: 'Upload 3 Tracks',
+  'agreement-upload': {
+    id: 'agreement-upload' as ChallengeRewardID,
+    title: 'Upload 3 Agreements',
     icon: <i className='emoji large multiple-musical-notes' />,
     description: (challenge) => `Earn ${challenge?.amount} $LIVE`,
-    fullDescription: () => 'Upload 3 tracks to your profile',
+    fullDescription: () => 'Upload 3 agreements to your profile',
     progressLabel: '%0/%1 Uploaded',
-    amount: amounts['track-upload'],
-    panelButtonText: 'Upload Tracks',
+    amount: amounts['agreement-upload'],
+    panelButtonText: 'Upload Agreements',
     modalButtonInfo: {
-      incomplete: linkButtonMap.trackUpload,
-      inProgress: linkButtonMap.trackUpload,
-      complete: linkButtonMap.trackUpload
+      incomplete: linkButtonMap.agreementUpload,
+      inProgress: linkButtonMap.agreementUpload,
+      complete: linkButtonMap.agreementUpload
     }
   },
   'send-first-tip': {
@@ -260,7 +260,7 @@ export const challengeRewardsConfig: Record<
     title: 'Create Your First Playlist',
     icon: <i className='emoji large sparkles' />,
     description: (challenge) => `Earn ${challenge?.amount} $LIVE`,
-    fullDescription: () => 'Create your first playlist & add a track to it',
+    fullDescription: () => 'Create your first playlist & add a agreement to it',
     progressLabel: 'Not Earned',
     amount: amounts['first-playlist'],
     panelButtonText: 'Create Your First Playlist',
@@ -291,12 +291,12 @@ export const trendingRewardsConfig: Record<
     buttonText: 'See More',
     id: 'trending-playlist'
   },
-  'trending-track': {
-    title: 'Top 5 Trending Tracks',
+  'trending-agreement': {
+    title: 'Top 5 Trending Agreements',
     icon: <i className='emoji large chart-increasing' />,
     description: 'Winners are selected every Friday at Noon PT!',
     buttonText: 'See More',
-    id: 'trending-track'
+    id: 'trending-agreement'
   },
   'top-api': {
     title: 'Top 10 API Apps',
@@ -309,7 +309,7 @@ export const trendingRewardsConfig: Record<
     title: 'First Upload With Your Verified Account',
     icon: <i className='emoji large white-heavy-check-mark' />,
     description:
-      'Verified on Twitter/Instagram? Upload your first track, post it on social media, & tag us',
+      'Verified on Twitter/Instagram? Upload your first agreement, post it on social media, & tag us',
     buttonText: 'More Info',
     id: 'verified-upload'
   },

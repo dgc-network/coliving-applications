@@ -1,10 +1,10 @@
-import { LineupState, Track } from '@coliving/common'
+import { LineupState, Agreement } from '@coliving/common'
 
 import { RESET_SUCCEEDED, stripPrefix } from 'common/store/lineup/actions'
 import { initialLineupState } from 'common/store/lineup/reducer'
-import { PREFIX } from 'common/store/pages/search-results/lineup/tracks/actions'
+import { PREFIX } from 'common/store/pages/search-results/lineup/agreements/actions'
 
-const initialState: LineupState<Track> = {
+const initialState: LineupState<Agreement> = {
   ...initialLineupState,
   prefix: PREFIX,
   containsDeleted: false
@@ -15,13 +15,13 @@ type ResetSucceededAction = {
 }
 
 const actionsMap = {
-  [RESET_SUCCEEDED](state: LineupState<Track>, action: ResetSucceededAction) {
+  [RESET_SUCCEEDED](state: LineupState<Agreement>, action: ResetSucceededAction) {
     const newState = initialState
     return newState
   }
 }
 
-const tracks = (state = initialState, action: ResetSucceededAction) => {
+const agreements = (state = initialState, action: ResetSucceededAction) => {
   const baseActionType = stripPrefix(
     PREFIX,
     action.type
@@ -31,4 +31,4 @@ const tracks = (state = initialState, action: ResetSucceededAction) => {
   return matchingReduceFunction(state, action)
 }
 
-export default tracks
+export default agreements

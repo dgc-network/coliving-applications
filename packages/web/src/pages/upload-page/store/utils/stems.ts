@@ -1,21 +1,21 @@
-import { ID, StemCategory, StemUpload, Track, StemTrack } from '@coliving/common'
+import { ID, StemCategory, StemUpload, Agreement, StemAgreement } from '@coliving/common'
 
 export const updateAndFlattenStems = (
   stems: StemUpload[][],
-  parentTrackIds: ID[]
+  parentAgreementIds: ID[]
 ) => {
   return stems.flatMap((stemList, i) => {
-    const parentTrackId = parentTrackIds[i]
+    const parentAgreementId = parentAgreementIds[i]
 
     return stemList.map((stem) => {
       const metadata = createStemMetadata({
-        parentTrackId,
-        track: stem.metadata,
+        parentAgreementId,
+        agreement: stem.metadata,
         stemCategory: stem.category
       })
       return {
         metadata,
-        track: {
+        agreement: {
           ...stem,
           metadata
         }
@@ -25,26 +25,26 @@ export const updateAndFlattenStems = (
 }
 
 export const createStemMetadata = ({
-  parentTrackId,
-  track,
+  parentAgreementId,
+  agreement,
   stemCategory
 }: {
-  parentTrackId: ID
-  track: Track
+  parentAgreementId: ID
+  agreement: Agreement
   stemCategory: StemCategory
-}): StemTrack => {
+}): StemAgreement => {
   return {
-    ...track,
+    ...agreement,
     download: {
       cid: null,
       is_downloadable: true,
       // IMPORTANT: Stems never require a follow to download in their metadata
-      // but should determine their downloadability based on the parent track's
+      // but should determine their downloadability based on the parent agreement's
       // requirements.
       requires_follow: false
     },
     stem_of: {
-      parent_track_id: parentTrackId,
+      parent_agreement_id: parentAgreementId,
       category: stemCategory
     }
   }

@@ -5,7 +5,7 @@ import cn from 'classnames'
 
 import { ReactComponent as IconDrag } from 'assets/img/iconDrag.svg'
 import { ReactComponent as IconShow } from 'assets/img/iconMultiselectAdd.svg'
-import { ReactComponent as IconHide } from 'assets/img/iconRemoveTrack.svg'
+import { ReactComponent as IconHide } from 'assets/img/iconRemoveAgreement.svg'
 import { formatDateWithTimezoneOffset } from 'common/utils/timeUtil'
 import {
   collectibleMessages,

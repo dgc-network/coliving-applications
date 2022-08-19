@@ -1,6 +1,6 @@
 import { RESET_SUCCEEDED, stripPrefix } from 'common/store/lineup/actions'
 import { initialLineupState } from 'common/store/lineup/reducer'
-import { PREFIX } from 'common/store/pages/saved-page/lineups/tracks/actions'
+import { PREFIX } from 'common/store/pages/saved-page/lineups/agreements/actions'
 
 const initialState = {
   ...initialLineupState,
@@ -14,11 +14,11 @@ const actionsMap = {
   }
 }
 
-const tracks = (state = initialState, action) => {
+const agreements = (state = initialState, action) => {
   const baseActionType = stripPrefix(PREFIX, action.type)
   const matchingReduceFunction = actionsMap[baseActionType]
   if (!matchingReduceFunction) return state
   return matchingReduceFunction(state, action)
 }
 
-export default tracks
+export default agreements

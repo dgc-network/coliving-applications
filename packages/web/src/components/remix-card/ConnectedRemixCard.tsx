@@ -5,17 +5,17 @@ import { push as pushRoute } from 'connected-react-router'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 
-import { getTrack } from 'common/store/cache/tracks/selectors'
-import { getUserFromTrack } from 'common/store/cache/users/selectors'
+import { getAgreement } from 'common/store/cache/agreements/selectors'
+import { getUserFromAgreement } from 'common/store/cache/users/selectors'
 import RemixCard from 'components/remix-card/RemixCard'
-import { useTrackCoverArt } from 'hooks/useTrackCoverArt'
+import { useAgreementCoverArt } from 'hooks/useAgreementCoverArt'
 import { useUserProfilePicture } from 'hooks/useUserProfilePicture'
 import { AppState } from 'store/types'
 import { profilePage } from 'utils/route'
 import { withNullGuard } from 'utils/withNullGuard'
 
 type OwnProps = {
-  trackId: ID
+  agreementId: ID
 }
 
 type ConnectedRemixCardProps = OwnProps &
@@ -23,24 +23,24 @@ type ConnectedRemixCardProps = OwnProps &
   ReturnType<typeof mapDispatchToProps>
 
 const g = withNullGuard(
-  ({ track, user, ...p }: ConnectedRemixCardProps) =>
-    track && user && { ...p, track, user }
+  ({ agreement, user, ...p }: ConnectedRemixCardProps) =>
+    agreement && user && { ...p, agreement, user }
 )
 
-const ConnectedRemixCard = g(({ track, user, goToRoute }) => {
+const ConnectedRemixCard = g(({ agreement, user, goToRoute }) => {
   const profilePictureImage = useUserProfilePicture(
     user.user_id,
     user._profile_picture_sizes,
     SquareSizes.SIZE_150_BY_150
   )
-  const coverArtImage = useTrackCoverArt(
-    track.track_id,
-    track._cover_art_sizes,
+  const coverArtImage = useAgreementCoverArt(
+    agreement.agreement_id,
+    agreement._cover_art_sizes,
     SquareSizes.SIZE_480_BY_480
   )
-  const goToTrackPage = useCallback(() => {
-    goToRoute(track.permalink)
-  }, [goToRoute, track])
+  const goToAgreementPage = useCallback(() => {
+    goToRoute(agreement.permalink)
+  }, [goToRoute, agreement])
   const goToArtistPage = useCallback(() => {
     goToRoute(profilePage(user.handle))
   }, [goToRoute, user])
@@ -49,10 +49,10 @@ const ConnectedRemixCard = g(({ track, user, goToRoute }) => {
     <RemixCard
       profilePictureImage={profilePictureImage}
       coverArtImage={coverArtImage}
-      coSign={track._co_sign}
+      coSign={agreement._co_sign}
       artistName={user.name}
       artistHandle={user.handle}
-      onClick={goToTrackPage}
+      onClick={goToAgreementPage}
       onClickArtistName={goToArtistPage}
       userId={user.user_id}
     />
@@ -61,8 +61,8 @@ const ConnectedRemixCard = g(({ track, user, goToRoute }) => {
 
 function mapStateToProps(state: AppState, ownProps: OwnProps) {
   return {
-    track: getTrack(state, { id: ownProps.trackId }),
-    user: getUserFromTrack(state, { id: ownProps.trackId })
+    agreement: getAgreement(state, { id: ownProps.agreementId }),
+    user: getUserFromAgreement(state, { id: ownProps.agreementId })
   }
 }
 

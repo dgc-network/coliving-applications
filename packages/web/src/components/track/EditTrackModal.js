@@ -6,13 +6,13 @@ import { mapValues } from 'lodash'
 import PropTypes from 'prop-types'
 
 import FormTile from 'components/data-entry/FormTile'
-import { useTrackCoverArt } from 'hooks/useTrackCoverArt'
+import { useAgreementCoverArt } from 'hooks/useAgreementCoverArt'
 import * as schemas from 'schemas'
 import zIndex from 'utils/zIndex'
 
-import styles from './EditTrackModal.module.css'
+import styles from './EditAgreementModal.module.css'
 
-const EditTrackModal = ({
+const EditAgreementModal = ({
   visible,
   title,
   onCancel,
@@ -25,7 +25,7 @@ const EditTrackModal = ({
   onDeleteStem,
   onDelete
 }) => {
-  const initialForm = schemas.newTrackMetadata(metadata)
+  const initialForm = schemas.newAgreementMetadata(metadata)
   const [formFields, setFormFields] = useState(initialForm)
   const [invalidFields, setInvalidFields] = useState(
     mapValues(formFields, (v) => false)
@@ -34,8 +34,8 @@ const EditTrackModal = ({
   requiredFields.genre = true
   requiredFields.title = true
 
-  const coverArt = useTrackCoverArt(
-    metadata ? metadata.track_id : null,
+  const coverArt = useAgreementCoverArt(
+    metadata ? metadata.agreement_id : null,
     metadata ? metadata._cover_art_sizes : null,
     SquareSizes.SIZE_1000_BY_1000
   )
@@ -58,7 +58,7 @@ const EditTrackModal = ({
     onCancel()
   }
 
-  const updateTrack = (field, value, invalid) => {
+  const updateAgreement = (field, value, invalid) => {
     if (invalid) {
       setInvalidFields((oldInvalidFields) => ({
         ...oldInvalidFields,
@@ -98,7 +98,7 @@ const EditTrackModal = ({
       isOpen={visible}
       onClose={onClose}
       // Antd modal default value, behind antd DropdownInput
-      zIndex={zIndex.EDIT_TRACK_MODAL}
+      zIndex={zIndex.EDIT_AGREEMENT_MODAL}
       bodyClassName={styles.modalBody}
       titleClassName={styles.modalTitle}
       headerContainerClassName={styles.modalHeader}
@@ -106,25 +106,25 @@ const EditTrackModal = ({
       showTitleHeader
       dismissOnClickOutside={!isArtworkPopupOpen}
     >
-      <div className={styles.editTrack}>
+      <div className={styles.editAgreement}>
         <FormTile
           // Key the form tile by id so each id gets a different instance
           // of input fields to preserve correct default values
-          key={formFields.track_id}
+          key={formFields.agreement_id}
           showPreview={false}
           defaultFields={formFields}
           coverArt={coverArt}
           invalidFields={invalidFields}
           requiredFields={requiredFields}
           onChangeField={(field, value, invalid) =>
-            updateTrack(field, value, invalid)
+            updateAgreement(field, value, invalid)
           }
           stems={stems}
           onDeleteStem={onDeleteStem}
           onAddStems={onAddStems}
           onSelectStemCategory={onSelectStemCategory}
           showUnlistedToggle={showUnlistedToggle}
-          showHideTrackSectionInModal={false}
+          showHideAgreementSectionInModal={false}
           onOpenArtworkPopup={onOpenArtworkPopup}
           onCloseArtworkPopup={onCloseArtworkPopup}
         />
@@ -132,7 +132,7 @@ const EditTrackModal = ({
           <div className={styles.buttonsLeft}>
             {onDelete ? (
               <Button
-                text='DELETE TRACK'
+                text='DELETE AGREEMENT'
                 size={ButtonSize.TINY}
                 type={ButtonType.SECONDARY}
                 onClick={onDelete}
@@ -162,7 +162,7 @@ const EditTrackModal = ({
   )
 }
 
-EditTrackModal.propTypes = {
+EditAgreementModal.propTypes = {
   visible: PropTypes.bool,
   title: PropTypes.string,
   onCancel: PropTypes.func,
@@ -176,24 +176,24 @@ EditTrackModal.propTypes = {
   /** An array of type StemUpload */
   stems: PropTypes.array,
 
-  /** function of type (category, trackIndex, stemIndex) */
+  /** function of type (category, agreementIndex, stemIndex) */
   onSelectStemCategory: PropTypes.func,
 
-  /** function of type (selectedIndex, trackIndex) */
+  /** function of type (selectedIndex, agreementIndex) */
   onAddStems: PropTypes.func,
 
   /** function of type (index) => void */
   onDeleteStem: PropTypes.func
 }
 
-EditTrackModal.defaultProps = {
+EditAgreementModal.defaultProps = {
   visible: true,
-  title: 'EDIT TRACK',
+  title: 'EDIT AGREEMENT',
   onCancel: () => {},
   onSave: () => {},
   onDelete: () => {},
-  metadata: schemas.newTrackMetadata(),
+  metadata: schemas.newAgreementMetadata(),
   showUnlistedToggle: true
 }
 
-export default EditTrackModal
+export default EditAgreementModal

@@ -1,15 +1,15 @@
 import React from 'react'
 
-import type { Track } from '@/common'
+import type { Agreement } from '@/common'
 import { SquareSizes } from '@/common'
-import { getDominantColorsByTrack } from '-client/src/common/store/average-color/slice'
+import { getDominantColorsByAgreement } from '-client/src/common/store/average-color/slice'
 import { Dimensions, StyleSheet, View } from 'react-native'
 import { Shadow } from 'react-native-shadow-2'
 
 import { DynamicImage } from 'app/components/core'
 import { useSelectorWeb } from 'app/hooks/useSelectorWeb'
 import { useThemedStyles } from 'app/hooks/useThemedStyles'
-import { useTrackCoverArt } from 'app/hooks/useTrackCoverArt'
+import { useAgreementCoverArt } from 'app/hooks/useAgreementCoverArt'
 import type { ThemeColors } from 'app/utils/theme'
 
 const dimensions = Dimensions.get('window')
@@ -39,20 +39,20 @@ const createStyles = (themeColors: ThemeColors) =>
   })
 
 type ArtworkProps = {
-  track: Track
+  agreement: Agreement
 }
 
-export const Artwork = ({ track }: ArtworkProps) => {
+export const Artwork = ({ agreement }: ArtworkProps) => {
   const styles = useThemedStyles(createStyles)
-  const image = useTrackCoverArt({
-    id: track.track_id,
-    sizes: track._cover_art_sizes,
+  const image = useAgreementCoverArt({
+    id: agreement.agreement_id,
+    sizes: agreement._cover_art_sizes,
     size: SquareSizes.SIZE_1000_BY_1000
   })
 
   const dominantColors = useSelectorWeb((state) =>
-    getDominantColorsByTrack(state, {
-      track
+    getDominantColorsByAgreement(state, {
+      agreement
     })
   )
 

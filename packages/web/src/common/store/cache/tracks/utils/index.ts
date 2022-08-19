@@ -1,3 +1,3 @@
-export { processAndCacheTracks } from './processAndCacheTracks'
-export { retrieveTracks } from './retrieveTracks'
+export { processAndCacheAgreements } from './processAndCacheAgreements'
+export { retrieveAgreements } from './retrieveAgreements'
 export { reformat } from './reformat'

@@ -1,24 +1,24 @@
-import { parseTrackRoute } from './trackRouteParser'
+import { parseAgreementRoute } from './agreementRouteParser'
 
 // eslint-disable-next-line
 import { mockDecode } from '__mocks__/Hashids'
 
-describe('parseTrackRoute', () => {
+describe('parseAgreementRoute', () => {
   it('can parse a handle/slug route', () => {
     const route = '/tartine/morning-buns-25'
-    const { slug, trackId, handle } = parseTrackRoute(route)
+    const { slug, agreementId, handle } = parseAgreementRoute(route)
     expect(slug).toEqual('morning-buns-25')
-    expect(trackId).toEqual(null)
+    expect(agreementId).toEqual(null)
     expect(handle).toEqual('tartine')
   })
 
-  it('can decode a hashed track id route', () => {
+  it('can decode a hashed agreement id route', () => {
     mockDecode.mockReturnValue([11845])
 
-    const route = '/tracks/eP9k7'
-    const { slug, trackId, handle } = parseTrackRoute(route)
+    const route = '/agreements/eP9k7'
+    const { slug, agreementId, handle } = parseAgreementRoute(route)
     expect(slug).toEqual(null)
-    expect(trackId).toEqual(11845)
+    expect(agreementId).toEqual(11845)
     expect(handle).toEqual(null)
   })
 })

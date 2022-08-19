@@ -12,7 +12,7 @@ export enum LineupVariant {
 export type LineupItem = {
   id: ID
   kind: Kind
-  track_id?: ID
+  agreement_id?: ID
   playlist_id?: ID
   uid: UID
   _marked_deleted?: boolean
@@ -31,7 +31,7 @@ export type LineupProps = {
   /** Object containing lineup actions such as setPage */
   actions: LineupActions
 
-  /** The maximum number of total tracks to fetch */
+  /** The maximum number of total agreements to fetch */
   count?: number
 
   /**
@@ -62,7 +62,7 @@ export type LineupProps = {
   isFeed?: boolean
 
   /**
-   * Indicator if a track should be displayed differently (ie. artist pick)
+   * Indicator if a agreement should be displayed differently (ie. artist pick)
    * The leadingElementId is displayed at the top of the lineup
    */
   leadingElementId?: ID
@@ -72,7 +72,7 @@ export type LineupProps = {
    */
   leadingElementDelineator?: ReactElement
 
-  /** The number of tracks to fetch in each request */
+  /** The number of agreements to fetch in each request */
   limit?: number
 
   /**

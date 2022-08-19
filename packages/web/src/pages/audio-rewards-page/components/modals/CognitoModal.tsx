@@ -17,7 +17,7 @@ import {
 } from 'common/store/pages/live-rewards/slice'
 import { useScript } from 'hooks/useScript'
 import { getCognitoSignature } from 'services/coliving-backend/Cognito'
-import { track } from 'store/analytics/providers'
+import { agreement } from 'store/analytics/providers'
 import { isElectron, isMobile } from 'utils/clientUtil'
 import { COGNITO_SCRIPT_URL } from 'utils/constants'
 import { useSelector } from 'utils/reducer'
@@ -62,14 +62,14 @@ export const CognitoModal = () => {
       switch (event.action) {
         case 'opened':
           dispatch(setCognitoFlowStatus({ status: CognitoFlowStatus.OPENED }))
-          track(Name.REWARDS_CLAIM_START_COGNITO_FLOW, {
+          agreement(Name.REWARDS_CLAIM_START_COGNITO_FLOW, {
             handle,
             source
           })
           break
         case 'closed':
           dispatch(setCognitoFlowStatus({ status: CognitoFlowStatus.CLOSED }))
-          track(Name.REWARDS_CLAIM_FINISH_COGNITO_FLOW, {
+          agreement(Name.REWARDS_CLAIM_FINISH_COGNITO_FLOW, {
             handle,
             source
           })

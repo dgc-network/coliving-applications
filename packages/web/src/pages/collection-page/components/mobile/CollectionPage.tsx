@@ -12,7 +12,7 @@ import {
 
 import {
   CollectionsPageType,
-  CollectionTrack
+  CollectionAgreement
 } from 'common/store/pages/collection/types'
 import { OverflowAction } from 'common/store/ui/mobile-overflow-menu/types'
 import CollectionHeader from 'components/collection/mobile/CollectionHeader'
@@ -25,7 +25,7 @@ import NavContext, {
   RightPreset
 } from 'components/nav/store/context'
 import NetworkConnectivityMonitor from 'components/network-connectivity/NetworkConnectivityMonitor'
-import TrackList from 'components/track/mobile/TrackList'
+import AgreementList from 'components/agreement/mobile/AgreementList'
 import { computeCollectionMetadataProps } from 'pages/collection-page/store/utils'
 
 import styles from './CollectionPage.module.css'
@@ -34,7 +34,7 @@ const messages = {
   emptyPlaylist: 'This playlist is empty.'
 }
 
-const EmptyTrackList = ({
+const EmptyAgreementList = ({
   customEmptyText
 }: {
   customEmptyText?: string | null
@@ -59,18 +59,18 @@ export type CollectionPageProps = {
     metadata: Collection | SmartCollection | null
     user: User | null
   }
-  tracks: {
+  agreements: {
     status: string
-    entries: CollectionTrack[]
+    entries: CollectionAgreement[]
   }
   userId?: ID | null
   userPlaylists?: any
   isQueued: () => boolean
-  onHeroTrackClickArtistName: () => void
+  onHeroAgreementClickArtistName: () => void
   onPlay: (record: any) => void
-  onHeroTrackShare: () => void
-  onHeroTrackSave?: () => void
-  onHeroTrackRepost?: () => void
+  onHeroAgreementShare: () => void
+  onHeroAgreementSave?: () => void
+  onHeroAgreementRepost?: () => void
   onClickRow: (record: any) => void
   onClickSave?: (record: any) => void
   onClickMobileOverflow?: (
@@ -91,17 +91,17 @@ const CollectionPage = ({
   playing,
   type,
   collection: { status, metadata, user },
-  tracks,
+  agreements,
   userId,
   userPlaylists,
   isQueued,
-  onHeroTrackClickArtistName,
+  onHeroAgreementClickArtistName,
   onPlay,
-  onHeroTrackShare,
-  onHeroTrackSave,
+  onHeroAgreementShare,
+  onHeroAgreementSave,
   onClickRow,
   onClickSave,
-  onHeroTrackRepost,
+  onHeroAgreementRepost,
   onClickMobileOverflow,
   onClickFavorites,
   onClickReposts,
@@ -131,15 +131,15 @@ const CollectionPage = ({
   // TODO: Consider dynamic lineups, esp. for caching improvement.
   const collectionLoading = status === Status.LOADING
   const queuedAndPlaying = playing && isQueued()
-  const tracksLoading = tracks.status === Status.LOADING
+  const agreementsLoading = agreements.status === Status.LOADING
 
   const coverArtSizes =
     metadata && metadata?.variant !== Variant.SMART
       ? metadata._cover_art_sizes
       : null
   const duration =
-    tracks.entries?.reduce(
-      (duration: number, entry: CollectionTrack) =>
+    agreements.entries?.reduce(
+      (duration: number, entry: CollectionAgreement) =>
         duration + entry.duration || 0,
       0
     ) ?? 0
@@ -180,32 +180,32 @@ const CollectionPage = ({
     isReposted
   } = computeCollectionMetadataProps(metadata)
 
-  const togglePlay = (uid: string, trackId: ID) => {
+  const togglePlay = (uid: string, agreementId: ID) => {
     if (playlistId === SmartCollectionVariant.LIVE_NFT_PLAYLIST) {
-      const track = tracks.entries.find((track) => track.uid === uid)
+      const agreement = agreements.entries.find((agreement) => agreement.uid === uid)
 
-      if (track?.collectible) {
-        const { collectible } = track
+      if (agreement?.collectible) {
+        const { collectible } = agreement
 
         onClickRow({
           ...collectible,
           uid: collectible.id,
-          track_id: collectible.id
+          agreement_id: collectible.id
         })
       }
     } else {
-      onClickRow({ uid, track_id: trackId })
+      onClickRow({ uid, agreement_id: agreementId })
     }
   }
-  const onSave = (isSaved: boolean, trackId: number) => {
+  const onSave = (isSaved: boolean, agreementId: number) => {
     if (!isOwner) {
-      onClickSave?.({ has_current_user_saved: isSaved, track_id: trackId })
+      onClickSave?.({ has_current_user_saved: isSaved, agreement_id: agreementId })
     }
   }
 
   const playingUid = getPlayingUid()
 
-  const trackList = tracks.entries.map((entry) => ({
+  const agreementList = agreements.entries.map((entry) => ({
     isLoading: false,
     isSaved: entry.has_current_user_saved,
     isReposted: entry.has_current_user_reposted,
@@ -213,15 +213,15 @@ const CollectionPage = ({
     isPlaying: queuedAndPlaying && playingUid === entry.uid,
     artistName: entry?.user?.name,
     artistHandle: entry?.user?.handle,
-    trackTitle: entry.title,
-    trackId: entry.track_id,
+    agreementTitle: entry.title,
+    agreementId: entry.agreement_id,
     uid: entry.uid,
     isDeleted: entry.is_delete || !!entry?.user?.is_deactivated
   }))
 
   return (
     <NetworkConnectivityMonitor
-      pageDidLoad={tracksLoading}
+      pageDidLoad={agreementsLoading}
       onDidRegainConnectivity={refresh}
     >
       <MobilePageContainer
@@ -236,10 +236,10 @@ const CollectionPage = ({
               userId={user?.user_id ?? 0}
               loading={
                 typeTitle === 'Audio NFT Playlist'
-                  ? tracksLoading
+                  ? agreementsLoading
                   : collectionLoading
               }
-              tracksLoading={tracksLoading}
+              agreementsLoading={agreementsLoading}
               type={typeTitle}
               title={playlistName}
               artistName={playlistOwnerName}
@@ -248,7 +248,7 @@ const CollectionPage = ({
               description={description}
               isOwner={isOwner}
               isAlbum={isAlbum}
-              numTracks={trackList.length}
+              numAgreements={agreementList.length}
               modified={lastModified || Date.now()}
               duration={duration}
               isPublished={!isPrivate}
@@ -259,11 +259,11 @@ const CollectionPage = ({
               repostCount={playlistRepostCount}
               isReposted={isReposted}
               // Actions
-              onClickArtistName={onHeroTrackClickArtistName}
+              onClickArtistName={onHeroAgreementClickArtistName}
               onPlay={onPlay}
-              onShare={onHeroTrackShare}
-              onSave={onHeroTrackSave}
-              onRepost={onHeroTrackRepost}
+              onShare={onHeroAgreementShare}
+              onSave={onHeroAgreementSave}
+              onRepost={onHeroAgreementRepost}
               onClickFavorites={onClickFavorites}
               onClickReposts={onClickReposts}
               onClickMobileOverflow={onClickMobileOverflow}
@@ -274,18 +274,18 @@ const CollectionPage = ({
               icon={icon}
             />
           </div>
-          <div className={styles.collectionTracksContainer}>
-            {!tracksLoading ? (
+          <div className={styles.collectionAgreementsContainer}>
+            {!agreementsLoading ? (
               isEmpty ? (
                 <>
                   <div className={styles.divider}></div>
-                  <EmptyTrackList customEmptyText={customEmptyText} />
+                  <EmptyAgreementList customEmptyText={customEmptyText} />
                 </>
               ) : (
-                <TrackList
+                <AgreementList
                   containerClassName={''}
                   itemClassName={''}
-                  tracks={trackList}
+                  agreements={agreementList}
                   showTopDivider
                   showDivider
                   onSave={onSave}

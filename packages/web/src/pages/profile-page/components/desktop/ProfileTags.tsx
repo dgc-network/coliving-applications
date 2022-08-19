@@ -3,7 +3,7 @@ import { useCallback } from 'react'
 import { Name } from '@coliving/common'
 import { IconTrending } from '@coliving/stems'
 
-import Tag from 'components/track/Tag'
+import Tag from 'components/agreement/Tag'
 import { make, useRecord } from 'store/analytics/actions'
 import { searchResultsPage } from 'utils/route'
 

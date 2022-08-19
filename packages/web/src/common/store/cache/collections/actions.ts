@@ -9,12 +9,12 @@ export const EDIT_PLAYLIST = 'EDIT_PLAYLIST'
 export const EDIT_PLAYLIST_SUCCEEDED = 'EDIT_PLAYLIST_SUCCEEDED'
 export const EDIT_PLAYLIST_FAILED = 'EDIT_PLAYLIST_FAILED'
 
-export const ADD_TRACK_TO_PLAYLIST = 'ADD_TRACK_TO_PLAYLIST'
-export const ADD_TRACK_TO_PLAYLIST_FAILED = 'ADD_TRACK_TO_PLAYLIST_FAILED'
+export const ADD_AGREEMENT_TO_PLAYLIST = 'ADD_AGREEMENT_TO_PLAYLIST'
+export const ADD_AGREEMENT_TO_PLAYLIST_FAILED = 'ADD_AGREEMENT_TO_PLAYLIST_FAILED'
 
-export const REMOVE_TRACK_FROM_PLAYLIST = 'REMOVE_TRACK_FROM_PLAYLIST'
-export const REMOVE_TRACK_FROM_PLAYLIST_FAILED =
-  'REMOVE_TRACK_FROM_PLAYLIST_FAILED'
+export const REMOVE_AGREEMENT_FROM_PLAYLIST = 'REMOVE_AGREEMENT_FROM_PLAYLIST'
+export const REMOVE_AGREEMENT_FROM_PLAYLIST_FAILED =
+  'REMOVE_AGREEMENT_FROM_PLAYLIST_FAILED'
 
 export const ORDER_PLAYLIST = 'ORDER_PLAYLIST'
 export const ORDER_PLAYLIST_FAILED = 'ORDER_PLAYLIST_FAILED'
@@ -27,18 +27,18 @@ export const DELETE_PLAYLIST_REQUESTED = 'DELETE_PLAYLIST_REQUESTED'
 export const DELETE_PLAYLIST_SUCCEEDED = 'DELETE_PLAYLIST_SUCCEEDED'
 export const DELETE_PLAYLIST_FAILED = 'DELETE_PLAYLIST_FAILED'
 
-export const FETCH_COVER_ART = 'TRACKS/FETCH_COVER_ART'
+export const FETCH_COVER_ART = 'AGREEMENTS/FETCH_COVER_ART'
 
 /**
- * @param initTrackId optional track id to pull artwork from.
+ * @param initAgreementId optional agreement id to pull artwork from.
  */
 export function createPlaylist(
   tempId: number | string,
   formFields: Record<string, unknown>,
   source: string,
-  initTrackId?: number | null
+  initAgreementId?: number | null
 ) {
-  return { type: CREATE_PLAYLIST, tempId, formFields, source, initTrackId }
+  return { type: CREATE_PLAYLIST, tempId, formFields, source, initAgreementId }
 }
 
 export function createPlaylistRequested() {
@@ -73,43 +73,43 @@ export function editPlaylistFailed(
   return { type: EDIT_PLAYLIST_FAILED, error, params, metadata }
 }
 
-export function addTrackToPlaylist(
-  trackId: ID | null,
+export function addAgreementToPlaylist(
+  agreementId: ID | null,
   playlistId: number | string
 ) {
-  return { type: ADD_TRACK_TO_PLAYLIST, trackId, playlistId }
+  return { type: ADD_AGREEMENT_TO_PLAYLIST, agreementId, playlistId }
 }
 
-export function addTrackToPlaylistFailed(
+export function addAgreementToPlaylistFailed(
   error: Error,
   params: Record<string, unknown>,
   metadata: Record<string, unknown>
 ) {
-  return { type: ADD_TRACK_TO_PLAYLIST_FAILED, error, params, metadata }
+  return { type: ADD_AGREEMENT_TO_PLAYLIST_FAILED, error, params, metadata }
 }
 
-export function removeTrackFromPlaylist(
-  trackId: number,
+export function removeAgreementFromPlaylist(
+  agreementId: number,
   playlistId: number,
   timestamp: number
 ) {
-  return { type: REMOVE_TRACK_FROM_PLAYLIST, trackId, playlistId, timestamp }
+  return { type: REMOVE_AGREEMENT_FROM_PLAYLIST, agreementId, playlistId, timestamp }
 }
 
-export function removeTrackFromPlaylistFailed(
+export function removeAgreementFromPlaylistFailed(
   error: Error,
   params: Record<string, unknown>,
   metadata: Record<string, unknown>
 ) {
-  return { type: REMOVE_TRACK_FROM_PLAYLIST_FAILED, error, params, metadata }
+  return { type: REMOVE_AGREEMENT_FROM_PLAYLIST_FAILED, error, params, metadata }
 }
 
 export function orderPlaylist(
   playlistId: number,
-  trackIdsAndTimes: { id: ID; time: number }[],
-  trackUids?: UID[]
+  agreementIdsAndTimes: { id: ID; time: number }[],
+  agreementUids?: UID[]
 ) {
-  return { type: ORDER_PLAYLIST, playlistId, trackIdsAndTimes, trackUids }
+  return { type: ORDER_PLAYLIST, playlistId, agreementIdsAndTimes, agreementUids }
 }
 
 export function orderPlaylistFailed(

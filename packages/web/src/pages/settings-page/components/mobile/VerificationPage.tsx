@@ -24,7 +24,7 @@ import Page from 'components/page/Page'
 import UserBadges from 'components/user-badges/UserBadges'
 import { useRemoteVar } from 'hooks/useRemoteConfig'
 import { useUserProfilePicture } from 'hooks/useUserProfilePicture'
-import { useRecord, make, TrackEvent } from 'store/analytics/actions'
+import { useRecord, make, AgreementEvent } from 'store/analytics/actions'
 import { profilePage } from 'utils/route'
 
 import InstagramAccountVerification from '../InstagramAccountVerified'
@@ -70,18 +70,18 @@ const VerifyBody = (props: VerifyBodyProps) => {
   const { handle, onClick } = props
   const onTwitterClick = useCallback(() => {
     onClick()
-    const trackEvent: TrackEvent = make(Name.SETTINGS_START_TWITTER_OAUTH, {
+    const agreementEvent: AgreementEvent = make(Name.SETTINGS_START_TWITTER_OAUTH, {
       handle
     })
-    record(trackEvent)
+    record(agreementEvent)
   }, [record, onClick, handle])
 
   const onInstagramClick = useCallback(() => {
     onClick()
-    const trackEvent: TrackEvent = make(Name.SETTINGS_START_INSTAGRAM_OAUTH, {
+    const agreementEvent: AgreementEvent = make(Name.SETTINGS_START_INSTAGRAM_OAUTH, {
       handle
     })
-    record(trackEvent)
+    record(agreementEvent)
   }, [record, onClick, handle])
 
   return (
@@ -212,11 +212,11 @@ const VerificationPage = ({
         onInstagramLogin(uuid, profile)
         setStatus(Status.SUCCESS)
       }
-      const trackEvent: TrackEvent = make(
+      const agreementEvent: AgreementEvent = make(
         Name.SETTINGS_COMPLETE_INSTAGRAM_OAUTH,
         { is_verified: profile.is_verified, handle, username: profile.username }
       )
-      record(trackEvent)
+      record(agreementEvent)
     },
     [handle, onInstagramLogin, setError, record]
   )
@@ -233,7 +233,7 @@ const VerificationPage = ({
         onTwitterLogin(uuid, profile)
         setStatus(Status.SUCCESS)
       }
-      const trackEvent: TrackEvent = make(
+      const agreementEvent: AgreementEvent = make(
         Name.SETTINGS_COMPLETE_TWITTER_OAUTH,
         {
           is_verified: profile.verified,
@@ -241,7 +241,7 @@ const VerificationPage = ({
           screen_name: profile.screen_name
         }
       )
-      record(trackEvent)
+      record(agreementEvent)
     },
     [handle, onTwitterLogin, setError, record]
   )

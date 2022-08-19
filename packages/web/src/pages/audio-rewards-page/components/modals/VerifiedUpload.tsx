@@ -25,13 +25,13 @@ const messages = {
   step1Subtitle: 'Link your verified Twitter or Instagram Account',
   verifyTwitterButton: 'Verify With Twitter',
   verifyIGButton: 'Verify With Instagram',
-  step2Title: 'Step 2: Upload a Track',
-  step2SubtitleDesktop: 'Upload your first track from your verified account',
-  step2SubtitleMobile: 'Upload your first track from your computer',
+  step2Title: 'Step 2: Upload a Agreement',
+  step2SubtitleDesktop: 'Upload your first agreement from your verified account',
+  step2SubtitleMobile: 'Upload your first agreement from your computer',
   uploadButton: 'Upload',
   step3Title: 'Step 3: Tag us And Let Us Know',
   step3Subtitle:
-    'Post a link to your track from your verified Twittter or Instagram and tag us',
+    'Post a link to your agreement from your verified Twittter or Instagram and tag us',
   findUsTwitter: 'Find Us On Twitter',
   findUsInstagram: 'Find Us On Instagram'
 }

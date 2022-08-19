@@ -1,14 +1,14 @@
 import * as schemas from 'schemas'
-import { DownloadTrackMessage } from 'services/native-mobile-interface/downloadTrack'
+import { DownloadAgreementMessage } from 'services/native-mobile-interface/downloadAgreement'
 
 import { waitForLibsInit } from './eagerLoadUtils'
 
 const CHECK_DOWNLOAD_AVAILIBILITY_POLLING_INTERVAL = 3000
 
-const updateTrackDownloadCIDInProgress = new Set([])
+const updateAgreementDownloadCIDInProgress = new Set([])
 
-class TrackDownload {
-  static async downloadTrack(cid, contentNodeEndpoints, filename) {
+class AgreementDownload {
+  static async downloadAgreement(cid, contentNodeEndpoints, filename) {
     return window.colivingLibs.File.downloadCID(
       cid,
       contentNodeEndpoints,
@@ -16,12 +16,12 @@ class TrackDownload {
     )
   }
 
-  static async downloadTrackMobile(cid, creatorNodeGateways, filename) {
+  static async downloadAgreementMobile(cid, creatorNodeGateways, filename) {
     const urls = creatorNodeGateways.map(
       (gateway) => new URL(`${gateway}${cid}?filename=${filename}`)
     )
 
-    const message = new DownloadTrackMessage({
+    const message = new DownloadAgreementMessage({
       filename,
       urls
     })
@@ -29,42 +29,42 @@ class TrackDownload {
   }
 
   /**
-   * Updates the download cid for a track
-   * @param {ID} trackId
-   * @param {TrackMetadata} metadata
+   * Updates the download cid for a agreement
+   * @param {ID} agreementId
+   * @param {AgreementMetadata} metadata
    * @param {string?} cid optional cid to update to, otherwise it is polled for
    */
-  static async updateTrackDownloadCID(trackId, metadata, cid) {
+  static async updateAgreementDownloadCID(agreementId, metadata, cid) {
     await waitForLibsInit()
-    if (updateTrackDownloadCIDInProgress.has(trackId)) return
+    if (updateAgreementDownloadCIDInProgress.has(agreementId)) return
     if (metadata.download && metadata.download.cid) return
 
-    updateTrackDownloadCIDInProgress.add(trackId)
+    updateAgreementDownloadCIDInProgress.add(agreementId)
 
-    const cleanedMetadata = schemas.newTrackMetadata(metadata, true)
+    const cleanedMetadata = schemas.newAgreementMetadata(metadata, true)
     const account = window.colivingLibs.Account.getCurrentUser()
 
     if (!cid) {
-      cid = await TrackDownload.checkIfDownloadAvailable(
-        trackId,
+      cid = await AgreementDownload.checkIfDownloadAvailable(
+        agreementId,
         account.creator_node_endpoint
       )
     }
     cleanedMetadata.download.cid = cid
-    const update = await window.colivingLibs.Track.updateTrack(cleanedMetadata)
+    const update = await window.colivingLibs.Agreement.updateAgreement(cleanedMetadata)
 
-    updateTrackDownloadCIDInProgress.delete(trackId)
+    updateAgreementDownloadCIDInProgress.delete(agreementId)
     return update
   }
 
-  static async checkIfDownloadAvailable(trackId, contentNodeEndpoints) {
+  static async checkIfDownloadAvailable(agreementId, contentNodeEndpoints) {
     await waitForLibsInit()
     let cid
     while (!cid) {
       try {
-        cid = await window.colivingLibs.Track.checkIfDownloadAvailable(
+        cid = await window.colivingLibs.Agreement.checkIfDownloadAvailable(
           contentNodeEndpoints,
-          trackId
+          agreementId
         )
       } catch (e) {
         console.error(e)
@@ -78,4 +78,4 @@ class TrackDownload {
   }
 }
 
-export default TrackDownload
+export default AgreementDownload

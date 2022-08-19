@@ -5,9 +5,9 @@ import {
   ADD_LOCAL_SAVE,
   REMOVE_LOCAL_SAVE
 } from 'common/store/pages/saved-page/actions'
-import tracksReducer from 'common/store/pages/saved-page/lineups/tracks/reducer'
+import agreementsReducer from 'common/store/pages/saved-page/lineups/agreements/reducer'
 
-import { PREFIX as tracksPrefix } from './lineups/tracks/actions'
+import { PREFIX as agreementsPrefix } from './lineups/agreements/actions'
 
 const initialState = {
   // id => uid
@@ -33,25 +33,25 @@ const actionsMap = {
       ...state,
       localSaves: {
         ...state.localSaves,
-        [action.trackId]: action.uid
+        [action.agreementId]: action.uid
       }
     }
   },
   [REMOVE_LOCAL_SAVE](state, action) {
     const newState = { ...state }
-    delete newState.localSaves[action.trackId]
+    delete newState.localSaves[action.agreementId]
     newState.saves = newState.saves.filter(
-      ({ save_item_id: id }) => id !== action.trackId
+      ({ save_item_id: id }) => id !== action.agreementId
     )
     return newState
   }
 }
 
-const tracksLineupReducer = asLineup(tracksPrefix, tracksReducer)
+const agreementsLineupReducer = asLineup(agreementsPrefix, agreementsReducer)
 
 const reducer = (state = initialState, action) => {
-  const tracks = tracksLineupReducer(state.tracks, action)
-  if (tracks !== state.tracks) return { ...state, tracks }
+  const agreements = agreementsLineupReducer(state.agreements, action)
+  if (agreements !== state.agreements) return { ...state, agreements }
 
   const matchingReduceFunction = actionsMap[action.type]
   if (!matchingReduceFunction) return state

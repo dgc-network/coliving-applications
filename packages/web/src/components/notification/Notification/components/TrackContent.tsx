@@ -1,34 +1,34 @@
 import { SquareSizes } from '@coliving/common'
 
-import { TrackEntity } from 'common/store/notifications/types'
+import { AgreementEntity } from 'common/store/notifications/types'
 import CoSign, { Size } from 'components/co-sign/CoSign'
 import DynamicImage from 'components/dynamic-image/DynamicImage'
-import { useTrackCoverArt } from 'hooks/useTrackCoverArt'
+import { useAgreementCoverArt } from 'hooks/useAgreementCoverArt'
 
-import styles from './TrackContent.module.css'
+import styles from './AgreementContent.module.css'
 
-type TrackContentProps = {
-  track: TrackEntity
+type AgreementContentProps = {
+  agreement: AgreementEntity
 }
 
-export const TrackContent = (props: TrackContentProps) => {
-  const { track } = props
+export const AgreementContent = (props: AgreementContentProps) => {
+  const { agreement } = props
 
-  const image = useTrackCoverArt(
-    track.track_id,
-    track._cover_art_sizes,
+  const image = useAgreementCoverArt(
+    agreement.agreement_id,
+    agreement._cover_art_sizes,
     SquareSizes.SIZE_150_BY_150
   )
 
   return (
-    <div className={styles.trackContent}>
+    <div className={styles.agreementContent}>
       <CoSign hideTooltip size={Size.SMALL} className={styles.cosign}>
         <DynamicImage
-          wrapperClassName={styles.trackContentArtwork}
+          wrapperClassName={styles.agreementContentArtwork}
           image={image}
         />
       </CoSign>
-      <span className={styles.trackContentText}>{track.title}</span>
+      <span className={styles.agreementContentText}>{agreement.title}</span>
     </div>
   )
 }

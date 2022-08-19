@@ -23,15 +23,15 @@ import {
 } from 'common/store/account/selectors'
 import { setDominantColors } from 'common/store/average-color/slice'
 import * as cacheActions from 'common/store/cache/actions'
-import * as trackActions from 'common/store/cache/tracks/actions'
-import { getTrack } from 'common/store/cache/tracks/selectors'
+import * as agreementActions from 'common/store/cache/agreements/actions'
+import { getAgreement } from 'common/store/cache/agreements/selectors'
 import { fetchUsers } from 'common/store/cache/users/sagas'
 import { getUser } from 'common/store/cache/users/selectors'
 import { squashNewLines, formatUrlName } from 'common/utils/formatUtil'
 import * as signOnActions from 'pages/sign-on/store/actions'
 import ColivingBackend, { fetchCID } from 'services/ColivingBackend'
 import apiClient from 'services/coliving-api-client/ColivingAPIClient'
-import TrackDownload from 'services/coliving-backend/TrackDownload'
+import AgreementDownload from 'services/coliving-backend/AgreementDownload'
 import { make } from 'store/analytics/actions'
 import { waitForBackendSetup } from 'store/backend/sagas'
 import * as confirmerActions from 'store/confirmer/actions'
@@ -60,8 +60,8 @@ function* fetchRepostInfo(entries) {
 function* fetchSegment(metadata) {
   const user = yield call(waitForValue, getUser, { id: metadata.owner_id })
   const gateways = getCreatorNodeIPFSGateways(user.creator_node_endpoint)
-  if (!metadata.track_segments[0]) return
-  const cid = metadata.track_segments[0].multihash
+  if (!metadata.agreement_segments[0]) return
+  const cid = metadata.agreement_segments[0].multihash
   return yield call(fetchCID, cid, gateways, /* cache */ false)
 }
 
@@ -77,7 +77,7 @@ function* fetchFirstSegments(entries) {
 
     yield put(
       cacheActions.update(
-        Kind.TRACKS,
+        Kind.AGREEMENTS,
         firstSegments.map((s, i) => {
           if (s === 'Unauthorized') {
             return {
@@ -103,9 +103,9 @@ function* fetchFirstSegments(entries) {
 
 function* watchAdd() {
   yield takeEvery(cacheActions.ADD_SUCCEEDED, function* (action) {
-    if (action.kind === Kind.TRACKS) {
+    if (action.kind === Kind.AGREEMENTS) {
       yield put(
-        trackActions.setPermalinkStatus(
+        agreementActions.setPermalinkStatus(
           action.entries
             .filter((entry) => !!entry.metadata.permalink)
             .map((entry) => ({
@@ -123,46 +123,46 @@ function* watchAdd() {
   })
 }
 
-export function* trackNewRemixEvent(remixTrack) {
+export function* agreementNewRemixEvent(remixAgreement) {
   const account = yield select(getAccountUser)
-  const remixParentTrack = remixTrack.remix_of.tracks[0]
-  const parentTrack = yield select(getTrack, {
-    id: remixParentTrack.parent_track_id
+  const remixParentAgreement = remixAgreement.remix_of.agreements[0]
+  const parentAgreement = yield select(getAgreement, {
+    id: remixParentAgreement.parent_agreement_id
   })
-  const parentTrackUser = parentTrack
-    ? yield select(getUser, { id: parentTrack.owner_id })
+  const parentAgreementUser = parentAgreement
+    ? yield select(getUser, { id: parentAgreement.owner_id })
     : null
   yield put(
     make(Name.REMIX_NEW_REMIX, {
-      id: remixTrack.track_id,
+      id: remixAgreement.agreement_id,
       handle: account.handle,
-      title: remixTrack.title,
-      parent_track_id: remixParentTrack.parent_track_id,
-      parent_track_title: parentTrack ? parentTrack.title : '',
-      parent_track_user_handle: parentTrackUser ? parentTrackUser.handle : ''
+      title: remixAgreement.title,
+      parent_agreement_id: remixParentAgreement.parent_agreement_id,
+      parent_agreement_title: parentAgreement ? parentAgreement.title : '',
+      parent_agreement_user_handle: parentAgreementUser ? parentAgreementUser.handle : ''
     })
   )
 }
 
-function* editTrackAsync(action) {
+function* editAgreementAsync(action) {
   yield call(waitForBackendSetup)
   action.formFields.description = squashNewLines(action.formFields.description)
 
-  const currentTrack = yield select(getTrack, { id: action.trackId })
+  const currentAgreement = yield select(getAgreement, { id: action.agreementId })
   const wasDownloadable =
-    currentTrack.download && currentTrack.download.is_downloadable
+    currentAgreement.download && currentAgreement.download.is_downloadable
   const isNowDownloadable =
     action.formFields.download && action.formFields.download.is_downloadable
 
-  const isPublishing = currentTrack._is_publishing
-  const wasUnlisted = currentTrack.is_unlisted
+  const isPublishing = currentAgreement._is_publishing
+  const wasUnlisted = currentAgreement.is_unlisted
   const isNowListed = !action.formFields.is_unlisted
 
   if (!isPublishing && wasUnlisted && isNowListed) {
     yield put(
-      cacheActions.update(Kind.TRACKS, [
+      cacheActions.update(Kind.AGREEMENTS, [
         {
-          id: action.trackId,
+          id: action.agreementId,
           metadata: { _is_publishing: true }
         }
       ])
@@ -170,78 +170,78 @@ function* editTrackAsync(action) {
   }
 
   yield call(
-    confirmEditTrack,
-    action.trackId,
+    confirmEditAgreement,
+    action.agreementId,
     action.formFields,
     wasDownloadable,
     isNowDownloadable,
     wasUnlisted,
     isNowListed,
-    currentTrack
+    currentAgreement
   )
 
-  const track = { ...action.formFields }
-  track.track_id = action.trackId
-  if (track.artwork) {
-    track._cover_art_sizes = {
-      ...track._cover_art_sizes,
-      [DefaultSizes.OVERRIDE]: track.artwork.url
+  const agreement = { ...action.formFields }
+  agreement.agreement_id = action.agreementId
+  if (agreement.artwork) {
+    agreement._cover_art_sizes = {
+      ...agreement._cover_art_sizes,
+      [DefaultSizes.OVERRIDE]: agreement.artwork.url
     }
   }
 
   yield put(
-    cacheActions.update(Kind.TRACKS, [{ id: track.track_id, metadata: track }])
+    cacheActions.update(Kind.AGREEMENTS, [{ id: agreement.agreement_id, metadata: agreement }])
   )
-  yield put(trackActions.editTrackSucceeded())
+  yield put(agreementActions.editAgreementSucceeded())
 
   // This is a new remix
   if (
-    track?.remix_of?.tracks?.[0]?.parent_track_id &&
-    currentTrack?.remix_of?.tracks?.[0]?.parent_track_id !==
-      track?.remix_of?.tracks?.[0]?.parent_track_id
+    agreement?.remix_of?.agreements?.[0]?.parent_agreement_id &&
+    currentAgreement?.remix_of?.agreements?.[0]?.parent_agreement_id !==
+      agreement?.remix_of?.agreements?.[0]?.parent_agreement_id
   ) {
     // This is a new remix
-    yield call(trackNewRemixEvent, track)
+    yield call(agreementNewRemixEvent, agreement)
   }
 }
 
-function* confirmEditTrack(
-  trackId,
+function* confirmEditAgreement(
+  agreementId,
   formFields,
   wasDownloadable,
   isNowDownloadable,
   wasUnlisted,
   isNowListed,
-  currentTrack
+  currentAgreement
 ) {
   yield put(
     confirmerActions.requestConfirmation(
-      makeKindId(Kind.TRACKS, trackId),
+      makeKindId(Kind.AGREEMENTS, agreementId),
       function* () {
         if (!wasDownloadable && isNowDownloadable) {
-          yield put(trackActions.checkIsDownloadable(trackId))
+          yield put(agreementActions.checkIsDownloadable(agreementId))
         }
 
         const { blockHash, blockNumber } = yield call(
-          ColivingBackend.updateTrack,
-          trackId,
+          ColivingBackend.updateAgreement,
+          agreementId,
           { ...formFields }
         )
 
         const confirmed = yield call(confirmTransaction, blockHash, blockNumber)
         if (!confirmed) {
           throw new Error(
-            `Could not confirm edit track for track id ${trackId}`
+            `Could not confirm edit agreement for agreement id ${agreementId}`
           )
         }
 
-        // Need to poll with the new track name in case it changed
+        // Need to poll with the new agreement name in case it changed
         const userId = yield select(getUserId)
         const handle = yield select(getUserHandle)
 
-        return yield apiClient.getTrack(
+        return yield apiClient.getAgreement(
           {
-            id: trackId,
+            id: agreementId,
             currentUserId: userId,
             unlistedArgs: {
               urlTitle: formatUrlName(formFields.title),
@@ -251,51 +251,51 @@ function* confirmEditTrack(
           /* retry */ false
         )
       },
-      function* (confirmedTrack) {
+      function* (confirmedAgreement) {
         if (wasUnlisted && isNowListed) {
-          confirmedTrack._is_publishing = false
+          confirmedAgreement._is_publishing = false
         }
-        // Update the cached track so it no longer contains image upload artifacts
+        // Update the cached agreement so it no longer contains image upload artifacts
         yield put(
-          cacheActions.update(Kind.TRACKS, [
+          cacheActions.update(Kind.AGREEMENTS, [
             {
-              id: confirmedTrack.track_id,
-              metadata: { ...confirmedTrack, artwork: {} }
+              id: confirmedAgreement.agreement_id,
+              metadata: { ...confirmedAgreement, artwork: {} }
             }
           ])
         )
 
-        // Record analytics on track edit
+        // Record analytics on agreement edit
         // Note: if remixes is not defined in field_visibility, it defaults to true
         if (
-          (currentTrack?.field_visibility?.remixes ?? true) &&
-          confirmedTrack?.field_visibility?.remixes === false
+          (currentAgreement?.field_visibility?.remixes ?? true) &&
+          confirmedAgreement?.field_visibility?.remixes === false
         ) {
           const handle = yield select(getUserHandle)
           // Record event if hide remixes was turned on
           yield put(
             make(Name.REMIX_HIDE, {
-              id: confirmedTrack.track_id,
+              id: confirmedAgreement.agreement_id,
               handle
             })
           )
         }
       },
       function* () {
-        yield put(trackActions.editTrackFailed())
+        yield put(agreementActions.editAgreementFailed())
         // Throw so the user can't capture a bad upload state (especially for downloads).
         // TODO: Consider better update revesion logic here coupled with a toast or similar.
-        throw new Error('Edit track failed')
+        throw new Error('Edit agreement failed')
       }
     )
   )
 }
 
-function* watchEditTrack() {
-  yield takeEvery(trackActions.EDIT_TRACK, editTrackAsync)
+function* watchEditAgreement() {
+  yield takeEvery(agreementActions.EDIT_AGREEMENT, editAgreementAsync)
 }
 
-function* deleteTrackAsync(action) {
+function* deleteAgreementAsync(action) {
   yield call(waitForBackendSetup)
   const userId = yield select(getUserId)
   if (!userId) {
@@ -304,9 +304,9 @@ function* deleteTrackAsync(action) {
   }
   const handle = yield select(getUserHandle)
 
-  // Before deleting, check if the track is set as the artist pick & delete if so
+  // Before deleting, check if the agreement is set as the artist pick & delete if so
   const socials = yield call(ColivingBackend.getCreatorSocialHandle, handle)
-  if (socials.pinnedTrackId === action.trackId) {
+  if (socials.pinnedAgreementId === action.agreementId) {
     yield call(ColivingBackend.setArtistPick)
     yield put(
       cacheActions.update(Kind.USERS, [
@@ -318,73 +318,73 @@ function* deleteTrackAsync(action) {
     )
   }
 
-  const track = yield select(getTrack, { id: action.trackId })
+  const agreement = yield select(getAgreement, { id: action.agreementId })
   yield put(
-    cacheActions.update(Kind.TRACKS, [
-      { id: track.track_id, metadata: { _marked_deleted: true } }
+    cacheActions.update(Kind.AGREEMENTS, [
+      { id: agreement.agreement_id, metadata: { _marked_deleted: true } }
     ])
   )
 
-  yield call(confirmDeleteTrack, track.track_id)
+  yield call(confirmDeleteAgreement, agreement.agreement_id)
 }
 
-function* confirmDeleteTrack(trackId) {
+function* confirmDeleteAgreement(agreementId) {
   yield put(
     confirmerActions.requestConfirmation(
-      makeKindId(Kind.TRACKS, trackId),
+      makeKindId(Kind.AGREEMENTS, agreementId),
       function* () {
         const { blockHash, blockNumber } = yield call(
-          ColivingBackend.deleteTrack,
-          trackId
+          ColivingBackend.deleteAgreement,
+          agreementId
         )
 
         const confirmed = yield call(confirmTransaction, blockHash, blockNumber)
         if (!confirmed) {
           throw new Error(
-            `Could not confirm delete track for track id ${trackId}`
+            `Could not confirm delete agreement for agreement id ${agreementId}`
           )
         }
 
-        const track = yield select(getTrack, { id: trackId })
+        const agreement = yield select(getAgreement, { id: agreementId })
         const handle = yield select(getUserHandle)
         const userId = yield select(getUserId)
 
-        return yield apiClient.getTrack(
+        return yield apiClient.getAgreement(
           {
-            id: trackId,
+            id: agreementId,
             currentUserId: userId,
             unlistedArgs: {
-              urlTitle: formatUrlName(track.title),
+              urlTitle: formatUrlName(agreement.title),
               handle
             }
           },
           /* retry */ false
         )
       },
-      function* (deletedTrack) {
-        // NOTE: we do not delete from the cache as the track may be playing
-        yield put(trackActions.deleteTrackSucceeded(deletedTrack.track_id))
+      function* (deletedAgreement) {
+        // NOTE: we do not delete from the cache as the agreement may be playing
+        yield put(agreementActions.deleteAgreementSucceeded(deletedAgreement.agreement_id))
 
         // Record Delete Event
         const event = make(Name.DELETE, {
-          kind: 'track',
-          id: deletedTrack.trackId
+          kind: 'agreement',
+          id: deletedAgreement.agreementId
         })
         yield put(event)
-        if (deletedTrack.stem_of) {
+        if (deletedAgreement.stem_of) {
           const stemDeleteEvent = make(Name.STEM_DELETE, {
-            id: deletedTrack.track_id,
-            parent_track_id: deletedTrack.stem_of.parent_track_id,
-            category: deletedTrack.stem_of.category
+            id: deletedAgreement.agreement_id,
+            parent_agreement_id: deletedAgreement.stem_of.parent_agreement_id,
+            category: deletedAgreement.stem_of.category
           })
           yield put(stemDeleteEvent)
         }
       },
       function* () {
-        // On failure, do not mark the track as deleted
+        // On failure, do not mark the agreement as deleted
         yield put(
-          cacheActions.update(Kind.TRACKS, [
-            { id: trackId, metadata: { _marked_deleted: false } }
+          cacheActions.update(Kind.AGREEMENTS, [
+            { id: agreementId, metadata: { _marked_deleted: false } }
           ])
         )
       }
@@ -392,39 +392,39 @@ function* confirmDeleteTrack(trackId) {
   )
 }
 
-function* watchDeleteTrack() {
-  yield takeEvery(trackActions.DELETE_TRACK, deleteTrackAsync)
+function* watchDeleteAgreement() {
+  yield takeEvery(agreementActions.DELETE_AGREEMENT, deleteAgreementAsync)
 }
 
 function* watchFetchCoverArt() {
   const inProgress = new Set()
-  yield takeEvery(trackActions.FETCH_COVER_ART, function* ({ trackId, size }) {
+  yield takeEvery(agreementActions.FETCH_COVER_ART, function* ({ agreementId, size }) {
     // Unique on id and size
-    const key = `${trackId}-${size}`
+    const key = `${agreementId}-${size}`
     if (inProgress.has(key)) return
     inProgress.add(key)
 
     try {
-      let track = yield call(waitForValue, getTrack, { id: trackId })
-      const user = yield call(waitForValue, getUser, { id: track.owner_id })
-      if (!track || !user || (!track.cover_art_sizes && !track.cover_art))
+      let agreement = yield call(waitForValue, getAgreement, { id: agreementId })
+      const user = yield call(waitForValue, getUser, { id: agreement.owner_id })
+      if (!agreement || !user || (!agreement.cover_art_sizes && !agreement.cover_art))
         return
       const gateways = getCreatorNodeIPFSGateways(user.creator_node_endpoint)
-      const multihash = track.cover_art_sizes || track.cover_art
-      const coverArtSize = multihash === track.cover_art_sizes ? size : null
+      const multihash = agreement.cover_art_sizes || agreement.cover_art
+      const coverArtSize = multihash === agreement.cover_art_sizes ? size : null
       const url = yield call(
         ColivingBackend.getImageUrl,
         multihash,
         coverArtSize,
         gateways
       )
-      track = yield select(getTrack, { id: trackId })
-      track._cover_art_sizes = {
-        ...track._cover_art_sizes,
+      agreement = yield select(getAgreement, { id: agreementId })
+      agreement._cover_art_sizes = {
+        ...agreement._cover_art_sizes,
         [coverArtSize || DefaultSizes.OVERRIDE]: url
       }
       yield put(
-        cacheActions.update(Kind.TRACKS, [{ id: trackId, metadata: track }])
+        cacheActions.update(Kind.AGREEMENTS, [{ id: agreementId, metadata: agreement }])
       )
 
       let smallImageUrl = url
@@ -445,7 +445,7 @@ function* watchFetchCoverArt() {
         })
       )
     } catch (e) {
-      console.error(`Unable to fetch cover art for track ${trackId}`)
+      console.error(`Unable to fetch cover art for agreement ${agreementId}`)
     } finally {
       inProgress.delete(key)
     }
@@ -453,32 +453,32 @@ function* watchFetchCoverArt() {
 }
 
 function* watchCheckIsDownloadable() {
-  yield takeLatest(trackActions.CHECK_IS_DOWNLOADABLE, function* (action) {
-    const track = yield select(getTrack, { id: action.trackId })
-    if (!track) return
+  yield takeLatest(agreementActions.CHECK_IS_DOWNLOADABLE, function* (action) {
+    const agreement = yield select(getAgreement, { id: action.agreementId })
+    if (!agreement) return
 
-    const user = yield select(getUser, { id: track.owner_id })
+    const user = yield select(getUser, { id: agreement.owner_id })
     if (!user) return
     if (!user.creator_node_endpoint) return
 
     const cid = yield call(
-      TrackDownload.checkIfDownloadAvailable,
-      track.track_id,
+      AgreementDownload.checkIfDownloadAvailable,
+      agreement.agreement_id,
       user.creator_node_endpoint
     )
 
     const updatedMetadata = {
-      ...track,
+      ...agreement,
       download: {
-        ...track.download,
+        ...agreement.download,
         cid
       }
     }
 
     yield put(
-      cacheActions.update(Kind.TRACKS, [
+      cacheActions.update(Kind.AGREEMENTS, [
         {
-          id: track.track_id,
+          id: agreement.agreement_id,
           metadata: updatedMetadata
         }
       ])
@@ -487,9 +487,9 @@ function* watchCheckIsDownloadable() {
     const currentUserId = yield select(getUserId)
     if (currentUserId === user.user_id) {
       yield call(
-        TrackDownload.updateTrackDownloadCID,
-        track.track_id,
-        track,
+        AgreementDownload.updateAgreementDownloadCID,
+        agreement.agreement_id,
+        agreement,
         cid
       )
     }
@@ -499,8 +499,8 @@ function* watchCheckIsDownloadable() {
 const sagas = () => {
   return [
     watchAdd,
-    watchEditTrack,
-    watchDeleteTrack,
+    watchEditAgreement,
+    watchDeleteAgreement,
     watchFetchCoverArt,
     watchCheckIsDownloadable
   ]

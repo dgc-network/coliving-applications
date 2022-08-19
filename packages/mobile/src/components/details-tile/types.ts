@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
 
-import type { Track, User } from '@/common'
+import type { Agreement, User } from '@/common'
 import type { TextStyle } from 'react-native'
 
 import type { SearchUser } from 'app/store/search/types'
@@ -16,10 +16,10 @@ export type DetailsTileDetail = {
 
 export type DetailsTileProps = {
   /** Cosign information */
-  coSign?: Track['_co_sign']
+  coSign?: Agreement['_co_sign']
 
   /** Source for the analytics call when an external link in the description is pressed */
-  descriptionLinkPressSource: 'track page' | 'collection page'
+  descriptionLinkPressSource: 'agreement page' | 'collection page'
 
   /** Information about the item such as genre, duration, etc */
   details: DetailsTileDetail[]

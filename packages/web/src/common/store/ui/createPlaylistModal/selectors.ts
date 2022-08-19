@@ -1,6 +1,6 @@
 import { CommonState } from 'common/store'
 import { getCollection } from 'common/store/cache/collections/selectors'
-import { getTracks as getCachedTracks } from 'common/store/cache/tracks/selectors'
+import { getAgreements as getCachedAgreements } from 'common/store/cache/agreements/selectors'
 import { getUsers } from 'common/store/cache/users/selectors'
 
 export const getBaseState = (state: CommonState) => state.ui.createPlaylistModal
@@ -16,19 +16,19 @@ export const getMetadata = (state: CommonState) => {
   return getCollection(state, { id })
 }
 
-export const getTracks = (state: CommonState) => {
+export const getAgreements = (state: CommonState) => {
   const metadata = getMetadata(state)
   if (!metadata) return null
 
-  const trackIds = metadata.playlist_contents.track_ids.map((t) => t.track)
-  const tracks = getCachedTracks(state, { ids: trackIds })
-  const userIds = Object.keys(tracks).map(
-    (trackId) => tracks[trackId as unknown as number].owner_id
+  const agreementIds = metadata.playlist_contents.agreement_ids.map((t) => t.agreement)
+  const agreements = getCachedAgreements(state, { ids: agreementIds })
+  const userIds = Object.keys(agreements).map(
+    (agreementId) => agreements[agreementId as unknown as number].owner_id
   )
   const users = getUsers(state, { ids: userIds })
 
-  return trackIds.map((id) => ({
-    ...tracks[id],
-    user: users[tracks[id].owner_id]
+  return agreementIds.map((id) => ({
+    ...agreements[id],
+    user: users[agreements[id].owner_id]
   }))
 }

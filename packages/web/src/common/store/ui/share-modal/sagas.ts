@@ -3,7 +3,7 @@ import { takeEvery, put, select } from 'typed-redux-saga/macro'
 
 import { CommonState } from 'common/store'
 import { getCollection as getCollectionBase } from 'common/store/cache/collections/selectors'
-import { getTrack as getTrackBase } from 'common/store/cache/tracks/selectors'
+import { getAgreement as getAgreementBase } from 'common/store/cache/agreements/selectors'
 import { getUser as getUserBase } from 'common/store/cache/users/selectors'
 
 import { setVisibility } from '../modals/slice'
@@ -11,20 +11,20 @@ import { setVisibility } from '../modals/slice'
 import { open, requestOpen } from './slice'
 import { RequestOpenAction } from './types'
 
-const getTrack = (id: ID) => (state: CommonState) => getTrackBase(state, { id })
+const getAgreement = (id: ID) => (state: CommonState) => getAgreementBase(state, { id })
 const getUser = (id: ID) => (state: CommonState) => getUserBase(state, { id })
 const getCollection = (id: ID) => (state: CommonState) =>
   getCollectionBase(state, { id })
 
 function* handleRequestOpen(action: RequestOpenAction) {
   switch (action.payload.type) {
-    case 'track': {
-      const { trackId, source, type } = action.payload
-      const track = yield* select(getTrack(trackId))
-      if (!track) return
-      const artist = yield* select(getUser(track.owner_id))
+    case 'agreement': {
+      const { agreementId, source, type } = action.payload
+      const agreement = yield* select(getAgreement(agreementId))
+      if (!agreement) return
+      const artist = yield* select(getUser(agreement.owner_id))
       if (!artist) return
-      yield put(open({ type, track, source, artist }))
+      yield put(open({ type, agreement, source, artist }))
       break
     }
     case 'profile': {

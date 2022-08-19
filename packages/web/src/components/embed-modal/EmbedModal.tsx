@@ -1,6 +1,6 @@
 import { useState, useMemo, useEffect, useCallback } from 'react'
 
-import { PlayableType, ID, Name, Track } from '@coliving/common'
+import { PlayableType, ID, Name, Agreement } from '@coliving/common'
 import { Modal, Button, ButtonType } from '@coliving/stems'
 import cn from 'classnames'
 import { connect } from 'react-redux'
@@ -28,7 +28,7 @@ const FlavorMap = {
 }
 
 const KindMap = {
-  [PlayableType.TRACK]: 'track',
+  [PlayableType.AGREEMENT]: 'agreement',
   [PlayableType.PLAYLIST]: 'playlist',
   [PlayableType.ALBUM]: 'album'
 }
@@ -57,7 +57,7 @@ const formatIFrame = (url: string, size: Size) => {
 
 const messages = {
   title: {
-    [PlayableType.TRACK]: 'Embed Track',
+    [PlayableType.AGREEMENT]: 'Embed Agreement',
     [PlayableType.PLAYLIST]: 'Embed Playlist',
     [PlayableType.ALBUM]: 'Embed Album'
   },
@@ -162,7 +162,7 @@ const EmbedModal = ({ isOpen, kind, id, metadata, close }: EmbedModalProps) => {
           >
             {delayedOpen && <EmbedFrame frameString={standardFrameString} />}
           </div>
-          {kind === PlayableType.TRACK && (
+          {kind === PlayableType.AGREEMENT && (
             <div
               className={cn(styles.switcher, {
                 [styles.show]: size === Size.COMPACT
@@ -171,7 +171,7 @@ const EmbedModal = ({ isOpen, kind, id, metadata, close }: EmbedModalProps) => {
               {delayedOpen && <EmbedFrame frameString={compactFrameString} />}
             </div>
           )}
-          {kind === PlayableType.TRACK && (
+          {kind === PlayableType.AGREEMENT && (
             <div
               className={cn(styles.switcher, {
                 [styles.show]: size === Size.TINY
@@ -184,7 +184,7 @@ const EmbedModal = ({ isOpen, kind, id, metadata, close }: EmbedModalProps) => {
           )}
         </div>
         <div className={styles.details}>
-          {metadata && (metadata as Track).track_id && (
+          {metadata && (metadata as Agreement).agreement_id && (
             <div className={styles.panel}>
               <div className={styles.title}>{messages.playerSize}</div>
               <TabSlider

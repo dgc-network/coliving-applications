@@ -1,22 +1,22 @@
 import { CommonState } from 'common/store'
-import { getTrack as getCachedTrack } from 'common/store/cache/tracks/selectors'
-import { getUserFromTrack } from 'common/store/cache/users/selectors'
+import { getAgreement as getCachedAgreement } from 'common/store/cache/agreements/selectors'
+import { getUserFromAgreement } from 'common/store/cache/users/selectors'
 
 export const getBaseState = (state: CommonState) => state.pages.remixes
 
-export const getLineup = (state: CommonState) => getBaseState(state).tracks
+export const getLineup = (state: CommonState) => getBaseState(state).agreements
 
-export const getTrackId = (state: CommonState) =>
-  getBaseState(state).page.trackId
+export const getAgreementId = (state: CommonState) =>
+  getBaseState(state).page.agreementId
 
 export const getCount = (state: CommonState) => getBaseState(state).page.count
 
-export const getTrack = (state: CommonState) => {
-  const id = getTrackId(state)
-  return getCachedTrack(state, { id })
+export const getAgreement = (state: CommonState) => {
+  const id = getAgreementId(state)
+  return getCachedAgreement(state, { id })
 }
 
 export const getUser = (state: CommonState) => {
-  const id = getTrackId(state)
-  return getUserFromTrack(state, { id })
+  const id = getAgreementId(state)
+  return getUserFromAgreement(state, { id })
 }

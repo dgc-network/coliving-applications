@@ -14,9 +14,9 @@ import {
   undoRepostCollection
 } from 'common/store/social/collections/actions'
 import {
-  repostTrack,
-  undoRepostTrack
-} from 'common/store/social/tracks/actions'
+  repostAgreement,
+  undoRepostAgreement
+} from 'common/store/social/agreements/actions'
 import { requestOpen as requestOpenShareModal } from 'common/store/ui/share-modal/slice'
 import Menu from 'components/menu/Menu'
 import Toast from 'components/toast/Toast'
@@ -139,17 +139,17 @@ const ExpandedActionsTab = (props) => {
 export class ActionsTab extends PureComponent {
   onToggleRepost = () => {
     const {
-      repostTrack,
-      undoRepostTrack,
+      repostAgreement,
+      undoRepostAgreement,
       repostCollection,
       undoRepostCollection,
       currentUserReposted,
       variant,
-      trackId,
+      agreementId,
       playlistId
     } = this.props
-    if (variant === 'track') {
-      currentUserReposted ? undoRepostTrack(trackId) : repostTrack(trackId)
+    if (variant === 'agreement') {
+      currentUserReposted ? undoRepostAgreement(agreementId) : repostAgreement(agreementId)
     } else if (variant === 'playlist' || variant === 'album') {
       currentUserReposted
         ? undoRepostCollection(playlistId)
@@ -158,10 +158,10 @@ export class ActionsTab extends PureComponent {
   }
 
   onShare = () => {
-    const { trackId, variant, playlistId, shareTrack, shareCollection } =
+    const { agreementId, variant, playlistId, shareAgreement, shareCollection } =
       this.props
-    if (variant === 'track') {
-      shareTrack(trackId)
+    if (variant === 'agreement') {
+      shareAgreement(agreementId)
     } else if (variant === 'playlist' || variant === 'album') {
       shareCollection(playlistId)
     }
@@ -180,8 +180,8 @@ export class ActionsTab extends PureComponent {
       userHandle,
       playlistId,
       playlistName,
-      trackId,
-      trackTitle,
+      agreementId,
+      agreementTitle,
       currentUserSaved,
       currentUserReposted,
       isArtistPick,
@@ -199,10 +199,10 @@ export class ActionsTab extends PureComponent {
         isArtistPick
       }
     }
-    if (variant === 'track') {
-      overflowMenu.menu.type = 'track'
-      overflowMenu.menu.trackId = trackId
-      overflowMenu.menu.trackTitle = trackTitle
+    if (variant === 'agreement') {
+      overflowMenu.menu.type = 'agreement'
+      overflowMenu.menu.agreementId = agreementId
+      overflowMenu.menu.agreementTitle = agreementTitle
       overflowMenu.menu.isArtistPick = isArtistPick
     } else if (variant === 'playlist' || variant === 'album') {
       overflowMenu.menu.type = variant === 'playlist' ? 'playlist' : 'album'
@@ -248,11 +248,11 @@ ActionsTab.propTypes = {
   isDisabled: PropTypes.bool,
   includeEdit: PropTypes.bool,
   direction: PropTypes.oneOf(['vertical', 'horizontal']),
-  variant: PropTypes.oneOf(['track', 'playlist', 'album']),
+  variant: PropTypes.oneOf(['agreement', 'playlist', 'album']),
   containerStyles: PropTypes.string,
   handle: PropTypes.string,
-  trackTitle: PropTypes.string,
-  trackId: PropTypes.number,
+  agreementTitle: PropTypes.string,
+  agreementId: PropTypes.number,
   playlistName: PropTypes.string,
   playlistId: PropTypes.number
 }
@@ -263,7 +263,7 @@ ActionsTab.defaultProps = {
   standalone: false,
   isDisabled: false,
   direction: 'vertical',
-  variant: 'track',
+  variant: 'agreement',
   handle: 'handle'
 }
 
@@ -272,11 +272,11 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  shareTrack: (trackId) =>
+  shareAgreement: (agreementId) =>
     dispatch(
       requestOpenShareModal({
-        type: 'track',
-        trackId,
+        type: 'agreement',
+        agreementId,
         source: ShareSource.TILE
       })
     ),
@@ -288,9 +288,9 @@ const mapDispatchToProps = (dispatch) => ({
         source: ShareSource.TILE
       })
     ),
-  repostTrack: (trackId) => dispatch(repostTrack(trackId, RepostSource.TILE)),
-  undoRepostTrack: (trackId) =>
-    dispatch(undoRepostTrack(trackId, RepostSource.TILE)),
+  repostAgreement: (agreementId) => dispatch(repostAgreement(agreementId, RepostSource.TILE)),
+  undoRepostAgreement: (agreementId) =>
+    dispatch(undoRepostAgreement(agreementId, RepostSource.TILE)),
   repostCollection: (playlistId) =>
     dispatch(repostCollection(playlistId, RepostSource.TILE)),
   undoRepostCollection: (playlistId) =>

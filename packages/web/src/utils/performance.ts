@@ -1,6 +1,6 @@
 import { Name } from '@coliving/common'
 
-import { track } from 'store/analytics/providers'
+import { agreement } from 'store/analytics/providers'
 
 const DEFAULT_BATCH_SIZE = 10
 
@@ -11,7 +11,7 @@ type Recording = {
 
 const sendToAnalytics = ({ name, duration }: Recording) => {
   console.info(`Recorded event ${name} with duration ${duration}`)
-  track(Name.PERFORMANCE, {
+  agreement(Name.PERFORMANCE, {
     metric: name,
     value: duration
   })
@@ -55,7 +55,7 @@ export class Timer {
   config: TimerConfig
   record: (record: Recording) => void
 
-  // Tracking
+  // Agreementing
   private totalCount: number
   private rollingAverage: number
 

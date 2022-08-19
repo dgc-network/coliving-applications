@@ -4,7 +4,7 @@ import moment from 'moment'
 import { all, call, put, take, takeEvery } from 'redux-saga/effects'
 
 import { getAccountUser } from 'common/store/account/selectors'
-import { retrieveUserTracks } from 'common/store/pages/profile/lineups/tracks/retrieveUserTracks'
+import { retrieveUserAgreements } from 'common/store/pages/profile/lineups/agreements/retrieveUserAgreements'
 import { getBalance } from 'common/store/wallet/slice'
 import ColivingBackend from 'services/ColivingBackend'
 import { remoteConfigInstance } from 'services/remote-config/remote-config-instance'
@@ -19,8 +19,8 @@ function* fetchDashboardAsync(action) {
 
   const account = yield call(waitForValue, getAccountUser)
 
-  const [tracks, playlists] = yield all([
-    call(retrieveUserTracks, {
+  const [agreements, playlists] = yield all([
+    call(retrieveUserAgreements, {
       handle: account.handle,
       currentUserId: account.user_id,
       // TODO: This only supports up to 500, we need to redesign / paginate
@@ -29,29 +29,29 @@ function* fetchDashboardAsync(action) {
     }),
     call(ColivingBackend.getPlaylists, account.user_id, [])
   ])
-  const listedTracks = tracks.filter((t) => t.is_unlisted === false)
-  const unlistedTracks = tracks.filter((t) => t.is_unlisted === true)
+  const listedAgreements = agreements.filter((t) => t.is_unlisted === false)
+  const unlistedAgreements = agreements.filter((t) => t.is_unlisted === true)
 
-  const trackIds = listedTracks.map((t) => t.track_id)
+  const agreementIds = listedAgreements.map((t) => t.agreement_id)
   const now = moment()
 
   yield call(fetchDashboardListenDataAsync, {
-    trackIds,
+    agreementIds,
     start: now.clone().subtract(1, 'years').toISOString(),
     end: now.toISOString(),
     period: 'month'
   })
 
   if (
-    listedTracks.length > 0 ||
+    listedAgreements.length > 0 ||
     playlists.length > 0 ||
-    unlistedTracks.length > 0
+    unlistedAgreements.length > 0
   ) {
     yield put(
       dashboardActions.fetchDashboardSucceeded(
-        listedTracks,
+        listedAgreements,
         playlists,
-        unlistedTracks
+        unlistedAgreements
       )
     )
     yield call(pollForBalance)
@@ -64,8 +64,8 @@ const formatMonth = (date) => moment.utc(date).format('MMM').toUpperCase()
 
 function* fetchDashboardListenDataAsync(action) {
   const listenData = yield call(
-    ColivingBackend.getTrackListens,
-    action.trackIds,
+    ColivingBackend.getAgreementListens,
+    action.agreementIds,
     action.start,
     action.end,
     action.period
@@ -92,13 +92,13 @@ function* fetchDashboardListenDataAsync(action) {
     formattedListenData.all.values[labelIndexMap[formatMonth(date)]] =
       data.totalListens
     data.listenCounts.forEach((count) => {
-      if (!(count.trackId in formattedListenData)) {
-        formattedListenData[count.trackId] = {
+      if (!(count.agreementId in formattedListenData)) {
+        formattedListenData[count.agreementId] = {
           labels: [...labels],
           values: new Array(labels.length).fill(0)
         }
       }
-      formattedListenData[count.trackId].values[
+      formattedListenData[count.agreementId].values[
         labelIndexMap[formatMonth(date)]
       ] = count.listens
     })

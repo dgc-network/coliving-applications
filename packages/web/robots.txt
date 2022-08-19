@@ -3,6 +3,6 @@ User-agent: *
 Allow: /
 
 Sitemap: https://coliving.co/sitemaps/defaults.xml
-Sitemap: https://coliving.co/sitemaps/tracks/index.xml
+Sitemap: https://coliving.co/sitemaps/agreements/index.xml
 Sitemap: https://coliving.co/sitemaps/collections/index.xml
 Sitemap: https://coliving.co/sitemaps/users/index.xml

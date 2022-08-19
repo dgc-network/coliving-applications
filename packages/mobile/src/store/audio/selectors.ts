@@ -6,7 +6,7 @@ import { RepeatMode } from './reducer'
 
 const getBaseState = (state: AppState) => state.live
 
-export const getTrack = (state: AppState) => {
+export const getAgreement = (state: AppState) => {
   const baseState = getBaseState(state)
   // An index of -1, signals no live is ready to be played back
   return baseState.index >= 0 ? baseState.queue[baseState.index] : null
@@ -29,7 +29,7 @@ export const getShuffleIndex = (state: AppState) =>
 export const getQueueAutoplay = (state: AppState) =>
   getBaseState(state).queueAutoplay
 
-export const getTrackAndIndex = createSelector(
-  [getTrack, getIndex],
-  (track, index) => ({ track, index })
+export const getAgreementAndIndex = createSelector(
+  [getAgreement, getIndex],
+  (agreement, index) => ({ agreement, index })
 )

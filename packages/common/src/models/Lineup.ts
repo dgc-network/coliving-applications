@@ -19,14 +19,14 @@ export type Lineup<T, ExtraProps = {}> = {
   isMetadataLoading: boolean
 } & ExtraProps
 
-export type LineupStateTrack<T> = { uid: UID; kind: Kind; id: ID } & T
+export type LineupStateAgreement<T> = { uid: UID; kind: Kind; id: ID } & T
 
 export type Order = Record<UID, number>
 
 // Add possibility of attaching extra metadata to entries with type `T`
 // e.g. DateAdded
 export type LineupState<T> = {
-  entries: Array<LineupStateTrack<T>>
+  entries: Array<LineupStateAgreement<T>>
   order: Order
   total: number
   deleted: number

@@ -6,7 +6,7 @@ import { Repost } from 'models/Repost'
 import { Nullable } from 'utils/typeUtils'
 
 import { Favorite } from './Favorite'
-import { UserTrackMetadata } from './Track'
+import { UserAgreementMetadata } from './Agreement'
 import { User, UserMetadata } from './User'
 
 export enum Variant {
@@ -15,7 +15,7 @@ export enum Variant {
 }
 
 type PlaylistContents = {
-  track_ids: Array<{ time: number; track: ID } | { track: string }>
+  agreement_ids: Array<{ time: number; agreement: ID } | { agreement: string }>
 }
 
 export type CollectionMetadata = {
@@ -30,10 +30,10 @@ export type CollectionMetadata = {
   is_delete: boolean
   is_private: boolean
   playlist_contents: {
-    track_ids: Array<{ time: number; track: ID; uid?: UID }>
+    agreement_ids: Array<{ time: number; agreement: ID; uid?: UID }>
   }
-  tracks?: UserTrackMetadata[]
-  track_count: number
+  agreements?: UserAgreementMetadata[]
+  agreement_count: number
   playlist_id: ID
   cover_art: CID | null
   cover_art_sizes: Nullable<CID>

@@ -20,8 +20,8 @@ const messages = {
   profileCheckProfilePicture: 'Profile Picture',
   profileCheckCoverPhoto: 'Cover Photo',
   profileCheckProfileDescription: 'Profile Description',
-  profileCheckFavorite: 'Favorite Track/Playlist',
-  profileCheckRepost: 'Repost Track/Playlist',
+  profileCheckFavorite: 'Favorite Agreement/Playlist',
+  profileCheckRepost: 'Repost Agreement/Playlist',
   profileCheckFollow: 'Follow Five People',
 
   profileCompletionButton: 'Your Profile'

@@ -11,7 +11,7 @@ export enum CollectionSortMode {
   SAVE_COUNT = 1
 }
 
-export enum TracksSortMode {
+export enum AgreementsSortMode {
   RECENT = 0,
   POPULAR = 1
 }
@@ -36,14 +36,14 @@ export type ProfilePageState = {
   followees: Follow
   followeeFollows: Follow
   feed: LineupState<{ id: ID }>
-  tracks: LineupState<{ id: ID }>
+  agreements: LineupState<{ id: ID }>
   isNotificationSubscribed: boolean
   error?: string
   mostUsedTags: string[]
 }
 
 export enum Tabs {
-  TRACKS = 'TRACKS',
+  AGREEMENTS = 'AGREEMENTS',
   ALBUMS = 'ALBUMS',
   PLAYLISTS = 'PLAYLISTS',
   REPOSTS = 'REPOSTS',
@@ -51,7 +51,7 @@ export enum Tabs {
 }
 
 export enum TabRoute {
-  TRACKS = 'tracks',
+  AGREEMENTS = 'agreements',
   ALBUMS = 'albums',
   PLAYLISTS = 'playlists',
   REPOSTS = 'reposts',
@@ -60,8 +60,8 @@ export enum TabRoute {
 
 export const getTabForRoute = (tabRoute: TabRoute) => {
   switch (tabRoute) {
-    case TabRoute.TRACKS:
-      return Tabs.TRACKS
+    case TabRoute.AGREEMENTS:
+      return Tabs.AGREEMENTS
     case TabRoute.ALBUMS:
       return Tabs.ALBUMS
     case TabRoute.PLAYLISTS:

@@ -8,7 +8,7 @@ import {
   PlaybackSource,
   ShareSource,
   FavoriteType,
-  Track
+  Agreement
 } from '@coliving/common'
 import { push as pushRoute } from 'connected-react-router'
 import { connect } from 'react-redux'
@@ -17,7 +17,7 @@ import { Dispatch } from 'redux'
 import { getUserId } from 'common/store/account/selectors'
 import {
   getCollection,
-  getTracksFromCollection
+  getAgreementsFromCollection
 } from 'common/store/cache/collections/selectors'
 import { getUserFromCollection } from 'common/store/cache/users/selectors'
 import {
@@ -36,7 +36,7 @@ import { getTheme } from 'common/store/ui/theme/selectors'
 import { setFavorite } from 'common/store/user-list/favorites/actions'
 import { setRepost } from 'common/store/user-list/reposts/actions'
 import { RepostType } from 'common/store/user-list/reposts/types'
-import { PlaylistTileProps } from 'components/track/types'
+import { PlaylistTileProps } from 'components/agreement/types'
 import { useRecord, make } from 'store/analytics/actions'
 import { getUid, getBuffering, getPlaying } from 'store/player/selectors'
 import { AppState } from 'store/types'
@@ -64,9 +64,9 @@ const ConnectedPlaylistTile = memo(
     size,
     collection: nullableCollection,
     user: nullableUser,
-    tracks,
-    playTrack,
-    pauseTrack,
+    agreements,
+    playAgreement,
+    pauseAgreement,
     playingUid,
     isBuffering,
     isPlaying,
@@ -74,7 +74,7 @@ const ConnectedPlaylistTile = memo(
     isLoading,
     numLoadingSkeletonRows,
     hasLoaded,
-    playingTrackId,
+    playingAgreementId,
     uploading,
     unsaveCollection,
     saveCollection,
@@ -93,8 +93,8 @@ const ConnectedPlaylistTile = memo(
     const user = getUserWithFallback(nullableUser)
     const record = useRecord()
     const isActive = useMemo(() => {
-      return tracks.some((track) => track.uid === playingUid)
-    }, [tracks, playingUid])
+      return agreements.some((agreement) => agreement.uid === playingUid)
+    }, [agreements, playingUid])
 
     const isOwner = collection.playlist_owner_id === currentUserId
 
@@ -178,42 +178,42 @@ const ConnectedPlaylistTile = memo(
       if (uploading) return
       if (!isPlaying || !isActive) {
         if (isActive) {
-          playTrack(playingUid!)
+          playAgreement(playingUid!)
           record(
             make(Name.PLAYBACK_PLAY, {
-              id: `${playingTrackId}`,
-              source: PlaybackSource.PLAYLIST_TILE_TRACK
+              id: `${playingAgreementId}`,
+              source: PlaybackSource.PLAYLIST_TILE_AGREEMENT
             })
           )
         } else {
-          const trackUid = tracks[0] ? tracks[0].uid : null
-          const trackId = tracks[0] ? tracks[0].track_id : null
-          if (!trackUid || !trackId) return
-          playTrack(trackUid)
+          const agreementUid = agreements[0] ? agreements[0].uid : null
+          const agreementId = agreements[0] ? agreements[0].agreement_id : null
+          if (!agreementUid || !agreementId) return
+          playAgreement(agreementUid)
           record(
             make(Name.PLAYBACK_PLAY, {
-              id: `${trackId}`,
-              source: PlaybackSource.PLAYLIST_TILE_TRACK
+              id: `${agreementId}`,
+              source: PlaybackSource.PLAYLIST_TILE_AGREEMENT
             })
           )
         }
       } else {
-        pauseTrack()
+        pauseAgreement()
         record(
           make(Name.PLAYBACK_PAUSE, {
-            id: `${playingTrackId}`,
-            source: PlaybackSource.PLAYLIST_TILE_TRACK
+            id: `${playingAgreementId}`,
+            source: PlaybackSource.PLAYLIST_TILE_AGREEMENT
           })
         )
       }
     }, [
       isPlaying,
-      tracks,
-      playTrack,
-      pauseTrack,
+      agreements,
+      playAgreement,
+      pauseAgreement,
       isActive,
       playingUid,
-      playingTrackId,
+      playingAgreementId,
       uploading,
       record
     ])
@@ -251,12 +251,12 @@ const ConnectedPlaylistTile = memo(
         artistIsVerified={user.is_verified}
         ownerId={collection.playlist_owner_id}
         coverArtSizes={collection._cover_art_sizes}
-        duration={tracks.reduce(
-          (duration: number, track: Track) => duration + track.duration,
+        duration={agreements.reduce(
+          (duration: number, agreement: Agreement) => duration + agreement.duration,
           0
         )}
-        tracks={tracks}
-        trackCount={collection.track_count}
+        agreements={agreements}
+        agreementCount={collection.agreement_count}
         size={size}
         repostCount={collection.repost_count}
         saveCount={collection.save_count}
@@ -268,12 +268,12 @@ const ConnectedPlaylistTile = memo(
         numLoadingSkeletonRows={numLoadingSkeletonRows}
         // Playback
         togglePlay={togglePlay}
-        playTrack={playTrack}
-        pauseTrack={pauseTrack}
+        playAgreement={playAgreement}
+        pauseAgreement={pauseAgreement}
         isActive={isActive}
         isPlaying={isActive && isPlaying}
         isLoading={isActive && isBuffering}
-        activeTrackUid={playingUid || null}
+        activeAgreementUid={playingUid || null}
         goToRoute={goToRoute}
         goToArtistPage={goToArtistPage}
         goToCollectionPage={goToCollectionPage}
@@ -297,7 +297,7 @@ function mapStateToProps(state: AppState, ownProps: PlaylistTileProps) {
   return {
     collection: getCollection(state, { uid: ownProps.uid }),
     user: getUserFromCollection(state, { uid: ownProps.uid }),
-    tracks: getTracksFromCollection(state, { uid: ownProps.uid }),
+    agreements: getAgreementsFromCollection(state, { uid: ownProps.uid }),
     playingUid: getUid(state),
     isBuffering: getBuffering(state),
     isPlaying: getPlaying(state),

@@ -99,7 +99,7 @@ export const ProfileLeftNav = (props: ProfileLeftNavProps) => {
 
   const onClickUploadChip = useCallback(() => {
     goToRoute(UPLOAD_PAGE)
-    record(make(Name.TRACK_UPLOAD_OPEN, { source: 'profile' }))
+    record(make(Name.AGREEMENT_UPLOAD_OPEN, { source: 'profile' }))
   }, [goToRoute, record])
 
   const renderTipAudioButton = (_: any, style: object) => (
@@ -210,7 +210,7 @@ export const ProfileLeftNav = (props: ProfileLeftNavProps) => {
         {isArtist ? <ProfileTags goToRoute={goToRoute} tags={tags} /> : null}
         <ProfileMutuals />
         {isOwner && !isArtist && (
-          <UploadChip type='track' variant='nav' onClick={onClickUploadChip} />
+          <UploadChip type='agreement' variant='nav' onClick={onClickUploadChip} />
         )}
       </div>
     )

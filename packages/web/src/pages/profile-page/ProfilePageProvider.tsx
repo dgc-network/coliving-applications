@@ -22,18 +22,18 @@ import { getAccountUser } from 'common/store/account/selectors'
 import { makeGetLineupMetadatas } from 'common/store/lineup/selectors'
 import * as profileActions from 'common/store/pages/profile/actions'
 import { feedActions } from 'common/store/pages/profile/lineups/feed/actions'
-import { tracksActions } from 'common/store/pages/profile/lineups/tracks/actions'
+import { agreementsActions } from 'common/store/pages/profile/lineups/agreements/actions'
 import {
   makeGetProfile,
   getProfileFeedLineup,
-  getProfileTracksLineup,
+  getProfileAgreementsLineup,
   getProfileUserId
 } from 'common/store/pages/profile/selectors'
 import {
   CollectionSortMode,
   Tabs,
   FollowType,
-  TracksSortMode,
+  AgreementsSortMode,
   getTabForRoute
 } from 'common/store/pages/profile/types'
 import { makeGetCurrent } from 'common/store/queue/selectors'
@@ -51,7 +51,7 @@ import { setFollowing } from 'common/store/user-list/following/actions'
 import { formatCount } from 'common/utils/formatUtil'
 import * as unfollowConfirmationActions from 'components/unfollow-confirmation-modal/store/actions'
 import { newUserMetadata } from 'schemas'
-import { make, TrackEvent } from 'store/analytics/actions'
+import { make, AgreementEvent } from 'store/analytics/actions'
 import { getIsDone } from 'store/confirmer/selectors'
 import { getPlaying, getBuffering } from 'store/player/selectors'
 import { getLocationPathname } from 'store/routing/selectors'
@@ -104,7 +104,7 @@ type ProfilePageState = {
   updatedTikTokHandle: string | null
   updatedWebsite: string | null
   updatedDonation: string | null
-  tracksLineupOrder: TracksSortMode
+  agreementsLineupOrder: AgreementsSortMode
   areArtistRecommendationsVisible: boolean
 }
 
@@ -117,7 +117,7 @@ class ProfilePage extends PureComponent<ProfilePageProps, ProfilePageState> {
     activeTab: null,
     editMode: false,
     shouldMaskContent: false,
-    tracksLineupOrder: TracksSortMode.RECENT,
+    agreementsLineupOrder: AgreementsSortMode.RECENT,
     areArtistRecommendationsVisible: false,
     ...INITIAL_UPDATE_FIELDS
   }
@@ -128,8 +128,8 @@ class ProfilePage extends PureComponent<ProfilePageProps, ProfilePageState> {
     // If routing from a previous profile page
     // the lineups must be reset to refetch & update for new user
     this.props.resetProfile()
-    this.props.resetArtistTracks()
-    this.props.resetUserFeedTracks()
+    this.props.resetArtistAgreements()
+    this.props.resetUserFeedAgreements()
     this.fetchProfile(getPathname(this.props.location))
 
     // Switching from profile page => profile page
@@ -140,8 +140,8 @@ class ProfilePage extends PureComponent<ProfilePageProps, ProfilePageState> {
         action === 'POP'
       ) {
         this.props.resetProfile()
-        this.props.resetArtistTracks()
-        this.props.resetUserFeedTracks()
+        this.props.resetArtistAgreements()
+        this.props.resetUserFeedAgreements()
         const params = parseUserRoute(getPathname(location))
         if (params) {
           // Fetch profile if this is a new profile page
@@ -165,7 +165,7 @@ class ProfilePage extends PureComponent<ProfilePageProps, ProfilePageState> {
   }
 
   componentDidUpdate(prevProps: ProfilePageProps, prevState: ProfilePageState) {
-    const { pathname, profile, artistTracks, goToRoute } = this.props
+    const { pathname, profile, artistAgreements, goToRoute } = this.props
     const { editMode, activeTab } = this.state
 
     if (profile && profile.status === Status.ERROR) {
@@ -176,11 +176,11 @@ class ProfilePage extends PureComponent<ProfilePageProps, ProfilePageState> {
       !activeTab &&
       profile &&
       profile.profile &&
-      artistTracks.status === Status.SUCCESS
+      artistAgreements.status === Status.SUCCESS
     ) {
-      if (profile.profile.track_count > 0) {
+      if (profile.profile.agreement_count > 0) {
         this.setState({
-          activeTab: Tabs.TRACKS
+          activeTab: Tabs.AGREEMENTS
         })
       } else {
         this.setState({
@@ -191,7 +191,7 @@ class ProfilePage extends PureComponent<ProfilePageProps, ProfilePageState> {
       !activeTab &&
       profile &&
       profile.profile &&
-      !(profile.profile.track_count > 0)
+      !(profile.profile.agreement_count > 0)
     ) {
       this.setState({
         activeTab: Tabs.REPOSTS
@@ -218,22 +218,22 @@ class ProfilePage extends PureComponent<ProfilePageProps, ProfilePageState> {
     }
   }
 
-  // Check that the sorted order has the _artist_pick track as the first
-  updateOrderArtistPickCheck = (tracks: Array<{ track_id: ID }>) => {
+  // Check that the sorted order has the _artist_pick agreement as the first
+  updateOrderArtistPickCheck = (agreements: Array<{ agreement_id: ID }>) => {
     const {
       profile: { profile }
     } = this.props
     if (!profile) return []
     const artistPick = profile._artist_pick
-    const artistTrackIndex = tracks.findIndex(
-      (track) => track.track_id === artistPick
+    const artistAgreementIndex = agreements.findIndex(
+      (agreement) => agreement.agreement_id === artistPick
     )
-    if (artistTrackIndex > -1) {
-      return [tracks[artistTrackIndex]]
-        .concat(tracks.slice(0, artistTrackIndex))
-        .concat(tracks.slice(artistTrackIndex + 1))
+    if (artistAgreementIndex > -1) {
+      return [agreements[artistAgreementIndex]]
+        .concat(agreements.slice(0, artistAgreementIndex))
+        .concat(agreements.slice(artistAgreementIndex + 1))
     }
-    return tracks
+    return agreements
   }
 
   onFollow = () => {
@@ -395,7 +395,7 @@ class ProfilePage extends PureComponent<ProfilePageProps, ProfilePageState> {
 
     // Once the hero card settles into place, then turn the mask off
     setTimeout(() => {
-      const firstTab = this.getIsArtist() ? 'TRACKS' : 'REPOSTS'
+      const firstTab = this.getIsArtist() ? 'AGREEMENTS' : 'REPOSTS'
       this.setState({
         shouldMaskContent: tab !== firstTab
       })
@@ -404,12 +404,12 @@ class ProfilePage extends PureComponent<ProfilePageProps, ProfilePageState> {
 
   getLineupProps = (lineup: any) => {
     const { currentQueueItem, playing, buffering, containerRef } = this.props
-    const { uid: playingUid, track, source } = currentQueueItem
+    const { uid: playingUid, agreement, source } = currentQueueItem
     return {
       lineup,
       variant: 'condensed',
       playingSource: source,
-      playingTrackId: track ? track.track_id : null,
+      playingAgreementId: agreement ? agreement.agreement_id : null,
       playingUid,
       playing,
       buffering,
@@ -519,13 +519,13 @@ class ProfilePage extends PureComponent<ProfilePageProps, ProfilePageState> {
       profile: { profile }
     } = this.props
 
-    let trackCount = 0
+    let agreementCount = 0
     let playlistCount = 0
     let followerCount = 0
     let followingCount = 0
 
     if (profile) {
-      trackCount = profile.track_count
+      agreementCount = profile.agreement_count
       playlistCount = profile.playlist_count
       followerCount = profile.follower_count
       followingCount = profile.followee_count
@@ -534,9 +534,9 @@ class ProfilePage extends PureComponent<ProfilePageProps, ProfilePageState> {
     return isArtist
       ? [
           {
-            number: trackCount,
-            title: trackCount === 1 ? 'track' : 'tracks',
-            key: 'track'
+            number: agreementCount,
+            title: agreementCount === 1 ? 'agreement' : 'agreements',
+            key: 'agreement'
           },
           {
             number: followerCount,
@@ -562,52 +562,52 @@ class ProfilePage extends PureComponent<ProfilePageProps, ProfilePageState> {
 
   onSortByRecent = () => {
     const {
-      artistTracks,
+      artistAgreements,
       updateCollectionOrder,
       profile: { profile },
-      trackUpdateSort
+      agreementUpdateSort
     } = this.props
     if (!profile) return
-    this.setState({ tracksLineupOrder: TracksSortMode.RECENT })
+    this.setState({ agreementsLineupOrder: AgreementsSortMode.RECENT })
     updateCollectionOrder(CollectionSortMode.TIMESTAMP)
-    trackUpdateSort('recent')
-    this.props.loadMoreArtistTracks(
+    agreementUpdateSort('recent')
+    this.props.loadMoreArtistAgreements(
       0,
-      artistTracks.entries.length,
+      artistAgreements.entries.length,
       profile.user_id,
-      TracksSortMode.RECENT
+      AgreementsSortMode.RECENT
     )
   }
 
   onSortByPopular = () => {
     const {
-      artistTracks,
+      artistAgreements,
       updateCollectionOrder,
       profile: { profile },
-      trackUpdateSort
+      agreementUpdateSort
     } = this.props
     if (!profile) return
-    this.setState({ tracksLineupOrder: TracksSortMode.POPULAR })
-    this.props.loadMoreArtistTracks(
+    this.setState({ agreementsLineupOrder: AgreementsSortMode.POPULAR })
+    this.props.loadMoreArtistAgreements(
       0,
-      artistTracks.entries.length,
+      artistAgreements.entries.length,
       profile.user_id,
-      TracksSortMode.POPULAR
+      AgreementsSortMode.POPULAR
     )
     updateCollectionOrder(CollectionSortMode.SAVE_COUNT)
-    trackUpdateSort('popular')
+    agreementUpdateSort('popular')
   }
 
-  loadMoreArtistTracks = (offset: number, limit: number) => {
+  loadMoreArtistAgreements = (offset: number, limit: number) => {
     const {
       profile: { profile }
     } = this.props
     if (!profile) return
-    this.props.loadMoreArtistTracks(
+    this.props.loadMoreArtistAgreements(
       offset,
       limit,
       profile.user_id,
-      this.state.tracksLineupOrder
+      this.state.agreementsLineupOrder
     )
   }
 
@@ -618,9 +618,9 @@ class ProfilePage extends PureComponent<ProfilePageProps, ProfilePageState> {
     } = this.props
     if (profile) {
       let tab = `/${currLabel.toLowerCase()}`
-      if (profile.track_count > 0) {
-        // An artist, default route is tracks
-        if (currLabel === Tabs.TRACKS) {
+      if (profile.agreement_count > 0) {
+        // An artist, default route is agreements
+        if (currLabel === Tabs.AGREEMENTS) {
           tab = ''
         }
       } else {
@@ -649,13 +649,13 @@ class ProfilePage extends PureComponent<ProfilePageProps, ProfilePageState> {
 
   formatCardSecondaryText = (
     saves: number,
-    tracks: number,
+    agreements: number,
     isPrivate = false
   ) => {
     const savesText = saves === 1 ? 'Favorite' : 'Favorites'
-    const tracksText = tracks === 1 ? 'Track' : 'Tracks'
-    if (isPrivate) return `Private • ${tracks} ${tracksText}`
-    return `${formatCount(saves)} ${savesText} • ${tracks} ${tracksText}`
+    const agreementsText = agreements === 1 ? 'Agreement' : 'Agreements'
+    if (isPrivate) return `Private • ${agreements} ${agreementsText}`
+    return `${formatCount(saves)} ${savesText} • ${agreements} ${agreementsText}`
   }
 
   fetchFollowers = () => {
@@ -690,7 +690,7 @@ class ProfilePage extends PureComponent<ProfilePageProps, ProfilePageState> {
 
   getIsArtist = () => {
     const { profile } = this.props.profile
-    return !!profile && profile.track_count > 0
+    return !!profile && profile.agreement_count > 0
   }
 
   getIsOwner = () => {
@@ -711,14 +711,14 @@ class ProfilePage extends PureComponent<ProfilePageProps, ProfilePageState> {
         mostUsedTags,
         isSubscribed
       },
-      // Tracks
-      artistTracks,
-      playArtistTrack,
-      pauseArtistTrack,
+      // Agreements
+      artistAgreements,
+      playArtistAgreement,
+      pauseArtistAgreement,
       // Feed
       userFeed,
-      playUserFeedTrack,
-      pauseUserFeedTrack,
+      playUserFeedAgreement,
+      pauseUserFeedAgreement,
       account,
       goToRoute,
       openCreatePlaylistModal,
@@ -851,9 +851,9 @@ class ProfilePage extends PureComponent<ProfilePageProps, ProfilePageState> {
       status: profileLoadingStatus,
       albums,
       playlists,
-      artistTracks,
-      playArtistTrack,
-      pauseArtistTrack,
+      artistAgreements,
+      playArtistAgreement,
+      pauseArtistAgreement,
       goToRoute,
 
       // Methods
@@ -861,7 +861,7 @@ class ProfilePage extends PureComponent<ProfilePageProps, ProfilePageState> {
       getLineupProps: this.getLineupProps,
       onSortByRecent: this.onSortByRecent,
       onSortByPopular: this.onSortByPopular,
-      loadMoreArtistTracks: this.loadMoreArtistTracks,
+      loadMoreArtistAgreements: this.loadMoreArtistAgreements,
       loadMoreUserFeed: this.loadMoreUserFeed,
       formatCardSecondaryText: this.formatCardSecondaryText,
       refreshProfile: this.refreshProfile,
@@ -889,7 +889,7 @@ class ProfilePage extends PureComponent<ProfilePageProps, ProfilePageState> {
     }
 
     const mobileProps = {
-      trackIsActive: !!currentQueueItem,
+      agreementIsActive: !!currentQueueItem,
       onConfirmUnfollow: this.props.onConfirmUnfollow,
       isUserConfirming: this.props.isUserConfirming,
       hasMadeEdit:
@@ -916,8 +916,8 @@ class ProfilePage extends PureComponent<ProfilePageProps, ProfilePageState> {
       isSubscribed: !!isSubscribed,
 
       userFeed,
-      playUserFeedTrack,
-      pauseUserFeedTrack,
+      playUserFeedAgreement,
+      pauseUserFeedAgreement,
 
       followees,
       dropdownDisabled,
@@ -941,8 +941,8 @@ class ProfilePage extends PureComponent<ProfilePageProps, ProfilePageState> {
 }
 
 function makeMapStateToProps() {
-  const getArtistTracksMetadatas = makeGetLineupMetadatas(
-    getProfileTracksLineup
+  const getArtistAgreementsMetadatas = makeGetLineupMetadatas(
+    getProfileAgreementsLineup
   )
   const getUserFeedMetadatas = makeGetLineupMetadatas(getProfileFeedLineup)
   const getProfile = makeGetProfile()
@@ -951,7 +951,7 @@ function makeMapStateToProps() {
   const mapStateToProps = (state: AppState) => ({
     account: getAccountUser(state),
     profile: getProfile(state),
-    artistTracks: getArtistTracksMetadatas(state),
+    artistAgreements: getArtistAgreementsMetadatas(state),
     userFeed: getUserFeedMetadatas(state),
     currentQueueItem: getCurrentQueueItem(state),
     playing: getPlaying(state),
@@ -1007,31 +1007,31 @@ function mapDispatchToProps(dispatch: Dispatch) {
     updateCurrentUserFollows: (follow: any) =>
       dispatch(profileActions.updateCurrentUserFollows(follow)),
 
-    // Artist Tracks
-    loadMoreArtistTracks: (
+    // Artist Agreements
+    loadMoreArtistAgreements: (
       offset: number,
       limit: number,
       id: ID,
-      sort: TracksSortMode
+      sort: AgreementsSortMode
     ) => {
       dispatch(
-        tracksActions.fetchLineupMetadatas(offset, limit, false, {
+        agreementsActions.fetchLineupMetadatas(offset, limit, false, {
           userId: id,
           sort
         })
       )
     },
-    resetArtistTracks: () => dispatch(tracksActions.reset()),
-    playArtistTrack: (uid: string) => dispatch(tracksActions.play(uid)),
-    pauseArtistTrack: () => dispatch(tracksActions.pause()),
+    resetArtistAgreements: () => dispatch(agreementsActions.reset()),
+    playArtistAgreement: (uid: string) => dispatch(agreementsActions.play(uid)),
+    pauseArtistAgreement: () => dispatch(agreementsActions.pause()),
     // User Feed
     loadMoreUserFeed: (offset: number, limit: number, id: ID) =>
       dispatch(
         feedActions.fetchLineupMetadatas(offset, limit, false, { userId: id })
       ),
-    resetUserFeedTracks: () => dispatch(feedActions.reset()),
-    playUserFeedTrack: (uid: UID) => dispatch(feedActions.play(uid)),
-    pauseUserFeedTrack: () => dispatch(feedActions.pause()),
+    resetUserFeedAgreements: () => dispatch(feedActions.reset()),
+    playUserFeedAgreement: (uid: UID) => dispatch(feedActions.play(uid)),
+    pauseUserFeedAgreement: () => dispatch(feedActions.pause()),
     // Followes
     fetchFollowUsers: (followGroup: any, limit: number, offset: number) =>
       dispatch(profileActions.fetchFollowUsers(followGroup, limit, offset)),
@@ -1053,34 +1053,34 @@ function mapDispatchToProps(dispatch: Dispatch) {
 
     didChangeTabsFrom: (prevLabel: string, currLabel: string) => {
       if (prevLabel !== currLabel) {
-        const trackEvent: TrackEvent = make(Name.PROFILE_PAGE_TAB_CLICK, {
+        const agreementEvent: AgreementEvent = make(Name.PROFILE_PAGE_TAB_CLICK, {
           tab: currLabel.toLowerCase() as
-            | 'tracks'
+            | 'agreements'
             | 'albums'
             | 'reposts'
             | 'playlists'
             | 'collectibles'
         })
-        dispatch(trackEvent)
+        dispatch(agreementEvent)
       }
     },
-    trackUpdateSort: (sort: 'recent' | 'popular') => {
-      const trackEvent: TrackEvent = make(Name.PROFILE_PAGE_SORT, { sort })
-      dispatch(trackEvent)
+    agreementUpdateSort: (sort: 'recent' | 'popular') => {
+      const agreementEvent: AgreementEvent = make(Name.PROFILE_PAGE_SORT, { sort })
+      dispatch(agreementEvent)
     },
     recordUpdateProfilePicture: (source: 'original' | 'unsplash' | 'url') => {
-      const trackEvent: TrackEvent = make(
+      const agreementEvent: AgreementEvent = make(
         Name.ACCOUNT_HEALTH_UPLOAD_PROFILE_PICTURE,
         { source }
       )
-      dispatch(trackEvent)
+      dispatch(agreementEvent)
     },
     recordUpdateCoverPhoto: (source: 'original' | 'unsplash' | 'url') => {
-      const trackEvent: TrackEvent = make(
+      const agreementEvent: AgreementEvent = make(
         Name.ACCOUNT_HEALTH_UPLOAD_COVER_PHOTO,
         { source }
       )
-      dispatch(trackEvent)
+      dispatch(agreementEvent)
     }
   }
 }

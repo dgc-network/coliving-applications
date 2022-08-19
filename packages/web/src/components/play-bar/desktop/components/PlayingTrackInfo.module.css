@@ -44,7 +44,7 @@
   justify-content: center;
 }
 
-.trackTitle,
+.agreementTitle,
 .artistName {
   user-select: none;
   white-space: nowrap;
@@ -57,14 +57,14 @@
   text-shadow: 0px 1px 6px #00000033;
 }
 
-.trackTitle:hover,
+.agreementTitle:hover,
 .artistName:hover {
   color: var(--primary);
   text-decoration: underline;
   text-decoration-color: var(--primary-light-2);
 }
 
-.trackTitle {
+.agreementTitle {
   font-size: var(--font-xs);
   font-weight: var(--font-bold);
   line-height: 18px;

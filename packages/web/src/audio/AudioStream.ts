@@ -1,4 +1,4 @@
-import { TrackSegment } from '@coliving/common'
+import { AgreementSegment } from '@coliving/common'
 import Hls from 'hls.js'
 
 import { fetchCID } from 'services/ColivingBackend'
@@ -42,7 +42,7 @@ export enum AudioError {
 // eslint-disable-next-line
 class fLoader extends Hls.DefaultConfig.loader {
   getFallbacks = () => []
-  getTrackId = () => ''
+  getAgreementId = () => ''
 
   constructor(config: Hls.LoaderConfig) {
     super(config)
@@ -56,7 +56,7 @@ class fLoader extends Hls.DefaultConfig.loader {
           this.getFallbacks(),
           /* cache */ false,
           /* asUrl */ true,
-          decodeHashId(this.getTrackId())
+          decodeHashId(this.getAgreementId())
         ).then((resolved) => {
           const updatedContext = { ...context, url: resolved }
           load(updatedContext, config, callbacks)
@@ -131,7 +131,7 @@ class AudioStream {
 
     // Listen for errors
     this.onError = (e, data) => {}
-    // Per load / instantiation of HLS (once per track),
+    // Per load / instantiation of HLS (once per agreement),
     // we limit rate limit logging to once per type
     // this is to prevent log spam, something HLS.js is *very* good at
     this.errorRateLimiter = new Set()
@@ -190,7 +190,7 @@ class AudioStream {
   }
 
   load = (
-    segments: TrackSegment[],
+    segments: AgreementSegment[],
     onEnd: () => void,
     prefetchedSegments = [],
     gateways = [],
@@ -222,7 +222,7 @@ class AudioStream {
         // eslint-disable-next-line
         class creatorFLoader extends fLoader {
           getFallbacks = () => gateways
-          getTrackId = () => info.id
+          getAgreementId = () => info.id
         }
         const hlsConfig = { ...HlsConfig, fLoader: creatorFLoader }
         this.hls = new Hls(hlsConfig)
@@ -234,8 +234,8 @@ class AudioStream {
           // Only emit on fatal because HLS is very noisy (e.g. pauses trigger errors)
           if (data.fatal) {
             // Buffer stall errors occur but are rarely fatal even if they claim to be.
-            // This occurs when you play a track, pause it, and then wait a few seconds.
-            // It appears as if we see this despite being able to play through the track.
+            // This occurs when you play a agreement, pause it, and then wait a few seconds.
+            // It appears as if we see this despite being able to play through the agreement.
             if (data.details === 'bufferStalledError') {
               return
             }
@@ -348,7 +348,7 @@ class AudioStream {
     const promise = this.live.play()
     if (promise) {
       promise.catch((_) => {
-        // Let pauses interrupt plays (as the user could be rapidly skipping through tracks).
+        // Let pauses interrupt plays (as the user could be rapidly skipping through agreements).
       })
     }
   }

@@ -1,4 +1,4 @@
-import type { LineupTrack } from '@/common'
+import type { LineupAgreement } from '@/common'
 import { range } from 'lodash'
 import { Pressable, Text, View } from 'react-native'
 import { useSelector } from 'react-redux'
@@ -8,14 +8,14 @@ import { getPlayingUid } from 'app/store/live/selectors'
 import { flexRowCentered, makeStyles } from 'app/styles'
 import type { GestureResponderHandler } from 'app/types/gesture'
 
-// Max number of tracks to display
-const DISPLAY_TRACK_COUNT = 5
+// Max number of agreements to display
+const DISPLAY_AGREEMENT_COUNT = 5
 
-type LineupTileTrackListProps = {
+type LineupTileAgreementListProps = {
   isLoading?: boolean
   onPress: GestureResponderHandler
-  trackCount?: number
-  tracks: LineupTrack[]
+  agreementCount?: number
+  agreements: LineupAgreement[]
 }
 
 const useStyles = makeStyles(({ palette, spacing, typography }) => ({
@@ -59,14 +59,14 @@ const useStyles = makeStyles(({ palette, spacing, typography }) => ({
   }
 }))
 
-type TrackItemProps = {
+type AgreementItemProps = {
   active: boolean
   showSkeleton?: boolean
   index: number
-  track?: LineupTrack
+  agreement?: LineupAgreement
 }
 
-const TrackItem = ({ track, active, index, showSkeleton }: TrackItemProps) => {
+const AgreementItem = ({ agreement, active, index, showSkeleton }: AgreementItemProps) => {
   const styles = useStyles()
   return (
     <>
@@ -74,7 +74,7 @@ const TrackItem = ({ track, active, index, showSkeleton }: TrackItemProps) => {
       <View style={styles.item}>
         {showSkeleton ? (
           <Skeleton width='100%' height='10' />
-        ) : !track ? null : (
+        ) : !agreement ? null : (
           <>
             <Text style={[styles.text, active && styles.active]}>
               {index + 1}
@@ -83,13 +83,13 @@ const TrackItem = ({ track, active, index, showSkeleton }: TrackItemProps) => {
               style={[styles.text, styles.title, active && styles.active]}
               numberOfLines={1}
             >
-              {track.title}
+              {agreement.title}
             </Text>
             <Text
               style={[styles.text, styles.artist, active && styles.active]}
               numberOfLines={1}
             >
-              {`by ${track.user.name}`}
+              {`by ${agreement.user.name}`}
             </Text>
           </>
         )}
@@ -98,20 +98,20 @@ const TrackItem = ({ track, active, index, showSkeleton }: TrackItemProps) => {
   )
 }
 
-export const CollectionTileTrackList = ({
+export const CollectionTileAgreementList = ({
   isLoading,
   onPress,
-  trackCount,
-  tracks
-}: LineupTileTrackListProps) => {
+  agreementCount,
+  agreements
+}: LineupTileAgreementListProps) => {
   const styles = useStyles()
   const playingUid = useSelector(getPlayingUid)
 
-  if (!tracks.length && isLoading) {
+  if (!agreements.length && isLoading) {
     return (
       <>
-        {range(DISPLAY_TRACK_COUNT).map((i) => (
-          <TrackItem key={i} active={false} index={i} showSkeleton />
+        {range(DISPLAY_AGREEMENT_COUNT).map((i) => (
+          <AgreementItem key={i} active={false} index={i} showSkeleton />
         ))}
       </>
     )
@@ -119,19 +119,19 @@ export const CollectionTileTrackList = ({
 
   return (
     <Pressable onPress={onPress}>
-      {tracks.slice(0, DISPLAY_TRACK_COUNT).map((track, index) => (
-        <TrackItem
-          key={track.uid}
-          active={playingUid === track.uid}
+      {agreements.slice(0, DISPLAY_AGREEMENT_COUNT).map((agreement, index) => (
+        <AgreementItem
+          key={agreement.uid}
+          active={playingUid === agreement.uid}
           index={index}
-          track={track}
+          agreement={agreement}
         />
       ))}
-      {trackCount && trackCount > 5 ? (
+      {agreementCount && agreementCount > 5 ? (
         <>
           <View style={styles.divider} />
           <Text style={[styles.item, styles.more]}>
-            {`+${trackCount - tracks.length} more tracks`}
+            {`+${agreementCount - agreements.length} more agreements`}
           </Text>
         </>
       ) : null}

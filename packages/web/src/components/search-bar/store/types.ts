@@ -1,8 +1,8 @@
-import { Collection, Status, Track, User } from '@coliving/common'
+import { Collection, Status, Agreement, User } from '@coliving/common'
 
 export default interface SearchBarState {
   searchText: string
-  tracks: Track[]
+  agreements: Agreement[]
   users: User[]
   playlists: Collection[]
   albums: Collection[]

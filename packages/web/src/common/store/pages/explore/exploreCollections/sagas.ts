@@ -64,7 +64,7 @@ function* watchFetch() {
     yield* call(
       processAndCacheCollections,
       collections,
-      /* shouldRetrieveTracks= */ false
+      /* shouldRetrieveAgreements= */ false
     )
 
     const collectionIds = collections.map((c: Collection) => c.playlist_id)

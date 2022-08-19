@@ -1,18 +1,18 @@
-import { UserCollectionMetadata, UserTrackMetadata } from '@coliving/common'
+import { UserCollectionMetadata, UserAgreementMetadata } from '@coliving/common'
 
-import { processAndCacheTracks } from 'common/store/cache/tracks/utils'
+import { processAndCacheAgreements } from 'common/store/cache/agreements/utils'
 
-export function* addTracksFromCollections(
+export function* addAgreementsFromCollections(
   metadataArray: Array<UserCollectionMetadata>
 ) {
-  const tracks: UserTrackMetadata[] = []
+  const agreements: UserAgreementMetadata[] = []
 
   metadataArray.forEach((m) => {
-    if (m.tracks) {
-      m.tracks.forEach((t) => {
-        tracks.push(t)
+    if (m.agreements) {
+      m.agreements.forEach((t) => {
+        agreements.push(t)
       })
     }
   })
-  yield processAndCacheTracks(tracks)
+  yield processAndCacheAgreements(agreements)
 }

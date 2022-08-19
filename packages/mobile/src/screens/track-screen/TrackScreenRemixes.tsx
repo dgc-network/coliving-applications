@@ -7,7 +7,7 @@ import { Button, Tile, GradientText } from 'app/components/core'
 import { flexRowCentered, makeStyles } from 'app/styles'
 import { useThemeColors } from 'app/utils/theme'
 
-import { TrackScreenRemix } from './TrackScreenRemix'
+import { AgreementScreenRemix } from './AgreementScreenRemix'
 
 const messages = {
   title: 'Remixes',
@@ -15,8 +15,8 @@ const messages = {
     `View All ${count && count > 6 ? `${count} ` : ''}Remixes`
 }
 
-type TrackScreenRemixesProps = {
-  trackIds: ID[]
+type AgreementScreenRemixesProps = {
+  agreementIds: ID[]
   onPressGoToRemixes: () => void
   count: number | null
 }
@@ -46,14 +46,14 @@ const useStyles = makeStyles(({ palette, spacing, typography }) => ({
     marginRight: spacing(2)
   },
 
-  tracks: {
+  agreements: {
     flexDirection: 'row',
     alignItems: 'flex-start',
     justifyContent: 'center',
     flexWrap: 'wrap'
   },
 
-  track: {
+  agreement: {
     marginHorizontal: spacing(3),
     marginBottom: spacing(5)
   },
@@ -63,11 +63,11 @@ const useStyles = makeStyles(({ palette, spacing, typography }) => ({
   }
 }))
 
-export const TrackScreenRemixes = ({
-  trackIds,
+export const AgreementScreenRemixes = ({
+  agreementIds,
   onPressGoToRemixes,
   count
-}: TrackScreenRemixesProps) => {
+}: AgreementScreenRemixesProps) => {
   const styles = useStyles()
   const { pageHeaderGradientColor2 } = useThemeColors()
   return (
@@ -76,9 +76,9 @@ export const TrackScreenRemixes = ({
         <IconRemix style={styles.iconRemix} fill={pageHeaderGradientColor2} />
         <GradientText style={styles.headerText}>{messages.title}</GradientText>
       </View>
-      <View style={styles.tracks}>
-        {trackIds.map((id) => {
-          return <TrackScreenRemix id={id} key={id} style={styles.track} />
+      <View style={styles.agreements}>
+        {agreementIds.map((id) => {
+          return <AgreementScreenRemix id={id} key={id} style={styles.agreement} />
         })}
       </View>
       <Button

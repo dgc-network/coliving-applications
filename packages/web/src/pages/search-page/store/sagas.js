@@ -2,13 +2,13 @@ import { select, call, takeLatest, put } from 'redux-saga/effects'
 
 import { getUserId } from 'common/store/account/selectors'
 import { processAndCacheCollections } from 'common/store/cache/collections/utils'
-import { processAndCacheTracks } from 'common/store/cache/tracks/utils'
+import { processAndCacheAgreements } from 'common/store/cache/agreements/utils'
 import { fetchUsers } from 'common/store/cache/users/sagas'
 import { processAndCacheUsers } from 'common/store/cache/users/utils'
 import * as searchPageActions from 'common/store/pages/search-results/actions'
-import { tracksActions as tracksLineupActions } from 'common/store/pages/search-results/lineup/tracks/actions'
+import { agreementsActions as agreementsLineupActions } from 'common/store/pages/search-results/lineup/agreements/actions'
 import { trimToAlphaNumeric } from 'common/utils/formatUtil'
-import tracksSagas from 'pages/search-page/store/lineups/tracks/sagas'
+import agreementsSagas from 'pages/search-page/store/lineups/agreements/sagas'
 import ColivingBackend from 'services/ColivingBackend'
 import apiClient from 'services/coliving-api-client/ColivingAPIClient'
 import { waitForBackendSetup } from 'store/backend/sagas'
@@ -21,9 +21,9 @@ export function* getTagSearchResults(tag, kind, limit, offset) {
     limit,
     offset
   })
-  const { users, tracks } = results
+  const { users, agreements } = results
 
-  const creatorIds = tracks
+  const creatorIds = agreements
     .map((t) => t.owner_id)
     .concat(users.map((u) => u.user_id))
 
@@ -31,13 +31,13 @@ export function* getTagSearchResults(tag, kind, limit, offset) {
 
   const { entries } = yield call(fetchUsers, creatorIds)
 
-  const tracksWithUsers = tracks.map((track) => ({
-    ...track,
-    user: entries[track.owner_id]
+  const agreementsWithUsers = agreements.map((agreement) => ({
+    ...agreement,
+    user: entries[agreement.owner_id]
   }))
-  yield call(processAndCacheTracks, tracksWithUsers)
+  yield call(processAndCacheAgreements, agreementsWithUsers)
 
-  return { users, tracks }
+  return { users, agreements }
 }
 
 export function* fetchSearchPageTags(action) {
@@ -53,9 +53,9 @@ export function* fetchSearchPageTags(action) {
   )
   if (results) {
     results.users = results.users.map(({ user_id: id }) => id)
-    results.tracks = results.tracks.map(({ track_id: id }) => id)
+    results.agreements = results.agreements.map(({ agreement_id: id }) => id)
     yield put(searchPageActions.fetchSearchPageTagsSucceeded(results, tag))
-    yield put(tracksLineupActions.fetchLineupMetadatas(0, 10))
+    yield put(agreementsLineupActions.fetchLineupMetadatas(0, 10))
   } else {
     yield put(searchPageActions.fetchSearchPageTagsFailed())
   }
@@ -70,19 +70,19 @@ export function* getSearchResults(searchText, kind, limit, offset) {
     limit,
     offset
   })
-  const { tracks, albums, playlists, users } = results
+  const { agreements, albums, playlists, users } = results
 
   yield call(processAndCacheUsers, users)
-  yield call(processAndCacheTracks, tracks)
+  yield call(processAndCacheAgreements, agreements)
 
   const collections = albums.concat(playlists)
   yield call(
     processAndCacheCollections,
     collections,
-    /* shouldRetrieveTracks */ false
+    /* shouldRetrieveAgreements */ false
   )
 
-  return { users, tracks, albums, playlists }
+  return { users, agreements, albums, playlists }
 }
 
 function* fetchSearchPageResults(action) {
@@ -97,7 +97,7 @@ function* fetchSearchPageResults(action) {
   )
   if (results) {
     results.users = results.users.map(({ user_id: id }) => id)
-    results.tracks = results.tracks.map(({ track_id: id }) => id)
+    results.agreements = results.agreements.map(({ agreement_id: id }) => id)
     results.albums = results.albums.map(({ playlist_id: id }) => id)
     results.playlists = results.playlists.map(({ playlist_id: id }) => id)
     yield put(
@@ -106,7 +106,7 @@ function* fetchSearchPageResults(action) {
         action.searchText
       )
     )
-    yield put(tracksLineupActions.fetchLineupMetadatas(0, 10))
+    yield put(agreementsLineupActions.fetchLineupMetadatas(0, 10))
   } else {
     yield put(searchPageActions.fetchSearchPageResultsFailed())
   }
@@ -128,7 +128,7 @@ function* watchFetchSearchPageResults() {
 
 export default function sagas() {
   return [
-    ...tracksSagas(),
+    ...agreementsSagas(),
     watchFetchSearchPageResults,
     watchFetchSearchPageTags
   ]

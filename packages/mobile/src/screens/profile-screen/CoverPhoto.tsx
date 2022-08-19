@@ -43,10 +43,10 @@ const interpolateBadgeImagePosition = (scrollY: Animated.Value) =>
 
 export const CoverPhoto = ({ scrollY }: { scrollY?: Animated.Value }) => {
   const styles = useStyles()
-  const { user_id, _cover_photo_sizes, track_count } = useSelectProfile([
+  const { user_id, _cover_photo_sizes, agreement_count } = useSelectProfile([
     'user_id',
     '_cover_photo_sizes',
-    'track_count'
+    'agreement_count'
   ])
 
   const coverPhoto = useUserCoverPhoto({
@@ -57,7 +57,7 @@ export const CoverPhoto = ({ scrollY }: { scrollY?: Animated.Value }) => {
 
   const isDefaultImage = coverPhoto && /imageCoverPhotoBlank/.test(coverPhoto)
 
-  const isArtist = track_count > 0
+  const isArtist = agreement_count > 0
 
   return (
     <>

@@ -5,7 +5,7 @@ import { SectionList } from 'app/components/core'
 import { getSearchResults } from 'app/store/search/selectors'
 import type {
   SearchUser,
-  SearchTrack,
+  SearchAgreement,
   SearchPlaylist,
   SectionHeader
 } from 'app/store/search/types'
@@ -16,7 +16,7 @@ import { SeeMoreResultsButton } from './content/SeeMoreResultsButton'
 
 const messages = {
   profile: 'PROFILES',
-  tracks: 'TRACKS',
+  agreements: 'AGREEMENTS',
   playlists: 'PLAYLISTS',
   albums: 'ALBUMS'
 }
@@ -29,13 +29,13 @@ const styles = StyleSheet.create({
 
 const sectionHeaders: SectionHeader[] = [
   'users',
-  'tracks',
+  'agreements',
   'playlists',
   'albums'
 ]
 const headerMapping: { [key in SectionHeader]: string } = {
   users: messages.profile,
-  tracks: messages.tracks,
+  agreements: messages.agreements,
   playlists: messages.playlists,
   albums: messages.albums
 }
@@ -53,7 +53,7 @@ const SearchResults = () => {
 
   const sectionWithMore: {
     title: SectionHeader | 'more'
-    data: (SearchUser | SearchTrack | SearchPlaylist)[]
+    data: (SearchUser | SearchAgreement | SearchPlaylist)[]
   }[] = [...sections, { title: 'more', data: [] }]
 
   return (
@@ -63,7 +63,7 @@ const SearchResults = () => {
         stickySectionHeadersEnabled={false}
         sections={sectionWithMore}
         keyExtractor={(item) => {
-          if ('track_id' in item) return `track-${item.track_id}`
+          if ('agreement_id' in item) return `agreement-${item.agreement_id}`
           else if ('user_id' in item) return `user-${item.user_id}`
           return `playlist-${item.playlist_id}`
         }}

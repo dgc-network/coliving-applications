@@ -16,21 +16,21 @@ import { Dispatch } from 'redux'
 import { getAccountOwnedPlaylists } from 'common/store/account/selectors'
 import {
   createPlaylist,
-  addTrackToPlaylist
+  addAgreementToPlaylist
 } from 'common/store/cache/collections/actions'
 import { getCollectionId } from 'common/store/pages/collection/selectors'
 import {
-  saveTrack,
-  unsaveTrack,
-  repostTrack,
-  undoRepostTrack,
-  shareTrack
-} from 'common/store/social/tracks/actions'
+  saveAgreement,
+  unsaveAgreement,
+  repostAgreement,
+  undoRepostAgreement,
+  shareAgreement
+} from 'common/store/social/agreements/actions'
 import { requestOpen as openAddToPlaylist } from 'common/store/ui/add-to-playlist/actions'
 import * as embedModalActions from 'components/embed-modal/store/actions'
 import { ToastContext } from 'components/toast/ToastContext'
 import { newCollectionMetadata } from 'schemas'
-import * as editTrackModalActions from 'store/application/ui/editTrackModal/actions'
+import * as editAgreementModalActions from 'store/application/ui/editAgreementModal/actions'
 import { showSetAsArtistPickConfirmation } from 'store/application/ui/setAsArtistPickConfirmation/actions'
 import { AppState } from 'store/types'
 import { profilePage } from 'utils/route'
@@ -50,7 +50,7 @@ const messages = {
   unreposted: 'Un-Reposted!',
   unsetArtistPick: 'Unset as Artist Pick',
   visitArtistPage: 'Visit Artist Page',
-  visitTrackPage: 'Visit Track Page'
+  visitAgreementPage: 'Visit Agreement Page'
 }
 
 export type OwnProps = {
@@ -64,24 +64,24 @@ export type OwnProps = {
   includeFavorite: boolean
   includeRepost: boolean
   includeShare: boolean
-  includeTrackPage: boolean
+  includeAgreementPage: boolean
   isArtistPick: boolean
   isDeleted: boolean
   isFavorited: boolean
   isOwner: boolean
   isOwnerDeactivated?: boolean
   isReposted: boolean
-  trackId: ID
-  trackTitle: string
-  trackPermalink: string
-  type: 'track'
+  agreementId: ID
+  agreementTitle: string
+  agreementPermalink: string
+  type: 'agreement'
 }
 
-export type TrackMenuProps = OwnProps &
+export type AgreementMenuProps = OwnProps &
   ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>
 
-const TrackMenu = (props: TrackMenuProps) => {
+const AgreementMenu = (props: AgreementMenuProps) => {
   const { toast } = useContext(ToastContext)
 
   const getMenu = () => {
@@ -96,7 +96,7 @@ const TrackMenu = (props: TrackMenuProps) => {
       includeFavorite,
       includeRepost,
       includeShare,
-      includeTrackPage,
+      includeAgreementPage,
       isArtistPick,
       isDeleted,
       isFavorited,
@@ -104,25 +104,25 @@ const TrackMenu = (props: TrackMenuProps) => {
       isOwnerDeactivated,
       isReposted,
       openAddToPlaylistModal,
-      openEditTrackModal,
+      openEditAgreementModal,
       openEmbedModal,
-      repostTrack,
-      saveTrack,
+      repostAgreement,
+      saveAgreement,
       setArtistPick,
-      shareTrack,
-      trackId,
-      trackTitle,
-      trackPermalink,
-      undoRepostTrack,
-      unsaveTrack,
+      shareAgreement,
+      agreementId,
+      agreementTitle,
+      agreementPermalink,
+      undoRepostAgreement,
+      unsaveAgreement,
       unsetArtistPick
     } = props
 
     const shareMenuItem = {
       text: messages.share,
       onClick: () => {
-        if (trackId) {
-          shareTrack(trackId)
+        if (agreementId) {
+          shareAgreement(agreementId)
           toast(messages.copiedToClipboard)
         }
       }
@@ -133,7 +133,7 @@ const TrackMenu = (props: TrackMenuProps) => {
       // Set timeout so the menu has time to close before we propagate the change.
       onClick: () =>
         setTimeout(() => {
-          isReposted ? undoRepostTrack(trackId) : repostTrack(trackId)
+          isReposted ? undoRepostAgreement(agreementId) : repostAgreement(agreementId)
           toast(isReposted ? messages.unreposted : messages.reposted)
         }, 0)
     }
@@ -143,20 +143,20 @@ const TrackMenu = (props: TrackMenuProps) => {
       // Set timeout so the menu has time to close before we propagate the change.
       onClick: () =>
         setTimeout(() => {
-          isFavorited ? unsaveTrack(trackId) : saveTrack(trackId)
+          isFavorited ? unsaveAgreement(agreementId) : saveAgreement(agreementId)
         }, 0)
     }
 
     const addToPlaylistMenuItem = {
       text: messages.addToPlaylist,
       onClick: () => {
-        openAddToPlaylistModal(trackId, trackTitle)
+        openAddToPlaylistModal(agreementId, agreementTitle)
       }
     }
 
-    const trackPageMenuItem = {
-      text: messages.visitTrackPage,
-      onClick: () => goToRoute(trackPermalink)
+    const agreementPageMenuItem = {
+      text: messages.visitAgreementPage,
+      onClick: () => goToRoute(agreementPermalink)
     }
 
     // TODO: Add back go to album when we have better album linking.
@@ -174,17 +174,17 @@ const TrackMenu = (props: TrackMenuProps) => {
       text: isArtistPick ? messages.unsetArtistPick : messages.setArtistPick,
       onClick: isArtistPick
         ? () => unsetArtistPick()
-        : () => setArtistPick(trackId)
+        : () => setArtistPick(agreementId)
     }
 
-    const editTrackMenuItem = {
-      text: 'Edit Track',
-      onClick: () => openEditTrackModal(trackId)
+    const editAgreementMenuItem = {
+      text: 'Edit Agreement',
+      onClick: () => openEditAgreementModal(agreementId)
     }
 
     const embedMenuItem = {
       text: messages.embed,
-      onClick: () => openEmbedModal(trackId)
+      onClick: () => openEmbedModal(agreementId)
     }
 
     const menu: { items: PopupMenuItem[] } = { items: [] }
@@ -201,10 +201,10 @@ const TrackMenu = (props: TrackMenuProps) => {
     if (includeAddToPlaylist && !isDeleted) {
       menu.items.push(addToPlaylistMenuItem)
     }
-    if (trackId && trackTitle && includeTrackPage && !isDeleted) {
-      menu.items.push(trackPageMenuItem)
+    if (agreementId && agreementTitle && includeAgreementPage && !isDeleted) {
+      menu.items.push(agreementPageMenuItem)
     }
-    if (trackId && isOwner && includeArtistPick && !isDeleted) {
+    if (agreementId && isOwner && includeArtistPick && !isDeleted) {
       menu.items.push(artistPickMenuItem)
     }
     // TODO: Add back go to album when we have better album linking.
@@ -215,7 +215,7 @@ const TrackMenu = (props: TrackMenuProps) => {
       menu.items.push(artistPageMenuItem)
     }
     if (includeEdit && isOwner && !isDeleted) {
-      menu.items.push(editTrackMenuItem)
+      menu.items.push(editAgreementMenuItem)
     }
     if (extraMenuItems && extraMenuItems.length > 0) {
       menu.items = menu.items.concat(extraMenuItems)
@@ -242,40 +242,40 @@ function mapStateToProps(state: AppState) {
 function mapDispatchToProps(dispatch: Dispatch) {
   return {
     goToRoute: (route: string) => dispatch(pushRoute(route)),
-    addTrackToPlaylist: (trackId: ID, playlistId: ID) =>
-      dispatch(addTrackToPlaylist(trackId, playlistId)),
-    shareTrack: (trackId: ID) =>
-      dispatch(shareTrack(trackId, ShareSource.OVERFLOW)),
-    saveTrack: (trackId: ID) =>
-      dispatch(saveTrack(trackId, FavoriteSource.OVERFLOW)),
-    unsaveTrack: (trackId: ID) =>
-      dispatch(unsaveTrack(trackId, FavoriteSource.OVERFLOW)),
-    repostTrack: (trackId: ID) =>
-      dispatch(repostTrack(trackId, RepostSource.OVERFLOW)),
-    undoRepostTrack: (trackId: ID) =>
-      dispatch(undoRepostTrack(trackId, RepostSource.OVERFLOW)),
-    setArtistPick: (trackId: ID) =>
-      dispatch(showSetAsArtistPickConfirmation(trackId)),
+    addAgreementToPlaylist: (agreementId: ID, playlistId: ID) =>
+      dispatch(addAgreementToPlaylist(agreementId, playlistId)),
+    shareAgreement: (agreementId: ID) =>
+      dispatch(shareAgreement(agreementId, ShareSource.OVERFLOW)),
+    saveAgreement: (agreementId: ID) =>
+      dispatch(saveAgreement(agreementId, FavoriteSource.OVERFLOW)),
+    unsaveAgreement: (agreementId: ID) =>
+      dispatch(unsaveAgreement(agreementId, FavoriteSource.OVERFLOW)),
+    repostAgreement: (agreementId: ID) =>
+      dispatch(repostAgreement(agreementId, RepostSource.OVERFLOW)),
+    undoRepostAgreement: (agreementId: ID) =>
+      dispatch(undoRepostAgreement(agreementId, RepostSource.OVERFLOW)),
+    setArtistPick: (agreementId: ID) =>
+      dispatch(showSetAsArtistPickConfirmation(agreementId)),
     unsetArtistPick: () => dispatch(showSetAsArtistPickConfirmation()),
-    createEmptyPlaylist: (tempId: ID, name: string, trackId: ID) =>
+    createEmptyPlaylist: (tempId: ID, name: string, agreementId: ID) =>
       dispatch(
         createPlaylist(
           tempId,
           newCollectionMetadata({ playlist_name: name }),
-          CreatePlaylistSource.FROM_TRACK,
-          trackId
+          CreatePlaylistSource.FROM_AGREEMENT,
+          agreementId
         )
       ),
-    openAddToPlaylistModal: (trackId: ID, title: string) =>
-      dispatch(openAddToPlaylist(trackId, title)),
-    openEditTrackModal: (trackId: ID) =>
-      dispatch(editTrackModalActions.open(trackId)),
-    openEmbedModal: (trackId: ID) =>
-      dispatch(embedModalActions.open(trackId, PlayableType.TRACK))
+    openAddToPlaylistModal: (agreementId: ID, title: string) =>
+      dispatch(openAddToPlaylist(agreementId, title)),
+    openEditAgreementModal: (agreementId: ID) =>
+      dispatch(editAgreementModalActions.open(agreementId)),
+    openEmbedModal: (agreementId: ID) =>
+      dispatch(embedModalActions.open(agreementId, PlayableType.AGREEMENT))
   }
 }
 
-TrackMenu.defaultProps = {
+AgreementMenu.defaultProps = {
   includeShare: false,
   includeRepost: false,
   isFavorited: false,
@@ -283,10 +283,10 @@ TrackMenu.defaultProps = {
   includeEdit: true,
   includeEmbed: true,
   includeFavorite: true,
-  includeTrackPage: true,
+  includeAgreementPage: true,
   includeAddToPlaylist: true,
   includeArtistPick: true,
   extraMenuItems: []
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(TrackMenu)
+export default connect(mapStateToProps, mapDispatchToProps)(AgreementMenu)

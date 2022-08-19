@@ -16,7 +16,7 @@ import { Dispatch } from 'redux'
 
 import { ReactComponent as IconCaret } from 'assets/img/iconCaretRight.svg'
 import { getUserId } from 'common/store/account/selectors'
-import { getDominantColorsByTrack } from 'common/store/average-color/slice'
+import { getDominantColorsByAgreement } from 'common/store/average-color/slice'
 import { getIsCasting, getMethod } from 'common/store/cast/selectors'
 import { makeGetCurrent } from 'common/store/queue/selectors'
 import {
@@ -29,11 +29,11 @@ import {
 } from 'common/store/queue/slice'
 import { RepeatMode } from 'common/store/queue/types'
 import {
-  saveTrack,
-  unsaveTrack,
-  repostTrack,
-  undoRepostTrack
-} from 'common/store/social/tracks/actions'
+  saveAgreement,
+  unsaveAgreement,
+  repostAgreement,
+  undoRepostAgreement
+} from 'common/store/social/agreements/actions'
 import { open } from 'common/store/ui/mobile-overflow-menu/slice'
 import {
   OverflowAction,
@@ -51,7 +51,7 @@ import RepeatButtonProvider from 'components/play-bar/repeat-button/RepeatButton
 import ShuffleButtonProvider from 'components/play-bar/shuffle-button/ShuffleButtonProvider'
 import { PlayButtonStatus } from 'components/play-bar/types'
 import UserBadges from 'components/user-badges/UserBadges'
-import { useTrackCoverArt } from 'hooks/useTrackCoverArt'
+import { useAgreementCoverArt } from 'hooks/useAgreementCoverArt'
 import { HapticFeedbackMessage } from 'services/native-mobile-interface/haptics'
 import { useRecord, make } from 'store/analytics/actions'
 import {
@@ -94,13 +94,13 @@ const messages = {
 }
 
 const g = withNullGuard((wide: NowPlayingProps) => {
-  const { uid, source, user, track, collectible } = wide.currentQueueItem
+  const { uid, source, user, agreement, collectible } = wide.currentQueueItem
   if (
-    ((uid !== null && track !== null) || collectible !== null) &&
+    ((uid !== null && agreement !== null) || collectible !== null) &&
     source !== null &&
     user !== null
   ) {
-    const currentQueueItem = { uid, source, user, track, collectible }
+    const currentQueueItem = { uid, source, user, agreement, collectible }
     return {
       ...wide,
       currentQueueItem
@@ -136,7 +136,7 @@ const NowPlaying = g(
     castMethod,
     dominantColors
   }) => {
-    const { uid, track, user, collectible } = currentQueueItem
+    const { uid, agreement, user, collectible } = currentQueueItem
 
     // Keep a ref for the artwork and dynamically resize the width of the
     // image as the height changes (which is flexed).
@@ -195,12 +195,12 @@ const NowPlaying = g(
     const record = useRecord()
 
     let displayInfo
-    if (track) {
-      displayInfo = track
+    if (agreement) {
+      displayInfo = agreement
     } else {
       displayInfo = {
         title: collectible?.name as string,
-        track_id: collectible?.id as string,
+        agreement_id: collectible?.id as string,
         owner_id: user?.user_id,
         _cover_art_sizes: {
           [SquareSizes.SIZE_480_BY_480]:
@@ -216,7 +216,7 @@ const NowPlaying = g(
     }
     const {
       title,
-      track_id,
+      agreement_id,
       owner_id,
       _cover_art_sizes,
       has_current_user_saved,
@@ -226,8 +226,8 @@ const NowPlaying = g(
 
     const { name, handle } = user
     const image =
-      useTrackCoverArt(
-        track_id,
+      useAgreementCoverArt(
+        agreement_id,
         _cover_art_sizes,
         SquareSizes.SIZE_480_BY_480
       ) || _cover_art_sizes[SquareSizes.SIZE_480_BY_480]
@@ -248,7 +248,7 @@ const NowPlaying = g(
         pause()
         record(
           make(Name.PLAYBACK_PAUSE, {
-            id: `${track_id}`,
+            id: `${agreement_id}`,
             source: PlaybackSource.NOW_PLAYING
           })
         )
@@ -256,7 +256,7 @@ const NowPlaying = g(
         play()
         record(
           make(Name.PLAYBACK_PLAY, {
-            id: `${track_id}`,
+            id: `${agreement_id}`,
             source: PlaybackSource.NOW_PLAYING
           })
         )
@@ -264,25 +264,25 @@ const NowPlaying = g(
     }
 
     const toggleFavorite = useCallback(() => {
-      if (track && track_id && typeof track_id !== 'string') {
-        has_current_user_saved ? unsave(track_id) : save(track_id)
+      if (agreement && agreement_id && typeof agreement_id !== 'string') {
+        has_current_user_saved ? unsave(agreement_id) : save(agreement_id)
       }
-    }, [track, track_id, has_current_user_saved, unsave, save])
+    }, [agreement, agreement_id, has_current_user_saved, unsave, save])
 
     const toggleRepost = useCallback(() => {
-      if (track && track_id && typeof track_id !== 'string') {
-        has_current_user_reposted ? undoRepost(track_id) : repost(track_id)
+      if (agreement && agreement_id && typeof agreement_id !== 'string') {
+        has_current_user_reposted ? undoRepost(agreement_id) : repost(agreement_id)
       }
-    }, [track, track_id, has_current_user_reposted, undoRepost, repost])
+    }, [agreement, agreement_id, has_current_user_reposted, undoRepost, repost])
 
     const onShare = useCallback(() => {
-      if (track && track_id && typeof track_id !== 'string') share(track_id)
-    }, [share, track, track_id])
+      if (agreement && agreement_id && typeof agreement_id !== 'string') share(agreement_id)
+    }, [share, agreement, agreement_id])
 
-    const goToTrackPage = () => {
+    const goToAgreementPage = () => {
       onClose()
-      if (track) {
-        goToRoute(track.permalink)
+      if (agreement) {
+        goToRoute(agreement.permalink)
       } else {
         goToRoute(collectibleDetailsPage(user.handle, collectible?.id ?? ''))
       }
@@ -308,32 +308,32 @@ const NowPlaying = g(
             : OverflowAction.FAVORITE
           : null,
         !collectible ? OverflowAction.ADD_TO_PLAYLIST : null,
-        track && OverflowAction.VIEW_TRACK_PAGE,
+        agreement && OverflowAction.VIEW_AGREEMENT_PAGE,
         collectible && OverflowAction.VIEW_COLLECTIBLE_PAGE,
         OverflowAction.VIEW_ARTIST_PAGE
       ].filter(Boolean) as OverflowAction[]
 
       const overflowCallbacks = {
-        [OverflowAction.VIEW_TRACK_PAGE]: onClose,
+        [OverflowAction.VIEW_AGREEMENT_PAGE]: onClose,
         [OverflowAction.VIEW_COLLECTIBLE_PAGE]: onClose,
         [OverflowAction.VIEW_ARTIST_PAGE]: onClose
       }
 
-      clickOverflow(track_id, overflowActions, overflowCallbacks)
+      clickOverflow(agreement_id, overflowActions, overflowCallbacks)
     }, [
       currentUserId,
       owner_id,
       collectible,
       has_current_user_reposted,
       has_current_user_saved,
-      track,
+      agreement,
       onClose,
       clickOverflow,
-      track_id
+      agreement_id
     ])
 
     const onPrevious = () => {
-      if (track?.genre === Genre.PODCASTS) {
+      if (agreement?.genre === Genre.PODCASTS) {
         const position = timing.position
         const newPosition = position - SKIP_DURATION_SEC
         seek(Math.max(0, newPosition))
@@ -351,7 +351,7 @@ const NowPlaying = g(
     }
 
     const onNext = () => {
-      if (track?.genre === Genre.PODCASTS) {
+      if (agreement?.genre === Genre.PODCASTS) {
         const newPosition = timing.position + SKIP_DURATION_SEC
         seek(Math.min(newPosition, timing.duration))
         // Update mediakey so scrubber updates
@@ -400,7 +400,7 @@ const NowPlaying = g(
           >
             <div
               className={styles.image}
-              onClick={goToTrackPage}
+              onClick={goToAgreementPage}
               style={artworkAverageColor}
             >
               <DynamicImage image={image} />
@@ -409,7 +409,7 @@ const NowPlaying = g(
         ) : (
           <div
             className={cn(styles.artwork, styles.image)}
-            onClick={goToTrackPage}
+            onClick={goToAgreementPage}
             ref={artworkRef}
             style={artworkAverageColor}
           >
@@ -417,7 +417,7 @@ const NowPlaying = g(
           </div>
         )}
         <div className={styles.info}>
-          <div className={styles.title} onClick={goToTrackPage}>
+          <div className={styles.title} onClick={goToAgreementPage}>
             {title}
           </div>
           <div className={styles.artist} onClick={goToProfilePage}>
@@ -442,8 +442,8 @@ const NowPlaying = g(
             includeTimestamps
             onScrubRelease={seek}
             style={{
-              railListenedColor: 'var(--track-slider-rail)',
-              handleColor: 'var(--track-slider-handle)'
+              railListenedColor: 'var(--agreement-slider-rail)',
+              handleColor: 'var(--agreement-slider-handle)'
             }}
           />
         </div>
@@ -516,8 +516,8 @@ function makeMapStateToProps() {
       isBuffering: getBuffering(state),
       isCasting: getIsCasting(state),
       castMethod: getMethod(state),
-      dominantColors: getDominantColorsByTrack(state, {
-        track: currentQueueItem.track
+      dominantColors: getDominantColorsByAgreement(state, {
+        agreement: currentQueueItem.agreement
       })
     }
   }
@@ -550,31 +550,31 @@ function mapDispatchToProps(dispatch: Dispatch) {
     shuffle: (enable: boolean) => {
       dispatch(shuffle({ enable }))
     },
-    share: (trackId: ID) =>
+    share: (agreementId: ID) =>
       dispatch(
         requestOpenShareModal({
-          type: 'track',
-          trackId,
+          type: 'agreement',
+          agreementId,
           source: ShareSource.NOW_PLAYING
         })
       ),
-    save: (trackId: ID) =>
-      dispatch(saveTrack(trackId, FavoriteSource.NOW_PLAYING)),
-    unsave: (trackId: ID) =>
-      dispatch(unsaveTrack(trackId, FavoriteSource.NOW_PLAYING)),
-    repost: (trackId: ID) =>
-      dispatch(repostTrack(trackId, RepostSource.NOW_PLAYING)),
-    undoRepost: (trackId: ID) =>
-      dispatch(undoRepostTrack(trackId, RepostSource.NOW_PLAYING)),
+    save: (agreementId: ID) =>
+      dispatch(saveAgreement(agreementId, FavoriteSource.NOW_PLAYING)),
+    unsave: (agreementId: ID) =>
+      dispatch(unsaveAgreement(agreementId, FavoriteSource.NOW_PLAYING)),
+    repost: (agreementId: ID) =>
+      dispatch(repostAgreement(agreementId, RepostSource.NOW_PLAYING)),
+    undoRepost: (agreementId: ID) =>
+      dispatch(undoRepostAgreement(agreementId, RepostSource.NOW_PLAYING)),
     clickOverflow: (
-      trackId: ID | string,
+      agreementId: ID | string,
       overflowActions: OverflowAction[],
       callbacks: OverflowActionCallbacks
     ) =>
       dispatch(
         open({
-          source: OverflowSource.TRACKS,
-          id: trackId,
+          source: OverflowSource.AGREEMENTS,
+          id: agreementId,
           overflowActions,
           overflowActionCallbacks: callbacks
         })

@@ -3,7 +3,7 @@ import { select, call } from 'redux-saga/effects'
 
 import { getUserId } from 'common/store/account/selectors'
 import { getCollections } from 'common/store/cache/collections/selectors'
-import { getTracks } from 'common/store/cache/tracks/selectors'
+import { getAgreements } from 'common/store/cache/agreements/selectors'
 import {
   PREFIX,
   feedActions
@@ -30,37 +30,37 @@ function* getReposts({ offset, limit, payload }) {
   })
 
   // If we're on our own profile, add any
-  // tracks or collections that haven't confirmed yet.
+  // agreements or collections that haven't confirmed yet.
   // Only do this on page 1 of the reposts tab
   if (profileId === currentUserId && offset === 0) {
     // Get everything that is confirming
     const confirming = yield select(getConfirmCalls)
     if (Object.keys(confirming).length > 0) {
-      const repostTrackIds = new Set(
-        reposts.map((r) => r.track_id).filter(Boolean)
+      const repostAgreementIds = new Set(
+        reposts.map((r) => r.agreement_id).filter(Boolean)
       )
       const repostCollectionIds = new Set(
         reposts.map((r) => r.playlist_id).filter(Boolean)
       )
 
-      const tracks = yield select(getTracks)
+      const agreements = yield select(getAgreements)
       const collections = yield select(getCollections)
 
-      // For each confirming entry, check if it's a track or collection,
+      // For each confirming entry, check if it's a agreement or collection,
       // then check if we have reposted/favorited it, and check to make
-      // sure we're not already getting back that same track or collection from the
+      // sure we're not already getting back that same agreement or collection from the
       // backend.
       // If we aren't, this is an unconfirmed repost, prepend it to the lineup.
       Object.keys(confirming).forEach((kindId) => {
         const kind = getKindFromKindId(kindId)
         const id = getIdFromKindId(kindId)
-        if (kind === Kind.TRACKS) {
-          const track = tracks[id]
+        if (kind === Kind.AGREEMENTS) {
+          const agreement = agreements[id]
           if (
-            track.has_current_user_reposted &&
-            !repostTrackIds.has(track.track_id)
+            agreement.has_current_user_reposted &&
+            !repostAgreementIds.has(agreement.agreement_id)
           ) {
-            reposts = [track, ...reposts]
+            reposts = [agreement, ...reposts]
           }
         } else if (kind === Kind.COLLECTIONS) {
           const collection = collections[id]

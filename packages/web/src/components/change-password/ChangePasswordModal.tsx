@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { getCurrentPage } from 'common/store/change-password/selectors'
 import { changePage, Page } from 'common/store/change-password/slice'
-import { make, TrackEvent } from 'store/analytics/actions'
+import { make, AgreementEvent } from 'store/analytics/actions'
 
 import { ChangePassword } from './ChangePassword'
 
@@ -33,11 +33,11 @@ export const ChangePasswordModal = (props: any) => {
   useEffect(() => {
     if (showModal) {
       dispatch(changePage(Page.CONFIRM_CREDENTIALS))
-      const trackEvent: TrackEvent = make(
+      const agreementEvent: AgreementEvent = make(
         Name.SETTINGS_START_CHANGE_PASSWORD,
         {}
       )
-      dispatch(trackEvent)
+      dispatch(agreementEvent)
     }
   }, [dispatch, showModal])
 

@@ -13,7 +13,7 @@ import {
 } from 'common/store/notifications/types'
 import ErrorWrapper from 'components/error-wrapper/ErrorWrapper'
 
-import { AddTrackToPlaylistNotification } from './AddTrackToPlaylistNotification'
+import { AddAgreementToPlaylistNotification } from './AddAgreementToPlaylistNotification'
 import { AnnouncementNotification } from './AnnouncementNotification'
 import { ChallengeRewardNotification } from './ChallengeRewardNotification'
 import { FavoriteNotification } from './FavoriteNotification'
@@ -28,7 +28,7 @@ import { TipReceivedNotification } from './TipReceivedNotification'
 import { TipSentNotification } from './TipSentNotification'
 import { TopSupporterNotification } from './TopSupporterNotification'
 import { TopSupportingNotification } from './TopSupportingNotification'
-import { TrendingTrackNotification } from './TrendingTrackNotification'
+import { TrendingAgreementNotification } from './TrendingAgreementNotification'
 import { UserSubscriptionNotification } from './UserSubscriptionNotification'
 import { USER_LENGTH_LIMIT } from './utils'
 
@@ -108,14 +108,14 @@ export const Notification = (props: NotificationProps) => {
       case NotificationType.SupportingRankUp: {
         return <TopSupportingNotification notification={notification} />
       }
-      case NotificationType.TrendingTrack: {
-        return <TrendingTrackNotification notification={notification} />
+      case NotificationType.TrendingAgreement: {
+        return <TrendingAgreementNotification notification={notification} />
       }
       case NotificationType.UserSubscription: {
         return <UserSubscriptionNotification notification={notification} />
       }
-      case NotificationType.AddTrackToPlaylist: {
-        return <AddTrackToPlaylistNotification notification={notification} />
+      case NotificationType.AddAgreementToPlaylist: {
+        return <AddAgreementToPlaylistNotification notification={notification} />
       }
       default: {
         return null

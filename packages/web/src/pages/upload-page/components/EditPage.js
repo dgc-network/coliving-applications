@@ -12,8 +12,8 @@ import UploadType from './uploadType'
 
 class EditPage extends Component {
   state = {
-    invalidTracksFields: this.props.tracks.map((track) =>
-      mapValues(track.metadata, (v) => false)
+    invalidAgreementsFields: this.props.agreements.map((agreement) =>
+      mapValues(agreement.metadata, (v) => false)
     ),
     invalidCollectionFields: mapValues(this.props.metadata, (v) => false)
   }
@@ -22,13 +22,13 @@ class EditPage extends Component {
     this.props.onStopPreview()
   }
 
-  getRequiredTracksFields = (tracks) => {
-    return this.props.tracks.map((track) => {
-      const fields = mapValues(track.metadata, (v) => false)
+  getRequiredAgreementsFields = (agreements) => {
+    return this.props.agreements.map((agreement) => {
+      const fields = mapValues(agreement.metadata, (v) => false)
       fields.title = true
       if (
-        this.props.uploadType === UploadType.INDIVIDUAL_TRACK ||
-        this.props.uploadType === UploadType.INDIVIDUAL_TRACKS
+        this.props.uploadType === UploadType.INDIVIDUAL_AGREEMENT ||
+        this.props.uploadType === UploadType.INDIVIDUAL_AGREEMENTS
       ) {
         fields.genre = true
         fields.artwork = true
@@ -45,27 +45,27 @@ class EditPage extends Component {
     return fields
   }
 
-  validateTracksFields = (tracks) => {
+  validateAgreementsFields = (agreements) => {
     const { uploadType } = this.props
 
-    const newInvalidTracksFields = [...this.state.invalidTracksFields]
-    const validTracks = tracks.map((track, i) => {
-      newInvalidTracksFields[i] = {
-        ...this.state.invalidTracksFields[i],
-        title: !track.metadata.title
+    const newInvalidAgreementsFields = [...this.state.invalidAgreementsFields]
+    const validAgreements = agreements.map((agreement, i) => {
+      newInvalidAgreementsFields[i] = {
+        ...this.state.invalidAgreementsFields[i],
+        title: !agreement.metadata.title
       }
       if (
-        uploadType === UploadType.INDIVIDUAL_TRACK ||
-        uploadType === UploadType.INDIVIDUAL_TRACKS
+        uploadType === UploadType.INDIVIDUAL_AGREEMENT ||
+        uploadType === UploadType.INDIVIDUAL_AGREEMENTS
       ) {
-        newInvalidTracksFields[i].genre = !track.metadata.genre
-        newInvalidTracksFields[i].artwork = !track.metadata.artwork.file
+        newInvalidAgreementsFields[i].genre = !agreement.metadata.genre
+        newInvalidAgreementsFields[i].artwork = !agreement.metadata.artwork.file
       }
-      return Object.values(newInvalidTracksFields[i]).every((f) => !f)
+      return Object.values(newInvalidAgreementsFields[i]).every((f) => !f)
     })
 
     this.setState({
-      invalidTracksFields: newInvalidTracksFields
+      invalidAgreementsFields: newInvalidAgreementsFields
     })
 
     const unlistedVisibilityFields = [
@@ -75,16 +75,16 @@ class EditPage extends Component {
       'share',
       'play_count'
     ]
-    for (let i = 0; i < tracks.length; i += 1) {
-      const track = tracks[i]
-      // If track is not unlisted (is public) and one of the unlisted visibility fields is false, set to true
+    for (let i = 0; i < agreements.length; i += 1) {
+      const agreement = agreements[i]
+      // If agreement is not unlisted (is public) and one of the unlisted visibility fields is false, set to true
       if (
-        !track.metadata.is_unlisted &&
+        !agreement.metadata.is_unlisted &&
         !unlistedVisibilityFields.every(
-          (field) => track.metadata.field_visibility[field]
+          (field) => agreement.metadata.field_visibility[field]
         )
       ) {
-        this.updateTrack(
+        this.updateAgreement(
           'field_visibility',
           {
             genre: true,
@@ -92,14 +92,14 @@ class EditPage extends Component {
             tags: true,
             share: true,
             play_count: true,
-            remixes: track.metadata.field_visibility.remixes
+            remixes: agreement.metadata.field_visibility.remixes
           },
           false,
           i
         )
       }
     }
-    return validTracks.every((f) => f)
+    return validAgreements.every((f) => f)
   }
 
   validateCollectionFields = (formFields) => {
@@ -122,8 +122,8 @@ class EditPage extends Component {
     if (uploadType === UploadType.PLAYLIST || uploadType === UploadType.ALBUM) {
       validCollectionFields = this.validateCollectionFields(this.props.metadata)
     }
-    const validTracksFields = this.validateTracksFields(this.props.tracks)
-    if (validTracksFields && validCollectionFields) {
+    const validAgreementsFields = this.validateAgreementsFields(this.props.agreements)
+    if (validAgreementsFields && validCollectionFields) {
       this.props.onContinue()
     }
   }
@@ -135,17 +135,17 @@ class EditPage extends Component {
     this.props.updateMetadata(field, value)
   }
 
-  updateTrack = (field, value, invalid, i) => {
-    const { invalidTracksFields } = this.state
-    invalidTracksFields[i][field] = !!invalid
-    this.setState({ invalidTracksFields })
-    this.props.updateTrack(field, value, i)
+  updateAgreement = (field, value, invalid, i) => {
+    const { invalidAgreementsFields } = this.state
+    invalidAgreementsFields[i][field] = !!invalid
+    this.setState({ invalidAgreementsFields })
+    this.props.updateAgreement(field, value, i)
   }
 
   render() {
     const {
       metadata,
-      tracks,
+      agreements,
       uploadType,
       previewIndex,
       onPlayPreview,
@@ -153,9 +153,9 @@ class EditPage extends Component {
       onChangeOrder
     } = this.props
 
-    const { invalidTracksFields, invalidCollectionFields } = this.state
+    const { invalidAgreementsFields, invalidCollectionFields } = this.state
 
-    const requiredTracksFields = this.getRequiredTracksFields(this.props.tracks)
+    const requiredAgreementsFields = this.getRequiredAgreementsFields(this.props.agreements)
     const requiredCollectionFields = this.getRequiredCollectionFields(
       this.props.metadata
     )
@@ -177,17 +177,17 @@ class EditPage extends Component {
               onChangeOrder(source, destination)
             }
           >
-            {tracks.map((track, i) => (
+            {agreements.map((agreement, i) => (
               <InlineFormTile
                 key={i}
-                defaultFields={track.metadata}
-                invalidFields={invalidTracksFields[i]}
-                requiredFields={requiredTracksFields[i]}
+                defaultFields={agreement.metadata}
+                invalidFields={invalidAgreementsFields[i]}
+                requiredFields={requiredAgreementsFields[i]}
                 playing={i === previewIndex}
                 onPlayPreview={() => onPlayPreview(i)}
                 onStopPreview={() => onStopPreview()}
                 onChangeField={(field, value, invalid = false) =>
-                  this.updateTrack(field, value, invalid, i)
+                  this.updateAgreement(field, value, invalid, i)
                 }
               />
             ))}
@@ -195,14 +195,14 @@ class EditPage extends Component {
         </div>
       )
     } else {
-      forms = tracks.map((track, i) => (
-        <div key={track.file.preview + i} className={styles.formTile}>
+      forms = agreements.map((agreement, i) => (
+        <div key={agreement.file.preview + i} className={styles.formTile}>
           <FormTile
-            defaultFields={track.metadata}
-            invalidFields={invalidTracksFields[i]}
-            requiredFields={requiredTracksFields[i]}
+            defaultFields={agreement.metadata}
+            invalidFields={invalidAgreementsFields[i]}
+            requiredFields={requiredAgreementsFields[i]}
             playing={i === previewIndex}
-            type={'track'}
+            type={'agreement'}
             onAddStems={(stems) => this.props.onAddStems(stems, i)}
             onSelectStemCategory={(category, stemIndex) =>
               this.props.onSelectStemCategory(category, i, stemIndex)
@@ -212,7 +212,7 @@ class EditPage extends Component {
             onPlayPreview={() => onPlayPreview(i)}
             onStopPreview={() => onStopPreview()}
             onChangeField={(field, value, invalid) =>
-              this.updateTrack(field, value, invalid, i)
+              this.updateAgreement(field, value, invalid, i)
             }
           />
         </div>
@@ -239,18 +239,18 @@ class EditPage extends Component {
 }
 
 EditPage.propTypes = {
-  tracks: PropTypes.array,
+  agreements: PropTypes.array,
   uploadType: PropTypes.oneOf(Object.values(UploadType)),
   previewIndex: PropTypes.number,
   onPlayPreview: PropTypes.func,
   onStopPreview: PropTypes.func,
-  updateTrack: PropTypes.func,
+  updateAgreement: PropTypes.func,
   updateMetadata: PropTypes.func,
   onContinue: PropTypes.func,
   onAddStems: PropTypes.func,
   stems: PropTypes.array,
 
-  /** Function of type (trackIndex, stemIndex) => void */
+  /** Function of type (agreementIndex, stemIndex) => void */
   onDeleteStem: PropTypes.func
 }
 

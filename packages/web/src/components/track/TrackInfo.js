@@ -8,13 +8,13 @@ import { ArtistPopover } from 'components/artist/ArtistPopover'
 import Skeleton from 'components/skeleton/Skeleton'
 import UserBadges from 'components/user-badges/UserBadges'
 
-import styles from './TrackInfo.module.css'
+import styles from './AgreementInfo.module.css'
 
-class TrackInfo extends PureComponent {
-  onClickTrackName = (e) => {
+class AgreementInfo extends PureComponent {
+  onClickAgreementName = (e) => {
     e.stopPropagation()
-    if (!this.props.disabled && this.props.onClickTrackName)
-      this.props.onClickTrackName()
+    if (!this.props.disabled && this.props.onClickAgreementName)
+      this.props.onClickAgreementName()
   }
 
   onClickArtistName = (e) => {
@@ -27,13 +27,13 @@ class TrackInfo extends PureComponent {
     const {
       contentTitle,
       isLoading,
-      trackTitle,
+      agreementTitle,
       active,
       artistName,
       disabled,
       artistHandle,
       size,
-      onClickTrackName,
+      onClickAgreementName,
       onClickArtistName,
       popover,
       condense,
@@ -49,7 +49,7 @@ class TrackInfo extends PureComponent {
       [styles.miniscule]: size === 'miniscule'
     }
 
-    const trackTitleStyle = cn(styles.trackTitle, style, {
+    const agreementTitleStyle = cn(styles.agreementTitle, style, {
       [styles.active]: active,
       [styles.condense]: condense
     })
@@ -65,19 +65,19 @@ class TrackInfo extends PureComponent {
 
     return (
       <div
-        className={cn(styles.trackInfoWrapper, {
+        className={cn(styles.agreementInfoWrapper, {
           [styles.disabled]: disabled
         })}
       >
-        <div className={trackTitleStyle}>
+        <div className={agreementTitleStyle}>
           <div className={hideShow}>
             <div
-              className={cn(styles.trackName, {
-                [styles.trackNameLink]: onClickTrackName
+              className={cn(styles.agreementName, {
+                [styles.agreementNameLink]: onClickAgreementName
               })}
-              onClick={this.onClickTrackName}
+              onClick={this.onClickAgreementName}
             >
-              {trackTitle}
+              {agreementTitle}
             </div>
             {active ? (
               <span className={styles.volumeIcon}>
@@ -126,8 +126,8 @@ class TrackInfo extends PureComponent {
   }
 }
 
-TrackInfo.propTypes = {
-  trackTitle: PropTypes.string,
+AgreementInfo.propTypes = {
+  agreementTitle: PropTypes.string,
   artistName: PropTypes.string,
   artistHandle: PropTypes.string,
   isLoading: PropTypes.bool,
@@ -142,13 +142,13 @@ TrackInfo.propTypes = {
   ]),
   popover: PropTypes.bool,
   disabled: PropTypes.bool,
-  onClickTrackName: PropTypes.func,
+  onClickAgreementName: PropTypes.func,
   onClickArtistName: PropTypes.func,
   userId: PropTypes.number
 }
 
-TrackInfo.defaultProps = {
-  trackTitle: '\u200B',
+AgreementInfo.defaultProps = {
+  agreementTitle: '\u200B',
   artistName: '\u200B',
   artistHandle: '',
   size: 'medium',
@@ -157,8 +157,8 @@ TrackInfo.defaultProps = {
   condense: false,
   isLoading: false,
   routeArtistPage: false,
-  routeTrackPage: false,
+  routeAgreementPage: false,
   popover: true
 }
 
-export default TrackInfo
+export default AgreementInfo

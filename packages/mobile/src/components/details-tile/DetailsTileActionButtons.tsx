@@ -52,7 +52,7 @@ const createStyles = (themeColors: ThemeColors) =>
   })
 
 /**
- * The action buttons on track and playlist screens
+ * The action buttons on agreement and playlist screens
  */
 export const DetailsTileActionButtons = ({
   hasReposted,

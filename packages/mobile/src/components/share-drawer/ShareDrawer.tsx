@@ -4,7 +4,7 @@ import { FeatureFlags } from '@/common'
 import Clipboard from '@react-native-clipboard/clipboard'
 import { getAccountUser } from '-client/src/common/store/account/selectors'
 import { shareCollection } from '-client/src/common/store/social/collections/actions'
-import { shareTrack } from '-client/src/common/store/social/tracks/actions'
+import { shareAgreement } from '-client/src/common/store/social/agreements/actions'
 import { shareUser } from '-client/src/common/store/social/users/actions'
 import { getShareState } from '-client/src/common/store/ui/share-modal/selectors'
 import { requestOpen as requestOpenTikTokModal } from '-client/src/common/store/ui/share-sound-to-tiktok-modal/slice'
@@ -79,10 +79,10 @@ export const ShareDrawer = () => {
   const account = useSelectorWeb(getAccountUser)
   const { toast } = useContext(ToastContext)
   const isOwner =
-    content?.type === 'track' &&
+    content?.type === 'agreement' &&
     account &&
     account.user_id === content.artist.user_id
-  const shareType = content?.type ?? 'track'
+  const shareType = content?.type ?? 'agreement'
 
   const handleShareToTwitter = useCallback(async () => {
     if (!content) return
@@ -96,8 +96,8 @@ export const ShareDrawer = () => {
   }, [content])
 
   const handleShareToTikTok = useCallback(() => {
-    if (content?.type === 'track') {
-      dispatchWeb(requestOpenTikTokModal({ id: content.track.track_id }))
+    if (content?.type === 'agreement') {
+      dispatchWeb(requestOpenTikTokModal({ id: content.agreement.agreement_id }))
     }
   }, [content, dispatchWeb])
 
@@ -111,8 +111,8 @@ export const ShareDrawer = () => {
   const handleOpenShareSheet = useCallback(() => {
     if (!source || !content) return
     switch (content.type) {
-      case 'track':
-        dispatchWeb(shareTrack(content.track.track_id, source))
+      case 'agreement':
+        dispatchWeb(shareAgreement(content.agreement.agreement_id, source))
         break
       case 'profile':
         dispatchWeb(shareUser(content.profile.user_id, source))
@@ -128,11 +128,11 @@ export const ShareDrawer = () => {
 
   const shouldIncludeTikTokAction = Boolean(
     isShareToTikTokEnabled &&
-      content?.type === 'track' &&
+      content?.type === 'agreement' &&
       isOwner &&
-      !content.track.is_unlisted &&
-      !content.track.is_invalid &&
-      !content.track.is_delete
+      !content.agreement.is_unlisted &&
+      !content.agreement.is_invalid &&
+      !content.agreement.is_delete
   )
 
   const getRows = useCallback(() => {

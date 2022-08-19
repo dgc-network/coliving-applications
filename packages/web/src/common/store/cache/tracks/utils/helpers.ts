@@ -1,4 +1,4 @@
-import { Kind, TrackMetadata, User, makeUid } from '@coliving/common'
+import { Kind, AgreementMetadata, User, makeUid } from '@coliving/common'
 import { uniqBy } from 'lodash'
 import { put, select } from 'redux-saga/effects'
 
@@ -7,11 +7,11 @@ import * as cacheActions from 'common/store/cache/actions'
 import { reformat as reformatUser } from 'common/store/cache/users/utils'
 
 /**
- * Adds users from track metadata to cache.
+ * Adds users from agreement metadata to cache.
  * Dedupes and removes self.
  * @param metadataArray
  */
-export function* addUsersFromTracks<T extends TrackMetadata & { user?: User }>(
+export function* addUsersFromAgreements<T extends AgreementMetadata & { user?: User }>(
   metadataArray: T[]
 ) {
   const accountUser: ReturnType<typeof getAccountUser> = yield select(
@@ -21,11 +21,11 @@ export function* addUsersFromTracks<T extends TrackMetadata & { user?: User }>(
   let users = metadataArray
     .filter((m) => m.user)
     .map((m) => {
-      const track = m as TrackMetadata & { user: User }
+      const agreement = m as AgreementMetadata & { user: User }
       return {
-        id: track.user.user_id,
-        uid: makeUid(Kind.USERS, track.user.user_id),
-        metadata: reformatUser(track.user)
+        id: agreement.user.user_id,
+        uid: makeUid(Kind.USERS, agreement.user.user_id),
+        metadata: reformatUser(agreement.user)
       }
     })
 

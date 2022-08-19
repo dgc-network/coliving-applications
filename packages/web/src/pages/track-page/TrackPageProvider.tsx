@@ -12,7 +12,7 @@ import {
   PlaybackSource,
   FavoriteType,
   Status,
-  Track,
+  Agreement,
   Uid
 } from '@coliving/common'
 import { push as pushRoute, replace } from 'connected-react-router'
@@ -20,22 +20,22 @@ import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 
 import { getUserId } from 'common/store/account/selectors'
-import * as cacheTrackActions from 'common/store/cache/tracks/actions'
+import * as cacheAgreementActions from 'common/store/cache/agreements/actions'
 import { makeGetLineupMetadatas } from 'common/store/lineup/selectors'
-import * as trackPageActions from 'common/store/pages/track/actions'
-import { tracksActions } from 'common/store/pages/track/lineup/actions'
+import * as agreementPageActions from 'common/store/pages/agreement/actions'
+import { agreementsActions } from 'common/store/pages/agreement/lineup/actions'
 import {
   getUser,
   getLineup,
-  getTrackRank,
-  getTrack,
-  getRemixParentTrack,
+  getAgreementRank,
+  getAgreement,
+  getRemixParentAgreement,
   getStatus,
   getSourceSelector,
-  getTrackPermalink
-} from 'common/store/pages/track/selectors'
+  getAgreementPermalink
+} from 'common/store/pages/agreement/selectors'
 import { makeGetCurrent } from 'common/store/queue/selectors'
-import * as socialTracksActions from 'common/store/social/tracks/actions'
+import * as socialAgreementsActions from 'common/store/social/agreements/actions'
 import * as socialUsersActions from 'common/store/social/users/actions'
 import { open } from 'common/store/ui/mobile-overflow-menu/slice'
 import {
@@ -50,7 +50,7 @@ import { getCanonicalName } from 'common/utils/genres'
 import { formatSeconds, formatDate } from 'common/utils/timeUtil'
 import * as unfollowConfirmationActions from 'components/unfollow-confirmation-modal/store/actions'
 import DeletedPage from 'pages/deleted-page/DeletedPage'
-import { TrackEvent, make } from 'store/analytics/actions'
+import { AgreementEvent, make } from 'store/analytics/actions'
 import {
   setUsers,
   setVisibility
@@ -70,32 +70,32 @@ import {
   FEED_PAGE,
   FAVORITING_USERS_ROUTE,
   REPOSTING_USERS_ROUTE,
-  fullTrackPage,
-  trackRemixesPage
+  fullAgreementPage,
+  agreementRemixesPage
 } from 'utils/route'
-import { parseTrackRoute, TrackRouteParams } from 'utils/route/trackRouteParser'
-import { getTrackPageTitle, getTrackPageDescription } from 'utils/seo'
+import { parseAgreementRoute, AgreementRouteParams } from 'utils/route/agreementRouteParser'
+import { getAgreementPageTitle, getAgreementPageDescription } from 'utils/seo'
 
 import StemsSEOHint from './components/StemsSEOHint'
-import { OwnProps as DesktopTrackPageProps } from './components/desktop/TrackPage'
-import { OwnProps as MobileTrackPageProps } from './components/mobile/TrackPage'
+import { OwnProps as DesktopAgreementPageProps } from './components/desktop/AgreementPage'
+import { OwnProps as MobileAgreementPageProps } from './components/mobile/AgreementPage'
 import { TRENDING_BADGE_LIMIT } from './store/sagas'
 
-const getRemixParentTrackId = (track: Track | null) =>
-  track?.remix_of?.tracks?.[0]?.parent_track_id
+const getRemixParentAgreementId = (agreement: Agreement | null) =>
+  agreement?.remix_of?.agreements?.[0]?.parent_agreement_id
 
 type OwnProps = {
   children:
-    | ComponentType<MobileTrackPageProps>
-    | ComponentType<DesktopTrackPageProps>
+    | ComponentType<MobileAgreementPageProps>
+    | ComponentType<DesktopAgreementPageProps>
 }
 
 type mapStateProps = ReturnType<typeof makeMapStateToProps>
-type TrackPageProviderProps = OwnProps &
+type AgreementPageProviderProps = OwnProps &
   ReturnType<mapStateProps> &
   ReturnType<typeof mapDispatchToProps>
 
-type TrackPageProviderState = {
+type AgreementPageProviderState = {
   pathname: string
   ownerHandle: string | null
   showDeleteConfirmation: boolean
@@ -103,37 +103,37 @@ type TrackPageProviderState = {
   source: string | undefined
 }
 
-class TrackPageProvider extends Component<
-  TrackPageProviderProps,
-  TrackPageProviderState
+class AgreementPageProvider extends Component<
+  AgreementPageProviderProps,
+  AgreementPageProviderState
 > {
-  state: TrackPageProviderState = {
+  state: AgreementPageProviderState = {
     pathname: this.props.pathname,
     ownerHandle: null,
     showDeleteConfirmation: false,
-    routeKey: parseTrackRoute(this.props.pathname)?.trackId ?? 0,
+    routeKey: parseAgreementRoute(this.props.pathname)?.agreementId ?? 0,
     source: undefined
   }
 
   componentDidMount() {
-    const params = parseTrackRoute(this.props.pathname)
-    // Go to 404 if the track id isn't parsed correctly or if should redirect
-    if (!params || (params.trackId && shouldRedirectTrack(params.trackId))) {
+    const params = parseAgreementRoute(this.props.pathname)
+    // Go to 404 if the agreement id isn't parsed correctly or if should redirect
+    if (!params || (params.agreementId && shouldRedirectAgreement(params.agreementId))) {
       this.props.goToRoute(NOT_FOUND_PAGE)
       return
     }
 
-    this.fetchTracks(params)
+    this.fetchAgreements(params)
   }
 
-  componentDidUpdate(prevProps: TrackPageProviderProps) {
+  componentDidUpdate(prevProps: AgreementPageProviderProps) {
     const {
       pathname,
-      track,
+      agreement,
       status,
-      refetchTracksLinup,
+      refetchAgreementsLinup,
       user,
-      trackPermalink
+      agreementPermalink
     } = this.props
     if (status === Status.ERROR) {
       this.props.goToRoute(NOT_FOUND_PAGE)
@@ -142,15 +142,15 @@ class TrackPageProvider extends Component<
       this.goToProfilePage(user.handle)
     }
     if (!isMobile()) {
-      // On componentDidUpdate we try to reparse the URL because if you’re on a track page
-      // and go to another track page, the component doesn’t remount but we need to
+      // On componentDidUpdate we try to reparse the URL because if you’re on a agreement page
+      // and go to another agreement page, the component doesn’t remount but we need to
       // trigger a re-fetch based on the URL. On mobile, separate page provider components are
       // used so this is a non-issue.
       if (pathname !== this.state.pathname) {
-        const params = parseTrackRoute(pathname)
+        const params = parseAgreementRoute(pathname)
         if (params) {
           this.setState({ pathname })
-          this.fetchTracks(params)
+          this.fetchAgreements(params)
         }
       }
     }
@@ -158,45 +158,45 @@ class TrackPageProvider extends Component<
     // Set the lineup source in state once it's set in redux
     if (
       !this.state.source &&
-      this.state.routeKey === this.props.track?.track_id
+      this.state.routeKey === this.props.agreement?.agreement_id
     ) {
       this.setState({ source: this.props.source })
     }
 
-    // If the remix of this track changed and we have
-    // already fetched the track, refetch the entire lineup
-    // because the remix parent track needs to be retrieved
+    // If the remix of this agreement changed and we have
+    // already fetched the agreement, refetch the entire lineup
+    // because the remix parent agreement needs to be retrieved
     if (
-      prevProps.track &&
-      prevProps.track.track_id &&
-      track &&
-      track.track_id &&
-      getRemixParentTrackId(prevProps.track) !== getRemixParentTrackId(track)
+      prevProps.agreement &&
+      prevProps.agreement.agreement_id &&
+      agreement &&
+      agreement.agreement_id &&
+      getRemixParentAgreementId(prevProps.agreement) !== getRemixParentAgreementId(agreement)
     ) {
-      refetchTracksLinup()
+      refetchAgreementsLinup()
     }
 
-    if (track) {
-      const params = parseTrackRoute(pathname)
+    if (agreement) {
+      const params = parseAgreementRoute(pathname)
       if (params) {
         // Check if we are coming from a non-canonical route and replace route if necessary.
         const { slug, handle } = params
         if (slug === null || handle === null) {
-          if (track.permalink) {
-            this.props.replaceRoute(track.permalink)
+          if (agreement.permalink) {
+            this.props.replaceRoute(agreement.permalink)
           }
         } else {
-          // Reroute to the most recent permalink if necessary in case user edits the track
+          // Reroute to the most recent permalink if necessary in case user edits the agreement
           // name, which changes the permalink
           if (
             pathname === this.state.pathname &&
-            prevProps.track?.track_id === track?.track_id &&
-            trackPermalink &&
-            trackPermalink !== pathname
+            prevProps.agreement?.agreement_id === agreement?.agreement_id &&
+            agreementPermalink &&
+            agreementPermalink !== pathname
           ) {
-            // The path is going to change but don't re-fetch as we already have the track
-            this.setState({ pathname: trackPermalink })
-            this.props.replaceRoute(trackPermalink)
+            // The path is going to change but don't re-fetch as we already have the agreement
+            this.setState({ pathname: agreementPermalink })
+            this.props.replaceRoute(agreementPermalink)
           }
         }
       }
@@ -206,30 +206,30 @@ class TrackPageProvider extends Component<
   componentWillUnmount() {
     if (!isMobile()) {
       // Don't reset on mobile because there are two
-      // track pages mounted at a time due to animations.
-      this.props.resetTrackPage()
+      // agreement pages mounted at a time due to animations.
+      this.props.resetAgreementPage()
     }
   }
 
-  fetchTracks = (params: NonNullable<TrackRouteParams>) => {
-    const { track } = this.props
-    const { slug, trackId, handle } = params
+  fetchAgreements = (params: NonNullable<AgreementRouteParams>) => {
+    const { agreement } = this.props
+    const { slug, agreementId, handle } = params
 
-    // Go to feed if the track is deleted
-    if (track && track.track_id === trackId) {
-      if (track._marked_deleted) {
+    // Go to feed if the agreement is deleted
+    if (agreement && agreement.agreement_id === agreementId) {
+      if (agreement._marked_deleted) {
         this.props.goToRoute(FEED_PAGE)
         return
       }
     }
     this.props.reset()
-    if (trackId) {
-      this.props.setTrackId(trackId)
+    if (agreementId) {
+      this.props.setAgreementId(agreementId)
     }
     if (slug && handle) {
-      this.props.setTrackPermalink(`/${handle}/${slug}`)
+      this.props.setAgreementPermalink(`/${handle}/${slug}`)
     }
-    this.props.fetchTrack(trackId, slug || '', handle || '', !!(slug && handle))
+    this.props.fetchAgreement(agreementId, slug || '', handle || '', !!(slug && handle))
     if (handle) {
       this.setState({ ownerHandle: handle })
     }
@@ -244,83 +244,83 @@ class TrackPageProvider extends Component<
       record
     } = this.props
     if (!entries || !entries[0]) return
-    const track = entries[0]
+    const agreement = entries[0]
 
     if (heroPlaying) {
       pause()
       record(
         make(Name.PLAYBACK_PAUSE, {
-          id: `${track.id}`,
-          source: PlaybackSource.TRACK_PAGE
+          id: `${agreement.id}`,
+          source: PlaybackSource.AGREEMENT_PAGE
         })
       )
     } else if (
-      currentQueueItem.uid !== track.uid &&
-      currentQueueItem.track &&
-      currentQueueItem.track.track_id === track.id
+      currentQueueItem.uid !== agreement.uid &&
+      currentQueueItem.agreement &&
+      currentQueueItem.agreement.agreement_id === agreement.id
     ) {
       play()
       record(
         make(Name.PLAYBACK_PLAY, {
-          id: `${track.id}`,
-          source: PlaybackSource.TRACK_PAGE
+          id: `${agreement.id}`,
+          source: PlaybackSource.AGREEMENT_PAGE
         })
       )
-    } else if (track) {
-      play(track.uid)
+    } else if (agreement) {
+      play(agreement.uid)
       record(
         make(Name.PLAYBACK_PLAY, {
-          id: `${track.id}`,
-          source: PlaybackSource.TRACK_PAGE
+          id: `${agreement.id}`,
+          source: PlaybackSource.AGREEMENT_PAGE
         })
       )
     }
   }
 
-  onMoreByArtistTracksPlay = (uid?: string) => {
+  onMoreByArtistAgreementsPlay = (uid?: string) => {
     const { play, recordPlayMoreByArtist } = this.props
     play(uid)
     if (uid) {
-      const trackId = Uid.fromString(uid).id
-      recordPlayMoreByArtist(trackId)
+      const agreementId = Uid.fromString(uid).id
+      recordPlayMoreByArtist(agreementId)
     }
   }
 
-  onHeroRepost = (isReposted: boolean, trackId: ID) => {
-    const { repostTrack, undoRepostTrack } = this.props
+  onHeroRepost = (isReposted: boolean, agreementId: ID) => {
+    const { repostAgreement, undoRepostAgreement } = this.props
     if (!isReposted) {
-      repostTrack(trackId)
+      repostAgreement(agreementId)
     } else {
-      undoRepostTrack(trackId)
+      undoRepostAgreement(agreementId)
     }
   }
 
-  onHeroShare = (trackId: ID) => {
-    const { shareTrack } = this.props
-    shareTrack(trackId)
+  onHeroShare = (agreementId: ID) => {
+    const { shareAgreement } = this.props
+    shareAgreement(agreementId)
   }
 
-  onSaveTrack = (isSaved: boolean, trackId: ID) => {
-    const { saveTrack, unsaveTrack } = this.props
+  onSaveAgreement = (isSaved: boolean, agreementId: ID) => {
+    const { saveAgreement, unsaveAgreement } = this.props
     if (isSaved) {
-      unsaveTrack(trackId)
+      unsaveAgreement(agreementId)
     } else {
-      saveTrack(trackId)
+      saveAgreement(agreementId)
     }
   }
 
   onFollow = () => {
-    const { onFollow, track } = this.props
-    if (track) onFollow(track.owner_id)
+    const { onFollow, agreement } = this.props
+    if (agreement) onFollow(agreement.owner_id)
   }
 
   onUnfollow = () => {
-    const { onUnfollow, onConfirmUnfollow, track } = this.props
-    if (track) {
+    const { onUnfollow, onConfirmUnfollow, agreement } = this.props
+    if (agreement) {
       if (this.props.isMobile) {
-        onConfirmUnfollow(track.owner_id)
+        onConfirmUnfollow(agreement.owner_id)
       } else {
-        onUnfollow(track.owner_id)
+        onUnfollow(agreement.owner_id)
       }
     }
   }
@@ -335,112 +335,112 @@ class TrackPageProvider extends Component<
   }
 
   goToParentRemixesPage = () => {
-    const { goToRemixesOfParentPage, track } = this.props
-    const parentTrackId = getRemixParentTrackId(track)
-    if (parentTrackId) {
-      goToRemixesOfParentPage(parentTrackId)
+    const { goToRemixesOfParentPage, agreement } = this.props
+    const parentAgreementId = getRemixParentAgreementId(agreement)
+    if (parentAgreementId) {
+      goToRemixesOfParentPage(parentAgreementId)
     }
   }
 
   goToAllRemixesPage = () => {
-    const { track } = this.props
-    if (track) {
-      this.props.goToRoute(trackRemixesPage(track.permalink))
+    const { agreement } = this.props
+    if (agreement) {
+      this.props.goToRoute(agreementRemixesPage(agreement.permalink))
     }
   }
 
-  goToFavoritesPage = (trackId: ID) => {
-    this.props.setFavoriteTrackId(trackId)
+  goToFavoritesPage = (agreementId: ID) => {
+    this.props.setFavoriteAgreementId(agreementId)
     this.props.goToRoute(FAVORITING_USERS_ROUTE)
   }
 
-  goToRepostsPage = (trackId: ID) => {
-    this.props.setRepostTrackId(trackId)
+  goToRepostsPage = (agreementId: ID) => {
+    this.props.setRepostAgreementId(agreementId)
     this.props.goToRoute(REPOSTING_USERS_ROUTE)
   }
 
   onClickReposts = () => {
-    this.props.track && this.props.setRepostUsers(this.props.track.track_id)
+    this.props.agreement && this.props.setRepostUsers(this.props.agreement.agreement_id)
     this.props.setModalVisibility()
   }
 
   onClickFavorites = () => {
-    this.props.track && this.props.setFavoriteUsers(this.props.track.track_id)
+    this.props.agreement && this.props.setFavoriteUsers(this.props.agreement.agreement_id)
     this.props.setModalVisibility()
   }
 
   render() {
     const {
-      track,
-      remixParentTrack,
+      agreement,
+      remixParentAgreement,
       user,
-      trackRank,
+      agreementRank,
       moreByArtist,
       currentQueueItem,
       playing,
       buffering,
       userId,
       pause,
-      downloadTrack,
+      downloadAgreement,
       onExternalLinkClick
     } = this.props
     const heroPlaying =
       playing &&
-      !!track &&
-      !!currentQueueItem.track &&
-      currentQueueItem.track.track_id === track.track_id
+      !!agreement &&
+      !!currentQueueItem.agreement &&
+      currentQueueItem.agreement.agreement_id === agreement.agreement_id
     const badge =
-      trackRank.year && trackRank.year <= TRENDING_BADGE_LIMIT
-        ? `#${trackRank.year} This Year`
-        : trackRank.month && trackRank.month <= TRENDING_BADGE_LIMIT
-        ? `#${trackRank.month} This Month`
-        : trackRank.week && trackRank.week <= TRENDING_BADGE_LIMIT
-        ? `#${trackRank.week} This Week`
+      agreementRank.year && agreementRank.year <= TRENDING_BADGE_LIMIT
+        ? `#${agreementRank.year} This Year`
+        : agreementRank.month && agreementRank.month <= TRENDING_BADGE_LIMIT
+        ? `#${agreementRank.month} This Month`
+        : agreementRank.week && agreementRank.week <= TRENDING_BADGE_LIMIT
+        ? `#${agreementRank.week} This Week`
         : null
 
     const desktopProps = {
       // Follow Props
       onFollow: this.onFollow,
       onUnfollow: this.onUnfollow,
-      makePublic: this.props.makeTrackPublic,
+      makePublic: this.props.makeAgreementPublic,
       onClickReposts: this.onClickReposts,
       onClickFavorites: this.onClickFavorites
     }
 
-    const title = getTrackPageTitle({
-      title: track ? track.title : '',
+    const title = getAgreementPageTitle({
+      title: agreement ? agreement.title : '',
       handle: user ? user.handle : ''
     })
 
-    const releaseDate = track ? track.release_date || track.created_at : ''
-    const description = getTrackPageDescription({
+    const releaseDate = agreement ? agreement.release_date || agreement.created_at : ''
+    const description = getAgreementPageDescription({
       releaseDate: releaseDate ? formatDate(releaseDate) : '',
-      description: track?.description ?? '',
-      mood: track?.mood ?? '',
-      genre: track ? getCanonicalName(track.genre) : '',
-      duration: track ? formatSeconds(track.duration) : '',
-      tags: track ? (track.tags || '').split(',').filter(Boolean) : []
+      description: agreement?.description ?? '',
+      mood: agreement?.mood ?? '',
+      genre: agreement ? getCanonicalName(agreement.genre) : '',
+      duration: agreement ? formatSeconds(agreement.duration) : '',
+      tags: agreement ? (agreement.tags || '').split(',').filter(Boolean) : []
     })
-    const canonicalUrl = user && track ? fullTrackPage(track.permalink) : ''
+    const canonicalUrl = user && agreement ? fullAgreementPage(agreement.permalink) : ''
 
-    // If the track has a remix parent and it's not deleted and the original's owner is not deactivated.
+    // If the agreement has a remix parent and it's not deleted and the original's owner is not deactivated.
     const hasValidRemixParent =
-      !!getRemixParentTrackId(track) &&
-      !!remixParentTrack &&
-      remixParentTrack.is_delete === false &&
-      !remixParentTrack.user?.is_deactivated
+      !!getRemixParentAgreementId(agreement) &&
+      !!remixParentAgreement &&
+      remixParentAgreement.is_delete === false &&
+      !remixParentAgreement.user?.is_deactivated
 
-    if ((track?.is_delete || track?._marked_deleted) && user) {
-      // Track has not been blocked and is content-available, meaning the owner
+    if ((agreement?.is_delete || agreement?._marked_deleted) && user) {
+      // Agreement has not been blocked and is content-available, meaning the owner
       // deleted themselves via transaction.
-      const deletedByArtist = !track._blocked && track.is_available
+      const deletedByArtist = !agreement._blocked && agreement.is_available
 
       return (
         <DeletedPage
           title={title}
           description={description}
           canonicalUrl={canonicalUrl}
-          playable={{ metadata: track, type: PlayableType.TRACK }}
+          playable={{ metadata: agreement, type: PlayableType.AGREEMENT }}
           user={user}
           deletedByArtist={deletedByArtist}
         />
@@ -451,7 +451,7 @@ class TrackPageProvider extends Component<
       title,
       description,
       canonicalUrl,
-      heroTrack: track,
+      heroAgreement: agreement,
       hasValidRemixParent,
       user,
       heroPlaying,
@@ -464,26 +464,26 @@ class TrackPageProvider extends Component<
       goToParentRemixesPage: this.goToParentRemixesPage,
       onHeroRepost: this.onHeroRepost,
       onHeroShare: this.onHeroShare,
-      onSaveTrack: this.onSaveTrack,
-      onDownloadTrack: downloadTrack,
+      onSaveAgreement: this.onSaveAgreement,
+      onDownloadAgreement: downloadAgreement,
       onClickMobileOverflow: this.props.clickOverflow,
       onConfirmUnfollow: this.props.onConfirmUnfollow,
       goToFavoritesPage: this.goToFavoritesPage,
       goToRepostsPage: this.goToRepostsPage,
 
-      // Tracks Lineup Props
-      tracks: moreByArtist,
+      // Agreements Lineup Props
+      agreements: moreByArtist,
       currentQueueItem,
       isPlaying: playing,
       isBuffering: buffering,
-      play: this.onMoreByArtistTracksPlay,
+      play: this.onMoreByArtistAgreementsPlay,
       pause,
       onExternalLinkClick
     }
 
     return (
       <>
-        {!!track?._stems?.[0] && <StemsSEOHint />}
+        {!!agreement?._stems?.[0] && <StemsSEOHint />}
         <this.props.children
           key={this.state.routeKey}
           {...childProps}
@@ -494,9 +494,9 @@ class TrackPageProvider extends Component<
   }
 }
 
-const REDIRECT_TRACK_ID_RANGE = [416972, 418372]
-const shouldRedirectTrack = (trackId: ID) =>
-  trackId >= REDIRECT_TRACK_ID_RANGE[0] && trackId <= REDIRECT_TRACK_ID_RANGE[1]
+const REDIRECT_AGREEMENT_ID_RANGE = [416972, 418372]
+const shouldRedirectAgreement = (agreementId: ID) =>
+  agreementId >= REDIRECT_AGREEMENT_ID_RANGE[0] && agreementId <= REDIRECT_AGREEMENT_ID_RANGE[1]
 
 function makeMapStateToProps() {
   const getMoreByArtistLineup = makeGetLineupMetadatas(getLineup)
@@ -505,9 +505,9 @@ function makeMapStateToProps() {
   const mapStateToProps = (state: AppState) => {
     return {
       source: getSourceSelector(state),
-      track: getTrack(state),
-      trackPermalink: getTrackPermalink(state),
-      remixParentTrack: getRemixParentTrack(state),
+      agreement: getAgreement(state),
+      agreementPermalink: getAgreementPermalink(state),
+      remixParentAgreement: getRemixParentAgreement(state),
       user: getUser(state),
       status: getStatus(state),
       moreByArtist: getMoreByArtistLineup(state),
@@ -516,7 +516,7 @@ function makeMapStateToProps() {
       currentQueueItem: getCurrentQueueItem(state),
       playing: getPlaying(state),
       buffering: getBuffering(state),
-      trackRank: getTrackRank(state),
+      agreementRank: getAgreementRank(state),
       isMobile: isMobile(),
       pathname: getLocationPathname(state)
     }
@@ -526,139 +526,139 @@ function makeMapStateToProps() {
 
 function mapDispatchToProps(dispatch: Dispatch) {
   return {
-    fetchTrack: (
-      trackId: number | null,
+    fetchAgreement: (
+      agreementId: number | null,
       slug: string,
       ownerHandle: string,
       canBeUnlisted: boolean
     ) =>
       dispatch(
-        trackPageActions.fetchTrack(trackId, slug, ownerHandle, canBeUnlisted)
+        agreementPageActions.fetchAgreement(agreementId, slug, ownerHandle, canBeUnlisted)
       ),
-    setTrackId: (trackId: number) =>
-      dispatch(trackPageActions.setTrackId(trackId)),
-    setTrackPermalink: (permalink: string) =>
-      dispatch(trackPageActions.setTrackPermalink(permalink)),
-    resetTrackPage: () => dispatch(trackPageActions.resetTrackPage()),
-    makeTrackPublic: (trackId: ID) =>
-      dispatch(trackPageActions.makeTrackPublic(trackId)),
+    setAgreementId: (agreementId: number) =>
+      dispatch(agreementPageActions.setAgreementId(agreementId)),
+    setAgreementPermalink: (permalink: string) =>
+      dispatch(agreementPageActions.setAgreementPermalink(permalink)),
+    resetAgreementPage: () => dispatch(agreementPageActions.resetAgreementPage()),
+    makeAgreementPublic: (agreementId: ID) =>
+      dispatch(agreementPageActions.makeAgreementPublic(agreementId)),
 
     goToRoute: (route: string) => dispatch(pushRoute(route)),
     replaceRoute: (route: string) => dispatch(replace(route)),
-    reset: (source?: string) => dispatch(tracksActions.reset(source)),
-    play: (uid?: string) => dispatch(tracksActions.play(uid)),
-    recordPlayMoreByArtist: (trackId: ID) => {
-      const trackEvent: TrackEvent = make(Name.TRACK_PAGE_PLAY_MORE, {
-        id: trackId
+    reset: (source?: string) => dispatch(agreementsActions.reset(source)),
+    play: (uid?: string) => dispatch(agreementsActions.play(uid)),
+    recordPlayMoreByArtist: (agreementId: ID) => {
+      const agreementEvent: AgreementEvent = make(Name.AGREEMENT_PAGE_PLAY_MORE, {
+        id: agreementId
       })
-      dispatch(trackEvent)
+      dispatch(agreementEvent)
     },
-    pause: () => dispatch(tracksActions.pause()),
-    shareTrack: (trackId: ID) =>
+    pause: () => dispatch(agreementsActions.pause()),
+    shareAgreement: (agreementId: ID) =>
       dispatch(
         requestOpenShareModal({
-          type: 'track',
-          trackId,
+          type: 'agreement',
+          agreementId,
           source: ShareSource.PAGE
         })
       ),
-    saveTrack: (trackId: ID) =>
+    saveAgreement: (agreementId: ID) =>
       dispatch(
-        socialTracksActions.saveTrack(trackId, FavoriteSource.TRACK_PAGE)
+        socialAgreementsActions.saveAgreement(agreementId, FavoriteSource.AGREEMENT_PAGE)
       ),
-    unsaveTrack: (trackId: ID) =>
+    unsaveAgreement: (agreementId: ID) =>
       dispatch(
-        socialTracksActions.unsaveTrack(trackId, FavoriteSource.TRACK_PAGE)
+        socialAgreementsActions.unsaveAgreement(agreementId, FavoriteSource.AGREEMENT_PAGE)
       ),
-    deleteTrack: (trackId: ID) =>
-      dispatch(cacheTrackActions.deleteTrack(trackId)),
-    repostTrack: (trackId: ID) =>
+    deleteAgreement: (agreementId: ID) =>
+      dispatch(cacheAgreementActions.deleteAgreement(agreementId)),
+    repostAgreement: (agreementId: ID) =>
       dispatch(
-        socialTracksActions.repostTrack(trackId, RepostSource.TRACK_PAGE)
+        socialAgreementsActions.repostAgreement(agreementId, RepostSource.AGREEMENT_PAGE)
       ),
-    undoRepostTrack: (trackId: ID) =>
+    undoRepostAgreement: (agreementId: ID) =>
       dispatch(
-        socialTracksActions.undoRepostTrack(trackId, RepostSource.TRACK_PAGE)
+        socialAgreementsActions.undoRepostAgreement(agreementId, RepostSource.AGREEMENT_PAGE)
       ),
-    editTrack: (trackId: ID, formFields: any) =>
-      dispatch(cacheTrackActions.editTrack(trackId, formFields)),
+    editAgreement: (agreementId: ID, formFields: any) =>
+      dispatch(cacheAgreementActions.editAgreement(agreementId, formFields)),
     onFollow: (userId: ID) =>
-      dispatch(socialUsersActions.followUser(userId, FollowSource.TRACK_PAGE)),
+      dispatch(socialUsersActions.followUser(userId, FollowSource.AGREEMENT_PAGE)),
     onUnfollow: (userId: ID) =>
       dispatch(
-        socialUsersActions.unfollowUser(userId, FollowSource.TRACK_PAGE)
+        socialUsersActions.unfollowUser(userId, FollowSource.AGREEMENT_PAGE)
       ),
     onConfirmUnfollow: (userId: ID) =>
       dispatch(unfollowConfirmationActions.setOpen(userId)),
-    downloadTrack: (
-      trackId: ID,
+    downloadAgreement: (
+      agreementId: ID,
       cid: CID,
       contentNodeEndpoints: string,
       category?: string,
-      parentTrackId?: ID
+      parentAgreementId?: ID
     ) => {
       dispatch(
-        socialTracksActions.downloadTrack(
-          trackId,
+        socialAgreementsActions.downloadAgreement(
+          agreementId,
           cid,
           contentNodeEndpoints,
           category
         )
       )
-      const trackEvent: TrackEvent = make(Name.TRACK_PAGE_DOWNLOAD, {
-        id: trackId,
+      const agreementEvent: AgreementEvent = make(Name.AGREEMENT_PAGE_DOWNLOAD, {
+        id: agreementId,
         category,
-        parent_track_id: parentTrackId
+        parent_agreement_id: parentAgreementId
       })
-      dispatch(trackEvent)
+      dispatch(agreementEvent)
     },
-    clickOverflow: (trackId: ID, overflowActions: OverflowAction[]) =>
+    clickOverflow: (agreementId: ID, overflowActions: OverflowAction[]) =>
       dispatch(
-        open({ source: OverflowSource.TRACKS, id: trackId, overflowActions })
+        open({ source: OverflowSource.AGREEMENTS, id: agreementId, overflowActions })
       ),
-    setRepostTrackId: (trackId: ID) =>
-      dispatch(setRepost(trackId, RepostType.TRACK)),
-    setFavoriteTrackId: (trackId: ID) =>
-      dispatch(setFavorite(trackId, FavoriteType.TRACK)),
+    setRepostAgreementId: (agreementId: ID) =>
+      dispatch(setRepost(agreementId, RepostType.AGREEMENT)),
+    setFavoriteAgreementId: (agreementId: ID) =>
+      dispatch(setFavorite(agreementId, FavoriteType.AGREEMENT)),
     onExternalLinkClick: (event: any) => {
-      const trackEvent: TrackEvent = make(Name.LINK_CLICKING, {
+      const agreementEvent: AgreementEvent = make(Name.LINK_CLICKING, {
         url: event.target.href,
-        source: 'track page' as const
+        source: 'agreement page' as const
       })
-      dispatch(trackEvent)
+      dispatch(agreementEvent)
     },
     recordTagClick: (tag: string) => {
-      const trackEvent: TrackEvent = make(Name.TAG_CLICKING, {
+      const agreementEvent: AgreementEvent = make(Name.TAG_CLICKING, {
         tag,
-        source: 'track page' as const
+        source: 'agreement page' as const
       })
-      dispatch(trackEvent)
+      dispatch(agreementEvent)
     },
-    record: (event: TrackEvent) => dispatch(event),
-    setRepostUsers: (trackID: ID) =>
+    record: (event: AgreementEvent) => dispatch(event),
+    setRepostUsers: (agreementID: ID) =>
       dispatch(
         setUsers({
           userListType: UserListType.REPOST,
-          entityType: UserListEntityType.TRACK,
-          id: trackID
+          entityType: UserListEntityType.AGREEMENT,
+          id: agreementID
         })
       ),
-    setFavoriteUsers: (trackID: ID) =>
+    setFavoriteUsers: (agreementID: ID) =>
       dispatch(
         setUsers({
           userListType: UserListType.FAVORITE,
-          entityType: UserListEntityType.TRACK,
-          id: trackID
+          entityType: UserListEntityType.AGREEMENT,
+          id: agreementID
         })
       ),
     setModalVisibility: () => dispatch(setVisibility(true)),
-    goToRemixesOfParentPage: (parentTrackId: ID) =>
-      dispatch(trackPageActions.goToRemixesOfParentPage(parentTrackId)),
-    refetchTracksLinup: () => dispatch(trackPageActions.refetchLineup())
+    goToRemixesOfParentPage: (parentAgreementId: ID) =>
+      dispatch(agreementPageActions.goToRemixesOfParentPage(parentAgreementId)),
+    refetchAgreementsLinup: () => dispatch(agreementPageActions.refetchLineup())
   }
 }
 
 export default connect(
   makeMapStateToProps,
   mapDispatchToProps
-)(TrackPageProvider)
+)(AgreementPageProvider)

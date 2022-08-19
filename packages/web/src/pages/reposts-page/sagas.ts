@@ -1,10 +1,10 @@
-import { ID, Collection, Track } from '@coliving/common'
+import { ID, Collection, Agreement } from '@coliving/common'
 import { put, select } from 'typed-redux-saga'
 
 import { getCollection } from 'common/store/cache/collections/selectors'
-import { getTrack } from 'common/store/cache/tracks/selectors'
+import { getAgreement } from 'common/store/cache/agreements/selectors'
 import {
-  trackRepostError,
+  agreementRepostError,
   playlistRepostError
 } from 'common/store/user-list/reposts/actions'
 import { watchRepostsError } from 'common/store/user-list/reposts/errorSagas'
@@ -45,10 +45,10 @@ const getPlaylistReposts = createUserListProvider<Collection>({
   includeCurrentUser: (p) => p.has_current_user_reposted
 })
 
-const getTrackReposts = createUserListProvider<Track>({
-  getExistingEntity: getTrack,
-  extractUserIDSubsetFromEntity: (track: Track) =>
-    track.followee_reposts.map((r) => r.user_id),
+const getAgreementReposts = createUserListProvider<Agreement>({
+  getExistingEntity: getAgreement,
+  extractUserIDSubsetFromEntity: (agreement: Agreement) =>
+    agreement.followee_reposts.map((r) => r.user_id),
   fetchAllUsersForEntity: async ({
     limit,
     offset,
@@ -60,17 +60,17 @@ const getTrackReposts = createUserListProvider<Track>({
     entityId: ID
     currentUserId: ID | null
   }) => {
-    const users = await apiClient.getTrackRepostUsers({
+    const users = await apiClient.getAgreementRepostUsers({
       limit,
       offset,
-      trackId: entityId,
+      agreementId: entityId,
       currentUserId
     })
     return { users }
   },
   selectCurrentUserIDsInList: getUserIds,
-  canFetchMoreUsers: (track: Track, combinedUserIDs: ID[]) =>
-    combinedUserIDs.length < track.repost_count,
+  canFetchMoreUsers: (agreement: Agreement, combinedUserIDs: ID[]) =>
+    combinedUserIDs.length < agreement.repost_count,
   includeCurrentUser: (t) => t.has_current_user_reposted
 })
 
@@ -79,8 +79,8 @@ function* errorDispatcher(error: Error) {
   const id = yield* select(getId)
   if (!id) return
 
-  if (repostType === RepostType.TRACK) {
-    yield* put(trackRepostError(id, error.message))
+  if (repostType === RepostType.AGREEMENT) {
+    yield* put(agreementRepostError(id, error.message))
   } else {
     yield* put(playlistRepostError(id, error.message))
   }
@@ -91,7 +91,7 @@ function* getReposts(currentPage: number, pageSize: number) {
   if (!id) return { userIds: [], hasMore: false }
   const repostType = yield* select(getRepostsType)
   return yield* (
-    repostType === RepostType.TRACK ? getTrackReposts : getPlaylistReposts
+    repostType === RepostType.AGREEMENT ? getAgreementReposts : getPlaylistReposts
   )({ id, currentPage, pageSize })
 }
 

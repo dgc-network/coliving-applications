@@ -52,7 +52,7 @@ const useStyles = makeStyles(({ spacing, palette }) => ({
 const getNotifications = makeGetAllNotifications()
 
 /**
- * Hook to handle tracking visibility for notification items, by index.
+ * Hook to handle agreementing visibility for notification items, by index.
  * Returns a function to check the visibility for an index, and a callback for the Flatlist.
  */
 const useIsViewable = () => {

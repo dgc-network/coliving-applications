@@ -88,7 +88,7 @@ export const PlaylistNavLink = ({
 type PlaylistNavItemProps = {
   playlist: AccountCollection
   url: string
-  addTrack: (trackId: ID) => void
+  addAgreement: (agreementId: ID) => void
   isOwner: boolean
   onReorder: (
     draggingId: ID | SmartCollectionVariant | string,
@@ -106,7 +106,7 @@ export const PlaylistNavItem = ({
   playlist,
   hasUpdate = false,
   url,
-  addTrack,
+  addAgreement,
   isOwner,
   onReorder,
   dragging,
@@ -123,8 +123,8 @@ export const PlaylistNavItem = ({
       key={id}
       className={navColumnStyles.droppable}
       hoverClassName={navColumnStyles.droppableHover}
-      onDrop={addTrack}
-      acceptedKinds={['track']}
+      onDrop={addAgreement}
+      acceptedKinds={['agreement']}
       disabled={!isOwner}
     >
       <PlaylistNavLink
@@ -141,11 +141,11 @@ export const PlaylistNavItem = ({
           [navColumnStyles.droppableLink]:
             isOwner &&
             dragging &&
-            (draggingKind === 'track' || draggingKind === 'playlist'),
+            (draggingKind === 'agreement' || draggingKind === 'playlist'),
           [navColumnStyles.editable]: isOwner && onClickEdit != null,
           [navColumnStyles.disabledLink]:
             dragging &&
-            ((draggingKind !== 'track' &&
+            ((draggingKind !== 'agreement' &&
               draggingKind !== 'playlist' &&
               draggingKind !== 'library-playlist') ||
               !isOwner)

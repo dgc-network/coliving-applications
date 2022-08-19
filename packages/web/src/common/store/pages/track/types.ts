@@ -1,17 +1,17 @@
 import { ID, LineupState } from '@coliving/common'
 
-export default interface TrackPageState {
-  trackId: ID | null
-  trackPermalink: string | null
+export default interface AgreementPageState {
+  agreementId: ID | null
+  agreementPermalink: string | null
   rank: {
     week: number | null
     month: number | null
     year: number | null
   }
-  trendingTrackRanks: {
+  trendingAgreementRanks: {
     week: ID[] | null
     month: ID[] | null
     year: ID[] | null
   }
-  tracks: LineupState<{ id: ID }>
+  agreements: LineupState<{ id: ID }>
 }

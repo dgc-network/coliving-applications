@@ -6,9 +6,9 @@ import reducer from 'store/player/slice'
 import * as actions from 'store/player/slice'
 import { noopReducer } from 'store/testHelper'
 
-const initialTracks = {
+const initialAgreements = {
   entries: {
-    1: { metadata: { owner_id: 1, track_segments: {} } }
+    1: { metadata: { owner_id: 1, agreement_segments: {} } }
   },
   uids: {
     123: 1
@@ -38,17 +38,17 @@ describe('watchPlay', () => {
     const { storeState } = await expectSaga(sagas.watchPlay, actions)
       .withReducer(
         combineReducers({
-          tracks: noopReducer(initialTracks),
+          agreements: noopReducer(initialAgreements),
           users: noopReducer(initialUsers),
           player: reducer
         }),
         {
-          tracks: initialTracks,
+          agreements: initialAgreements,
           users: initialUsers,
           player: initialPlayer
         }
       )
-      .dispatch(actions.play({ uid: '123', trackId: 1, onEnd: () => {} }))
+      .dispatch(actions.play({ uid: '123', agreementId: 1, onEnd: () => {} }))
       .silentRun()
     expect(storeState.player).toMatchObject({
       playing: true
@@ -62,12 +62,12 @@ describe('watchPlay', () => {
     const { storeState } = await expectSaga(sagas.watchPlay, actions)
       .withReducer(
         combineReducers({
-          tracks: noopReducer(initialTracks),
+          agreements: noopReducer(initialAgreements),
           users: noopReducer(initialUsers),
           player: reducer
         }),
         {
-          tracks: initialTracks,
+          agreements: initialAgreements,
           users: initialUsers,
           player: initialPlayer
         }
@@ -87,11 +87,11 @@ describe('watchPause', () => {
     const { storeState } = await expectSaga(sagas.watchPause, actions)
       .withReducer(
         combineReducers({
-          tracks: noopReducer(initialTracks),
+          agreements: noopReducer(initialAgreements),
           player: reducer
         }),
         {
-          tracks: initialTracks,
+          agreements: initialAgreements,
           player: initialPlayer
         }
       )
@@ -110,11 +110,11 @@ describe('watchStop', () => {
     const { storeState } = await expectSaga(sagas.watchStop, actions)
       .withReducer(
         combineReducers({
-          tracks: noopReducer(initialTracks),
+          agreements: noopReducer(initialAgreements),
           player: reducer
         }),
         {
-          tracks: initialTracks,
+          agreements: initialAgreements,
           player: initialPlayer
         }
       )
@@ -133,11 +133,11 @@ describe('watchSeek', () => {
     const { storeState } = await expectSaga(sagas.watchSeek, actions)
       .withReducer(
         combineReducers({
-          tracks: noopReducer(initialTracks),
+          agreements: noopReducer(initialAgreements),
           player: reducer
         }),
         {
-          tracks: initialTracks,
+          agreements: initialAgreements,
           player: initialPlayer
         }
       )

@@ -28,7 +28,7 @@ const initialState = {
   resultQuery: '',
   results: {
     users: [],
-    tracks: [],
+    agreements: [],
     playlists: [],
     albums: []
   },

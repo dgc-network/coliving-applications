@@ -1,4 +1,4 @@
-import { Track, User } from '@coliving/common'
+import { Agreement, User } from '@coliving/common'
 import cn from 'classnames'
 
 import { ReactComponent as IconRemixes } from 'assets/img/iconRemix.svg'
@@ -7,7 +7,7 @@ import Header from 'components/header/desktop/Header'
 import Lineup, { LineupWithoutTile } from 'components/lineup/Lineup'
 import Page from 'components/page/Page'
 import UserBadges from 'components/user-badges/UserBadges'
-import { fullTrackRemixesPage } from 'utils/route'
+import { fullAgreementRemixesPage } from 'utils/route'
 import { isMatrix } from 'utils/theme/theme'
 import { withNullGuard } from 'utils/withNullGuard'
 
@@ -17,33 +17,33 @@ const messages = {
   remixes: 'Remix',
   by: 'by',
   of: 'of',
-  getDescription: (trackName: string, artistName: string) =>
-    `${messages.remixes} ${messages.of} ${trackName} ${messages.by} ${artistName}`
+  getDescription: (agreementName: string, artistName: string) =>
+    `${messages.remixes} ${messages.of} ${agreementName} ${messages.by} ${artistName}`
 }
 
 export type RemixesPageProps = {
   title: string
   count: number | null
-  originalTrack: Track | null
+  originalAgreement: Agreement | null
   user: User | null
   getLineupProps: () => LineupWithoutTile
-  goToTrackPage: () => void
+  goToAgreementPage: () => void
   goToArtistPage: () => void
 }
 
 const g = withNullGuard(
-  ({ originalTrack, user, ...p }: RemixesPageProps) =>
-    originalTrack && user && { ...p, originalTrack, user }
+  ({ originalAgreement, user, ...p }: RemixesPageProps) =>
+    originalAgreement && user && { ...p, originalAgreement, user }
 )
 
 const RemixesPage = g(
   ({
     title,
     count,
-    originalTrack,
+    originalAgreement,
     user,
     getLineupProps,
-    goToTrackPage,
+    goToAgreementPage,
     goToArtistPage
   }) => {
     const renderHeader = () => (
@@ -65,8 +65,8 @@ const RemixesPage = g(
               'es',
               !count
             )} ${messages.of}`}
-            <div className={styles.link} onClick={goToTrackPage}>
-              {originalTrack.title}
+            <div className={styles.link} onClick={goToAgreementPage}>
+              {originalAgreement.title}
             </div>
             {messages.by}
             <div className={styles.link} onClick={goToArtistPage}>
@@ -86,8 +86,8 @@ const RemixesPage = g(
     return (
       <Page
         title={title}
-        description={messages.getDescription(originalTrack.title, user.name)}
-        canonicalUrl={fullTrackRemixesPage(originalTrack.permalink)}
+        description={messages.getDescription(originalAgreement.title, user.name)}
+        canonicalUrl={fullAgreementRemixesPage(originalAgreement.permalink)}
         header={renderHeader()}
       >
         <Lineup {...getLineupProps()} />

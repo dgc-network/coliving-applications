@@ -212,7 +212,7 @@
   margin-right: auto !important;
 }
 
-.trackCount {
+.agreementCount {
   color: var(--static-neutral-light-4);
   font-size: var(--font-xs);
   font-weight: var(--font-demi-bold);

@@ -28,7 +28,7 @@
     0 2px 3px -2px var(--tile-shadow-3);
 }
 
-.moreTracks {
+.moreAgreements {
   background: var(--white);
   display: flex;
   align-items: center;
@@ -40,7 +40,7 @@
   cursor: pointer;
 }
 
-.moreTracks:hover {
+.moreAgreements:hover {
   background: var(--neutral-light-9);
 }
 

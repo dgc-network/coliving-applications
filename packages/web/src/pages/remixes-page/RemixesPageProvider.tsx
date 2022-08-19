@@ -7,14 +7,14 @@ import { useParams } from 'react-router'
 import { Dispatch } from 'redux'
 
 import { makeGetLineupMetadatas } from 'common/store/lineup/selectors'
-import { tracksActions } from 'common/store/pages/remixes/lineup/actions'
+import { agreementsActions } from 'common/store/pages/remixes/lineup/actions'
 import {
-  getTrack,
+  getAgreement,
   getUser,
   getLineup,
   getCount
 } from 'common/store/pages/remixes/selectors'
-import { fetchTrack, reset } from 'common/store/pages/remixes/slice'
+import { fetchAgreement, reset } from 'common/store/pages/remixes/slice'
 import { makeGetCurrent } from 'common/store/queue/selectors'
 import { LineupVariant } from 'components/lineup/types'
 import { getPlaying, getBuffering } from 'store/player/selectors'
@@ -45,10 +45,10 @@ const RemixesPageProvider = ({
   containerRef,
   children: Children,
   count,
-  originalTrack,
+  originalAgreement,
   user,
-  tracks,
-  fetchTrack,
+  agreements,
+  fetchAgreement,
   currentQueueItem,
   isPlaying,
   isBuffering,
@@ -57,25 +57,25 @@ const RemixesPageProvider = ({
   loadMore,
   goToRoute,
   reset,
-  resetTracks
+  resetAgreements
 }: RemixesPageProviderProps) => {
   const { handle, slug } = useParams<{ handle: string; slug: string }>()
   useEffect(() => {
-    fetchTrack(handle, slug)
-  }, [handle, slug, fetchTrack])
+    fetchAgreement(handle, slug)
+  }, [handle, slug, fetchAgreement])
 
   useEffect(() => {
     return function cleanup() {
       reset()
-      resetTracks()
+      resetAgreements()
     }
-  }, [reset, resetTracks])
+  }, [reset, resetAgreements])
 
-  const goToTrackPage = useCallback(() => {
-    if (user && originalTrack) {
-      goToRoute(originalTrack.permalink)
+  const goToAgreementPage = useCallback(() => {
+    if (user && originalAgreement) {
+      goToRoute(originalAgreement.permalink)
     }
-  }, [goToRoute, originalTrack, user])
+  }, [goToRoute, originalAgreement, user])
 
   const goToArtistPage = useCallback(() => {
     if (user) {
@@ -88,18 +88,18 @@ const RemixesPageProvider = ({
       selfLoad: true,
       variant: LineupVariant.MAIN,
       containerRef,
-      lineup: tracks,
+      lineup: agreements,
       playingUid: currentQueueItem.uid,
       playingSource: currentQueueItem.source,
-      playingTrackId: currentQueueItem.track && currentQueueItem.track.track_id,
+      playingAgreementId: currentQueueItem.agreement && currentQueueItem.agreement.agreement_id,
       playing: isPlaying,
       buffering: isBuffering,
-      pauseTrack: pause,
-      playTrack: play,
-      actions: tracksActions,
+      pauseAgreement: pause,
+      playAgreement: play,
+      actions: agreementsActions,
       scrollParent: containerRef as any,
       loadMore: (offset: number, limit: number) => {
-        loadMore(offset, limit, { trackId: originalTrack?.track_id ?? null })
+        loadMore(offset, limit, { agreementId: originalAgreement?.agreement_id ?? null })
       }
     }
   }
@@ -107,9 +107,9 @@ const RemixesPageProvider = ({
   const childProps = {
     title: messages.title,
     count,
-    originalTrack,
+    originalAgreement,
     user,
-    goToTrackPage,
+    goToAgreementPage,
     goToArtistPage,
     getLineupProps
   }
@@ -118,15 +118,15 @@ const RemixesPageProvider = ({
 }
 
 function makeMapStateToProps() {
-  const getRemixesTracksLineup = makeGetLineupMetadatas(getLineup)
+  const getRemixesAgreementsLineup = makeGetLineupMetadatas(getLineup)
   const getCurrentQueueItem = makeGetCurrent()
 
   const mapStateToProps = (state: AppState) => {
     return {
       user: getUser(state),
-      originalTrack: getTrack(state),
+      originalAgreement: getAgreement(state),
       count: getCount(state),
-      tracks: getRemixesTracksLineup(state),
+      agreements: getRemixesAgreementsLineup(state),
       currentQueueItem: getCurrentQueueItem(state),
       isPlaying: getPlaying(state),
       isBuffering: getBuffering(state)
@@ -138,20 +138,20 @@ function makeMapStateToProps() {
 function mapDispatchToProps(dispatch: Dispatch) {
   return {
     goToRoute: (route: string) => dispatch(pushRoute(route)),
-    fetchTrack: (handle: string, slug: string) =>
-      dispatch(fetchTrack({ handle, slug })),
+    fetchAgreement: (handle: string, slug: string) =>
+      dispatch(fetchAgreement({ handle, slug })),
     loadMore: (
       offset: number,
       limit: number,
-      payload: { trackId: ID | null }
+      payload: { agreementId: ID | null }
     ) =>
       dispatch(
-        tracksActions.fetchLineupMetadatas(offset, limit, false, payload)
+        agreementsActions.fetchLineupMetadatas(offset, limit, false, payload)
       ),
-    pause: () => dispatch(tracksActions.pause()),
-    play: (uid?: string) => dispatch(tracksActions.play(uid)),
+    pause: () => dispatch(agreementsActions.pause()),
+    play: (uid?: string) => dispatch(agreementsActions.play(uid)),
     reset: () => dispatch(reset()),
-    resetTracks: () => dispatch(tracksActions.reset())
+    resetAgreements: () => dispatch(agreementsActions.reset())
   }
 }
 

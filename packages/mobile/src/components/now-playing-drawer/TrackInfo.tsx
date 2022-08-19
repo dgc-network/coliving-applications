@@ -1,4 +1,4 @@
-import type { Track, User } from '@/common'
+import type { Agreement, User } from '@/common'
 import { Pressable, View } from 'react-native'
 
 import { Text } from 'app/components/core'
@@ -10,7 +10,7 @@ const useStyles = makeStyles(({ typography, spacing }) => ({
   root: {
     alignItems: 'center'
   },
-  trackTitle: {
+  agreementTitle: {
     textAlign: 'center'
   },
   artistInfo: {
@@ -24,27 +24,27 @@ const useStyles = makeStyles(({ typography, spacing }) => ({
   }
 }))
 
-type TrackInfoProps = {
-  track: Track
+type AgreementInfoProps = {
+  agreement: Agreement
   user: User
   onPressArtist: GestureResponderHandler
   onPressTitle: GestureResponderHandler
 }
 
-export const TrackInfo = ({
+export const AgreementInfo = ({
   onPressArtist,
   onPressTitle,
-  track,
+  agreement,
   user
-}: TrackInfoProps) => {
+}: AgreementInfoProps) => {
   const styles = useStyles()
   return (
     <View style={styles.root}>
-      {user && track ? (
+      {user && agreement ? (
         <>
           <Pressable onPress={onPressTitle}>
-            <Text numberOfLines={2} style={styles.trackTitle} variant='h1'>
-              {track.title}
+            <Text numberOfLines={2} style={styles.agreementTitle} variant='h1'>
+              {agreement.title}
             </Text>
           </Pressable>
           <Pressable onPress={onPressArtist}>

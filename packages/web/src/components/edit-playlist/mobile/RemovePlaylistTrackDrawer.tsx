@@ -2,35 +2,35 @@ import { Button, ButtonType } from '@coliving/stems'
 
 import Drawer from 'components/drawer/Drawer'
 
-import styles from './RemovePlaylistTrackDrawer.module.css'
+import styles from './RemovePlaylistAgreementDrawer.module.css'
 
 const messages = {
   title: `Are You Sure?`,
-  description: (trackName: string) =>
-    `Do you want to remove ${trackName} from this playlist?`,
-  submit: 'Remove Track',
+  description: (agreementName: string) =>
+    `Do you want to remove ${agreementName} from this playlist?`,
+  submit: 'Remove Agreement',
   cancel: 'Nevermind'
 }
 
-type RemovePlaylistTrackDrawerProps = {
+type RemovePlaylistAgreementDrawerProps = {
   isOpen: boolean
-  trackTitle?: string
+  agreementTitle?: string
   onClose: () => void
   onConfirm: () => void
 }
 
-const RemovePlaylistTrackDrawer = ({
+const RemovePlaylistAgreementDrawer = ({
   isOpen,
   onClose,
-  trackTitle = '',
+  agreementTitle = '',
   onConfirm
-}: RemovePlaylistTrackDrawerProps) => {
+}: RemovePlaylistAgreementDrawerProps) => {
   return (
     <Drawer isOpen={isOpen} onClose={onClose} shouldClose={!isOpen}>
       <div className={styles.drawer}>
         <h4 className={styles.title}>{messages.title}</h4>
         <div className={styles.description}>
-          {messages.description(trackTitle)}
+          {messages.description(agreementTitle)}
         </div>
         <Button
           className={styles.submit}
@@ -47,4 +47,4 @@ const RemovePlaylistTrackDrawer = ({
   )
 }
 
-export default RemovePlaylistTrackDrawer
+export default RemovePlaylistAgreementDrawer

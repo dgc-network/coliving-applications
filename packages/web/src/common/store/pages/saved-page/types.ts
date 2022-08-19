@@ -4,25 +4,25 @@ import {
   Collection,
   Favorite,
   LineupState,
-  LineupTrack
+  LineupAgreement
 } from '@coliving/common'
 import { Moment } from 'moment'
 
 export default interface SavesPageState {
   localSaves: { [id: number]: UID }
-  tracks: LineupState<{ id: ID; dateSaved: string }>
+  agreements: LineupState<{ id: ID; dateSaved: string }>
   saves: Favorite[]
 }
 
 export enum Tabs {
-  TRACKS = 'TRACKS',
+  AGREEMENTS = 'AGREEMENTS',
   ALBUMS = 'ALBUMS',
   PLAYLISTS = 'PLAYLISTS'
 }
 
-export type SavedPageTrack = LineupTrack & { dateSaved: string }
+export type SavedPageAgreement = LineupAgreement & { dateSaved: string }
 
-export type TrackRecord = SavedPageTrack & {
+export type AgreementRecord = SavedPageAgreement & {
   key: string
   name: string
   artist: string

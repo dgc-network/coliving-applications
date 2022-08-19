@@ -107,7 +107,7 @@ const CollectionsPage = ({
         }
         reposts={playlist.repost_count}
         favorites={playlist.save_count}
-        trackCount={playlist.playlist_contents.track_ids.length}
+        agreementCount={playlist.playlist_contents.agreement_ids.length}
         onClickReposts={() => onClickReposts(playlist.playlist_id)}
         onClickFavorites={() => onClickFavorites(playlist.playlist_id)}
         onClick={() =>

@@ -25,7 +25,7 @@ import { challengesConfig } from 'app/utils/challenges'
 import { Panel } from './Panel'
 
 const validRewardIds: Set<ChallengeRewardID> = new Set([
-  'track-upload',
+  'agreement-upload',
   'referrals',
   'ref-v',
   'mobile-install',

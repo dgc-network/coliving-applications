@@ -64,7 +64,7 @@
   padding-left: 24px !important;
 }
 
-.trackName {
+.agreementName {
   max-width: 350px;
   white-space: nowrap;
   overflow: hidden;
@@ -97,7 +97,7 @@
   margin-left: 8px;
 }
 
-.tracksTableWrapper {
+.agreementsTableWrapper {
   margin-top: 50px;
 }
 

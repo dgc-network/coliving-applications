@@ -5,8 +5,8 @@ import Header from 'components/header/desktop/Header'
 import EndOfLineup from 'components/lineup/EndOfLineup'
 import Lineup from 'components/lineup/Lineup'
 import {
-  getLoadMoreTrackCount,
-  INITIAL_LOAD_TRACKS_MULTIPLIER
+  getLoadMoreAgreementCount,
+  INITIAL_LOAD_AGREEMENTS_MULTIPLIER
 } from 'components/lineup/LineupProvider'
 import { LineupVariant } from 'components/lineup/types'
 import Page from 'components/page/Page'
@@ -35,8 +35,8 @@ const FeedPageContent = ({
   goToSignUp,
   setFeedInView,
   loadMoreFeed,
-  playFeedTrack,
-  pauseFeedTrack,
+  playFeedAgreement,
+  pauseFeedAgreement,
   getLineupProps,
   feedFilter,
   setFeedFilter,
@@ -50,8 +50,8 @@ const FeedPageContent = ({
     ...getLineupProps(feed),
     setInView: setFeedInView,
     loadMore: loadMoreFeed,
-    playTrack: playFeedTrack,
-    pauseTrack: pauseFeedTrack,
+    playAgreement: playFeedAgreement,
+    pauseAgreement: pauseFeedAgreement,
     delineate: feedIsMain,
     actions: feedActions
   }
@@ -63,9 +63,9 @@ const FeedPageContent = ({
     }
     setFeedFilter(filter)
     resetFeedLineup()
-    const fetchLimit = getLoadMoreTrackCount(
+    const fetchLimit = getLoadMoreAgreementCount(
       mainLineupProps.variant,
-      INITIAL_LOAD_TRACKS_MULTIPLIER
+      INITIAL_LOAD_AGREEMENTS_MULTIPLIER
     )
     const fetchOffset = 0
     loadMoreFeed(fetchOffset, fetchLimit, true)

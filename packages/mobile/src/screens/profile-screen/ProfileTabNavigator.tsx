@@ -17,7 +17,7 @@ import { AlbumsTab } from './AlbumsTab'
 import { CollectiblesTab } from './CollectiblesTab'
 import { PlaylistsTab } from './PlaylistsTab'
 import { RepostsTab } from './RepostsTab'
-import { TracksTab } from './TracksTab'
+import { AgreementsTab } from './AgreementsTab'
 import { useSelectProfile } from './selectors'
 import { useShouldShowCollectiblesTab } from './utils'
 
@@ -43,19 +43,19 @@ export const ProfileTabNavigator = ({
   refreshing,
   onRefresh
 }: ProfileTabNavigatorProps) => {
-  const { user_id, track_count } = useSelectProfile(['user_id', 'track_count'])
+  const { user_id, agreement_count } = useSelectProfile(['user_id', 'agreement_count'])
   const { params } = useRoute<'Profile'>()
 
   const initialParams = { id: user_id, handle: params.handle }
 
-  const isArtist = track_count > 0
+  const isArtist = agreement_count > 0
 
   const showCollectiblesTab = useShouldShowCollectiblesTab()
 
-  const trackScreen = collapsibleTabScreen({
-    name: 'Tracks',
+  const agreementScreen = collapsibleTabScreen({
+    name: 'Agreements',
     Icon: IconNote,
-    component: TracksTab,
+    component: AgreementsTab,
     initialParams,
     refreshing,
     onRefresh,
@@ -108,7 +108,7 @@ export const ProfileTabNavigator = ({
         renderHeader={renderHeader}
         animatedValue={animatedValue}
       >
-        {trackScreen}
+        {agreementScreen}
         {albumsScreen}
         {playlistsScreen}
         {repostsScreen}

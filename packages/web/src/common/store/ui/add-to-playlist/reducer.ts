@@ -6,14 +6,14 @@ import * as actions from './actions'
 type AddToPlaylistActions = ActionType<typeof actions>
 
 export type AddToPlaylistState = {
-  trackId: ID | null
-  trackTitle: string | null
+  agreementId: ID | null
+  agreementTitle: string | null
 }
 
 const initialState = {
   isOpen: false,
-  trackId: null,
-  trackTitle: null
+  agreementId: null,
+  agreementTitle: null
 }
 
 const reducer = createReducer<AddToPlaylistState, AddToPlaylistActions>(
@@ -22,15 +22,15 @@ const reducer = createReducer<AddToPlaylistState, AddToPlaylistActions>(
     [actions.OPEN](state, action) {
       return {
         ...state,
-        trackId: action.trackId,
-        trackTitle: action.trackTitle
+        agreementId: action.agreementId,
+        agreementTitle: action.agreementTitle
       }
     },
     [actions.CLOSE](state, action) {
       return {
         ...state,
-        trackId: null,
-        trackTitle: null
+        agreementId: null,
+        agreementTitle: null
       }
     }
   }

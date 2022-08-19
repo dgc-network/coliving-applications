@@ -23,7 +23,7 @@ export const ArtistCard = (props: ArtistCardProps) => {
   const {
     user_id,
     bio,
-    track_count,
+    agreement_count,
     playlist_count,
     follower_count,
     followee_count,
@@ -31,7 +31,7 @@ export const ArtistCard = (props: ArtistCardProps) => {
   } = artist
 
   const dispatch = useDispatch()
-  const isArtist = track_count > 0
+  const isArtist = agreement_count > 0
   const isTippingEnabled = getFeatureEnabled(FeatureFlags.TIPPING_ENABLED)
 
   const handleClick: MouseEventHandler = useCallback((event) => {
@@ -42,9 +42,9 @@ export const ArtistCard = (props: ArtistCardProps) => {
     if (isArtist) {
       return [
         {
-          number: track_count,
-          title: track_count === 1 ? 'track' : 'tracks',
-          key: 'track'
+          number: agreement_count,
+          title: agreement_count === 1 ? 'agreement' : 'agreements',
+          key: 'agreement'
         },
         {
           number: follower_count,
@@ -67,7 +67,7 @@ export const ArtistCard = (props: ArtistCardProps) => {
       },
       { number: followee_count, title: 'following', key: 'following' }
     ]
-  }, [isArtist, track_count, follower_count, followee_count, playlist_count])
+  }, [isArtist, agreement_count, follower_count, followee_count, playlist_count])
 
   const handleFollow = useCallback(() => {
     dispatch(followUser(user_id, FollowSource.HOVER_TILE))

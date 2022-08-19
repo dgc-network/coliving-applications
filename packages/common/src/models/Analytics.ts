@@ -4,7 +4,7 @@ import { MonitorPayload, ServiceMonitorType } from 'models/Services'
 import { TimeRange } from 'models/TimeRange'
 import { SolanaWalletAddress, StringAudio, WalletAddress } from 'models/Wallet'
 
-const ANALYTICS_TRACK_EVENT = 'ANALYTICS/TRACK_EVENT'
+const ANALYTICS_AGREEMENT_EVENT = 'ANALYTICS/AGREEMENT_EVENT'
 
 export enum Name {
   SESSION_START = 'Session Start',
@@ -82,7 +82,7 @@ export enum Name {
   UNDO_REPOST = 'Undo Repost',
   FAVORITE = 'Favorite',
   UNFAVORITE = 'Unfavorite',
-  ARTIST_PICK_SELECT_TRACK = 'Artist Pick: Select Track',
+  ARTIST_PICK_SELECT_AGREEMENT = 'Artist Pick: Select Agreement',
   FOLLOW = 'Follow',
   UNFOLLOW = 'Unfollow',
 
@@ -110,16 +110,16 @@ export enum Name {
   EMBED_COPY = 'Embed: Copy',
 
   // Upload
-  TRACK_UPLOAD_OPEN = 'Track Upload: Open',
-  TRACK_UPLOAD_START_UPLOADING = 'Track Upload: Start Upload',
-  TRACK_UPLOAD_TRACK_UPLOADING = 'Track Upload: Track Uploading',
-  TRACK_UPLOAD_COMPLETE_UPLOAD = 'Track Upload: Complete Upload',
-  TRACK_UPLOAD_COPY_LINK = 'Track Upload: Copy Link',
-  TRACK_UPLOAD_SHARE_WITH_FANS = 'Track Upload: Share with your fans',
-  TRACK_UPLOAD_SHARE_SOUND_TO_TIKTOK = 'Track Upload: Share sound to TikTok',
-  TRACK_UPLOAD_VIEW_TRACK_PAGE = 'Track Upload: View Track page',
-  TRACK_UPLOAD_SUCCESS = 'Track Upload: Success',
-  TRACK_UPLOAD_FAILURE = 'Track Upload: Failure',
+  AGREEMENT_UPLOAD_OPEN = 'Agreement Upload: Open',
+  AGREEMENT_UPLOAD_START_UPLOADING = 'Agreement Upload: Start Upload',
+  AGREEMENT_UPLOAD_AGREEMENT_UPLOADING = 'Agreement Upload: Agreement Uploading',
+  AGREEMENT_UPLOAD_COMPLETE_UPLOAD = 'Agreement Upload: Complete Upload',
+  AGREEMENT_UPLOAD_COPY_LINK = 'Agreement Upload: Copy Link',
+  AGREEMENT_UPLOAD_SHARE_WITH_FANS = 'Agreement Upload: Share with your fans',
+  AGREEMENT_UPLOAD_SHARE_SOUND_TO_TIKTOK = 'Agreement Upload: Share sound to TikTok',
+  AGREEMENT_UPLOAD_VIEW_AGREEMENT_PAGE = 'Agreement Upload: View Agreement page',
+  AGREEMENT_UPLOAD_SUCCESS = 'Agreement Upload: Success',
+  AGREEMENT_UPLOAD_FAILURE = 'Agreement Upload: Failure',
   TWEET_FIRST_UPLOAD = 'Tweet First Upload',
 
   // Trending
@@ -141,7 +141,7 @@ export enum Name {
   NOTIFICATIONS_CLICK_TIP_SENT_TWITTER_SHARE = 'Notifications: Clicked Tip Sent Twitter Share',
   NOTIFICATIONS_CLICK_SUPPORTER_RANK_UP_TWITTER_SHARE = 'Notifications: Clicked Supporter Rank Up Twitter Share',
   NOTIFICATIONS_CLICK_SUPPORTING_RANK_UP_TWITTER_SHARE = 'Notifications: Clicked Supporting Rank Up Twitter Share',
-  NOTIFICATIONS_CLICK_ADD_TRACK_TO_PLAYLIST_TWITTER_SHARE = 'Notifications: Clicked Add Track to Playlist Twitter Share',
+  NOTIFICATIONS_CLICK_ADD_AGREEMENT_TO_PLAYLIST_TWITTER_SHARE = 'Notifications: Clicked Add Agreement to Playlist Twitter Share',
   NOTIFICATIONS_TOGGLE_SETTINGS = 'Notifications: Toggle Setting',
   BROWSER_NOTIFICATION_SETTINGS = 'Browser Push Notification',
 
@@ -155,9 +155,9 @@ export enum Name {
   PROFILE_PAGE_CLICK_DONATION = 'ProfilePage: Go To Donation',
   PROFILE_PAGE_SHOWN_ARTIST_RECOMMENDATIONS = 'ProfilePage: Shown Artist Recommendations',
 
-  // Track page
-  TRACK_PAGE_DOWNLOAD = 'Track Page: Download',
-  TRACK_PAGE_PLAY_MORE = 'Track Page: Play More By This Artist',
+  // Agreement page
+  AGREEMENT_PAGE_DOWNLOAD = 'Agreement Page: Download',
+  AGREEMENT_PAGE_PLAY_MORE = 'Agreement Page: Play More By This Artist',
 
   // Playback
   PLAYBACK_PLAY = 'Playback: Play',
@@ -457,23 +457,23 @@ export enum RepostSource {
   TILE = 'tile',
   PLAYBAR = 'playbar',
   NOW_PLAYING = 'now playing',
-  TRACK_PAGE = 'page',
+  AGREEMENT_PAGE = 'page',
   COLLECTION_PAGE = 'collection page',
   HISTORY_PAGE = 'history page',
   FAVORITES_PAGE = 'favorites page',
   OVERFLOW = 'overflow',
-  TRACK_LIST = 'track list'
+  AGREEMENT_LIST = 'agreement list'
 }
 export enum FavoriteSource {
   TILE = 'tile',
   PLAYBAR = 'playbar',
   NOW_PLAYING = 'now playing',
-  TRACK_PAGE = 'page',
+  AGREEMENT_PAGE = 'page',
   COLLECTION_PAGE = 'collection page',
   HISTORY_PAGE = 'history page',
   FAVORITES_PAGE = 'favorites page',
   OVERFLOW = 'overflow',
-  TRACK_LIST = 'track list',
+  AGREEMENT_LIST = 'agreement list',
   SIGN_UP = 'sign up',
   // Favorite triggered by some implicit action, e.g.
   // you had a smart collection and it was favorited so it
@@ -483,7 +483,7 @@ export enum FavoriteSource {
 }
 export enum FollowSource {
   PROFILE_PAGE = 'profile page',
-  TRACK_PAGE = 'track page',
+  AGREEMENT_PAGE = 'agreement page',
   COLLECTION_PAGE = 'collection page',
   HOVER_TILE = 'hover tile',
   OVERFLOW = 'overflow',
@@ -494,7 +494,7 @@ export enum FollowSource {
 
 type Share = {
   eventName: Name.SHARE
-  kind: 'profile' | 'album' | 'playlist' | 'track'
+  kind: 'profile' | 'album' | 'playlist' | 'agreement'
   source: ShareSource
   id: string
   url: string
@@ -502,7 +502,7 @@ type Share = {
 
 export type ShareToTwitter = {
   eventName: Name.SHARE_TO_TWITTER
-  kind: 'profile' | 'album' | 'playlist' | 'track' | 'liveNftPlaylist'
+  kind: 'profile' | 'album' | 'playlist' | 'agreement' | 'liveNftPlaylist'
   source: ShareSource
   id: number
   url: string
@@ -532,8 +532,8 @@ type Unfavorite = {
   source: FavoriteSource
   id: string
 }
-type ArtistPickSelectTrack = {
-  eventName: Name.ARTIST_PICK_SELECT_TRACK
+type ArtistPickSelectAgreement = {
+  eventName: Name.ARTIST_PICK_SELECT_AGREEMENT
   id: string
 }
 type Follow = {
@@ -555,13 +555,13 @@ type TweetFirstUpload = {
 export enum CreatePlaylistSource {
   NAV = 'nav',
   CREATE_PAGE = 'create page',
-  FROM_TRACK = 'from track',
+  FROM_AGREEMENT = 'from agreement',
   FAVORITES_PAGE = 'favorites page'
 }
 
 type PlaylistAdd = {
   eventName: Name.PLAYLIST_ADD
-  trackId: string
+  agreementId: string
   playlistId: string
 }
 type PlaylistOpenCreate = {
@@ -636,57 +636,57 @@ type EmbedCopy = {
   size: 'card' | 'compact' | 'tiny'
 }
 
-// Track Upload
-type TrackUploadOpen = {
-  eventName: Name.TRACK_UPLOAD_OPEN
+// Agreement Upload
+type AgreementUploadOpen = {
+  eventName: Name.AGREEMENT_UPLOAD_OPEN
   source: 'nav' | 'profile' | 'signup'
 }
-type TrackUploadStartUploading = {
-  eventName: Name.TRACK_UPLOAD_START_UPLOADING
+type AgreementUploadStartUploading = {
+  eventName: Name.AGREEMENT_UPLOAD_START_UPLOADING
   count: number
-  kind: 'tracks' | 'album' | 'playlist'
+  kind: 'agreements' | 'album' | 'playlist'
 }
-type TrackUploadTrackUploading = {
-  eventName: Name.TRACK_UPLOAD_TRACK_UPLOADING
+type AgreementUploadAgreementUploading = {
+  eventName: Name.AGREEMENT_UPLOAD_AGREEMENT_UPLOADING
   artworkSource: 'unsplash' | 'original'
   genre: string
   mood: string
   downloadable: 'yes' | 'no' | 'follow'
 }
-type TrackUploadCompleteUpload = {
-  eventName: Name.TRACK_UPLOAD_COMPLETE_UPLOAD
+type AgreementUploadCompleteUpload = {
+  eventName: Name.AGREEMENT_UPLOAD_COMPLETE_UPLOAD
   count: number
-  kind: 'tracks' | 'album' | 'playlist'
+  kind: 'agreements' | 'album' | 'playlist'
 }
 
-type TrackUploadSuccess = {
-  eventName: Name.TRACK_UPLOAD_SUCCESS
+type AgreementUploadSuccess = {
+  eventName: Name.AGREEMENT_UPLOAD_SUCCESS
   endpoint: string
-  kind: 'single_track' | 'multi_track' | 'album' | 'playlist'
+  kind: 'single_agreement' | 'multi_agreement' | 'album' | 'playlist'
 }
 
-type TrackUploadFailure = {
-  eventName: Name.TRACK_UPLOAD_FAILURE
+type AgreementUploadFailure = {
+  eventName: Name.AGREEMENT_UPLOAD_FAILURE
   endpoint: string
-  kind: 'single_track' | 'multi_track' | 'album' | 'playlist'
+  kind: 'single_agreement' | 'multi_agreement' | 'album' | 'playlist'
   error?: string
 }
 
-type TrackUploadCopyLink = {
-  eventName: Name.TRACK_UPLOAD_COPY_LINK
+type AgreementUploadCopyLink = {
+  eventName: Name.AGREEMENT_UPLOAD_COPY_LINK
   uploadType: string
   url: string
 }
-type TrackUploadShareWithFans = {
-  eventName: Name.TRACK_UPLOAD_SHARE_WITH_FANS
+type AgreementUploadShareWithFans = {
+  eventName: Name.AGREEMENT_UPLOAD_SHARE_WITH_FANS
   uploadType: string
   text: string
 }
-type TrackUploadShareSoundToTikTok = {
-  eventName: Name.TRACK_UPLOAD_SHARE_SOUND_TO_TIKTOK
+type AgreementUploadShareSoundToTikTok = {
+  eventName: Name.AGREEMENT_UPLOAD_SHARE_SOUND_TO_TIKTOK
 }
-type TrackUploadViewTrackPage = {
-  eventName: Name.TRACK_UPLOAD_VIEW_TRACK_PAGE
+type AgreementUploadViewAgreementPage = {
+  eventName: Name.AGREEMENT_UPLOAD_VIEW_AGREEMENT_PAGE
   uploadType: string
 }
 
@@ -755,8 +755,8 @@ type NotificationsClickSupportingRankUp = {
   eventName: Name.NOTIFICATIONS_CLICK_SUPPORTING_RANK_UP_TWITTER_SHARE
   text: string
 }
-type NotificationsClickAddTrackToPlaylist = {
-  eventName: Name.NOTIFICATIONS_CLICK_ADD_TRACK_TO_PLAYLIST_TWITTER_SHARE
+type NotificationsClickAddAgreementToPlaylist = {
+  eventName: Name.NOTIFICATIONS_CLICK_ADD_AGREEMENT_TO_PLAYLIST_TWITTER_SHARE
   text: string
 }
 type NotificationsToggleSettings = {
@@ -768,7 +768,7 @@ type NotificationsToggleSettings = {
 // Profile
 type ProfilePageTabClick = {
   eventName: Name.PROFILE_PAGE_TAB_CLICK
-  tab: 'tracks' | 'albums' | 'reposts' | 'playlists' | 'collectibles'
+  tab: 'agreements' | 'albums' | 'reposts' | 'playlists' | 'collectibles'
 }
 type ProfilePageSort = {
   eventName: Name.PROFILE_PAGE_SORT
@@ -804,15 +804,15 @@ type ProfilePageShownArtistRecommendations = {
   userId: number
 }
 
-// Track Page
-type TrackPageDownload = {
-  eventName: Name.TRACK_PAGE_DOWNLOAD
+// Agreement Page
+type AgreementPageDownload = {
+  eventName: Name.AGREEMENT_PAGE_DOWNLOAD
   id: ID
   category?: string
-  parent_track_id?: ID
+  parent_agreement_id?: ID
 }
-type TrackPagePlayMore = {
-  eventName: Name.TRACK_PAGE_PLAY_MORE
+type AgreementPagePlayMore = {
+  eventName: Name.AGREEMENT_PAGE_PLAY_MORE
   id: ID
 }
 
@@ -821,10 +821,10 @@ export enum PlaybackSource {
   PLAYBAR = 'playbar',
   NOW_PLAYING = 'now playing',
   PLAYLIST_PAGE = 'playlist page',
-  TRACK_PAGE = 'track page',
-  TRACK_TILE = 'track tile',
-  PLAYLIST_TRACK = 'playlist page track list',
-  PLAYLIST_TILE_TRACK = 'playlist track tile',
+  AGREEMENT_PAGE = 'agreement page',
+  AGREEMENT_TILE = 'agreement tile',
+  PLAYLIST_AGREEMENT = 'playlist page agreement list',
+  PLAYLIST_TILE_AGREEMENT = 'playlist agreement tile',
   HISTORY_PAGE = 'history page',
   FAVORITES_PAGE = 'favorites page',
   PASSIVE = 'passive',
@@ -846,12 +846,12 @@ type PlaybackPause = {
 type LinkClicking = {
   eventName: Name.LINK_CLICKING
   url: string
-  source: 'profile page' | 'track page' | 'collection page'
+  source: 'profile page' | 'agreement page' | 'collection page'
 }
 type TagClicking = {
   eventName: Name.TAG_CLICKING
   tag: string
-  source: 'profile page' | 'track page' | 'collection page'
+  source: 'profile page' | 'agreement page' | 'collection page'
 }
 
 // Search
@@ -878,17 +878,17 @@ type SearchResultSelect = {
   term: string
   source: 'autocomplete' | 'search results page' | 'more results page'
   id: ID
-  kind: 'track' | 'profile' | 'playlist' | 'album'
+  kind: 'agreement' | 'profile' | 'playlist' | 'album'
 }
 
 type SearchTabClick = {
   eventName: Name.SEARCH_TAB_CLICK
   term: string
-  tab: 'people' | 'tracks' | 'albums' | 'playlists'
+  tab: 'people' | 'agreements' | 'albums' | 'playlists'
 }
 type Listen = {
   eventName: Name.LISTEN
-  trackId: string
+  agreementId: string
 }
 
 type OnFirstPage = {
@@ -934,14 +934,14 @@ type CreatorNodeSelection = {
 type StemCompleteUpload = {
   eventName: Name.STEM_COMPLETE_UPLOAD
   id: number
-  parent_track_id: number
+  parent_agreement_id: number
   category: string
 }
 
 type StemDelete = {
   eventName: Name.STEM_DELETE
   id: number
-  parent_track_id: number
+  parent_agreement_id: number
 }
 
 type RemixNewRemix = {
@@ -949,9 +949,9 @@ type RemixNewRemix = {
   id: number
   handle: string
   title: string
-  parent_track_id: number
-  parent_track_title: string
-  parent_track_user_handle: string
+  parent_agreement_id: number
+  parent_agreement_title: string
+  parent_agreement_user_handle: string
 }
 
 type RemixCosign = {
@@ -959,8 +959,8 @@ type RemixCosign = {
   id: number
   handle: string
   action: 'reposted' | 'favorited'
-  original_track_id: number
-  original_track_title: string
+  original_agreement_id: number
+  original_agreement_title: string
 }
 
 type RemixCosignIndicator = {
@@ -968,8 +968,8 @@ type RemixCosignIndicator = {
   id: number
   handle: string
   action: 'reposted' | 'favorited'
-  original_track_id: number
-  original_track_title: string
+  original_agreement_id: number
+  original_agreement_title: string
 }
 
 type RemixHide = {
@@ -1247,9 +1247,9 @@ type ColivingOauthError = {
   error: string
 }
 
-export type BaseAnalyticsEvent = { type: typeof ANALYTICS_TRACK_EVENT }
+export type BaseAnalyticsEvent = { type: typeof ANALYTICS_AGREEMENT_EVENT }
 
-export type AllTrackingEvents =
+export type AllAgreementingEvents =
   | CreateAccountOpen
   | CreateAccountCompleteEmail
   | CreateAccountCompletePassword
@@ -1292,7 +1292,7 @@ export type AllTrackingEvents =
   | UndoRepost
   | Favorite
   | Unfavorite
-  | ArtistPickSelectTrack
+  | ArtistPickSelectAgreement
   | PlaylistAdd
   | PlaylistOpenCreate
   | PlaylistStartCreate
@@ -1302,16 +1302,16 @@ export type AllTrackingEvents =
   | Delete
   | EmbedOpen
   | EmbedCopy
-  | TrackUploadOpen
-  | TrackUploadStartUploading
-  | TrackUploadTrackUploading
-  | TrackUploadCompleteUpload
-  | TrackUploadSuccess
-  | TrackUploadFailure
-  | TrackUploadCopyLink
-  | TrackUploadShareWithFans
-  | TrackUploadShareSoundToTikTok
-  | TrackUploadViewTrackPage
+  | AgreementUploadOpen
+  | AgreementUploadStartUploading
+  | AgreementUploadAgreementUploading
+  | AgreementUploadCompleteUpload
+  | AgreementUploadSuccess
+  | AgreementUploadFailure
+  | AgreementUploadCopyLink
+  | AgreementUploadShareWithFans
+  | AgreementUploadShareSoundToTikTok
+  | AgreementUploadViewAgreementPage
   | TrendingChangeView
   | TrendingPaginate
   | FeedChangeView
@@ -1326,7 +1326,7 @@ export type AllTrackingEvents =
   | NotificationsClickTipSent
   | NotificationsClickSupporterRankUp
   | NotificationsClickSupportingRankUp
-  | NotificationsClickAddTrackToPlaylist
+  | NotificationsClickAddAgreementToPlaylist
   | NotificationsToggleSettings
   | ProfilePageTabClick
   | ProfilePageSort
@@ -1336,8 +1336,8 @@ export type AllTrackingEvents =
   | ProfilePageClickWebsite
   | ProfilePageClickDonation
   | ProfilePageShownArtistRecommendations
-  | TrackPageDownload
-  | TrackPagePlayMore
+  | AgreementPageDownload
+  | AgreementPagePlayMore
   | PlaybackPlay
   | PlaybackPause
   | Follow

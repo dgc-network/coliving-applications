@@ -2,35 +2,35 @@ import { Kind } from '@coliving/common'
 import { all, call, select, takeEvery, put } from 'redux-saga/effects'
 
 import { getUserId } from 'common/store/account/selectors'
-import { DELETE_TRACK } from 'common/store/cache/tracks/actions'
-import { getTrack } from 'common/store/cache/tracks/selectors'
-import { retrieveTracks } from 'common/store/cache/tracks/utils'
+import { DELETE_AGREEMENT } from 'common/store/cache/agreements/actions'
+import { getAgreement } from 'common/store/cache/agreements/selectors'
+import { retrieveAgreements } from 'common/store/cache/agreements/utils'
 import { getUser } from 'common/store/cache/users/selectors'
 import {
   PREFIX,
-  tracksActions,
-  tracksActions as lineupActions
-} from 'common/store/pages/profile/lineups/tracks/actions'
+  agreementsActions,
+  agreementsActions as lineupActions
+} from 'common/store/pages/profile/lineups/agreements/actions'
 import {
   getProfileUserId,
-  getProfileTracksLineup,
+  getProfileAgreementsLineup,
   getProfileUserHandle
 } from 'common/store/pages/profile/selectors'
-import { SET_ARTIST_PICK } from 'common/store/social/tracks/actions'
+import { SET_ARTIST_PICK } from 'common/store/social/agreements/actions'
 import { LineupSagas } from 'store/lineup/sagas'
 import { waitForValue } from 'utils/sagaHelpers'
 
-import { TracksSortMode } from '../../types'
+import { AgreementsSortMode } from '../../types'
 
-import { retrieveUserTracks } from './retrieveUserTracks'
+import { retrieveUserAgreements } from './retrieveUserAgreements'
 
-function* getTracks({ offset, limit, payload }) {
+function* getAgreements({ offset, limit, payload }) {
   const handle = yield select(getProfileUserHandle)
   const currentUserId = yield select(getUserId)
 
   // Wait for user to receive social handles
   // We need to know ahead of time whether we want to request
-  // the "artist pick" track in addition to the artist's tracks.
+  // the "artist pick" agreement in addition to the artist's agreements.
   // TODO: Move artist pick to chain/discprov to avoid this extra trip
   const user = yield call(
     waitForValue,
@@ -40,13 +40,13 @@ function* getTracks({ offset, limit, payload }) {
     },
     (user) => 'twitter_handle' in user
   )
-  const sort = payload.sort === TracksSortMode.POPULAR ? 'plays' : 'date'
+  const sort = payload.sort === AgreementsSortMode.POPULAR ? 'plays' : 'date'
   const getUnlisted = true
 
   if (user._artist_pick) {
-    let [pinnedTrack, processed] = yield all([
-      call(retrieveTracks, { trackIds: [user._artist_pick] }),
-      call(retrieveUserTracks, {
+    let [pinnedAgreement, processed] = yield all([
+      call(retrieveAgreements, { agreementIds: [user._artist_pick] }),
+      call(retrieveUserAgreements, {
         handle,
         currentUserId,
         sort,
@@ -56,40 +56,40 @@ function* getTracks({ offset, limit, payload }) {
       })
     ])
 
-    // Pinned tracks *should* be unpinned
+    // Pinned agreements *should* be unpinned
     // when deleted, but just in case they're not,
     // defend against that edge case here.
-    if (!pinnedTrack.length || pinnedTrack[0].is_delete) {
-      pinnedTrack = []
+    if (!pinnedAgreement.length || pinnedAgreement[0].is_delete) {
+      pinnedAgreement = []
     }
 
-    const pinnedTrackIndex = processed.findIndex(
-      (track) => track.track_id === user._artist_pick
+    const pinnedAgreementIndex = processed.findIndex(
+      (agreement) => agreement.agreement_id === user._artist_pick
     )
     if (offset === 0) {
-      // If pinned track found in tracksResponse,
-      // put it to the front of the list, slicing it out of tracksResponse.
-      if (pinnedTrackIndex !== -1) {
-        return pinnedTrack
-          .concat(processed.slice(0, pinnedTrackIndex))
-          .concat(processed.slice(pinnedTrackIndex + 1))
+      // If pinned agreement found in agreementsResponse,
+      // put it to the front of the list, slicing it out of agreementsResponse.
+      if (pinnedAgreementIndex !== -1) {
+        return pinnedAgreement
+          .concat(processed.slice(0, pinnedAgreementIndex))
+          .concat(processed.slice(pinnedAgreementIndex + 1))
       }
-      // If pinned track not in tracksResponse,
+      // If pinned agreement not in agreementsResponse,
       // add it to the front of the list.
-      return pinnedTrack.concat(processed)
+      return pinnedAgreement.concat(processed)
     } else {
       // If we're paginating w/ offset > 0
-      // set the pinned track as null.
+      // set the pinned agreement as null.
       // This will be handled by `filterDeletes` via `nullCount`
-      if (pinnedTrackIndex !== -1) {
-        return processed.map((track, i) =>
-          i === pinnedTrackIndex ? null : track
+      if (pinnedAgreementIndex !== -1) {
+        return processed.map((agreement, i) =>
+          i === pinnedAgreementIndex ? null : agreement
         )
       }
       return processed
     }
   } else {
-    const processed = yield call(retrieveUserTracks, {
+    const processed = yield call(retrieveUserAgreements, {
       handle,
       currentUserId,
       sort,
@@ -103,13 +103,13 @@ function* getTracks({ offset, limit, payload }) {
 
 const sourceSelector = (state) => `${PREFIX}:${getProfileUserId(state)}`
 
-class TracksSagas extends LineupSagas {
+class AgreementsSagas extends LineupSagas {
   constructor() {
     super(
       PREFIX,
-      tracksActions,
-      getProfileTracksLineup,
-      getTracks,
+      agreementsActions,
+      getProfileAgreementsLineup,
+      getAgreements,
       undefined,
       undefined,
       sourceSelector
@@ -119,11 +119,11 @@ class TracksSagas extends LineupSagas {
 
 function* watchSetArtistPick() {
   yield takeEvery(SET_ARTIST_PICK, function* (action) {
-    const lineup = yield select(getProfileTracksLineup)
+    const lineup = yield select(getProfileAgreementsLineup)
     const updatedOrderUid = []
     for (const [entryUid, order] of Object.entries(lineup.order)) {
-      const track = yield select(getTrack, { uid: entryUid })
-      const isArtistPick = track.track_id === action.trackId
+      const agreement = yield select(getAgreement, { uid: entryUid })
+      const isArtistPick = agreement.agreement_id === action.agreementId
 
       if (isArtistPick) updatedOrderUid.push({ uid: entryUid, order: 0 })
       else updatedOrderUid.push({ uid: entryUid, order: order + 1 })
@@ -135,20 +135,20 @@ function* watchSetArtistPick() {
   })
 }
 
-function* watchDeleteTrack() {
-  yield takeEvery(DELETE_TRACK, function* (action) {
-    const { trackId } = action
-    const lineup = yield select(getProfileTracksLineup)
-    const trackLineupEntry = lineup.entries.find(
-      (entry) => entry.id === trackId
+function* watchDeleteAgreement() {
+  yield takeEvery(DELETE_AGREEMENT, function* (action) {
+    const { agreementId } = action
+    const lineup = yield select(getProfileAgreementsLineup)
+    const agreementLineupEntry = lineup.entries.find(
+      (entry) => entry.id === agreementId
     )
-    if (trackLineupEntry) {
-      yield put(tracksActions.remove(Kind.TRACKS, trackLineupEntry.uid))
+    if (agreementLineupEntry) {
+      yield put(agreementsActions.remove(Kind.AGREEMENTS, agreementLineupEntry.uid))
     }
   })
 }
 
 export default function sagas() {
-  const trackSagas = new TracksSagas().getSagas()
-  return trackSagas.concat([watchSetArtistPick, watchDeleteTrack])
+  const agreementSagas = new AgreementsSagas().getSagas()
+  return agreementSagas.concat([watchSetArtistPick, watchDeleteAgreement])
 }

@@ -131,13 +131,13 @@
   flex: 1 auto;
 }
 
-.trackId {
+.agreementId {
   display: flex;
 }
-.trackId > div {
+.agreementId > div {
   flex: 1 auto;
 }
-.trackId > div:first-child {
+.agreementId > div:first-child {
   margin-right: 38px;
 }
 
@@ -175,11 +175,11 @@
   margin-top: 16px;
 }
 
-.hiddenTrackButton {
+.hiddenAgreementButton {
   height: 35px !important;
 }
 
-.hiddenTrackButton .hiddenTrackButtonText {
+.hiddenAgreementButton .hiddenAgreementButtonText {
   font-size: var(--font-xs);
   font-weight: var(--font-demi-bold);
 }

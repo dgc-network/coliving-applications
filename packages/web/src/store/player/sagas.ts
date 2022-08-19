@@ -11,15 +11,15 @@ import {
 } from 'typed-redux-saga/macro'
 
 import * as cacheActions from 'common/store/cache/actions'
-import { getTrack } from 'common/store/cache/tracks/selectors'
+import { getAgreement } from 'common/store/cache/agreements/selectors'
 import { getUser } from 'common/store/cache/users/selectors'
 import * as queueActions from 'common/store/queue/slice'
-import { recordListen } from 'common/store/social/tracks/actions'
+import { recordListen } from 'common/store/social/agreements/actions'
 import apiClient from 'services/coliving-api-client/ColivingAPIClient'
 import { remoteConfigInstance } from 'services/remote-config/remote-config-instance'
 import {
   getAudio,
-  getTrackId,
+  getAgreementId,
   getUid,
   getCounter,
   getPlaying
@@ -65,19 +65,19 @@ function* setAudioStream() {
   }
 }
 
-// Set of track ids that should be forceably streamed as mp3 rather than hls because
+// Set of agreement ids that should be forceably streamed as mp3 rather than hls because
 // their hls maybe corrupt.
-let FORCE_MP3_STREAM_TRACK_IDS: Set<string> | null = null
+let FORCE_MP3_STREAM_AGREEMENT_IDS: Set<string> | null = null
 
 export function* watchPlay() {
   yield* takeLatest(play.type, function* (action: ReturnType<typeof play>) {
-    const { uid, trackId, onEnd } = action.payload
+    const { uid, agreementId, onEnd } = action.payload
 
-    if (!FORCE_MP3_STREAM_TRACK_IDS) {
-      FORCE_MP3_STREAM_TRACK_IDS = new Set(
+    if (!FORCE_MP3_STREAM_AGREEMENT_IDS) {
+      FORCE_MP3_STREAM_AGREEMENT_IDS = new Set(
         (
           remoteConfigInstance.getRemoteVar(
-            StringKeys.FORCE_MP3_STREAM_TRACK_IDS
+            StringKeys.FORCE_MP3_STREAM_AGREEMENT_IDS
           ) || ''
         ).split(',')
       )
@@ -85,39 +85,39 @@ export function* watchPlay() {
 
     const live: NonNullable<AudioState> = yield* call(waitForValue, getAudio)
 
-    if (trackId) {
+    if (agreementId) {
       // Load and set end action.
-      const track = yield* select(getTrack, { id: trackId })
-      if (!track) return
+      const agreement = yield* select(getAgreement, { id: agreementId })
+      if (!agreement) return
 
       const owner = yield* select(getUser, {
-        id: track.owner_id
+        id: agreement.owner_id
       })
 
       const gateways = owner
         ? getCreatorNodeIPFSGateways(owner.creator_node_endpoint)
         : []
-      const encodedTrackId = encodeHashId(trackId)
+      const encodedAgreementId = encodeHashId(agreementId)
       const forceStreamMp3 =
-        encodedTrackId && FORCE_MP3_STREAM_TRACK_IDS.has(encodedTrackId)
+        encodedAgreementId && FORCE_MP3_STREAM_AGREEMENT_IDS.has(encodedAgreementId)
       const forceStreamMp3Url = forceStreamMp3
-        ? apiClient.makeUrl(`/tracks/${encodedTrackId}/stream`)
+        ? apiClient.makeUrl(`/agreements/${encodedAgreementId}/stream`)
         : null
 
       const endChannel = eventChannel((emitter) => {
         live.load(
-          track.track_segments,
+          agreement.agreement_segments,
           () => {
             if (onEnd) {
               emitter(onEnd({}))
             }
           },
           // @ts-ignore a few issues with typing here...
-          [track._first_segment],
+          [agreement._first_segment],
           gateways,
           {
-            id: encodedTrackId,
-            title: track.title,
+            id: encodedAgreementId,
+            title: agreement.title,
             artist: owner?.name
           },
           forceStreamMp3Url
@@ -126,14 +126,14 @@ export function* watchPlay() {
       })
       yield* spawn(actionChannelDispatcher, endChannel)
       yield* put(
-        cacheActions.subscribe(Kind.TRACKS, [
-          { uid: PLAYER_SUBSCRIBER_NAME, id: trackId }
+        cacheActions.subscribe(Kind.AGREEMENTS, [
+          { uid: PLAYER_SUBSCRIBER_NAME, id: agreementId }
         ])
       )
     }
     // Play.
     live.play()
-    yield* put(playSucceeded({ uid, trackId }))
+    yield* put(playSucceeded({ uid, agreementId }))
   })
 }
 
@@ -197,12 +197,12 @@ export function* watchReset() {
       live.pause()
     } else {
       const playerUid = yield* select(getUid)
-      const playerTrackId = yield* select(getTrackId)
-      if (playerUid && playerTrackId) {
+      const playerAgreementId = yield* select(getAgreementId)
+      if (playerUid && playerAgreementId) {
         yield* put(
           play({
             uid: playerUid,
-            trackId: playerTrackId,
+            agreementId: playerAgreementId,
             onEnd: queueActions.next
           })
         )
@@ -214,9 +214,9 @@ export function* watchReset() {
 
 export function* watchStop() {
   yield* takeLatest(stop.type, function* (action: ReturnType<typeof stop>) {
-    const id = yield* select(getTrackId)
+    const id = yield* select(getAgreementId)
     yield* put(
-      cacheActions.unsubscribe(Kind.TRACKS, [
+      cacheActions.unsubscribe(Kind.AGREEMENTS, [
         { uid: PLAYER_SUBSCRIBER_NAME, id }
       ])
     )
@@ -280,9 +280,9 @@ export function* handleAudioErrors() {
 
   while (true) {
     const { error, data } = yield* take(chan)
-    const trackId = yield* select(getTrackId)
-    if (trackId) {
-      yield* put(errorAction({ error, trackId, info: data }))
+    const agreementId = yield* select(getAgreementId)
+    if (agreementId) {
+      yield* put(errorAction({ error, agreementId, info: data }))
     }
   }
 }
@@ -311,15 +311,15 @@ function watchAudio(live: HTMLAudioElement) {
 }
 
 /**
- * Poll for whether a track has been listened to.
+ * Poll for whether a agreement has been listened to.
  */
 function* recordListenWorker() {
   // Store the last seen play counter to make sure we only record
-  // a listen for each "unique" track play. Using an id here wouldn't
+  // a listen for each "unique" agreement play. Using an id here wouldn't
   // be enough because the user might have "repeat single" mode turned on.
   let lastSeenPlayCounter = null
   while (true) {
-    const trackId = yield* select(getTrackId)
+    const agreementId = yield* select(getAgreementId)
     const playCounter = yield* select(getCounter)
     const live = yield* call(waitForValue, getAudio)
     const position = live.getPosition()
@@ -327,7 +327,7 @@ function* recordListenWorker() {
     const newPlay = lastSeenPlayCounter !== playCounter
 
     if (newPlay && position > RECORD_LISTEN_SECONDS) {
-      if (trackId) yield* put(recordListen(trackId))
+      if (agreementId) yield* put(recordListen(agreementId))
       lastSeenPlayCounter = playCounter
     }
     yield* delay(RECORD_LISTEN_INTERVAL)

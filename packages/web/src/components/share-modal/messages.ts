@@ -1,7 +1,7 @@
 import { ShareType } from 'common/store/ui/share-modal/types'
 
 const shareTypeMap: Record<ShareType, string> = {
-  track: 'Track',
+  agreement: 'Agreement',
   profile: 'Profile',
   album: 'Album',
   playlist: 'Playlist',
@@ -14,7 +14,7 @@ export const messages = {
   tikTok: 'Share Sound to TikTok',
   copyLink: (asset: ShareType) => `Copy Link to ${shareTypeMap[asset]}`,
   toast: (asset: ShareType) => `Copied Link to ${shareTypeMap[asset]}`,
-  trackShareText: (title: string, handle: string) =>
+  agreementShareText: (title: string, handle: string) =>
     `Check out ${title} by ${handle} on @dgc.network #Coliving`,
   profileShareText: (handle: string) =>
     `Check out ${handle} on @dgc.network #Coliving`,

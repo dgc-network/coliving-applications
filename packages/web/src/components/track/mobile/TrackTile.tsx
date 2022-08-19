@@ -11,32 +11,32 @@ import { formatSeconds } from 'common/utils/timeUtil'
 import FavoriteButton from 'components/alt-button/FavoriteButton'
 import RepostButton from 'components/alt-button/RepostButton'
 import Skeleton from 'components/skeleton/Skeleton'
-import { TrackTileProps } from 'components/track/types'
+import { AgreementTileProps } from 'components/agreement/types'
 import UserBadges from 'components/user-badges/UserBadges'
 
-import TrackBannerIcon, { TrackBannerIconType } from '../TrackBannerIcon'
+import AgreementBannerIcon, { AgreementBannerIconType } from '../AgreementBannerIcon'
 
 import BottomButtons from './BottomButtons'
-import styles from './TrackTile.module.css'
-import TrackTileArt from './TrackTileArt'
+import styles from './AgreementTile.module.css'
+import AgreementTileArt from './AgreementTileArt'
 
 const messages = {
   artistPick: "Artist's Pick",
   coSign: 'Co-Sign',
   reposted: 'Reposted',
   favorited: 'Favorited',
-  hiddenTrack: 'Hidden Track',
+  hiddenAgreement: 'Hidden Agreement',
   repostedAndFavorited: 'Reposted & Favorited'
 }
 
 type ExtraProps = {
-  goToTrackPage: (e: MouseEvent<HTMLElement>) => void
+  goToAgreementPage: (e: MouseEvent<HTMLElement>) => void
   goToArtistPage: (e: MouseEvent<HTMLElement>) => void
-  toggleSave: (trackId: ID) => void
-  toggleRepost: (trackId: ID) => void
-  onShare: (trackId: ID) => void
-  makeGoToRepostsPage: (trackId: ID) => (e: MouseEvent<HTMLElement>) => void
-  makeGoToFavoritesPage: (trackId: ID) => (e: MouseEvent<HTMLElement>) => void
+  toggleSave: (agreementId: ID) => void
+  toggleRepost: (agreementId: ID) => void
+  onShare: (agreementId: ID) => void
+  makeGoToRepostsPage: (agreementId: ID) => (e: MouseEvent<HTMLElement>) => void
+  makeGoToFavoritesPage: (agreementId: ID) => (e: MouseEvent<HTMLElement>) => void
   isOwner: boolean
   darkMode: boolean
   isMatrix: boolean
@@ -82,7 +82,7 @@ export const RankIcon = ({
   ) : null
 }
 
-const TrackTile = (props: TrackTileProps & ExtraProps) => {
+const AgreementTile = (props: AgreementTileProps & ExtraProps) => {
   const {
     id,
     index,
@@ -133,15 +133,15 @@ const TrackTile = (props: TrackTileProps & ExtraProps) => {
   return (
     <div className={styles.container}>
       {props.showArtistPick && props.isArtistPick && (
-        <TrackBannerIcon
-          type={TrackBannerIconType.STAR}
+        <AgreementBannerIcon
+          type={AgreementBannerIconType.STAR}
           isMobile
           isMatrixMode={isMatrix}
         />
       )}
       {props.isUnlisted && (
-        <TrackBannerIcon
-          type={TrackBannerIconType.HIDDEN}
+        <AgreementBannerIcon
+          type={AgreementBannerIconType.HIDDEN}
           isMobile
           isMatrixMode={isMatrix}
         />
@@ -163,7 +163,7 @@ const TrackTile = (props: TrackTileProps & ExtraProps) => {
           {props.isUnlisted && (
             <div className={styles.topRightIcon}>
               <IconHidden />
-              {messages.hiddenTrack}
+              {messages.hiddenAgreement}
             </div>
           )}
           <div className={cn(styles.duration, fadeIn)}>
@@ -171,9 +171,9 @@ const TrackTile = (props: TrackTileProps & ExtraProps) => {
           </div>
         </div>
         <div className={styles.metadata}>
-          <TrackTileArt
+          <AgreementTileArt
             id={props.id}
-            isTrack={true}
+            isAgreement={true}
             callback={() => setArtworkLoaded(true)}
             showSkeleton={showSkeleton}
             coverArtSizes={props.coverArtSizes}
@@ -186,7 +186,7 @@ const TrackTile = (props: TrackTileProps & ExtraProps) => {
               [styles.titlesSkeleton]: props.showSkeleton
             })}
           >
-            <div className={styles.title} onClick={props.goToTrackPage}>
+            <div className={styles.title} onClick={props.goToAgreementPage}>
               <div className={cn(fadeIn)}>{props.title}</div>
               {props.isPlaying && <IconVolume />}
               {(!artworkLoaded || showSkeleton) && (
@@ -306,4 +306,4 @@ const TrackTile = (props: TrackTileProps & ExtraProps) => {
   )
 }
 
-export default TrackTile
+export default AgreementTile

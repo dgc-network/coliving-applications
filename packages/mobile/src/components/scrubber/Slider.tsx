@@ -29,8 +29,8 @@ const createStyles = (themeColors: ThemeColors) =>
       height: 4,
       overflow: 'hidden'
     },
-    tracker: {
-      // The tracker must be the full width of the rail
+    agreementer: {
+      // The agreementer must be the full width of the rail
       // so that it can have rounded edges. It animates
       // by sliding (translateX) instead of by growing.
       flexGrow: 1,
@@ -67,7 +67,7 @@ const createStyles = (themeColors: ThemeColors) =>
 type SliderProps = {
   /**
    * A unique key to represent this instances of playback.
-   * If the user replays the same track, mediaKey should change
+   * If the user replays the same agreement, mediaKey should change
    */
   mediaKey: string
   /**
@@ -75,7 +75,7 @@ type SliderProps = {
    */
   isPlaying: boolean
   /**
-   * The duration of the currently playing track
+   * The duration of the currently playing agreement
    */
   duration: number
   /**
@@ -112,7 +112,7 @@ export const Slider = memo(
     const styles = useThemedStyles(createStyles)
     const { primaryLight2, primaryDark2 } = useThemeColors()
 
-    // Animation to translate the handle and tracker
+    // Animation to translate the handle and agreementer
     const translationAnim = useRef(new Animated.Value(0)).current
     // Scale animation for the handle
     const {
@@ -314,7 +314,7 @@ export const Slider = memo(
         >
           <Animated.View
             style={[
-              styles.tracker,
+              styles.agreementer,
               {
                 transform: [
                   {
@@ -327,14 +327,14 @@ export const Slider = memo(
               }
             ]}
           >
-            {/* While dragging, show the gradient tracker */}
+            {/* While dragging, show the gradient agreementer */}
             <Animated.View
               style={[
                 {
                   flex: 1,
                   // Interpolate the handle scale animation to
                   // capture the same timing/easing for the fade in
-                  // of the tracker.
+                  // of the agreementer.
                   opacity: handleScale.interpolate({
                     inputRange: [1, HANDLE_GROW_SCALE],
                     outputRange: [0, 1]

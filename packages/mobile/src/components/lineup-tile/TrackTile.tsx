@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 
-import type { Track, User } from '@/common'
+import type { Agreement, User } from '@/common'
 import {
   PlaybackSource,
   FavoriteSource,
@@ -10,14 +10,14 @@ import {
   SquareSizes
 } from '@/common'
 import { getUserId } from '-client/src/common/store/account/selectors'
-import { getTrack } from '-client/src/common/store/cache/tracks/selectors'
-import { getUserFromTrack } from '-client/src/common/store/cache/users/selectors'
+import { getAgreement } from '-client/src/common/store/cache/agreements/selectors'
+import { getUserFromAgreement } from '-client/src/common/store/cache/users/selectors'
 import {
-  repostTrack,
-  saveTrack,
-  undoRepostTrack,
-  unsaveTrack
-} from '-client/src/common/store/social/tracks/actions'
+  repostAgreement,
+  saveAgreement,
+  undoRepostAgreement,
+  unsaveAgreement
+} from '-client/src/common/store/social/agreements/actions'
 import {
   OverflowAction,
   OverflowSource
@@ -31,48 +31,48 @@ import type { LineupItemProps } from 'app/components/lineup-tile/types'
 import { useDispatchWeb } from 'app/hooks/useDispatchWeb'
 import { useNavigation } from 'app/hooks/useNavigation'
 import { isEqual, useSelectorWeb } from 'app/hooks/useSelectorWeb'
-import { useTrackCoverArt } from 'app/hooks/useTrackCoverArt'
+import { useAgreementCoverArt } from 'app/hooks/useAgreementCoverArt'
 import type { AppState } from 'app/store'
 import { getPlayingUid } from 'app/store/live/selectors'
 
 import { LineupTile } from './LineupTile'
 
-export const TrackTile = (props: LineupItemProps) => {
+export const AgreementTile = (props: LineupItemProps) => {
   const { uid } = props
 
   // Using isEqual as the equality function to prevent rerenders due to object references
   // not being preserved when syncing redux state from client.
   // This can be removed when no longer dependent on web client
-  const track = useSelectorWeb((state) => getTrack(state, { uid }), isEqual)
+  const agreement = useSelectorWeb((state) => getAgreement(state, { uid }), isEqual)
 
   const user = useSelectorWeb(
-    (state) => getUserFromTrack(state, { uid }),
+    (state) => getUserFromAgreement(state, { uid }),
     isEqual
   )
 
-  if (!track || !user) {
-    console.warn('Track or user missing for TrackTile, preventing render')
+  if (!agreement || !user) {
+    console.warn('Agreement or user missing for AgreementTile, preventing render')
     return null
   }
 
-  if (track.is_delete || user?.is_deactivated) {
+  if (agreement.is_delete || user?.is_deactivated) {
     return null
   }
 
-  return <TrackTileComponent {...props} track={track} user={user} />
+  return <AgreementTileComponent {...props} agreement={agreement} user={user} />
 }
 
-type TrackTileProps = LineupItemProps & {
-  track: Track
+type AgreementTileProps = LineupItemProps & {
+  agreement: Agreement
   user: User
 }
 
-const TrackTileComponent = ({
+const AgreementTileComponent = ({
   togglePlay,
-  track,
+  agreement,
   user,
   ...lineupTileProps
-}: TrackTileProps) => {
+}: AgreementTileProps) => {
   const dispatchWeb = useDispatchWeb()
   const navigation = useNavigation()
   const currentUserId = useSelectorWeb(getUserId)
@@ -90,15 +90,15 @@ const TrackTileComponent = ({
     permalink,
     play_count,
     title,
-    track_id
-  } = track
+    agreement_id
+  } = agreement
 
   const { user_id } = user
 
   const isOwner = user_id === currentUserId
 
-  const imageUrl = useTrackCoverArt({
-    id: track_id,
+  const imageUrl = useAgreementCoverArt({
+    id: agreement_id,
     sizes: _cover_art_sizes,
     size: SquareSizes.SIZE_150_BY_150
   })
@@ -107,24 +107,24 @@ const TrackTileComponent = ({
     ({ isPlaying }) => {
       togglePlay({
         uid: lineupTileProps.uid,
-        id: track_id,
-        source: PlaybackSource.TRACK_TILE,
+        id: agreement_id,
+        source: PlaybackSource.AGREEMENT_TILE,
         isPlaying,
         isPlayingUid
       })
     },
-    [togglePlay, lineupTileProps.uid, track_id, isPlayingUid]
+    [togglePlay, lineupTileProps.uid, agreement_id, isPlayingUid]
   )
 
   const handlePressTitle = useCallback(() => {
     navigation.push({
-      native: { screen: 'Track', params: { id: track_id } },
+      native: { screen: 'Agreement', params: { id: agreement_id } },
       web: { route: permalink }
     })
-  }, [navigation, permalink, track_id])
+  }, [navigation, permalink, agreement_id])
 
   const handlePressOverflow = useCallback(() => {
-    if (track_id === undefined) {
+    if (agreement_id === undefined) {
       return
     }
     const overflowActions = [
@@ -140,19 +140,19 @@ const TrackTileComponent = ({
         : null,
       OverflowAction.SHARE,
       OverflowAction.ADD_TO_PLAYLIST,
-      OverflowAction.VIEW_TRACK_PAGE,
+      OverflowAction.VIEW_AGREEMENT_PAGE,
       OverflowAction.VIEW_ARTIST_PAGE
     ].filter(Boolean) as OverflowAction[]
 
     dispatchWeb(
       openOverflowMenu({
-        source: OverflowSource.TRACKS,
-        id: track_id,
+        source: OverflowSource.AGREEMENTS,
+        id: agreement_id,
         overflowActions
       })
     )
   }, [
-    track_id,
+    agreement_id,
     dispatchWeb,
     has_current_user_reposted,
     has_current_user_saved,
@@ -160,39 +160,39 @@ const TrackTileComponent = ({
   ])
 
   const handlePressShare = useCallback(() => {
-    if (track_id === undefined) {
+    if (agreement_id === undefined) {
       return
     }
     dispatchWeb(
       requestOpenShareModal({
-        type: 'track',
-        trackId: track_id,
+        type: 'agreement',
+        agreementId: agreement_id,
         source: ShareSource.TILE
       })
     )
-  }, [dispatchWeb, track_id])
+  }, [dispatchWeb, agreement_id])
 
   const handlePressSave = useCallback(() => {
-    if (track_id === undefined) {
+    if (agreement_id === undefined) {
       return
     }
     if (has_current_user_saved) {
-      dispatchWeb(unsaveTrack(track_id, FavoriteSource.TILE))
+      dispatchWeb(unsaveAgreement(agreement_id, FavoriteSource.TILE))
     } else {
-      dispatchWeb(saveTrack(track_id, FavoriteSource.TILE))
+      dispatchWeb(saveAgreement(agreement_id, FavoriteSource.TILE))
     }
-  }, [track_id, dispatchWeb, has_current_user_saved])
+  }, [agreement_id, dispatchWeb, has_current_user_saved])
 
   const handlePressRepost = useCallback(() => {
-    if (track_id === undefined) {
+    if (agreement_id === undefined) {
       return
     }
     if (has_current_user_reposted) {
-      dispatchWeb(undoRepostTrack(track_id, RepostSource.TILE))
+      dispatchWeb(undoRepostAgreement(agreement_id, RepostSource.TILE))
     } else {
-      dispatchWeb(repostTrack(track_id, RepostSource.TILE))
+      dispatchWeb(repostAgreement(agreement_id, RepostSource.TILE))
     }
-  }, [track_id, dispatchWeb, has_current_user_reposted])
+  }, [agreement_id, dispatchWeb, has_current_user_reposted])
 
   const hideShare = field_visibility?.share === false
   const hidePlays = field_visibility?.play_count === false
@@ -202,11 +202,11 @@ const TrackTileComponent = ({
       {...lineupTileProps}
       isPlayingUid={isPlayingUid}
       duration={duration}
-      favoriteType={FavoriteType.TRACK}
-      repostType={RepostType.TRACK}
+      favoriteType={FavoriteType.AGREEMENT}
+      repostType={RepostType.AGREEMENT}
       hideShare={hideShare}
       hidePlays={hidePlays}
-      id={track_id}
+      id={agreement_id}
       imageUrl={imageUrl}
       isUnlisted={is_unlisted}
       onPress={handlePress}
@@ -217,7 +217,7 @@ const TrackTileComponent = ({
       onPressTitle={handlePressTitle}
       playCount={play_count}
       title={title}
-      item={track}
+      item={agreement}
       user={user}
     />
   )

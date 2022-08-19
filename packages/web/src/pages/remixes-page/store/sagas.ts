@@ -1,32 +1,32 @@
-import { TrackMetadata } from '@coliving/common'
+import { AgreementMetadata } from '@coliving/common'
 import { takeEvery, call, put } from 'redux-saga/effects'
 
-import { retrieveTrackByHandleAndSlug } from 'common/store/cache/tracks/utils/retrieveTracks'
+import { retrieveAgreementByHandleAndSlug } from 'common/store/cache/agreements/utils/retrieveAgreements'
 import {
-  fetchTrack,
-  fetchTrackSucceeded
+  fetchAgreement,
+  fetchAgreementSucceeded
 } from 'common/store/pages/remixes/slice'
 import { waitForBackendSetup } from 'store/backend/sagas'
 
-import tracksSagas from './lineups/tracks/sagas'
+import agreementsSagas from './lineups/agreements/sagas'
 
 function* watchFetch() {
   yield takeEvery(
-    fetchTrack.type,
-    function* (action: ReturnType<typeof fetchTrack>) {
+    fetchAgreement.type,
+    function* (action: ReturnType<typeof fetchAgreement>) {
       yield call(waitForBackendSetup)
       const { handle, slug } = action.payload
 
-      const track: TrackMetadata = yield call(retrieveTrackByHandleAndSlug, {
+      const agreement: AgreementMetadata = yield call(retrieveAgreementByHandleAndSlug, {
         handle,
         slug
       })
 
-      yield put(fetchTrackSucceeded({ trackId: track.track_id }))
+      yield put(fetchAgreementSucceeded({ agreementId: agreement.agreement_id }))
     }
   )
 }
 
 export default function sagas() {
-  return [...tracksSagas(), watchFetch]
+  return [...agreementsSagas(), watchFetch]
 }

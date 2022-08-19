@@ -3,17 +3,17 @@ import cn from 'classnames'
 
 import Switch from '../switch/Switch'
 
-import styles from './UnlistedTrackModal.module.css'
+import styles from './UnlistedAgreementModal.module.css'
 
 const messages = {
-  title: 'TRACK VISIBILITY',
+  title: 'AGREEMENT VISIBILITY',
   subtitle:
-    "Hidden tracks won't show up on your profile.\nAnyone who has the link will be able to listen.",
-  hideTrack: 'Hide Track'
+    "Hidden agreements won't show up on your profile.\nAnyone who has the link will be able to listen.",
+  hideAgreement: 'Hide Agreement'
 }
 
 // All possible toggleable fields
-enum TrackMetadataField {
+enum AgreementMetadataField {
   UNLISTED = 'unlisted',
   GENRE = 'genre',
   MOOD = 'mood',
@@ -23,25 +23,25 @@ enum TrackMetadataField {
 }
 
 // The order of toggles in the modal
-const trackMetadataOrder = [
-  TrackMetadataField.GENRE,
-  TrackMetadataField.MOOD,
-  TrackMetadataField.TAGS,
-  TrackMetadataField.SHARE,
-  TrackMetadataField.PLAYS
+const agreementMetadataOrder = [
+  AgreementMetadataField.GENRE,
+  AgreementMetadataField.MOOD,
+  AgreementMetadataField.TAGS,
+  AgreementMetadataField.SHARE,
+  AgreementMetadataField.PLAYS
 ]
 
 // Maps switch identifiers to section titles on the UI
 const metadataTitleMap = {
-  [TrackMetadataField.UNLISTED]: 'Track',
-  [TrackMetadataField.GENRE]: 'Genre',
-  [TrackMetadataField.MOOD]: 'Mood',
-  [TrackMetadataField.TAGS]: 'Tags',
-  [TrackMetadataField.SHARE]: 'Share Button',
-  [TrackMetadataField.PLAYS]: 'Play Count'
+  [AgreementMetadataField.UNLISTED]: 'Agreement',
+  [AgreementMetadataField.GENRE]: 'Genre',
+  [AgreementMetadataField.MOOD]: 'Mood',
+  [AgreementMetadataField.TAGS]: 'Tags',
+  [AgreementMetadataField.SHARE]: 'Share Button',
+  [AgreementMetadataField.PLAYS]: 'Play Count'
 }
 
-type TrackMetadataSectionProps = {
+type AgreementMetadataSectionProps = {
   title: string
   isVisible: boolean
   isDisabled: boolean
@@ -49,12 +49,12 @@ type TrackMetadataSectionProps = {
 }
 
 // Individual section of the modal.
-const TrackMetadataSection = ({
+const AgreementMetadataSection = ({
   title,
   isVisible,
   isDisabled,
   didSet
-}: TrackMetadataSectionProps) => {
+}: AgreementMetadataSectionProps) => {
   return (
     <div
       className={cn(styles.section, { [styles.disabledSection]: isDisabled })}
@@ -73,16 +73,16 @@ const TrackMetadataSection = ({
   )
 }
 
-type UnlistedTrackModalProps = {
-  // Whether or not to show the hide track switch or just metadata switches..
-  showHideTrackSwitch: boolean
+type UnlistedAgreementModalProps = {
+  // Whether or not to show the hide agreement switch or just metadata switches..
+  showHideAgreementSwitch: boolean
   isOpen: boolean
-  metadataState: TrackMetadataState
-  didUpdateState: (newState: TrackMetadataState) => void
+  metadataState: AgreementMetadataState
+  didUpdateState: (newState: AgreementMetadataState) => void
   onClose: () => void
 }
 
-type TrackMetadataState = {
+type AgreementMetadataState = {
   unlisted: boolean
   genre: boolean
   mood: boolean
@@ -91,22 +91,22 @@ type TrackMetadataState = {
   plays: boolean
 }
 
-// A modal that allows you to toggle a track to unlisted, as
+// A modal that allows you to toggle a agreement to unlisted, as
 // well as toggle individual metadata field visibility.
-const UnlistedTrackModal = ({
-  showHideTrackSwitch,
+const UnlistedAgreementModal = ({
+  showHideAgreementSwitch,
   isOpen,
   metadataState,
   didUpdateState,
   onClose
-}: UnlistedTrackModalProps) => {
-  const makeDidSetField = (field: TrackMetadataField) => (visible: boolean) => {
+}: UnlistedAgreementModalProps) => {
+  const makeDidSetField = (field: AgreementMetadataField) => (visible: boolean) => {
     const newState = { ...metadataState }
     newState[field] = visible
     didUpdateState(newState)
   }
 
-  const makeSectionTitle = (metadata: TrackMetadataField) =>
+  const makeSectionTitle = (metadata: AgreementMetadataField) =>
     `Show ${metadataTitleMap[metadata]}`
 
   return (
@@ -122,19 +122,19 @@ const UnlistedTrackModal = ({
       titleClassName={styles.modalTitleStyle}
     >
       <div className={styles.container}>
-        {showHideTrackSwitch && (
-          <div className={styles.hideTracksSection}>
-            <TrackMetadataSection
+        {showHideAgreementSwitch && (
+          <div className={styles.hideAgreementsSection}>
+            <AgreementMetadataSection
               isDisabled={false}
               isVisible={metadataState.unlisted}
-              title={messages.hideTrack}
-              didSet={makeDidSetField(TrackMetadataField.UNLISTED)}
+              title={messages.hideAgreement}
+              didSet={makeDidSetField(AgreementMetadataField.UNLISTED)}
             />
           </div>
         )}
-        {trackMetadataOrder.map((field, i) => {
+        {agreementMetadataOrder.map((field, i) => {
           return (
-            <TrackMetadataSection
+            <AgreementMetadataSection
               key={i}
               isDisabled={!metadataState.unlisted}
               isVisible={metadataState[field]}
@@ -148,4 +148,4 @@ const UnlistedTrackModal = ({
   )
 }
 
-export default UnlistedTrackModal
+export default UnlistedAgreementModal

@@ -8,7 +8,7 @@ import { useDarkMode } from 'react-native-dark-mode'
 
 import { useDispatchWeb } from 'app/hooks/useDispatchWeb'
 import { useSelectorWeb } from 'app/hooks/useSelectorWeb'
-import { make, track } from 'app/utils/analytics'
+import { make, agreement } from 'app/utils/analytics'
 import { Theme } from 'app/utils/theme'
 
 type ThemeContextProps = {
@@ -40,12 +40,12 @@ export const ThemeProvider = (props: ThemeProviderProps) => {
       const recordedTheme =
         theme === Theme.DEFAULT ? 'light' : theme.toLocaleLowerCase()
 
-      const trackEvent = make({
+      const agreementEvent = make({
         eventName: Name.SETTINGS_CHANGE_THEME,
         mode: recordedTheme as 'dark' | 'light' | 'matrix' | 'auto'
       })
 
-      track(trackEvent)
+      agreement(agreementEvent)
     },
     [dispatchWeb]
   )

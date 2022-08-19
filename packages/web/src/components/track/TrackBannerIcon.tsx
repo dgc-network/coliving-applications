@@ -3,27 +3,27 @@ import cn from 'classnames'
 import { ReactComponent as IconHidden } from 'assets/img/iconHidden.svg'
 import { ReactComponent as IconStar } from 'assets/img/iconStar.svg'
 
-import styles from './TrackBannerIcon.module.css'
+import styles from './AgreementBannerIcon.module.css'
 
-export enum TrackBannerIconType {
+export enum AgreementBannerIconType {
   STAR = 'star',
   HIDDEN = 'hidden'
 }
 
-const TrackBannerIcon = ({
+const AgreementBannerIcon = ({
   type,
   isMobile,
   isMatrixMode
 }: {
-  type: TrackBannerIconType
+  type: AgreementBannerIconType
   isMobile?: boolean
   isMatrixMode: boolean
 }) => {
   const renderIcon = () => {
     switch (type) {
-      case TrackBannerIconType.STAR:
+      case AgreementBannerIconType.STAR:
         return <IconStar />
-      case TrackBannerIconType.HIDDEN:
+      case AgreementBannerIconType.HIDDEN:
         return <IconHidden />
     }
   }
@@ -37,8 +37,8 @@ const TrackBannerIcon = ({
     >
       <div
         className={cn(styles.container, {
-          [styles.star]: type === TrackBannerIconType.STAR,
-          [styles.hidden]: type === TrackBannerIconType.HIDDEN
+          [styles.star]: type === AgreementBannerIconType.STAR,
+          [styles.hidden]: type === AgreementBannerIconType.HIDDEN
         })}
       />
       {renderIcon()}
@@ -46,4 +46,4 @@ const TrackBannerIcon = ({
   )
 }
 
-export default TrackBannerIcon
+export default AgreementBannerIcon

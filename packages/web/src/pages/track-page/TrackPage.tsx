@@ -3,18 +3,18 @@ import { connect } from 'react-redux'
 import { AppState } from 'store/types'
 import { isMobile } from 'utils/clientUtil'
 
-import TrackPageProvider from './TrackPageProvider'
-import TrackPageDesktopContent from './components/desktop/TrackPage'
-import TrackPageMobileContent from './components/mobile/TrackPage'
+import AgreementPageProvider from './AgreementPageProvider'
+import AgreementPageDesktopContent from './components/desktop/AgreementPage'
+import AgreementPageMobileContent from './components/mobile/AgreementPage'
 
 interface OwnProps {}
 
-type TrackPageContentProps = ReturnType<typeof mapStateToProps> & OwnProps
+type AgreementPageContentProps = ReturnType<typeof mapStateToProps> & OwnProps
 
-const TrackPage = ({ isMobile }: TrackPageContentProps) => {
-  const content = isMobile ? TrackPageMobileContent : TrackPageDesktopContent
+const AgreementPage = ({ isMobile }: AgreementPageContentProps) => {
+  const content = isMobile ? AgreementPageMobileContent : AgreementPageDesktopContent
 
-  return <TrackPageProvider>{content}</TrackPageProvider>
+  return <AgreementPageProvider>{content}</AgreementPageProvider>
 }
 
 function mapStateToProps(state: AppState) {
@@ -23,4 +23,4 @@ function mapStateToProps(state: AppState) {
   }
 }
 
-export default connect(mapStateToProps)(TrackPage)
+export default connect(mapStateToProps)(AgreementPage)

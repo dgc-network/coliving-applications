@@ -10,11 +10,11 @@ import { useThemedStyles } from 'app/hooks/useThemedStyles'
 import { flexRowCentered } from 'app/styles'
 import { useThemeColors } from 'app/utils/theme'
 
-import { createStyles as createTrackTileStyles } from './styles'
+import { createStyles as createAgreementTileStyles } from './styles'
 
 const messages = {
   artistPick: "Artist's Pick",
-  hiddenTrack: 'Hidden Track'
+  hiddenAgreement: 'Hidden Agreement'
 }
 
 const flexRowEnd = (): ViewStyle => ({
@@ -52,26 +52,26 @@ type ItemProps = {
 
 const LineupTileTopRightItem = ({ icon: Icon, label }: ItemProps) => {
   const { neutralLight4 } = useThemeColors()
-  const trackTileStyles = useThemedStyles(createTrackTileStyles)
+  const agreementTileStyles = useThemedStyles(createAgreementTileStyles)
   return (
     <View style={styles.item}>
       <Icon height={16} width={16} fill={neutralLight4} style={styles.icon} />
-      <Text style={trackTileStyles.statText}>{label}</Text>
+      <Text style={agreementTileStyles.statText}>{label}</Text>
     </View>
   )
 }
 
 type Props = {
   /**
-   * The duration of the track or tracks
+   * The duration of the agreement or agreements
    */
   duration?: number
   /**
-   * Whether or not the track is the artist pick
+   * Whether or not the agreement is the artist pick
    */
   isArtistPick?: boolean
   /**
-   * Whether or not the track is unlisted (hidden)
+   * Whether or not the agreement is unlisted (hidden)
    */
   isUnlisted?: boolean
   /**
@@ -86,7 +86,7 @@ export const LineupTileTopRight = ({
   isUnlisted,
   showArtistPick
 }: Props) => {
-  const trackTileStyles = useThemedStyles(createTrackTileStyles)
+  const agreementTileStyles = useThemedStyles(createAgreementTileStyles)
 
   return (
     <View style={styles.topRight}>
@@ -96,10 +96,10 @@ export const LineupTileTopRight = ({
       {isUnlisted && (
         <LineupTileTopRightItem
           icon={IconHidden}
-          label={messages.hiddenTrack}
+          label={messages.hiddenAgreement}
         />
       )}
-      <Text style={trackTileStyles.statText}>
+      <Text style={agreementTileStyles.statText}>
         {duration && formatSeconds(duration)}
       </Text>
     </View>

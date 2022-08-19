@@ -1,4 +1,4 @@
-import * as pinTrackActions from 'store/application/ui/setAsArtistPickConfirmation/actions'
+import * as pinAgreementActions from 'store/application/ui/setAsArtistPickConfirmation/actions'
 import { makeReducer } from 'utils/reducer'
 
 import { SetAsArtistPickConfirmationState } from './types'
@@ -8,18 +8,18 @@ const initialState: SetAsArtistPickConfirmationState = {
 }
 
 const actionMap = {
-  [pinTrackActions.SHOW_SET_AS_ARTIST_PICK_CONFIRMATION](
+  [pinAgreementActions.SHOW_SET_AS_ARTIST_PICK_CONFIRMATION](
     state: SetAsArtistPickConfirmationState,
-    action: pinTrackActions.ShowSetAsArtistPickConfirmation
+    action: pinAgreementActions.ShowSetAsArtistPickConfirmation
   ): SetAsArtistPickConfirmationState {
     return {
       isVisible: true,
-      trackId: action.trackId
+      agreementId: action.agreementId
     }
   },
-  [pinTrackActions.HIDE_SET_AS_ARTIST_PICK_CONFIRMATION](
+  [pinAgreementActions.HIDE_SET_AS_ARTIST_PICK_CONFIRMATION](
     state: SetAsArtistPickConfirmationState,
-    action: pinTrackActions.CancelSetAsArtistPick
+    action: pinAgreementActions.CancelSetAsArtistPick
   ): SetAsArtistPickConfirmationState {
     return { isVisible: false }
   }

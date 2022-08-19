@@ -66,7 +66,7 @@ const messages = {
   followers: 'New Followers',
   reposts: 'Reposts',
   favorites: 'Favorites',
-  remixes: 'Remixes of My Tracks',
+  remixes: 'Remixes of My Agreements',
   emailFrequency: '‘What You Missed’ Email Frequency'
 }
 

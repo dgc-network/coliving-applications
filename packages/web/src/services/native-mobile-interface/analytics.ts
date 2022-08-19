@@ -7,9 +7,9 @@ export class SetAnalyticsUser extends NativeMobileMessage {
   }
 }
 
-export class TrackAnalyticsEvent extends NativeMobileMessage {
+export class AgreementAnalyticsEvent extends NativeMobileMessage {
   constructor(eventName: string, properties?: Record<string, any>) {
-    super(MessageType.ANALYTICS_TRACK, { eventName, properties })
+    super(MessageType.ANALYTICS_AGREEMENT, { eventName, properties })
   }
 }
 

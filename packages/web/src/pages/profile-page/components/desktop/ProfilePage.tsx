@@ -18,7 +18,7 @@ import { ReactComponent as IconPlaylists } from 'assets/img/iconPlaylists.svg'
 import { ReactComponent as IconReposts } from 'assets/img/iconRepost.svg'
 import { useSelectTierInfo } from 'common/hooks/wallet'
 import { feedActions } from 'common/store/pages/profile/lineups/feed/actions'
-import { tracksActions } from 'common/store/pages/profile/lineups/tracks/actions'
+import { agreementsActions } from 'common/store/pages/profile/lineups/agreements/actions'
 import { ProfileUser, Tabs } from 'common/store/pages/profile/types'
 import { badgeTiers } from 'common/store/wallet/utils'
 import Card from 'components/card/desktop/Card'
@@ -93,13 +93,13 @@ export type ProfilePageProps = {
   playlists: Collection[] | null
   status: Status
   goToRoute: (route: string) => void
-  artistTracks: LineupState<{ id: ID }>
-  playArtistTrack: (uid: UID) => void
-  pauseArtistTrack: () => void
+  artistAgreements: LineupState<{ id: ID }>
+  playArtistAgreement: (uid: UID) => void
+  pauseArtistAgreement: () => void
   // Feed
   userFeed: LineupState<{ id: ID }>
-  playUserFeedTrack: (uid: UID) => void
-  pauseUserFeedTrack: () => void
+  playUserFeedAgreement: (uid: UID) => void
+  pauseUserFeedAgreement: () => void
 
   // Methods
   onFollow: () => void
@@ -120,11 +120,11 @@ export type ProfilePageProps = {
   onCancel: () => void
   onSortByRecent: () => void
   onSortByPopular: () => void
-  loadMoreArtistTracks: (offset: number, limit: number) => void
+  loadMoreArtistAgreements: (offset: number, limit: number) => void
   loadMoreUserFeed: (offset: number, limit: number) => void
   formatCardSecondaryText: (
     saves: number,
-    tracks: number,
+    agreements: number,
     isPrivate?: boolean
   ) => string
   openCreatePlaylistModal: () => void
@@ -149,18 +149,18 @@ const ProfilePage = ({
   playlists,
   status,
   goToRoute,
-  // Tracks
-  artistTracks,
-  playArtistTrack,
-  pauseArtistTrack,
+  // Agreements
+  artistAgreements,
+  playArtistAgreement,
+  pauseArtistAgreement,
   getLineupProps,
   // Feed
   userFeed,
-  playUserFeedTrack,
-  pauseUserFeedTrack,
+  playUserFeedAgreement,
+  pauseUserFeedAgreement,
   formatCardSecondaryText,
   loadMoreUserFeed,
-  loadMoreArtistTracks,
+  loadMoreArtistAgreements,
   openCreatePlaylistModal,
   updateProfile,
 
@@ -226,15 +226,15 @@ const ProfilePage = ({
   const record = useRecord()
   const onClickUploadAlbum = useCallback(() => {
     goToRoute(UPLOAD_ALBUM_PAGE)
-    record(make(Name.TRACK_UPLOAD_OPEN, { source: 'profile' }))
+    record(make(Name.AGREEMENT_UPLOAD_OPEN, { source: 'profile' }))
   }, [goToRoute, record])
   const onClickUploadPlaylist = useCallback(() => {
     goToRoute(UPLOAD_PLAYLIST_PAGE)
-    record(make(Name.TRACK_UPLOAD_OPEN, { source: 'profile' }))
+    record(make(Name.AGREEMENT_UPLOAD_OPEN, { source: 'profile' }))
   }, [goToRoute, record])
-  const onClickUploadTrack = useCallback(() => {
+  const onClickUploadAgreement = useCallback(() => {
     goToRoute(UPLOAD_PAGE)
-    record(make(Name.TRACK_UPLOAD_OPEN, { source: 'profile' }))
+    record(make(Name.AGREEMENT_UPLOAD_OPEN, { source: 'profile' }))
   }, [goToRoute, record])
 
   const { tierNumber } = useSelectTierInfo(userId ?? 0)
@@ -277,7 +277,7 @@ const ProfilePage = ({
         // link={fullAlbumPage(profile.handle, album.playlist_name, album.playlist_id)}
         secondaryText={formatCardSecondaryText(
           album.save_count,
-          album.playlist_contents.track_ids.length
+          album.playlist_contents.agreement_ids.length
         )}
         cardCoverImageSizes={album._cover_art_sizes}
         isReposted={album.has_current_user_reposted}
@@ -317,7 +317,7 @@ const ProfilePage = ({
         // link={fullPlaylistPage(profile.handle, playlist.playlist_name, playlist.playlist_id)}
         secondaryText={formatCardSecondaryText(
           playlist.save_count,
-          playlist.playlist_contents.track_ids.length,
+          playlist.playlist_contents.agreement_ids.length,
           playlist.is_private
         )}
         cardCoverImageSizes={playlist._cover_art_sizes}
@@ -347,17 +347,17 @@ const ProfilePage = ({
       )
     }
 
-    const trackUploadChip = isOwner ? (
+    const agreementUploadChip = isOwner ? (
       <UploadChip
         key='upload-chip'
-        type='track'
+        type='agreement'
         variant='tile'
-        onClick={onClickUploadTrack}
+        onClick={onClickUploadAgreement}
       />
     ) : null
 
     const headers = [
-      { icon: <IconNote />, text: Tabs.TRACKS, label: Tabs.TRACKS },
+      { icon: <IconNote />, text: Tabs.AGREEMENTS, label: Tabs.AGREEMENTS },
       { icon: <IconAlbum />, text: Tabs.ALBUMS, label: Tabs.ALBUMS },
       {
         icon: <IconPlaylists />,
@@ -367,26 +367,26 @@ const ProfilePage = ({
       { icon: <IconReposts />, text: Tabs.REPOSTS, label: Tabs.REPOSTS }
     ]
     const elements = [
-      <div key={Tabs.TRACKS} className={styles.tiles}>
+      <div key={Tabs.AGREEMENTS} className={styles.tiles}>
         {renderProfileCompletionCard()}
         {status !== Status.LOADING ? (
-          artistTracks.status !== Status.LOADING &&
-          artistTracks.entries.length === 0 ? (
+          artistAgreements.status !== Status.LOADING &&
+          artistAgreements.entries.length === 0 ? (
             <EmptyTab
               isOwner={isOwner}
               name={profile.name}
-              text={'uploaded any tracks'}
+              text={'uploaded any agreements'}
             />
           ) : (
             <Lineup
-              {...getLineupProps(artistTracks)}
-              extraPrecedingElement={trackUploadChip}
+              {...getLineupProps(artistAgreements)}
+              extraPrecedingElement={agreementUploadChip}
               animateLeadingElement
               leadingElementId={profile._artist_pick}
-              loadMore={loadMoreArtistTracks}
-              playTrack={playArtistTrack}
-              pauseTrack={pauseArtistTrack}
-              actions={tracksActions}
+              loadMore={loadMoreArtistAgreements}
+              playAgreement={playArtistAgreement}
+              pauseAgreement={pauseArtistAgreement}
+              actions={agreementsActions}
             />
           )
         ) : null}
@@ -430,8 +430,8 @@ const ProfilePage = ({
             <Lineup
               {...getLineupProps(userFeed)}
               loadMore={loadMoreUserFeed}
-              playTrack={playUserFeedTrack}
-              pauseTrack={pauseUserFeedTrack}
+              playAgreement={playUserFeedAgreement}
+              pauseAgreement={pauseUserFeedAgreement}
               actions={feedActions}
             />
           )
@@ -496,7 +496,7 @@ const ProfilePage = ({
         primaryText={playlist.playlist_name}
         secondaryText={formatCardSecondaryText(
           playlist.save_count,
-          playlist.playlist_contents.track_ids.length,
+          playlist.playlist_contents.agreement_ids.length,
           playlist.is_private
         )}
         // link={fullPlaylistPage(profile.handle, playlist.playlist_name, playlist.playlist_id)}
@@ -543,8 +543,8 @@ const ProfilePage = ({
             {...getLineupProps(userFeed)}
             count={profile.repost_count}
             loadMore={loadMoreUserFeed}
-            playTrack={playUserFeedTrack}
-            pauseTrack={pauseUserFeedTrack}
+            playAgreement={playUserFeedAgreement}
+            pauseAgreement={pauseUserFeedAgreement}
             actions={feedActions}
           />
         )}

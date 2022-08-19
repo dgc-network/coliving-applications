@@ -35,7 +35,7 @@ enum LocationAction {
 
 ;(window as any).locationHistory = []
 
-function* trackLocation() {
+function* agreementLocation() {
   while (true) {
     const {
       payload: { location, action, isFirstRendering }
@@ -93,7 +93,7 @@ function* handleHardwareBack() {
 }
 
 const sagas = () => {
-  const sagas = [trackLocation, handleHardwareBack]
+  const sagas = [agreementLocation, handleHardwareBack]
   return NATIVE_MOBILE ? sagas.concat(mobileSagas()) : sagas
 }
 

@@ -3,65 +3,65 @@ import { keyBy } from 'lodash'
 import { call, select } from 'redux-saga/effects'
 
 import { getUserId } from 'common/store/account/selectors'
-import { processAndCacheTracks } from 'common/store/cache/tracks/utils'
+import { processAndCacheAgreements } from 'common/store/cache/agreements/utils'
 import {
   PREFIX,
-  tracksActions
-} from 'common/store/pages/history-page/lineups/tracks/actions'
+  agreementsActions
+} from 'common/store/pages/history-page/lineups/agreements/actions'
 import apiClient from 'services/coliving-api-client/ColivingAPIClient'
 import { LineupSagas } from 'store/lineup/sagas'
 
-function* getHistoryTracks() {
+function* getHistoryAgreements() {
   try {
     const currentUserId = yield select(getUserId)
-    const activity = yield apiClient.getUserTrackHistory({
+    const activity = yield apiClient.getUserAgreementHistory({
       currentUserId,
       userId: currentUserId,
       limit: 100
     })
 
-    const processedTracks = yield call(
-      processAndCacheTracks,
-      activity.map((a) => a.track)
+    const processedAgreements = yield call(
+      processAndCacheAgreements,
+      activity.map((a) => a.agreement)
     )
-    const processedTracksMap = keyBy(processedTracks, 'track_id')
+    const processedAgreementsMap = keyBy(processedAgreements, 'agreement_id')
 
-    const lineupTracks = []
+    const lineupAgreements = []
     activity.forEach((activity, i) => {
-      const trackMetadata = processedTracksMap[activity.track.track_id]
-      // Prevent history for invalid tracks from getting into the lineup.
-      if (trackMetadata) {
-        lineupTracks.push({
-          ...trackMetadata,
+      const agreementMetadata = processedAgreementsMap[activity.agreement.agreement_id]
+      // Prevent history for invalid agreements from getting into the lineup.
+      if (agreementMetadata) {
+        lineupAgreements.push({
+          ...agreementMetadata,
           dateListened: activity.timestamp
         })
       }
     })
-    return lineupTracks
+    return lineupAgreements
   } catch (e) {
     console.error(e)
     return []
   }
 }
 
-const keepTrackIdAndDateListened = (entry) => ({
+const keepAgreementIdAndDateListened = (entry) => ({
   uid: entry.uid,
-  kind: entry.track_id ? Kind.TRACKS : Kind.COLLECTIONS,
-  id: entry.track_id || entry.playlist_id,
+  kind: entry.agreement_id ? Kind.AGREEMENTS : Kind.COLLECTIONS,
+  id: entry.agreement_id || entry.playlist_id,
   dateListened: entry.dateListened
 })
 
 const sourceSelector = () => PREFIX
 
-class TracksSagas extends LineupSagas {
+class AgreementsSagas extends LineupSagas {
   constructor() {
     super(
       PREFIX,
-      tracksActions,
-      // store => store.history.tracks,
-      (store) => store.pages.historyPage.tracks,
-      getHistoryTracks,
-      keepTrackIdAndDateListened,
+      agreementsActions,
+      // store => store.history.agreements,
+      (store) => store.pages.historyPage.agreements,
+      getHistoryAgreements,
+      keepAgreementIdAndDateListened,
       /* removeDeleted */ false,
       sourceSelector
     )
@@ -69,5 +69,5 @@ class TracksSagas extends LineupSagas {
 }
 
 export default function sagas() {
-  return new TracksSagas().getSagas()
+  return new AgreementsSagas().getSagas()
 }

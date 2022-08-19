@@ -10,13 +10,13 @@ import {
 import { useSelector } from 'react-redux'
 
 import { useDispatchWeb } from 'app/hooks/useDispatchWeb'
-import { getTrack, getPlaying, getSeek } from 'app/store/live/selectors'
+import { getAgreement, getPlaying, getSeek } from 'app/store/live/selectors'
 
 export const useChromecast = () => {
   const dispatchWeb = useDispatchWeb()
 
   // Data hooks
-  const track = useSelector(getTrack)
+  const agreement = useSelector(getAgreement)
   const playing = useSelector(getPlaying)
   const seek = useSelector(getSeek)
 
@@ -26,21 +26,21 @@ export const useChromecast = () => {
   const streamPosition = useStreamPosition(0.5)
 
   const loadCast = useCallback(
-    (track, startTime) => {
-      if (client && track) {
+    (agreement, startTime) => {
+      if (client && agreement) {
         client.loadMedia({
           mediaInfo: {
-            contentUrl: track.uri,
+            contentUrl: agreement.uri,
             contentType: 'application/vnd.apple.mpegurl',
             metadata: {
-              type: 'musicTrack',
+              type: 'musicAgreement',
               images: [
                 {
-                  url: track.largeArtwork
+                  url: agreement.largeArtwork
                 }
               ],
-              title: track.title,
-              artist: track.artist
+              title: agreement.title,
+              artist: agreement.artist
             }
           },
           startTime
@@ -73,9 +73,9 @@ export const useChromecast = () => {
   // Load media when the cast connects
   useEffect(() => {
     if (castState === CastState.CONNECTED) {
-      loadCast(track, global.progress.currentTime ?? 0)
+      loadCast(agreement, global.progress.currentTime ?? 0)
     }
-  }, [loadCast, track, castState])
+  }, [loadCast, agreement, castState])
 
   // Play & pause the cast device
   useEffect(() => {

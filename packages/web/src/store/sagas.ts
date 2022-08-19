@@ -2,7 +2,7 @@ import { all, fork } from 'redux-saga/effects'
 
 import collectionsSagas from 'common/store/cache/collections/sagas'
 import coreCacheSagas from 'common/store/cache/sagas'
-import tracksSagas from 'common/store/cache/tracks/sagas'
+import agreementsSagas from 'common/store/cache/agreements/sagas'
 import usersSagas from 'common/store/cache/users/sagas'
 import { sagas as castSagas } from 'common/store/cast/sagas'
 import errorSagas from 'common/store/errors/sagas'
@@ -49,7 +49,7 @@ import signOnSaga from 'pages/sign-on/store/sagas'
 import smartCollectionPageSagas from 'pages/smart-collection/store/sagas'
 import supportingPageSagas from 'pages/supporting-page/sagas'
 import topSupportersPageSagas from 'pages/top-supporters-page/sagas'
-import trackSagas from 'pages/track-page/store/sagas'
+import agreementSagas from 'pages/agreement-page/store/sagas'
 import trendingPageSagas from 'pages/trending-page/store/sagas'
 import trendingPlaylistSagas from 'pages/trending-playlists/store/sagas'
 import trendingUndergroundSagas from 'pages/trending-underground/store/sagas'
@@ -116,7 +116,7 @@ export default function* rootSaga() {
     settingsSagas(),
     signOnSaga(),
     socialSagas(),
-    trackSagas(),
+    agreementSagas(),
     trendingPageSagas(),
     trendingPlaylistSagas(),
     trendingUndergroundSagas(),
@@ -125,7 +125,7 @@ export default function* rootSaga() {
     // Cache
     coreCacheSagas(),
     collectionsSagas(),
-    tracksSagas(),
+    agreementsSagas(),
     usersSagas(),
 
     // Playback

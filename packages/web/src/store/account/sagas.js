@@ -86,7 +86,7 @@ function* onFetchAccount(account) {
     // Set analytics user context
     const traits = {
       isVerified: account.is_verified,
-      trackCount: account.track_count
+      agreementCount: account.agreement_count
     }
     yield put(identify(account.handle, traits))
     setSentryUser(account, traits)
@@ -208,7 +208,7 @@ function* cacheAccount(account) {
   )
   const hasFavoritedItem =
     collections.some((playlist) => playlist.user.id !== account.user_id) ||
-    account.track_save_count > 0
+    account.agreement_save_count > 0
 
   const formattedAccount = {
     userId: account.user_id,

@@ -10,7 +10,7 @@ export enum UserListType {
 }
 
 export enum UserListEntityType {
-  TRACK = 'TRACK',
+  AGREEMENT = 'AGREEMENT',
   COLLECTION = 'COLLECTION',
   USER = 'USER'
 }

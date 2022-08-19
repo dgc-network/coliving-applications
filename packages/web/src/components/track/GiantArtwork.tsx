@@ -5,25 +5,25 @@ import { CoverArtSizes, SquareSizes, Remix } from '@coliving/common'
 import CoSign from 'components/co-sign/CoSign'
 import { Size } from 'components/co-sign/types'
 import DynamicImage from 'components/dynamic-image/DynamicImage'
-import { useTrackCoverArt } from 'hooks/useTrackCoverArt'
+import { useAgreementCoverArt } from 'hooks/useAgreementCoverArt'
 
 import styles from './GiantArtwork.module.css'
 
 type GiantArtworkProps = {
-  trackId: number
+  agreementId: number
   coverArtSizes: CoverArtSizes
   coSign: Remix
   callback: () => void
 }
 
 const GiantArtwork = ({
-  trackId,
+  agreementId,
   coverArtSizes,
   coSign,
   callback
 }: GiantArtworkProps) => {
-  const image = useTrackCoverArt(
-    trackId,
+  const image = useAgreementCoverArt(
+    agreementId,
     coverArtSizes,
     SquareSizes.SIZE_1000_BY_1000,
     ''

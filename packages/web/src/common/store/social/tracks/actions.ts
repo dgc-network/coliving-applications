@@ -7,74 +7,74 @@ import {
 } from '@coliving/common'
 import { createCustomAction } from 'typesafe-actions'
 
-export const REPOST_TRACK = 'SOCIAL/REPOST_TRACK'
-export const UNDO_REPOST_TRACK = 'SOCIAL/UNDO_REPOST_TRACK'
-export const REPOST_FAILED = 'SOCIAL/TRACK_REPOST_FAILED'
+export const REPOST_AGREEMENT = 'SOCIAL/REPOST_AGREEMENT'
+export const UNDO_REPOST_AGREEMENT = 'SOCIAL/UNDO_REPOST_AGREEMENT'
+export const REPOST_FAILED = 'SOCIAL/AGREEMENT_REPOST_FAILED'
 
-export const SAVE_TRACK = 'SOCIAL/SAVE_TRACK'
-export const SAVE_TRACK_SUCCEEDED = 'SOCIAL/SAVE_TRACK_SUCCEEDED'
-export const SAVE_TRACK_FAILED = 'SOCIAL/SAVE_TRACK_FAILED'
+export const SAVE_AGREEMENT = 'SOCIAL/SAVE_AGREEMENT'
+export const SAVE_AGREEMENT_SUCCEEDED = 'SOCIAL/SAVE_AGREEMENT_SUCCEEDED'
+export const SAVE_AGREEMENT_FAILED = 'SOCIAL/SAVE_AGREEMENT_FAILED'
 
-export const UNSAVE_TRACK = 'SOCIAL/UNSAVE_TRACK'
-export const UNSAVE_TRACK_SUCCEEDED = 'SOCIAL/UNSAVE_TRACK_SUCCEEDED'
-export const UNSAVE_TRACK_FAILED = 'SOCIAL/UNSAVE_TRACK_FAILED'
+export const UNSAVE_AGREEMENT = 'SOCIAL/UNSAVE_AGREEMENT'
+export const UNSAVE_AGREEMENT_SUCCEEDED = 'SOCIAL/UNSAVE_AGREEMENT_SUCCEEDED'
+export const UNSAVE_AGREEMENT_FAILED = 'SOCIAL/UNSAVE_AGREEMENT_FAILED'
 
 export const SET_ARTIST_PICK = 'SOCIAL/SET_ARTIST_PICK'
 export const UNSET_ARTIST_PICK = 'SOCIAL/UNSET_ARTIST_PICK'
 
 export const RECORD_LISTEN = 'SOCIAL/RECORD_LISTEN'
-export const DOWNLOAD_TRACK = 'SOCIAL/DOWNLOAD_TRACK'
+export const DOWNLOAD_AGREEMENT = 'SOCIAL/DOWNLOAD_AGREEMENT'
 
-export const SHARE_TRACK = 'SOCIAL/SHARE_TRACK'
+export const SHARE_AGREEMENT = 'SOCIAL/SHARE_AGREEMENT'
 
-export const repostTrack = createCustomAction(
-  REPOST_TRACK,
-  (trackId: ID, source: RepostSource) => ({ trackId, source })
+export const repostAgreement = createCustomAction(
+  REPOST_AGREEMENT,
+  (agreementId: ID, source: RepostSource) => ({ agreementId, source })
 )
 
-export const undoRepostTrack = createCustomAction(
-  UNDO_REPOST_TRACK,
-  (trackId: ID, source: RepostSource) => ({ trackId, source })
+export const undoRepostAgreement = createCustomAction(
+  UNDO_REPOST_AGREEMENT,
+  (agreementId: ID, source: RepostSource) => ({ agreementId, source })
 )
 
-export const trackRepostFailed = createCustomAction(
+export const agreementRepostFailed = createCustomAction(
   REPOST_FAILED,
-  (trackId: ID, error: any) => ({ trackId, error })
+  (agreementId: ID, error: any) => ({ agreementId, error })
 )
 
-export const saveTrack = createCustomAction(
-  SAVE_TRACK,
-  (trackId: ID, source: FavoriteSource) => ({ trackId, source })
+export const saveAgreement = createCustomAction(
+  SAVE_AGREEMENT,
+  (agreementId: ID, source: FavoriteSource) => ({ agreementId, source })
 )
 
-export const saveTrackSucceeded = createCustomAction(
-  SAVE_TRACK_SUCCEEDED,
-  (trackId: ID) => ({ trackId })
+export const saveAgreementSucceeded = createCustomAction(
+  SAVE_AGREEMENT_SUCCEEDED,
+  (agreementId: ID) => ({ agreementId })
 )
 
-export const saveTrackFailed = createCustomAction(
-  SAVE_TRACK_FAILED,
-  (trackId: ID, error: any) => ({ trackId, error })
+export const saveAgreementFailed = createCustomAction(
+  SAVE_AGREEMENT_FAILED,
+  (agreementId: ID, error: any) => ({ agreementId, error })
 )
 
-export const unsaveTrack = createCustomAction(
-  UNSAVE_TRACK,
-  (trackId: ID, source: FavoriteSource) => ({ trackId, source })
+export const unsaveAgreement = createCustomAction(
+  UNSAVE_AGREEMENT,
+  (agreementId: ID, source: FavoriteSource) => ({ agreementId, source })
 )
 
-export const unsaveTrackSucceeded = createCustomAction(
-  UNSAVE_TRACK_SUCCEEDED,
-  (trackId: ID) => ({ trackId })
+export const unsaveAgreementSucceeded = createCustomAction(
+  UNSAVE_AGREEMENT_SUCCEEDED,
+  (agreementId: ID) => ({ agreementId })
 )
 
-export const unsaveTrackFailed = createCustomAction(
-  UNSAVE_TRACK_FAILED,
-  (trackId: ID, error: any) => ({ trackId, error })
+export const unsaveAgreementFailed = createCustomAction(
+  UNSAVE_AGREEMENT_FAILED,
+  (agreementId: ID, error: any) => ({ agreementId, error })
 )
 
 export const setArtistPick = createCustomAction(
   SET_ARTIST_PICK,
-  (trackId: ID) => ({ trackId })
+  (agreementId: ID) => ({ agreementId })
 )
 
 export const unsetArtistPick = createCustomAction(UNSET_ARTIST_PICK, () => {
@@ -83,20 +83,20 @@ export const unsetArtistPick = createCustomAction(UNSET_ARTIST_PICK, () => {
 
 export const recordListen = createCustomAction(
   RECORD_LISTEN,
-  (trackId: ID) => ({ trackId })
+  (agreementId: ID) => ({ agreementId })
 )
 
-export const downloadTrack = createCustomAction(
-  DOWNLOAD_TRACK,
-  (trackId: ID, cid: CID, contentNodeEndpoints: string, stemName?: string) => ({
-    trackId,
+export const downloadAgreement = createCustomAction(
+  DOWNLOAD_AGREEMENT,
+  (agreementId: ID, cid: CID, contentNodeEndpoints: string, stemName?: string) => ({
+    agreementId,
     cid,
     contentNodeEndpoints,
     stemName
   })
 )
 
-export const shareTrack = createCustomAction(
-  SHARE_TRACK,
-  (trackId: ID, source: ShareSource) => ({ trackId, source })
+export const shareAgreement = createCustomAction(
+  SHARE_AGREEMENT,
+  (agreementId: ID, source: ShareSource) => ({ agreementId, source })
 )

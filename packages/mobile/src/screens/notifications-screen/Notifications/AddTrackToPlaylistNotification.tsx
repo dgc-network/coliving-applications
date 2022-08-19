@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
 
 import { getNotificationEntities } from '-client/src/common/store/notifications/selectors'
-import type { AddTrackToPlaylist } from '-client/src/common/store/notifications/types'
+import type { AddAgreementToPlaylist } from '-client/src/common/store/notifications/types'
 import { isEqual } from 'lodash'
 import { View } from 'react-native'
 
@@ -21,23 +21,23 @@ import { getEntityRoute, getEntityScreen } from '../Notification/utils'
 import { useDrawerNavigation } from '../useDrawerNavigation'
 
 const messages = {
-  title: 'Track Added to Playlist',
-  addedTrack: ' added your track ',
+  title: 'Agreement Added to Playlist',
+  addedAgreement: ' added your agreement ',
   toPlaylist: ' to their playlist '
 }
-type AddTrackToPlaylistNotificationProps = {
-  notification: AddTrackToPlaylist
+type AddAgreementToPlaylistNotificationProps = {
+  notification: AddAgreementToPlaylist
 }
 
-export const AddTrackToPlaylistNotification = (
-  props: AddTrackToPlaylistNotificationProps
+export const AddAgreementToPlaylistNotification = (
+  props: AddAgreementToPlaylistNotificationProps
 ) => {
   const { notification } = props
   const entities = useSelectorWeb(
     (state) => getNotificationEntities(state, notification),
     isEqual
   )
-  const { track, playlist } = entities
+  const { agreement, playlist } = entities
   const playlistOwner = playlist.user
 
   const navigation = useDrawerNavigation()
@@ -61,8 +61,8 @@ export const AddTrackToPlaylistNotification = (
         <View style={{ flex: 1 }}>
           <NotificationText>
             <UserNameLink user={playlistOwner} />
-            {messages.addedTrack}
-            <EntityLink entity={track} />
+            {messages.addedAgreement}
+            <EntityLink entity={agreement} />
             {messages.toPlaylist}
             <EntityLink entity={playlist} />
           </NotificationText>

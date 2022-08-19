@@ -20,33 +20,33 @@ import playerReducer, {
 } from 'store/player/slice'
 import { noopReducer, allSagas } from 'store/testHelper'
 
-const PREFIX = 'tracks'
+const PREFIX = 'agreements'
 const MOCK_TIMESTAMP = 1479427200000
 
-function* getTracks() {
-  const tracks = yield all([
+function* getAgreements() {
+  const agreements = yield all([
     {
-      track_id: 1,
+      agreement_id: 1,
       owner_id: 1,
       keep_in_lineup: 11
     },
     {
-      track_id: 2,
+      agreement_id: 2,
       owner_id: 1,
       keep_in_lineup: 22
     },
     {
-      track_id: 3,
+      agreement_id: 3,
       owner_id: 2,
       keep_in_lineup: 33
     },
     {
-      track_id: 4,
+      agreement_id: 4,
       owner_id: 2,
       keep_in_lineup: 44
     }
   ])
-  return tracks
+  return agreements
 }
 
 class Actions extends LineupActions {
@@ -63,12 +63,12 @@ class Sagas extends LineupSagas {
       actions,
       // Selector to fetch the lineup.
       (state) => state.lineup,
-      // Query to fetch remote tracks (e.g. from BE).
-      getTracks,
+      // Query to fetch remote agreements (e.g. from BE).
+      getAgreements,
       // Selector of what to keep in the lineup.
-      (track) => ({
-        id: track.track_id,
-        keepInLineup: track.keep_in_lineup
+      (agreement) => ({
+        id: agreement.agreement_id,
+        keepInLineup: agreement.keep_in_lineup
       }),
       /* removeDeleted */ false
     )
@@ -81,7 +81,7 @@ beforeAll(() => {
 })
 
 describe('fetch', () => {
-  it('fetches and add tracks to the lineup', async () => {
+  it('fetches and add agreements to the lineup', async () => {
     const { storeState } = await expectSaga(
       allSagas(sagas.getSagas().concat(cacheSagas())),
       actions
@@ -90,7 +90,7 @@ describe('fetch', () => {
         combineReducers({
           lineup: asLineup(PREFIX, noopReducer()),
           queue: queueReducer,
-          tracks: asCache(noopReducer(), Kind.TRACKS),
+          agreements: asCache(noopReducer(), Kind.AGREEMENTS),
           users: asCache(noopReducer(), Kind.USERS),
           collections: asCache(noopReducer(), Kind.COLECTIONS),
           confirmer: noopReducer()
@@ -102,7 +102,7 @@ describe('fetch', () => {
           queue: {
             ...initialQueueState
           },
-          tracks: {
+          agreements: {
             ...initialCacheState
           },
           users: {
@@ -125,50 +125,50 @@ describe('fetch', () => {
     expect(storeState.lineup.entries).toEqual([
       {
         id: 1,
-        uid: 'kind:TRACKS-id:1-count:1',
+        uid: 'kind:AGREEMENTS-id:1-count:1',
         keepInLineup: 11
       },
       {
         id: 2,
-        uid: 'kind:TRACKS-id:2-count:2',
+        uid: 'kind:AGREEMENTS-id:2-count:2',
         keepInLineup: 22
       },
       {
         id: 3,
-        uid: 'kind:TRACKS-id:3-count:3',
+        uid: 'kind:AGREEMENTS-id:3-count:3',
         keepInLineup: 33
       },
       {
         id: 4,
-        uid: 'kind:TRACKS-id:4-count:4',
+        uid: 'kind:AGREEMENTS-id:4-count:4',
         keepInLineup: 44
       }
     ])
-    expect(storeState.tracks).toEqual({
+    expect(storeState.agreements).toEqual({
       ...initialCacheState,
       uids: {
-        'kind:TRACKS-id:1-count:1': 1,
-        'kind:TRACKS-id:2-count:2': 2,
-        'kind:TRACKS-id:3-count:3': 3,
-        'kind:TRACKS-id:4-count:4': 4
+        'kind:AGREEMENTS-id:1-count:1': 1,
+        'kind:AGREEMENTS-id:2-count:2': 2,
+        'kind:AGREEMENTS-id:3-count:3': 3,
+        'kind:AGREEMENTS-id:4-count:4': 4
       },
       subscribers: {
-        1: new Set(['kind:TRACKS-id:1-count:1']),
-        2: new Set(['kind:TRACKS-id:2-count:2']),
-        3: new Set(['kind:TRACKS-id:3-count:3']),
-        4: new Set(['kind:TRACKS-id:4-count:4'])
+        1: new Set(['kind:AGREEMENTS-id:1-count:1']),
+        2: new Set(['kind:AGREEMENTS-id:2-count:2']),
+        3: new Set(['kind:AGREEMENTS-id:3-count:3']),
+        4: new Set(['kind:AGREEMENTS-id:4-count:4'])
       }
     })
   })
 })
 
 describe('play', () => {
-  it('adds all tracks to the queue', async () => {
+  it('adds all agreements to the queue', async () => {
     const { storeState } = await expectSaga(allSagas(sagas.getSagas()), actions)
       .withReducer(
         combineReducers({
           lineup: asLineup(PREFIX, noopReducer()),
-          tracks: noopReducer(),
+          agreements: noopReducer(),
           queue: queueReducer,
           player: playerReducer
         }),
@@ -176,38 +176,38 @@ describe('play', () => {
           lineup: {
             ...initialLineupState,
             entries: [
-              { id: 1, uid: 'kind:TRACKS-id:1-count:1', kind: Kind.TRACKS },
-              { id: 2, uid: 'kind:TRACKS-id:2-count:2', kind: Kind.TRACKS },
-              { id: 3, uid: 'kind:TRACKS-id:3-count:3', kind: Kind.TRACKS },
-              { id: 4, uid: 'kind:TRACKS-id:4-count:4', kind: Kind.TRACKS }
+              { id: 1, uid: 'kind:AGREEMENTS-id:1-count:1', kind: Kind.AGREEMENTS },
+              { id: 2, uid: 'kind:AGREEMENTS-id:2-count:2', kind: Kind.AGREEMENTS },
+              { id: 3, uid: 'kind:AGREEMENTS-id:3-count:3', kind: Kind.AGREEMENTS },
+              { id: 4, uid: 'kind:AGREEMENTS-id:4-count:4', kind: Kind.AGREEMENTS }
             ],
             order: {
-              'kind:TRACKS-id:1-count:1': 0,
-              'kind:TRACKS-id:2-count:2': 1,
-              'kind:TRACKS-id:3-count:3': 2,
-              'kind:TRACKS-id:4-count:4': 3
+              'kind:AGREEMENTS-id:1-count:1': 0,
+              'kind:AGREEMENTS-id:2-count:2': 1,
+              'kind:AGREEMENTS-id:3-count:3': 2,
+              'kind:AGREEMENTS-id:4-count:4': 3
             },
             prefix: PREFIX
           },
-          tracks: {
+          agreements: {
             ...initialCacheState,
             entries: {
-              1: { metadata: { track_id: 1, keep_in_lineup: 11 } },
-              2: { metadata: { track_id: 2, keep_in_lineup: 22 } },
-              3: { metadata: { track_id: 3, keep_in_lineup: 33 } },
-              4: { metadata: { track_id: 4, keep_in_lineup: 44 } }
+              1: { metadata: { agreement_id: 1, keep_in_lineup: 11 } },
+              2: { metadata: { agreement_id: 2, keep_in_lineup: 22 } },
+              3: { metadata: { agreement_id: 3, keep_in_lineup: 33 } },
+              4: { metadata: { agreement_id: 4, keep_in_lineup: 44 } }
             },
             uids: {
-              'kind:TRACKS-id:1-count:1': 1,
-              'kind:TRACKS-id:2-count:2': 2,
-              'kind:TRACKS-id:3-count:3': 3,
-              'kind:TRACKS-id:4-count:4': 4
+              'kind:AGREEMENTS-id:1-count:1': 1,
+              'kind:AGREEMENTS-id:2-count:2': 2,
+              'kind:AGREEMENTS-id:3-count:3': 3,
+              'kind:AGREEMENTS-id:4-count:4': 4
             },
             subscribers: {
-              1: new Set(['kind:TRACKS-id:1-count:1']),
-              2: new Set(['kind:TRACKS-id:2-count:2']),
-              3: new Set(['kind:TRACKS-id:3-count:3']),
-              4: new Set(['kind:TRACKS-id:4-count:4'])
+              1: new Set(['kind:AGREEMENTS-id:1-count:1']),
+              2: new Set(['kind:AGREEMENTS-id:2-count:2']),
+              3: new Set(['kind:AGREEMENTS-id:3-count:3']),
+              4: new Set(['kind:AGREEMENTS-id:4-count:4'])
             }
           },
           queue: {
@@ -218,13 +218,13 @@ describe('play', () => {
           }
         }
       )
-      .dispatch(actions.play('kind:TRACKS-id:2-count:2'))
+      .dispatch(actions.play('kind:AGREEMENTS-id:2-count:2'))
       .silentRun()
     expect(storeState.queue.order).toEqual([
-      { id: 1, uid: 'kind:TRACKS-id:1-count:1', source: PREFIX },
-      { id: 2, uid: 'kind:TRACKS-id:2-count:2', source: PREFIX },
-      { id: 3, uid: 'kind:TRACKS-id:3-count:3', source: PREFIX },
-      { id: 4, uid: 'kind:TRACKS-id:4-count:4', source: PREFIX }
+      { id: 1, uid: 'kind:AGREEMENTS-id:1-count:1', source: PREFIX },
+      { id: 2, uid: 'kind:AGREEMENTS-id:2-count:2', source: PREFIX },
+      { id: 3, uid: 'kind:AGREEMENTS-id:3-count:3', source: PREFIX },
+      { id: 4, uid: 'kind:AGREEMENTS-id:4-count:4', source: PREFIX }
     ])
     expect(storeState.queue.index).toEqual(1)
   })

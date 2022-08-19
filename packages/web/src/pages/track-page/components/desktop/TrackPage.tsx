@@ -1,7 +1,7 @@
-import { ID, CID, LineupState, Track, User } from '@coliving/common'
+import { ID, CID, LineupState, Agreement, User } from '@coliving/common'
 import cn from 'classnames'
 
-import { tracksActions } from 'common/store/pages/track/lineup/actions'
+import { agreementsActions } from 'common/store/pages/agreement/lineup/actions'
 import { QueueItem } from 'common/store/queue/types'
 import CoverPhoto from 'components/cover-photo/CoverPhoto'
 import Lineup from 'components/lineup/Lineup'
@@ -10,16 +10,16 @@ import NavBanner from 'components/nav-banner/NavBanner'
 import Page from 'components/page/Page'
 import SectionButton from 'components/section-button/SectionButton'
 import StatBanner from 'components/stat-banner/StatBanner'
-import GiantTrackTile from 'components/track/GiantTrackTile'
-import { TrackTileSize } from 'components/track/types'
-import { getTrackDefaults, emptyStringGuard } from 'pages/track-page/utils'
+import GiantAgreementTile from 'components/agreement/GiantAgreementTile'
+import { AgreementTileSize } from 'components/agreement/types'
+import { getAgreementDefaults, emptyStringGuard } from 'pages/agreement-page/utils'
 
 import Remixes from './Remixes'
-import styles from './TrackPage.module.css'
+import styles from './AgreementPage.module.css'
 
 const messages = {
   moreBy: 'More By',
-  originalTrack: 'Original Track',
+  originalAgreement: 'Original Agreement',
   viewOtherRemixes: 'View Other Remixes'
 }
 
@@ -27,8 +27,8 @@ export type OwnProps = {
   title: string
   description: string
   canonicalUrl: string
-  // Hero Track Props
-  heroTrack: Track | null
+  // Hero Agreement Props
+  heroAgreement: Agreement | null
   hasValidRemixParent: boolean
   user: User | null
   heroPlaying: boolean
@@ -39,24 +39,24 @@ export type OwnProps = {
   goToSearchResultsPage: (tag: string) => void
   goToAllRemixesPage: () => void
   goToParentRemixesPage: () => void
-  onHeroShare: (trackId: ID) => void
-  onHeroRepost: (isReposted: boolean, trackId: ID) => void
+  onHeroShare: (agreementId: ID) => void
+  onHeroRepost: (isReposted: boolean, agreementId: ID) => void
   onFollow: () => void
   onUnfollow: () => void
   onClickReposts: () => void
   onClickFavorites: () => void
 
-  onSaveTrack: (isSaved: boolean, trackId: ID) => void
-  onDownloadTrack: (
-    trackId: ID,
+  onSaveAgreement: (isSaved: boolean, agreementId: ID) => void
+  onDownloadAgreement: (
+    agreementId: ID,
     cid: CID,
     contentNodeEndpoints: string,
     category?: string,
-    parentTrackId?: ID
+    parentAgreementId?: ID
   ) => void
-  makePublic: (trackId: ID) => void
-  // Tracks Lineup Props
-  tracks: LineupState<{ id: ID }>
+  makePublic: (agreementId: ID) => void
+  // Agreements Lineup Props
+  agreements: LineupState<{ id: ID }>
   currentQueueItem: QueueItem
   isPlaying: boolean
   isBuffering: boolean
@@ -65,13 +65,13 @@ export type OwnProps = {
   onExternalLinkClick: (url: string) => void
 }
 
-const TrackPage = ({
+const AgreementPage = ({
   title,
   description,
   canonicalUrl,
   hasValidRemixParent,
-  // Hero Track Props
-  heroTrack,
+  // Hero Agreement Props
+  heroAgreement,
   user,
   heroPlaying,
   userId,
@@ -83,66 +83,66 @@ const TrackPage = ({
   goToParentRemixesPage,
   onHeroShare,
   onHeroRepost,
-  onSaveTrack,
+  onSaveAgreement,
   onFollow,
   onUnfollow,
-  onDownloadTrack,
+  onDownloadAgreement,
   makePublic,
   onExternalLinkClick,
   onClickReposts,
   onClickFavorites,
 
-  // Tracks Lineup Props
-  tracks,
+  // Agreements Lineup Props
+  agreements,
   currentQueueItem,
   isPlaying,
   isBuffering,
   play,
   pause
 }: OwnProps) => {
-  const { entries } = tracks
-  const isOwner = heroTrack?.owner_id === userId ?? false
+  const { entries } = agreements
+  const isOwner = heroAgreement?.owner_id === userId ?? false
   const following = user?.does_current_user_follow ?? false
-  const isSaved = heroTrack?.has_current_user_saved ?? false
-  const isReposted = heroTrack?.has_current_user_reposted ?? false
-  const loading = !heroTrack
+  const isSaved = heroAgreement?.has_current_user_saved ?? false
+  const isReposted = heroAgreement?.has_current_user_reposted ?? false
+  const loading = !heroAgreement
 
   const onPlay = () => onHeroPlay(heroPlaying)
   const onSave = isOwner
     ? () => {}
-    : () => heroTrack && onSaveTrack(isSaved, heroTrack.track_id)
+    : () => heroAgreement && onSaveAgreement(isSaved, heroAgreement.agreement_id)
   const onClickArtistName = () =>
     goToProfilePage(emptyStringGuard(user?.handle))
-  const onShare = () => (heroTrack ? onHeroShare(heroTrack.track_id) : null)
+  const onShare = () => (heroAgreement ? onHeroShare(heroAgreement.agreement_id) : null)
   const onRepost = () =>
-    heroTrack ? onHeroRepost(isReposted, heroTrack.track_id) : null
+    heroAgreement ? onHeroRepost(isReposted, heroAgreement.agreement_id) : null
   const onClickTag = (tag: string) => goToSearchResultsPage(`#${tag}`)
   const onDownload = (
-    trackId: ID,
+    agreementId: ID,
     cid: CID,
     category?: string,
-    parentTrackId?: ID
+    parentAgreementId?: ID
   ) => {
     if (!user) return
     const { creator_node_endpoint } = user
     if (!creator_node_endpoint) return
-    onDownloadTrack(
-      trackId,
+    onDownloadAgreement(
+      agreementId,
       cid,
       creator_node_endpoint,
       category,
-      parentTrackId
+      parentAgreementId
     )
   }
 
-  const defaults = getTrackDefaults(heroTrack)
+  const defaults = getAgreementDefaults(heroAgreement)
 
-  const renderGiantTrackTile = () => (
-    <GiantTrackTile
+  const renderGiantAgreementTile = () => (
+    <GiantAgreementTile
       loading={loading}
       playing={heroPlaying}
-      trackTitle={defaults.title}
-      trackId={defaults.trackId}
+      agreementTitle={defaults.title}
+      agreementId={defaults.agreementId}
       userId={user?.user_id ?? 0}
       artistName={emptyStringGuard(user?.name)}
       artistHandle={emptyStringGuard(user?.handle)}
@@ -161,13 +161,13 @@ const TrackPage = ({
       isOwner={isOwner}
       currentUserId={userId}
       isArtistPick={
-        heroTrack && user ? user._artist_pick === heroTrack.track_id : false
+        heroAgreement && user ? user._artist_pick === heroAgreement.agreement_id : false
       }
       isSaved={isSaved}
       badge={badge}
       onExternalLinkClick={onExternalLinkClick}
       isUnlisted={defaults.isUnlisted}
-      isRemix={!!defaults.remixParentTrackId}
+      isRemix={!!defaults.remixParentAgreementId}
       isPublishing={defaults.isPublishing}
       fieldVisibility={defaults.fieldVisibility}
       coSign={defaults.coSign}
@@ -189,15 +189,15 @@ const TrackPage = ({
     />
   )
 
-  const renderOriginalTrackTitle = () => (
+  const renderOriginalAgreementTitle = () => (
     <div className={cn(styles.lineupHeader, styles.large)}>
-      {messages.originalTrack}
+      {messages.originalAgreement}
     </div>
   )
 
   const renderMoreByTitle = () =>
-    (defaults.remixParentTrackId && entries.length > 2) ||
-    (!defaults.remixParentTrackId && entries.length > 1) ? (
+    (defaults.remixParentAgreementId && entries.length > 2) ||
+    (!defaults.remixParentAgreementId && entries.length > 1) ? (
       <div
         className={styles.lineupHeader}
       >{`${messages.moreBy} ${user?.name}`}</div>
@@ -220,26 +220,26 @@ const TrackPage = ({
         <StatBanner empty />
         <NavBanner empty />
       </div>
-      <div className={styles.contentWrapper}>{renderGiantTrackTile()}</div>
+      <div className={styles.contentWrapper}>{renderGiantAgreementTile()}</div>
       {defaults.fieldVisibility.remixes &&
-        defaults.remixTrackIds &&
-        defaults.remixTrackIds.length > 0 && (
+        defaults.remixAgreementIds &&
+        defaults.remixAgreementIds.length > 0 && (
           <div className={styles.remixes}>
             <Remixes
-              trackIds={defaults.remixTrackIds}
+              agreementIds={defaults.remixAgreementIds}
               goToAllRemixes={goToAllRemixesPage}
               count={defaults.remixesCount}
             />
           </div>
         )}
       <div className={styles.moreByArtistLineupWrapper}>
-        {hasValidRemixParent ? renderOriginalTrackTitle() : renderMoreByTitle()}
+        {hasValidRemixParent ? renderOriginalAgreementTitle() : renderMoreByTitle()}
         <Lineup
-          lineup={tracks}
-          // Styles for leading element (original track if remix).
-          leadingElementId={defaults.remixParentTrackId}
+          lineup={agreements}
+          // Styles for leading element (original agreement if remix).
+          leadingElementId={defaults.remixParentAgreementId}
           leadingElementDelineator={
-            <div className={styles.originalTrackDelineator}>
+            <div className={styles.originalAgreementDelineator}>
               <SectionButton
                 text={messages.viewOtherRemixes}
                 onClick={goToParentRemixesPage}
@@ -247,13 +247,13 @@ const TrackPage = ({
               {renderMoreByTitle()}
             </div>
           }
-          leadingElementTileProps={{ size: TrackTileSize.LARGE }}
+          leadingElementTileProps={{ size: AgreementTileSize.LARGE }}
           laggingContainerClassName={styles.moreByArtistContainer}
-          leadingElementClassName={styles.originalTrack}
+          leadingElementClassName={styles.originalAgreement}
           showLeadingElementArtistPick={false}
           applyLeadingElementStylesToSkeleton
           // Don't render the first tile in the lineup since it's actually the "giant"
-          // track tile this page is about.
+          // agreement tile this page is about.
           start={1}
           // Show max 5 loading tiles
           count={6}
@@ -262,18 +262,18 @@ const TrackPage = ({
           variant={LineupVariant.CONDENSED}
           playingUid={currentQueueItem.uid}
           playingSource={currentQueueItem.source}
-          playingTrackId={
-            currentQueueItem.track && currentQueueItem.track.track_id
+          playingAgreementId={
+            currentQueueItem.agreement && currentQueueItem.agreement.agreement_id
           }
           playing={isPlaying}
           buffering={isBuffering}
-          playTrack={play}
-          pauseTrack={pause}
-          actions={tracksActions}
+          playAgreement={play}
+          pauseAgreement={pause}
+          actions={agreementsActions}
         />
       </div>
     </Page>
   )
 }
 
-export default TrackPage
+export default AgreementPage

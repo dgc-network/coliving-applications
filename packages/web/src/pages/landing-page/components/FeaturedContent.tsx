@@ -66,7 +66,7 @@ const DesktopPlaylistTile = (props: PlaylistTileProps) => {
   const [mouseDown, setMouseDown] = useState(false)
   return (
     <div
-      className={styles.trackMoveContainer}
+      className={styles.agreementMoveContainer}
       ref={cardRef}
       // @ts-ignore
       onClick={props.onClick}
@@ -79,25 +79,25 @@ const DesktopPlaylistTile = (props: PlaylistTileProps) => {
       onMouseDown={() => setMouseDown(true)}
     >
       <animated.div
-        className={styles.trackContainer}
+        className={styles.agreementContainer}
         // @ts-ignore
         style={{ transform: mouseDown ? '' : transform }}
       >
         <div
-          className={styles.track}
+          className={styles.agreement}
           style={{
             backgroundImage: `url(${props.imageUrl})`,
             boxShadow: `0px 10px 50px -2px rgba(56, 14, 13, 0.4)`
           }}
         >
-          <div className={styles.trackContent}>
-            <div className={styles.trackArtist}>{`By ${props.artist}`}</div>
+          <div className={styles.agreementContent}>
+            <div className={styles.agreementArtist}>{`By ${props.artist}`}</div>
             <IconListenOnColiving className={styles.listenOnColiving} />
           </div>
         </div>
       </animated.div>
-      <div className={styles.trackTitleContainer}>
-        <span className={styles.trackTitle}>{props.title}</span>
+      <div className={styles.agreementTitleContainer}>
+        <span className={styles.agreementTitle}>{props.title}</span>
       </div>
     </div>
   )
@@ -106,11 +106,11 @@ const DesktopPlaylistTile = (props: PlaylistTileProps) => {
 const MobilePlaylistTile = (props: PlaylistTileProps) => (
   <div
     key={props.title}
-    className={styles.trackContainer}
+    className={styles.agreementContainer}
     onClick={props.onClick}
   >
     <div
-      className={styles.trackImage}
+      className={styles.agreementImage}
       style={{
         backgroundImage: `url(${
           props.imageUrl || colivingExclusivesPlaylistImg
@@ -118,7 +118,7 @@ const MobilePlaylistTile = (props: PlaylistTileProps) => (
         boxShadow: `0px 10px 50px -2px rgba(56, 14, 13, 0.4)`
       }}
     ></div>
-    <div className={styles.trackTitle}>{props.title}</div>
+    <div className={styles.agreementTitle}>{props.title}</div>
   </div>
 )
 
@@ -174,7 +174,7 @@ const FeaturedContent = (props: FeaturedContentProps) => {
       <div className={styles.mobileContainer}>
         <h3 className={styles.title}>{messages.title}</h3>
         <h4 className={styles.subTitle}>{messages.subTitle}</h4>
-        <div className={styles.tracksContainer}>
+        <div className={styles.agreementsContainer}>
           {trendingPlaylistsResponse.value == null ||
           trendingPlaylistsResponse.value.length < 4
             ? FALLBACK_PLAYLISTS.map((p) => (
@@ -228,7 +228,7 @@ const FeaturedContent = (props: FeaturedContentProps) => {
             </div>
           </animated.div>
         </div>
-        <div className={styles.tracksContainer}>
+        <div className={styles.agreementsContainer}>
           {trendingPlaylistsResponse.value == null ||
           trendingPlaylistsResponse.value.length < 4
             ? FALLBACK_PLAYLISTS.map((p) => (

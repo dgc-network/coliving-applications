@@ -5,7 +5,7 @@ import {
   fullAlbumPage,
   fullPlaylistPage,
   fullProfilePage,
-  fullTrackPage,
+  fullAgreementPage,
   fullAudioNftPlaylistPage
 } from 'utils/route'
 
@@ -21,14 +21,14 @@ export const getTwitterShareText = (
   let link = ''
   let analyticsEvent: ShareToTwitterEvent
   switch (content.type) {
-    case 'track': {
+    case 'agreement': {
       const {
-        track: { title, permalink, track_id },
+        agreement: { title, permalink, agreement_id },
         artist: { handle }
       } = content
-      twitterText = messages.trackShareText(title, handle)
-      link = fullTrackPage(permalink)
-      analyticsEvent = { kind: 'track', id: track_id, url: link }
+      twitterText = messages.agreementShareText(title, handle)
+      link = fullAgreementPage(permalink)
+      analyticsEvent = { kind: 'agreement', id: agreement_id, url: link }
       break
     }
     case 'profile': {

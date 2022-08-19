@@ -15,7 +15,7 @@ import { ProfileInfo } from './ProfileInfo'
 import { ProfileMetrics } from './ProfileMetrics'
 import { ProfilePicture } from './ProfilePicture'
 import { ProfileSocials } from './ProfileSocials'
-import { UploadTrackButton } from './UploadTrackButton'
+import { UploadAgreementButton } from './UploadAgreementButton'
 import { useSelectProfileRoot } from './selectors'
 
 const useStyles = makeStyles(({ palette, spacing }) => ({
@@ -74,7 +74,7 @@ export const ProfileHeader = (props: ProfileHeaderProps) => {
         {!hasUserFollowed ? null : (
           <ArtistRecommendations onClose={handleCloseArtistRecs} />
         )}
-        {isOwner ? <UploadTrackButton /> : null}
+        {isOwner ? <UploadAgreementButton /> : null}
       </View>
     </>
   )

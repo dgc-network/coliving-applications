@@ -22,7 +22,7 @@ import useKeyboardListeners from 'app/hooks/useKeyboardListeners'
 import type { Message } from 'app/message'
 import { MessageType, handleMessage } from 'app/message'
 import type { AppState } from 'app/store'
-import { getTrack, getIndex } from 'app/store/live/selectors'
+import { getAgreement, getIndex } from 'app/store/live/selectors'
 import {
   getDappLoaded,
   getIsOnFirstPage,
@@ -148,8 +148,8 @@ type Props = OwnProps &
 const WebApp = ({
   onMessage,
   webRef,
-  trackInfo,
-  trackIndex,
+  agreementInfo,
+  agreementIndex,
   isOnFirstPage,
   isSignedIn,
   dappLoaded
@@ -363,8 +363,8 @@ const WebApp = ({
     if (webRef.current) {
       postMessage(webRef.current, {
         type: MessageType.SYNC_QUEUE,
-        info: trackInfo,
-        index: trackIndex,
+        info: agreementInfo,
+        index: agreementIndex,
         isAction: true
       })
       postMessage(webRef.current, {
@@ -377,8 +377,8 @@ const WebApp = ({
     setImmediate(checkAndRestartServer)
   }, [
     webRef,
-    trackInfo,
-    trackIndex,
+    agreementInfo,
+    agreementIndex,
     checkAndRestartServer,
     resetServerInterval
   ])
@@ -512,8 +512,8 @@ const WebApp = ({
 
 const mapStateToProps = (state: AppState) => ({
   dappLoaded: getDappLoaded(state),
-  trackInfo: getTrack(state),
-  trackIndex: getIndex(state),
+  agreementInfo: getAgreement(state),
+  agreementIndex: getIndex(state),
   isOnFirstPage: getIsOnFirstPage(state),
   isSignedIn: getIsSignedIn(state)
 })

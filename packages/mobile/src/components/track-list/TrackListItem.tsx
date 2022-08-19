@@ -13,7 +13,7 @@ import { Text, TouchableOpacity, View } from 'react-native'
 import IconDrag from 'app/assets/images/iconDrag.svg'
 import IconHeart from 'app/assets/images/iconHeart.svg'
 import IconKebabHorizontal from 'app/assets/images/iconKebabHorizontal.svg'
-import IconRemoveTrack from 'app/assets/images/iconRemoveTrack.svg'
+import IconRemoveAgreement from 'app/assets/images/iconRemoveAgreement.svg'
 import { IconButton } from 'app/components/core'
 import UserBadges from 'app/components/user-badges'
 import { useDispatchWeb } from 'app/hooks/useDispatchWeb'
@@ -22,24 +22,24 @@ import { font, makeStyles } from 'app/styles'
 import { useThemeColors } from 'app/utils/theme'
 
 import { TablePlayButton } from './TablePlayButton'
-import { TrackArtwork } from './TrackArtwork'
-import type { TrackMetadata } from './types'
+import { AgreementArtwork } from './AgreementArtwork'
+import type { AgreementMetadata } from './types'
 
-export type TrackItemAction = 'save' | 'overflow' | 'remove'
+export type AgreementItemAction = 'save' | 'overflow' | 'remove'
 
 const useStyles = makeStyles(({ palette, spacing }) => ({
-  trackContainer: {
+  agreementContainer: {
     width: '100%',
     height: 72,
     backgroundColor: palette.white
   },
-  trackContainerActive: {
+  agreementContainerActive: {
     backgroundColor: palette.neutralLight9
   },
-  trackContainerDisabled: {
+  agreementContainerDisabled: {
     backgroundColor: palette.neutralLight9
   },
-  trackInnerContainer: {
+  agreementInnerContainer: {
     height: '100%',
     width: '100%',
     flexDirection: 'row',
@@ -54,10 +54,10 @@ const useStyles = makeStyles(({ palette, spacing }) => ({
     overflow: 'hidden',
     height: '100%'
   },
-  trackTitle: {
+  agreementTitle: {
     flexDirection: 'row'
   },
-  trackTitleText: {
+  agreementTitleText: {
     ...font('demiBold'),
     color: palette.neutral
   },
@@ -84,7 +84,7 @@ const getMessages = ({ isDeleted = false }: { isDeleted?: boolean } = {}) => ({
   deleted: isDeleted ? ' [Deleted By Artist]' : ''
 })
 
-export type TrackListItemProps = {
+export type AgreementListItemProps = {
   drag: () => void
   hideArt?: boolean
   index: number
@@ -95,13 +95,13 @@ export type TrackListItemProps = {
   isRemoveActive?: boolean
   isReorderable?: boolean
   onRemove?: (index: number) => void
-  onSave?: (isSaved: boolean, trackId: ID) => void
-  togglePlay?: (uid: string, trackId: ID) => void
-  track: TrackMetadata
-  trackItemAction?: TrackItemAction
+  onSave?: (isSaved: boolean, agreementId: ID) => void
+  togglePlay?: (uid: string, agreementId: ID) => void
+  agreement: AgreementMetadata
+  agreementItemAction?: AgreementItemAction
 }
 
-export const TrackListItem = ({
+export const AgreementListItem = ({
   drag,
   hideArt,
   index,
@@ -114,9 +114,9 @@ export const TrackListItem = ({
   onRemove,
   onSave,
   togglePlay,
-  track,
-  trackItemAction
-}: TrackListItemProps) => {
+  agreement,
+  agreementItemAction
+}: AgreementListItemProps) => {
   const {
     _cover_art_sizes,
     has_current_user_reposted,
@@ -124,10 +124,10 @@ export const TrackListItem = ({
     is_delete,
     is_unlisted,
     title,
-    track_id,
+    agreement_id,
     uid,
     user: { name, is_deactivated, user_id }
-  } = track
+  } = agreement
   const isDeleted = is_delete || !!is_deactivated || is_unlisted
 
   const messages = getMessages({ isDeleted })
@@ -142,9 +142,9 @@ export const TrackListItem = ({
     [messages]
   )
 
-  const onPressTrack = () => {
+  const onPressAgreement = () => {
     if (uid && !isDeleted && togglePlay) {
-      togglePlay(uid, track_id)
+      togglePlay(uid, agreement_id)
     }
   }
 
@@ -163,14 +163,14 @@ export const TrackListItem = ({
           : OverflowAction.FAVORITE
         : null,
       OverflowAction.ADD_TO_PLAYLIST,
-      OverflowAction.VIEW_TRACK_PAGE,
+      OverflowAction.VIEW_AGREEMENT_PAGE,
       OverflowAction.VIEW_ARTIST_PAGE
     ].filter(Boolean) as OverflowAction[]
 
     dispatchWeb(
       openOverflowMenu({
-        source: OverflowSource.TRACKS,
-        id: track_id,
+        source: OverflowSource.AGREEMENTS,
+        id: agreement_id,
         overflowActions
       })
     )
@@ -180,14 +180,14 @@ export const TrackListItem = ({
     has_current_user_reposted,
     has_current_user_saved,
     dispatchWeb,
-    track_id
+    agreement_id
   ])
 
   const handlePressSave = (e: NativeSyntheticEvent<NativeTouchEvent>) => {
     e.stopPropagation()
     const isNotAvailable = isDeleted && !has_current_user_saved
     if (!isNotAvailable && onSave) {
-      onSave(has_current_user_saved, track_id)
+      onSave(has_current_user_saved, agreement_id)
     }
   }
 
@@ -203,20 +203,20 @@ export const TrackListItem = ({
   return (
     <View
       style={[
-        styles.trackContainer,
-        isActive && styles.trackContainerActive,
-        isDeleted && styles.trackContainerDisabled
+        styles.agreementContainer,
+        isActive && styles.agreementContainerActive,
+        isDeleted && styles.agreementContainerDisabled
       ]}
     >
       <TouchableOpacity
-        style={styles.trackInnerContainer}
-        onPress={onPressTrack}
+        style={styles.agreementInnerContainer}
+        onPress={onPressAgreement}
         onLongPress={drag}
         disabled={isDeleted}
       >
         {!hideArt ? (
-          <TrackArtwork
-            trackId={track_id}
+          <AgreementArtwork
+            agreementId={agreement_id}
             coverArtSizes={_cover_art_sizes}
             isActive={isActive}
             isLoading={isLoading}
@@ -228,20 +228,20 @@ export const TrackListItem = ({
               playing
               paused={!isPlaying}
               hideDefault={false}
-              onPress={onPressTrack}
+              onPress={onPressAgreement}
             />
           </View>
         ) : null}
         {isReorderable && <IconDrag style={styles.dragIcon} />}
         <View style={styles.nameArtistContainer}>
           <View
-            style={styles.trackTitle}
+            style={styles.agreementTitle}
             onLayout={(e) => setTitleWidth(e.nativeEvent.layout.width)}
           >
             <Text
               numberOfLines={1}
               style={[
-                styles.trackTitleText,
+                styles.agreementTitleText,
                 {
                   maxWidth: titleWidth ? titleWidth - deletedTextWidth : '100%'
                 }
@@ -251,17 +251,17 @@ export const TrackListItem = ({
             </Text>
             <Text
               numberOfLines={1}
-              style={[styles.trackTitleText, { flexBasis: deletedTextWidth }]}
+              style={[styles.agreementTitleText, { flexBasis: deletedTextWidth }]}
             >
               {messages.deleted}
             </Text>
           </View>
           <Text numberOfLines={1} style={styles.artistName}>
             {name}
-            <UserBadges user={track.user} badgeSize={12} hideName />
+            <UserBadges user={agreement.user} badgeSize={12} hideName />
           </Text>
         </View>
-        {trackItemAction === 'save' ? (
+        {agreementItemAction === 'save' ? (
           <IconButton
             icon={IconHeart}
             styles={{
@@ -276,7 +276,7 @@ export const TrackListItem = ({
             onPress={handlePressSave}
           />
         ) : null}
-        {trackItemAction === 'overflow' ? (
+        {agreementItemAction === 'overflow' ? (
           <IconButton
             icon={IconKebabHorizontal}
             styles={{
@@ -286,9 +286,9 @@ export const TrackListItem = ({
             onPress={handlePressOverflow}
           />
         ) : null}
-        {trackItemAction === 'remove' ? (
+        {agreementItemAction === 'remove' ? (
           <IconButton
-            icon={IconRemoveTrack}
+            icon={IconRemoveAgreement}
             styles={{
               root: styles.iconContainer,
               icon: styles.removeIcon

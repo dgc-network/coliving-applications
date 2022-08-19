@@ -1,7 +1,7 @@
 import type { Genre } from '-client/src/common/utils/genres'
 
 import { EventNames, PlaybackSource } from 'app/types/analytics'
-import { track, make } from 'app/utils/analytics'
+import { agreement, make } from 'app/utils/analytics'
 
 import type { AudioActions } from './actions'
 import {
@@ -24,7 +24,7 @@ type Info = {
   artist: string
   artwork: string
   largeArtwork: string
-  trackId: number
+  agreementId: number
   currentUserId: number
   ownerId: number
   currentListenCount: number
@@ -108,12 +108,12 @@ const reducer = (
       // Side-Effect (yes, this shouldn't be in a reducer, but
       // maybe not worth including sagas/thunks)
       if (playing) {
-        const newTrack = state.queue[newIndex]
-        if (newTrack) {
-          track(
+        const newAgreement = state.queue[newIndex]
+        if (newAgreement) {
+          agreement(
             make({
               eventName: EventNames.PLAYBACK_PLAY,
-              id: `${newTrack.trackId}`,
+              id: `${newAgreement.agreementId}`,
               source: PlaybackSource.PASSIVE
             })
           )
@@ -132,12 +132,12 @@ const reducer = (
       // Side-Effect (yes, this shouldn't be in a reducer, but
       // maybe not worth including sagas/thunks)
       if (state.playing) {
-        const newTrack = state.queue[newIndex]
-        if (newTrack) {
-          track(
+        const newAgreement = state.queue[newIndex]
+        if (newAgreement) {
+          agreement(
             make({
               eventName: EventNames.PLAYBACK_PLAY,
-              id: `${newTrack.trackId}`,
+              id: `${newAgreement.agreementId}`,
               source: PlaybackSource.PASSIVE
             })
           )
@@ -172,7 +172,7 @@ const reducer = (
     case PERSIST_QUEUE:
       return {
         ...state,
-        queue: action.message.tracks,
+        queue: action.message.agreements,
         index: action.message.index,
         shuffle: action.message.shuffle,
         shuffleIndex: action.message.shuffleIndex,

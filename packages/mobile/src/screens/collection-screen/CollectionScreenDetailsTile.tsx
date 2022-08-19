@@ -3,8 +3,8 @@ import { useCallback, useMemo } from 'react'
 import type { ID, UID } from '@/common'
 import { Status, Name, PlaybackSource } from '@/common'
 import { makeGetTableMetadatas } from '-client/src/common/store/lineup/selectors'
-import { tracksActions } from '-client/src/common/store/pages/collection/lineup/actions'
-import { getCollectionTracksLineup } from '-client/src/common/store/pages/collection/selectors'
+import { agreementsActions } from '-client/src/common/store/pages/collection/lineup/actions'
+import { getCollectionAgreementsLineup } from '-client/src/common/store/pages/collection/selectors'
 import { formatSecondsAsText } from '-client/src/common/utils/timeUtil'
 import { Text, View } from 'react-native'
 import { useSelector } from 'react-redux'
@@ -14,12 +14,12 @@ import type {
   DetailsTileDetail,
   DetailsTileProps
 } from 'app/components/details-tile/types'
-import { TrackList } from 'app/components/track-list'
+import { AgreementList } from 'app/components/agreement-list'
 import { useDispatchWeb } from 'app/hooks/useDispatchWeb'
 import { useSelectorWeb } from 'app/hooks/useSelectorWeb'
-import { getPlaying, getPlayingUid, getTrack } from 'app/store/live/selectors'
+import { getPlaying, getPlayingUid, getAgreement } from 'app/store/live/selectors'
 import { makeStyles } from 'app/styles'
-import { make, track } from 'app/utils/analytics'
+import { make, agreement } from 'app/utils/analytics'
 import { formatCount } from 'app/utils/format'
 
 const messages = {
@@ -32,7 +32,7 @@ const messages = {
 }
 
 const useStyles = makeStyles(({ palette, spacing, typography }) => ({
-  trackListDivider: {
+  agreementListDivider: {
     marginHorizontal: spacing(6),
     borderTopWidth: 1,
     borderTopColor: palette.neutralLight7
@@ -55,10 +55,10 @@ type CollectionScreenDetailsTileProps = {
   'descriptionLinkPressSource' | 'details' | 'headerText' | 'onPressPlay'
 >
 
-const getTracksLineup = makeGetTableMetadatas(getCollectionTracksLineup)
+const getAgreementsLineup = makeGetTableMetadatas(getCollectionAgreementsLineup)
 
 const recordPlay = (id, play = true) => {
-  track(
+  agreement(
     make({
       eventName: play ? Name.PLAYBACK_PLAY : Name.PLAYBACK_PAUSE,
       id: String(id),
@@ -77,66 +77,66 @@ export const CollectionScreenDetailsTile = ({
 }: CollectionScreenDetailsTileProps) => {
   const styles = useStyles()
   const dispatchWeb = useDispatchWeb()
-  const tracksLineup = useSelectorWeb(getTracksLineup)
-  const tracksLoading = tracksLineup.status === Status.LOADING
-  const numTracks = tracksLineup.entries.length
+  const agreementsLineup = useSelectorWeb(getAgreementsLineup)
+  const agreementsLoading = agreementsLineup.status === Status.LOADING
+  const numAgreements = agreementsLineup.entries.length
 
-  const duration = tracksLineup.entries?.reduce(
+  const duration = agreementsLineup.entries?.reduce(
     (duration, entry) => duration + entry.duration,
     0
   )
 
   const details = useMemo(() => {
-    if (!tracksLoading && numTracks === 0) return []
+    if (!agreementsLoading && numAgreements === 0) return []
     return [
       {
-        label: 'Tracks',
-        value: tracksLoading
+        label: 'Agreements',
+        value: agreementsLoading
           ? messages.detailsPlaceholder
-          : formatCount(numTracks)
+          : formatCount(numAgreements)
       },
       {
         label: 'Duration',
-        value: tracksLoading
+        value: agreementsLoading
           ? messages.detailsPlaceholder
           : formatSecondsAsText(duration)
       },
       ...extraDetails
     ].filter(({ isHidden, value }) => !isHidden && !!value)
-  }, [tracksLoading, numTracks, duration, extraDetails])
+  }, [agreementsLoading, numAgreements, duration, extraDetails])
 
   const isPlaying = useSelector(getPlaying)
   const playingUid = useSelector(getPlayingUid)
-  const playingTrack = useSelector(getTrack)
-  const trackId = playingTrack?.trackId
+  const playingAgreement = useSelector(getAgreement)
+  const agreementId = playingAgreement?.agreementId
 
-  const isQueued = tracksLineup.entries.some(
+  const isQueued = agreementsLineup.entries.some(
     (entry) => playingUid === entry.uid
   )
 
   const handlePressPlay = useCallback(() => {
     if (isPlaying && isQueued) {
-      dispatchWeb(tracksActions.pause())
-      recordPlay(trackId, false)
+      dispatchWeb(agreementsActions.pause())
+      recordPlay(agreementId, false)
     } else if (!isPlaying && isQueued) {
-      dispatchWeb(tracksActions.play())
-      recordPlay(trackId)
-    } else if (tracksLineup.entries.length > 0) {
-      dispatchWeb(tracksActions.play(tracksLineup.entries[0].uid))
-      recordPlay(tracksLineup.entries[0].track_id)
+      dispatchWeb(agreementsActions.play())
+      recordPlay(agreementId)
+    } else if (agreementsLineup.entries.length > 0) {
+      dispatchWeb(agreementsActions.play(agreementsLineup.entries[0].uid))
+      recordPlay(agreementsLineup.entries[0].agreement_id)
     }
-  }, [dispatchWeb, isPlaying, trackId, tracksLineup, isQueued])
+  }, [dispatchWeb, isPlaying, agreementId, agreementsLineup, isQueued])
 
-  const handlePressTrackListItemPlay = useCallback(
+  const handlePressAgreementListItemPlay = useCallback(
     (uid: UID, id: ID) => {
       if (isPlaying && playingUid === uid) {
-        dispatchWeb(tracksActions.pause())
+        dispatchWeb(agreementsActions.pause())
         recordPlay(id, false)
       } else if (playingUid !== uid) {
-        dispatchWeb(tracksActions.play(uid))
+        dispatchWeb(agreementsActions.play(uid))
         recordPlay(id)
       } else {
-        dispatchWeb(tracksActions.play())
+        dispatchWeb(agreementsActions.play())
         recordPlay(id)
       }
     },
@@ -159,25 +159,25 @@ export const CollectionScreenDetailsTile = ({
     return messages.playlist
   }, [isAlbum, isPrivate, isPublishing])
 
-  const renderTrackList = () => {
-    if (tracksLoading)
+  const renderAgreementList = () => {
+    if (agreementsLoading)
       return (
         <>
-          <View style={styles.trackListDivider} />
-          <TrackList hideArt showDivider showSkeleton tracks={Array(20)} />
+          <View style={styles.agreementListDivider} />
+          <AgreementList hideArt showDivider showSkeleton agreements={Array(20)} />
         </>
       )
 
-    return tracksLineup.entries.length === 0 ? (
+    return agreementsLineup.entries.length === 0 ? (
       <Text style={styles.empty}>{messages.empty}</Text>
     ) : (
       <>
-        <View style={styles.trackListDivider} />
-        <TrackList
+        <View style={styles.agreementListDivider} />
+        <AgreementList
           hideArt
           showDivider
-          togglePlay={handlePressTrackListItemPlay}
-          tracks={tracksLineup.entries}
+          togglePlay={handlePressAgreementListItemPlay}
+          agreements={agreementsLineup.entries}
         />
       </>
     )
@@ -192,7 +192,7 @@ export const CollectionScreenDetailsTile = ({
       headerText={headerText}
       hideListenCount={true}
       isPlaying={isPlaying && isQueued}
-      renderBottomContent={renderTrackList}
+      renderBottomContent={renderAgreementList}
       onPressPlay={handlePressPlay}
     />
   )

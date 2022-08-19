@@ -47,7 +47,7 @@ const Modals = () => {
 }
 
 const App = () => {
-  // Track the web view as a top-level ref so that any children can use it
+  // Agreement the web view as a top-level ref so that any children can use it
   // to send messages to the dapp
   const webRef = useRef<WebView>(null)
 

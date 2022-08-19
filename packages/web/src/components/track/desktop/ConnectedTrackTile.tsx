@@ -14,20 +14,20 @@ import { Dispatch } from 'redux'
 
 import { ReactComponent as IconKebabHorizontal } from 'assets/img/iconKebabHorizontal.svg'
 import { getUserHandle } from 'common/store/account/selectors'
-import { getTrack } from 'common/store/cache/tracks/selectors'
-import { getUserFromTrack } from 'common/store/cache/users/selectors'
+import { getAgreement } from 'common/store/cache/agreements/selectors'
+import { getUserFromAgreement } from 'common/store/cache/users/selectors'
 import {
-  saveTrack,
-  unsaveTrack,
-  repostTrack,
-  undoRepostTrack
-} from 'common/store/social/tracks/actions'
+  saveAgreement,
+  unsaveAgreement,
+  repostAgreement,
+  undoRepostAgreement
+} from 'common/store/social/agreements/actions'
 import { requestOpen as requestOpenShareModal } from 'common/store/ui/share-modal/slice'
 import { ArtistPopover } from 'components/artist/ArtistPopover'
 import Draggable from 'components/dragndrop/Draggable'
 import Menu from 'components/menu/Menu'
-import { OwnProps as TrackMenuProps } from 'components/menu/TrackMenu'
-import { TrackArtwork } from 'components/track/desktop/Artwork'
+import { OwnProps as AgreementMenuProps } from 'components/menu/AgreementMenu'
+import { AgreementArtwork } from 'components/agreement/desktop/Artwork'
 import UserBadges from 'components/user-badges/UserBadges'
 import {
   setUsers,
@@ -39,14 +39,14 @@ import {
 } from 'store/application/ui/userListModal/types'
 import { getUid, getPlaying, getBuffering } from 'store/player/selectors'
 import { AppState } from 'store/types'
-import { fullTrackPage, profilePage } from 'utils/route'
+import { fullAgreementPage, profilePage } from 'utils/route'
 import { isDarkMode, isMatrix } from 'utils/theme/theme'
 
-import { getTrackWithFallback, getUserWithFallback } from '../helpers'
-import { TrackTileSize } from '../types'
+import { getAgreementWithFallback, getUserWithFallback } from '../helpers'
+import { AgreementTileSize } from '../types'
 
-import styles from './ConnectedTrackTile.module.css'
-import TrackTile from './TrackTile'
+import styles from './ConnectedAgreementTile.module.css'
+import AgreementTile from './AgreementTile'
 import Stats from './stats/Stats'
 import { Flavor } from './stats/StatsText'
 
@@ -55,7 +55,7 @@ type OwnProps = {
   index: number
   order: number
   containerClassName?: string
-  size: TrackTileSize
+  size: AgreementTileSize
   showArtistPick: boolean
   ordered: boolean
   togglePlay: (uid: UID, id: ID) => void
@@ -65,16 +65,16 @@ type OwnProps = {
   showRankIcon: boolean
 }
 
-type ConnectedTrackTileProps = OwnProps &
+type ConnectedAgreementTileProps = OwnProps &
   ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>
 
-const ConnectedTrackTile = memo(
+const ConnectedAgreementTile = memo(
   ({
     uid,
     index,
     size,
-    track,
+    agreement,
     user,
     ordered,
     showArtistPick,
@@ -90,18 +90,18 @@ const ConnectedTrackTile = memo(
     setFavoriteUsers,
     setModalVisibility,
     userHandle,
-    saveTrack,
-    unsaveTrack,
-    repostTrack,
-    undoRepostTrack,
-    shareTrack,
+    saveAgreement,
+    unsaveAgreement,
+    repostAgreement,
+    undoRepostAgreement,
+    shareAgreement,
     isTrending,
     showRankIcon
-  }: ConnectedTrackTileProps) => {
+  }: ConnectedAgreementTileProps) => {
     const {
       is_delete,
       is_unlisted: isUnlisted,
-      track_id: trackId,
+      agreement_id: agreementId,
       title,
       permalink,
       repost_count,
@@ -115,7 +115,7 @@ const ConnectedTrackTile = memo(
       _cover_art_sizes,
       play_count,
       duration
-    } = getTrackWithFallback(track)
+    } = getAgreementWithFallback(agreement)
 
     const {
       _artist_pick,
@@ -125,18 +125,18 @@ const ConnectedTrackTile = memo(
     } = getUserWithFallback(user)
 
     const isActive = uid === playingUid
-    const isTrackBuffering = isActive && isBuffering
-    const isTrackPlaying = isActive && isPlaying
+    const isAgreementBuffering = isActive && isBuffering
+    const isAgreementPlaying = isActive && isPlaying
     const isOwner = handle === userHandle
-    const isArtistPick = showArtistPick && _artist_pick === trackId
+    const isArtistPick = showArtistPick && _artist_pick === agreementId
 
     const onClickStatRepost = () => {
-      setRepostUsers(trackId)
+      setRepostUsers(agreementId)
       setModalVisibility()
     }
 
     const onClickStatFavorite = () => {
-      setFavoriteUsers(trackId)
+      setFavoriteUsers(agreementId)
       setModalVisibility()
     }
 
@@ -149,22 +149,22 @@ const ConnectedTrackTile = memo(
 
     const renderImage = () => {
       const artworkProps = {
-        id: trackId,
+        id: agreementId,
         coverArtSizes: _cover_art_sizes,
         coSign: coSign || undefined,
         size: 'large',
-        isBuffering: isTrackBuffering,
-        isPlaying: isTrackPlaying,
+        isBuffering: isAgreementBuffering,
+        isPlaying: isAgreementPlaying,
         artworkIconClassName: styles.artworkIcon,
         showArtworkIcon: !isLoading,
         showSkeleton: isLoading,
         callback: () => setArtworkLoaded(true)
       }
-      return <TrackArtwork {...artworkProps} />
+      return <AgreementArtwork {...artworkProps} />
     }
 
     const renderOverflowMenu = () => {
-      const menu: Omit<TrackMenuProps, 'children'> = {
+      const menu: Omit<AgreementMenuProps, 'children'> = {
         extraMenuItems: [],
         handle,
         includeAddToPlaylist: true,
@@ -174,16 +174,16 @@ const ConnectedTrackTile = memo(
         includeFavorite: false,
         includeRepost: false,
         includeShare: false,
-        includeTrackPage: true,
+        includeAgreementPage: true,
         isArtistPick,
         isDeleted: is_delete || isOwnerDeactivated,
         isFavorited,
         isOwner,
         isReposted,
-        trackId,
-        trackTitle: title,
-        trackPermalink: permalink,
-        type: 'track'
+        agreementId,
+        agreementTitle: title,
+        agreementPermalink: permalink,
+        type: 'agreement'
       }
 
       return (
@@ -192,8 +192,8 @@ const ConnectedTrackTile = memo(
             <div className={styles.menuContainer}>
               <div
                 className={cn(styles.menuKebabContainer, {
-                  [styles.small]: size === TrackTileSize.SMALL,
-                  [styles.large]: size === TrackTileSize.LARGE
+                  [styles.small]: size === AgreementTileSize.SMALL,
+                  [styles.large]: size === AgreementTileSize.LARGE
                 })}
                 onClick={triggerPopup}
               >
@@ -247,12 +247,12 @@ const ConnectedTrackTile = memo(
     }
 
     const renderStats = () => {
-      const contentTitle = 'track' // undefined,  playlist or album -  undefined is track
+      const contentTitle = 'agreement' // undefined,  playlist or album -  undefined is agreement
       const statSize = 'large'
       return (
         <div className={cn(styles.socialInfo)}>
           <Stats
-            hideImage={size === TrackTileSize.SMALL}
+            hideImage={size === AgreementTileSize.SMALL}
             count={repost_count}
             followeeActions={followee_reposts}
             contentTitle={contentTitle}
@@ -274,27 +274,27 @@ const ConnectedTrackTile = memo(
 
     const onClickFavorite = useCallback(() => {
       if (isFavorited) {
-        unsaveTrack(trackId)
+        unsaveAgreement(agreementId)
       } else {
-        saveTrack(trackId)
+        saveAgreement(agreementId)
       }
-    }, [saveTrack, unsaveTrack, trackId, isFavorited])
+    }, [saveAgreement, unsaveAgreement, agreementId, isFavorited])
 
     const onClickRepost = useCallback(() => {
       if (isReposted) {
-        undoRepostTrack(trackId)
+        undoRepostAgreement(agreementId)
       } else {
-        repostTrack(trackId)
+        repostAgreement(agreementId)
       }
-    }, [repostTrack, undoRepostTrack, trackId, isReposted])
+    }, [repostAgreement, undoRepostAgreement, agreementId, isReposted])
 
     const onClickShare = useCallback(() => {
-      shareTrack(trackId)
-    }, [shareTrack, trackId])
+      shareAgreement(agreementId)
+    }, [shareAgreement, agreementId])
 
     const onTogglePlay = useCallback(() => {
-      togglePlay(uid, trackId)
-    }, [togglePlay, uid, trackId])
+      togglePlay(uid, agreementId)
+    }, [togglePlay, uid, agreementId])
 
     if (is_delete || user?.is_deactivated) return null
 
@@ -310,13 +310,13 @@ const ConnectedTrackTile = memo(
     return (
       <Draggable
         text={title}
-        kind='track'
-        id={trackId}
+        kind='agreement'
+        id={agreementId}
         isOwner={isOwner}
         isDisabled={disableActions || showSkeleton}
-        link={fullTrackPage(permalink)}
+        link={fullAgreementPage(permalink)}
       >
-        <TrackTile
+        <AgreementTile
           size={size}
           order={order}
           standalone
@@ -357,8 +357,8 @@ const ConnectedTrackTile = memo(
 
 function mapStateToProps(state: AppState, ownProps: OwnProps) {
   return {
-    track: getTrack(state, { uid: ownProps.uid }),
-    user: getUserFromTrack(state, { uid: ownProps.uid }),
+    agreement: getAgreement(state, { uid: ownProps.uid }),
+    user: getUserFromAgreement(state, { uid: ownProps.uid }),
     playingUid: getUid(state),
     isBuffering: getBuffering(state),
     isPlaying: getPlaying(state),
@@ -369,41 +369,41 @@ function mapStateToProps(state: AppState, ownProps: OwnProps) {
 function mapDispatchToProps(dispatch: Dispatch) {
   return {
     goToRoute: (route: string) => dispatch(pushRoute(route)),
-    shareTrack: (trackId: ID) =>
+    shareAgreement: (agreementId: ID) =>
       dispatch(
         requestOpenShareModal({
-          type: 'track',
-          trackId,
+          type: 'agreement',
+          agreementId,
           source: ShareSource.TILE
         })
       ),
-    repostTrack: (trackId: ID) =>
-      dispatch(repostTrack(trackId, RepostSource.TILE)),
-    undoRepostTrack: (trackId: ID) =>
-      dispatch(undoRepostTrack(trackId, RepostSource.TILE)),
-    saveTrack: (trackId: ID) =>
-      dispatch(saveTrack(trackId, FavoriteSource.TILE)),
-    unsaveTrack: (trackId: ID) =>
-      dispatch(unsaveTrack(trackId, FavoriteSource.TILE)),
+    repostAgreement: (agreementId: ID) =>
+      dispatch(repostAgreement(agreementId, RepostSource.TILE)),
+    undoRepostAgreement: (agreementId: ID) =>
+      dispatch(undoRepostAgreement(agreementId, RepostSource.TILE)),
+    saveAgreement: (agreementId: ID) =>
+      dispatch(saveAgreement(agreementId, FavoriteSource.TILE)),
+    unsaveAgreement: (agreementId: ID) =>
+      dispatch(unsaveAgreement(agreementId, FavoriteSource.TILE)),
 
-    setRepostUsers: (trackID: ID) =>
+    setRepostUsers: (agreementID: ID) =>
       dispatch(
         setUsers({
           userListType: UserListType.REPOST,
-          entityType: UserListEntityType.TRACK,
-          id: trackID
+          entityType: UserListEntityType.AGREEMENT,
+          id: agreementID
         })
       ),
-    setFavoriteUsers: (trackID: ID) =>
+    setFavoriteUsers: (agreementID: ID) =>
       dispatch(
         setUsers({
           userListType: UserListType.FAVORITE,
-          entityType: UserListEntityType.TRACK,
-          id: trackID
+          entityType: UserListEntityType.AGREEMENT,
+          id: agreementID
         })
       ),
     setModalVisibility: () => dispatch(setVisibility(true))
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ConnectedTrackTile)
+export default connect(mapStateToProps, mapDispatchToProps)(ConnectedAgreementTile)

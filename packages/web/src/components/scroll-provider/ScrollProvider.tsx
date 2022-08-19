@@ -4,7 +4,7 @@ import { matchPath } from 'react-router-dom'
 
 import useInstanceVar from 'common/hooks/useInstanceVar'
 import { useIsMobile } from 'utils/clientUtil'
-import { TRACK_PAGE, NOTIFICATION_PAGE } from 'utils/route'
+import { AGREEMENT_PAGE, NOTIFICATION_PAGE } from 'utils/route'
 
 type ScrollRecords = { [route: string]: number }
 
@@ -23,10 +23,10 @@ export const ScrollContext = createContext<ScrollContextProps>({
 })
 
 // Routes where we know we never want to preserve scroll
-const SCROLL_PRESERVATION_BLACKLIST = [TRACK_PAGE, NOTIFICATION_PAGE]
+const SCROLL_PRESERVATION_BLACKLIST = [AGREEMENT_PAGE, NOTIFICATION_PAGE]
 
 /**
- * `ScrollProvider` is a context provider that tracks
+ * `ScrollProvider` is a context provider that agreements
  * the last maintained scroll position for given route.
  */
 export const ScrollProvider = memo((props: { children: JSX.Element }) => {

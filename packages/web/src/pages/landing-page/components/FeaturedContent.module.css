@@ -50,7 +50,7 @@
   text-align: center;
 }
 
-.tracksContainer {
+.agreementsContainer {
   flex: 1;
   display: inline-flex;
   justify-content: space-between;
@@ -59,18 +59,18 @@
 }
 
 @media (max-width: 1380px) {
-  .tracksContainer {
+  .agreementsContainer {
     max-width: 700px;
     margin: 0 auto;
   }
 }
 
-.trackMoveContainer {
+.agreementMoveContainer {
   user-select: none;
   flex: 1 0;
 }
 
-.trackContainer {
+.agreementContainer {
   margin-top: 24px;
   user-select: none;
   cursor: pointer;
@@ -81,7 +81,7 @@
   align-items: center;
 }
 
-.track {
+.agreement {
   overflow: hidden;
   height: 292px;
   width: 292px;
@@ -91,15 +91,15 @@
   background-size: cover;
 }
 
-.track:hover {
+.agreement:hover {
   transform: scale3d(1.1, 1.1, 1.1);
 }
 
-.track:active {
+.agreement:active {
   transform: scale3d(0.99, 0.99, 0.99);
 }
 
-.trackContent {
+.agreementContent {
   width: 100%;
   height: 100%;
   display: inline-flex;
@@ -111,8 +111,8 @@
   background: rgba(0, 0, 0, 0);
 }
 
-.trackContent:hover,
-.trackContent:active {
+.agreementContent:hover,
+.agreementContent:active {
   background: linear-gradient(
     180deg,
     rgba(0, 0, 0, 0) 0%,
@@ -120,12 +120,12 @@
   );
 }
 
-.trackTitleContainer {
+.agreementTitleContainer {
   margin-top: 24px;
   text-align: center;
 }
 
-.trackTitle {
+.agreementTitle {
   color: #858199;
   font-size: 21px;
   line-height: 26px;
@@ -133,7 +133,7 @@
   text-align: center;
 }
 
-.track .trackArtist {
+.agreement .agreementArtist {
   opacity: 0;
   color: rgba(255, 255, 255, 1);
   font-size: 18px;
@@ -144,21 +144,21 @@
   transition: all 0.07s ease-in-out;
 }
 
-.track .listenOnColiving {
+.agreement .listenOnColiving {
   opacity: 0;
   width: 154px;
   transition: all 0.07s ease-in-out;
 }
 
-.track:hover .trackTitle {
+.agreement:hover .agreementTitle {
   opacity: 1;
 }
 
-.track:hover .trackArtist {
+.agreement:hover .agreementArtist {
   opacity: 1;
 }
 
-.track:hover .listenOnColiving {
+.agreement:hover .listenOnColiving {
   opacity: 1;
 }
 
@@ -197,7 +197,7 @@
   text-align: center;
 }
 
-.mobileContainer .tracksContainer {
+.mobileContainer .agreementsContainer {
   width: 100%;
   position: relative;
   display: inline-flex;
@@ -207,7 +207,7 @@
   margin-top: 24px;
 }
 
-.mobileContainer .trackContainer {
+.mobileContainer .agreementContainer {
   max-width: 165px;
   height: auto;
   display: inline-flex;
@@ -219,7 +219,7 @@
   margin-top: 0;
 }
 
-.mobileContainer .trackImage {
+.mobileContainer .agreementImage {
   height: 164px;
   width: 164px;
   border-radius: 8px;
@@ -228,7 +228,7 @@
   background-position: center;
 }
 
-.mobileContainer .trackTitle {
+.mobileContainer .agreementTitle {
   position: relative;
   font-size: 14px;
   font-weight: 500;
@@ -251,7 +251,7 @@
   fill: #858199;
 }
 
-.mobileContainer .trackArtist {
+.mobileContainer .agreementArtist {
   color: #858199;
   font-size: 14px;
   font-weight: 500;

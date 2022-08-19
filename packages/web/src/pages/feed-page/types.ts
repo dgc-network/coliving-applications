@@ -15,14 +15,14 @@ export interface FeedPageContentProps {
   goToTrending: () => void
   setFeedInView: (inView: boolean) => void
   loadMoreFeed: (offset: number, limit: number, overwrite: boolean) => void
-  playFeedTrack: (uid: UID) => void
-  pauseFeedTrack: () => void
+  playFeedAgreement: (uid: UID) => void
+  pauseFeedAgreement: () => void
   switchView: () => void
   getLineupProps: (lineup: Lineup<any>) => {
     lineup: Lineup<any>
     playingUid: UID
     playingSource: string
-    playingTrackId: ID | null
+    playingAgreementId: ID | null
     playing: boolean
     buffering: boolean
     scrollParent: HTMLElement | null

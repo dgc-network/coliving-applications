@@ -31,7 +31,7 @@ import {
 import type { FollowArtistsCategory } from 'app/store/signon/types'
 import { artistCategories } from 'app/store/signon/types'
 import { EventNames } from 'app/types/analytics'
-import { track, make } from 'app/utils/analytics'
+import { agreement, make } from 'app/utils/analytics'
 
 import UserImage from '../../components/image/UserImage'
 import UserBadges from '../../components/user-badges/UserBadges'
@@ -262,7 +262,7 @@ const styles = StyleSheet.create({
 const messages = {
   title: 'Follow At Least 3 Artists To Get Started',
   subTitle:
-    'Tracks uploaded or reposted by people you follow will appear in your feed.',
+    'Agreements uploaded or reposted by people you follow will appear in your feed.',
   pickForMe: 'Pick Some For Me',
   following: 'Following',
   continue: 'Continue'
@@ -498,7 +498,7 @@ const FirstFollows = ({ navigation, route }: FirstFollowsProps) => {
       isAction: true
     })
 
-    track(
+    agreement(
       make({
         eventName: EventNames.CREATE_ACCOUNT_COMPLETE_FOLLOW,
         emailAddress: email,

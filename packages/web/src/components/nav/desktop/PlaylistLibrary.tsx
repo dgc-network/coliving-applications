@@ -20,7 +20,7 @@ import {
   getAccountUser,
   getPlaylistLibrary
 } from 'common/store/account/selectors'
-import { addTrackToPlaylist } from 'common/store/cache/collections/actions'
+import { addAgreementToPlaylist } from 'common/store/cache/collections/actions'
 import { getPlaylistUpdates } from 'common/store/notifications/selectors'
 import {
   addPlaylistToFolder,
@@ -286,7 +286,7 @@ const PlaylistLibrary = ({
     if (!account || !playlist) return null
     const { id, name } = playlist
     const url = playlistPage(playlist.user.handle, name, id)
-    const addTrack = (trackId: ID) => dispatch(addTrackToPlaylist(trackId, id))
+    const addAgreement = (agreementId: ID) => dispatch(addAgreementToPlaylist(agreementId, id))
     const isOwner = playlist.user.handle === account.handle
     const hasUpdate = updatesSet.has(id)
     return (
@@ -296,7 +296,7 @@ const PlaylistLibrary = ({
         playlist={playlist}
         hasUpdate={hasUpdate}
         url={url}
-        addTrack={addTrack}
+        addAgreement={addAgreement}
         isOwner={isOwner}
         onReorder={onReorder}
         dragging={dragging}

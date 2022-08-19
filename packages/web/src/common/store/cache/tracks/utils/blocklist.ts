@@ -1,4 +1,4 @@
-import { TrackMetadata } from '@coliving/common'
+import { AgreementMetadata } from '@coliving/common'
 
 import { waitForWeb3 } from 'services/ColivingBackend'
 
@@ -29,7 +29,7 @@ const waitForBItems = async () => {
   }
 }
 
-const setBlocked = async <T extends TrackMetadata>(track: T) => {
+const setBlocked = async <T extends AgreementMetadata>(agreement: T) => {
   // Initialize the set if not present
   if (!blockList) {
     await waitForBItems()
@@ -37,21 +37,21 @@ const setBlocked = async <T extends TrackMetadata>(track: T) => {
   }
   if (IS_WEB_HOSTNAME) {
     await waitForWeb3()
-    const shaId = window.Web3.utils.sha3(track.track_id.toString())
+    const shaId = window.Web3.utils.sha3(agreement.agreement_id.toString())
     if (blockList.has(shaId)) {
       return {
-        ...track,
+        ...agreement,
         is_delete: true,
         _blocked: true
       }
     }
   }
   // Most of the time this method is a no-op
-  return track
+  return agreement
 }
 
-export const setTracksIsBlocked = async <T extends TrackMetadata>(
-  tracks: T[]
+export const setAgreementsIsBlocked = async <T extends AgreementMetadata>(
+  agreements: T[]
 ): Promise<T[]> => {
-  return await Promise.all(tracks.map(setBlocked))
+  return await Promise.all(agreements.map(setBlocked))
 }

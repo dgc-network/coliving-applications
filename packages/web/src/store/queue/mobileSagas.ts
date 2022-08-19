@@ -2,12 +2,12 @@ import { ID, UID, removeNullable } from '@coliving/common'
 import { all, put, select, takeEvery, call } from 'typed-redux-saga/macro'
 
 import { getUserId } from 'common/store/account/selectors'
-import { getTrack } from 'common/store/cache/tracks/selectors'
+import { getAgreement } from 'common/store/cache/agreements/selectors'
 import { getUser } from 'common/store/cache/users/selectors'
 import {
   getOrder,
   getIndex,
-  getId as getQueueTrackId,
+  getId as getQueueAgreementId,
   getShuffle,
   getShuffleIndex,
   getShuffleOrder,
@@ -39,42 +39,42 @@ const getImageUrl = (cid: string, gateway: string | null): string => {
   return `${gateway}${cid}`
 }
 
-function* getTrackInfo(id: ID, uid: UID) {
+function* getAgreementInfo(id: ID, uid: UID) {
   const currentUserId = yield* select(getUserId)
   if (!currentUserId) return null
 
-  const track = yield* select(getTrack, { id })
-  if (!track) return null
+  const agreement = yield* select(getAgreement, { id })
+  if (!agreement) return null
 
-  const owner = yield* select(getUser, { id: track.owner_id })
+  const owner = yield* select(getUser, { id: agreement.owner_id })
   if (!owner) return null
 
   const gateways = owner
     ? getCreatorNodeIPFSGateways(owner.creator_node_endpoint)
     : []
 
-  const imageHash = track.cover_art_sizes
-    ? `${track.cover_art_sizes}/150x150.jpg`
-    : track.cover_art
-  const largeImageHash = track.cover_art_sizes
-    ? `${track.cover_art_sizes}/1000x1000.jpg`
-    : track.cover_art
+  const imageHash = agreement.cover_art_sizes
+    ? `${agreement.cover_art_sizes}/150x150.jpg`
+    : agreement.cover_art
+  const largeImageHash = agreement.cover_art_sizes
+    ? `${agreement.cover_art_sizes}/1000x1000.jpg`
+    : agreement.cover_art
 
   const m3u8Gateways = gateways.concat(PUBLIC_IPFS_GATEWAY)
-  const m3u8 = generateM3U8Variants(track.track_segments, [], m3u8Gateways)
+  const m3u8 = generateM3U8Variants(agreement.agreement_segments, [], m3u8Gateways)
   return {
-    title: track.title,
+    title: agreement.title,
     artist: owner.name,
     artwork: getImageUrl(imageHash!, gateways[0]),
     largeArtwork: getImageUrl(largeImageHash!, gateways[0]),
     uid,
     currentUserId,
-    currentListenCount: track.play_count,
-    isDelete: track.is_delete || owner.is_deactivated,
-    ownerId: track.owner_id,
-    trackId: id,
+    currentListenCount: agreement.play_count,
+    isDelete: agreement.is_delete || owner.is_deactivated,
+    ownerId: agreement.owner_id,
+    agreementId: id,
     id,
-    genre: track.genre,
+    genre: agreement.genre,
     uri: m3u8
   }
 }
@@ -92,14 +92,14 @@ function* persistQueue() {
   const queueAutoplay: ReturnType<typeof getQueueAutoplay> = yield* select(
     getQueueAutoplay
   )
-  const tracks = yield* all(
+  const agreements = yield* all(
     queueOrder.map((queueItem: any) => {
-      return call(getTrackInfo, queueItem.id, queueItem.uid)
+      return call(getAgreementInfo, queueItem.id, queueItem.uid)
     })
   )
 
   const message = new PersistQueueMessage(
-    tracks.filter(removeNullable),
+    agreements.filter(removeNullable),
     queueIndex,
     shuffle,
     shuffleIndex,
@@ -144,13 +144,13 @@ function* watchSyncQueue() {
       console.info(`
         Syncing queue:
         index: ${index},
-        id: ${info.trackId},
+        id: ${info.agreementId},
         uid: ${info.uid},
         title: ${info.title}`)
       yield* put(updateIndex({ index }))
-      // Update currently playing track.
+      // Update currently playing agreement.
       if (!info.isDelete) {
-        yield* put(playerActions.set({ uid: info.uid, trackId: info.trackId }))
+        yield* put(playerActions.set({ uid: info.uid, agreementId: info.agreementId }))
       } else {
         yield* put(playerActions.stop({}))
       }
@@ -165,17 +165,17 @@ function* watchSyncQueue() {
 function* watchSyncPlayer() {
   yield* takeEvery(MessageType.SYNC_PLAYER, function* (action: Message) {
     const { isPlaying, incrementCounter } = action
-    const id = yield* select(getQueueTrackId)
+    const id = yield* select(getQueueAgreementId)
     if (!id) return
 
-    const track = yield* select(getTrack, { id: id as number })
-    if (!track) return
+    const agreement = yield* select(getAgreement, { id: id as number })
+    if (!agreement) return
 
-    const owner = yield* select(getUser, { id: track?.owner_id })
+    const owner = yield* select(getUser, { id: agreement?.owner_id })
     if (!owner) return
 
     console.info(`Syncing player: isPlaying ${isPlaying}`)
-    if (track?.is_delete || owner?.is_deactivated) {
+    if (agreement?.is_delete || owner?.is_deactivated) {
       yield* put(playerActions.stop({}))
     } else if (isPlaying) {
       yield* put(playerActions.playSucceeded({}))
@@ -192,12 +192,12 @@ export function* watchRequestQueueAutoplay() {
   yield* takeEvery(
     MessageType.REQUEST_QUEUE_AUTOPLAY,
     function* (action: Message) {
-      const { genre, trackId } = action
+      const { genre, agreementId } = action
       const userId = yield* select(getUserId)
       yield* put(
         queueAutoplay({
           genre,
-          exclusionList: trackId ? [trackId] : [],
+          exclusionList: agreementId ? [agreementId] : [],
           currentUserId: userId
         })
       )

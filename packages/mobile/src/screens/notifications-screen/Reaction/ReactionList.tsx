@@ -41,7 +41,7 @@ type Positions = { [k in ReactionTypes]: { x: number; width: number } }
  * List of reactions that allows a user to select a reaction by pressing,
  * or pressHolding + dragging.
  *
- * Implements gesture handler to track user drag position and presses, providing
+ * Implements gesture handler to agreement user drag position and presses, providing
  * each reaction one of the following statuses: idle/interacting/selected/unselected
  */
 export const ReactionList = (props: ReactionListProps) => {

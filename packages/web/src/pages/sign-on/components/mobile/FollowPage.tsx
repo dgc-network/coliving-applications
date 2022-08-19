@@ -16,7 +16,7 @@ import styles from './FollowPage.module.css'
 const messages = {
   title: 'Follow At Least 3 Artists To Get Started',
   subTitle:
-    'Tracks uploaded or reposted by people you follow will appear in your feed.',
+    'Agreements uploaded or reposted by people you follow will appear in your feed.',
   pickForMe: 'Pick Some For Me',
   following: 'Following'
 }

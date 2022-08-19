@@ -43,7 +43,7 @@ import UploadButton from './UploadButton'
 import UploadStub from './UploadStub'
 
 const messages = {
-  tracks: 'Tracks',
+  agreements: 'Agreements',
   followers: 'Followers',
   following: 'Following',
   playlists: 'Playlists',
@@ -88,7 +88,7 @@ type ProfileHeaderProps = {
   profilePictureSizes: ProfilePictureSizes | null
   hasProfilePicture: boolean
   playlistCount: number
-  trackCount: number
+  agreementCount: number
   followerCount: number
   setFollowersUserId: (id: ID) => void
   followingCount: number
@@ -137,7 +137,7 @@ const ProfileHeader = ({
   coverPhotoSizes,
   profilePictureSizes,
   playlistCount,
-  trackCount,
+  agreementCount,
   followerCount,
   followingCount,
   doesFollowCurrentUser,
@@ -385,10 +385,10 @@ const ProfileHeader = ({
           <div className={styles.artistMetrics}>
             <div className={styles.artistMetric}>
               <div className={styles.artistMetricValue}>
-                {formatCount(isArtist ? trackCount : playlistCount)}
+                {formatCount(isArtist ? agreementCount : playlistCount)}
               </div>
               <div className={styles.artistMetricLabel}>
-                {isArtist ? messages.tracks : messages.playlists}
+                {isArtist ? messages.agreements : messages.playlists}
               </div>
             </div>
             <div

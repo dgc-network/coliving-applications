@@ -518,7 +518,7 @@ function* handleOptimisticChallengesOnUpdate(
 }
 
 /**
- * Updates the listen streak optimistically if current_step_count is zero and a track is played
+ * Updates the listen streak optimistically if current_step_count is zero and a agreement is played
  */
 function* watchUpdateOptimisticListenStreak() {
   yield* takeEvery(updateOptimisticListenStreak.type, function* () {

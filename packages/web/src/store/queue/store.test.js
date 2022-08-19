@@ -11,36 +11,36 @@ import reducer, * as actions from 'common/store/queue/slice'
 import { RepeatMode, Source } from 'common/store/queue/types'
 import playerReducer, * as playerActions from 'store/player/slice'
 import * as sagas from 'store/queue/sagas'
-import { getRecommendedTracks } from 'store/recommendation/sagas'
+import { getRecommendedAgreements } from 'store/recommendation/sagas'
 import { noopReducer } from 'store/testHelper'
 
-const initialTracks = {
+const initialAgreements = {
   entries: {
-    1: { metadata: { track_segments: {} } },
-    2: { metadata: { track_segments: {} } },
-    3: { metadata: { track_segments: {} } },
-    4: { metadata: { track_segments: {} } },
-    5: { metadata: { track_segments: {} } }
+    1: { metadata: { agreement_segments: {} } },
+    2: { metadata: { agreement_segments: {} } },
+    3: { metadata: { agreement_segments: {} } },
+    4: { metadata: { agreement_segments: {} } },
+    5: { metadata: { agreement_segments: {} } }
   },
   uids: {
-    'kind:TRACKS-id:1-count:1': 1,
-    'kind:TRACKS-id:2-count:2': 2,
-    'kind:TRACKS-id:3-count:3': 3,
-    'kind:TRACKS-id:4-count:4': 4,
-    'kind:TRACKS-id:5-count:5': 5
+    'kind:AGREEMENTS-id:1-count:1': 1,
+    'kind:AGREEMENTS-id:2-count:2': 2,
+    'kind:AGREEMENTS-id:3-count:3': 3,
+    'kind:AGREEMENTS-id:4-count:4': 4,
+    'kind:AGREEMENTS-id:5-count:5': 5
   }
 }
 
 const makeInitialQueue = (config) => ({
   order: [
-    { id: 1, uid: 'kind:TRACKS-id:1-count:1' },
-    { id: 2, uid: 'kind:TRACKS-id:2-count:2' },
-    { id: 3, uid: 'kind:TRACKS-id:3-count:3' }
+    { id: 1, uid: 'kind:AGREEMENTS-id:1-count:1' },
+    { id: 2, uid: 'kind:AGREEMENTS-id:2-count:2' },
+    { id: 3, uid: 'kind:AGREEMENTS-id:3-count:3' }
   ],
   positions: {
-    'kind:TRACKS-id:1-count:1': 0,
-    'kind:TRACKS-id:2-count:2': 1,
-    'kind:TRACKS-id:3-count:3': 2
+    'kind:AGREEMENTS-id:1-count:1': 0,
+    'kind:AGREEMENTS-id:2-count:2': 1,
+    'kind:AGREEMENTS-id:3-count:3': 2
   },
   index: -1,
   repeat: RepeatMode.OFF,
@@ -54,7 +54,7 @@ const makeInitialQueue = (config) => ({
 const makeInitialPlayer = (config = {}) => ({
   // Identifier for the live that's playing.
   uid: null,
-  trackId: null,
+  agreementId: null,
   live: new AudioStream(),
   // Keep 'playing' in the store separately from the live
   // object to allow components to subscribe to changes.
@@ -76,20 +76,20 @@ describe('watchPlay', () => {
         combineReducers({
           queue: reducer,
           player: playerReducer,
-          tracks: noopReducer(initialTracks)
+          agreements: noopReducer(initialAgreements)
         }),
         {
           queue: initialQueue,
-          tracks: initialTracks
+          agreements: initialAgreements
         }
       )
-      .dispatch(actions.play({ uid: 'kind:TRACKS-id:1-count:1' }))
+      .dispatch(actions.play({ uid: 'kind:AGREEMENTS-id:1-count:1' }))
       .put(playerActions.stop({}))
       .put(actions.persist({}))
       .put(
         playerActions.play({
-          uid: 'kind:TRACKS-id:1-count:1',
-          trackId: undefined,
+          uid: 'kind:AGREEMENTS-id:1-count:1',
+          agreementId: undefined,
           onEnd: actions.next
         })
       )
@@ -104,11 +104,11 @@ describe('watchPlay', () => {
         combineReducers({
           queue: reducer,
           player: playerReducer,
-          tracks: noopReducer(initialTracks)
+          agreements: noopReducer(initialAgreements)
         }),
         {
           queue: initialQueue,
-          tracks: initialTracks
+          agreements: initialAgreements
         }
       )
       .dispatch(actions.play({}))
@@ -127,11 +127,11 @@ describe('watchPause', () => {
         combineReducers({
           queue: reducer,
           player: playerReducer,
-          tracks: noopReducer(initialTracks)
+          agreements: noopReducer(initialAgreements)
         }),
         {
           queue: initialQueue,
-          tracks: initialTracks
+          agreements: initialAgreements
         }
       )
       .dispatch(actions.pause({}))
@@ -148,21 +148,21 @@ describe('watchNext', () => {
     const nextPlayingEntry = initialQueue.order[initialQueue.index + 1]
     const initialPlayer = makeInitialPlayer({
       uid: playingEntry.uid,
-      trackId: playingEntry.id,
+      agreementId: playingEntry.id,
       playing: true
     })
     const initialAccount = makeInitialAccount({ userId: 1 })
     const { storeState } = await expectSaga(sagas.watchNext, actions)
       .withReducer(
         combineReducers({
-          tracks: noopReducer(initialTracks),
+          agreements: noopReducer(initialAgreements),
           queue: reducer,
           player: playerReducer,
           account: accountSlice.reducer
         }),
         {
           player: initialPlayer,
-          tracks: initialTracks,
+          agreements: initialAgreements,
           queue: initialQueue,
           account: initialAccount
         }
@@ -170,15 +170,15 @@ describe('watchNext', () => {
       .dispatch(actions.next({}))
       .put(
         actions.queueAutoplay({
-          genre: initialTracks.entries[1].genre,
-          exclusionList: [initialTracks.entries[1].track_id],
+          genre: initialAgreements.entries[1].genre,
+          exclusionList: [initialAgreements.entries[1].agreement_id],
           currentUserId: 1
         })
       )
       .put(
         actions.play({
           uid: nextPlayingEntry.uid,
-          trackId: nextPlayingEntry.id,
+          agreementId: nextPlayingEntry.id,
           source: undefined
         })
       )
@@ -200,7 +200,7 @@ describe('watchNext', () => {
       ]
     const initialPlayer = makeInitialPlayer({
       uid: playingEntry.uid,
-      trackId: playingEntry.id,
+      agreementId: playingEntry.id,
       playing: true
     })
     const { storeState, effects } = await expectNextSagaAndGetStoreState(
@@ -223,7 +223,7 @@ describe('watchNext', () => {
     nextPlayingEntry = initialQueue.order[initialQueue.index + 1]
     initialPlayer = makeInitialPlayer({
       uid: playingEntry.uid,
-      trackId: playingEntry.id,
+      agreementId: playingEntry.id,
       playing: true
     })
     const { storeState: repeatAllStoreState, effects: repeatAllEffects } =
@@ -242,7 +242,7 @@ describe('watchNext', () => {
     nextPlayingEntry = initialQueue.order[initialQueue.index]
     initialPlayer = makeInitialPlayer({
       uid: playingEntry.uid,
-      trackId: playingEntry.id,
+      agreementId: playingEntry.id,
       playing: true
     })
     const {
@@ -262,13 +262,13 @@ describe('watchNext', () => {
       .forEach((action) => expect(action.type).not.toEqual('queue/add'))
   })
 
-  it('plays the next track', async () => {
+  it('plays the next agreement', async () => {
     const initialQueue = makeInitialQueue({ index: 0 })
     const playingEntry = initialQueue.order[initialQueue.index]
     const nextPlayingEntry = initialQueue.order[initialQueue.index + 1]
     const initialPlayer = makeInitialPlayer({
       uid: playingEntry.uid,
-      trackId: playingEntry.id,
+      agreementId: playingEntry.id,
       playing: true
     })
     const { storeState } = await expectNextSagaAndGetStoreState(
@@ -279,7 +279,7 @@ describe('watchNext', () => {
     expect(storeState.queue.index).toEqual(1)
   })
 
-  it('plays the next shuffle track', async () => {
+  it('plays the next shuffle agreement', async () => {
     const initialQueue = makeInitialQueue({
       index: 0,
       shuffle: true,
@@ -292,7 +292,7 @@ describe('watchNext', () => {
       ]
     const initialPlayer = makeInitialPlayer({
       uid: playingEntry.uid,
-      trackId: playingEntry.id,
+      agreementId: playingEntry.id,
       playing: true
     })
     const { storeState } = await expectNextSagaAndGetStoreState(
@@ -303,7 +303,7 @@ describe('watchNext', () => {
     expect(storeState.queue.index).toEqual(1)
   })
 
-  it('repeats the same track if not skipped', async () => {
+  it('repeats the same agreement if not skipped', async () => {
     const initialQueue = makeInitialQueue({
       index: 0,
       repeat: RepeatMode.SINGLE
@@ -311,7 +311,7 @@ describe('watchNext', () => {
     const playingEntry = initialQueue.order[initialQueue.index]
     const initialPlayer = makeInitialPlayer({
       uid: playingEntry.uid,
-      trackId: playingEntry.id,
+      agreementId: playingEntry.id,
       playing: true
     })
     const { storeState } = await expectNextSagaAndGetStoreState(
@@ -322,7 +322,7 @@ describe('watchNext', () => {
     expect(storeState.queue.index).toEqual(0)
   })
 
-  it('does not repeat the same track if skipped', async () => {
+  it('does not repeat the same agreement if skipped', async () => {
     const initialQueue = makeInitialQueue({
       index: 0,
       repeat: RepeatMode.SINGLE
@@ -331,7 +331,7 @@ describe('watchNext', () => {
     const nextPlayingEntry = initialQueue.order[initialQueue.index + 1]
     const initialPlayer = makeInitialPlayer({
       uid: playingEntry.uid,
-      trackId: playingEntry.id,
+      agreementId: playingEntry.id,
       playing: true
     })
     const { storeState } = await expectNextSagaAndGetStoreState(
@@ -350,7 +350,7 @@ describe('watchNext', () => {
       initialQueue.order[(initialQueue.index + 1) % initialQueue.order.length]
     const initialPlayer = makeInitialPlayer({
       uid: playingEntry.uid,
-      trackId: playingEntry.id,
+      agreementId: playingEntry.id,
       playing: true
     })
     const { storeState } = await expectNextSagaAndGetStoreState(
@@ -371,14 +371,14 @@ describe('watchNext', () => {
     return await expectSaga(sagas.watchNext, actions)
       .withReducer(
         combineReducers({
-          tracks: noopReducer(initialTracks),
+          agreements: noopReducer(initialAgreements),
           queue: reducer,
           player: playerReducer,
           account: accountSlice.reducer
         }),
         {
           player: initialPlayer,
-          tracks: initialTracks,
+          agreements: initialAgreements,
           queue: initialQueue,
           account: initialAccount
         }
@@ -387,7 +387,7 @@ describe('watchNext', () => {
       .put(
         actions.play({
           uid: nextPlayingEntry.uid,
-          trackId: nextPlayingEntry.id,
+          agreementId: nextPlayingEntry.id,
           source: undefined
         })
       )
@@ -396,48 +396,48 @@ describe('watchNext', () => {
 })
 
 describe('watchQueueAutoplay', () => {
-  it('adds tracks to queue', async () => {
-    const recommendedTracks = [
+  it('adds agreements to queue', async () => {
+    const recommendedAgreements = [
       {
-        track_id: 1
+        agreement_id: 1
       }
     ]
-    const expectedRecommendedTracks = [
+    const expectedRecommendedAgreements = [
       {
         id: 1,
-        uid: 'kind:TRACKS-id:1-count:1',
-        source: Source.RECOMMENDED_TRACKS
+        uid: 'kind:AGREEMENTS-id:1-count:1',
+        source: Source.RECOMMENDED_AGREEMENTS
       }
     ]
     await expectSaga(sagas.watchQueueAutoplay, actions)
-      .provide([[matchers.call.fn(getRecommendedTracks), recommendedTracks]])
+      .provide([[matchers.call.fn(getRecommendedAgreements), recommendedAgreements]])
       .dispatch(actions.queueAutoplay({}))
-      .put(actions.add({ entries: expectedRecommendedTracks }))
+      .put(actions.add({ entries: expectedRecommendedAgreements }))
       .silentRun()
   })
 })
 
 describe('watchPrevious', () => {
-  it('plays the previous track', async () => {
+  it('plays the previous agreement', async () => {
     const initialQueue = makeInitialQueue({ index: 2 })
     const playingEntry = initialQueue.order[initialQueue.index]
     const prevPlayingEntry =
       initialQueue.order[(initialQueue.index - 1) % initialQueue.order.length]
     const initialPlayer = makeInitialPlayer({
       uid: playingEntry.uid,
-      trackId: playingEntry.id,
+      agreementId: playingEntry.id,
       playing: true
     })
     const { storeState } = await expectSaga(sagas.watchPrevious, actions)
       .withReducer(
         combineReducers({
-          tracks: noopReducer(initialTracks),
+          agreements: noopReducer(initialAgreements),
           queue: reducer,
           player: playerReducer
         }),
         {
           player: initialPlayer,
-          tracks: initialTracks,
+          agreements: initialAgreements,
           queue: initialQueue
         }
       )
@@ -445,7 +445,7 @@ describe('watchPrevious', () => {
       .put(
         actions.play({
           uid: prevPlayingEntry.uid,
-          trackId: prevPlayingEntry.id,
+          agreementId: prevPlayingEntry.id,
           source: undefined
         })
       )
@@ -453,7 +453,7 @@ describe('watchPrevious', () => {
     expect(storeState.queue.index).toEqual(1)
   })
 
-  it('plays the previous shuffle track', async () => {
+  it('plays the previous shuffle agreement', async () => {
     const initialQueue = makeInitialQueue({
       index: 1,
       shuffle: true,
@@ -466,19 +466,19 @@ describe('watchPrevious', () => {
       ]
     const initialPlayer = makeInitialPlayer({
       uid: playingEntry.uid,
-      trackId: playingEntry.id,
+      agreementId: playingEntry.id,
       playing: true
     })
     const { storeState } = await expectSaga(sagas.watchPrevious, actions)
       .withReducer(
         combineReducers({
-          tracks: noopReducer(initialTracks),
+          agreements: noopReducer(initialAgreements),
           queue: reducer,
           player: playerReducer
         }),
         {
           player: initialPlayer,
-          tracks: initialTracks,
+          agreements: initialAgreements,
           queue: initialQueue
         }
       )
@@ -486,7 +486,7 @@ describe('watchPrevious', () => {
       .put(
         actions.play({
           uid: previousPlayingEntry.uid,
-          trackId: previousPlayingEntry.id,
+          agreementId: previousPlayingEntry.id,
           source: undefined
         })
       )
@@ -538,30 +538,30 @@ describe('watchShuffle', () => {
 })
 
 describe('watchAdd', () => {
-  it('adds tracks', async () => {
+  it('adds agreements', async () => {
     const initialQueue = makeInitialQueue()
     const { storeState } = await expectSaga(sagas.watchAdd, actions)
       .withReducer(
         combineReducers({
-          tracks: noopReducer(initialTracks),
+          agreements: noopReducer(initialAgreements),
           queue: reducer,
           player: playerReducer
         }),
         {
-          tracks: initialTracks,
+          agreements: initialAgreements,
           queue: initialQueue
         }
       )
       .dispatch(
         actions.add({
           entries: [
-            { id: 4, uid: 'kind:TRACKS-id:4-count:4' },
-            { id: 5, uid: 'kind:TRACKS-id:5-count:5' }
+            { id: 4, uid: 'kind:AGREEMENTS-id:4-count:4' },
+            { id: 5, uid: 'kind:AGREEMENTS-id:5-count:5' }
           ]
         })
       )
       .put(
-        cacheActions.subscribe(Kind.TRACKS, [
+        cacheActions.subscribe(Kind.AGREEMENTS, [
           { uid: 'QUEUE', id: 4 },
           { uid: 'QUEUE', id: 5 }
         ])
@@ -570,48 +570,48 @@ describe('watchAdd', () => {
       .silentRun()
     expect(storeState.queue).toMatchObject({
       order: [
-        { id: 1, uid: 'kind:TRACKS-id:1-count:1' },
-        { id: 2, uid: 'kind:TRACKS-id:2-count:2' },
-        { id: 3, uid: 'kind:TRACKS-id:3-count:3' },
-        { id: 4, uid: 'kind:TRACKS-id:4-count:4' },
-        { id: 5, uid: 'kind:TRACKS-id:5-count:5' }
+        { id: 1, uid: 'kind:AGREEMENTS-id:1-count:1' },
+        { id: 2, uid: 'kind:AGREEMENTS-id:2-count:2' },
+        { id: 3, uid: 'kind:AGREEMENTS-id:3-count:3' },
+        { id: 4, uid: 'kind:AGREEMENTS-id:4-count:4' },
+        { id: 5, uid: 'kind:AGREEMENTS-id:5-count:5' }
       ],
       positions: {
-        'kind:TRACKS-id:1-count:1': 0,
-        'kind:TRACKS-id:2-count:2': 1,
-        'kind:TRACKS-id:3-count:3': 2,
-        'kind:TRACKS-id:4-count:4': 3,
-        'kind:TRACKS-id:5-count:5': 4
+        'kind:AGREEMENTS-id:1-count:1': 0,
+        'kind:AGREEMENTS-id:2-count:2': 1,
+        'kind:AGREEMENTS-id:3-count:3': 2,
+        'kind:AGREEMENTS-id:4-count:4': 3,
+        'kind:AGREEMENTS-id:5-count:5': 4
       }
     })
     expect(storeState.queue.shuffleOrder).toHaveLength(5)
   })
 
-  it('adds tracks at position', async () => {
+  it('adds agreements at position', async () => {
     const initialQueue = makeInitialQueue()
     const { storeState } = await expectSaga(sagas.watchAdd, actions)
       .withReducer(
         combineReducers({
-          tracks: noopReducer(initialTracks),
+          agreements: noopReducer(initialAgreements),
           queue: reducer,
           player: playerReducer
         }),
         {
-          tracks: initialTracks,
+          agreements: initialAgreements,
           queue: initialQueue
         }
       )
       .dispatch(
         actions.add({
           entries: [
-            { id: 4, uid: 'kind:TRACKS-id:4-count:4' },
-            { id: 5, uid: 'kind:TRACKS-id:5-count:5' }
+            { id: 4, uid: 'kind:AGREEMENTS-id:4-count:4' },
+            { id: 5, uid: 'kind:AGREEMENTS-id:5-count:5' }
           ],
           index: 1
         })
       )
       .put(
-        cacheActions.subscribe(Kind.TRACKS, [
+        cacheActions.subscribe(Kind.AGREEMENTS, [
           { uid: 'QUEUE', id: 4 },
           { uid: 'QUEUE', id: 5 }
         ])
@@ -620,18 +620,18 @@ describe('watchAdd', () => {
       .silentRun()
     expect(storeState.queue).toMatchObject({
       order: [
-        { id: 1, uid: 'kind:TRACKS-id:1-count:1' },
-        { id: 4, uid: 'kind:TRACKS-id:4-count:4' },
-        { id: 5, uid: 'kind:TRACKS-id:5-count:5' },
-        { id: 2, uid: 'kind:TRACKS-id:2-count:2' },
-        { id: 3, uid: 'kind:TRACKS-id:3-count:3' }
+        { id: 1, uid: 'kind:AGREEMENTS-id:1-count:1' },
+        { id: 4, uid: 'kind:AGREEMENTS-id:4-count:4' },
+        { id: 5, uid: 'kind:AGREEMENTS-id:5-count:5' },
+        { id: 2, uid: 'kind:AGREEMENTS-id:2-count:2' },
+        { id: 3, uid: 'kind:AGREEMENTS-id:3-count:3' }
       ],
       positions: {
-        'kind:TRACKS-id:1-count:1': 0,
-        'kind:TRACKS-id:2-count:2': 3,
-        'kind:TRACKS-id:3-count:3': 4,
-        'kind:TRACKS-id:4-count:4': 1,
-        'kind:TRACKS-id:5-count:5': 2
+        'kind:AGREEMENTS-id:1-count:1': 0,
+        'kind:AGREEMENTS-id:2-count:2': 3,
+        'kind:AGREEMENTS-id:3-count:3': 4,
+        'kind:AGREEMENTS-id:4-count:4': 1,
+        'kind:AGREEMENTS-id:5-count:5': 2
       }
     })
     expect(storeState.queue.shuffleOrder).toHaveLength(5)
@@ -639,31 +639,31 @@ describe('watchAdd', () => {
 })
 
 describe('watchRemove', () => {
-  it('removes a track', async () => {
+  it('removes a agreement', async () => {
     const initialQueue = makeInitialQueue()
     const { storeState } = await expectSaga(sagas.watchRemove, actions)
       .withReducer(
         combineReducers({
-          tracks: noopReducer(initialTracks),
+          agreements: noopReducer(initialAgreements),
           queue: reducer,
           player: playerReducer
         }),
         {
-          tracks: initialTracks,
+          agreements: initialAgreements,
           queue: initialQueue
         }
       )
-      .dispatch(actions.remove({ uid: 'kind:TRACKS-id:2-count:2' }))
-      .put(cacheActions.unsubscribe(Kind.TRACKS, [{ uid: 'QUEUE', id: 2 }]))
+      .dispatch(actions.remove({ uid: 'kind:AGREEMENTS-id:2-count:2' }))
+      .put(cacheActions.unsubscribe(Kind.AGREEMENTS, [{ uid: 'QUEUE', id: 2 }]))
       .silentRun()
     expect(storeState.queue).toMatchObject({
       order: [
-        { id: 1, uid: 'kind:TRACKS-id:1-count:1' },
-        { id: 3, uid: 'kind:TRACKS-id:3-count:3' }
+        { id: 1, uid: 'kind:AGREEMENTS-id:1-count:1' },
+        { id: 3, uid: 'kind:AGREEMENTS-id:3-count:3' }
       ],
       positions: {
-        'kind:TRACKS-id:1-count:1': 0,
-        'kind:TRACKS-id:3-count:3': 1
+        'kind:AGREEMENTS-id:1-count:1': 0,
+        'kind:AGREEMENTS-id:3-count:3': 1
       }
     })
     expect(storeState.queue.shuffleOrder).toHaveLength(2)
@@ -705,35 +705,35 @@ describe('watchReorder', () => {
     }, actions)
       .withReducer(
         combineReducers({
-          tracks: noopReducer(initialTracks),
+          agreements: noopReducer(initialAgreements),
           queue: reducer,
           player: playerReducer
         }),
         {
-          tracks: initialTracks,
+          agreements: initialAgreements,
           queue: initialQueue
         }
       )
       .dispatch(
         actions.reorder({
           orderedUids: [
-            'kind:TRACKS-id:3-count:3',
-            'kind:TRACKS-id:1-count:1',
-            'kind:TRACKS-id:2-count:2'
+            'kind:AGREEMENTS-id:3-count:3',
+            'kind:AGREEMENTS-id:1-count:1',
+            'kind:AGREEMENTS-id:2-count:2'
           ]
         })
       )
       .silentRun()
     expect(storeState.queue).toMatchObject({
       order: [
-        { id: 3, uid: 'kind:TRACKS-id:3-count:3' },
-        { id: 1, uid: 'kind:TRACKS-id:1-count:1' },
-        { id: 2, uid: 'kind:TRACKS-id:2-count:2' }
+        { id: 3, uid: 'kind:AGREEMENTS-id:3-count:3' },
+        { id: 1, uid: 'kind:AGREEMENTS-id:1-count:1' },
+        { id: 2, uid: 'kind:AGREEMENTS-id:2-count:2' }
       ],
       positions: {
-        'kind:TRACKS-id:1-count:1': 1,
-        'kind:TRACKS-id:2-count:2': 2,
-        'kind:TRACKS-id:3-count:3': 0
+        'kind:AGREEMENTS-id:1-count:1': 1,
+        'kind:AGREEMENTS-id:2-count:2': 2,
+        'kind:AGREEMENTS-id:3-count:3': 0
       }
     })
   })

@@ -2,9 +2,9 @@ import {
   ID,
   Kind,
   Status,
-  Track,
-  TrackMetadata,
-  UserTrackMetadata
+  Agreement,
+  AgreementMetadata,
+  UserAgreementMetadata
 } from '@coliving/common'
 import { call, put, select, spawn } from 'typed-redux-saga/macro'
 
@@ -12,30 +12,30 @@ import { CommonState } from 'common/store'
 import { getUserId } from 'common/store/account/selectors'
 import { retrieve } from 'common/store/cache/sagas'
 import { getEntryTimestamp } from 'common/store/cache/selectors'
-import * as trackActions from 'common/store/cache/tracks/actions'
-import { getTracks as getTracksSelector } from 'common/store/cache/tracks/selectors'
+import * as agreementActions from 'common/store/cache/agreements/actions'
+import { getAgreements as getAgreementsSelector } from 'common/store/cache/agreements/selectors'
 import ColivingBackend from 'services/ColivingBackend'
 import apiClient from 'services/coliving-api-client/ColivingAPIClient'
 
-import { setTracksIsBlocked } from './blocklist'
+import { setAgreementsIsBlocked } from './blocklist'
 import {
   fetchAndProcessRemixes,
   fetchAndProcessRemixParents
 } from './fetchAndProcessRemixes'
 import { fetchAndProcessStems } from './fetchAndProcessStems'
-import { addUsersFromTracks } from './helpers'
+import { addUsersFromAgreements } from './helpers'
 import { reformat } from './reformat'
 
-type UnlistedTrackRequest = { id: ID; url_title: string; handle: string }
-type RetrieveTracksArgs = {
-  trackIds: ID[] | UnlistedTrackRequest[]
+type UnlistedAgreementRequest = { id: ID; url_title: string; handle: string }
+type RetrieveAgreementsArgs = {
+  agreementIds: ID[] | UnlistedAgreementRequest[]
   canBeUnlisted?: boolean
   withStems?: boolean
   withRemixes?: boolean
   withRemixParents?: boolean
   forceRetrieveFromSource?: boolean
 }
-type RetrieveTrackByHandleAndSlugArgs = {
+type RetrieveAgreementByHandleAndSlugArgs = {
   handle: string
   slug: string
   withStems?: boolean
@@ -43,41 +43,41 @@ type RetrieveTrackByHandleAndSlugArgs = {
   withRemixParents?: boolean
 }
 
-export function* retrieveTrackByHandleAndSlug({
+export function* retrieveAgreementByHandleAndSlug({
   handle,
   slug,
   withStems,
   withRemixes,
   withRemixParents
-}: RetrieveTrackByHandleAndSlugArgs) {
+}: RetrieveAgreementByHandleAndSlugArgs) {
   const permalink = `/${handle}/${slug}`
-  const tracks: { entries: { [permalink: string]: Track } } = yield* call(
+  const agreements: { entries: { [permalink: string]: Agreement } } = yield* call(
     // @ts-ignore retrieve should be refactored to ts first
     retrieve,
     {
       ids: [permalink],
       selectFromCache: function* (permalinks: string[]) {
-        const track = yield* select(getTracksSelector, {
+        const agreement = yield* select(getAgreementsSelector, {
           permalinks
         })
-        return track
+        return agreement
       },
       retrieveFromSource: function* (permalinks: string[]) {
         const userId = yield* select(getUserId)
-        const track = yield* call((args) => {
+        const agreement = yield* call((args) => {
           const split = args[0].split('/')
           const handle = split[1]
           const slug = split.slice(2).join('')
-          return apiClient.getTrackByHandleAndSlug({
+          return apiClient.getAgreementByHandleAndSlug({
             handle,
             slug,
             currentUserId: userId
           })
         }, permalinks)
-        return track
+        return agreement
       },
-      kind: Kind.TRACKS,
-      idField: 'track_id',
+      kind: Kind.AGREEMENTS,
+      idField: 'agreement_id',
       forceRetrieveFromSource: false,
       shouldSetLoading: true,
       deleteExistingEntry: false,
@@ -85,97 +85,97 @@ export function* retrieveTrackByHandleAndSlug({
         const selected = yield* select(
           (state: CommonState, ids: ID[]) =>
             ids.reduce((acc, id) => {
-              acc[id] = getEntryTimestamp(state, { kind: Kind.TRACKS, id })
+              acc[id] = getEntryTimestamp(state, { kind: Kind.AGREEMENTS, id })
               return acc
             }, {} as { [id: number]: number | null }),
           ids
         )
         return selected
       },
-      onBeforeAddToCache: function* (tracks: TrackMetadata[]) {
-        yield* addUsersFromTracks(tracks)
+      onBeforeAddToCache: function* (agreements: AgreementMetadata[]) {
+        yield* addUsersFromAgreements(agreements)
         yield* put(
-          trackActions.setPermalinkStatus([
+          agreementActions.setPermalinkStatus([
             {
               permalink,
-              id: tracks[0].track_id,
+              id: agreements[0].agreement_id,
               status: Status.SUCCESS
             }
           ])
         )
-        const checkedTracks = yield* call(setTracksIsBlocked, tracks)
-        return checkedTracks.map(reformat)
+        const checkedAgreements = yield* call(setAgreementsIsBlocked, agreements)
+        return checkedAgreements.map(reformat)
       }
     }
   )
-  const track = tracks.entries[permalink]
-  if (!track || !track.track_id) return null
-  const trackId = track.track_id
+  const agreement = agreements.entries[permalink]
+  if (!agreement || !agreement.agreement_id) return null
+  const agreementId = agreement.agreement_id
   if (withStems) {
     yield* spawn(function* () {
-      yield* call(fetchAndProcessStems, trackId)
+      yield* call(fetchAndProcessStems, agreementId)
     })
   }
 
   if (withRemixes) {
     yield* spawn(function* () {
-      yield* call(fetchAndProcessRemixes, trackId)
+      yield* call(fetchAndProcessRemixes, agreementId)
     })
   }
 
   if (withRemixParents) {
     yield* spawn(function* () {
-      yield* call(fetchAndProcessRemixParents, trackId)
+      yield* call(fetchAndProcessRemixParents, agreementId)
     })
   }
-  return track
+  return agreement
 }
 
 /**
- * Retrieves tracks either from cache or from source.
+ * Retrieves agreements either from cache or from source.
  * Optionally:
- * - retrieves hiddenTracks.
- * - includes stems of a parent track.
- * - includes remixes of a parent track.
- * - includes the remix parents of a track.
+ * - retrieves hiddenAgreements.
+ * - includes stems of a parent agreement.
+ * - includes remixes of a parent agreement.
+ * - includes the remix parents of a agreement.
  *
- * If retrieving unlisted tracks, request tracks as an array of `UnlistedTrackRequests.`
+ * If retrieving unlisted agreements, request agreements as an array of `UnlistedAgreementRequests.`
  */
-export function* retrieveTracks({
-  trackIds,
+export function* retrieveAgreements({
+  agreementIds,
   canBeUnlisted = false,
   withStems = false,
   withRemixes = false,
   withRemixParents = false
-}: RetrieveTracksArgs) {
+}: RetrieveAgreementsArgs) {
   const currentUserId: number | null = yield* select(getUserId)
 
-  // In the case of unlisted tracks, trackIds contains metadata used to fetch tracks
+  // In the case of unlisted agreements, agreementIds contains metadata used to fetch agreements
   const ids = canBeUnlisted
-    ? (trackIds as UnlistedTrackRequest[]).map(({ id }) => id)
-    : (trackIds as ID[])
+    ? (agreementIds as UnlistedAgreementRequest[]).map(({ id }) => id)
+    : (agreementIds as ID[])
 
   if (canBeUnlisted && withStems) {
     yield* spawn(function* () {
       if (ids.length > 1) {
-        console.warn('Stems endpoint only supports fetching single tracks')
+        console.warn('Stems endpoint only supports fetching single agreements')
         return
       }
-      const trackId = ids[0]
-      if (!trackId) return
-      yield* call(fetchAndProcessStems, trackId)
+      const agreementId = ids[0]
+      if (!agreementId) return
+      yield* call(fetchAndProcessStems, agreementId)
     })
   }
 
   if (withRemixes) {
     yield* spawn(function* () {
       if (ids.length > 1) {
-        console.warn('Remixes endpoint only supports fetching single tracks')
+        console.warn('Remixes endpoint only supports fetching single agreements')
         return
       }
-      const trackId = ids[0]
-      if (!trackId) return
-      yield* call(fetchAndProcessRemixes, trackId)
+      const agreementId = ids[0]
+      if (!agreementId) return
+      yield* call(fetchAndProcessRemixes, agreementId)
     })
   }
 
@@ -183,47 +183,47 @@ export function* retrieveTracks({
     yield* spawn(function* () {
       if (ids.length > 1) {
         console.warn(
-          'Remix parents endpoint only supports fetching single tracks'
+          'Remix parents endpoint only supports fetching single agreements'
         )
         return
       }
-      const trackId = ids[0]
-      if (!trackId) return
-      yield* call(fetchAndProcessRemixParents, trackId)
+      const agreementId = ids[0]
+      if (!agreementId) return
+      yield* call(fetchAndProcessRemixParents, agreementId)
     })
   }
 
   // @ts-ignore retrieve should be refactored to ts first
-  const tracks: { entries: { [id: number]: Track } } = yield* call(retrieve, {
+  const agreements: { entries: { [id: number]: Agreement } } = yield* call(retrieve, {
     ids,
     selectFromCache: function* (ids: ID[]) {
-      return yield* select(getTracksSelector, { ids })
+      return yield* select(getAgreementsSelector, { ids })
     },
     getEntriesTimestamp: function* (ids: ID[]) {
       const selected = yield* select(
         (state: CommonState, ids: ID[]) =>
           ids.reduce((acc, id) => {
-            acc[id] = getEntryTimestamp(state, { kind: Kind.TRACKS, id })
+            acc[id] = getEntryTimestamp(state, { kind: Kind.AGREEMENTS, id })
             return acc
           }, {} as { [id: number]: number | null }),
         ids
       )
       return selected
     },
-    retrieveFromSource: function* (ids: ID[] | UnlistedTrackRequest[]) {
-      let fetched: UserTrackMetadata | UserTrackMetadata[] | null | undefined
+    retrieveFromSource: function* (ids: ID[] | UnlistedAgreementRequest[]) {
+      let fetched: UserAgreementMetadata | UserAgreementMetadata[] | null | undefined
       if (canBeUnlisted) {
-        const ids = trackIds as UnlistedTrackRequest[]
+        const ids = agreementIds as UnlistedAgreementRequest[]
         // TODO: remove the ColivingBackend
         // branches here when we support
-        // bulk track fetches in the API.
+        // bulk agreement fetches in the API.
         if (ids.length > 1) {
           fetched = yield* call(
-            ColivingBackend.getTracksIncludingUnlisted,
-            trackIds as UnlistedTrackRequest[]
+            ColivingBackend.getAgreementsIncludingUnlisted,
+            agreementIds as UnlistedAgreementRequest[]
           )
         } else {
-          fetched = yield* call([apiClient, 'getTrack'], {
+          fetched = yield* call([apiClient, 'getAgreement'], {
             id: ids[0].id,
             currentUserId,
             unlistedArgs: {
@@ -233,15 +233,15 @@ export function* retrieveTracks({
           })
         }
       } else {
-        const ids = trackIds as number[]
+        const ids = agreementIds as number[]
         if (ids.length > 1) {
-          fetched = yield* call(ColivingBackend.getAllTracks, {
+          fetched = yield* call(ColivingBackend.getAllAgreements, {
             offset: 0,
             limit: ids.length,
             idsArray: ids as ID[]
           })
         } else {
-          fetched = yield* call([apiClient, 'getTrack'], {
+          fetched = yield* call([apiClient, 'getAgreement'], {
             id: ids[0],
             currentUserId
           })
@@ -249,17 +249,17 @@ export function* retrieveTracks({
       }
       return fetched
     },
-    kind: Kind.TRACKS,
-    idField: 'track_id',
+    kind: Kind.AGREEMENTS,
+    idField: 'agreement_id',
     forceRetrieveFromSource: false,
     shouldSetLoading: true,
     deleteExistingEntry: false,
-    onBeforeAddToCache: function* <T extends TrackMetadata>(tracks: T[]) {
-      yield* addUsersFromTracks(tracks)
-      const checkedTracks = yield* call(setTracksIsBlocked, tracks)
-      return checkedTracks.map(reformat)
+    onBeforeAddToCache: function* <T extends AgreementMetadata>(agreements: T[]) {
+      yield* addUsersFromAgreements(agreements)
+      const checkedAgreements = yield* call(setAgreementsIsBlocked, agreements)
+      return checkedAgreements.map(reformat)
     }
   })
 
-  return ids.map((id) => tracks.entries[id]).filter(Boolean)
+  return ids.map((id) => agreements.entries[id]).filter(Boolean)
 }

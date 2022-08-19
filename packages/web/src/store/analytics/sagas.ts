@@ -9,17 +9,17 @@ import * as analyticsProvider from './providers'
 
 const NATIVE_MOBILE = process.env.REACT_APP_NATIVE_MOBILE
 
-function* trackEventAsync(action: any) {
+function* agreementEventAsync(action: any) {
   const { eventName, callback, ...eventProps } = action
-  yield call(analyticsProvider.track, eventName, eventProps, callback)
+  yield call(analyticsProvider.agreement, eventName, eventProps, callback)
 }
 
 function* identifyEventAsync(action: any) {
   yield call(analyticsProvider.identify, action.handle, action.traits)
 }
 
-function* watchTrackEvent() {
-  yield takeEvery(analyticsActions.TRACK, trackEventAsync)
+function* watchAgreementEvent() {
+  yield takeEvery(analyticsActions.AGREEMENT, agreementEventAsync)
 }
 
 function* watchIdentifyEvent() {
@@ -32,7 +32,7 @@ function* initProviders() {
   }
 }
 
-function* trackLocation() {
+function* agreementLocation() {
   while (true) {
     const {
       payload: {
@@ -46,20 +46,20 @@ function* trackLocation() {
         })
       }
       if ((window as any).adroll) {
-        ;(window as any).adroll.track('pageView')
+        ;(window as any).adroll.agreement('pageView')
       }
 
       if (NATIVE_MOBILE) {
         const message = new ScreenAnalyticsEvent(pathname)
         message.send()
       } else {
-        // Dispatch a track event and then resolve page/screen events with segment
-        analyticsProvider.track(Name.PAGE_VIEW, { route: pathname })
+        // Dispatch a agreement event and then resolve page/screen events with segment
+        analyticsProvider.agreement(Name.PAGE_VIEW, { route: pathname })
       }
     }
   }
 }
 
 export default function sagas() {
-  return [initProviders, watchTrackEvent, watchIdentifyEvent, trackLocation]
+  return [initProviders, watchAgreementEvent, watchIdentifyEvent, agreementLocation]
 }

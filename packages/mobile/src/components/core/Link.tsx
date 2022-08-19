@@ -5,14 +5,14 @@ import { Linking, Pressable } from 'react-native'
 
 import { ToastContext } from 'app/components/toast/ToastContext'
 import { EventNames } from 'app/types/analytics'
-import { make, track } from 'app/utils/analytics'
+import { make, agreement } from 'app/utils/analytics'
 
 const messages = {
   error: 'Unable to open this URL'
 }
 
 export const useOnOpenLink = (
-  source?: 'profile page' | 'track page' | 'collection page'
+  source?: 'profile page' | 'agreement page' | 'collection page'
 ) => {
   const { toast } = useContext(ToastContext)
 
@@ -28,7 +28,7 @@ export const useOnOpenLink = (
         if (supported) {
           await Linking.openURL(url)
           if (source) {
-            track(make({ eventName: EventNames.LINK_CLICKING, url, source }))
+            agreement(make({ eventName: EventNames.LINK_CLICKING, url, source }))
           }
         } else {
           toast(errorToastConfig)
@@ -67,7 +67,7 @@ export const Link = (props: LinkProps) => {
       onPress?.(event)
       onPressLink()
       if (analytics) {
-        track(analytics)
+        agreement(analytics)
       }
     },
     [onPress, onPressLink, analytics]

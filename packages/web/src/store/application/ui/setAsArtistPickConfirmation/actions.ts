@@ -5,9 +5,9 @@ export const SHOW_SET_AS_ARTIST_PICK_CONFIRMATION = 'SET_AS_ARTIST_PICK/SHOW'
 export const HIDE_SET_AS_ARTIST_PICK_CONFIRMATION = 'SET_AS_ARTIST_PICK/HIDE'
 
 // action creators
-export const showSetAsArtistPickConfirmation = (trackId?: ID) => ({
+export const showSetAsArtistPickConfirmation = (agreementId?: ID) => ({
   type: SHOW_SET_AS_ARTIST_PICK_CONFIRMATION,
-  trackId
+  agreementId
 })
 
 export const cancelSetAsArtistPick = () => ({

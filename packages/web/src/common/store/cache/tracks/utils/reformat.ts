@@ -1,54 +1,54 @@
-import { CoverArtSizes, Track, TrackMetadata } from '@coliving/common'
+import { CoverArtSizes, Agreement, AgreementMetadata } from '@coliving/common'
 import { omit } from 'lodash'
 
 import ColivingBackend from 'services/ColivingBackend'
 
 /**
- * Adds _cover_art_sizes to a track object if it does not have one set
+ * Adds _cover_art_sizes to a agreement object if it does not have one set
  */
-const addTrackImages = <T extends TrackMetadata>(
-  track: T
+const addAgreementImages = <T extends AgreementMetadata>(
+  agreement: T
 ): T & { duration: number; _cover_art_sizes: CoverArtSizes } => {
-  return ColivingBackend.getTrackImages(track)
+  return ColivingBackend.getAgreementImages(agreement)
 }
 
 /**
  * Potentially add
- * @param track
+ * @param agreement
  */
-const setIsCoSigned = <T extends TrackMetadata>(track: T) => {
-  const { remix_of } = track
+const setIsCoSigned = <T extends AgreementMetadata>(agreement: T) => {
+  const { remix_of } = agreement
 
-  const remixOfTrack = remix_of?.tracks?.[0]
+  const remixOfAgreement = remix_of?.agreements?.[0]
 
   const isCoSigned =
-    remixOfTrack &&
-    (remixOfTrack.has_remix_author_saved ||
-      remixOfTrack.has_remix_author_reposted)
+    remixOfAgreement &&
+    (remixOfAgreement.has_remix_author_saved ||
+      remixOfAgreement.has_remix_author_reposted)
 
   if (isCoSigned) {
     return {
-      ...track,
-      _co_sign: remix_of!.tracks[0]
+      ...agreement,
+      _co_sign: remix_of!.agreements[0]
     }
   }
-  return track
+  return agreement
 }
 
 /**
- * When a track is not unlisted, even if field visibility is set
- * we should coerce the track into a state where socials are visible.
- * @param track
- * @returns track with repaired field visibility
+ * When a agreement is not unlisted, even if field visibility is set
+ * we should coerce the agreement into a state where socials are visible.
+ * @param agreement
+ * @returns agreement with repaired field visibility
  */
-const setFieldVisibility = <T extends TrackMetadata>(track: T) => {
-  const { is_unlisted } = track
+const setFieldVisibility = <T extends AgreementMetadata>(agreement: T) => {
+  const { is_unlisted } = agreement
   if (!is_unlisted) {
-    // Public track
+    // Public agreement
     return {
-      ...track,
+      ...agreement,
       field_visibility: {
-        ...track.field_visibility,
+        ...agreement.field_visibility,
         genre: true,
         mood: true,
         tags: true,
@@ -57,30 +57,30 @@ const setFieldVisibility = <T extends TrackMetadata>(track: T) => {
       }
     }
   }
-  return track
+  return agreement
 }
 
 /**
  * NOTE: This is a temporary fix for a backend bug: The field followee_saves is not defined.
  * This is a stopgap to prevent the client from erroring and should be removed after fixed.
  * The current erroneous disprov endpoint is `/feed/reposts/<userid>`
- * @param track
+ * @param agreement
  */
-const setDefaultFolloweeSaves = <T extends TrackMetadata>(track: T) => {
+const setDefaultFolloweeSaves = <T extends AgreementMetadata>(agreement: T) => {
   return {
-    ...track,
-    followee_saves: track?.followee_saves ?? []
+    ...agreement,
+    followee_saves: agreement?.followee_saves ?? []
   }
 }
 
 /**
- * Reformats a track to be used internally within the client
- * This method should *always* be called before a track is cached.
+ * Reformats a agreement to be used internally within the client
+ * This method should *always* be called before a agreement is cached.
  */
-export const reformat = <T extends TrackMetadata>(track: T): Track => {
-  const t = track
+export const reformat = <T extends AgreementMetadata>(agreement: T): Agreement => {
+  const t = agreement
   const withoutUser = omit(t, 'user')
-  const withImages = addTrackImages(withoutUser)
+  const withImages = addAgreementImages(withoutUser)
   const withCosign = setIsCoSigned(withImages)
   const withFieldVisibility = setFieldVisibility(withCosign)
 

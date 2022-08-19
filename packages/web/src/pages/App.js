@@ -37,7 +37,7 @@ import { HeaderContextConsumer } from 'components/header/mobile/HeaderContextPro
 import Konami from 'components/konami/Konami'
 import Navigator from 'components/nav/Navigator'
 import { NotificationPage } from 'components/notification'
-import PinnedTrackConfirmation from 'components/pin-track-confirmation/PinTrackConfirmation'
+import PinnedAgreementConfirmation from 'components/pin-agreement-confirmation/PinAgreementConfirmation'
 import PlayBarProvider from 'components/play-bar/PlayBarProvider'
 import ConnectedReachabilityBar from 'components/reachability-bar/ReachabilityBar'
 import { RewardClaimedToast } from 'components/reward-claimed-toast/RewardClaimedToast'
@@ -68,7 +68,7 @@ import {
 } from 'pages/sign-on/store/actions'
 import { getStatus as getSignOnStatus } from 'pages/sign-on/store/selectors'
 import { Pages as SignOnPages } from 'pages/sign-on/store/types'
-import TrackPage from 'pages/track-page/TrackPage'
+import AgreementPage from 'pages/agreement-page/AgreementPage'
 import TrendingPage from 'pages/trending-page/TrendingPage'
 import TrendingPlaylistsPage from 'pages/trending-playlists/TrendingPlaylistPage'
 import TrendingUndergroundPage from 'pages/trending-underground/TrendingUndergroundPage'
@@ -117,8 +117,8 @@ import {
   SEARCH_PAGE,
   PLAYLIST_PAGE,
   ALBUM_PAGE,
-  TRACK_PAGE,
-  TRACK_REMIXES_PAGE,
+  AGREEMENT_PAGE,
+  AGREEMENT_REMIXES_PAGE,
   PROFILE_PAGE,
   SIGN_IN_PAGE,
   SIGN_UP_PAGE,
@@ -135,13 +135,13 @@ import {
   FOLLOWERS_USERS_ROUTE,
   TRENDING_GENRES,
   APP_REDIRECT,
-  TRACK_ID_PAGE,
+  AGREEMENT_ID_PAGE,
   USER_ID_PAGE,
   PLAYLIST_ID_PAGE,
   TRENDING_PLAYLISTS_PAGE,
   PROFILE_PAGE_COLLECTIBLES,
   PROFILE_PAGE_COLLECTIBLE_DETAILS,
-  PROFILE_PAGE_TRACKS,
+  PROFILE_PAGE_AGREEMENTS,
   PROFILE_PAGE_ALBUMS,
   PROFILE_PAGE_PLAYLISTS,
   PROFILE_PAGE_REPOSTS,
@@ -580,7 +580,7 @@ class App extends Component {
               {publicSiteRoutes.map((route) => (
                 // Redirect all public site routes to the corresponding pathname.
                 // This is necessary first because otherwise pathnames like
-                // legal/privacy-policy will match the track route.
+                // legal/privacy-policy will match the agreement route.
                 <Redirect
                   key={route}
                   from={route}
@@ -875,18 +875,18 @@ class App extends Component {
                   />
                 )}
               />
-              <Route exact path={TRACK_ID_PAGE} component={TrackPage} />
+              <Route exact path={AGREEMENT_ID_PAGE} component={AgreementPage} />
               <Route exact path={PLAYLIST_ID_PAGE} component={CollectionPage} />
 
               {/*
                 Define profile page sub-routes before profile page itself.
                 The rules for sub-routes would lose in a precedence fight with
-                the rule for track page if defined below.
+                the rule for agreement page if defined below.
                */}
               <Route
                 exact
                 path={[
-                  PROFILE_PAGE_TRACKS,
+                  PROFILE_PAGE_AGREEMENTS,
                   PROFILE_PAGE_ALBUMS,
                   PROFILE_PAGE_PLAYLISTS,
                   PROFILE_PAGE_REPOSTS,
@@ -901,11 +901,11 @@ class App extends Component {
                 )}
               />
 
-              <Route exact path={TRACK_PAGE} component={TrackPage} />
+              <Route exact path={AGREEMENT_PAGE} component={AgreementPage} />
 
               <Route
                 exact
-                path={TRACK_REMIXES_PAGE}
+                path={AGREEMENT_REMIXES_PAGE}
                 render={(props) => (
                   <RemixesPage
                     {...props}
@@ -1007,7 +1007,7 @@ class App extends Component {
         {!isMobileClient && <ConfirmerPreview />}
         {!isMobileClient && <DiscoveryNodeSelection />}
         {!isMobileClient && <Visualizer />}
-        {!isMobileClient && <PinnedTrackConfirmation />}
+        {!isMobileClient && <PinnedAgreementConfirmation />}
         {!isMobileClient && <DevModeMananger />}
 
         {/* Mobile-only */}

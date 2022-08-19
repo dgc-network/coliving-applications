@@ -17,15 +17,15 @@ import { ArtistPopover } from 'components/artist/ArtistPopover'
 import Draggable from 'components/dragndrop/Draggable'
 import Skeleton from 'components/skeleton/Skeleton'
 import Tooltip from 'components/tooltip/Tooltip'
-import TableDragHandle from 'components/tracks-table/TableDragHandle'
-import TableFavoriteButton from 'components/tracks-table/TableFavoriteButton'
-import TableOptionsButton from 'components/tracks-table/TableOptionsButton'
-import TablePlayButton from 'components/tracks-table/TablePlayButton'
-import TableRepostButton from 'components/tracks-table/TableRepostButton'
+import TableDragHandle from 'components/agreements-table/TableDragHandle'
+import TableFavoriteButton from 'components/agreements-table/TableFavoriteButton'
+import TableOptionsButton from 'components/agreements-table/TableOptionsButton'
+import TablePlayButton from 'components/agreements-table/TablePlayButton'
+import TableRepostButton from 'components/agreements-table/TableRepostButton'
 import UserBadges from 'components/user-badges/UserBadges'
-import { fullTrackPage } from 'utils/route'
+import { fullAgreementPage } from 'utils/route'
 
-import styles from './TracksTable.module.css'
+import styles from './AgreementsTable.module.css'
 
 /**
  * Sorter for two items based on their alphanumeric (lowercase) value.
@@ -62,17 +62,17 @@ const favoriteButtonCell = (val, record, props) => {
   )
 }
 
-const trackNameCell = (val, record, props) => {
+const agreementNameCell = (val, record, props) => {
   const deleted = record.is_delete || record.user?.is_deactivated
   return (
     <div
       className={styles.textContainer}
       onClick={(e) => {
         e.stopPropagation()
-        if (!deleted) props.onClickTrackName(record)
+        if (!deleted) props.onClickAgreementName(record)
       }}
     >
-      <div className={cn(styles.textCell, { [styles.trackName]: !deleted })}>
+      <div className={cn(styles.textCell, { [styles.agreementName]: !deleted })}>
         {val}
         {deleted ? ` [Deleted By Artist]` : ''}
       </div>
@@ -135,18 +135,18 @@ const optionsButtonCell = (val, record, index, props) => {
       onRemove={props.onClickRemove}
       removeText={props.removeText}
       handle={val.handle}
-      trackId={val.track_id}
+      agreementId={val.agreement_id}
       uid={val.uid}
       date={val.date}
       isFavorited={val.has_current_user_saved}
       isOwner={record.owner_id === props.userId}
       isOwnerDeactivated={!!record.user.is_deactivated}
-      isArtistPick={val.user._artist_pick === val.track_id}
+      isArtistPick={val.user._artist_pick === val.agreement_id}
       index={index}
-      trackTitle={val.name}
+      agreementTitle={val.name}
       albumId={null}
       albumName={null}
-      trackPermalink={val.permalink}
+      agreementPermalink={val.permalink}
     />
   )
 }
@@ -187,7 +187,7 @@ const DraggableRow = (props) => {
     let record
     if (handleProps) {
       record = children[1].props.record
-      const loading = !record.track_id
+      const loading = !record.agreement_id
       // Hack to make the first child the draggable handle.
       children[0] = (
         <TableDragHandle
@@ -199,14 +199,14 @@ const DraggableRow = (props) => {
     } else {
       record = children[0].props.record
     }
-    const link = record.user ? fullTrackPage(record.permalink) : ''
+    const link = record.user ? fullAgreementPage(record.permalink) : ''
     return (
       <Draggable
         elementType='tr'
         key={dataRowKey}
         text={record.title}
-        kind='track'
-        id={record.track_id}
+        kind='agreement'
+        id={record.agreement_id}
         link={link}
         isOwner={record.isOwner}
         isDisabled={record.is_unlisted}
@@ -244,7 +244,7 @@ const ReorderableRow = (props) => {
 
 const ReorderableBody = (props) => {
   return (
-    <RbdDroppable droppableId='tracks-table-droppable' type='TABLE'>
+    <RbdDroppable droppableId='agreements-table-droppable' type='TABLE'>
       {(provided, snapshot) => (
         <tbody
           {...props}
@@ -264,7 +264,7 @@ const columns = {
     name: 'colFavoriteButton',
     minWidth: 16
   },
-  colTrackName: { name: 'colTrackName', minWidth: 200 },
+  colAgreementName: { name: 'colAgreementName', minWidth: 200 },
   colArtistName: { name: 'colArtistName', minWidth: 200 },
   colDate: { name: 'colDate', minWidth: 140 },
   colTime: { name: 'colTime', minWidth: 85 },
@@ -294,7 +294,7 @@ const minWidthReducedColumns = columnsToDrop.reduce(
   totalMinWidth
 )
 
-class TracksTable extends Component {
+class AgreementsTable extends Component {
   state = {
     limit: this.props.limit,
     hasRendered: false,
@@ -324,7 +324,7 @@ class TracksTable extends Component {
   // Check if columns should be drop or added back backed on table size
   checkDropColumn = () => {
     const table = document.querySelector(
-      `.${styles.tracksTableContainer} table`
+      `.${styles.agreementsTableContainer} table`
     )
     if (this.tableRef && table) {
       const displayWidth = this.tableRef.clientWidth
@@ -426,15 +426,15 @@ class TracksTable extends Component {
             )
         },
         {
-          title: <Tooltip text='Track Name'>{'Track Name'}</Tooltip>,
+          title: <Tooltip text='Agreement Name'>{'Agreement Name'}</Tooltip>,
           dataIndex: 'name',
           key: 'name',
-          className: 'colTrackName',
+          className: 'colAgreementName',
           sorter: loading
             ? null
             : (a, b) => alphaSortFn(a.name, b.name, a.key, b.key),
           render: (val, record) =>
-            loading ? <Loading /> : trackNameCell(val, record, this.props)
+            loading ? <Loading /> : agreementNameCell(val, record, this.props)
         },
         {
           title: <Tooltip text='Artist'>{'Artist'}</Tooltip>,
@@ -457,7 +457,7 @@ class TracksTable extends Component {
           sorter: loading ? null : (a, b) => moment(a.date) - moment(b.date)
         },
         this.state.displayedColumns.colTime && {
-          title: <Tooltip text='Track Length'>{'Time'}</Tooltip>,
+          title: <Tooltip text='Agreement Length'>{'Time'}</Tooltip>,
           dataIndex: 'time',
           key: 'time',
           className: 'colTime',
@@ -506,13 +506,13 @@ class TracksTable extends Component {
     return columns
   }
 
-  onToggleShowTracks = () => {
+  onToggleShowAgreements = () => {
     const limit =
       this.state.limit === this.props.limit
         ? this.props.dataSource.length
         : this.props.limit
     this.setState({ limit })
-    this.props.didToggleShowTracks()
+    this.props.didToggleShowAgreements()
   }
 
   getRowClassName = (record, index) => {
@@ -524,7 +524,7 @@ class TracksTable extends Component {
   }
 
   onTableChange = (pagination, filters, sorters, extras) => {
-    this.props.onSortTracks(sorters)
+    this.props.onSortAgreements(sorters)
   }
 
   onDragEnd = (result) => {
@@ -536,7 +536,7 @@ class TracksTable extends Component {
       destination.index === source.index
     )
       return
-    this.props.onReorderTracks(source.index, destination.index)
+    this.props.onReorderAgreements(source.index, destination.index)
   }
 
   render() {
@@ -570,7 +570,7 @@ class TracksTable extends Component {
     const columns = this.getColumns(loading)
     return (
       <div
-        className={cn(styles.tracksTableContainer, {
+        className={cn(styles.agreementsTableContainer, {
           [styles.loading]: loading
         })}
         ref={this.onSetTableRef}
@@ -610,7 +610,7 @@ class TracksTable extends Component {
           />
           {limit && dataSource.length > limit ? (
             <ShowLimitTab
-              onClick={this.onToggleShowTracks}
+              onClick={this.onToggleShowAgreements}
               showMore={displayDataSource.length === limit}
             />
           ) : null}
@@ -620,7 +620,7 @@ class TracksTable extends Component {
   }
 }
 
-TracksTable.propTypes = {
+AgreementsTable.propTypes = {
   dataSource: PropTypes.array,
   limit: PropTypes.number,
   // When making columns, the width attribute doesn't confine the cell to that size
@@ -638,36 +638,36 @@ TracksTable.propTypes = {
   userId: PropTypes.number,
   onClickRow: PropTypes.func,
   onClickFavorite: PropTypes.func,
-  onClickTrackName: PropTypes.func,
+  onClickAgreementName: PropTypes.func,
   onClickArtistName: PropTypes.func,
   onClickRepost: PropTypes.func,
-  onSortTracks: PropTypes.func,
-  onReorderTracks: PropTypes.func,
+  onSortAgreements: PropTypes.func,
+  onReorderAgreements: PropTypes.func,
   onClickRemove: PropTypes.func,
   removeText: PropTypes.string,
   loading: PropTypes.bool,
   loadingRowsCount: PropTypes.number,
   allowReordering: PropTypes.bool,
   onReorder: PropTypes.func,
-  didToggleShowTracks: PropTypes.func,
+  didToggleShowAgreements: PropTypes.func,
   animateTransitions: PropTypes.bool
 }
 
-TracksTable.defaultProps = {
+AgreementsTable.defaultProps = {
   loading: false,
   loadingRowsCount: 10,
   dataSource: [],
   onClickRow: () => {},
   onClickFavorite: () => {},
-  onClickTrackName: () => {},
+  onClickAgreementName: () => {},
   onClickArtistName: () => {},
   onClickRepost: () => {},
-  onSortTracks: () => {},
-  onReorderTracks: () => {},
-  didToggleShowTracks: () => {},
+  onSortAgreements: () => {},
+  onReorderAgreements: () => {},
+  didToggleShowAgreements: () => {},
   onClickRemove: null,
   removeText: '',
   animateTransitions: true
 }
 
-export default TracksTable
+export default AgreementsTable

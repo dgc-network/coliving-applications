@@ -10,7 +10,7 @@ import { ReactComponent as IconNote } from 'assets/img/iconNote.svg'
 import { ReactComponent as IconPlaylists } from 'assets/img/iconPlaylists.svg'
 import {
   Tabs,
-  SavedPageTrack,
+  SavedPageAgreement,
   SavedPageCollection
 } from 'common/store/pages/saved-page/types'
 import { QueueItem } from 'common/store/queue/types'
@@ -21,8 +21,8 @@ import CardLineup from 'components/lineup/CardLineup'
 import LoadingSpinner from 'components/loading-spinner/LoadingSpinner'
 import MobilePageContainer from 'components/mobile-page-container/MobilePageContainer'
 import { useMainPageHeader } from 'components/nav/store/context'
-import TrackList from 'components/track/mobile/TrackList'
-import { TrackItemAction } from 'components/track/mobile/TrackListItem'
+import AgreementList from 'components/agreement/mobile/AgreementList'
+import { AgreementItemAction } from 'components/agreement/mobile/AgreementListItem'
 import useTabs from 'hooks/useTabs/useTabs'
 import { make, useRecord } from 'store/analytics/actions'
 import { albumPage, TRENDING_PAGE, playlistPage } from 'utils/route'
@@ -81,8 +81,8 @@ const useOffsetScroll = () => {
   return contentRefCallback
 }
 
-const TracksLineup = ({
-  tracks,
+const AgreementsLineup = ({
+  agreements,
   goToTrending,
   onFilterChange,
   filterText,
@@ -92,18 +92,18 @@ const TracksLineup = ({
   onSave,
   onTogglePlay
 }: {
-  tracks: Lineup<SavedPageTrack>
+  agreements: Lineup<SavedPageAgreement>
   goToTrending: () => void
   onFilterChange: (e: any) => void
   filterText: string
-  getFilteredData: (trackMetadatas: any) => [SavedPageTrack[], number]
+  getFilteredData: (agreementMetadatas: any) => [SavedPageAgreement[], number]
   playingUid: UID | null
   queuedAndPlaying: boolean
-  onSave: (isSaved: boolean, trackId: ID) => void
-  onTogglePlay: (uid: UID, trackId: ID) => void
+  onSave: (isSaved: boolean, agreementId: ID) => void
+  onTogglePlay: (uid: UID, agreementId: ID) => void
 }) => {
-  const [trackEntries] = getFilteredData(tracks.entries)
-  const trackList = trackEntries.map((entry) => ({
+  const [agreementEntries] = getFilteredData(agreements.entries)
+  const agreementList = agreementEntries.map((entry) => ({
     isLoading: false,
     isSaved: entry.has_current_user_saved,
     isReposted: entry.has_current_user_reposted,
@@ -111,20 +111,20 @@ const TracksLineup = ({
     isPlaying: queuedAndPlaying && playingUid === entry.uid,
     artistName: entry.user.name,
     artistHandle: entry.user.handle,
-    trackTitle: entry.title,
-    trackId: entry.track_id,
+    agreementTitle: entry.title,
+    agreementId: entry.agreement_id,
     uid: entry.uid,
     isDeleted: entry.is_delete || !!entry.user.is_deactivated
   }))
   const contentRefCallback = useOffsetScroll()
   return (
-    <div className={styles.tracksLineupContainer}>
-      {tracks.status !== Status.LOADING ? (
-        tracks.entries.length === 0 ? (
+    <div className={styles.agreementsLineupContainer}>
+      {agreements.status !== Status.LOADING ? (
+        agreements.entries.length === 0 ? (
           <EmptyTab
             message={
               <>
-                {messages.emptyTracks}
+                {messages.emptyAgreements}
                 <i className={cn('emoji', 'face-with-monocle', styles.emoji)} />
               </>
             }
@@ -135,22 +135,22 @@ const TracksLineup = ({
             <div className={styles.searchContainer}>
               <div className={styles.searchInnerContainer}>
                 <input
-                  placeholder={messages.filterTracks}
+                  placeholder={messages.filterAgreements}
                   onChange={onFilterChange}
                   value={filterText}
                 />
                 <IconFilter className={styles.iconFilter} />
               </div>
             </div>
-            {trackList.length > 0 && (
-              <div className={styles.trackListContainer}>
-                <TrackList
-                  tracks={trackList}
+            {agreementList.length > 0 && (
+              <div className={styles.agreementListContainer}>
+                <AgreementList
+                  agreements={agreementList}
                   showDivider
                   showBorder
                   onSave={onSave}
                   togglePlay={onTogglePlay}
-                  trackItemAction={TrackItemAction.Save}
+                  agreementItemAction={AgreementItemAction.Save}
                 />
               </div>
             )}
@@ -174,7 +174,7 @@ const AlbumCardLineup = ({
   goToTrending: () => void
   onFilterChange: (e: any) => void
   filterText: string
-  formatCardSecondaryText: (saves: number, tracks: number) => string
+  formatCardSecondaryText: (saves: number, agreements: number) => string
   getFilteredAlbums: (albums: SavedPageCollection[]) => SavedPageCollection[]
   goToRoute: (route: string) => void
 }) => {
@@ -189,7 +189,7 @@ const AlbumCardLineup = ({
         primaryText={album.playlist_name}
         secondaryText={formatCardSecondaryText(
           album.save_count,
-          album.playlist_contents.track_ids.length
+          album.playlist_contents.agreement_ids.length
         )}
         onClick={() =>
           goToRoute(
@@ -255,7 +255,7 @@ const PlaylistCardLineup = ({
   goToTrending: () => void
   onFilterChange: (e: any) => void
   filterText: string
-  formatCardSecondaryText: (saves: number, tracks: number) => string
+  formatCardSecondaryText: (saves: number, agreements: number) => string
   getFilteredPlaylists: (
     playlists: SavedPageCollection[]
   ) => SavedPageCollection[]
@@ -277,7 +277,7 @@ const PlaylistCardLineup = ({
         primaryText={playlist.playlist_name}
         secondaryText={formatCardSecondaryText(
           playlist.save_count,
-          playlist.playlist_contents.track_ids.length
+          playlist.playlist_contents.agreement_ids.length
         )}
         onClick={() => {
           goToRoute(
@@ -345,19 +345,19 @@ const PlaylistCardLineup = ({
 }
 
 const messages = {
-  emptyTracks: "You haven't favorited any tracks yet.",
+  emptyAgreements: "You haven't favorited any agreements yet.",
   emptyAlbums: "You haven't favorited any albums yet.",
   emptyPlaylists: "You haven't favorited any playlists yet.",
-  filterTracks: 'Filter Tracks',
+  filterAgreements: 'Filter Agreements',
   filterAlbums: 'Filter Albums',
   filterPlaylists: 'Filter Playlists',
-  tracks: 'Tracks',
+  agreements: 'Agreements',
   albums: 'Albums',
   playlists: 'Playlists'
 }
 
 const tabHeaders = [
-  { icon: <IconNote />, text: messages.tracks, label: Tabs.TRACKS },
+  { icon: <IconNote />, text: messages.agreements, label: Tabs.AGREEMENTS },
   { icon: <IconAlbum />, text: messages.albums, label: Tabs.ALBUMS },
   { icon: <IconPlaylists />, text: messages.playlists, label: Tabs.PLAYLISTS }
 ]
@@ -368,13 +368,13 @@ export type SavedPageProps = {
   onFilterChange: (e: any) => void
   isQueued: boolean
   playingUid: UID | null
-  getFilteredData: (trackMetadatas: any) => [SavedPageTrack[], number]
-  onTogglePlay: (uid: UID, trackId: ID) => void
+  getFilteredData: (agreementMetadatas: any) => [SavedPageAgreement[], number]
+  onTogglePlay: (uid: UID, agreementId: ID) => void
 
-  onSave: (isSaved: boolean, trackId: ID) => void
+  onSave: (isSaved: boolean, agreementId: ID) => void
   onPlay: () => void
-  onSortTracks: (sorters: any) => void
-  formatCardSecondaryText: (saves: number, tracks: number) => string
+  onSortAgreements: (sorters: any) => void
+  formatCardSecondaryText: (saves: number, agreements: number) => string
   filterText: string
   initialOrder: UID[] | null
   account:
@@ -383,12 +383,12 @@ export type SavedPageProps = {
         playlists: SavedPageCollection[]
       })
     | undefined
-  tracks: Lineup<SavedPageTrack>
+  agreements: Lineup<SavedPageAgreement>
   currentQueueItem: QueueItem
   playing: boolean
   buffering: boolean
-  fetchSavedTracks: () => void
-  resetSavedTracks: () => void
+  fetchSavedAgreements: () => void
+  resetSavedAgreements: () => void
   updateLineupOrder: (updatedOrderIndices: UID[]) => void
   getFilteredAlbums: (albums: SavedPageCollection[]) => SavedPageCollection[]
   getFilteredPlaylists: (
@@ -397,12 +397,12 @@ export type SavedPageProps = {
 
   fetchSavedAlbums: () => void
   goToRoute: (route: string) => void
-  repostTrack: (trackId: ID) => void
-  undoRepostTrack: (trackId: ID) => void
-  saveTrack: (trackId: ID) => void
-  unsaveTrack: (trackId: ID) => void
+  repostAgreement: (agreementId: ID) => void
+  undoRepostAgreement: (agreementId: ID) => void
+  saveAgreement: (agreementId: ID) => void
+  unsaveAgreement: (agreementId: ID) => void
   onClickRemove: any
-  onReorderTracks: any
+  onReorderAgreements: any
   playlistUpdates: number[]
   updatePlaylistLastViewedAt: (playlistId: number) => void
 }
@@ -412,7 +412,7 @@ const SavedPage = ({
   description,
   account,
   playingUid,
-  tracks,
+  agreements,
   goToRoute,
   playing,
   isQueued,
@@ -433,9 +433,9 @@ const SavedPage = ({
 
   const goToTrending = () => goToRoute(TRENDING_PAGE)
   const elements = [
-    <TracksLineup
-      key='tracksLineup'
-      tracks={tracks}
+    <AgreementsLineup
+      key='agreementsLineup'
+      agreements={agreements}
       goToTrending={goToTrending}
       onFilterChange={onFilterChange}
       filterText={filterText}
@@ -490,7 +490,7 @@ const SavedPage = ({
       description={description}
       containerClassName={styles.mobilePageContainer}
     >
-      {tracks.status === Status.LOADING ? (
+      {agreements.status === Status.LOADING ? (
         <LoadingSpinner className={styles.spinner} />
       ) : (
         <div className={styles.tabContainer}>

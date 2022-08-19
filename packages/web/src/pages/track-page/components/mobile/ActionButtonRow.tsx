@@ -27,7 +27,7 @@ type ActionButtonRowProps = {
   darkMode: boolean
 }
 
-// A row of action buttons, visible on track or playlist pages.
+// A row of action buttons, visible on agreement or playlist pages.
 const ActionButtonRow = ({
   showRepost,
   isOwner,

@@ -27,7 +27,7 @@ import {
 const messages = {
   infoHeader: 'Just For You',
   infoText:
-    'Content curated for you based on your likes, reposts, and follows. Refreshes often so if you like a track, favorite it.'
+    'Content curated for you based on your likes, reposts, and follows. Refreshes often so if you like a agreement, favorite it.'
 }
 
 const useStyles = makeStyles(({ spacing }) => ({

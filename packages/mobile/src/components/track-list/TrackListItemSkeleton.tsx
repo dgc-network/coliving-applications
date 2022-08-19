@@ -4,7 +4,7 @@ import Skeleton from 'app/components/skeleton'
 import { makeStyles } from 'app/styles'
 
 const useStyles = makeStyles(({ palette, spacing }) => ({
-  trackContainer: {
+  agreementContainer: {
     width: '100%',
     height: 72,
     backgroundColor: palette.white,
@@ -14,11 +14,11 @@ const useStyles = makeStyles(({ palette, spacing }) => ({
   }
 }))
 
-export const TrackListItemSkeleton = () => {
+export const AgreementListItemSkeleton = () => {
   const styles = useStyles()
 
   return (
-    <View style={styles.trackContainer}>
+    <View style={styles.agreementContainer}>
       <Skeleton style={{ height: 16, marginBottom: 2 }} width='54%' />
       <Skeleton style={{ height: 16 }} width='30%' />
     </View>

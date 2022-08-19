@@ -24,8 +24,8 @@ function* watchSetUsers() {
           yield put(
             favoritesActions.setFavorite(
               id,
-              entityType === UserListEntityType.TRACK
-                ? FavoriteType.TRACK
+              entityType === UserListEntityType.AGREEMENT
+                ? FavoriteType.AGREEMENT
                 : FavoriteType.PLAYLIST
             )
           )
@@ -34,8 +34,8 @@ function* watchSetUsers() {
           yield put(
             repostActions.setRepost(
               id,
-              entityType === UserListEntityType.TRACK
-                ? RepostType.TRACK
+              entityType === UserListEntityType.AGREEMENT
+                ? RepostType.AGREEMENT
                 : RepostType.COLLECTION
             )
           )

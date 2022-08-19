@@ -158,7 +158,7 @@ StatBanner.propTypes = {
 
 StatBanner.defaultProps = {
   stats: [
-    { number: 0, title: 'tracks' },
+    { number: 0, title: 'agreements' },
     { number: 0, title: 'followers' },
     { number: 0, title: 'reposts' }
   ],

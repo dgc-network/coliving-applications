@@ -24,19 +24,19 @@ import { Size } from 'components/co-sign/types'
 import DownloadButtons from 'components/download-buttons/DownloadButtons'
 import DynamicImage from 'components/dynamic-image/DynamicImage'
 import UserBadges from 'components/user-badges/UserBadges'
-import { useTrackCoverArt } from 'hooks/useTrackCoverArt'
+import { useAgreementCoverArt } from 'hooks/useAgreementCoverArt'
 import { make, useRecord } from 'store/analytics/actions'
 import { moodMap } from 'utils/moods'
 import { isDarkMode } from 'utils/theme/theme'
 
-import HiddenTrackHeader from '../HiddenTrackHeader'
+import HiddenAgreementHeader from '../HiddenAgreementHeader'
 
 import ActionButtonRow from './ActionButtonRow'
 import StatsButtonRow from './StatsButtonRow'
-import styles from './TrackHeader.module.css'
+import styles from './AgreementHeader.module.css'
 
 const messages = {
-  track: 'TRACK',
+  agreement: 'AGREEMENT',
   remix: 'REMIX',
   play: 'PLAY',
   pause: 'PAUSE'
@@ -64,7 +64,7 @@ const PlayButton = (props: { playing: boolean; onPlay: () => void }) => {
   )
 }
 
-type TrackHeaderProps = {
+type AgreementHeaderProps = {
   isLoading: boolean
   isPlaying: boolean
   isOwner: boolean
@@ -72,7 +72,7 @@ type TrackHeaderProps = {
   isReposted: boolean
   isFollowing: boolean
   title: string
-  trackId: ID
+  agreementId: ID
   userId: ID
   coverArtSizes: CoverArtSizes | null
   artistName: string
@@ -94,7 +94,7 @@ type TrackHeaderProps = {
   onClickTag: (tag: string) => void
   onClickArtistName: () => void
   onClickMobileOverflow: (
-    trackId: ID,
+    agreementId: ID,
     overflowActions: OverflowAction[]
   ) => void
   onPlay: () => void
@@ -102,18 +102,18 @@ type TrackHeaderProps = {
   onSave: () => void
   onRepost: () => void
   onDownload: (
-    trackId: ID,
+    agreementId: ID,
     cid: CID,
     category?: string,
-    parentTrackId?: ID
+    parentAgreementId?: ID
   ) => void
-  goToFavoritesPage: (trackId: ID) => void
-  goToRepostsPage: (trackId: ID) => void
+  goToFavoritesPage: (agreementId: ID) => void
+  goToRepostsPage: (agreementId: ID) => void
 }
 
-const TrackHeader = ({
+const AgreementHeader = ({
   title,
-  trackId,
+  agreementId,
   userId,
   coverArtSizes,
   artistName,
@@ -148,18 +148,18 @@ const TrackHeader = ({
   onClickMobileOverflow,
   goToFavoritesPage,
   goToRepostsPage
-}: TrackHeaderProps) => {
-  const image = useTrackCoverArt(
-    trackId,
+}: AgreementHeaderProps) => {
+  const image = useAgreementCoverArt(
+    agreementId,
     coverArtSizes,
     SquareSizes.SIZE_480_BY_480
   )
-  const onSaveHeroTrack = () => {
+  const onSaveHeroAgreement = () => {
     if (!isOwner) onSave()
   }
   const filteredTags = (tags || '').split(',').filter(Boolean)
 
-  const trackLabels: { isHidden?: boolean; label: string; value: any }[] = [
+  const agreementLabels: { isHidden?: boolean; label: string; value: any }[] = [
     {
       label: 'Duration',
       value: formatSeconds(duration)
@@ -185,7 +185,7 @@ const TrackHeader = ({
       record(
         make(Name.LINK_CLICKING, {
           url: event.target.href,
-          source: 'track page' as const
+          source: 'agreement page' as const
         })
       )
     },
@@ -211,7 +211,7 @@ const TrackHeader = ({
       OverflowAction.VIEW_ARTIST_PAGE
     ].filter(Boolean) as OverflowAction[]
 
-    onClickMobileOverflow(trackId, overflowActions)
+    onClickMobileOverflow(agreementId, overflowActions)
   }
 
   const renderTags = () => {
@@ -239,7 +239,7 @@ const TrackHeader = ({
     return (
       <DownloadButtons
         className={styles.downloadButtonsContainer}
-        trackId={trackId}
+        agreementId={agreementId}
         isOwner={isOwner}
         following={isFollowing}
         onDownload={onDownload}
@@ -247,8 +247,8 @@ const TrackHeader = ({
     )
   }
 
-  const renderTrackLabels = () => {
-    return trackLabels.map((infoFact) => {
+  const renderAgreementLabels = () => {
+    return agreementLabels.map((infoFact) => {
       return (
         <div key={infoFact.label} className={styles.infoFact}>
           <h2 className={styles.infoLabel}>{infoFact.label}</h2>
@@ -259,12 +259,12 @@ const TrackHeader = ({
   }
 
   const onClickFavorites = useCallback(() => {
-    goToFavoritesPage(trackId)
-  }, [goToFavoritesPage, trackId])
+    goToFavoritesPage(agreementId)
+  }, [goToFavoritesPage, agreementId])
 
   const onClickReposts = useCallback(() => {
-    goToRepostsPage(trackId)
-  }, [goToRepostsPage, trackId])
+    goToRepostsPage(agreementId)
+  }, [goToRepostsPage, agreementId])
 
   const imageElement = coSign ? (
     <CoSign
@@ -285,14 +285,14 @@ const TrackHeader = ({
   )
 
   return (
-    <div className={styles.trackHeader}>
+    <div className={styles.agreementHeader}>
       {isUnlisted ? (
-        <div className={styles.hiddenTrackHeaderWrapper}>
-          <HiddenTrackHeader />
+        <div className={styles.hiddenAgreementHeaderWrapper}>
+          <HiddenAgreementHeader />
         </div>
       ) : (
         <div className={styles.typeLabel}>
-          {isRemix ? messages.remix : messages.track}
+          {isRemix ? messages.remix : messages.agreement}
         </div>
       )}
       {imageElement}
@@ -318,7 +318,7 @@ const TrackHeader = ({
           isSaved={isSaved}
           onClickOverflow={onClickOverflow}
           onRepost={onRepost}
-          onFavorite={onSaveHeroTrack}
+          onFavorite={onSaveHeroAgreement}
           onShare={onShare}
           darkMode={isDarkMode()}
         />
@@ -355,7 +355,7 @@ const TrackHeader = ({
           [styles.noStats]: isUnlisted && !fieldVisibility.play_count
         })}
       >
-        {renderTrackLabels()}
+        {renderAgreementLabels()}
       </div>
       {renderDownloadButtons()}
       {renderTags()}
@@ -363,7 +363,7 @@ const TrackHeader = ({
   )
 }
 
-TrackHeader.defaultProps = {
+AgreementHeader.defaultProps = {
   loading: false,
   playing: false,
   active: true,
@@ -373,7 +373,7 @@ TrackHeader.defaultProps = {
 
   isOwner: false,
   isAlbum: false,
-  hasTracks: false,
+  hasAgreements: false,
   isPublished: false,
   isSaved: false,
 
@@ -382,4 +382,4 @@ TrackHeader.defaultProps = {
   onPlay: () => {}
 }
 
-export default TrackHeader
+export default AgreementHeader

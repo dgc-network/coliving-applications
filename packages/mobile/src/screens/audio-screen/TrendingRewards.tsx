@@ -14,7 +14,7 @@ import { trendingRewardsConfig } from 'app/utils/challenges'
 import { Panel } from './Panel'
 
 const validRewardIds: Set<TrendingRewardID> = new Set([
-  'trending-track',
+  'trending-agreement',
   'trending-playlist',
   'top-api',
   'verified-upload',
@@ -53,9 +53,9 @@ export const TrendingRewards = () => {
         modal = 'TrendingRewardsExplainer'
         modalType = 'playlists'
         break
-      case 'trending-track':
+      case 'trending-agreement':
         modal = 'TrendingRewardsExplainer'
-        modalType = 'tracks'
+        modalType = 'agreements'
         break
       case 'trending-underground':
         modal = 'TrendingRewardsExplainer'

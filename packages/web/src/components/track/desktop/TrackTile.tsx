@@ -13,18 +13,18 @@ import ShareButton from 'components/alt-button/ShareButton'
 import Skeleton from 'components/skeleton/Skeleton'
 import Tooltip from 'components/tooltip/Tooltip'
 
-import TrackBannerIcon, { TrackBannerIconType } from '../TrackBannerIcon'
+import AgreementBannerIcon, { AgreementBannerIconType } from '../AgreementBannerIcon'
 import {
-  TrackTileSize,
-  DesktopTrackTileProps as TrackTileProps
+  AgreementTileSize,
+  DesktopAgreementTileProps as AgreementTileProps
 } from '../types'
 
-import styles from './TrackTile.module.css'
+import styles from './AgreementTile.module.css'
 
 const messages = {
   getPlays: (listenCount: number) => ` ${pluralize('Play', listenCount)}`,
   artistPick: 'Artist Pick',
-  hiddenTrack: 'Hidden Track',
+  hiddenAgreement: 'Hidden Agreement',
   repostLabel: 'Repost',
   unrepostLabel: 'Unrepost'
 }
@@ -56,7 +56,7 @@ const RankAndIndexIndicator = ({
   )
 }
 
-const TrackTile = memo(
+const AgreementTile = memo(
   ({
     size,
     order,
@@ -89,7 +89,7 @@ const TrackTile = memo(
     onClickShare,
     onTogglePlay,
     showRankIcon
-  }: TrackTileProps) => {
+  }: AgreementTileProps) => {
     const hasOrdering = order !== undefined
     const onStopPropagation = useCallback(
       (e: MouseEvent) => e.stopPropagation(),
@@ -135,12 +135,12 @@ const TrackTile = memo(
       <div
         className={cn(styles.container, {
           [containerClassName!]: !!containerClassName,
-          // Active indicates that the track is the current queue item
+          // Active indicates that the agreement is the current queue item
           [styles.isActive]: isActive,
           [styles.isDisabled]: isDisabled,
 
-          [styles.large]: size === TrackTileSize.LARGE,
-          [styles.small]: size === TrackTileSize.SMALL,
+          [styles.large]: size === AgreementTileSize.LARGE,
+          [styles.small]: size === AgreementTileSize.SMALL,
 
           // Standalone means that this tile is not w/ a playlist
           [styles.standalone]: !!standalone
@@ -154,7 +154,7 @@ const TrackTile = memo(
           isLoading={!!isLoading}
           index={order ?? 0}
         />
-        {/* Track tile image */}
+        {/* Agreement tile image */}
         <div
           className={cn(styles.imageContainer, {
             [styles.leftSpacing]: !hasOrdering
@@ -163,20 +163,20 @@ const TrackTile = memo(
           {artwork}
         </div>
         {isArtistPick && (
-          <TrackBannerIcon
-            type={TrackBannerIconType.STAR}
+          <AgreementBannerIcon
+            type={AgreementBannerIconType.STAR}
             isMatrixMode={isMatrixMode}
           />
         )}
         {isUnlisted && (
-          <TrackBannerIcon
-            type={TrackBannerIconType.HIDDEN}
+          <AgreementBannerIcon
+            type={AgreementBannerIconType.HIDDEN}
             isMatrixMode={isMatrixMode}
           />
         )}
         <div
           className={cn(styles.body, {
-            // if track and not playlist/album
+            // if agreement and not playlist/album
             [styles.withoutHeader]: true
           })}
         >
@@ -225,7 +225,7 @@ const TrackTile = memo(
               {isUnlisted && (
                 <div className={styles.topRightIconLabel}>
                   <IconHidden className={styles.topRightIcon} />
-                  {messages.hiddenTrack}
+                  {messages.hiddenAgreement}
                 </div>
               )}
               {!isLoading && duration && (
@@ -309,4 +309,4 @@ const TrackTile = memo(
   }
 )
 
-export default memo(TrackTile)
+export default memo(AgreementTile)

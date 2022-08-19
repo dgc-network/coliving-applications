@@ -20,7 +20,7 @@ import {
 import { processAndCacheUsers } from 'common/store/cache/users/utils'
 import * as profileActions from 'common/store/pages/profile/actions'
 import feedSagas from 'common/store/pages/profile/lineups/feed/sagas.js'
-import tracksSagas from 'common/store/pages/profile/lineups/tracks/sagas.js'
+import agreementsSagas from 'common/store/pages/profile/lineups/agreements/sagas.js'
 import {
   getProfileUserId,
   getProfileFollowers,
@@ -239,8 +239,8 @@ function* fetchProfileAsync(action) {
 
     const isMobileClient = isMobile()
     if (!isMobileClient) {
-      if (user.track_count > 0) {
-        yield fork(fetchMostUsedTags, user.user_id, user.track_count)
+      if (user.agreement_count > 0) {
+        yield fork(fetchMostUsedTags, user.user_id, user.agreement_count)
       }
     }
 
@@ -281,23 +281,23 @@ function* watchFetchFollowUsers(action) {
 
 const MOST_USED_TAGS_COUNT = 5
 
-// Get all the tracks & parse the tracks for the most used tags
-// NOTE: The number of user tracks is not known b/c some tracks are deleted,
-// so the number of user tracks plus a large track number are fetched
-const LARGE_TRACKCOUNT_TAGS = 100
-function* fetchMostUsedTags(userId, trackCount) {
-  const trackResponse = yield call(ColivingBackend.getArtistTracks, {
+// Get all the agreements & parse the agreements for the most used tags
+// NOTE: The number of user agreements is not known b/c some agreements are deleted,
+// so the number of user agreements plus a large agreement number are fetched
+const LARGE_AGREEMENTCOUNT_TAGS = 100
+function* fetchMostUsedTags(userId, agreementCount) {
+  const agreementResponse = yield call(ColivingBackend.getArtistAgreements, {
     offset: 0,
-    limit: trackCount + LARGE_TRACKCOUNT_TAGS,
+    limit: agreementCount + LARGE_AGREEMENTCOUNT_TAGS,
     userId,
     filterDeleted: true
   })
-  const tracks = trackResponse.filter((metadata) => !metadata.is_delete)
+  const agreements = agreementResponse.filter((metadata) => !metadata.is_delete)
   // tagUsage: { [tag: string]: number }
   const tagUsage = {}
-  tracks.forEach((track) => {
-    if (track.tags) {
-      track.tags.split(',').forEach((tag) => {
+  agreements.forEach((agreement) => {
+    if (agreement.tags) {
+      agreement.tags.split(',').forEach((tag) => {
         tag in tagUsage ? (tagUsage[tag] += 1) : (tagUsage[tag] = 1)
       })
     }
@@ -528,7 +528,7 @@ function* watchSetNotificationSubscription() {
 export default function sagas() {
   return [
     ...feedSagas(),
-    ...tracksSagas(),
+    ...agreementsSagas(),
     watchFetchFollowUsers,
     watchFetchProfile,
     watchUpdateProfile,
