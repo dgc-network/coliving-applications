@@ -4,7 +4,7 @@
   "description": "Common utilities and store for web and mobile.",
   "private": "true",
   "author": "Coliving",
-  "homepage": "https://github.com/dgc.network/coliving-client#readme",
+  "homepage": "https://github.com/dgc-network/coliving-client#readme",
   "license": "",
   "main": "dist/index.cjs.js",
   "types": "dist/index.d.ts",
@@ -14,7 +14,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dgc.network/coliving-client.git"
+    "url": "git+https://github.com/dgc-network/coliving-client.git"
   },
   "scripts": {
     "lint": "eslint --cache src",
@@ -22,10 +22,10 @@
     "build": "rollup -c"
   },
   "bugs": {
-    "url": "https://github.com/dgc.network/coliving-client/issues"
+    "url": "https://github.com/dgc-network/coliving-client/issues"
   },
   "dependencies": {
-    "@optimizely/optimizely-sdk": "4.0.0",
+    "@optimizely/optimizely-sdk": "^4.9.2",
     "bn.js": "4.11.6",
     "react": "17.0.2"
   },
@@ -33,9 +33,10 @@
     "@types/bn.js": "4.11.6",
     "@types/react": "17.0.2",
     "eslint": "8.19.0",
-    "eslint-config-coliving": "1.2.2",
+    "eslint-config-standard": "17.0.0",
     "rollup": "2.76.0",
     "rollup-plugin-dts": "4.2.2",
-    "rollup-plugin-typescript2": "0.32.1"
+    "rollup-plugin-typescript2": "0.32.1",
+    "typescript": "^4.7.4"
   }
 }

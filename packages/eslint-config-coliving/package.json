@@ -29,7 +29,7 @@
     "eslint-config-standard": "^17.0.0",
     "eslint-import-resolver-alias": "^1.1.2",
     "eslint-plugin-import": "^2.26.0",
-    "eslint-plugin-jest": "?26.5.3",
+    "eslint-plugin-jest": "^26.5.3",
     "eslint-plugin-n": "^15.2.4",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^4.2.1",
@@ -44,5 +44,8 @@
   },
   "bugs": {
     "url": "https://github.com/dgc-network/-client/issues"
+  },
+  "devDependencies": {
+    "typescript": "^4.7.4"
   }
 }
