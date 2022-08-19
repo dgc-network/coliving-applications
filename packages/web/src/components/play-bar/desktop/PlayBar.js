@@ -79,7 +79,7 @@ class PlayBar extends Component {
       trackPosition: 0,
       playCounter: null,
       trackId: null,
-      // Capture intent to set initial volume before audio is playing
+      // Capture intent to set initial volume before live is playing
       initialVolume: null,
       mediaKey: 0
     }
@@ -98,7 +98,7 @@ class PlayBar extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { audio, isPlaying, playCounter } = this.props
+    const { live, isPlaying, playCounter } = this.props
     if (!isPlaying) {
       clearInterval(this.seekInterval)
       this.seekInterval = null
@@ -106,7 +106,7 @@ class PlayBar extends Component {
 
     if (isPlaying && !this.seekInterval) {
       this.seekInterval = setInterval(() => {
-        const trackPosition = audio.getPosition()
+        const trackPosition = live.getPosition()
         this.setState({ trackPosition })
       }, SEEK_INTERVAL)
     }
@@ -120,10 +120,10 @@ class PlayBar extends Component {
       })
     }
 
-    // If there was an intent to set initial volume and audio is defined
+    // If there was an intent to set initial volume and live is defined
     // set the initial volume
-    if (this.state.initialVolume !== null && audio) {
-      audio.setVolume(this.state.initialVolume)
+    if (this.state.initialVolume !== null && live) {
+      live.setVolume(this.state.initialVolume)
       this.setState({
         initialVolume: null
       })
@@ -162,14 +162,14 @@ class PlayBar extends Component {
   togglePlay = () => {
     const {
       currentQueueItem: { track },
-      audio,
+      live,
       isPlaying,
       play,
       pause,
       record
     } = this.props
 
-    if (audio && isPlaying) {
+    if (live && isPlaying) {
       pause()
       record(
         make(Name.PLAYBACK_PAUSE, {
@@ -205,12 +205,12 @@ class PlayBar extends Component {
   }
 
   updateVolume = (volume) => {
-    const { audio } = this.props
-    if (audio) {
-      // If we already have an audio object set the volume immediately!
-      audio.setVolume(volume / VOLUME_GRANULARITY)
+    const { live } = this.props
+    if (live) {
+      // If we already have an live object set the volume immediately!
+      live.setVolume(volume / VOLUME_GRANULARITY)
     } else {
-      // Store volume in the state so that when audio does mount we can set it
+      // Store volume in the state so that when live does mount we can set it
       this.setState({
         initialVolume: volume / VOLUME_GRANULARITY
       })
@@ -239,14 +239,14 @@ class PlayBar extends Component {
 
   onPrevious = () => {
     const {
-      audio,
+      live,
       seek,
       previous,
       reset,
       currentQueueItem: { track }
     } = this.props
     if (track?.genre === Genre.PODCASTS) {
-      const position = audio.getPosition()
+      const position = live.getPosition()
       const newPosition = position - SKIP_DURATION_SEC
       seek(Math.max(0, newPosition))
       this.setState({
@@ -265,14 +265,14 @@ class PlayBar extends Component {
 
   onNext = () => {
     const {
-      audio,
+      live,
       seek,
       next,
       currentQueueItem: { track }
     } = this.props
     if (track?.genre === Genre.PODCASTS) {
-      const duration = audio.getDuration()
-      const position = audio.getPosition()
+      const duration = live.getDuration()
+      const position = live.getPosition()
       const newPosition = position + SKIP_DURATION_SEC
       seek(Math.min(newPosition, duration))
       this.setState({
@@ -291,7 +291,7 @@ class PlayBar extends Component {
   render() {
     const {
       currentQueueItem: { uid, track, user },
-      audio,
+      live,
       collectible,
       isPlaying,
       isBuffering,
@@ -324,13 +324,13 @@ class PlayBar extends Component {
       isOwner = track.owner_id === userId
       trackPermalink = track.permalink
 
-      duration = audio.getDuration()
+      duration = live.getDuration()
       trackId = track.track_id
       reposted = track.has_current_user_reposted
       favorited = track.has_current_user_saved || false
       isTrackUnlisted = track.is_unlisted
     } else if (collectible && user) {
-      // Special case for audio nft playlist
+      // Special case for live nft playlist
       trackTitle = collectible.name
       artistName = user.name
       artistHandle = user.handle
@@ -338,7 +338,7 @@ class PlayBar extends Component {
       isVerified = user.is_verified
       profilePictureSizes = user._profile_picture_sizes
       isOwner = this.props.accountUser?.user_id === user.user_id
-      duration = audio.getDuration()
+      duration = live.getDuration()
 
       reposted = false
       favorited = false
@@ -386,7 +386,7 @@ class PlayBar extends Component {
                 isPlaying={isPlaying && !isBuffering}
                 isDisabled={!uid && !collectible}
                 includeTimestamps
-                elapsedSeconds={audio?.getPosition()}
+                elapsedSeconds={live?.getPosition()}
                 totalSeconds={duration}
                 style={{
                   railListenedColor: 'var(--track-slider-rail)',
@@ -488,7 +488,7 @@ const makeMapStateToProps = () => {
     accountUser: getAccountUser(state),
     currentQueueItem: getCurrentQueueItem(state),
     playCounter: getCounter(state),
-    audio: getAudio(state),
+    live: getAudio(state),
     collectible: getCollectible(state),
     isPlaying: getPlaying(state),
     isBuffering: getBuffering(state),

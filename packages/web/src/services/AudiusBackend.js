@@ -2488,7 +2488,7 @@ class ColivingBackend {
   }
 
   /**
-   * Make a request to fetch the sol wrapped audio balance of the the user
+   * Make a request to fetch the sol wrapped live balance of the the user
    * @returns {Promise<BN>} balance
    */
   static async getWAudioBalance() {
@@ -2499,7 +2499,7 @@ class ColivingBackend {
       const ownerWAudioBalance =
         await colivingLibs.solanaWeb3Manager.getWAudioBalance(userBank)
       if (!ownerWAudioBalance) {
-        console.error('Failed to fetch account waudio balance')
+        console.error('Failed to fetch account wlive balance')
         return new BN('0')
       }
       return ownerWAudioBalance
@@ -2557,12 +2557,12 @@ class ColivingBackend {
   }
 
   /**
-   * Make a request to send solana wrapped audio
+   * Make a request to send solana wrapped live
    */
   static async sendWAudioTokens(address, amount) {
     await waitForLibsInit()
 
-    // Check when sending waudio if the user has a user bank acccount
+    // Check when sending wlive if the user has a user bank acccount
     let tokenAccountInfo =
       await colivingLibs.solanaWeb3Manager.getAssociatedTokenAccountInfo(address)
     if (!tokenAccountInfo) {
@@ -2650,14 +2650,14 @@ class ColivingBackend {
    */
   static async getAddressWAudioBalance(address) {
     await waitForLibsInit()
-    const waudioBalance = await colivingLibs.solanaWeb3Manager.getWAudioBalance(
+    const wliveBalance = await colivingLibs.solanaWeb3Manager.getWAudioBalance(
       address
     )
-    if (!waudioBalance) {
-      console.error(`Failed to get waudio balance for address: ${address}`)
+    if (!wliveBalance) {
+      console.error(`Failed to get wlive balance for address: ${address}`)
       return new BN('0')
     }
-    return waudioBalance
+    return wliveBalance
   }
 
   /**

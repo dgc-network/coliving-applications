@@ -37,7 +37,7 @@ const messages = {
   newWalletConnected: 'New Wallet Successfully Connected!',
   linkedWallets: 'LINKED WALLETS',
   collectibles: 'COLLECTIBLES',
-  audio: '$LIVE'
+  live: '$LIVE'
 }
 
 type WalletProps = {
@@ -45,7 +45,7 @@ type WalletProps = {
   chain: Chain
   address: string
   collectibleCount: number
-  audioBalance: BNWei
+  liveBalance: BNWei
   isDisabled: boolean
   isConfirmAdding: boolean
   isConfirmRemoving: boolean
@@ -59,7 +59,7 @@ const Wallet = ({
   isConfirmAdding,
   isConfirmRemoving,
   collectibleCount,
-  audioBalance,
+  liveBalance,
   isDisabled,
   hasActions,
   hideCollectibles
@@ -117,11 +117,11 @@ const Wallet = ({
           {collectibleCount}
         </div>
       )}
-      <div className={cn(styles.audioBalance, styles.walletText)}>
+      <div className={cn(styles.liveBalance, styles.walletText)}>
         {(chain === Chain.Eth || solWalletAudioEnabled) && (
           <DisplayAudio
             showLabel={false}
-            amount={audioBalance}
+            amount={liveBalance}
             className={styles.balanceContainer}
             tokenClassName={styles.balance}
           />
@@ -214,7 +214,7 @@ const WalletsTable = ({
           </h6>
         )}
         <h6 className={cn(styles.walletsHeaderItem, styles.headerAudio)}>
-          {messages.audio}
+          {messages.live}
         </h6>
       </div>
       {ethWallets &&
@@ -224,7 +224,7 @@ const WalletsTable = ({
             key={wallet.address}
             address={wallet.address}
             collectibleCount={wallet.collectibleCount}
-            audioBalance={wallet.balance}
+            liveBalance={wallet.balance}
             isDisabled={isDisabled}
             isConfirmAdding={false}
             hasActions={hasActions}
@@ -239,7 +239,7 @@ const WalletsTable = ({
             key={wallet.address}
             address={wallet.address}
             collectibleCount={wallet.collectibleCount}
-            audioBalance={wallet.balance}
+            liveBalance={wallet.balance}
             isDisabled={isDisabled}
             hasActions={hasActions}
             hideCollectibles={hideCollectibles}
@@ -252,7 +252,7 @@ const WalletsTable = ({
           chain={confirmingWallet.chain!}
           address={confirmingWallet.wallet!}
           collectibleCount={confirmingWallet.collectibleCount!}
-          audioBalance={confirmingWallet.balance!}
+          liveBalance={confirmingWallet.balance!}
           isDisabled
           hasActions
           isConfirmAdding

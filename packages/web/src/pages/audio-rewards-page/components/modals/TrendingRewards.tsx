@@ -7,11 +7,11 @@ import { useDispatch } from 'react-redux'
 import { TwitterTweetEmbed } from 'react-twitter-embed'
 
 import { useModalState } from 'common/hooks/useModalState'
-import { getTrendingRewardsModalType } from 'common/store/pages/audio-rewards/selectors'
+import { getTrendingRewardsModalType } from 'common/store/pages/live-rewards/selectors'
 import {
   TrendingRewardsModalType,
   setTrendingRewardsModalType
-} from 'common/store/pages/audio-rewards/slice'
+} from 'common/store/pages/live-rewards/slice'
 import LoadingSpinner from 'components/loading-spinner/LoadingSpinner'
 import { useNavigateToPage } from 'hooks/useNavigateToPage'
 import { useRemoteVar } from 'hooks/useRemoteConfig'
@@ -82,7 +82,7 @@ const textMap = {
   }
 }
 
-const TOS_URL = 'https://blog.coliving.co/posts/audio-rewards'
+const TOS_URL = 'https://blog.coliving.co/posts/live-rewards'
 
 // Getters and setters for whether we're looking at
 // trending playlists or trending tracks

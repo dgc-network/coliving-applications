@@ -4,10 +4,10 @@ import { useModalState } from 'common/hooks/useModalState'
 import { useProfileTier } from 'common/hooks/wallet'
 import Drawer from 'components/drawer/Drawer'
 import {
-  audioTierMapPng,
+  liveTierMapPng,
   TierLevel,
   TierNumber
-} from 'pages/audio-rewards-page/Tiers'
+} from 'pages/live-rewards-page/Tiers'
 import { getKeyboardVisibility } from 'store/application/ui/mobileKeyboard/selectors'
 import { useSelector } from 'utils/reducer'
 
@@ -29,7 +29,7 @@ const TierExplainerDrawer = () => {
     <Drawer isOpen={isOpen} keyboardVisible={keyboardVisible} onClose={onClose}>
       <div className={styles.drawer}>
         <div className={styles.top}>
-          {audioTierMapPng[tier]}
+          {liveTierMapPng[tier]}
           <div className={styles.topText}>
             <TierNumber tier={tier} />
             <BadgeTierText

@@ -15,25 +15,25 @@ import PreviewButton from 'components/upload/PreviewButton'
 import styles from './TrackPreview.module.css'
 
 const supportsPreview = new Set([
-  'audio/mpeg',
-  'audio/mp3',
-  'audio/ogg',
-  'audio/wav'
+  'live/mpeg',
+  'live/mp3',
+  'live/ogg',
+  'live/wav'
 ])
 
 class TrackPreview extends Component {
   fileTypeIcon = (type) => {
     switch (type) {
-      case 'audio/mpeg':
-      case 'audio/mp3':
+      case 'live/mpeg':
+      case 'live/mp3':
         return iconFileMp3
-      case 'audio/aiff':
+      case 'live/aiff':
         return iconFileAiff
-      case 'audio/flac':
+      case 'live/flac':
         return iconFileFlac
-      case 'audio/ogg':
+      case 'live/ogg':
         return iconFileOgg
-      case 'audio/wav':
+      case 'live/wav':
         return iconFileWav
       default:
         return iconFileUnknown

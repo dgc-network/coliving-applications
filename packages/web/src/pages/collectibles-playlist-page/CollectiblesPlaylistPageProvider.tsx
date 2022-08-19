@@ -50,7 +50,7 @@ declare global {
   interface HTMLMediaElement {
     webkitAudioDecodedByteCount: number
     mozHasAudio: boolean
-    audioTracks: unknown[]
+    liveTracks: unknown[]
   }
 }
 
@@ -70,7 +70,7 @@ const hasAudio = (video: HTMLMediaElement) => {
     if (
       video.webkitAudioDecodedByteCount > 0 ||
       video.mozHasAudio ||
-      video.audioTracks?.length
+      video.liveTracks?.length
     ) {
       return true
     }
@@ -102,7 +102,7 @@ export const CollectiblesPlaylistPageProvider = ({
     getUser(state, { handle: routeMatch?.params.handle ?? null })
   )
 
-  const [audioCollectibles, setAudioCollectibles] = useState<Collectible[]>([])
+  const [liveCollectibles, setAudioCollectibles] = useState<Collectible[]>([])
   const firstLoadedCollectible = useRef<Collectible>()
   const hasFetchedCollectibles = useRef(false)
   const [hasFetchedAllCollectibles, setHasFetchedAllCollectibles] =
@@ -240,19 +240,19 @@ export const CollectiblesPlaylistPageProvider = ({
 
   const isPlayingACollectible = useMemo(
     () =>
-      audioCollectibles.some(
+      liveCollectibles.some(
         (collectible) =>
           collectible && collectible.id === currentPlayerItem?.collectible?.id
       ),
-    [audioCollectibles, currentPlayerItem]
+    [liveCollectibles, currentPlayerItem]
   )
 
   const firstCollectible = useMemo(
-    () => audioCollectibles.find((c) => c),
-    [audioCollectibles]
+    () => liveCollectibles.find((c) => c),
+    [liveCollectibles]
   )
 
-  const entries = audioCollectibles
+  const entries = liveCollectibles
     .filter((c) => c)
     .map((collectible) => ({
       track_id: collectible.id,
@@ -420,7 +420,7 @@ export const CollectiblesPlaylistPageProvider = ({
     if (user) {
       dispatch(
         requestOpenShareModal({
-          type: 'audioNftPlaylist',
+          type: 'liveNftPlaylist',
           userId: user?.user_id,
           source: ShareSource.TILE
         })
@@ -442,7 +442,7 @@ export const CollectiblesPlaylistPageProvider = ({
       firstLoadedCollectible.current?.gifUrl) as string | undefined,
     typeTitle: 'Audio NFT Playlist',
     customEmptyText: user
-      ? `There are no playable audio NFTs in any wallets connected to ${user.name}`
+      ? `There are no playable live NFTs in any wallets connected to ${user.name}`
       : ''
   }
 

@@ -22,7 +22,7 @@ const initialUsers = {
 }
 
 const makeInitialPlayer = (playing) => ({
-  audio: {
+  live: {
     load: jest.fn(),
     play: jest.fn(),
     pause: jest.fn(),
@@ -53,8 +53,8 @@ describe('watchPlay', () => {
     expect(storeState.player).toMatchObject({
       playing: true
     })
-    expect(initialPlayer.audio.load).toBeCalled()
-    expect(initialPlayer.audio.play).toBeCalled()
+    expect(initialPlayer.live.load).toBeCalled()
+    expect(initialPlayer.live.play).toBeCalled()
   })
 
   it('plays by resuming', async () => {
@@ -77,7 +77,7 @@ describe('watchPlay', () => {
     expect(storeState.player).toMatchObject({
       playing: true
     })
-    expect(initialPlayer.audio.play).toBeCalled()
+    expect(initialPlayer.live.play).toBeCalled()
   })
 })
 
@@ -100,7 +100,7 @@ describe('watchPause', () => {
     expect(storeState.player).toMatchObject({
       playing: false
     })
-    expect(initialPlayer.audio.pause).toBeCalled()
+    expect(initialPlayer.live.pause).toBeCalled()
   })
 })
 
@@ -123,7 +123,7 @@ describe('watchStop', () => {
     expect(storeState.player).toMatchObject({
       playing: false
     })
-    expect(initialPlayer.audio.stop).toBeCalled()
+    expect(initialPlayer.live.stop).toBeCalled()
   })
 })
 
@@ -146,6 +146,6 @@ describe('watchSeek', () => {
     expect(storeState.player).toMatchObject({
       playing: true
     })
-    expect(initialPlayer.audio.seek).toBeCalledWith(30)
+    expect(initialPlayer.live.seek).toBeCalledWith(30)
   })
 })

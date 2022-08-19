@@ -5,7 +5,7 @@ import {
   fetchCognitoFlowUrlFailed,
   fetchCognitoFlowUrlSucceeded,
   updateHCaptchaScore
-} from 'common/store/pages/audio-rewards/slice'
+} from 'common/store/pages/live-rewards/slice'
 import {
   CognitoFlowResponse,
   getCognitoFlow

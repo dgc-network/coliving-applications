@@ -32,7 +32,7 @@ import {
   clearColivingAccountUser
 } from 'services/LocalStorage'
 import { recordIP } from 'services/coliving-backend/RecordIP'
-import { createUserBankIfNeeded } from 'services/coliving-backend/waudio'
+import { createUserBankIfNeeded } from 'services/coliving-backend/wlive'
 import fingerprintClient from 'services/fingerprint/FingerprintClient'
 import { SignedIn } from 'services/native-mobile-interface/lifecycle'
 import { remoteConfigInstance } from 'services/remote-config/remote-config-instance'

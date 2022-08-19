@@ -151,7 +151,7 @@ class WalletClient {
           throw new Error(error)
         }
         console.error(
-          `Error sending sol wrapped audio amount ${amount.toString()} to ${address.toString()}` +
+          `Error sending sol wrapped live amount ${amount.toString()} to ${address.toString()}` +
             `with error ${error.toString()} and errorCode: ${errorCode}`
         )
         throw new Error(

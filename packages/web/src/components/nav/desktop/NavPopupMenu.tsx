@@ -21,7 +21,7 @@ import styles from './NavPopupMenu.module.css'
 const messages = {
   settings: 'Settings',
   dashboard: 'Artist Dashboard',
-  audio: '$LIVE & Rewards'
+  live: '$LIVE & Rewards'
 }
 
 const useAccountHasTracks = () => {
@@ -48,7 +48,7 @@ const NavPopupMenu = () => {
         }
       : null,
     {
-      text: messages.audio,
+      text: messages.live,
       className: styles.rewardsMenuItem,
       onClick: () => navigate(LIVE_PAGE),
       icon: <IconCrown />,

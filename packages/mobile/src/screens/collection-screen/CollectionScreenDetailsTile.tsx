@@ -17,7 +17,7 @@ import type {
 import { TrackList } from 'app/components/track-list'
 import { useDispatchWeb } from 'app/hooks/useDispatchWeb'
 import { useSelectorWeb } from 'app/hooks/useSelectorWeb'
-import { getPlaying, getPlayingUid, getTrack } from 'app/store/audio/selectors'
+import { getPlaying, getPlayingUid, getTrack } from 'app/store/live/selectors'
 import { makeStyles } from 'app/styles'
 import { make, track } from 'app/utils/analytics'
 import { formatCount } from 'app/utils/format'

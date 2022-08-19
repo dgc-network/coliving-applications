@@ -86,10 +86,10 @@ export const makeGetTierAndVerifiedForUser = () =>
 // Helpers
 
 export const getTierAndNumberForBalance = (balance: StringWei) => {
-  const audio = stringWeiToAudioBN(balance)
+  const live = stringWeiToAudioBN(balance)
 
   const index = badgeTiers.findIndex((t) => {
-    return t.minAudio.lte(audio)
+    return t.minAudio.lte(live)
   })
 
   const tier = index === -1 ? 'none' : badgeTiers[index].tier

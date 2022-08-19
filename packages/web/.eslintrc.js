@@ -20,7 +20,7 @@ module.exports = {
       alias: {
         map: [
           ['__mocks__', './src/__mocks__'],
-          ['audio', './src/audio'],
+          ['live', './src/live'],
           ['assets', './src/assets'],
           ['common', './src/common'],
           ['components', './src/components'],

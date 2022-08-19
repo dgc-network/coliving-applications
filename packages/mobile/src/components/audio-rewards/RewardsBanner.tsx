@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 
-import { setTrendingRewardsModalType } from '-client/src/common/store/pages/audio-rewards/slice'
+import { setTrendingRewardsModalType } from '-client/src/common/store/pages/live-rewards/slice'
 import { setVisibility } from '-client/src/common/store/ui/modals/slice'
 import { Text, View } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
@@ -12,10 +12,10 @@ import { makeStyles } from 'app/styles'
 import { useThemeColors } from 'app/utils/theme'
 
 const messages = {
-  rewards: '$audio rewards',
-  tracks: 'top 5 tracks each week win $audio',
-  playlists: 'top 5 playlists each week win $audio',
-  underground: 'top 5 tracks each week win $audio',
+  rewards: '$live rewards',
+  tracks: 'top 5 tracks each week win $live',
+  playlists: 'top 5 playlists each week win $live',
+  underground: 'top 5 tracks each week win $live',
   learnMore: 'learn more'
 }
 

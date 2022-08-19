@@ -1,7 +1,7 @@
 import { View } from 'react-native'
 import { useSelector } from 'react-redux'
 
-import { getTrack } from 'app/store/audio/selectors'
+import { getTrack } from 'app/store/live/selectors'
 
 import { PLAY_BAR_HEIGHT } from '../now-playing-drawer'
 

@@ -22,7 +22,7 @@ import useKeyboardListeners from 'app/hooks/useKeyboardListeners'
 import type { Message } from 'app/message'
 import { MessageType, handleMessage } from 'app/message'
 import type { AppState } from 'app/store'
-import { getTrack, getIndex } from 'app/store/audio/selectors'
+import { getTrack, getIndex } from 'app/store/live/selectors'
 import {
   getDappLoaded,
   getIsOnFirstPage,

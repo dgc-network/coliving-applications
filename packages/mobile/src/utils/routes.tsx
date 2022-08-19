@@ -79,7 +79,7 @@ export const getEmptyPageRoute = (fullUrl = false) => {
 }
 
 export const getAudioPageRoute = () => {
-  return '/audio'
+  return '/live'
 }
 
 /**

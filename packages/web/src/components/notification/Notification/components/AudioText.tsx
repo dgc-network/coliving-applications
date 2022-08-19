@@ -1,7 +1,7 @@
 import styles from './AudioText.module.css'
 
 const messages = {
-  audioLabel: 'audio tokens'
+  liveLabel: 'live tokens'
 }
 
 type AudioTextProps = {
@@ -11,7 +11,7 @@ type AudioTextProps = {
 export const AudioText = ({ value }: AudioTextProps) => {
   return (
     <span className={styles.root}>
-      {value} <span aria-label={messages.audioLabel}>$LIVE</span>
+      {value} <span aria-label={messages.liveLabel}>$LIVE</span>
     </span>
   )
 }

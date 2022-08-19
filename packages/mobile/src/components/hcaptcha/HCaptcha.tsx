@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 
 import HCaptcha from '@hcaptcha/react-native-hcaptcha'
-import { getHCaptchaStatus } from '-client/src/common/store/pages/audio-rewards/selectors'
-import { HCaptchaStatus } from '-client/src/common/store/pages/audio-rewards/slice'
+import { getHCaptchaStatus } from '-client/src/common/store/pages/live-rewards/selectors'
+import { HCaptchaStatus } from '-client/src/common/store/pages/live-rewards/slice'
 import {
   getModalVisibility,
   setVisibility

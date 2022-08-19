@@ -46,7 +46,7 @@ type AudioTiers = Exclude<BadgeTier, 'none'>
 const tiers: AudioTiers[] = ['bronze', 'silver', 'gold', 'platinum']
 
 // Mapping for large icons
-export const audioTierMapPng: {
+export const liveTierMapPng: {
   [tier in AudioTiers]: Nullable<ReactElement>
 } = {
   bronze: <img alt='' src={IconBronzeBadge} />,
@@ -57,7 +57,7 @@ export const audioTierMapPng: {
 
 export const BADGE_LOCAL_STORAGE_KEY = 'last_badge_tier'
 
-export const LEARN_MORE_URL = 'http://blog.coliving.co/posts/community-meet-audio'
+export const LEARN_MORE_URL = 'http://blog.coliving.co/posts/community-meet-live'
 
 const useShowConfetti = (tier: BadgeTier) => {
   // No tier or no local storage, never show confetti
@@ -91,7 +91,7 @@ export const TierNumber = ({ tier }: { tier: AudioTiers }) => {
   )
 }
 
-/** Renders out level of audio required for a tier - e.g. '1000+ $LIVE */
+/** Renders out level of live required for a tier - e.g. '1000+ $LIVE */
 export const TierLevel = ({ tier }: { tier: AudioTiers }) => {
   const minAudio = useMemo(
     () => badgeTiers.find((b) => b.tier === tier)?.minAudio.toString() ?? '',
@@ -114,7 +114,7 @@ export const Tier = ({
   isCompact = false,
   onClickDiscord = () => {}
 }: TierProps) => {
-  const badgeImage = audioTierMapPng[tier]
+  const badgeImage = liveTierMapPng[tier]
 
   return (
     <div

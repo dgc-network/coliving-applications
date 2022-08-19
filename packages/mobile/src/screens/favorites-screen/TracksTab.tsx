@@ -20,7 +20,7 @@ import type { TrackMetadata } from 'app/components/track-list/types'
 import { WithLoader } from 'app/components/with-loader/WithLoader'
 import { useDispatchWeb } from 'app/hooks/useDispatchWeb'
 import { useSelectorWeb } from 'app/hooks/useSelectorWeb'
-import { getPlaying, getPlayingUid } from 'app/store/audio/selectors'
+import { getPlaying, getPlayingUid } from 'app/store/live/selectors'
 import { makeStyles } from 'app/styles'
 import { make, track } from 'app/utils/analytics'
 

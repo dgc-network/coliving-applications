@@ -6,12 +6,12 @@ import { getOptimisticUserChallenges } from '-client/src/common/store/challenges
 import {
   getChallengeRewardsModalType,
   getClaimStatus
-} from '-client/src/common/store/pages/audio-rewards/selectors'
+} from '-client/src/common/store/pages/live-rewards/selectors'
 import {
   claimChallengeReward,
   ClaimStatus,
   resetAndCancelClaimReward
-} from '-client/src/common/store/pages/audio-rewards/slice'
+} from '-client/src/common/store/pages/live-rewards/slice'
 import { setVisibility } from '-client/src/common/store/ui/modals/slice'
 
 import { useDispatchWeb } from 'app/hooks/useDispatchWeb'
@@ -65,18 +65,18 @@ export const ChallengeRewardsDrawerProvider = () => {
   // We could just depend on undisbursedAmount here
   // But DN may have not indexed the challenge so check for client-side completion too
   // Note that we can't handle aggregate challenges optimistically
-  let audioToClaim = 0
-  let audioClaimedSoFar = 0
+  let liveToClaim = 0
+  let liveClaimedSoFar = 0
   if (challenge?.challenge_type === 'aggregate') {
-    audioToClaim = challenge.claimableAmount
-    audioClaimedSoFar =
-      challenge.amount * challenge.current_step_count - audioToClaim
+    liveToClaim = challenge.claimableAmount
+    liveClaimedSoFar =
+      challenge.amount * challenge.current_step_count - liveToClaim
   } else if (challenge?.state === 'completed') {
-    audioToClaim = challenge.totalAmount
-    audioClaimedSoFar = 0
+    liveToClaim = challenge.totalAmount
+    liveClaimedSoFar = 0
   } else if (challenge?.state === 'disbursed') {
-    audioToClaim = 0
-    audioClaimedSoFar = challenge.totalAmount
+    liveToClaim = 0
+    liveClaimedSoFar = challenge.totalAmount
   }
 
   const { navigate } = useNavigation<ChallengesParamList>()
@@ -179,8 +179,8 @@ export const ChallengeRewardsDrawerProvider = () => {
       challengeState={challenge.state}
       currentStep={challenge.current_step_count}
       stepCount={challenge.max_steps}
-      claimableAmount={audioToClaim}
-      claimedAmount={audioClaimedSoFar}
+      claimableAmount={liveToClaim}
+      claimedAmount={liveClaimedSoFar}
       claimStatus={claimStatus}
       onClaim={hasConfig ? onClaim : undefined}
       isVerifiedChallenge={!!config.isVerifiedChallenge}

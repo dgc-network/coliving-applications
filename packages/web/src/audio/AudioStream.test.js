@@ -1,6 +1,6 @@
 import Hls from 'hls.js'
 
-import AudioStream from 'audio/AudioStream'
+import AudioStream from 'live/AudioStream'
 
 jest.mock('hls.js', () => {
   const hls = jest.fn().mockImplementation(() => ({
@@ -43,7 +43,7 @@ beforeAll(() => {
 
 describe('load hls.js', () => {
   let segments
-  let audioStream
+  let liveStream
   beforeEach(() => {
     segments = [
       {
@@ -59,21 +59,21 @@ describe('load hls.js', () => {
         multihash: 'c'
       }
     ]
-    audioStream = new AudioStream()
+    liveStream = new AudioStream()
   })
 
   it('loads segments with hlsjs', () => {
-    audioStream.load(segments, () => {})
+    liveStream.load(segments, () => {})
 
-    expect(audioStream.hls.loadSource).toBeCalled()
-    expect(audioStream.hls.attachMedia).toBeCalledWith(audioStream.audio)
-    expect(audioStream.duration).toEqual(18)
+    expect(liveStream.hls.loadSource).toBeCalled()
+    expect(liveStream.hls.attachMedia).toBeCalledWith(liveStream.live)
+    expect(liveStream.duration).toEqual(18)
   })
 })
 
 describe('load native hls', () => {
   let segments
-  let audioStream
+  let liveStream
   beforeEach(() => {
     Hls.isSupported = jest.fn().mockReturnValue(false)
 
@@ -91,33 +91,33 @@ describe('load native hls', () => {
         multihash: 'c'
       }
     ]
-    audioStream = new AudioStream()
+    liveStream = new AudioStream()
   })
 
   it('loads segments with native hls', () => {
-    audioStream.load(segments, () => {})
+    liveStream.load(segments, () => {})
 
-    expect(audioStream.audio.src).toEqual(
+    expect(liveStream.live.src).toEqual(
       expect.stringContaining('data:application/vnd.apple.mpegURL;')
     )
-    expect(audioStream.duration).toEqual(18)
+    expect(liveStream.duration).toEqual(18)
   })
 
   it('sets up event listeners', () => {
     const onEnd = jest.fn()
-    audioStream.load(segments, onEnd)
+    liveStream.load(segments, onEnd)
     const onBufferingChange = jest.fn()
-    audioStream.onBufferingChange = onBufferingChange
+    liveStream.onBufferingChange = onBufferingChange
 
-    audioStream.audio.dispatchEvent(new Event('waiting'))
-    expect(audioStream.buffering).toEqual(true)
+    liveStream.live.dispatchEvent(new Event('waiting'))
+    expect(liveStream.buffering).toEqual(true)
     expect(onBufferingChange).toBeCalledWith(true)
 
-    audioStream.audio.dispatchEvent(new Event('canplay'))
-    expect(audioStream.buffering).toEqual(false)
+    liveStream.live.dispatchEvent(new Event('canplay'))
+    expect(liveStream.buffering).toEqual(false)
     expect(onBufferingChange).toBeCalledWith(false)
 
-    audioStream.audio.dispatchEvent(new Event('ended'))
+    liveStream.live.dispatchEvent(new Event('ended'))
     expect(onEnd).toBeCalled()
   })
 })
@@ -131,9 +131,9 @@ describe('play', () => {
       dispatchEvent: jest.fn(),
       play
     }))
-    const audioStream = new AudioStream()
-    audioStream.load([{ duration: 6 }], () => {})
-    audioStream.play()
+    const liveStream = new AudioStream()
+    liveStream.load([{ duration: 6 }], () => {})
+    liveStream.play()
 
     expect(play).toBeCalled()
   })
@@ -150,9 +150,9 @@ describe('pause', () => {
       dispatchEvent: jest.fn(),
       pause
     }))
-    const audioStream = new AudioStream()
-    audioStream.load([{ duration: 6 }], () => {})
-    audioStream.pause()
+    const liveStream = new AudioStream()
+    liveStream.load([{ duration: 6 }], () => {})
+    liveStream.pause()
 
     expect(pause).toBeCalled()
   })
@@ -167,13 +167,13 @@ describe('stop', () => {
       dispatchEvent: jest.fn(),
       pause
     }))
-    const audioStream = new AudioStream()
-    audioStream.load([{ duration: 6 }], () => {})
-    audioStream.stop()
+    const liveStream = new AudioStream()
+    liveStream.load([{ duration: 6 }], () => {})
+    liveStream.stop()
 
     expect(pause).toBeCalled()
     setTimeout(() => {
-      expect(audioStream.audio.currentTime).toEqual(0)
+      expect(liveStream.live.currentTime).toEqual(0)
     }, 0)
   })
 })

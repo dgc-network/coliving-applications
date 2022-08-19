@@ -8,7 +8,7 @@ import DraggableFlatList from 'react-native-draggable-flatlist'
 import { useSelector } from 'react-redux'
 
 import * as haptics from 'app/haptics'
-import { getPlaying, getPlayingUid } from 'app/store/audio/selectors'
+import { getPlaying, getPlayingUid } from 'app/store/live/selectors'
 import { makeStyles } from 'app/styles'
 
 import type { TrackItemAction } from './TrackListItem'

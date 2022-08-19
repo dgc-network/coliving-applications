@@ -45,7 +45,7 @@ export const ShareModal = () => {
   const handleShareToTwitter = useCallback(() => {
     if (!source || !content) return
     const isPlaylistOwner =
-      content.type === 'audioNftPlaylist' &&
+      content.type === 'liveNftPlaylist' &&
       account?.user_id === content.user.user_id
     const { twitterText, link, analyticsEvent } = getTwitterShareText(
       content,
@@ -80,7 +80,7 @@ export const ShareModal = () => {
       case 'playlist':
         dispatch(shareCollection(content.playlist.playlist_id, source))
         break
-      case 'audioNftPlaylist':
+      case 'liveNftPlaylist':
         dispatch(shareAudioNftPlaylist(content.user.handle, source))
         break
     }

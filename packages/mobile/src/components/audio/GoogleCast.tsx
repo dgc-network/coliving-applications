@@ -10,7 +10,7 @@ import {
 import { useSelector } from 'react-redux'
 
 import { useDispatchWeb } from 'app/hooks/useDispatchWeb'
-import { getTrack, getPlaying, getSeek } from 'app/store/audio/selectors'
+import { getTrack, getPlaying, getSeek } from 'app/store/live/selectors'
 
 export const useChromecast = () => {
   const dispatchWeb = useDispatchWeb()

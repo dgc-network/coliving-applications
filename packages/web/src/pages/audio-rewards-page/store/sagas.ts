@@ -29,7 +29,7 @@ import {
   getUserChallenge,
   getUserChallengesOverrides,
   getUserChallengeSpecifierMap
-} from 'common/store/pages/audio-rewards/selectors'
+} from 'common/store/pages/live-rewards/selectors'
 import {
   resetAndCancelClaimReward,
   claimChallengeReward,
@@ -53,13 +53,13 @@ import {
   updateOptimisticListenStreak,
   setUndisbursedChallenges,
   UndisbursedUserChallenge
-} from 'common/store/pages/audio-rewards/slice'
+} from 'common/store/pages/live-rewards/slice'
 import { getFeePayer } from 'common/store/solana/selectors'
 import { setVisibility } from 'common/store/ui/modals/slice'
 import { getBalance, increaseBalance } from 'common/store/wallet/slice'
 import { stringAudioToStringWei } from 'common/utils/wallet'
 import { show as showMusicConfetti } from 'components/music-confetti/store/slice'
-import mobileSagas from 'pages/audio-rewards-page/store/mobileSagas'
+import mobileSagas from 'pages/live-rewards-page/store/mobileSagas'
 import ColivingBackend from 'services/ColivingBackend'
 import apiClient from 'services/coliving-api-client/ColivingAPIClient'
 import { getCognitoExists } from 'services/coliving-backend/Cognito'
@@ -563,7 +563,7 @@ function* userChallengePollingDaemon() {
   const defaultChallengePollingTimeout = remoteConfigInstance.getRemoteVar(
     IntKeys.CHALLENGE_REFRESH_INTERVAL_MS
   )!
-  const audioRewardsPageChallengePollingTimeout =
+  const liveRewardsPageChallengePollingTimeout =
     remoteConfigInstance.getRemoteVar(
       IntKeys.CHALLENGE_REFRESH_INTERVAL_LIVE_PAGE_MS
     )!
@@ -577,7 +577,7 @@ function* userChallengePollingDaemon() {
     fetchUserChallenges(),
     defaultChallengePollingTimeout,
     {
-      [LIVE_PAGE]: audioRewardsPageChallengePollingTimeout
+      [LIVE_PAGE]: liveRewardsPageChallengePollingTimeout
     }
   )
 }

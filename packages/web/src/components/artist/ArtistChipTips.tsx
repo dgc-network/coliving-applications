@@ -20,7 +20,7 @@ import { TIPPING_TOP_RANK_THRESHOLD } from 'utils/constants'
 import styles from './ArtistChip.module.css'
 
 const messages = {
-  audio: '$LIVE',
+  live: '$LIVE',
   supporter: 'Supporter'
 }
 
@@ -78,7 +78,7 @@ export const ArtistChipTips = ({ artistId, tag }: ArtistChipTipsProps) => {
           <span className={styles.value}>
             {formatWei(stringWeiToBN(amount), true)}
           </span>
-          <span className={styles.label}>{messages.audio}</span>
+          <span className={styles.label}>{messages.live}</span>
         </div>
       )}
     </div>

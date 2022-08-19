@@ -4,13 +4,13 @@ import { createSelector } from 'reselect'
 import { CommonState } from 'common/store'
 
 export const getTrendingRewardsModalType = (state: CommonState) =>
-  state.pages.audioRewards.trendingRewardsModalType
+  state.pages.liveRewards.trendingRewardsModalType
 
 export const getChallengeRewardsModalType = (state: CommonState) =>
-  state.pages.audioRewards.challengeRewardsModalType
+  state.pages.liveRewards.challengeRewardsModalType
 
 export const getUserChallengeSpecifierMap = (state: CommonState) =>
-  state.pages.audioRewards.userChallenges
+  state.pages.liveRewards.userChallenges
 
 // Returns just a single challenge per challengeId
 export const getUserChallenges = createSelector(
@@ -28,9 +28,9 @@ export const getUserChallenges = createSelector(
 )
 
 export const getUndisbursedUserChallenges = (state: CommonState) =>
-  state.pages.audioRewards.undisbursedChallenges.filter((challenge) => {
+  state.pages.liveRewards.undisbursedChallenges.filter((challenge) => {
     return !(
-      state.pages.audioRewards.disbursedChallenges[challenge.challenge_id] ?? []
+      state.pages.liveRewards.disbursedChallenges[challenge.challenge_id] ?? []
     ).includes(challenge.specifier)
   })
 
@@ -39,32 +39,32 @@ export const getUserChallenge = (
   props: { challengeId: ChallengeRewardID }
 ) =>
   Object.values(
-    state.pages.audioRewards.userChallenges[props.challengeId] || {}
+    state.pages.liveRewards.userChallenges[props.challengeId] || {}
   )[0]
 
 export const getUserChallengesOverrides = (state: CommonState) =>
-  state.pages.audioRewards.userChallengesOverrides
+  state.pages.liveRewards.userChallengesOverrides
 
 export const getUserChallengesLoading = (state: CommonState) =>
-  state.pages.audioRewards.loading
+  state.pages.liveRewards.loading
 
 export const getClaimStatus = (state: CommonState) =>
-  state.pages.audioRewards.claimStatus
+  state.pages.liveRewards.claimStatus
 
 export const getClaimToRetry = (state: CommonState) =>
-  state.pages.audioRewards.claimToRetry
+  state.pages.liveRewards.claimToRetry
 
 export const getHCaptchaStatus = (state: CommonState) =>
-  state.pages.audioRewards.hCaptchaStatus
+  state.pages.liveRewards.hCaptchaStatus
 
 export const getCognitoFlowStatus = (state: CommonState) =>
-  state.pages.audioRewards.cognitoFlowStatus
+  state.pages.liveRewards.cognitoFlowStatus
 
 export const getCognitoFlowUrl = (state: CommonState) =>
-  state.pages.audioRewards.cognitoFlowUrl
+  state.pages.liveRewards.cognitoFlowUrl
 
 export const getCognitoFlowUrlStatus = (state: CommonState) =>
-  state.pages.audioRewards.cognitoFlowUrlStatus
+  state.pages.liveRewards.cognitoFlowUrlStatus
 
 export const getShowRewardClaimedToast = (state: CommonState) =>
-  state.pages.audioRewards.showRewardClaimedToast
+  state.pages.liveRewards.showRewardClaimedToast

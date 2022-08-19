@@ -135,8 +135,8 @@ const NavigationContainer = ({ children }: Props) => {
       } else {
         // If the path has two parts
         if (path.match(/^\/[^/]+\/[^/]+$/)) {
-          // If the path is to audio-nft-playlist, reroute to feed
-          if (path.match(/^\/[^/]+\/audio-nft-playlist$/)) {
+          // If the path is to live-nft-playlist, reroute to feed
+          if (path.match(/^\/[^/]+\/live-nft-playlist$/)) {
             path = '/feed'
           }
           // If the path doesn't match a profile tab, it's a track

@@ -3,7 +3,7 @@ attribute float direction;
 attribute vec3 next;
 attribute vec3 previous;
 
-uniform sampler2D audioTexture;
+uniform sampler2D liveTexture;
 uniform mat4 projection;
 uniform mat4 model;
 uniform mat4 view;
@@ -21,7 +21,7 @@ varying vec2 uvCoords;
 #define HAS_VERTEX_SAMPLER
 #define PI 3.14
 
-#pragma glslify: analyse = require('gl-audio-analyser')
+#pragma glslify: analyse = require('gl-live-analyser')
 #pragma glslify: noise4d = require('glsl-noise/simplex/4d')
 #pragma glslify: noise3d = require('glsl-noise/simplex/3d')
 
@@ -79,7 +79,7 @@ float turb (float angle, float alpha, float scale, float offset) {
 
 void main() {
   #ifdef HAS_VERTEX_SAMPLER
-  float frequencies = analyse(audioTexture, position.x * 0.5 + 0.5);
+  float frequencies = analyse(liveTexture, position.x * 0.5 + 0.5);
   #endif
   
   float pinch = smoothstep(0.0, 0.5, 1.0 - abs(position.x));

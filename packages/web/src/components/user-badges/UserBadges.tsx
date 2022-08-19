@@ -16,7 +16,7 @@ import { useSelectTierInfo } from 'common/hooks/wallet'
 
 import styles from './UserBadges.module.css'
 
-const audioTierMapSVG: { [tier in BadgeTier]: Nullable<ReactElement> } = {
+const liveTierMapSVG: { [tier in BadgeTier]: Nullable<ReactElement> } = {
   none: null,
   bronze: <IconBronzeBadgeSVG />,
   silver: <IconSilverBadgeSVG />,
@@ -24,7 +24,7 @@ const audioTierMapSVG: { [tier in BadgeTier]: Nullable<ReactElement> } = {
   platinum: <IconPlatinumBadgeSVG />
 }
 
-export const audioTierMapPng: {
+export const liveTierMapPng: {
   [tier in BadgeTier]: Nullable<ReactElement>
 } = {
   none: null,
@@ -65,9 +65,9 @@ const UserBadges = ({
 }: UserBadgesProps) => {
   const { tier: currentTier, isVerified } = useSelectTierInfo(userId)
   const tier = overrideTier || currentTier
-  const tierMap = useSVGTiers ? audioTierMapSVG : audioTierMapPng
-  const audioBadge = tierMap[tier as BadgeTier]
-  const hasContent = isVerifiedOverride ?? (isVerified || audioBadge)
+  const tierMap = useSVGTiers ? liveTierMapSVG : liveTierMapPng
+  const liveBadge = tierMap[tier as BadgeTier]
+  const hasContent = isVerifiedOverride ?? (isVerified || liveBadge)
 
   if (inline) {
     return (
@@ -79,8 +79,8 @@ const UserBadges = ({
         {(isVerifiedOverride ?? isVerified) && (
           <IconVerified height={badgeSize} width={badgeSize} />
         )}
-        {audioBadge &&
-          cloneElement(audioBadge, { height: badgeSize, width: badgeSize })}
+        {liveBadge &&
+          cloneElement(liveBadge, { height: badgeSize, width: badgeSize })}
       </span>
     )
   }
@@ -93,8 +93,8 @@ const UserBadges = ({
       {(isVerifiedOverride ?? isVerified) && (
         <IconVerified height={badgeSize} width={badgeSize} />
       )}
-      {audioBadge &&
-        cloneElement(audioBadge, { height: badgeSize, width: badgeSize })}
+      {liveBadge &&
+        cloneElement(liveBadge, { height: badgeSize, width: badgeSize })}
     </div>
   )
 }

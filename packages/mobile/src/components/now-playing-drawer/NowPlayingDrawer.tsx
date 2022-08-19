@@ -24,11 +24,11 @@ import { useDispatchWeb } from 'app/hooks/useDispatchWeb'
 import { useDrawer } from 'app/hooks/useDrawer'
 import { useNavigation } from 'app/hooks/useNavigation'
 import { useSelectorWeb } from 'app/hooks/useSelectorWeb'
-import { SEEK, seek } from 'app/store/audio/actions'
+import { SEEK, seek } from 'app/store/live/actions'
 import {
   getPlaying,
   getTrack as getNativeTrack
-} from 'app/store/audio/selectors'
+} from 'app/store/live/selectors'
 import { makeStyles } from 'app/styles'
 
 import { ActionsBar } from './ActionsBar'
@@ -95,7 +95,7 @@ const NowPlayingDrawer = ({ translationAnim }: NowPlayingDrawerProps) => {
   const isPlaying = useSelector(getPlaying)
   const [isPlayBarShowing, setIsPlayBarShowing] = useState(false)
 
-  // When audio starts playing, open the playbar to the initial offset
+  // When live starts playing, open the playbar to the initial offset
   useEffect(() => {
     if (isPlaying && !isPlayBarShowing) {
       setIsPlayBarShowing(true)
@@ -162,7 +162,7 @@ const NowPlayingDrawer = ({ translationAnim }: NowPlayingDrawerProps) => {
 
   const [isGestureEnabled, setIsGestureEnabled] = useState(true)
 
-  // TODO: As we move away from the audio store slice in mobile-client
+  // TODO: As we move away from the live store slice in mobile-client
   // in favor of player/queue selectors in common, getNativeTrack calls
   // should be replaced
   const trackInfo = useSelector(getNativeTrack)

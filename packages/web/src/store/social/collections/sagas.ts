@@ -30,7 +30,7 @@ import { waitForBackendSetup } from 'store/backend/sagas'
 import * as confirmerActions from 'store/confirmer/actions'
 import { confirmTransaction } from 'store/confirmer/sagas'
 import { update as updatePlaylistLibrary } from 'store/playlist-library/slice'
-import { albumPage, audioNftPlaylistPage, playlistPage } from 'utils/route'
+import { albumPage, liveNftPlaylistPage, playlistPage } from 'utils/route'
 import { share } from 'utils/share'
 
 import watchCollectionErrors from './errorSagas'
@@ -556,11 +556,11 @@ export function* watchShareAudioNftPlaylist() {
       const { handle } = action
       const user = yield* select(getUser, { handle })
 
-      const link = audioNftPlaylistPage(handle)
+      const link = liveNftPlaylistPage(handle)
       share(link, formatShareText('Audio NFT Playlist', user?.name ?? handle))
 
       const event = make(Name.SHARE, {
-        kind: 'audioNftPlaylist',
+        kind: 'liveNftPlaylist',
         source: action.source,
         url: link
       })

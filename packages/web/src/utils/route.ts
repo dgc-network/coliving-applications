@@ -62,13 +62,13 @@ export const TRENDING_PLAYLISTS_PAGE = '/explore/playlists'
 export const TRENDING_UNDERGROUND_PAGE = '/explore/underground'
 export const EXPLORE_REMIXABLES_PAGE = '/explore/remixables'
 
-export const LIVE_NFT_PLAYLIST_PAGE = '/:handle/audio-nft-playlist'
+export const LIVE_NFT_PLAYLIST_PAGE = '/:handle/live-nft-playlist'
 
 export const SAVED_PAGE = '/favorites'
 export const FAVORITES_PAGE = '/favorites'
 export const HISTORY_PAGE = '/history'
 export const DASHBOARD_PAGE = '/dashboard'
-export const LIVE_PAGE = '/audio'
+export const LIVE_PAGE = '/live'
 export const UPLOAD_PAGE = '/upload'
 export const UPLOAD_ALBUM_PAGE = '/upload/album'
 export const UPLOAD_PLAYLIST_PAGE = '/upload/playlist'
@@ -283,11 +283,11 @@ export const fullPlaylistPage = (handle: string, title: string, id: ID) => {
   return `${BASE_URL}${playlistPage(handle, title, id)}`
 }
 
-export const audioNftPlaylistPage = (handle: string) => {
-  return `/${encodeUrlName(handle)}/audio-nft-playlist`
+export const liveNftPlaylistPage = (handle: string) => {
+  return `/${encodeUrlName(handle)}/live-nft-playlist`
 }
 export const fullAudioNftPlaylistPage = (handle: string) => {
-  return `${BASE_URL}${audioNftPlaylistPage(handle)}`
+  return `${BASE_URL}${liveNftPlaylistPage(handle)}`
 }
 
 export const collectibleDetailsPage = (

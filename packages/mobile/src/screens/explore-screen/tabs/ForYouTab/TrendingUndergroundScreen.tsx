@@ -2,7 +2,7 @@ import { makeGetLineupMetadatas } from '-client/src/common/store/lineup/selector
 import { trendingUndergroundLineupActions } from '-client/src/common/store/pages/trending-underground/lineup/actions'
 import { getLineup } from '-client/src/common/store/pages/trending-underground/lineup/selectors'
 
-import { RewardsBanner } from 'app/components/audio-rewards'
+import { RewardsBanner } from 'app/components/live-rewards'
 import { Header } from 'app/components/header'
 import { Lineup } from 'app/components/lineup'
 import { useSelectorWeb } from 'app/hooks/useSelectorWeb'

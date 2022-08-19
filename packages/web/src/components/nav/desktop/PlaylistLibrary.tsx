@@ -44,7 +44,7 @@ import { open as openEditPlaylistModal } from 'store/application/ui/editPlaylist
 import { getIsDragging } from 'store/dragndrop/selectors'
 import { update } from 'store/playlist-library/slice'
 import { useSelector } from 'utils/reducer'
-import { audioNftPlaylistPage, getPathname, playlistPage } from 'utils/route'
+import { liveNftPlaylistPage, getPathname, playlistPage } from 'utils/route'
 
 import navColumnStyles from './NavColumn.module.css'
 import { PlaylistFolderNavItem } from './PlaylistFolderNavItem'
@@ -121,7 +121,7 @@ const PlaylistLibrary = ({
   const [, setIsEditFolderModalOpen] = useModalState('EditFolder')
 
   const accountCollectibles = useSelector(getAccountCollectibles)
-  const audioCollectibles = useMemo(
+  const liveCollectibles = useMemo(
     () =>
       accountCollectibles?.filter((c) =>
         ['mp3', 'wav', 'oga', 'mp4'].some(
@@ -131,14 +131,14 @@ const PlaylistLibrary = ({
     [accountCollectibles]
   )
 
-  // Set audio nft playlist in library if it is not already set
+  // Set live nft playlist in library if it is not already set
   useEffect(() => {
     if (library) {
       const isAudioNftPlaylistInLibrary = !!findInPlaylistLibrary(
         library,
         SmartCollectionVariant.LIVE_NFT_PLAYLIST
       )
-      if (audioCollectibles.length && !isAudioNftPlaylistInLibrary) {
+      if (liveCollectibles.length && !isAudioNftPlaylistInLibrary) {
         dispatch(
           saveSmartCollection(
             LIVE_NFT_PLAYLIST.playlist_name,
@@ -147,7 +147,7 @@ const PlaylistLibrary = ({
         )
       }
     }
-  }, [audioCollectibles, library, dispatch])
+  }, [liveCollectibles, library, dispatch])
 
   const handleClickEditFolder = useCallback(
     (folderId) => {
@@ -238,13 +238,13 @@ const PlaylistLibrary = ({
   ) => {
     const isAudioNftPlaylist =
       playlistId === SmartCollectionVariant.LIVE_NFT_PLAYLIST
-    if (isAudioNftPlaylist && !audioCollectibles.length) return null
+    if (isAudioNftPlaylist && !liveCollectibles.length) return null
     const playlist = SMART_COLLECTION_MAP[playlistId]
     if (!playlist) return null
 
     const name = playlist.playlist_name
     const url = isAudioNftPlaylist
-      ? audioNftPlaylistPage(account?.handle ?? '')
+      ? liveNftPlaylistPage(account?.handle ?? '')
       : playlist.link
 
     return (

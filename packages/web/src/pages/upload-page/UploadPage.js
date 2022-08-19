@@ -218,9 +218,9 @@ class Upload extends Component {
     }
 
     if (this.state.preview) this.stopPreview()
-    const audio = this.state.tracks[index].preview
-    audio.play()
-    this.setState({ preview: audio, previewIndex: index })
+    const live = this.state.tracks[index].preview
+    live.play()
+    this.setState({ preview: live, previewIndex: index })
   }
 
   stopPreview = () => {
@@ -453,7 +453,7 @@ class Upload extends Component {
     return (
       <Page
         title='Upload'
-        description='Upload and publish audio content to the Coliving platform'
+        description='Upload and publish live content to the Coliving platform'
         contentClassName={styles.upload}
         header={header}
       >

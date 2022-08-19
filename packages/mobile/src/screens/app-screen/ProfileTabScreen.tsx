@@ -1,4 +1,4 @@
-import { AudioScreen } from 'app/screens/audio-screen'
+import { AudioScreen } from 'app/screens/live-screen'
 import { EditProfileScreen } from 'app/screens/edit-profile-screen'
 import { ProfileScreen } from 'app/screens/profile-screen'
 import {

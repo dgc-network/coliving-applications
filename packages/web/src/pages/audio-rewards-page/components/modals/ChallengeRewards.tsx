@@ -23,7 +23,7 @@ import {
   getChallengeRewardsModalType,
   getClaimStatus,
   getCognitoFlowStatus
-} from 'common/store/pages/audio-rewards/selectors'
+} from 'common/store/pages/live-rewards/selectors'
 import {
   ChallengeRewardsModalType,
   setChallengeRewardsModalType,
@@ -31,7 +31,7 @@ import {
   resetAndCancelClaimReward,
   CognitoFlowStatus,
   claimChallengeReward
-} from 'common/store/pages/audio-rewards/slice'
+} from 'common/store/pages/live-rewards/slice'
 import { fillString } from 'common/utils/fillString'
 import { formatNumberCommas } from 'common/utils/formatUtil'
 import LoadingSpinner from 'components/loading-spinner/LoadingSpinner'
@@ -41,7 +41,7 @@ import { ToastContext } from 'components/toast/ToastContext'
 import Tooltip from 'components/tooltip/Tooltip'
 import { ComponentPlacement, MountPlacement } from 'components/types'
 import { useWithMobileStyle } from 'hooks/useWithMobileStyle'
-import { challengeRewardsConfig } from 'pages/audio-rewards-page/config'
+import { challengeRewardsConfig } from 'pages/live-rewards-page/config'
 import { isMobile } from 'utils/clientUtil'
 import { copyToClipboard, getCopyableLink } from 'utils/clipboardUtil'
 import { CLAIM_REWARD_TOAST_TIMEOUT_MILLIS } from 'utils/constants'
@@ -81,7 +81,7 @@ const messages = {
   claimYourReward: 'Claim Your Reward',
   twitterShare: (modalType: 'referrals' | 'ref-v') =>
     `Share Invite With Your ${modalType === 'referrals' ? 'Friends' : 'Fans'}`,
-  twitterCopy: `Come support me on @colivingproject! Use my link and we both earn $LIVE when you sign up.\n\n #coliving #audiorewards\n\n`,
+  twitterCopy: `Come support me on @colivingproject! Use my link and we both earn $LIVE when you sign up.\n\n #coliving #liverewards\n\n`,
   verifiedChallenge: 'VERIFIED CHALLENGE',
   claimAmountLabel: '$LIVE available to claim',
   claimedSoFar: '$LIVE claimed so far',
@@ -284,18 +284,18 @@ const ChallengeRewardsBody = ({ dismissModal }: BodyProps) => {
   // We could just depend on undisbursedAmount here
   // But DN may have not indexed the challenge so check for client-side completion too
   // Note that we can't handle aggregate challenges optimistically
-  let audioToClaim = 0
-  let audioClaimedSoFar = 0
+  let liveToClaim = 0
+  let liveClaimedSoFar = 0
   if (challenge?.challenge_type === 'aggregate') {
-    audioToClaim = challenge.claimableAmount
-    audioClaimedSoFar =
-      challenge.amount * challenge.current_step_count - audioToClaim
+    liveToClaim = challenge.claimableAmount
+    liveClaimedSoFar =
+      challenge.amount * challenge.current_step_count - liveToClaim
   } else if (challenge?.state === 'completed') {
-    audioToClaim = challenge.totalAmount
-    audioClaimedSoFar = 0
+    liveToClaim = challenge.totalAmount
+    liveClaimedSoFar = 0
   } else if (challenge?.state === 'disbursed') {
-    audioToClaim = 0
-    audioClaimedSoFar = challenge.totalAmount
+    liveToClaim = 0
+    liveClaimedSoFar = challenge.totalAmount
   }
 
   const showProgressBar =
@@ -410,10 +410,10 @@ const ChallengeRewardsBody = ({ dismissModal }: BodyProps) => {
         />
       )}
       <div className={wm(styles.claimRewardWrapper)}>
-        {audioToClaim > 0 ? (
+        {liveToClaim > 0 ? (
           <>
             <div className={styles.claimRewardAmountLabel}>
-              {`${audioToClaim} ${messages.claimAmountLabel}`}
+              {`${liveToClaim} ${messages.claimAmountLabel}`}
             </div>
             <Button
               text={messages.claimYourReward}
@@ -433,9 +433,9 @@ const ChallengeRewardsBody = ({ dismissModal }: BodyProps) => {
             />
           </>
         ) : null}
-        {audioClaimedSoFar > 0 && challenge?.state !== 'disbursed' ? (
+        {liveClaimedSoFar > 0 && challenge?.state !== 'disbursed' ? (
           <div className={styles.claimRewardClaimedAmountLabel}>
-            {`(${formatNumberCommas(audioClaimedSoFar)} ${
+            {`(${formatNumberCommas(liveClaimedSoFar)} ${
               messages.claimedSoFar
             })`}
           </div>

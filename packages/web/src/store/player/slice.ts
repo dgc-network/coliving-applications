@@ -1,26 +1,26 @@
 import { UID, ID, Collectible, Nullable } from '@coliving/common'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-import NativeMobileAudio from 'audio/NativeMobileAudio'
+import NativeMobileAudio from 'live/NativeMobileAudio'
 
 import { AudioState } from './types'
 
 const NATIVE_MOBILE = process.env.REACT_APP_NATIVE_MOBILE
 
 type State = {
-  // Identifiers for the audio that's playing.
+  // Identifiers for the live that's playing.
   uid: UID | null
   trackId: ID | null
 
   collectible: Collectible | null
 
-  audio: AudioState
+  live: AudioState
 
-  // Keep 'playing' in the store separately from the audio
+  // Keep 'playing' in the store separately from the live
   // object to allow components to subscribe to changes.
   playing: boolean
 
-  // Keep 'buffering' in the store separately from the audio
+  // Keep 'buffering' in the store separately from the live
   // object to allow components to subscribe to changes.
   buffering: boolean
 
@@ -35,9 +35,9 @@ export const initialState: State = {
 
   collectible: null,
 
-  // In the case of native mobile, use the native mobile audio
+  // In the case of native mobile, use the native mobile live
   // player directly. Otherwise, it is set dynamically
-  audio: NATIVE_MOBILE ? new NativeMobileAudio() : null,
+  live: NATIVE_MOBILE ? new NativeMobileAudio() : null,
 
   playing: false,
   buffering: false,
@@ -45,7 +45,7 @@ export const initialState: State = {
 }
 
 type SetAudioStreamPayload = {
-  audio: AudioState
+  live: AudioState
 }
 
 type PlayPayload = {
@@ -70,8 +70,8 @@ type PlayCollectibleSucceededPayload = {
 
 type PausePayload = {
   // Optionally allow only setting state which doesn't actually
-  // invoke a .pause on the internal audio object. This is used in
-  // native mobile audio only.
+  // invoke a .pause on the internal live object. This is used in
+  // native mobile live only.
   onlySetState?: boolean
 }
 
@@ -109,9 +109,9 @@ const slice = createSlice({
   initialState,
   reducers: {
     setAudioStream: (state, action: PayloadAction<SetAudioStreamPayload>) => {
-      const { audio } = action.payload
-      // Redux toolkit seems to do something to state.audio's type (some destructured form?)
-      state.audio = audio as typeof state.audio
+      const { live } = action.payload
+      // Redux toolkit seems to do something to state.live's type (some destructured form?)
+      state.live = live as typeof state.live
     },
     play: (state, action: PayloadAction<PlayPayload>) => {},
     playSucceeded: (state, action: PayloadAction<PlaySucceededPayload>) => {

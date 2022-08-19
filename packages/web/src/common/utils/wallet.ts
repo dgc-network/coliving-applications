@@ -26,7 +26,7 @@ export const weiToAudio = (bnWei: BNWei): BNAudio => {
   return stringAudioToBN(stringAudio)
 }
 
-export const audioToWei = (stringAudio: StringAudio): BNWei => {
+export const liveToWei = (stringAudio: StringAudio): BNWei => {
   const wei = parseWeiNumber(stringAudio) as BNWei
   return wei
 }
@@ -50,17 +50,17 @@ export const weiToString = (wei: BNWei): StringWei => {
 }
 
 export const stringAudioToStringWei = (stringAudio: StringAudio): StringWei => {
-  return weiToString(audioToWei(stringAudio))
+  return weiToString(liveToWei(stringAudio))
 }
 
-export const parseAudioInputToWei = (audio: StringAudio): Nullable<BNWei> => {
-  if (!audio.length) return null
-  // First try converting from float, in case audio has decimal value
-  const floatWei = convertFloatToWei(audio) as Nullable<BNWei>
+export const parseAudioInputToWei = (live: StringAudio): Nullable<BNWei> => {
+  if (!live.length) return null
+  // First try converting from float, in case live has decimal value
+  const floatWei = convertFloatToWei(live) as Nullable<BNWei>
   if (floatWei) return floatWei
   // Safe to assume no decimals
   try {
-    return audioToWei(audio)
+    return liveToWei(live)
   } catch {
     return null
   }

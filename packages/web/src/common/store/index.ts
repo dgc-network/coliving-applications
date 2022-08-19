@@ -20,7 +20,7 @@ import changePasswordReducer, {
   ChangePasswordState
 } from 'common/store/change-password/slice'
 import notifications from 'common/store/notifications/reducer'
-import audioRewardsSlice from 'common/store/pages/audio-rewards/slice'
+import liveRewardsSlice from 'common/store/pages/live-rewards/slice'
 import collection from 'common/store/pages/collection/reducer'
 import { CollectionsPageState } from 'common/store/pages/collection/types'
 import exploreCollectionsReducer from 'common/store/pages/explore/exploreCollections/slice'
@@ -160,7 +160,7 @@ export const reducers = (ctx: CommonStoreContext) => ({
 
   // Pages
   pages: combineReducers({
-    audioRewards: audioRewardsSlice.reducer,
+    liveRewards: liveRewardsSlice.reducer,
     collection,
     feed,
     explore: explorePageReducer,
@@ -216,7 +216,7 @@ export const sagas = (ctx: CommonStoreContext) => ({
   // store/social/tracks/sagas.ts
   // store/social/users/sagas.ts
   // store/social/collections/sagas.ts
-  // pages/audio-rewards-page/store/sagas.ts
+  // pages/live-rewards-page/store/sagas.ts
   // store/wallet/sagas.ts
   // store/lineup/sagas.js
   // pages/feed/store/lineups/feed/sagas.js
@@ -303,7 +303,7 @@ export type CommonState = {
   }
 
   pages: {
-    audioRewards: ReturnType<typeof audioRewardsSlice.reducer>
+    liveRewards: ReturnType<typeof liveRewardsSlice.reducer>
     collection: CollectionsPageState
     feed: FeedPageState
     explore: ReturnType<typeof explorePageReducer>

@@ -226,7 +226,7 @@ function* sendTipAsync() {
   const recipientWallet = recipient.spl_wallet
   const weiBNBalance: BNWei = yield select(getAccountBalance) ??
     (new BN('0') as BNWei)
-  const waudioWeiAmount = yield* call(walletClient.getCurrentWAudioBalance)
+  const wliveWeiAmount = yield* call(walletClient.getCurrentWAudioBalance)
 
   if (weiBNAmount.gt(weiBNBalance)) {
     const errorMessage = 'Not enough $LIVE'
@@ -245,9 +245,9 @@ function* sendTipAsync() {
         source
       })
     )
-    // If transferring spl wrapped audio and there are insufficent funds with only the
-    // user bank balance, transfer all eth LIVE to spl wrapped audio
-    if (weiBNAmount.gt(waudioWeiAmount)) {
+    // If transferring spl wrapped live and there are insufficent funds with only the
+    // user bank balance, transfer all eth LIVE to spl wrapped live
+    if (weiBNAmount.gt(wliveWeiAmount)) {
       // Wait for a second before showing the notice that this might take a while
       const showConvertingMessage = yield* fork(function* () {
         yield delay(1000)
@@ -426,7 +426,7 @@ function* fetchSupportingForUserAsync({
    * get all its supporting data so that when the logged in
    * user is trying to tip an artist, we'll know whether or
    * not that artist is already being supported by the logged in
-   * user and thus correctly calculate how much more audio to tip
+   * user and thus correctly calculate how much more live to tip
    * to become the top supporter.
    */
   const account = yield* select(getAccountUser)

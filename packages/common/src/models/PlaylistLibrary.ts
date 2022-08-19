@@ -11,7 +11,7 @@ export type ExplorePlaylistIdentifier = {
 }
 
 export type AudioNftPlaylistIdentifier = {
-  type: 'audio_nft_playlist'
+  type: 'live_nft_playlist'
   playlist_id: SmartCollectionVariant.LIVE_NFT_PLAYLIST
 }
 

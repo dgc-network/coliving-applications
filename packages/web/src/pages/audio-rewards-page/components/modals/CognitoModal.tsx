@@ -14,7 +14,7 @@ import { getUserHandle } from 'common/store/account/selectors'
 import {
   CognitoFlowStatus,
   setCognitoFlowStatus
-} from 'common/store/pages/audio-rewards/slice'
+} from 'common/store/pages/live-rewards/slice'
 import { useScript } from 'hooks/useScript'
 import { getCognitoSignature } from 'services/coliving-backend/Cognito'
 import { track } from 'store/analytics/providers'

@@ -15,12 +15,12 @@ const TOKEN_ANIMATION_URL =
 
 const messages = {
   whatIsAudio: 'WHAT IS $LIVE',
-  audioDescription: `Coliving is owned by people like you, not major corporations. Holding $LIVE grants you partial ownership of the Coliving platform and gives you access to special features as they are released.`,
+  liveDescription: `Coliving is owned by people like you, not major corporations. Holding $LIVE grants you partial ownership of the Coliving platform and gives you access to special features as they are released.`,
   confused: 'Still confused? Don’t worry, more details coming soon!',
   learnMore: 'Learn More'
 }
 
-export const LEARN_MORE_URL = 'http://blog.coliving.co/posts/community-meet-audio'
+export const LEARN_MORE_URL = 'http://blog.coliving.co/posts/community-meet-live'
 
 type TileProps = {
   className?: string
@@ -84,7 +84,7 @@ export const ExplainerTile = ({ className }: { className?: string }) => {
         </div>
         <div className={wm(styles.whatIsAudioContainer)}>
           <h4 className={wm(styles.whatIsAudio)}>{messages.whatIsAudio}</h4>
-          <p className={styles.description}>{messages.audioDescription}</p>
+          <p className={styles.description}>{messages.liveDescription}</p>
           <div className={styles.learnMore} onClick={onClickLearnMore}>
             {messages.learnMore}
           </div>

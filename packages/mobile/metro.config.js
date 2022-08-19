@@ -32,7 +32,7 @@ module.exports = (async () => {
         // and this can be removed
         ...[
           'assets',
-          'audio',
+          'live',
           'common',
           'pages',
           'models',

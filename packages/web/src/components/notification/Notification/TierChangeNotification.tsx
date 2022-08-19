@@ -1,7 +1,7 @@
 import { getNotificationUser } from 'common/store/notifications/selectors'
 import { TierChange } from 'common/store/notifications/types'
 import { BadgeTierInfo, badgeTiers } from 'common/store/wallet/utils'
-import { audioTierMapPng } from 'components/user-badges/UserBadges'
+import { liveTierMapPng } from 'components/user-badges/UserBadges'
 import { useSelector } from 'utils/reducer'
 import { fullProfilePage } from 'utils/route'
 
@@ -18,8 +18,8 @@ const messages = {
   unlocked: 'tier unlocked',
   reached: "Congrats, you've reached ",
   having: 'Tier by having over',
-  audio: '$LIVE!',
-  audioLabel: 'audio tokens',
+  live: '$LIVE!',
+  liveLabel: 'live tokens',
   accessInfo:
     'You now have access to exclusive features & a shiny new badge by your name.',
   twitterShareText: (label: string, icon: string) =>
@@ -57,14 +57,14 @@ export const TierChangeNotification = (props: TierChangeNotificationProps) => {
 
   return (
     <NotificationTile notification={notification}>
-      <NotificationHeader icon={<IconTier>{audioTierMapPng[tier]}</IconTier>}>
+      <NotificationHeader icon={<IconTier>{liveTierMapPng[tier]}</IconTier>}>
         <NotificationTitle className={styles.title}>
           {tier} {messages.unlocked}
         </NotificationTitle>
       </NotificationHeader>
       <NotificationBody>
         {messages.reached} {tier} {messages.having} {humanReadableAmount}{' '}
-        {messages.audio} {messages.accessInfo}
+        {messages.live} {messages.accessInfo}
       </NotificationBody>
       <TwitterShareButton
         type='static'

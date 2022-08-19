@@ -1,7 +1,7 @@
 import React from 'react'
 
 import type { UserChallengeState } from '@/common'
-import { ClaimStatus } from '-client/src/common/store/pages/audio-rewards/slice'
+import { ClaimStatus } from '-client/src/common/store/pages/live-rewards/slice'
 import { fillString } from '-client/src/common/utils/fillString'
 import { formatNumberCommas } from '-client/src/common/utils/formatUtil'
 import type { ImageSourcePropType } from 'react-native'
@@ -24,7 +24,7 @@ const messages = {
   taskVerified: 'Verified Challenge',
   reward: 'Reward',
   progress: 'Progress',
-  audio: '$LIVE',
+  live: '$LIVE',
   incomplete: 'Incomplete',
   complete: 'Complete',
   claim: 'Claim Your Reward',
@@ -102,11 +102,11 @@ const createStyles = (themeColors: ThemeColors) =>
     statusTextComplete: {
       color: themeColors.staticWhite
     },
-    audioAmount: {
+    liveAmount: {
       textAlign: 'center',
       fontSize: 34
     },
-    audioLabel: {
+    liveLabel: {
       textAlign: 'center',
       fontSize: 12,
       color: themeColors.neutralLight4
@@ -250,11 +250,11 @@ export const ChallengeRewardsDrawer = ({
               <Text style={styles.subheader} weight='heavy'>
                 {messages.reward}
               </Text>
-              <GradientText style={styles.audioAmount}>
+              <GradientText style={styles.liveAmount}>
                 {formatNumberCommas(amount)}
               </GradientText>
-              <Text style={styles.audioLabel} weight='heavy'>
-                {messages.audio}
+              <Text style={styles.liveLabel} weight='heavy'>
+                {messages.live}
               </Text>
             </View>
             {showProgressBar ? (

@@ -60,15 +60,15 @@ export const getTwitterShareText = (
       analyticsEvent = { kind: 'playlist', id: playlist_id, url: link }
       break
     }
-    case 'audioNftPlaylist': {
+    case 'liveNftPlaylist': {
       const {
         user: { handle, name, user_id }
       } = content
-      twitterText = messages.audioNftPlaylistShareText(
+      twitterText = messages.liveNftPlaylistShareText(
         isPlaylistOwner ? 'my' : name
       )
       link = fullAudioNftPlaylistPage(handle)
-      analyticsEvent = { kind: 'audioNftPlaylist', id: user_id, url: link }
+      analyticsEvent = { kind: 'liveNftPlaylist', id: user_id, url: link }
       break
     }
   }

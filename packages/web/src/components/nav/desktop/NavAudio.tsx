@@ -12,7 +12,7 @@ import { getAccountUser } from 'common/store/account/selectors'
 import { getOptimisticUserChallenges } from 'common/store/challenges/selectors/optimistic-challenges'
 import { getAccountTotalBalance } from 'common/store/wallet/selectors'
 import { formatWei } from 'common/utils/wallet'
-import { audioTierMapPng } from 'components/user-badges/UserBadges'
+import { liveTierMapPng } from 'components/user-badges/UserBadges'
 import { useNavigateToPage } from 'hooks/useNavigateToPage'
 import { useRemoteVar } from 'hooks/useRemoteConfig'
 import { useSelector } from 'utils/reducer'
@@ -60,10 +60,10 @@ const NavAudio = () => {
 
   const positiveTotalBalance =
     nonNullTotalBalance && totalBalance!.gt(new BN(0))
-  // we only show the audio balance and respective badge when there is an account
+  // we only show the live balance and respective badge when there is an account
   // so below null-coalescing is okay
   const { tier } = useSelectTierInfo(account?.user_id ?? 0)
-  const audioBadge = audioTierMapPng[tier as BadgeTier]
+  const liveBadge = liveTierMapPng[tier as BadgeTier]
 
   const optimisticUserChallenges = useSelector(getOptimisticUserChallenges)
   const activeRewardIds = useActiveRewardIds()
@@ -99,28 +99,28 @@ const NavAudio = () => {
     return null
   }
   if (!nonNullTotalBalance) {
-    return <div className={styles.audio} />
+    return <div className={styles.live} />
   }
 
   return (
     <div
       className={cn(
-        styles.audio,
+        styles.live,
         { [styles.hasBalance]: positiveTotalBalance },
         { [styles.show]: true }
       )}
       onClick={goToAudioPage}
     >
       <div className={styles.amountContainer}>
-        {positiveTotalBalance && audioBadge ? (
-          cloneElement(audioBadge, {
+        {positiveTotalBalance && liveBadge ? (
+          cloneElement(liveBadge, {
             height: 16,
             width: 16
           })
         ) : (
           <img alt='no tier' src={IconNoTierBadge} width='16' height='16' />
         )}
-        <span className={styles.audioAmount}>
+        <span className={styles.liveAmount}>
           {formatWei(totalBalance!, true, 0)}
         </span>
       </div>

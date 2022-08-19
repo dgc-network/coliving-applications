@@ -19,9 +19,9 @@ import { getAccountBalance } from 'common/store/wallet/selectors'
 import { getTierAndNumberForBalance } from 'common/store/wallet/utils'
 import { formatWei, stringWeiToBN, weiToString } from 'common/utils/wallet'
 import Tooltip from 'components/tooltip/Tooltip'
-import { audioTierMapPng } from 'components/user-badges/UserBadges'
+import { liveTierMapPng } from 'components/user-badges/UserBadges'
 import { useGetFirstOrTopSupporter } from 'hooks/useGetFirstOrTopSupporter'
-import ButtonWithArrow from 'pages/audio-rewards-page/components/ButtonWithArrow'
+import ButtonWithArrow from 'pages/live-rewards-page/components/ButtonWithArrow'
 
 import { ProfileInfo } from '../../profile-info/ProfileInfo'
 
@@ -51,7 +51,7 @@ export const SendTip = () => {
   const [tipAmount, setTipAmount] = useState('')
 
   const { tier } = getTierAndNumberForBalance(weiToString(accountBalance))
-  const audioBadge = audioTierMapPng[tier as BadgeTier]
+  const liveBadge = liveTierMapPng[tier as BadgeTier]
 
   const [isDisabled, setIsDisabled] = useState(true)
 
@@ -132,8 +132,8 @@ export const SendTip = () => {
         </Tooltip>
       </div>
       <div className={styles.amountContainer}>
-        {audioBadge ? (
-          cloneElement(audioBadge, {
+        {liveBadge ? (
+          cloneElement(liveBadge, {
             height: 16,
             width: 16
           })

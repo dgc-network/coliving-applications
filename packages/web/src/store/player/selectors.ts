@@ -8,7 +8,7 @@ export const getHasTrack = (state: AppState) => !!state.player.trackId
 export const getUid = (state: AppState) => state.player.uid
 export const getTrackId = (state: AppState) => state.player.trackId
 export const getCollectible = (state: AppState) => state.player.collectible
-export const getAudio = (state: AppState) => state.player.audio
+export const getAudio = (state: AppState) => state.player.live
 
 export const getPlaying = (state: AppState) => state.player.playing
 export const getPaused = (state: AppState) => !state.player.playing

@@ -78,7 +78,7 @@ const NATIVE_MOBILE = process.env.REACT_APP_NATIVE_MOBILE
 
 type OwnProps = {
   onClose: () => void
-  audio: AudioState
+  live: AudioState
 }
 
 type NowPlayingProps = OwnProps &
@@ -114,7 +114,7 @@ const NowPlaying = g(
     currentQueueItem,
     currentUserId,
     playCounter,
-    audio,
+    live,
     isPlaying,
     isBuffering,
     play,
@@ -161,12 +161,12 @@ const NowPlaying = g(
     const startSeeking = useCallback(() => {
       clearInterval(seekInterval.current)
       seekInterval.current = window.setInterval(async () => {
-        if (!audio) return
-        const position = await audio.getPosition()
-        const duration = await audio.getDuration()
+        if (!live) return
+        const position = await live.getPosition()
+        const duration = await live.getDuration()
         setTiming({ position, duration })
       }, SEEK_INTERVAL)
-    }, [audio, setTiming])
+    }, [live, setTiming])
 
     // Clean up
     useEffect(() => {
@@ -511,7 +511,7 @@ function makeMapStateToProps() {
       currentQueueItem,
       currentUserId: getUserId(state),
       playCounter: getCounter(state),
-      audio: getAudio(state),
+      live: getAudio(state),
       isPlaying: getPlaying(state),
       isBuffering: getBuffering(state),
       isCasting: getIsCasting(state),

@@ -111,7 +111,7 @@ export const messageHandlers: Partial<MessageHandlers> = {
           addAndroidDownloads: {
             description: trackName,
             mediaScannable: true,
-            mime: 'audio/mpeg',
+            mime: 'live/mpeg',
             notification: true,
             path: filePath,
             title: trackName,

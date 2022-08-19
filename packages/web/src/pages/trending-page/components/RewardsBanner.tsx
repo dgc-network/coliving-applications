@@ -8,7 +8,7 @@ import { useModalState } from 'common/hooks/useModalState'
 import {
   setTrendingRewardsModalType,
   TrendingRewardsModalType
-} from 'common/store/pages/audio-rewards/slice'
+} from 'common/store/pages/live-rewards/slice'
 import { isMobile } from 'utils/clientUtil'
 
 import styles from './RewardsBanner.module.css'

@@ -176,7 +176,7 @@ const messages = {
     'Linked wallets are more secure but not all features are supported',
   linkedWalletsTooltip:
     'Linked wallets affect VIP status and NFTs. Upcoming features may require different behavior to support linked wallets. ',
-  audio: '$LIVE'
+  live: '$LIVE'
 }
 
 export const AudioBreakdownDrawer = () => {
@@ -250,7 +250,7 @@ export const AudioBreakdownDrawer = () => {
               {messages.linkedWallets}
             </Text>
             <Text style={styles.headerLabel} weight='bold'>
-              {messages.audio}
+              {messages.live}
             </Text>
           </View>
 
@@ -290,7 +290,7 @@ export const AudioBreakdownDrawer = () => {
 type WalletProps = { chain: Chain; address: string; balance: BNWei }
 
 const Wallet = ({ chain, address, balance }: WalletProps) => {
-  // todo: use feature flag to determine whether we show sol audio
+  // todo: use feature flag to determine whether we show sol live
   // const { isEnabled: solWalletAudioEnabled } = useFlag(
   //   FeatureFlags.SOL_WALLET_LIVE_ENABLED
   // )

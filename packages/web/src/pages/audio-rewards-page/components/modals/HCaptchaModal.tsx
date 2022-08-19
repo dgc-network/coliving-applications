@@ -7,7 +7,7 @@ import { useModalState } from 'common/hooks/useModalState'
 import {
   HCaptchaStatus,
   setHCaptchaStatus
-} from 'common/store/pages/audio-rewards/slice'
+} from 'common/store/pages/live-rewards/slice'
 import ColivingBackend from 'services/ColivingBackend'
 
 import styles from './HCaptchaModal.module.css'

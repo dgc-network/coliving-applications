@@ -107,7 +107,7 @@ let Visualizer1 = (function () {
     shader.bind()
     shader.uniforms.iGlobalTime = time
     shader.uniforms.radius = radius
-    shader.uniforms.audioTexture = 0
+    shader.uniforms.liveTexture = 0
     shader.uniforms.opacity = settings.opacity
     shader.uniforms.useHue = settings.useHue
 
@@ -159,8 +159,8 @@ let Visualizer1 = (function () {
   }
 
   /** Binds the visualizer to an AudioStream element. */
-  function bind(audio) {
-    analyser = new GLAudioAnalyser(gl, audio.source, audio.audioCtx)
+  function bind(live) {
+    analyser = new GLAudioAnalyser(gl, live.source, live.liveCtx)
   }
 
   function hide() {

@@ -13,7 +13,7 @@ export type ShareType =
   | 'profile'
   | 'album'
   | 'playlist'
-  | 'audioNftPlaylist'
+  | 'liveNftPlaylist'
 
 type ShareTrackContent = {
   type: 'track'
@@ -39,7 +39,7 @@ type SharePlaylistContent = {
 }
 
 type ShareAudioNftPlaylistContent = {
-  type: 'audioNftPlaylist'
+  type: 'liveNftPlaylist'
   user: User
 }
 
@@ -59,7 +59,7 @@ type RequestOpenPayload = { source: ShareSource } & (
   | { type: 'track'; trackId: ID }
   | { type: 'profile'; profileId: ID }
   | { type: 'collection'; collectionId: ID }
-  | { type: 'audioNftPlaylist'; userId: ID }
+  | { type: 'liveNftPlaylist'; userId: ID }
 )
 
 export type RequestOpenAction = PayloadAction<RequestOpenPayload>

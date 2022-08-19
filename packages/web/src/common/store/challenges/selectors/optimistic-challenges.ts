@@ -10,8 +10,8 @@ import {
   getUndisbursedUserChallenges,
   getUserChallenges,
   getUserChallengesOverrides
-} from 'common/store/pages/audio-rewards/selectors'
-import { UndisbursedUserChallenge } from 'common/store/pages/audio-rewards/slice'
+} from 'common/store/pages/live-rewards/selectors'
+import { UndisbursedUserChallenge } from 'common/store/pages/live-rewards/slice'
 
 import { CommonState } from '../..'
 
@@ -91,7 +91,7 @@ const toOptimisticChallenge = (
   const state = getUserChallengeState(challengeOverridden)
   // For aggregate challenges, we show the total amount
   // you'd get when completing every step of the challenge
-  // -- i.e. for referrals, show 1 audio x 5 steps = 5 audio
+  // -- i.e. for referrals, show 1 live x 5 steps = 5 live
   const totalAmount =
     challenge.challenge_type === 'aggregate'
       ? challenge.amount * challenge.max_steps

@@ -2,14 +2,14 @@ import type { TextProps } from './Text'
 import { Text } from './Text'
 
 const messages = {
-  audio: 'audio tokens'
+  live: 'live tokens'
 }
 
 type AudioProps = TextProps
 
 export const AudioText = (props: AudioProps) => {
   return (
-    <Text accessibilityLabel={messages.audio} {...props}>
+    <Text accessibilityLabel={messages.live} {...props}>
       $LIVE
     </Text>
   )

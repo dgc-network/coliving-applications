@@ -10,7 +10,7 @@ import styles from './Dropzone.module.css'
 const messages = {
   track: 'Drag-and-drop a track here, or ',
   image: 'Drag-and-drop an image here, or ',
-  stem: 'Drag-and-drop audio files here, or ',
+  stem: 'Drag-and-drop live files here, or ',
   browse: 'browse to upload'
 }
 
@@ -58,7 +58,7 @@ const Dropzone = ({
       disabled={disabled}
       disableClick={disabled || disableClick}
       accept={
-        type === 'image' ? ALLOWED_IMAGE_FILE_TYPES.join(', ') : 'audio/*'
+        type === 'image' ? ALLOWED_IMAGE_FILE_TYPES.join(', ') : 'live/*'
       }
       data-testid='upload-dropzone'
     >

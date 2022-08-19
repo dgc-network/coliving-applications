@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux'
 
 import { useSelectTierInfo } from 'common/hooks/wallet'
 import { setVisibility } from 'common/store/ui/modals/slice'
-import { audioTierMapPng } from 'components/user-badges/UserBadges'
+import { liveTierMapPng } from 'components/user-badges/UserBadges'
 
 import styles from './ProfilePageBadge.module.css'
 
@@ -82,7 +82,7 @@ const ProfilePageBadge = ({
 
   if (tier === 'none') return null
 
-  const badge = audioTierMapPng[tier as BadgeTier]
+  const badge = liveTierMapPng[tier as BadgeTier]
 
   return (
     <div

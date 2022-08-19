@@ -1,17 +1,17 @@
-import * as audioActions from 'app/store/audio/actions'
+import * as liveActions from 'app/store/live/actions'
 
 import type { MessageHandlers } from '../types'
 import { MessageType } from '../types'
 
 export const messageHandlers: Partial<MessageHandlers> = {
   [MessageType.PLAY_TRACK]: ({ dispatch }) => {
-    dispatch(audioActions.play())
+    dispatch(liveActions.play())
   },
   [MessageType.PAUSE_TRACK]: ({ dispatch }) => {
-    dispatch(audioActions.pause())
+    dispatch(liveActions.pause())
   },
   [MessageType.SEEK_TRACK]: ({ message, dispatch }) => {
-    dispatch(audioActions.seek(message))
+    dispatch(liveActions.seek(message))
   },
   [MessageType.GET_POSITION]: ({ message, postMessage }) => {
     postMessage({
@@ -22,12 +22,12 @@ export const messageHandlers: Partial<MessageHandlers> = {
     })
   },
   [MessageType.PERSIST_QUEUE]: ({ message, dispatch }) => {
-    dispatch(audioActions.persistQueue(message))
+    dispatch(liveActions.persistQueue(message))
   },
   [MessageType.SET_REPEAT_MODE]: ({ message, dispatch }) => {
-    dispatch(audioActions.repeat(message))
+    dispatch(liveActions.repeat(message))
   },
   [MessageType.SHUFFLE]: ({ message, dispatch }) => {
-    dispatch(audioActions.shuffle(message))
+    dispatch(liveActions.shuffle(message))
   }
 }

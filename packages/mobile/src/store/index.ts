@@ -5,8 +5,8 @@ import { createStore, combineReducers, applyMiddleware } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import createSagaMiddleware from 'redux-saga'
 
-import type { AudioState } from './audio/reducer'
-import audio from './audio/reducer'
+import type { AudioState } from './live/reducer'
+import live from './live/reducer'
 import { reducer as common } from './common/reducer'
 import type { DownloadState } from './download/slice'
 import downloads from './download/slice'
@@ -29,7 +29,7 @@ import type { WebState } from './web/reducer'
 import web from './web/reducer'
 
 export type AppState = {
-  audio: AudioState
+  live: AudioState
   common: CommonState
   drawers: DrawersState
   downloads: DownloadState
@@ -45,7 +45,7 @@ export type AppState = {
 
 const createRootReducer = () =>
   combineReducers({
-    audio,
+    live,
     common,
     drawers,
     downloads,

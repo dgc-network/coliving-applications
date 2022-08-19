@@ -1,9 +1,9 @@
 import { useCallback } from 'react'
 
 import { Theme, StringKeys } from '@/common'
-import { getTrendingRewardsModalType } from '-client/src/common/store/pages/audio-rewards/selectors'
-import type { TrendingRewardsModalType } from '-client/src/common/store/pages/audio-rewards/slice'
-import { setTrendingRewardsModalType } from '-client/src/common/store/pages/audio-rewards/slice'
+import { getTrendingRewardsModalType } from '-client/src/common/store/pages/live-rewards/selectors'
+import type { TrendingRewardsModalType } from '-client/src/common/store/pages/live-rewards/slice'
+import { setTrendingRewardsModalType } from '-client/src/common/store/pages/live-rewards/slice'
 import {
   TRENDING_PAGE,
   TRENDING_PLAYLISTS_PAGE,
@@ -33,7 +33,7 @@ import { useThemeVariant } from 'app/utils/theme'
 import { AppDrawer, useDrawerState } from '../drawer/AppDrawer'
 
 const TRENDING_REWARDS_DRAWER_NAME = 'TrendingRewardsExplainer'
-const TOS_URL = 'https://blog..co/article/audio-rewards'
+const TOS_URL = 'https://blog..co/article/live-rewards'
 
 const messages = {
   tracksTitle: 'Top 5 Tracks Each Week Receive 100 $LIVE',

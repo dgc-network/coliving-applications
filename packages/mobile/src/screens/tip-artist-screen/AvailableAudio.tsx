@@ -24,7 +24,7 @@ const useStyles = makeStyles(({ spacing, typography, palette }) => ({
     alignItems: 'center',
     paddingVertical: spacing(2)
   },
-  audioToken: {
+  liveToken: {
     height: spacing(4),
     width: spacing(4),
     marginLeft: spacing(3),
@@ -47,7 +47,7 @@ export const AvailableAudio = () => {
         <Text variant='body' style={styles.text}>
           {messages.available}
         </Text>
-        <Image style={styles.audioToken} source={TokenBadgeNoTier} />
+        <Image style={styles.liveToken} source={TokenBadgeNoTier} />
         <Text variant='body' style={styles.text}>
           {formatWei(accountBalance as BNWei, true, 0)}
         </Text>

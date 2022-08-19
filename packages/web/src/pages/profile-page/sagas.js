@@ -160,7 +160,7 @@ function* fetchSupportersAndSupporting(userId) {
    * get all its supporting data so that when the logged in
    * user is trying to tip an artist, we'll know whether or
    * not that artist is already being supported by the logged in
-   * user and thus correctly calculate how much more audio to tip
+   * user and thus correctly calculate how much more live to tip
    * to become the top supporter.
    */
   const account = yield select(getAccountUser)

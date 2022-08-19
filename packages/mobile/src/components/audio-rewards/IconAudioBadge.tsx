@@ -8,7 +8,7 @@ import IconGoldBadge from 'app/assets/images/IconGoldBadge.svg'
 import IconPlatinumBadge from 'app/assets/images/IconPlatinumBadge.svg'
 import IconSilverBadge from 'app/assets/images/IconSilverBadge.svg'
 
-const audioTierMap: Record<BadgeTier, ComponentType<SvgProps> | null> = {
+const liveTierMap: Record<BadgeTier, ComponentType<SvgProps> | null> = {
   none: null,
   bronze: IconBronzeBadge,
   silver: IconSilverBadge,
@@ -22,7 +22,7 @@ type IconBadgeProps = SvgProps & {
 
 export const IconAudioBadge = (props: IconBadgeProps) => {
   const { tier, ...other } = props
-  const AudioBadge = audioTierMap[tier]
+  const AudioBadge = liveTierMap[tier]
 
   return AudioBadge ? <AudioBadge {...other} /> : null
 }

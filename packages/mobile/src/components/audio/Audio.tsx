@@ -12,8 +12,8 @@ import type { Dispatch } from 'redux'
 
 import { MessageType } from 'app/message'
 import type { AppState } from 'app/store'
-import * as audioActions from 'app/store/audio/actions'
-import { RepeatMode } from 'app/store/audio/reducer'
+import * as liveActions from 'app/store/live/actions'
+import { RepeatMode } from 'app/store/live/reducer'
 import {
   getPlaying,
   getSeek,
@@ -23,7 +23,7 @@ import {
   getShuffleIndex,
   getQueueAutoplay,
   getTrackAndIndex
-} from 'app/store/audio/selectors'
+} from 'app/store/live/selectors'
 import type { MessagePostingWebView } from 'app/types/MessagePostingWebView'
 import { postMessage } from 'app/utils/postMessage'
 
@@ -93,7 +93,7 @@ const Audio = ({
   const [listenLoggedForTrack, setListenLoggedForTrack] = useState(false)
 
   // A ref to invalidate the current progress counter and prevent
-  // stale values of audio progress from propagating back to the UI.
+  // stale values of live progress from propagating back to the UI.
   const progressInvalidator = useRef(false)
 
   // Init progress tracking
@@ -209,7 +209,7 @@ const Audio = ({
   useEffect(() => {
     if (track && !track.isDelete && duration !== null) {
       // Set the background mode when a song starts
-      // playing to ensure audio outside app
+      // playing to ensure live outside app
       // continues when music isn't being played.
       MusicControl.enableBackgroundMode(true)
       MusicControl.setNowPlaying({
@@ -414,7 +414,7 @@ const Audio = ({
           playInBackground
           playWhenInactive
           allowsExternalPlayback={false}
-          audioOnly
+          liveOnly
           // Mute playback if we are casting to an external source
           muted={isCasting}
           onError={handleError}
@@ -449,11 +449,11 @@ const mapStateToProps = (state: AppState) => ({
 })
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  play: () => dispatch(audioActions.play()),
-  pause: () => dispatch(audioActions.pause()),
-  next: () => dispatch(audioActions.next()),
-  previous: () => dispatch(audioActions.previous()),
-  reset: () => dispatch(audioActions.reset())
+  play: () => dispatch(liveActions.play()),
+  pause: () => dispatch(liveActions.pause()),
+  next: () => dispatch(liveActions.next()),
+  previous: () => dispatch(liveActions.previous()),
+  reset: () => dispatch(liveActions.reset())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Audio)

@@ -18,14 +18,14 @@ import PasswordResetModal from 'components/password-reset/PasswordResetModal'
 import ServiceSelectionModal from 'components/service-selection/ServiceSelectionModal'
 import { ShareModal } from 'components/share-modal/ShareModal'
 import ShareSoundToTikTokModal from 'components/share-sound-to-tiktok-modal/ShareSoundToTikTokModal'
-import { TipAudioModal } from 'components/tipping/tip-audio/TipAudioModal'
+import { TipAudioModal } from 'components/tipping/tip-live/TipAudioModal'
 import ConnectedMobileOverflowModal from 'components/track-overflow-modal/ConnectedMobileOverflowModal'
 import UnfollowConfirmationModal from 'components/unfollow-confirmation-modal/UnfollowConfirmationModal'
 import UnloadDialog from 'components/unload-dialog/UnloadDialog'
 import TierExplainerModal from 'components/user-badges/TierExplainerModal'
 import ConnectedUserListModal from 'components/user-list-modal/ConnectedUserListModal'
-import AudioBreakdownModal from 'pages/audio-rewards-page/components/modals/AudioBreakdownModal'
-import RewardsModals from 'pages/audio-rewards-page/components/modals/RewardsModals'
+import AudioBreakdownModal from 'pages/live-rewards-page/components/modals/AudioBreakdownModal'
+import RewardsModals from 'pages/live-rewards-page/components/modals/RewardsModals'
 import { getClient } from 'utils/clientUtil'
 
 import { AppModal } from './AppModal'
@@ -58,7 +58,7 @@ const Modals = () => {
       <UnloadDialog />
       <RewardsModals />
       <ShareSoundToTikTokModal />
-      {/* Enable and use this audio breakdown modal until we get
+      {/* Enable and use this live breakdown modal until we get
       the feature flags to work for native mobile */}
       <AudioBreakdownModal />
       <CollectibleDetailsModal />

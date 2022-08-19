@@ -4,7 +4,7 @@ import { getTrendingGenre } from '-client/src/common/store/pages/trending/select
 import IconAllTime from 'app/assets/images/iconAllTime.svg'
 import IconDay from 'app/assets/images/iconDay.svg'
 import IconMonth from 'app/assets/images/iconMonth.svg'
-import { RewardsBanner } from 'app/components/audio-rewards'
+import { RewardsBanner } from 'app/components/live-rewards'
 import { Screen } from 'app/components/core'
 import { Header } from 'app/components/header'
 import { TopTabNavigator } from 'app/components/top-tab-bar'

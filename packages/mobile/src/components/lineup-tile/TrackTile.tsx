@@ -33,7 +33,7 @@ import { useNavigation } from 'app/hooks/useNavigation'
 import { isEqual, useSelectorWeb } from 'app/hooks/useSelectorWeb'
 import { useTrackCoverArt } from 'app/hooks/useTrackCoverArt'
 import type { AppState } from 'app/store'
-import { getPlayingUid } from 'app/store/audio/selectors'
+import { getPlayingUid } from 'app/store/live/selectors'
 
 import { LineupTile } from './LineupTile'
 

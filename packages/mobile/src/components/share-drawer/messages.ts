@@ -5,7 +5,7 @@ const shareTypeMap: Record<ShareType, string> = {
   profile: 'Profile',
   album: 'Album',
   playlist: 'Playlist',
-  audioNftPlaylist: 'Audio NFT Playlist'
+  liveNftPlaylist: 'Audio NFT Playlist'
 }
 
 export const messages = {

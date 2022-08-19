@@ -292,7 +292,7 @@ export function* watchNext() {
       return
     }
 
-    // For the audio nft playlist flow
+    // For the live nft playlist flow
     const collectible = yield* select(getCollectible)
     if (collectible) {
       const event = make(Name.PLAYBACK_PLAY, {
@@ -371,7 +371,7 @@ export function* watchPrevious() {
         return
       }
 
-      // For the audio nft playlist flow
+      // For the live nft playlist flow
       const collectible = yield* select(getCollectible)
       if (collectible) {
         const event = make(Name.PLAYBACK_PLAY, {

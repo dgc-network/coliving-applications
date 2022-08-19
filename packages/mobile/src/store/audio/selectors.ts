@@ -4,11 +4,11 @@ import type { AppState } from 'app/store'
 
 import { RepeatMode } from './reducer'
 
-const getBaseState = (state: AppState) => state.audio
+const getBaseState = (state: AppState) => state.live
 
 export const getTrack = (state: AppState) => {
   const baseState = getBaseState(state)
-  // An index of -1, signals no audio is ready to be played back
+  // An index of -1, signals no live is ready to be played back
   return baseState.index >= 0 ? baseState.queue[baseState.index] : null
 }
 export const getPlaying = (state: AppState) => getBaseState(state).playing

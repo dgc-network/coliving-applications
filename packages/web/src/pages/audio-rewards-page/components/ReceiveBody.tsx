@@ -26,7 +26,7 @@ const messages = {
   splWarning1: (
     <>
       {'You can only send Solana (SPL) '}
-      <b className={styles.audio}>{'$LIVE'}</b> {' tokens to this address.'}
+      <b className={styles.live}>{'$LIVE'}</b> {' tokens to this address.'}
     </>
   ),
   splWarning2: 'Be sure to send your $LIVE to the correct address!',

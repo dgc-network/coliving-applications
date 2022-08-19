@@ -18,7 +18,7 @@ const useStyles = makeStyles(({ spacing, typography }) => ({
     marginRight: spacing(1),
     fontSize: typography.fontSize.small
   },
-  audioText: {
+  liveText: {
     fontSize: typography.fontSize.small
   }
 }))
@@ -38,7 +38,7 @@ export const Tip = (props: TipProps) => {
       <Text style={styles.amount} color='neutralLight4' weight='bold'>
         {formatWei(stringWeiToBN(amount))}
       </Text>
-      <AudioText style={styles.audioText} color='neutralLight4' />
+      <AudioText style={styles.liveText} color='neutralLight4' />
     </View>
   )
 }

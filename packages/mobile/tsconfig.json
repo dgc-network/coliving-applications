@@ -12,7 +12,7 @@
     "paths": {
       "app/*": ["./src/*"],
       // Remove these when no longer dependent on -client
-      "audio/*": ["./node_modules/-client/src/audio/*"],
+      "live/*": ["./node_modules/-client/src/live/*"],
       "common/*": ["./node_modules/-client/src/common/*"],
       "components/*": ["./node_modules/-client/src/components/*"],
       "hooks/*": ["./node_modules/-client/src/hooks/*"],

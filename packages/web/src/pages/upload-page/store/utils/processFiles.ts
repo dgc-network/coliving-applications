@@ -50,7 +50,7 @@ const ALLOWED_LIVE_FILE_EXTENSIONS = [
   'tsa'
 ]
 
-const ALLOWED_LIVE_FILE_MIME = /^audio/
+const ALLOWED_LIVE_FILE_MIME = /^live/
 
 const readMediaTags = (file: File): Promise<any> => {
   return new Promise(function (resolve, reject) {
@@ -97,8 +97,8 @@ export const processFiles = (
       handleInvalid(file.name, 'type')
       return null
     }
-    // If the mime type is somehow undefined or it doesn't begin with audio/ reject.
-    // Backend will try to match on mime again and if it's not an audio/ match, it'll error
+    // If the mime type is somehow undefined or it doesn't begin with live/ reject.
+    // Backend will try to match on mime again and if it's not an live/ match, it'll error
     if (file.type && !file.type.match(ALLOWED_LIVE_FILE_MIME)) {
       handleInvalid(file.type, 'type')
       return null
@@ -123,12 +123,12 @@ export const processFiles = (
         error
       )
     }
-    const audio = new Audio()
+    const live = new Audio()
     // @ts-ignore
-    audio.src = file.preview
+    live.src = file.preview
     return {
       file,
-      preview: audio,
+      preview: live,
       metadata: schemas.newTrackMetadata({
         title,
         artwork

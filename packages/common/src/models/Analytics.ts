@@ -502,7 +502,7 @@ type Share = {
 
 export type ShareToTwitter = {
   eventName: Name.SHARE_TO_TWITTER
-  kind: 'profile' | 'album' | 'playlist' | 'track' | 'audioNftPlaylist'
+  kind: 'profile' | 'album' | 'playlist' | 'track' | 'liveNftPlaylist'
   source: ShareSource
   id: number
   url: string

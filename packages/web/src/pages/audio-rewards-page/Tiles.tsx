@@ -34,13 +34,13 @@ const messages = {
   balance: '$LIVE BALANCE',
   receiveLabel: 'RECEIVE $LIVE',
   sendLabel: 'SEND $LIVE',
-  audio: '$LIVE',
+  live: '$LIVE',
   manageWallets: 'Manage Wallets',
   connectWallets: 'Connect Other Wallets',
   totalAudio: 'Total $LIVE'
 }
 
-export const LEARN_MORE_URL = 'http://blog.coliving.co/posts/community-meet-audio'
+export const LEARN_MORE_URL = 'http://blog.coliving.co/posts/community-meet-live'
 
 type TileProps = {
   className?: string
@@ -90,7 +90,7 @@ export const BalanceTile = ({ className }: { className?: string }) => {
               <IconInfo className={styles.iconInfo} />
             </div>
           ) : (
-            messages.audio
+            messages.live
           )}
         </div>
       </>

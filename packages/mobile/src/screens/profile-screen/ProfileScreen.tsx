@@ -70,7 +70,7 @@ export const ProfileScreen = () => {
   const handlePressAudio = useCallback(() => {
     navigation.push({
       native: { screen: 'AudioScreen' },
-      web: { route: '/audio ' }
+      web: { route: '/live ' }
     })
   }, [navigation])
 

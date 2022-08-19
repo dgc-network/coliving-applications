@@ -8,7 +8,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context'
 import type WebView from 'react-native-webview'
 import { Provider } from 'react-redux'
 
-import Audio from 'app/components/audio/Audio'
+import Audio from 'app/components/live/Audio'
 import HCaptcha from 'app/components/hcaptcha'
 import NavigationContainer from 'app/components/navigation-container'
 import OAuth from 'app/components/oauth/OAuth'
@@ -35,7 +35,7 @@ const store = createStore()
 export const dispatch = store.dispatch
 
 const Airplay = Platform.select({
-  ios: () => require('./components/audio/Airplay').default,
+  ios: () => require('./components/live/Airplay').default,
   android: () => () => null
 })?.()
 

@@ -40,7 +40,7 @@ import styles from './PlayBar.module.css'
 const SEEK_INTERVAL = 200
 
 type OwnProps = {
-  audio: AudioState
+  live: AudioState
   onClickInfo: () => void
 }
 
@@ -50,7 +50,7 @@ type PlayBarProps = OwnProps &
 
 const PlayBar = ({
   currentQueueItem,
-  audio,
+  live,
   isPlaying,
   isBuffering,
   play,
@@ -66,8 +66,8 @@ const PlayBar = ({
 
   useEffect(() => {
     const seekInterval = setInterval(async () => {
-      const duration = await audio?.getDuration()
-      const pos = await audio?.getPosition()
+      const duration = await live?.getDuration()
+      const pos = await live?.getPosition()
       if (duration === undefined || pos === undefined) return
 
       const position = Math.min(pos, duration)
@@ -87,7 +87,7 @@ const PlayBar = ({
     collectible?.frameUrl ??
     collectible?.gifUrl
 
-  if (!audio || ((!uid || !track) && !collectible) || !user) return null
+  if (!live || ((!uid || !track) && !collectible) || !user) return null
 
   const getDisplayInfo = () => {
     if (track && !collectible) {
@@ -200,7 +200,7 @@ function makeMapStateToProps() {
   const mapStateToProps = (state: AppState) => ({
     currentQueueItem: getCurrentQueueItem(state),
     playCounter: getCounter(state),
-    audio: getAudio(state),
+    live: getAudio(state),
     isPlaying: getPlaying(state),
     isBuffering: getBuffering(state)
   })

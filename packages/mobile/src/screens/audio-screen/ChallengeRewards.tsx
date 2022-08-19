@@ -6,12 +6,12 @@ import { getOptimisticUserChallenges } from '-client/src/common/store/challenges
 import {
   getUserChallenges,
   getUserChallengesLoading
-} from '-client/src/common/store/pages/audio-rewards/selectors'
-import type { ChallengeRewardsModalType } from '-client/src/common/store/pages/audio-rewards/slice'
+} from '-client/src/common/store/pages/live-rewards/selectors'
+import type { ChallengeRewardsModalType } from '-client/src/common/store/pages/live-rewards/slice'
 import {
   fetchUserChallenges,
   setChallengeRewardsModalType
-} from '-client/src/common/store/pages/audio-rewards/slice'
+} from '-client/src/common/store/pages/live-rewards/slice'
 import { setVisibility } from '-client/src/common/store/ui/modals/slice'
 import { View } from 'react-native'
 

@@ -37,7 +37,7 @@ import { useDispatchWeb } from 'app/hooks/useDispatchWeb'
 import { useNavigation } from 'app/hooks/useNavigation'
 import { isEqual, useSelectorWeb } from 'app/hooks/useSelectorWeb'
 import type { AppState } from 'app/store'
-import { getPlayingUid } from 'app/store/audio/selectors'
+import { getPlayingUid } from 'app/store/live/selectors'
 
 import { CollectionTileTrackList } from './CollectionTileTrackList'
 import { LineupTile } from './LineupTile'

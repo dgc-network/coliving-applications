@@ -201,21 +201,21 @@
   text-align: right;
 }
 
-.audioBalance {
+.liveBalance {
   flex: 0 0 182px;
   text-align: right;
 }
 
-.hideCollectibles:not(.noActions) .audioBalance {
+.hideCollectibles:not(.noActions) .liveBalance {
   flex: 1 0 182px;
 }
 
-.noActions .audioBalance {
+.noActions .liveBalance {
   flex: 1 0 182px;
   padding-right: 24px;
 }
 
-.mobile.noActions .audioBalance {
+.mobile.noActions .liveBalance {
   flex: 1;
   padding-right: 24px;
 }

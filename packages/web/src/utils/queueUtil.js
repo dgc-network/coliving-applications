@@ -37,11 +37,11 @@ export function getCurrentTrackHowl(queue) {
   if (queue.playingIndex === -1) {
     return null
   }
-  return queue.queue[queue.playingIndex].track.audio.currentSegment()
+  return queue.queue[queue.playingIndex].track.live.currentSegment()
 }
 
 /**
- * Gets the HTML5 audio element for the current track in the queue.
+ * Gets the HTML5 live element for the current track in the queue.
  * @param {Object} queue the queue redux store object.
  * @returns {?Object}
  */
@@ -49,11 +49,11 @@ export function getCurrentTrackAudioElement(queue) {
   if (
     queue.playingIndex === -1 ||
     !queue.queue[queue.playingIndex].track ||
-    !queue.queue[queue.playingIndex].track.audio
+    !queue.queue[queue.playingIndex].track.live
   ) {
     return null
   }
-  return queue.queue[queue.playingIndex].track.audio.currentAudioElement()
+  return queue.queue[queue.playingIndex].track.live.currentAudioElement()
 }
 
 /**
@@ -65,7 +65,7 @@ export function getCurrentTrackDuration(queue) {
   if (queue.playingIndex === -1) {
     return null
   }
-  return queue.queue[queue.playingIndex].track.audio.getDuration()
+  return queue.queue[queue.playingIndex].track.live.getDuration()
 }
 
 /**

@@ -44,11 +44,11 @@ import { ChallengeRewards } from './ChallengeRewards'
 import { Tier } from './Tier'
 import { TrendingRewards } from './TrendingRewards'
 
-const LEARN_MORE_LINK = 'https://blog..co/article/community-meet-audio'
+const LEARN_MORE_LINK = 'https://blog..co/article/community-meet-live'
 
 const messages = {
   title: '$LIVE & Rewards',
-  audio: '$LIVE',
+  live: '$LIVE',
   totalAudio: 'Total $LIVE',
   send: 'Send $LIVE',
   receive: 'Receive $LIVE',
@@ -108,7 +108,7 @@ const useStyles = makeStyles(({ spacing, palette, typography }) => ({
     textAlign: 'center',
     marginVertical: spacing(4)
   },
-  audioAmount: {
+  liveAmount: {
     marginTop: spacing(4),
     color: palette.staticWhite,
     fontSize: typography.fontSize.xxxxxl,
@@ -118,12 +118,12 @@ const useStyles = makeStyles(({ spacing, palette, typography }) => ({
     textShadowOffset: { width: 0, height: 4 },
     textShadowRadius: 15
   },
-  audioInfo: {
+  liveInfo: {
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: spacing(4)
   },
-  audioText: {
+  liveText: {
     fontSize: typography.fontSize.xxl,
     fontFamily: typography.fontByWeight.bold,
     letterSpacing: 1,
@@ -193,13 +193,13 @@ export const AudioScreen = () => {
           content: styles.tileContent
         }}
       >
-        <Text style={styles.audioAmount}>
+        <Text style={styles.liveAmount}>
           {formatWei((totalBalance || new BN(0)) as BNWei, true, 0)}{' '}
         </Text>
-        <View style={styles.audioInfo}>
+        <View style={styles.liveInfo}>
           {hasMultipleWallets ? (
             <>
-              <Text style={styles.audioText}>{messages.totalAudio}</Text>
+              <Text style={styles.liveText}>{messages.totalAudio}</Text>
               <TouchableOpacity
                 hitSlop={{ left: 4, top: 4, bottom: 4, right: 4 }}
                 onPress={onPressWalletInfo}
@@ -213,7 +213,7 @@ export const AudioScreen = () => {
               </TouchableOpacity>
             </>
           ) : (
-            <Text style={styles.audioText}>{messages.audio}</Text>
+            <Text style={styles.liveText}>{messages.live}</Text>
           )}
         </View>
       </Tile>

@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux'
 
 import Text from 'app/components/text'
 import { useThemedStyles } from 'app/hooks/useThemedStyles'
-import { SEEK, seek } from 'app/store/audio/actions'
+import { SEEK, seek } from 'app/store/live/actions'
 import type { ThemeColors } from 'app/utils/theme'
 
 import { Slider } from './Slider'
@@ -50,7 +50,7 @@ type ScrubberProps = {
    */
   mediaKey: string
   /**
-   * Whether audio is playing and the scrubber should animate
+   * Whether live is playing and the scrubber should animate
    */
   isPlaying: boolean
   /**

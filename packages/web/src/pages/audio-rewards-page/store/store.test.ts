@@ -24,7 +24,7 @@ import {
   getUserChallenges,
   getUserChallengesOverrides,
   getUserChallengeSpecifierMap
-} from 'common/store/pages/audio-rewards/selectors'
+} from 'common/store/pages/live-rewards/selectors'
 import {
   Claim,
   claimChallengeReward,
@@ -42,7 +42,7 @@ import {
   setHCaptchaStatus,
   setUserChallengesDisbursed,
   showRewardClaimedToast
-} from 'common/store/pages/audio-rewards/slice'
+} from 'common/store/pages/live-rewards/slice'
 import { getFeePayer } from 'common/store/solana/selectors'
 import { setVisibility } from 'common/store/ui/modals/slice'
 import { getBalance, increaseBalance } from 'common/store/wallet/slice'
@@ -360,7 +360,7 @@ describe('Rewards Page Sagas', () => {
       )
     })
 
-    it('should update the audio balance and disbursement status on success', () => {
+    it('should update the live balance and disbursement status on success', () => {
       return (
         expectSaga(saga)
           .dispatch(

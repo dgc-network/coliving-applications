@@ -21,7 +21,7 @@ import { Track } from '@coliving/common'
 import { SquareSizes } from '@coliving/common'
 import DynamicImage from 'components/dynamic-image/DynamicImage'
 import PlayingTrackInfo from 'components/play-bar/desktop/components/PlayingTrackInfo'
-import AudioStream from 'audio/AudioStream'
+import AudioStream from 'live/AudioStream'
 import { webglSupported } from './utils'
 import { getDominantColorsByTrack } from 'common/store/average-color/slice'
 import { ReactComponent as IconRemove } from 'assets/img/iconRemove.svg'
@@ -53,7 +53,7 @@ const messages = (browser: string) => ({
 const Visualizer = ({
   isVisible,
   currentQueueItem,
-  audio,
+  live,
   playing,
   theme,
   dominantColors,
@@ -93,11 +93,11 @@ const Visualizer = ({
     }
   }, [isVisible, dominantColors, playing, currentQueueItem])
 
-  // Rebind audio
+  // Rebind live
   useEffect(() => {
-    if (audio && (audio as AudioStream).audioCtx && playing)
-      Visualizer1?.bind(audio)
-  }, [isVisible, playing, audio, currentQueueItem])
+    if (live && (live as AudioStream).liveCtx && playing)
+      Visualizer1?.bind(live)
+  }, [isVisible, playing, live, currentQueueItem])
 
   useEffect(() => {
     if (isVisible) {
@@ -220,7 +220,7 @@ const makeMapStateToProps = () => {
     const currentQueueItem = getCurrentQueueItem(state)
     return {
       currentQueueItem,
-      audio: getAudio(state),
+      live: getAudio(state),
       playing: getPlaying(state),
       theme: getTheme(state),
       dominantColors: getDominantColorsByTrack(state, {

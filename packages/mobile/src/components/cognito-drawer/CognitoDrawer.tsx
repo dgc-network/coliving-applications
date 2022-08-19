@@ -4,12 +4,12 @@ import { Status } from '@/common'
 import {
   getCognitoFlowUrl,
   getCognitoFlowUrlStatus
-} from '-client/src/common/store/pages/audio-rewards/selectors'
+} from '-client/src/common/store/pages/live-rewards/selectors'
 import {
   CognitoFlowStatus,
   fetchCognitoFlowUrl,
   setCognitoFlowStatus
-} from '-client/src/common/store/pages/audio-rewards/slice'
+} from '-client/src/common/store/pages/live-rewards/slice'
 import { StyleSheet, View } from 'react-native'
 import WebView from 'react-native-webview'
 

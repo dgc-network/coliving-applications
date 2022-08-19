@@ -15,12 +15,12 @@ import { getOptimisticUserChallenges } from 'common/store/challenges/selectors/o
 import {
   getUserChallenges,
   getUserChallengesLoading
-} from 'common/store/pages/audio-rewards/selectors'
+} from 'common/store/pages/live-rewards/selectors'
 import {
   ChallengeRewardsModalType,
   fetchUserChallenges,
   setChallengeRewardsModalType
-} from 'common/store/pages/audio-rewards/slice'
+} from 'common/store/pages/live-rewards/slice'
 import { fillString } from 'common/utils/fillString'
 import { formatNumberCommas } from 'common/utils/formatUtil'
 import LoadingSpinner from 'components/loading-spinner/LoadingSpinner'

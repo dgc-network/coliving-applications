@@ -7,7 +7,7 @@ import { decodeHashId } from 'utils/route/hashIds'
 
 declare global {
   interface Window {
-    audio: HTMLAudioElement
+    live: HTMLAudioElement
     webkitAudioContext: typeof AudioContext
   }
 }
@@ -17,11 +17,11 @@ const FADE_OUT_EVENT = new Event('fade-out')
 const VOLUME_CHANGE_BASE = 10
 const BUFFERING_DELAY_MILLISECONDS = 500
 
-// In the case of audio errors, try to resume playback
+// In the case of live errors, try to resume playback
 // by nudging the playhead this many seconds ahead.
 const ON_ERROR_NUDGE_SECONDS = 0.2
 
-// This calculation comes from chrome's audio SourceBuffer max of
+// This calculation comes from chrome's live SourceBuffer max of
 // 12MB. Each segment is ~260KB, so we can only fit ~ 47 segments in memory.
 // Read more: https://github.com/w3c/media-source/issues/172
 const MAX_SEGMENTS = 47
@@ -74,8 +74,8 @@ const HlsConfig = {
 }
 
 class AudioStream {
-  audio: HTMLAudioElement
-  audioCtx: AudioContext | null
+  live: HTMLAudioElement
+  liveCtx: AudioContext | null
   source: MediaElementAudioSourceNode | null
   gainNode: GainNode | null
   duration: number
@@ -95,11 +95,11 @@ class AudioStream {
   errorRateLimiter: Set<string>
 
   constructor() {
-    this.audio = new Audio()
-    // Connect this.audio to the window so that 3P's can interact with it.
-    window.audio = this.audio
+    this.live = new Audio()
+    // Connect this.live to the window so that 3P's can interact with it.
+    window.live = this.live
 
-    this.audioCtx = null
+    this.liveCtx = null
     this.source = null
     this.gainNode = null
 
@@ -126,7 +126,7 @@ class AudioStream {
 
     // M3U8 file
     this.url = null
-    // HLS audio object
+    // HLS live object
     this.hls = null
 
     // Listen for errors
@@ -138,18 +138,18 @@ class AudioStream {
   }
 
   _initContext = (shouldSkipAudioContext = false) => {
-    this.audio.addEventListener('canplay', () => {
-      if (!this.audioCtx && !shouldSkipAudioContext) {
+    this.live.addEventListener('canplay', () => {
+      if (!this.liveCtx && !shouldSkipAudioContext) {
         // Set up WebAudio API handles
         const AudioContext = window.AudioContext || window.webkitAudioContext
         try {
-          this.audioCtx = new AudioContext()
-          this.gainNode = this.audioCtx.createGain()
-          this.gainNode.connect(this.audioCtx.destination)
-          this.source = this.audioCtx.createMediaElementSource(this.audio)
+          this.liveCtx = new AudioContext()
+          this.gainNode = this.liveCtx.createGain()
+          this.gainNode.connect(this.liveCtx.destination)
+          this.source = this.liveCtx.createMediaElementSource(this.live)
           this.source.connect(this.gainNode)
         } catch (e) {
-          console.log('error setting up audio context')
+          console.log('error setting up live context')
           console.log(e)
         }
       }
@@ -159,10 +159,10 @@ class AudioStream {
       this.onBufferingChange(this.buffering)
     })
 
-    this.audio.onerror = (e) => {
+    this.live.onerror = (e) => {
       this.onError(AudioError.LIVE, e)
 
-      // Handle audio errors by trying to nudge the playhead and re attach media.
+      // Handle live errors by trying to nudge the playhead and re attach media.
       // Simply nudging the media doesn't work.
       //
       // This kind of error only seems to manifest on chrome because, as they say
@@ -172,17 +172,17 @@ class AudioStream {
       if (IS_CHROME_LIKE) {
         // Likely there isn't a case where an error is thrown while we're in a paused
         // state, but just in case, we record what state we were in.
-        const wasPlaying = !this.audio.paused
+        const wasPlaying = !this.live.paused
         if (this.hls && this.url) {
-          const newTime = this.audio.currentTime + ON_ERROR_NUDGE_SECONDS
+          const newTime = this.live.currentTime + ON_ERROR_NUDGE_SECONDS
           this.hls.loadSource(this.url)
-          this.hls.attachMedia(this.audio)
+          this.hls.attachMedia(this.live)
           // Set the new time to the current plus the nudge. If this nudge
           // wasn't enough, this error will be thrown again and we will just continue
           // to nudge the playhead forward until the errors stop or the song ends.
-          this.audio.currentTime = newTime
+          this.live.currentTime = newTime
           if (wasPlaying) {
-            this.audio.play()
+            this.live.play()
           }
         }
       }
@@ -200,16 +200,16 @@ class AudioStream {
     if (forceStreamSrc) {
       // TODO: Test to make sure that this doesn't break anything
       this.stop()
-      const prevVolume = this.audio.volume
-      this.audio = new Audio()
+      const prevVolume = this.live.volume
+      this.live = new Audio()
       this.gainNode = null
       this.source = null
-      this.audioCtx = null
+      this.liveCtx = null
       this._initContext(/* shouldSkipAudioContext */ true)
-      this.audio.setAttribute('preload', 'none')
-      this.audio.setAttribute('src', forceStreamSrc)
-      this.audio.volume = prevVolume
-      this.audio.onloadedmetadata = () => (this.duration = this.audio.duration)
+      this.live.setAttribute('preload', 'none')
+      this.live.setAttribute('src', forceStreamSrc)
+      this.live.volume = prevVolume
+      this.live.onloadedmetadata = () => (this.duration = this.live.duration)
     } else {
       this._initContext()
       if (Hls.isSupported()) {
@@ -268,7 +268,7 @@ class AudioStream {
         const url = URL.createObjectURL(m3u8Blob)
         this.url = url
         this.hls.loadSource(this.url)
-        this.hls.attachMedia(this.audio)
+        this.hls.attachMedia(this.live)
       } else {
         // Native HLS (ios Safari)
         const m3u8Gateways =
@@ -279,8 +279,8 @@ class AudioStream {
           m3u8Gateways
         )
 
-        this.audio.src = m3u8
-        this.audio.title =
+        this.live.src = m3u8
+        this.live.title =
           info.title && info.artist
             ? `${info.title} by ${info.artist}`
             : 'Coliving'
@@ -292,17 +292,17 @@ class AudioStream {
       0
     )
 
-    // Set audio listeners.
+    // Set live listeners.
     if (this.endedListener) {
-      this.audio.removeEventListener('ended', this.endedListener)
+      this.live.removeEventListener('ended', this.endedListener)
     }
     this.endedListener = () => {
       onEnd()
     }
-    this.audio.addEventListener('ended', this.endedListener)
+    this.live.addEventListener('ended', this.endedListener)
 
     if (this.waitingListener) {
-      this.audio.removeEventListener('waiting', this.waitingListener)
+      this.live.removeEventListener('waiting', this.waitingListener)
     }
     this.waitingListener = () => {
       this.bufferingTimeout = setTimeout(() => {
@@ -310,42 +310,42 @@ class AudioStream {
         this.onBufferingChange(this.buffering)
       }, BUFFERING_DELAY_MILLISECONDS)
     }
-    this.audio.addEventListener('waiting', this.waitingListener)
+    this.live.addEventListener('waiting', this.waitingListener)
   }
 
   play = () => {
     // In case we haven't faded out the last pause, pause again and
     // clear our listener for the end of the pause fade.
-    this.audio.removeEventListener('fade-out', this._pauseInternal)
-    if (this.audio.currentTime !== 0) {
+    this.live.removeEventListener('fade-out', this._pauseInternal)
+    if (this.live.currentTime !== 0) {
       this._fadeIn()
     } else if (this.gainNode) {
       this.gainNode.gain.setValueAtTime(1, 0)
     }
 
     // This is a very nasty "hack" to fix a bug in chrome-like webkit browsers.
-    // Calling a traditional `audio.pause()` / `play()` and switching tabs leaves the
+    // Calling a traditional `live.pause()` / `play()` and switching tabs leaves the
     // AudioContext in a weird state where after the browser tab enters the background,
     // and then comes back into the foreground, the AudioContext gives misinformation.
-    // Weirdly, the audio's playback rate is no longer maintained on resuming playback after a pause.
-    // Though the audio itself claims audio.playbackRate = 1.0, the actual resumed speed
+    // Weirdly, the live's playback rate is no longer maintained on resuming playback after a pause.
+    // Though the live itself claims live.playbackRate = 1.0, the actual resumed speed
     // is nearish 0.9.
     //
     // In chrome like browsers (opera, edge), we disconnect and reconnect the source node
-    // instead of playing and pausing the audio element itself, which seems to fix this issue
+    // instead of playing and pausing the live element itself, which seems to fix this issue
     // without any side-effects (though this behavior could change?).
     //
-    // Another solution to this problem is calling `this.audioCtx.suspend()` and `resume()`,
+    // Another solution to this problem is calling `this.liveCtx.suspend()` and `resume()`,
     // however, that doesn't play nicely with Analyser nodes (e.g. visualizer) because it
-    // freezes in place rather than naturally "disconnecting" it from audio.
+    // freezes in place rather than naturally "disconnecting" it from live.
     //
     // Web resources on this problem are limited (or none?), but this is a start:
-    // https://stackoverflow.com/questions/11506180/web-audio-api-resume-from-pause
-    if (this.audioCtx && IS_CHROME_LIKE) {
+    // https://stackoverflow.com/questions/11506180/web-live-api-resume-from-pause
+    if (this.liveCtx && IS_CHROME_LIKE) {
       this.source!.connect(this.gainNode!)
     }
 
-    const promise = this.audio.play()
+    const promise = this.live.play()
     if (promise) {
       promise.catch((_) => {
         // Let pauses interrupt plays (as the user could be rapidly skipping through tracks).
@@ -354,35 +354,35 @@ class AudioStream {
   }
 
   pause = () => {
-    this.audio.addEventListener('fade-out', this._pauseInternal)
+    this.live.addEventListener('fade-out', this._pauseInternal)
     this._fadeOut()
   }
 
   _pauseInternal = () => {
-    if (this.audioCtx && IS_CHROME_LIKE) {
+    if (this.liveCtx && IS_CHROME_LIKE) {
       // See comment above in the `play()` method.
       this.source!.disconnect()
     } else {
-      this.audio.pause()
+      this.live.pause()
     }
   }
 
   stop = () => {
-    this.audio.pause()
+    this.live.pause()
     // Normally canplaythrough should be required to set currentTime, but in the case
     // of setting curtingTime to zero, pushing to the end of the event loop works.
     // This fixes issues in Firefox, in particular `the operation was aborted`
     setTimeout(() => {
-      this.audio.currentTime = 0
+      this.live.currentTime = 0
     }, 0)
   }
 
   isPlaying = () => {
-    return !this.audio.paused
+    return !this.live.paused
   }
 
   isPaused = () => {
-    return this.audio.paused
+    return this.live.paused
   }
 
   isBuffering = () => {
@@ -394,15 +394,15 @@ class AudioStream {
   }
 
   getPosition = () => {
-    return this.audio.currentTime
+    return this.live.currentTime
   }
 
   seek = (seconds: number) => {
-    this.audio.currentTime = seconds
+    this.live.currentTime = seconds
   }
 
   setVolume = (value: number) => {
-    this.audio.volume =
+    this.live.volume =
       (Math.pow(VOLUME_CHANGE_BASE, value) - 1) / (VOLUME_CHANGE_BASE - 1)
   }
 
@@ -410,14 +410,14 @@ class AudioStream {
     if (this.gainNode) {
       const fadeTime = 320
       setTimeout(() => {
-        this.audio.dispatchEvent(FADE_IN_EVENT)
+        this.live.dispatchEvent(FADE_IN_EVENT)
       }, fadeTime)
       this.gainNode.gain.exponentialRampToValueAtTime(
         1,
-        this.audioCtx!.currentTime + fadeTime / 1000.0
+        this.liveCtx!.currentTime + fadeTime / 1000.0
       )
     } else {
-      this.audio.dispatchEvent(FADE_IN_EVENT)
+      this.live.dispatchEvent(FADE_IN_EVENT)
     }
   }
 
@@ -425,14 +425,14 @@ class AudioStream {
     if (this.gainNode) {
       const fadeTime = 200
       setTimeout(() => {
-        this.audio.dispatchEvent(FADE_OUT_EVENT)
+        this.live.dispatchEvent(FADE_OUT_EVENT)
       }, fadeTime)
       this.gainNode.gain.exponentialRampToValueAtTime(
         0.001,
-        this.audioCtx!.currentTime + fadeTime / 1000.0
+        this.liveCtx!.currentTime + fadeTime / 1000.0
       )
     } else {
-      this.audio.dispatchEvent(FADE_OUT_EVENT)
+      this.live.dispatchEvent(FADE_OUT_EVENT)
     }
   }
 }

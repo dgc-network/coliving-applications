@@ -54,7 +54,7 @@ function* sendAsync({
   const accountBalance = yield* select(getAccountBalance)
   const weiBNBalance = accountBalance ?? (new BN('0') as BNWei)
 
-  const waudioWeiAmount: BNWei = yield* call(
+  const wliveWeiAmount: BNWei = yield* call(
     walletClient.getCurrentWAudioBalance
   )
   if (
@@ -77,9 +77,9 @@ function* sendAsync({
         recipient: recipientWallet
       })
     )
-    // If transferring spl wrapped audio and there are insufficent funds with only the
-    // user bank balance, transfer all eth LIVE to spl wrapped audio
-    if (chain === Chain.Sol && weiBNAmount.gt(waudioWeiAmount)) {
+    // If transferring spl wrapped live and there are insufficent funds with only the
+    // user bank balance, transfer all eth LIVE to spl wrapped live
+    if (chain === Chain.Sol && weiBNAmount.gt(wliveWeiAmount)) {
       yield* put(transferEthAudioToSolWAudio())
       yield* call(walletClient.transferTokensFromEthToSol)
     }
@@ -171,16 +171,16 @@ function* fetchBalanceAsync() {
     )
   )
 
-  const audioWeiBalance = currentEthAudioWeiBalance.add(
+  const liveWeiBalance = currentEthAudioWeiBalance.add(
     currentSolAudioWeiBalance
   ) as BNWei
 
   const useSolAudio = getFeatureEnabled(FeatureFlags.ENABLE_SPL_LIVE)
   if (useSolAudio) {
-    const totalBalance = audioWeiBalance.add(associatedWalletBalance) as BNWei
+    const totalBalance = liveWeiBalance.add(associatedWalletBalance) as BNWei
     yield* put(
       setBalance({
-        balance: weiToString(audioWeiBalance),
+        balance: weiToString(liveWeiBalance),
         totalBalance: weiToString(totalBalance)
       })
     )

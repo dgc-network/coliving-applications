@@ -4,7 +4,7 @@ import { Pressable, Text, View } from 'react-native'
 import { useSelector } from 'react-redux'
 
 import Skeleton from 'app/components/skeleton'
-import { getPlayingUid } from 'app/store/audio/selectors'
+import { getPlayingUid } from 'app/store/live/selectors'
 import { flexRowCentered, makeStyles } from 'app/styles'
 import type { GestureResponderHandler } from 'app/types/gesture'
 

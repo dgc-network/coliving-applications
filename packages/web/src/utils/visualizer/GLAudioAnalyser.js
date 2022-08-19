@@ -1,14 +1,14 @@
-import Analyser from 'web-audio-analyser'
+import Analyser from 'web-live-analyser'
 import Texture from 'gl-texture2d'
 import ndarray from 'ndarray'
 
 export default class GLAudioAnalyser {
-  constructor (gl, audio, ctx) {
+  constructor (gl, live, ctx) {
     this.gl = gl
-    this.audio = audio
+    this.live = live
     this.ctx = ctx
 
-    this.waa = Analyser(this.audio, this.ctx, { audible: false })
+    this.waa = Analyser(this.live, this.ctx, { audible: false })
 
     var size = (this.waa.analyser[0] || this.waa.analyser).frequencyBinCount
 

@@ -71,7 +71,7 @@ type SliderProps = {
    */
   mediaKey: string
   /**
-   * Whether audio is playing and the scrubber should animate
+   * Whether live is playing and the scrubber should animate
    */
   isPlaying: boolean
   /**

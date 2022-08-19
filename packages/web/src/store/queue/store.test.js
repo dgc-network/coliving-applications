@@ -4,7 +4,7 @@ import { expectSaga } from 'redux-saga-test-plan'
 import * as matchers from 'redux-saga-test-plan/matchers'
 import { take } from 'redux-saga/effects'
 
-import AudioStream from 'audio/AudioStream'
+import AudioStream from 'live/AudioStream'
 import accountSlice from 'common/store/account/reducer'
 import * as cacheActions from 'common/store/cache/actions'
 import reducer, * as actions from 'common/store/queue/slice'
@@ -52,11 +52,11 @@ const makeInitialQueue = (config) => ({
 })
 
 const makeInitialPlayer = (config = {}) => ({
-  // Identifier for the audio that's playing.
+  // Identifier for the live that's playing.
   uid: null,
   trackId: null,
-  audio: new AudioStream(),
-  // Keep 'playing' in the store separately from the audio
+  live: new AudioStream(),
+  // Keep 'playing' in the store separately from the live
   // object to allow components to subscribe to changes.
   playing: false,
   counter: 0,

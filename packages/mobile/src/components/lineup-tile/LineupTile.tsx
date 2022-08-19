@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux'
 
 import type { LineupTileProps } from 'app/components/lineup-tile/types'
 import { useSelectorWeb } from 'app/hooks/useSelectorWeb'
-import { getPlaying } from 'app/store/audio/selectors'
+import { getPlaying } from 'app/store/live/selectors'
 
 import { LineupTileActionButtons } from './LineupTileActionButtons'
 import {
