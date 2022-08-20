@@ -15,7 +15,7 @@ import {
   HISTORY_PAGE,
   SEARCH_CATEGORY_PAGE,
   SEARCH_PAGE,
-  PLAYLIST_PAGE,
+  CONTENT_LIST_PAGE,
   ALBUM_PAGE,
   AGREEMENT_PAGE,
   PROFILE_PAGE,
@@ -59,7 +59,7 @@ export const getLineupSelectorForRoute = (state) => {
   if (matchPage(HISTORY_PAGE)) {
     return getHistoryAgreementsLineup
   }
-  if (matchPage(PLAYLIST_PAGE) || matchPage(ALBUM_PAGE)) {
+  if (matchPage(CONTENT_LIST_PAGE) || matchPage(ALBUM_PAGE)) {
     return getCollectionAgreementsLineup
   }
   if (matchPage(AGREEMENT_PAGE)) {

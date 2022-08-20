@@ -18,7 +18,7 @@ export type CollectionsPageState = {
   smartCollectionVariant: SmartCollectionVariant
 }
 
-export type CollectionsPageType = 'playlist' | 'album'
+export type CollectionsPageType = 'content list' | 'album'
 
 export type CollectionAgreement = LineupAgreement & { dateAdded: Moment } & {
   collectible?: Collectible

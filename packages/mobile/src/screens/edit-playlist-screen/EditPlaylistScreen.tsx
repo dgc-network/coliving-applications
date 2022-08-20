@@ -107,52 +107,52 @@ const EditPlaylistForm = (props: FormikProps<PlaylistValues>) => {
 }
 
 export const EditPlaylistScreen = () => {
-  const playlist = useSelectorWeb(getMetadata)
+  const content list = useSelectorWeb(getMetadata)
   const dispatchWeb = useDispatchWeb()
   const agreements = useSelectorWeb(getAgreements)
 
   const coverArt = useCollectionCoverArt({
-    id: playlist?.playlist_id,
-    sizes: playlist?._cover_art_sizes ?? null,
+    id: content list?.content list_id,
+    sizes: content list?._cover_art_sizes ?? null,
     size: SquareSizes.SIZE_1000_BY_1000
   })
 
   const handleSubmit = useCallback(
     (values: PlaylistValues) => {
-      if (playlist) {
+      if (content list) {
         values.removedAgreements.forEach(({ agreementId, timestamp }) => {
           dispatchWeb(
-            removeAgreementFromPlaylist(agreementId, playlist.playlist_id, timestamp)
+            removeAgreementFromPlaylist(agreementId, content list.content list_id, timestamp)
           )
         })
-        if (!isEqual(playlist?.playlist_contents.agreement_ids, values.agreement_ids)) {
+        if (!isEqual(content list?.content list_contents.agreement_ids, values.agreement_ids)) {
           dispatchWeb(
             orderPlaylist(
-              playlist?.playlist_id,
+              content list?.content list_id,
               values.agreement_ids.map(({ agreement, time }) => ({ id: agreement, time }))
             )
           )
         }
         dispatchWeb(
-          editPlaylist(playlist.playlist_id, values as unknown as Collection)
+          editPlaylist(content list.content list_id, values as unknown as Collection)
         )
         dispatchWeb(agreementsActions.fetchLineupMetadatas())
       }
     },
-    [dispatchWeb, playlist]
+    [dispatchWeb, content list]
   )
 
-  if (!playlist) return null
+  if (!content list) return null
 
-  const { playlist_name, description } = playlist
+  const { content list_name, description } = content list
 
   const initialValues = {
-    playlist_name,
+    content list_name,
     description,
     artwork: { url: coverArt ?? '' },
     removedAgreements: [],
     agreements,
-    agreement_ids: playlist.playlist_contents.agreement_ids
+    agreement_ids: content list.content list_contents.agreement_ids
   }
 
   return (

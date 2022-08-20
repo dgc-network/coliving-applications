@@ -42,7 +42,7 @@ const MAX_COUNT_LOADING_TILES = 18
 // The inital multiplier for number of agreements to fetch on lineup load
 // multiplied by the number of agreements that fit the browser height
 export const INITIAL_LOAD_AGREEMENTS_MULTIPLIER = 1.75
-export const INITIAL_PLAYLISTS_MULTIPLER = 1
+export const INITIAL_CONTENT_LISTS_MULTIPLER = 1
 
 // A multiplier for the number of tiles to fill a page to be
 // loaded in on each call (after the intial call)
@@ -61,7 +61,7 @@ const totalTileHeight = {
   main: 152 + 16,
   section: 124 + 16,
   condensed: 124 + 8,
-  playlist: 350
+  content list: 350
 }
 
 // Load AGREEMENTS_AHEAD x the number of tiles to be displayed on the screen
@@ -107,7 +107,7 @@ export interface LineupProviderProps {
   'aria-label'?: string
   // Tile components
   agreementTile: ComponentType<AgreementTileProps> | any
-  playlistTile: ComponentType<PlaylistTileProps> | any
+  content listTile: ComponentType<PlaylistTileProps> | any
 
   // Other props
 
@@ -191,7 +191,7 @@ export interface LineupProviderProps {
   emptyElement?: JSX.Element
   actions: LineupActions
   delayLoad?: boolean
-  /** How many rows to show for a loading playlist tile. Defaults to 0 */
+  /** How many rows to show for a loading content list tile. Defaults to 0 */
   numPlaylistSkeletonRows?: number
 
   /** Are we in a trending lineup? Allows tiles to specialize their rendering */
@@ -232,16 +232,16 @@ class LineupProvider extends PureComponent<CombinedProps, LineupProviderState> {
     super(props)
     const loadMoreThreshold = getLoadMoreThreshold()
     const minimumAgreementLoadCount = getLoadMoreAgreementCount(
-      this.props.variant === LineupVariant.PLAYLIST
-        ? LineupVariant.PLAYLIST
+      this.props.variant === LineupVariant.CONTENT_LIST
+        ? LineupVariant.CONTENT_LIST
         : LineupVariant.MAIN,
       MINIMUM_INITIAL_LOAD_AGREEMENTS_MULTIPLIER
     )
     const initialAgreementLoadCount = getLoadMoreAgreementCount(
       this.props.variant,
       () =>
-        this.props.variant === LineupVariant.PLAYLIST
-          ? INITIAL_PLAYLISTS_MULTIPLER
+        this.props.variant === LineupVariant.CONTENT_LIST
+          ? INITIAL_CONTENT_LISTS_MULTIPLER
           : INITIAL_LOAD_AGREEMENTS_MULTIPLIER
     )
     const agreementLoadMoreCount = getLoadMoreAgreementCount(
@@ -411,14 +411,14 @@ class LineupProvider extends PureComponent<CombinedProps, LineupProviderState> {
 
     const isLineupPlaying = lineup.entries.some((entry) => {
       if (entry.agreement_id) return playingUid === entry.uid
-      else if (entry.playlist_id)
+      else if (entry.content list_id)
         return entry.agreements.some((agreement: any) => agreement.uid === playingUid)
       return false
     })
     if (playingAgreementId && !isLineupPlaying && lineup.prefix === playingSource) {
       for (const entry of lineup.entries) {
         if (entry.agreement_id === playingAgreementId) return entry.uid
-        if (entry.playlist_id) {
+        if (entry.content list_id) {
           for (const agreement of entry.agreements) {
             if (agreement.agreement_id === playingAgreementId) return agreement.uid
           }
@@ -492,7 +492,7 @@ class LineupProvider extends PureComponent<CombinedProps, LineupProviderState> {
     let tileSize: AgreementTileSize
     let lineupStyle = {}
     let containerClassName: string
-    if (variant === LineupVariant.MAIN || variant === LineupVariant.PLAYLIST) {
+    if (variant === LineupVariant.MAIN || variant === LineupVariant.CONTENT_LIST) {
       tileSize = AgreementTileSize.LARGE
       lineupStyle = styles.main
     } else if (variant === LineupVariant.SECTION) {
@@ -535,10 +535,10 @@ class LineupProvider extends PureComponent<CombinedProps, LineupProviderState> {
             agreementProps = { ...agreementProps, ...leadingElementTileProps }
           }
           return <this.props.agreementTile key={index} {...agreementProps} />
-        } else if (entry.kind === Kind.COLLECTIONS || entry.playlist_id) {
+        } else if (entry.kind === Kind.COLLECTIONS || entry.content list_id) {
           // Render a agreement tile if the kind agreements or there's a agreement id present
 
-          const playlistProps = {
+          const content listProps = {
             ...entry,
             key: index,
             index,
@@ -556,12 +556,12 @@ class LineupProvider extends PureComponent<CombinedProps, LineupProviderState> {
             showRankIcon: index < rankIconCount
           }
 
-          return <this.props.playlistTile key={index} {...playlistProps} />
+          return <this.props.content listTile key={index} {...content listProps} />
         }
-        // Poorly formed agreement or playlist metatdata.
+        // Poorly formed agreement or content list metatdata.
         return null
       })
-      // Remove nulls (invalid playlists or agreements)
+      // Remove nulls (invalid content lists or agreements)
       .filter(Boolean)
       .slice(start, lineupCount)
 
@@ -597,8 +597,8 @@ class LineupProvider extends PureComponent<CombinedProps, LineupProviderState> {
 
         // Skeleton tile should change depending on variant
         const SkeletonTileElement =
-          variant === LineupVariant.PLAYLIST
-            ? this.props.playlistTile
+          variant === LineupVariant.CONTENT_LIST
+            ? this.props.content listTile
             : this.props.agreementTile
         // If elected to apply leading element styles to the skeletons
         // Create featured content structure around firest skeleton tile

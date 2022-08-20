@@ -5,7 +5,7 @@ export type SearchPageState = {
   searchText: string
   agreementIds: ID[]
   albumIds: ID[]
-  playlistIds: ID[]
+  content listIds: ID[]
   artistIds: ID[]
   agreements: LineupState<Agreement>
 }
@@ -13,7 +13,7 @@ export type SearchPageState = {
 export enum SearchKind {
   AGREEMENTS = 'agreements',
   USERS = 'users',
-  PLAYLISTS = 'playlists',
+  CONTENT_LISTS = 'content lists',
   ALBUMS = 'albums',
   ALL = 'all'
 }

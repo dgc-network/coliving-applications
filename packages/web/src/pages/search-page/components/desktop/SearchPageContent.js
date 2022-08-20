@@ -17,7 +17,7 @@ import Toast from 'components/toast/Toast'
 import {
   albumPage,
   fullAlbumPage,
-  playlistPage,
+  content listPage,
   fullPlaylistPage,
   profilePage,
   fullSearchResultsPage,
@@ -111,7 +111,7 @@ class SearchPageContent extends Component {
       playing,
       buffering,
       artists,
-      playlists,
+      content lists,
       albums,
       goToRoute,
       handleViewMoreResults,
@@ -166,20 +166,20 @@ class SearchPageContent extends Component {
       )
     })
 
-    const playlistCards = playlists.map((playlist, ind) => {
-      const toastId = `playlist-${playlist.playlist_id}`
+    const content listCards = content lists.map((content list, ind) => {
+      const toastId = `content list-${content list.content list_id}`
       const onClick = () => {
         goToRoute(
-          playlistPage(
-            playlist.user.handle,
-            playlist.playlist_name,
-            playlist.playlist_id
+          content listPage(
+            content list.user.handle,
+            content list.content list_name,
+            content list.content list_id
           )
         )
         recordSearchResultClick({
           term: searchText,
-          kind: 'playlist',
-          id: playlist.playlist_id,
+          kind: 'content list',
+          id: content list.content list_id,
           source:
             searchResultsCategory === 'all'
               ? 'search results page'
@@ -189,43 +189,43 @@ class SearchPageContent extends Component {
       return (
         // TODO: Refactor cards and the way draggable wraps them.
         <Toast
-          key={playlist.playlist_id}
+          key={content list.content list_id}
           text={cardToast[toastId] && cardToast[toastId].message}
           open={cardToast[toastId] && cardToast[toastId].open}
           placement='bottom'
           fillParent={false}
-          playlistId={playlist.playlist_id}
-          isAlbum={playlist.is_album}
+          content listId={content list.content list_id}
+          isAlbum={content list.is_album}
           link={fullPlaylistPage(
-            playlist.user.handle,
-            playlist.playlist_name,
-            playlist.playlist_id
+            content list.user.handle,
+            content list.content list_name,
+            content list.content list_id
           )}
-          primaryText={playlist.playlist_name}
+          primaryText={content list.content list_name}
         >
           <Card
             size={'small'}
-            id={playlist.playlist_id}
-            imageSize={playlist._cover_art_sizes}
-            primaryText={playlist.playlist_name}
-            secondaryText={`${playlist.user.name} • ${
-              playlist.agreementCount
-            } Agreement${playlist.agreementCount > 1 ? 's' : ''}`}
+            id={content list.content list_id}
+            imageSize={content list._cover_art_sizes}
+            primaryText={content list.content list_name}
+            secondaryText={`${content list.user.name} • ${
+              content list.agreementCount
+            } Agreement${content list.agreementCount > 1 ? 's' : ''}`}
             onClick={onClick}
             menu={{
-              type: 'playlist',
-              handle: playlist.user.handle,
-              name: playlist.playlist_name,
-              isOwner: playlist.user.user_id === userId,
-              playlistId: playlist.playlist_id,
-              currentUserSaved: playlist.has_current_user_saved,
-              currentUserReposted: playlist.has_current_user_reposted,
-              metadata: playlist,
+              type: 'content list',
+              handle: content list.user.handle,
+              name: content list.content list_name,
+              isOwner: content list.user.user_id === userId,
+              content listId: content list.content list_id,
+              currentUserSaved: content list.has_current_user_saved,
+              currentUserReposted: content list.has_current_user_reposted,
+              metadata: content list,
               includeShare: true,
               includeRepost: true,
-              isPublic: !playlist.is_private,
-              onShare: this.onShare('playlist', playlist.playlist_id),
-              onRepost: this.onRepost('playlist', playlist.playlist_id)
+              isPublic: !content list.is_private,
+              onShare: this.onShare('content list', content list.content list_id),
+              onRepost: this.onRepost('content list', content list.content list_id)
             }}
           />
         </Toast>
@@ -233,15 +233,15 @@ class SearchPageContent extends Component {
     })
 
     const albumCards = albums.map((album, ind) => {
-      const toastId = `album-${album.playlist_id}`
+      const toastId = `album-${album.content list_id}`
       const onClick = () => {
         goToRoute(
-          albumPage(album.user.handle, album.playlist_name, album.playlist_id)
+          albumPage(album.user.handle, album.content list_name, album.content list_id)
         )
         recordSearchResultClick({
           term: searchText,
           kind: 'album',
-          id: album.playlist_id,
+          id: album.content list_id,
           source:
             searchResultsCategory === 'all'
               ? 'search results page'
@@ -251,32 +251,32 @@ class SearchPageContent extends Component {
       return (
         // TODO: Refactor cards and the way draggable wraps them.
         <Toast
-          key={album.playlist_id}
+          key={album.content list_id}
           text={cardToast[toastId] && cardToast[toastId].message}
           open={cardToast[toastId] && cardToast[toastId].open}
           placement='bottom'
           fillParent={false}
-          playlistId={album.playlist_id}
+          content listId={album.content list_id}
           isAlbum={album.is_album}
           link={fullAlbumPage(
             album.user.handle,
-            album.playlist_name,
-            album.playlist_id
+            album.content list_name,
+            album.content list_id
           )}
-          primaryText={album.playlist_name}
+          primaryText={album.content list_name}
         >
           <Card
             size={'small'}
-            id={album.playlist_id}
+            id={album.content list_id}
             imageSize={album._cover_art_sizes}
-            primaryText={album.playlist_name}
+            primaryText={album.content list_name}
             secondaryText={album.user.name}
             onClick={onClick}
             menu={{
               type: 'album',
               handle: album.user.handle,
-              name: album.playlist_name,
-              playlistId: album.playlist_id,
+              name: album.content list_name,
+              content listId: album.content list_id,
               isOwner: album.user.user_id === userId,
               metadata: album,
               isPublic: !album.is_private,
@@ -284,8 +284,8 @@ class SearchPageContent extends Component {
               currentUserReposted: album.has_current_user_reposted,
               includeShare: true,
               includeRepost: true,
-              onShare: this.onShare('album', album.playlist_id),
-              onRepost: this.onRepost('album', album.playlist_id)
+              onShare: this.onShare('album', album.content list_id),
+              onRepost: this.onRepost('album', album.content list_id)
             }}
           />
         </Toast>
@@ -295,7 +295,7 @@ class SearchPageContent extends Component {
     const foundResults =
       artistCards.length > 0 ||
       agreements.entries.length > 0 ||
-      playlistCards.length > 0 ||
+      content listCards.length > 0 ||
       albumCards.length > 0
     let content
     let header
@@ -341,15 +341,15 @@ class SearchPageContent extends Component {
         </>
       )
       header = <SearchHeader searchText={searchText} title={searchTitle} />
-    } else if (searchResultsCategory === 'playlists') {
+    } else if (searchResultsCategory === 'content lists') {
       content = isTagSearch ? (
         <Redirect to={NOT_FOUND_PAGE} />
       ) : (
         <>
           <CardLineup
             categoryName={'Playlists'}
-            cards={playlistCards}
-            containerClassName={styles.playlistSearchResultsContainer}
+            cards={content listCards}
+            containerClassName={styles.content listSearchResultsContainer}
             cardsClassName={styles.cardsContainer}
           />
         </>
@@ -424,16 +424,16 @@ class SearchPageContent extends Component {
               />
             </div>
           ) : null}
-          {!isTagSearch && playlistCards.length > 0 ? (
+          {!isTagSearch && content listCards.length > 0 ? (
             <CardLineup
               categoryName={'Playlists'}
               onMore={
-                playlistCards.length >= 4
-                  ? handleViewMoreResults('playlists')
+                content listCards.length >= 4
+                  ? handleViewMoreResults('content lists')
                   : null
               }
-              cards={playlistCards.slice(0, Math.min(4, playlistCards.length))}
-              containerClassName={styles.playlistSearchResultsContainer}
+              cards={content listCards.slice(0, Math.min(4, content listCards.length))}
+              containerClassName={styles.content listSearchResultsContainer}
               cardsClassName={styles.cardsContainer}
             />
           ) : null}

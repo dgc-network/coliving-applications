@@ -51,7 +51,7 @@ const FolderNavLink = ({
     <Draggable
       id={id}
       text={name}
-      kind='playlist-folder'
+      kind='content list-folder'
       onDrag={onDrag}
       onDrop={onDrop}
     >
@@ -76,12 +76,12 @@ type PlaylistFolderNavItemProps = {
   onClickEdit: (folderId: string) => void
   onDropInFolder: (
     folder: PlaylistLibraryFolder,
-    draggingKind: 'library-playlist' | 'playlist',
+    draggingKind: 'library-content list' | 'content list',
     draggingId: ID | string | SmartCollectionVariant
   ) => void
   onDropBelowFolder: (
     folderId: string,
-    draggingKind: 'playlist-folder' | 'library-playlist',
+    draggingKind: 'content list-folder' | 'library-content list',
     draggingId: ID | string | SmartCollectionVariant
   ) => void
   children?: ReactNode
@@ -99,7 +99,7 @@ export const PlaylistFolderNavItem = ({
 }: PlaylistFolderNavItemProps) => {
   const { id, name } = folder
   const isDroppableKind =
-    draggingKind === 'library-playlist' || draggingKind === 'playlist'
+    draggingKind === 'library-content list' || draggingKind === 'content list'
   const [isHovering, setIsHovering] = useState(false)
   const [isExpanded, setIsExpanded] = useState(false)
   const record = useRecord()
@@ -115,22 +115,22 @@ export const PlaylistFolderNavItem = ({
     const prevIsExpanded = isExpanded
     setIsExpanded(!isExpanded)
     if (prevIsExpanded) {
-      record(make(Name.PLAYLIST_LIBRARY_COLLAPSE_FOLDER, {}))
+      record(make(Name.CONTENT_LIST_LIBRARY_COLLAPSE_FOLDER, {}))
     } else {
-      record(make(Name.PLAYLIST_LIBRARY_EXPAND_FOLDER, {}))
+      record(make(Name.CONTENT_LIST_LIBRARY_EXPAND_FOLDER, {}))
     }
   }
 
   return (
     <>
-      {/* This is the droppable area for adding a playlist into a folder */}
+      {/* This is the droppable area for adding a content list into a folder */}
       <Droppable
         className={navColumnStyles.droppable}
         hoverClassName={navColumnStyles.droppableHover}
-        onDrop={(playlistId, kind) => {
-          onDropInFolder(folder, kind, playlistId)
+        onDrop={(content listId, kind) => {
+          onDropInFolder(folder, kind, content listId)
         }}
-        acceptedKinds={['library-playlist', 'playlist']}
+        acceptedKinds={['library-content list', 'content list']}
       >
         <FolderNavLink
           onMouseEnter={() => {
@@ -172,7 +172,7 @@ export const PlaylistFolderNavItem = ({
               })}
             />
             <IconButton
-              aria-label='More playlist actions'
+              aria-label='More content list actions'
               className={cn(styles.iconKebabHorizontal, {
                 [styles.hidden]: !isHovering || dragging
               })}
@@ -191,7 +191,7 @@ export const PlaylistFolderNavItem = ({
           </animated.div>
         )}
       </Droppable>
-      {/* This is the droppable area for reordering something below this playlist
+      {/* This is the droppable area for reordering something below this content list
       folder item. */}
       <Droppable
         className={styles.droppable}
@@ -199,7 +199,7 @@ export const PlaylistFolderNavItem = ({
         onDrop={(draggingId, kind) => {
           onDropBelowFolder(id, kind, draggingId)
         }}
-        acceptedKinds={['playlist-folder', 'library-playlist']}
+        acceptedKinds={['content list-folder', 'library-content list']}
       />
     </>
   )

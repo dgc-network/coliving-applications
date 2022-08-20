@@ -174,7 +174,7 @@ const InstagramAuth = ({
         }
         try {
           if (
-            popup.location.hostname.includes('coliving.co') ||
+            popup.location.hostname.includes('coliving.lol') ||
             popup.location.hostname.includes(HOSTNAME) ||
             popup.location.hostname.includes(window.location.hostname)
           ) {

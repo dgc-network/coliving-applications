@@ -55,7 +55,7 @@ class AgreementInfo extends PureComponent {
     })
     const artistNameStyle = cn(styles.artistName, style, {
       [styles.active]: active,
-      [styles.playlistCreator]: contentTitle === 'playlist'
+      [styles.content listCreator]: contentTitle === 'content list'
     })
 
     const hideShow = cn({
@@ -89,7 +89,7 @@ class AgreementInfo extends PureComponent {
         </div>
         <div className={artistNameStyle}>
           <div className={hideShow}>
-            {contentTitle === 'playlist' ? (
+            {contentTitle === 'content list' ? (
               <span className={styles.createdBy}>{'Created by'}</span>
             ) : null}
             {popover ? (

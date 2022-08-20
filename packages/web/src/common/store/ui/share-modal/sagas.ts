@@ -38,7 +38,7 @@ function* handleRequestOpen(action: RequestOpenAction) {
       const { collectionId, source } = action.payload
       const collection = yield* select(getCollection(collectionId))
       if (!collection) return
-      const owner = yield* select(getUser(collection.playlist_owner_id))
+      const owner = yield* select(getUser(collection.content list_owner_id))
       if (!owner) return
       if (collection.is_album) {
         yield put(
@@ -47,8 +47,8 @@ function* handleRequestOpen(action: RequestOpenAction) {
       } else {
         yield put(
           open({
-            type: 'playlist',
-            playlist: collection,
+            type: 'content list',
+            content list: collection,
             creator: owner,
             source
           })

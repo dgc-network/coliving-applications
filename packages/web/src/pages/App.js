@@ -70,7 +70,7 @@ import { getStatus as getSignOnStatus } from 'pages/sign-on/store/selectors'
 import { Pages as SignOnPages } from 'pages/sign-on/store/types'
 import AgreementPage from 'pages/agreement-page/AgreementPage'
 import TrendingPage from 'pages/trending-page/TrendingPage'
-import TrendingPlaylistsPage from 'pages/trending-playlists/TrendingPlaylistPage'
+import TrendingPlaylistsPage from 'pages/trending-content lists/TrendingPlaylistPage'
 import TrendingUndergroundPage from 'pages/trending-underground/TrendingUndergroundPage'
 import UploadType from 'pages/upload-page/components/uploadType'
 import Visualizer from 'pages/visualizer/Visualizer'
@@ -102,20 +102,20 @@ import {
   EXPLORE_TOP_ALBUMS_PAGE,
   EXPLORE_MOST_LOVED_PAGE,
   EXPLORE_FEELING_LUCKY_PAGE,
-  EXPLORE_MOOD_PLAYLISTS_PAGE,
+  EXPLORE_MOOD_CONTENT_LISTS_PAGE,
   SAVED_PAGE,
   HISTORY_PAGE,
   DASHBOARD_PAGE,
   LIVE_PAGE,
   UPLOAD_PAGE,
   UPLOAD_ALBUM_PAGE,
-  UPLOAD_PLAYLIST_PAGE,
+  UPLOAD_CONTENT_LIST_PAGE,
   SETTINGS_PAGE,
   HOME_PAGE,
   NOT_FOUND_PAGE,
   SEARCH_CATEGORY_PAGE,
   SEARCH_PAGE,
-  PLAYLIST_PAGE,
+  CONTENT_LIST_PAGE,
   ALBUM_PAGE,
   AGREEMENT_PAGE,
   AGREEMENT_REMIXES_PAGE,
@@ -137,20 +137,20 @@ import {
   APP_REDIRECT,
   AGREEMENT_ID_PAGE,
   USER_ID_PAGE,
-  PLAYLIST_ID_PAGE,
-  TRENDING_PLAYLISTS_PAGE,
+  CONTENT_LIST_ID_PAGE,
+  TRENDING_CONTENT_LISTS_PAGE,
   PROFILE_PAGE_COLLECTIBLES,
   PROFILE_PAGE_COLLECTIBLE_DETAILS,
   PROFILE_PAGE_AGREEMENTS,
   PROFILE_PAGE_ALBUMS,
-  PROFILE_PAGE_PLAYLISTS,
+  PROFILE_PAGE_CONTENT_LISTS,
   PROFILE_PAGE_REPOSTS,
   TRENDING_UNDERGROUND_PAGE,
   EXPLORE_REMIXABLES_PAGE,
   CHECK_PAGE,
   getPathname,
-  TRENDING_PLAYLISTS_PAGE_LEGACY,
-  LIVE_NFT_PLAYLIST_PAGE,
+  TRENDING_CONTENT_LISTS_PAGE_LEGACY,
+  LIVE_NFT_CONTENT_LIST_PAGE,
   DEACTIVATE_PAGE,
   SUPPORTING_USERS_ROUTE,
   TOP_SUPPORTERS_USERS_ROUTE,
@@ -164,7 +164,7 @@ import TopLevelPage from '../components/nav/mobile/TopLevelPage'
 import Notice from '../components/notice/Notice'
 
 import styles from './App.module.css'
-import { CollectiblesPlaylistPage } from './collectibles-playlist-page'
+import { CollectiblesPlaylistPage } from './collectibles-content list-page'
 import { DeactivateAccountPage } from './deactivate-account-page/DeactivateAccountPage'
 import ExploreCollectionsPage from './explore-page/ExploreCollectionsPage'
 import FollowersPage from './followers-page/FollowersPage'
@@ -644,12 +644,12 @@ class App extends Component {
                 )}
               />
               <Redirect
-                from={TRENDING_PLAYLISTS_PAGE_LEGACY}
-                to={TRENDING_PLAYLISTS_PAGE}
+                from={TRENDING_CONTENT_LISTS_PAGE_LEGACY}
+                to={TRENDING_CONTENT_LISTS_PAGE}
               />
               <Route
                 exact
-                path={TRENDING_PLAYLISTS_PAGE}
+                path={TRENDING_CONTENT_LISTS_PAGE}
                 render={() => (
                   <TrendingPlaylistsPage
                     containerRef={this.props.mainContentRef.current}
@@ -677,7 +677,7 @@ class App extends Component {
               <Route exact path={EXPLORE_PAGE} render={() => <ExplorePage />} />
               <Route
                 exact
-                path={LIVE_NFT_PLAYLIST_PAGE}
+                path={LIVE_NFT_CONTENT_LIST_PAGE}
                 render={() => <CollectiblesPlaylistPage />}
               />
               <Route
@@ -745,7 +745,7 @@ class App extends Component {
               />
               <Route
                 exact
-                path={EXPLORE_MOOD_PLAYLISTS_PAGE}
+                path={EXPLORE_MOOD_CONTENT_LISTS_PAGE}
                 render={() => (
                   <ExploreCollectionsPage
                     variant={ExploreCollectionsVariant.MOOD}
@@ -780,9 +780,9 @@ class App extends Component {
                 render={() => <UploadPage uploadType={UploadType.ALBUM} />}
               />
               <DesktopRoute
-                path={UPLOAD_PLAYLIST_PAGE}
+                path={UPLOAD_CONTENT_LIST_PAGE}
                 isMobile={isMobileClient}
-                render={() => <UploadPage uploadType={UploadType.PLAYLIST} />}
+                render={() => <UploadPage uploadType={UploadType.CONTENT_LIST} />}
               />
               <DesktopRoute
                 path={UPLOAD_PAGE}
@@ -855,8 +855,8 @@ class App extends Component {
 
               <Route
                 exact
-                path={PLAYLIST_PAGE}
-                render={() => <CollectionPage type='playlist' />}
+                path={CONTENT_LIST_PAGE}
+                render={() => <CollectionPage type='content list' />}
               />
               <Route
                 exact
@@ -876,7 +876,7 @@ class App extends Component {
                 )}
               />
               <Route exact path={AGREEMENT_ID_PAGE} component={AgreementPage} />
-              <Route exact path={PLAYLIST_ID_PAGE} component={CollectionPage} />
+              <Route exact path={CONTENT_LIST_ID_PAGE} component={CollectionPage} />
 
               {/*
                 Define profile page sub-routes before profile page itself.
@@ -888,7 +888,7 @@ class App extends Component {
                 path={[
                   PROFILE_PAGE_AGREEMENTS,
                   PROFILE_PAGE_ALBUMS,
-                  PROFILE_PAGE_PLAYLISTS,
+                  PROFILE_PAGE_CONTENT_LISTS,
                   PROFILE_PAGE_REPOSTS,
                   PROFILE_PAGE_COLLECTIBLE_DETAILS,
                   PROFILE_PAGE_COLLECTIBLES

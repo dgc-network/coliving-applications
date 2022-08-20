@@ -1,31 +1,31 @@
 import { ID, UID, Collection, SquareSizes } from '@coliving/common'
 
-export const CREATE_PLAYLIST = 'CREATE_PLAYLIST'
-export const CREATE_PLAYLIST_REQUESTED = 'CREATE_PLAYLIST_REQUESTED'
-export const CREATE_PLAYLIST_SUCCEEDED = 'CREATE_PLAYLIST_SUCCEEDED'
-export const CREATE_PLAYLIST_FAILED = 'CREATE_PLAYLIST_FAILED'
+export const CREATE_CONTENT_LIST = 'CREATE_CONTENT_LIST'
+export const CREATE_CONTENT_LIST_REQUESTED = 'CREATE_CONTENT_LIST_REQUESTED'
+export const CREATE_CONTENT_LIST_SUCCEEDED = 'CREATE_CONTENT_LIST_SUCCEEDED'
+export const CREATE_CONTENT_LIST_FAILED = 'CREATE_CONTENT_LIST_FAILED'
 
-export const EDIT_PLAYLIST = 'EDIT_PLAYLIST'
-export const EDIT_PLAYLIST_SUCCEEDED = 'EDIT_PLAYLIST_SUCCEEDED'
-export const EDIT_PLAYLIST_FAILED = 'EDIT_PLAYLIST_FAILED'
+export const EDIT_CONTENT_LIST = 'EDIT_CONTENT_LIST'
+export const EDIT_CONTENT_LIST_SUCCEEDED = 'EDIT_CONTENT_LIST_SUCCEEDED'
+export const EDIT_CONTENT_LIST_FAILED = 'EDIT_CONTENT_LIST_FAILED'
 
-export const ADD_AGREEMENT_TO_PLAYLIST = 'ADD_AGREEMENT_TO_PLAYLIST'
-export const ADD_AGREEMENT_TO_PLAYLIST_FAILED = 'ADD_AGREEMENT_TO_PLAYLIST_FAILED'
+export const ADD_AGREEMENT_TO_CONTENT_LIST = 'ADD_AGREEMENT_TO_CONTENT_LIST'
+export const ADD_AGREEMENT_TO_CONTENT_LIST_FAILED = 'ADD_AGREEMENT_TO_CONTENT_LIST_FAILED'
 
-export const REMOVE_AGREEMENT_FROM_PLAYLIST = 'REMOVE_AGREEMENT_FROM_PLAYLIST'
-export const REMOVE_AGREEMENT_FROM_PLAYLIST_FAILED =
-  'REMOVE_AGREEMENT_FROM_PLAYLIST_FAILED'
+export const REMOVE_AGREEMENT_FROM_CONTENT_LIST = 'REMOVE_AGREEMENT_FROM_CONTENT_LIST'
+export const REMOVE_AGREEMENT_FROM_CONTENT_LIST_FAILED =
+  'REMOVE_AGREEMENT_FROM_CONTENT_LIST_FAILED'
 
-export const ORDER_PLAYLIST = 'ORDER_PLAYLIST'
-export const ORDER_PLAYLIST_FAILED = 'ORDER_PLAYLIST_FAILED'
+export const ORDER_CONTENT_LIST = 'ORDER_CONTENT_LIST'
+export const ORDER_CONTENT_LIST_FAILED = 'ORDER_CONTENT_LIST_FAILED'
 
-export const PUBLISH_PLAYLIST = 'PUBLISH_PLAYLIST'
-export const PUBLISH_PLAYLIST_FAILED = 'PUBLISH_PLAYLIST_FAILED'
+export const PUBLISH_CONTENT_LIST = 'PUBLISH_CONTENT_LIST'
+export const PUBLISH_CONTENT_LIST_FAILED = 'PUBLISH_CONTENT_LIST_FAILED'
 
-export const DELETE_PLAYLIST = 'DELETE_PLAYLIST'
-export const DELETE_PLAYLIST_REQUESTED = 'DELETE_PLAYLIST_REQUESTED'
-export const DELETE_PLAYLIST_SUCCEEDED = 'DELETE_PLAYLIST_SUCCEEDED'
-export const DELETE_PLAYLIST_FAILED = 'DELETE_PLAYLIST_FAILED'
+export const DELETE_CONTENT_LIST = 'DELETE_CONTENT_LIST'
+export const DELETE_CONTENT_LIST_REQUESTED = 'DELETE_CONTENT_LIST_REQUESTED'
+export const DELETE_CONTENT_LIST_SUCCEEDED = 'DELETE_CONTENT_LIST_SUCCEEDED'
+export const DELETE_CONTENT_LIST_FAILED = 'DELETE_CONTENT_LIST_FAILED'
 
 export const FETCH_COVER_ART = 'AGREEMENTS/FETCH_COVER_ART'
 
@@ -38,15 +38,15 @@ export function createPlaylist(
   source: string,
   initAgreementId?: number | null
 ) {
-  return { type: CREATE_PLAYLIST, tempId, formFields, source, initAgreementId }
+  return { type: CREATE_CONTENT_LIST, tempId, formFields, source, initAgreementId }
 }
 
 export function createPlaylistRequested() {
-  return { type: CREATE_PLAYLIST_REQUESTED }
+  return { type: CREATE_CONTENT_LIST_REQUESTED }
 }
 
 export function createPlaylistSucceeded() {
-  return { type: CREATE_PLAYLIST_SUCCEEDED }
+  return { type: CREATE_CONTENT_LIST_SUCCEEDED }
 }
 
 export function createPlaylistFailed(
@@ -54,15 +54,15 @@ export function createPlaylistFailed(
   params: Record<string, unknown>,
   metadata: Record<string, unknown>
 ) {
-  return { type: CREATE_PLAYLIST_FAILED, error, params, metadata }
+  return { type: CREATE_CONTENT_LIST_FAILED, error, params, metadata }
 }
 
-export function editPlaylist(playlistId: number, formFields: Collection) {
-  return { type: EDIT_PLAYLIST, playlistId, formFields }
+export function editPlaylist(content listId: number, formFields: Collection) {
+  return { type: EDIT_CONTENT_LIST, content listId, formFields }
 }
 
 export function editPlaylistSucceeded() {
-  return { type: EDIT_PLAYLIST_SUCCEEDED }
+  return { type: EDIT_CONTENT_LIST_SUCCEEDED }
 }
 
 export function editPlaylistFailed(
@@ -70,14 +70,14 @@ export function editPlaylistFailed(
   params: Record<string, unknown>,
   metadata: Record<string, unknown>
 ) {
-  return { type: EDIT_PLAYLIST_FAILED, error, params, metadata }
+  return { type: EDIT_CONTENT_LIST_FAILED, error, params, metadata }
 }
 
 export function addAgreementToPlaylist(
   agreementId: ID | null,
-  playlistId: number | string
+  content listId: number | string
 ) {
-  return { type: ADD_AGREEMENT_TO_PLAYLIST, agreementId, playlistId }
+  return { type: ADD_AGREEMENT_TO_CONTENT_LIST, agreementId, content listId }
 }
 
 export function addAgreementToPlaylistFailed(
@@ -85,15 +85,15 @@ export function addAgreementToPlaylistFailed(
   params: Record<string, unknown>,
   metadata: Record<string, unknown>
 ) {
-  return { type: ADD_AGREEMENT_TO_PLAYLIST_FAILED, error, params, metadata }
+  return { type: ADD_AGREEMENT_TO_CONTENT_LIST_FAILED, error, params, metadata }
 }
 
 export function removeAgreementFromPlaylist(
   agreementId: number,
-  playlistId: number,
+  content listId: number,
   timestamp: number
 ) {
-  return { type: REMOVE_AGREEMENT_FROM_PLAYLIST, agreementId, playlistId, timestamp }
+  return { type: REMOVE_AGREEMENT_FROM_CONTENT_LIST, agreementId, content listId, timestamp }
 }
 
 export function removeAgreementFromPlaylistFailed(
@@ -101,15 +101,15 @@ export function removeAgreementFromPlaylistFailed(
   params: Record<string, unknown>,
   metadata: Record<string, unknown>
 ) {
-  return { type: REMOVE_AGREEMENT_FROM_PLAYLIST_FAILED, error, params, metadata }
+  return { type: REMOVE_AGREEMENT_FROM_CONTENT_LIST_FAILED, error, params, metadata }
 }
 
 export function orderPlaylist(
-  playlistId: number,
+  content listId: number,
   agreementIdsAndTimes: { id: ID; time: number }[],
   agreementUids?: UID[]
 ) {
-  return { type: ORDER_PLAYLIST, playlistId, agreementIdsAndTimes, agreementUids }
+  return { type: ORDER_CONTENT_LIST, content listId, agreementIdsAndTimes, agreementUids }
 }
 
 export function orderPlaylistFailed(
@@ -117,11 +117,11 @@ export function orderPlaylistFailed(
   params: Record<string, unknown>,
   metadata: Record<string, unknown>
 ) {
-  return { type: ORDER_PLAYLIST_FAILED, error, params, metadata }
+  return { type: ORDER_CONTENT_LIST_FAILED, error, params, metadata }
 }
 
-export function publishPlaylist(playlistId: ID) {
-  return { type: PUBLISH_PLAYLIST, playlistId }
+export function publishPlaylist(content listId: ID) {
+  return { type: PUBLISH_CONTENT_LIST, content listId }
 }
 
 export function publishPlaylistFailed(
@@ -129,19 +129,19 @@ export function publishPlaylistFailed(
   params: Record<string, unknown>,
   metadata: Record<string, unknown>
 ) {
-  return { type: PUBLISH_PLAYLIST_FAILED, error, params, metadata }
+  return { type: PUBLISH_CONTENT_LIST_FAILED, error, params, metadata }
 }
 
-export function deletePlaylist(playlistId: ID) {
-  return { type: DELETE_PLAYLIST, playlistId }
+export function deletePlaylist(content listId: ID) {
+  return { type: DELETE_CONTENT_LIST, content listId }
 }
 
 export function deletePlaylistRequested() {
-  return { type: DELETE_PLAYLIST_REQUESTED }
+  return { type: DELETE_CONTENT_LIST_REQUESTED }
 }
 
 export function deletePlaylistSucceeded() {
-  return { type: DELETE_PLAYLIST_SUCCEEDED }
+  return { type: DELETE_CONTENT_LIST_SUCCEEDED }
 }
 
 export function deletePlaylistFailed(
@@ -149,7 +149,7 @@ export function deletePlaylistFailed(
   params: Record<string, unknown>,
   metadata: Record<string, unknown>
 ) {
-  return { type: DELETE_PLAYLIST_FAILED, error, params, metadata }
+  return { type: DELETE_CONTENT_LIST_FAILED, error, params, metadata }
 }
 
 export function fetchCoverArt(collectionId: ID, size: SquareSizes) {

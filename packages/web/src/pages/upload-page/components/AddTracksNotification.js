@@ -6,7 +6,7 @@ import PropTypes from 'prop-types'
 import styles from './AddAgreementsNotification.module.css'
 
 const messages = {
-  notice: 'Add more agreements to create an album or a playlist!',
+  notice: 'Add more agreements to create an album or a content list!',
   dismiss: 'Got it!'
 }
 

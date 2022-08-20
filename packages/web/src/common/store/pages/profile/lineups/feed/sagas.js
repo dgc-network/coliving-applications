@@ -40,7 +40,7 @@ function* getReposts({ offset, limit, payload }) {
         reposts.map((r) => r.agreement_id).filter(Boolean)
       )
       const repostCollectionIds = new Set(
-        reposts.map((r) => r.playlist_id).filter(Boolean)
+        reposts.map((r) => r.content list_id).filter(Boolean)
       )
 
       const agreements = yield select(getAgreements)
@@ -66,7 +66,7 @@ function* getReposts({ offset, limit, payload }) {
           const collection = collections[id]
           if (
             collection.has_current_user_reposted &&
-            !repostCollectionIds.has(collection.playlist_id)
+            !repostCollectionIds.has(collection.content list_id)
           ) {
             reposts = [collection, ...reposts]
           }

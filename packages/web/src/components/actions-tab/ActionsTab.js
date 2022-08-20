@@ -146,24 +146,24 @@ export class ActionsTab extends PureComponent {
       currentUserReposted,
       variant,
       agreementId,
-      playlistId
+      content listId
     } = this.props
     if (variant === 'agreement') {
       currentUserReposted ? undoRepostAgreement(agreementId) : repostAgreement(agreementId)
-    } else if (variant === 'playlist' || variant === 'album') {
+    } else if (variant === 'content list' || variant === 'album') {
       currentUserReposted
-        ? undoRepostCollection(playlistId)
-        : repostCollection(playlistId)
+        ? undoRepostCollection(content listId)
+        : repostCollection(content listId)
     }
   }
 
   onShare = () => {
-    const { agreementId, variant, playlistId, shareAgreement, shareCollection } =
+    const { agreementId, variant, content listId, shareAgreement, shareCollection } =
       this.props
     if (variant === 'agreement') {
       shareAgreement(agreementId)
-    } else if (variant === 'playlist' || variant === 'album') {
-      shareCollection(playlistId)
+    } else if (variant === 'content list' || variant === 'album') {
+      shareCollection(content listId)
     }
   }
 
@@ -178,8 +178,8 @@ export class ActionsTab extends PureComponent {
       containerStyles,
       handle,
       userHandle,
-      playlistId,
-      playlistName,
+      content listId,
+      content listName,
       agreementId,
       agreementTitle,
       currentUserSaved,
@@ -204,10 +204,10 @@ export class ActionsTab extends PureComponent {
       overflowMenu.menu.agreementId = agreementId
       overflowMenu.menu.agreementTitle = agreementTitle
       overflowMenu.menu.isArtistPick = isArtistPick
-    } else if (variant === 'playlist' || variant === 'album') {
-      overflowMenu.menu.type = variant === 'playlist' ? 'playlist' : 'album'
-      overflowMenu.menu.playlistId = playlistId
-      overflowMenu.menu.playlistName = playlistName
+    } else if (variant === 'content list' || variant === 'album') {
+      overflowMenu.menu.type = variant === 'content list' ? 'content list' : 'album'
+      overflowMenu.menu.content listId = content listId
+      overflowMenu.menu.content listName = content listName
       overflowMenu.menu.includeAddToPlaylist = false
       overflowMenu.menu.isPublic = isPublic
       overflowMenu.menu.includeEdit = includeEdit
@@ -248,13 +248,13 @@ ActionsTab.propTypes = {
   isDisabled: PropTypes.bool,
   includeEdit: PropTypes.bool,
   direction: PropTypes.oneOf(['vertical', 'horizontal']),
-  variant: PropTypes.oneOf(['agreement', 'playlist', 'album']),
+  variant: PropTypes.oneOf(['agreement', 'content list', 'album']),
   containerStyles: PropTypes.string,
   handle: PropTypes.string,
   agreementTitle: PropTypes.string,
   agreementId: PropTypes.number,
-  playlistName: PropTypes.string,
-  playlistId: PropTypes.number
+  content listName: PropTypes.string,
+  content listId: PropTypes.number
 }
 
 ActionsTab.defaultProps = {
@@ -291,10 +291,10 @@ const mapDispatchToProps = (dispatch) => ({
   repostAgreement: (agreementId) => dispatch(repostAgreement(agreementId, RepostSource.TILE)),
   undoRepostAgreement: (agreementId) =>
     dispatch(undoRepostAgreement(agreementId, RepostSource.TILE)),
-  repostCollection: (playlistId) =>
-    dispatch(repostCollection(playlistId, RepostSource.TILE)),
-  undoRepostCollection: (playlistId) =>
-    dispatch(undoRepostCollection(playlistId, RepostSource.TILE))
+  repostCollection: (content listId) =>
+    dispatch(repostCollection(content listId, RepostSource.TILE)),
+  undoRepostCollection: (content listId) =>
+    dispatch(undoRepostCollection(content listId, RepostSource.TILE))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ActionsTab)

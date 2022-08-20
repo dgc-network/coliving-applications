@@ -32,7 +32,7 @@ export const CollectionCard = ({
   const handlePress = useCallback(() => {
     const collectionRoute = getCollectionRoute(collection)
     navigation.push({
-      native: { screen: 'Collection', params: { id: collection.playlist_id } },
+      native: { screen: 'Collection', params: { id: collection.content list_id } },
       web: { route: collectionRoute, fromPage }
     })
   }, [navigation, collection, fromPage])
@@ -40,13 +40,13 @@ export const CollectionCard = ({
   return (
     <Card
       style={style}
-      id={collection.playlist_id}
+      id={collection.content list_id}
       type='collection'
       imageSize={collection._cover_art_sizes}
-      primaryText={collection.playlist_name}
+      primaryText={collection.content list_name}
       secondaryText={formatPlaylistCardSecondaryText(
         collection.save_count,
-        collection.playlist_contents.agreement_ids.length
+        collection.content list_contents.agreement_ids.length
       )}
       onPress={handlePress}
       user={collection.user}

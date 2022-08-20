@@ -1,7 +1,7 @@
 enum UploadType {
   INDIVIDUAL_AGREEMENT = 0,
   INDIVIDUAL_AGREEMENTS = 1,
-  PLAYLIST = 2,
+  CONTENT_LIST = 2,
   ALBUM = 3
 }
 

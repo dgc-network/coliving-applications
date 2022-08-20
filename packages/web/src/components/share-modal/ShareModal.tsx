@@ -75,10 +75,10 @@ export const ShareModal = () => {
         dispatch(shareUser(content.profile.user_id, source))
         break
       case 'album':
-        dispatch(shareCollection(content.album.playlist_id, source))
+        dispatch(shareCollection(content.album.content list_id, source))
         break
-      case 'playlist':
-        dispatch(shareCollection(content.playlist.playlist_id, source))
+      case 'content list':
+        dispatch(shareCollection(content.content list.content list_id, source))
         break
       case 'liveNftPlaylist':
         dispatch(shareAudioNftPlaylist(content.user.handle, source))

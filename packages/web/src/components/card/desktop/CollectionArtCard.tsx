@@ -28,7 +28,7 @@ import {
   UserListEntityType
 } from 'store/application/ui/userListModal/types'
 import { AppState } from 'store/types'
-import { playlistPage, albumPage, profilePage } from 'utils/route'
+import { content listPage, albumPage, profilePage } from 'utils/route'
 import { withNullGuard } from 'utils/withNullGuard'
 
 import styles from './CollectionArtCard.module.css'
@@ -71,8 +71,8 @@ const CollectionArtCard = g(
     goToRoute
   }) => {
     const {
-      playlist_id,
-      playlist_name,
+      content list_id,
+      content list_name,
       is_album,
       _cover_art_sizes,
       has_current_user_reposted,
@@ -87,14 +87,14 @@ const CollectionArtCard = g(
     const goToCollection = useCallback(() => {
       if (isPerspectiveDisabled) return
       const link = is_album
-        ? albumPage(handle, playlist_name, playlist_id)
-        : playlistPage(handle, playlist_name, playlist_id)
+        ? albumPage(handle, content list_name, content list_id)
+        : content listPage(handle, content list_name, content list_id)
       goToRoute(link)
     }, [
       is_album,
       handle,
-      playlist_name,
-      playlist_id,
+      content list_name,
+      content list_id,
       goToRoute,
       isPerspectiveDisabled
     ])
@@ -105,17 +105,17 @@ const CollectionArtCard = g(
     }, [handle, goToRoute])
 
     const onClickReposts = useCallback(() => {
-      setRepostUsers(playlist_id)
+      setRepostUsers(content list_id)
       setModalVisibility()
-    }, [setRepostUsers, setModalVisibility, playlist_id])
+    }, [setRepostUsers, setModalVisibility, content list_id])
 
     const onClickFavorites = useCallback(() => {
-      setFavoriteUsers(playlist_id)
+      setFavoriteUsers(content list_id)
       setModalVisibility()
-    }, [setFavoriteUsers, setModalVisibility, playlist_id])
+    }, [setFavoriteUsers, setModalVisibility, content list_id])
 
     const image = useCollectionCoverArt(
-      playlist_id,
+      content list_id,
       _cover_art_sizes,
       SquareSizes.SIZE_480_BY_480,
       placeholderArt
@@ -123,10 +123,10 @@ const CollectionArtCard = g(
     if (image && setDidLoad) setDidLoad(index)
 
     const menu = {
-      type: (is_album ? 'album' : 'playlist') as MenuType,
+      type: (is_album ? 'album' : 'content list') as MenuType,
       handle,
-      playlistId: playlist_id,
-      playlistName: playlist_name,
+      content listId: content list_id,
+      content listName: content list_name,
       isOwner: currentUserId === user_id,
       includeShare: true,
       includeRepost: true,
@@ -135,7 +135,7 @@ const CollectionArtCard = g(
       isFavorited: has_current_user_saved,
       isReposted: has_current_user_reposted,
       metadata: collection,
-      name: playlist_name
+      name: content list_name
     }
 
     return (
@@ -168,8 +168,8 @@ const CollectionArtCard = g(
             </Menu>
           </DynamicImage>
         </PerspectiveCard>
-        <div className={styles.playlistName} onClick={goToCollection}>
-          {playlist_name}
+        <div className={styles.content listName} onClick={goToCollection}>
+          {content list_name}
         </div>
         <div className={styles.nameWrapper}>
           <ArtistPopover handle={handle}>

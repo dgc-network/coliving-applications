@@ -298,7 +298,7 @@ export const AgreementScreenDetailsTile = ({
         : has_current_user_saved
         ? OverflowAction.UNFAVORITE
         : OverflowAction.FAVORITE,
-      OverflowAction.ADD_TO_PLAYLIST,
+      OverflowAction.ADD_TO_CONTENT_LIST,
       user.does_current_user_follow
         ? OverflowAction.UNFOLLOW_ARTIST
         : OverflowAction.FOLLOW_ARTIST,

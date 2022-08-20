@@ -3,7 +3,7 @@ import { makeStyles } from 'app/styles'
 
 const messages = {
   label: 'Description',
-  placeholder: 'Give your playlist a description'
+  placeholder: 'Give your content list a description'
 }
 
 const useStyles = makeStyles(() => ({

@@ -89,7 +89,7 @@ import {
   REPOSTING_USERS_ROUTE,
   FAVORITING_USERS_ROUTE,
   fullPlaylistPage,
-  playlistPage,
+  content listPage,
   albumPage,
   getPathname
 } from 'utils/route'
@@ -117,7 +117,7 @@ type CollectionPageProps = OwnProps &
 type CollectionPageState = {
   filterText: string
   initialOrder: string[] | null
-  playlistId: number | null
+  content listId: number | null
   reordering: string[] | null
   allowReordering: boolean
   updatingRoute: boolean
@@ -132,13 +132,13 @@ class CollectionPage extends Component<
   state: CollectionPageState = {
     filterText: '',
     initialOrder: null,
-    playlistId: null,
+    content listId: null,
     // For drag + drop reordering
     reordering: null,
     allowReordering: true,
 
     // Whether the collection is updating its own route.
-    // When a user creates a playlist, we eagerly cache it with a fake uid.
+    // When a user creates a content list, we eagerly cache it with a fake uid.
     // When the collection is available, a new cache entry is added with the actual id and
     // the existing collection is marked as moved, triggering this component to re-route if rendered.
     updatingRoute: false
@@ -154,7 +154,7 @@ class CollectionPage extends Component<
         getPathname(this.props.location) !== getPathname(location)
       ) {
         // If the action is not replace (e.g. we are not trying to update
-        // the URL for the same playlist. Reset it.)
+        // the URL for the same content list. Reset it.)
         this.resetCollection()
       }
       this.fetchCollection(getPathname(location))
@@ -176,16 +176,16 @@ class CollectionPage extends Component<
       pathname,
       fetchCollectionSucceeded,
       type,
-      playlistUpdates,
+      content listUpdates,
       updatePlaylistLastViewedAt
     } = this.props
 
     if (
-      type === 'playlist' &&
-      this.state.playlistId &&
-      playlistUpdates.includes(this.state.playlistId)
+      type === 'content list' &&
+      this.state.content listId &&
+      content listUpdates.includes(this.state.content listId)
     ) {
-      updatePlaylistLastViewedAt(this.state.playlistId)
+      updatePlaylistLastViewedAt(this.state.content listId)
     }
 
     if (!prevProps.smartCollection && smartCollection) {
@@ -219,12 +219,12 @@ class CollectionPage extends Component<
     if (status === Status.ERROR) {
       if (
         params &&
-        params.collectionId === this.state.playlistId &&
-        metadata?.playlist_owner_id !== this.props.userId
+        params.collectionId === this.state.content listId &&
+        metadata?.content list_owner_id !== this.props.userId
       ) {
         // Only route to not found page if still on the collection page and
-        // it is erroring on the correct playlistId
-        // and it's not our playlist
+        // it is erroring on the correct content listId
+        // and it's not our content list
         this.props.goToRoute(NOT_FOUND_PAGE)
       }
       return
@@ -243,12 +243,12 @@ class CollectionPage extends Component<
       // TODO: Put fetch collection succeeded and then replace route
       fetchCollectionSucceeded(collectionId, metadata._moved, userUid)
       const newPath = pathname.replace(
-        `${metadata.playlist_id}`,
+        `${metadata.content list_id}`,
         collectionId.toString()
       )
       this.setState(
         {
-          playlistId: collectionId,
+          content listId: collectionId,
           initialOrder: null,
           reordering: null
         },
@@ -266,22 +266,22 @@ class CollectionPage extends Component<
       const params = parseCollectionRoute(pathname)
       if (params) {
         const { collectionId, title, collectionType, handle } = params
-        const newCollectionName = formatUrlName(metadata.playlist_name)
+        const newCollectionName = formatUrlName(metadata.content list_name)
 
         const routeLacksCollectionInfo =
           (title === null || handle === null || collectionType === null) && user
         if (routeLacksCollectionInfo) {
           // Check if we are coming from a non-canonical route and replace route if necessary.
           const newPath = metadata.is_album
-            ? albumPage(user!.handle, metadata.playlist_name, collectionId)
-            : playlistPage(user!.handle, metadata.playlist_name, collectionId)
+            ? albumPage(user!.handle, metadata.content list_name, collectionId)
+            : content listPage(user!.handle, metadata.content list_name, collectionId)
           this.props.replaceRoute(newPath)
         } else {
           // Id matches or temp id matches
           const idMatches =
-            collectionId === metadata.playlist_id ||
-            (metadata._temp && `${collectionId}` === `${metadata.playlist_id}`)
-          // Check that the playlist name hasn't changed. If so, update url.
+            collectionId === metadata.content list_id ||
+            (metadata._temp && `${collectionId}` === `${metadata.content list_id}`)
+          // Check that the content list name hasn't changed. If so, update url.
           if (idMatches && title) {
             if (newCollectionName !== title) {
               const newPath = pathname.replace(title, newCollectionName)
@@ -297,8 +297,8 @@ class CollectionPage extends Component<
       metadata &&
       prevMetadata &&
       !this.playListContentsEqual(
-        metadata.playlist_contents.agreement_ids,
-        prevMetadata.playlist_contents.agreement_ids
+        metadata.content list_contents.agreement_ids,
+        prevMetadata.content list_contents.agreement_ids
       )
     ) {
       this.props.fetchAgreements()
@@ -339,8 +339,8 @@ class CollectionPage extends Component<
     const params = parseCollectionRoute(pathname)
     if (params) {
       const { handle, collectionId } = params
-      if (forceFetch || collectionId !== this.state.playlistId) {
-        this.setState({ playlistId: collectionId as number })
+      if (forceFetch || collectionId !== this.state.content listId) {
+        this.setState({ content listId: collectionId as number })
         this.props.fetchCollection(handle, collectionId as number)
         this.props.fetchAgreements()
       }
@@ -348,7 +348,7 @@ class CollectionPage extends Component<
 
     if (
       this.props.smartCollection &&
-      this.props.smartCollection.playlist_contents
+      this.props.smartCollection.content list_contents
     ) {
       this.props.fetchAgreements()
     }
@@ -425,7 +425,7 @@ class CollectionPage extends Component<
       record(
         make(Name.PLAYBACK_PAUSE, {
           id: `${agreementRecord.agreement_id}`,
-          source: PlaybackSource.PLAYLIST_AGREEMENT
+          source: PlaybackSource.CONTENT_LIST_AGREEMENT
         })
       )
     } else if (playingUid !== agreementRecord.uid) {
@@ -433,7 +433,7 @@ class CollectionPage extends Component<
       record(
         make(Name.PLAYBACK_PLAY, {
           id: `${agreementRecord.agreement_id}`,
-          source: PlaybackSource.PLAYLIST_AGREEMENT
+          source: PlaybackSource.CONTENT_LIST_AGREEMENT
         })
       )
     } else {
@@ -441,7 +441,7 @@ class CollectionPage extends Component<
       record(
         make(Name.PLAYBACK_PLAY, {
           id: `${agreementRecord.agreement_id}`,
-          source: PlaybackSource.PLAYLIST_AGREEMENT
+          source: PlaybackSource.CONTENT_LIST_AGREEMENT
         })
       )
     }
@@ -487,10 +487,10 @@ class CollectionPage extends Component<
     uid: string,
     timestamp: number
   ) => {
-    const { playlistId } = this.state
+    const { content listId } = this.state
     this.props.removeAgreementFromPlaylist(
       agreementId,
-      playlistId as number,
+      content listId as number,
       uid,
       timestamp
     )
@@ -521,7 +521,7 @@ class CollectionPage extends Component<
       record(
         make(Name.PLAYBACK_PAUSE, {
           id: `${playingId}`,
-          source: PlaybackSource.PLAYLIST_PAGE
+          source: PlaybackSource.CONTENT_LIST_PAGE
         })
       )
     } else if (!playing && isQueued) {
@@ -529,7 +529,7 @@ class CollectionPage extends Component<
       record(
         make(Name.PLAYBACK_PLAY, {
           id: `${playingId}`,
-          source: PlaybackSource.PLAYLIST_PAGE
+          source: PlaybackSource.CONTENT_LIST_PAGE
         })
       )
     } else if (entries.length > 0) {
@@ -537,7 +537,7 @@ class CollectionPage extends Component<
       record(
         make(Name.PLAYBACK_PLAY, {
           id: `${entries[0].agreement_id}`,
-          source: PlaybackSource.PLAYLIST_PAGE
+          source: PlaybackSource.CONTENT_LIST_PAGE
         })
       )
     }
@@ -578,18 +578,18 @@ class CollectionPage extends Component<
 
     this.props.updateLineupOrder(newOrder)
     this.setState({ initialOrder: newOrder })
-    this.props.orderPlaylist(this.state.playlistId!, agreementIdAndTimes, newOrder)
+    this.props.orderPlaylist(this.state.content listId!, agreementIdAndTimes, newOrder)
   }
 
   onPublish = () => {
-    this.props.publishPlaylist(this.state.playlistId!)
+    this.props.publishPlaylist(this.state.content listId!)
   }
 
-  onSavePlaylist = (isSaved: boolean, playlistId: number) => {
+  onSavePlaylist = (isSaved: boolean, content listId: number) => {
     if (isSaved) {
-      this.props.unsaveCollection(playlistId)
+      this.props.unsaveCollection(content listId)
     } else {
-      this.props.saveCollection(playlistId)
+      this.props.saveCollection(content listId)
     }
   }
 
@@ -601,55 +601,55 @@ class CollectionPage extends Component<
     }
   }
 
-  onRepostPlaylist = (isReposted: boolean, playlistId: number) => {
+  onRepostPlaylist = (isReposted: boolean, content listId: number) => {
     if (isReposted) {
-      this.props.undoRepostCollection(playlistId)
+      this.props.undoRepostCollection(content listId)
     } else {
-      this.props.repostCollection(playlistId)
+      this.props.repostCollection(content listId)
     }
   }
 
-  onSharePlaylist = (playlistId: number) => {
-    this.props.shareCollection(playlistId)
+  onSharePlaylist = (content listId: number) => {
+    this.props.shareCollection(content listId)
   }
 
   onHeroAgreementClickArtistName = () => {
     const { goToRoute, user } = this.props
-    const playlistOwnerHandle = user ? user.handle : ''
-    goToRoute(profilePage(playlistOwnerHandle))
+    const content listOwnerHandle = user ? user.handle : ''
+    goToRoute(profilePage(content listOwnerHandle))
   }
 
   onHeroAgreementEdit = () => {
-    if (this.state.playlistId)
-      this.props.onEditCollection(this.state.playlistId)
+    if (this.state.content listId)
+      this.props.onEditCollection(this.state.content listId)
   }
 
   onHeroAgreementShare = () => {
-    const { playlistId } = this.state
-    this.onSharePlaylist(playlistId!)
+    const { content listId } = this.state
+    this.onSharePlaylist(content listId!)
   }
 
   onHeroAgreementSave = () => {
     const { userPlaylists, collection: metadata, smartCollection } = this.props
-    const { playlistId } = this.state
+    const { content listId } = this.state
     const isSaved =
-      (metadata && playlistId
-        ? metadata.has_current_user_saved || playlistId in userPlaylists
+      (metadata && content listId
+        ? metadata.has_current_user_saved || content listId in userPlaylists
         : false) ||
       (smartCollection && smartCollection.has_current_user_saved)
 
     if (smartCollection && metadata) {
-      this.onSaveSmartCollection(!!isSaved, metadata.playlist_name)
+      this.onSaveSmartCollection(!!isSaved, metadata.content list_name)
     } else {
-      this.onSavePlaylist(!!isSaved, playlistId!)
+      this.onSavePlaylist(!!isSaved, content listId!)
     }
   }
 
   onHeroAgreementRepost = () => {
     const { collection: metadata } = this.props
-    const { playlistId } = this.state
+    const { content listId } = this.state
     const isReposted = metadata ? metadata.has_current_user_reposted : false
-    this.onRepostPlaylist(isReposted, playlistId!)
+    this.onRepostPlaylist(isReposted, content listId!)
   }
 
   onClickReposts = () => {
@@ -663,10 +663,10 @@ class CollectionPage extends Component<
     } = this.props
     if (!metadata) return
     if (isMobile) {
-      setRepostPlaylistId(metadata.playlist_id)
+      setRepostPlaylistId(metadata.content list_id)
       goToRoute(REPOSTING_USERS_ROUTE)
     } else {
-      setRepostUsers(metadata.playlist_id)
+      setRepostUsers(metadata.content list_id)
       setModalVisibility()
     }
   }
@@ -682,22 +682,22 @@ class CollectionPage extends Component<
     } = this.props
     if (!metadata) return
     if (isMobile) {
-      setFavoritePlaylistId(metadata.playlist_id)
+      setFavoritePlaylistId(metadata.content list_id)
       goToRoute(FAVORITING_USERS_ROUTE)
     } else {
-      setFavoriteUsers(metadata.playlist_id)
+      setFavoriteUsers(metadata.content list_id)
       setModalVisibility()
     }
   }
 
   onFollow = () => {
     const { onFollow, collection: metadata } = this.props
-    if (metadata) onFollow(metadata.playlist_owner_id)
+    if (metadata) onFollow(metadata.content list_owner_id)
   }
 
   onUnfollow = () => {
     const { onUnfollow, collection: metadata } = this.props
-    if (metadata) onUnfollow(metadata.playlist_owner_id)
+    if (metadata) onUnfollow(metadata.content list_owner_id)
   }
 
   render() {
@@ -713,16 +713,16 @@ class CollectionPage extends Component<
       smartCollection
     } = this.props
 
-    const { playlistId, allowReordering } = this.state
+    const { content listId, allowReordering } = this.state
 
-    const title = metadata?.playlist_name ?? ''
+    const title = metadata?.content list_name ?? ''
     const description = metadata?.description ?? ''
     const canonicalUrl =
       user && metadata
         ? fullPlaylistPage(
             user?.handle,
-            metadata?.playlist_name,
-            metadata?.playlist_id
+            metadata?.content list_name,
+            metadata?.content list_id
           )
         : ''
 
@@ -730,7 +730,7 @@ class CollectionPage extends Component<
       title,
       description,
       canonicalUrl,
-      playlistId: playlistId!,
+      content listId: content listId!,
       allowReordering,
       playing,
       type,
@@ -778,7 +778,7 @@ class CollectionPage extends Component<
             metadata,
             type: metadata?.is_album
               ? PlayableType.ALBUM
-              : PlayableType.PLAYLIST
+              : PlayableType.CONTENT_LIST
           }}
           user={user}
         />
@@ -786,11 +786,11 @@ class CollectionPage extends Component<
     }
 
     // Note:
-    // While some of our other page components key by playlist id, etc.
+    // While some of our other page components key by content list id, etc.
     // here to allow for multiple pages to be in view at the same time while
     // animating. Because we use temporary ids (which impact the URL) for
-    // playlists during creation, we can't simply key here by path or playlistId
-    // because we do not want a playlist transitioning from temp => not temp
+    // content lists during creation, we can't simply key here by path or content listId
+    // because we do not want a content list transitioning from temp => not temp
     // to trigger a rerender of everything
     return <this.props.children {...childProps} />
   }
@@ -816,7 +816,7 @@ function makeMapStateToProps() {
       playing: getPlaying(state),
       buffering: getBuffering(state),
       pathname: getLocationPathname(state),
-      playlistUpdates: getPlaylistUpdates(state)
+      content listUpdates: getPlaylistUpdates(state)
     }
   }
   return mapStateToProps
@@ -836,28 +836,28 @@ function mapDispatchToProps(dispatch: Dispatch) {
     pause: () => dispatch(agreementsActions.pause()),
     updateLineupOrder: (updatedOrderIndices: any) =>
       dispatch(agreementsActions.updateLineupOrder(updatedOrderIndices)),
-    editPlaylist: (playlistId: number, formFields: any) =>
-      dispatch(editPlaylist(playlistId, formFields)),
+    editPlaylist: (content listId: number, formFields: any) =>
+      dispatch(editPlaylist(content listId, formFields)),
     removeAgreementFromPlaylist: (
       agreementId: number,
-      playlistId: number,
+      content listId: number,
       uid: string,
       timestamp: number
     ) => {
-      dispatch(removeAgreementFromPlaylist(agreementId, playlistId, timestamp))
+      dispatch(removeAgreementFromPlaylist(agreementId, content listId, timestamp))
       dispatch(agreementsActions.remove(Kind.AGREEMENTS, uid))
     },
-    orderPlaylist: (playlistId: number, agreementIds: any, agreementUids: string[]) =>
-      dispatch(orderPlaylist(playlistId, agreementIds, agreementUids)),
-    publishPlaylist: (playlistId: number) =>
-      dispatch(publishPlaylist(playlistId)),
-    deletePlaylist: (playlistId: number) =>
-      dispatch(deletePlaylist(playlistId)),
+    orderPlaylist: (content listId: number, agreementIds: any, agreementUids: string[]) =>
+      dispatch(orderPlaylist(content listId, agreementIds, agreementUids)),
+    publishPlaylist: (content listId: number) =>
+      dispatch(publishPlaylist(content listId)),
+    deletePlaylist: (content listId: number) =>
+      dispatch(deletePlaylist(content listId)),
 
-    saveCollection: (playlistId: number) =>
+    saveCollection: (content listId: number) =>
       dispatch(
         socialCollectionsActions.saveCollection(
-          playlistId,
+          content listId,
           FavoriteSource.COLLECTION_PAGE
         )
       ),
@@ -869,10 +869,10 @@ function mapDispatchToProps(dispatch: Dispatch) {
         )
       ),
 
-    unsaveCollection: (playlistId: number) =>
+    unsaveCollection: (content listId: number) =>
       dispatch(
         socialCollectionsActions.unsaveCollection(
-          playlistId,
+          content listId,
           FavoriteSource.COLLECTION_PAGE
         )
       ),
@@ -884,25 +884,25 @@ function mapDispatchToProps(dispatch: Dispatch) {
         )
       ),
 
-    repostCollection: (playlistId: number) =>
+    repostCollection: (content listId: number) =>
       dispatch(
         socialCollectionsActions.repostCollection(
-          playlistId,
+          content listId,
           RepostSource.COLLECTION_PAGE
         )
       ),
-    undoRepostCollection: (playlistId: number) =>
+    undoRepostCollection: (content listId: number) =>
       dispatch(
         socialCollectionsActions.undoRepostCollection(
-          playlistId,
+          content listId,
           RepostSource.COLLECTION_PAGE
         )
       ),
-    shareCollection: (playlistId: number) =>
+    shareCollection: (content listId: number) =>
       dispatch(
         requestOpenShareModal({
           type: 'collection',
-          collectionId: playlistId,
+          collectionId: content listId,
           source: ShareSource.TILE
         })
       ),
@@ -956,7 +956,7 @@ function mapDispatchToProps(dispatch: Dispatch) {
     setRepostPlaylistId: (collectionId: ID) =>
       dispatch(setRepost(collectionId, RepostType.COLLECTION)),
     setFavoritePlaylistId: (collectionId: ID) =>
-      dispatch(setFavorite(collectionId, FavoriteType.PLAYLIST)),
+      dispatch(setFavorite(collectionId, FavoriteType.CONTENT_LIST)),
     record: (event: AgreementEvent) => dispatch(event),
     setRepostUsers: (agreementID: ID) =>
       dispatch(
@@ -975,10 +975,10 @@ function mapDispatchToProps(dispatch: Dispatch) {
         })
       ),
     setModalVisibility: () => dispatch(setVisibility(true)),
-    onEditCollection: (playlistId: ID) =>
-      dispatch(openEditCollectionModal(playlistId)),
-    updatePlaylistLastViewedAt: (playlistId: ID) =>
-      dispatch(updatePlaylistLastViewedAt(playlistId))
+    onEditCollection: (content listId: ID) =>
+      dispatch(openEditCollectionModal(content listId)),
+    updatePlaylistLastViewedAt: (content listId: ID) =>
+      dispatch(updatePlaylistLastViewedAt(content listId))
   }
 }
 

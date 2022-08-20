@@ -50,9 +50,9 @@ const NavigationContainer = ({ children }: Props) => {
                   initialRouteName: 'Feed',
                   screens: {
                     Feed: 'feed',
-                    Collection: '*/playlist/*',
+                    Collection: '*/content list/*',
                     Agreement: 'agreement',
-                    // Unfortunately routes like username/playlists
+                    // Unfortunately routes like username/content lists
                     // don't load properly on web. So for now deep linking
                     // to profile tabs (other than for your own account) isn't
                     // implemented
@@ -61,7 +61,7 @@ const NavigationContainer = ({ children }: Props) => {
                       screens: {
                         Agreements: 'agreements',
                         Albums: 'albums',
-                        Playlists: 'playlists',
+                        Playlists: 'content lists',
                         Reposts: 'reposts',
                         Collectibles: 'collectibles'
                       }
@@ -78,7 +78,7 @@ const NavigationContainer = ({ children }: Props) => {
                   initialRouteName: 'Explore',
                   screens: {
                     Explore: 'explore',
-                    TrendingPlaylists: 'explore/playlists',
+                    TrendingPlaylists: 'explore/content lists',
                     TrendingUnderground: 'explore/underground',
                     LetThemDJ: 'explore/let-them-dj',
                     TopAlbums: 'explore/top-albums',
@@ -107,7 +107,7 @@ const NavigationContainer = ({ children }: Props) => {
                       screens: {
                         Agreements: 'agreements',
                         Albums: 'albums',
-                        Playlists: 'playlists',
+                        Playlists: 'content lists',
                         Reposts: 'reposts',
                         Collectibles: 'collectibles'
                       }
@@ -135,14 +135,14 @@ const NavigationContainer = ({ children }: Props) => {
       } else {
         // If the path has two parts
         if (path.match(/^\/[^/]+\/[^/]+$/)) {
-          // If the path is to live-nft-playlist, reroute to feed
-          if (path.match(/^\/[^/]+\/live-nft-playlist$/)) {
+          // If the path is to live-nft-content list, reroute to feed
+          if (path.match(/^\/[^/]+\/live-nft-content list$/)) {
             path = '/feed'
           }
           // If the path doesn't match a profile tab, it's a agreement
           else if (
             !path.match(
-              /^\/[^/]+\/(agreements|albums|playlists|reposts|collectibles)$/
+              /^\/[^/]+\/(agreements|albums|content lists|reposts|collectibles)$/
             )
           ) {
             path = '/agreement'

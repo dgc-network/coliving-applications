@@ -1,4 +1,4 @@
-import { CreatePlaylistScreen } from 'app/screens/edit-playlist-screen'
+import { CreatePlaylistScreen } from 'app/screens/edit-content list-screen'
 import FavoritesScreen from 'app/screens/favorites-screen'
 
 import type { AppTabScreenParamList } from './AppTabScreen'

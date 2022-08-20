@@ -36,16 +36,16 @@ import MobilePageContainer from 'components/mobile-page-container/MobilePageCont
 import { useMainPageHeader } from 'components/nav/store/context'
 import useTabs from 'hooks/useTabs/useTabs'
 import {
-  CHILL_PLAYLISTS,
-  UPBEAT_PLAYLISTS,
-  INTENSE_PLAYLISTS,
-  PROVOKING_PLAYLISTS,
-  INTIMATE_PLAYLISTS,
+  CHILL_CONTENT_LISTS,
+  UPBEAT_CONTENT_LISTS,
+  INTENSE_CONTENT_LISTS,
+  PROVOKING_CONTENT_LISTS,
+  INTIMATE_CONTENT_LISTS,
   ExploreCollection,
   ExploreMoodCollection
 } from 'pages/explore-page/collections'
 import {
-  playlistPage,
+  content listPage,
   albumPage,
   profilePage,
   BASE_URL,
@@ -62,7 +62,7 @@ const messages = {
   pageDescription: 'Explore featured content on Coliving',
   forYou: 'For You',
   moods: 'Moods',
-  playlists: 'Playlists',
+  content lists: 'Playlists',
   artists: 'Artists',
   featuredPlaylists: 'Featured Playlists',
   featuredArtists: 'Featured Artists',
@@ -75,11 +75,11 @@ you based on your likes, reposts, and follows. Refreshes often so if you like a 
 }
 
 const lifestyle = [
-  CHILL_PLAYLISTS,
-  UPBEAT_PLAYLISTS,
-  INTENSE_PLAYLISTS,
-  PROVOKING_PLAYLISTS,
-  INTIMATE_PLAYLISTS
+  CHILL_CONTENT_LISTS,
+  UPBEAT_CONTENT_LISTS,
+  INTENSE_CONTENT_LISTS,
+  PROVOKING_CONTENT_LISTS,
+  INTIMATE_CONTENT_LISTS
 ]
 
 const TabBodyHeader = ({
@@ -107,8 +107,8 @@ const tabHeaders = [
   { icon: <IconMoods />, text: messages.moods, label: ExploreTabs.MOODS },
   {
     icon: <IconNote />,
-    text: messages.playlists,
-    label: ExploreTabs.PLAYLISTS
+    text: messages.content lists,
+    label: ExploreTabs.CONTENT_LISTS
   },
   { icon: <IconUser />, text: messages.artists, label: ExploreTabs.PROFILES }
 ]
@@ -116,7 +116,7 @@ const tabHeaders = [
 export type ExplorePageProps = {
   title: string
   description: string
-  playlists: UserCollection[]
+  content lists: UserCollection[]
   profiles: User[]
   status: Status
   formatPlaylistCardSecondaryText: (saves: number, agreements: number) => string
@@ -127,7 +127,7 @@ export type ExplorePageProps = {
 const ExplorePage = ({
   title,
   description,
-  playlists,
+  content lists,
   profiles,
   status,
   formatPlaylistCardSecondaryText,
@@ -142,8 +142,8 @@ const ExplorePage = ({
       if (t.variant === CollectionVariant.SMART) {
         return (
           <ColorTile
-            key={t.playlist_name}
-            title={t.playlist_name}
+            key={t.content list_name}
+            title={t.content list_name}
             link={t.link}
             description={t.description}
             gradient={t.gradient}
@@ -189,38 +189,38 @@ const ExplorePage = ({
     )
   })
 
-  let playlistCards: JSX.Element[]
+  let content listCards: JSX.Element[]
   let profileCards: JSX.Element[]
   if (status === Status.LOADING) {
-    playlistCards = []
+    content listCards = []
     profileCards = []
   } else {
-    playlistCards = playlists.map((playlist: UserCollection) => {
+    content listCards = content lists.map((content list: UserCollection) => {
       return (
         <Card
-          key={playlist.playlist_id}
-          id={playlist.playlist_id}
-          userId={playlist.playlist_owner_id}
-          imageSize={playlist._cover_art_sizes}
-          primaryText={playlist.playlist_name}
+          key={content list.content list_id}
+          id={content list.content list_id}
+          userId={content list.content list_owner_id}
+          imageSize={content list._cover_art_sizes}
+          primaryText={content list.content list_name}
           secondaryText={formatPlaylistCardSecondaryText(
-            playlist.save_count,
-            playlist.playlist_contents.agreement_ids.length
+            content list.save_count,
+            content list.content list_contents.agreement_ids.length
           )}
           onClick={() =>
-            playlist.is_album
+            content list.is_album
               ? goToRoute(
                   albumPage(
-                    playlist.user.handle,
-                    playlist.playlist_name,
-                    playlist.playlist_id
+                    content list.user.handle,
+                    content list.content list_name,
+                    content list.content list_id
                   )
                 )
               : goToRoute(
-                  playlistPage(
-                    playlist.user.handle,
-                    playlist.playlist_name,
-                    playlist.playlist_id
+                  content listPage(
+                    content list.user.handle,
+                    content list.content list_name,
+                    content list.content list_id
                   )
                 )
           }
@@ -268,7 +268,7 @@ const ExplorePage = ({
           <CardLineup
             containerClassName={styles.lineupContainer}
             cardsClassName={styles.cardLineup}
-            cards={playlistCards}
+            cards={content listCards}
           />
         )}
       </TabBodyHeader>,
@@ -284,7 +284,7 @@ const ExplorePage = ({
         )}
       </TabBodyHeader>
     ]
-  }, [playlistCards, profileCards, justForYouTiles, lifestyleTiles, status])
+  }, [content listCards, profileCards, justForYouTiles, lifestyleTiles, status])
 
   const initialTab = useSelector(getTab)
   const dispatch = useDispatch()

@@ -16,13 +16,13 @@ import useCardWeight from 'hooks/useCardWeight'
 import useHasViewed from 'hooks/useHasViewed'
 import ColivingBackend from 'services/ColivingBackend'
 import { getCreatorNodeIPFSGateways } from 'utils/gatewayUtil'
-import { playlistPage } from 'utils/route'
+import { content listPage } from 'utils/route'
 
 import styles from './FeaturedContent.module.css'
 
 const messages = {
   title: 'Featured Content',
-  subTitle: 'Check out the playlists we are listening to right now'
+  subTitle: 'Check out the content lists we are listening to right now'
 }
 
 type PlaylistTileProps = {
@@ -32,24 +32,24 @@ type PlaylistTileProps = {
   onClick: () => void
 }
 
-const FALLBACK_PLAYLISTS = [
+const FALLBACK_CONTENT_LISTS = [
   {
     title: 'Coliving Exclusives',
     artist: 'Coliving',
     imageUrl: colivingExclusivesPlaylistImg,
-    link: '/coliving/playlist/official-coliving-exclusives-1428'
+    link: '/coliving/content list/official-coliving-exclusives-1428'
   },
   {
     title: 'MOOMBAHTON COMES TO COLIVING',
     artist: 'Moombahton',
     imageUrl: moombahtonPlaylistImg,
-    link: '/moombahton/playlist/moombahton-comes-to-coliving-9601'
+    link: '/moombahton/content list/moombahton-comes-to-coliving-9601'
   },
   {
     title: 'Hot & New On Coliving 🔥',
     artist: 'Coliving',
     imageUrl: hotAndNewPlaylistImg,
-    link: '/coliving/playlist/hot-new-on-coliving-%F0%9F%94%A5-4281'
+    link: '/coliving/content list/hot-new-on-coliving-%F0%9F%94%A5-4281'
   },
   {
     title: 'Coliving Weekly',
@@ -150,11 +150,11 @@ const FeaturedContent = (props: FeaturedContentProps) => {
     useAsyncFn(async () => {
       const featuredContent = await fetchExploreContent()
       const ids = featuredContent.featuredPlaylists
-      const playlists = ColivingBackend.getPlaylists(
+      const content lists = ColivingBackend.getPlaylists(
         null,
         ids
       ) as any as UserCollectionMetadata[]
-      return playlists
+      return content lists
     }, [])
 
   useEffect(() => {
@@ -177,7 +177,7 @@ const FeaturedContent = (props: FeaturedContentProps) => {
         <div className={styles.agreementsContainer}>
           {trendingPlaylistsResponse.value == null ||
           trendingPlaylistsResponse.value.length < 4
-            ? FALLBACK_PLAYLISTS.map((p) => (
+            ? FALLBACK_CONTENT_LISTS.map((p) => (
                 <MobilePlaylistTile
                   key={p.link}
                   {...p}
@@ -188,19 +188,19 @@ const FeaturedContent = (props: FeaturedContentProps) => {
                 .slice(0, 4)
                 .map((p) => (
                   <MobilePlaylistTile
-                    key={p.playlist_id}
-                    title={p.playlist_name}
+                    key={p.content list_id}
+                    title={p.content list_name}
                     artist={p.user.name}
                     imageUrl={getImageUrl(
                       'small',
                       p,
-                      p.user.creator_node_endpoint
+                      p.user.content_node_endpoint
                     )}
                     onClick={handleClickRoute(
-                      playlistPage(
+                      content listPage(
                         p.user.handle,
-                        p.playlist_name,
-                        p.playlist_id
+                        p.content list_name,
+                        p.content list_id
                       ),
                       props.setRenderPublicSite
                     )}
@@ -231,7 +231,7 @@ const FeaturedContent = (props: FeaturedContentProps) => {
         <div className={styles.agreementsContainer}>
           {trendingPlaylistsResponse.value == null ||
           trendingPlaylistsResponse.value.length < 4
-            ? FALLBACK_PLAYLISTS.map((p) => (
+            ? FALLBACK_CONTENT_LISTS.map((p) => (
                 <DesktopPlaylistTile
                   key={p.title}
                   {...p}
@@ -242,19 +242,19 @@ const FeaturedContent = (props: FeaturedContentProps) => {
                 .slice(0, 4)
                 .map((p) => (
                   <DesktopPlaylistTile
-                    key={p.playlist_id}
-                    title={p.playlist_name}
+                    key={p.content list_id}
+                    title={p.content list_name}
                     artist={p.user.name}
                     imageUrl={getImageUrl(
                       'large',
                       p,
-                      p.user.creator_node_endpoint
+                      p.user.content_node_endpoint
                     )}
                     onClick={handleClickRoute(
-                      playlistPage(
+                      content listPage(
                         p.user.handle,
-                        p.playlist_name,
-                        p.playlist_id
+                        p.content list_name,
+                        p.content list_id
                       ),
                       props.setRenderPublicSite
                     )}

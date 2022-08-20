@@ -40,7 +40,7 @@ import smartCollection from 'common/store/pages/smart-collection/slice'
 import tokenDashboardSlice from 'common/store/pages/token-dashboard/slice'
 import agreement from 'common/store/pages/agreement/reducer'
 import AgreementPageState from 'common/store/pages/agreement/types'
-import trendingPlaylists from 'common/store/pages/trending-playlists/slice'
+import trendingPlaylists from 'common/store/pages/trending-content lists/slice'
 import trendingUnderground from 'common/store/pages/trending-underground/slice'
 import trending from 'common/store/pages/trending/reducer'
 import { TrendingPageState } from 'common/store/pages/trending/types'
@@ -55,7 +55,7 @@ import stemsUpload from 'common/store/stems-upload/slice'
 import tippingReducer from 'common/store/tipping/slice'
 import addToPlaylistReducer, {
   AddToPlaylistState
-} from 'common/store/ui/add-to-playlist/reducer'
+} from 'common/store/ui/add-to-content list/reducer'
 import artistRecommendationsReducer, {
   ArtistRecommendationsState
 } from 'common/store/ui/artist-recommendations/slice'
@@ -64,8 +64,8 @@ import collectibleDetailsReducer, {
 } from 'common/store/ui/collectible-details/slice'
 import createPlaylistModalReducer from 'common/store/ui/createPlaylistModal/reducer'
 import { CreatePlaylistModalState } from 'common/store/ui/createPlaylistModal/types'
-import deletePlaylistConfirmationReducer from 'common/store/ui/delete-playlist-confirmation-modal/slice'
-import { DeletePlaylistConfirmationModalState } from 'common/store/ui/delete-playlist-confirmation-modal/types'
+import deletePlaylistConfirmationReducer from 'common/store/ui/delete-content list-confirmation-modal/slice'
+import { DeletePlaylistConfirmationModalState } from 'common/store/ui/delete-content list-confirmation-modal/types'
 import mobileOverflowModalReducer from 'common/store/ui/mobile-overflow-menu/slice'
 import { MobileOverflowModalState } from 'common/store/ui/mobile-overflow-menu/types'
 import modalsReducer, { ModalsState } from 'common/store/ui/modals/slice'
@@ -211,7 +211,7 @@ export const sagas = (ctx: CommonStoreContext) => ({
   // once ColivingBackend and dependencies are migrated
   // common/store/pages/explore/exploreCollections/sagas.ts
   // common/store/pages/explore/sagas.ts
-  // components/add-to-playlist/store/sagas.ts
+  // components/add-to-content list/store/sagas.ts
   // components/share-sound-to-tiktok-modal/store/sagas.ts
   // store/social/agreements/sagas.ts
   // store/social/users/sagas.ts

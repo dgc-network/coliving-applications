@@ -86,7 +86,7 @@ describe('fetchServices', () => {
             entries: {
               1: {
                 metadata: {
-                  creator_node_endpoint:
+                  content_node_endpoint:
                     'http://test_endpoint1,http://test_endpoint2'
                 }
               }

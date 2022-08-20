@@ -25,7 +25,7 @@ const exploreScreens = [
     component: MoodsTab
   },
   {
-    name: 'playlists',
+    name: 'content lists',
     Icon: IconPlaylists,
     component: PlaylistsTab
   },

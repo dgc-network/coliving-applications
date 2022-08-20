@@ -20,7 +20,7 @@ const initialState: NotificationState = {
     status: undefined,
     limit: 0
   },
-  playlistUpdates: []
+  content listUpdates: []
 }
 
 const actionsMap: any = {
@@ -158,30 +158,30 @@ const actionsMap: any = {
   [actions.TOGGLE_NOTIFICATION_PANEL](state: NotificationState) {
     return { ...state, panelIsOpen: !state.panelIsOpen }
   },
-  [actions.SET_PLAYLIST_UPDATES](
+  [actions.SET_CONTENT_LIST_UPDATES](
     state: NotificationState,
     action: actions.SetPlaylistUpdates
   ) {
     if (
-      action.playlistUpdates.length === 0 &&
-      state.playlistUpdates.length === 0
+      action.content listUpdates.length === 0 &&
+      state.content listUpdates.length === 0
     ) {
       return state
     }
 
     return {
       ...state,
-      playlistUpdates: action.playlistUpdates || []
+      content listUpdates: action.content listUpdates || []
     }
   },
-  [actions.UPDATE_PLAYLIST_VIEW](
+  [actions.UPDATE_CONTENT_LIST_VIEW](
     state: NotificationState,
     action: actions.UpdatePlaylistLastViewedAt
   ) {
     return {
       ...state,
-      playlistUpdates: state.playlistUpdates.filter(
-        (id) => id !== action.playlistId
+      content listUpdates: state.content listUpdates.filter(
+        (id) => id !== action.content listId
       )
     }
   }

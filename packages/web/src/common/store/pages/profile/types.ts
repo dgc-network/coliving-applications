@@ -45,7 +45,7 @@ export type ProfilePageState = {
 export enum Tabs {
   AGREEMENTS = 'AGREEMENTS',
   ALBUMS = 'ALBUMS',
-  PLAYLISTS = 'PLAYLISTS',
+  CONTENT_LISTS = 'CONTENT_LISTS',
   REPOSTS = 'REPOSTS',
   COLLECTIBLES = 'COLLECTIBLES'
 }
@@ -53,7 +53,7 @@ export enum Tabs {
 export enum TabRoute {
   AGREEMENTS = 'agreements',
   ALBUMS = 'albums',
-  PLAYLISTS = 'playlists',
+  CONTENT_LISTS = 'content lists',
   REPOSTS = 'reposts',
   COLLECTIBLES = 'collectibles'
 }
@@ -64,8 +64,8 @@ export const getTabForRoute = (tabRoute: TabRoute) => {
       return Tabs.AGREEMENTS
     case TabRoute.ALBUMS:
       return Tabs.ALBUMS
-    case TabRoute.PLAYLISTS:
-      return Tabs.PLAYLISTS
+    case TabRoute.CONTENT_LISTS:
+      return Tabs.CONTENT_LISTS
     case TabRoute.REPOSTS:
       return Tabs.REPOSTS
     case TabRoute.COLLECTIBLES:

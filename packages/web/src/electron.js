@@ -69,19 +69,19 @@ switch (env) {
     appEnvironment = Environment.STAGING
     scheme = 'coliving-staging'
     buildName = 'build-staging'
-    s3Bucket = 'staging.coliving.co'
+    s3Bucket = 'staging.coliving.lol'
     break
   case 'production':
     appEnvironment = Environment.PRODUCTION
     scheme = 'coliving'
     buildName = 'build-production'
-    s3Bucket = 'coliving.co'
+    s3Bucket = 'coliving.lol'
     break
   default:
     appEnvironment = ''
     scheme = ''
     buildName = 'build'
-    s3Bucket = 'coliving.co'
+    s3Bucket = 'coliving.lol'
     break
 }
 

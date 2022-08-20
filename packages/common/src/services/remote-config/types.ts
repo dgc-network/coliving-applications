@@ -1,7 +1,7 @@
 export enum IntKeys {
   /**
    * Duration (in ms) before we consider the fetch of an image against
-   * a primary creator node a failure and try using libs.fetchCID
+   * a primary content node a failure and try using libs.fetchCID
    */
   IMAGE_QUICK_FETCH_TIMEOUT_MS = 'IMAGE_QUICK_FETCH_TIMEOUT_MS',
   /**
@@ -213,10 +213,10 @@ export enum StringKeys {
   INSTAGRAM_API_PROFILE_URL = 'INSTAGRAM_API_PROFILE_URL',
 
   /**
-   * User ids omitted from trending playlists (used to omit Coliving from rewards).
+   * User ids omitted from trending content lists (used to omit Coliving from rewards).
    * Comma-separated.
    */
-  TRENDING_PLAYLIST_OMITTED_USER_IDS = 'TRENDING_PLAYLIST_OMITTED_USER_IDS',
+  TRENDING_CONTENT_LIST_OMITTED_USER_IDS = 'TRENDING_CONTENT_LIST_OMITTED_USER_IDS',
 
   /** Rewards IDs as comma-separated array */
   TRENDING_REWARD_IDS = 'TRENDING_REWARD_IDS',
@@ -225,8 +225,8 @@ export enum StringKeys {
   /** Embedded tweet for trending rewards UI agreements */
   REWARDS_TWEET_ID_AGREEMENTS = 'REWARDS_TWEET_ID_AGREEMENTS',
 
-  /** Embedded tweet for trending rewards UI playlists */
-  REWARDS_TWEET_ID_PLAYLISTS = 'REWARDS_TWEET_ID_PLAYLISTS',
+  /** Embedded tweet for trending rewards UI content lists */
+  REWARDS_TWEET_ID_CONTENT_LISTS = 'REWARDS_TWEET_ID_CONTENT_LISTS',
 
   /** Embedded tweet for underground trending rewards UI  */
   REWARDS_TWEET_ID_UNDERGROUND = 'REWARDS_TWEET_ID_UNDERGROUND',
@@ -246,7 +246,7 @@ export enum StringKeys {
   UNDERGROUND_TRENDING_EXPERIMENT = 'UNDERGROUND_TRENDING_EXPERIMENT',
 
   /** Playlist trending experiment id */
-  PLAYLIST_TRENDING_EXPERIMENT = 'PLAYLIST_TRENDING_EXPERIMENT',
+  CONTENT_LIST_TRENDING_EXPERIMENT = 'CONTENT_LIST_TRENDING_EXPERIMENT',
 
   /** Ethereum address for oracle */
   ORACLE_ETH_ADDRESS = 'ORACLE_ETH_ADDRESS',

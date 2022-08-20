@@ -271,7 +271,7 @@ export const OAuthLoginPage = () => {
       email = userEmail
     }
 
-    const gateways = getCreatorNodeIPFSGateways(account.creator_node_endpoint)
+    const gateways = getCreatorNodeIPFSGateways(account.content_node_endpoint)
     const cNode = gateways[0]
     let profilePicture:
       | { '150x150': string; '480x480': string; '1000x1000': string }

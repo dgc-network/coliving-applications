@@ -35,13 +35,13 @@ const rowMessageMap = {
   [OverflowAction.FAVORITE]: 'Favorite',
   [OverflowAction.UNFAVORITE]: 'Unfavorite',
   [OverflowAction.SHARE]: 'Share',
-  [OverflowAction.ADD_TO_PLAYLIST]: 'Add To Playlist',
-  [OverflowAction.EDIT_PLAYLIST]: 'Edit Playlist',
-  [OverflowAction.DELETE_PLAYLIST]: 'Delete Playlist',
-  [OverflowAction.PUBLISH_PLAYLIST]: 'Publish Playlist',
+  [OverflowAction.ADD_TO_CONTENT_LIST]: 'Add To Playlist',
+  [OverflowAction.EDIT_CONTENT_LIST]: 'Edit Playlist',
+  [OverflowAction.DELETE_CONTENT_LIST]: 'Delete Playlist',
+  [OverflowAction.PUBLISH_CONTENT_LIST]: 'Publish Playlist',
   [OverflowAction.VIEW_AGREEMENT_PAGE]: 'View Agreement Page',
   [OverflowAction.VIEW_ARTIST_PAGE]: 'View Artist Page',
-  [OverflowAction.VIEW_PLAYLIST_PAGE]: 'View Playlist Page',
+  [OverflowAction.VIEW_CONTENT_LIST_PAGE]: 'View Playlist Page',
   [OverflowAction.VIEW_COLLECTIBLE_PAGE]: 'View Collectible Page',
   [OverflowAction.VIEW_ALBUM_PAGE]: 'View Album Page',
   [OverflowAction.UNSUBSCRIBER_USER]: 'Unsubscribe',
@@ -82,14 +82,14 @@ const MobileOverflowModal = ({
     [OverflowAction.FAVORITE]: onFavorite,
     [OverflowAction.UNFAVORITE]: onUnfavorite,
     [OverflowAction.SHARE]: onShare,
-    [OverflowAction.ADD_TO_PLAYLIST]: onAddToPlaylist,
-    [OverflowAction.EDIT_PLAYLIST]: onEditPlaylist,
-    [OverflowAction.DELETE_PLAYLIST]: onDeletePlaylist,
-    [OverflowAction.PUBLISH_PLAYLIST]: onPublishPlaylist,
+    [OverflowAction.ADD_TO_CONTENT_LIST]: onAddToPlaylist,
+    [OverflowAction.EDIT_CONTENT_LIST]: onEditPlaylist,
+    [OverflowAction.DELETE_CONTENT_LIST]: onDeletePlaylist,
+    [OverflowAction.PUBLISH_CONTENT_LIST]: onPublishPlaylist,
     [OverflowAction.VIEW_AGREEMENT_PAGE]: onVisitAgreementPage,
     [OverflowAction.VIEW_ARTIST_PAGE]: onVisitArtistPage,
     [OverflowAction.VIEW_COLLECTIBLE_PAGE]: onVisitCollectiblePage,
-    [OverflowAction.VIEW_PLAYLIST_PAGE]: onVisitCollectionPage,
+    [OverflowAction.VIEW_CONTENT_LIST_PAGE]: onVisitCollectionPage,
     [OverflowAction.VIEW_ALBUM_PAGE]: onVisitCollectionPage,
     [OverflowAction.UNSUBSCRIBER_USER]: onUnsubscribeUser,
     [OverflowAction.FOLLOW_ARTIST]: onFollow,
@@ -105,7 +105,7 @@ const MobileOverflowModal = ({
       callbacks[action]!()
     }
     // Eventually: will need some special casing for onAddToPlaylist, which returns
-    // a function accepting playlistId
+    // a function accepting content listId
     callback()
     onClose()
   }

@@ -15,7 +15,7 @@ import { FilterInput } from './FilterInput'
 import type { ExtendedCollection } from './types'
 
 const messages = {
-  emptyTabText: "You haven't favorited any playlists yet.",
+  emptyTabText: "You haven't favorited any content lists yet.",
   inputPlaceholder: 'Filter Playlists'
 }
 
@@ -24,29 +24,29 @@ export const PlaylistsTab = () => {
   const [filterValue, setFilterValue] = useState('')
   const user = useSelectorWeb(getAccountWithPlaylists)
 
-  const matchesFilter = (playlist: ExtendedCollection) => {
+  const matchesFilter = (content list: ExtendedCollection) => {
     const matchValue = filterValue.toLowerCase()
     return (
-      playlist.playlist_name.toLowerCase().indexOf(matchValue) > -1 ||
-      playlist.ownerName.toLowerCase().indexOf(matchValue) > -1
+      content list.content list_name.toLowerCase().indexOf(matchValue) > -1 ||
+      content list.ownerName.toLowerCase().indexOf(matchValue) > -1
     )
   }
 
-  const userPlaylists = user?.playlists
+  const userPlaylists = user?.content lists
     ?.filter(
-      (playlist) =>
-        !playlist.is_album &&
-        playlist.ownerHandle !== user.handle &&
-        matchesFilter(playlist)
+      (content list) =>
+        !content list.is_album &&
+        content list.ownerHandle !== user.handle &&
+        matchesFilter(content list)
     )
-    .map((playlist) => ({ ...playlist, user }))
+    .map((content list) => ({ ...content list, user }))
 
   const handleNavigateToNewPlaylist = useCallback(() => {
     navigation.push({ native: { screen: 'CreatePlaylist' } })
   }, [navigation])
 
   return (
-    <VirtualizedScrollView listKey='favorites-playlists-view'>
+    <VirtualizedScrollView listKey='favorites-content lists-view'>
       {!userPlaylists?.length && !filterValue ? (
         <EmptyTab message={messages.emptyTabText} />
       ) : (
@@ -62,7 +62,7 @@ export const PlaylistsTab = () => {
         onPress={handleNavigateToNewPlaylist}
       />
       <CollectionList
-        listKey='favorites-playlists'
+        listKey='favorites-content lists'
         scrollEnabled={false}
         collection={userPlaylists ?? []}
         fromPage={FAVORITES_PAGE}

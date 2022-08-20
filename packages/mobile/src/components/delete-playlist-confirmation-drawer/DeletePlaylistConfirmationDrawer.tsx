@@ -1,7 +1,7 @@
 import { useCallback, useMemo } from 'react'
 
 import { deletePlaylist } from 'common/store/cache/collections/actions'
-import { getPlaylistId } from 'common/store/ui/delete-playlist-confirmation-modal/selectors'
+import { getPlaylistId } from 'common/store/ui/delete-content list-confirmation-modal/selectors'
 
 import ActionDrawer from 'app/components/action-drawer'
 import { useDispatchWeb } from 'app/hooks/useDispatchWeb'
@@ -9,16 +9,16 @@ import { useNavigation } from 'app/hooks/useNavigation'
 import { useSelectorWeb } from 'app/hooks/useSelectorWeb'
 
 export const DeletePlaylistConfirmationDrawer = () => {
-  const playlistId = useSelectorWeb(getPlaylistId)
+  const content listId = useSelectorWeb(getPlaylistId)
   const dispatchWeb = useDispatchWeb()
   const navigation = useNavigation()
 
   const handleDelete = useCallback(() => {
-    if (playlistId) {
-      dispatchWeb(deletePlaylist(playlistId))
+    if (content listId) {
+      dispatchWeb(deletePlaylist(content listId))
       navigation.goBack()
     }
-  }, [dispatchWeb, playlistId, navigation])
+  }, [dispatchWeb, content listId, navigation])
 
   const rows = useMemo(
     () => [

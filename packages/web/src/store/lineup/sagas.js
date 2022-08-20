@@ -23,8 +23,8 @@ import { getUid as getCurrentPlayerAgreementUid } from 'store/player/selectors'
 import { getToQueue } from 'store/queue/sagas'
 import { isMobile } from 'utils/clientUtil'
 
-const makeCollectionSourceId = (source, playlistId) =>
-  `${source}:collection:${playlistId}`
+const makeCollectionSourceId = (source, content listId) =>
+  `${source}:collection:${content listId}`
 const getEntryId = (entry) => `${entry.kind}:${entry.id}`
 
 const flatten = (list) =>
@@ -41,12 +41,12 @@ function* filterDeletes(agreementsMetadata, removeDeleted) {
       }
       // If we said to remove deleted agreements and it is deleted, remove it
       if (removeDeleted && metadata.is_delete) return null
-      // If we said to remove deleted and the agreement/playlist owner is deactivated, remove it
+      // If we said to remove deleted and the agreement/content list owner is deactivated, remove it
       else if (removeDeleted && users[metadata.owner_id]?.is_deactivated)
         return null
       else if (
         removeDeleted &&
-        users[metadata.playlist_owner_id]?.is_deactivated
+        users[metadata.content list_owner_id]?.is_deactivated
       )
         return null
       // If the agreement was not cached, keep it
@@ -74,20 +74,20 @@ function getCollectionCacheables(
   agreementSubscriptions,
   agreementSubscribers
 ) {
-  collectionsToCache.push({ id: metadata.playlist_id, uid, metadata })
+  collectionsToCache.push({ id: metadata.content list_id, uid, metadata })
 
-  const agreementIds = metadata.playlist_contents.agreement_ids.map((t) => t.agreement)
+  const agreementIds = metadata.content list_contents.agreement_ids.map((t) => t.agreement)
   const agreementUids = agreementIds.map((id) =>
-    makeUid(Kind.AGREEMENTS, id, `collection:${metadata.playlist_id}`)
+    makeUid(Kind.AGREEMENTS, id, `collection:${metadata.content list_id}`)
   )
 
   agreementSubscriptions.push({
-    id: metadata.playlist_id,
+    id: metadata.content list_id,
     kind: Kind.AGREEMENTS,
     uids: agreementUids
   })
-  metadata.playlist_contents.agreement_ids =
-    metadata.playlist_contents.agreement_ids.map((t, i) => {
+  metadata.content list_contents.agreement_ids =
+    metadata.content list_contents.agreement_ids.map((t, i) => {
       const agreementUid = t.uid || agreementUids[i]
       agreementSubscribers.push({ uid: agreementUid, id: t.agreement })
       return { uid: agreementUid, ...t }
@@ -178,7 +178,7 @@ function* fetchLineupMetadatasAsync(
         metadata.agreement_id ? Kind.AGREEMENTS : Kind.COLLECTIONS
       )
       const ids = allMetadatas.map(
-        (metadata) => metadata.agreement_id || metadata.playlist_id
+        (metadata) => metadata.agreement_id || metadata.content list_id
       )
       const uids = makeUids(kinds, ids, source)
 
@@ -189,8 +189,8 @@ function* fetchLineupMetadatasAsync(
       let agreementSubscribers = []
 
       allMetadatas.forEach((metadata, i) => {
-        // Need to update the UIDs on the playlist agreements
-        if (metadata.playlist_id) {
+        // Need to update the UIDs on the content list agreements
+        if (metadata.content list_id) {
           getCollectionCacheables(
             metadata,
             uids[i],
@@ -204,17 +204,17 @@ function* fetchLineupMetadatasAsync(
       })
 
       const lineupCollections = allMetadatas.filter(
-        (item) => !!item.playlist_id
+        (item) => !!item.content list_id
       )
 
       lineupCollections.forEach((metadata) => {
-        const agreementUids = metadata.playlist_contents.agreement_ids.map(
+        const agreementUids = metadata.content list_contents.agreement_ids.map(
           (agreement, idx) => {
             const id = agreement.agreement
             const uid = new Uid(
               Kind.AGREEMENTS,
               id,
-              makeCollectionSourceId(source, metadata.playlist_id),
+              makeCollectionSourceId(source, metadata.content list_id),
               idx
             )
             return { id, uid: uid.toString() }
@@ -223,7 +223,7 @@ function* fetchLineupMetadatasAsync(
         agreementSubscribers = agreementSubscribers.concat(agreementUids)
       })
 
-      // We rewrote the playlist agreements with new UIDs, so we need to update them
+      // We rewrote the content list agreements with new UIDs, so we need to update them
       // in the cache.
       if (collectionsToCache.length > 0) {
         yield put(cacheActions.update(Kind.COLLECTIONS, collectionsToCache))
@@ -349,12 +349,12 @@ function* reset(
     }
     if (entry.kind === Kind.COLLECTIONS) {
       const collection = yield select(getCollection, { uid: entry.uid })
-      const removeAgreementIds = collection.playlist_contents.agreement_ids.map(
+      const removeAgreementIds = collection.content list_contents.agreement_ids.map(
         ({ agreement: agreementId }, idx) => {
           const agreementUid = new Uid(
             Kind.AGREEMENTS,
             agreementId,
-            makeCollectionSourceId(source, collection.playlist_id),
+            makeCollectionSourceId(source, collection.content list_id),
             idx
           )
           return { UID: agreementUid.toString() }
@@ -420,20 +420,20 @@ function* refreshInView(lineupActions, lineupSelector, action) {
 const keepUidAndKind = (entry) => ({
   uid: entry.uid,
   kind: entry.agreement_id ? Kind.AGREEMENTS : Kind.COLLECTIONS,
-  id: entry.agreement_id || entry.playlist_id
+  id: entry.agreement_id || entry.content list_id
 })
 
 /**
  * A generic class of common Lineup Sagas for fetching, loading and
  * simple playback.
  * @example
- *  // playlist.js
+ *  // contentList.js
  *  // Creates an exports and array of all sagas to be combined in the
  *  // root saga.
  *  class PlaylistSagas extends LineupSagas {
  *    constructor() {
- *      const selector = store => store.playlist
- *      super("PLAYLIST", playlistActions, selector, Backend.getPlaylist)
+ *      const selector = store => store.content list
+ *      super("CONTENT_LIST", content listActions, selector, Backend.getPlaylist)
  *    }
  *  }
  *  export default function sagas () {

@@ -14,13 +14,13 @@ import {
   shareCollection
 } from '-client/src/common/store/social/collections/actions'
 import { open as openEditPlaylist } from '-client/src/common/store/ui/createPlaylistModal/actions'
-import { requestOpen as openDeletePlaylist } from '-client/src/common/store/ui/delete-playlist-confirmation-modal/slice'
+import { requestOpen as openDeletePlaylist } from '-client/src/common/store/ui/delete-content list-confirmation-modal/slice'
 import { getMobileOverflowModal } from '-client/src/common/store/ui/mobile-overflow-menu/selectors'
 import type { OverflowActionCallbacks } from '-client/src/common/store/ui/mobile-overflow-menu/types'
 import { OverflowAction } from '-client/src/common/store/ui/mobile-overflow-menu/types'
 import {
   profilePage,
-  playlistPage,
+  content listPage,
   albumPage
 } from '-client/src/utils/route'
 
@@ -38,21 +38,21 @@ const CollectionOverflowMenuDrawer = ({ render }: Props) => {
   const { id: modalId } = useSelectorWeb(getMobileOverflowModal)
   const id = modalId as ID
 
-  const playlist = useSelectorWeb((state: CommonState) =>
+  const content list = useSelectorWeb((state: CommonState) =>
     getCollection(state, { id })
   )
 
   const user = useSelectorWeb((state: CommonState) =>
-    getUser(state, { id: playlist?.playlist_owner_id })
+    getUser(state, { id: content list?.content list_owner_id })
   )
 
-  if (!playlist || !user) {
+  if (!content list || !user) {
     return null
   }
-  const { playlist_name, is_album } = playlist
+  const { content list_name, is_album } = content list
   const { handle } = user
 
-  if (!id || !handle || !playlist_name || is_album === undefined) {
+  if (!id || !handle || !content list_name || is_album === undefined) {
     return null
   }
 
@@ -71,9 +71,9 @@ const CollectionOverflowMenuDrawer = ({ render }: Props) => {
       navigation.navigate({
         native: { screen: 'Collection', params: { id } },
         web: {
-          route: (is_album ? albumPage : playlistPage)(
+          route: (is_album ? albumPage : content listPage)(
             handle,
-            playlist_name,
+            content list_name,
             id
           )
         }
@@ -85,15 +85,15 @@ const CollectionOverflowMenuDrawer = ({ render }: Props) => {
         web: { route: profilePage(handle) }
       })
     },
-    [OverflowAction.EDIT_PLAYLIST]: () => {
+    [OverflowAction.EDIT_CONTENT_LIST]: () => {
       navigation.navigate({
         native: { screen: 'EditPlaylist', params: { id } }
       })
       dispatchWeb(openEditPlaylist(id))
     },
-    [OverflowAction.DELETE_PLAYLIST]: () =>
-      dispatchWeb(openDeletePlaylist({ playlistId: id })),
-    [OverflowAction.PUBLISH_PLAYLIST]: () =>
+    [OverflowAction.DELETE_CONTENT_LIST]: () =>
+      dispatchWeb(openDeletePlaylist({ content listId: id })),
+    [OverflowAction.PUBLISH_CONTENT_LIST]: () =>
       is_album ? () => {} : dispatchWeb(publishPlaylist(Number(id)))
   }
 

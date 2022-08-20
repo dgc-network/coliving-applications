@@ -76,7 +76,7 @@ const getTwitterShareData = (
         const link = getEntityRoute(entity, true)
         const text = messages.achievementText(
           entityType,
-          'title' in entity ? entity.title : entity.playlist_name,
+          'title' in entity ? entity.title : entity.content list_name,
           value,
           achievement
         )

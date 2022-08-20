@@ -85,7 +85,7 @@ export const collectibleMessages = {
   visibleThumbnail: 'Visible collectible thumbnail',
   hiddenThumbnail: 'Hidden collectible thumbnail',
   editInBrowser:
-    'Visit coliving.co from a desktop browser to hide and sort your NFT collectibles.',
+    'Visit coliving.lol from a desktop browser to hide and sort your NFT collectibles.',
   videoNotSupported: 'Your browser does not support the video tag.',
   clickCopy: 'Click To Copy',
   copied: 'Copied to Clipboard',

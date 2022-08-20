@@ -159,19 +159,19 @@ class SavedPage extends PureComponent<SavedPageProps, SavedPageState> {
     const filterText = this.state.filterText
     return albums.filter(
       (item: SavedPageCollection) =>
-        item.playlist_name.toLowerCase().indexOf(filterText.toLowerCase()) >
+        item.content list_name.toLowerCase().indexOf(filterText.toLowerCase()) >
           -1 ||
         item.ownerHandle.toLowerCase().indexOf(filterText.toLowerCase()) > -1
     )
   }
 
   getFilteredPlaylists = (
-    playlists: SavedPageCollection[]
+    content lists: SavedPageCollection[]
   ): SavedPageCollection[] => {
     const filterText = this.state.filterText
-    return playlists.filter(
+    return content lists.filter(
       (item: SavedPageCollection) =>
-        item.playlist_name.toLowerCase().indexOf(filterText.toLowerCase()) >
+        item.content list_name.toLowerCase().indexOf(filterText.toLowerCase()) >
           -1 ||
         item.ownerHandle.toLowerCase().indexOf(filterText.toLowerCase()) > -1
     )
@@ -392,7 +392,7 @@ class SavedPage extends PureComponent<SavedPageProps, SavedPageState> {
     }
 
     const mobileProps = {
-      playlistUpdates: this.props.playlistUpdates,
+      content listUpdates: this.props.content listUpdates,
       updatePlaylistLastViewedAt: this.props.updatePlaylistLastViewedAt,
 
       onSave: this.onSave,
@@ -426,7 +426,7 @@ function makeMapStateToProps() {
       currentQueueItem: getCurrentQueueItem(state),
       playing: getPlaying(state),
       buffering: getBuffering(state),
-      playlistUpdates: getPlaylistUpdates(state)
+      content listUpdates: getPlaylistUpdates(state)
     }
   }
   return mapStateToProps
@@ -440,8 +440,8 @@ function mapDispatchToProps(dispatch: Dispatch) {
       dispatch(agreementsActions.updateLineupOrder(updatedOrderIndices)),
     fetchSavedAlbums: () => dispatch(accountActions.fetchSavedAlbums()),
     fetchSavedPlaylists: () => dispatch(accountActions.fetchSavedPlaylists()),
-    updatePlaylistLastViewedAt: (playlistId: number) =>
-      dispatch(updatePlaylistLastViewedAt(playlistId)),
+    updatePlaylistLastViewedAt: (content listId: number) =>
+      dispatch(updatePlaylistLastViewedAt(content listId)),
     goToRoute: (route: string) => dispatch(pushRoute(route)),
     play: (uid?: UID) => dispatch(agreementsActions.play(uid)),
     pause: () => dispatch(agreementsActions.pause()),

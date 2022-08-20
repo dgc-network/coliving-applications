@@ -33,10 +33,10 @@ const DesktopCardContainer = ({
         {cards.map((card) => {
           return card.props.link ? (
             <Draggable
-              key={`draggable-${card.props.playlistId}`}
+              key={`draggable-${card.props.content listId}`}
               text={card.props.primaryText}
-              kind={card.props.isPlaylist ? 'playlist' : 'album'}
-              id={card.props.playlistId}
+              kind={card.props.isPlaylist ? 'content list' : 'album'}
+              id={card.props.content listId}
               link={card.props.link}
             >
               {card}

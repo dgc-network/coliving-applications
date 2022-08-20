@@ -100,11 +100,11 @@ export const AgreementScreenDownloadButtons = ({
 
   const onDownload = useCallback(
     (id: ID, cid: CID, category?: string, parentAgreementId?: ID) => {
-      const { creator_node_endpoint } = user
-      if (!creator_node_endpoint) {
+      const { content_node_endpoint } = user
+      if (!content_node_endpoint) {
         return
       }
-      dispatchWeb(downloadAgreement(id, cid, creator_node_endpoint, category))
+      dispatchWeb(downloadAgreement(id, cid, content_node_endpoint, category))
       agreement(
         make({
           eventName: Name.AGREEMENT_PAGE_DOWNLOAD,

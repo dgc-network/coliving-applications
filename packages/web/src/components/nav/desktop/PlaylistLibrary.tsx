@@ -29,22 +29,22 @@ import {
   getPlaylistsNotInLibrary,
   isInsideFolder,
   reorderPlaylistLibrary
-} from 'common/store/playlist-library/helpers'
+} from 'common/store/content list-library/helpers'
 import { saveSmartCollection } from 'common/store/social/collections/actions'
 import Droppable from 'components/dragndrop/Droppable'
 import { ToastContext } from 'components/toast/ToastContext'
 import { useFlag } from 'hooks/useRemoteConfig'
 import {
-  LIVE_NFT_PLAYLIST,
+  LIVE_NFT_CONTENT_LIST,
   SMART_COLLECTION_MAP
 } from 'pages/smart-collection/smartCollections'
 import { make, useRecord } from 'store/analytics/actions'
 import { setFolderId as setEditFolderModalFolderId } from 'store/application/ui/editFolderModal/slice'
 import { open as openEditPlaylistModal } from 'store/application/ui/editPlaylistModal/slice'
 import { getIsDragging } from 'store/dragndrop/selectors'
-import { update } from 'store/playlist-library/slice'
+import { update } from 'store/content list-library/slice'
 import { useSelector } from 'utils/reducer'
-import { liveNftPlaylistPage, getPathname, playlistPage } from 'utils/route'
+import { liveNftPlaylistPage, getPathname, content listPage } from 'utils/route'
 
 import navColumnStyles from './NavColumn.module.css'
 import { PlaylistFolderNavItem } from './PlaylistFolderNavItem'
@@ -58,20 +58,20 @@ type PlaylistLibraryProps = {
 type LibraryContentsLevelProps = {
   level?: number
   contents: PlaylistLibraryType['contents']
-  renderPlaylist: (playlistId: number, level: number) => void
+  renderPlaylist: (content listId: number, level: number) => void
   renderCollectionPlaylist: (
-    playlistId: SmartCollectionVariant,
+    content listId: SmartCollectionVariant,
     level: number
   ) => void
   renderFolder: (folder: PlaylistLibraryFolder, level: number) => void
 }
 
 const messages = {
-  playlistMovedToFolderToast: (folderName: string) =>
-    `This playlist was already in your library. It has now been moved to ${folderName}!`
+  content listMovedToFolderToast: (folderName: string) =>
+    `This content list was already in your library. It has now been moved to ${folderName}!`
 }
 
-/** Function component for rendering a single level of the playlist library.
+/** Function component for rendering a single level of the content list library.
  * Playlist library consists of up to two content levels (root + inside a folder) */
 const LibraryContentsLevel = ({
   level = 0,
@@ -84,14 +84,14 @@ const LibraryContentsLevel = ({
     <>
       {contents.map((content) => {
         switch (content.type) {
-          case 'explore_playlist': {
-            return renderCollectionPlaylist(content.playlist_id, level)
+          case 'explore_content list': {
+            return renderCollectionPlaylist(content.content list_id, level)
           }
-          case 'playlist': {
-            return renderPlaylist(content.playlist_id, level)
+          case 'content list': {
+            return renderPlaylist(content.content list_id, level)
           }
-          case 'temp_playlist': {
-            return renderPlaylist(parseInt(content.playlist_id), level)
+          case 'temp_content list': {
+            return renderPlaylist(parseInt(content.content list_id), level)
           }
           case 'folder':
             return renderFolder(content, level)
@@ -107,14 +107,14 @@ const PlaylistLibrary = ({
   onClickNavLinkWithAccount
 }: PlaylistLibraryProps) => {
   const account = useSelector(getAccountUser)
-  const playlists = useSelector(getAccountNavigationPlaylists)
+  const content lists = useSelector(getAccountNavigationPlaylists)
   const library = useSelector(getPlaylistLibrary)
   const updates = useSelector(getPlaylistUpdates)
   const updatesSet = new Set(updates)
   const { dragging, kind: draggingKind } = useSelector(getIsDragging)
   const dispatch = useDispatch()
   const { isEnabled: isPlaylistFoldersEnabled } = useFlag(
-    FeatureFlags.PLAYLIST_FOLDERS
+    FeatureFlags.CONTENT_LIST_FOLDERS
   )
   const { toast } = useContext(ToastContext)
   const record = useRecord()
@@ -131,17 +131,17 @@ const PlaylistLibrary = ({
     [accountCollectibles]
   )
 
-  // Set live nft playlist in library if it is not already set
+  // Set live nft content list in library if it is not already set
   useEffect(() => {
     if (library) {
       const isAudioNftPlaylistInLibrary = !!findInPlaylistLibrary(
         library,
-        SmartCollectionVariant.LIVE_NFT_PLAYLIST
+        SmartCollectionVariant.LIVE_NFT_CONTENT_LIST
       )
       if (liveCollectibles.length && !isAudioNftPlaylistInLibrary) {
         dispatch(
           saveSmartCollection(
-            LIVE_NFT_PLAYLIST.playlist_name,
+            LIVE_NFT_CONTENT_LIST.content list_name,
             FavoriteSource.IMPLICIT
           )
         )
@@ -159,9 +159,9 @@ const PlaylistLibrary = ({
   )
 
   const handleClickEditPlaylist = useCallback(
-    (playlistId) => {
-      dispatch(openEditPlaylistModal(playlistId))
-      record(make(Name.PLAYLIST_OPEN_EDIT_FROM_LIBRARY, {}))
+    (content listId) => {
+      dispatch(openEditPlaylistModal(content listId))
+      record(make(Name.CONTENT_LIST_OPEN_EDIT_FROM_LIBRARY, {}))
     },
     [dispatch, record]
   )
@@ -169,23 +169,23 @@ const PlaylistLibrary = ({
   const handleDropInFolder = useCallback(
     (
       folder: PlaylistLibraryFolder,
-      droppedKind: 'playlist' | 'library-playlist',
+      droppedKind: 'content list' | 'library-content list',
       droppedId: ID | string | SmartCollectionVariant
     ) => {
       if (!library) return
       const newLibrary = addPlaylistToFolder(library, droppedId, folder.id)
 
-      // Show a toast if playlist dragged from outside of library was already in the library so it simply got moved to the target folder.
+      // Show a toast if content list dragged from outside of library was already in the library so it simply got moved to the target folder.
       if (
-        droppedKind === 'playlist' &&
+        droppedKind === 'content list' &&
         library !== newLibrary &&
         findInPlaylistLibrary(library, droppedId)
       ) {
-        toast(messages.playlistMovedToFolderToast(folder.name))
+        toast(messages.content listMovedToFolderToast(folder.name))
       }
       if (library !== newLibrary) {
-        record(make(Name.PLAYLIST_LIBRARY_ADD_PLAYLIST_TO_FOLDER, {}))
-        dispatch(update({ playlistLibrary: newLibrary }))
+        record(make(Name.CONTENT_LIST_LIBRARY_ADD_CONTENT_LIST_TO_FOLDER, {}))
+        dispatch(update({ content listLibrary: newLibrary }))
       }
     },
     [dispatch, library, record, toast]
@@ -195,7 +195,7 @@ const PlaylistLibrary = ({
     (
       draggingId: ID | SmartCollectionVariant | string,
       droppingId: ID | SmartCollectionVariant | string,
-      draggingKind: 'library-playlist' | 'playlist' | 'playlist-folder',
+      draggingKind: 'library-content list' | 'content list' | 'content list-folder',
       reorderBeforeTarget = false
     ) => {
       if (!library) return
@@ -208,9 +208,9 @@ const PlaylistLibrary = ({
         draggingKind,
         reorderBeforeTarget
       )
-      dispatch(update({ playlistLibrary: newLibrary }))
+      dispatch(update({ content listLibrary: newLibrary }))
       record(
-        make(Name.PLAYLIST_LIBRARY_REORDER, {
+        make(Name.CONTENT_LIST_LIBRARY_REORDER, {
           containsTemporaryPlaylists: containsTempPlaylist(newLibrary),
           kind: draggingKind
         })
@@ -224,34 +224,34 @@ const PlaylistLibrary = ({
         draggingId
       )
       if (isIdInFolderBeforeReorder && !isDroppingIntoFolder) {
-        record(make(Name.PLAYLIST_LIBRARY_MOVE_PLAYLIST_OUT_OF_FOLDER, {}))
+        record(make(Name.CONTENT_LIST_LIBRARY_MOVE_CONTENT_LIST_OUT_OF_FOLDER, {}))
       } else if (!isIdInFolderBeforeReorder && isDroppingIntoFolder) {
-        record(make(Name.PLAYLIST_LIBRARY_MOVE_PLAYLIST_INTO_FOLDER, {}))
+        record(make(Name.CONTENT_LIST_LIBRARY_MOVE_CONTENT_LIST_INTO_FOLDER, {}))
       }
     },
     [dispatch, library, record]
   )
 
   const renderCollectionPlaylist = (
-    playlistId: SmartCollectionVariant,
+    content listId: SmartCollectionVariant,
     level = 0
   ) => {
     const isAudioNftPlaylist =
-      playlistId === SmartCollectionVariant.LIVE_NFT_PLAYLIST
+      content listId === SmartCollectionVariant.LIVE_NFT_CONTENT_LIST
     if (isAudioNftPlaylist && !liveCollectibles.length) return null
-    const playlist = SMART_COLLECTION_MAP[playlistId]
-    if (!playlist) return null
+    const content list = SMART_COLLECTION_MAP[content listId]
+    if (!content list) return null
 
-    const name = playlist.playlist_name
+    const name = content list.content list_name
     const url = isAudioNftPlaylist
       ? liveNftPlaylistPage(account?.handle ?? '')
-      : playlist.link
+      : content list.link
 
     return (
       <PlaylistNavLink
         isInsideFolder={level > 0}
-        key={playlist.link}
-        playlistId={name as SmartCollectionVariant}
+        key={content list.link}
+        content listId={name as SmartCollectionVariant}
         droppableKey={name as SmartCollectionVariant}
         name={name}
         to={url}
@@ -261,7 +261,7 @@ const PlaylistLibrary = ({
         onClick={onClickNavLinkWithAccount}
         className={cn(navColumnStyles.link, {
           [navColumnStyles.disabledLink]:
-            !account || (dragging && draggingKind !== 'library-playlist')
+            !account || (dragging && draggingKind !== 'library-content list')
         })}
       >
         {name}
@@ -270,30 +270,30 @@ const PlaylistLibrary = ({
   }
 
   const onClickPlaylist = useCallback(
-    (playlistId: ID, hasUpdate: boolean) => {
+    (content listId: ID, hasUpdate: boolean) => {
       onClickNavLinkWithAccount()
       record(
-        make(Name.PLAYLIST_LIBRARY_CLICKED, {
-          playlistId,
+        make(Name.CONTENT_LIST_LIBRARY_CLICKED, {
+          content listId,
           hasUpdate
         })
       )
     },
     [record, onClickNavLinkWithAccount]
   )
-  const renderPlaylist = (playlistId: ID, level = 0) => {
-    const playlist = playlists[playlistId]
-    if (!account || !playlist) return null
-    const { id, name } = playlist
-    const url = playlistPage(playlist.user.handle, name, id)
+  const renderPlaylist = (content listId: ID, level = 0) => {
+    const content list = content lists[content listId]
+    if (!account || !content list) return null
+    const { id, name } = content list
+    const url = content listPage(content list.user.handle, name, id)
     const addAgreement = (agreementId: ID) => dispatch(addAgreementToPlaylist(agreementId, id))
-    const isOwner = playlist.user.handle === account.handle
+    const isOwner = content list.user.handle === account.handle
     const hasUpdate = updatesSet.has(id)
     return (
       <PlaylistNavItem
         isInsideFolder={level > 0}
         key={id}
-        playlist={playlist}
+        content list={content list}
         hasUpdate={hasUpdate}
         url={url}
         addAgreement={addAgreement}
@@ -317,7 +317,7 @@ const PlaylistLibrary = ({
         key={folder.id}
         folder={folder}
         hasUpdate={folder.contents.some(
-          (c) => c.type !== 'folder' && updatesSet.has(Number(c.playlist_id))
+          (c) => c.type !== 'folder' && updatesSet.has(Number(c.content list_id))
         )}
         dragging={dragging}
         draggingKind={draggingKind}
@@ -329,7 +329,7 @@ const PlaylistLibrary = ({
       >
         {isEmpty(folder.contents) ? null : (
           <div className={styles.folderContentsContainer}>
-            {/* This is the droppable area for reordering something in the first slot of the playlist folder. */}
+            {/* This is the droppable area for reordering something in the first slot of the content list folder. */}
             <Droppable
               className={styles.droppable}
               hoverClassName={styles.droppableHover}
@@ -338,12 +338,12 @@ const PlaylistLibrary = ({
                   draggingId,
                   folder.contents[0].type === 'folder'
                     ? folder.contents[0].id
-                    : folder.contents[0].playlist_id,
+                    : folder.contents[0].content list_id,
                   draggingKind,
                   true
                 )
               }}
-              acceptedKinds={['playlist-folder', 'library-playlist']}
+              acceptedKinds={['content list-folder', 'library-content list']}
             />
             <LibraryContentsLevel
               level={level + 1}
@@ -358,15 +358,15 @@ const PlaylistLibrary = ({
     )
   }
 
-  /** We want to ensure that all playlists attached to the user's account show up in the library UI, even
-  /* if the user's library itself does not contain some of the playlists (for example, if a write failed).
-  /* This computes those playlists that are attached to the user's account but are not in the user library. */
-  const playlistsNotInLibrary = useMemo(() => {
-    return getPlaylistsNotInLibrary(library, playlists)
-  }, [library, playlists])
+  /** We want to ensure that all content lists attached to the user's account show up in the library UI, even
+  /* if the user's library itself does not contain some of the content lists (for example, if a write failed).
+  /* This computes those content lists that are attached to the user's account but are not in the user library. */
+  const content listsNotInLibrary = useMemo(() => {
+    return getPlaylistsNotInLibrary(library, content lists)
+  }, [library, content lists])
 
-  /** Iterate over playlist library and render out available explore/smart
-  /* playlists and ordered playlists. Remaining playlists that are unordered
+  /** Iterate over content list library and render out available explore/smart
+  /* content lists and ordered content lists. Remaining content lists that are unordered
   /* are rendered afterwards by sort order. */
   return (
     <>
@@ -377,9 +377,9 @@ const PlaylistLibrary = ({
         onDrop={(id: ID | SmartCollectionVariant, kind) =>
           onReorder(id, -1, kind)
         }
-        acceptedKinds={['library-playlist', 'playlist-folder']}
+        acceptedKinds={['library-content list', 'content list-folder']}
       />
-      {account && playlists && library ? (
+      {account && content lists && library ? (
         <LibraryContentsLevel
           contents={library.contents || []}
           renderPlaylist={renderPlaylist}
@@ -387,12 +387,12 @@ const PlaylistLibrary = ({
           renderFolder={renderFolder}
         />
       ) : null}
-      {Object.values(playlistsNotInLibrary).map((playlist) => {
-        return renderPlaylist(playlist.id)
+      {Object.values(content listsNotInLibrary).map((content list) => {
+        return renderPlaylist(content list.id)
       })}
       {isEmpty(library?.contents) ? (
         <div className={cn(navColumnStyles.link, navColumnStyles.disabled)}>
-          Create your first playlist!
+          Create your first content list!
         </div>
       ) : null}
     </>

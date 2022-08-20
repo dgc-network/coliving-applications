@@ -2,8 +2,8 @@ import { useEffect } from 'react'
 
 import { useDispatch } from 'react-redux'
 
-import { trendingPlaylistLineupActions } from 'common/store/pages/trending-playlists/lineups/actions'
-import { getLineup } from 'common/store/pages/trending-playlists/lineups/selectors'
+import { trendingPlaylistLineupActions } from 'common/store/pages/trending-content lists/lineups/actions'
+import { getLineup } from 'common/store/pages/trending-content lists/lineups/selectors'
 import DesktopHeader from 'components/header/desktop/Header'
 import { useMobileHeader } from 'components/header/mobile/hooks'
 import Lineup from 'components/lineup/Lineup'
@@ -13,7 +13,7 @@ import MobilePageContainer from 'components/mobile-page-container/MobilePageCont
 import Page from 'components/page/Page'
 import RewardsBanner from 'pages/trending-page/components/RewardsBanner'
 import { isMobile } from 'utils/clientUtil'
-import { BASE_URL, TRENDING_PLAYLISTS_PAGE } from 'utils/route'
+import { BASE_URL, TRENDING_CONTENT_LISTS_PAGE } from 'utils/route'
 
 import styles from './TrendingPlaylistPage.module.css'
 
@@ -22,12 +22,12 @@ const messages = {
   description: 'Trending Playlists on Coliving'
 }
 
-/** Wraps useLineupProps to return trending playlist lineup props */
+/** Wraps useLineupProps to return trending content list lineup props */
 const useTrendingPlaylistLineup = (containerRef: HTMLElement) => {
   return useLineupProps({
     actions: trendingPlaylistLineupActions,
     getLineupSelector: getLineup,
-    variant: LineupVariant.PLAYLIST,
+    variant: LineupVariant.CONTENT_LIST,
     numPlaylistSkeletonRows: 5,
     scrollParent: containerRef,
     rankIconCount: 5,
@@ -57,7 +57,7 @@ const DesktopTrendingPlaylistPage = ({
       header={header}
     >
       <div className={styles.bannerContainer}>
-        <RewardsBanner bannerType='playlists' />
+        <RewardsBanner bannerType='content lists' />
       </div>
       <Lineup {...lineupProps} />
     </Page>
@@ -75,12 +75,12 @@ const MobileTrendingPlaylistPage = ({
     <MobilePageContainer
       title={messages.trendingPlaylistTile}
       description={messages.description}
-      canonicalUrl={`${BASE_URL}${TRENDING_PLAYLISTS_PAGE}`}
+      canonicalUrl={`${BASE_URL}${TRENDING_CONTENT_LISTS_PAGE}`}
       hasDefaultHeader
     >
       <div className={styles.mobileLineupContainer}>
         <div className={styles.mobileBannerContainer}>
-          <RewardsBanner bannerType='playlists' />
+          <RewardsBanner bannerType='content lists' />
         </div>
         <Lineup {...lineupProps} />
       </div>

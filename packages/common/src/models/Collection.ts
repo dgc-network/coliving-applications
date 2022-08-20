@@ -29,16 +29,16 @@ export type CollectionMetadata = {
   is_album: boolean
   is_delete: boolean
   is_private: boolean
-  playlist_contents: {
+  content list_contents: {
     agreement_ids: Array<{ time: number; agreement: ID; uid?: UID }>
   }
   agreements?: UserAgreementMetadata[]
   agreement_count: number
-  playlist_id: ID
+  content list_id: ID
   cover_art: CID | null
   cover_art_sizes: Nullable<CID>
-  playlist_name: string
-  playlist_owner_id: ID
+  content list_name: string
+  content list_owner_id: ID
   repost_count: number
   save_count: number
   upc?: string | null
@@ -64,10 +64,10 @@ export type UserCollection = Collection & {
 
 export type SmartCollection = {
   variant: Variant.SMART
-  playlist_name: string
+  content list_name: string
   description?: string
   makeDescription?: (...args: any) => string
-  // Where this type of playlist is given a different classification
+  // Where this type of content list is given a different classification
   // e.g. "Audio NFT Playlist" instead of just "Playlist"
   typeTitle?: 'Playlist' | 'Audio NFT Playlist'
   gradient?: string
@@ -75,7 +75,7 @@ export type SmartCollection = {
   shadow?: string
   icon?: ReactNode
   link: string
-  playlist_contents?: PlaylistContents
+  content list_contents?: PlaylistContents
   has_current_user_saved?: boolean
   incentivized?: boolean // Whether we reward winners with Audio
   cardSensitivity?: number

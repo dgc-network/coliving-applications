@@ -6,7 +6,7 @@ import styles from './TransferAudioMobileDrawer.module.css'
 
 const messages = {
   title: 'Transfer $LIVE',
-  subtitle: 'To transfer LIVE please visit coliving.co from a desktop browser'
+  subtitle: 'To transfer LIVE please visit coliving.lol from a desktop browser'
 }
 
 const TransferAudioMobileDrawer = () => {

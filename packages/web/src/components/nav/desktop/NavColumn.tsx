@@ -45,7 +45,7 @@ import {
 import {
   addFolderToLibrary,
   constructPlaylistFolder
-} from 'common/store/playlist-library/helpers'
+} from 'common/store/content list-library/helpers'
 import { makeGetCurrent } from 'common/store/queue/selectors'
 import { saveCollection } from 'common/store/social/collections/actions'
 import { saveAgreement } from 'common/store/social/agreements/actions'
@@ -54,7 +54,7 @@ import {
   getHideFolderTab,
   getIsOpen
 } from 'common/store/ui/createPlaylistModal/selectors'
-import CreatePlaylistModal from 'components/create-playlist/CreatePlaylistModal'
+import CreatePlaylistModal from 'components/create-content list/CreatePlaylistModal'
 import { DragAutoscroller } from 'components/drag-autoscroller/DragAutoscroller'
 import Droppable from 'components/dragndrop/Droppable'
 import DynamicImage from 'components/dynamic-image/DynamicImage'
@@ -74,7 +74,7 @@ import { openVisualizer } from 'pages/visualizer/store/slice'
 import { make, useRecord } from 'store/analytics/actions'
 import { getIsDragging } from 'store/dragndrop/selectors'
 import { makeGetCurrent as makeGetCurrentPlayer } from 'store/player/selectors'
-import { update as updatePlaylistLibrary } from 'store/playlist-library/slice'
+import { update as updatePlaylistLibrary } from 'store/content list-library/slice'
 import { AppState } from 'store/types'
 import {
   DASHBOARD_PAGE,
@@ -82,7 +82,7 @@ import {
   FEED_PAGE,
   fullAgreementPage,
   HISTORY_PAGE,
-  playlistPage,
+  content listPage,
   profilePage,
   SAVED_PAGE,
   TRENDING_PAGE,
@@ -159,7 +159,7 @@ const NavColumn = ({
     [record, routeToSignup]
   )
   const { isEnabled: isPlaylistFoldersEnabled } = useFlag(
-    FeatureFlags.PLAYLIST_FOLDERS
+    FeatureFlags.CONTENT_LIST_FOLDERS
   )
 
   const onClickNavProfile = useCallback(() => goToSignIn(), [goToSignIn])
@@ -186,7 +186,7 @@ const NavColumn = ({
       createPlaylist(tempId, metadata)
       closeCreatePlaylistModal()
       if (account) {
-        goToRoute(playlistPage(account.handle, metadata.playlist_name, tempId))
+        goToRoute(content listPage(account.handle, metadata.content list_name, tempId))
       }
     },
     [account, createPlaylist, closeCreatePlaylistModal, goToRoute]
@@ -208,7 +208,7 @@ const NavColumn = ({
     if (account) {
       openCreatePlaylistModal()
       record(
-        make(Name.PLAYLIST_OPEN_CREATE, { source: CreatePlaylistSource.NAV })
+        make(Name.CONTENT_LIST_OPEN_CREATE, { source: CreatePlaylistSource.NAV })
       )
     } else {
       goToSignUp('social action')
@@ -426,7 +426,7 @@ const NavColumn = ({
                     className={cn(styles.link, {
                       [styles.disabledLink]:
                         !account ||
-                        (dragging && kind === 'playlist') ||
+                        (dragging && kind === 'content list') ||
                         draggingIsOwner,
                       [styles.droppableLink]:
                         dragging &&
@@ -454,11 +454,11 @@ const NavColumn = ({
                   className={styles.droppableGroup}
                   hoverClassName={styles.droppableGroupHover}
                   onDrop={saveCollection}
-                  acceptedKinds={['playlist']}
+                  acceptedKinds={['content list']}
                 >
                   <div
                     className={cn(styles.groupHeader, {
-                      [styles.droppableLink]: dragging && kind === 'playlist'
+                      [styles.droppableLink]: dragging && kind === 'content list'
                     })}
                   >
                     Playlists
@@ -562,17 +562,17 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(saveAgreement(agreementId, FavoriteSource.NAVIGATOR)),
   saveCollection: (collectionId: number) =>
     dispatch(saveCollection(collectionId, FavoriteSource.NAVIGATOR)),
-  addAgreementToPlaylist: (agreementId: number, playlistId: number) =>
-    dispatch(addAgreementToPlaylist(agreementId, playlistId)),
+  addAgreementToPlaylist: (agreementId: number, content listId: number) =>
+    dispatch(addAgreementToPlaylist(agreementId, content listId)),
   showActionRequiresAccount: () =>
     dispatch(signOnActions.showRequiresAccountModal()),
   toggleNotificationPanel: () => dispatch(toggleNotificationPanel()),
   openCreatePlaylistModal: () => dispatch(createPlaylistModalActions.open()),
   closeCreatePlaylistModal: () => dispatch(createPlaylistModalActions.close()),
-  updatePlaylistLastViewedAt: (playlistId: number) =>
-    dispatch(updatePlaylistLastViewedAt(playlistId)),
+  updatePlaylistLastViewedAt: (content listId: number) =>
+    dispatch(updatePlaylistLastViewedAt(content listId)),
   updatePlaylistLibrary: (newLibrary: PlaylistLibraryType) =>
-    dispatch(updatePlaylistLibrary({ playlistLibrary: newLibrary })),
+    dispatch(updatePlaylistLibrary({ content listLibrary: newLibrary })),
   goToUpload: () => dispatch(pushRoute(UPLOAD_PAGE)),
   goToDashboard: () => dispatch(pushRoute(DASHBOARD_PAGE)),
   goToSignUp: () => dispatch(signOnActions.openSignOn(/** signIn */ false)),

@@ -87,12 +87,12 @@ export enum Name {
   UNFOLLOW = 'Unfollow',
 
   // Playlist creation
-  PLAYLIST_ADD = 'Playlist: Add To Playlist',
-  PLAYLIST_OPEN_CREATE = 'Playlist: Open Create Playlist',
-  PLAYLIST_START_CREATE = 'Playlist: Start Create Playlist',
-  PLAYLIST_COMPLETE_CREATE = 'Playlist: Complete Create Playlist',
-  PLAYLIST_MAKE_PUBLIC = 'Playlist: Make Public',
-  PLAYLIST_OPEN_EDIT_FROM_LIBRARY = 'Playlist: Open Edit Playlist From Sidebar',
+  CONTENT_LIST_ADD = 'Playlist: Add To Playlist',
+  CONTENT_LIST_OPEN_CREATE = 'Playlist: Open Create Playlist',
+  CONTENT_LIST_START_CREATE = 'Playlist: Start Create Playlist',
+  CONTENT_LIST_COMPLETE_CREATE = 'Playlist: Complete Create Playlist',
+  CONTENT_LIST_MAKE_PUBLIC = 'Playlist: Make Public',
+  CONTENT_LIST_OPEN_EDIT_FROM_LIBRARY = 'Playlist: Open Edit Playlist From Sidebar',
 
   DELETE = 'Delete',
 
@@ -141,7 +141,7 @@ export enum Name {
   NOTIFICATIONS_CLICK_TIP_SENT_TWITTER_SHARE = 'Notifications: Clicked Tip Sent Twitter Share',
   NOTIFICATIONS_CLICK_SUPPORTER_RANK_UP_TWITTER_SHARE = 'Notifications: Clicked Supporter Rank Up Twitter Share',
   NOTIFICATIONS_CLICK_SUPPORTING_RANK_UP_TWITTER_SHARE = 'Notifications: Clicked Supporting Rank Up Twitter Share',
-  NOTIFICATIONS_CLICK_ADD_AGREEMENT_TO_PLAYLIST_TWITTER_SHARE = 'Notifications: Clicked Add Agreement to Playlist Twitter Share',
+  NOTIFICATIONS_CLICK_ADD_AGREEMENT_TO_CONTENT_LIST_TWITTER_SHARE = 'Notifications: Clicked Add Agreement to Playlist Twitter Share',
   NOTIFICATIONS_TOGGLE_SETTINGS = 'Notifications: Toggle Setting',
   BROWSER_NOTIFICATION_SETTINGS = 'Browser Push Notification',
 
@@ -187,7 +187,7 @@ export enum Name {
   WEB_VITALS = 'Web Vitals',
   PERFORMANCE = 'Performance',
   DISCOVERY_PROVIDER_SELECTION = 'Discovery Node Selection',
-  CREATOR_NODE_SELECTION = 'Creator Node Selection',
+  CONTENT_NODE_SELECTION = 'Creator Node Selection',
 
   // Remixes
   STEM_COMPLETE_UPLOAD = 'Stem: Complete Upload',
@@ -212,16 +212,16 @@ export enum Name {
   SERVICE_MONITOR_HEALTH_CHECK = 'Service Monitor: Status',
 
   // Playlist library
-  PLAYLIST_LIBRARY_REORDER = 'Playlist Library: Reorder',
-  PLAYLIST_LIBRARY_MOVE_PLAYLIST_INTO_FOLDER = 'Playlist Library: Move Playlist Into Folder',
-  PLAYLIST_LIBRARY_ADD_PLAYLIST_TO_FOLDER = 'Playlist Library: Add Playlist To Folder',
-  PLAYLIST_LIBRARY_MOVE_PLAYLIST_OUT_OF_FOLDER = 'Playlist Library: Move Playlist Out of Folder',
-  PLAYLIST_LIBRARY_EXPAND_FOLDER = 'Playlist Library: Expand Folder',
-  PLAYLIST_LIBRARY_COLLAPSE_FOLDER = 'Playlist Library: Collapse Folder',
-  // When an update is available in the playlist library
-  PLAYLIST_LIBRARY_HAS_UPDATE = 'Playlist Library: Has Update',
-  // When a user clicks on a playlist in the library
-  PLAYLIST_LIBRARY_CLICKED = 'Playlist Library: Clicked',
+  CONTENT_LIST_LIBRARY_REORDER = 'Playlist Library: Reorder',
+  CONTENT_LIST_LIBRARY_MOVE_CONTENT_LIST_INTO_FOLDER = 'Playlist Library: Move Playlist Into Folder',
+  CONTENT_LIST_LIBRARY_ADD_CONTENT_LIST_TO_FOLDER = 'Playlist Library: Add Playlist To Folder',
+  CONTENT_LIST_LIBRARY_MOVE_CONTENT_LIST_OUT_OF_FOLDER = 'Playlist Library: Move Playlist Out of Folder',
+  CONTENT_LIST_LIBRARY_EXPAND_FOLDER = 'Playlist Library: Expand Folder',
+  CONTENT_LIST_LIBRARY_COLLAPSE_FOLDER = 'Playlist Library: Collapse Folder',
+  // When an update is available in the content list library
+  CONTENT_LIST_LIBRARY_HAS_UPDATE = 'Playlist Library: Has Update',
+  // When a user clicks on a content list in the library
+  CONTENT_LIST_LIBRARY_CLICKED = 'Playlist Library: Clicked',
 
   // Deactivate Account
   DEACTIVATE_ACCOUNT_PAGE_VIEW = 'Deactivate Account: Page View',
@@ -494,7 +494,7 @@ export enum FollowSource {
 
 type Share = {
   eventName: Name.SHARE
-  kind: 'profile' | 'album' | 'playlist' | 'agreement'
+  kind: 'profile' | 'album' | 'content list' | 'agreement'
   source: ShareSource
   id: string
   url: string
@@ -502,7 +502,7 @@ type Share = {
 
 export type ShareToTwitter = {
   eventName: Name.SHARE_TO_TWITTER
-  kind: 'profile' | 'album' | 'playlist' | 'agreement' | 'liveNftPlaylist'
+  kind: 'profile' | 'album' | 'content list' | 'agreement' | 'liveNftPlaylist'
   source: ShareSource
   id: number
   url: string
@@ -560,31 +560,31 @@ export enum CreatePlaylistSource {
 }
 
 type PlaylistAdd = {
-  eventName: Name.PLAYLIST_ADD
+  eventName: Name.CONTENT_LIST_ADD
   agreementId: string
-  playlistId: string
+  content listId: string
 }
 type PlaylistOpenCreate = {
-  eventName: Name.PLAYLIST_OPEN_CREATE
+  eventName: Name.CONTENT_LIST_OPEN_CREATE
   source: CreatePlaylistSource
 }
 type PlaylistStartCreate = {
-  eventName: Name.PLAYLIST_START_CREATE
+  eventName: Name.CONTENT_LIST_START_CREATE
   source: CreatePlaylistSource
   artworkSource: 'unsplash' | 'original'
 }
 type PlaylistCompleteCreate = {
-  eventName: Name.PLAYLIST_COMPLETE_CREATE
+  eventName: Name.CONTENT_LIST_COMPLETE_CREATE
   source: CreatePlaylistSource
   status: 'success' | 'failure'
 }
 type PlaylistMakePublic = {
-  eventName: Name.PLAYLIST_MAKE_PUBLIC
+  eventName: Name.CONTENT_LIST_MAKE_PUBLIC
   id: string
 }
 
 type PlaylistOpenEditFromLibrary = {
-  eventName: Name.PLAYLIST_OPEN_EDIT_FROM_LIBRARY
+  eventName: Name.CONTENT_LIST_OPEN_EDIT_FROM_LIBRARY
 }
 
 type Delete = {
@@ -644,7 +644,7 @@ type AgreementUploadOpen = {
 type AgreementUploadStartUploading = {
   eventName: Name.AGREEMENT_UPLOAD_START_UPLOADING
   count: number
-  kind: 'agreements' | 'album' | 'playlist'
+  kind: 'agreements' | 'album' | 'content list'
 }
 type AgreementUploadAgreementUploading = {
   eventName: Name.AGREEMENT_UPLOAD_AGREEMENT_UPLOADING
@@ -656,19 +656,19 @@ type AgreementUploadAgreementUploading = {
 type AgreementUploadCompleteUpload = {
   eventName: Name.AGREEMENT_UPLOAD_COMPLETE_UPLOAD
   count: number
-  kind: 'agreements' | 'album' | 'playlist'
+  kind: 'agreements' | 'album' | 'content list'
 }
 
 type AgreementUploadSuccess = {
   eventName: Name.AGREEMENT_UPLOAD_SUCCESS
   endpoint: string
-  kind: 'single_agreement' | 'multi_agreement' | 'album' | 'playlist'
+  kind: 'single_agreement' | 'multi_agreement' | 'album' | 'content list'
 }
 
 type AgreementUploadFailure = {
   eventName: Name.AGREEMENT_UPLOAD_FAILURE
   endpoint: string
-  kind: 'single_agreement' | 'multi_agreement' | 'album' | 'playlist'
+  kind: 'single_agreement' | 'multi_agreement' | 'album' | 'content list'
   error?: string
 }
 
@@ -756,7 +756,7 @@ type NotificationsClickSupportingRankUp = {
   text: string
 }
 type NotificationsClickAddAgreementToPlaylist = {
-  eventName: Name.NOTIFICATIONS_CLICK_ADD_AGREEMENT_TO_PLAYLIST_TWITTER_SHARE
+  eventName: Name.NOTIFICATIONS_CLICK_ADD_AGREEMENT_TO_CONTENT_LIST_TWITTER_SHARE
   text: string
 }
 type NotificationsToggleSettings = {
@@ -768,7 +768,7 @@ type NotificationsToggleSettings = {
 // Profile
 type ProfilePageTabClick = {
   eventName: Name.PROFILE_PAGE_TAB_CLICK
-  tab: 'agreements' | 'albums' | 'reposts' | 'playlists' | 'collectibles'
+  tab: 'agreements' | 'albums' | 'reposts' | 'content lists' | 'collectibles'
 }
 type ProfilePageSort = {
   eventName: Name.PROFILE_PAGE_SORT
@@ -820,11 +820,11 @@ type AgreementPagePlayMore = {
 export enum PlaybackSource {
   PLAYBAR = 'playbar',
   NOW_PLAYING = 'now playing',
-  PLAYLIST_PAGE = 'playlist page',
+  CONTENT_LIST_PAGE = 'content list page',
   AGREEMENT_PAGE = 'agreement page',
   AGREEMENT_TILE = 'agreement tile',
-  PLAYLIST_AGREEMENT = 'playlist page agreement list',
-  PLAYLIST_TILE_AGREEMENT = 'playlist agreement tile',
+  CONTENT_LIST_AGREEMENT = 'content list page agreement list',
+  CONTENT_LIST_TILE_AGREEMENT = 'content list agreement tile',
   HISTORY_PAGE = 'history page',
   FAVORITES_PAGE = 'favorites page',
   PASSIVE = 'passive',
@@ -878,13 +878,13 @@ type SearchResultSelect = {
   term: string
   source: 'autocomplete' | 'search results page' | 'more results page'
   id: ID
-  kind: 'agreement' | 'profile' | 'playlist' | 'album'
+  kind: 'agreement' | 'profile' | 'content list' | 'album'
 }
 
 type SearchTabClick = {
   eventName: Name.SEARCH_TAB_CLICK
   term: string
-  tab: 'people' | 'agreements' | 'albums' | 'playlists'
+  tab: 'people' | 'agreements' | 'albums' | 'content lists'
 }
 type Listen = {
   eventName: Name.LISTEN
@@ -925,7 +925,7 @@ type DiscoveryProviderSelection = {
 }
 
 type CreatorNodeSelection = {
-  eventName: Name.CREATOR_NODE_SELECTION
+  eventName: Name.CONTENT_NODE_SELECTION
   selectedAs: 'primary' | 'secondary'
   endpoint: string
   reason: string
@@ -1025,41 +1025,41 @@ type ServiceMonitorHealthCheck = {
 } & MonitorPayload
 
 type PlaylistLibraryReorder = {
-  eventName: Name.PLAYLIST_LIBRARY_REORDER
-  // Whether or not the reorder contains newly created temp playlists
+  eventName: Name.CONTENT_LIST_LIBRARY_REORDER
+  // Whether or not the reorder contains newly created temp content lists
   containsTemporaryPlaylists: boolean
-  kind: 'library-playlist' | 'playlist' | 'playlist-folder'
+  kind: 'library-content list' | 'content list' | 'content list-folder'
 }
 
 type PlaylistLibraryHasUpdate = {
-  eventName: Name.PLAYLIST_LIBRARY_HAS_UPDATE
+  eventName: Name.CONTENT_LIST_LIBRARY_HAS_UPDATE
   count: number
 }
 
 type PlaylistLibraryClicked = {
-  eventName: Name.PLAYLIST_LIBRARY_CLICKED
-  playlistId: ID
+  eventName: Name.CONTENT_LIST_LIBRARY_CLICKED
+  content listId: ID
   hasUpdate: boolean
 }
 
 type PlaylistLibraryMovePlaylistIntoFolder = {
-  eventName: Name.PLAYLIST_LIBRARY_MOVE_PLAYLIST_INTO_FOLDER
+  eventName: Name.CONTENT_LIST_LIBRARY_MOVE_CONTENT_LIST_INTO_FOLDER
 }
 
 type PlaylistLibraryAddPlaylistToFolder = {
-  eventName: Name.PLAYLIST_LIBRARY_ADD_PLAYLIST_TO_FOLDER
+  eventName: Name.CONTENT_LIST_LIBRARY_ADD_CONTENT_LIST_TO_FOLDER
 }
 
 type PlaylistLibraryMovePlaylistOutOfFolder = {
-  eventName: Name.PLAYLIST_LIBRARY_MOVE_PLAYLIST_OUT_OF_FOLDER
+  eventName: Name.CONTENT_LIST_LIBRARY_MOVE_CONTENT_LIST_OUT_OF_FOLDER
 }
 
 type PlaylistLibraryExpandFolder = {
-  eventName: Name.PLAYLIST_LIBRARY_EXPAND_FOLDER
+  eventName: Name.CONTENT_LIST_LIBRARY_EXPAND_FOLDER
 }
 
 type PlaylistLibraryCollapseFolder = {
-  eventName: Name.PLAYLIST_LIBRARY_COLLAPSE_FOLDER
+  eventName: Name.CONTENT_LIST_LIBRARY_COLLAPSE_FOLDER
 }
 
 type DeactivateAccountPageView = {

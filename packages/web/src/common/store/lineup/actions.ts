@@ -47,15 +47,15 @@ export const stripPrefix = (prefix: string, actionType: string) => {
  * A generic class of common Lineup actions for fetching, loading and
  * simple playback.
  * @example
- *  // playlist.js
- *  // Creates lineup actions for a playlist, e.g.
- *  // PLAYLIST_FETCH_AGREEMENTS_METADATAS.
+ *  // contentList.js
+ *  // Creates lineup actions for a content list, e.g.
+ *  // CONTENT_LIST_FETCH_AGREEMENTS_METADATAS.
  *  class PlaylistActions extends LineupActions {
  *    constructor () {
- *      super("PLAYLIST")
+ *      super("CONTENT_LIST")
  *    }
  *  }
- *  export const playlistActions = new PlaylistActions()
+ *  export const content listActions = new PlaylistActions()
  */
 export class LineupActions {
   prefix: string

@@ -24,8 +24,8 @@ import { formatCount } from 'app/utils/format'
 
 const messages = {
   album: 'Album',
-  playlist: 'Playlist',
-  empty: 'This playlist is empty.',
+  content list: 'Playlist',
+  empty: 'This content list is empty.',
   privatePlaylist: 'Private Playlist',
   publishing: 'Publishing...',
   detailsPlaceholder: '---'
@@ -62,7 +62,7 @@ const recordPlay = (id, play = true) => {
     make({
       eventName: play ? Name.PLAYBACK_PLAY : Name.PLAYBACK_PAUSE,
       id: String(id),
-      source: PlaybackSource.PLAYLIST_PAGE
+      source: PlaybackSource.CONTENT_LIST_PAGE
     })
   )
 }
@@ -156,7 +156,7 @@ export const CollectionScreenDetailsTile = ({
       return messages.privatePlaylist
     }
 
-    return messages.playlist
+    return messages.content list
   }, [isAlbum, isPrivate, isPublishing])
 
   const renderAgreementList = () => {

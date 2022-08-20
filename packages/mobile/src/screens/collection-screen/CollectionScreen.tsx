@@ -62,7 +62,7 @@ export const CollectionScreen = () => {
   ) as Collection
 
   const cachedUser = useSelectorWeb((state) =>
-    getUser(state, { id: cachedCollection?.playlist_owner_id })
+    getUser(state, { id: cachedCollection?.content list_owner_id })
   )
 
   const collection = cachedCollection ?? searchCollection
@@ -98,22 +98,22 @@ const CollectionScreenComponent = ({
     has_current_user_saved,
     is_album,
     is_private,
-    playlist_id,
-    playlist_name,
-    playlist_owner_id,
+    content list_id,
+    content list_name,
+    content list_owner_id,
     repost_count,
     save_count,
     updated_at
   } = collection
 
   const imageUrl = useCollectionCoverArt({
-    id: playlist_id,
+    id: content list_id,
     sizes: _cover_art_sizes,
     size: SquareSizes.SIZE_480_BY_480
   })
 
   const currentUserId = useSelectorWeb(getUserId)
-  const isOwner = currentUserId === playlist_owner_id
+  const isOwner = currentUserId === content list_owner_id
 
   const extraDetails = useMemo(
     () => [
@@ -137,24 +137,24 @@ const CollectionScreenComponent = ({
         : has_current_user_saved
         ? OverflowAction.UNFAVORITE
         : OverflowAction.FAVORITE,
-      !is_album && isOwner ? OverflowAction.EDIT_PLAYLIST : null,
+      !is_album && isOwner ? OverflowAction.EDIT_CONTENT_LIST : null,
       isOwner && !is_album && is_private
-        ? OverflowAction.PUBLISH_PLAYLIST
+        ? OverflowAction.PUBLISH_CONTENT_LIST
         : null,
-      isOwner && !is_album ? OverflowAction.DELETE_PLAYLIST : null,
+      isOwner && !is_album ? OverflowAction.DELETE_CONTENT_LIST : null,
       OverflowAction.VIEW_ARTIST_PAGE
     ].filter(Boolean) as OverflowAction[]
 
     dispatchWeb(
       openOverflowMenu({
         source: OverflowSource.COLLECTIONS,
-        id: playlist_id,
+        id: content list_id,
         overflowActions
       })
     )
   }, [
     dispatchWeb,
-    playlist_id,
+    content list_id,
     isOwner,
     is_album,
     is_private,
@@ -164,58 +164,58 @@ const CollectionScreenComponent = ({
 
   const handlePressSave = useCallback(() => {
     if (has_current_user_saved) {
-      dispatchWeb(unsaveCollection(playlist_id, FavoriteSource.COLLECTION_PAGE))
+      dispatchWeb(unsaveCollection(content list_id, FavoriteSource.COLLECTION_PAGE))
     } else {
-      dispatchWeb(saveCollection(playlist_id, FavoriteSource.COLLECTION_PAGE))
+      dispatchWeb(saveCollection(content list_id, FavoriteSource.COLLECTION_PAGE))
     }
-  }, [dispatchWeb, playlist_id, has_current_user_saved])
+  }, [dispatchWeb, content list_id, has_current_user_saved])
 
   const handlePressShare = useCallback(() => {
     dispatchWeb(
       requestOpenShareModal({
         type: 'collection',
-        collectionId: playlist_id,
+        collectionId: content list_id,
         source: ShareSource.PAGE
       })
     )
-  }, [dispatchWeb, playlist_id])
+  }, [dispatchWeb, content list_id])
 
   const handlePressRepost = useCallback(() => {
     if (has_current_user_reposted) {
       dispatchWeb(
-        undoRepostCollection(playlist_id, RepostSource.COLLECTION_PAGE)
+        undoRepostCollection(content list_id, RepostSource.COLLECTION_PAGE)
       )
     } else {
-      dispatchWeb(repostCollection(playlist_id, RepostSource.COLLECTION_PAGE))
+      dispatchWeb(repostCollection(content list_id, RepostSource.COLLECTION_PAGE))
     }
-  }, [dispatchWeb, playlist_id, has_current_user_reposted])
+  }, [dispatchWeb, content list_id, has_current_user_reposted])
 
   const handlePressFavorites = useCallback(() => {
-    dispatchWeb(setFavorite(playlist_id, FavoriteType.PLAYLIST))
+    dispatchWeb(setFavorite(content list_id, FavoriteType.CONTENT_LIST))
     navigation.push({
       native: {
         screen: 'Favorited',
-        params: { id: playlist_id, favoriteType: FavoriteType.PLAYLIST }
+        params: { id: content list_id, favoriteType: FavoriteType.CONTENT_LIST }
       },
       web: { route: FAVORITING_USERS_ROUTE }
     })
-  }, [dispatchWeb, playlist_id, navigation])
+  }, [dispatchWeb, content list_id, navigation])
 
   const handlePressReposts = useCallback(() => {
-    dispatchWeb(setRepost(playlist_id, RepostType.COLLECTION))
+    dispatchWeb(setRepost(content list_id, RepostType.COLLECTION))
     navigation.push({
       native: {
         screen: 'Reposts',
-        params: { id: playlist_id, repostType: RepostType.COLLECTION }
+        params: { id: content list_id, repostType: RepostType.COLLECTION }
       },
       web: { route: REPOSTING_USERS_ROUTE }
     })
-  }, [dispatchWeb, playlist_id, navigation])
+  }, [dispatchWeb, content list_id, navigation])
 
   return (
     <Screen>
       <VirtualizedScrollView
-        listKey={`playlist-${collection.playlist_id}`}
+        listKey={`content list-${collection.content list_id}`}
         style={styles.root}
       >
         <CollectionScreenDetailsTile
@@ -235,7 +235,7 @@ const CollectionScreenComponent = ({
           onPressShare={handlePressShare}
           repostCount={repost_count}
           saveCount={save_count}
-          title={playlist_name}
+          title={content list_name}
           user={user}
         />
       </VirtualizedScrollView>

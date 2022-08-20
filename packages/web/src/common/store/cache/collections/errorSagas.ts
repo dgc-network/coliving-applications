@@ -13,13 +13,13 @@ type CollectionErrors =
 
 const errorSagas = createErrorSagas<CollectionErrors>({
   errorTypes: [
-    collectionActions.CREATE_PLAYLIST_FAILED,
-    collectionActions.EDIT_PLAYLIST_FAILED,
-    collectionActions.ADD_AGREEMENT_TO_PLAYLIST_FAILED,
-    collectionActions.REMOVE_AGREEMENT_FROM_PLAYLIST_FAILED,
-    collectionActions.ORDER_PLAYLIST_FAILED,
-    collectionActions.DELETE_PLAYLIST_FAILED,
-    collectionActions.PUBLISH_PLAYLIST_FAILED
+    collectionActions.CREATE_CONTENT_LIST_FAILED,
+    collectionActions.EDIT_CONTENT_LIST_FAILED,
+    collectionActions.ADD_AGREEMENT_TO_CONTENT_LIST_FAILED,
+    collectionActions.REMOVE_AGREEMENT_FROM_CONTENT_LIST_FAILED,
+    collectionActions.ORDER_CONTENT_LIST_FAILED,
+    collectionActions.DELETE_CONTENT_LIST_FAILED,
+    collectionActions.PUBLISH_CONTENT_LIST_FAILED
   ],
   getShouldRedirect: () => false,
   getShouldReport: () => true,

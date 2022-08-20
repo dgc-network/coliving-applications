@@ -55,8 +55,8 @@ const UPLOAD_TIMEOUT_MILLIS =
   2 /* hour */ * 60 /* min */ * 60 /* sec */ * 1000 /* ms */
 
 /**
- * Combines the metadata for a agreement and a collection (playlist or album),
- * taking the metadata from the playlist when the agreement is missing it.
+ * Combines the metadata for a agreement and a collection (content list or album),
+ * taking the metadata from the content list when the agreement is missing it.
  * @param {object} agreementMetadata
  * @param {object} collectionMetadata
  */
@@ -173,7 +173,7 @@ function* uploadWorker(requestChan, respChan, progressChan) {
   }
 
   // If it's not a collection (e.g. we're just uploading multiple agreements)
-  // we can call uploadAgreement, which uploads to creator node and then writes to chain.
+  // we can call uploadAgreement, which uploads to content node and then writes to chain.
   const makeConfirmerCall = (
     agreement,
     metadata,
@@ -222,7 +222,7 @@ function* uploadWorker(requestChan, respChan, progressChan) {
     }
   }
 
-  // If it is a collection, we should just upload to creator node.
+  // If it is a collection, we should just upload to content node.
   const makeConfirmerCallForCollection = (agreement, metadata, artwork, index) => {
     return function* () {
       console.debug(`Beginning collection upload for agreement: ${metadata.title}`)
@@ -282,7 +282,7 @@ function* uploadWorker(requestChan, respChan, progressChan) {
         transcodedAgreementUUID
       }
 
-      console.debug(`Finished creator node upload of: ${JSON.stringify(resp)}`)
+      console.debug(`Finished content node upload of: ${JSON.stringify(resp)}`)
       yield put(respChan, resp)
 
       // Finally, unblock this worker
@@ -512,10 +512,10 @@ export function* handleUploads({
   const uploadType = isCollection
     ? isAlbum
       ? 'album'
-      : 'playlist'
+      : 'content list'
     : 'multi_agreement'
   yield reportSuccessAndFailureEvents({
-    // Don't report non-uploaded agreements due to playlist upload abort
+    // Don't report non-uploaded agreements due to content list upload abort
     numSuccess: numSuccessRequests,
     numFailure: failedRequests.length,
     errors: failedRequests.map((r) => r.message),
@@ -677,19 +677,19 @@ function* uploadCollection(agreements, userId, collectionMetadata, isAlbum) {
 
   // If we errored, return early
   if (error) {
-    console.debug('Saw an error, not going to create a playlist.')
+    console.debug('Saw an error, not going to create a content list.')
     return
   }
 
-  // Finally, create the playlist
+  // Finally, create the content list
   yield put(
     confirmerActions.requestConfirmation(
-      `${collectionMetadata.playlist_name}_${Date.now()}`,
+      `${collectionMetadata.content list_name}_${Date.now()}`,
       function* () {
-        console.debug('Creating playlist')
+        console.debug('Creating content list')
         // Uploaded collections are always public
         const isPrivate = false
-        const { blockHash, blockNumber, playlistId, error } = yield call(
+        const { blockHash, blockNumber, content listId, error } = yield call(
           ColivingBackend.createPlaylist,
           userId,
           collectionMetadata,
@@ -699,13 +699,13 @@ function* uploadCollection(agreements, userId, collectionMetadata, isAlbum) {
         )
 
         if (error) {
-          console.debug('Caught an error creating playlist')
-          if (playlistId) {
+          console.debug('Caught an error creating content list')
+          if (content listId) {
             yield put(uploadActions.createPlaylistErrorIDExists(error))
-            console.debug('Deleting playlist')
-            // If we got a playlist ID back, that means we
-            // created the playlist but adding agreements to it failed. So we must delete the playlist
-            yield call(ColivingBackend.deletePlaylist, playlistId)
+            console.debug('Deleting content list')
+            // If we got a content list ID back, that means we
+            // created the content list but adding agreements to it failed. So we must delete the content list
+            yield call(ColivingBackend.deletePlaylist, content listId)
             console.debug('Playlist deleted successfully')
           } else {
             // I think this is what we want
@@ -718,14 +718,14 @@ function* uploadCollection(agreements, userId, collectionMetadata, isAlbum) {
         const confirmed = yield call(confirmTransaction, blockHash, blockNumber)
         if (!confirmed) {
           throw new Error(
-            `Could not confirm playlist creation for playlist id ${playlistId}`
+            `Could not confirm content list creation for content list id ${content listId}`
           )
         }
-        return (yield call(ColivingBackend.getPlaylists, userId, [playlistId]))[0]
+        return (yield call(ColivingBackend.getPlaylists, userId, [content listId]))[0]
       },
       function* (confirmedPlaylist) {
         yield put(
-          uploadActions.uploadAgreementsSucceeded(confirmedPlaylist.playlist_id)
+          uploadActions.uploadAgreementsSucceeded(confirmedPlaylist.content list_id)
         )
         const user = yield select(getUser, { id: userId })
         yield put(
@@ -734,7 +734,7 @@ function* uploadCollection(agreements, userId, collectionMetadata, isAlbum) {
               id: userId,
               metadata: {
                 _collectionIds: (user._collectionIds || []).concat(
-                  confirmedPlaylist.playlist_id
+                  confirmedPlaylist.content list_id
                 )
               }
             }
@@ -746,16 +746,16 @@ function* uploadCollection(agreements, userId, collectionMetadata, isAlbum) {
         confirmedPlaylist = yield call(reformat, confirmedPlaylist)
         const uid = yield makeUid(
           Kind.COLLECTIONS,
-          confirmedPlaylist.playlist_id,
+          confirmedPlaylist.content list_id,
           'account'
         )
-        // Create a cache entry and add it to the account so the playlist shows in the left nav
+        // Create a cache entry and add it to the account so the content list shows in the left nav
         yield put(
           cacheActions.add(
             Kind.COLLECTIONS,
             [
               {
-                id: confirmedPlaylist.playlist_id,
+                id: confirmedPlaylist.content list_id,
                 uid,
                 metadata: confirmedPlaylist
               }
@@ -765,8 +765,8 @@ function* uploadCollection(agreements, userId, collectionMetadata, isAlbum) {
         )
         yield put(
           accountActions.addAccountPlaylist({
-            id: confirmedPlaylist.playlist_id,
-            name: confirmedPlaylist.playlist_name,
+            id: confirmedPlaylist.content list_id,
+            name: confirmedPlaylist.content list_name,
             is_album: confirmedPlaylist.is_album,
             user: {
               id: user.user_id,
@@ -777,7 +777,7 @@ function* uploadCollection(agreements, userId, collectionMetadata, isAlbum) {
         yield put(
           make(Name.AGREEMENT_UPLOAD_COMPLETE_UPLOAD, {
             count: agreementIds.length,
-            kind: isAlbum ? 'album' : 'playlist'
+            kind: isAlbum ? 'album' : 'content list'
           })
         )
         yield put(cacheActions.setExpired(Kind.USERS, userId))
@@ -790,7 +790,7 @@ function* uploadCollection(agreements, userId, collectionMetadata, isAlbum) {
         }
 
         console.error(
-          `Create playlist call failed, deleting agreements: ${JSON.stringify(
+          `Create content list call failed, deleting agreements: ${JSON.stringify(
             agreementIds
           )}`
         )
@@ -1061,15 +1061,15 @@ function* uploadAgreementsAsync(action) {
     )
   )
 
-  // If user already has creator_node_endpoint, do not reselect replica set
-  let newEndpoint = user.creator_node_endpoint || ''
+  // If user already has content_node_endpoint, do not reselect replica set
+  let newEndpoint = user.content_node_endpoint || ''
   if (!newEndpoint) {
     const serviceSelectionStatus = yield select(getStatus)
     if (serviceSelectionStatus === Status.ERROR) {
       yield put(uploadActions.uploadAgreementFailed())
       yield put(
         uploadActions.upgradeToCreatorError(
-          'Failed to find creator nodes to upload to'
+          'Failed to find content nodes to upload to'
         )
       )
       return
@@ -1088,7 +1088,7 @@ function* uploadAgreementsAsync(action) {
       yield put(uploadActions.uploadAgreementFailed())
       yield put(
         uploadActions.upgradeToCreatorError(
-          'Failed to find creator nodes to upload to, after taking a long time'
+          'Failed to find content nodes to upload to, after taking a long time'
         )
       )
       return
@@ -1101,7 +1101,7 @@ function* uploadAgreementsAsync(action) {
       {
         id: user.user_id,
         metadata: {
-          creator_node_endpoint: newEndpoint
+          content_node_endpoint: newEndpoint
         }
       }
     ])
@@ -1109,8 +1109,8 @@ function* uploadAgreementsAsync(action) {
 
   const uploadType = (() => {
     switch (action.uploadType) {
-      case UploadType.PLAYLIST:
-        return 'playlist'
+      case UploadType.CONTENT_LIST:
+        return 'content list'
       case UploadType.ALBUM:
         return 'album'
       case UploadType.INDIVIDUAL_AGREEMENT:
@@ -1128,7 +1128,7 @@ function* uploadAgreementsAsync(action) {
 
   // Upload content.
   if (
-    action.uploadType === UploadType.PLAYLIST ||
+    action.uploadType === UploadType.CONTENT_LIST ||
     action.uploadType === UploadType.ALBUM
   ) {
     const isAlbum = action.uploadType === UploadType.ALBUM

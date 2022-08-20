@@ -47,7 +47,7 @@ class AgreementDownload {
     if (!cid) {
       cid = await AgreementDownload.checkIfDownloadAvailable(
         agreementId,
-        account.creator_node_endpoint
+        account.content_node_endpoint
       )
     }
     cleanedMetadata.download.cid = cid

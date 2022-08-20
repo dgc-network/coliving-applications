@@ -12,7 +12,7 @@ export type Image = {
 }
 
 export type PlaylistValues = {
-  playlist_name: string
+  content list_name: string
   description: Nullable<string>
   artwork: Image
   agreements: ReturnType<typeof getAgreements>

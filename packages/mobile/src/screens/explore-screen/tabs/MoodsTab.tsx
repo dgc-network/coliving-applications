@@ -4,11 +4,11 @@ import { ScrollView } from 'app/components/core'
 import { makeStyles } from 'app/styles'
 
 import {
-  CHILL_PLAYLISTS,
-  PROVOKING_PLAYLISTS,
-  INTIMATE_PLAYLISTS,
-  UPBEAT_PLAYLISTS,
-  INTENSE_PLAYLISTS
+  CHILL_CONTENT_LISTS,
+  PROVOKING_CONTENT_LISTS,
+  INTIMATE_CONTENT_LISTS,
+  UPBEAT_CONTENT_LISTS,
+  INTENSE_CONTENT_LISTS
 } from '../collections'
 import { ColorTile } from '../components/ColorTile'
 import { TabInfo } from '../components/TabInfo'
@@ -31,11 +31,11 @@ const useStyles = makeStyles(({ spacing }) => ({
 }))
 
 const tiles = [
-  CHILL_PLAYLISTS,
-  UPBEAT_PLAYLISTS,
-  INTENSE_PLAYLISTS,
-  PROVOKING_PLAYLISTS,
-  INTIMATE_PLAYLISTS
+  CHILL_CONTENT_LISTS,
+  UPBEAT_CONTENT_LISTS,
+  INTENSE_CONTENT_LISTS,
+  PROVOKING_CONTENT_LISTS,
+  INTIMATE_CONTENT_LISTS
 ]
 
 export const MoodsTab = () => {

@@ -10,5 +10,5 @@ export type UserImage = Pick<
 
 export type UserMultihash = Pick<
   User,
-  'metadata_multihash' | 'creator_node_endpoint'
+  'metadata_multihash' | 'content_node_endpoint'
 >

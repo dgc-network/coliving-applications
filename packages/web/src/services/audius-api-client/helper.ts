@@ -39,11 +39,11 @@ const combineLists = (
 type ProcessSearchResultsArgs = {
   agreements?: UserAgreementMetadata[]
   albums?: UserCollectionMetadata[]
-  playlists?: UserCollectionMetadata[]
+  content lists?: UserCollectionMetadata[]
   users?: UserMetadata[]
   saved_agreements?: UserAgreementMetadata[]
   saved_albums?: UserCollectionMetadata[]
-  saved_playlists?: UserCollectionMetadata[]
+  saved_content lists?: UserCollectionMetadata[]
   followed_users?: UserMetadata[]
   searchText?: string | null
   isAutocomplete?: boolean
@@ -66,12 +66,12 @@ export const adaptSearchResponse = (searchResponse: APIResponse<APISearch>) => {
       searchResponse.data.followed_users
         ?.map(adapter.makeUser)
         .filter(removeNullable) ?? undefined,
-    playlists:
-      searchResponse.data.playlists
+    content lists:
+      searchResponse.data.content lists
         ?.map(adapter.makePlaylist)
         .filter(removeNullable) ?? undefined,
-    saved_playlists:
-      searchResponse.data.saved_playlists
+    saved_content lists:
+      searchResponse.data.saved_content lists
         ?.map(adapter.makePlaylist)
         .filter(removeNullable) ?? undefined,
     albums:
@@ -87,11 +87,11 @@ export const adaptSearchResponse = (searchResponse: APIResponse<APISearch>) => {
 export const processSearchResults = async ({
   agreements = [],
   albums = [],
-  playlists = [],
+  content lists = [],
   users = [],
   saved_agreements: savedAgreements = [],
   saved_albums: savedAlbums = [],
-  saved_playlists: savedPlaylists = [],
+  saved_content lists: savedPlaylists = [],
   followed_users: followedUsers = [],
   isAutocomplete = false
 }: ProcessSearchResultsArgs) => {
@@ -111,14 +111,14 @@ export const processSearchResults = async ({
   const combinedAlbums = combineLists(
     savedAlbums,
     albums,
-    'playlist_id',
+    'content list_id',
     maxSaved,
     maxTotal
   )
   const combinedPlaylists = combineLists(
     savedPlaylists,
-    playlists,
-    'playlist_id',
+    content lists,
+    'content list_id',
     maxSaved,
     maxTotal
   )
@@ -133,7 +133,7 @@ export const processSearchResults = async ({
   return {
     agreements: combinedAgreements,
     albums: combinedAlbums,
-    playlists: combinedPlaylists,
+    content lists: combinedPlaylists,
     users: combinedUsers
   }
 }

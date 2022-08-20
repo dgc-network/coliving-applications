@@ -19,7 +19,7 @@ import {
   editPlaylist
 } from 'common/store/cache/collections/actions'
 import { getCollectionWithUser } from 'common/store/cache/collections/selectors'
-import PlaylistForm from 'components/create-playlist/PlaylistForm'
+import PlaylistForm from 'components/create-content list/PlaylistForm'
 import DeleteConfirmationModal from 'components/delete-confirmation/DeleteConfirmationModal'
 import LoadingSpinner from 'components/loading-spinner/LoadingSpinner'
 import {
@@ -28,7 +28,7 @@ import {
 } from 'store/application/ui/editPlaylistModal/selectors'
 import { close } from 'store/application/ui/editPlaylistModal/slice'
 import { AppState } from 'store/types'
-import { FEED_PAGE, getPathname, playlistPage } from 'utils/route'
+import { FEED_PAGE, getPathname, content listPage } from 'utils/route'
 import zIndex from 'utils/zIndex'
 
 import styles from './EditPlaylistModal.module.css'
@@ -37,11 +37,11 @@ const messages = {
   edit: 'Edit',
   delete: 'Delete',
   title: {
-    playlist: 'Playlist',
+    content list: 'Playlist',
     album: 'Album'
   },
   type: {
-    playlist: 'Playlist',
+    content list: 'Playlist',
     album: 'Album'
   }
 }
@@ -70,9 +70,9 @@ const EditPlaylistModal = ({
   }, [collection, collectionId, fetchSavedPlaylists])
 
   const {
-    playlist_id: playlistId,
+    content list_id: content listId,
     is_album: isAlbum,
-    playlist_name: title,
+    content list_name: title,
     user
   } = collection || {}
   const { handle } = user || {}
@@ -82,20 +82,20 @@ const EditPlaylistModal = ({
   const onDelete = () => {
     setShowDeleteConfirmation(false)
     onClose()
-    deletePlaylist(playlistId!)
+    deletePlaylist(content listId!)
     if (handle && title) {
-      const playlistRoute = playlistPage(handle, title, playlistId!)
-      // If on the playlist page, direct user to feed
-      if (getPathname(location) === playlistRoute) goToRoute(FEED_PAGE)
+      const content listRoute = content listPage(handle, title, content listId!)
+      // If on the content list page, direct user to feed
+      if (getPathname(location) === content listRoute) goToRoute(FEED_PAGE)
     }
   }
   const onSaveEdit = (formFields: any) => {
-    editPlaylist(playlistId!, formFields)
+    editPlaylist(content listId!, formFields)
     onClose()
   }
 
   const editPlaylistModalTitle = `${messages.edit} ${
-    isAlbum ? messages.title.album : messages.title.playlist
+    isAlbum ? messages.title.album : messages.title.content list
   }`
 
   const [isArtworkPopupOpen, setIsArtworkPopupOpen] = useState(false)
@@ -112,11 +112,11 @@ const EditPlaylistModal = ({
     <>
       <Modal
         bodyClassName={styles.modalBody}
-        modalKey='editplaylist'
+        modalKey='editcontent list'
         dismissOnClickOutside={!isArtworkPopupOpen}
         isOpen={isOpen}
         onClose={onClose}
-        zIndex={zIndex.EDIT_PLAYLIST_MODAL}
+        zIndex={zIndex.EDIT_CONTENT_LIST_MODAL}
       >
         <ModalHeader onClose={onClose}>
           <ModalTitle icon={<IconPlaylists />} title={editPlaylistModalTitle} />
@@ -140,9 +140,9 @@ const EditPlaylistModal = ({
       </Modal>
       <DeleteConfirmationModal
         title={`${messages.delete} ${
-          isAlbum ? messages.title.album : messages.title.playlist
+          isAlbum ? messages.title.album : messages.title.content list
         }`}
-        entity={isAlbum ? messages.type.album : messages.type.playlist}
+        entity={isAlbum ? messages.type.album : messages.type.content list}
         visible={showDeleteConfirmation}
         onDelete={onDelete}
         onCancel={onCancelDelete}
@@ -164,9 +164,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   onClose: () => dispatch(close()),
   fetchSavedPlaylists: () => dispatch(fetchSavedPlaylists()),
   goToRoute: (route: string) => dispatch(pushRoute(route)),
-  editPlaylist: (playlistId: ID, formFields: any) =>
-    dispatch(editPlaylist(playlistId, formFields)),
-  deletePlaylist: (playlistId: ID) => dispatch(deletePlaylist(playlistId))
+  editPlaylist: (content listId: ID, formFields: any) =>
+    dispatch(editPlaylist(content listId, formFields)),
+  deletePlaylist: (content listId: ID) => dispatch(deletePlaylist(content listId))
 })
 
 export default withRouter(

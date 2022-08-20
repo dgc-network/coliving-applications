@@ -16,7 +16,7 @@ export const getMetadata = (state: AppState) => {
     case PlayableType.AGREEMENT:
       return getAgreement(state, { id })
     case PlayableType.ALBUM:
-    case PlayableType.PLAYLIST:
+    case PlayableType.CONTENT_LIST:
       return getCollection(state, { id })
     default:
       // should never happen, but I guess ts doesn't like combined cases

@@ -29,7 +29,7 @@ const FlavorMap = {
 
 const KindMap = {
   [PlayableType.AGREEMENT]: 'agreement',
-  [PlayableType.PLAYLIST]: 'playlist',
+  [PlayableType.CONTENT_LIST]: 'content list',
   [PlayableType.ALBUM]: 'album'
 }
 
@@ -58,7 +58,7 @@ const formatIFrame = (url: string, size: Size) => {
 const messages = {
   title: {
     [PlayableType.AGREEMENT]: 'Embed Agreement',
-    [PlayableType.PLAYLIST]: 'Embed Playlist',
+    [PlayableType.CONTENT_LIST]: 'Embed Playlist',
     [PlayableType.ALBUM]: 'Embed Album'
   },
   playerSize: 'Player Size',

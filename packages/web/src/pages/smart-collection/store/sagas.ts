@@ -51,7 +51,7 @@ function* fetchHeavyRotation() {
 
   return {
     ...HEAVY_ROTATION,
-    playlist_contents: {
+    content list_contents: {
       agreement_ids: agreementIds
     }
   }
@@ -71,7 +71,7 @@ function* fetchBestNewReleases() {
 
   return {
     ...BEST_NEW_RELEASES,
-    playlist_contents: {
+    content list_contents: {
       agreement_ids: agreementIds
     }
   }
@@ -92,7 +92,7 @@ function* fetchUnderTheRadar() {
   // feed minus listened
   return {
     ...UNDER_THE_RADAR,
-    playlist_contents: {
+    content list_contents: {
       agreement_ids: agreementIds
     }
   }
@@ -112,7 +112,7 @@ function* fetchMostLoved() {
 
   return {
     ...MOST_LOVED,
-    playlist_contents: {
+    content list_contents: {
       agreement_ids: agreementIds
     }
   }
@@ -130,7 +130,7 @@ function* fetchFeelingLucky() {
 
   return {
     ...FEELING_LUCKY,
-    playlist_contents: {
+    content list_contents: {
       agreement_ids: agreementIds
     }
   }
@@ -175,7 +175,7 @@ function* fetchRemixables() {
 
   return {
     ...REMIXABLES,
-    playlist_contents: {
+    content list_contents: {
       agreement_ids: agreementIds
     }
   }
@@ -200,7 +200,7 @@ const fetchMap = {
   ),
   [SmartCollectionVariant.FEELING_LUCKY]: fetchFeelingLucky,
   [SmartCollectionVariant.REMIXABLES]: fetchRemixables,
-  [SmartCollectionVariant.LIVE_NFT_PLAYLIST]: () => {}
+  [SmartCollectionVariant.LIVE_NFT_CONTENT_LIST]: () => {}
 }
 
 function* watchFetch() {

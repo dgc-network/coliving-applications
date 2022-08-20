@@ -3,7 +3,7 @@ import { ID, Status } from '@coliving/common'
 export enum Tabs {
   FOR_YOU = 'FOR YOU',
   MOODS = 'MOODS',
-  PLAYLISTS = 'PLAYLISTS',
+  CONTENT_LISTS = 'CONTENT_LISTS',
   PROFILES = 'PROFILES'
 }
 
@@ -14,7 +14,7 @@ export type ExploreContent = {
 
 export default interface ExplorePageState {
   status: Status
-  playlists: ID[]
+  content lists: ID[]
   profiles: ID[]
   tab: Tabs
 }

@@ -15,13 +15,13 @@ import { getPlaylistLibrary } from 'common/store/account/selectors'
 import {
   removePlaylistFolderInLibrary,
   renamePlaylistFolderInLibrary
-} from 'common/store/playlist-library/helpers'
-import FolderForm from 'components/create-playlist/FolderForm'
+} from 'common/store/content list-library/helpers'
+import FolderForm from 'components/create-content list/FolderForm'
 import DeleteConfirmationModal from 'components/delete-confirmation/DeleteConfirmationModal'
 import { make, useRecord } from 'store/analytics/actions'
 import { getFolderId } from 'store/application/ui/editFolderModal/selectors'
 import { setFolderId } from 'store/application/ui/editFolderModal/slice'
-import { update as updatePlaylistLibrary } from 'store/playlist-library/slice'
+import { update as updatePlaylistLibrary } from 'store/content list-library/slice'
 import { useSelector } from 'utils/reducer'
 import { zIndex } from 'utils/zIndex'
 
@@ -33,19 +33,19 @@ const messages = {
   confirmDeleteFolderModalHeader:
     'Are you sure you want to delete this folder?',
   confirmDeleteFolderModalDescription:
-    'Any playlists inside will be moved out before the folder is deleted.',
+    'Any content lists inside will be moved out before the folder is deleted.',
   folderEntity: 'Folder'
 }
 
 const EditFolderModal = () => {
   const record = useRecord()
   const folderId = useSelector(getFolderId)
-  const playlistLibrary = useSelector(getPlaylistLibrary)
+  const content listLibrary = useSelector(getPlaylistLibrary)
   const [isOpen, setIsOpen] = useModalState('EditFolder')
   const folder =
-    playlistLibrary == null || folderId == null
+    content listLibrary == null || folderId == null
       ? null
-      : (playlistLibrary.contents.find(
+      : (content listLibrary.contents.find(
           (item) => item.type === 'folder' && item.id === folderId
         ) as PlaylistLibraryFolder | undefined)
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false)
@@ -66,20 +66,20 @@ const EditFolderModal = () => {
   const handleSubmit = useCallback(
     (newName: string) => {
       if (
-        !(playlistLibrary == null || folderId == null || folder == null) &&
+        !(content listLibrary == null || folderId == null || folder == null) &&
         newName !== folder.name
       ) {
         const newLibrary = renamePlaylistFolderInLibrary(
-          playlistLibrary,
+          content listLibrary,
           folderId,
           newName
         )
-        dispatch(updatePlaylistLibrary({ playlistLibrary: newLibrary }))
+        dispatch(updatePlaylistLibrary({ content listLibrary: newLibrary }))
       }
       record(make(Name.FOLDER_SUBMIT_EDIT, {}))
       handleClose()
     },
-    [dispatch, folder, folderId, handleClose, playlistLibrary, record]
+    [dispatch, folder, folderId, handleClose, content listLibrary, record]
   )
 
   const handleClickDelete = useCallback(() => {
@@ -87,17 +87,17 @@ const EditFolderModal = () => {
   }, [])
 
   const handleConfirmDelete = useCallback(() => {
-    if (!(playlistLibrary == null || folderId == null || folder == null)) {
+    if (!(content listLibrary == null || folderId == null || folder == null)) {
       const newLibrary = removePlaylistFolderInLibrary(
-        playlistLibrary,
+        content listLibrary,
         folderId
       )
       setShowDeleteConfirmation(false)
-      dispatch(updatePlaylistLibrary({ playlistLibrary: newLibrary }))
+      dispatch(updatePlaylistLibrary({ content listLibrary: newLibrary }))
     }
     record(make(Name.FOLDER_DELETE, {}))
     handleClose()
-  }, [dispatch, folder, folderId, handleClose, playlistLibrary, record])
+  }, [dispatch, folder, folderId, handleClose, content listLibrary, record])
 
   return (
     <>
@@ -105,7 +105,7 @@ const EditFolderModal = () => {
         modalKey='editfolder'
         isOpen={isOpen}
         onClose={handleClose}
-        zIndex={zIndex.EDIT_PLAYLIST_MODAL}
+        zIndex={zIndex.EDIT_CONTENT_LIST_MODAL}
         bodyClassName={styles.modalBody}
       >
         <ModalHeader onClose={handleClose}>

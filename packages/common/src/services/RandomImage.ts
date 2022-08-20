@@ -1,7 +1,7 @@
 import { Nullable } from 'utils/typeUtils'
 
 const UNSPLASH_PUBLIC = 'https://source.unsplash.com/random'
-const UNSPLASH_API_GATEWAY = 'https://api.coliving.co/unsplash/photos/random'
+const UNSPLASH_API_GATEWAY = 'https://api.coliving.lol/unsplash/photos/random'
 
 const UNSPLASH_PUBLIC_TIMEOUT = 8000
 const UNSPLASH_API_GATEWAY_TIMEOUT = 2000

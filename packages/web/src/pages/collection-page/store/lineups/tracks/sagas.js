@@ -30,25 +30,25 @@ function* getCollectionAgreements() {
     collection = yield call(waitForValue, getCollection)
   }
 
-  const agreement = collection.playlist_contents.agreement_ids
+  const agreement = collection.content list_contents.agreement_ids
 
   const agreementIds = agreement.map((t) => t.agreement)
   // TODO: Conform all timestamps to be of the same format so we don't have to do any special work here.
   const times = agreement.map((t) => t.time)
 
-  // Reconcile fetching this playlist with the queue.
+  // Reconcile fetching this content list with the queue.
   // Search the queue for its currently playing uids. If any are sourced
   // from `this` collection, use their uids rather than allowing
   // the lineup to generate fresh ones.
-  // This allows the user to navigate back and forth between playlists and other
-  // pages without losing their currently playing position in the playlist.
+  // This allows the user to navigate back and forth between content lists and other
+  // pages without losing their currently playing position in the content list.
   // TODO: Investigate a better pattern to solve this.
   const queueUids = Object.keys(yield select(getPositions)).map((uid) =>
     Uid.fromString(uid)
   )
   const thisSource = yield select(sourceSelector)
   // Gets uids in the queue for this source in the form: { id: [uid1, uid2] }
-  // as there might be two uids in the playlist for the same id.
+  // as there might be two uids in the content list for the same id.
   const uidForSource = queueUids
     .filter((uid) => uid.source === thisSource)
     .reduce((mapping, uid) => {

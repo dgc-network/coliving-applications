@@ -17,7 +17,7 @@ export default interface SavesPageState {
 export enum Tabs {
   AGREEMENTS = 'AGREEMENTS',
   ALBUMS = 'ALBUMS',
-  PLAYLISTS = 'PLAYLISTS'
+  CONTENT_LISTS = 'CONTENT_LISTS'
 }
 
 export type SavedPageAgreement = LineupAgreement & { dateSaved: string }

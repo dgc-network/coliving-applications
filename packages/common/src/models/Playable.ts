@@ -6,7 +6,7 @@ import { Agreement } from './Agreement'
 export type Playable =
   | {
       metadata: Collection | null
-      type: PlayableType.PLAYLIST
+      type: PlayableType.CONTENT_LIST
     }
   | {
       metadata: Collection | null

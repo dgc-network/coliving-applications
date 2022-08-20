@@ -5,7 +5,7 @@ import { getCollection } from 'common/store/cache/collections/selectors'
 import { getAgreement } from 'common/store/cache/agreements/selectors'
 import {
   agreementRepostError,
-  playlistRepostError
+  content listRepostError
 } from 'common/store/user-list/reposts/actions'
 import { watchRepostsError } from 'common/store/user-list/reposts/errorSagas'
 import {
@@ -34,7 +34,7 @@ const getPlaylistReposts = createUserListProvider<Collection>({
     const users = await apiClient.getPlaylistRepostUsers({
       limit,
       offset,
-      playlistId: entityId,
+      content listId: entityId,
       currentUserId
     })
     return { users }
@@ -82,7 +82,7 @@ function* errorDispatcher(error: Error) {
   if (repostType === RepostType.AGREEMENT) {
     yield* put(agreementRepostError(id, error.message))
   } else {
-    yield* put(playlistRepostError(id, error.message))
+    yield* put(content listRepostError(id, error.message))
   }
 }
 

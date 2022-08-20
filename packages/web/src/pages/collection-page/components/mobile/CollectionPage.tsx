@@ -31,7 +31,7 @@ import { computeCollectionMetadataProps } from 'pages/collection-page/store/util
 import styles from './CollectionPage.module.css'
 
 const messages = {
-  emptyPlaylist: 'This playlist is empty.'
+  emptyPlaylist: 'This content list is empty.'
 }
 
 const EmptyAgreementList = ({
@@ -50,7 +50,7 @@ export type CollectionPageProps = {
   title: string
   description: string
   canonicalUrl: string
-  playlistId: ID | SmartCollectionVariant
+  content listId: ID | SmartCollectionVariant
   playing: boolean
   getPlayingUid: () => string | null
   type: CollectionsPageType
@@ -86,7 +86,7 @@ const CollectionPage = ({
   title,
   description: pageDescription,
   canonicalUrl,
-  playlistId,
+  content listId,
   getPlayingUid,
   playing,
   type,
@@ -144,13 +144,13 @@ const CollectionPage = ({
       0
     ) ?? 0
 
-  const playlistOwnerName = user?.name ?? ''
-  const playlistOwnerHandle = user?.handle ?? ''
-  const playlistOwnerId = user?.user_id ?? null
-  const isOwner = userId === playlistOwnerId
+  const content listOwnerName = user?.name ?? ''
+  const content listOwnerHandle = user?.handle ?? ''
+  const content listOwnerId = user?.user_id ?? null
+  const isOwner = userId === content listOwnerId
 
   const isSaved =
-    metadata?.has_current_user_saved || playlistId in (userPlaylists ?? {})
+    metadata?.has_current_user_saved || content listId in (userPlaylists ?? {})
   const isPublishing =
     metadata && metadata?.variant !== Variant.SMART
       ? metadata._is_publishing
@@ -171,17 +171,17 @@ const CollectionPage = ({
   const {
     isEmpty,
     lastModified,
-    playlistName,
+    content listName,
     description,
     isPrivate,
     isAlbum,
-    playlistSaveCount,
-    playlistRepostCount,
+    content listSaveCount,
+    content listRepostCount,
     isReposted
   } = computeCollectionMetadataProps(metadata)
 
   const togglePlay = (uid: string, agreementId: ID) => {
-    if (playlistId === SmartCollectionVariant.LIVE_NFT_PLAYLIST) {
+    if (content listId === SmartCollectionVariant.LIVE_NFT_CONTENT_LIST) {
       const agreement = agreements.entries.find((agreement) => agreement.uid === uid)
 
       if (agreement?.collectible) {
@@ -232,7 +232,7 @@ const CollectionPage = ({
         <div className={styles.collectionContent}>
           <div>
             <CollectionHeader
-              collectionId={playlistId}
+              collectionId={content listId}
               userId={user?.user_id ?? 0}
               loading={
                 typeTitle === 'Audio NFT Playlist'
@@ -241,9 +241,9 @@ const CollectionPage = ({
               }
               agreementsLoading={agreementsLoading}
               type={typeTitle}
-              title={playlistName}
-              artistName={playlistOwnerName}
-              artistHandle={playlistOwnerHandle}
+              title={content listName}
+              artistName={content listOwnerName}
+              artistHandle={content listOwnerHandle}
               coverArtSizes={coverArtSizes}
               description={description}
               isOwner={isOwner}
@@ -254,9 +254,9 @@ const CollectionPage = ({
               isPublished={!isPrivate}
               isPublishing={isPublishing}
               isSaved={isSaved}
-              saves={playlistSaveCount}
+              saves={content listSaveCount}
               playing={queuedAndPlaying}
-              repostCount={playlistRepostCount}
+              repostCount={content listRepostCount}
               isReposted={isReposted}
               // Actions
               onClickArtistName={onHeroAgreementClickArtistName}

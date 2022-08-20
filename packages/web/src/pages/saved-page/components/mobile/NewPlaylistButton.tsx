@@ -32,7 +32,7 @@ const NewPlaylistButton = ({ open, onClick }: NewPlaylistButtonProps) => {
       open()
     }
     record(
-      make(Name.PLAYLIST_OPEN_CREATE, {
+      make(Name.CONTENT_LIST_OPEN_CREATE, {
         source: CreatePlaylistSource.FAVORITES_PAGE
       })
     )

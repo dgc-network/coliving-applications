@@ -47,9 +47,9 @@ const validateConfirmationOptions = ({
  *
  * Confirmations with the same uid chain together and form a `confirm group`.
  * For example, if the following actions are dispatched in rapid succession:
- *  1. Create playlist
- *  2. Change playlist name
- *  3. Change playlist description
+ *  1. Create content list
+ *  2. Change content list name
+ *  3. Change content list description
  * The calls are fired in order in such a way that each call makes use the result of the previous call's return value.
  * Additionally, calls within a confirm group can be further categorized using
  * an `operationId`. Using the `confirmationOptions` param object, the requester can specify that calls of a particular `operationId`
@@ -98,7 +98,7 @@ export const requestConfirmation = createCustomAction(
 
 /* Private */
 
-/** Enqueues a confirmation call to make, e.g. "create playlist with a temp id, wait for playlist to appear in discovery node"." */
+/** Enqueues a confirmation call to make, e.g. "create content list with a temp id, wait for content list to appear in discovery node"." */
 export const _addConfirmationCall = createCustomAction(
   ADD_CONFIRMATION_CALL,
   (
@@ -127,7 +127,7 @@ export const _incrementConfirmGroupIndex = createCustomAction(
 )
 
 /**
- * Sets the result of a confirmation call, e.g. "save the discprov's returned playlist id"
+ * Sets the result of a confirmation call, e.g. "save the discprov's returned content list id"
  * @param uid confirm group uid
  * @param result Result of the confirmation call
  * @param resultIndex (optional) index of the call whose result we want to set. If undefined, defaults to the current index
@@ -154,7 +154,7 @@ export const _setConfirmationResult = createCustomAction(
   }
 )
 
-/** Enqueues a completion call to make, e.g. "cache the playlist" */
+/** Enqueues a completion call to make, e.g. "cache the content list" */
 export const _addCompletionCall = createCustomAction(
   ADD_COMPLETION_CALL,
   (uid: string, completionCall: any) => {

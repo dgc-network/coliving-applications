@@ -38,12 +38,12 @@ import EmptyTab from 'pages/profile-page/components/EmptyTab'
 import { make, useRecord } from 'store/analytics/actions'
 import {
   albumPage,
-  playlistPage,
+  content listPage,
   profilePage,
   fullProfilePage,
   UPLOAD_PAGE,
   UPLOAD_ALBUM_PAGE,
-  UPLOAD_PLAYLIST_PAGE
+  UPLOAD_CONTENT_LIST_PAGE
 } from 'utils/route'
 
 import { DeactivatedProfileTombstone } from '../DeactivatedProfileTombstone'
@@ -90,7 +90,7 @@ export type ProfilePageProps = {
 
   profile: ProfileUser | null
   albums: Collection[] | null
-  playlists: Collection[] | null
+  content lists: Collection[] | null
   status: Status
   goToRoute: (route: string) => void
   artistAgreements: LineupState<{ id: ID }>
@@ -146,7 +146,7 @@ const ProfilePage = ({
   isOwner,
   profile,
   albums,
-  playlists,
+  content lists,
   status,
   goToRoute,
   // Agreements
@@ -229,7 +229,7 @@ const ProfilePage = ({
     record(make(Name.AGREEMENT_UPLOAD_OPEN, { source: 'profile' }))
   }, [goToRoute, record])
   const onClickUploadPlaylist = useCallback(() => {
-    goToRoute(UPLOAD_PLAYLIST_PAGE)
+    goToRoute(UPLOAD_CONTENT_LIST_PAGE)
     record(make(Name.AGREEMENT_UPLOAD_OPEN, { source: 'profile' }))
   }, [goToRoute, record])
   const onClickUploadAgreement = useCallback(() => {
@@ -260,31 +260,31 @@ const ProfilePage = ({
   }, [tabRecalculator])
 
   const getArtistProfileContent = () => {
-    if (!profile || !albums || !playlists) return { headers: [], elements: [] }
+    if (!profile || !albums || !content lists) return { headers: [], elements: [] }
     const albumCards = albums.map((album, index) => (
       <Card
         key={index}
         size='medium'
         handle={profile.handle}
-        playlistName={album.playlist_name}
-        playlistId={album.playlist_id}
-        id={album.playlist_id}
-        userId={album.playlist_owner_id}
+        content listName={album.content list_name}
+        content listId={album.content list_id}
+        id={album.content list_id}
+        userId={album.content list_owner_id}
         isPublic={!album.is_private}
         imageSize={album._cover_art_sizes}
         isPlaylist={!album.is_album}
-        primaryText={album.playlist_name}
-        // link={fullAlbumPage(profile.handle, album.playlist_name, album.playlist_id)}
+        primaryText={album.content list_name}
+        // link={fullAlbumPage(profile.handle, album.content list_name, album.content list_id)}
         secondaryText={formatCardSecondaryText(
           album.save_count,
-          album.playlist_contents.agreement_ids.length
+          album.content list_contents.agreement_ids.length
         )}
         cardCoverImageSizes={album._cover_art_sizes}
         isReposted={album.has_current_user_reposted}
         isSaved={album.has_current_user_saved}
         onClick={() =>
           goToRoute(
-            albumPage(profile.handle, album.playlist_name, album.playlist_id)
+            albumPage(profile.handle, album.content list_name, album.content list_id)
           )
         }
       />
@@ -301,48 +301,48 @@ const ProfilePage = ({
       )
     }
 
-    const playlistCards = playlists.map((playlist, index) => (
+    const content listCards = content lists.map((content list, index) => (
       <Card
         key={index}
         size='medium'
         handle={profile.handle}
-        playlistName={playlist.playlist_name}
-        playlistId={playlist.playlist_id}
-        id={playlist.playlist_id}
-        imageSize={playlist._cover_art_sizes}
-        userId={playlist.playlist_owner_id}
-        isPublic={!playlist.is_private}
-        // isAlbum={playlist.is_album}
-        primaryText={playlist.playlist_name}
-        // link={fullPlaylistPage(profile.handle, playlist.playlist_name, playlist.playlist_id)}
+        content listName={content list.content list_name}
+        content listId={content list.content list_id}
+        id={content list.content list_id}
+        imageSize={content list._cover_art_sizes}
+        userId={content list.content list_owner_id}
+        isPublic={!content list.is_private}
+        // isAlbum={content list.is_album}
+        primaryText={content list.content list_name}
+        // link={fullPlaylistPage(profile.handle, content list.content list_name, content list.content list_id)}
         secondaryText={formatCardSecondaryText(
-          playlist.save_count,
-          playlist.playlist_contents.agreement_ids.length,
-          playlist.is_private
+          content list.save_count,
+          content list.content list_contents.agreement_ids.length,
+          content list.is_private
         )}
-        cardCoverImageSizes={playlist._cover_art_sizes}
-        isReposted={playlist.has_current_user_reposted}
-        isSaved={playlist.has_current_user_saved}
+        cardCoverImageSizes={content list._cover_art_sizes}
+        isReposted={content list.has_current_user_reposted}
+        isSaved={content list.has_current_user_saved}
         onClick={() =>
           goToRoute(
-            playlistPage(
+            content listPage(
               profile.handle,
-              playlist.playlist_name,
-              playlist.playlist_id
+              content list.content list_name,
+              content list.content list_id
             )
           )
         }
       />
     ))
     if (isOwner) {
-      playlistCards.unshift(
+      content listCards.unshift(
         <UploadChip
           key='upload-chip'
-          type='playlist'
+          type='content list'
           variant='card'
           onClick={onClickUploadPlaylist}
           isArtist
-          isFirst={playlistCards.length === 0}
+          isFirst={content listCards.length === 0}
         />
       )
     }
@@ -361,8 +361,8 @@ const ProfilePage = ({
       { icon: <IconAlbum />, text: Tabs.ALBUMS, label: Tabs.ALBUMS },
       {
         icon: <IconPlaylists />,
-        text: Tabs.PLAYLISTS,
-        label: Tabs.PLAYLISTS
+        text: Tabs.CONTENT_LISTS,
+        label: Tabs.CONTENT_LISTS
       },
       { icon: <IconReposts />, text: Tabs.REPOSTS, label: Tabs.REPOSTS }
     ]
@@ -402,17 +402,17 @@ const ProfilePage = ({
           <CardLineup cardsClassName={styles.cardLineup} cards={albumCards} />
         )}
       </div>,
-      <div key={Tabs.PLAYLISTS} className={styles.cards}>
-        {playlists.length === 0 && !isOwner ? (
+      <div key={Tabs.CONTENT_LISTS} className={styles.cards}>
+        {content lists.length === 0 && !isOwner ? (
           <EmptyTab
             isOwner={isOwner}
             name={profile.name}
-            text={'created any playlists'}
+            text={'created any content lists'}
           />
         ) : (
           <CardLineup
             cardsClassName={styles.cardLineup}
-            cards={playlistCards}
+            cards={content listCards}
           />
         )}
       </div>,
@@ -480,52 +480,52 @@ const ProfilePage = ({
   }
 
   const getUserProfileContent = () => {
-    if (!profile || !playlists) return { headers: [], elements: [] }
-    const playlistCards = playlists.map((playlist, index) => (
+    if (!profile || !content lists) return { headers: [], elements: [] }
+    const content listCards = content lists.map((content list, index) => (
       <Card
         key={index}
         size='medium'
-        id={playlist.playlist_id}
-        userId={playlist.playlist_owner_id}
-        imageSize={playlist._cover_art_sizes}
+        id={content list.content list_id}
+        userId={content list.content list_owner_id}
+        imageSize={content list._cover_art_sizes}
         handle={profile.handle}
-        playlistId={playlist.playlist_id}
-        isPublic={!playlist.is_private}
-        playlistName={playlist.playlist_name}
-        // isAlbum={playlist.is_album}
-        primaryText={playlist.playlist_name}
+        content listId={content list.content list_id}
+        isPublic={!content list.is_private}
+        content listName={content list.content list_name}
+        // isAlbum={content list.is_album}
+        primaryText={content list.content list_name}
         secondaryText={formatCardSecondaryText(
-          playlist.save_count,
-          playlist.playlist_contents.agreement_ids.length,
-          playlist.is_private
+          content list.save_count,
+          content list.content list_contents.agreement_ids.length,
+          content list.is_private
         )}
-        // link={fullPlaylistPage(profile.handle, playlist.playlist_name, playlist.playlist_id)}
-        isReposted={playlist.has_current_user_reposted}
-        isSaved={playlist.has_current_user_saved}
-        cardCoverImageSizes={playlist._cover_art_sizes}
+        // link={fullPlaylistPage(profile.handle, content list.content list_name, content list.content list_id)}
+        isReposted={content list.has_current_user_reposted}
+        isSaved={content list.has_current_user_saved}
+        cardCoverImageSizes={content list._cover_art_sizes}
         onClick={() =>
           goToRoute(
-            playlistPage(
+            content listPage(
               profile.handle,
-              playlist.playlist_name,
-              playlist.playlist_id
+              content list.content list_name,
+              content list.content list_id
             )
           )
         }
       />
     ))
-    playlistCards.unshift(
+    content listCards.unshift(
       <UploadChip
-        type='playlist'
+        type='content list'
         variant='card'
         onClick={openCreatePlaylistModal}
-        isFirst={playlistCards.length === 0}
+        isFirst={content listCards.length === 0}
       />
     )
 
     const headers = [
       { icon: <IconReposts />, text: Tabs.REPOSTS, label: Tabs.REPOSTS },
-      { icon: <IconPlaylists />, text: Tabs.PLAYLISTS, label: Tabs.PLAYLISTS }
+      { icon: <IconPlaylists />, text: Tabs.CONTENT_LISTS, label: Tabs.CONTENT_LISTS }
     ]
     const elements = [
       <div key={Tabs.REPOSTS} className={styles.tiles}>
@@ -549,17 +549,17 @@ const ProfilePage = ({
           />
         )}
       </div>,
-      <div key={Tabs.PLAYLISTS} className={styles.cards}>
-        {playlists.length === 0 && !isOwner ? (
+      <div key={Tabs.CONTENT_LISTS} className={styles.cards}>
+        {content lists.length === 0 && !isOwner ? (
           <EmptyTab
             isOwner={isOwner}
             name={profile.name}
-            text={'created any playlists'}
+            text={'created any content lists'}
           />
         ) : (
           <CardLineup
             cardsClassName={styles.cardLineup}
-            cards={playlistCards}
+            cards={content listCards}
           />
         )}
       </div>

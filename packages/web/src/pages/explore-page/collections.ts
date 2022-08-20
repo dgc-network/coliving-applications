@@ -9,7 +9,7 @@ import {
   EXPLORE_LET_THEM_DJ_PAGE,
   EXPLORE_TOP_ALBUMS_PAGE,
   exploreMoodPlaylistsPage,
-  TRENDING_PLAYLISTS_PAGE,
+  TRENDING_CONTENT_LISTS_PAGE,
   TRENDING_UNDERGROUND_PAGE
 } from 'utils/route'
 
@@ -53,14 +53,14 @@ export const TOP_ALBUMS: ExploreCollection = {
   link: EXPLORE_TOP_ALBUMS_PAGE
 }
 
-export const TRENDING_PLAYLISTS: ExploreCollection = {
+export const TRENDING_CONTENT_LISTS: ExploreCollection = {
   variant: ExploreCollectionsVariant.DIRECT_LINK,
   title: 'Trending Playlists',
-  subtitle: 'The top playlists on Coliving right now',
+  subtitle: 'The top content lists on Coliving right now',
   gradient: 'linear-gradient(315deg, #57ABFF 0%, #CD98FF 100%)',
   shadow: 'rgba(87,170,255,0.35)',
   icon: IconExploreTopPlaylists,
-  link: TRENDING_PLAYLISTS_PAGE,
+  link: TRENDING_CONTENT_LISTS_PAGE,
   incentivized: true,
   cardSensitivity: WIDE_CARD_SENSITIVTY
 }
@@ -77,7 +77,7 @@ export const TRENDING_UNDERGROUND: ExploreCollection = {
   cardSensitivity: WIDE_CARD_SENSITIVTY
 }
 
-export const CHILL_PLAYLISTS: ExploreMoodCollection = {
+export const CHILL_CONTENT_LISTS: ExploreMoodCollection = {
   variant: ExploreCollectionsVariant.MOOD,
   title: 'Chill',
   emoji: 'dove-of-peace',
@@ -87,7 +87,7 @@ export const CHILL_PLAYLISTS: ExploreMoodCollection = {
   moods: ['peaceful', 'easygoing', 'melancholy']
 }
 
-export const PROVOKING_PLAYLISTS: ExploreMoodCollection = {
+export const PROVOKING_CONTENT_LISTS: ExploreMoodCollection = {
   variant: ExploreCollectionsVariant.MOOD,
   title: 'Provoking',
   emoji: 'thinking-face',
@@ -97,7 +97,7 @@ export const PROVOKING_PLAYLISTS: ExploreMoodCollection = {
   moods: ['sophisticated', 'brooding', 'serious', 'stirring']
 }
 
-export const INTIMATE_PLAYLISTS: ExploreMoodCollection = {
+export const INTIMATE_CONTENT_LISTS: ExploreMoodCollection = {
   variant: ExploreCollectionsVariant.MOOD,
   title: 'Intimate',
   emoji: 'heart-with-arrow',
@@ -107,7 +107,7 @@ export const INTIMATE_PLAYLISTS: ExploreMoodCollection = {
   moods: ['sentimental', 'romantic', 'yearning', 'sensual', 'tender']
 }
 
-export const UPBEAT_PLAYLISTS: ExploreMoodCollection = {
+export const UPBEAT_CONTENT_LISTS: ExploreMoodCollection = {
   variant: ExploreCollectionsVariant.MOOD,
   title: 'Upbeat',
   emoji: 'person-raising-both-hands-in-celebration',
@@ -117,7 +117,7 @@ export const UPBEAT_PLAYLISTS: ExploreMoodCollection = {
   moods: ['upbeat', 'excited', 'energizing', 'empowering', 'cool']
 }
 
-export const INTENSE_PLAYLISTS: ExploreMoodCollection = {
+export const INTENSE_CONTENT_LISTS: ExploreMoodCollection = {
   variant: ExploreCollectionsVariant.MOOD,
   title: 'Intense',
   emoji: 'fire',
@@ -134,9 +134,9 @@ export const EXPLORE_COLLECTIONS_MAP = {
 
 type ExploreMoodMap = { [key in string]: ExploreMoodCollection }
 export const EXPLORE_MOOD_COLLECTIONS_MAP: ExploreMoodMap = {
-  chill: CHILL_PLAYLISTS,
-  provoking: PROVOKING_PLAYLISTS,
-  intimate: INTIMATE_PLAYLISTS,
-  upbeat: UPBEAT_PLAYLISTS,
-  intense: INTENSE_PLAYLISTS
+  chill: CHILL_CONTENT_LISTS,
+  provoking: PROVOKING_CONTENT_LISTS,
+  intimate: INTIMATE_CONTENT_LISTS,
+  upbeat: UPBEAT_CONTENT_LISTS,
+  intense: INTENSE_CONTENT_LISTS
 }

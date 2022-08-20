@@ -10,7 +10,7 @@ export const PlaylistNameInput = () => {
     <FormTextInput
       required
       isFirstInput
-      name='playlist_name'
+      name='content list_name'
       label={messages.label}
       placeholder={messages.placeholder}
     />

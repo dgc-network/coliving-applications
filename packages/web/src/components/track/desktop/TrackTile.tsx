@@ -142,7 +142,7 @@ const AgreementTile = memo(
           [styles.large]: size === AgreementTileSize.LARGE,
           [styles.small]: size === AgreementTileSize.SMALL,
 
-          // Standalone means that this tile is not w/ a playlist
+          // Standalone means that this tile is not w/ a content list
           [styles.standalone]: !!standalone
         })}
         onClick={isLoading || isDisabled ? undefined : onTogglePlay}
@@ -176,7 +176,7 @@ const AgreementTile = memo(
         )}
         <div
           className={cn(styles.body, {
-            // if agreement and not playlist/album
+            // if agreement and not content list/album
             [styles.withoutHeader]: true
           })}
         >

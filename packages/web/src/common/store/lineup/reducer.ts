@@ -146,7 +146,7 @@ export const actionsMap = {
     }
 
     // Hack alert:
-    // For lineups with max entries (such as trending playlists) and deleted content,
+    // For lineups with max entries (such as trending content lists) and deleted content,
     // manually set hasMore.
     //
     // Total entries is existing entries + deleted from both lineup & action

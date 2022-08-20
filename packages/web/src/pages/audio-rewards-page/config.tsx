@@ -255,14 +255,14 @@ export const challengeRewardsConfig: Record<
       complete: linkButtonMap.sendFirstTip
     }
   },
-  'first-playlist': {
-    id: 'first-playlist' as ChallengeRewardID,
+  'first-content list': {
+    id: 'first-content list' as ChallengeRewardID,
     title: 'Create Your First Playlist',
     icon: <i className='emoji large sparkles' />,
     description: (challenge) => `Earn ${challenge?.amount} $LIVE`,
-    fullDescription: () => 'Create your first playlist & add a agreement to it',
+    fullDescription: () => 'Create your first content list & add a agreement to it',
     progressLabel: 'Not Earned',
-    amount: amounts['first-playlist'],
+    amount: amounts['first-content list'],
     panelButtonText: 'Create Your First Playlist',
     modalButtonInfo: {
       incomplete: linkButtonMap.firstPlaylist,
@@ -284,12 +284,12 @@ export const trendingRewardsConfig: Record<
   TrendingRewardID,
   TrendingRewardsInfo
 > = {
-  'trending-playlist': {
+  'trending-content list': {
     title: 'Top 5 Trending Playlists',
     icon: <i className='emoji large chart-increasing' />,
     description: 'Winners are selected every Friday at Noon PT!',
     buttonText: 'See More',
-    id: 'trending-playlist'
+    id: 'trending-content list'
   },
   'trending-agreement': {
     title: 'Top 5 Trending Agreements',

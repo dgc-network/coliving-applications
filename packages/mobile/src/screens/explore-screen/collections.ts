@@ -5,7 +5,7 @@ import {
   EXPLORE_LET_THEM_DJ_PAGE,
   EXPLORE_TOP_ALBUMS_PAGE,
   exploreMoodPlaylistsPage,
-  TRENDING_PLAYLISTS_PAGE,
+  TRENDING_CONTENT_LISTS_PAGE,
   TRENDING_UNDERGROUND_PAGE
 } from 'utils/route'
 
@@ -80,17 +80,17 @@ export const TOP_ALBUMS: ExploreCollection = {
   link: EXPLORE_TOP_ALBUMS_PAGE
 }
 
-export const TRENDING_PLAYLISTS: ExploreCollection = {
+export const TRENDING_CONTENT_LISTS: ExploreCollection = {
   variant: 'Direct Link',
   title: 'Trending Playlists',
   screen: 'TrendingPlaylists',
-  description: 'The top playlists on Coliving right now',
+  description: 'The top content lists on Coliving right now',
   gradientColors: ['#57ABFF', '#CD98FF'],
   gradientAngle: 315,
   shadowColor: 'rgb(87,170,255)',
   shadowOpacity: 0.25,
   icon: IconExploreTopPlaylists,
-  link: TRENDING_PLAYLISTS_PAGE,
+  link: TRENDING_CONTENT_LISTS_PAGE,
   incentivized: true
 }
 
@@ -110,7 +110,7 @@ export const TRENDING_UNDERGROUND: ExploreCollection = {
 }
 
 // Moods Collections
-export const CHILL_PLAYLISTS: ExploreMoodCollection = {
+export const CHILL_CONTENT_LISTS: ExploreMoodCollection = {
   variant: 'Mood',
   title: 'Chill',
   screen: 'ChillPlaylists',
@@ -123,7 +123,7 @@ export const CHILL_PLAYLISTS: ExploreMoodCollection = {
   moods: ['peaceful', 'easygoing', 'melancholy']
 }
 
-export const PROVOKING_PLAYLISTS: ExploreMoodCollection = {
+export const PROVOKING_CONTENT_LISTS: ExploreMoodCollection = {
   variant: 'Mood',
   title: 'Provoking',
   screen: 'ProvokingPlaylists',
@@ -136,7 +136,7 @@ export const PROVOKING_PLAYLISTS: ExploreMoodCollection = {
   moods: ['sophisticated', 'brooding', 'serious', 'stirring']
 }
 
-export const INTIMATE_PLAYLISTS: ExploreMoodCollection = {
+export const INTIMATE_CONTENT_LISTS: ExploreMoodCollection = {
   variant: 'Mood',
   title: 'Intimate',
   screen: 'IntimatePlaylists',
@@ -149,7 +149,7 @@ export const INTIMATE_PLAYLISTS: ExploreMoodCollection = {
   moods: ['sentimental', 'romantic', 'yearning', 'sensual', 'tender']
 }
 
-export const UPBEAT_PLAYLISTS: ExploreMoodCollection = {
+export const UPBEAT_CONTENT_LISTS: ExploreMoodCollection = {
   variant: 'Mood',
   title: 'Upbeat',
   screen: 'UpbeatPlaylists',
@@ -162,7 +162,7 @@ export const UPBEAT_PLAYLISTS: ExploreMoodCollection = {
   moods: ['upbeat', 'excited', 'energizing', 'empowering', 'cool']
 }
 
-export const INTENSE_PLAYLISTS: ExploreMoodCollection = {
+export const INTENSE_CONTENT_LISTS: ExploreMoodCollection = {
   variant: 'Mood',
   title: 'Intense',
   screen: 'IntensePlaylists',

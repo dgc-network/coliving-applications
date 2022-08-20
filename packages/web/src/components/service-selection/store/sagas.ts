@@ -30,9 +30,9 @@ export function* watchFetchServices() {
         secondaries: string[],
         services: { [name: string]: Service }
 
-      if (currentUser.creator_node_endpoint) {
+      if (currentUser.content_node_endpoint) {
         services = yield* call(ColivingBackend.getSelectableCreatorNodes)
-        const userEndpoints = currentUser.creator_node_endpoint.split(',')
+        const userEndpoints = currentUser.content_node_endpoint.split(',')
         primary = userEndpoints[0]
         secondaries = userEndpoints.slice(1)
         // Filter out a secondary that is unhealthy.
@@ -120,7 +120,7 @@ function* watchSetSelected() {
       )
       yield* put(
         cacheActions.update(Kind.USERS, [
-          { id: user.user_id, metadata: { creator_node_endpoint: newEndpoint } }
+          { id: user.user_id, metadata: { content_node_endpoint: newEndpoint } }
         ])
       )
       yield* all(
@@ -131,7 +131,7 @@ function* watchSetSelected() {
       )
 
       yield* call(ColivingBackend.setCreatorNodeEndpoint, primary)
-      user.creator_node_endpoint = newEndpoint
+      user.content_node_endpoint = newEndpoint
       const success = yield* call(
         ColivingBackend.updateCreator,
         user,

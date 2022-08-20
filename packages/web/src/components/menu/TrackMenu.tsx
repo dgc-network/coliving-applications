@@ -26,7 +26,7 @@ import {
   undoRepostAgreement,
   shareAgreement
 } from 'common/store/social/agreements/actions'
-import { requestOpen as openAddToPlaylist } from 'common/store/ui/add-to-playlist/actions'
+import { requestOpen as openAddToPlaylist } from 'common/store/ui/add-to-content list/actions'
 import * as embedModalActions from 'components/embed-modal/store/actions'
 import { ToastContext } from 'components/toast/ToastContext'
 import { newCollectionMetadata } from 'schemas'
@@ -234,7 +234,7 @@ const AgreementMenu = (props: AgreementMenuProps) => {
 
 function mapStateToProps(state: AppState) {
   return {
-    playlists: getAccountOwnedPlaylists(state),
+    content lists: getAccountOwnedPlaylists(state),
     currentCollectionId: getCollectionId(state)
   }
 }
@@ -242,8 +242,8 @@ function mapStateToProps(state: AppState) {
 function mapDispatchToProps(dispatch: Dispatch) {
   return {
     goToRoute: (route: string) => dispatch(pushRoute(route)),
-    addAgreementToPlaylist: (agreementId: ID, playlistId: ID) =>
-      dispatch(addAgreementToPlaylist(agreementId, playlistId)),
+    addAgreementToPlaylist: (agreementId: ID, content listId: ID) =>
+      dispatch(addAgreementToPlaylist(agreementId, content listId)),
     shareAgreement: (agreementId: ID) =>
       dispatch(shareAgreement(agreementId, ShareSource.OVERFLOW)),
     saveAgreement: (agreementId: ID) =>
@@ -261,7 +261,7 @@ function mapDispatchToProps(dispatch: Dispatch) {
       dispatch(
         createPlaylist(
           tempId,
-          newCollectionMetadata({ playlist_name: name }),
+          newCollectionMetadata({ content list_name: name }),
           CreatePlaylistSource.FROM_AGREEMENT,
           agreementId
         )

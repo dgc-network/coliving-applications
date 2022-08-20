@@ -23,7 +23,7 @@ import { useDrawerNavigation } from '../useDrawerNavigation'
 const messages = {
   title: 'Agreement Added to Playlist',
   addedAgreement: ' added your agreement ',
-  toPlaylist: ' to their playlist '
+  toPlaylist: ' to their content list '
 }
 type AddAgreementToPlaylistNotificationProps = {
   notification: AddAgreementToPlaylist
@@ -37,19 +37,19 @@ export const AddAgreementToPlaylistNotification = (
     (state) => getNotificationEntities(state, notification),
     isEqual
   )
-  const { agreement, playlist } = entities
-  const playlistOwner = playlist.user
+  const { agreement, content list } = entities
+  const content listOwner = content list.user
 
   const navigation = useDrawerNavigation()
 
   const handlePress = useCallback(() => {
-    if (playlist) {
+    if (content list) {
       navigation.navigate({
-        native: getEntityScreen(playlist),
-        web: { route: getEntityRoute(playlist) }
+        native: getEntityScreen(content list),
+        web: { route: getEntityRoute(content list) }
       })
     }
-  }, [playlist, navigation])
+  }, [content list, navigation])
 
   return (
     <NotificationTile notification={notification} onPress={handlePress}>
@@ -57,14 +57,14 @@ export const AddAgreementToPlaylistNotification = (
         <NotificationTitle>{messages.title}</NotificationTitle>
       </NotificationHeader>
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-        <ProfilePicture profile={playlistOwner} />
+        <ProfilePicture profile={content listOwner} />
         <View style={{ flex: 1 }}>
           <NotificationText>
-            <UserNameLink user={playlistOwner} />
+            <UserNameLink user={content listOwner} />
             {messages.addedAgreement}
             <EntityLink entity={agreement} />
             {messages.toPlaylist}
-            <EntityLink entity={playlist} />
+            <EntityLink entity={content list} />
           </NotificationText>
         </View>
       </View>

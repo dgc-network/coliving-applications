@@ -4,14 +4,14 @@ import * as errorActions from 'common/store/errors/actions'
 
 import {
   GET_AGREEMENT_REPOST_ERROR,
-  GET_PLAYLIST_REPOST_ERROR,
+  GET_CONTENT_LIST_REPOST_ERROR,
   agreementRepostError,
-  playlistRepostError
+  content listRepostError
 } from './actions'
 
 type ErrorActions =
   | ReturnType<typeof agreementRepostError>
-  | ReturnType<typeof playlistRepostError>
+  | ReturnType<typeof content listRepostError>
 
 export function* handleRepostError(action: ErrorActions) {
   yield put(
@@ -29,7 +29,7 @@ export function* handleRepostError(action: ErrorActions) {
 
 export function* watchRepostsError() {
   yield takeEvery(
-    [GET_AGREEMENT_REPOST_ERROR, GET_PLAYLIST_REPOST_ERROR],
+    [GET_AGREEMENT_REPOST_ERROR, GET_CONTENT_LIST_REPOST_ERROR],
     handleRepostError
   )
 }

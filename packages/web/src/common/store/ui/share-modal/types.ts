@@ -12,7 +12,7 @@ export type ShareType =
   | 'agreement'
   | 'profile'
   | 'album'
-  | 'playlist'
+  | 'content list'
   | 'liveNftPlaylist'
 
 type ShareAgreementContent = {
@@ -33,8 +33,8 @@ type ShareAlbumContent = {
 }
 
 type SharePlaylistContent = {
-  type: 'playlist'
-  playlist: Collection
+  type: 'content list'
+  content list: Collection
   creator: User
 }
 

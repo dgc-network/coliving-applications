@@ -37,7 +37,7 @@ export type SmartCollection = {
   icon?: ComponentType<SvgProps>
   link: string
   // TODO: Need to implement this when adding data for smart collections
-  // playlist_contents?: PlaylistContents
+  // content list_contents?: PlaylistContents
   has_current_user_saved?: boolean
   incentivized?: boolean // Whether we reward winners with Audio
   cardSensitivity?: number

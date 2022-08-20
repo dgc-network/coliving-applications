@@ -145,7 +145,7 @@ const makeMapStateToProps = (initialState, ownProps) => {
     search: getSearchResultsState(state),
     agreements: getAgreementsLineup(state),
     artists: getSearchArtists(state),
-    playlists: getPlaylists(state),
+    content lists: getPlaylists(state),
     albums: getAlbums(state),
     currentQueueItem: getCurrentQueueItem(state),
     playing: getPlaying(state),

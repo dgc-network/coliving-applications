@@ -11,14 +11,14 @@ import isEmpty from 'lodash/isEmpty'
 import { AccountCollection } from '../account/reducer'
 
 /**
- * Finds a playlist by id in the playlist library
+ * Finds a content list by id in the content list library
  * @param library
- * @param playlistId
+ * @param content listId
  * @returns the identifier or false
  */
 export const findInPlaylistLibrary = (
   library: PlaylistLibrary | PlaylistLibraryFolder,
-  playlistId: ID | SmartCollectionVariant | string
+  content listId: ID | SmartCollectionVariant | string
 ): PlaylistLibraryIdentifier | false => {
   if (!library.contents) return false
 
@@ -26,14 +26,14 @@ export const findInPlaylistLibrary = (
   for (const item of library.contents) {
     switch (item.type) {
       case 'folder': {
-        const contains = findInPlaylistLibrary(item, playlistId)
+        const contains = findInPlaylistLibrary(item, content listId)
         if (contains) return contains
         break
       }
-      case 'playlist':
-      case 'explore_playlist':
-      case 'temp_playlist':
-        if (item.playlist_id === playlistId) return item
+      case 'content list':
+      case 'explore_content list':
+      case 'temp_content list':
+        if (item.content list_id === content listId) return item
         break
     }
   }
@@ -41,7 +41,7 @@ export const findInPlaylistLibrary = (
 }
 
 /**
- * Finds the index of a playlist or folder id in the library, returning -1 if not found
+ * Finds the index of a content list or folder id in the library, returning -1 if not found
  * If the target item is nested in a folder, this returns a tuple where the first value is the
  * index of the folder and the second value is the index of the item within that folder's contents.
  * @param library
@@ -65,10 +65,10 @@ export const findIndexInPlaylistLibrary = (
         }
         break
       }
-      case 'playlist':
-      case 'explore_playlist':
-      case 'temp_playlist':
-        if (item.playlist_id === entityId) return i
+      case 'content list':
+      case 'explore_content list':
+      case 'temp_content list':
+        if (item.content list_id === entityId) return i
         break
     }
   }
@@ -76,10 +76,10 @@ export const findIndexInPlaylistLibrary = (
 }
 
 /**
- * Removes a playlist or folder from the library and returns the removed item as well as the
+ * Removes a content list or folder from the library and returns the removed item as well as the
  * updated library (does not mutate)
  * @param library
- * @param entityId the id of the playlist or folder to remove
+ * @param entityId the id of the content list or folder to remove
  * @returns { library, removed }
  */
 export const removeFromPlaylistLibrary = (
@@ -114,10 +114,10 @@ export const removeFromPlaylistLibrary = (
         }
         break
       }
-      case 'playlist':
-      case 'explore_playlist':
-      case 'temp_playlist':
-        if (item.playlist_id === entityId) {
+      case 'content list':
+      case 'explore_content list':
+      case 'temp_content list':
+        if (item.content list_id === entityId) {
           removed = item
           newItem = null
         }
@@ -148,42 +148,42 @@ export const constructPlaylistFolder = (
   }
 }
 
-const playlistIdToPlaylistLibraryIdentifier = (
-  playlistId: ID | SmartCollectionVariant | string
+const content listIdToPlaylistLibraryIdentifier = (
+  content listId: ID | SmartCollectionVariant | string
 ): PlaylistLibraryIdentifier => {
-  if (typeof playlistId === 'number') {
+  if (typeof content listId === 'number') {
     return {
-      type: 'playlist',
-      playlist_id: playlistId
+      type: 'content list',
+      content list_id: content listId
     }
   } else if (
-    (Object.values(SmartCollectionVariant) as string[]).includes(playlistId)
+    (Object.values(SmartCollectionVariant) as string[]).includes(content listId)
   ) {
     return {
-      type: 'explore_playlist',
-      playlist_id: playlistId as SmartCollectionVariant
+      type: 'explore_content list',
+      content list_id: content listId as SmartCollectionVariant
     }
   } else {
     // This is a temp ID which requires special attention
     return {
-      type: 'temp_playlist',
-      playlist_id: playlistId
+      type: 'temp_content list',
+      content list_id: content listId
     }
   }
 }
 
 /**
- * Adds playlist with given id to folder with given id and returns the resulting updated library.
- * If the playlist is already in the library but not in the folder, it removes the playlist from its current position and into the folder.
- * This is a no op if the folder is not in the library or the playlist is already in the target folder. In these cases, the original library is returned.
+ * Adds content list with given id to folder with given id and returns the resulting updated library.
+ * If the content list is already in the library but not in the folder, it removes the content list from its current position and into the folder.
+ * This is a no op if the folder is not in the library or the content list is already in the target folder. In these cases, the original library is returned.
  * @param library
- * @param playlistId
+ * @param content listId
  * @param folderId
- * @returns the updated playlist library
+ * @returns the updated content list library
  */
 export const addPlaylistToFolder = (
   library: PlaylistLibrary,
-  playlistId: ID | SmartCollectionVariant | string,
+  content listId: ID | SmartCollectionVariant | string,
   folderId: string
 ): PlaylistLibrary => {
   if (!library.contents) return library
@@ -192,16 +192,16 @@ export const addPlaylistToFolder = (
   })
   if (folderIndex < 0) return library
   const folder = library.contents[folderIndex] as PlaylistLibraryFolder
-  // If the playlist is in the right folder already, return the original library.
-  if (findInPlaylistLibrary(folder, playlistId) !== false) {
+  // If the content list is in the right folder already, return the original library.
+  if (findInPlaylistLibrary(folder, content listId) !== false) {
     return library
   }
 
-  // Remove the playlist from the library if it's already there but not in the given folder
+  // Remove the content list from the library if it's already there but not in the given folder
   let entry: PlaylistLibraryIdentifier | null
   const { library: newLibrary, removed } = removeFromPlaylistLibrary(
     library,
-    playlistId
+    content listId
   )
 
   if (removed?.type === 'folder') {
@@ -211,16 +211,16 @@ export const addPlaylistToFolder = (
   entry = removed as PlaylistLibraryIdentifier
 
   if (!entry) {
-    entry = playlistIdToPlaylistLibraryIdentifier(playlistId)
+    entry = content listIdToPlaylistLibraryIdentifier(content listId)
   } else {
-    // If playlist was removed the folder index might be different now.
+    // If content list was removed the folder index might be different now.
     folderIndex = newLibrary.contents.findIndex((item) => {
       return item.type === 'folder' && item.id === folderId
     })
   }
   const updatedFolder = reorderPlaylistLibrary(
     folder,
-    playlistId,
+    content listId,
     -1
   ) as PlaylistLibraryFolder
   const newContents = [...newLibrary.contents]
@@ -241,7 +241,7 @@ export const addPlaylistToFolder = (
  * @param library
  * @param folderId
  * @param newName
- * @returns the updated playlist library
+ * @returns the updated content list library
  */
 export const renamePlaylistFolderInLibrary = (
   library: PlaylistLibrary,
@@ -265,13 +265,13 @@ export const renamePlaylistFolderInLibrary = (
 
 /**
  * Removes folder with given id from the library.
- * Any playlists or temporary playlists in the deleted
+ * Any content lists or temporary content lists in the deleted
  * folder are moved out of the folder.
  * Note that this assumes that folders cannot be nested within one another.
  * If we enable nesting folders in the future, this function must be updated.
  * @param library
  * @param folderId
- * @returns the updated playlist library
+ * @returns the updated content list library
  */
 export const removePlaylistFolderInLibrary = (
   library: PlaylistLibrary,
@@ -297,7 +297,7 @@ export const removePlaylistFolderInLibrary = (
 }
 
 /**
- * Adds new folder to a playlist library and returns the result.
+ * Adds new folder to a content list library and returns the result.
  * Does not mutate.
  * @param library
  * @param folder
@@ -313,9 +313,9 @@ export const addFolderToLibrary = (
 }
 
 /**
- * Removes temp playlists from playlist library (without mutating)
+ * Removes temp content lists from content list library (without mutating)
  * @param library
- * @returns a copy of the library with all temp playlists removed
+ * @returns a copy of the library with all temp content lists removed
  */
 export const removePlaylistLibraryTempPlaylists = (
   library: PlaylistLibrary | PlaylistLibraryFolder
@@ -331,10 +331,10 @@ export const removePlaylistLibraryTempPlaylists = (
         newContents.push(folder)
         break
       }
-      case 'temp_playlist':
+      case 'temp_content list':
         break
-      case 'explore_playlist':
-      case 'playlist':
+      case 'explore_content list':
+      case 'content list':
         newContents.push(item)
         break
     }
@@ -346,7 +346,7 @@ export const removePlaylistLibraryTempPlaylists = (
 }
 
 /**
- * Removes duplicates in a playlist library
+ * Removes duplicates in a content list library
  * @param library
  * @param ids ids to keep agreement of as we recurse
  */
@@ -373,14 +373,14 @@ export const removePlaylistLibraryDuplicates = (
         newContents.push(folder)
         break
       }
-      case 'playlist':
-      case 'explore_playlist':
-      case 'temp_playlist':
-        // If we've seen this playlist already, don't include it in our final result.
-        if (ids.has(`${item.playlist_id}`)) {
+      case 'content list':
+      case 'explore_content list':
+      case 'temp_content list':
+        // If we've seen this content list already, don't include it in our final result.
+        if (ids.has(`${item.content list_id}`)) {
           break
         }
-        ids.add(`${item.playlist_id}`)
+        ids.add(`${item.content list_id}`)
         newContents.push(item)
         break
     }
@@ -392,21 +392,21 @@ export const removePlaylistLibraryDuplicates = (
 }
 
 /**
- * Reorders a playlist library
+ * Reorders a content list library
  * Note that this helper assumes that folders cannot be inside folders.
  * If we ever support nesting folders, this must be updated.
  * @param library
- * @param draggingId the playlist being reordered
- * @param droppingId the playlist where the dragged one was dropped onto
+ * @param draggingId the content list being reordered
+ * @param droppingId the content list where the dragged one was dropped onto
  */
 export const reorderPlaylistLibrary = (
   library: PlaylistLibrary | PlaylistLibraryFolder,
   draggingId: ID | SmartCollectionVariant | string,
   droppingId: ID | SmartCollectionVariant | string,
   draggingKind:
-    | 'library-playlist'
-    | 'playlist'
-    | 'playlist-folder' = 'library-playlist',
+    | 'library-content list'
+    | 'content list'
+    | 'content list-folder' = 'library-content list',
   reorderBeforeTarget = false
 ) => {
   // Find the dragging id and remove it from the library if present.
@@ -417,11 +417,11 @@ export const reorderPlaylistLibrary = (
   )
   entry = removed
   if (!entry) {
-    if (draggingKind === 'playlist-folder') {
+    if (draggingKind === 'content list-folder') {
       // Soft fail if the thing being dragged is a folder and it doesn't exist in the library yet. This shouldn't be possible.
       return library
     } else {
-      entry = playlistIdToPlaylistLibraryIdentifier(draggingId)
+      entry = content listIdToPlaylistLibraryIdentifier(draggingId)
     }
   }
 
@@ -463,7 +463,7 @@ export const reorderPlaylistLibrary = (
 }
 
 /**
- * Determines whether or not a library contains a temp playlist
+ * Determines whether or not a library contains a temp content list
  * @param library
  * @returns boolean
  */
@@ -480,7 +480,7 @@ export const containsTempPlaylist = (
         if (contains) return contains
         break
       }
-      case 'temp_playlist':
+      case 'temp_content list':
         return true
       default:
         break
@@ -490,9 +490,9 @@ export const containsTempPlaylist = (
 }
 
 /**
- * Determines whether or not a playlist or folder is inside a folder
+ * Determines whether or not a content list or folder is inside a folder
  * @param library
- * @param id (playlist or folder id)
+ * @param id (content list or folder id)
  * @returns boolean
  */
 export const isInsideFolder = (
@@ -503,7 +503,7 @@ export const isInsideFolder = (
 }
 
 /**
- * Takes a library and returns a list of all temporary playlists from that library
+ * Takes a library and returns a list of all temporary content lists from that library
  * @param library
  * @returns PlaylistLibraryIdentifier[]
  */
@@ -514,7 +514,7 @@ export const extractTempPlaylistsFromLibrary = (
   return library.contents.reduce((prevResult, nextContent) => {
     if (nextContent.type === 'folder') {
       return prevResult.concat(extractTempPlaylistsFromLibrary(nextContent))
-    } else if (nextContent.type === 'temp_playlist') {
+    } else if (nextContent.type === 'temp_content list') {
       return prevResult.concat(nextContent)
     } else {
       return prevResult
@@ -523,11 +523,11 @@ export const extractTempPlaylistsFromLibrary = (
 }
 
 /**
- * Takes a library and mapping of temporary playlist ids to their resolved
- * playlist identifiers, then returns the library (does not mutate original)
- * with temporary playlists replaced by their resolved playlist identifiers.
+ * Takes a library and mapping of temporary content list ids to their resolved
+ * content list identifiers, then returns the library (does not mutate original)
+ * with temporary content lists replaced by their resolved content list identifiers.
  * @param library
- * @param tempPlaylistIdToResolvedPlaylist object that maps temporary playlist ids to their resolved playlist identifiers
+ * @param tempPlaylistIdToResolvedPlaylist object that maps temporary content list ids to their resolved content list identifiers
  * @returns PlaylistLibrary | PlaylistLibraryFolder
  */
 export const replaceTempWithResolvedPlaylists = <
@@ -543,8 +543,8 @@ export const replaceTempWithResolvedPlaylists = <
         c,
         tempPlaylistIdToResolvedPlaylist
       )
-    } else if (c.type === 'temp_playlist') {
-      return tempPlaylistIdToResolvedPlaylist[c.playlist_id] ?? c
+    } else if (c.type === 'temp_content list') {
+      return tempPlaylistIdToResolvedPlaylist[c.content list_id] ?? c
     } else {
       return c
     }
@@ -552,29 +552,29 @@ export const replaceTempWithResolvedPlaylists = <
   return { ...library, contents: newContents }
 }
 
-/* Returns playlists in `playlists` that are not in the given playlist library `library`. */
+/* Returns content lists in `content lists` that are not in the given content list library `library`. */
 export const getPlaylistsNotInLibrary = (
   library: PlaylistLibrary | null,
-  playlists: {
+  content lists: {
     [id: number]: AccountCollection
   }
 ) => {
-  const result = { ...playlists }
+  const result = { ...content lists }
   const helpComputePlaylistsNotInLibrary = (
     libraryContentsLevel: PlaylistLibrary['contents']
   ) => {
     libraryContentsLevel.forEach((content) => {
-      if (content.type === 'temp_playlist' || content.type === 'playlist') {
-        const playlist = playlists[Number(content.playlist_id)]
-        if (playlist) {
-          delete result[Number(content.playlist_id)]
+      if (content.type === 'temp_content list' || content.type === 'content list') {
+        const content list = content lists[Number(content.content list_id)]
+        if (content list) {
+          delete result[Number(content.content list_id)]
         }
       } else if (content.type === 'folder') {
         helpComputePlaylistsNotInLibrary(content.contents)
       }
     })
   }
-  if (library && playlists) {
+  if (library && content lists) {
     helpComputePlaylistsNotInLibrary(library.contents)
   }
   return result

@@ -24,8 +24,8 @@ const getHasImage = (user: UserImageType & UserMultihash) => {
 
 const useUserImage = (user: UserImageType & UserMultihash) => {
   const cNodes =
-    user.creator_node_endpoint !== null
-      ? user.creator_node_endpoint.split(',').filter(Boolean)
+    user.content_node_endpoint !== null
+      ? user.content_node_endpoint.split(',').filter(Boolean)
       : gateways
   const [didError, setDidError] = useState(
     cNodes.length === 0 || !getHasImage(user)
@@ -37,8 +37,8 @@ const useUserImage = (user: UserImageType & UserMultihash) => {
   const onError = useCallback(async () => {
     if (didError) return
     const nodes =
-      user.creator_node_endpoint !== null
-        ? user.creator_node_endpoint.split(',').filter(Boolean)
+      user.content_node_endpoint !== null
+        ? user.content_node_endpoint.split(',').filter(Boolean)
         : gateways
     const numNodes = nodes.length
     const currInd = nodes.findIndex(
@@ -48,7 +48,7 @@ const useUserImage = (user: UserImageType & UserMultihash) => {
       setSource({ uri: getUserImageUrl(user, nodes[currInd + 1]) })
     } else {
       // contain "legacy" image formats (no dir cid)
-      const legacyUrls = (user.creator_node_endpoint ?? '')
+      const legacyUrls = (user.content_node_endpoint ?? '')
         .split(',')
         .filter(Boolean)
         .concat(gateways)

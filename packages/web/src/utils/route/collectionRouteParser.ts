@@ -1,7 +1,7 @@
 import { ID } from '@coliving/common'
 import { matchPath } from 'react-router-dom'
 
-import { PLAYLIST_PAGE, ALBUM_PAGE, PLAYLIST_ID_PAGE } from 'utils/route'
+import { CONTENT_LIST_PAGE, ALBUM_PAGE, CONTENT_LIST_ID_PAGE } from 'utils/route'
 
 import { decodeHashId } from './hashIds'
 
@@ -9,7 +9,7 @@ type CollectionRouteParams =
   | {
       collectionId: ID
       handle: string
-      collectionType: 'playlist' | 'album'
+      collectionType: 'content list' | 'album'
       title: string
     }
   | { collectionId: ID; handle: null; collectionType: null; title: null }
@@ -22,7 +22,7 @@ type CollectionRouteParams =
  */
 export const parseCollectionRoute = (route: string): CollectionRouteParams => {
   const collectionIdPageMatch = matchPath<{ id: string }>(route, {
-    path: PLAYLIST_ID_PAGE,
+    path: CONTENT_LIST_ID_PAGE,
     exact: true
   })
   if (collectionIdPageMatch) {
@@ -31,20 +31,20 @@ export const parseCollectionRoute = (route: string): CollectionRouteParams => {
     return { collectionId, handle: null, collectionType: null, title: null }
   }
 
-  const playlistPageMatch = matchPath<{
+  const content listPageMatch = matchPath<{
     handle: string
-    playlistName: string
+    content listName: string
   }>(route, {
-    path: PLAYLIST_PAGE,
+    path: CONTENT_LIST_PAGE,
     exact: true
   })
-  if (playlistPageMatch) {
-    const { handle, playlistName } = playlistPageMatch.params
-    const nameParts = playlistName.split('-')
+  if (content listPageMatch) {
+    const { handle, content listName } = content listPageMatch.params
+    const nameParts = content listName.split('-')
     const title = nameParts.slice(0, nameParts.length - 1).join('-')
     const collectionId = parseInt(nameParts[nameParts.length - 1], 10)
     if (!collectionId || isNaN(collectionId)) return null
-    return { title, collectionId, handle, collectionType: 'playlist' }
+    return { title, collectionId, handle, collectionType: 'content list' }
   }
 
   const albumPageMatch = matchPath<{

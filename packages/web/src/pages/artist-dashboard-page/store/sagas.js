@@ -19,7 +19,7 @@ function* fetchDashboardAsync(action) {
 
   const account = yield call(waitForValue, getAccountUser)
 
-  const [agreements, playlists] = yield all([
+  const [agreements, content lists] = yield all([
     call(retrieveUserAgreements, {
       handle: account.handle,
       currentUserId: account.user_id,
@@ -44,13 +44,13 @@ function* fetchDashboardAsync(action) {
 
   if (
     listedAgreements.length > 0 ||
-    playlists.length > 0 ||
+    content lists.length > 0 ||
     unlistedAgreements.length > 0
   ) {
     yield put(
       dashboardActions.fetchDashboardSucceeded(
         listedAgreements,
-        playlists,
+        content lists,
         unlistedAgreements
       )
     )

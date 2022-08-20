@@ -22,8 +22,8 @@ const getHasImage = (agreement: AgreementImageType) => {
 
 const useAgreementImage = (agreement: AgreementImageType, user: UserMultihash) => {
   const cNodes =
-    user.creator_node_endpoint !== null
-      ? user.creator_node_endpoint.split(',').filter(Boolean)
+    user.content_node_endpoint !== null
+      ? user.content_node_endpoint.split(',').filter(Boolean)
       : gateways
   const [didError, setDidError] = useState(
     cNodes.length === 0 || !getHasImage(agreement)
@@ -34,8 +34,8 @@ const useAgreementImage = (agreement: AgreementImageType, user: UserMultihash) =
   const onError = useCallback(() => {
     if (didError) return
     const nodes =
-      user.creator_node_endpoint !== null
-        ? user.creator_node_endpoint.split(',').filter(Boolean)
+      user.content_node_endpoint !== null
+        ? user.content_node_endpoint.split(',').filter(Boolean)
         : gateways
     const numNodes = nodes.length
     const currInd = nodes.findIndex(
@@ -45,7 +45,7 @@ const useAgreementImage = (agreement: AgreementImageType, user: UserMultihash) =
       setSource({ uri: getAgreementImageUrl(agreement, nodes[currInd + 1]) })
     } else {
       // Legacy fallback for image formats (no dir cid)
-      const legacyUrls = (user.creator_node_endpoint ?? '')
+      const legacyUrls = (user.content_node_endpoint ?? '')
         .split(',')
         .filter(Boolean)
         .concat(gateways)

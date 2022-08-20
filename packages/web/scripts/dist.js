@@ -16,7 +16,7 @@ const fse = require('fs-extra')
 const PRODUCTION_APP_ID = 'co.coliving.app'
 const PRODUCTION_NAME = 'Coliving'
 const PRODUCTION_PACKAGE_JSON_NAME = 'coliving-client'
-const PRODUCTION_BUCKET = 'download.coliving.co'
+const PRODUCTION_BUCKET = 'download.coliving.lol'
 const PRODUCTION_ICNS = 'resources/icons/ColivingIcon.icns'
 const PRODUCTION_DMG_ICNS = 'resources/icons/ColivingDmgIcon.icns'
 const PRODUCTION_ICON = 'resources/icons/ColivingIcon.png'
@@ -26,7 +26,7 @@ const PRODUCTION_BUILD_DIR = 'build-production'
 const STAGING_APP_ID = 'co.coliving.staging.app'
 const STAGING_NAME = 'Coliving Staging'
 const STAGING_PACKAGE_JSON_NAME = 'coliving-client-staging'
-const STAGING_BUCKET = 'download.staging.coliving.co'
+const STAGING_BUCKET = 'download.staging.coliving.lol'
 const STAGING_ICNS = 'resources/icons/ColivingStagingIcon.icns'
 const STAGING_DMG_ICNS = 'resources/icons/ColivingStagingDmgIcon.icns'
 const STAGING_ICON = 'resources/icons/ColivingStagingIcon.png'
@@ -184,7 +184,7 @@ const makeBuildParams = isProduction => {
       snap: {
         publish: {
           provider: 'generic',
-          url: 'https://coliving.co'
+          url: 'https://coliving.lol'
         }
       },
       afterSign: async params => notarizeFn(appId, params),

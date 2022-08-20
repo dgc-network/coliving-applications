@@ -13,7 +13,7 @@ import { getTierForUser } from 'common/store/wallet/utils'
 import { getSearch } from 'components/search-bar/store/selectors'
 import Bar from 'components/search/SearchBar'
 import { make } from 'store/analytics/actions'
-import { albumPage, playlistPage, profilePage, getPathname } from 'utils/route'
+import { albumPage, content listPage, profilePage, getPathname } from 'utils/route'
 
 import styles from './ConnectedSearchBar.module.css'
 import { fetchSearch, cancelFetchSearch, clearSearch } from './store/actions'
@@ -91,23 +91,23 @@ class ConnectedSearchBar extends Component {
         (t) => value === (t.user ? t.permalink : '')
       )
       if (selectedAgreement) return { kind: 'agreement', id: selectedAgreement.agreement_id }
-      const selectedPlaylist = this.props.search.playlists.find(
+      const selectedPlaylist = this.props.search.content lists.find(
         (p) =>
           value ===
           (p.user
-            ? playlistPage(p.user.handle, p.playlist_name, p.playlist_id)
+            ? content listPage(p.user.handle, p.content list_name, p.content list_id)
             : '')
       )
       if (selectedPlaylist)
-        return { kind: 'playlist', id: selectedPlaylist.playlist_id }
+        return { kind: 'content list', id: selectedPlaylist.content list_id }
       const selectedAlbum = this.props.search.albums.find(
         (a) =>
           value ===
           (a.user
-            ? albumPage(a.user.handle, a.playlist_name, a.playlist_id)
+            ? albumPage(a.user.handle, a.content list_name, a.content list_id)
             : '')
       )
-      if (selectedAlbum) return { kind: 'album', id: selectedAlbum.playlist_id }
+      if (selectedAlbum) return { kind: 'album', id: selectedAlbum.content list_id }
       return {}
     })()
     this.props.recordSearchResultClick({
@@ -137,7 +137,7 @@ class ConnectedSearchBar extends Component {
               size: user.profile_picture_sizes
                 ? SquareSizes.SIZE_150_BY_150
                 : null,
-              contentNodeEndpoint: user.creator_node_endpoint,
+              contentNodeEndpoint: user.content_node_endpoint,
               defaultImage: profilePicEmpty,
               isVerifiedUser: user.is_verified,
               tier: getTierForUser(user)
@@ -156,7 +156,7 @@ class ConnectedSearchBar extends Component {
               imageMultihash: agreement.cover_art_sizes || agreement.cover_art,
               size: agreement.cover_art_sizes ? SquareSizes.SIZE_150_BY_150 : null,
               contentNodeEndpoint: agreement.user
-                ? agreement.user.creator_node_endpoint
+                ? agreement.user.content_node_endpoint
                 : '',
               defaultImage: placeholderArt,
               isVerifiedUser: agreement.user.is_verified,
@@ -166,29 +166,29 @@ class ConnectedSearchBar extends Component {
         },
         {
           title: 'Playlists',
-          children: this.props.search.playlists.map((playlist) => {
+          children: this.props.search.content lists.map((content list) => {
             return {
-              primary: playlist.playlist_name,
-              secondary: playlist.user ? playlist.user.name : '',
-              key: playlist.user
-                ? playlistPage(
-                    playlist.user.handle,
-                    playlist.playlist_name,
-                    playlist.playlist_id
+              primary: content list.content list_name,
+              secondary: content list.user ? content list.user.name : '',
+              key: content list.user
+                ? content listPage(
+                    content list.user.handle,
+                    content list.content list_name,
+                    content list.content list_id
                   )
                 : '',
-              id: playlist.playlist_id,
-              userId: playlist.playlist_owner_id,
-              imageMultihash: playlist.cover_art_sizes || playlist.cover_art,
-              size: playlist.cover_art_sizes
+              id: content list.content list_id,
+              userId: content list.content list_owner_id,
+              imageMultihash: content list.cover_art_sizes || content list.cover_art,
+              size: content list.cover_art_sizes
                 ? SquareSizes.SIZE_150_BY_150
                 : null,
               defaultImage: placeholderArt,
-              contentNodeEndpoint: playlist.user
-                ? playlist.user.creator_node_endpoint
+              contentNodeEndpoint: content list.user
+                ? content list.user.content_node_endpoint
                 : '',
-              isVerifiedUser: playlist.user.is_verified,
-              tier: getTierForUser(playlist.user)
+              isVerifiedUser: content list.user.is_verified,
+              tier: getTierForUser(content list.user)
             }
           })
         },
@@ -199,19 +199,19 @@ class ConnectedSearchBar extends Component {
               key: album.user
                 ? albumPage(
                     album.user.handle,
-                    album.playlist_name,
-                    album.playlist_id
+                    album.content list_name,
+                    album.content list_id
                   )
                 : '',
-              primary: album.playlist_name,
+              primary: album.content list_name,
               secondary: album.user ? album.user.name : '',
-              id: album.playlist_id,
-              userId: album.playlist_owner_id,
+              id: album.content list_id,
+              userId: album.content list_owner_id,
               imageMultihash: album.cover_art_sizes || album.cover_art,
               size: album.cover_art_sizes ? SquareSizes.SIZE_150_BY_150 : null,
               defaultImage: placeholderArt,
               contentNodeEndpoint: album.user
-                ? album.user.creator_node_endpoint
+                ? album.user.content_node_endpoint
                 : '',
               isVerifiedUser: album.user.is_verified,
               tier: getTierForUser(album.user)

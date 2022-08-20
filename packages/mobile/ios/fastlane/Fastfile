@@ -28,7 +28,7 @@ platform :ios do
   desc "Build the app"
   lane :build do |options|
 
-    if options[:bundle_id] === 'co.coliving.colivingmusic'  
+    if options[:bundle_id] === 'co.coliving.lollivingmusic'  
       appId = MY_APP_ID
       provisioningProfile = MY_PROFILE
       environment = 'production'
@@ -67,7 +67,7 @@ platform :ios do
     # is specified in Info.plist, that one will be used
 
     previousVersionNumberString = get_app_store_version_number(
-      bundle_id: 'co.coliving.colivingmusic'
+      bundle_id: 'co.coliving.lollivingmusic'
     )
 
     previousVersionNumber = Gem::Version.new previousVersionNumberString
@@ -131,7 +131,7 @@ platform :ios do
   desc "Push a build to TestFlight"
   lane :upload do |options|
 
-    if (options[:bundle_id] === 'co.coliving.colivingmusic') 
+    if (options[:bundle_id] === 'co.coliving.lollivingmusic') 
       appleId = "1491270519"
       ipa = './output/gym/Coliving.ipa'
     else

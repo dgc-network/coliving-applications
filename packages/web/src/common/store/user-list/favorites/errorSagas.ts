@@ -4,14 +4,14 @@ import * as errorActions from 'common/store/errors/actions'
 
 import {
   GET_AGREEMENT_FAVORITE_ERROR,
-  GET_PLAYLIST_FAVORITE_ERROR,
+  GET_CONTENT_LIST_FAVORITE_ERROR,
   agreementFavoriteError,
-  playlistFavoriteError
+  content listFavoriteError
 } from './actions'
 
 type ErrorActions =
   | ReturnType<typeof agreementFavoriteError>
-  | ReturnType<typeof playlistFavoriteError>
+  | ReturnType<typeof content listFavoriteError>
 
 export function* handleFavoriteError(action: ErrorActions) {
   yield put(
@@ -29,7 +29,7 @@ export function* handleFavoriteError(action: ErrorActions) {
 
 export function* watchFavoriteError() {
   yield takeEvery(
-    [GET_AGREEMENT_FAVORITE_ERROR, GET_PLAYLIST_FAVORITE_ERROR],
+    [GET_AGREEMENT_FAVORITE_ERROR, GET_CONTENT_LIST_FAVORITE_ERROR],
     handleFavoriteError
   )
 }

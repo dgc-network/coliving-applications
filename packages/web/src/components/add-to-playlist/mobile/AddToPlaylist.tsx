@@ -10,11 +10,11 @@ import {
   addAgreementToPlaylist,
   createPlaylist
 } from 'common/store/cache/collections/actions'
-import { close } from 'common/store/ui/add-to-playlist/actions'
+import { close } from 'common/store/ui/add-to-content list/actions'
 import {
   getAgreementId,
   getAgreementTitle
-} from 'common/store/ui/add-to-playlist/selectors'
+} from 'common/store/ui/add-to-content list/selectors'
 import Card from 'components/card/mobile/Card'
 import CardLineup from 'components/lineup/CardLineup'
 import MobilePageContainer from 'components/mobile-page-container/MobilePageContainer'
@@ -25,7 +25,7 @@ import useHasChangedRoute from 'hooks/useHasChangedRoute'
 import NewPlaylistButton from 'pages/saved-page/components/mobile/NewPlaylistButton'
 import { newCollectionMetadata } from 'schemas'
 import { AppState } from 'store/types'
-import { playlistPage } from 'utils/route'
+import { content listPage } from 'utils/route'
 import { withNullGuard } from 'utils/withNullGuard'
 
 import styles from './AddToPlaylist.module.css'
@@ -76,18 +76,18 @@ const AddToPlaylist = g(
 
     const { toast } = useContext(ToastContext)
 
-    const cards = account.playlists.map((playlist: any) => {
+    const cards = account.content lists.map((content list: any) => {
       return (
         <Card
-          key={playlist.playlist_id}
-          id={playlist.playlist_id}
-          userId={playlist.owner_id}
-          imageSize={playlist._cover_art_sizes}
-          primaryText={playlist.playlist_name}
-          secondaryText={playlist.ownerName}
+          key={content list.content list_id}
+          id={content list.content list_id}
+          userId={content list.owner_id}
+          imageSize={content list._cover_art_sizes}
+          primaryText={content list.content list_name}
+          secondaryText={content list.ownerName}
           onClick={() => {
             toast(messages.addedToast)
-            addAgreementToPlaylist(agreementId!, playlist.playlist_id)
+            addAgreementToPlaylist(agreementId!, content list.content list_id)
             close()
           }}
         />
@@ -96,14 +96,14 @@ const AddToPlaylist = g(
 
     const addToNewPlaylist = useCallback(() => {
       const metadata = newCollectionMetadata({
-        playlist_name: agreementTitle,
+        content list_name: agreementTitle,
         is_private: false
       })
       const tempId = `${Date.now()}`
       createPlaylist(tempId, metadata, agreementId!)
       addAgreementToPlaylist(agreementId!, tempId)
       toast(messages.createdToast)
-      goToRoute(playlistPage(account.handle, agreementTitle, tempId))
+      goToRoute(content listPage(account.handle, agreementTitle, tempId))
       close()
     }, [
       account,
@@ -140,8 +140,8 @@ function mapStateToProps(state: AppState) {
 function mapDispatchToProps(dispatch: Dispatch) {
   return {
     goToRoute: (route: string) => dispatch(pushRoute(route)),
-    addAgreementToPlaylist: (agreementId: ID, playlistId: ID | string) =>
-      dispatch(addAgreementToPlaylist(agreementId, playlistId)),
+    addAgreementToPlaylist: (agreementId: ID, content listId: ID | string) =>
+      dispatch(addAgreementToPlaylist(agreementId, content listId)),
     createPlaylist: (tempId: string, metadata: Collection, agreementId: ID) =>
       dispatch(
         createPlaylist(

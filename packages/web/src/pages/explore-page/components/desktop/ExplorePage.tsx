@@ -22,13 +22,13 @@ import { useOrderedLoad } from 'hooks/useOrderedLoad'
 import {
   LET_THEM_DJ,
   TOP_ALBUMS,
-  TRENDING_PLAYLISTS,
+  TRENDING_CONTENT_LISTS,
   TRENDING_UNDERGROUND,
-  CHILL_PLAYLISTS,
-  UPBEAT_PLAYLISTS,
-  INTENSE_PLAYLISTS,
-  PROVOKING_PLAYLISTS,
-  INTIMATE_PLAYLISTS
+  CHILL_CONTENT_LISTS,
+  UPBEAT_CONTENT_LISTS,
+  INTENSE_CONTENT_LISTS,
+  PROVOKING_CONTENT_LISTS,
+  INTIMATE_CONTENT_LISTS
 } from 'pages/explore-page/collections'
 import {
   HEAVY_ROTATION,
@@ -56,7 +56,7 @@ reposts, and follows. Refreshes often so if you like a agreement, favorite it.`,
 }
 
 export const justForYou = [
-  TRENDING_PLAYLISTS,
+  TRENDING_CONTENT_LISTS,
   TRENDING_UNDERGROUND,
   HEAVY_ROTATION,
   LET_THEM_DJ,
@@ -69,17 +69,17 @@ export const justForYou = [
 ]
 
 const lifestyle = [
-  CHILL_PLAYLISTS,
-  UPBEAT_PLAYLISTS,
-  INTENSE_PLAYLISTS,
-  PROVOKING_PLAYLISTS,
-  INTIMATE_PLAYLISTS
+  CHILL_CONTENT_LISTS,
+  UPBEAT_CONTENT_LISTS,
+  INTENSE_CONTENT_LISTS,
+  PROVOKING_CONTENT_LISTS,
+  INTIMATE_CONTENT_LISTS
 ]
 
 export type ExplorePageProps = {
   title: string
   description: string
-  playlists: UserCollection[]
+  content lists: UserCollection[]
   profiles: User[]
   status: Status
   goToRoute: (route: string) => void
@@ -88,13 +88,13 @@ export type ExplorePageProps = {
 const ExplorePage = ({
   title,
   description,
-  playlists,
+  content lists,
   profiles,
   status,
   goToRoute
 }: ExplorePageProps) => {
   const { isLoading: isLoadingPlaylist, setDidLoad: setDidLoadPlaylist } =
-    useOrderedLoad(playlists.length)
+    useOrderedLoad(content lists.length)
   const { isLoading: isLoadingProfiles, setDidLoad: setDidLoadProfile } =
     useOrderedLoad(profiles.length)
 
@@ -128,7 +128,7 @@ const ExplorePage = ({
       >
         {justForYou.map((i) => {
           const title =
-            i.variant === CollectionVariant.SMART ? i.playlist_name : i.title
+            i.variant === CollectionVariant.SMART ? i.content list_name : i.title
           const subtitle =
             i.variant === CollectionVariant.SMART ? i.description : i.subtitle
           const Icon = i.icon ? i.icon : Fragment
@@ -181,11 +181,11 @@ const ExplorePage = ({
             />
           </div>
         ) : (
-          playlists.map((playlist: UserCollection, i: number) => {
+          content lists.map((content list: UserCollection, i: number) => {
             return (
               <CollectionArtCard
-                key={playlist.playlist_id}
-                id={playlist.playlist_id}
+                key={content list.content list_id}
+                id={content list.content list_id}
                 index={i}
                 isLoading={isLoadingPlaylist(i)}
                 setDidLoad={setDidLoadPlaylist}

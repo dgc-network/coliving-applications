@@ -25,11 +25,11 @@ import styles from './CollectionPage.module.css'
 const messages = {
   emptyPage: {
     owner:
-      'Find a agreement you want to add and click the ••• button to add it to your playlist',
+      'Find a agreement you want to add and click the ••• button to add it to your content list',
     visitor: 'This Playlist is Empty...'
   },
   type: {
-    playlist: 'Playlist',
+    content list: 'Playlist',
     album: 'Album'
   },
   remove: 'Remove from this'
@@ -50,7 +50,7 @@ export type CollectionPageProps = {
   title: string
   description: string
   canonicalUrl: string
-  playlistId: ID
+  content listId: ID
   playing: boolean
   getPlayingUid: () => string | null
   type: CollectionsPageType
@@ -101,7 +101,7 @@ const CollectionPage = ({
   title,
   description: pageDescription,
   canonicalUrl,
-  playlistId,
+  content listId,
   allowReordering,
   playing,
   type,
@@ -154,13 +154,13 @@ const CollectionPage = ({
       0
     ) ?? 0
 
-  const playlistOwnerName = user?.name ?? ''
-  const playlistOwnerHandle = user?.handle ?? ''
-  const playlistOwnerId = user?.user_id ?? null
-  const isOwner = userId === playlistOwnerId
+  const content listOwnerName = user?.name ?? ''
+  const content listOwnerHandle = user?.handle ?? ''
+  const content listOwnerId = user?.user_id ?? null
+  const isOwner = userId === content listOwnerId
   const isFollowing = user?.does_current_user_follow ?? false
   const isSaved =
-    metadata?.has_current_user_saved || playlistId in (userPlaylists ?? {})
+    metadata?.has_current_user_saved || content listId in (userPlaylists ?? {})
 
   const variant = metadata?.variant ?? null
   const gradient =
@@ -177,28 +177,28 @@ const CollectionPage = ({
     agreementCount,
     isEmpty,
     lastModified,
-    playlistName,
+    content listName,
     description,
     isPrivate,
     isAlbum,
     isPublishing,
-    playlistSaveCount,
-    playlistRepostCount,
+    content listSaveCount,
+    content listRepostCount,
     isReposted
   } = computeCollectionMetadataProps(metadata)
 
   const topSection = (
     <CollectionHeader
-      collectionId={playlistId}
-      userId={playlistOwnerId}
+      collectionId={content listId}
+      userId={content listOwnerId}
       loading={
         typeTitle === 'Audio NFT Playlist' ? agreementsLoading : collectionLoading
       }
       agreementsLoading={agreementsLoading}
       type={typeTitle}
-      title={playlistName}
-      artistName={playlistOwnerName}
-      artistHandle={playlistOwnerHandle}
+      title={content listName}
+      artistName={content listOwnerName}
+      artistHandle={content listOwnerHandle}
       coverArtSizes={coverArtSizes}
       description={description}
       isOwner={isOwner}
@@ -211,8 +211,8 @@ const CollectionPage = ({
       isReposted={isReposted}
       isSaved={isSaved}
       isFollowing={isFollowing}
-      reposts={playlistRepostCount}
-      saves={playlistSaveCount}
+      reposts={content listRepostCount}
+      saves={content listSaveCount}
       playing={queuedAndPlaying}
       // Actions
       onClickArtistName={onHeroAgreementClickArtistName}
@@ -251,7 +251,7 @@ const CollectionPage = ({
         ) : (
           <div className={styles.tableWrapper}>
             <AgreementsTable
-              key={playlistName}
+              key={content listName}
               loading={agreementsLoading}
               loadingRowsCount={agreementCount}
               columns={columns}
@@ -261,7 +261,7 @@ const CollectionPage = ({
               dataSource={dataSource}
               allowReordering={
                 userId !== null &&
-                userId === playlistOwnerId &&
+                userId === content listOwnerId &&
                 allowReordering &&
                 !isAlbum
               }
@@ -274,7 +274,7 @@ const CollectionPage = ({
               onReorderAgreements={onReorderAgreements}
               onClickRemove={isOwner ? onClickRemove : null}
               removeText={`${messages.remove} ${
-                isAlbum ? messages.type.album : messages.type.playlist
+                isAlbum ? messages.type.album : messages.type.content list
               }`}
             />
             {collectionLoading && typeTitle === 'Audio NFT Playlist' ? (

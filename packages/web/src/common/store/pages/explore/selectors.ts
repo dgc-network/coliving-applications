@@ -8,7 +8,7 @@ import { getUsers } from 'common/store/cache/users/selectors'
 const getExplore = (state: CommonState) => state.pages.explore
 
 export type GetExplore = {
-  playlists: UserCollection[]
+  content lists: UserCollection[]
   profiles: User[]
   status: Status
 }
@@ -19,16 +19,16 @@ export const makeGetExplore = () => {
     getCollections,
     getUsers,
     (explore, collections, users) => {
-      const playlists = explore.playlists
+      const content lists = explore.content lists
         .map((id) => collections[id])
         .filter(Boolean)
         .map((collection) => ({
           ...collection,
-          user: users[collection.playlist_owner_id] || {}
+          user: users[collection.content list_owner_id] || {}
         }))
       const profiles = explore.profiles.map((id) => users[id]).filter(Boolean)
       return {
-        playlists,
+        content lists,
         profiles,
         status: explore.status
       }

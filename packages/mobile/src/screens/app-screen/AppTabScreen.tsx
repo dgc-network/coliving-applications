@@ -30,7 +30,7 @@ import {
 } from 'app/screens/user-list-screen'
 import type { SearchPlaylist, SearchAgreement } from 'app/store/search/types'
 
-import { EditPlaylistScreen } from '../edit-playlist-screen/EditPlaylistScreen'
+import { EditPlaylistScreen } from '../edit-content list-screen/EditPlaylistScreen'
 import { NotificationsDrawerNavigationContext } from '../notifications-screen/NotificationsDrawerNavigationContext'
 import { TipArtistModal } from '../tip-artist-screen'
 import { AgreementRemixesScreen } from '../agreement-screen/AgreementRemixesScreen'

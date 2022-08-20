@@ -5,13 +5,13 @@ const ENVIRONMENT = process.env.REACT_APP_ENVIRONMENT
 let APP_DOWNLOAD_URL: string
 switch (ENVIRONMENT) {
   case 'staging':
-    APP_DOWNLOAD_URL = 'https://download.staging.coliving.co'
+    APP_DOWNLOAD_URL = 'https://download.staging.coliving.lol'
     break
   case 'production':
-    APP_DOWNLOAD_URL = 'https://download.coliving.co'
+    APP_DOWNLOAD_URL = 'https://download.coliving.lol'
     break
   default:
-    APP_DOWNLOAD_URL = 'https://download.coliving.co'
+    APP_DOWNLOAD_URL = 'https://download.coliving.lol'
     break
 }
 

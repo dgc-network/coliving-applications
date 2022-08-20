@@ -55,7 +55,7 @@
   line-height: normal;
   padding-bottom: 7px;
 }
-.artistName.playlistCreator.medium {
+.artistName.content listCreator.medium {
   padding-bottom: 2px;
 }
 .artistName.small,
@@ -180,6 +180,6 @@
   padding-right: 3px;
 }
 
-.playlistCreator {
+.content listCreator {
   color: var(--neutral);
 }

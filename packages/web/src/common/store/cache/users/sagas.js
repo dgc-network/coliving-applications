@@ -13,7 +13,7 @@ import {
   getUsers,
   getUserTimestamps
 } from 'common/store/cache/users/selectors'
-import { removePlaylistLibraryTempPlaylists } from 'common/store/playlist-library/helpers'
+import { removePlaylistLibraryTempPlaylists } from 'common/store/content list-library/helpers'
 import {
   getSelectedServices,
   getStatus
@@ -31,13 +31,13 @@ import { waitForValue } from 'utils/sagaHelpers'
 import { pruneBlobValues, reformat } from './utils'
 
 /**
- * If the user is not a creator, upgrade the user to a creator node.
+ * If the user is not a creator, upgrade the user to a content node.
  */
 export function* upgradeToCreator() {
   const user = yield select(getAccountUser)
 
-  // If user already has creator_node_endpoint, do not reselect replica set
-  let newEndpoint = user.creator_node_endpoint || ''
+  // If user already has content_node_endpoint, do not reselect replica set
+  let newEndpoint = user.content_node_endpoint || ''
   if (!newEndpoint) {
     const serviceSelectionStatus = yield select(getStatus)
     if (serviceSelectionStatus === Status.ERROR) {
@@ -72,7 +72,7 @@ export function* upgradeToCreator() {
       {
         id: user.user_id,
         metadata: {
-          creator_node_endpoint: newEndpoint
+          content_node_endpoint: newEndpoint
         }
       }
     ])
@@ -151,14 +151,14 @@ export function* fetchUserByHandle(
  * @param {number} userId target user id
  */
 export function* fetchUserCollections(userId) {
-  // Get playlists.
-  const playlists = yield call(ColivingBackend.getPlaylists, userId)
-  const playlistIds = playlists.map((p) => p.playlist_id)
+  // Get content lists.
+  const content lists = yield call(ColivingBackend.getPlaylists, userId)
+  const content listIds = content lists.map((p) => p.content list_id)
 
-  if (!playlistIds.length) return
-  const { collections } = yield call(retrieveCollections, userId, playlistIds)
+  if (!content listIds.length) return
+  const { collections } = yield call(retrieveCollections, userId, content listIds)
   const cachedCollectionIds = Object.values(collections).map(
-    (c) => c.playlist_id
+    (c) => c.content list_id
   )
 
   yield put(
@@ -209,14 +209,14 @@ function* watchSyncLocalStorageUser() {
       const merged = mergeWith({}, existing, addedUser, mergeCustomizer)
       // Remove blob urls if any - blob urls only last for the session so we don't want to store those
       const cleaned = pruneBlobValues(merged)
-      // Remove temp playlists from the playlist library since they are only meant to last
-      // in the current session until the playlist is finished creating
-      // If we don't do this, temp playlists can get stuck in local storage (resulting in a corrupted state)
-      // if the user reloads before a temp playlist is resolved.
-      cleaned.playlist_library =
-        cleaned.playlist_library == null
-          ? cleaned.playlist_library
-          : removePlaylistLibraryTempPlaylists(cleaned.playlist_library)
+      // Remove temp content lists from the content list library since they are only meant to last
+      // in the current session until the content list is finished creating
+      // If we don't do this, temp content lists can get stuck in local storage (resulting in a corrupted state)
+      // if the user reloads before a temp content list is resolved.
+      cleaned.content list_library =
+        cleaned.content list_library == null
+          ? cleaned.content list_library
+          : removePlaylistLibraryTempPlaylists(cleaned.content list_library)
       // Set user back to local storage
       setColivingAccountUser(cleaned)
     }
@@ -254,7 +254,7 @@ function* watchFetchProfilePicture() {
         const user = yield select(getUser, { id: userId })
         if (!user || (!user.profile_picture_sizes && !user.profile_picture))
           return
-        const gateways = getCreatorNodeIPFSGateways(user.creator_node_endpoint)
+        const gateways = getCreatorNodeIPFSGateways(user.content_node_endpoint)
         if (user.profile_picture_sizes) {
           const url = yield call(
             ColivingBackend.getImageUrl,
@@ -324,7 +324,7 @@ function* watchFetchCoverPhoto() {
         return
       }
 
-      const gateways = getCreatorNodeIPFSGateways(user.creator_node_endpoint)
+      const gateways = getCreatorNodeIPFSGateways(user.content_node_endpoint)
       if (user.cover_photo_sizes) {
         const url = yield call(
           ColivingBackend.getImageUrl,

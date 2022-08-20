@@ -6,8 +6,8 @@ import { RepostType } from './types'
 export const SET_REPOST = 'REPOSTING_USER_PAGE/SET_REPOST'
 export const GET_AGREEMENT_REPOST_ERROR =
   'REPOSTING_USER_PAGE/GET_AGREEMENT_REPOST_ERROR'
-export const GET_PLAYLIST_REPOST_ERROR =
-  'REPOSTING_USER_PAGE/GET_PLAYLIST_REPOST_ERROR'
+export const GET_CONTENT_LIST_REPOST_ERROR =
+  'REPOSTING_USER_PAGE/GET_CONTENT_LIST_REPOST_ERROR'
 
 export const setRepost = createCustomAction(
   SET_REPOST,
@@ -17,7 +17,7 @@ export const agreementRepostError = createCustomAction(
   GET_AGREEMENT_REPOST_ERROR,
   (id: ID, error: string) => ({ id, error })
 )
-export const playlistRepostError = createCustomAction(
-  GET_PLAYLIST_REPOST_ERROR,
+export const content listRepostError = createCustomAction(
+  GET_CONTENT_LIST_REPOST_ERROR,
   (id: ID, error: string) => ({ id, error })
 )

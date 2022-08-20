@@ -16,7 +16,7 @@ import styles from './RewardsBanner.module.css'
 const messages = {
   rewards: '$LIVE REWARDS',
   agreementsDescription: 'TOP 5 AGREEMENTS EACH WEEK WIN $LIVE',
-  playlistsDescription: 'TOP 5 PLAYLISTS EACH WEEK WIN $LIVE',
+  content listsDescription: 'TOP 5 CONTENT_LISTS EACH WEEK WIN $LIVE',
   undergroundDescription: 'TOP 5 AGREEMENTS EACH WEEK WIN $LIVE',
   learnMore: 'LEARN MORE'
 }
@@ -25,8 +25,8 @@ const messageMap = {
   agreements: {
     description: messages.agreementsDescription
   },
-  playlists: {
-    description: messages.playlistsDescription
+  content lists: {
+    description: messages.content listsDescription
   },
   underground: {
     description: messages.undergroundDescription
@@ -34,7 +34,7 @@ const messageMap = {
 }
 
 type RewardsBannerProps = {
-  bannerType: 'agreements' | 'playlists' | 'underground'
+  bannerType: 'agreements' | 'content lists' | 'underground'
 }
 
 const useHandleBannerClick = () => {

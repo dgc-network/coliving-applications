@@ -8,7 +8,7 @@ import styles from './MobileConnectWalletsDrawer.module.css'
 const messages = {
   title: 'Connect Wallets',
   visit:
-    'To connect additional wallets please visit coliving.co from a desktop browser'
+    'To connect additional wallets please visit coliving.lol from a desktop browser'
 }
 
 const MobileConnectWalletsDrawer = ({ onClose }: { onClose: () => void }) => {

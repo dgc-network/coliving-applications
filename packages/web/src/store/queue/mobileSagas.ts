@@ -32,7 +32,7 @@ import { generateM3U8Variants } from 'utils/hlsUtil'
 
 const PUBLIC_IPFS_GATEWAY = 'http://cloudflare-ipfs.com/ipfs/'
 const DEFAULT_IMAGE_URL =
-  'https://download.coliving.co/static-resources/preview-image.jpg'
+  'https://download.coliving.lol/static-resources/preview-image.jpg'
 
 const getImageUrl = (cid: string, gateway: string | null): string => {
   if (!cid) return DEFAULT_IMAGE_URL
@@ -50,7 +50,7 @@ function* getAgreementInfo(id: ID, uid: UID) {
   if (!owner) return null
 
   const gateways = owner
-    ? getCreatorNodeIPFSGateways(owner.creator_node_endpoint)
+    ? getCreatorNodeIPFSGateways(owner.content_node_endpoint)
     : []
 
   const imageHash = agreement.cover_art_sizes

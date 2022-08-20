@@ -15,7 +15,7 @@ import UploadType from './uploadType'
 class SelectPage extends Component {
   state = {
     showSelectServices: this.props.account
-      ? !this.props.account.creator_node_endpoint
+      ? !this.props.account.content_node_endpoint
       : false
   }
 
@@ -23,7 +23,7 @@ class SelectPage extends Component {
     const { account } = this.props
     if (
       account &&
-      !account.creator_node_endpoint &&
+      !account.content_node_endpoint &&
       !this.state.showSelectServices
     ) {
       this.setState({ showSelectServices: true })
@@ -110,7 +110,7 @@ SelectPage.propTypes = {
   uploadType: PropTypes.oneOf([
     UploadType.INDIVIDUAL_AGREEMENT,
     UploadType.INDIVIDUAL_AGREEMENTS,
-    UploadType.PLAYLIST,
+    UploadType.CONTENT_LIST,
     UploadType.ALBUM
   ]),
   onCloseMultiAgreementNotification: PropTypes.func,

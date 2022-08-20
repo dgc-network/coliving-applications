@@ -393,7 +393,7 @@ function* connectSPLWallet(
     let updatedMetadata = newUserMetadata({ ...userMetadata })
 
     if (
-      !updatedMetadata.creator_node_endpoint ||
+      !updatedMetadata.content_node_endpoint ||
       !updatedMetadata.metadata_multihash
     ) {
       yield put(fetchServices())
@@ -559,7 +559,7 @@ function* connectEthWallet(web3Instance: any) {
     let updatedMetadata = newUserMetadata({ ...userMetadata })
 
     if (
-      !updatedMetadata.creator_node_endpoint ||
+      !updatedMetadata.content_node_endpoint ||
       !updatedMetadata.metadata_multihash
     ) {
       yield put(fetchServices())

@@ -12,14 +12,14 @@ import { useHistory } from 'react-router-dom'
 import {
   UPLOAD_PAGE,
   UPLOAD_ALBUM_PAGE,
-  UPLOAD_PLAYLIST_PAGE
+  UPLOAD_CONTENT_LIST_PAGE
 } from 'utils/route'
 import useHotkeys from 'hooks/useHotkey'
 
 export const NO_VISUALIZER_ROUTES = new Set([
   UPLOAD_PAGE,
   UPLOAD_ALBUM_PAGE,
-  UPLOAD_PLAYLIST_PAGE
+  UPLOAD_CONTENT_LIST_PAGE
 ])
 
 // Fetch the visualizer 1s after initial load

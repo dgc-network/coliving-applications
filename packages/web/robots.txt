@@ -2,7 +2,7 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://coliving.co/sitemaps/defaults.xml
-Sitemap: https://coliving.co/sitemaps/agreements/index.xml
-Sitemap: https://coliving.co/sitemaps/collections/index.xml
-Sitemap: https://coliving.co/sitemaps/users/index.xml
+Sitemap: https://coliving.lol/sitemaps/defaults.xml
+Sitemap: https://coliving.lol/sitemaps/agreements/index.xml
+Sitemap: https://coliving.lol/sitemaps/collections/index.xml
+Sitemap: https://coliving.lol/sitemaps/users/index.xml

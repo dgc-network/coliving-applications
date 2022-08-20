@@ -21,7 +21,7 @@ type StatsButtonRowProps = {
   onClickReposts: () => void
 }
 
-// A row of stats, visible on playlist and agreements pages.
+// A row of stats, visible on content list and agreements pages.
 const StatsButtonRow = ({
   showListenCount,
   showFavoriteCount,

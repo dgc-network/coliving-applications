@@ -20,7 +20,7 @@ export type SearchUser = UserMultihash &
     is_verified: boolean
     location: string
     name: string
-    playlist_count: null
+    content list_count: null
     repost_count: null
     agreement_count: null
     blocknumber: number
@@ -92,7 +92,7 @@ export type SearchPlaylist = CollectionImage & {
   _is_publishing?: boolean
   description: string | null
   is_album: boolean
-  playlist_name: string
+  content list_name: string
   repost_count: number
   total_play_count: null
   user: SearchUser
@@ -107,11 +107,11 @@ export type SearchPlaylist = CollectionImage & {
   agreements: []
   agreement_count: number
   variant: string
-  playlist_id: number
-  playlist_owner_id: number
+  content list_id: number
+  content list_owner_id: number
   followee_saves: []
   save_count: undefined
-  playlist_contents: {
+  content list_contents: {
     agreement_ids: {
       agreement: number
       time: number
@@ -122,7 +122,7 @@ export type SearchPlaylist = CollectionImage & {
 export type SearchResults = {
   users: SearchUser[]
   agreements: SearchAgreement[]
-  playlists: SearchPlaylist[]
+  content lists: SearchPlaylist[]
   albums: SearchPlaylist[]
 }
 export type SectionHeader = keyof SearchResults

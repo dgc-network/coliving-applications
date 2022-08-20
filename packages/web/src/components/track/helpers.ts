@@ -41,8 +41,8 @@ export const getAgreementWithFallback = (agreement: Agreement | null) => {
 export const getCollectionWithFallback = (collection: Collection | null) => {
   return (
     collection || {
-      playlist_id: -1,
-      playlist_name: '',
+      content list_id: -1,
+      content list_name: '',
       repost_count: 0,
       save_count: 0,
       agreement_ids: [],
@@ -56,7 +56,7 @@ export const getCollectionWithFallback = (collection: Collection | null) => {
       is_delete: false,
       activity_timestamp: '',
       _co_sign: undefined,
-      playlist_owner_id: -1,
+      content list_owner_id: -1,
       _cover_art_sizes: {
         '150x150': '',
         '480x480': '',

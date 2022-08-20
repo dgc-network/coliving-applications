@@ -26,7 +26,7 @@ import styles from './DeletedPage.module.css'
 const messages = {
   agreementDeleted: 'Agreement [Deleted]',
   agreementDeletedByArtist: 'Agreement [Deleted By Artist]',
-  playlistDeleted: 'Playlist [Deleted by Artist]',
+  content listDeleted: 'Playlist [Deleted by Artist]',
   albumDeleted: 'Album [Deleted By Artist]',
   checkOut: (name: string) => `Check out more by ${name}`,
   moreBy: (name: string) => `More by ${name}`
@@ -92,14 +92,14 @@ const DeletedPage = g(
     goToArtistPage
   }) => {
     const isPlaylist =
-      playable.type === PlayableType.PLAYLIST ||
+      playable.type === PlayableType.CONTENT_LIST ||
       playable.type === PlayableType.ALBUM
     const isAlbum = playable.type === PlayableType.ALBUM
 
     const headingText = isPlaylist
       ? isAlbum
         ? messages.albumDeleted
-        : messages.playlistDeleted
+        : messages.content listDeleted
       : deletedByArtist
       ? messages.agreementDeletedByArtist
       : messages.agreementDeleted
@@ -107,10 +107,10 @@ const DeletedPage = g(
     const renderTile = () => {
       return (
         <div className={styles.tile}>
-          {playable.type === PlayableType.PLAYLIST ||
+          {playable.type === PlayableType.CONTENT_LIST ||
           playable.type === PlayableType.ALBUM ? (
             <CollectionArt
-              collectionId={playable.metadata.playlist_id}
+              collectionId={playable.metadata.content list_id}
               coverArtSizes={playable.metadata._cover_art_sizes}
             />
           ) : (
@@ -123,9 +123,9 @@ const DeletedPage = g(
             <div className={styles.type}>{headingText}</div>
             <div className={styles.title}>
               <h1>
-                {playable.type === PlayableType.PLAYLIST ||
+                {playable.type === PlayableType.CONTENT_LIST ||
                 playable.type === PlayableType.ALBUM
-                  ? playable.metadata.playlist_name
+                  ? playable.metadata.content list_name
                   : playable.metadata.title}
               </h1>
             </div>

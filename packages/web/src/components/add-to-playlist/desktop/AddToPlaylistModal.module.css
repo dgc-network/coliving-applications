@@ -83,7 +83,7 @@
   border-radius: 4px;
 }
 
-.playlistName {
+.content listName {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

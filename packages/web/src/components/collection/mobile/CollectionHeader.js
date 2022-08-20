@@ -118,11 +118,11 @@ const CollectionHeader = ({
         : isSaved
         ? OverflowAction.UNFAVORITE
         : OverflowAction.FAVORITE,
-      !isAlbum && isOwner ? OverflowAction.EDIT_PLAYLIST : null,
+      !isAlbum && isOwner ? OverflowAction.EDIT_CONTENT_LIST : null,
       isOwner && !isAlbum && !isPublished
-        ? OverflowAction.PUBLISH_PLAYLIST
+        ? OverflowAction.PUBLISH_CONTENT_LIST
         : null,
-      isOwner && !isAlbum ? OverflowAction.DELETE_PLAYLIST : null,
+      isOwner && !isAlbum ? OverflowAction.DELETE_CONTENT_LIST : null,
       OverflowAction.VIEW_ARTIST_PAGE
     ].filter(Boolean)
 
@@ -178,7 +178,7 @@ const CollectionHeader = ({
   return (
     <div className={styles.collectionHeader}>
       <div className={styles.typeLabel}>
-        {type === 'playlist' && !isPublished
+        {type === 'content list' && !isPublished
           ? isPublishing
             ? messages.publishing
             : messages.privatePlaylist
@@ -289,7 +289,7 @@ CollectionHeader.propTypes = {
   agreementsLoading: PropTypes.bool,
   playing: PropTypes.bool,
   active: PropTypes.bool,
-  type: PropTypes.oneOf(['playlist', 'album']),
+  type: PropTypes.oneOf(['content list', 'album']),
   title: PropTypes.string,
   artistName: PropTypes.string,
   artistHandle: PropTypes.string,
@@ -323,7 +323,7 @@ CollectionHeader.defaultProps = {
   loading: false,
   playing: false,
   active: true,
-  type: 'playlist',
+  type: 'content list',
   description: '',
 
   isOwner: false,

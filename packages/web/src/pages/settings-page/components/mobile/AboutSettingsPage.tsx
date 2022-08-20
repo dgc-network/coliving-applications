@@ -27,10 +27,10 @@ const links = {
   discord: 'https://discordapp.com/invite/yNUg2e2',
   instagram: 'https://www.instagram.com/colivingmusic/',
   twitter: 'https://twitter.com/dgc-network',
-  contact: 'mailto:contact@coliving.co',
+  contact: 'mailto:contact@coliving.lol',
   careers: 'https://jobs.lever.co/coliving',
-  help: 'https://help.coliving.co/',
-  terms: 'https://coliving.co/legal/terms-of-use'
+  help: 'https://help.coliving.lol/',
+  terms: 'https://coliving.lol/legal/terms-of-use'
 }
 
 const messages = {

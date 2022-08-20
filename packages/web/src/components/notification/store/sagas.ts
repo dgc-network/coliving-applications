@@ -66,7 +66,7 @@ type NotificationsResponse =
   | {
       notifications: ResponseNotification[]
       totalUnread: number
-      playlistUpdates: number[]
+      content listUpdates: number[]
     }
   | {
       error: { message: string }
@@ -105,15 +105,15 @@ const getTimeAgo = (now: moment.Moment, date: string) => {
 
 const NOTIFICATION_LIMIT_DEFAULT = 20
 
-function* recordPlaylistUpdatesAnalytics(playlistUpdates: ID[]) {
+function* recordPlaylistUpdatesAnalytics(content listUpdates: ID[]) {
   const existingUpdates: ID[] = yield* select(getPlaylistUpdates)
-  yield* put(notificationActions.setPlaylistUpdates(playlistUpdates))
+  yield* put(notificationActions.setPlaylistUpdates(content listUpdates))
   if (
-    playlistUpdates.length > 0 &&
-    existingUpdates.length !== playlistUpdates.length
+    content listUpdates.length > 0 &&
+    existingUpdates.length !== content listUpdates.length
   ) {
-    const event = make(Name.PLAYLIST_LIBRARY_HAS_UPDATE, {
-      count: playlistUpdates.length
+    const event = make(Name.CONTENT_LIST_LIBRARY_HAS_UPDATE, {
+      count: content listUpdates.length
     })
     yield* put(event)
   }
@@ -153,14 +153,14 @@ export function* fetchNotifications(
     const {
       notifications: notificationItems,
       totalUnread: totalUnviewed,
-      playlistUpdates
+      content listUpdates
     } = notificationsResponse
 
     const notifications = yield* parseAndProcessNotifications(notificationItems)
 
     const hasMore = notifications.length >= limit
 
-    yield* fork(recordPlaylistUpdatesAnalytics, playlistUpdates)
+    yield* fork(recordPlaylistUpdatesAnalytics, content listUpdates)
     yield* put(
       notificationActions.fetchNotificationSucceeded(
         notifications,
@@ -271,8 +271,8 @@ export function* parseAndProcessNotifications(
     }
     if (notification.type === NotificationType.AddAgreementToPlaylist) {
       agreementIdsToFetch.push(notification.agreementId)
-      userIdsToFetch.push(notification.playlistOwnerId)
-      collectionIdsToFetch.push(notification.playlistId)
+      userIdsToFetch.push(notification.content listOwnerId)
+      collectionIdsToFetch.push(notification.content listId)
     }
   })
 
@@ -393,7 +393,7 @@ export function* unsubscribeUserSettings(
 export function* updatePlaylistLastViewedAt(
   action: notificationActions.UpdatePlaylistLastViewedAt
 ) {
-  yield* call(ColivingBackend.updatePlaylistLastViewedAt, action.playlistId)
+  yield* call(ColivingBackend.updatePlaylistLastViewedAt, action.content listId)
 }
 
 // Action Watchers
@@ -447,7 +447,7 @@ function* watchUnsubscribeUserSettings() {
 
 function* watchUpdatePlaylistLastViewedAt() {
   yield* takeEvery(
-    notificationActions.UPDATE_PLAYLIST_VIEW,
+    notificationActions.UPDATE_CONTENT_LIST_VIEW,
     updatePlaylistLastViewedAt
   )
 }
@@ -531,10 +531,10 @@ export function* getNotifications(isFirstFetch: boolean) {
       const {
         notifications: notificationItems,
         totalUnread: totalUnviewed,
-        playlistUpdates
+        content listUpdates
       } = notificationsResponse
 
-      yield* fork(recordPlaylistUpdatesAnalytics, playlistUpdates)
+      yield* fork(recordPlaylistUpdatesAnalytics, content listUpdates)
 
       if (notificationItems.length > 0) {
         const currentNotifications = yield* select(makeGetAllNotifications())

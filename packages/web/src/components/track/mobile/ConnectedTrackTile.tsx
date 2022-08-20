@@ -159,7 +159,7 @@ const ConnectedAgreementTile = memo(
             ? OverflowAction.UNFAVORITE
             : OverflowAction.FAVORITE
           : null,
-        OverflowAction.ADD_TO_PLAYLIST,
+        OverflowAction.ADD_TO_CONTENT_LIST,
         OverflowAction.VIEW_AGREEMENT_PAGE,
         OverflowAction.VIEW_ARTIST_PAGE
       ].filter(Boolean) as OverflowAction[]

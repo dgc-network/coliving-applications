@@ -1,24 +1,24 @@
 import { SmartCollectionVariant } from 'models/SmartCollectionVariant'
 
 export type PlaylistIdentifier = {
-  type: 'playlist'
-  playlist_id: number
+  type: 'content list'
+  content list_id: number
 }
 
 export type ExplorePlaylistIdentifier = {
-  type: 'explore_playlist'
-  playlist_id: SmartCollectionVariant
+  type: 'explore_content list'
+  content list_id: SmartCollectionVariant
 }
 
 export type AudioNftPlaylistIdentifier = {
-  type: 'live_nft_playlist'
-  playlist_id: SmartCollectionVariant.LIVE_NFT_PLAYLIST
+  type: 'live_nft_content list'
+  content list_id: SmartCollectionVariant.LIVE_NFT_CONTENT_LIST
 }
 
 // Never written to backends
 export type TempPlaylistIdentifier = {
-  type: 'temp_playlist'
-  playlist_id: string
+  type: 'temp_content list'
+  content list_id: string
 }
 
 export type PlaylistLibraryIdentifier =

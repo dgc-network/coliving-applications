@@ -137,21 +137,21 @@ class Explore {
     }
   }
 
-  /** PLAYLIST ENDPOINTS */
+  /** CONTENT_LIST ENDPOINTS */
   static async getTopCollections(
-    type?: 'playlist' | 'album',
+    type?: 'content list' | 'album',
     followeesOnly?: boolean,
     limit = 20
   ): Promise<Collection[]> {
     try {
-      const playlists = await libs().discoveryProvider.getTopPlaylists(
+      const content lists = await libs().discoveryProvider.getTopPlaylists(
         type,
         limit,
         undefined,
         followeesOnly ? 'followees' : undefined,
         true
       )
-      return playlists
+      return content lists
     } catch (e) {
       console.error(e)
       return []
@@ -165,18 +165,18 @@ class Explore {
     try {
       const requests = moods.map((mood) => {
         return libs().discoveryProvider.getTopPlaylists(
-          'playlist',
+          'content list',
           limit,
           mood,
           undefined,
           true
         )
       })
-      const playlistsByMood = await Promise.all(requests)
+      const content listsByMood = await Promise.all(requests)
 
       let allPlaylists: CollectionWithScore[] = []
-      playlistsByMood.forEach((playlists) => {
-        allPlaylists = allPlaylists.concat(playlists)
+      content listsByMood.forEach((content lists) => {
+        allPlaylists = allPlaylists.concat(content lists)
       })
       return allPlaylists.sort(scoreComparator).slice(0, 20)
     } catch (e) {

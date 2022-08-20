@@ -9,9 +9,9 @@ import {
 import {
   getAgreementId,
   getAgreementTitle
-} from '-client/src/common/store/ui/add-to-playlist/selectors'
+} from '-client/src/common/store/ui/add-to-content list/selectors'
 import { newCollectionMetadata } from '-client/src/schemas'
-import { FEED_PAGE, playlistPage } from '-client/src/utils/route'
+import { FEED_PAGE, content listPage } from '-client/src/utils/route'
 import type { NativeScrollEvent, NativeSyntheticEvent } from 'react-native'
 import { View } from 'react-native'
 
@@ -60,11 +60,11 @@ export const AddToPlaylistDrawer = () => {
   if (!user || !agreementId || !agreementTitle) {
     return null
   }
-  const userPlaylists = user.playlists ?? []
+  const userPlaylists = user.content lists ?? []
 
   const addToNewPlaylist = () => {
     const metadata = newCollectionMetadata({
-      playlist_name: agreementTitle,
+      content list_name: agreementTitle,
       is_private: false
     })
     const tempId = `${Date.now()}`
@@ -73,7 +73,7 @@ export const AddToPlaylistDrawer = () => {
     )
     dispatchWeb(addAgreementToPlaylist(agreementId!, tempId))
     toast({ content: messages.createdToast })
-    pushRouteWeb(playlistPage(user.handle, agreementTitle, tempId), FEED_PAGE)
+    pushRouteWeb(content listPage(user.handle, agreementTitle, tempId), FEED_PAGE)
     onClose()
   }
 
@@ -109,15 +109,15 @@ export const AddToPlaylistDrawer = () => {
           data={userPlaylists}
           renderItem={({ item }) => (
             <Card
-              key={item.playlist_id}
-              id={item.playlist_id}
+              key={item.content list_id}
+              id={item.content list_id}
               type='collection'
               imageSize={item._cover_art_sizes}
-              primaryText={item.playlist_name}
+              primaryText={item.content list_name}
               secondaryText={user.name}
               onPress={() => {
                 toast({ content: messages.addedToast })
-                dispatchWeb(addAgreementToPlaylist(agreementId!, item.playlist_id))
+                dispatchWeb(addAgreementToPlaylist(agreementId!, item.content list_id))
                 onClose()
               }}
               user={user}

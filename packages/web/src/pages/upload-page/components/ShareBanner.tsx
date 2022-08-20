@@ -23,7 +23,7 @@ import {
   fullAgreementPage,
   profilePage,
   albumPage,
-  playlistPage
+  content listPage
 } from 'utils/route'
 import { openTwitterLink } from 'utils/tweet'
 
@@ -108,7 +108,7 @@ const getShareTextUrl = async (
     }
     case 'Album': {
       // @ts-ignore
-      const { playlist_name: title } = upload.metadata
+      const { content list_name: title } = upload.metadata
       const getPage = fullUrl ? fullAlbumPage : albumPage
       const url = getPage(user.handle, title, upload.completionId)
       return {
@@ -118,11 +118,11 @@ const getShareTextUrl = async (
     }
     case 'Playlist': {
       // @ts-ignore
-      const { playlist_name: title } = upload.metadata
-      const getPage = fullUrl ? fullPlaylistPage : playlistPage
+      const { content list_name: title } = upload.metadata
+      const getPage = fullUrl ? fullPlaylistPage : content listPage
       const url = getPage(user.handle, title, upload.completionId)
       return {
-        text: `Check out my new playlist, ${title} on @dgc-network #Coliving`,
+        text: `Check out my new content list, ${title} on @dgc-network #Coliving`,
         url
       }
     }

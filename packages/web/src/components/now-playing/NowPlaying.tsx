@@ -307,7 +307,7 @@ const NowPlaying = g(
             ? OverflowAction.UNFAVORITE
             : OverflowAction.FAVORITE
           : null,
-        !collectible ? OverflowAction.ADD_TO_PLAYLIST : null,
+        !collectible ? OverflowAction.ADD_TO_CONTENT_LIST : null,
         agreement && OverflowAction.VIEW_AGREEMENT_PAGE,
         collectible && OverflowAction.VIEW_COLLECTIBLE_PAGE,
         OverflowAction.VIEW_ARTIST_PAGE

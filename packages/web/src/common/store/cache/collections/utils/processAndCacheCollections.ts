@@ -39,8 +39,8 @@ export function* processAndCacheCollections(
     cacheActions.add(
       Kind.COLLECTIONS,
       reformattedCollections.map((c) => ({
-        id: c.playlist_id,
-        uid: makeUid(Kind.COLLECTIONS, c.playlist_id),
+        id: c.content list_id,
+        uid: makeUid(Kind.COLLECTIONS, c.content list_id),
         metadata: c
       })),
       false,

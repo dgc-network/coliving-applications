@@ -61,7 +61,7 @@ import {
   fullAlbumPage,
   fullPlaylistPage,
   fullAgreementPage,
-  playlistPage,
+  content listPage,
   profilePage
 } from 'utils/route'
 import { isDarkMode, isMatrix } from 'utils/theme/theme'
@@ -132,8 +132,8 @@ const ConnectedPlaylistTile = memo(
   }: ConnectedPlaylistTileProps) => {
     const {
       is_album: isAlbum,
-      playlist_name: title,
-      playlist_id: id,
+      content list_name: title,
+      content list_id: id,
       is_private: isPrivate,
       _cover_art_sizes: coverArtSizes,
       repost_count: repostCount,
@@ -165,7 +165,7 @@ const ConnectedPlaylistTile = memo(
             record(
               make(Name.PLAYBACK_PLAY, {
                 id: `${playingAgreementId}`,
-                source: PlaybackSource.PLAYLIST_TILE_AGREEMENT
+                source: PlaybackSource.CONTENT_LIST_TILE_AGREEMENT
               })
             )
           }
@@ -178,7 +178,7 @@ const ConnectedPlaylistTile = memo(
             record(
               make(Name.PLAYBACK_PLAY, {
                 id: `${agreementId}`,
-                source: PlaybackSource.PLAYLIST_TILE_AGREEMENT
+                source: PlaybackSource.CONTENT_LIST_TILE_AGREEMENT
               })
             )
           }
@@ -189,7 +189,7 @@ const ConnectedPlaylistTile = memo(
           record(
             make(Name.PLAYBACK_PAUSE, {
               id: `${playingAgreementId}`,
-              source: PlaybackSource.PLAYLIST_TILE_AGREEMENT
+              source: PlaybackSource.CONTENT_LIST_TILE_AGREEMENT
             })
           )
         }
@@ -212,7 +212,7 @@ const ConnectedPlaylistTile = memo(
         goToRoute(
           isAlbum
             ? albumPage(handle, title, id)
-            : playlistPage(handle, title, id)
+            : content listPage(handle, title, id)
         )
       },
       [goToRoute, isAlbum, handle, title, id]
@@ -253,9 +253,9 @@ const ConnectedPlaylistTile = memo(
         handle,
         isFavorited,
         isReposted,
-        type: isAlbum ? 'album' : 'playlist', // playlist or album
-        playlistId: id,
-        playlistName: title,
+        type: isAlbum ? 'album' : 'content list', // content list or album
+        content listId: id,
+        content listName: title,
         isPublic: !isPrivate,
         isOwner,
         includeEmbed: true,
@@ -323,7 +323,7 @@ const ConnectedPlaylistTile = memo(
     }, [setRepostUsers, id, setModalVisibility])
 
     const renderStats = () => {
-      const contentTitle = 'agreement' // undefined,  playlist or album -  undefined is agreement
+      const contentTitle = 'agreement' // undefined,  content list or album -  undefined is agreement
       const sz = 'large'
       return (
         <div className={cn(styles.socialInfo)}>
@@ -376,7 +376,7 @@ const ConnectedPlaylistTile = memo(
           key={id}
           isDisabled={disableActions}
           text={title}
-          kind={isAlbum ? 'album' : 'playlist'}
+          kind={isAlbum ? 'album' : 'content list'}
           id={id}
           isOwner={isOwner}
           link={
@@ -463,10 +463,10 @@ const ConnectedPlaylistTile = memo(
       size === AgreementTileSize.LARGE
         ? isAlbum
           ? 'ALBUM'
-          : 'PLAYLIST'
+          : 'CONTENT_LIST'
         : undefined
 
-    // Failsafe check - should never get this far, lineups should filter deactivated playlists
+    // Failsafe check - should never get this far, lineups should filter deactivated content lists
     if (isOwnerDeactivated) {
       return null
     }

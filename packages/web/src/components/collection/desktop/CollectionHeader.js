@@ -59,7 +59,7 @@ const messages = {
   unrepost: 'Unrepost',
   favorite: 'Favorite',
   unfavorite: 'Unfavorite',
-  playlistViewable: 'Your playlist can now be viewed by others!',
+  content listViewable: 'Your content list can now be viewed by others!',
   filter: 'Filter Agreements'
 }
 
@@ -226,7 +226,7 @@ const SmartCollectionButtons = (props) => {
     <>
       <PlayButton playing={props.playing} onPlay={props.onPlay} />
       {/* Audio NFT Playlist share button */}
-      {props.playlistId === SmartCollectionVariant.LIVE_NFT_PLAYLIST ? (
+      {props.content listId === SmartCollectionVariant.LIVE_NFT_CONTENT_LIST ? (
         <Button
           className={cn(styles.buttonSpacing, styles.buttonFormatting)}
           textClassName={styles.buttonTextFormatting}
@@ -332,7 +332,7 @@ const OwnerPublishedButtons = (props) => {
     <>
       <PlayButton playing={props.playing} onPlay={props.onPlay} />
       <Toast
-        text={messages.playlistViewable}
+        text={messages.content listViewable}
         fillParent={false}
         placement='top'
         firesOnClick={false}
@@ -393,8 +393,8 @@ const Buttons = (props) => {
   const overflowMenu = {
     menu: {
       type: props.type,
-      playlistId: props.playlistId,
-      playlistName: props.playlistName,
+      content listId: props.content listId,
+      content listName: props.content listName,
       handle: props.ownerHandle,
       isFavorited: props.isSaved,
       mount: 'page',
@@ -470,7 +470,7 @@ const Artwork = ({
 class CollectionHeader extends PureComponent {
   state = {
     filterText: '',
-    // Stores state if the user publishes the playlist this "session"
+    // Stores state if the user publishes the content list this "session"
     previouslyUnpublished: false,
     artworkLoading: true
   }
@@ -571,7 +571,7 @@ class CollectionHeader extends PureComponent {
           />
           <div className={styles.infoSection}>
             <div className={cn(styles.typeLabel, fadeIn)}>
-              {type === 'playlist' && !isPublished ? 'private playlist' : type}
+              {type === 'content list' && !isPublished ? 'private content list' : type}
             </div>
             <div className={styles.title}>
               <h1 className={cn(fadeIn)}>{title}</h1>
@@ -639,8 +639,8 @@ class CollectionHeader extends PureComponent {
               {!agreementsLoading && (
                 <Buttons
                   variant={variant}
-                  playlistId={collectionId}
-                  playlistName={title}
+                  content listId={collectionId}
+                  content listName={title}
                   isOwner={isOwner}
                   type={type}
                   ownerHandle={artistHandle}
@@ -694,7 +694,7 @@ CollectionHeader.propTypes = {
   agreementsLoading: PropTypes.bool,
   playing: PropTypes.bool,
   active: PropTypes.bool,
-  type: PropTypes.oneOf(['playlist', 'album']),
+  type: PropTypes.oneOf(['content list', 'album']),
   title: PropTypes.string,
   artistName: PropTypes.string,
   artistHandle: PropTypes.string,
@@ -731,7 +731,7 @@ CollectionHeader.defaultProps = {
   loading: false,
   playing: false,
   active: true,
-  type: 'playlist',
+  type: 'content list',
   tags: [],
   description: '',
 

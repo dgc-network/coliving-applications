@@ -19,8 +19,8 @@ export enum zIndex {
 
   // Set to 1000 to account for nested modals inside, which take a higher z-index
   EDIT_AGREEMENT_MODAL = 1000,
-  CREATE_PLAYLIST_MODAL = 1000,
-  EDIT_PLAYLIST_MODAL = 1001,
+  CREATE_CONTENT_LIST_MODAL = 1000,
+  EDIT_CONTENT_LIST_MODAL = 1001,
   IMAGE_SELECTION_POPUP = 1002,
 
   // Web3 wallet connect modal

@@ -8,13 +8,13 @@ import { SearchResultsTab } from './SearchResultsTab'
 const getSearchPlaylists = makeGetSearchPlaylists()
 
 export const PlaylistsTab = () => {
-  const playlists = useSelectorWeb(getSearchPlaylists, isEqual)
+  const content lists = useSelectorWeb(getSearchPlaylists, isEqual)
 
   return (
-    <SearchResultsTab noResults={playlists.length === 0}>
+    <SearchResultsTab noResults={content lists.length === 0}>
       <CollectionList
-        listKey='search-playlists'
-        collection={playlists}
+        listKey='search-content lists'
+        collection={content lists}
         fromPage='search'
       />
     </SearchResultsTab>

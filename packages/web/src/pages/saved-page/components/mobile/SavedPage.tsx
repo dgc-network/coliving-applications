@@ -25,7 +25,7 @@ import AgreementList from 'components/agreement/mobile/AgreementList'
 import { AgreementItemAction } from 'components/agreement/mobile/AgreementListItem'
 import useTabs from 'hooks/useTabs/useTabs'
 import { make, useRecord } from 'store/analytics/actions'
-import { albumPage, TRENDING_PAGE, playlistPage } from 'utils/route'
+import { albumPage, TRENDING_PAGE, content listPage } from 'utils/route'
 
 import NewPlaylistButton from './NewPlaylistButton'
 import styles from './SavedPage.module.css'
@@ -182,18 +182,18 @@ const AlbumCardLineup = ({
   const albumCards = filteredAlbums.map((album) => {
     return (
       <Card
-        key={album.playlist_id}
-        id={album.playlist_id}
-        userId={album.playlist_owner_id}
+        key={album.content list_id}
+        id={album.content list_id}
+        userId={album.content list_owner_id}
         imageSize={album._cover_art_sizes}
-        primaryText={album.playlist_name}
+        primaryText={album.content list_name}
         secondaryText={formatCardSecondaryText(
           album.save_count,
-          album.playlist_contents.agreement_ids.length
+          album.content list_contents.agreement_ids.length
         )}
         onClick={() =>
           goToRoute(
-            albumPage(album.ownerHandle, album.playlist_name, album.playlist_id)
+            albumPage(album.ownerHandle, album.content list_name, album.content list_id)
           )
         }
       />
@@ -241,56 +241,56 @@ const AlbumCardLineup = ({
 }
 
 const PlaylistCardLineup = ({
-  playlists,
+  content lists,
   goToTrending,
   onFilterChange,
   filterText,
   goToRoute,
   getFilteredPlaylists,
   formatCardSecondaryText,
-  playlistUpdates,
+  content listUpdates,
   updatePlaylistLastViewedAt
 }: {
-  playlists: SavedPageCollection[]
+  content lists: SavedPageCollection[]
   goToTrending: () => void
   onFilterChange: (e: any) => void
   filterText: string
   formatCardSecondaryText: (saves: number, agreements: number) => string
   getFilteredPlaylists: (
-    playlists: SavedPageCollection[]
+    content lists: SavedPageCollection[]
   ) => SavedPageCollection[]
   goToRoute: (route: string) => void
-  playlistUpdates: number[]
-  updatePlaylistLastViewedAt: (playlistId: number) => void
+  content listUpdates: number[]
+  updatePlaylistLastViewedAt: (content listId: number) => void
 }) => {
   const record = useRecord()
 
-  const filteredPlaylists = getFilteredPlaylists(playlists || [])
-  const playlistCards = filteredPlaylists.map((playlist) => {
-    const hasUpdate = playlistUpdates.includes(playlist.playlist_id)
+  const filteredPlaylists = getFilteredPlaylists(content lists || [])
+  const content listCards = filteredPlaylists.map((content list) => {
+    const hasUpdate = content listUpdates.includes(content list.content list_id)
     return (
       <Card
-        key={playlist.playlist_id}
-        id={playlist.playlist_id}
-        userId={playlist.playlist_owner_id}
-        imageSize={playlist._cover_art_sizes}
-        primaryText={playlist.playlist_name}
+        key={content list.content list_id}
+        id={content list.content list_id}
+        userId={content list.content list_owner_id}
+        imageSize={content list._cover_art_sizes}
+        primaryText={content list.content list_name}
         secondaryText={formatCardSecondaryText(
-          playlist.save_count,
-          playlist.playlist_contents.agreement_ids.length
+          content list.save_count,
+          content list.content list_contents.agreement_ids.length
         )}
         onClick={() => {
           goToRoute(
-            playlistPage(
-              playlist.ownerHandle,
-              playlist.playlist_name,
-              playlist.playlist_id
+            content listPage(
+              content list.ownerHandle,
+              content list.content list_name,
+              content list.content list_id
             )
           )
-          updatePlaylistLastViewedAt(playlist.playlist_id)
+          updatePlaylistLastViewedAt(content list.content list_id)
           record(
-            make(Name.PLAYLIST_LIBRARY_CLICKED, {
-              playlistId: playlist.playlist_id,
+            make(Name.CONTENT_LIST_LIBRARY_CLICKED, {
+              content listId: content list.content list_id,
               hasUpdate
             })
           )
@@ -304,7 +304,7 @@ const PlaylistCardLineup = ({
 
   return (
     <div className={styles.cardLineupContainer}>
-      {playlists.length === 0 ? (
+      {content lists.length === 0 ? (
         <>
           <EmptyTab
             message={
@@ -334,7 +334,7 @@ const PlaylistCardLineup = ({
             <div className={styles.cardsContainer}>
               <CardLineup
                 cardsClassName={styles.cardLineup}
-                cards={playlistCards}
+                cards={content listCards}
               />
             </div>
           )}
@@ -347,19 +347,19 @@ const PlaylistCardLineup = ({
 const messages = {
   emptyAgreements: "You haven't favorited any agreements yet.",
   emptyAlbums: "You haven't favorited any albums yet.",
-  emptyPlaylists: "You haven't favorited any playlists yet.",
+  emptyPlaylists: "You haven't favorited any content lists yet.",
   filterAgreements: 'Filter Agreements',
   filterAlbums: 'Filter Albums',
   filterPlaylists: 'Filter Playlists',
   agreements: 'Agreements',
   albums: 'Albums',
-  playlists: 'Playlists'
+  content lists: 'Playlists'
 }
 
 const tabHeaders = [
   { icon: <IconNote />, text: messages.agreements, label: Tabs.AGREEMENTS },
   { icon: <IconAlbum />, text: messages.albums, label: Tabs.ALBUMS },
-  { icon: <IconPlaylists />, text: messages.playlists, label: Tabs.PLAYLISTS }
+  { icon: <IconPlaylists />, text: messages.content lists, label: Tabs.CONTENT_LISTS }
 ]
 
 export type SavedPageProps = {
@@ -380,7 +380,7 @@ export type SavedPageProps = {
   account:
     | (User & {
         albums: SavedPageCollection[]
-        playlists: SavedPageCollection[]
+        content lists: SavedPageCollection[]
       })
     | undefined
   agreements: Lineup<SavedPageAgreement>
@@ -392,7 +392,7 @@ export type SavedPageProps = {
   updateLineupOrder: (updatedOrderIndices: UID[]) => void
   getFilteredAlbums: (albums: SavedPageCollection[]) => SavedPageCollection[]
   getFilteredPlaylists: (
-    playlists: SavedPageCollection[]
+    content lists: SavedPageCollection[]
   ) => SavedPageCollection[]
 
   fetchSavedAlbums: () => void
@@ -403,8 +403,8 @@ export type SavedPageProps = {
   unsaveAgreement: (agreementId: ID) => void
   onClickRemove: any
   onReorderAgreements: any
-  playlistUpdates: number[]
-  updatePlaylistLastViewedAt: (playlistId: number) => void
+  content listUpdates: number[]
+  updatePlaylistLastViewedAt: (content listId: number) => void
 }
 
 const SavedPage = ({
@@ -424,7 +424,7 @@ const SavedPage = ({
   filterText,
   formatCardSecondaryText,
   onSave,
-  playlistUpdates,
+  content listUpdates,
   updatePlaylistLastViewedAt
 }: SavedPageProps) => {
   useMainPageHeader()
@@ -456,15 +456,15 @@ const SavedPage = ({
       formatCardSecondaryText={formatCardSecondaryText}
     />,
     <PlaylistCardLineup
-      key='playlistLineup'
+      key='content listLineup'
       getFilteredPlaylists={getFilteredPlaylists}
-      playlists={account ? account.playlists : []}
+      content lists={account ? account.content lists : []}
       goToTrending={goToTrending}
       onFilterChange={onFilterChange}
       filterText={filterText}
       goToRoute={goToRoute}
       formatCardSecondaryText={formatCardSecondaryText}
-      playlistUpdates={playlistUpdates}
+      content listUpdates={content listUpdates}
       updatePlaylistLastViewedAt={updatePlaylistLastViewedAt}
     />
   ]

@@ -147,12 +147,12 @@ const AgreementPage = ({
     parentAgreementId?: ID
   ) => {
     if (!user) return
-    const { creator_node_endpoint } = user
-    if (!creator_node_endpoint) return
+    const { content_node_endpoint } = user
+    if (!content_node_endpoint) return
     onDownloadAgreement(
       agreementId,
       cid,
-      creator_node_endpoint,
+      content_node_endpoint,
       category,
       parentAgreementId
     )

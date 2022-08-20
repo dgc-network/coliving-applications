@@ -8,7 +8,7 @@ import { PREFIX } from './actions'
 export const initialState: LineupState<Collection> = {
   ...initialLineupState,
   prefix: PREFIX,
-  // Trending is limited to 30 playlists
+  // Trending is limited to 30 content lists
   // on the backend, so safe to cap it here
   maxEntries: 30
 }
@@ -20,11 +20,11 @@ const actionsMap: { [key in string]: any } = {
   }
 }
 
-const playlistsReducer = (state = initialState, action: { type: string }) => {
+const content listsReducer = (state = initialState, action: { type: string }) => {
   const baseActionType = stripPrefix(PREFIX, action.type)
   const matchingReduceFunction = actionsMap[baseActionType]
   if (!matchingReduceFunction) return state
   return matchingReduceFunction(state, action)
 }
 
-export default playlistsReducer
+export default content listsReducer

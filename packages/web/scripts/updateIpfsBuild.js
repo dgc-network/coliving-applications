@@ -28,10 +28,10 @@ const config = {
     gaEndpoint: 'http://localhost:9001'
   },
   stage: {
-    gaEndpoint: 'https://general-admission.staging.coliving.co'
+    gaEndpoint: 'https://general-admission.staging.coliving.lol'
   },
   prod: {
-    gaEndpoint: 'https://general-admission.coliving.co'
+    gaEndpoint: 'https://general-admission.coliving.lol'
   }
 }
 

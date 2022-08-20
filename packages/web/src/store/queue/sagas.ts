@@ -71,7 +71,7 @@ export function* getToQueue(prefix: string, entry: { kind: Kind; uid: UID }) {
     if (!collection) return
 
     const {
-      playlist_contents: { agreement_ids: agreementIds }
+      content list_contents: { agreement_ids: agreementIds }
     } = collection
     // Replace the agreement uid source w/ the full source including collection source
     // Replace the agreement count w/ it's index in the array
@@ -292,7 +292,7 @@ export function* watchNext() {
       return
     }
 
-    // For the live nft playlist flow
+    // For the live nft content list flow
     const collectible = yield* select(getCollectible)
     if (collectible) {
       const event = make(Name.PLAYBACK_PLAY, {
@@ -371,7 +371,7 @@ export function* watchPrevious() {
         return
       }
 
-      // For the live nft playlist flow
+      // For the live nft content list flow
       const collectible = yield* select(getCollectible)
       if (collectible) {
         const event = make(Name.PLAYBACK_PLAY, {

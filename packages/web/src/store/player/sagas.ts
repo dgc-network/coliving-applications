@@ -95,7 +95,7 @@ export function* watchPlay() {
       })
 
       const gateways = owner
-        ? getCreatorNodeIPFSGateways(owner.creator_node_endpoint)
+        ? getCreatorNodeIPFSGateways(owner.content_node_endpoint)
         : []
       const encodedAgreementId = encodeHashId(agreementId)
       const forceStreamMp3 =

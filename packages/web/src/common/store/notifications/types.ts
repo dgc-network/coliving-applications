@@ -200,8 +200,8 @@ export type SupportingRankUp = BaseNotification & {
 export type AddAgreementToPlaylist = BaseNotification & {
   type: NotificationType.AddAgreementToPlaylist
   agreementId: ID
-  playlistId: ID
-  playlistOwnerId: ID
+  content listId: ID
+  content listOwnerId: ID
 }
 
 export type Notification =
@@ -241,5 +241,5 @@ export default interface NotificationState {
   status?: Status
   hasMore: boolean
   hasLoaded: boolean
-  playlistUpdates: number[]
+  content listUpdates: number[]
 }

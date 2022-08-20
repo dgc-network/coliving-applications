@@ -4,11 +4,11 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 const initialState = {}
 
 export type UpdatePayload = {
-  playlistLibrary: PlaylistLibrary
+  content listLibrary: PlaylistLibrary
 }
 
 const slice = createSlice({
-  name: 'playlist-library',
+  name: 'content list-library',
   initialState,
   reducers: {
     update: (state, action: PayloadAction<UpdatePayload>) => {}

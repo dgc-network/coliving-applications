@@ -42,7 +42,7 @@ import { getUid, getBuffering, getPlaying } from 'store/player/selectors'
 import { AppState } from 'store/types'
 import {
   albumPage,
-  playlistPage,
+  content listPage,
   profilePage,
   REPOSTING_USERS_ROUTE,
   FAVORITING_USERS_ROUTE
@@ -96,21 +96,21 @@ const ConnectedPlaylistTile = memo(
       return agreements.some((agreement) => agreement.uid === playingUid)
     }, [agreements, playingUid])
 
-    const isOwner = collection.playlist_owner_id === currentUserId
+    const isOwner = collection.content list_owner_id === currentUserId
 
     const toggleSave = useCallback(() => {
       if (collection.has_current_user_saved) {
-        unsaveCollection(collection.playlist_id)
+        unsaveCollection(collection.content list_id)
       } else {
-        saveCollection(collection.playlist_id)
+        saveCollection(collection.content list_id)
       }
     }, [collection, unsaveCollection, saveCollection])
 
     const toggleRepost = useCallback(() => {
       if (collection.has_current_user_reposted) {
-        unrepostCollection(collection.playlist_id)
+        unrepostCollection(collection.content list_id)
       } else {
-        repostCollection(collection.playlist_id)
+        repostCollection(collection.content list_id)
       }
     }, [collection, unrepostCollection, repostCollection])
 
@@ -118,13 +118,13 @@ const ConnectedPlaylistTile = memo(
       return collection.is_album
         ? albumPage(
             user.handle,
-            collection.playlist_name,
-            collection.playlist_id
+            collection.content list_name,
+            collection.content list_id
           )
-        : playlistPage(
+        : content listPage(
             user.handle,
-            collection.playlist_name,
-            collection.playlist_id
+            collection.content list_name,
+            collection.content list_id
           )
     }, [collection, user])
 
@@ -146,8 +146,8 @@ const ConnectedPlaylistTile = memo(
     )
 
     const onShare = useCallback(() => {
-      shareCollection(collection.playlist_id)
-    }, [shareCollection, collection.playlist_id])
+      shareCollection(collection.content list_id)
+    }, [shareCollection, collection.content list_id])
 
     const onClickOverflow = useCallback(() => {
       const overflowActions = [
@@ -159,16 +159,16 @@ const ConnectedPlaylistTile = memo(
           : OverflowAction.FAVORITE,
         collection.is_album
           ? OverflowAction.VIEW_ALBUM_PAGE
-          : OverflowAction.VIEW_PLAYLIST_PAGE,
+          : OverflowAction.VIEW_CONTENT_LIST_PAGE,
         isOwner && !collection.is_album
-          ? OverflowAction.PUBLISH_PLAYLIST
+          ? OverflowAction.PUBLISH_CONTENT_LIST
           : null,
-        isOwner && !collection.is_album ? OverflowAction.DELETE_PLAYLIST : null,
+        isOwner && !collection.is_album ? OverflowAction.DELETE_CONTENT_LIST : null,
         OverflowAction.VIEW_ARTIST_PAGE
       ].filter(Boolean)
 
       clickOverflow(
-        collection.playlist_id,
+        collection.content list_id,
         // @ts-ignore
         overflowActions
       )
@@ -182,7 +182,7 @@ const ConnectedPlaylistTile = memo(
           record(
             make(Name.PLAYBACK_PLAY, {
               id: `${playingAgreementId}`,
-              source: PlaybackSource.PLAYLIST_TILE_AGREEMENT
+              source: PlaybackSource.CONTENT_LIST_TILE_AGREEMENT
             })
           )
         } else {
@@ -193,7 +193,7 @@ const ConnectedPlaylistTile = memo(
           record(
             make(Name.PLAYBACK_PLAY, {
               id: `${agreementId}`,
-              source: PlaybackSource.PLAYLIST_TILE_AGREEMENT
+              source: PlaybackSource.CONTENT_LIST_TILE_AGREEMENT
             })
           )
         }
@@ -202,7 +202,7 @@ const ConnectedPlaylistTile = memo(
         record(
           make(Name.PLAYBACK_PAUSE, {
             id: `${playingAgreementId}`,
-            source: PlaybackSource.PLAYLIST_TILE_AGREEMENT
+            source: PlaybackSource.CONTENT_LIST_TILE_AGREEMENT
           })
         )
       }
@@ -235,21 +235,21 @@ const ConnectedPlaylistTile = memo(
     return (
       <PlaylistTile
         uid={uid}
-        id={collection.playlist_id}
-        userId={collection.playlist_owner_id}
+        id={collection.content list_id}
+        userId={collection.content list_owner_id}
         index={index}
-        key={`${index}-${collection.playlist_name}`}
+        key={`${index}-${collection.content list_name}`}
         showSkeleton={isLoading}
         hasLoaded={hasLoaded}
         // UI
         isAlbum={collection.is_album}
         isPublic={!collection.is_private}
-        contentTitle={collection.is_album ? 'album' : 'playlist'}
-        playlistTitle={collection.playlist_name}
+        contentTitle={collection.is_album ? 'album' : 'content list'}
+        content listTitle={collection.content list_name}
         artistHandle={user.handle}
         artistName={user.name}
         artistIsVerified={user.is_verified}
-        ownerId={collection.playlist_owner_id}
+        ownerId={collection.content list_owner_id}
         coverArtSizes={collection._cover_art_sizes}
         duration={agreements.reduce(
           (duration: number, agreement: Agreement) => duration + agreement.duration,
@@ -337,7 +337,7 @@ function mapDispatchToProps(dispatch: Dispatch) {
     setRepostPlaylistId: (collectionId: ID) =>
       dispatch(setRepost(collectionId, RepostType.COLLECTION)),
     setFavoritePlaylistId: (collectionId: ID) =>
-      dispatch(setFavorite(collectionId, FavoriteType.PLAYLIST))
+      dispatch(setFavorite(collectionId, FavoriteType.CONTENT_LIST))
   }
 }
 

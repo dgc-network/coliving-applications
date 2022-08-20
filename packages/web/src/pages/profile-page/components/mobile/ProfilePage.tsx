@@ -39,7 +39,7 @@ import TierExplainerDrawer from 'components/user-badges/TierExplainerDrawer'
 import useAsyncPoll from 'hooks/useAsyncPoll'
 import useTabs from 'hooks/useTabs/useTabs'
 import { MIN_COLLECTIBLES_TIER } from 'pages/profile-page/ProfilePageProvider'
-import { albumPage, playlistPage, fullProfilePage } from 'utils/route'
+import { albumPage, content listPage, fullProfilePage } from 'utils/route'
 import { withNullGuard } from 'utils/withNullGuard'
 
 import { DeactivatedProfileTombstone } from '../DeactivatedProfileTombstone'
@@ -90,7 +90,7 @@ export type ProfilePageProps = {
 
   profile: ProfileUser | null
   albums: Collection[] | null
-  playlists: Collection[] | null
+  content lists: Collection[] | null
   status: Status
   goToRoute: (route: string) => void
   artistAgreements: LineupState<{ id: ID }>
@@ -151,7 +151,7 @@ export const EmptyTab = (props: EmptyTabProps) => {
 const artistTabs = [
   { icon: <IconNote />, text: 'Agreements', label: Tabs.AGREEMENTS },
   { icon: <IconAlbum />, text: 'Albums', label: Tabs.ALBUMS },
-  { icon: <IconPlaylists />, text: 'Playlists', label: Tabs.PLAYLISTS },
+  { icon: <IconPlaylists />, text: 'Playlists', label: Tabs.CONTENT_LISTS },
   {
     icon: <IconReposts className={styles.iconReposts} />,
     text: 'Reposts',
@@ -165,7 +165,7 @@ const userTabs = [
     text: 'Reposts',
     label: Tabs.REPOSTS
   },
-  { icon: <IconPlaylists />, text: 'Playlists', label: Tabs.PLAYLISTS }
+  { icon: <IconPlaylists />, text: 'Playlists', label: Tabs.CONTENT_LISTS }
 ]
 
 const collectiblesTab = {
@@ -191,17 +191,17 @@ const getMessages = ({
     ? "You haven't created any albums yet"
     : `${name} hasn't created any albums yet`,
   emptyPlaylists: isOwner
-    ? "You haven't created any playlists yet"
-    : `${name} hasn't created any playlists yet`,
+    ? "You haven't created any content lists yet"
+    : `${name} hasn't created any content lists yet`,
   emptyReposts: isOwner
     ? "You haven't reposted anything yet"
     : `${name} hasn't reposted anything yet`
 })
 
 const g = withNullGuard((props: ProfilePageProps) => {
-  const { profile, albums, playlists } = props
-  if (profile && albums && playlists) {
-    return { ...props, profile, albums, playlists }
+  const { profile, albums, content lists } = props
+  if (profile && albums && content lists) {
+    return { ...props, profile, albums, content lists }
   }
 })
 
@@ -230,7 +230,7 @@ const ProfilePage = g(
     website,
     donation,
     albums,
-    playlists,
+    content lists,
     artistAgreements,
     userFeed,
     isUserConfirming,
@@ -368,24 +368,24 @@ const ProfilePage = g(
         />
       )
     } else {
-      const playlistCards = (playlists || []).map((playlist) => (
+      const content listCards = (content lists || []).map((content list) => (
         <Card
-          key={playlist.playlist_id}
-          id={playlist.playlist_id}
-          userId={playlist.playlist_owner_id}
-          imageSize={playlist._cover_art_sizes}
-          primaryText={playlist.playlist_name}
+          key={content list.content list_id}
+          id={content list.content list_id}
+          userId={content list.content list_owner_id}
+          imageSize={content list._cover_art_sizes}
+          primaryText={content list.content list_name}
           secondaryText={formatCardSecondaryText(
-            playlist.save_count,
-            playlist.playlist_contents.agreement_ids.length,
-            playlist.is_private
+            content list.save_count,
+            content list.content list_contents.agreement_ids.length,
+            content list.is_private
           )}
           onClick={() =>
             goToRoute(
-              playlistPage(
+              content listPage(
                 profile.handle,
-                playlist.playlist_name,
-                playlist.playlist_id
+                content list.content list_name,
+                content list.content list_id
               )
             )
           }
@@ -394,21 +394,21 @@ const ProfilePage = g(
       if (isArtist) {
         const albumCards = (albums || []).map((album) => (
           <Card
-            key={album.playlist_id}
-            id={album.playlist_id}
-            userId={album.playlist_owner_id}
+            key={album.content list_id}
+            id={album.content list_id}
+            userId={album.content list_owner_id}
             imageSize={album._cover_art_sizes}
-            primaryText={album.playlist_name}
+            primaryText={album.content list_name}
             secondaryText={formatCardSecondaryText(
               album.save_count,
-              album.playlist_contents.agreement_ids.length
+              album.content list_contents.agreement_ids.length
             )}
             onClick={() =>
               goToRoute(
                 albumPage(
                   profile.handle,
-                  album.playlist_name,
-                  album.playlist_id
+                  album.content list_name,
+                  album.content list_id
                 )
               )
             }
@@ -461,7 +461,7 @@ const ProfilePage = g(
             )}
           </div>,
           <div className={styles.cardLineupContainer} key='artistPlaylists'>
-            {(playlists || []).length === 0 ? (
+            {(content lists || []).length === 0 ? (
               <EmptyTab
                 message={
                   <>
@@ -475,7 +475,7 @@ const ProfilePage = g(
             ) : (
               <CardLineup
                 cardsClassName={styles.cardLineup}
-                cards={playlistCards}
+                cards={content listCards}
               />
             )}
           </div>,
@@ -529,8 +529,8 @@ const ProfilePage = g(
               />
             )}
           </div>,
-          <div className={styles.cardLineupContainer} key='playlists'>
-            {(playlists || []).length === 0 ? (
+          <div className={styles.cardLineupContainer} key='content lists'>
+            {(content lists || []).length === 0 ? (
               <EmptyTab
                 message={
                   <>
@@ -544,7 +544,7 @@ const ProfilePage = g(
             ) : (
               <CardLineup
                 cardsClassName={styles.cardLineup}
-                cards={playlistCards}
+                cards={content listCards}
               />
             )}
           </div>
@@ -637,7 +637,7 @@ const ProfilePage = g(
                 coverPhotoSizes={coverPhotoSizes}
                 profilePictureSizes={profilePictureSizes}
                 hasProfilePicture={hasProfilePicture}
-                playlistCount={profile.playlist_count}
+                content listCount={profile.content list_count}
                 agreementCount={profile.agreement_count}
                 followerCount={profile.follower_count}
                 followingCount={profile.followee_count}

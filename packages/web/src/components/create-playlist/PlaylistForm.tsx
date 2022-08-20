@@ -46,8 +46,8 @@ export type PlaylistFormFields = Partial<Collection> & {
       | 'updated_at'
       | 'cover_art'
       | 'cover_art_sizes'
-      | 'playlist_name'
-      | 'playlist_owner_id'
+      | 'content list_name'
+      | 'content list_owner_id'
       | 'save_count'
       | 'upc'
       | 'description'
@@ -82,13 +82,13 @@ const PlaylistForm = ({
     ...schemas.newCollectionMetadata(metadata)
   })
   const [errors, setErrors] = useState({
-    playlistName: false,
+    content listName: false,
     artwork: false
   })
   const [hasSubmitted, setHasSubmitted] = useState(false)
 
   const coverArt = useCollectionCoverArt(
-    formFields.playlist_id,
+    formFields.content list_id,
     formFields?._cover_art_sizes ? formFields._cover_art_sizes : null,
     SquareSizes.SIZE_1000_BY_1000
   )
@@ -99,7 +99,7 @@ const PlaylistForm = ({
       setFormFields((oldFormFields) => ({
         ...schemas.newCollectionMetadata(metadata),
         artwork: oldFormFields.artwork,
-        playlist_name: oldFormFields.playlist_name,
+        content list_name: oldFormFields.content list_name,
         description: oldFormFields.description
       }))
     }
@@ -132,10 +132,10 @@ const PlaylistForm = ({
   const onChangePlaylistName = (name: string) => {
     setFormFields((formFields: PlaylistFormFields) => ({
       ...formFields,
-      playlist_name: name
+      content list_name: name
     }))
     if (name) {
-      setErrors({ ...errors, playlistName: false })
+      setErrors({ ...errors, content listName: false })
     }
   }
 
@@ -147,13 +147,13 @@ const PlaylistForm = ({
   }
 
   const onSave = () => {
-    const nameIsEmpty = !formFields.playlist_name
+    const nameIsEmpty = !formFields.content list_name
     const artworkIsEmpty = !formFields.artwork.file && !coverArt
     if (nameIsEmpty || artworkIsEmpty) {
       setErrors({
         ...errors,
         artwork: artworkIsEmpty,
-        playlistName: nameIsEmpty
+        content listName: nameIsEmpty
       })
     } else {
       setHasSubmitted(true)
@@ -163,7 +163,7 @@ const PlaylistForm = ({
 
   return (
     <div>
-      <div className={styles.playlistForm}>
+      <div className={styles.content listForm}>
         <UploadArtwork
           artworkUrl={formFields.artwork.url || coverArt}
           onDropArtwork={onDropArtwork}
@@ -176,8 +176,8 @@ const PlaylistForm = ({
           <Input
             variant='elevatedPlaceholder'
             placeholder={`${isAlbum ? 'Album' : 'Playlist'} Name`}
-            defaultValue={formFields.playlist_name || ''}
-            error={errors.playlistName}
+            defaultValue={formFields.content list_name || ''}
+            error={errors.content listName}
             onChange={onChangePlaylistName}
             characterLimit={64}
           />

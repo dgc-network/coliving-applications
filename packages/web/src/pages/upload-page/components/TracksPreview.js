@@ -9,8 +9,8 @@ import styles from './AgreementsPreview.module.css'
 import UploadType from './uploadType'
 
 const uploadDescriptions = {
-  [UploadType.PLAYLIST]:
-    'A playlist is a living thing that can change and grow over time. Playlists can contain your own agreements, as well as agreements uploaded by others.',
+  [UploadType.CONTENT_LIST]:
+    'A content list is a living thing that can change and grow over time. Playlists can contain your own agreements, as well as agreements uploaded by others.',
   [UploadType.ALBUM]:
     'An album is a curated listening experience that is frozen in time and does not change. Albums can only contain agreements that you upload.',
   [UploadType.INDIVIDUAL_AGREEMENTS]:
@@ -31,7 +31,7 @@ const AgreementsPreview = (props) => {
           options={[
             { key: UploadType.INDIVIDUAL_AGREEMENTS, text: 'Agreements' },
             { key: UploadType.ALBUM, text: 'Album' },
-            { key: UploadType.PLAYLIST, text: 'Playlist' }
+            { key: UploadType.CONTENT_LIST, text: 'Playlist' }
           ]}
         />
         <div className={styles.typeDescription}>
@@ -65,7 +65,7 @@ AgreementsPreview.propTypes = {
   uploadType: PropTypes.oneOf([
     UploadType.INDIVIDUAL_AGREEMENT,
     UploadType.INDIVIDUAL_AGREEMENTS,
-    UploadType.PLAYLIST,
+    UploadType.CONTENT_LIST,
     UploadType.ALBUM
   ]),
   agreements: PropTypes.array,

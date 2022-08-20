@@ -1,5 +1,5 @@
 name = "stems"
-route = "stems.coliving.co/*"
+route = "stems.coliving.lol/*"
 
 type = "webpack"
 account_id = "3811365464a8e56b2b27a5590e328e49"

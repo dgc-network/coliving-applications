@@ -7,7 +7,7 @@ import styles from './RemovePlaylistAgreementDrawer.module.css'
 const messages = {
   title: `Are You Sure?`,
   description: (agreementName: string) =>
-    `Do you want to remove ${agreementName} from this playlist?`,
+    `Do you want to remove ${agreementName} from this content list?`,
   submit: 'Remove Agreement',
   cancel: 'Nevermind'
 }

@@ -6,56 +6,56 @@ import type { UserMultihash } from 'app/models/User'
 import ImageLoader from './ImageLoader'
 import { gateways, publicGateways } from './utils'
 
-const getPlaylistImageUrl = (playlist: CollectionImage, cNode: string) => {
-  if (playlist.cover_art_sizes) {
-    return `${cNode}/ipfs/${playlist.cover_art_sizes}/150x150.jpg`
+const getPlaylistImageUrl = (content list: CollectionImage, cNode: string) => {
+  if (content list.cover_art_sizes) {
+    return `${cNode}/ipfs/${content list.cover_art_sizes}/150x150.jpg`
   }
-  if (playlist.cover_art) {
-    return `${cNode}/ipfs/${playlist.cover_art}`
+  if (content list.cover_art) {
+    return `${cNode}/ipfs/${content list.cover_art}`
   }
   return null
 }
 
-const getHasImage = (playlist: CollectionImage) => {
-  return !!(playlist.cover_art_sizes || playlist.cover_art)
+const getHasImage = (content list: CollectionImage) => {
+  return !!(content list.cover_art_sizes || content list.cover_art)
 }
 
-const usePlaylistImage = (playlist: CollectionImage, user: UserMultihash) => {
+const usePlaylistImage = (content list: CollectionImage, user: UserMultihash) => {
   const cNodes =
-    user.creator_node_endpoint !== null
-      ? user.creator_node_endpoint.split(',').filter(Boolean)
+    user.content_node_endpoint !== null
+      ? user.content_node_endpoint.split(',').filter(Boolean)
       : gateways
   const [didError, setDidError] = useState(
-    cNodes.length === 0 || !getHasImage(playlist)
+    cNodes.length === 0 || !getHasImage(content list)
   )
   const [source, setSource] = useState(
-    didError ? null : { uri: getPlaylistImageUrl(playlist, cNodes[0]) }
+    didError ? null : { uri: getPlaylistImageUrl(content list, cNodes[0]) }
   )
   const onError = useCallback(() => {
     if (didError) return
     const nodes =
-      user.creator_node_endpoint !== null
-        ? user.creator_node_endpoint.split(',').filter(Boolean)
+      user.content_node_endpoint !== null
+        ? user.content_node_endpoint.split(',').filter(Boolean)
         : gateways
     const numNodes = nodes.length
     const currInd = nodes.findIndex(
-      (cn: string) => (source?.uri ?? '') === getPlaylistImageUrl(playlist, cn)
+      (cn: string) => (source?.uri ?? '') === getPlaylistImageUrl(content list, cn)
     )
     if (currInd !== -1 && currInd < numNodes - 1) {
-      setSource({ uri: getPlaylistImageUrl(playlist, nodes[currInd + 1]) })
+      setSource({ uri: getPlaylistImageUrl(content list, nodes[currInd + 1]) })
     } else {
       // Legacy fallback for image formats (no dir cid)
-      const legacyUrls = (user.creator_node_endpoint ?? '')
+      const legacyUrls = (user.content_node_endpoint ?? '')
         .split(',')
         .filter(Boolean)
         .concat(gateways)
         .concat(publicGateways)
-        .map((gateway) => `${gateway}/ipfs/${playlist.cover_art_sizes}`)
+        .map((gateway) => `${gateway}/ipfs/${content list.cover_art_sizes}`)
       const legacyIdx = legacyUrls.findIndex(
         (route: string) => (source?.uri ?? '') === route
       )
       if (
-        playlist.cover_art_sizes &&
+        content list.cover_art_sizes &&
         source?.uri?.endsWith('.jpg') &&
         legacyUrls.length > 0
       ) {
@@ -66,21 +66,21 @@ const usePlaylistImage = (playlist: CollectionImage, user: UserMultihash) => {
         setDidError(true)
       }
     }
-  }, [playlist, source, didError, user])
+  }, [content list, source, didError, user])
 
   return { source, didError, onError }
 }
 
 const PlaylistImage = ({
-  playlist,
+  content list,
   user,
   imageStyle
 }: {
-  playlist: CollectionImage
+  content list: CollectionImage
   user: UserMultihash
   imageStyle?: Record<string, any>
 }) => {
-  const { source, onError, didError } = usePlaylistImage(playlist, user)
+  const { source, onError, didError } = usePlaylistImage(content list, user)
   return (
     <ImageLoader
       style={imageStyle}

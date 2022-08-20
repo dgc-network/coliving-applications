@@ -6,8 +6,8 @@ import listensIconPrimary from 'assets/img/particles/particleListensPrimary.svg'
 import listensIconSecondary from 'assets/img/particles/particleListensSecondary.svg'
 import noteIconPrimary from 'assets/img/particles/particleNotePrimary.svg'
 import noteIconSecondary from 'assets/img/particles/particleNoteSecondary.svg'
-import playlistsIconPrimary from 'assets/img/particles/particlePlaylistPrimary.svg'
-import playlistsIconSecondary from 'assets/img/particles/particlePlaylistSecondary.svg'
+import content listsIconPrimary from 'assets/img/particles/particlePlaylistPrimary.svg'
+import content listsIconSecondary from 'assets/img/particles/particlePlaylistSecondary.svg'
 import Confetti from 'utils/animations/music-confetti'
 import { useOnResizeEffect } from 'utils/effects'
 
@@ -18,8 +18,8 @@ const DEFAULT_IMAGES = [
   noteIconPrimary,
   listensIconPrimary,
   listensIconSecondary,
-  playlistsIconPrimary,
-  playlistsIconSecondary
+  content listsIconPrimary,
+  content listsIconSecondary
 ]
 
 async function startConfettiAnimation(

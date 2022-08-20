@@ -36,7 +36,7 @@ import { getLocationPathname } from 'store/routing/selectors'
 import { useSelector } from 'utils/reducer'
 import {
   albumPage,
-  playlistPage,
+  content listPage,
   profilePage,
   fullSearchResultsPage,
   SEARCH_PAGE
@@ -48,7 +48,7 @@ const NATIVE_MOBILE = process.env.REACT_APP_NATIVE_MOBILE
 
 type SearchPageContentProps = {
   agreements: LineupState<{}>
-  playlists: UserCollection[]
+  content lists: UserCollection[]
   albums: UserCollection[]
   artists: User[]
   match: any
@@ -66,7 +66,7 @@ type SearchPageContentProps = {
   search: {
     albumUids: UID[]
     artistUids: UID[]
-    playlistUids: UID[]
+    content listUids: UID[]
     agreementUids: UID[]
     searchText: string
     status: Status
@@ -187,7 +187,7 @@ const ALBUM_CATEGORY_NAME = 'Artists'
 
 enum CardType {
   ALBUM = 'ALBUM',
-  PLAYLIST = 'PLAYLIST',
+  CONTENT_LIST = 'CONTENT_LIST',
   USER = 'USER'
 }
 
@@ -198,11 +198,11 @@ const cardSearchPageMessages = {
 }
 
 /*
- * Component capable of rendering albums/playlists/people
+ * Component capable of rendering albums/content lists/people
  */
 const CardSearchPage = ({
   albums,
-  playlists,
+  content lists,
   artists,
   goToRoute,
   cardType,
@@ -214,8 +214,8 @@ const CardSearchPage = ({
     switch (cardType) {
       case CardType.ALBUM:
         return albums
-      case CardType.PLAYLIST:
-        return playlists
+      case CardType.CONTENT_LIST:
+        return content lists
       case CardType.USER:
         return artists
     }
@@ -239,19 +239,19 @@ const CardSearchPage = ({
             }
           }
           case CardType.ALBUM:
-          case CardType.PLAYLIST: {
+          case CardType.CONTENT_LIST: {
             const routeFunc =
-              cardType === CardType.ALBUM ? albumPage : playlistPage
+              cardType === CardType.ALBUM ? albumPage : content listPage
             const collection = e as UserCollection
             return {
-              userId: collection.playlist_owner_id,
-              id: collection.playlist_id,
+              userId: collection.content list_owner_id,
+              id: collection.content list_id,
               route: routeFunc(
                 collection.user.handle,
-                collection.playlist_name,
-                collection.playlist_id
+                collection.content list_name,
+                collection.content list_id
               ),
-              primaryText: collection.playlist_name,
+              primaryText: collection.content list_name,
               secondaryText: collection.user.handle,
               imageSize: collection._cover_art_sizes,
               isVerified: false
@@ -293,14 +293,14 @@ const messages = {
   tagSearchTitle: 'Tag Search',
   agreementsTitle: 'Agreements',
   albumsTitle: 'Albums',
-  playlistsTitle: 'Playlists',
+  content listsTitle: 'Playlists',
   peopleTitle: 'Profiles'
 }
 
 enum Tabs {
   AGREEMENTS = 'AGREEMENTS',
   ALBUMS = 'ALBUMS',
-  PLAYLISTS = 'PLAYLISTS',
+  CONTENT_LISTS = 'CONTENT_LISTS',
   PEOPLE = 'PEOPLE'
 }
 
@@ -335,7 +335,7 @@ const SearchPageContent = (props: SearchPageContentProps) => {
               | 'people'
               | 'agreements'
               | 'albums'
-              | 'playlists'
+              | 'content lists'
           })
         )
     },
@@ -388,8 +388,8 @@ const SearchPageContent = (props: SearchPageContentProps) => {
             },
             {
               icon: <IconPlaylists />,
-              text: messages.playlistsTitle,
-              label: Tabs.PLAYLISTS
+              text: messages.content listsTitle,
+              label: Tabs.CONTENT_LISTS
             }
           ],
           elements: [
@@ -405,9 +405,9 @@ const SearchPageContent = (props: SearchPageContentProps) => {
               cardType={CardType.ALBUM}
             />,
             <CardSearchPage
-              key='playlistSearch'
+              key='content listSearch'
               {...props}
-              cardType={CardType.PLAYLIST}
+              cardType={CardType.CONTENT_LIST}
             />
           ]
         }

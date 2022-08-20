@@ -12,7 +12,7 @@ const messages = {
   description: `
     Take Coliving with you! Download the Coliving
     mobile app and listen to remixes, agreements, and
-    playlists in incredible quality from anywhere.
+    content lists in incredible quality from anywhere.
   `,
   qrInstruction: `
     Scan This Code with Your

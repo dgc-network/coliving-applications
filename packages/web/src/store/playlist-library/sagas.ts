@@ -31,7 +31,7 @@ import {
   getPlaylistsNotInLibrary,
   removePlaylistLibraryDuplicates,
   replaceTempWithResolvedPlaylists
-} from 'common/store/playlist-library/helpers'
+} from 'common/store/content list-library/helpers'
 import { updateProfileAsync } from 'pages/profile-page/sagas'
 import { waitForBackendSetup } from 'store/backend/sagas'
 import { getResult } from 'store/confirmer/selectors'
@@ -39,45 +39,45 @@ import { waitForValue } from 'utils/sagaHelpers'
 
 import { update } from './slice'
 
-const TEMP_PLAYLIST_UPDATE_HELPER = 'TEMP_PLAYLIST_UPDATE_HELPER'
+const TEMP_CONTENT_LIST_UPDATE_HELPER = 'TEMP_CONTENT_LIST_UPDATE_HELPER'
 
 /**
- * Given a temp playlist, resolves it to a proper playlist
- * @param playlist
- * @returns a playlist library identifier
+ * Given a temp content list, resolves it to a proper content list
+ * @param content list
+ * @returns a content list library identifier
  */
 function* resolveTempPlaylists(
-  playlist: PlaylistLibraryIdentifier | PlaylistLibraryFolder
+  content list: PlaylistLibraryIdentifier | PlaylistLibraryFolder
 ) {
-  if (playlist.type === 'temp_playlist') {
-    const { playlist_id }: { playlist_id: ID } = yield call(
+  if (content list.type === 'temp_content list') {
+    const { content list_id }: { content list_id: ID } = yield call(
       waitForValue,
       getResult,
       {
-        uid: makeKindId(Kind.COLLECTIONS, playlist.playlist_id),
+        uid: makeKindId(Kind.COLLECTIONS, content list.content list_id),
         index: 0
       },
-      // The playlist has been created
+      // The content list has been created
       (res) => Object.keys(res).length > 0
     )
     return {
-      type: 'playlist',
-      playlist_id
+      type: 'content list',
+      content list_id
     }
   }
-  return playlist
+  return content list
 }
 
 function* watchUpdatePlaylistLibrary() {
   yield takeEvery(
     update.type,
     function* updatePlaylistLibrary(action: ReturnType<typeof update>) {
-      const { playlistLibrary } = action.payload
+      const { content listLibrary } = action.payload
       yield call(waitForBackendSetup)
 
       const account: User = yield select(getAccountUser)
-      account.playlist_library =
-        removePlaylistLibraryDuplicates(playlistLibrary)
+      account.content list_library =
+        removePlaylistLibraryDuplicates(content listLibrary)
       yield put(
         cacheActions.update(Kind.USERS, [
           {
@@ -87,14 +87,14 @@ function* watchUpdatePlaylistLibrary() {
         ])
       )
 
-      const containsTemps = containsTempPlaylist(playlistLibrary)
+      const containsTemps = containsTempPlaylist(content listLibrary)
       if (containsTemps) {
-        // Deal with temp playlists
-        // If there's a temp playlist, write to the cache, but dispatch
+        // Deal with temp content lists
+        // If there's a temp content list, write to the cache, but dispatch
         // to a helper to watch for the update.
         yield put({
-          type: TEMP_PLAYLIST_UPDATE_HELPER,
-          payload: { playlistLibrary }
+          type: TEMP_CONTENT_LIST_UPDATE_HELPER,
+          payload: { content listLibrary }
         })
       } else {
         // Otherwise, just write the profile update
@@ -107,65 +107,65 @@ function* watchUpdatePlaylistLibrary() {
 /**
  * Helper to watch for updates to the library with temp playlits in it.
  * Here we intentionally take latest so that we only do one write to the
- * backend once we've resolved the temp playlist ids to actual ids
+ * backend once we've resolved the temp content list ids to actual ids
  */
 function* watchUpdatePlaylistLibraryWithTempPlaylist() {
   yield takeLatest(
-    TEMP_PLAYLIST_UPDATE_HELPER,
+    TEMP_CONTENT_LIST_UPDATE_HELPER,
     function* makeUpdate(action: ReturnType<typeof update>) {
-      const { playlistLibrary: rawPlaylistLibrary } = action.payload
-      const playlistLibrary =
+      const { content listLibrary: rawPlaylistLibrary } = action.payload
+      const content listLibrary =
         removePlaylistLibraryDuplicates(rawPlaylistLibrary)
       const account: User = yield select(getAccountUser)
 
-      // Map over playlist library contents and resolve each temp id playlist
+      // Map over content list library contents and resolve each temp id content list
       // to one with an actual id. Once we have the actual id, we can proceed
       // with writing the library to the user metadata (profile update)
-      const tempPlaylists = extractTempPlaylistsFromLibrary(playlistLibrary)
+      const tempPlaylists = extractTempPlaylistsFromLibrary(content listLibrary)
       const resolvedPlaylists: PlaylistLibraryIdentifier[] = yield all(
-        tempPlaylists.map((playlist) => call(resolveTempPlaylists, playlist))
+        tempPlaylists.map((content list) => call(resolveTempPlaylists, content list))
       )
       const tempPlaylistIdToResolvedPlaylist = tempPlaylists.reduce(
         (result, nextTempPlaylist, index) => ({
           ...result,
-          [nextTempPlaylist.playlist_id]: resolvedPlaylists[index]
+          [nextTempPlaylist.content list_id]: resolvedPlaylists[index]
         }),
         {} as { [key: string]: PlaylistLibraryIdentifier }
       )
 
-      playlistLibrary.contents = replaceTempWithResolvedPlaylists(
-        playlistLibrary,
+      content listLibrary.contents = replaceTempWithResolvedPlaylists(
+        content listLibrary,
         tempPlaylistIdToResolvedPlaylist
       ).contents
-      account.playlist_library = playlistLibrary
-      // Update playlist library on chain via an account profile update
+      account.content list_library = content listLibrary
+      // Update content list library on chain via an account profile update
       yield call(updateProfileAsync, { metadata: account })
     }
   )
 }
 
 /**
- * Goes through the account playlists and adds playlists that are
- * not in the user's set playlist library
+ * Goes through the account content lists and adds content lists that are
+ * not in the user's set content list library
  */
 export function* addPlaylistsNotInLibrary() {
   let library: PlaylistLibrary = yield select(getPlaylistLibrary)
   if (!library) library = { contents: [] }
-  const playlists: { [id: number]: AccountCollection } = yield select(
+  const content lists: { [id: number]: AccountCollection } = yield select(
     getAccountNavigationPlaylists
   )
-  const notInLibrary = getPlaylistsNotInLibrary(library, playlists)
+  const notInLibrary = getPlaylistsNotInLibrary(library, content lists)
   if (Object.keys(notInLibrary).length > 0) {
     const newEntries = Object.values(notInLibrary).map(
-      (playlist) =>
+      (content list) =>
         ({
-          playlist_id: playlist.id,
-          type: 'playlist'
+          content list_id: content list.id,
+          type: 'content list'
         } as PlaylistIdentifier)
     )
     const newContents = library.contents.concat(newEntries)
     yield put(
-      update({ playlistLibrary: { ...library, contents: newContents } })
+      update({ content listLibrary: { ...library, contents: newContents } })
     )
   }
 }

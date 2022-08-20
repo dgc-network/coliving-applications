@@ -121,7 +121,7 @@ const AppRedirectPopover = ({
   const onClick = () => {
     onBeforeClickApp()
     const pathname = getPathname()
-    const newHref = `https://redirect.coliving.co${APP_REDIRECT}${pathname}`
+    const newHref = `https://redirect.coliving.lol${APP_REDIRECT}${pathname}`
     // If we're on the signup page, copy the URL to clipboard on app redirect
     // The app can then read the URL on load, persisting through install, to associate referrals
     if (

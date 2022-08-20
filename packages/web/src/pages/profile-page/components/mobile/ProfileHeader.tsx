@@ -46,7 +46,7 @@ const messages = {
   agreements: 'Agreements',
   followers: 'Followers',
   following: 'Following',
-  playlists: 'Playlists',
+  content lists: 'Playlists',
   showMore: 'Show More',
   showLess: 'Show Less',
   editProfile: 'EDIT PROFILE'
@@ -87,7 +87,7 @@ type ProfileHeaderProps = {
   coverPhotoSizes: CoverPhotoSizes | null
   profilePictureSizes: ProfilePictureSizes | null
   hasProfilePicture: boolean
-  playlistCount: number
+  content listCount: number
   agreementCount: number
   followerCount: number
   setFollowersUserId: (id: ID) => void
@@ -136,7 +136,7 @@ const ProfileHeader = ({
   loading,
   coverPhotoSizes,
   profilePictureSizes,
-  playlistCount,
+  content listCount,
   agreementCount,
   followerCount,
   followingCount,
@@ -385,10 +385,10 @@ const ProfileHeader = ({
           <div className={styles.artistMetrics}>
             <div className={styles.artistMetric}>
               <div className={styles.artistMetricValue}>
-                {formatCount(isArtist ? agreementCount : playlistCount)}
+                {formatCount(isArtist ? agreementCount : content listCount)}
               </div>
               <div className={styles.artistMetricLabel}>
-                {isArtist ? messages.agreements : messages.playlists}
+                {isArtist ? messages.agreements : messages.content lists}
               </div>
             </div>
             <div

@@ -9,7 +9,7 @@ import { makeStyles } from 'app/styles'
 
 import {
   LET_THEM_DJ,
-  TRENDING_PLAYLISTS,
+  TRENDING_CONTENT_LISTS,
   TRENDING_UNDERGROUND,
   TOP_ALBUMS
 } from '../../collections'
@@ -55,7 +55,7 @@ const useStyles = makeStyles(({ spacing }) => ({
 }))
 
 const tiles = [
-  TRENDING_PLAYLISTS,
+  TRENDING_CONTENT_LISTS,
   TRENDING_UNDERGROUND,
   HEAVY_ROTATION,
   LET_THEM_DJ,

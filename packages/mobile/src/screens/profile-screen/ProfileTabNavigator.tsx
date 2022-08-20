@@ -72,7 +72,7 @@ export const ProfileTabNavigator = ({
     scrollY: animatedValue
   })
 
-  const playlistsScreen = collapsibleTabScreen({
+  const content listsScreen = collapsibleTabScreen({
     name: 'Playlists',
     Icon: IconPlaylists,
     component: PlaylistsTab,
@@ -110,7 +110,7 @@ export const ProfileTabNavigator = ({
       >
         {agreementScreen}
         {albumsScreen}
-        {playlistsScreen}
+        {content listsScreen}
         {repostsScreen}
         {showCollectiblesTab ? collectiblesScreen : null}
       </CollapsibleTabNavigator>
@@ -123,7 +123,7 @@ export const ProfileTabNavigator = ({
       animatedValue={animatedValue}
     >
       {repostsScreen}
-      {playlistsScreen}
+      {content listsScreen}
       {showCollectiblesTab ? collectiblesScreen : null}
     </CollapsibleTabNavigator>
   )

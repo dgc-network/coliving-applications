@@ -39,7 +39,7 @@ const MAX_COUNT_LOADING_TILES = 18
 // The inital multiplier for number of agreements to fetch on lineup load
 // multiplied by the number of agreements that fit the screen height
 export const INITIAL_LOAD_AGREEMENTS_MULTIPLIER = 1.75
-export const INITIAL_PLAYLISTS_MULTIPLER = 1
+export const INITIAL_CONTENT_LISTS_MULTIPLER = 1
 
 // A multiplier for the number of tiles to fill a page to be
 // loaded in on each call (after the intial call)
@@ -56,7 +56,7 @@ const MINIMUM_INITIAL_LOAD_AGREEMENTS_MULTIPLIER = 1
 // tile height + margin
 const totalTileHeight = {
   main: 152 + 16,
-  playlist: 350
+  content list: 350
 }
 
 // Helper to calculate an item count based on the Lineup variant and a multiplier
@@ -74,14 +74,14 @@ const useItemCounts = (variant: LineupVariant) =>
   useMemo(
     () => ({
       minimum: getItemCount(
-        variant === LineupVariant.PLAYLIST
-          ? LineupVariant.PLAYLIST
+        variant === LineupVariant.CONTENT_LIST
+          ? LineupVariant.CONTENT_LIST
           : LineupVariant.MAIN,
         MINIMUM_INITIAL_LOAD_AGREEMENTS_MULTIPLIER
       ),
       initial: getItemCount(variant, () =>
-        variant === LineupVariant.PLAYLIST
-          ? INITIAL_PLAYLISTS_MULTIPLER
+        variant === LineupVariant.CONTENT_LIST
+          ? INITIAL_CONTENT_LISTS_MULTIPLER
           : INITIAL_LOAD_AGREEMENTS_MULTIPLIER
       ),
       loadMore: getItemCount(variant, AGREEMENTS_AHEAD_MULTIPLIER)
@@ -270,7 +270,7 @@ export const Lineup = ({
         return null
       }
       return AgreementTile
-    } else if (item.kind === Kind.COLLECTIONS || item.playlist_id) {
+    } else if (item.kind === Kind.COLLECTIONS || item.content list_id) {
       return CollectionTile
     }
     return null

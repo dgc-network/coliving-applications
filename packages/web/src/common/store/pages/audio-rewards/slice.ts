@@ -6,7 +6,7 @@ import {
 } from '@coliving/common'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-export type TrendingRewardsModalType = 'agreements' | 'playlists' | 'underground'
+export type TrendingRewardsModalType = 'agreements' | 'content lists' | 'underground'
 export type ChallengeRewardsModalType = ChallengeRewardID
 
 export enum ClaimStatus {

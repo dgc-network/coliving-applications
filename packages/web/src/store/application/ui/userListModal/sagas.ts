@@ -26,7 +26,7 @@ function* watchSetUsers() {
               id,
               entityType === UserListEntityType.AGREEMENT
                 ? FavoriteType.AGREEMENT
-                : FavoriteType.PLAYLIST
+                : FavoriteType.CONTENT_LIST
             )
           )
           break

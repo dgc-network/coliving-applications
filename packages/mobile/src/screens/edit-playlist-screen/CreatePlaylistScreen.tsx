@@ -3,7 +3,7 @@ import { useCallback } from 'react'
 import { CreatePlaylistSource } from '@/common'
 import { getUserHandle } from '-client/src/common/store/account/selectors'
 import { createPlaylist } from '-client/src/common/store/cache/collections/actions'
-import { playlistPage } from '-client/src/utils/route'
+import { content listPage } from '-client/src/utils/route'
 import type { FormikProps } from 'formik'
 import { Formik } from 'formik'
 
@@ -19,11 +19,11 @@ import { PlaylistNameInput } from './PlaylistNameInput'
 
 const messages = {
   title: 'Create Playlist',
-  playlistCreatedToast: 'Playlist Created!'
+  content listCreatedToast: 'Playlist Created!'
 }
 
 type PlaylistValues = {
-  playlist_name: string
+  content list_name: string
   description: string
   artwork: { url: string }
 }
@@ -46,13 +46,13 @@ const CreatePlaylistForm = (props: FormikProps<PlaylistValues>) => {
 }
 
 const initialValues: PlaylistValues = {
-  playlist_name: '',
+  content list_name: '',
   description: '',
   artwork: { url: '' }
 }
 
 const initialErrors = {
-  playlist_name: 'Required'
+  content list_name: 'Required'
 }
 
 export const CreatePlaylistScreen = () => {
@@ -69,9 +69,9 @@ export const CreatePlaylistScreen = () => {
       )
       navigation.replace({
         native: { screen: 'Collection', params: { id: parseInt(tempId, 10) } },
-        web: { route: playlistPage(handle, values.playlist_name, tempId) }
+        web: { route: content listPage(handle, values.content list_name, tempId) }
       })
-      toast({ content: messages.playlistCreatedToast })
+      toast({ content: messages.content listCreatedToast })
     },
     [dispatchWeb, navigation, handle, toast]
   )

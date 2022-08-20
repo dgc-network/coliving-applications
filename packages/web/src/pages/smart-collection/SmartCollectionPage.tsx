@@ -7,7 +7,7 @@ import { Dispatch } from 'redux'
 import { getPlaylistLibrary } from 'common/store/account/selectors'
 import { getCollection } from 'common/store/pages/smart-collection/selectors'
 import { fetchSmartCollection } from 'common/store/pages/smart-collection/slice'
-import { findInPlaylistLibrary } from 'common/store/playlist-library/helpers'
+import { findInPlaylistLibrary } from 'common/store/content list-library/helpers'
 import CollectionPage from 'pages/collection-page/CollectionPage'
 import { AppState } from 'store/types'
 
@@ -22,7 +22,7 @@ type SmartCollectionPageProps = OwnProps &
 const SmartCollectionPage = ({
   variant,
   collection,
-  playlistLibrary,
+  content listLibrary,
   fetch
 }: SmartCollectionPageProps) => {
   useEffect(() => {
@@ -32,8 +32,8 @@ const SmartCollectionPage = ({
   if (collection) {
     collection = {
       ...collection,
-      has_current_user_saved: playlistLibrary
-        ? !!findInPlaylistLibrary(playlistLibrary, variant)
+      has_current_user_saved: content listLibrary
+        ? !!findInPlaylistLibrary(content listLibrary, variant)
         : false
     }
   }
@@ -41,7 +41,7 @@ const SmartCollectionPage = ({
   return (
     <CollectionPage
       key={variant}
-      type='playlist'
+      type='content list'
       smartCollection={collection}
     />
   )
@@ -50,7 +50,7 @@ const SmartCollectionPage = ({
 function mapStateToProps(state: AppState, ownProps: OwnProps) {
   return {
     collection: getCollection(state, { variant: ownProps.variant }),
-    playlistLibrary: getPlaylistLibrary(state)
+    content listLibrary: getPlaylistLibrary(state)
   }
 }
 

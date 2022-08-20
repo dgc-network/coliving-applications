@@ -1,6 +1,6 @@
 import { makeGetLineupMetadatas } from '-client/src/common/store/lineup/selectors'
-import { trendingPlaylistLineupActions } from '-client/src/common/store/pages/trending-playlists/lineups/actions'
-import { getLineup } from '-client/src/common/store/pages/trending-playlists/lineups/selectors'
+import { trendingPlaylistLineupActions } from '-client/src/common/store/pages/trending-content lists/lineups/actions'
+import { getLineup } from '-client/src/common/store/pages/trending-content lists/lineups/selectors'
 
 import { RewardsBanner } from 'app/components/live-rewards'
 import { Screen } from 'app/components/core'
@@ -22,7 +22,7 @@ export const TrendingPlaylistsScreen = () => {
       <Header text={messages.header} />
       <Lineup
         lineup={lineup}
-        header={<RewardsBanner type='playlists' />}
+        header={<RewardsBanner type='content lists' />}
         actions={trendingPlaylistLineupActions}
         rankIconCount={5}
         isTrending

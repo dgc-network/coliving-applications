@@ -74,7 +74,7 @@ export type PlaylistTileProps = TileProps & {
   isAlbum: boolean
   isPublic: boolean
   contentTitle: string
-  playlistTitle: string
+  content listTitle: string
   artistName: string
   artistHandle: string
   artistIsVerified: boolean
@@ -91,7 +91,7 @@ export type PlaylistTileProps = TileProps & {
   uploading?: boolean
   uploadPercent?: number
   ownerId: ID
-  // TODO: remove when making all playlist tiles functional components
+  // TODO: remove when making all content list tiles functional components
   record?: (event: any) => void
   /** Number of rows to show when in loading state, if any */
   numLoadingSkeletonRows?: number
@@ -250,7 +250,7 @@ export type DesktopPlaylistTileProps = {
   /** The agreement's duration in seconds displayed in the top right */
   duration?: number
 
-  /** Class name to be added to the top level container of the playlist tile */
+  /** Class name to be added to the top level container of the content list tile */
   containerClassName?: string
 
   /** Class name to be added to the top level container of the agreementtile */
@@ -289,7 +289,7 @@ export type DesktopPlaylistTileProps = {
   /** The list of agreements to be rendered under the agreementtile  */
   agreementList: ReactNode[]
 
-  /** The full agreement count for the playlist (may include agreements not rendered) */
+  /** The full agreement count for the content list (may include agreements not rendered) */
   agreementCount: number
 
   /** The wrapper react compoenent for the agreement tile - can be used for drag and drop */

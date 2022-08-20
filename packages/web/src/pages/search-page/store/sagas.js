@@ -70,19 +70,19 @@ export function* getSearchResults(searchText, kind, limit, offset) {
     limit,
     offset
   })
-  const { agreements, albums, playlists, users } = results
+  const { agreements, albums, content lists, users } = results
 
   yield call(processAndCacheUsers, users)
   yield call(processAndCacheAgreements, agreements)
 
-  const collections = albums.concat(playlists)
+  const collections = albums.concat(content lists)
   yield call(
     processAndCacheCollections,
     collections,
     /* shouldRetrieveAgreements */ false
   )
 
-  return { users, agreements, albums, playlists }
+  return { users, agreements, albums, content lists }
 }
 
 function* fetchSearchPageResults(action) {
@@ -98,8 +98,8 @@ function* fetchSearchPageResults(action) {
   if (results) {
     results.users = results.users.map(({ user_id: id }) => id)
     results.agreements = results.agreements.map(({ agreement_id: id }) => id)
-    results.albums = results.albums.map(({ playlist_id: id }) => id)
-    results.playlists = results.playlists.map(({ playlist_id: id }) => id)
+    results.albums = results.albums.map(({ content list_id: id }) => id)
+    results.content lists = results.content lists.map(({ content list_id: id }) => id)
     yield put(
       searchPageActions.fetchSearchPageResultsSucceeded(
         results,

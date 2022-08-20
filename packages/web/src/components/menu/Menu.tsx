@@ -48,7 +48,7 @@ const Menu = forwardRef<HTMLDivElement, MenuProps>((props, ref) => {
 
   if (menu.type === 'user') {
     return <UserMenu {...(menu as UserMenuProps)}>{renderMenu}</UserMenu>
-  } else if (menu.type === 'album' || menu.type === 'playlist') {
+  } else if (menu.type === 'album' || menu.type === 'content list') {
     return (
       <CollectionMenu
         onClose={props.onClose}

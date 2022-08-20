@@ -40,20 +40,20 @@ export const remoteConfigStringDefaults: {
   [StringKeys.INSTAGRAM_API_PROFILE_URL]:
     'https://instagram.com/$USERNAME$/?__a=1',
   // Coliving user id
-  [StringKeys.TRENDING_PLAYLIST_OMITTED_USER_IDS]: '51',
+  [StringKeys.TRENDING_CONTENT_LIST_OMITTED_USER_IDS]: '51',
   [StringKeys.TRENDING_REWARD_IDS]:
-    'trending-agreement,trending-playlist,trending-underground,top-api',
+    'trending-agreement,trending-content list,trending-underground,top-api',
   [StringKeys.CHALLENGE_REWARD_IDS]:
-    'agreement-upload,invite-friends,mobile-app,connect-verified,listen-streak,profile-completion,send-first-tip,first-playlist',
+    'agreement-upload,invite-friends,mobile-app,connect-verified,listen-streak,profile-completion,send-first-tip,first-content list',
   [StringKeys.REWARDS_TWEET_ID_AGREEMENTS]: '1374856377651187713',
-  [StringKeys.REWARDS_TWEET_ID_PLAYLISTS]: '1374856377651187713',
+  [StringKeys.REWARDS_TWEET_ID_CONTENT_LISTS]: '1374856377651187713',
   [StringKeys.REWARDS_TWEET_ID_UNDERGROUND]: '1374856377651187713',
   [StringKeys.FORCE_MP3_STREAM_AGREEMENT_IDS]: null,
   [StringKeys.TF]: null,
   [StringKeys.TPF]: null,
   [StringKeys.UTF]: null,
   [StringKeys.TRENDING_EXPERIMENT]: null,
-  [StringKeys.PLAYLIST_TRENDING_EXPERIMENT]: null,
+  [StringKeys.CONTENT_LIST_TRENDING_EXPERIMENT]: null,
   [StringKeys.UNDERGROUND_TRENDING_EXPERIMENT]: null,
   [StringKeys.ORACLE_ETH_ADDRESS]: null,
   [StringKeys.ORACLE_ENDPOINT]: null,

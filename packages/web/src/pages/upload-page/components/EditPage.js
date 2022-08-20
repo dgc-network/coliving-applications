@@ -39,7 +39,7 @@ class EditPage extends Component {
 
   getRequiredCollectionFields = (metadata) => {
     const fields = mapValues(metadata, (v) => false)
-    fields.playlist_name = true
+    fields.content list_name = true
     fields.genre = true
     fields.artwork = true
     return fields
@@ -105,7 +105,7 @@ class EditPage extends Component {
   validateCollectionFields = (formFields) => {
     const newInvalidCollectionFields = {
       ...this.state.invalidCollectionFields,
-      playlist_name: !formFields.playlist_name,
+      content list_name: !formFields.content list_name,
       genre: !formFields.genre,
       artwork: !formFields.artwork.file
     }
@@ -119,7 +119,7 @@ class EditPage extends Component {
     const { uploadType } = this.props
 
     let validCollectionFields = true
-    if (uploadType === UploadType.PLAYLIST || uploadType === UploadType.ALBUM) {
+    if (uploadType === UploadType.CONTENT_LIST || uploadType === UploadType.ALBUM) {
       validCollectionFields = this.validateCollectionFields(this.props.metadata)
     }
     const validAgreementsFields = this.validateAgreementsFields(this.props.agreements)
@@ -161,7 +161,7 @@ class EditPage extends Component {
     )
 
     let forms
-    if (uploadType === UploadType.PLAYLIST || uploadType === UploadType.ALBUM) {
+    if (uploadType === UploadType.CONTENT_LIST || uploadType === UploadType.ALBUM) {
       forms = (
         <div className={styles.formTile}>
           <FormTile
@@ -169,7 +169,7 @@ class EditPage extends Component {
             invalidFields={invalidCollectionFields}
             requiredFields={requiredCollectionFields}
             isPlaylist
-            type={uploadType === UploadType.PLAYLIST ? 'playlist' : 'album'}
+            type={uploadType === UploadType.CONTENT_LIST ? 'content list' : 'album'}
             onChangeField={(field, value, invalid) =>
               this.updateMetadata(field, value, invalid)
             }

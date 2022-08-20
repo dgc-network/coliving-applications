@@ -2,13 +2,13 @@ import { ID, Nullable } from '@coliving/common'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 type DeletePlaylistConfirmationState = {
-  playlistId: Nullable<ID>
+  content listId: Nullable<ID>
 }
 
-export type OpenPayload = PayloadAction<{ playlistId: ID }>
+export type OpenPayload = PayloadAction<{ content listId: ID }>
 
 const initialState: DeletePlaylistConfirmationState = {
-  playlistId: null
+  content listId: null
 }
 
 const slice = createSlice({
@@ -17,7 +17,7 @@ const slice = createSlice({
   reducers: {
     requestOpen: (state, action: OpenPayload) => {},
     open: (state, action: OpenPayload) => {
-      state.playlistId = action.payload.playlistId
+      state.content listId = action.payload.content listId
     }
   }
 })

@@ -31,9 +31,9 @@ const messages = {
   shareTwitterText: (
     handle: string,
     agreement: Agreement,
-    playlist: CollectionEntity
+    content list: CollectionEntity
   ) =>
-    `My agreement ${agreement.title} was added to the playlist ${playlist.playlist_name} by ${handle} on @colivingproject! #Coliving`
+    `My agreement ${agreement.title} was added to the content list ${content list.content list_name} by ${handle} on @colivingproject! #Coliving`
 }
 
 type AddAgreementToPlaylistNotificationProps = {
@@ -45,20 +45,20 @@ export const AddAgreementToPlaylistNotification = (
 ) => {
   const { notification } = props
   const { timeLabel, isViewed } = notification
-  const { agreement, playlist } = useSelector((state) =>
+  const { agreement, content list } = useSelector((state) =>
     getNotificationEntities(state, notification)
   )
-  const playlistOwner = playlist.user
+  const content listOwner = content list.user
 
   const dispatch = useDispatch()
 
   const handleTwitterShare = useCallback(
     (twitterHandle: string) => {
-      if (agreement && playlist && twitterHandle) {
+      if (agreement && content list && twitterHandle) {
         const shareText = messages.shareTwitterText(
           twitterHandle,
           agreement,
-          playlist
+          content list
         )
         const analytics = make(
           Name.NOTIFICATIONS_CLICK_TIP_REACTION_TWITTER_SHARE,
@@ -68,14 +68,14 @@ export const AddAgreementToPlaylistNotification = (
       }
       return null
     },
-    [agreement, playlist]
+    [agreement, content list]
   )
 
   const handleClick = useCallback(() => {
-    dispatch(push(getEntityLink(playlist)))
-  }, [playlist, dispatch])
+    dispatch(push(getEntityLink(content list)))
+  }, [content list, dispatch])
 
-  if (!playlistOwner || !agreement) return null
+  if (!content listOwner || !agreement) return null
 
   return (
     <NotificationTile notification={notification} onClick={handleClick}>
@@ -85,21 +85,21 @@ export const AddAgreementToPlaylistNotification = (
       <NotificationBody className={styles.body}>
         <ProfilePicture
           className={styles.profilePicture}
-          user={playlistOwner}
+          user={content listOwner}
         />
         <span>
-          <UserNameLink user={playlistOwner} notification={notification} />
+          <UserNameLink user={content listOwner} notification={notification} />
           {' added your agreement '}
           <EntityLink entity={agreement} entityType={Entity.Agreement} />
-          {' to their playlist '}
-          <EntityLink entity={playlist} entityType={Entity.Playlist} />
+          {' to their content list '}
+          <EntityLink entity={content list} entityType={Entity.Playlist} />
         </span>
       </NotificationBody>
       <TwitterShareButton
         type='dynamic'
-        handle={playlistOwner.handle}
+        handle={content listOwner.handle}
         shareData={handleTwitterShare}
-        url={getEntityLink(playlist, true)}
+        url={getEntityLink(content list, true)}
       />
       <NotificationFooter timeLabel={timeLabel} isViewed={isViewed} />
     </NotificationTile>

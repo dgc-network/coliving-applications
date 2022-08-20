@@ -1,10 +1,10 @@
 import ExploreScreen from 'app/screens/explore-screen'
 import {
-  CHILL_PLAYLISTS,
-  INTENSE_PLAYLISTS,
-  INTIMATE_PLAYLISTS,
-  PROVOKING_PLAYLISTS,
-  UPBEAT_PLAYLISTS
+  CHILL_CONTENT_LISTS,
+  INTENSE_CONTENT_LISTS,
+  INTIMATE_CONTENT_LISTS,
+  PROVOKING_CONTENT_LISTS,
+  UPBEAT_CONTENT_LISTS
 } from 'app/screens/explore-screen/collections'
 import {
   BEST_NEW_RELEASES,
@@ -49,11 +49,11 @@ export type ExploreTabScreenParamList = AppTabScreenParamList & {
 }
 
 const moodCollections = [
-  CHILL_PLAYLISTS,
-  INTENSE_PLAYLISTS,
-  INTIMATE_PLAYLISTS,
-  PROVOKING_PLAYLISTS,
-  UPBEAT_PLAYLISTS
+  CHILL_CONTENT_LISTS,
+  INTENSE_CONTENT_LISTS,
+  INTIMATE_CONTENT_LISTS,
+  PROVOKING_CONTENT_LISTS,
+  UPBEAT_CONTENT_LISTS
 ]
 
 const smartCollections = [

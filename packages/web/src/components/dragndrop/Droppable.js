@@ -101,7 +101,7 @@ Droppable.propTypes = {
 
 Droppable.defaultProps = {
   onDrop: (id, kind) => {},
-  acceptedKinds: ['agreement', 'album', 'playlist', 'library-playlist'],
+  acceptedKinds: ['agreement', 'album', 'content list', 'library-content list'],
   disabled: false,
   stopPropogationOnDrop: false,
   acceptOwner: true

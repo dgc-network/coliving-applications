@@ -19,12 +19,12 @@ const messages = { recentlyUpdatedTooltip: 'Recently Updated' }
 
 type PlaylistNavLinkProps = NavLinkProps & {
   droppableKey: ID | SmartCollectionVariant
-  playlistId: ID | SmartCollectionVariant
+  content listId: ID | SmartCollectionVariant
   name: string
   onReorder: (
     draggingId: ID | SmartCollectionVariant | string,
     droppingId: ID | SmartCollectionVariant | string,
-    draggingKind: 'library-playlist' | 'playlist' | 'playlist-folder'
+    draggingKind: 'library-content list' | 'content list' | 'content list-folder'
   ) => void
   link?: string
   isInsideFolder?: boolean
@@ -32,7 +32,7 @@ type PlaylistNavLinkProps = NavLinkProps & {
 
 export const PlaylistNavLink = ({
   droppableKey,
-  playlistId,
+  content listId,
   name,
   link,
   onReorder,
@@ -54,20 +54,20 @@ export const PlaylistNavLink = ({
       className={styles.droppable}
       hoverClassName={styles.droppableHover}
       onDrop={(id: ID | SmartCollectionVariant | string, draggingKind) => {
-        onReorder(id, playlistId, draggingKind)
+        onReorder(id, content listId, draggingKind)
       }}
       stopPropogationOnDrop={true}
       acceptedKinds={
         isInsideFolder
-          ? ['library-playlist']
-          : ['library-playlist', 'playlist-folder']
+          ? ['library-content list']
+          : ['library-content list', 'content list-folder']
       }
     >
       <Draggable
-        id={playlistId}
+        id={content listId}
         text={name}
         link={link}
-        kind='library-playlist'
+        kind='library-content list'
         onDrag={onDrag}
         onDrop={onDrop}
       >
@@ -86,14 +86,14 @@ export const PlaylistNavLink = ({
 }
 
 type PlaylistNavItemProps = {
-  playlist: AccountCollection
+  content list: AccountCollection
   url: string
   addAgreement: (agreementId: ID) => void
   isOwner: boolean
   onReorder: (
     draggingId: ID | SmartCollectionVariant | string,
     droppingId: ID | SmartCollectionVariant | string,
-    draggingKind: 'library-playlist' | 'playlist' | 'playlist-folder'
+    draggingKind: 'library-content list' | 'content list' | 'content list-folder'
   ) => void
   hasUpdate?: boolean
   dragging: boolean
@@ -103,7 +103,7 @@ type PlaylistNavItemProps = {
   isInsideFolder?: boolean
 }
 export const PlaylistNavItem = ({
-  playlist,
+  content list,
   hasUpdate = false,
   url,
   addAgreement,
@@ -115,7 +115,7 @@ export const PlaylistNavItem = ({
   onClickEdit,
   isInsideFolder
 }: PlaylistNavItemProps) => {
-  const { id, name } = playlist
+  const { id, name } = content list
   const [isHovering, setIsHovering] = useState(false)
 
   return (
@@ -130,7 +130,7 @@ export const PlaylistNavItem = ({
       <PlaylistNavLink
         isInsideFolder={isInsideFolder}
         droppableKey={id}
-        playlistId={id}
+        content listId={id}
         name={name}
         link={url}
         to={url}
@@ -141,13 +141,13 @@ export const PlaylistNavItem = ({
           [navColumnStyles.droppableLink]:
             isOwner &&
             dragging &&
-            (draggingKind === 'agreement' || draggingKind === 'playlist'),
+            (draggingKind === 'agreement' || draggingKind === 'content list'),
           [navColumnStyles.editable]: isOwner && onClickEdit != null,
           [navColumnStyles.disabledLink]:
             dragging &&
             ((draggingKind !== 'agreement' &&
-              draggingKind !== 'playlist' &&
-              draggingKind !== 'library-playlist') ||
+              draggingKind !== 'content list' &&
+              draggingKind !== 'library-content list') ||
               !isOwner)
         })}
         onClick={() => onClickPlaylist(id, hasUpdate)}
@@ -177,7 +177,7 @@ export const PlaylistNavItem = ({
           </div>
           {!isOwner || !onClickEdit ? null : (
             <IconButton
-              aria-label='Edit playlist'
+              aria-label='Edit content list'
               className={cn(styles.iconKebabHorizontal, {
                 [styles.hidden]: !isHovering || dragging
               })}

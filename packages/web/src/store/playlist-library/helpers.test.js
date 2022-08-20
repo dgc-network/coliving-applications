@@ -13,51 +13,51 @@ import {
   replaceTempWithResolvedPlaylists,
   removePlaylistLibraryTempPlaylists,
   getPlaylistsNotInLibrary
-} from 'common/store/playlist-library/helpers'
+} from 'common/store/content list-library/helpers'
 
 describe('findInPlaylistLibrary', () => {
   it('finds an index in the library', () => {
     const library = {
       contents: [
-        { type: 'playlist', playlist_id: 1 },
-        { type: 'playlist', playlist_id: 2 },
-        { type: 'playlist', playlist_id: 3 },
-        { type: 'playlist', playlist_id: 4 }
+        { type: 'content list', content list_id: 1 },
+        { type: 'content list', content list_id: 2 },
+        { type: 'content list', content list_id: 3 },
+        { type: 'content list', content list_id: 4 }
       ]
     }
     const found = findInPlaylistLibrary(library, 2)
-    expect(found).toEqual({ type: 'playlist', playlist_id: 2 })
+    expect(found).toEqual({ type: 'content list', content list_id: 2 })
   })
 
   it('finds an index in the library with folders', () => {
     const library = {
       contents: [
-        { type: 'playlist', playlist_id: 1 },
-        { type: 'playlist', playlist_id: 2 },
+        { type: 'content list', content list_id: 1 },
+        { type: 'content list', content list_id: 2 },
         {
           type: 'folder',
           name: 'favorites',
-          contents: [{ type: 'playlist', playlist_id: 3 }]
+          contents: [{ type: 'content list', content list_id: 3 }]
         },
-        { type: 'playlist', playlist_id: 4 }
+        { type: 'content list', content list_id: 4 }
       ]
     }
     const found = findInPlaylistLibrary(library, 3)
-    expect(found).toEqual({ type: 'playlist', playlist_id: 3 })
+    expect(found).toEqual({ type: 'content list', content list_id: 3 })
   })
 
   it('does not find something not in the library', () => {
     const library = {
       contents: [
-        { type: 'playlist', playlist_id: 1 },
-        { type: 'playlist', playlist_id: 2 },
+        { type: 'content list', content list_id: 1 },
+        { type: 'content list', content list_id: 2 },
         {
           type: 'folder',
           name: 'favorites',
           id: 'fake-uuid',
-          contents: [{ type: 'playlist', playlist_id: 3 }]
+          contents: [{ type: 'content list', content list_id: 3 }]
         },
-        { type: 'playlist', playlist_id: 4 }
+        { type: 'content list', content list_id: 4 }
       ]
     }
     const found = findInPlaylistLibrary(library, 10)
@@ -69,10 +69,10 @@ describe('findIndexInPlaylistLibrary', () => {
   it('finds an index in the library', () => {
     const library = {
       contents: [
-        { type: 'playlist', playlist_id: 1 },
-        { type: 'playlist', playlist_id: 2 },
-        { type: 'playlist', playlist_id: 3 },
-        { type: 'playlist', playlist_id: 4 }
+        { type: 'content list', content list_id: 1 },
+        { type: 'content list', content list_id: 2 },
+        { type: 'content list', content list_id: 3 },
+        { type: 'content list', content list_id: 4 }
       ]
     }
     const index = findIndexInPlaylistLibrary(library, 2)
@@ -82,10 +82,10 @@ describe('findIndexInPlaylistLibrary', () => {
   it('does not find something not in the library', () => {
     const library = {
       contents: [
-        { type: 'playlist', playlist_id: 1 },
-        { type: 'playlist', playlist_id: 2 },
-        { type: 'playlist', playlist_id: 3 },
-        { type: 'playlist', playlist_id: 4 }
+        { type: 'content list', content list_id: 1 },
+        { type: 'content list', content list_id: 2 },
+        { type: 'content list', content list_id: 3 },
+        { type: 'content list', content list_id: 4 }
       ]
     }
     const index = findIndexInPlaylistLibrary(library, 10)
@@ -95,17 +95,17 @@ describe('findIndexInPlaylistLibrary', () => {
   it('finds folder in the library', () => {
     const library = {
       contents: [
-        { type: 'playlist', playlist_id: 1 },
-        { type: 'playlist', playlist_id: 2 },
-        { type: 'playlist', playlist_id: 3 },
-        { type: 'playlist', playlist_id: 4 },
+        { type: 'content list', content list_id: 1 },
+        { type: 'content list', content list_id: 2 },
+        { type: 'content list', content list_id: 3 },
+        { type: 'content list', content list_id: 4 },
         {
           type: 'folder',
           name: 'favorites',
           id: 'fake-uuid',
           contents: [
-            { type: 'playlist', playlist_id: 7 },
-            { type: 'playlist', playlist_id: 10 }
+            { type: 'content list', content list_id: 7 },
+            { type: 'content list', content list_id: 10 }
           ]
         }
       ]
@@ -114,29 +114,29 @@ describe('findIndexInPlaylistLibrary', () => {
     expect(index).toEqual(4)
   })
 
-  it('finds playlist inside folder', () => {
+  it('finds content list inside folder', () => {
     const library = {
       contents: [
-        { type: 'playlist', playlist_id: 1 },
-        { type: 'playlist', playlist_id: 2 },
-        { type: 'playlist', playlist_id: 3 },
-        { type: 'playlist', playlist_id: 4 },
+        { type: 'content list', content list_id: 1 },
+        { type: 'content list', content list_id: 2 },
+        { type: 'content list', content list_id: 3 },
+        { type: 'content list', content list_id: 4 },
         {
           type: 'folder',
           name: 'favorites',
           id: 'fake-uuid',
           contents: [
-            { type: 'playlist', playlist_id: 7 },
-            { type: 'playlist', playlist_id: 10 },
-            { type: 'temp_playlist', playlist_id: '33' },
+            { type: 'content list', content list_id: 7 },
+            { type: 'content list', content list_id: 10 },
+            { type: 'temp_content list', content list_id: '33' },
             {
               type: 'folder',
               name: 'favorites 2',
               id: 'fake-uuid-2',
               contents: [
-                { type: 'playlist', playlist_id: 11 },
-                { type: 'playlist', playlist_id: 12 },
-                { type: 'temp_playlist', playlist_id: 13 }
+                { type: 'content list', content list_id: 11 },
+                { type: 'content list', content list_id: 12 },
+                { type: 'temp_content list', content list_id: 13 }
               ]
             }
           ]
@@ -156,26 +156,26 @@ describe('findIndexInPlaylistLibrary', () => {
   it('finds folder inside folder', () => {
     const library = {
       contents: [
-        { type: 'playlist', playlist_id: 1 },
-        { type: 'playlist', playlist_id: 2 },
-        { type: 'playlist', playlist_id: 3 },
-        { type: 'playlist', playlist_id: 4 },
+        { type: 'content list', content list_id: 1 },
+        { type: 'content list', content list_id: 2 },
+        { type: 'content list', content list_id: 3 },
+        { type: 'content list', content list_id: 4 },
         {
           type: 'folder',
           name: 'favorites',
           id: 'fake-uuid',
           contents: [
-            { type: 'playlist', playlist_id: 7 },
-            { type: 'playlist', playlist_id: 10 },
-            { type: 'temp_playlist', playlist_id: '33' },
+            { type: 'content list', content list_id: 7 },
+            { type: 'content list', content list_id: 10 },
+            { type: 'temp_content list', content list_id: '33' },
             {
               type: 'folder',
               name: 'favorites 2',
               id: 'fake-uuid-2',
               contents: [
-                { type: 'playlist', playlist_id: 11 },
-                { type: 'playlist', playlist_id: 12 },
-                { type: 'temp_playlist', playlist_id: 13 }
+                { type: 'content list', content list_id: 11 },
+                { type: 'content list', content list_id: 12 },
+                { type: 'temp_content list', content list_id: 13 }
               ]
             }
           ]
@@ -188,36 +188,36 @@ describe('findIndexInPlaylistLibrary', () => {
 })
 
 describe('removeFromPlaylistLibrary', () => {
-  it('removes playlist from the library', () => {
+  it('removes content list from the library', () => {
     const library = {
       contents: [
-        { type: 'playlist', playlist_id: 1 },
-        { type: 'playlist', playlist_id: 2 },
-        { type: 'playlist', playlist_id: 3 },
-        { type: 'playlist', playlist_id: 4 }
+        { type: 'content list', content list_id: 1 },
+        { type: 'content list', content list_id: 2 },
+        { type: 'content list', content list_id: 3 },
+        { type: 'content list', content list_id: 4 }
       ]
     }
     const { library: ret, removed } = removeFromPlaylistLibrary(library, 2)
     expect(ret).toEqual({
       contents: [
-        { type: 'playlist', playlist_id: 1 },
-        { type: 'playlist', playlist_id: 3 },
-        { type: 'playlist', playlist_id: 4 }
+        { type: 'content list', content list_id: 1 },
+        { type: 'content list', content list_id: 3 },
+        { type: 'content list', content list_id: 4 }
       ]
     })
-    expect(removed).toEqual({ type: 'playlist', playlist_id: 2 })
+    expect(removed).toEqual({ type: 'content list', content list_id: 2 })
   })
 
   it('removes folder from the library', () => {
     const library = {
       contents: [
-        { type: 'playlist', playlist_id: 1 },
-        { type: 'playlist', playlist_id: 2 },
-        { type: 'playlist', playlist_id: 3 },
-        { type: 'playlist', playlist_id: 4 },
+        { type: 'content list', content list_id: 1 },
+        { type: 'content list', content list_id: 2 },
+        { type: 'content list', content list_id: 3 },
+        { type: 'content list', content list_id: 4 },
         {
           type: 'folder',
-          contents: [{ type: 'playlist', playlist_id: 5 }],
+          contents: [{ type: 'content list', content list_id: 5 }],
           id: 'fake-uuid',
           name: 'Foldar'
         }
@@ -229,82 +229,82 @@ describe('removeFromPlaylistLibrary', () => {
     )
     expect(ret).toEqual({
       contents: [
-        { type: 'playlist', playlist_id: 1 },
-        { type: 'playlist', playlist_id: 2 },
-        { type: 'playlist', playlist_id: 3 },
-        { type: 'playlist', playlist_id: 4 }
+        { type: 'content list', content list_id: 1 },
+        { type: 'content list', content list_id: 2 },
+        { type: 'content list', content list_id: 3 },
+        { type: 'content list', content list_id: 4 }
       ]
     })
     expect(removed).toEqual({
       type: 'folder',
-      contents: [{ type: 'playlist', playlist_id: 5 }],
+      contents: [{ type: 'content list', content list_id: 5 }],
       id: 'fake-uuid',
       name: 'Foldar'
     })
   })
 
-  it('removes playlist from the library with folders present', () => {
+  it('removes content list from the library with folders present', () => {
     const library = {
       contents: [
-        { type: 'playlist', playlist_id: 1 },
-        { type: 'playlist', playlist_id: 2 },
+        { type: 'content list', content list_id: 1 },
+        { type: 'content list', content list_id: 2 },
         {
           type: 'folder',
           name: 'favorites',
           contents: [
-            { type: 'playlist', playlist_id: 3 },
-            { type: 'playlist', playlist_id: 5 }
+            { type: 'content list', content list_id: 3 },
+            { type: 'content list', content list_id: 5 }
           ]
         },
-        { type: 'playlist', playlist_id: 4 }
+        { type: 'content list', content list_id: 4 }
       ]
     }
     const { library: ret, removed } = removeFromPlaylistLibrary(library, 3)
     expect(ret).toEqual({
       contents: [
-        { type: 'playlist', playlist_id: 1 },
-        { type: 'playlist', playlist_id: 2 },
+        { type: 'content list', content list_id: 1 },
+        { type: 'content list', content list_id: 2 },
         {
           type: 'folder',
           name: 'favorites',
-          contents: [{ type: 'playlist', playlist_id: 5 }]
+          contents: [{ type: 'content list', content list_id: 5 }]
         },
-        { type: 'playlist', playlist_id: 4 }
+        { type: 'content list', content list_id: 4 }
       ]
     })
-    expect(removed).toEqual({ type: 'playlist', playlist_id: 3 })
+    expect(removed).toEqual({ type: 'content list', content list_id: 3 })
   })
 
   it('does not remove something not in the library', () => {
     const library = {
       contents: [
-        { type: 'playlist', playlist_id: 1 },
-        { type: 'playlist', playlist_id: 2 },
+        { type: 'content list', content list_id: 1 },
+        { type: 'content list', content list_id: 2 },
         {
           type: 'folder',
           name: 'favorites',
           contents: [
-            { type: 'playlist', playlist_id: 3 },
-            { type: 'playlist', playlist_id: 5 }
+            { type: 'content list', content list_id: 3 },
+            { type: 'content list', content list_id: 5 }
           ]
         },
-        { type: 'playlist', playlist_id: 4 }
+        { type: 'content list', content list_id: 4 }
       ]
     }
     const { library: ret, removed } = removeFromPlaylistLibrary(library, 100)
     expect(ret).toEqual({
       contents: [
-        { type: 'playlist', playlist_id: 1 },
-        { type: 'playlist', playlist_id: 2 },
+        { type: 'content list', content list_id: 1 },
+        { type: 'content list', content list_id: 2 },
         {
           type: 'folder',
           name: 'favorites',
           contents: [
-            { type: 'playlist', playlist_id: 3 },
-            { type: 'playlist', playlist_id: 5 }
+            { type: 'content list', content list_id: 3 },
+            { type: 'content list', content list_id: 5 }
           ]
         },
-        { type: 'playlist', playlist_id: 4 }
+        { type: 'content list', content list_id: 4 }
       ]
     })
     expect(removed).toEqual(null)
@@ -315,18 +315,18 @@ describe('removePlaylistLibraryDuplicates', () => {
   it('can remove single dupes', () => {
     const library = {
       contents: [
-        { type: 'playlist', playlist_id: 1 },
-        { type: 'playlist', playlist_id: 2 },
-        { type: 'playlist', playlist_id: 3 },
-        { type: 'playlist', playlist_id: 1 }
+        { type: 'content list', content list_id: 1 },
+        { type: 'content list', content list_id: 2 },
+        { type: 'content list', content list_id: 3 },
+        { type: 'content list', content list_id: 1 }
       ]
     }
     const ret = removePlaylistLibraryDuplicates(library)
     expect(ret).toEqual({
       contents: [
-        { type: 'playlist', playlist_id: 1 },
-        { type: 'playlist', playlist_id: 2 },
-        { type: 'playlist', playlist_id: 3 }
+        { type: 'content list', content list_id: 1 },
+        { type: 'content list', content list_id: 2 },
+        { type: 'content list', content list_id: 3 }
       ]
     })
   })
@@ -334,23 +334,23 @@ describe('removePlaylistLibraryDuplicates', () => {
   it('does not remove non duplicates', () => {
     const library = {
       contents: [
-        { type: 'playlist', playlist_id: 1 },
-        { type: 'playlist', playlist_id: 2 },
-        { type: 'playlist', playlist_id: 3 },
-        { type: 'playlist', playlist_id: 4 },
-        { type: 'playlist', playlist_id: 5 },
-        { type: 'playlist', playlist_id: 6 }
+        { type: 'content list', content list_id: 1 },
+        { type: 'content list', content list_id: 2 },
+        { type: 'content list', content list_id: 3 },
+        { type: 'content list', content list_id: 4 },
+        { type: 'content list', content list_id: 5 },
+        { type: 'content list', content list_id: 6 }
       ]
     }
     const ret = removePlaylistLibraryDuplicates(library)
     expect(ret).toEqual({
       contents: [
-        { type: 'playlist', playlist_id: 1 },
-        { type: 'playlist', playlist_id: 2 },
-        { type: 'playlist', playlist_id: 3 },
-        { type: 'playlist', playlist_id: 4 },
-        { type: 'playlist', playlist_id: 5 },
-        { type: 'playlist', playlist_id: 6 }
+        { type: 'content list', content list_id: 1 },
+        { type: 'content list', content list_id: 2 },
+        { type: 'content list', content list_id: 3 },
+        { type: 'content list', content list_id: 4 },
+        { type: 'content list', content list_id: 5 },
+        { type: 'content list', content list_id: 6 }
       ]
     })
   })
@@ -358,22 +358,22 @@ describe('removePlaylistLibraryDuplicates', () => {
   it('can remove multiple dupes', () => {
     const library = {
       contents: [
-        { type: 'playlist', playlist_id: 1 },
-        { type: 'playlist', playlist_id: 2 },
-        { type: 'playlist', playlist_id: 3 },
-        { type: 'playlist', playlist_id: 1 },
-        { type: 'playlist', playlist_id: 2 },
-        { type: 'playlist', playlist_id: 3 },
-        { type: 'playlist', playlist_id: 3 },
-        { type: 'playlist', playlist_id: 3 }
+        { type: 'content list', content list_id: 1 },
+        { type: 'content list', content list_id: 2 },
+        { type: 'content list', content list_id: 3 },
+        { type: 'content list', content list_id: 1 },
+        { type: 'content list', content list_id: 2 },
+        { type: 'content list', content list_id: 3 },
+        { type: 'content list', content list_id: 3 },
+        { type: 'content list', content list_id: 3 }
       ]
     }
     const ret = removePlaylistLibraryDuplicates(library)
     expect(ret).toEqual({
       contents: [
-        { type: 'playlist', playlist_id: 1 },
-        { type: 'playlist', playlist_id: 2 },
-        { type: 'playlist', playlist_id: 3 }
+        { type: 'content list', content list_id: 1 },
+        { type: 'content list', content list_id: 2 },
+        { type: 'content list', content list_id: 3 }
       ]
     })
   })
@@ -381,31 +381,31 @@ describe('removePlaylistLibraryDuplicates', () => {
   it('can remove nested dupes', () => {
     const library = {
       contents: [
-        { type: 'playlist', playlist_id: 1 },
-        { type: 'playlist', playlist_id: 2 },
-        { type: 'playlist', playlist_id: 3 },
+        { type: 'content list', content list_id: 1 },
+        { type: 'content list', content list_id: 2 },
+        { type: 'content list', content list_id: 3 },
         {
           type: 'folder',
           name: 'favorites',
           contents: [
-            { type: 'playlist', playlist_id: 2 },
-            { type: 'playlist', playlist_id: 3 },
-            { type: 'playlist', playlist_id: 5 }
+            { type: 'content list', content list_id: 2 },
+            { type: 'content list', content list_id: 3 },
+            { type: 'content list', content list_id: 5 }
           ]
         },
-        { type: 'playlist', playlist_id: 3 }
+        { type: 'content list', content list_id: 3 }
       ]
     }
     const ret = removePlaylistLibraryDuplicates(library)
     expect(ret).toEqual({
       contents: [
-        { type: 'playlist', playlist_id: 1 },
-        { type: 'playlist', playlist_id: 2 },
-        { type: 'playlist', playlist_id: 3 },
+        { type: 'content list', content list_id: 1 },
+        { type: 'content list', content list_id: 2 },
+        { type: 'content list', content list_id: 3 },
         {
           type: 'folder',
           name: 'favorites',
-          contents: [{ type: 'playlist', playlist_id: 5 }]
+          contents: [{ type: 'content list', content list_id: 5 }]
         }
       ]
     })
@@ -414,17 +414,17 @@ describe('removePlaylistLibraryDuplicates', () => {
   it('can remove dupe folders', () => {
     const library = {
       contents: [
-        { type: 'playlist', playlist_id: 1 },
-        { type: 'playlist', playlist_id: 2 },
-        { type: 'playlist', playlist_id: 3 },
+        { type: 'content list', content list_id: 1 },
+        { type: 'content list', content list_id: 2 },
+        { type: 'content list', content list_id: 3 },
         {
           type: 'folder',
           name: 'favorites',
           id: 'my-uuid',
           contents: [
-            { type: 'playlist', playlist_id: 4 },
-            { type: 'playlist', playlist_id: 5 },
-            { type: 'playlist', playlist_id: 6 }
+            { type: 'content list', content list_id: 4 },
+            { type: 'content list', content list_id: 5 },
+            { type: 'content list', content list_id: 6 }
           ]
         },
         {
@@ -432,9 +432,9 @@ describe('removePlaylistLibraryDuplicates', () => {
           name: 'favorites',
           id: 'my-uuid',
           contents: [
-            { type: 'playlist', playlist_id: 4 },
-            { type: 'playlist', playlist_id: 5 },
-            { type: 'playlist', playlist_id: 6 }
+            { type: 'content list', content list_id: 4 },
+            { type: 'content list', content list_id: 5 },
+            { type: 'content list', content list_id: 6 }
           ]
         },
         {
@@ -442,9 +442,9 @@ describe('removePlaylistLibraryDuplicates', () => {
           name: 'favorites',
           id: 'different-uuid',
           contents: [
-            { type: 'playlist', playlist_id: 4 },
-            { type: 'playlist', playlist_id: 5 },
-            { type: 'playlist', playlist_id: 6 }
+            { type: 'content list', content list_id: 4 },
+            { type: 'content list', content list_id: 5 },
+            { type: 'content list', content list_id: 6 }
           ]
         }
       ]
@@ -453,17 +453,17 @@ describe('removePlaylistLibraryDuplicates', () => {
 
     const expectedResult = {
       contents: [
-        { type: 'playlist', playlist_id: 1 },
-        { type: 'playlist', playlist_id: 2 },
-        { type: 'playlist', playlist_id: 3 },
+        { type: 'content list', content list_id: 1 },
+        { type: 'content list', content list_id: 2 },
+        { type: 'content list', content list_id: 3 },
         {
           type: 'folder',
           name: 'favorites',
           id: 'my-uuid',
           contents: [
-            { type: 'playlist', playlist_id: 4 },
-            { type: 'playlist', playlist_id: 5 },
-            { type: 'playlist', playlist_id: 6 }
+            { type: 'content list', content list_id: 4 },
+            { type: 'content list', content list_id: 5 },
+            { type: 'content list', content list_id: 6 }
           ]
         },
         {
@@ -479,62 +479,62 @@ describe('removePlaylistLibraryDuplicates', () => {
 })
 
 describe('removePlaylistLibraryTempPlaylists', () => {
-  it('can remove temporary playlists', () => {
+  it('can remove temporary content lists', () => {
     const library = {
       contents: [
-        { type: 'temp_playlist', playlist_id: '33' },
-        { type: 'explore_playlist', playlist_id: 'Heavy Rotation' },
+        { type: 'temp_content list', content list_id: '33' },
+        { type: 'explore_content list', content list_id: 'Heavy Rotation' },
         {
           type: 'folder',
           name: 'My folder',
           id: 'uuid',
           contents: [
-            { type: 'temp_playlist', playlist_id: '44' },
-            { type: 'playlist', playlist_id: 5 },
-            { type: 'playlist', playlist_id: 6 }
+            { type: 'temp_content list', content list_id: '44' },
+            { type: 'content list', content list_id: 5 },
+            { type: 'content list', content list_id: 6 }
           ]
         },
-        { type: 'playlist', playlist_id: 3 },
-        { type: 'playlist', playlist_id: 1 }
+        { type: 'content list', content list_id: 3 },
+        { type: 'content list', content list_id: 1 }
       ]
     }
     const ret = removePlaylistLibraryTempPlaylists(library)
     expect(ret).toEqual({
       contents: [
-        { type: 'explore_playlist', playlist_id: 'Heavy Rotation' },
+        { type: 'explore_content list', content list_id: 'Heavy Rotation' },
         {
           type: 'folder',
           name: 'My folder',
           id: 'uuid',
           contents: [
-            { type: 'playlist', playlist_id: 5 },
-            { type: 'playlist', playlist_id: 6 }
+            { type: 'content list', content list_id: 5 },
+            { type: 'content list', content list_id: 6 }
           ]
         },
-        { type: 'playlist', playlist_id: 3 },
-        { type: 'playlist', playlist_id: 1 }
+        { type: 'content list', content list_id: 3 },
+        { type: 'content list', content list_id: 1 }
       ]
     })
   })
 
-  it('does not remove non temp playlists', () => {
+  it('does not remove non temp content lists', () => {
     const library = {
       contents: [
-        { type: 'playlist', playlist_id: 1 },
-        { type: 'playlist', playlist_id: 2 },
-        { type: 'explore_playlist', playlist_id: 'Heavy Rotation' },
+        { type: 'content list', content list_id: 1 },
+        { type: 'content list', content list_id: 2 },
+        { type: 'explore_content list', content list_id: 'Heavy Rotation' },
         {
           type: 'folder',
           name: 'My folder',
           id: 'uuid',
           contents: [
-            { type: 'playlist', playlist_id: 10 },
-            { type: 'playlist', playlist_id: 11 }
+            { type: 'content list', content list_id: 10 },
+            { type: 'content list', content list_id: 11 }
           ]
         },
-        { type: 'playlist', playlist_id: 4 },
-        { type: 'playlist', playlist_id: 5 },
-        { type: 'playlist', playlist_id: 6 }
+        { type: 'content list', content list_id: 4 },
+        { type: 'content list', content list_id: 5 },
+        { type: 'content list', content list_id: 6 }
       ]
     }
     const ret = removePlaylistLibraryTempPlaylists(library)
@@ -555,61 +555,61 @@ describe('removePlaylistLibraryTempPlaylists', () => {
 })
 
 describe('reorderPlaylistLibrary', () => {
-  it('can reorder adjacent playlists', () => {
+  it('can reorder adjacent content lists', () => {
     const library = {
       contents: [
-        { type: 'playlist', playlist_id: 1 },
-        { type: 'playlist', playlist_id: 2 },
-        { type: 'playlist', playlist_id: 3 },
+        { type: 'content list', content list_id: 1 },
+        { type: 'content list', content list_id: 2 },
+        { type: 'content list', content list_id: 3 },
         {
           type: 'folder',
           name: 'favorites',
           id: 'my-uuid',
           contents: [
-            { type: 'temp_playlist', playlist_id: '10' },
-            { type: 'explore_playlist', playlist_id: 'Heavy Rotation' },
-            { type: 'playlist', playlist_id: 12 }
+            { type: 'temp_content list', content list_id: '10' },
+            { type: 'explore_content list', content list_id: 'Heavy Rotation' },
+            { type: 'content list', content list_id: 12 }
           ]
         },
-        { type: 'playlist', playlist_id: 4 }
+        { type: 'content list', content list_id: 4 }
       ]
     }
     const ret = reorderPlaylistLibrary(library, 2, 3)
     expect(ret).toEqual({
       contents: [
-        { type: 'playlist', playlist_id: 1 },
-        { type: 'playlist', playlist_id: 3 },
-        { type: 'playlist', playlist_id: 2 },
+        { type: 'content list', content list_id: 1 },
+        { type: 'content list', content list_id: 3 },
+        { type: 'content list', content list_id: 2 },
         {
           type: 'folder',
           name: 'favorites',
           id: 'my-uuid',
           contents: [
-            { type: 'temp_playlist', playlist_id: '10' },
-            { type: 'explore_playlist', playlist_id: 'Heavy Rotation' },
-            { type: 'playlist', playlist_id: 12 }
+            { type: 'temp_content list', content list_id: '10' },
+            { type: 'explore_content list', content list_id: 'Heavy Rotation' },
+            { type: 'content list', content list_id: 12 }
           ]
         },
-        { type: 'playlist', playlist_id: 4 }
+        { type: 'content list', content list_id: 4 }
       ]
     })
   })
 
-  it('can reorder the start playlist', () => {
+  it('can reorder the start content list', () => {
     const library = {
       contents: [
-        { type: 'playlist', playlist_id: 1 },
-        { type: 'playlist', playlist_id: 2 },
-        { type: 'playlist', playlist_id: 3 },
-        { type: 'playlist', playlist_id: 4 },
+        { type: 'content list', content list_id: 1 },
+        { type: 'content list', content list_id: 2 },
+        { type: 'content list', content list_id: 3 },
+        { type: 'content list', content list_id: 4 },
         {
           type: 'folder',
           name: 'favorites',
           id: 'my-uuid',
           contents: [
-            { type: 'temp_playlist', playlist_id: '10' },
-            { type: 'explore_playlist', playlist_id: 'Heavy Rotation' },
-            { type: 'playlist', playlist_id: 12 }
+            { type: 'temp_content list', content list_id: '10' },
+            { type: 'explore_content list', content list_id: 'Heavy Rotation' },
+            { type: 'content list', content list_id: 12 }
           ]
         }
       ]
@@ -617,157 +617,157 @@ describe('reorderPlaylistLibrary', () => {
     const ret = reorderPlaylistLibrary(library, 1, 4)
     expect(ret).toEqual({
       contents: [
-        { type: 'playlist', playlist_id: 2 },
-        { type: 'playlist', playlist_id: 3 },
-        { type: 'playlist', playlist_id: 4 },
-        { type: 'playlist', playlist_id: 1 },
+        { type: 'content list', content list_id: 2 },
+        { type: 'content list', content list_id: 3 },
+        { type: 'content list', content list_id: 4 },
+        { type: 'content list', content list_id: 1 },
         {
           type: 'folder',
           name: 'favorites',
           id: 'my-uuid',
           contents: [
-            { type: 'temp_playlist', playlist_id: '10' },
-            { type: 'explore_playlist', playlist_id: 'Heavy Rotation' },
-            { type: 'playlist', playlist_id: 12 }
+            { type: 'temp_content list', content list_id: '10' },
+            { type: 'explore_content list', content list_id: 'Heavy Rotation' },
+            { type: 'content list', content list_id: 12 }
           ]
         }
       ]
     })
   })
 
-  it('can reorder the end playlist', () => {
+  it('can reorder the end content list', () => {
     const library = {
       contents: [
-        { type: 'playlist', playlist_id: 1 },
-        { type: 'playlist', playlist_id: 2 },
+        { type: 'content list', content list_id: 1 },
+        { type: 'content list', content list_id: 2 },
         {
           type: 'folder',
           name: 'favorites',
           id: 'my-uuid',
           contents: [
-            { type: 'temp_playlist', playlist_id: '10' },
-            { type: 'explore_playlist', playlist_id: 'Heavy Rotation' },
-            { type: 'playlist', playlist_id: 12 }
+            { type: 'temp_content list', content list_id: '10' },
+            { type: 'explore_content list', content list_id: 'Heavy Rotation' },
+            { type: 'content list', content list_id: 12 }
           ]
         },
-        { type: 'playlist', playlist_id: 3 },
-        { type: 'playlist', playlist_id: 4 }
+        { type: 'content list', content list_id: 3 },
+        { type: 'content list', content list_id: 4 }
       ]
     }
     const ret = reorderPlaylistLibrary(library, 4, 1)
     expect(ret).toEqual({
       contents: [
-        { type: 'playlist', playlist_id: 1 },
-        { type: 'playlist', playlist_id: 4 },
-        { type: 'playlist', playlist_id: 2 },
+        { type: 'content list', content list_id: 1 },
+        { type: 'content list', content list_id: 4 },
+        { type: 'content list', content list_id: 2 },
         {
           type: 'folder',
           name: 'favorites',
           id: 'my-uuid',
           contents: [
-            { type: 'temp_playlist', playlist_id: '10' },
-            { type: 'explore_playlist', playlist_id: 'Heavy Rotation' },
-            { type: 'playlist', playlist_id: 12 }
+            { type: 'temp_content list', content list_id: '10' },
+            { type: 'explore_content list', content list_id: 'Heavy Rotation' },
+            { type: 'content list', content list_id: 12 }
           ]
         },
-        { type: 'playlist', playlist_id: 3 }
+        { type: 'content list', content list_id: 3 }
       ]
     })
   })
 
-  it('can reorder a playlist inside a folder', () => {
+  it('can reorder a content list inside a folder', () => {
     const library = {
       contents: [
-        { type: 'playlist', playlist_id: 1 },
-        { type: 'playlist', playlist_id: 2 },
+        { type: 'content list', content list_id: 1 },
+        { type: 'content list', content list_id: 2 },
         {
           type: 'folder',
           name: 'favorites',
           id: 'my-uuid',
           contents: [
-            { type: 'temp_playlist', playlist_id: '10' },
-            { type: 'explore_playlist', playlist_id: 'Heavy Rotation' },
-            { type: 'playlist', playlist_id: 12 }
+            { type: 'temp_content list', content list_id: '10' },
+            { type: 'explore_content list', content list_id: 'Heavy Rotation' },
+            { type: 'content list', content list_id: 12 }
           ]
         },
-        { type: 'playlist', playlist_id: 3 },
-        { type: 'playlist', playlist_id: 4 }
+        { type: 'content list', content list_id: 3 },
+        { type: 'content list', content list_id: 4 }
       ]
     }
     const ret = reorderPlaylistLibrary(library, '10', 2)
     expect(ret).toEqual({
       contents: [
-        { type: 'playlist', playlist_id: 1 },
-        { type: 'playlist', playlist_id: 2 },
-        { type: 'temp_playlist', playlist_id: '10' },
+        { type: 'content list', content list_id: 1 },
+        { type: 'content list', content list_id: 2 },
+        { type: 'temp_content list', content list_id: '10' },
         {
           type: 'folder',
           name: 'favorites',
           id: 'my-uuid',
           contents: [
-            { type: 'explore_playlist', playlist_id: 'Heavy Rotation' },
-            { type: 'playlist', playlist_id: 12 }
+            { type: 'explore_content list', content list_id: 'Heavy Rotation' },
+            { type: 'content list', content list_id: 12 }
           ]
         },
-        { type: 'playlist', playlist_id: 3 },
-        { type: 'playlist', playlist_id: 4 }
+        { type: 'content list', content list_id: 3 },
+        { type: 'content list', content list_id: 4 }
       ]
     })
   })
 
-  it('can reorder a playlist to the beginning', () => {
+  it('can reorder a content list to the beginning', () => {
     const library = {
       contents: [
-        { type: 'playlist', playlist_id: 1 },
-        { type: 'playlist', playlist_id: 2 },
+        { type: 'content list', content list_id: 1 },
+        { type: 'content list', content list_id: 2 },
         {
           type: 'folder',
           name: 'favorites',
           id: 'my-uuid',
           contents: [
-            { type: 'temp_playlist', playlist_id: '10' },
-            { type: 'explore_playlist', playlist_id: 'Heavy Rotation' },
-            { type: 'playlist', playlist_id: 12 }
+            { type: 'temp_content list', content list_id: '10' },
+            { type: 'explore_content list', content list_id: 'Heavy Rotation' },
+            { type: 'content list', content list_id: 12 }
           ]
         },
-        { type: 'playlist', playlist_id: 3 },
-        { type: 'playlist', playlist_id: 4 }
+        { type: 'content list', content list_id: 3 },
+        { type: 'content list', content list_id: 4 }
       ]
     }
     const ret = reorderPlaylistLibrary(library, 3, -1)
     expect(ret).toEqual({
       contents: [
-        { type: 'playlist', playlist_id: 3 },
-        { type: 'playlist', playlist_id: 1 },
-        { type: 'playlist', playlist_id: 2 },
+        { type: 'content list', content list_id: 3 },
+        { type: 'content list', content list_id: 1 },
+        { type: 'content list', content list_id: 2 },
         {
           type: 'folder',
           name: 'favorites',
           id: 'my-uuid',
           contents: [
-            { type: 'temp_playlist', playlist_id: '10' },
-            { type: 'explore_playlist', playlist_id: 'Heavy Rotation' },
-            { type: 'playlist', playlist_id: 12 }
+            { type: 'temp_content list', content list_id: '10' },
+            { type: 'explore_content list', content list_id: 'Heavy Rotation' },
+            { type: 'content list', content list_id: 12 }
           ]
         },
-        { type: 'playlist', playlist_id: 4 }
+        { type: 'content list', content list_id: 4 }
       ]
     })
   })
 
-  it('can reorder a playlist to a folder', () => {
+  it('can reorder a content list to a folder', () => {
     const library = {
       contents: [
-        { type: 'playlist', playlist_id: 1 },
-        { type: 'playlist', playlist_id: 2 },
+        { type: 'content list', content list_id: 1 },
+        { type: 'content list', content list_id: 2 },
         {
           type: 'folder',
           name: 'favorites',
           id: 'my-uuid',
           contents: [
-            { type: 'temp_playlist', playlist_id: '10' },
-            { type: 'explore_playlist', playlist_id: 'Heavy Rotation' },
-            { type: 'playlist', playlist_id: 12 }
+            { type: 'temp_content list', content list_id: '10' },
+            { type: 'explore_content list', content list_id: 'Heavy Rotation' },
+            { type: 'content list', content list_id: 12 }
           ]
         },
         {
@@ -775,29 +775,29 @@ describe('reorderPlaylistLibrary', () => {
           name: 'favorites 2',
           id: 'my-uuid-2',
           contents: [
-            { type: 'temp_playlist', playlist_id: '100' },
-            { type: 'explore_playlist', playlist_id: 'Best New Releases' },
-            { type: 'playlist', playlist_id: 120 }
+            { type: 'temp_content list', content list_id: '100' },
+            { type: 'explore_content list', content list_id: 'Best New Releases' },
+            { type: 'content list', content list_id: 120 }
           ]
         },
-        { type: 'playlist', playlist_id: 3 },
-        { type: 'playlist', playlist_id: 4 }
+        { type: 'content list', content list_id: 3 },
+        { type: 'content list', content list_id: 4 }
       ]
     }
     const ret = reorderPlaylistLibrary(library, 3, -1)
     expect(ret).toEqual({
       contents: [
-        { type: 'playlist', playlist_id: 3 },
-        { type: 'playlist', playlist_id: 1 },
-        { type: 'playlist', playlist_id: 2 },
+        { type: 'content list', content list_id: 3 },
+        { type: 'content list', content list_id: 1 },
+        { type: 'content list', content list_id: 2 },
         {
           type: 'folder',
           name: 'favorites',
           id: 'my-uuid',
           contents: [
-            { type: 'temp_playlist', playlist_id: '10' },
-            { type: 'explore_playlist', playlist_id: 'Heavy Rotation' },
-            { type: 'playlist', playlist_id: 12 }
+            { type: 'temp_content list', content list_id: '10' },
+            { type: 'explore_content list', content list_id: 'Heavy Rotation' },
+            { type: 'content list', content list_id: 12 }
           ]
         },
         {
@@ -805,30 +805,30 @@ describe('reorderPlaylistLibrary', () => {
           name: 'favorites 2',
           id: 'my-uuid-2',
           contents: [
-            { type: 'temp_playlist', playlist_id: '100' },
-            { type: 'explore_playlist', playlist_id: 'Best New Releases' },
-            { type: 'playlist', playlist_id: 120 }
+            { type: 'temp_content list', content list_id: '100' },
+            { type: 'explore_content list', content list_id: 'Best New Releases' },
+            { type: 'content list', content list_id: 120 }
           ]
         },
-        { type: 'playlist', playlist_id: 4 }
+        { type: 'content list', content list_id: 4 }
       ]
     })
 
     const ret2 = reorderPlaylistLibrary(ret, '100', '10')
     expect(ret2).toEqual({
       contents: [
-        { type: 'playlist', playlist_id: 3 },
-        { type: 'playlist', playlist_id: 1 },
-        { type: 'playlist', playlist_id: 2 },
+        { type: 'content list', content list_id: 3 },
+        { type: 'content list', content list_id: 1 },
+        { type: 'content list', content list_id: 2 },
         {
           type: 'folder',
           name: 'favorites',
           id: 'my-uuid',
           contents: [
-            { type: 'temp_playlist', playlist_id: '10' },
-            { type: 'temp_playlist', playlist_id: '100' },
-            { type: 'explore_playlist', playlist_id: 'Heavy Rotation' },
-            { type: 'playlist', playlist_id: 12 }
+            { type: 'temp_content list', content list_id: '10' },
+            { type: 'temp_content list', content list_id: '100' },
+            { type: 'explore_content list', content list_id: 'Heavy Rotation' },
+            { type: 'content list', content list_id: 12 }
           ]
         },
         {
@@ -836,152 +836,152 @@ describe('reorderPlaylistLibrary', () => {
           name: 'favorites 2',
           id: 'my-uuid-2',
           contents: [
-            { type: 'explore_playlist', playlist_id: 'Best New Releases' },
-            { type: 'playlist', playlist_id: 120 }
+            { type: 'explore_content list', content list_id: 'Best New Releases' },
+            { type: 'content list', content list_id: 120 }
           ]
         },
-        { type: 'playlist', playlist_id: 4 }
+        { type: 'content list', content list_id: 4 }
       ]
     })
   })
 
-  it('can reorder a playlist inside a folder to another position inside the folder', () => {
+  it('can reorder a content list inside a folder to another position inside the folder', () => {
     const library = {
       contents: [
-        { type: 'playlist', playlist_id: 1 },
-        { type: 'playlist', playlist_id: 2 },
+        { type: 'content list', content list_id: 1 },
+        { type: 'content list', content list_id: 2 },
         {
           type: 'folder',
           name: 'favorites',
           id: 'my-uuid',
           contents: [
-            { type: 'temp_playlist', playlist_id: '10' },
-            { type: 'explore_playlist', playlist_id: 'Heavy Rotation' },
-            { type: 'playlist', playlist_id: 12 }
+            { type: 'temp_content list', content list_id: '10' },
+            { type: 'explore_content list', content list_id: 'Heavy Rotation' },
+            { type: 'content list', content list_id: 12 }
           ]
         },
-        { type: 'playlist', playlist_id: 3 },
-        { type: 'playlist', playlist_id: 4 }
+        { type: 'content list', content list_id: 3 },
+        { type: 'content list', content list_id: 4 }
       ]
     }
     const ret = reorderPlaylistLibrary(library, 'Heavy Rotation', 12)
     expect(ret).toEqual({
       contents: [
-        { type: 'playlist', playlist_id: 1 },
-        { type: 'playlist', playlist_id: 2 },
+        { type: 'content list', content list_id: 1 },
+        { type: 'content list', content list_id: 2 },
         {
           type: 'folder',
           name: 'favorites',
           id: 'my-uuid',
           contents: [
-            { type: 'temp_playlist', playlist_id: '10' },
-            { type: 'playlist', playlist_id: 12 },
-            { type: 'explore_playlist', playlist_id: 'Heavy Rotation' }
+            { type: 'temp_content list', content list_id: '10' },
+            { type: 'content list', content list_id: 12 },
+            { type: 'explore_content list', content list_id: 'Heavy Rotation' }
           ]
         },
-        { type: 'playlist', playlist_id: 3 },
-        { type: 'playlist', playlist_id: 4 }
+        { type: 'content list', content list_id: 3 },
+        { type: 'content list', content list_id: 4 }
       ]
     })
   })
 
-  it('does not reorder a playlist to a location outside of the library', () => {
+  it('does not reorder a content list to a location outside of the library', () => {
     const library = {
       contents: [
-        { type: 'playlist', playlist_id: 1 },
-        { type: 'playlist', playlist_id: 2 },
-        { type: 'playlist', playlist_id: 3 },
+        { type: 'content list', content list_id: 1 },
+        { type: 'content list', content list_id: 2 },
+        { type: 'content list', content list_id: 3 },
         {
           type: 'folder',
           name: 'favorites',
           id: 'my-uuid',
           contents: [
-            { type: 'temp_playlist', playlist_id: '10' },
-            { type: 'explore_playlist', playlist_id: 'Heavy Rotation' },
-            { type: 'playlist', playlist_id: 12 }
+            { type: 'temp_content list', content list_id: '10' },
+            { type: 'explore_content list', content list_id: 'Heavy Rotation' },
+            { type: 'content list', content list_id: 12 }
           ]
         },
-        { type: 'playlist', playlist_id: 4 }
+        { type: 'content list', content list_id: 4 }
       ]
     }
     const ret = reorderPlaylistLibrary(library, 3, 10)
     expect(ret).toEqual({
       contents: [
-        { type: 'playlist', playlist_id: 1 },
-        { type: 'playlist', playlist_id: 2 },
-        { type: 'playlist', playlist_id: 3 },
+        { type: 'content list', content list_id: 1 },
+        { type: 'content list', content list_id: 2 },
+        { type: 'content list', content list_id: 3 },
         {
           type: 'folder',
           name: 'favorites',
           id: 'my-uuid',
           contents: [
-            { type: 'temp_playlist', playlist_id: '10' },
-            { type: 'explore_playlist', playlist_id: 'Heavy Rotation' },
-            { type: 'playlist', playlist_id: 12 }
+            { type: 'temp_content list', content list_id: '10' },
+            { type: 'explore_content list', content list_id: 'Heavy Rotation' },
+            { type: 'content list', content list_id: 12 }
           ]
         },
-        { type: 'playlist', playlist_id: 4 }
+        { type: 'content list', content list_id: 4 }
       ]
     })
   })
 
-  it('inserts a new playlist that was not in the original order', () => {
+  it('inserts a new content list that was not in the original order', () => {
     const library = {
       contents: [
-        { type: 'playlist', playlist_id: 1 },
-        { type: 'playlist', playlist_id: 2 },
+        { type: 'content list', content list_id: 1 },
+        { type: 'content list', content list_id: 2 },
         {
           type: 'folder',
           name: 'favorites',
           id: 'my-uuid',
           contents: [
-            { type: 'temp_playlist', playlist_id: '10' },
-            { type: 'explore_playlist', playlist_id: 'Heavy Rotation' },
-            { type: 'playlist', playlist_id: 12 }
+            { type: 'temp_content list', content list_id: '10' },
+            { type: 'explore_content list', content list_id: 'Heavy Rotation' },
+            { type: 'content list', content list_id: 12 }
           ]
         },
-        { type: 'playlist', playlist_id: 3 },
-        { type: 'playlist', playlist_id: 4 }
+        { type: 'content list', content list_id: 3 },
+        { type: 'content list', content list_id: 4 }
       ]
     }
     const ret = reorderPlaylistLibrary(library, 5, 2)
     expect(ret).toEqual({
       contents: [
-        { type: 'playlist', playlist_id: 1 },
-        { type: 'playlist', playlist_id: 2 },
-        { type: 'playlist', playlist_id: 5 },
+        { type: 'content list', content list_id: 1 },
+        { type: 'content list', content list_id: 2 },
+        { type: 'content list', content list_id: 5 },
         {
           type: 'folder',
           name: 'favorites',
           id: 'my-uuid',
           contents: [
-            { type: 'temp_playlist', playlist_id: '10' },
-            { type: 'explore_playlist', playlist_id: 'Heavy Rotation' },
-            { type: 'playlist', playlist_id: 12 }
+            { type: 'temp_content list', content list_id: '10' },
+            { type: 'explore_content list', content list_id: 'Heavy Rotation' },
+            { type: 'content list', content list_id: 12 }
           ]
         },
-        { type: 'playlist', playlist_id: 3 },
-        { type: 'playlist', playlist_id: 4 }
+        { type: 'content list', content list_id: 3 },
+        { type: 'content list', content list_id: 4 }
       ]
     })
     const res2 = reorderPlaylistLibrary(library, 22, 'Heavy Rotation')
     expect(res2).toEqual({
       contents: [
-        { type: 'playlist', playlist_id: 1 },
-        { type: 'playlist', playlist_id: 2 },
+        { type: 'content list', content list_id: 1 },
+        { type: 'content list', content list_id: 2 },
         {
           type: 'folder',
           name: 'favorites',
           id: 'my-uuid',
           contents: [
-            { type: 'temp_playlist', playlist_id: '10' },
-            { type: 'explore_playlist', playlist_id: 'Heavy Rotation' },
-            { type: 'playlist', playlist_id: 22 },
-            { type: 'playlist', playlist_id: 12 }
+            { type: 'temp_content list', content list_id: '10' },
+            { type: 'explore_content list', content list_id: 'Heavy Rotation' },
+            { type: 'content list', content list_id: 22 },
+            { type: 'content list', content list_id: 12 }
           ]
         },
-        { type: 'playlist', playlist_id: 3 },
-        { type: 'playlist', playlist_id: 4 }
+        { type: 'content list', content list_id: 3 },
+        { type: 'content list', content list_id: 4 }
       ]
     })
   })
@@ -989,27 +989,27 @@ describe('reorderPlaylistLibrary', () => {
   it('soft fails if the dragging item is a folder but it is not in the library', () => {
     const library = {
       contents: [
-        { type: 'playlist', playlist_id: 1 },
-        { type: 'playlist', playlist_id: 2 },
+        { type: 'content list', content list_id: 1 },
+        { type: 'content list', content list_id: 2 },
         {
           type: 'folder',
           name: 'favorites',
           id: 'my-uuid',
           contents: [
-            { type: 'temp_playlist', playlist_id: '10' },
-            { type: 'explore_playlist', playlist_id: 'Heavy Rotation' },
-            { type: 'playlist', playlist_id: 12 }
+            { type: 'temp_content list', content list_id: '10' },
+            { type: 'explore_content list', content list_id: 'Heavy Rotation' },
+            { type: 'content list', content list_id: 12 }
           ]
         },
-        { type: 'playlist', playlist_id: 3 },
-        { type: 'playlist', playlist_id: 4 }
+        { type: 'content list', content list_id: 3 },
+        { type: 'content list', content list_id: 4 }
       ]
     }
     const ret = reorderPlaylistLibrary(
       library,
       'not-exist-folder',
       2,
-      'playlist-folder'
+      'content list-folder'
     )
     expect(ret).toEqual(library)
   })
@@ -1017,27 +1017,27 @@ describe('reorderPlaylistLibrary', () => {
   it('is a no op if the dragging id and dropping id are the same', () => {
     const library = {
       contents: [
-        { type: 'playlist', playlist_id: 1 },
-        { type: 'playlist', playlist_id: 2 },
+        { type: 'content list', content list_id: 1 },
+        { type: 'content list', content list_id: 2 },
         {
           type: 'folder',
           name: 'favorites',
           id: 'my-uuid',
           contents: [
-            { type: 'temp_playlist', playlist_id: '10' },
-            { type: 'explore_playlist', playlist_id: 'Heavy Rotation' },
-            { type: 'playlist', playlist_id: 12 }
+            { type: 'temp_content list', content list_id: '10' },
+            { type: 'explore_content list', content list_id: 'Heavy Rotation' },
+            { type: 'content list', content list_id: 12 }
           ]
         },
-        { type: 'playlist', playlist_id: 3 },
-        { type: 'playlist', playlist_id: 4 }
+        { type: 'content list', content list_id: 3 },
+        { type: 'content list', content list_id: 4 }
       ]
     }
     const ret = reorderPlaylistLibrary(
       library,
       'my-uuid',
       'my-uuid',
-      'playlist-folder'
+      'content list-folder'
     )
     expect(ret).toEqual(library)
   })
@@ -1045,27 +1045,27 @@ describe('reorderPlaylistLibrary', () => {
   it('can reorder a folder to the beginning of the library', () => {
     const library = {
       contents: [
-        { type: 'playlist', playlist_id: 1 },
-        { type: 'playlist', playlist_id: 2 },
+        { type: 'content list', content list_id: 1 },
+        { type: 'content list', content list_id: 2 },
         {
           type: 'folder',
           name: 'favorites',
           id: 'my-uuid',
           contents: [
-            { type: 'temp_playlist', playlist_id: '10' },
-            { type: 'explore_playlist', playlist_id: 'Heavy Rotation' },
-            { type: 'playlist', playlist_id: 12 }
+            { type: 'temp_content list', content list_id: '10' },
+            { type: 'explore_content list', content list_id: 'Heavy Rotation' },
+            { type: 'content list', content list_id: 12 }
           ]
         },
-        { type: 'playlist', playlist_id: 3 },
-        { type: 'playlist', playlist_id: 4 }
+        { type: 'content list', content list_id: 3 },
+        { type: 'content list', content list_id: 4 }
       ]
     }
     const ret = reorderPlaylistLibrary(
       library,
       'my-uuid',
       -1,
-      'playlist-folder'
+      'content list-folder'
     )
     expect(ret).toEqual({
       contents: [
@@ -1074,15 +1074,15 @@ describe('reorderPlaylistLibrary', () => {
           name: 'favorites',
           id: 'my-uuid',
           contents: [
-            { type: 'temp_playlist', playlist_id: '10' },
-            { type: 'explore_playlist', playlist_id: 'Heavy Rotation' },
-            { type: 'playlist', playlist_id: 12 }
+            { type: 'temp_content list', content list_id: '10' },
+            { type: 'explore_content list', content list_id: 'Heavy Rotation' },
+            { type: 'content list', content list_id: 12 }
           ]
         },
-        { type: 'playlist', playlist_id: 1 },
-        { type: 'playlist', playlist_id: 2 },
-        { type: 'playlist', playlist_id: 3 },
-        { type: 'playlist', playlist_id: 4 }
+        { type: 'content list', content list_id: 1 },
+        { type: 'content list', content list_id: 2 },
+        { type: 'content list', content list_id: 3 },
+        { type: 'content list', content list_id: 4 }
       ]
     })
   })
@@ -1090,37 +1090,37 @@ describe('reorderPlaylistLibrary', () => {
   it('can reorder a folder to the end of the library', () => {
     const library = {
       contents: [
-        { type: 'playlist', playlist_id: 1 },
-        { type: 'playlist', playlist_id: 2 },
+        { type: 'content list', content list_id: 1 },
+        { type: 'content list', content list_id: 2 },
         {
           type: 'folder',
           name: 'favorites',
           id: 'my-uuid',
           contents: [
-            { type: 'temp_playlist', playlist_id: '10' },
-            { type: 'explore_playlist', playlist_id: 'Heavy Rotation' },
-            { type: 'playlist', playlist_id: 12 }
+            { type: 'temp_content list', content list_id: '10' },
+            { type: 'explore_content list', content list_id: 'Heavy Rotation' },
+            { type: 'content list', content list_id: 12 }
           ]
         },
-        { type: 'playlist', playlist_id: 3 },
-        { type: 'playlist', playlist_id: 4 }
+        { type: 'content list', content list_id: 3 },
+        { type: 'content list', content list_id: 4 }
       ]
     }
-    const ret = reorderPlaylistLibrary(library, 'my-uuid', 4, 'playlist-folder')
+    const ret = reorderPlaylistLibrary(library, 'my-uuid', 4, 'content list-folder')
     expect(ret).toEqual({
       contents: [
-        { type: 'playlist', playlist_id: 1 },
-        { type: 'playlist', playlist_id: 2 },
-        { type: 'playlist', playlist_id: 3 },
-        { type: 'playlist', playlist_id: 4 },
+        { type: 'content list', content list_id: 1 },
+        { type: 'content list', content list_id: 2 },
+        { type: 'content list', content list_id: 3 },
+        { type: 'content list', content list_id: 4 },
         {
           type: 'folder',
           name: 'favorites',
           id: 'my-uuid',
           contents: [
-            { type: 'temp_playlist', playlist_id: '10' },
-            { type: 'explore_playlist', playlist_id: 'Heavy Rotation' },
-            { type: 'playlist', playlist_id: 12 }
+            { type: 'temp_content list', content list_id: '10' },
+            { type: 'explore_content list', content list_id: 'Heavy Rotation' },
+            { type: 'content list', content list_id: 12 }
           ]
         }
       ]
@@ -1130,56 +1130,56 @@ describe('reorderPlaylistLibrary', () => {
   it('can reorder a folder to the middle of the library', () => {
     const library = {
       contents: [
-        { type: 'playlist', playlist_id: 1 },
-        { type: 'playlist', playlist_id: 2 },
+        { type: 'content list', content list_id: 1 },
+        { type: 'content list', content list_id: 2 },
         {
           type: 'folder',
           name: 'favorites',
           id: 'my-uuid',
           contents: [
-            { type: 'temp_playlist', playlist_id: '10' },
-            { type: 'explore_playlist', playlist_id: 'Heavy Rotation' },
-            { type: 'playlist', playlist_id: 12 }
+            { type: 'temp_content list', content list_id: '10' },
+            { type: 'explore_content list', content list_id: 'Heavy Rotation' },
+            { type: 'content list', content list_id: 12 }
           ]
         },
-        { type: 'playlist', playlist_id: 3 },
-        { type: 'playlist', playlist_id: 4 }
+        { type: 'content list', content list_id: 3 },
+        { type: 'content list', content list_id: 4 }
       ]
     }
-    const ret = reorderPlaylistLibrary(library, 'my-uuid', 3, 'playlist-folder')
+    const ret = reorderPlaylistLibrary(library, 'my-uuid', 3, 'content list-folder')
     expect(ret).toEqual({
       contents: [
-        { type: 'playlist', playlist_id: 1 },
-        { type: 'playlist', playlist_id: 2 },
-        { type: 'playlist', playlist_id: 3 },
+        { type: 'content list', content list_id: 1 },
+        { type: 'content list', content list_id: 2 },
+        { type: 'content list', content list_id: 3 },
         {
           type: 'folder',
           name: 'favorites',
           id: 'my-uuid',
           contents: [
-            { type: 'temp_playlist', playlist_id: '10' },
-            { type: 'explore_playlist', playlist_id: 'Heavy Rotation' },
-            { type: 'playlist', playlist_id: 12 }
+            { type: 'temp_content list', content list_id: '10' },
+            { type: 'explore_content list', content list_id: 'Heavy Rotation' },
+            { type: 'content list', content list_id: 12 }
           ]
         },
-        { type: 'playlist', playlist_id: 4 }
+        { type: 'content list', content list_id: 4 }
       ]
     })
   })
 
-  it('can reorder a playlist or folder after a folder', () => {
+  it('can reorder a content list or folder after a folder', () => {
     const library = {
       contents: [
-        { type: 'playlist', playlist_id: 1 },
-        { type: 'playlist', playlist_id: 2 },
+        { type: 'content list', content list_id: 1 },
+        { type: 'content list', content list_id: 2 },
         {
           type: 'folder',
           name: 'favorites',
           id: 'my-uuid',
           contents: [
-            { type: 'temp_playlist', playlist_id: '10' },
-            { type: 'explore_playlist', playlist_id: 'Heavy Rotation' },
-            { type: 'playlist', playlist_id: 12 }
+            { type: 'temp_content list', content list_id: '10' },
+            { type: 'explore_content list', content list_id: 'Heavy Rotation' },
+            { type: 'content list', content list_id: 12 }
           ]
         },
         {
@@ -1187,31 +1187,31 @@ describe('reorderPlaylistLibrary', () => {
           name: 'favorites 2',
           id: 'my-uuid-2',
           contents: [
-            { type: 'explore_playlist', playlist_id: 'Best New Releases' },
-            { type: 'playlist', playlist_id: 120 }
+            { type: 'explore_content list', content list_id: 'Best New Releases' },
+            { type: 'content list', content list_id: 120 }
           ]
         },
-        { type: 'playlist', playlist_id: 3 },
-        { type: 'playlist', playlist_id: 4 }
+        { type: 'content list', content list_id: 3 },
+        { type: 'content list', content list_id: 4 }
       ]
     }
     const ret = reorderPlaylistLibrary(
       library,
       'my-uuid',
       'my-uuid-2',
-      'playlist-folder'
+      'content list-folder'
     )
     expect(ret).toEqual({
       contents: [
-        { type: 'playlist', playlist_id: 1 },
-        { type: 'playlist', playlist_id: 2 },
+        { type: 'content list', content list_id: 1 },
+        { type: 'content list', content list_id: 2 },
         {
           type: 'folder',
           name: 'favorites 2',
           id: 'my-uuid-2',
           contents: [
-            { type: 'explore_playlist', playlist_id: 'Best New Releases' },
-            { type: 'playlist', playlist_id: 120 }
+            { type: 'explore_content list', content list_id: 'Best New Releases' },
+            { type: 'content list', content list_id: 120 }
           ]
         },
         {
@@ -1219,26 +1219,26 @@ describe('reorderPlaylistLibrary', () => {
           name: 'favorites',
           id: 'my-uuid',
           contents: [
-            { type: 'temp_playlist', playlist_id: '10' },
-            { type: 'explore_playlist', playlist_id: 'Heavy Rotation' },
-            { type: 'playlist', playlist_id: 12 }
+            { type: 'temp_content list', content list_id: '10' },
+            { type: 'explore_content list', content list_id: 'Heavy Rotation' },
+            { type: 'content list', content list_id: 12 }
           ]
         },
-        { type: 'playlist', playlist_id: 3 },
-        { type: 'playlist', playlist_id: 4 }
+        { type: 'content list', content list_id: 3 },
+        { type: 'content list', content list_id: 4 }
       ]
     })
-    const ret2 = reorderPlaylistLibrary(ret, 2, 'my-uuid', 'playlist')
+    const ret2 = reorderPlaylistLibrary(ret, 2, 'my-uuid', 'content list')
     expect(ret2).toEqual({
       contents: [
-        { type: 'playlist', playlist_id: 1 },
+        { type: 'content list', content list_id: 1 },
         {
           type: 'folder',
           name: 'favorites 2',
           id: 'my-uuid-2',
           contents: [
-            { type: 'explore_playlist', playlist_id: 'Best New Releases' },
-            { type: 'playlist', playlist_id: 120 }
+            { type: 'explore_content list', content list_id: 'Best New Releases' },
+            { type: 'content list', content list_id: 120 }
           ]
         },
         {
@@ -1246,14 +1246,14 @@ describe('reorderPlaylistLibrary', () => {
           name: 'favorites',
           id: 'my-uuid',
           contents: [
-            { type: 'temp_playlist', playlist_id: '10' },
-            { type: 'explore_playlist', playlist_id: 'Heavy Rotation' },
-            { type: 'playlist', playlist_id: 12 }
+            { type: 'temp_content list', content list_id: '10' },
+            { type: 'explore_content list', content list_id: 'Heavy Rotation' },
+            { type: 'content list', content list_id: 12 }
           ]
         },
-        { type: 'playlist', playlist_id: 2 },
-        { type: 'playlist', playlist_id: 3 },
-        { type: 'playlist', playlist_id: 4 }
+        { type: 'content list', content list_id: 2 },
+        { type: 'content list', content list_id: 3 },
+        { type: 'content list', content list_id: 4 }
       ]
     })
   })
@@ -1261,16 +1261,16 @@ describe('reorderPlaylistLibrary', () => {
   it('can reorder an item before the target item', () => {
     const library = {
       contents: [
-        { type: 'playlist', playlist_id: 1 },
-        { type: 'playlist', playlist_id: 2 },
+        { type: 'content list', content list_id: 1 },
+        { type: 'content list', content list_id: 2 },
         {
           type: 'folder',
           name: 'favorites',
           id: 'my-uuid',
           contents: [
-            { type: 'temp_playlist', playlist_id: '10' },
-            { type: 'explore_playlist', playlist_id: 'Heavy Rotation' },
-            { type: 'playlist', playlist_id: 12 }
+            { type: 'temp_content list', content list_id: '10' },
+            { type: 'explore_content list', content list_id: 'Heavy Rotation' },
+            { type: 'content list', content list_id: 12 }
           ]
         },
         {
@@ -1278,19 +1278,19 @@ describe('reorderPlaylistLibrary', () => {
           name: 'favorites 2',
           id: 'my-uuid-2',
           contents: [
-            { type: 'explore_playlist', playlist_id: 'Best New Releases' },
-            { type: 'playlist', playlist_id: 120 }
+            { type: 'explore_content list', content list_id: 'Best New Releases' },
+            { type: 'content list', content list_id: 120 }
           ]
         },
-        { type: 'playlist', playlist_id: 3 },
-        { type: 'playlist', playlist_id: 4 }
+        { type: 'content list', content list_id: 3 },
+        { type: 'content list', content list_id: 4 }
       ]
     }
     const ret = reorderPlaylistLibrary(
       library,
       'my-uuid',
       1,
-      'playlist-folder',
+      'content list-folder',
       true
     )
     expect(ret).toEqual({
@@ -1300,27 +1300,27 @@ describe('reorderPlaylistLibrary', () => {
           name: 'favorites',
           id: 'my-uuid',
           contents: [
-            { type: 'temp_playlist', playlist_id: '10' },
-            { type: 'explore_playlist', playlist_id: 'Heavy Rotation' },
-            { type: 'playlist', playlist_id: 12 }
+            { type: 'temp_content list', content list_id: '10' },
+            { type: 'explore_content list', content list_id: 'Heavy Rotation' },
+            { type: 'content list', content list_id: 12 }
           ]
         },
-        { type: 'playlist', playlist_id: 1 },
-        { type: 'playlist', playlist_id: 2 },
+        { type: 'content list', content list_id: 1 },
+        { type: 'content list', content list_id: 2 },
         {
           type: 'folder',
           name: 'favorites 2',
           id: 'my-uuid-2',
           contents: [
-            { type: 'explore_playlist', playlist_id: 'Best New Releases' },
-            { type: 'playlist', playlist_id: 120 }
+            { type: 'explore_content list', content list_id: 'Best New Releases' },
+            { type: 'content list', content list_id: 120 }
           ]
         },
-        { type: 'playlist', playlist_id: 3 },
-        { type: 'playlist', playlist_id: 4 }
+        { type: 'content list', content list_id: 3 },
+        { type: 'content list', content list_id: 4 }
       ]
     })
-    const ret2 = reorderPlaylistLibrary(ret, 1, '10', 'playlist', true)
+    const ret2 = reorderPlaylistLibrary(ret, 1, '10', 'content list', true)
     expect(ret2).toEqual({
       contents: [
         {
@@ -1328,24 +1328,24 @@ describe('reorderPlaylistLibrary', () => {
           name: 'favorites',
           id: 'my-uuid',
           contents: [
-            { type: 'playlist', playlist_id: 1 },
-            { type: 'temp_playlist', playlist_id: '10' },
-            { type: 'explore_playlist', playlist_id: 'Heavy Rotation' },
-            { type: 'playlist', playlist_id: 12 }
+            { type: 'content list', content list_id: 1 },
+            { type: 'temp_content list', content list_id: '10' },
+            { type: 'explore_content list', content list_id: 'Heavy Rotation' },
+            { type: 'content list', content list_id: 12 }
           ]
         },
-        { type: 'playlist', playlist_id: 2 },
+        { type: 'content list', content list_id: 2 },
         {
           type: 'folder',
           name: 'favorites 2',
           id: 'my-uuid-2',
           contents: [
-            { type: 'explore_playlist', playlist_id: 'Best New Releases' },
-            { type: 'playlist', playlist_id: 120 }
+            { type: 'explore_content list', content list_id: 'Best New Releases' },
+            { type: 'content list', content list_id: 120 }
           ]
         },
-        { type: 'playlist', playlist_id: 3 },
-        { type: 'playlist', playlist_id: 4 }
+        { type: 'content list', content list_id: 3 },
+        { type: 'content list', content list_id: 4 }
       ]
     })
   })
@@ -1355,10 +1355,10 @@ describe('containsTempPlaylist', () => {
   it('finds a temp', () => {
     const library = {
       contents: [
-        { type: 'playlist', playlist_id: 1 },
-        { type: 'playlist', playlist_id: 2 },
-        { type: 'playlist', playlist_id: 3 },
-        { type: 'temp_playlist', playlist_id: 'asdf' }
+        { type: 'content list', content list_id: 1 },
+        { type: 'content list', content list_id: 2 },
+        { type: 'content list', content list_id: 3 },
+        { type: 'temp_content list', content list_id: 'asdf' }
       ]
     }
     const ret = containsTempPlaylist(library)
@@ -1368,17 +1368,17 @@ describe('containsTempPlaylist', () => {
   it('finds a temp in a folder', () => {
     const library = {
       contents: [
-        { type: 'playlist', playlist_id: 1 },
-        { type: 'playlist', playlist_id: 2 },
+        { type: 'content list', content list_id: 1 },
+        { type: 'content list', content list_id: 2 },
         {
           type: 'folder',
           name: 'favorites',
           contents: [
-            { type: 'playlist', playlist_id: 3 },
-            { type: 'temp_playlist', playlist_id: 'asdf' }
+            { type: 'content list', content list_id: 3 },
+            { type: 'temp_content list', content list_id: 'asdf' }
           ]
         },
-        { type: 'playlist', playlist_id: 4 }
+        { type: 'content list', content list_id: 4 }
       ]
     }
     const ret = containsTempPlaylist(library)
@@ -1388,9 +1388,9 @@ describe('containsTempPlaylist', () => {
   it('finds no temp', () => {
     const library = {
       contents: [
-        { type: 'playlist', playlist_id: 1 },
-        { type: 'playlist', playlist_id: 2 },
-        { type: 'playlist', playlist_id: 3 }
+        { type: 'content list', content list_id: 1 },
+        { type: 'content list', content list_id: 2 },
+        { type: 'content list', content list_id: 3 }
       ]
     }
     const ret = containsTempPlaylist(library)
@@ -1399,13 +1399,13 @@ describe('containsTempPlaylist', () => {
 })
 
 describe('addFolderToLibrary', () => {
-  it('Adds a new folder to the end of a playlist library and returns the result', () => {
+  it('Adds a new folder to the end of a content list library and returns the result', () => {
     const library = {
       contents: [
-        { type: 'playlist', playlist_id: 1 },
-        { type: 'playlist', playlist_id: 2 },
-        { type: 'playlist', playlist_id: 3 },
-        { type: 'temp_playlist', playlist_id: 'asdf' }
+        { type: 'content list', content list_id: 1 },
+        { type: 'content list', content list_id: 2 },
+        { type: 'content list', content list_id: 3 },
+        { type: 'temp_content list', content list_id: 'asdf' }
       ]
     }
     const folder = {
@@ -1417,10 +1417,10 @@ describe('addFolderToLibrary', () => {
     const result = addFolderToLibrary(library, folder)
     const expectedResult = {
       contents: [
-        { type: 'playlist', playlist_id: 1 },
-        { type: 'playlist', playlist_id: 2 },
-        { type: 'playlist', playlist_id: 3 },
-        { type: 'temp_playlist', playlist_id: 'asdf' },
+        { type: 'content list', content list_id: 1 },
+        { type: 'content list', content list_id: 2 },
+        { type: 'content list', content list_id: 3 },
+        { type: 'temp_content list', content list_id: 'asdf' },
         {
           id: 'fake-uuid',
           name: 'Foldero',
@@ -1497,11 +1497,11 @@ describe('renamePlaylistFolderInLibrary', () => {
   it('changes the name of given folder in library', () => {
     const library = {
       contents: [
-        { type: 'playlist', playlist_id: 1 },
-        { type: 'playlist', playlist_id: 2 },
+        { type: 'content list', content list_id: 1 },
+        { type: 'content list', content list_id: 2 },
         { type: 'folder', name: 'Foldero', id: 'fake-uuid', contents: [] },
-        { type: 'playlist', playlist_id: 3 },
-        { type: 'temp_playlist', playlist_id: 'asdf' }
+        { type: 'content list', content list_id: 3 },
+        { type: 'temp_content list', content list_id: 'asdf' }
       ]
     }
 
@@ -1512,16 +1512,16 @@ describe('renamePlaylistFolderInLibrary', () => {
     )
     const expectedResult = {
       contents: [
-        { type: 'playlist', playlist_id: 1 },
-        { type: 'playlist', playlist_id: 2 },
+        { type: 'content list', content list_id: 1 },
+        { type: 'content list', content list_id: 2 },
         {
           id: 'fake-uuid',
           name: 'Foldera',
           contents: [],
           type: 'folder'
         },
-        { type: 'playlist', playlist_id: 3 },
-        { type: 'temp_playlist', playlist_id: 'asdf' }
+        { type: 'content list', content list_id: 3 },
+        { type: 'temp_content list', content list_id: 'asdf' }
       ]
     }
     expect(result).toEqual(expectedResult)
@@ -1530,11 +1530,11 @@ describe('renamePlaylistFolderInLibrary', () => {
   it('is a no op if the given folder is not in the library', () => {
     const library = {
       contents: [
-        { type: 'playlist', playlist_id: 1 },
-        { type: 'playlist', playlist_id: 2 },
+        { type: 'content list', content list_id: 1 },
+        { type: 'content list', content list_id: 2 },
         { type: 'folder', name: 'Foldero', id: 'fake-uuid', contents: [] },
-        { type: 'playlist', playlist_id: 3 },
-        { type: 'temp_playlist', playlist_id: 'asdf' }
+        { type: 'content list', content list_id: 3 },
+        { type: 'temp_content list', content list_id: 'asdf' }
       ]
     }
     const result = renamePlaylistFolderInLibrary(
@@ -1550,21 +1550,21 @@ describe('removePlaylistFolderInLibrary', () => {
   it('removes folder from library', () => {
     const library = {
       contents: [
-        { type: 'playlist', playlist_id: 1 },
-        { type: 'playlist', playlist_id: 2 },
+        { type: 'content list', content list_id: 1 },
+        { type: 'content list', content list_id: 2 },
         { type: 'folder', name: 'Foldero', id: 'fake-uuid', contents: [] },
-        { type: 'playlist', playlist_id: 3 },
-        { type: 'temp_playlist', playlist_id: 'asdf' }
+        { type: 'content list', content list_id: 3 },
+        { type: 'temp_content list', content list_id: 'asdf' }
       ]
     }
 
     const result = removePlaylistFolderInLibrary(library, 'fake-uuid')
     const expectedResult = {
       contents: [
-        { type: 'playlist', playlist_id: 1 },
-        { type: 'playlist', playlist_id: 2 },
-        { type: 'playlist', playlist_id: 3 },
-        { type: 'temp_playlist', playlist_id: 'asdf' }
+        { type: 'content list', content list_id: 1 },
+        { type: 'content list', content list_id: 2 },
+        { type: 'content list', content list_id: 3 },
+        { type: 'temp_content list', content list_id: 'asdf' }
       ]
     }
     expect(result).toEqual(expectedResult)
@@ -1573,16 +1573,16 @@ describe('removePlaylistFolderInLibrary', () => {
   it('moves contents of folder to upper level before deleting', () => {
     const library = {
       contents: [
-        { type: 'playlist', playlist_id: 1 },
-        { type: 'playlist', playlist_id: 2 },
+        { type: 'content list', content list_id: 1 },
+        { type: 'content list', content list_id: 2 },
         {
           type: 'folder',
           name: 'Foldero',
           id: 'fake-uuid',
           contents: [
-            { type: 'playlist', playlist_id: 4 },
-            { type: 'playlist', playlist_id: 5 },
-            { type: 'temp_playlist', playlist_id: 'ghji' },
+            { type: 'content list', content list_id: 4 },
+            { type: 'content list', content list_id: 5 },
+            { type: 'temp_content list', content list_id: 'ghji' },
             {
               type: 'folder',
               name: 'Folderino',
@@ -1591,21 +1591,21 @@ describe('removePlaylistFolderInLibrary', () => {
             }
           ]
         },
-        { type: 'playlist', playlist_id: 3 },
-        { type: 'temp_playlist', playlist_id: 'asdf' }
+        { type: 'content list', content list_id: 3 },
+        { type: 'temp_content list', content list_id: 'asdf' }
       ]
     }
     const result = removePlaylistFolderInLibrary(library, 'fake-uuid')
     const expectedResult = {
       contents: [
-        { type: 'playlist', playlist_id: 1 },
-        { type: 'playlist', playlist_id: 2 },
-        { type: 'playlist', playlist_id: 4 },
-        { type: 'playlist', playlist_id: 5 },
-        { type: 'temp_playlist', playlist_id: 'ghji' },
+        { type: 'content list', content list_id: 1 },
+        { type: 'content list', content list_id: 2 },
+        { type: 'content list', content list_id: 4 },
+        { type: 'content list', content list_id: 5 },
+        { type: 'temp_content list', content list_id: 'ghji' },
         { type: 'folder', name: 'Folderino', id: 'fake-uuid-2', contents: [] },
-        { type: 'playlist', playlist_id: 3 },
-        { type: 'temp_playlist', playlist_id: 'asdf' }
+        { type: 'content list', content list_id: 3 },
+        { type: 'temp_content list', content list_id: 'asdf' }
       ]
     }
     expect(result).toEqual(expectedResult)
@@ -1614,11 +1614,11 @@ describe('removePlaylistFolderInLibrary', () => {
   it('is a no op if the given folder is not in the library', () => {
     const library = {
       contents: [
-        { type: 'playlist', playlist_id: 1 },
-        { type: 'playlist', playlist_id: 2 },
+        { type: 'content list', content list_id: 1 },
+        { type: 'content list', content list_id: 2 },
         { type: 'folder', name: 'Foldero', id: 'fake-uuid', contents: [] },
-        { type: 'playlist', playlist_id: 3 },
-        { type: 'temp_playlist', playlist_id: 'asdf' }
+        { type: 'content list', content list_id: 3 },
+        { type: 'temp_content list', content list_id: 'asdf' }
       ]
     }
     const result = removePlaylistFolderInLibrary(
@@ -1630,18 +1630,18 @@ describe('removePlaylistFolderInLibrary', () => {
 })
 
 describe('addPlaylistToFolder', () => {
-  it('adds playlist to given folder', () => {
+  it('adds content list to given folder', () => {
     const library = {
       contents: [
-        { type: 'playlist', playlist_id: 1 },
-        { type: 'playlist', playlist_id: 2 },
+        { type: 'content list', content list_id: 1 },
+        { type: 'content list', content list_id: 2 },
         {
           type: 'folder',
           name: 'Foldero',
           id: 'fake-uuid',
           contents: [
-            { type: 'playlist', playlist_id: 3 },
-            { type: 'temp_playlist', playlist_id: 'asdf' }
+            { type: 'content list', content list_id: 3 },
+            { type: 'temp_content list', content list_id: 'asdf' }
           ]
         }
       ]
@@ -1650,16 +1650,16 @@ describe('addPlaylistToFolder', () => {
     const result = addPlaylistToFolder(library, 'Heavy Rotation', 'fake-uuid')
     const expectedResult = {
       contents: [
-        { type: 'playlist', playlist_id: 1 },
-        { type: 'playlist', playlist_id: 2 },
+        { type: 'content list', content list_id: 1 },
+        { type: 'content list', content list_id: 2 },
         {
           type: 'folder',
           name: 'Foldero',
           id: 'fake-uuid',
           contents: [
-            { type: 'explore_playlist', playlist_id: 'Heavy Rotation' },
-            { type: 'playlist', playlist_id: 3 },
-            { type: 'temp_playlist', playlist_id: 'asdf' }
+            { type: 'explore_content list', content list_id: 'Heavy Rotation' },
+            { type: 'content list', content list_id: 3 },
+            { type: 'temp_content list', content list_id: 'asdf' }
           ]
         }
       ]
@@ -1667,18 +1667,18 @@ describe('addPlaylistToFolder', () => {
     expect(result).toEqual(expectedResult)
   })
 
-  it('returns the original unchanged library if the playlist is already in the folder', () => {
+  it('returns the original unchanged library if the content list is already in the folder', () => {
     const library = {
       contents: [
-        { type: 'playlist', playlist_id: 1 },
-        { type: 'playlist', playlist_id: 2 },
+        { type: 'content list', content list_id: 1 },
+        { type: 'content list', content list_id: 2 },
         {
           type: 'folder',
           name: 'Foldero',
           id: 'fake-uuid',
           contents: [
-            { type: 'playlist', playlist_id: 3 },
-            { type: 'temp_playlist', playlist_id: 'asdf' }
+            { type: 'content list', content list_id: 3 },
+            { type: 'temp_content list', content list_id: 'asdf' }
           ]
         }
       ]
@@ -1691,15 +1691,15 @@ describe('addPlaylistToFolder', () => {
   it('returns the original unchanged library if folder does not exist', () => {
     const library = {
       contents: [
-        { type: 'playlist', playlist_id: 1 },
-        { type: 'playlist', playlist_id: 2 },
+        { type: 'content list', content list_id: 1 },
+        { type: 'content list', content list_id: 2 },
         {
           type: 'folder',
           name: 'Foldero',
           id: 'fake-uuid',
           contents: [
-            { type: 'playlist', playlist_id: 3 },
-            { type: 'temp_playlist', playlist_id: 'asdf' }
+            { type: 'content list', content list_id: 3 },
+            { type: 'temp_content list', content list_id: 'asdf' }
           ]
         }
       ]
@@ -1720,18 +1720,18 @@ describe('addPlaylistToFolder', () => {
     expect(result).toBe(library)
   })
 
-  it('moves the playlist into the folder if the playlist is already in the library but not in the folder', () => {
+  it('moves the content list into the folder if the content list is already in the library but not in the folder', () => {
     const library = {
       contents: [
-        { type: 'playlist', playlist_id: 1 },
-        { type: 'playlist', playlist_id: 2 },
+        { type: 'content list', content list_id: 1 },
+        { type: 'content list', content list_id: 2 },
         {
           type: 'folder',
           name: 'Foldero',
           id: 'fake-uuid',
           contents: [
-            { type: 'playlist', playlist_id: 3 },
-            { type: 'temp_playlist', playlist_id: 'asdf' }
+            { type: 'content list', content list_id: 3 },
+            { type: 'temp_content list', content list_id: 'asdf' }
           ]
         }
       ]
@@ -1740,15 +1740,15 @@ describe('addPlaylistToFolder', () => {
     const result = addPlaylistToFolder(library, 2, 'fake-uuid')
     const expectedResult = {
       contents: [
-        { type: 'playlist', playlist_id: 1 },
+        { type: 'content list', content list_id: 1 },
         {
           type: 'folder',
           name: 'Foldero',
           id: 'fake-uuid',
           contents: [
-            { type: 'playlist', playlist_id: 2 },
-            { type: 'playlist', playlist_id: 3 },
-            { type: 'temp_playlist', playlist_id: 'asdf' }
+            { type: 'content list', content list_id: 2 },
+            { type: 'content list', content list_id: 3 },
+            { type: 'temp_content list', content list_id: 'asdf' }
           ]
         }
       ]
@@ -1758,35 +1758,35 @@ describe('addPlaylistToFolder', () => {
 })
 
 describe('extractTempPlaylistsFromLibrary', () => {
-  it('returns all temp playlists in library', () => {
+  it('returns all temp content lists in library', () => {
     const library = {
       contents: [
-        { type: 'playlist', playlist_id: 1 },
-        { type: 'playlist', playlist_id: 2 },
-        { type: 'explore_playlist', playlist_id: 'Heavy Rotation' },
-        { type: 'temp_playlist', playlist_id: 'e' },
+        { type: 'content list', content list_id: 1 },
+        { type: 'content list', content list_id: 2 },
+        { type: 'explore_content list', content list_id: 'Heavy Rotation' },
+        { type: 'temp_content list', content list_id: 'e' },
         {
           type: 'folder',
           id: 'my id',
           name: 'Favorites',
           contents: [
-            { type: 'playlist', playlist_id: 10 },
-            { type: 'temp_playlist', playlist_id: 'a' },
-            { type: 'temp_playlist', playlist_id: 'b' },
-            { type: 'playlist', playlist_id: 11 },
-            { type: 'temp_playlist', playlist_id: 'c' },
-            { type: 'temp_playlist', playlist_id: 'd' }
+            { type: 'content list', content list_id: 10 },
+            { type: 'temp_content list', content list_id: 'a' },
+            { type: 'temp_content list', content list_id: 'b' },
+            { type: 'content list', content list_id: 11 },
+            { type: 'temp_content list', content list_id: 'c' },
+            { type: 'temp_content list', content list_id: 'd' }
           ]
         }
       ]
     }
     const ret = extractTempPlaylistsFromLibrary(library)
     expect(ret).toEqual([
-      { type: 'temp_playlist', playlist_id: 'e' },
-      { type: 'temp_playlist', playlist_id: 'a' },
-      { type: 'temp_playlist', playlist_id: 'b' },
-      { type: 'temp_playlist', playlist_id: 'c' },
-      { type: 'temp_playlist', playlist_id: 'd' }
+      { type: 'temp_content list', content list_id: 'e' },
+      { type: 'temp_content list', content list_id: 'a' },
+      { type: 'temp_content list', content list_id: 'b' },
+      { type: 'temp_content list', content list_id: 'c' },
+      { type: 'temp_content list', content list_id: 'd' }
     ])
   })
 
@@ -1800,19 +1800,19 @@ describe('extractTempPlaylistsFromLibrary', () => {
     expect(ret2).toEqual([])
   })
 
-  it('returns empty array if no temp playlists in library', () => {
+  it('returns empty array if no temp content lists in library', () => {
     const library = {
       contents: [
-        { type: 'playlist', playlist_id: 1 },
-        { type: 'playlist', playlist_id: 2 },
-        { type: 'explore_playlist', playlist_id: 'Heavy Rotation' },
+        { type: 'content list', content list_id: 1 },
+        { type: 'content list', content list_id: 2 },
+        { type: 'explore_content list', content list_id: 'Heavy Rotation' },
         {
           type: 'folder',
           id: 'my id',
           name: 'Favorites',
           contents: [
-            { type: 'playlist', playlist_id: 10 },
-            { type: 'playlist', playlist_id: 11 }
+            { type: 'content list', content list_id: 10 },
+            { type: 'content list', content list_id: 11 }
           ]
         }
       ]
@@ -1823,34 +1823,34 @@ describe('extractTempPlaylistsFromLibrary', () => {
 })
 
 describe('replaceTempWithResolvedPlaylists', () => {
-  it('returns all temp playlists in library', () => {
+  it('returns all temp content lists in library', () => {
     const library = {
       contents: [
-        { type: 'playlist', playlist_id: 1 },
-        { type: 'playlist', playlist_id: 2 },
-        { type: 'explore_playlist', playlist_id: 'Heavy Rotation' },
-        { type: 'temp_playlist', playlist_id: 'e' },
+        { type: 'content list', content list_id: 1 },
+        { type: 'content list', content list_id: 2 },
+        { type: 'explore_content list', content list_id: 'Heavy Rotation' },
+        { type: 'temp_content list', content list_id: 'e' },
         {
           type: 'folder',
           id: 'my id',
           name: 'Favorites',
           contents: [
-            { type: 'playlist', playlist_id: 10 },
-            { type: 'temp_playlist', playlist_id: 'a' },
-            { type: 'temp_playlist', playlist_id: 'b' },
-            { type: 'playlist', playlist_id: 11 },
-            { type: 'temp_playlist', playlist_id: 'c' },
-            { type: 'temp_playlist', playlist_id: 'd' }
+            { type: 'content list', content list_id: 10 },
+            { type: 'temp_content list', content list_id: 'a' },
+            { type: 'temp_content list', content list_id: 'b' },
+            { type: 'content list', content list_id: 11 },
+            { type: 'temp_content list', content list_id: 'c' },
+            { type: 'temp_content list', content list_id: 'd' }
           ]
         }
       ]
     }
     const tempPlaylistIdToResolvedPlaylist = {
-      e: { type: 'playlist', playlist_id: 12 },
-      a: { type: 'playlist', playlist_id: 13 },
-      b: { type: 'playlist', playlist_id: 14 },
-      c: { type: 'playlist', playlist_id: 15 },
-      d: { type: 'playlist', playlist_id: 16 }
+      e: { type: 'content list', content list_id: 12 },
+      a: { type: 'content list', content list_id: 13 },
+      b: { type: 'content list', content list_id: 14 },
+      c: { type: 'content list', content list_id: 15 },
+      d: { type: 'content list', content list_id: 16 }
     }
 
     const ret = replaceTempWithResolvedPlaylists(
@@ -1859,21 +1859,21 @@ describe('replaceTempWithResolvedPlaylists', () => {
     )
     expect(ret).toEqual({
       contents: [
-        { type: 'playlist', playlist_id: 1 },
-        { type: 'playlist', playlist_id: 2 },
-        { type: 'explore_playlist', playlist_id: 'Heavy Rotation' },
-        { type: 'playlist', playlist_id: 12 },
+        { type: 'content list', content list_id: 1 },
+        { type: 'content list', content list_id: 2 },
+        { type: 'explore_content list', content list_id: 'Heavy Rotation' },
+        { type: 'content list', content list_id: 12 },
         {
           type: 'folder',
           id: 'my id',
           name: 'Favorites',
           contents: [
-            { type: 'playlist', playlist_id: 10 },
-            { type: 'playlist', playlist_id: 13 },
-            { type: 'playlist', playlist_id: 14 },
-            { type: 'playlist', playlist_id: 11 },
-            { type: 'playlist', playlist_id: 15 },
-            { type: 'playlist', playlist_id: 16 }
+            { type: 'content list', content list_id: 10 },
+            { type: 'content list', content list_id: 13 },
+            { type: 'content list', content list_id: 14 },
+            { type: 'content list', content list_id: 11 },
+            { type: 'content list', content list_id: 15 },
+            { type: 'content list', content list_id: 16 }
           ]
         }
       ]
@@ -1898,32 +1898,32 @@ describe('replaceTempWithResolvedPlaylists', () => {
   it('can deal with empty folders', () => {
     const library = {
       contents: [
-        { type: 'playlist', playlist_id: 1 },
-        { type: 'playlist', playlist_id: 2 },
-        { type: 'explore_playlist', playlist_id: 'Heavy Rotation' },
-        { type: 'temp_playlist', playlist_id: 'e' },
+        { type: 'content list', content list_id: 1 },
+        { type: 'content list', content list_id: 2 },
+        { type: 'explore_content list', content list_id: 'Heavy Rotation' },
+        { type: 'temp_content list', content list_id: 'e' },
         {
           type: 'folder',
           id: 'my id',
           name: 'Favorites',
           contents: [
-            { type: 'playlist', playlist_id: 10 },
-            { type: 'temp_playlist', playlist_id: 'a' },
-            { type: 'temp_playlist', playlist_id: 'b' },
-            { type: 'playlist', playlist_id: 11 },
-            { type: 'temp_playlist', playlist_id: 'c' },
-            { type: 'temp_playlist', playlist_id: 'd' }
+            { type: 'content list', content list_id: 10 },
+            { type: 'temp_content list', content list_id: 'a' },
+            { type: 'temp_content list', content list_id: 'b' },
+            { type: 'content list', content list_id: 11 },
+            { type: 'temp_content list', content list_id: 'c' },
+            { type: 'temp_content list', content list_id: 'd' }
           ]
         },
         { type: 'folder', id: 'my id 2', name: 'Favorites 2', contents: [] }
       ]
     }
     const tempPlaylistIdToResolvedPlaylist = {
-      e: { type: 'playlist', playlist_id: 12 },
-      a: { type: 'playlist', playlist_id: 13 },
-      b: { type: 'playlist', playlist_id: 14 },
-      c: { type: 'playlist', playlist_id: 15 },
-      d: { type: 'playlist', playlist_id: 16 }
+      e: { type: 'content list', content list_id: 12 },
+      a: { type: 'content list', content list_id: 13 },
+      b: { type: 'content list', content list_id: 14 },
+      c: { type: 'content list', content list_id: 15 },
+      d: { type: 'content list', content list_id: 16 }
     }
 
     const ret = replaceTempWithResolvedPlaylists(
@@ -1932,21 +1932,21 @@ describe('replaceTempWithResolvedPlaylists', () => {
     )
     expect(ret).toEqual({
       contents: [
-        { type: 'playlist', playlist_id: 1 },
-        { type: 'playlist', playlist_id: 2 },
-        { type: 'explore_playlist', playlist_id: 'Heavy Rotation' },
-        { type: 'playlist', playlist_id: 12 },
+        { type: 'content list', content list_id: 1 },
+        { type: 'content list', content list_id: 2 },
+        { type: 'explore_content list', content list_id: 'Heavy Rotation' },
+        { type: 'content list', content list_id: 12 },
         {
           type: 'folder',
           id: 'my id',
           name: 'Favorites',
           contents: [
-            { type: 'playlist', playlist_id: 10 },
-            { type: 'playlist', playlist_id: 13 },
-            { type: 'playlist', playlist_id: 14 },
-            { type: 'playlist', playlist_id: 11 },
-            { type: 'playlist', playlist_id: 15 },
-            { type: 'playlist', playlist_id: 16 }
+            { type: 'content list', content list_id: 10 },
+            { type: 'content list', content list_id: 13 },
+            { type: 'content list', content list_id: 14 },
+            { type: 'content list', content list_id: 11 },
+            { type: 'content list', content list_id: 15 },
+            { type: 'content list', content list_id: 16 }
           ]
         },
         { type: 'folder', id: 'my id 2', name: 'Favorites 2', contents: [] }
@@ -1954,33 +1954,33 @@ describe('replaceTempWithResolvedPlaylists', () => {
     })
   })
 
-  it('can deal with missing temp playlist mapping', () => {
+  it('can deal with missing temp content list mapping', () => {
     const library = {
       contents: [
-        { type: 'playlist', playlist_id: 1 },
-        { type: 'playlist', playlist_id: 2 },
-        { type: 'explore_playlist', playlist_id: 'Heavy Rotation' },
-        { type: 'temp_playlist', playlist_id: 'e' },
+        { type: 'content list', content list_id: 1 },
+        { type: 'content list', content list_id: 2 },
+        { type: 'explore_content list', content list_id: 'Heavy Rotation' },
+        { type: 'temp_content list', content list_id: 'e' },
         {
           type: 'folder',
           id: 'my id',
           name: 'Favorites',
           contents: [
-            { type: 'playlist', playlist_id: 10 },
-            { type: 'temp_playlist', playlist_id: 'a' },
-            { type: 'temp_playlist', playlist_id: 'b' },
-            { type: 'playlist', playlist_id: 11 },
-            { type: 'temp_playlist', playlist_id: 'c' },
-            { type: 'temp_playlist', playlist_id: 'd' }
+            { type: 'content list', content list_id: 10 },
+            { type: 'temp_content list', content list_id: 'a' },
+            { type: 'temp_content list', content list_id: 'b' },
+            { type: 'content list', content list_id: 11 },
+            { type: 'temp_content list', content list_id: 'c' },
+            { type: 'temp_content list', content list_id: 'd' }
           ]
         }
       ]
     }
     const tempPlaylistIdToResolvedPlaylist = {
-      e: { type: 'playlist', playlist_id: 12 },
-      b: { type: 'playlist', playlist_id: 14 },
-      c: { type: 'playlist', playlist_id: 15 },
-      d: { type: 'playlist', playlist_id: 16 }
+      e: { type: 'content list', content list_id: 12 },
+      b: { type: 'content list', content list_id: 14 },
+      c: { type: 'content list', content list_id: 15 },
+      d: { type: 'content list', content list_id: 16 }
     }
 
     const ret = replaceTempWithResolvedPlaylists(
@@ -1989,21 +1989,21 @@ describe('replaceTempWithResolvedPlaylists', () => {
     )
     expect(ret).toEqual({
       contents: [
-        { type: 'playlist', playlist_id: 1 },
-        { type: 'playlist', playlist_id: 2 },
-        { type: 'explore_playlist', playlist_id: 'Heavy Rotation' },
-        { type: 'playlist', playlist_id: 12 },
+        { type: 'content list', content list_id: 1 },
+        { type: 'content list', content list_id: 2 },
+        { type: 'explore_content list', content list_id: 'Heavy Rotation' },
+        { type: 'content list', content list_id: 12 },
         {
           type: 'folder',
           id: 'my id',
           name: 'Favorites',
           contents: [
-            { type: 'playlist', playlist_id: 10 },
-            { type: 'temp_playlist', playlist_id: 'a' },
-            { type: 'playlist', playlist_id: 14 },
-            { type: 'playlist', playlist_id: 11 },
-            { type: 'playlist', playlist_id: 15 },
-            { type: 'playlist', playlist_id: 16 }
+            { type: 'content list', content list_id: 10 },
+            { type: 'temp_content list', content list_id: 'a' },
+            { type: 'content list', content list_id: 14 },
+            { type: 'content list', content list_id: 11 },
+            { type: 'content list', content list_id: 15 },
+            { type: 'content list', content list_id: 16 }
           ]
         }
       ]
@@ -2012,26 +2012,26 @@ describe('replaceTempWithResolvedPlaylists', () => {
 })
 
 describe('getPlaylistsNotInLibrary', () => {
-  it('returns the playlists that are not already in the library', () => {
+  it('returns the content lists that are not already in the library', () => {
     const library = {
       contents: [
-        { type: 'playlist', playlist_id: 1 },
-        { type: 'playlist', playlist_id: 2 },
-        { type: 'explore_playlist', playlist_id: 'Heavy Rotation' },
-        { type: 'temp_playlist', playlist_id: 'e' },
+        { type: 'content list', content list_id: 1 },
+        { type: 'content list', content list_id: 2 },
+        { type: 'explore_content list', content list_id: 'Heavy Rotation' },
+        { type: 'temp_content list', content list_id: 'e' },
         {
           type: 'folder',
           id: 'my id',
           name: 'Favorites',
           contents: [
-            { type: 'playlist', playlist_id: 10 },
-            { type: 'playlist', playlist_id: 11 },
-            { type: 'temp_playlist', playlist_id: 'd' }
+            { type: 'content list', content list_id: 10 },
+            { type: 'content list', content list_id: 11 },
+            { type: 'temp_content list', content list_id: 'd' }
           ]
         }
       ]
     }
-    const playlists = {
+    const content lists = {
       1: {
         id: 1,
         is_album: false,
@@ -2079,7 +2079,7 @@ describe('getPlaylistsNotInLibrary', () => {
       }
     }
 
-    const ret = getPlaylistsNotInLibrary(library, playlists)
+    const ret = getPlaylistsNotInLibrary(library, content lists)
     expect(ret).toEqual({
       12: {
         id: 12,

@@ -6,14 +6,14 @@ import type { SectionListProps } from 'react-native'
 
 export enum LineupVariant {
   MAIN = 'main',
-  PLAYLIST = 'playlist'
+  CONTENT_LIST = 'content list'
 }
 
 export type LineupItem = {
   id: ID
   kind: Kind
   agreement_id?: ID
-  playlist_id?: ID
+  content list_id?: ID
   uid: UID
   _marked_deleted?: boolean
   activityTimestamp?: Maybe<number | string>

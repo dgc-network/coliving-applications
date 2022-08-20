@@ -41,7 +41,7 @@ import UploadStub from 'pages/profile-page/components/mobile/UploadStub'
 import * as schemas from 'schemas'
 import { AppState } from 'store/types'
 import { resizeImage } from 'utils/imageProcessingUtil'
-import { playlistPage } from 'utils/route'
+import { content listPage } from 'utils/route'
 import { withNullGuard } from 'utils/withNullGuard'
 
 import styles from './EditPlaylistPage.module.css'
@@ -54,7 +54,7 @@ const messages = {
   editPlaylist: 'Edit Playlist',
   randomPhoto: 'Get Random Artwork',
   placeholderName: 'My Playlist',
-  placeholderDescription: 'Give your playlist a description',
+  placeholderDescription: 'Give your content list a description',
   toast: 'Playlist Created!'
 }
 
@@ -120,7 +120,7 @@ const EditPlaylistPage = g(
     }, [setReorderedAgreements, reorderedAgreements, agreements])
 
     const existingImage = useCollectionCoverArt(
-      formFields.playlist_id,
+      formFields.content list_id,
       formFields._cover_art_sizes,
       SquareSizes.SIZE_1000_BY_1000,
       '' // default
@@ -165,7 +165,7 @@ const EditPlaylistPage = g(
       (name: string) => {
         setFormFields((formFields: any) => ({
           ...formFields,
-          playlist_name: name
+          content list_name: name
         }))
       },
       [setFormFields]
@@ -209,44 +209,44 @@ const EditPlaylistPage = g(
       if (formFields.description === undefined) {
         formFields.description = null
       }
-      // Copy the metadata playlist contents so that a reference is not changed between
-      // removing agreements, updating agreement order, and edit playlist
-      const playlistAgreementIds = [
-        ...(metadata?.playlist_contents?.agreement_ids ?? [])
+      // Copy the metadata content list contents so that a reference is not changed between
+      // removing agreements, updating agreement order, and edit content list
+      const content listAgreementIds = [
+        ...(metadata?.content list_contents?.agreement_ids ?? [])
       ]
 
       for (const removedAgreement of removedAgreements) {
-        const { playlist_id } = metadata!
-        removeAgreement(removedAgreement.agreementId, playlist_id, removedAgreement.timestamp)
+        const { content list_id } = metadata!
+        removeAgreement(removedAgreement.agreementId, content list_id, removedAgreement.timestamp)
       }
 
-      if (metadata && formFields.playlist_id) {
-        // Edit playlist
+      if (metadata && formFields.content list_id) {
+        // Edit content list
         if (hasReordered) {
-          // Reorder the playlist and refresh the lineup just in case it's
-          // in the view behind the edit playlist page.
+          // Reorder the content list and refresh the lineup just in case it's
+          // in the view behind the edit content list page.
           orderPlaylist(
-            metadata.playlist_id,
-            formatReorder(playlistAgreementIds, reorderedAgreements)
+            metadata.content list_id,
+            formatReorder(content listAgreementIds, reorderedAgreements)
           )
-          // Update the playlist content agreement_ids so that the editPlaylist
+          // Update the content list content agreement_ids so that the editPlaylist
           // optimistically update the cached collection agreementIds
-          formFields.playlist_contents.agreement_ids = reorderedAgreements.map(
-            (idx) => playlistAgreementIds[idx]
+          formFields.content list_contents.agreement_ids = reorderedAgreements.map(
+            (idx) => content listAgreementIds[idx]
           )
         }
         refreshLineup()
-        editPlaylist(metadata.playlist_id, formFields)
+        editPlaylist(metadata.content list_id, formFields)
 
         close()
       } else {
-        // Create new playlist
+        // Create new content list
         const tempId = `${Date.now()}`
         createPlaylist(tempId, formFields)
         toast(messages.toast)
         close()
         goToRoute(
-          playlistPage(account.handle, formFields.playlist_name, tempId)
+          content listPage(account.handle, formFields.content list_name, tempId)
         )
       }
     }, [
@@ -272,12 +272,12 @@ const EditPlaylistPage = g(
      */
     const onRemoveAgreement = useCallback(
       (index: number) => {
-        if ((metadata?.playlist_contents?.agreement_ids.length ?? 0) <= index)
+        if ((metadata?.content list_contents?.agreement_ids.length ?? 0) <= index)
           return
         const reorderedIndex = reorderedAgreements[index]
-        const { playlist_contents } = metadata!
+        const { content list_contents } = metadata!
         const { agreement: agreementId, time } =
-          playlist_contents.agreement_ids[reorderedIndex]
+          content list_contents.agreement_ids[reorderedIndex]
         const agreementMetadata = agreements?.find(
           (agreement) => agreement.agreement_id === agreementId
         )
@@ -304,7 +304,7 @@ const EditPlaylistPage = g(
      */
     const onConfirmRemove = useCallback(() => {
       if (!confirmRemoveAgreement) return
-      const removeIdx = metadata?.playlist_contents.agreement_ids.findIndex(
+      const removeIdx = metadata?.content list_contents.agreement_ids.findIndex(
         (t) =>
           t.agreement === confirmRemoveAgreement.agreementId &&
           t.time === confirmRemoveAgreement.timestamp
@@ -327,14 +327,14 @@ const EditPlaylistPage = g(
         left: (
           <TextElement text='Cancel' type={Type.SECONDARY} onClick={close} />
         ),
-        center: formFields.playlist_id
+        center: formFields.content list_id
           ? messages.editPlaylist
           : messages.createPlaylist,
         right: (
           <TextElement
             text='Save'
             type={Type.PRIMARY}
-            isEnabled={!!formFields.playlist_name}
+            isEnabled={!!formFields.content list_name}
             onClick={onSave}
           />
         )
@@ -349,11 +349,11 @@ const EditPlaylistPage = g(
     if (agreements && reorderedAgreements.length > 0) {
       agreementList = reorderedAgreements.map((i) => {
         const t = agreements[i]
-        const playlistAgreement = metadata?.playlist_contents.agreement_ids[i]
+        const content listAgreement = metadata?.content list_contents.agreement_ids[i]
         const isRemoveActive =
           showRemoveAgreementDrawer &&
           t.agreement_id === confirmRemoveAgreement?.agreementId &&
-          playlistAgreement?.time === confirmRemoveAgreement?.timestamp
+          content listAgreement?.time === confirmRemoveAgreement?.timestamp
 
         return {
           isLoading: false,
@@ -361,7 +361,7 @@ const EditPlaylistPage = g(
           artistHandle: t.user.handle,
           agreementTitle: t.title,
           agreementId: t.agreement_id,
-          time: playlistAgreement?.time,
+          time: content listAgreement?.time,
           isDeleted: t.is_delete || !!t.user.is_deactivated,
           isRemoveActive
         }
@@ -399,7 +399,7 @@ const EditPlaylistPage = g(
               <EditableRow
                 label='Name'
                 format={Format.INPUT}
-                initialValue={formFields.playlist_name}
+                initialValue={formFields.content list_name}
                 placeholderValue={messages.placeholderName}
                 onChange={onUpdateName}
                 maxLength={64}
@@ -459,10 +459,10 @@ function mapDispatchToProps(dispatch: Dispatch) {
       ),
     editPlaylist: (id: ID, metadata: Collection) =>
       dispatch(editPlaylist(id, metadata)),
-    orderPlaylist: (playlistId: ID, idsAndTimes: any) =>
-      dispatch(orderPlaylist(playlistId, idsAndTimes)),
-    removeAgreement: (agreementId: ID, playlistId: ID, timestamp: number) =>
-      dispatch(removeAgreementFromPlaylist(agreementId, playlistId, timestamp)),
+    orderPlaylist: (content listId: ID, idsAndTimes: any) =>
+      dispatch(orderPlaylist(content listId, idsAndTimes)),
+    removeAgreement: (agreementId: ID, content listId: ID, timestamp: number) =>
+      dispatch(removeAgreementFromPlaylist(agreementId, content listId, timestamp)),
     refreshLineup: () => dispatch(agreementsActions.fetchLineupMetadatas()),
     goToRoute: (route: string) => dispatch(pushRoute(route))
   }

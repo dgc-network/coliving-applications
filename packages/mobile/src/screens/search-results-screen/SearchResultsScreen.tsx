@@ -45,7 +45,7 @@ export const SearchResultsScreen = () => {
     component: AlbumsTab
   })
 
-  const playlistsScreen = tabScreen({
+  const content listsScreen = tabScreen({
     name: 'Playlists',
     Icon: IconPlaylists,
     component: PlaylistsTab
@@ -59,7 +59,7 @@ export const SearchResultsScreen = () => {
           {profilesScreen}
           {agreementsScreen}
           {albumsScreen}
-          {playlistsScreen}
+          {content listsScreen}
         </TabNavigator>
       </SearchFocusContext.Provider>
     </Screen>

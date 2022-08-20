@@ -34,8 +34,8 @@ export const SET_NOTIFICATION_MODAL = 'NOTIFICATION/SET_NOTIFICATION_MODAL'
 export const SUBSCRIBE_USER = 'NOTIFICATION/SUBSCRIBE_USER'
 export const UNSUBSCRIBE_USER = 'NOTIFICATION/UNSUBSCRIBE_USER'
 
-export const SET_PLAYLIST_UPDATES = 'NOTIFICATION/SET_PLAYLIST_UPDATES'
-export const UPDATE_PLAYLIST_VIEW = 'NOTIFICATION/UPDATE_PLAYLIST_VIEW'
+export const SET_CONTENT_LIST_UPDATES = 'NOTIFICATION/SET_CONTENT_LIST_UPDATES'
+export const UPDATE_CONTENT_LIST_VIEW = 'NOTIFICATION/UPDATE_CONTENT_LIST_VIEW'
 
 export const fetchNotifications = (limit = 10, fromLast = true) => ({
   type: FETCH_NOTIFICATIONS,
@@ -131,14 +131,14 @@ export const unsubscribeUser = (userId: ID) => ({
   userId
 })
 
-export const setPlaylistUpdates = (playlistUpdates: number[]) => ({
-  type: SET_PLAYLIST_UPDATES,
-  playlistUpdates
+export const setPlaylistUpdates = (content listUpdates: number[]) => ({
+  type: SET_CONTENT_LIST_UPDATES,
+  content listUpdates
 })
 
-export const updatePlaylistLastViewedAt = (playlistId: number) => ({
-  type: UPDATE_PLAYLIST_VIEW,
-  playlistId
+export const updatePlaylistLastViewedAt = (content listId: number) => ({
+  type: UPDATE_CONTENT_LIST_VIEW,
+  content listId
 })
 
 export type FetchNotifications = ReturnType<typeof fetchNotifications>

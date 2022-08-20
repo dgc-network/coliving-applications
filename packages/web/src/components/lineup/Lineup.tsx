@@ -13,7 +13,7 @@ import { LineupVariant } from './types'
 
 export type LineupWithoutTile = Omit<
   LineupProviderProps,
-  'agreementTile' | 'skeletonTile' | 'playlistTile'
+  'agreementTile' | 'skeletonTile' | 'content listTile'
 >
 type LineupProps = LineupWithoutTile & ReturnType<typeof mapStateToProps>
 
@@ -23,13 +23,13 @@ type LineupProps = LineupWithoutTile & ReturnType<typeof mapStateToProps>
 const Lineup = (props: LineupProps) => {
   const mobile = props.isMobile
   const agreementTile = mobile ? MobileAgreementTile : DesktopAgreementTile
-  const playlistTile = mobile ? MobilePlaylistTile : DesktopPlaylistTile
+  const content listTile = mobile ? MobilePlaylistTile : DesktopPlaylistTile
 
   return (
     <LineupProvider
       {...props}
       agreementTile={agreementTile}
-      playlistTile={playlistTile}
+      content listTile={content listTile}
     />
   )
 }

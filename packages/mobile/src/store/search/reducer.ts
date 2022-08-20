@@ -29,7 +29,7 @@ const initialState = {
   results: {
     users: [],
     agreements: [],
-    playlists: [],
+    content lists: [],
     albums: []
   },
   status: Status.LOADING,

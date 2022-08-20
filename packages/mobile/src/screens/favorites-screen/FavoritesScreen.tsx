@@ -22,7 +22,7 @@ const favoritesScreens = [
     component: AlbumsTab
   },
   {
-    name: 'playlists',
+    name: 'content lists',
     Icon: IconPlaylists,
     component: PlaylistsTab
   }

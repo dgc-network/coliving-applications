@@ -52,12 +52,12 @@ type CardProps = {
   primaryText: ReactNode
   secondaryText: ReactNode
   cardCoverImageSizes?: CoverArtSizes
-  playlistName?: string
+  content listName?: string
   isUser: boolean
-  isPlaylist: boolean // playlist or album
-  isPublic?: boolean // only for playlist or album
+  isPlaylist: boolean // content list or album
+  isPublic?: boolean // only for content list or album
   handle: string
-  playlistId?: number
+  content listId?: number
   isReposted?: boolean
   isSaved?: boolean
   index?: number
@@ -133,9 +133,9 @@ const Card = ({
   handle,
   isReposted,
   isSaved,
-  playlistId,
+  content listId,
   isPublic,
-  playlistName,
+  content listName,
   primaryText,
   secondaryText,
   size,
@@ -176,9 +176,9 @@ const Card = ({
           handle={handle}
           standalone
           direction='horizontal'
-          variant={isPlaylist ? 'playlist' : 'album'}
-          playlistId={playlistId}
-          playlistName={playlistName}
+          variant={isPlaylist ? 'content list' : 'album'}
+          content listId={content listId}
+          content listName={content listName}
           containerStyles={styles.actionContainer}
           currentUserReposted={isReposted}
           currentUserSaved={isSaved}

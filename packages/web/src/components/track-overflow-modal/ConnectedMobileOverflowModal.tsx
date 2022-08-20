@@ -38,9 +38,9 @@ import {
   shareUser,
   unfollowUser
 } from 'common/store/social/users/actions'
-import { requestOpen as openAddToPlaylist } from 'common/store/ui/add-to-playlist/actions'
+import { requestOpen as openAddToPlaylist } from 'common/store/ui/add-to-content list/actions'
 import { open as openEditPlaylist } from 'common/store/ui/createPlaylistModal/actions'
-import { requestOpen as openDeletePlaylist } from 'common/store/ui/delete-playlist-confirmation-modal/slice'
+import { requestOpen as openDeletePlaylist } from 'common/store/ui/delete-content list-confirmation-modal/slice'
 import { getMobileOverflowModal } from 'common/store/ui/mobile-overflow-menu/selectors'
 import { OverflowSource } from 'common/store/ui/mobile-overflow-menu/types'
 import { getModalVisibility, setVisibility } from 'common/store/ui/modals/slice'
@@ -48,7 +48,7 @@ import { AppState } from 'store/types'
 import {
   albumPage,
   collectibleDetailsPage,
-  playlistPage,
+  content listPage,
   profilePage
 } from 'utils/route'
 
@@ -282,12 +282,12 @@ const getAdditionalInfo = ({
     case OverflowSource.COLLECTIONS: {
       const col = getCollection(state, { id: id as number })
       if (!col) return {}
-      const user = getUser(state, { id: col.playlist_owner_id })
+      const user = getUser(state, { id: col.content list_owner_id })
       if (!user) return {}
       return {
         handle: user.handle,
         artistName: user.name,
-        title: col.playlist_name,
+        title: col.content list_name,
         isAlbum: col.is_album
       }
     }
@@ -347,10 +347,10 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
       dispatch(saveCollection(collectionId, FavoriteSource.OVERFLOW)),
     unsaveCollection: (collectionId: ID) =>
       dispatch(unsaveCollection(collectionId, FavoriteSource.OVERFLOW)),
-    editPlaylist: (playlistId: ID) => dispatch(openEditPlaylist(playlistId)),
-    deletePlaylist: (playlistId: ID) =>
-      dispatch(openDeletePlaylist({ playlistId })),
-    publishPlaylist: (playlistId: ID) => dispatch(publishPlaylist(playlistId)),
+    editPlaylist: (content listId: ID) => dispatch(openEditPlaylist(content listId)),
+    deletePlaylist: (content listId: ID) =>
+      dispatch(openDeletePlaylist({ content listId })),
+    publishPlaylist: (content listId: ID) => dispatch(publishPlaylist(content listId)),
 
     // Users
     follow: (userId: ID) => dispatch(followUser(userId, FollowSource.OVERFLOW)),
@@ -372,10 +372,10 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
       dispatch(pushRoute(collectibleDetailsPage(handle, id)))
     },
     visitPlaylistPage: (
-      playlistId: ID,
+      content listId: ID,
       handle: string,
-      playlistTitle: string
-    ) => dispatch(pushRoute(playlistPage(handle, playlistTitle, playlistId))),
+      content listTitle: string
+    ) => dispatch(pushRoute(content listPage(handle, content listTitle, content listId))),
     visitAlbumPage: (albumId: ID, handle: string, albumTitle: string) =>
       dispatch(pushRoute(albumPage(handle, albumTitle, albumId)))
   }

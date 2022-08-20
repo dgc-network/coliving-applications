@@ -39,7 +39,7 @@ import { remoteConfigInstance } from 'services/remote-config/remote-config-insta
 import { setSentryUser } from 'services/sentry'
 import { identify } from 'store/analytics/actions'
 import { waitForBackendSetup } from 'store/backend/sagas'
-import { addPlaylistsNotInLibrary } from 'store/playlist-library/sagas'
+import { addPlaylistsNotInLibrary } from 'store/content list-library/sagas'
 import {
   Permission,
   isPushManagerAvailable,
@@ -109,8 +109,8 @@ function* onFetchAccount(account) {
     fetchProfile(account.handle, account.user_id, false, false, false, true)
   )
 
-  // Add playlists that might not have made it into the user's library.
-  // This could happen if the user creates a new playlist and then leaves their session.
+  // Add content lists that might not have made it into the user's library.
+  // This could happen if the user creates a new content list and then leaves their session.
   yield fork(addPlaylistsNotInLibrary)
 
   const feePayerOverride = yield select(getFeePayer)
@@ -199,7 +199,7 @@ export function* fetchAccountAsync(action) {
 }
 
 function* cacheAccount(account) {
-  const collections = account.playlists || []
+  const collections = account.content lists || []
 
   yield put(
     cacheActions.add(Kind.USERS, [
@@ -207,7 +207,7 @@ function* cacheAccount(account) {
     ])
   )
   const hasFavoritedItem =
-    collections.some((playlist) => playlist.user.id !== account.user_id) ||
+    collections.some((content list) => content list.user.id !== account.user_id) ||
     account.agreement_save_count > 0
 
   const formattedAccount = {
@@ -410,7 +410,7 @@ function* fetchSavedPlaylistsAsync() {
     (status) => status === Status.SUCCESS
   )
 
-  // Fetch other people's playlists you've saved
+  // Fetch other people's content lists you've saved
   yield fork(function* () {
     const savedPlaylists = yield select(getAccountSavedPlaylistIds)
     if (savedPlaylists.length > 0) {
@@ -418,7 +418,7 @@ function* fetchSavedPlaylistsAsync() {
     }
   })
 
-  // Fetch your own playlists
+  // Fetch your own content lists
   yield fork(function* () {
     const ownPlaylists = yield select(getAccountOwnedPlaylistIds)
     if (ownPlaylists.length > 0) {

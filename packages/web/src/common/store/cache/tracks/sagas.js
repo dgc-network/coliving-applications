@@ -59,7 +59,7 @@ function* fetchRepostInfo(entries) {
 
 function* fetchSegment(metadata) {
   const user = yield call(waitForValue, getUser, { id: metadata.owner_id })
-  const gateways = getCreatorNodeIPFSGateways(user.creator_node_endpoint)
+  const gateways = getCreatorNodeIPFSGateways(user.content_node_endpoint)
   if (!metadata.agreement_segments[0]) return
   const cid = metadata.agreement_segments[0].multihash
   return yield call(fetchCID, cid, gateways, /* cache */ false)
@@ -409,7 +409,7 @@ function* watchFetchCoverArt() {
       const user = yield call(waitForValue, getUser, { id: agreement.owner_id })
       if (!agreement || !user || (!agreement.cover_art_sizes && !agreement.cover_art))
         return
-      const gateways = getCreatorNodeIPFSGateways(user.creator_node_endpoint)
+      const gateways = getCreatorNodeIPFSGateways(user.content_node_endpoint)
       const multihash = agreement.cover_art_sizes || agreement.cover_art
       const coverArtSize = multihash === agreement.cover_art_sizes ? size : null
       const url = yield call(
@@ -459,12 +459,12 @@ function* watchCheckIsDownloadable() {
 
     const user = yield select(getUser, { id: agreement.owner_id })
     if (!user) return
-    if (!user.creator_node_endpoint) return
+    if (!user.content_node_endpoint) return
 
     const cid = yield call(
       AgreementDownload.checkIfDownloadAvailable,
       agreement.agreement_id,
-      user.creator_node_endpoint
+      user.content_node_endpoint
     )
 
     const updatedMetadata = {

@@ -204,7 +204,7 @@ const AgreementHeader = ({
         : isSaved
         ? OverflowAction.UNFAVORITE
         : OverflowAction.FAVORITE,
-      OverflowAction.ADD_TO_PLAYLIST,
+      OverflowAction.ADD_TO_CONTENT_LIST,
       isFollowing
         ? OverflowAction.UNFOLLOW_ARTIST
         : OverflowAction.FOLLOW_ARTIST,

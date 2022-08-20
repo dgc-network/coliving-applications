@@ -1,5 +1,5 @@
-app_identifier("co.coliving.colivingmusic") # The bundle identifier of your app
-apple_id("admin@coliving.co") # Your Apple email address
+app_identifier("co.coliving.lollivingmusic") # The bundle identifier of your app
+apple_id("admin@coliving.lol") # Your Apple email address
 
 itc_team_id("120153007") # App Store Connect Team ID
 team_id("LRFCG93S85") # Developer Portal Team ID

@@ -107,9 +107,9 @@ Draggable.propTypes = {
   kind: PropTypes.oneOf([
     'agreement',
     'album',
-    'playlist',
-    'library-playlist',
-    'playlist-folder'
+    'content list',
+    'library-content list',
+    'content list-folder'
   ]),
   id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]), // One of agreementId, collectionId, userId
   children: PropTypes.element,
@@ -120,7 +120,7 @@ Draggable.propTypes = {
 Draggable.defaultProps = {
   elementType: 'div',
   text: 'Untitled',
-  link: 'https://coliving.co'
+  link: 'https://coliving.lol'
 }
 
 const mapStateToProps = (state, props) => ({})

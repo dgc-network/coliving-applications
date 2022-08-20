@@ -147,20 +147,20 @@ const SavedPage = ({
             index={i}
             isLoading={isLoadingAlbums(i)}
             setDidLoad={setDidLoadAlbums}
-            key={album.playlist_id}
-            id={album.playlist_id}
-            userId={album.playlist_owner_id}
+            key={album.content list_id}
+            id={album.content list_id}
+            userId={album.content list_owner_id}
             imageSize={album._cover_art_sizes}
             size='medium'
-            playlistName={album.playlist_name}
-            playlistId={album.playlist_id}
+            content listName={album.content list_name}
+            content listId={album.content list_id}
             isPlaylist={false}
             isPublic={!album.is_private}
             handle={album.ownerHandle}
-            primaryText={album.playlist_name}
+            primaryText={album.content list_name}
             secondaryText={formatCardSecondaryText(
               album.save_count,
-              album.playlist_contents.agreement_ids.length
+              album.content list_contents.agreement_ids.length
             )}
             isReposted={album.has_current_user_reposted}
             isSaved={album.has_current_user_saved}
@@ -169,8 +169,8 @@ const SavedPage = ({
               goToRoute(
                 albumPage(
                   album.ownerHandle,
-                  album.playlist_name,
-                  album.playlist_id
+                  album.content list_name,
+                  album.content list_id
                 )
               )
             }

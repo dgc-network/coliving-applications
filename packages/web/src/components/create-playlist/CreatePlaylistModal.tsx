@@ -24,8 +24,8 @@ const messages = {
   createFolderTabTitle: 'Create Folder'
 }
 
-type TabName = 'create-playlist' | 'create-folder'
-const INITIAL_TAB = 'create-playlist' as TabName
+type TabName = 'create-content list' | 'create-folder'
+const INITIAL_TAB = 'create-content list' as TabName
 
 type CreatePlaylistModalProps = {
   visible?: boolean
@@ -44,12 +44,12 @@ const CreatePlaylistModal = ({
 }: CreatePlaylistModalProps) => {
   const record = useRecord()
   const { isEnabled: isPlaylistFoldersEnabled } = useFlag(
-    FeatureFlags.PLAYLIST_FOLDERS
+    FeatureFlags.CONTENT_LIST_FOLDERS
   )
 
   const tabOptions = [
     {
-      key: 'create-playlist',
+      key: 'create-content list',
       text: messages.createPlaylistTabTitle
     },
     {
@@ -103,24 +103,24 @@ const CreatePlaylistModal = ({
 
   return (
     <Modal
-      modalKey='createplaylist'
+      modalKey='createcontent list'
       dismissOnClickOutside={!isArtworkPopupOpen}
       bodyClassName={styles.modalBody}
       isOpen={visible}
       onClose={handleClose}
-      zIndex={zIndex.CREATE_PLAYLIST_MODAL}
+      zIndex={zIndex.CREATE_CONTENT_LIST_MODAL}
     >
       <ModalHeader onClose={handleClose}>
         <ModalTitle
           icon={
-            currentTabName === 'create-playlist' ? (
+            currentTabName === 'create-content list' ? (
               <IconPlaylists />
             ) : (
               <IconFolder />
             )
           }
           title={
-            currentTabName === 'create-playlist'
+            currentTabName === 'create-content list'
               ? messages.createPlaylistTabTitle
               : messages.createFolderTabTitle
           }
@@ -136,7 +136,7 @@ const CreatePlaylistModal = ({
             />
           </div>
         )}
-        {currentTabName === 'create-playlist' ? (
+        {currentTabName === 'create-content list' ? (
           <PlaylistForm
             onOpenArtworkPopup={onOpenArtworkPopup}
             onCloseArtworkPopup={onCloseArtworkPopup}

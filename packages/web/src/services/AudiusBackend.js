@@ -250,7 +250,7 @@ const fetchImageCID = async (cid, creatorNodeGateways = [], cache = true) => {
   creatorNodeGateways.push(`${USER_NODE}/ipfs`)
   const primary = creatorNodeGateways[0]
   if (primary) {
-    // Attempt to fetch/load the image using the first creator node gateway
+    // Attempt to fetch/load the image using the first content node gateway
     const firstImageUrl = `${primary}${cid}`
     const preloadedImageUrl = await preloadImage(firstImageUrl)
 
@@ -325,13 +325,13 @@ class ColivingBackend {
     const coverArtSizes = {}
 
     if (
-      collection.playlist_image_sizes_multihash &&
+      collection.content list_image_sizes_multihash &&
       !collection.cover_art_sizes
     ) {
-      collection.cover_art_sizes = collection.playlist_image_sizes_multihash
+      collection.cover_art_sizes = collection.content list_image_sizes_multihash
     }
-    if (collection.playlist_image_multihash && !collection.cover_art) {
-      collection.cover_art = collection.playlist_image_multihash
+    if (collection.content list_image_multihash && !collection.cover_art) {
+      collection.cover_art = collection.content list_image_multihash
     }
 
     if (!collection.cover_art_sizes && !collection.cover_art) {
@@ -377,13 +377,13 @@ class ColivingBackend {
   }
 
   static creatorNodeSelectionCallback(primary, secondaries, reason) {
-    agreement(Name.CREATOR_NODE_SELECTION, {
+    agreement(Name.CONTENT_NODE_SELECTION, {
       endpoint: primary,
       selectedAs: 'primary',
       reason
     })
     secondaries.forEach((secondary) => {
-      agreement(Name.CREATOR_NODE_SELECTION, {
+      agreement(Name.CONTENT_NODE_SELECTION, {
         endpoint: secondary,
         selectedAs: 'secondary',
         reason
@@ -844,7 +844,7 @@ class ColivingBackend {
       console.error(err)
     }
     return feedItems.map((item) => {
-      if (item.playlist_id) return ColivingBackend.getCollectionImages(item)
+      if (item.content list_id) return ColivingBackend.getCollectionImages(item)
       return item
     })
   }
@@ -974,18 +974,18 @@ class ColivingBackend {
     }
   }
 
-  static async repostCollection(playlistId) {
+  static async repostCollection(content listId) {
     try {
-      return colivingLibs.Playlist.addPlaylistRepost(playlistId)
+      return colivingLibs.Playlist.addPlaylistRepost(content listId)
     } catch (err) {
       console.error(err.message)
       throw err
     }
   }
 
-  static async undoRepostCollection(playlistId) {
+  static async undoRepostCollection(content listId) {
     try {
-      return colivingLibs.Playlist.deletePlaylistRepost(playlistId)
+      return colivingLibs.Playlist.deletePlaylistRepost(content listId)
     } catch (err) {
       console.error(err.message)
       throw err
@@ -1011,7 +1011,7 @@ class ColivingBackend {
     )
   }
 
-  // Used to upload multiple agreements as part of an album/playlist
+  // Used to upload multiple agreements as part of an album/content list
   // Returns { metadataMultihash, metadataFileUUID, transcodedAgreementCID, transcodedAgreementUUID }
   static async uploadAgreementToCreatorNode(
     agreementFile,
@@ -1094,12 +1094,12 @@ class ColivingBackend {
   }
 
   /**
-   * Retrieves the user's eth associated wallets from IPFS using the user's metadata CID and creator node endpoints
+   * Retrieves the user's eth associated wallets from IPFS using the user's metadata CID and content node endpoints
    * @param {User} user The user metadata which contains the CID for the metadata multihash
    * @returns Object The associated wallets mapping of address to nested signature
    */
   static async fetchUserAssociatedEthWallets(user) {
-    const gateways = getCreatorNodeIPFSGateways(user.creator_node_endpoint)
+    const gateways = getCreatorNodeIPFSGateways(user.content_node_endpoint)
     const cid = user?.metadata_multihash ?? null
     if (cid) {
       const metadata = await fetchCID(
@@ -1116,12 +1116,12 @@ class ColivingBackend {
   }
 
   /**
-   * Retrieves the user's solana associated wallets from IPFS using the user's metadata CID and creator node endpoints
+   * Retrieves the user's solana associated wallets from IPFS using the user's metadata CID and content node endpoints
    * @param {User} user The user metadata which contains the CID for the metadata multihash
    * @returns Object The associated wallets mapping of address to nested signature
    */
   static async fetchUserAssociatedSolWallets(user) {
-    const gateways = getCreatorNodeIPFSGateways(user.creator_node_endpoint)
+    const gateways = getCreatorNodeIPFSGateways(user.content_node_endpoint)
     const cid = user?.metadata_multihash ?? null
     if (cid) {
       const metadata = await fetchCID(
@@ -1143,7 +1143,7 @@ class ColivingBackend {
    * @returns Object The associated wallets mapping of address to nested signature
    */
   static async fetchUserAssociatedWallets(user) {
-    const gateways = getCreatorNodeIPFSGateways(user.creator_node_endpoint)
+    const gateways = getCreatorNodeIPFSGateways(user.content_node_endpoint)
     const cid = user?.metadata_multihash ?? null
     if (cid) {
       const metadata = await fetchCID(
@@ -1324,20 +1324,20 @@ class ColivingBackend {
     return followers
   }
 
-  static async getPlaylists(userId, playlistIds) {
+  static async getPlaylists(userId, content listIds) {
     try {
-      const playlists = await withEagerOption(
+      const content lists = await withEagerOption(
         {
           normal: (libs) => libs.Playlist.getPlaylists,
           eager: DiscoveryAPI.getPlaylists
         },
         100,
         0,
-        playlistIds,
+        content listIds,
         userId,
         true
       )
-      return (playlists || []).map(ColivingBackend.getCollectionImages)
+      return (content lists || []).map(ColivingBackend.getCollectionImages)
     } catch (err) {
       console.error(err.message)
       return []
@@ -1351,7 +1351,7 @@ class ColivingBackend {
     agreementIds = [],
     isPrivate = true
   ) {
-    const playlistName = metadata.playlist_name
+    const content listName = metadata.content list_name
     const coverArt = metadata.artwork ? metadata.artwork.file : null
     const description = metadata.description
     // Creating an album is automatically public.
@@ -1360,33 +1360,33 @@ class ColivingBackend {
     try {
       const response = await colivingLibs.Playlist.createPlaylist(
         userId,
-        playlistName,
+        content listName,
         isPrivate,
         isAlbum,
         agreementIds
       )
-      let { blockHash, blockNumber, playlistId, error } = response
+      let { blockHash, blockNumber, content listId, error } = response
 
-      if (error) return { playlistId, error }
+      if (error) return { content listId, error }
 
       const updatePromises = []
 
-      // If this playlist is being created from an existing cover art, use it.
+      // If this content list is being created from an existing cover art, use it.
       if (metadata.cover_art_sizes) {
         updatePromises.push(
           colivingLibs.contracts.PlaylistFactoryClient.updatePlaylistCoverPhoto(
-            playlistId,
+            content listId,
             Utils.formatOptionalMultihash(metadata.cover_art_sizes)
           )
         )
       } else if (coverArt) {
         updatePromises.push(
-          colivingLibs.Playlist.updatePlaylistCoverPhoto(playlistId, coverArt)
+          colivingLibs.Playlist.updatePlaylistCoverPhoto(content listId, coverArt)
         )
       }
       if (description) {
         updatePromises.push(
-          colivingLibs.Playlist.updatePlaylistDescription(playlistId, description)
+          colivingLibs.Playlist.updatePlaylistDescription(content listId, description)
         )
       }
 
@@ -1402,36 +1402,36 @@ class ColivingBackend {
         blockNumber = latestReceipt.blockNumber
       }
 
-      return { blockHash, blockNumber, playlistId }
+      return { blockHash, blockNumber, content listId }
     } catch (err) {
       // This code path should never execute
       console.debug('Reached client createPlaylist catch block')
       console.error(err.message)
-      return { playlistId: null, error: true }
+      return { content listId: null, error: true }
     }
   }
 
-  static async updatePlaylist(playlistId, metadata) {
-    const playlistName = metadata.playlist_name
+  static async updatePlaylist(content listId, metadata) {
+    const content listName = metadata.content list_name
     const coverPhoto = metadata.artwork.file
     const description = metadata.description
 
     try {
       let blockHash, blockNumber
       const promises = []
-      if (playlistName) {
+      if (content listName) {
         promises.push(
-          colivingLibs.Playlist.updatePlaylistName(playlistId, playlistName)
+          colivingLibs.Playlist.updatePlaylistName(content listId, content listName)
         )
       }
       if (coverPhoto) {
         promises.push(
-          colivingLibs.Playlist.updatePlaylistCoverPhoto(playlistId, coverPhoto)
+          colivingLibs.Playlist.updatePlaylistCoverPhoto(content listId, coverPhoto)
         )
       }
       if (description) {
         promises.push(
-          colivingLibs.Playlist.updatePlaylistDescription(playlistId, description)
+          colivingLibs.Playlist.updatePlaylistDescription(content listId, description)
         )
       }
 
@@ -1454,11 +1454,11 @@ class ColivingBackend {
     }
   }
 
-  static async orderPlaylist(playlistId, agreementIds, retries) {
+  static async orderPlaylist(content listId, agreementIds, retries) {
     try {
       const { blockHash, blockNumber } =
         await colivingLibs.Playlist.orderPlaylistAgreements(
-          playlistId,
+          content listId,
           agreementIds,
           retries
         )
@@ -1469,10 +1469,10 @@ class ColivingBackend {
     }
   }
 
-  static async publishPlaylist(playlistId) {
+  static async publishPlaylist(content listId) {
     try {
       const { blockHash, blockNumber } =
-        await colivingLibs.Playlist.updatePlaylistPrivacy(playlistId, false)
+        await colivingLibs.Playlist.updatePlaylistPrivacy(content listId, false)
       return { blockHash, blockNumber }
     } catch (error) {
       console.error(error.message)
@@ -1480,10 +1480,10 @@ class ColivingBackend {
     }
   }
 
-  static async addPlaylistAgreement(playlistId, agreementId) {
+  static async addPlaylistAgreement(content listId, agreementId) {
     try {
       const { blockHash, blockNumber } =
-        await colivingLibs.Playlist.addPlaylistAgreement(playlistId, agreementId)
+        await colivingLibs.Playlist.addPlaylistAgreement(content listId, agreementId)
       return { blockHash, blockNumber }
     } catch (error) {
       console.error(error.message)
@@ -1491,11 +1491,11 @@ class ColivingBackend {
     }
   }
 
-  static async deletePlaylistAgreement(playlistId, agreementId, timestamp, retries) {
+  static async deletePlaylistAgreement(content listId, agreementId, timestamp, retries) {
     try {
       const { blockHash, blockNumber } =
         await colivingLibs.Playlist.deletePlaylistAgreement(
-          playlistId,
+          content listId,
           agreementId,
           timestamp,
           retries
@@ -1507,10 +1507,10 @@ class ColivingBackend {
     }
   }
 
-  static async validateAgreementsInPlaylist(playlistId) {
+  static async validateAgreementsInPlaylist(content listId) {
     try {
       const { isValid, invalidAgreementIds } =
-        await colivingLibs.Playlist.validateAgreementsInPlaylist(playlistId)
+        await colivingLibs.Playlist.validateAgreementsInPlaylist(content listId)
       return { error: false, isValid, invalidAgreementIds }
     } catch (error) {
       console.error(error.message)
@@ -1518,13 +1518,13 @@ class ColivingBackend {
     }
   }
 
-  // NOTE: This is called to explicitly set a playlist agreement ids w/out running validation checks.
-  // This should NOT be used to set the playlist order
-  // It's added for the purpose of manually fixing broken playlists
-  static async dangerouslySetPlaylistOrder(playlistId, agreementIds) {
+  // NOTE: This is called to explicitly set a content list agreement ids w/out running validation checks.
+  // This should NOT be used to set the content list order
+  // It's added for the purpose of manually fixing broken content lists
+  static async dangerouslySetPlaylistOrder(content listId, agreementIds) {
     try {
       await colivingLibs.contracts.PlaylistFactoryClient.orderPlaylistAgreements(
-        playlistId,
+        content listId,
         agreementIds
       )
       return { error: false }
@@ -1534,9 +1534,9 @@ class ColivingBackend {
     }
   }
 
-  static async deletePlaylist(playlistId) {
+  static async deletePlaylist(content listId) {
     try {
-      const { txReceipt } = await colivingLibs.Playlist.deletePlaylist(playlistId)
+      const { txReceipt } = await colivingLibs.Playlist.deletePlaylist(content listId)
       return {
         blockHash: txReceipt.blockHash,
         blockNumber: txReceipt.blockNumber
@@ -1547,20 +1547,20 @@ class ColivingBackend {
     }
   }
 
-  static async deleteAlbum(playlistId, agreementIds) {
+  static async deleteAlbum(content listId, agreementIds) {
     try {
       console.debug(
-        `Deleting Album ${playlistId}, agreements: ${JSON.stringify(
+        `Deleting Album ${content listId}, agreements: ${JSON.stringify(
           agreementIds.map((t) => t.agreement)
         )}`
       )
       const agreementDeletionPromises = agreementIds.map((t) =>
         colivingLibs.Agreement.deleteAgreement(t.agreement)
       )
-      const playlistDeletionPromise =
-        colivingLibs.Playlist.deletePlaylist(playlistId)
+      const content listDeletionPromise =
+        colivingLibs.Playlist.deletePlaylist(content listId)
       const results = await Promise.all(
-        agreementDeletionPromises.concat(playlistDeletionPromise)
+        agreementDeletionPromises.concat(content listDeletionPromise)
       )
       const deleteAgreementReceipts = results.slice(0, -1).map((r) => r.txReceipt)
       const deletePlaylistReceipt = results.slice(-1)[0].txReceipt
@@ -1648,10 +1648,10 @@ class ColivingBackend {
     }
   }
 
-  // Favorite a playlist
-  static async saveCollection(playlistId) {
+  // Favorite a content list
+  static async saveCollection(content listId) {
     try {
-      return await colivingLibs.Playlist.addPlaylistSave(playlistId)
+      return await colivingLibs.Playlist.addPlaylistSave(content listId)
     } catch (err) {
       console.error(err.message)
       throw err
@@ -1668,10 +1668,10 @@ class ColivingBackend {
     }
   }
 
-  // Unfavorite a playlist
-  static async unsaveCollection(playlistId) {
+  // Unfavorite a content list
+  static async unsaveCollection(content listId) {
     try {
-      return await colivingLibs.Playlist.deletePlaylistSave(playlistId)
+      return await colivingLibs.Playlist.deletePlaylistSave(content listId)
     } catch (err) {
       console.error(err.message)
       throw err
@@ -2348,11 +2348,11 @@ class ColivingBackend {
   }
 
   /**
-   * Sets the playlist as viewed to reset the playlist updates notifications timer
-   * @param {playlistId} playlistId playlist id or folder id
+   * Sets the content list as viewed to reset the content list updates notifications timer
+   * @param {content listId} content listId content list id or folder id
    */
-  static async updatePlaylistLastViewedAt(playlistId) {
-    if (!getFeatureEnabled(FeatureFlags.PLAYLIST_UPDATES_ENABLED)) return
+  static async updatePlaylistLastViewedAt(content listId) {
+    if (!getFeatureEnabled(FeatureFlags.CONTENT_LIST_UPDATES_ENABLED)) return
 
     await waitForLibsInit()
     const account = colivingLibs.Account.getCurrentUser()
@@ -2361,7 +2361,7 @@ class ColivingBackend {
     try {
       const { data, signature } = await ColivingBackend.signData()
       await fetch(
-        `${IDENTITY_SERVICE}/user_playlist_updates?walletAddress=${account.wallet}&playlistId=${playlistId}`,
+        `${IDENTITY_SERVICE}/user_content list_updates?walletAddress=${account.wallet}&content listId=${content listId}`,
         {
           method: 'POST',
           headers: {

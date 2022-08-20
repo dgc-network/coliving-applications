@@ -30,12 +30,12 @@ export type APIUser = {
   is_deactivated: boolean
   location: Nullable<string>
   name: string
-  playlist_count: number
+  content list_count: number
   profile_picture: ProfilePictureSizes
   repost_count: number
   agreement_count: number
   created_at: string
-  creator_node_endpoint: Nullable<string>
+  content_node_endpoint: Nullable<string>
   current_user_followee_follow_count: number
   does_current_user_follow: boolean
   handle_lc: string
@@ -57,7 +57,7 @@ export type APISearchUser = Omit<
   | 'album_count'
   | 'followee_count'
   | 'follower_count'
-  | 'playlist_count'
+  | 'content list_count'
   | 'repost_count'
   | 'agreement_count'
   | 'current_user_followee_follow_count'
@@ -158,7 +158,7 @@ export type APIPlaylist = {
   description: Nullable<string>
   id: OpaqueID
   is_album: boolean
-  playlist_name: string
+  content list_name: string
   repost_count: number
   favorite_count: number
   total_play_count: number
@@ -191,11 +191,11 @@ export type APISearchPlaylist = Omit<
   | 'agreements'
 >
 
-export type APIItemType = 'agreement' | 'playlist'
+export type APIItemType = 'agreement' | 'content list'
 
 export type APIActivity = { timestamp: string } & (
   | { item_type: 'agreement'; item: APIAgreement }
-  | { item_type: 'playlist'; item: APIPlaylist }
+  | { item_type: 'content list'; item: APIPlaylist }
 )
 
 export type APISearch = {
@@ -203,8 +203,8 @@ export type APISearch = {
   followed_users?: APIUser[]
   agreements?: APIAgreement[]
   saved_agreements?: APIAgreement[]
-  playlists?: APIPlaylist[]
-  saved_playlists?: APIPlaylist[]
+  content lists?: APIPlaylist[]
+  saved_content lists?: APIPlaylist[]
   albums?: APIPlaylist[]
   saved_albums?: APIPlaylist[]
 }
@@ -214,8 +214,8 @@ export type APISearchAutocomplete = {
   followed_users?: APISearchUser[]
   agreements?: APISearchAgreement[]
   saved_agreements?: APISearchAgreement[]
-  playlists?: APISearchPlaylist[]
-  saved_playlists?: APISearchPlaylist[]
+  content lists?: APISearchPlaylist[]
+  saved_content lists?: APISearchPlaylist[]
   albums?: APISearchPlaylist[]
   saved_albums?: APISearchPlaylist[]
 }

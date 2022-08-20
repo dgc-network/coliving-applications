@@ -16,10 +16,10 @@ const errorsWithoutRedirect = new Set([
   uploadActions.COLLECTION_ASSOCIATE_AGREEMENTS_ERROR,
 
   // Playlist errors require
-  // agreement & possibly playlist cleanup
-  uploadActions.COLLECTION_CREATE_PLAYLIST_ID_EXISTS_ERROR,
-  uploadActions.COLLECTION_CREATE_PLAYLIST_NO_ID_ERROR,
-  uploadActions.COLLECTION_POLL_PLAYLIST_TIMEOUT_ERROR
+  // agreement & possibly content list cleanup
+  uploadActions.COLLECTION_CREATE_CONTENT_LIST_ID_EXISTS_ERROR,
+  uploadActions.COLLECTION_CREATE_CONTENT_LIST_NO_ID_ERROR,
+  uploadActions.COLLECTION_POLL_CONTENT_LIST_TIMEOUT_ERROR
 ])
 
 // TODO: This definition should live in Upload Actions
@@ -75,13 +75,13 @@ export function* watchUploadErrors() {
       uploadActions.SINGLE_AGREEMENT_UPLOAD_TIMEOUT_ERROR,
       uploadActions.MULTI_AGREEMENT_UPLOAD_ERROR,
       uploadActions.MULTI_AGREEMENT_TIMEOUT_ERROR,
-      uploadActions.COLLECTION_CREATOR_NODE_UPLOAD_ERROR,
-      uploadActions.COLLECTION_CREATOR_NODE_TIMEOUT_ERROR,
+      uploadActions.COLLECTION_CONTENT_NODE_UPLOAD_ERROR,
+      uploadActions.COLLECTION_CONTENT_NODE_TIMEOUT_ERROR,
       uploadActions.COLLECTION_ADD_AGREEMENT_TO_CHAIN_ERROR,
       uploadActions.COLLECTION_ASSOCIATE_AGREEMENTS_ERROR,
-      uploadActions.COLLECTION_CREATE_PLAYLIST_NO_ID_ERROR,
-      uploadActions.COLLECTION_CREATE_PLAYLIST_ID_EXISTS_ERROR,
-      uploadActions.COLLECTION_POLL_PLAYLIST_TIMEOUT_ERROR
+      uploadActions.COLLECTION_CREATE_CONTENT_LIST_NO_ID_ERROR,
+      uploadActions.COLLECTION_CREATE_CONTENT_LIST_ID_EXISTS_ERROR,
+      uploadActions.COLLECTION_POLL_CONTENT_LIST_TIMEOUT_ERROR
     ],
     handleUploadError
   )

@@ -46,7 +46,7 @@ export const makeUser = (
   const album_count = 'album_count' in user ? user.album_count : 0
   const followee_count = 'followee_count' in user ? user.followee_count : 0
   const follower_count = 'follower_count' in user ? user.follower_count : 0
-  const playlist_count = 'playlist_count' in user ? user.playlist_count : 0
+  const content list_count = 'content list_count' in user ? user.content list_count : 0
   const repost_count = 'repost_count' in user ? user.repost_count : 0
   const agreement_count = 'agreement_count' in user ? user.agreement_count : 0
   const current_user_followee_follow_count =
@@ -65,7 +65,7 @@ export const makeUser = (
     album_count,
     followee_count,
     follower_count,
-    playlist_count,
+    content list_count,
     repost_count,
     agreement_count,
     current_user_followee_follow_count,
@@ -272,41 +272,41 @@ export const makeAgreementId = (agreement: { id: string }): ID | undefined => {
 }
 
 export const makePlaylist = (
-  playlist: APIPlaylist | APISearchPlaylist
+  content list: APIPlaylist | APISearchPlaylist
 ): UserCollectionMetadata | undefined => {
-  const decodedPlaylistId = decodeHashId(playlist.id)
-  const decodedOwnerId = decodeHashId(playlist.user_id)
-  const user = makeUser(playlist.user)
+  const decodedPlaylistId = decodeHashId(content list.id)
+  const decodedOwnerId = decodeHashId(content list.user_id)
+  const user = makeUser(content list.user)
   if (!decodedPlaylistId || !decodedOwnerId || !user) {
     return undefined
   }
 
   const saves =
-    'followee_favorites' in playlist
-      ? playlist.followee_favorites?.map(makeFavorite).filter(removeNullable) ??
+    'followee_favorites' in content list
+      ? content list.followee_favorites?.map(makeFavorite).filter(removeNullable) ??
         []
       : []
 
   const reposts =
-    'followee_reposts' in playlist
-      ? playlist.followee_reposts?.map(makeRepost).filter(removeNullable) ?? []
+    'followee_reposts' in content list
+      ? content list.followee_reposts?.map(makeRepost).filter(removeNullable) ?? []
       : []
   const has_current_user_reposted =
-    'has_current_user_reposted' in playlist
-      ? playlist.has_current_user_reposted
+    'has_current_user_reposted' in content list
+      ? content list.has_current_user_reposted
       : false
   const has_current_user_saved =
-    'has_current_user_saved' in playlist
-      ? playlist.has_current_user_saved
+    'has_current_user_saved' in content list
+      ? content list.has_current_user_saved
       : false
-  const save_count = 'favorite_count' in playlist ? playlist.favorite_count : 0
-  const repost_count = 'repost_count' in playlist ? playlist.repost_count : 0
+  const save_count = 'favorite_count' in content list ? content list.favorite_count : 0
+  const repost_count = 'repost_count' in content list ? content list.repost_count : 0
   const total_play_count =
-    'total_play_count' in playlist ? playlist.total_play_count : 0
-  const agreement_count = 'agreement_count' in playlist ? playlist.agreement_count : 0
+    'total_play_count' in content list ? content list.total_play_count : 0
+  const agreement_count = 'agreement_count' in content list ? content list.agreement_count : 0
 
-  const playlistContents = {
-    agreement_ids: playlist.added_timestamps
+  const content listContents = {
+    agreement_ids: content list.added_timestamps
       .map((ts) => {
         const decoded = decodeHashId(ts.agreement_id)
         if (decoded) {
@@ -321,19 +321,19 @@ export const makePlaylist = (
   }
 
   const agreements =
-    'agreements' in playlist
-      ? playlist.agreements
+    'agreements' in content list
+      ? content list.agreements
           ?.map((agreement) => makeAgreement(agreement))
           .filter(removeNullable) ?? []
       : []
 
   const marshalled = {
-    ...playlist,
+    ...content list,
     variant: Variant.USER_GENERATED,
     user,
     agreements,
-    playlist_id: decodedPlaylistId,
-    playlist_owner_id: decodedOwnerId,
+    content list_id: decodedPlaylistId,
+    content list_owner_id: decodedOwnerId,
     followee_saves: saves,
     followee_reposts: reposts,
     has_current_user_reposted,
@@ -342,7 +342,7 @@ export const makePlaylist = (
     repost_count,
     agreement_count,
     total_play_count,
-    playlist_contents: playlistContents,
+    content list_contents: content listContents,
 
     // Fields to prune
     id: undefined,
@@ -369,7 +369,7 @@ export const makeActivity = (
   switch (activity.item_type) {
     case 'agreement':
       return makeAgreement(activity.item)
-    case 'playlist':
+    case 'content list':
       return makePlaylist(activity.item)
   }
 }
@@ -439,11 +439,11 @@ export const adaptSearchResponse = (searchResponse: APIResponse<APISearch>) => {
       searchResponse.data.followed_users
         ?.map(makeUser)
         .filter(removeNullable) ?? undefined,
-    playlists:
-      searchResponse.data.playlists?.map(makePlaylist).filter(removeNullable) ??
+    content lists:
+      searchResponse.data.content lists?.map(makePlaylist).filter(removeNullable) ??
       undefined,
-    saved_playlists:
-      searchResponse.data.saved_playlists
+    saved_content lists:
+      searchResponse.data.saved_content lists
         ?.map(makePlaylist)
         .filter(removeNullable) ?? undefined,
     albums:
@@ -473,11 +473,11 @@ export const adaptSearchAutocompleteResponse = (
       searchResponse.data.followed_users
         ?.map(makeUser)
         .filter(removeNullable) ?? undefined,
-    playlists:
-      searchResponse.data.playlists?.map(makePlaylist).filter(removeNullable) ??
+    content lists:
+      searchResponse.data.content lists?.map(makePlaylist).filter(removeNullable) ??
       undefined,
-    saved_playlists:
-      searchResponse.data.saved_playlists
+    saved_content lists:
+      searchResponse.data.saved_content lists
         ?.map(makePlaylist)
         .filter(removeNullable) ?? undefined,
     albums:

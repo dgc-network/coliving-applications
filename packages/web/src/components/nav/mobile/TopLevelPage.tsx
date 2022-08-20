@@ -4,8 +4,8 @@ import { Dispatch } from 'redux'
 
 import { getIsOpen as getIsCreatePlaylistModalOpen } from 'common/store/ui/createPlaylistModal/selectors'
 import { getModalVisibility } from 'common/store/ui/modals/slice'
-import AddToPlaylistPage from 'components/add-to-playlist/mobile/AddToPlaylist'
-import EditPlaylistPage from 'components/edit-playlist/mobile/EditPlaylistPage'
+import AddToPlaylistPage from 'components/add-to-content list/mobile/AddToPlaylist'
+import EditPlaylistPage from 'components/edit-content list/mobile/EditPlaylistPage'
 import useScrollLock from 'hooks/useScrollLock'
 import { AppState } from 'store/types'
 

@@ -43,7 +43,7 @@ const getShareUploadType = (uploadType, agreements) => {
     }
     case UploadType.INDIVIDUAL_AGREEMENTS:
       return 'Agreements'
-    case UploadType.PLAYLIST:
+    case UploadType.CONTENT_LIST:
       return 'Playlist'
     case UploadType.ALBUM:
       return 'Album'
@@ -198,8 +198,8 @@ class FinishPage extends Component {
       })
     } else {
       let header = 'ALBUM'
-      if (uploadType === UploadType.PLAYLIST) {
-        header = 'PLAYLIST'
+      if (uploadType === UploadType.CONTENT_LIST) {
+        header = 'CONTENT_LIST'
       }
       const t = agreements.map((agreement) => {
         const { duration } = agreement.preview
@@ -214,7 +214,7 @@ class FinishPage extends Component {
 
       const status =
         // Don't show complete until inProgress = false, to allow
-        // the saga to perform final processing steps (e.g. create a playlist after uploading agreements)
+        // the saga to perform final processing steps (e.g. create a content list after uploading agreements)
         uploadProgress
           .map((u) => u.status)
           .every((s) => s === ProgressStatus.COMPLETE) && !inProgress
@@ -277,7 +277,7 @@ class FinishPage extends Component {
           header={header}
           userName={userName}
           agreementList={agreementList}
-          title={metadata.playlist_name}
+          title={metadata.content list_name}
           artwork={artwork}
           activeAgreementUid={false} // No agreement should show as active
           bottomBar={bottomBar}
@@ -293,7 +293,7 @@ class FinishPage extends Component {
       case UploadType.INDIVIDUAL_AGREEMENT:
         continueText = 'View Agreement Page'
         break
-      case UploadType.PLAYLIST:
+      case UploadType.CONTENT_LIST:
         continueText = 'View Playlist'
         break
       case UploadType.ALBUM:

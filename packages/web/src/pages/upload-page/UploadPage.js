@@ -15,7 +15,7 @@ import { dropdownRows as stemRows } from 'components/source-files-modal/SourceFi
 import { processFiles } from 'pages/upload-page/store/utils/processFiles'
 import * as schemas from 'schemas'
 import { make } from 'store/analytics/actions'
-import { playlistPage, albumPage, profilePage } from 'utils/route'
+import { content listPage, albumPage, profilePage } from 'utils/route'
 
 import styles from './UploadPage.module.css'
 import EditPage from './components/EditPage'
@@ -67,7 +67,7 @@ class Upload extends Component {
 
     agreements: this.props.upload.uploading ? this.props.upload.agreements : [],
 
-    // Contains metadata related to the upload itself, e.g. playlist vs. agreement.
+    // Contains metadata related to the upload itself, e.g. content list vs. agreement.
     metadata: this.props.upload.metadata
       ? this.props.upload.metadata
       : schemas.newCollectionMetadata({ artwork: { file: null, url: '' } }),
@@ -309,18 +309,18 @@ class Upload extends Component {
           uploadType = 'agreement'
           break
         }
-        case UploadType.PLAYLIST: {
-          const playlistName = upload.metadata.playlist_name
-          route = playlistPage(
+        case UploadType.CONTENT_LIST: {
+          const content listName = upload.metadata.content list_name
+          route = content listPage(
             account.handle,
-            playlistName,
+            content listName,
             upload.completionId
           )
-          uploadType = 'playlist'
+          uploadType = 'content list'
           break
         }
         case UploadType.ALBUM: {
-          const albumName = upload.metadata.playlist_name
+          const albumName = upload.metadata.content list_name
           route = albumPage(account.handle, albumName, upload.completionId)
           uploadType = 'album'
           break
@@ -363,7 +363,7 @@ class Upload extends Component {
     let headerText
     if (uploadType === UploadType.INDIVIDUAL_AGREEMENTS) {
       headerText = 'Agreements'
-    } else if (uploadType === UploadType.PLAYLIST) {
+    } else if (uploadType === UploadType.CONTENT_LIST) {
       headerText = 'Playlist'
     } else if (uploadType === UploadType.ALBUM) {
       headerText = 'Album'

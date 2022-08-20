@@ -13,14 +13,14 @@ export function* reportSuccessAndFailureEvents({
 }: {
   numSuccess: number
   numFailure: number
-  uploadType: 'single_agreement' | 'multi_agreement' | 'album' | 'playlist'
+  uploadType: 'single_agreement' | 'multi_agreement' | 'album' | 'content list'
   errors: string[]
 }) {
   const accountUser: ReturnType<typeof getAccountUser> = yield select(
     getAccountUser
   )
   if (!accountUser) return
-  const primary = accountUser.creator_node_endpoint?.split(',')[0]
+  const primary = accountUser.content_node_endpoint?.split(',')[0]
   if (!primary) return
   const successEvents = range(numSuccess).map((_) =>
     make(Name.AGREEMENT_UPLOAD_SUCCESS, {

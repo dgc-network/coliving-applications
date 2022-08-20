@@ -247,7 +247,7 @@ const ConnectedAgreementTile = memo(
     }
 
     const renderStats = () => {
-      const contentTitle = 'agreement' // undefined,  playlist or album -  undefined is agreement
+      const contentTitle = 'agreement' // undefined,  content list or album -  undefined is agreement
       const statSize = 'large'
       return (
         <div className={cn(styles.socialInfo)}>

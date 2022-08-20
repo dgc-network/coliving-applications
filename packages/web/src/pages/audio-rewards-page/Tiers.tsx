@@ -57,7 +57,7 @@ export const liveTierMapPng: {
 
 export const BADGE_LOCAL_STORAGE_KEY = 'last_badge_tier'
 
-export const LEARN_MORE_URL = 'http://blog.coliving.co/posts/community-meet-live'
+export const LEARN_MORE_URL = 'http://blog.coliving.lol/posts/community-meet-live'
 
 const useShowConfetti = (tier: BadgeTier) => {
   // No tier or no local storage, never show confetti

@@ -3,8 +3,8 @@
     <title>iconMultiselectAdd</title>
     <g id="Assets" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
         <g id="assets" transform="translate(-625.000000, -1051.000000)">
-            <g id="components/buttons/newplaylist/create-playlist-1" transform="translate(625.000000, 1051.000000)">
-                <g id="components/buttons/create-playlist-1">
+            <g id="components/buttons/newcontent list/create-content list-1" transform="translate(625.000000, 1051.000000)">
+                <g id="components/buttons/create-content list-1">
                     <circle id="Oval" fill="#23AD1A" cx="12" cy="12" r="12"></circle>
                     <g id="icon/Add">
                         <rect id="bound" x="0" y="0" width="24" height="24"></rect>

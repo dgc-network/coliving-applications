@@ -57,7 +57,7 @@ function* watchFetchProfile() {
 }
 
 function* fetchProfileCustomizedCollectibles(user) {
-  const gateways = getCreatorNodeIPFSGateways(user.creator_node_endpoint)
+  const gateways = getCreatorNodeIPFSGateways(user.content_node_endpoint)
   const cid = user?.metadata_multihash ?? null
   if (cid) {
     const metadata = yield call(
@@ -355,7 +355,7 @@ export function* updateProfileAsync(action) {
   )
 
   // Get existing metadata and combine with it
-  const gateways = getCreatorNodeIPFSGateways(metadata.creator_node_endpoint)
+  const gateways = getCreatorNodeIPFSGateways(metadata.content_node_endpoint)
   const cid = metadata.metadata_multihash ?? null
   if (cid) {
     try {
@@ -367,10 +367,10 @@ export function* updateProfileAsync(action) {
         /* asUrl */ false
       )
       const collectibles = metadata.collectibles
-      const playlist_library = metadata.playlist_library
+      const content list_library = metadata.content list_library
       metadata = merge(metadataFromIPFS, metadata)
       metadata.collectibles = collectibles
-      metadata.playlist_library = playlist_library
+      metadata.content list_library = content list_library
     } catch (e) {
       // Although we failed to fetch the existing user metadata, this should only
       // happen if the user's account data is unavailable across the whole network.
@@ -421,7 +421,7 @@ function* confirmUpdateProfile(userId, metadata) {
       makeKindId(Kind.USERS, userId),
       function* () {
         let response
-        if (metadata.creator_node_endpoint) {
+        if (metadata.content_node_endpoint) {
           response = yield call(ColivingBackend.updateCreator, metadata, userId)
         } else {
           response = yield call(ColivingBackend.updateUser, metadata, userId)

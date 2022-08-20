@@ -8,12 +8,12 @@ entry-point = "./scripts/workers-site"
 
 [env.staging]
 name = "coliving-staging"
-vars = { ENVIRONMENT = "staging", GA = "https://general-admission.staging.coliving.co", SITEMAP = "http://staging.coliving.co.s3-website-us-west-1.amazonaws.com" }
+vars = { ENVIRONMENT = "staging", GA = "https://general-admission.staging.coliving.lol", SITEMAP = "http://staging.coliving.lol.s3-website-us-west-1.amazonaws.com" }
 
 [env.release]
 name = "coliving-release-candidate"
-vars = { ENVIRONMENT = "production", GA = "https://general-admission.coliving.co", SITEMAP = "http://coliving.co.s3-website-us-west-1.amazonaws.com" }
+vars = { ENVIRONMENT = "production", GA = "https://general-admission.coliving.lol", SITEMAP = "http://coliving.lol.s3-website-us-west-1.amazonaws.com" }
 
 [env.production]
 name = "coliving"
-vars = { ENVIRONMENT = "production", GA = "https://general-admission.coliving.co", SITEMAP = "http://coliving.co.s3-website-us-west-1.amazonaws.com" }
+vars = { ENVIRONMENT = "production", GA = "https://general-admission.coliving.lol", SITEMAP = "http://coliving.lol.s3-website-us-west-1.amazonaws.com" }

@@ -10,7 +10,7 @@ import LoadingSpinner from 'components/loading-spinner/LoadingSpinner'
 import Page from 'components/page/Page'
 import { useOrderedLoad } from 'hooks/useOrderedLoad'
 import {
-  playlistPage,
+  content listPage,
   fullPlaylistPage,
   albumPage,
   fullAlbumPage,
@@ -60,14 +60,14 @@ const CollectionsPage = ({
     />
   )
 
-  const cards = collections.map((playlist, i) => {
+  const cards = collections.map((content list, i) => {
     const secondaryText = (
-      <ArtistPopover handle={playlist.user.handle}>
+      <ArtistPopover handle={content list.user.handle}>
         <span
           className={styles.userName}
-          onClick={(e: MouseEvent) => goToProfilePage(e, playlist.user.handle)}
+          onClick={(e: MouseEvent) => goToProfilePage(e, content list.user.handle)}
         >
-          {playlist.user.name}
+          {content list.user.name}
         </span>
       </ArtistPopover>
     )
@@ -77,53 +77,53 @@ const CollectionsPage = ({
         index={i}
         isLoading={isLoadingPlaylist(i)}
         setDidLoad={setDidLoadPlaylist}
-        key={playlist.playlist_id}
-        id={playlist.playlist_id}
-        userId={playlist.playlist_owner_id}
-        imageSize={playlist._cover_art_sizes}
-        isPlaylist={!playlist.is_album}
-        isPublic={!playlist.is_private}
+        key={content list.content list_id}
+        id={content list.content list_id}
+        userId={content list.content list_owner_id}
+        imageSize={content list._cover_art_sizes}
+        isPlaylist={!content list.is_album}
+        isPublic={!content list.is_private}
         size='large'
-        playlistName={playlist.playlist_name}
-        playlistId={playlist.playlist_id}
-        handle={playlist.user.handle}
-        primaryText={playlist.playlist_name}
+        content listName={content list.content list_name}
+        content listId={content list.content list_id}
+        handle={content list.user.handle}
+        primaryText={content list.content list_name}
         secondaryText={secondaryText}
-        isReposted={playlist.has_current_user_reposted}
-        isSaved={playlist.has_current_user_saved}
-        cardCoverImageSizes={playlist._cover_art_sizes}
+        isReposted={content list.has_current_user_reposted}
+        isSaved={content list.has_current_user_saved}
+        cardCoverImageSizes={content list._cover_art_sizes}
         link={
-          playlist.is_album
+          content list.is_album
             ? fullAlbumPage(
-                playlist.user.handle,
-                playlist.playlist_name,
-                playlist.playlist_id
+                content list.user.handle,
+                content list.content list_name,
+                content list.content list_id
               )
             : fullPlaylistPage(
-                playlist.user.handle,
-                playlist.playlist_name,
-                playlist.playlist_id
+                content list.user.handle,
+                content list.content list_name,
+                content list.content list_id
               )
         }
-        reposts={playlist.repost_count}
-        favorites={playlist.save_count}
-        agreementCount={playlist.playlist_contents.agreement_ids.length}
-        onClickReposts={() => onClickReposts(playlist.playlist_id)}
-        onClickFavorites={() => onClickFavorites(playlist.playlist_id)}
+        reposts={content list.repost_count}
+        favorites={content list.save_count}
+        agreementCount={content list.content list_contents.agreement_ids.length}
+        onClickReposts={() => onClickReposts(content list.content list_id)}
+        onClickFavorites={() => onClickFavorites(content list.content list_id)}
         onClick={() =>
-          playlist.is_album
+          content list.is_album
             ? goToRoute(
                 albumPage(
-                  playlist.user.handle,
-                  playlist.playlist_name,
-                  playlist.playlist_id
+                  content list.user.handle,
+                  content list.content list_name,
+                  content list.content list_id
                 )
               )
             : goToRoute(
-                playlistPage(
-                  playlist.user.handle,
-                  playlist.playlist_name,
-                  playlist.playlist_id
+                content listPage(
+                  content list.user.handle,
+                  content list.content list_name,
+                  content list.content list_id
                 )
               )
         }

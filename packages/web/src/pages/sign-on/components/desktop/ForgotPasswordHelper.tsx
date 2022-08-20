@@ -13,7 +13,7 @@ const messages = {
     'To restore access to your account, please search for the email we sent when you first signed up.',
   fromHeader: 'From:',
   subjectHeader: 'Subject:',
-  from: 'recovery@coliving.co',
+  from: 'recovery@coliving.lol',
   subject: '"Save This Email: Coliving Password Recovery"',
   copied: 'Copied to Clipboard!'
 }

@@ -26,7 +26,7 @@ import {
 } from 'store/application/ui/userListModal/types'
 import { AppState } from 'store/types'
 import {
-  EXPLORE_MOOD_PLAYLISTS_PAGE,
+  EXPLORE_MOOD_CONTENT_LISTS_PAGE,
   REPOSTING_USERS_ROUTE,
   FAVORITING_USERS_ROUTE,
   getPathname
@@ -111,11 +111,11 @@ const ExploreCollectionsPageProvider = ({
 
   useEffect(() => {
     if (variant === ExploreCollectionsVariant.MOOD) {
-      // Mood playlist
+      // Mood content list
       const match = matchPath<{
         mood: string
       }>(getPathname(location), {
-        path: EXPLORE_MOOD_PLAYLISTS_PAGE
+        path: EXPLORE_MOOD_CONTENT_LISTS_PAGE
       })
       if (match && match.params.mood) {
         const collectionInfo = EXPLORE_MOOD_COLLECTIONS_MAP[match.params.mood]
@@ -125,7 +125,7 @@ const ExploreCollectionsPageProvider = ({
     } else if (variant === ExploreCollectionsVariant.DIRECT_LINK) {
       // no-op
     } else {
-      // Other playlist/albums types (e.g. Top Playlist)
+      // Other content list/albums types (e.g. Top Playlist)
       fetch(variant)
       setInfo(EXPLORE_COLLECTIONS_MAP[variant])
     }
@@ -169,7 +169,7 @@ function mapDispatchToProps(dispatch: Dispatch) {
     setRepostPlaylistId: (collectionId: ID) =>
       dispatch(setRepost(collectionId, RepostType.COLLECTION)),
     setFavoritePlaylistId: (collectionId: ID) =>
-      dispatch(setFavorite(collectionId, FavoriteType.PLAYLIST)),
+      dispatch(setFavorite(collectionId, FavoriteType.CONTENT_LIST)),
     setRepostUsers: (agreementID: ID) =>
       dispatch(
         setUsers({
