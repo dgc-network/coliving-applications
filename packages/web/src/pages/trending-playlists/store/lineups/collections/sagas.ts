@@ -5,14 +5,14 @@ import { getUserId } from 'common/store/account/selectors'
 import { processAndCacheCollections } from 'common/store/cache/collections/utils'
 import {
   PREFIX,
-  trendingPlaylistLineupActions
+  trendingContentListLineupActions
 } from 'common/store/pages/trending-content lists/lineups/actions'
 import { getLineup } from 'common/store/pages/trending-content lists/lineups/selectors'
 import apiClient from 'services/coliving-api-client/ColivingAPIClient'
 import { remoteConfigInstance } from 'services/remote-config/remote-config-instance'
 import { LineupSagas } from 'store/lineup/sagas'
 
-function* getPlaylists({ limit, offset }: { limit: number; offset: number }) {
+function* getContentLists({ limit, offset }: { limit: number; offset: number }) {
   yield call(remoteConfigInstance.waitForRemoteConfig)
   const TF = new Set(
     remoteConfigInstance.getRemoteVar(StringKeys.TPF)?.split(',') ?? []
@@ -21,7 +21,7 @@ function* getPlaylists({ limit, offset }: { limit: number; offset: number }) {
   const time = 'week' as const
   const currentUserId: ReturnType<typeof getUserId> = yield select(getUserId)
   let content lists: UserCollectionMetadata[] = yield call(
-    (args) => apiClient.getTrendingPlaylists(args),
+    (args) => apiClient.getTrendingContentLists(args),
     {
       currentUserId,
       limit,
@@ -44,23 +44,23 @@ function* getPlaylists({ limit, offset }: { limit: number; offset: number }) {
       ) || ''
     ).split(',')
   )
-  const trendingPlaylists = content lists.filter(
+  const trendingContentLists = content lists.filter(
     (content list) => !userIdsToOmit.has(`${content list.content list_owner_id}`)
   )
 
   const processed: Collection[] = yield processAndCacheCollections(
-    trendingPlaylists,
+    trendingContentLists,
     false
   )
 
   return processed
 }
 
-class TrendingPlaylistSagas extends LineupSagas {
+class TrendingContentListSagas extends LineupSagas {
   constructor() {
-    super(PREFIX, trendingPlaylistLineupActions, getLineup, getPlaylists)
+    super(PREFIX, trendingContentListLineupActions, getLineup, getContentLists)
   }
 }
 
-const sagas = () => new TrendingPlaylistSagas().getSagas()
+const sagas = () => new TrendingContentListSagas().getSagas()
 export default sagas

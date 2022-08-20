@@ -2,7 +2,7 @@ import { Button, ButtonType } from '@coliving/stems'
 
 import Drawer from 'components/drawer/Drawer'
 
-import styles from './RemovePlaylistAgreementDrawer.module.css'
+import styles from './RemoveContentListAgreementDrawer.module.css'
 
 const messages = {
   title: `Are You Sure?`,
@@ -12,19 +12,19 @@ const messages = {
   cancel: 'Nevermind'
 }
 
-type RemovePlaylistAgreementDrawerProps = {
+type RemoveContentListAgreementDrawerProps = {
   isOpen: boolean
   agreementTitle?: string
   onClose: () => void
   onConfirm: () => void
 }
 
-const RemovePlaylistAgreementDrawer = ({
+const RemoveContentListAgreementDrawer = ({
   isOpen,
   onClose,
   agreementTitle = '',
   onConfirm
-}: RemovePlaylistAgreementDrawerProps) => {
+}: RemoveContentListAgreementDrawerProps) => {
   return (
     <Drawer isOpen={isOpen} onClose={onClose} shouldClose={!isOpen}>
       <div className={styles.drawer}>
@@ -47,4 +47,4 @@ const RemovePlaylistAgreementDrawer = ({
   )
 }
 
-export default RemovePlaylistAgreementDrawer
+export default RemoveContentListAgreementDrawer

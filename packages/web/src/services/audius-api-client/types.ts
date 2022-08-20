@@ -147,12 +147,12 @@ export type APIStem = {
   blocknumber: number
 }
 
-export type APIPlaylistAddedTimestamp = {
+export type APIContentListAddedTimestamp = {
   timestamp: number
   agreement_id: OpaqueID
 }
 
-export type APIPlaylist = {
+export type APIContentList = {
   blocknumber: number
   artwork: CoverArtSizes
   description: Nullable<string>
@@ -172,15 +172,15 @@ export type APIPlaylist = {
   has_current_user_saved: boolean
   is_delete: boolean
   is_private: boolean
-  added_timestamps: APIPlaylistAddedTimestamp[]
+  added_timestamps: APIContentListAddedTimestamp[]
   agreements: APIAgreement[]
   agreement_count: number
   cover_art: Nullable<string>
   cover_art_sizes: Nullable<string>
 }
 
-export type APISearchPlaylist = Omit<
-  APIPlaylist,
+export type APISearchContentList = Omit<
+  APIContentList,
   | 'repost_count'
   | 'favorite_count'
   | 'total_play_count'
@@ -195,7 +195,7 @@ export type APIItemType = 'agreement' | 'content list'
 
 export type APIActivity = { timestamp: string } & (
   | { item_type: 'agreement'; item: APIAgreement }
-  | { item_type: 'content list'; item: APIPlaylist }
+  | { item_type: 'content list'; item: APIContentList }
 )
 
 export type APISearch = {
@@ -203,10 +203,10 @@ export type APISearch = {
   followed_users?: APIUser[]
   agreements?: APIAgreement[]
   saved_agreements?: APIAgreement[]
-  content lists?: APIPlaylist[]
-  saved_content lists?: APIPlaylist[]
-  albums?: APIPlaylist[]
-  saved_albums?: APIPlaylist[]
+  content lists?: APIContentList[]
+  saved_content lists?: APIContentList[]
+  albums?: APIContentList[]
+  saved_albums?: APIContentList[]
 }
 
 export type APISearchAutocomplete = {
@@ -214,10 +214,10 @@ export type APISearchAutocomplete = {
   followed_users?: APISearchUser[]
   agreements?: APISearchAgreement[]
   saved_agreements?: APISearchAgreement[]
-  content lists?: APISearchPlaylist[]
-  saved_content lists?: APISearchPlaylist[]
-  albums?: APISearchPlaylist[]
-  saved_albums?: APISearchPlaylist[]
+  content lists?: APISearchContentList[]
+  saved_content lists?: APISearchContentList[]
+  albums?: APISearchContentList[]
+  saved_albums?: APISearchContentList[]
 }
 
 export type APIBlockConfirmation = {

@@ -3,13 +3,13 @@ import { ComponentType } from 'react'
 import { Client } from '@coliving/common'
 
 import type { Modals as ModalTypes } from 'common/store/ui/modals/slice'
-import AddToPlaylistModal from 'components/add-to-content list/desktop/AddToPlaylistModal'
+import AddToContentListModal from 'components/add-to-content list/desktop/AddToContentListModal'
 import AppCTAModal from 'components/app-cta-modal/AppCTAModal'
 import BrowserPushConfirmationModal from 'components/browser-push-confirmation-modal/BrowserPushConfirmationModal'
 import CollectibleDetailsModal from 'components/collectibles/components/CollectibleDetailsModal'
-import DeletePlaylistConfirmationModal from 'components/delete-content list-confirmation-modal/DeletePlaylistConfirmationModal'
+import DeleteContentListConfirmationModal from 'components/delete-content list-confirmation-modal/DeleteContentListConfirmationModal'
 import EditFolderModal from 'components/edit-folder-modal/EditFolderModal'
-import EditPlaylistModal from 'components/edit-content list/desktop/EditPlaylistModal'
+import EditContentListModal from 'components/edit-content list/desktop/EditContentListModal'
 import EditAgreementModal from 'components/edit-agreement/EditAgreementModal'
 import EmbedModal from 'components/embed-modal/EmbedModal'
 import { FeatureFlagOverrideModal } from 'components/feature-flag-override-modal'
@@ -70,9 +70,9 @@ const Modals = () => {
       {!isMobileClient && (
         <>
           <EmbedModal />
-          <EditPlaylistModal />
+          <EditContentListModal />
           <EditFolderModal />
-          <AddToPlaylistModal />
+          <AddToContentListModal />
           <FeatureFlagOverrideModal />
           <ConnectedUserListModal />
           <AppCTAModal />
@@ -84,7 +84,7 @@ const Modals = () => {
         <>
           {!NATIVE_MOBILE && <ConnectedMobileOverflowModal />}
           <UnfollowConfirmationModal />
-          <DeletePlaylistConfirmationModal />
+          <DeleteContentListConfirmationModal />
         </>
       )}
 

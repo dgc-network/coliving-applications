@@ -54,7 +54,7 @@ type CardProps = {
   cardCoverImageSizes?: CoverArtSizes
   content listName?: string
   isUser: boolean
-  isPlaylist: boolean // content list or album
+  isContentList: boolean // content list or album
   isPublic?: boolean // only for content list or album
   handle: string
   content listId?: number
@@ -129,7 +129,7 @@ const Card = ({
   id,
   userId,
   imageSize = null,
-  isPlaylist,
+  isContentList,
   handle,
   isReposted,
   isSaved,
@@ -176,7 +176,7 @@ const Card = ({
           handle={handle}
           standalone
           direction='horizontal'
-          variant={isPlaylist ? 'content list' : 'album'}
+          variant={isContentList ? 'content list' : 'album'}
           content listId={content listId}
           content listName={content listName}
           containerStyles={styles.actionContainer}
@@ -273,7 +273,7 @@ Card.defaultProps = {
   primaryText: '',
   secondaryText: '',
   isUser: false,
-  isPlaylist: true,
+  isContentList: true,
   isReposted: false,
   isLoading: false,
   size: 'large',

@@ -58,7 +58,7 @@ const formatIFrame = (url: string, size: Size) => {
 const messages = {
   title: {
     [PlayableType.AGREEMENT]: 'Embed Agreement',
-    [PlayableType.CONTENT_LIST]: 'Embed Playlist',
+    [PlayableType.CONTENT_LIST]: 'Embed ContentList',
     [PlayableType.ALBUM]: 'Embed Album'
   },
   playerSize: 'Player Size',

@@ -88,7 +88,7 @@ export function* retrieveAgreementsForCollections(
  */
 export function* retrieveCollection(content listId: ID) {
   const userId: ReturnType<typeof getUserId> = yield select(getUserId)
-  const content lists: UserCollectionMetadata[] = yield apiClient.getPlaylist({
+  const content lists: UserCollectionMetadata[] = yield apiClient.getContentList({
     content listId,
     currentUserId: userId
   })
@@ -146,7 +146,7 @@ export function* retrieveCollections(
         metadatas = yield call(retrieveCollection, ids[0])
       } else {
         // TODO: Remove this branch when we have batched endpoints in new V1 api.
-        metadatas = yield call(ColivingBackend.getPlaylists, userId, ids)
+        metadatas = yield call(ColivingBackend.getContentLists, userId, ids)
       }
 
       // Process any local deletions on the client

@@ -5,7 +5,7 @@ import type { Animated } from 'react-native'
 import IconAlbum from 'app/assets/images/iconAlbum.svg'
 import IconCollectibles from 'app/assets/images/iconCollectibles.svg'
 import IconNote from 'app/assets/images/iconNote.svg'
-import IconPlaylists from 'app/assets/images/iconPlaylists.svg'
+import IconContentLists from 'app/assets/images/iconContentLists.svg'
 import IconRepost from 'app/assets/images/iconRepost.svg'
 import {
   collapsibleTabScreen,
@@ -15,7 +15,7 @@ import { useRoute } from 'app/hooks/useRoute'
 
 import { AlbumsTab } from './AlbumsTab'
 import { CollectiblesTab } from './CollectiblesTab'
-import { PlaylistsTab } from './PlaylistsTab'
+import { ContentListsTab } from './ContentListsTab'
 import { RepostsTab } from './RepostsTab'
 import { AgreementsTab } from './AgreementsTab'
 import { useSelectProfile } from './selectors'
@@ -73,9 +73,9 @@ export const ProfileTabNavigator = ({
   })
 
   const content listsScreen = collapsibleTabScreen({
-    name: 'Playlists',
-    Icon: IconPlaylists,
-    component: PlaylistsTab,
+    name: 'ContentLists',
+    Icon: IconContentLists,
+    component: ContentListsTab,
     initialParams,
     refreshing,
     onRefresh,

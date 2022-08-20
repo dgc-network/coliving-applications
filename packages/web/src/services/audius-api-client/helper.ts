@@ -68,19 +68,19 @@ export const adaptSearchResponse = (searchResponse: APIResponse<APISearch>) => {
         .filter(removeNullable) ?? undefined,
     content lists:
       searchResponse.data.content lists
-        ?.map(adapter.makePlaylist)
+        ?.map(adapter.makeContentList)
         .filter(removeNullable) ?? undefined,
     saved_content lists:
       searchResponse.data.saved_content lists
-        ?.map(adapter.makePlaylist)
+        ?.map(adapter.makeContentList)
         .filter(removeNullable) ?? undefined,
     albums:
       searchResponse.data.albums
-        ?.map(adapter.makePlaylist)
+        ?.map(adapter.makeContentList)
         .filter(removeNullable) ?? undefined,
     saved_albums:
       searchResponse.data.saved_albums
-        ?.map(adapter.makePlaylist)
+        ?.map(adapter.makeContentList)
         .filter(removeNullable) ?? undefined
   }
 }
@@ -91,7 +91,7 @@ export const processSearchResults = async ({
   users = [],
   saved_agreements: savedAgreements = [],
   saved_albums: savedAlbums = [],
-  saved_content lists: savedPlaylists = [],
+  saved_content lists: savedContentLists = [],
   followed_users: followedUsers = [],
   isAutocomplete = false
 }: ProcessSearchResultsArgs) => {
@@ -115,8 +115,8 @@ export const processSearchResults = async ({
     maxSaved,
     maxTotal
   )
-  const combinedPlaylists = combineLists(
-    savedPlaylists,
+  const combinedContentLists = combineLists(
+    savedContentLists,
     content lists,
     'content list_id',
     maxSaved,
@@ -133,7 +133,7 @@ export const processSearchResults = async ({
   return {
     agreements: combinedAgreements,
     albums: combinedAlbums,
-    content lists: combinedPlaylists,
+    content lists: combinedContentLists,
     users: combinedUsers
   }
 }

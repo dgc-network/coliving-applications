@@ -11,7 +11,7 @@ const useStyles = makeStyles(() => ({
   label: { lineHeight: 28 }
 }))
 
-export const PlaylistDescriptionInput = () => {
+export const ContentListDescriptionInput = () => {
   const styles = useStyles()
 
   return (

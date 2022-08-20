@@ -37,7 +37,7 @@ const TOS_URL = 'https://blog..co/article/live-rewards'
 
 const messages = {
   agreementsTitle: 'Top 5 Agreements Each Week Receive 100 $LIVE',
-  content listTitle: 'Top 5 Playlists Each Week Receive 100 $LIVE',
+  content listTitle: 'Top 5 ContentLists Each Week Receive 100 $LIVE',
   undergroundTitle: 'Top 5 Agreements Each Week Receive 100 $LIVE',
   winners: 'Winners are selected every Friday at Noon PT!',
   lastWeek: "LAST WEEK'S WINNERS",
@@ -46,10 +46,10 @@ const messages = {
   underground: 'UNDERGROUND',
   terms: 'Terms and Conditions Apply',
   agreementsModalTitle: 'Top 5 Trending Agreements',
-  content listsModalTitle: 'Top 5 Trending Playlists',
+  content listsModalTitle: 'Top 5 Trending ContentLists',
   undergroundModalTitle: 'Top 5 Underground Trending Agreements',
   buttonTextAgreements: 'Trending Agreements',
-  buttonTextPlaylists: 'Trending Playlists',
+  buttonTextContentLists: 'Trending ContentLists',
   buttonTextUnderground: 'Underground Trending Agreements'
 }
 
@@ -61,7 +61,7 @@ const TRENDING_PAGES = {
   content lists: {
     native: {
       screen: 'explore' as const,
-      params: { screen: 'TrendingPlaylists' as const }
+      params: { screen: 'TrendingContentLists' as const }
     },
     web: { route: TRENDING_CONTENT_LISTS_PAGE }
   },
@@ -78,7 +78,7 @@ const textMap = {
   content lists: {
     modalTitle: messages.content listsModalTitle,
     title: messages.content listTitle,
-    button: messages.buttonTextPlaylists
+    button: messages.buttonTextContentLists
   },
   agreements: {
     modalTitle: messages.agreementsModalTitle,

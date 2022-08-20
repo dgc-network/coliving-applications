@@ -13,7 +13,7 @@ import {
 } from 'common/store/notifications/types'
 import ErrorWrapper from 'components/error-wrapper/ErrorWrapper'
 
-import { AddAgreementToPlaylistNotification } from './AddAgreementToPlaylistNotification'
+import { AddAgreementToContentListNotification } from './AddAgreementToContentListNotification'
 import { AnnouncementNotification } from './AnnouncementNotification'
 import { ChallengeRewardNotification } from './ChallengeRewardNotification'
 import { FavoriteNotification } from './FavoriteNotification'
@@ -114,8 +114,8 @@ export const Notification = (props: NotificationProps) => {
       case NotificationType.UserSubscription: {
         return <UserSubscriptionNotification notification={notification} />
       }
-      case NotificationType.AddAgreementToPlaylist: {
-        return <AddAgreementToPlaylistNotification notification={notification} />
+      case NotificationType.AddAgreementToContentList: {
+        return <AddAgreementToContentListNotification notification={notification} />
       }
       default: {
         return null

@@ -23,7 +23,7 @@ import visualizer from 'pages/visualizer/store/slice'
 import appCTAModal from 'store/application/ui/app-cta-modal/slice'
 import cookieBanner from 'store/application/ui/cookieBanner/reducer'
 import editFolderModal from 'store/application/ui/editFolderModal/slice'
-import editPlaylistModal from 'store/application/ui/editPlaylistModal/slice'
+import editContentListModal from 'store/application/ui/editContentListModal/slice'
 import editAgreementModal from 'store/application/ui/editAgreementModal/reducer'
 import mobileKeyboard from 'store/application/ui/mobileKeyboard/reducer'
 import scrollLock from 'store/application/ui/scrollLock/reducer'
@@ -79,7 +79,7 @@ const createRootReducer = (routeHistory: History) =>
         cookieBanner,
         deactivateAccount,
         editFolderModal,
-        editPlaylistModal,
+        editContentListModal,
         editAgreementModal,
         embedModal,
         firstUploadModal,

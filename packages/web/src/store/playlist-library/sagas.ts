@@ -1,10 +1,10 @@
 import {
   ID,
   Kind,
-  PlaylistIdentifier,
-  PlaylistLibrary,
-  PlaylistLibraryFolder,
-  PlaylistLibraryIdentifier,
+  ContentListIdentifier,
+  ContentListLibrary,
+  ContentListLibraryFolder,
+  ContentListLibraryIdentifier,
   User,
   makeKindId
 } from '@coliving/common'
@@ -20,17 +20,17 @@ import {
 
 import { AccountCollection } from 'common/store/account/reducer'
 import {
-  getAccountNavigationPlaylists,
+  getAccountNavigationContentLists,
   getAccountUser,
-  getPlaylistLibrary
+  getContentListLibrary
 } from 'common/store/account/selectors'
 import * as cacheActions from 'common/store/cache/actions'
 import {
-  containsTempPlaylist,
-  extractTempPlaylistsFromLibrary,
-  getPlaylistsNotInLibrary,
-  removePlaylistLibraryDuplicates,
-  replaceTempWithResolvedPlaylists
+  containsTempContentList,
+  extractTempContentListsFromLibrary,
+  getContentListsNotInLibrary,
+  removeContentListLibraryDuplicates,
+  replaceTempWithResolvedContentLists
 } from 'common/store/content list-library/helpers'
 import { updateProfileAsync } from 'pages/profile-page/sagas'
 import { waitForBackendSetup } from 'store/backend/sagas'
@@ -46,8 +46,8 @@ const TEMP_CONTENT_LIST_UPDATE_HELPER = 'TEMP_CONTENT_LIST_UPDATE_HELPER'
  * @param content list
  * @returns a content list library identifier
  */
-function* resolveTempPlaylists(
-  content list: PlaylistLibraryIdentifier | PlaylistLibraryFolder
+function* resolveTempContentLists(
+  content list: ContentListLibraryIdentifier | ContentListLibraryFolder
 ) {
   if (content list.type === 'temp_content list') {
     const { content list_id }: { content list_id: ID } = yield call(
@@ -68,16 +68,16 @@ function* resolveTempPlaylists(
   return content list
 }
 
-function* watchUpdatePlaylistLibrary() {
+function* watchUpdateContentListLibrary() {
   yield takeEvery(
     update.type,
-    function* updatePlaylistLibrary(action: ReturnType<typeof update>) {
+    function* updateContentListLibrary(action: ReturnType<typeof update>) {
       const { content listLibrary } = action.payload
       yield call(waitForBackendSetup)
 
       const account: User = yield select(getAccountUser)
       account.content list_library =
-        removePlaylistLibraryDuplicates(content listLibrary)
+        removeContentListLibraryDuplicates(content listLibrary)
       yield put(
         cacheActions.update(Kind.USERS, [
           {
@@ -87,7 +87,7 @@ function* watchUpdatePlaylistLibrary() {
         ])
       )
 
-      const containsTemps = containsTempPlaylist(content listLibrary)
+      const containsTemps = containsTempContentList(content listLibrary)
       if (containsTemps) {
         // Deal with temp content lists
         // If there's a temp content list, write to the cache, but dispatch
@@ -109,33 +109,33 @@ function* watchUpdatePlaylistLibrary() {
  * Here we intentionally take latest so that we only do one write to the
  * backend once we've resolved the temp content list ids to actual ids
  */
-function* watchUpdatePlaylistLibraryWithTempPlaylist() {
+function* watchUpdateContentListLibraryWithTempContentList() {
   yield takeLatest(
     TEMP_CONTENT_LIST_UPDATE_HELPER,
     function* makeUpdate(action: ReturnType<typeof update>) {
-      const { content listLibrary: rawPlaylistLibrary } = action.payload
+      const { content listLibrary: rawContentListLibrary } = action.payload
       const content listLibrary =
-        removePlaylistLibraryDuplicates(rawPlaylistLibrary)
+        removeContentListLibraryDuplicates(rawContentListLibrary)
       const account: User = yield select(getAccountUser)
 
       // Map over content list library contents and resolve each temp id content list
       // to one with an actual id. Once we have the actual id, we can proceed
       // with writing the library to the user metadata (profile update)
-      const tempPlaylists = extractTempPlaylistsFromLibrary(content listLibrary)
-      const resolvedPlaylists: PlaylistLibraryIdentifier[] = yield all(
-        tempPlaylists.map((content list) => call(resolveTempPlaylists, content list))
+      const tempContentLists = extractTempContentListsFromLibrary(content listLibrary)
+      const resolvedContentLists: ContentListLibraryIdentifier[] = yield all(
+        tempContentLists.map((content list) => call(resolveTempContentLists, content list))
       )
-      const tempPlaylistIdToResolvedPlaylist = tempPlaylists.reduce(
-        (result, nextTempPlaylist, index) => ({
+      const tempContentListIdToResolvedContentList = tempContentLists.reduce(
+        (result, nextTempContentList, index) => ({
           ...result,
-          [nextTempPlaylist.content list_id]: resolvedPlaylists[index]
+          [nextTempContentList.content list_id]: resolvedContentLists[index]
         }),
-        {} as { [key: string]: PlaylistLibraryIdentifier }
+        {} as { [key: string]: ContentListLibraryIdentifier }
       )
 
-      content listLibrary.contents = replaceTempWithResolvedPlaylists(
+      content listLibrary.contents = replaceTempWithResolvedContentLists(
         content listLibrary,
-        tempPlaylistIdToResolvedPlaylist
+        tempContentListIdToResolvedContentList
       ).contents
       account.content list_library = content listLibrary
       // Update content list library on chain via an account profile update
@@ -148,20 +148,20 @@ function* watchUpdatePlaylistLibraryWithTempPlaylist() {
  * Goes through the account content lists and adds content lists that are
  * not in the user's set content list library
  */
-export function* addPlaylistsNotInLibrary() {
-  let library: PlaylistLibrary = yield select(getPlaylistLibrary)
+export function* addContentListsNotInLibrary() {
+  let library: ContentListLibrary = yield select(getContentListLibrary)
   if (!library) library = { contents: [] }
   const content lists: { [id: number]: AccountCollection } = yield select(
-    getAccountNavigationPlaylists
+    getAccountNavigationContentLists
   )
-  const notInLibrary = getPlaylistsNotInLibrary(library, content lists)
+  const notInLibrary = getContentListsNotInLibrary(library, content lists)
   if (Object.keys(notInLibrary).length > 0) {
     const newEntries = Object.values(notInLibrary).map(
       (content list) =>
         ({
           content list_id: content list.id,
           type: 'content list'
-        } as PlaylistIdentifier)
+        } as ContentListIdentifier)
     )
     const newContents = library.contents.concat(newEntries)
     yield put(
@@ -172,8 +172,8 @@ export function* addPlaylistsNotInLibrary() {
 
 export default function sagas() {
   const sagas = [
-    watchUpdatePlaylistLibrary,
-    watchUpdatePlaylistLibraryWithTempPlaylist
+    watchUpdateContentListLibrary,
+    watchUpdateContentListLibraryWithTempContentList
   ]
   return sagas
 }

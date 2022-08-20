@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux'
 
 import { getAccountUser } from 'common/store/account/selectors'
 import {
-  shareAudioNftPlaylist,
+  shareAudioNftContentList,
   shareCollection
 } from 'common/store/social/collections/actions'
 import { shareAgreement } from 'common/store/social/agreements/actions'
@@ -44,12 +44,12 @@ export const ShareModal = () => {
 
   const handleShareToTwitter = useCallback(() => {
     if (!source || !content) return
-    const isPlaylistOwner =
-      content.type === 'liveNftPlaylist' &&
+    const isContentListOwner =
+      content.type === 'liveNftContentList' &&
       account?.user_id === content.user.user_id
     const { twitterText, link, analyticsEvent } = getTwitterShareText(
       content,
-      isPlaylistOwner
+      isContentListOwner
     )
     openTwitterLink(link, twitterText)
     record(make(Name.SHARE_TO_TWITTER, { source, ...analyticsEvent }))
@@ -80,8 +80,8 @@ export const ShareModal = () => {
       case 'content list':
         dispatch(shareCollection(content.content list.content list_id, source))
         break
-      case 'liveNftPlaylist':
-        dispatch(shareAudioNftPlaylist(content.user.handle, source))
+      case 'liveNftContentList':
+        dispatch(shareAudioNftContentList(content.user.handle, source))
         break
     }
     toast(messages.toast(content.type), SHARE_TOAST_TIMEOUT_MILLIS)

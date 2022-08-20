@@ -26,10 +26,10 @@ const messages = {
   emptyPage: {
     owner:
       'Find a agreement you want to add and click the ••• button to add it to your content list',
-    visitor: 'This Playlist is Empty...'
+    visitor: 'This ContentList is Empty...'
   },
   type: {
-    content list: 'Playlist',
+    content list: 'ContentList',
     album: 'Album'
   },
   remove: 'Remove from this'
@@ -65,7 +65,7 @@ export type CollectionPageProps = {
   }
   columns?: any
   userId?: ID | null
-  userPlaylists?: any
+  userContentLists?: any
   isQueued: () => boolean
   onHeroAgreementClickArtistName: () => void
   onPlay: (record: AgreementRecord) => void
@@ -109,7 +109,7 @@ const CollectionPage = ({
   columns,
   agreements,
   userId,
-  userPlaylists,
+  userContentLists,
   getFilteredData,
   isQueued,
   onHeroAgreementClickArtistName,
@@ -160,7 +160,7 @@ const CollectionPage = ({
   const isOwner = userId === content listOwnerId
   const isFollowing = user?.does_current_user_follow ?? false
   const isSaved =
-    metadata?.has_current_user_saved || content listId in (userPlaylists ?? {})
+    metadata?.has_current_user_saved || content listId in (userContentLists ?? {})
 
   const variant = metadata?.variant ?? null
   const gradient =
@@ -192,7 +192,7 @@ const CollectionPage = ({
       collectionId={content listId}
       userId={content listOwnerId}
       loading={
-        typeTitle === 'Audio NFT Playlist' ? agreementsLoading : collectionLoading
+        typeTitle === 'Audio NFT ContentList' ? agreementsLoading : collectionLoading
       }
       agreementsLoading={agreementsLoading}
       type={typeTitle}
@@ -277,7 +277,7 @@ const CollectionPage = ({
                 isAlbum ? messages.type.album : messages.type.content list
               }`}
             />
-            {collectionLoading && typeTitle === 'Audio NFT Playlist' ? (
+            {collectionLoading && typeTitle === 'Audio NFT ContentList' ? (
               <LoadingSpinner className={styles.spinner} />
             ) : null}
           </div>

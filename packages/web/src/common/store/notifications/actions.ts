@@ -131,12 +131,12 @@ export const unsubscribeUser = (userId: ID) => ({
   userId
 })
 
-export const setPlaylistUpdates = (content listUpdates: number[]) => ({
+export const setContentListUpdates = (content listUpdates: number[]) => ({
   type: SET_CONTENT_LIST_UPDATES,
   content listUpdates
 })
 
-export const updatePlaylistLastViewedAt = (content listId: number) => ({
+export const updateContentListLastViewedAt = (content listId: number) => ({
   type: UPDATE_CONTENT_LIST_VIEW,
   content listId
 })
@@ -170,9 +170,9 @@ export type SetNotificationModal = ReturnType<typeof setNotificationModal>
 export type ToggleNotificationPanel = ReturnType<typeof toggleNotificationPanel>
 export type SubscribeUser = ReturnType<typeof subscribeUser>
 export type UnsubscribeUser = ReturnType<typeof unsubscribeUser>
-export type SetPlaylistUpdates = ReturnType<typeof setPlaylistUpdates>
-export type UpdatePlaylistLastViewedAt = ReturnType<
-  typeof updatePlaylistLastViewedAt
+export type SetContentListUpdates = ReturnType<typeof setContentListUpdates>
+export type UpdateContentListLastViewedAt = ReturnType<
+  typeof updateContentListLastViewedAt
 >
 
 export type NotificationAction =
@@ -193,5 +193,5 @@ export type NotificationAction =
   | ToggleNotificationPanel
   | SubscribeUser
   | UnsubscribeUser
-  | SetPlaylistUpdates
-  | UpdatePlaylistLastViewedAt
+  | SetContentListUpdates
+  | UpdateContentListLastViewedAt

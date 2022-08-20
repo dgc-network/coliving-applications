@@ -2,7 +2,7 @@ import { Collectible, CollectiblesMetadata } from 'models/Collectible'
 import { Color } from 'models/Color'
 import { CID, ID } from 'models/Identifiers'
 import { CoverPhotoSizes, ProfilePictureSizes } from 'models/ImageSizes'
-import { PlaylistLibrary } from 'models/PlaylistLibrary'
+import { ContentListLibrary } from 'models/ContentListLibrary'
 import { SolanaWalletAddress, StringWei, WalletAddress } from 'models/Wallet'
 import { Nullable } from 'utils/typeUtils'
 
@@ -55,7 +55,7 @@ export type UserMetadata = {
   balance?: Nullable<StringWei>
   total_balance?: Nullable<StringWei>
   associated_wallets_balance?: Nullable<StringWei>
-  content list_library?: PlaylistLibrary
+  content list_library?: ContentListLibrary
   userBank?: SolanaWalletAddress
 } & Timestamped
 

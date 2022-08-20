@@ -1,2 +1,2 @@
-export * from './EditPlaylistScreen'
-export * from './CreatePlaylistScreen'
+export * from './EditContentListScreen'
+export * from './CreateContentListScreen'

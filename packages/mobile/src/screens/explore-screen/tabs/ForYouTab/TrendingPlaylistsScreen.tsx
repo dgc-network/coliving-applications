@@ -1,5 +1,5 @@
 import { makeGetLineupMetadatas } from '-client/src/common/store/lineup/selectors'
-import { trendingPlaylistLineupActions } from '-client/src/common/store/pages/trending-content lists/lineups/actions'
+import { trendingContentListLineupActions } from '-client/src/common/store/pages/trending-content lists/lineups/actions'
 import { getLineup } from '-client/src/common/store/pages/trending-content lists/lineups/selectors'
 
 import { RewardsBanner } from 'app/components/live-rewards'
@@ -8,14 +8,14 @@ import { Header } from 'app/components/header'
 import { Lineup } from 'app/components/lineup'
 import { useSelectorWeb } from 'app/hooks/useSelectorWeb'
 
-const getTrendingPlaylistsLineup = makeGetLineupMetadatas(getLineup)
+const getTrendingContentListsLineup = makeGetLineupMetadatas(getLineup)
 
 const messages = {
-  header: 'Trending Playlists'
+  header: 'Trending ContentLists'
 }
 
-export const TrendingPlaylistsScreen = () => {
-  const lineup = useSelectorWeb(getTrendingPlaylistsLineup)
+export const TrendingContentListsScreen = () => {
+  const lineup = useSelectorWeb(getTrendingContentListsLineup)
 
   return (
     <Screen>
@@ -23,7 +23,7 @@ export const TrendingPlaylistsScreen = () => {
       <Lineup
         lineup={lineup}
         header={<RewardsBanner type='content lists' />}
-        actions={trendingPlaylistLineupActions}
+        actions={trendingContentListLineupActions}
         rankIconCount={5}
         isTrending
       />

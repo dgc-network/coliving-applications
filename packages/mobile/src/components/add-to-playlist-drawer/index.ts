@@ -1,1 +1,1 @@
-export { AddToPlaylistDrawer } from './AddToPlaylistDrawer'
+export { AddToContentListDrawer } from './AddToContentListDrawer'

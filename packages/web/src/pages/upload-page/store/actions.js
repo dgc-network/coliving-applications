@@ -128,16 +128,16 @@ export const associateAgreementsError = (error) => ({
   error
 })
 
-export const createPlaylistErrorIDExists = (error) => ({
+export const createContentListErrorIDExists = (error) => ({
   type: COLLECTION_CREATE_CONTENT_LIST_ID_EXISTS_ERROR,
   error
 })
 
-export const createPlaylistErrorNoId = (error) => ({
+export const createContentListErrorNoId = (error) => ({
   type: COLLECTION_CREATE_CONTENT_LIST_NO_ID_ERROR,
   error
 })
 
-export const createPlaylistPollingTimeout = () => ({
+export const createContentListPollingTimeout = () => ({
   type: COLLECTION_POLL_CONTENT_LIST_TIMEOUT_ERROR
 })

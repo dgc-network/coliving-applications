@@ -208,7 +208,7 @@ export class ActionsTab extends PureComponent {
       overflowMenu.menu.type = variant === 'content list' ? 'content list' : 'album'
       overflowMenu.menu.content listId = content listId
       overflowMenu.menu.content listName = content listName
-      overflowMenu.menu.includeAddToPlaylist = false
+      overflowMenu.menu.includeAddToContentList = false
       overflowMenu.menu.isPublic = isPublic
       overflowMenu.menu.includeEdit = includeEdit
     }

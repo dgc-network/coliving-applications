@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { Story } from '@storybook/react'
 
 import { Button } from 'components/Button'
-import { IconPlaylists } from 'components/Icons'
+import { IconContentLists } from 'components/Icons'
 
 import { Modal } from './Modal'
 import { ModalContent } from './ModalContent'
@@ -38,7 +38,7 @@ Composed.args = {
     <>
       <ModalHeader>
         <ModalTitle
-          icon={<IconPlaylists />}
+          icon={<IconContentLists />}
           title='Example modal'
           subtitle='This is a ModalTitle component inside a ModalHeader component!'
         />

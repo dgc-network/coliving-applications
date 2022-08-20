@@ -12,7 +12,7 @@ import * as searchPageActions from 'common/store/pages/search-results/actions'
 import { agreementsActions } from 'common/store/pages/search-results/lineup/agreements/actions'
 import {
   makeGetSearchArtists,
-  makeGetSearchPlaylists,
+  makeGetSearchContentLists,
   makeGetSearchAlbums,
   getSearchAgreementsLineup,
   getBaseState as getSearchResultsState
@@ -136,7 +136,7 @@ class SearchPageProvider extends Component {
 }
 
 const makeMapStateToProps = (initialState, ownProps) => {
-  const getPlaylists = makeGetSearchPlaylists()
+  const getContentLists = makeGetSearchContentLists()
   const getAlbums = makeGetSearchAlbums()
   const getSearchArtists = makeGetSearchArtists()
   const getCurrentQueueItem = makeGetCurrent()
@@ -145,7 +145,7 @@ const makeMapStateToProps = (initialState, ownProps) => {
     search: getSearchResultsState(state),
     agreements: getAgreementsLineup(state),
     artists: getSearchArtists(state),
-    content lists: getPlaylists(state),
+    content lists: getContentLists(state),
     albums: getAlbums(state),
     currentQueueItem: getCurrentQueueItem(state),
     playing: getPlaying(state),

@@ -364,7 +364,7 @@ class Upload extends Component {
     if (uploadType === UploadType.INDIVIDUAL_AGREEMENTS) {
       headerText = 'Agreements'
     } else if (uploadType === UploadType.CONTENT_LIST) {
-      headerText = 'Playlist'
+      headerText = 'ContentList'
     } else if (uploadType === UploadType.ALBUM) {
       headerText = 'Album'
     } else {

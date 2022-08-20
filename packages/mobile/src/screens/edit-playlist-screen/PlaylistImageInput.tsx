@@ -17,7 +17,7 @@ const useStyles = makeStyles(({ spacing }) => ({
   }
 }))
 
-export const PlaylistImageInput = () => {
+export const ContentListImageInput = () => {
   const styles = useStyles()
   const [isProcessingImage, setIsProcessingImage] = useState(false)
 

@@ -1,1 +1,1 @@
-export * from './DeletePlaylistConfirmationDrawer'
+export * from './DeleteContentListConfirmationDrawer'

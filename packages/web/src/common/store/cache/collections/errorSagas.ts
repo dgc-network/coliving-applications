@@ -3,13 +3,13 @@ import createErrorSagas from 'common/utils/errorSagas'
 import * as collectionActions from './actions'
 
 type CollectionErrors =
-  | ReturnType<typeof collectionActions.createPlaylistFailed>
-  | ReturnType<typeof collectionActions.editPlaylistFailed>
-  | ReturnType<typeof collectionActions.addAgreementToPlaylistFailed>
-  | ReturnType<typeof collectionActions.removeAgreementFromPlaylistFailed>
-  | ReturnType<typeof collectionActions.orderPlaylistFailed>
-  | ReturnType<typeof collectionActions.deletePlaylistFailed>
-  | ReturnType<typeof collectionActions.publishPlaylistFailed>
+  | ReturnType<typeof collectionActions.createContentListFailed>
+  | ReturnType<typeof collectionActions.editContentListFailed>
+  | ReturnType<typeof collectionActions.addAgreementToContentListFailed>
+  | ReturnType<typeof collectionActions.removeAgreementFromContentListFailed>
+  | ReturnType<typeof collectionActions.orderContentListFailed>
+  | ReturnType<typeof collectionActions.deleteContentListFailed>
+  | ReturnType<typeof collectionActions.publishContentListFailed>
 
 const errorSagas = createErrorSagas<CollectionErrors>({
   errorTypes: [

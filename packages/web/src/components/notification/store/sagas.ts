@@ -32,7 +32,7 @@ import {
   getNotificationPanelIsOpen,
   getNotificationStatus,
   makeGetAllNotifications,
-  getPlaylistUpdates
+  getContentListUpdates
 } from 'common/store/notifications/selectors'
 import {
   Notification,
@@ -105,9 +105,9 @@ const getTimeAgo = (now: moment.Moment, date: string) => {
 
 const NOTIFICATION_LIMIT_DEFAULT = 20
 
-function* recordPlaylistUpdatesAnalytics(content listUpdates: ID[]) {
-  const existingUpdates: ID[] = yield* select(getPlaylistUpdates)
-  yield* put(notificationActions.setPlaylistUpdates(content listUpdates))
+function* recordContentListUpdatesAnalytics(content listUpdates: ID[]) {
+  const existingUpdates: ID[] = yield* select(getContentListUpdates)
+  yield* put(notificationActions.setContentListUpdates(content listUpdates))
   if (
     content listUpdates.length > 0 &&
     existingUpdates.length !== content listUpdates.length
@@ -160,7 +160,7 @@ export function* fetchNotifications(
 
     const hasMore = notifications.length >= limit
 
-    yield* fork(recordPlaylistUpdatesAnalytics, content listUpdates)
+    yield* fork(recordContentListUpdatesAnalytics, content listUpdates)
     yield* put(
       notificationActions.fetchNotificationSucceeded(
         notifications,
@@ -199,7 +199,7 @@ export function* parseAndProcessNotifications(
         notification.entityIds = [...new Set(notification.entityIds)]
         agreementIdsToFetch.push(...notification.entityIds)
       } else if (
-        notification.entityType === Entity.Playlist ||
+        notification.entityType === Entity.ContentList ||
         notification.entityType === Entity.Album
       ) {
         // @ts-ignore
@@ -217,7 +217,7 @@ export function* parseAndProcessNotifications(
       if (notification.entityType === Entity.Agreement) {
         agreementIdsToFetch.push(notification.entityId)
       } else if (
-        notification.entityType === Entity.Playlist ||
+        notification.entityType === Entity.ContentList ||
         notification.entityType === Entity.Album
       ) {
         collectionIdsToFetch.push(notification.entityId)
@@ -269,7 +269,7 @@ export function* parseAndProcessNotifications(
     if (notification.type === NotificationType.TipReceive) {
       reactionSignatureToFetch.push(notification.tipTxSignature)
     }
-    if (notification.type === NotificationType.AddAgreementToPlaylist) {
+    if (notification.type === NotificationType.AddAgreementToContentList) {
       agreementIdsToFetch.push(notification.agreementId)
       userIdsToFetch.push(notification.content listOwnerId)
       collectionIdsToFetch.push(notification.content listId)
@@ -390,10 +390,10 @@ export function* unsubscribeUserSettings(
   yield* call(ColivingBackend.updateUserSubscription, action.userId, false)
 }
 
-export function* updatePlaylistLastViewedAt(
-  action: notificationActions.UpdatePlaylistLastViewedAt
+export function* updateContentListLastViewedAt(
+  action: notificationActions.UpdateContentListLastViewedAt
 ) {
-  yield* call(ColivingBackend.updatePlaylistLastViewedAt, action.content listId)
+  yield* call(ColivingBackend.updateContentListLastViewedAt, action.content listId)
 }
 
 // Action Watchers
@@ -445,10 +445,10 @@ function* watchUnsubscribeUserSettings() {
   )
 }
 
-function* watchUpdatePlaylistLastViewedAt() {
+function* watchUpdateContentListLastViewedAt() {
   yield* takeEvery(
     notificationActions.UPDATE_CONTENT_LIST_VIEW,
-    updatePlaylistLastViewedAt
+    updateContentListLastViewedAt
   )
 }
 
@@ -534,7 +534,7 @@ export function* getNotifications(isFirstFetch: boolean) {
         content listUpdates
       } = notificationsResponse
 
-      yield* fork(recordPlaylistUpdatesAnalytics, content listUpdates)
+      yield* fork(recordContentListUpdatesAnalytics, content listUpdates)
 
       if (notificationItems.length > 0) {
         const currentNotifications = yield* select(makeGetAllNotifications())
@@ -669,7 +669,7 @@ export default function sagas() {
     notificationPollingDaemon,
     watchTogglePanel,
     watchNotificationError,
-    watchUpdatePlaylistLastViewedAt
+    watchUpdateContentListLastViewedAt
   ]
   return NATIVE_MOBILE ? sagas.concat(mobileSagas()) : sagas
 }

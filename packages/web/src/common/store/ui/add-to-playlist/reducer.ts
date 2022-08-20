@@ -3,9 +3,9 @@ import { createReducer, ActionType } from 'typesafe-actions'
 
 import * as actions from './actions'
 
-type AddToPlaylistActions = ActionType<typeof actions>
+type AddToContentListActions = ActionType<typeof actions>
 
-export type AddToPlaylistState = {
+export type AddToContentListState = {
   agreementId: ID | null
   agreementTitle: string | null
 }
@@ -16,7 +16,7 @@ const initialState = {
   agreementTitle: null
 }
 
-const reducer = createReducer<AddToPlaylistState, AddToPlaylistActions>(
+const reducer = createReducer<AddToContentListState, AddToContentListActions>(
   initialState,
   {
     [actions.OPEN](state, action) {

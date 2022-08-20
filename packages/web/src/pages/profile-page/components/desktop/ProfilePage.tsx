@@ -14,7 +14,7 @@ import {
 import { ReactComponent as IconAlbum } from 'assets/img/iconAlbum.svg'
 import { ReactComponent as IconCollectibles } from 'assets/img/iconCollectibles.svg'
 import { ReactComponent as IconNote } from 'assets/img/iconNote.svg'
-import { ReactComponent as IconPlaylists } from 'assets/img/iconPlaylists.svg'
+import { ReactComponent as IconContentLists } from 'assets/img/iconContentLists.svg'
 import { ReactComponent as IconReposts } from 'assets/img/iconRepost.svg'
 import { useSelectTierInfo } from 'common/hooks/wallet'
 import { feedActions } from 'common/store/pages/profile/lineups/feed/actions'
@@ -127,7 +127,7 @@ export type ProfilePageProps = {
     agreements: number,
     isPrivate?: boolean
   ) => string
-  openCreatePlaylistModal: () => void
+  openCreateContentListModal: () => void
   updateProfile: (metadata: any) => void
   updateProfilePicture: (
     selectedFiles: any,
@@ -161,7 +161,7 @@ const ProfilePage = ({
   formatCardSecondaryText,
   loadMoreUserFeed,
   loadMoreArtistAgreements,
-  openCreatePlaylistModal,
+  openCreateContentListModal,
   updateProfile,
 
   mostUsedTags,
@@ -228,7 +228,7 @@ const ProfilePage = ({
     goToRoute(UPLOAD_ALBUM_PAGE)
     record(make(Name.AGREEMENT_UPLOAD_OPEN, { source: 'profile' }))
   }, [goToRoute, record])
-  const onClickUploadPlaylist = useCallback(() => {
+  const onClickUploadContentList = useCallback(() => {
     goToRoute(UPLOAD_CONTENT_LIST_PAGE)
     record(make(Name.AGREEMENT_UPLOAD_OPEN, { source: 'profile' }))
   }, [goToRoute, record])
@@ -272,7 +272,7 @@ const ProfilePage = ({
         userId={album.content list_owner_id}
         isPublic={!album.is_private}
         imageSize={album._cover_art_sizes}
-        isPlaylist={!album.is_album}
+        isContentList={!album.is_album}
         primaryText={album.content list_name}
         // link={fullAlbumPage(profile.handle, album.content list_name, album.content list_id)}
         secondaryText={formatCardSecondaryText(
@@ -314,7 +314,7 @@ const ProfilePage = ({
         isPublic={!content list.is_private}
         // isAlbum={content list.is_album}
         primaryText={content list.content list_name}
-        // link={fullPlaylistPage(profile.handle, content list.content list_name, content list.content list_id)}
+        // link={fullContentListPage(profile.handle, content list.content list_name, content list.content list_id)}
         secondaryText={formatCardSecondaryText(
           content list.save_count,
           content list.content list_contents.agreement_ids.length,
@@ -340,7 +340,7 @@ const ProfilePage = ({
           key='upload-chip'
           type='content list'
           variant='card'
-          onClick={onClickUploadPlaylist}
+          onClick={onClickUploadContentList}
           isArtist
           isFirst={content listCards.length === 0}
         />
@@ -360,7 +360,7 @@ const ProfilePage = ({
       { icon: <IconNote />, text: Tabs.AGREEMENTS, label: Tabs.AGREEMENTS },
       { icon: <IconAlbum />, text: Tabs.ALBUMS, label: Tabs.ALBUMS },
       {
-        icon: <IconPlaylists />,
+        icon: <IconContentLists />,
         text: Tabs.CONTENT_LISTS,
         label: Tabs.CONTENT_LISTS
       },
@@ -499,7 +499,7 @@ const ProfilePage = ({
           content list.content list_contents.agreement_ids.length,
           content list.is_private
         )}
-        // link={fullPlaylistPage(profile.handle, content list.content list_name, content list.content list_id)}
+        // link={fullContentListPage(profile.handle, content list.content list_name, content list.content list_id)}
         isReposted={content list.has_current_user_reposted}
         isSaved={content list.has_current_user_saved}
         cardCoverImageSizes={content list._cover_art_sizes}
@@ -518,14 +518,14 @@ const ProfilePage = ({
       <UploadChip
         type='content list'
         variant='card'
-        onClick={openCreatePlaylistModal}
+        onClick={openCreateContentListModal}
         isFirst={content listCards.length === 0}
       />
     )
 
     const headers = [
       { icon: <IconReposts />, text: Tabs.REPOSTS, label: Tabs.REPOSTS },
-      { icon: <IconPlaylists />, text: Tabs.CONTENT_LISTS, label: Tabs.CONTENT_LISTS }
+      { icon: <IconContentLists />, text: Tabs.CONTENT_LISTS, label: Tabs.CONTENT_LISTS }
     ]
     const elements = [
       <div key={Tabs.REPOSTS} className={styles.tiles}>

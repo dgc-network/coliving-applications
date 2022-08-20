@@ -1,21 +1,21 @@
 import { useCallback, useMemo } from 'react'
 
-import { deletePlaylist } from 'common/store/cache/collections/actions'
-import { getPlaylistId } from 'common/store/ui/delete-content list-confirmation-modal/selectors'
+import { deleteContentList } from 'common/store/cache/collections/actions'
+import { getContentListId } from 'common/store/ui/delete-content list-confirmation-modal/selectors'
 
 import ActionDrawer from 'app/components/action-drawer'
 import { useDispatchWeb } from 'app/hooks/useDispatchWeb'
 import { useNavigation } from 'app/hooks/useNavigation'
 import { useSelectorWeb } from 'app/hooks/useSelectorWeb'
 
-export const DeletePlaylistConfirmationDrawer = () => {
-  const content listId = useSelectorWeb(getPlaylistId)
+export const DeleteContentListConfirmationDrawer = () => {
+  const content listId = useSelectorWeb(getContentListId)
   const dispatchWeb = useDispatchWeb()
   const navigation = useNavigation()
 
   const handleDelete = useCallback(() => {
     if (content listId) {
-      dispatchWeb(deletePlaylist(content listId))
+      dispatchWeb(deleteContentList(content listId))
       navigation.goBack()
     }
   }, [dispatchWeb, content listId, navigation])
@@ -32,5 +32,5 @@ export const DeletePlaylistConfirmationDrawer = () => {
     [handleDelete]
   )
 
-  return <ActionDrawer modalName='DeletePlaylistConfirmation' rows={rows} />
+  return <ActionDrawer modalName='DeleteContentListConfirmation' rows={rows} />
 }

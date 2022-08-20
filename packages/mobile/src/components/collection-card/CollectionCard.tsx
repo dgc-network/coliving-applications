@@ -8,7 +8,7 @@ import { useNavigation } from 'app/hooks/useNavigation'
 import { formatCount } from 'app/utils/format'
 import { getCollectionRoute } from 'app/utils/routes'
 
-const formatPlaylistCardSecondaryText = (saves: number, agreements: number) => {
+const formatContentListCardSecondaryText = (saves: number, agreements: number) => {
   const savesText = saves === 1 ? 'Favorite' : 'Favorites'
   const agreementsText = agreements === 1 ? 'Agreement' : 'Agreements'
   return `${formatCount(saves)} ${savesText} • ${agreements} ${agreementsText}`
@@ -44,7 +44,7 @@ export const CollectionCard = ({
       type='collection'
       imageSize={collection._cover_art_sizes}
       primaryText={collection.content list_name}
-      secondaryText={formatPlaylistCardSecondaryText(
+      secondaryText={formatContentListCardSecondaryText(
         collection.save_count,
         collection.content list_contents.agreement_ids.length
       )}

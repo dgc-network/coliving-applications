@@ -8,14 +8,14 @@ import content listsReducer from './lineups/reducer'
 const initialState = {}
 
 const slice = createSlice({
-  name: 'application/pages/trendingPlaylists',
+  name: 'application/pages/trendingContentLists',
   initialState,
   reducers: {}
 })
 
-const trendingPlaylistsLineupReducer = asLineup(PREFIX, content listsReducer)
+const trendingContentListsLineupReducer = asLineup(PREFIX, content listsReducer)
 
 export default combineReducers({
   page: slice.reducer,
-  trending: trendingPlaylistsLineupReducer
+  trending: trendingContentListsLineupReducer
 })

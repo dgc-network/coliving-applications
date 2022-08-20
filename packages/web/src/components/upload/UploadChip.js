@@ -10,11 +10,11 @@ const messages = {
   agreement: 'Upload Agreement',
   aAgreement: 'Upload A Agreement',
   album: 'Upload New Album',
-  content list: 'Create New Playlist',
-  artistPlaylist: 'Upload New Playlist',
+  content list: 'Create New ContentList',
+  artistContentList: 'Upload New ContentList',
   firstAlbum: 'Upload Your First Album',
-  firstPlaylist: 'Create Your First Playlist',
-  firstArtistPlaylist: 'Upload Your First Playlist'
+  firstContentList: 'Create Your First ContentList',
+  firstArtistContentList: 'Upload Your First ContentList'
 }
 
 const UploadChip = ({ type, variant, isArtist = false, isFirst, onClick }) => {
@@ -35,9 +35,9 @@ const UploadChip = ({ type, variant, isArtist = false, isFirst, onClick }) => {
       break
     case 'content list':
       if (isArtist) {
-        text = isFirst ? messages.firstArtistPlaylist : messages.artistPlaylist
+        text = isFirst ? messages.firstArtistContentList : messages.artistContentList
       } else {
-        text = isFirst ? messages.firstPlaylist : messages.content list
+        text = isFirst ? messages.firstContentList : messages.content list
       }
       break
     default:

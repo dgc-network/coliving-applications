@@ -28,9 +28,9 @@ import {
   TopSupportersScreen,
   SupportingUsersScreen
 } from 'app/screens/user-list-screen'
-import type { SearchPlaylist, SearchAgreement } from 'app/store/search/types'
+import type { SearchContentList, SearchAgreement } from 'app/store/search/types'
 
-import { EditPlaylistScreen } from '../edit-content list-screen/EditPlaylistScreen'
+import { EditContentListScreen } from '../edit-content list-screen/EditContentListScreen'
 import { NotificationsDrawerNavigationContext } from '../notifications-screen/NotificationsDrawerNavigationContext'
 import { TipArtistModal } from '../tip-artist-screen'
 import { AgreementRemixesScreen } from '../agreement-screen/AgreementRemixesScreen'
@@ -41,8 +41,8 @@ export type AppTabScreenParamList = {
   Agreement: { id: ID; searchAgreement?: SearchAgreement }
   AgreementRemixes: { id: ID }
   Profile: { handle: string }
-  Collection: { id: ID; searchCollection?: SearchPlaylist }
-  EditPlaylist: { id: ID }
+  Collection: { id: ID; searchCollection?: SearchContentList }
+  EditContentList: { id: ID }
   Favorited: { id: ID; favoriteType: FavoriteType }
   Reposts: { id: ID; repostType: RepostType }
   Followers: { userId: ID }
@@ -121,8 +121,8 @@ export const AppTabScreen = ({ baseScreen, Stack }: AppTabScreenProps) => {
           // hack for now to prevent pop for some pages
           if (
             !e.target?.includes('EditProfile') &&
-            !e.target?.includes('EditPlaylist') &&
-            !e.target?.includes('CreatePlaylist') &&
+            !e.target?.includes('EditContentList') &&
+            !e.target?.includes('CreateContentList') &&
             !(
               e.target?.includes('Search') &&
               !e.target?.includes('SearchResults')
@@ -156,8 +156,8 @@ export const AppTabScreen = ({ baseScreen, Stack }: AppTabScreenProps) => {
         options={screenOptions}
       />
       <Stack.Screen
-        name='EditPlaylist'
-        component={EditPlaylistScreen}
+        name='EditContentList'
+        component={EditContentListScreen}
         options={screenOptions}
       />
       <Stack.Screen

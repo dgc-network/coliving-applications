@@ -106,7 +106,7 @@ export const useSubPageHeader = () => {
  * will allow a component to (on mount) set the NavContext in such a way that when
  * that component unmounts, the nav context is reset to whatever it was set to last.
  *
- * This is useful in cases like Playlist-Creation, which can be done from many
+ * This is useful in cases like ContentList-Creation, which can be done from many
  * contexts and when the page is closed, the previous context should be displayed.
  *
  * The hook returns a callback that can be called to manually reset the nav state.

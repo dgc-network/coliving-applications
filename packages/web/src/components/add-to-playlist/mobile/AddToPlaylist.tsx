@@ -1,14 +1,14 @@
 import { useCallback, useContext } from 'react'
 
-import { ID, CreatePlaylistSource, Collection } from '@coliving/common'
+import { ID, CreateContentListSource, Collection } from '@coliving/common'
 import { push as pushRoute } from 'connected-react-router'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 
-import { getAccountWithOwnPlaylists } from 'common/store/account/selectors'
+import { getAccountWithOwnContentLists } from 'common/store/account/selectors'
 import {
-  addAgreementToPlaylist,
-  createPlaylist
+  addAgreementToContentList,
+  createContentList
 } from 'common/store/cache/collections/actions'
 import { close } from 'common/store/ui/add-to-content list/actions'
 import {
@@ -22,24 +22,24 @@ import TextElement, { Type } from 'components/nav/mobile/TextElement'
 import { useTemporaryNavContext } from 'components/nav/store/context'
 import { ToastContext } from 'components/toast/ToastContext'
 import useHasChangedRoute from 'hooks/useHasChangedRoute'
-import NewPlaylistButton from 'pages/saved-page/components/mobile/NewPlaylistButton'
+import NewContentListButton from 'pages/saved-page/components/mobile/NewContentListButton'
 import { newCollectionMetadata } from 'schemas'
 import { AppState } from 'store/types'
 import { content listPage } from 'utils/route'
 import { withNullGuard } from 'utils/withNullGuard'
 
-import styles from './AddToPlaylist.module.css'
+import styles from './AddToContentList.module.css'
 
 const messages = {
-  title: 'Add To Playlist',
-  addedToast: 'Added To Playlist!',
-  createdToast: 'Playlist Created!'
+  title: 'Add To ContentList',
+  addedToast: 'Added To ContentList!',
+  createdToast: 'ContentList Created!'
 }
 
-export type AddToPlaylistProps = ReturnType<typeof mapStateToProps> &
+export type AddToContentListProps = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>
 
-const g = withNullGuard((props: AddToPlaylistProps) => {
+const g = withNullGuard((props: AddToContentListProps) => {
   const { account, agreementTitle } = props
   if (account && agreementTitle) {
     return {
@@ -50,15 +50,15 @@ const g = withNullGuard((props: AddToPlaylistProps) => {
   }
 })
 
-const AddToPlaylist = g(
+const AddToContentList = g(
   ({
     account,
     agreementId,
     agreementTitle,
     goToRoute,
     close,
-    addAgreementToPlaylist,
-    createPlaylist
+    addAgreementToContentList,
+    createContentList
   }) => {
     // Close the page if the route was changed
     useHasChangedRoute(close)
@@ -87,21 +87,21 @@ const AddToPlaylist = g(
           secondaryText={content list.ownerName}
           onClick={() => {
             toast(messages.addedToast)
-            addAgreementToPlaylist(agreementId!, content list.content list_id)
+            addAgreementToContentList(agreementId!, content list.content list_id)
             close()
           }}
         />
       )
     })
 
-    const addToNewPlaylist = useCallback(() => {
+    const addToNewContentList = useCallback(() => {
       const metadata = newCollectionMetadata({
         content list_name: agreementTitle,
         is_private: false
       })
       const tempId = `${Date.now()}`
-      createPlaylist(tempId, metadata, agreementId!)
-      addAgreementToPlaylist(agreementId!, tempId)
+      createContentList(tempId, metadata, agreementId!)
+      addAgreementToContentList(agreementId!, tempId)
       toast(messages.createdToast)
       goToRoute(content listPage(account.handle, agreementTitle, tempId))
       close()
@@ -109,8 +109,8 @@ const AddToPlaylist = g(
       account,
       agreementId,
       agreementTitle,
-      createPlaylist,
-      addAgreementToPlaylist,
+      createContentList,
+      addAgreementToContentList,
       goToRoute,
       close,
       toast
@@ -119,7 +119,7 @@ const AddToPlaylist = g(
     return (
       <MobilePageContainer>
         <div className={styles.bodyContainer}>
-          <NewPlaylistButton onClick={addToNewPlaylist} />
+          <NewContentListButton onClick={addToNewContentList} />
           <div className={styles.cardsContainer}>
             <CardLineup cardsClassName={styles.cardLineup} cards={cards} />
           </div>
@@ -131,7 +131,7 @@ const AddToPlaylist = g(
 
 function mapStateToProps(state: AppState) {
   return {
-    account: getAccountWithOwnPlaylists(state),
+    account: getAccountWithOwnContentLists(state),
     agreementId: getAgreementId(state),
     agreementTitle: getAgreementTitle(state)
   }
@@ -140,14 +140,14 @@ function mapStateToProps(state: AppState) {
 function mapDispatchToProps(dispatch: Dispatch) {
   return {
     goToRoute: (route: string) => dispatch(pushRoute(route)),
-    addAgreementToPlaylist: (agreementId: ID, content listId: ID | string) =>
-      dispatch(addAgreementToPlaylist(agreementId, content listId)),
-    createPlaylist: (tempId: string, metadata: Collection, agreementId: ID) =>
+    addAgreementToContentList: (agreementId: ID, content listId: ID | string) =>
+      dispatch(addAgreementToContentList(agreementId, content listId)),
+    createContentList: (tempId: string, metadata: Collection, agreementId: ID) =>
       dispatch(
-        createPlaylist(
+        createContentList(
           tempId,
           metadata,
-          CreatePlaylistSource.FROM_AGREEMENT,
+          CreateContentListSource.FROM_AGREEMENT,
           agreementId
         )
       ),
@@ -155,4 +155,4 @@ function mapDispatchToProps(dispatch: Dispatch) {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddToPlaylist)
+export default connect(mapStateToProps, mapDispatchToProps)(AddToContentList)

@@ -1,8 +1,8 @@
 import { useCallback } from 'react'
 
-import { CreatePlaylistSource } from '@/common'
+import { CreateContentListSource } from '@/common'
 import { getUserHandle } from '-client/src/common/store/account/selectors'
-import { createPlaylist } from '-client/src/common/store/cache/collections/actions'
+import { createContentList } from '-client/src/common/store/cache/collections/actions'
 import { content listPage } from '-client/src/utils/route'
 import type { FormikProps } from 'formik'
 import { Formik } from 'formik'
@@ -13,22 +13,22 @@ import { useNavigation } from 'app/hooks/useNavigation'
 import { useSelectorWeb } from 'app/hooks/useSelectorWeb'
 import { useToast } from 'app/hooks/useToast'
 
-import { PlaylistDescriptionInput } from './PlaylistDescriptionInput'
-import { PlaylistImageInput } from './PlaylistImageInput'
-import { PlaylistNameInput } from './PlaylistNameInput'
+import { ContentListDescriptionInput } from './ContentListDescriptionInput'
+import { ContentListImageInput } from './ContentListImageInput'
+import { ContentListNameInput } from './ContentListNameInput'
 
 const messages = {
-  title: 'Create Playlist',
-  content listCreatedToast: 'Playlist Created!'
+  title: 'Create ContentList',
+  content listCreatedToast: 'ContentList Created!'
 }
 
-type PlaylistValues = {
+type ContentListValues = {
   content list_name: string
   description: string
   artwork: { url: string }
 }
 
-const CreatePlaylistForm = (props: FormikProps<PlaylistValues>) => {
+const CreateContentListForm = (props: FormikProps<ContentListValues>) => {
   const { handleSubmit, handleReset, errors } = props
 
   return (
@@ -38,14 +38,14 @@ const CreatePlaylistForm = (props: FormikProps<PlaylistValues>) => {
       onReset={handleReset}
       errors={errors}
     >
-      <PlaylistImageInput />
-      <PlaylistNameInput />
-      <PlaylistDescriptionInput />
+      <ContentListImageInput />
+      <ContentListNameInput />
+      <ContentListDescriptionInput />
     </FormScreen>
   )
 }
 
-const initialValues: PlaylistValues = {
+const initialValues: ContentListValues = {
   content list_name: '',
   description: '',
   artwork: { url: '' }
@@ -55,17 +55,17 @@ const initialErrors = {
   content list_name: 'Required'
 }
 
-export const CreatePlaylistScreen = () => {
+export const CreateContentListScreen = () => {
   const handle = useSelectorWeb(getUserHandle) ?? ''
   const { toast } = useToast()
 
   const dispatchWeb = useDispatchWeb()
   const navigation = useNavigation()
   const handleSubmit = useCallback(
-    (values: PlaylistValues) => {
+    (values: ContentListValues) => {
       const tempId = Date.now().toString()
       dispatchWeb(
-        createPlaylist(tempId, values, CreatePlaylistSource.FAVORITES_PAGE)
+        createContentList(tempId, values, CreateContentListSource.FAVORITES_PAGE)
       )
       navigation.replace({
         native: { screen: 'Collection', params: { id: parseInt(tempId, 10) } },
@@ -81,7 +81,7 @@ export const CreatePlaylistScreen = () => {
       initialValues={initialValues}
       initialErrors={initialErrors}
       onSubmit={handleSubmit}
-      component={CreatePlaylistForm}
+      component={CreateContentListForm}
     />
   )
 }

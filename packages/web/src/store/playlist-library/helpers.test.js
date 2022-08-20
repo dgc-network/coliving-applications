@@ -1,21 +1,21 @@
 import {
   addFolderToLibrary,
-  containsTempPlaylist,
-  findIndexInPlaylistLibrary,
-  findInPlaylistLibrary,
-  removeFromPlaylistLibrary,
-  removePlaylistFolderInLibrary,
-  removePlaylistLibraryDuplicates,
-  renamePlaylistFolderInLibrary,
-  reorderPlaylistLibrary,
-  addPlaylistToFolder,
-  extractTempPlaylistsFromLibrary,
-  replaceTempWithResolvedPlaylists,
-  removePlaylistLibraryTempPlaylists,
-  getPlaylistsNotInLibrary
+  containsTempContentList,
+  findIndexInContentListLibrary,
+  findInContentListLibrary,
+  removeFromContentListLibrary,
+  removeContentListFolderInLibrary,
+  removeContentListLibraryDuplicates,
+  renameContentListFolderInLibrary,
+  reorderContentListLibrary,
+  addContentListToFolder,
+  extractTempContentListsFromLibrary,
+  replaceTempWithResolvedContentLists,
+  removeContentListLibraryTempContentLists,
+  getContentListsNotInLibrary
 } from 'common/store/content list-library/helpers'
 
-describe('findInPlaylistLibrary', () => {
+describe('findInContentListLibrary', () => {
   it('finds an index in the library', () => {
     const library = {
       contents: [
@@ -25,7 +25,7 @@ describe('findInPlaylistLibrary', () => {
         { type: 'content list', content list_id: 4 }
       ]
     }
-    const found = findInPlaylistLibrary(library, 2)
+    const found = findInContentListLibrary(library, 2)
     expect(found).toEqual({ type: 'content list', content list_id: 2 })
   })
 
@@ -42,7 +42,7 @@ describe('findInPlaylistLibrary', () => {
         { type: 'content list', content list_id: 4 }
       ]
     }
-    const found = findInPlaylistLibrary(library, 3)
+    const found = findInContentListLibrary(library, 3)
     expect(found).toEqual({ type: 'content list', content list_id: 3 })
   })
 
@@ -60,12 +60,12 @@ describe('findInPlaylistLibrary', () => {
         { type: 'content list', content list_id: 4 }
       ]
     }
-    const found = findInPlaylistLibrary(library, 10)
+    const found = findInContentListLibrary(library, 10)
     expect(found).toEqual(false)
   })
 })
 
-describe('findIndexInPlaylistLibrary', () => {
+describe('findIndexInContentListLibrary', () => {
   it('finds an index in the library', () => {
     const library = {
       contents: [
@@ -75,7 +75,7 @@ describe('findIndexInPlaylistLibrary', () => {
         { type: 'content list', content list_id: 4 }
       ]
     }
-    const index = findIndexInPlaylistLibrary(library, 2)
+    const index = findIndexInContentListLibrary(library, 2)
     expect(index).toEqual(1)
   })
 
@@ -88,7 +88,7 @@ describe('findIndexInPlaylistLibrary', () => {
         { type: 'content list', content list_id: 4 }
       ]
     }
-    const index = findIndexInPlaylistLibrary(library, 10)
+    const index = findIndexInContentListLibrary(library, 10)
     expect(index).toEqual(-1)
   })
 
@@ -110,7 +110,7 @@ describe('findIndexInPlaylistLibrary', () => {
         }
       ]
     }
-    const index = findIndexInPlaylistLibrary(library, 'fake-uuid')
+    const index = findIndexInContentListLibrary(library, 'fake-uuid')
     expect(index).toEqual(4)
   })
 
@@ -143,13 +143,13 @@ describe('findIndexInPlaylistLibrary', () => {
         }
       ]
     }
-    let index = findIndexInPlaylistLibrary(library, 7)
+    let index = findIndexInContentListLibrary(library, 7)
     expect(index).toEqual([4, 0])
 
-    index = findIndexInPlaylistLibrary(library, '33')
+    index = findIndexInContentListLibrary(library, '33')
     expect(index).toEqual([4, 2])
 
-    index = findIndexInPlaylistLibrary(library, 12)
+    index = findIndexInContentListLibrary(library, 12)
     expect(index).toEqual([4, 3, 1])
   })
 
@@ -182,12 +182,12 @@ describe('findIndexInPlaylistLibrary', () => {
         }
       ]
     }
-    const index = findIndexInPlaylistLibrary(library, 'fake-uuid-2')
+    const index = findIndexInContentListLibrary(library, 'fake-uuid-2')
     expect(index).toEqual([4, 3])
   })
 })
 
-describe('removeFromPlaylistLibrary', () => {
+describe('removeFromContentListLibrary', () => {
   it('removes content list from the library', () => {
     const library = {
       contents: [
@@ -197,7 +197,7 @@ describe('removeFromPlaylistLibrary', () => {
         { type: 'content list', content list_id: 4 }
       ]
     }
-    const { library: ret, removed } = removeFromPlaylistLibrary(library, 2)
+    const { library: ret, removed } = removeFromContentListLibrary(library, 2)
     expect(ret).toEqual({
       contents: [
         { type: 'content list', content list_id: 1 },
@@ -223,7 +223,7 @@ describe('removeFromPlaylistLibrary', () => {
         }
       ]
     }
-    const { library: ret, removed } = removeFromPlaylistLibrary(
+    const { library: ret, removed } = removeFromContentListLibrary(
       library,
       'fake-uuid'
     )
@@ -259,7 +259,7 @@ describe('removeFromPlaylistLibrary', () => {
         { type: 'content list', content list_id: 4 }
       ]
     }
-    const { library: ret, removed } = removeFromPlaylistLibrary(library, 3)
+    const { library: ret, removed } = removeFromContentListLibrary(library, 3)
     expect(ret).toEqual({
       contents: [
         { type: 'content list', content list_id: 1 },
@@ -291,7 +291,7 @@ describe('removeFromPlaylistLibrary', () => {
         { type: 'content list', content list_id: 4 }
       ]
     }
-    const { library: ret, removed } = removeFromPlaylistLibrary(library, 100)
+    const { library: ret, removed } = removeFromContentListLibrary(library, 100)
     expect(ret).toEqual({
       contents: [
         { type: 'content list', content list_id: 1 },
@@ -311,7 +311,7 @@ describe('removeFromPlaylistLibrary', () => {
   })
 })
 
-describe('removePlaylistLibraryDuplicates', () => {
+describe('removeContentListLibraryDuplicates', () => {
   it('can remove single dupes', () => {
     const library = {
       contents: [
@@ -321,7 +321,7 @@ describe('removePlaylistLibraryDuplicates', () => {
         { type: 'content list', content list_id: 1 }
       ]
     }
-    const ret = removePlaylistLibraryDuplicates(library)
+    const ret = removeContentListLibraryDuplicates(library)
     expect(ret).toEqual({
       contents: [
         { type: 'content list', content list_id: 1 },
@@ -342,7 +342,7 @@ describe('removePlaylistLibraryDuplicates', () => {
         { type: 'content list', content list_id: 6 }
       ]
     }
-    const ret = removePlaylistLibraryDuplicates(library)
+    const ret = removeContentListLibraryDuplicates(library)
     expect(ret).toEqual({
       contents: [
         { type: 'content list', content list_id: 1 },
@@ -368,7 +368,7 @@ describe('removePlaylistLibraryDuplicates', () => {
         { type: 'content list', content list_id: 3 }
       ]
     }
-    const ret = removePlaylistLibraryDuplicates(library)
+    const ret = removeContentListLibraryDuplicates(library)
     expect(ret).toEqual({
       contents: [
         { type: 'content list', content list_id: 1 },
@@ -396,7 +396,7 @@ describe('removePlaylistLibraryDuplicates', () => {
         { type: 'content list', content list_id: 3 }
       ]
     }
-    const ret = removePlaylistLibraryDuplicates(library)
+    const ret = removeContentListLibraryDuplicates(library)
     expect(ret).toEqual({
       contents: [
         { type: 'content list', content list_id: 1 },
@@ -449,7 +449,7 @@ describe('removePlaylistLibraryDuplicates', () => {
         }
       ]
     }
-    const result = removePlaylistLibraryDuplicates(library)
+    const result = removeContentListLibraryDuplicates(library)
 
     const expectedResult = {
       contents: [
@@ -478,7 +478,7 @@ describe('removePlaylistLibraryDuplicates', () => {
   })
 })
 
-describe('removePlaylistLibraryTempPlaylists', () => {
+describe('removeContentListLibraryTempContentLists', () => {
   it('can remove temporary content lists', () => {
     const library = {
       contents: [
@@ -498,7 +498,7 @@ describe('removePlaylistLibraryTempPlaylists', () => {
         { type: 'content list', content list_id: 1 }
       ]
     }
-    const ret = removePlaylistLibraryTempPlaylists(library)
+    const ret = removeContentListLibraryTempContentLists(library)
     expect(ret).toEqual({
       contents: [
         { type: 'explore_content list', content list_id: 'Heavy Rotation' },
@@ -537,7 +537,7 @@ describe('removePlaylistLibraryTempPlaylists', () => {
         { type: 'content list', content list_id: 6 }
       ]
     }
-    const ret = removePlaylistLibraryTempPlaylists(library)
+    const ret = removeContentListLibraryTempContentLists(library)
     expect(ret).toEqual(library)
   })
 
@@ -545,16 +545,16 @@ describe('removePlaylistLibraryTempPlaylists', () => {
     const library = {
       contents: []
     }
-    let ret = removePlaylistLibraryTempPlaylists(library)
+    let ret = removeContentListLibraryTempContentLists(library)
     expect(ret).toEqual(library)
 
     library.contents = null
-    ret = removePlaylistLibraryTempPlaylists(library)
+    ret = removeContentListLibraryTempContentLists(library)
     expect(ret).toEqual(library)
   })
 })
 
-describe('reorderPlaylistLibrary', () => {
+describe('reorderContentListLibrary', () => {
   it('can reorder adjacent content lists', () => {
     const library = {
       contents: [
@@ -574,7 +574,7 @@ describe('reorderPlaylistLibrary', () => {
         { type: 'content list', content list_id: 4 }
       ]
     }
-    const ret = reorderPlaylistLibrary(library, 2, 3)
+    const ret = reorderContentListLibrary(library, 2, 3)
     expect(ret).toEqual({
       contents: [
         { type: 'content list', content list_id: 1 },
@@ -614,7 +614,7 @@ describe('reorderPlaylistLibrary', () => {
         }
       ]
     }
-    const ret = reorderPlaylistLibrary(library, 1, 4)
+    const ret = reorderContentListLibrary(library, 1, 4)
     expect(ret).toEqual({
       contents: [
         { type: 'content list', content list_id: 2 },
@@ -654,7 +654,7 @@ describe('reorderPlaylistLibrary', () => {
         { type: 'content list', content list_id: 4 }
       ]
     }
-    const ret = reorderPlaylistLibrary(library, 4, 1)
+    const ret = reorderContentListLibrary(library, 4, 1)
     expect(ret).toEqual({
       contents: [
         { type: 'content list', content list_id: 1 },
@@ -694,7 +694,7 @@ describe('reorderPlaylistLibrary', () => {
         { type: 'content list', content list_id: 4 }
       ]
     }
-    const ret = reorderPlaylistLibrary(library, '10', 2)
+    const ret = reorderContentListLibrary(library, '10', 2)
     expect(ret).toEqual({
       contents: [
         { type: 'content list', content list_id: 1 },
@@ -734,7 +734,7 @@ describe('reorderPlaylistLibrary', () => {
         { type: 'content list', content list_id: 4 }
       ]
     }
-    const ret = reorderPlaylistLibrary(library, 3, -1)
+    const ret = reorderContentListLibrary(library, 3, -1)
     expect(ret).toEqual({
       contents: [
         { type: 'content list', content list_id: 3 },
@@ -784,7 +784,7 @@ describe('reorderPlaylistLibrary', () => {
         { type: 'content list', content list_id: 4 }
       ]
     }
-    const ret = reorderPlaylistLibrary(library, 3, -1)
+    const ret = reorderContentListLibrary(library, 3, -1)
     expect(ret).toEqual({
       contents: [
         { type: 'content list', content list_id: 3 },
@@ -814,7 +814,7 @@ describe('reorderPlaylistLibrary', () => {
       ]
     })
 
-    const ret2 = reorderPlaylistLibrary(ret, '100', '10')
+    const ret2 = reorderContentListLibrary(ret, '100', '10')
     expect(ret2).toEqual({
       contents: [
         { type: 'content list', content list_id: 3 },
@@ -864,7 +864,7 @@ describe('reorderPlaylistLibrary', () => {
         { type: 'content list', content list_id: 4 }
       ]
     }
-    const ret = reorderPlaylistLibrary(library, 'Heavy Rotation', 12)
+    const ret = reorderContentListLibrary(library, 'Heavy Rotation', 12)
     expect(ret).toEqual({
       contents: [
         { type: 'content list', content list_id: 1 },
@@ -904,7 +904,7 @@ describe('reorderPlaylistLibrary', () => {
         { type: 'content list', content list_id: 4 }
       ]
     }
-    const ret = reorderPlaylistLibrary(library, 3, 10)
+    const ret = reorderContentListLibrary(library, 3, 10)
     expect(ret).toEqual({
       contents: [
         { type: 'content list', content list_id: 1 },
@@ -944,7 +944,7 @@ describe('reorderPlaylistLibrary', () => {
         { type: 'content list', content list_id: 4 }
       ]
     }
-    const ret = reorderPlaylistLibrary(library, 5, 2)
+    const ret = reorderContentListLibrary(library, 5, 2)
     expect(ret).toEqual({
       contents: [
         { type: 'content list', content list_id: 1 },
@@ -964,7 +964,7 @@ describe('reorderPlaylistLibrary', () => {
         { type: 'content list', content list_id: 4 }
       ]
     })
-    const res2 = reorderPlaylistLibrary(library, 22, 'Heavy Rotation')
+    const res2 = reorderContentListLibrary(library, 22, 'Heavy Rotation')
     expect(res2).toEqual({
       contents: [
         { type: 'content list', content list_id: 1 },
@@ -1005,7 +1005,7 @@ describe('reorderPlaylistLibrary', () => {
         { type: 'content list', content list_id: 4 }
       ]
     }
-    const ret = reorderPlaylistLibrary(
+    const ret = reorderContentListLibrary(
       library,
       'not-exist-folder',
       2,
@@ -1033,7 +1033,7 @@ describe('reorderPlaylistLibrary', () => {
         { type: 'content list', content list_id: 4 }
       ]
     }
-    const ret = reorderPlaylistLibrary(
+    const ret = reorderContentListLibrary(
       library,
       'my-uuid',
       'my-uuid',
@@ -1061,7 +1061,7 @@ describe('reorderPlaylistLibrary', () => {
         { type: 'content list', content list_id: 4 }
       ]
     }
-    const ret = reorderPlaylistLibrary(
+    const ret = reorderContentListLibrary(
       library,
       'my-uuid',
       -1,
@@ -1106,7 +1106,7 @@ describe('reorderPlaylistLibrary', () => {
         { type: 'content list', content list_id: 4 }
       ]
     }
-    const ret = reorderPlaylistLibrary(library, 'my-uuid', 4, 'content list-folder')
+    const ret = reorderContentListLibrary(library, 'my-uuid', 4, 'content list-folder')
     expect(ret).toEqual({
       contents: [
         { type: 'content list', content list_id: 1 },
@@ -1146,7 +1146,7 @@ describe('reorderPlaylistLibrary', () => {
         { type: 'content list', content list_id: 4 }
       ]
     }
-    const ret = reorderPlaylistLibrary(library, 'my-uuid', 3, 'content list-folder')
+    const ret = reorderContentListLibrary(library, 'my-uuid', 3, 'content list-folder')
     expect(ret).toEqual({
       contents: [
         { type: 'content list', content list_id: 1 },
@@ -1195,7 +1195,7 @@ describe('reorderPlaylistLibrary', () => {
         { type: 'content list', content list_id: 4 }
       ]
     }
-    const ret = reorderPlaylistLibrary(
+    const ret = reorderContentListLibrary(
       library,
       'my-uuid',
       'my-uuid-2',
@@ -1228,7 +1228,7 @@ describe('reorderPlaylistLibrary', () => {
         { type: 'content list', content list_id: 4 }
       ]
     })
-    const ret2 = reorderPlaylistLibrary(ret, 2, 'my-uuid', 'content list')
+    const ret2 = reorderContentListLibrary(ret, 2, 'my-uuid', 'content list')
     expect(ret2).toEqual({
       contents: [
         { type: 'content list', content list_id: 1 },
@@ -1286,7 +1286,7 @@ describe('reorderPlaylistLibrary', () => {
         { type: 'content list', content list_id: 4 }
       ]
     }
-    const ret = reorderPlaylistLibrary(
+    const ret = reorderContentListLibrary(
       library,
       'my-uuid',
       1,
@@ -1320,7 +1320,7 @@ describe('reorderPlaylistLibrary', () => {
         { type: 'content list', content list_id: 4 }
       ]
     })
-    const ret2 = reorderPlaylistLibrary(ret, 1, '10', 'content list', true)
+    const ret2 = reorderContentListLibrary(ret, 1, '10', 'content list', true)
     expect(ret2).toEqual({
       contents: [
         {
@@ -1351,7 +1351,7 @@ describe('reorderPlaylistLibrary', () => {
   })
 })
 
-describe('containsTempPlaylist', () => {
+describe('containsTempContentList', () => {
   it('finds a temp', () => {
     const library = {
       contents: [
@@ -1361,7 +1361,7 @@ describe('containsTempPlaylist', () => {
         { type: 'temp_content list', content list_id: 'asdf' }
       ]
     }
-    const ret = containsTempPlaylist(library)
+    const ret = containsTempContentList(library)
     expect(ret).toEqual(true)
   })
 
@@ -1381,7 +1381,7 @@ describe('containsTempPlaylist', () => {
         { type: 'content list', content list_id: 4 }
       ]
     }
-    const ret = containsTempPlaylist(library)
+    const ret = containsTempContentList(library)
     expect(ret).toEqual(true)
   })
 
@@ -1393,7 +1393,7 @@ describe('containsTempPlaylist', () => {
         { type: 'content list', content list_id: 3 }
       ]
     }
-    const ret = containsTempPlaylist(library)
+    const ret = containsTempContentList(library)
     expect(ret).toEqual(false)
   })
 })
@@ -1493,7 +1493,7 @@ describe('addFolderToLibrary', () => {
   })
 })
 
-describe('renamePlaylistFolderInLibrary', () => {
+describe('renameContentListFolderInLibrary', () => {
   it('changes the name of given folder in library', () => {
     const library = {
       contents: [
@@ -1505,7 +1505,7 @@ describe('renamePlaylistFolderInLibrary', () => {
       ]
     }
 
-    const result = renamePlaylistFolderInLibrary(
+    const result = renameContentListFolderInLibrary(
       library,
       'fake-uuid',
       'Foldera'
@@ -1537,7 +1537,7 @@ describe('renamePlaylistFolderInLibrary', () => {
         { type: 'temp_content list', content list_id: 'asdf' }
       ]
     }
-    const result = renamePlaylistFolderInLibrary(
+    const result = renameContentListFolderInLibrary(
       library,
       'fake-uuid-not-in-library',
       'new name'
@@ -1546,7 +1546,7 @@ describe('renamePlaylistFolderInLibrary', () => {
   })
 })
 
-describe('removePlaylistFolderInLibrary', () => {
+describe('removeContentListFolderInLibrary', () => {
   it('removes folder from library', () => {
     const library = {
       contents: [
@@ -1558,7 +1558,7 @@ describe('removePlaylistFolderInLibrary', () => {
       ]
     }
 
-    const result = removePlaylistFolderInLibrary(library, 'fake-uuid')
+    const result = removeContentListFolderInLibrary(library, 'fake-uuid')
     const expectedResult = {
       contents: [
         { type: 'content list', content list_id: 1 },
@@ -1595,7 +1595,7 @@ describe('removePlaylistFolderInLibrary', () => {
         { type: 'temp_content list', content list_id: 'asdf' }
       ]
     }
-    const result = removePlaylistFolderInLibrary(library, 'fake-uuid')
+    const result = removeContentListFolderInLibrary(library, 'fake-uuid')
     const expectedResult = {
       contents: [
         { type: 'content list', content list_id: 1 },
@@ -1621,7 +1621,7 @@ describe('removePlaylistFolderInLibrary', () => {
         { type: 'temp_content list', content list_id: 'asdf' }
       ]
     }
-    const result = removePlaylistFolderInLibrary(
+    const result = removeContentListFolderInLibrary(
       library,
       'fake-uuid-not-in-library'
     )
@@ -1629,7 +1629,7 @@ describe('removePlaylistFolderInLibrary', () => {
   })
 })
 
-describe('addPlaylistToFolder', () => {
+describe('addContentListToFolder', () => {
   it('adds content list to given folder', () => {
     const library = {
       contents: [
@@ -1647,7 +1647,7 @@ describe('addPlaylistToFolder', () => {
       ]
     }
 
-    const result = addPlaylistToFolder(library, 'Heavy Rotation', 'fake-uuid')
+    const result = addContentListToFolder(library, 'Heavy Rotation', 'fake-uuid')
     const expectedResult = {
       contents: [
         { type: 'content list', content list_id: 1 },
@@ -1684,7 +1684,7 @@ describe('addPlaylistToFolder', () => {
       ]
     }
 
-    const result = addPlaylistToFolder(library, 'asdf', 'fake-uuid')
+    const result = addContentListToFolder(library, 'asdf', 'fake-uuid')
     expect(result).toBe(library)
   })
 
@@ -1705,7 +1705,7 @@ describe('addPlaylistToFolder', () => {
       ]
     }
 
-    const result = addPlaylistToFolder(
+    const result = addContentListToFolder(
       library,
       'Heavy Rotation',
       'uuid-doesnt-exist'
@@ -1716,7 +1716,7 @@ describe('addPlaylistToFolder', () => {
   it('returns the original unchanged library if the library has no contents', () => {
     const library = {}
 
-    const result = addPlaylistToFolder(library, 'Heavy Rotation', 'fake-uuid')
+    const result = addContentListToFolder(library, 'Heavy Rotation', 'fake-uuid')
     expect(result).toBe(library)
   })
 
@@ -1737,7 +1737,7 @@ describe('addPlaylistToFolder', () => {
       ]
     }
 
-    const result = addPlaylistToFolder(library, 2, 'fake-uuid')
+    const result = addContentListToFolder(library, 2, 'fake-uuid')
     const expectedResult = {
       contents: [
         { type: 'content list', content list_id: 1 },
@@ -1757,7 +1757,7 @@ describe('addPlaylistToFolder', () => {
   })
 })
 
-describe('extractTempPlaylistsFromLibrary', () => {
+describe('extractTempContentListsFromLibrary', () => {
   it('returns all temp content lists in library', () => {
     const library = {
       contents: [
@@ -1780,7 +1780,7 @@ describe('extractTempPlaylistsFromLibrary', () => {
         }
       ]
     }
-    const ret = extractTempPlaylistsFromLibrary(library)
+    const ret = extractTempContentListsFromLibrary(library)
     expect(ret).toEqual([
       { type: 'temp_content list', content list_id: 'e' },
       { type: 'temp_content list', content list_id: 'a' },
@@ -1791,12 +1791,12 @@ describe('extractTempPlaylistsFromLibrary', () => {
   })
 
   it('can deal with empty libraries', () => {
-    const ret = extractTempPlaylistsFromLibrary({
+    const ret = extractTempContentListsFromLibrary({
       contents: []
     })
     expect(ret).toEqual([])
 
-    const ret2 = extractTempPlaylistsFromLibrary({})
+    const ret2 = extractTempContentListsFromLibrary({})
     expect(ret2).toEqual([])
   })
 
@@ -1817,12 +1817,12 @@ describe('extractTempPlaylistsFromLibrary', () => {
         }
       ]
     }
-    const ret = extractTempPlaylistsFromLibrary(library)
+    const ret = extractTempContentListsFromLibrary(library)
     expect(ret).toEqual([])
   })
 })
 
-describe('replaceTempWithResolvedPlaylists', () => {
+describe('replaceTempWithResolvedContentLists', () => {
   it('returns all temp content lists in library', () => {
     const library = {
       contents: [
@@ -1845,7 +1845,7 @@ describe('replaceTempWithResolvedPlaylists', () => {
         }
       ]
     }
-    const tempPlaylistIdToResolvedPlaylist = {
+    const tempContentListIdToResolvedContentList = {
       e: { type: 'content list', content list_id: 12 },
       a: { type: 'content list', content list_id: 13 },
       b: { type: 'content list', content list_id: 14 },
@@ -1853,9 +1853,9 @@ describe('replaceTempWithResolvedPlaylists', () => {
       d: { type: 'content list', content list_id: 16 }
     }
 
-    const ret = replaceTempWithResolvedPlaylists(
+    const ret = replaceTempWithResolvedContentLists(
       library,
-      tempPlaylistIdToResolvedPlaylist
+      tempContentListIdToResolvedContentList
     )
     expect(ret).toEqual({
       contents: [
@@ -1881,7 +1881,7 @@ describe('replaceTempWithResolvedPlaylists', () => {
   })
 
   it('can deal with empty libraries', () => {
-    const ret = replaceTempWithResolvedPlaylists(
+    const ret = replaceTempWithResolvedContentLists(
       {
         contents: []
       },
@@ -1891,7 +1891,7 @@ describe('replaceTempWithResolvedPlaylists', () => {
       contents: []
     })
 
-    const ret2 = replaceTempWithResolvedPlaylists({})
+    const ret2 = replaceTempWithResolvedContentLists({})
     expect(ret2).toEqual({})
   })
 
@@ -1918,7 +1918,7 @@ describe('replaceTempWithResolvedPlaylists', () => {
         { type: 'folder', id: 'my id 2', name: 'Favorites 2', contents: [] }
       ]
     }
-    const tempPlaylistIdToResolvedPlaylist = {
+    const tempContentListIdToResolvedContentList = {
       e: { type: 'content list', content list_id: 12 },
       a: { type: 'content list', content list_id: 13 },
       b: { type: 'content list', content list_id: 14 },
@@ -1926,9 +1926,9 @@ describe('replaceTempWithResolvedPlaylists', () => {
       d: { type: 'content list', content list_id: 16 }
     }
 
-    const ret = replaceTempWithResolvedPlaylists(
+    const ret = replaceTempWithResolvedContentLists(
       library,
-      tempPlaylistIdToResolvedPlaylist
+      tempContentListIdToResolvedContentList
     )
     expect(ret).toEqual({
       contents: [
@@ -1976,16 +1976,16 @@ describe('replaceTempWithResolvedPlaylists', () => {
         }
       ]
     }
-    const tempPlaylistIdToResolvedPlaylist = {
+    const tempContentListIdToResolvedContentList = {
       e: { type: 'content list', content list_id: 12 },
       b: { type: 'content list', content list_id: 14 },
       c: { type: 'content list', content list_id: 15 },
       d: { type: 'content list', content list_id: 16 }
     }
 
-    const ret = replaceTempWithResolvedPlaylists(
+    const ret = replaceTempWithResolvedContentLists(
       library,
-      tempPlaylistIdToResolvedPlaylist
+      tempContentListIdToResolvedContentList
     )
     expect(ret).toEqual({
       contents: [
@@ -2011,7 +2011,7 @@ describe('replaceTempWithResolvedPlaylists', () => {
   })
 })
 
-describe('getPlaylistsNotInLibrary', () => {
+describe('getContentListsNotInLibrary', () => {
   it('returns the content lists that are not already in the library', () => {
     const library = {
       contents: [
@@ -2079,7 +2079,7 @@ describe('getPlaylistsNotInLibrary', () => {
       }
     }
 
-    const ret = getPlaylistsNotInLibrary(library, content lists)
+    const ret = getContentListsNotInLibrary(library, content lists)
     expect(ret).toEqual({
       12: {
         id: 12,

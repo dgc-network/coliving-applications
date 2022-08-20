@@ -23,7 +23,7 @@ import { usePushSearchRoute } from './utils'
 
 const messages = {
   clear: 'Clear Recent Searches',
-  empty: 'Search for Artists, Agreements, Playlists, & Albums'
+  empty: 'Search for Artists, Agreements, ContentLists, & Albums'
 }
 
 const styles = StyleSheet.create({

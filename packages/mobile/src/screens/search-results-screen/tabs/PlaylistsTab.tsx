@@ -1,14 +1,14 @@
-import { makeGetSearchPlaylists } from '-client/src/common/store/pages/search-results/selectors'
+import { makeGetSearchContentLists } from '-client/src/common/store/pages/search-results/selectors'
 
 import { CollectionList } from 'app/components/collection-list/CollectionList'
 import { useSelectorWeb, isEqual } from 'app/hooks/useSelectorWeb'
 
 import { SearchResultsTab } from './SearchResultsTab'
 
-const getSearchPlaylists = makeGetSearchPlaylists()
+const getSearchContentLists = makeGetSearchContentLists()
 
-export const PlaylistsTab = () => {
-  const content lists = useSelectorWeb(getSearchPlaylists, isEqual)
+export const ContentListsTab = () => {
+  const content lists = useSelectorWeb(getSearchContentLists, isEqual)
 
   return (
     <SearchResultsTab noResults={content lists.length === 0}>

@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux'
 
 import { getNotificationEntities } from 'common/store/notifications/selectors'
 import {
-  AddAgreementToPlaylist,
+  AddAgreementToContentList,
   CollectionEntity,
   Entity
 } from 'common/store/notifications/types'
@@ -23,11 +23,11 @@ import { NotificationTitle } from './components/NotificationTitle'
 import { ProfilePicture } from './components/ProfilePicture'
 import { TwitterShareButton } from './components/TwitterShareButton'
 import { UserNameLink } from './components/UserNameLink'
-import { IconAddAgreementToPlaylist } from './components/icons'
+import { IconAddAgreementToContentList } from './components/icons'
 import { getEntityLink } from './utils'
 
 const messages = {
-  title: 'Agreement Added to Playlist',
+  title: 'Agreement Added to ContentList',
   shareTwitterText: (
     handle: string,
     agreement: Agreement,
@@ -36,12 +36,12 @@ const messages = {
     `My agreement ${agreement.title} was added to the content list ${content list.content list_name} by ${handle} on @colivingproject! #Coliving`
 }
 
-type AddAgreementToPlaylistNotificationProps = {
-  notification: AddAgreementToPlaylist
+type AddAgreementToContentListNotificationProps = {
+  notification: AddAgreementToContentList
 }
 
-export const AddAgreementToPlaylistNotification = (
-  props: AddAgreementToPlaylistNotificationProps
+export const AddAgreementToContentListNotification = (
+  props: AddAgreementToContentListNotificationProps
 ) => {
   const { notification } = props
   const { timeLabel, isViewed } = notification
@@ -79,7 +79,7 @@ export const AddAgreementToPlaylistNotification = (
 
   return (
     <NotificationTile notification={notification} onClick={handleClick}>
-      <NotificationHeader icon={<IconAddAgreementToPlaylist />}>
+      <NotificationHeader icon={<IconAddAgreementToContentList />}>
         <NotificationTitle>{messages.title}</NotificationTitle>
       </NotificationHeader>
       <NotificationBody className={styles.body}>
@@ -92,7 +92,7 @@ export const AddAgreementToPlaylistNotification = (
           {' added your agreement '}
           <EntityLink entity={agreement} entityType={Entity.Agreement} />
           {' to their content list '}
-          <EntityLink entity={content list} entityType={Entity.Playlist} />
+          <EntityLink entity={content list} entityType={Entity.ContentList} />
         </span>
       </NotificationBody>
       <TwitterShareButton

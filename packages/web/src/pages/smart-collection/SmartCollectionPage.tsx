@@ -4,10 +4,10 @@ import { SmartCollectionVariant } from '@coliving/common'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 
-import { getPlaylistLibrary } from 'common/store/account/selectors'
+import { getContentListLibrary } from 'common/store/account/selectors'
 import { getCollection } from 'common/store/pages/smart-collection/selectors'
 import { fetchSmartCollection } from 'common/store/pages/smart-collection/slice'
-import { findInPlaylistLibrary } from 'common/store/content list-library/helpers'
+import { findInContentListLibrary } from 'common/store/content list-library/helpers'
 import CollectionPage from 'pages/collection-page/CollectionPage'
 import { AppState } from 'store/types'
 
@@ -33,7 +33,7 @@ const SmartCollectionPage = ({
     collection = {
       ...collection,
       has_current_user_saved: content listLibrary
-        ? !!findInPlaylistLibrary(content listLibrary, variant)
+        ? !!findInContentListLibrary(content listLibrary, variant)
         : false
     }
   }
@@ -50,7 +50,7 @@ const SmartCollectionPage = ({
 function mapStateToProps(state: AppState, ownProps: OwnProps) {
   return {
     collection: getCollection(state, { variant: ownProps.variant }),
-    content listLibrary: getPlaylistLibrary(state)
+    content listLibrary: getContentListLibrary(state)
   }
 }
 

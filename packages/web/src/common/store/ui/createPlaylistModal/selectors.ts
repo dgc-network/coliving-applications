@@ -3,7 +3,7 @@ import { getCollection } from 'common/store/cache/collections/selectors'
 import { getAgreements as getCachedAgreements } from 'common/store/cache/agreements/selectors'
 import { getUsers } from 'common/store/cache/users/selectors'
 
-export const getBaseState = (state: CommonState) => state.ui.createPlaylistModal
+export const getBaseState = (state: CommonState) => state.ui.createContentListModal
 
 export const getIsOpen = (state: CommonState) => getBaseState(state).isOpen
 export const getId = (state: CommonState) => getBaseState(state).collectionId

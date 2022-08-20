@@ -20,7 +20,7 @@ import apiClient from 'services/coliving-api-client/ColivingAPIClient'
 
 export const USER_LIST_TAG = 'FAVORITES'
 
-const getPlaylistFavorites = createUserListProvider<Collection>({
+const getContentListFavorites = createUserListProvider<Collection>({
   getExistingEntity: getCollection,
   extractUserIDSubsetFromEntity: (collection: Collection) =>
     collection.followee_saves.map((r) => r.user_id),
@@ -30,7 +30,7 @@ const getPlaylistFavorites = createUserListProvider<Collection>({
     entityId,
     currentUserId
   }) => {
-    const users = await apiClient.getPlaylistFavoriteUsers({
+    const users = await apiClient.getContentListFavoriteUsers({
       limit,
       offset,
       content listId: entityId,
@@ -87,7 +87,7 @@ function* getFavorites(currentPage: number, pageSize: number) {
   return yield* (
     favoriteType === FavoriteType.AGREEMENT
       ? getAgreementFavorites
-      : getPlaylistFavorites
+      : getContentListFavorites
   )({ id, currentPage, pageSize })
 }
 

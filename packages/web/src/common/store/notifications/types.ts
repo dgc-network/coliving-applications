@@ -27,12 +27,12 @@ export enum NotificationType {
   TipSend = 'TipSend',
   SupporterRankUp = 'SupporterRankUp',
   SupportingRankUp = 'SupportingRankUp',
-  AddAgreementToPlaylist = 'AddAgreementToPlaylist'
+  AddAgreementToContentList = 'AddAgreementToContentList'
 }
 
 export enum Entity {
   Agreement = 'Agreement',
-  Playlist = 'Playlist',
+  ContentList = 'ContentList',
   Album = 'Album',
   User = 'User'
 }
@@ -66,7 +66,7 @@ export type UserSubscription = BaseNotification & {
         entityType: Entity.Agreement
       }
     | {
-        entityType: Entity.Playlist | Entity.Album
+        entityType: Entity.ContentList | Entity.Album
       }
   )
 
@@ -79,14 +79,14 @@ export type Repost = BaseNotification & {
   type: NotificationType.Repost
   entityId: ID
   userIds: ID[]
-  entityType: Entity.Playlist | Entity.Album | Entity.Agreement
+  entityType: Entity.ContentList | Entity.Album | Entity.Agreement
 }
 
 export type Favorite = BaseNotification & {
   type: NotificationType.Favorite
   entityId: ID
   userIds: ID[]
-  entityType: Entity.Playlist | Entity.Album | Entity.Agreement
+  entityType: Entity.ContentList | Entity.Album | Entity.Agreement
 }
 
 export enum Achievement {
@@ -197,8 +197,8 @@ export type SupportingRankUp = BaseNotification & {
   entityType: Entity.User
 }
 
-export type AddAgreementToPlaylist = BaseNotification & {
-  type: NotificationType.AddAgreementToPlaylist
+export type AddAgreementToContentList = BaseNotification & {
+  type: NotificationType.AddAgreementToContentList
   agreementId: ID
   content listId: ID
   content listOwnerId: ID
@@ -221,7 +221,7 @@ export type Notification =
   | TipSend
   | SupporterRankUp
   | SupportingRankUp
-  | AddAgreementToPlaylist
+  | AddAgreementToContentList
 
 export default interface NotificationState {
   notifications: {

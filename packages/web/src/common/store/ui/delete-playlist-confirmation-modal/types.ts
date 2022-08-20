@@ -1,6 +1,6 @@
 import { ID } from '@coliving/common'
 
-export type DeletePlaylistConfirmationModalState = {
+export type DeleteContentListConfirmationModalState = {
   isOpen: boolean
   content listId: ID | null
 }

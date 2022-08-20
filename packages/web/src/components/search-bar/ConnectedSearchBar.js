@@ -91,15 +91,15 @@ class ConnectedSearchBar extends Component {
         (t) => value === (t.user ? t.permalink : '')
       )
       if (selectedAgreement) return { kind: 'agreement', id: selectedAgreement.agreement_id }
-      const selectedPlaylist = this.props.search.content lists.find(
+      const selectedContentList = this.props.search.content lists.find(
         (p) =>
           value ===
           (p.user
             ? content listPage(p.user.handle, p.content list_name, p.content list_id)
             : '')
       )
-      if (selectedPlaylist)
-        return { kind: 'content list', id: selectedPlaylist.content list_id }
+      if (selectedContentList)
+        return { kind: 'content list', id: selectedContentList.content list_id }
       const selectedAlbum = this.props.search.albums.find(
         (a) =>
           value ===
@@ -165,7 +165,7 @@ class ConnectedSearchBar extends Component {
           })
         },
         {
-          title: 'Playlists',
+          title: 'ContentLists',
           children: this.props.search.content lists.map((content list) => {
             return {
               primary: content list.content list_name,

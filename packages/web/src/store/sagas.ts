@@ -13,13 +13,13 @@ import recoveryEmailSagas from 'common/store/recovery-email/sagas'
 import remoteConfigSagas from 'common/store/remote-config/sagas'
 import signOutSagas from 'common/store/sign-out/sagas'
 import artistRecommendationsSagas from 'common/store/ui/artist-recommendations/sagas'
-import deletePlaylistConfirmationModalSagas from 'common/store/ui/delete-content list-confirmation-modal/sagas'
+import deleteContentListConfirmationModalSagas from 'common/store/ui/delete-content list-confirmation-modal/sagas'
 import overflowMenuSagas from 'common/store/ui/mobile-overflow-menu/sagas'
 import reactionSagas from 'common/store/ui/reactions/sagas'
 import shareModalSagas from 'common/store/ui/share-modal/sagas'
 import toastSagas from 'common/store/ui/toast/sagas'
 import notificationUsersPageSagas from 'common/store/user-list/notifications/sagas'
-import addToPlaylistSagas from 'components/add-to-content list/store/sagas'
+import addToContentListSagas from 'components/add-to-content list/store/sagas'
 import changePasswordSagas from 'components/change-password/store/sagas'
 import firstUploadModalSagas from 'components/first-upload-modal/store/sagas'
 import notificationSagas from 'components/notification/store/sagas'
@@ -51,7 +51,7 @@ import supportingPageSagas from 'pages/supporting-page/sagas'
 import topSupportersPageSagas from 'pages/top-supporters-page/sagas'
 import agreementSagas from 'pages/agreement-page/store/sagas'
 import trendingPageSagas from 'pages/trending-page/store/sagas'
-import trendingPlaylistSagas from 'pages/trending-content lists/store/sagas'
+import trendingContentListSagas from 'pages/trending-content lists/store/sagas'
 import trendingUndergroundSagas from 'pages/trending-underground/store/sagas'
 import uploadSagas from 'pages/upload-page/store/sagas'
 import { initInterface } from 'services/native-mobile-interface/helpers'
@@ -118,7 +118,7 @@ export default function* rootSaga() {
     socialSagas(),
     agreementSagas(),
     trendingPageSagas(),
-    trendingPlaylistSagas(),
+    trendingContentListSagas(),
     trendingUndergroundSagas(),
     uploadSagas(),
 
@@ -139,12 +139,12 @@ export default function* rootSaga() {
     castSagas(webStoreContext),
 
     // Application
-    addToPlaylistSagas(),
+    addToContentListSagas(),
     artistRecommendationsSagas(),
     changePasswordSagas(),
     deactivateAccountSagas(),
     deletedSagas(),
-    deletePlaylistConfirmationModalSagas(),
+    deleteContentListConfirmationModalSagas(),
     favoritePageSagas(),
     firstUploadModalSagas(),
     followersPageSagas(),

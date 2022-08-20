@@ -3,15 +3,15 @@ import { useCallback } from 'react'
 import type { Collection } from '@/common'
 import { SquareSizes } from '@/common'
 import {
-  editPlaylist,
-  orderPlaylist,
-  removeAgreementFromPlaylist
+  editContentList,
+  orderContentList,
+  removeAgreementFromContentList
 } from 'common/store/cache/collections/actions'
 import { agreementsActions } from 'common/store/pages/collection/lineup/actions'
 import {
   getMetadata,
   getAgreements
-} from 'common/store/ui/createPlaylistModal/selectors'
+} from 'common/store/ui/createContentListModal/selectors'
 import type { FormikProps } from 'formik'
 import { Formik } from 'formik'
 import { isEqual } from 'lodash'
@@ -24,10 +24,10 @@ import { useDispatchWeb } from 'app/hooks/useDispatchWeb'
 import { useSelectorWeb } from 'app/hooks/useSelectorWeb'
 import { makeStyles } from 'app/styles'
 
-import { PlaylistDescriptionInput } from './PlaylistDescriptionInput'
-import { PlaylistImageInput } from './PlaylistImageInput'
-import { PlaylistNameInput } from './PlaylistNameInput'
-import type { PlaylistValues } from './types'
+import { ContentListDescriptionInput } from './ContentListDescriptionInput'
+import { ContentListImageInput } from './ContentListImageInput'
+import { ContentListNameInput } from './ContentListNameInput'
+import type { ContentListValues } from './types'
 
 const useStyles = makeStyles(({ spacing }) => ({
   footer: {
@@ -35,7 +35,7 @@ const useStyles = makeStyles(({ spacing }) => ({
   }
 }))
 
-const EditPlaylistForm = (props: FormikProps<PlaylistValues>) => {
+const EditContentListForm = (props: FormikProps<ContentListValues>) => {
   const { values, handleSubmit, handleReset, setFieldValue } = props
   const styles = useStyles()
 
@@ -80,9 +80,9 @@ const EditPlaylistForm = (props: FormikProps<PlaylistValues>) => {
 
   const header = (
     <>
-      <PlaylistImageInput />
-      <PlaylistNameInput />
-      <PlaylistDescriptionInput />
+      <ContentListImageInput />
+      <ContentListNameInput />
+      <ContentListDescriptionInput />
     </>
   )
 
@@ -106,7 +106,7 @@ const EditPlaylistForm = (props: FormikProps<PlaylistValues>) => {
   )
 }
 
-export const EditPlaylistScreen = () => {
+export const EditContentListScreen = () => {
   const content list = useSelectorWeb(getMetadata)
   const dispatchWeb = useDispatchWeb()
   const agreements = useSelectorWeb(getAgreements)
@@ -118,23 +118,23 @@ export const EditPlaylistScreen = () => {
   })
 
   const handleSubmit = useCallback(
-    (values: PlaylistValues) => {
+    (values: ContentListValues) => {
       if (content list) {
         values.removedAgreements.forEach(({ agreementId, timestamp }) => {
           dispatchWeb(
-            removeAgreementFromPlaylist(agreementId, content list.content list_id, timestamp)
+            removeAgreementFromContentList(agreementId, content list.content list_id, timestamp)
           )
         })
         if (!isEqual(content list?.content list_contents.agreement_ids, values.agreement_ids)) {
           dispatchWeb(
-            orderPlaylist(
+            orderContentList(
               content list?.content list_id,
               values.agreement_ids.map(({ agreement, time }) => ({ id: agreement, time }))
             )
           )
         }
         dispatchWeb(
-          editPlaylist(content list.content list_id, values as unknown as Collection)
+          editContentList(content list.content list_id, values as unknown as Collection)
         )
         dispatchWeb(agreementsActions.fetchLineupMetadatas())
       }
@@ -159,7 +159,7 @@ export const EditPlaylistScreen = () => {
     <Formik
       initialValues={initialValues}
       onSubmit={handleSubmit}
-      component={EditPlaylistForm}
+      component={EditContentListForm}
     />
   )
 }

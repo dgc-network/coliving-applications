@@ -22,7 +22,7 @@ import { isDarkMode } from 'utils/theme/theme'
 import styles from './CollectionHeader.module.css'
 
 const messages = {
-  privatePlaylist: 'Private Playlist',
+  privateContentList: 'Private ContentList',
   publishing: 'Publishing...',
   play: 'PLAY',
   pause: 'PAUSE'
@@ -181,7 +181,7 @@ const CollectionHeader = ({
         {type === 'content list' && !isPublished
           ? isPublishing
             ? messages.publishing
-            : messages.privatePlaylist
+            : messages.privateContentList
           : type}
       </div>
       {loading ? (
@@ -243,7 +243,7 @@ const CollectionHeader = ({
               showFavorite={!!onSave}
               showRepost={variant !== Variant.SMART}
               showShare={
-                variant !== Variant.SMART || type === 'Audio NFT Playlist'
+                variant !== Variant.SMART || type === 'Audio NFT ContentList'
               }
               showOverflow={variant !== Variant.SMART}
               darkMode={isDarkMode()}

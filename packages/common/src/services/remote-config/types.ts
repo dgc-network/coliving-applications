@@ -245,7 +245,7 @@ export enum StringKeys {
   /** Underground trending experiment id */
   UNDERGROUND_TRENDING_EXPERIMENT = 'UNDERGROUND_TRENDING_EXPERIMENT',
 
-  /** Playlist trending experiment id */
+  /** ContentList trending experiment id */
   CONTENT_LIST_TRENDING_EXPERIMENT = 'CONTENT_LIST_TRENDING_EXPERIMENT',
 
   /** Ethereum address for oracle */

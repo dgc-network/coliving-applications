@@ -10,11 +10,11 @@ import { formatSeconds } from 'common/utils/timeUtil'
 import FavoriteButton from 'components/alt-button/FavoriteButton'
 import RepostButton from 'components/alt-button/RepostButton'
 import Skeleton from 'components/skeleton/Skeleton'
-import { PlaylistTileProps } from 'components/agreement/types'
+import { ContentListTileProps } from 'components/agreement/types'
 import UserBadges from 'components/user-badges/UserBadges'
 
 import BottomButtons from './BottomButtons'
-import styles from './PlaylistTile.module.css'
+import styles from './ContentListTile.module.css'
 import { RankIcon } from './AgreementTile'
 import AgreementTileArt from './AgreementTileArt'
 
@@ -122,7 +122,7 @@ type ExtraProps = {
   isMatrix: boolean
 }
 
-const PlaylistTile = (props: PlaylistTileProps & ExtraProps) => {
+const ContentListTile = (props: ContentListTileProps & ExtraProps) => {
   const {
     hasLoaded,
     index,
@@ -269,4 +269,4 @@ const PlaylistTile = (props: PlaylistTileProps & ExtraProps) => {
   )
 }
 
-export default PlaylistTile
+export default ContentListTile

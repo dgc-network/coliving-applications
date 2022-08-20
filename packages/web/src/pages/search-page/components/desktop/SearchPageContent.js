@@ -18,7 +18,7 @@ import {
   albumPage,
   fullAlbumPage,
   content listPage,
-  fullPlaylistPage,
+  fullContentListPage,
   profilePage,
   fullSearchResultsPage,
   NOT_FOUND_PAGE
@@ -196,7 +196,7 @@ class SearchPageContent extends Component {
           fillParent={false}
           content listId={content list.content list_id}
           isAlbum={content list.is_album}
-          link={fullPlaylistPage(
+          link={fullContentListPage(
             content list.user.handle,
             content list.content list_name,
             content list.content list_id
@@ -347,7 +347,7 @@ class SearchPageContent extends Component {
       ) : (
         <>
           <CardLineup
-            categoryName={'Playlists'}
+            categoryName={'ContentLists'}
             cards={content listCards}
             containerClassName={styles.content listSearchResultsContainer}
             cardsClassName={styles.cardsContainer}
@@ -426,7 +426,7 @@ class SearchPageContent extends Component {
           ) : null}
           {!isTagSearch && content listCards.length > 0 ? (
             <CardLineup
-              categoryName={'Playlists'}
+              categoryName={'ContentLists'}
               onMore={
                 content listCards.length >= 4
                   ? handleViewMoreResults('content lists')

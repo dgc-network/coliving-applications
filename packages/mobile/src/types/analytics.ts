@@ -44,5 +44,5 @@ export {
   RepostSource,
   FavoriteSource,
   FollowSource,
-  CreatePlaylistSource
+  CreateContentListSource
 } from '@/common'

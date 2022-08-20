@@ -46,7 +46,7 @@ const ExplorePage = ({
         agreementCount={content list.content list_contents.agreement_ids.length}
         reposts={content list.repost_count}
         favorites={content list.save_count}
-        isPlaylist={!content list.is_album}
+        isContentList={!content list.is_album}
         onClickReposts={() => onClickReposts(content list.content list_id)}
         onClickFavorites={() => onClickFavorites(content list.content list_id)}
         onClick={() =>

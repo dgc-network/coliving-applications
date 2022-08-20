@@ -61,7 +61,7 @@ const NavigationContainer = ({ children }: Props) => {
                       screens: {
                         Agreements: 'agreements',
                         Albums: 'albums',
-                        Playlists: 'content lists',
+                        ContentLists: 'content lists',
                         Reposts: 'reposts',
                         Collectibles: 'collectibles'
                       }
@@ -78,7 +78,7 @@ const NavigationContainer = ({ children }: Props) => {
                   initialRouteName: 'Explore',
                   screens: {
                     Explore: 'explore',
-                    TrendingPlaylists: 'explore/content lists',
+                    TrendingContentLists: 'explore/content lists',
                     TrendingUnderground: 'explore/underground',
                     LetThemDJ: 'explore/let-them-dj',
                     TopAlbums: 'explore/top-albums',
@@ -88,11 +88,11 @@ const NavigationContainer = ({ children }: Props) => {
                     MostLoved: 'explore/most-loved',
                     FeelingLucky: 'explore/feeling-lucky',
                     HeavyRotation: 'explore/heavy-rotation',
-                    ChillPlaylists: 'explore/chill',
-                    IntensePlaylists: 'explore/intense',
-                    IntimatePlaylists: 'explore/intimate',
-                    ProvokingPlaylists: 'explore/provoking',
-                    UpbeatPlaylists: 'explore/upbeat'
+                    ChillContentLists: 'explore/chill',
+                    IntenseContentLists: 'explore/intense',
+                    IntimateContentLists: 'explore/intimate',
+                    ProvokingContentLists: 'explore/provoking',
+                    UpbeatContentLists: 'explore/upbeat'
                   }
                 },
                 favorites: {
@@ -107,7 +107,7 @@ const NavigationContainer = ({ children }: Props) => {
                       screens: {
                         Agreements: 'agreements',
                         Albums: 'albums',
-                        Playlists: 'content lists',
+                        ContentLists: 'content lists',
                         Reposts: 'reposts',
                         Collectibles: 'collectibles'
                       }

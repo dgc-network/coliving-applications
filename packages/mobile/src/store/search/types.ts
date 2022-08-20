@@ -87,7 +87,7 @@ export type SearchAgreement = AgreementImage & {
   _remixes_count: undefined
 }
 
-export type SearchPlaylist = CollectionImage & {
+export type SearchContentList = CollectionImage & {
   _cover_art_sizes: null
   _is_publishing?: boolean
   description: string | null
@@ -122,7 +122,7 @@ export type SearchPlaylist = CollectionImage & {
 export type SearchResults = {
   users: SearchUser[]
   agreements: SearchAgreement[]
-  content lists: SearchPlaylist[]
-  albums: SearchPlaylist[]
+  content lists: SearchContentList[]
+  albums: SearchContentList[]
 }
 export type SectionHeader = keyof SearchResults

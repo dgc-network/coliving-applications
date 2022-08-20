@@ -404,7 +404,7 @@ class GiantAgreementTile extends PureComponent {
         isArtistPick,
         includeEmbed: !isUnlisted,
         includeArtistPick: !isUnlisted,
-        includeAddToPlaylist: !isUnlisted,
+        includeAddToContentList: !isUnlisted,
         extraMenuItems: overflowMenuExtraItems
       }
     }

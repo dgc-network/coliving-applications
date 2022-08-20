@@ -3,16 +3,16 @@ import { isMobile } from 'utils/clientUtil'
 import DesktopCollectionPage from '../collection-page/components/desktop/CollectionPage'
 import MobileCollectionPage from '../collection-page/components/mobile/CollectionPage'
 
-import { CollectiblesPlaylistPageProvider } from './CollectiblesPlaylistPageProvider'
+import { CollectiblesContentListPageProvider } from './CollectiblesContentListPageProvider'
 
 const isMobileClient = isMobile()
 
-export const CollectiblesPlaylistPage = () => {
+export const CollectiblesContentListPage = () => {
   const content = isMobileClient ? MobileCollectionPage : DesktopCollectionPage
 
   return (
-    <CollectiblesPlaylistPageProvider>
+    <CollectiblesContentListPageProvider>
       {content}
-    </CollectiblesPlaylistPageProvider>
+    </CollectiblesContentListPageProvider>
   )
 }

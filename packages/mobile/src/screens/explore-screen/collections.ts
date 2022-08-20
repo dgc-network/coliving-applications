@@ -4,7 +4,7 @@ import type { SvgProps } from 'react-native-svg'
 import {
   EXPLORE_LET_THEM_DJ_PAGE,
   EXPLORE_TOP_ALBUMS_PAGE,
-  exploreMoodPlaylistsPage,
+  exploreMoodContentListsPage,
   TRENDING_CONTENT_LISTS_PAGE,
   TRENDING_UNDERGROUND_PAGE
 } from 'utils/route'
@@ -17,22 +17,22 @@ import EmojiThinkingFace from 'app/assets/images/emojis/thinking-face.png'
 import IconCassette from 'app/assets/images/iconCassette.svg'
 import IconExploreDJ from 'app/assets/images/iconExploreDJ.svg'
 import IconExploreTopAlbums from 'app/assets/images/iconExploreTopAlbums.svg'
-import IconExploreTopPlaylists from 'app/assets/images/iconExploreTopPlaylists.svg'
+import IconExploreTopContentLists from 'app/assets/images/iconExploreTopContentLists.svg'
 
 import type { ExploreCollectionsVariant } from './types'
 
 export type CollectionScreen =
   | 'LetThemDJ'
   | 'TopAlbums'
-  | 'TrendingPlaylists'
+  | 'TrendingContentLists'
   | 'TrendingUnderground'
 
 export type MoodScreen =
-  | 'IntensePlaylists'
-  | 'ChillPlaylists'
-  | 'ProvokingPlaylists'
-  | 'IntimatePlaylists'
-  | 'UpbeatPlaylists'
+  | 'IntenseContentLists'
+  | 'ChillContentLists'
+  | 'ProvokingContentLists'
+  | 'IntimateContentLists'
+  | 'UpbeatContentLists'
 
 export type ExploreCollection = {
   variant: ExploreCollectionsVariant
@@ -58,7 +58,7 @@ export const LET_THEM_DJ: ExploreCollection = {
   variant: 'Let Them DJ',
   title: 'Let Them DJ',
   screen: 'LetThemDJ',
-  description: 'Playlists created by the people you follow',
+  description: 'ContentLists created by the people you follow',
   gradientColors: ['#08AEEA', '#2AF598'],
   gradientAngle: 315,
   shadowColor: 'rgb(9,175,233)',
@@ -82,14 +82,14 @@ export const TOP_ALBUMS: ExploreCollection = {
 
 export const TRENDING_CONTENT_LISTS: ExploreCollection = {
   variant: 'Direct Link',
-  title: 'Trending Playlists',
-  screen: 'TrendingPlaylists',
+  title: 'Trending ContentLists',
+  screen: 'TrendingContentLists',
   description: 'The top content lists on Coliving right now',
   gradientColors: ['#57ABFF', '#CD98FF'],
   gradientAngle: 315,
   shadowColor: 'rgb(87,170,255)',
   shadowOpacity: 0.25,
-  icon: IconExploreTopPlaylists,
+  icon: IconExploreTopContentLists,
   link: TRENDING_CONTENT_LISTS_PAGE,
   incentivized: true
 }
@@ -113,64 +113,64 @@ export const TRENDING_UNDERGROUND: ExploreCollection = {
 export const CHILL_CONTENT_LISTS: ExploreMoodCollection = {
   variant: 'Mood',
   title: 'Chill',
-  screen: 'ChillPlaylists',
+  screen: 'ChillContentLists',
   emoji: EmojiDoveOfPeace,
   gradientColors: ['#2CD1FF', '#FA8BFF'],
   gradientAngle: 135,
   shadowColor: 'rgb(237,144,255)',
   shadowOpacity: 0.25,
-  link: exploreMoodPlaylistsPage('chill'),
+  link: exploreMoodContentListsPage('chill'),
   moods: ['peaceful', 'easygoing', 'melancholy']
 }
 
 export const PROVOKING_CONTENT_LISTS: ExploreMoodCollection = {
   variant: 'Mood',
   title: 'Provoking',
-  screen: 'ProvokingPlaylists',
+  screen: 'ProvokingContentLists',
   emoji: EmojiThinkingFace,
   gradientColors: ['#3FECF4', '#16A085'],
   gradientAngle: 135,
   shadowColor: 'rgb(115,225,179)',
   shadowOpacity: 0.25,
-  link: exploreMoodPlaylistsPage('provoking'),
+  link: exploreMoodContentListsPage('provoking'),
   moods: ['sophisticated', 'brooding', 'serious', 'stirring']
 }
 
 export const INTIMATE_CONTENT_LISTS: ExploreMoodCollection = {
   variant: 'Mood',
   title: 'Intimate',
-  screen: 'IntimatePlaylists',
+  screen: 'IntimateContentLists',
   emoji: EmojiHeartWithArrow,
   gradientColors: ['#F24FDF', '#C881FF'],
   gradientAngle: 315,
   shadowColor: 'rgb(241,81,225)',
   shadowOpacity: 0.25,
-  link: exploreMoodPlaylistsPage('intimate'),
+  link: exploreMoodContentListsPage('intimate'),
   moods: ['sentimental', 'romantic', 'yearning', 'sensual', 'tender']
 }
 
 export const UPBEAT_CONTENT_LISTS: ExploreMoodCollection = {
   variant: 'Mood',
   title: 'Upbeat',
-  screen: 'UpbeatPlaylists',
+  screen: 'UpbeatContentLists',
   emoji: EmojiRaisedHands,
   gradientColors: ['#896BFF', '#0060FF'],
   gradientAngle: 135,
   shadowColor: 'rgb(11,97,255)',
   shadowOpacity: 0.25,
-  link: exploreMoodPlaylistsPage('upbeat'),
+  link: exploreMoodContentListsPage('upbeat'),
   moods: ['upbeat', 'excited', 'energizing', 'empowering', 'cool']
 }
 
 export const INTENSE_CONTENT_LISTS: ExploreMoodCollection = {
   variant: 'Mood',
   title: 'Intense',
-  screen: 'IntensePlaylists',
+  screen: 'IntenseContentLists',
   emoji: EmojiFire,
   gradientColors: ['#FBAB7E', '#F7CE68'],
   gradientAngle: 315,
   shadowColor: 'rgb(250,173,124)',
   shadowOpacity: 0.25,
-  link: exploreMoodPlaylistsPage('intense'),
+  link: exploreMoodContentListsPage('intense'),
   moods: ['rowdy', 'fiery', 'defiant', 'aggressive', 'gritty']
 }

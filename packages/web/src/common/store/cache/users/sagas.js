@@ -13,7 +13,7 @@ import {
   getUsers,
   getUserTimestamps
 } from 'common/store/cache/users/selectors'
-import { removePlaylistLibraryTempPlaylists } from 'common/store/content list-library/helpers'
+import { removeContentListLibraryTempContentLists } from 'common/store/content list-library/helpers'
 import {
   getSelectedServices,
   getStatus
@@ -152,7 +152,7 @@ export function* fetchUserByHandle(
  */
 export function* fetchUserCollections(userId) {
   // Get content lists.
-  const content lists = yield call(ColivingBackend.getPlaylists, userId)
+  const content lists = yield call(ColivingBackend.getContentLists, userId)
   const content listIds = content lists.map((p) => p.content list_id)
 
   if (!content listIds.length) return
@@ -216,7 +216,7 @@ function* watchSyncLocalStorageUser() {
       cleaned.content list_library =
         cleaned.content list_library == null
           ? cleaned.content list_library
-          : removePlaylistLibraryTempPlaylists(cleaned.content list_library)
+          : removeContentListLibraryTempContentLists(cleaned.content list_library)
       // Set user back to local storage
       setColivingAccountUser(cleaned)
     }

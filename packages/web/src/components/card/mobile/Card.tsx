@@ -58,7 +58,7 @@ type CardProps = {
   secondaryText: ReactNode
   isUser?: boolean
   agreementCount?: number
-  isPlaylist?: boolean
+  isContentList?: boolean
   // Socials
   reposts?: number
   favorites?: number
@@ -142,7 +142,7 @@ Card.defaultProps = {
   secondaryText: '',
   onClick: () => {},
   className: '',
-  isPlaylist: true
+  isContentList: true
 }
 
 export default Card

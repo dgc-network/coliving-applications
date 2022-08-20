@@ -1,16 +1,16 @@
 import { useContext, useMemo, useState } from 'react'
 
-import { CreatePlaylistSource, Collection, SquareSizes } from '@coliving/common'
+import { CreateContentListSource, Collection, SquareSizes } from '@coliving/common'
 import { Modal, Scrollbar } from '@coliving/stems'
 import cn from 'classnames'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { ReactComponent as IconMultiselectAdd } from 'assets/img/iconMultiselectAdd.svg'
 import { useModalState } from 'common/hooks/useModalState'
-import { getAccountWithOwnPlaylists } from 'common/store/account/selectors'
+import { getAccountWithOwnContentLists } from 'common/store/account/selectors'
 import {
-  addAgreementToPlaylist,
-  createPlaylist
+  addAgreementToContentList,
+  createContentList
 } from 'common/store/cache/collections/actions'
 import { getCollectionId } from 'common/store/pages/collection/selectors'
 import {
@@ -26,32 +26,32 @@ import { newCollectionMetadata } from 'schemas'
 import { AppState } from 'store/types'
 import { content listPage } from 'utils/route'
 
-import styles from './AddToPlaylistModal.module.css'
+import styles from './AddToContentListModal.module.css'
 
 const messages = {
-  title: 'Add to Playlist',
-  newPlaylist: 'New Playlist',
+  title: 'Add to ContentList',
+  newContentList: 'New ContentList',
   searchPlaceholder: 'Find one of your content lists',
-  addedToast: 'Added To Playlist!',
-  createdToast: 'Playlist Created!',
+  addedToast: 'Added To ContentList!',
+  createdToast: 'ContentList Created!',
   view: 'View'
 }
 
-const AddToPlaylistModal = () => {
+const AddToContentListModal = () => {
   const dispatch = useDispatch()
   const { toast } = useContext(ToastContext)
 
-  const [isOpen, setIsOpen] = useModalState('AddToPlaylist')
+  const [isOpen, setIsOpen] = useModalState('AddToContentList')
   const agreementId = useSelector(getAgreementId)
   const agreementTitle = useSelector(getAgreementTitle)
   const currentCollectionId = useSelector(getCollectionId)
   const account = useSelector((state: AppState) =>
-    getAccountWithOwnPlaylists(state)
+    getAccountWithOwnContentLists(state)
   )
 
   const [searchValue, setSearchValue] = useState('')
 
-  const filteredPlaylists = useMemo(() => {
+  const filteredContentLists = useMemo(() => {
     return (account?.content lists ?? []).filter(
       (content list: Collection) =>
         // Don't allow adding to this content list if already on this content list's page.
@@ -64,8 +64,8 @@ const AddToPlaylistModal = () => {
     )
   }, [searchValue, account, currentCollectionId])
 
-  const handlePlaylistClick = (content list: Collection) => {
-    dispatch(addAgreementToPlaylist(agreementId, content list.content list_id))
+  const handleContentListClick = (content list: Collection) => {
+    dispatch(addAgreementToContentList(agreementId, content list.content list_id))
     if (account && agreementTitle) {
       toast(
         <ToastLinkContent
@@ -78,16 +78,16 @@ const AddToPlaylistModal = () => {
     setIsOpen(false)
   }
 
-  const handleCreatePlaylist = () => {
+  const handleCreateContentList = () => {
     const metadata = newCollectionMetadata({
       content list_name: agreementTitle,
       is_private: false
     })
     const tempId = `${Date.now()}`
     dispatch(
-      createPlaylist(tempId, metadata, CreatePlaylistSource.FROM_AGREEMENT, agreementId)
+      createContentList(tempId, metadata, CreateContentListSource.FROM_AGREEMENT, agreementId)
     )
-    dispatch(addAgreementToPlaylist(agreementId, tempId))
+    dispatch(addAgreementToContentList(agreementId, tempId))
     if (account && agreementTitle) {
       toast(
         <ToastLinkContent
@@ -124,16 +124,16 @@ const AddToPlaylistModal = () => {
       />
       <Scrollbar>
         <div className={styles.listContent}>
-          <div className={cn(styles.listItem)} onClick={handleCreatePlaylist}>
+          <div className={cn(styles.listItem)} onClick={handleCreateContentList}>
             <IconMultiselectAdd className={styles.add} />
-            <span>{messages.newPlaylist}</span>
+            <span>{messages.newContentList}</span>
           </div>
           <div className={styles.list}>
-            {filteredPlaylists.map((content list) => (
+            {filteredContentLists.map((content list) => (
               <div key={`${content list.content list_id}`}>
-                <PlaylistItem
+                <ContentListItem
                   content list={content list}
-                  handleClick={handlePlaylistClick}
+                  handleClick={handleContentListClick}
                 />
               </div>
             ))}
@@ -144,12 +144,12 @@ const AddToPlaylistModal = () => {
   )
 }
 
-type PlaylistItemProps = {
+type ContentListItemProps = {
   handleClick: (content list: Collection) => void
   content list: Collection
 }
 
-const PlaylistItem = ({ handleClick, content list }: PlaylistItemProps) => {
+const ContentListItem = ({ handleClick, content list }: ContentListItemProps) => {
   const image = useCollectionCoverArt(
     content list.content list_id,
     content list._cover_art_sizes,
@@ -168,4 +168,4 @@ const PlaylistItem = ({ handleClick, content list }: PlaylistItemProps) => {
   )
 }
 
-export default AddToPlaylistModal
+export default AddToContentListModal

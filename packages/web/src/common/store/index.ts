@@ -40,7 +40,7 @@ import smartCollection from 'common/store/pages/smart-collection/slice'
 import tokenDashboardSlice from 'common/store/pages/token-dashboard/slice'
 import agreement from 'common/store/pages/agreement/reducer'
 import AgreementPageState from 'common/store/pages/agreement/types'
-import trendingPlaylists from 'common/store/pages/trending-content lists/slice'
+import trendingContentLists from 'common/store/pages/trending-content lists/slice'
 import trendingUnderground from 'common/store/pages/trending-underground/slice'
 import trending from 'common/store/pages/trending/reducer'
 import { TrendingPageState } from 'common/store/pages/trending/types'
@@ -53,8 +53,8 @@ import signOutSagas from 'common/store/sign-out/sagas'
 import solanaReducer from 'common/store/solana/slice'
 import stemsUpload from 'common/store/stems-upload/slice'
 import tippingReducer from 'common/store/tipping/slice'
-import addToPlaylistReducer, {
-  AddToPlaylistState
+import addToContentListReducer, {
+  AddToContentListState
 } from 'common/store/ui/add-to-content list/reducer'
 import artistRecommendationsReducer, {
   ArtistRecommendationsState
@@ -62,10 +62,10 @@ import artistRecommendationsReducer, {
 import collectibleDetailsReducer, {
   CollectibleDetailsState
 } from 'common/store/ui/collectible-details/slice'
-import createPlaylistModalReducer from 'common/store/ui/createPlaylistModal/reducer'
-import { CreatePlaylistModalState } from 'common/store/ui/createPlaylistModal/types'
-import deletePlaylistConfirmationReducer from 'common/store/ui/delete-content list-confirmation-modal/slice'
-import { DeletePlaylistConfirmationModalState } from 'common/store/ui/delete-content list-confirmation-modal/types'
+import createContentListModalReducer from 'common/store/ui/createContentListModal/reducer'
+import { CreateContentListModalState } from 'common/store/ui/createContentListModal/types'
+import deleteContentListConfirmationReducer from 'common/store/ui/delete-content list-confirmation-modal/slice'
+import { DeleteContentListConfirmationModalState } from 'common/store/ui/delete-content list-confirmation-modal/types'
 import mobileOverflowModalReducer from 'common/store/ui/mobile-overflow-menu/slice'
 import { MobileOverflowModalState } from 'common/store/ui/mobile-overflow-menu/types'
 import modalsReducer, { ModalsState } from 'common/store/ui/modals/slice'
@@ -132,12 +132,12 @@ export const reducers = (ctx: CommonStoreContext) => ({
   // UI
   ui: combineReducers({
     averageColor: averageColorReducer,
-    addToPlaylist: addToPlaylistReducer,
+    addToContentList: addToContentListReducer,
     artistRecommendations: artistRecommendationsReducer,
     changePassword: changePasswordReducer,
-    createPlaylistModal: createPlaylistModalReducer,
+    createContentListModal: createContentListModalReducer,
     collectibleDetails: collectibleDetailsReducer,
-    deletePlaylistConfirmationModal: deletePlaylistConfirmationReducer,
+    deleteContentListConfirmationModal: deleteContentListConfirmationReducer,
     mobileOverflowModal: mobileOverflowModalReducer,
     modals: modalsReducer,
     nowPlaying: nowPlayingReducer,
@@ -173,7 +173,7 @@ export const reducers = (ctx: CommonStoreContext) => ({
     tokenDashboard: tokenDashboardSlice.reducer,
     agreement,
     trending,
-    trendingPlaylists,
+    trendingContentLists,
     trendingUnderground,
     settings,
     notifications,
@@ -276,12 +276,12 @@ export type CommonState = {
 
   ui: {
     averageColor: ReturnType<typeof averageColorReducer>
-    addToPlaylist: AddToPlaylistState
+    addToContentList: AddToContentListState
     artistRecommendations: ArtistRecommendationsState
     changePassword: ChangePasswordState
-    createPlaylistModal: CreatePlaylistModalState
+    createContentListModal: CreateContentListModalState
     collectibleDetails: CollectibleDetailsState
-    deletePlaylistConfirmationModal: DeletePlaylistConfirmationModalState
+    deleteContentListConfirmationModal: DeleteContentListConfirmationModalState
     mobileOverflowModal: MobileOverflowModalState
     modals: ModalsState
     nowPlaying: NowPlayingState
@@ -317,7 +317,7 @@ export type CommonState = {
     searchResults: SearchPageState
     settings: SettingsPageState
     trending: TrendingPageState
-    trendingPlaylists: ReturnType<typeof trendingPlaylists>
+    trendingContentLists: ReturnType<typeof trendingContentLists>
     trendingUnderground: ReturnType<typeof trendingUnderground>
     notifications: ReturnType<typeof notifications>
     remixes: ReturnType<typeof remixes>

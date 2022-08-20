@@ -41,7 +41,7 @@ const ExplorePage = ({
     fetchExplore()
   }, [fetchExplore])
 
-  const formatPlaylistCardSecondaryText = (saves: number, agreements: number) => {
+  const formatContentListCardSecondaryText = (saves: number, agreements: number) => {
     const savesText = saves === 1 ? 'Favorite' : 'Favorites'
     const agreementsText = agreements === 1 ? 'Agreement' : 'Agreements'
     return `${formatCount(saves)} ${savesText} • ${agreements} ${agreementsText}`
@@ -60,7 +60,7 @@ const ExplorePage = ({
     content lists: explore.content lists,
     profiles: explore.profiles,
     status: explore.status,
-    formatPlaylistCardSecondaryText,
+    formatContentListCardSecondaryText,
     formatProfileCardSecondaryText,
 
     // Props from dispatch

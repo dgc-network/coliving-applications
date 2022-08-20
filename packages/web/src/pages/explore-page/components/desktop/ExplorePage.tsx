@@ -44,15 +44,15 @@ import styles from './ExplorePage.module.css'
 import Section, { Layout } from './Section'
 
 const messages = {
-  featuredPlaylists: 'Playlists We Love Right Now',
+  featuredContentLists: 'ContentLists We Love Right Now',
   featuredProfiles: 'Artists You Should Follow',
-  exploreMorePlaylists: 'Explore More Playlists',
+  exploreMoreContentLists: 'Explore More ContentLists',
   exploreMoreProfiles: 'Explore More Artists',
   justForYou: 'Just For You',
   justForYouSubtitle: `Content curated for you based on your likes,
 reposts, and follows. Refreshes often so if you like a agreement, favorite it.`,
-  lifestyle: 'Playlists to Fit Your Mood',
-  lifestyleSubtitle: 'Playlists made by Coliving users, sorted by mood and feel'
+  lifestyle: 'ContentLists to Fit Your Mood',
+  lifestyleSubtitle: 'ContentLists made by Coliving users, sorted by mood and feel'
 }
 
 export const justForYou = [
@@ -93,7 +93,7 @@ const ExplorePage = ({
   status,
   goToRoute
 }: ExplorePageProps) => {
-  const { isLoading: isLoadingPlaylist, setDidLoad: setDidLoadPlaylist } =
+  const { isLoading: isLoadingContentList, setDidLoad: setDidLoadContentList } =
     useOrderedLoad(content lists.length)
   const { isLoading: isLoadingProfiles, setDidLoad: setDidLoadProfile } =
     useOrderedLoad(profiles.length)
@@ -166,9 +166,9 @@ const ExplorePage = ({
       </Section>
 
       <Section
-        title={messages.featuredPlaylists}
+        title={messages.featuredContentLists}
         expandable
-        expandText={messages.exploreMorePlaylists}
+        expandText={messages.exploreMoreContentLists}
       >
         {status === Status.LOADING ? (
           <div className={styles.loadingSpinner}>
@@ -187,8 +187,8 @@ const ExplorePage = ({
                 key={content list.content list_id}
                 id={content list.content list_id}
                 index={i}
-                isLoading={isLoadingPlaylist(i)}
-                setDidLoad={setDidLoadPlaylist}
+                isLoading={isLoadingContentList(i)}
+                setDidLoad={setDidLoadContentList}
               />
             )
           })

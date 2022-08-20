@@ -4,8 +4,8 @@ import { push } from 'connected-react-router'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { useModalState } from 'common/hooks/useModalState'
-import { deletePlaylist } from 'common/store/cache/collections/actions'
-import { getPlaylistId } from 'common/store/ui/delete-content list-confirmation-modal/selectors'
+import { deleteContentList } from 'common/store/cache/collections/actions'
+import { getContentListId } from 'common/store/ui/delete-content list-confirmation-modal/selectors'
 import ActionSheetModal from 'components/action-drawer/ActionDrawer'
 import { RouterContext } from 'components/animated-switch/RouterContextProvider'
 import { TRENDING_PAGE } from 'utils/route'
@@ -20,9 +20,9 @@ const actions = [
   { text: messages.cancel }
 ]
 
-const DeletePlaylistConfirmationModal = () => {
-  const [isOpen, setIsOpen] = useModalState('DeletePlaylistConfirmation')
-  const content listId = useSelector(getPlaylistId) ?? -1
+const DeleteContentListConfirmationModal = () => {
+  const [isOpen, setIsOpen] = useModalState('DeleteContentListConfirmation')
+  const content listId = useSelector(getContentListId) ?? -1
   const dispatch = useDispatch()
   const { setStackReset } = useContext(RouterContext)
 
@@ -33,7 +33,7 @@ const DeletePlaylistConfirmationModal = () => {
   const handleDelete = useCallback(() => {
     setStackReset(true)
     dispatch(push(TRENDING_PAGE))
-    dispatch(deletePlaylist(content listId))
+    dispatch(deleteContentList(content listId))
     handleClose()
   }, [dispatch, setStackReset, content listId, handleClose])
 
@@ -56,4 +56,4 @@ const DeletePlaylistConfirmationModal = () => {
   )
 }
 
-export default DeletePlaylistConfirmationModal
+export default DeleteContentListConfirmationModal

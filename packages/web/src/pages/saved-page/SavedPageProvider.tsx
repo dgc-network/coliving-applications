@@ -14,10 +14,10 @@ import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { Dispatch } from 'redux'
 
 import * as accountActions from 'common/store/account/reducer'
-import { getAccountWithSavedPlaylistsAndAlbums } from 'common/store/account/selectors'
+import { getAccountWithSavedContentListsAndAlbums } from 'common/store/account/selectors'
 import { makeGetTableMetadatas } from 'common/store/lineup/selectors'
-import { updatePlaylistLastViewedAt } from 'common/store/notifications/actions'
-import { getPlaylistUpdates } from 'common/store/notifications/selectors'
+import { updateContentListLastViewedAt } from 'common/store/notifications/actions'
+import { getContentListUpdates } from 'common/store/notifications/selectors'
 import * as saveActions from 'common/store/pages/saved-page/actions'
 import { agreementsActions } from 'common/store/pages/saved-page/lineups/agreements/actions'
 import { getSavedAgreementsLineup } from 'common/store/pages/saved-page/selectors'
@@ -76,7 +76,7 @@ class SavedPage extends PureComponent<SavedPageProps, SavedPageState> {
     this.props.fetchSavedAgreements()
     this.props.fetchSavedAlbums()
     if (isMobile()) {
-      this.props.fetchSavedPlaylists()
+      this.props.fetchSavedContentLists()
     }
   }
 
@@ -165,7 +165,7 @@ class SavedPage extends PureComponent<SavedPageProps, SavedPageState> {
     )
   }
 
-  getFilteredPlaylists = (
+  getFilteredContentLists = (
     content lists: SavedPageCollection[]
   ): SavedPageCollection[] => {
     const filterText = this.state.filterText
@@ -393,12 +393,12 @@ class SavedPage extends PureComponent<SavedPageProps, SavedPageState> {
 
     const mobileProps = {
       content listUpdates: this.props.content listUpdates,
-      updatePlaylistLastViewedAt: this.props.updatePlaylistLastViewedAt,
+      updateContentListLastViewedAt: this.props.updateContentListLastViewedAt,
 
       onSave: this.onSave,
       onTogglePlay: this.onTogglePlay,
       getFilteredAlbums: this.getFilteredAlbums,
-      getFilteredPlaylists: this.getFilteredPlaylists
+      getFilteredContentLists: this.getFilteredContentLists
     }
 
     const desktopProps = {
@@ -421,12 +421,12 @@ function makeMapStateToProps() {
   const getCurrentQueueItem = makeGetCurrent()
   const mapStateToProps = (state: AppState) => {
     return {
-      account: getAccountWithSavedPlaylistsAndAlbums(state),
+      account: getAccountWithSavedContentListsAndAlbums(state),
       agreements: getLineupMetadatas(state),
       currentQueueItem: getCurrentQueueItem(state),
       playing: getPlaying(state),
       buffering: getBuffering(state),
-      content listUpdates: getPlaylistUpdates(state)
+      content listUpdates: getContentListUpdates(state)
     }
   }
   return mapStateToProps
@@ -439,9 +439,9 @@ function mapDispatchToProps(dispatch: Dispatch) {
     updateLineupOrder: (updatedOrderIndices: UID[]) =>
       dispatch(agreementsActions.updateLineupOrder(updatedOrderIndices)),
     fetchSavedAlbums: () => dispatch(accountActions.fetchSavedAlbums()),
-    fetchSavedPlaylists: () => dispatch(accountActions.fetchSavedPlaylists()),
-    updatePlaylistLastViewedAt: (content listId: number) =>
-      dispatch(updatePlaylistLastViewedAt(content listId)),
+    fetchSavedContentLists: () => dispatch(accountActions.fetchSavedContentLists()),
+    updateContentListLastViewedAt: (content listId: number) =>
+      dispatch(updateContentListLastViewedAt(content listId)),
     goToRoute: (route: string) => dispatch(pushRoute(route)),
     play: (uid?: UID) => dispatch(agreementsActions.play(uid)),
     pause: () => dispatch(agreementsActions.pause()),

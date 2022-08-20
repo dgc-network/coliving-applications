@@ -1,9 +1,9 @@
 import { Status } from '@coliving/common'
 import { connect } from 'react-redux'
 
-import DesktopPlaylistTile from 'components/agreement/desktop/ConnectedPlaylistTile'
+import DesktopContentListTile from 'components/agreement/desktop/ConnectedContentListTile'
 import DesktopAgreementTile from 'components/agreement/desktop/ConnectedAgreementTile'
-import MobilePlaylistTile from 'components/agreement/mobile/ConnectedPlaylistTile'
+import MobileContentListTile from 'components/agreement/mobile/ConnectedContentListTile'
 import MobileAgreementTile from 'components/agreement/mobile/ConnectedAgreementTile'
 import { AppState } from 'store/types'
 import { isMobile } from 'utils/clientUtil'
@@ -23,7 +23,7 @@ type LineupProps = LineupWithoutTile & ReturnType<typeof mapStateToProps>
 const Lineup = (props: LineupProps) => {
   const mobile = props.isMobile
   const agreementTile = mobile ? MobileAgreementTile : DesktopAgreementTile
-  const content listTile = mobile ? MobilePlaylistTile : DesktopPlaylistTile
+  const content listTile = mobile ? MobileContentListTile : DesktopContentListTile
 
   return (
     <LineupProvider

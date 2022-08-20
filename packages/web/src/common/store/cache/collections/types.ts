@@ -1,4 +1,4 @@
-export enum PlaylistOperations {
+export enum ContentListOperations {
   ADD_AGREEMENT = 'ADD_AGREEMENT',
   REMOVE_AGREEMENT = 'REMOVE_AGREEMENT',
   REORDER = 'REORDER'

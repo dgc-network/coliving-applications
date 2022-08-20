@@ -19,7 +19,7 @@ import {
   TipReactionNotification,
   TipSentNotification,
   TipReceivedNotification,
-  AddAgreementToPlaylistNotification
+  AddAgreementToContentListNotification
 } from './Notifications'
 
 type NotificationListItemProps = {
@@ -73,8 +73,8 @@ export const NotificationListItem = (props: NotificationListItemProps) => {
         return <TrendingAgreementNotification notification={notification} />
       case NotificationType.UserSubscription:
         return <UserSubscriptionNotification notification={notification} />
-      case NotificationType.AddAgreementToPlaylist:
-        return <AddAgreementToPlaylistNotification notification={notification} />
+      case NotificationType.AddAgreementToContentList:
+        return <AddAgreementToContentListNotification notification={notification} />
       default:
         return null
     }

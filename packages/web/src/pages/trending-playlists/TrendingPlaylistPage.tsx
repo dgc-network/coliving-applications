@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 
 import { useDispatch } from 'react-redux'
 
-import { trendingPlaylistLineupActions } from 'common/store/pages/trending-content lists/lineups/actions'
+import { trendingContentListLineupActions } from 'common/store/pages/trending-content lists/lineups/actions'
 import { getLineup } from 'common/store/pages/trending-content lists/lineups/selectors'
 import DesktopHeader from 'components/header/desktop/Header'
 import { useMobileHeader } from 'components/header/mobile/hooks'
@@ -15,20 +15,20 @@ import RewardsBanner from 'pages/trending-page/components/RewardsBanner'
 import { isMobile } from 'utils/clientUtil'
 import { BASE_URL, TRENDING_CONTENT_LISTS_PAGE } from 'utils/route'
 
-import styles from './TrendingPlaylistPage.module.css'
+import styles from './TrendingContentListPage.module.css'
 
 const messages = {
-  trendingPlaylistTile: 'Trending Playlists',
-  description: 'Trending Playlists on Coliving'
+  trendingContentListTile: 'Trending ContentLists',
+  description: 'Trending ContentLists on Coliving'
 }
 
 /** Wraps useLineupProps to return trending content list lineup props */
-const useTrendingPlaylistLineup = (containerRef: HTMLElement) => {
+const useTrendingContentListLineup = (containerRef: HTMLElement) => {
   return useLineupProps({
-    actions: trendingPlaylistLineupActions,
+    actions: trendingContentListLineupActions,
     getLineupSelector: getLineup,
     variant: LineupVariant.CONTENT_LIST,
-    numPlaylistSkeletonRows: 5,
+    numContentListSkeletonRows: 5,
     scrollParent: containerRef,
     rankIconCount: 5,
     isTrending: true,
@@ -36,22 +36,22 @@ const useTrendingPlaylistLineup = (containerRef: HTMLElement) => {
   })
 }
 
-type TrendingPlaylistPageProps = {
+type TrendingContentListPageProps = {
   containerRef: HTMLElement
 }
 
-const DesktopTrendingPlaylistPage = ({
+const DesktopTrendingContentListPage = ({
   containerRef
-}: TrendingPlaylistPageProps) => {
-  const lineupProps = useTrendingPlaylistLineup(containerRef)
+}: TrendingContentListPageProps) => {
+  const lineupProps = useTrendingContentListLineup(containerRef)
 
   const header = (
-    <DesktopHeader primary={messages.trendingPlaylistTile} variant='main' />
+    <DesktopHeader primary={messages.trendingContentListTile} variant='main' />
   )
 
   return (
     <Page
-      title={messages.trendingPlaylistTile}
+      title={messages.trendingContentListTile}
       description={messages.description}
       size='large'
       header={header}
@@ -64,16 +64,16 @@ const DesktopTrendingPlaylistPage = ({
   )
 }
 
-const MobileTrendingPlaylistPage = ({
+const MobileTrendingContentListPage = ({
   containerRef
-}: TrendingPlaylistPageProps) => {
-  const lineupProps = useTrendingPlaylistLineup(containerRef)
+}: TrendingContentListPageProps) => {
+  const lineupProps = useTrendingContentListLineup(containerRef)
 
-  useMobileHeader({ title: messages.trendingPlaylistTile })
+  useMobileHeader({ title: messages.trendingContentListTile })
 
   return (
     <MobilePageContainer
-      title={messages.trendingPlaylistTile}
+      title={messages.trendingContentListTile}
       description={messages.description}
       canonicalUrl={`${BASE_URL}${TRENDING_CONTENT_LISTS_PAGE}`}
       hasDefaultHeader
@@ -92,12 +92,12 @@ const useLineupReset = () => {
   const dispatch = useDispatch()
   useEffect(() => {
     return () => {
-      dispatch(trendingPlaylistLineupActions.reset())
+      dispatch(trendingContentListLineupActions.reset())
     }
   }, [dispatch])
 }
 
-const TrendingPlaylistPage = (props: TrendingPlaylistPageProps) => {
+const TrendingContentListPage = (props: TrendingContentListPageProps) => {
   const mobile = isMobile()
 
   useLineupReset()
@@ -105,12 +105,12 @@ const TrendingPlaylistPage = (props: TrendingPlaylistPageProps) => {
   return (
     <>
       {mobile ? (
-        <MobileTrendingPlaylistPage {...props} />
+        <MobileTrendingContentListPage {...props} />
       ) : (
-        <DesktopTrendingPlaylistPage {...props} />
+        <DesktopTrendingContentListPage {...props} />
       )}
     </>
   )
 }
 
-export default TrendingPlaylistPage
+export default TrendingContentListPage

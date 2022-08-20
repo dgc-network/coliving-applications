@@ -44,11 +44,11 @@ export const makeGetSearchAlbums = () => {
   )
 }
 
-const getSearchPlaylists = (state: CommonState) =>
+const getSearchContentLists = (state: CommonState) =>
   getCollections(state, { ids: getBaseState(state).content listIds })
-export const makeGetSearchPlaylists = () => {
+export const makeGetSearchContentLists = () => {
   return createShallowSelector(
-    [getSearchPlaylists, getUsers],
+    [getSearchContentLists, getUsers],
     (content lists, users) =>
       Object.values(content lists)
         .map((content list) => {

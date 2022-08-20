@@ -13,11 +13,11 @@ import UpdateDot from 'components/update-dot/UpdateDot'
 import { getPathname } from 'utils/route'
 
 import navColumnStyles from './NavColumn.module.css'
-import styles from './PlaylistLibrary.module.css'
+import styles from './ContentListLibrary.module.css'
 
 const messages = { recentlyUpdatedTooltip: 'Recently Updated' }
 
-type PlaylistNavLinkProps = NavLinkProps & {
+type ContentListNavLinkProps = NavLinkProps & {
   droppableKey: ID | SmartCollectionVariant
   content listId: ID | SmartCollectionVariant
   name: string
@@ -30,7 +30,7 @@ type PlaylistNavLinkProps = NavLinkProps & {
   isInsideFolder?: boolean
 }
 
-export const PlaylistNavLink = ({
+export const ContentListNavLink = ({
   droppableKey,
   content listId,
   name,
@@ -40,7 +40,7 @@ export const PlaylistNavLink = ({
   className,
   isInsideFolder,
   ...navLinkProps
-}: PlaylistNavLinkProps) => {
+}: ContentListNavLinkProps) => {
   const [isDragging, setIsDragging] = useState(false)
   const onDrag = useCallback(() => {
     setIsDragging(true)
@@ -85,7 +85,7 @@ export const PlaylistNavLink = ({
   )
 }
 
-type PlaylistNavItemProps = {
+type ContentListNavItemProps = {
   content list: AccountCollection
   url: string
   addAgreement: (agreementId: ID) => void
@@ -98,11 +98,11 @@ type PlaylistNavItemProps = {
   hasUpdate?: boolean
   dragging: boolean
   draggingKind: string
-  onClickPlaylist: (id: ID, hasUpdate: boolean) => void
+  onClickContentList: (id: ID, hasUpdate: boolean) => void
   onClickEdit?: (id: ID) => void
   isInsideFolder?: boolean
 }
-export const PlaylistNavItem = ({
+export const ContentListNavItem = ({
   content list,
   hasUpdate = false,
   url,
@@ -111,10 +111,10 @@ export const PlaylistNavItem = ({
   onReorder,
   dragging,
   draggingKind,
-  onClickPlaylist,
+  onClickContentList,
   onClickEdit,
   isInsideFolder
-}: PlaylistNavItemProps) => {
+}: ContentListNavItemProps) => {
   const { id, name } = content list
   const [isHovering, setIsHovering] = useState(false)
 
@@ -127,7 +127,7 @@ export const PlaylistNavItem = ({
       acceptedKinds={['agreement']}
       disabled={!isOwner}
     >
-      <PlaylistNavLink
+      <ContentListNavLink
         isInsideFolder={isInsideFolder}
         droppableKey={id}
         content listId={id}
@@ -150,7 +150,7 @@ export const PlaylistNavItem = ({
               draggingKind !== 'library-content list') ||
               !isOwner)
         })}
-        onClick={() => onClickPlaylist(id, hasUpdate)}
+        onClick={() => onClickContentList(id, hasUpdate)}
         onMouseEnter={() => {
           setIsHovering(true)
         }}
@@ -190,7 +190,7 @@ export const PlaylistNavItem = ({
             />
           )}
         </div>
-      </PlaylistNavLink>
+      </ContentListNavLink>
     </Droppable>
   )
 }

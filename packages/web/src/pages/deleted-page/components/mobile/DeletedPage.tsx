@@ -23,7 +23,7 @@ import styles from './DeletedPage.module.css'
 const messages = {
   agreementDeleted: 'Agreement [Deleted]',
   agreementDeletedByArtist: 'Agreement [Deleted By Artist]',
-  content listDeleted: 'Playlist [Deleted by Artist]',
+  content listDeleted: 'ContentList [Deleted by Artist]',
   albumDeleted: 'Album [Deleted By Artist]',
   checkOut: (name: string) => `Check out more by ${name}`,
   moreBy: (name: string) => `More by ${name}`
@@ -88,12 +88,12 @@ const DeletedPage = g(
     getLineupProps,
     goToArtistPage
   }) => {
-    const isPlaylist =
+    const isContentList =
       playable.type === PlayableType.CONTENT_LIST ||
       playable.type === PlayableType.ALBUM
     const isAlbum = playable.type === PlayableType.ALBUM
 
-    const headingText = isPlaylist
+    const headingText = isContentList
       ? isAlbum
         ? messages.albumDeleted
         : messages.content listDeleted

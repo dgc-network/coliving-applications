@@ -16,17 +16,17 @@ import * as schemas from 'schemas'
 import { resizeImage } from 'utils/imageProcessingUtil'
 
 import { CreateActions, EditActions } from './FormActions'
-import styles from './PlaylistForm.module.css'
+import styles from './ContentListForm.module.css'
 
 const messages = {
-  editPlaylistButtonText: 'Save Changes',
+  editContentListButtonText: 'Save Changes',
   cancelButtonText: 'Cancel',
-  deletePlaylistButtonText: 'Delete Playlist',
+  deleteContentListButtonText: 'Delete ContentList',
   deleteAlbumButtonText: 'Delete Album',
-  createPlaylistButtonText: 'Create Playlist'
+  createContentListButtonText: 'Create ContentList'
 }
 
-export type PlaylistFormFields = Partial<Collection> & {
+export type ContentListFormFields = Partial<Collection> & {
   artwork: {
     file: Blob
     url: string
@@ -54,7 +54,7 @@ export type PlaylistFormFields = Partial<Collection> & {
     >
   >
 
-type PlaylistFormProps = {
+type ContentListFormProps = {
   metadata?: Nullable<Collection>
   isAlbum?: boolean
   onOpenArtworkPopup?: () => void
@@ -64,10 +64,10 @@ type PlaylistFormProps = {
   onDelete?: () => void
   /** Only applies to edit mode */
   onCancel?: () => void
-  onSave: (formFields: PlaylistFormFields) => void
+  onSave: (formFields: ContentListFormFields) => void
 }
 
-const PlaylistForm = ({
+const ContentListForm = ({
   isAlbum = false,
   metadata,
   onSave: onSaveParent,
@@ -76,8 +76,8 @@ const PlaylistForm = ({
   onOpenArtworkPopup,
   onCloseArtworkPopup,
   isEditMode = false
-}: PlaylistFormProps) => {
-  const [formFields, setFormFields] = useState<PlaylistFormFields>({
+}: ContentListFormProps) => {
+  const [formFields, setFormFields] = useState<ContentListFormFields>({
     artwork: {},
     ...schemas.newCollectionMetadata(metadata)
   })
@@ -114,12 +114,12 @@ const PlaylistForm = ({
       let file = selectedFiles[0]
       file = await resizeImage(file)
       const url = URL.createObjectURL(file)
-      setFormFields((formFields: PlaylistFormFields) => ({
+      setFormFields((formFields: ContentListFormFields) => ({
         ...formFields,
         artwork: { file, url, source }
       }))
     } catch (err) {
-      setFormFields((formFields: PlaylistFormFields) => ({
+      setFormFields((formFields: ContentListFormFields) => ({
         ...formFields,
         artwork: {
           ...(formFields.artwork || {}),
@@ -129,8 +129,8 @@ const PlaylistForm = ({
     }
   }
 
-  const onChangePlaylistName = (name: string) => {
-    setFormFields((formFields: PlaylistFormFields) => ({
+  const onChangeContentListName = (name: string) => {
+    setFormFields((formFields: ContentListFormFields) => ({
       ...formFields,
       content list_name: name
     }))
@@ -140,7 +140,7 @@ const PlaylistForm = ({
   }
 
   const onChangeDescription = (description: string) => {
-    setFormFields((formFields: PlaylistFormFields) => ({
+    setFormFields((formFields: ContentListFormFields) => ({
       ...formFields,
       description
     }))
@@ -175,10 +175,10 @@ const PlaylistForm = ({
         <div className={styles.form}>
           <Input
             variant='elevatedPlaceholder'
-            placeholder={`${isAlbum ? 'Album' : 'Playlist'} Name`}
+            placeholder={`${isAlbum ? 'Album' : 'ContentList'} Name`}
             defaultValue={formFields.content list_name || ''}
             error={errors.content listName}
-            onChange={onChangePlaylistName}
+            onChange={onChangeContentListName}
             characterLimit={64}
           />
           <TextArea
@@ -195,9 +195,9 @@ const PlaylistForm = ({
             deleteText={
               isAlbum
                 ? messages.deleteAlbumButtonText
-                : messages.deletePlaylistButtonText
+                : messages.deleteContentListButtonText
             }
-            saveText={messages.editPlaylistButtonText}
+            saveText={messages.editContentListButtonText}
             cancelText={messages.cancelButtonText}
             onCancel={onCancel}
             onDelete={onDelete}
@@ -208,7 +208,7 @@ const PlaylistForm = ({
           <CreateActions
             onSave={onSave}
             disabled={hasSubmitted}
-            saveText={messages.createPlaylistButtonText}
+            saveText={messages.createContentListButtonText}
           />
         )}
       </div>
@@ -216,4 +216,4 @@ const PlaylistForm = ({
   )
 }
 
-export default PlaylistForm
+export default ContentListForm

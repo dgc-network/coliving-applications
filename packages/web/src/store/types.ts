@@ -12,7 +12,7 @@ import QueueReducer from 'common/store/queue/slice'
 import { ReachabilityState } from 'common/store/reachability/types'
 import RemoteConfigReducer from 'common/store/remote-config/slice'
 import StemsUploadReducer from 'common/store/stems-upload/slice'
-import { CreatePlaylistModalState } from 'common/store/ui/createPlaylistModal/types'
+import { CreateContentListModalState } from 'common/store/ui/createContentListModal/types'
 import { FavoritesPageState } from 'common/store/user-list/favorites/types'
 import { FollowersPageState } from 'common/store/user-list/followers/types'
 import { FollowingPageState } from 'common/store/user-list/following/types'
@@ -34,11 +34,11 @@ import { UploadPageState } from 'pages/upload-page/store/types'
 import VisualizerReducer from 'pages/visualizer/store/slice'
 import AppCTAModalReducer from 'store/application/ui/app-cta-modal/slice'
 import PlayerReducer from 'store/player/slice'
-import PlaylistLibraryReducer from 'store/content list-library/slice'
+import ContentListLibraryReducer from 'store/content list-library/slice'
 
 import { CookieBannerState } from './application/ui/cookieBanner/types'
 import { EditFolderModalState } from './application/ui/editFolderModal/slice'
-import { EditPlaylistModalState } from './application/ui/editPlaylistModal/slice'
+import { EditContentListModalState } from './application/ui/editContentListModal/slice'
 import EditAgreementModalState from './application/ui/editAgreementModal/types'
 import { MobileKeyboardState } from './application/ui/mobileKeyboard/types'
 import { ScrollLockState } from './application/ui/scrollLock/types'
@@ -56,7 +56,7 @@ export type AppState = CommonState & {
 
   // Account
   passwordReset: PasswordResetState
-  content listLibrary: ReturnType<typeof PlaylistLibraryReducer>
+  content listLibrary: ReturnType<typeof ContentListLibraryReducer>
 
   // UI
   dragndrop: DragNDropState
@@ -69,8 +69,8 @@ export type AppState = CommonState & {
       averageColor: ReturnType<typeof averageColor>
       changePassword: ChangePasswordState
       cookieBanner: CookieBannerState
-      createPlaylistModal: CreatePlaylistModalState
-      editPlaylistModal: EditPlaylistModalState
+      createContentListModal: CreateContentListModalState
+      editContentListModal: EditContentListModalState
       editFolderModal: EditFolderModalState
       editAgreementModal: EditAgreementModalState
       embedModal: EmbedModalState

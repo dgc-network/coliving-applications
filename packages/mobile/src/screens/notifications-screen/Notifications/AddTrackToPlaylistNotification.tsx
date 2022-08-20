@@ -1,11 +1,11 @@
 import { useCallback } from 'react'
 
 import { getNotificationEntities } from '-client/src/common/store/notifications/selectors'
-import type { AddAgreementToPlaylist } from '-client/src/common/store/notifications/types'
+import type { AddAgreementToContentList } from '-client/src/common/store/notifications/types'
 import { isEqual } from 'lodash'
 import { View } from 'react-native'
 
-import IconPlaylists from 'app/assets/images/iconPlaylists.svg'
+import IconContentLists from 'app/assets/images/iconContentLists.svg'
 import { useSelectorWeb } from 'app/hooks/useSelectorWeb'
 
 import {
@@ -21,16 +21,16 @@ import { getEntityRoute, getEntityScreen } from '../Notification/utils'
 import { useDrawerNavigation } from '../useDrawerNavigation'
 
 const messages = {
-  title: 'Agreement Added to Playlist',
+  title: 'Agreement Added to ContentList',
   addedAgreement: ' added your agreement ',
-  toPlaylist: ' to their content list '
+  toContentList: ' to their content list '
 }
-type AddAgreementToPlaylistNotificationProps = {
-  notification: AddAgreementToPlaylist
+type AddAgreementToContentListNotificationProps = {
+  notification: AddAgreementToContentList
 }
 
-export const AddAgreementToPlaylistNotification = (
-  props: AddAgreementToPlaylistNotificationProps
+export const AddAgreementToContentListNotification = (
+  props: AddAgreementToContentListNotificationProps
 ) => {
   const { notification } = props
   const entities = useSelectorWeb(
@@ -53,7 +53,7 @@ export const AddAgreementToPlaylistNotification = (
 
   return (
     <NotificationTile notification={notification} onPress={handlePress}>
-      <NotificationHeader icon={IconPlaylists}>
+      <NotificationHeader icon={IconContentLists}>
         <NotificationTitle>{messages.title}</NotificationTitle>
       </NotificationHeader>
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -63,7 +63,7 @@ export const AddAgreementToPlaylistNotification = (
             <UserNameLink user={content listOwner} />
             {messages.addedAgreement}
             <EntityLink entity={agreement} />
-            {messages.toPlaylist}
+            {messages.toContentList}
             <EntityLink entity={content list} />
           </NotificationText>
         </View>

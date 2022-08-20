@@ -29,9 +29,9 @@ const slice = createSlice({
       state,
       action: PayloadAction<FetchExploreSucceededPayload>
     ) => {
-      const { featuredPlaylists, featuredProfiles } =
+      const { featuredContentLists, featuredProfiles } =
         action.payload.exploreContent
-      state.content lists = featuredPlaylists
+      state.content lists = featuredContentLists
       state.profiles = featuredProfiles
       state.status = Status.SUCCESS
     },

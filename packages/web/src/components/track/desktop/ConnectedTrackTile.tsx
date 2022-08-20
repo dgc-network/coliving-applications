@@ -167,7 +167,7 @@ const ConnectedAgreementTile = memo(
       const menu: Omit<AgreementMenuProps, 'children'> = {
         extraMenuItems: [],
         handle,
-        includeAddToPlaylist: true,
+        includeAddToContentList: true,
         includeArtistPick: handle === userHandle && !isUnlisted,
         includeEdit: handle === userHandle,
         includeEmbed: true,

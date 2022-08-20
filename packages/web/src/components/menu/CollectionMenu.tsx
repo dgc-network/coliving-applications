@@ -13,11 +13,11 @@ import { Dispatch } from 'redux'
 import { getUser } from 'common/store/cache/users/selectors'
 import * as socialActions from 'common/store/social/collections/actions'
 import * as embedModalActions from 'components/embed-modal/store/actions'
-import { open as openEditCollectionModal } from 'store/application/ui/editPlaylistModal/slice'
+import { open as openEditCollectionModal } from 'store/application/ui/editContentListModal/slice'
 import { AppState } from 'store/types'
 import { albumPage, content listPage, profilePage } from 'utils/route'
 
-type PlaylistId = number
+type ContentListId = number
 
 export type OwnProps = {
   children: (items: PopupMenuItem[]) => JSX.Element
@@ -36,7 +36,7 @@ export type OwnProps = {
   onClose?: () => void
   onRepost?: () => void
   onShare?: () => void
-  content listId: PlaylistId
+  content listId: ContentListId
   content listName: string
   type: 'album' | 'content list'
 }
@@ -89,7 +89,7 @@ const CollectionMenu = (props: CollectionMenuProps) => {
       }
     }
 
-    const typeName = type === 'album' ? 'Album' : 'Playlist'
+    const typeName = type === 'album' ? 'Album' : 'ContentList'
     const favoriteMenuItem = {
       text: isFavorited ? `Unfavorite ${typeName}` : `Favorite ${typeName}`,
       onClick: () =>
@@ -175,23 +175,23 @@ function mapStateToProps(state: AppState, props: OwnProps) {
 function mapDispatchToProps(dispatch: Dispatch) {
   return {
     goToRoute: (route: string) => dispatch(pushRoute(route)),
-    shareCollection: (content listId: PlaylistId) =>
+    shareCollection: (content listId: ContentListId) =>
       dispatch(socialActions.shareCollection(content listId, ShareSource.OVERFLOW)),
     editCollection: (content listId: ID) =>
       dispatch(openEditCollectionModal(content listId)),
-    saveCollection: (content listId: PlaylistId) =>
+    saveCollection: (content listId: ContentListId) =>
       dispatch(
         socialActions.saveCollection(content listId, FavoriteSource.OVERFLOW)
       ),
-    unsaveCollection: (content listId: PlaylistId) =>
+    unsaveCollection: (content listId: ContentListId) =>
       dispatch(
         socialActions.unsaveCollection(content listId, FavoriteSource.OVERFLOW)
       ),
-    repostCollection: (content listId: PlaylistId) =>
+    repostCollection: (content listId: ContentListId) =>
       dispatch(
         socialActions.repostCollection(content listId, RepostSource.OVERFLOW)
       ),
-    undoRepostCollection: (content listId: PlaylistId) =>
+    undoRepostCollection: (content listId: ContentListId) =>
       dispatch(
         socialActions.undoRepostCollection(content listId, RepostSource.OVERFLOW)
       ),

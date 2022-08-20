@@ -2,10 +2,10 @@ import cn from 'classnames'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 
-import { getIsOpen as getIsCreatePlaylistModalOpen } from 'common/store/ui/createPlaylistModal/selectors'
+import { getIsOpen as getIsCreateContentListModalOpen } from 'common/store/ui/createContentListModal/selectors'
 import { getModalVisibility } from 'common/store/ui/modals/slice'
-import AddToPlaylistPage from 'components/add-to-content list/mobile/AddToPlaylist'
-import EditPlaylistPage from 'components/edit-content list/mobile/EditPlaylistPage'
+import AddToContentListPage from 'components/add-to-content list/mobile/AddToContentList'
+import EditContentListPage from 'components/edit-content list/mobile/EditContentListPage'
 import useScrollLock from 'hooks/useScrollLock'
 import { AppState } from 'store/types'
 
@@ -17,25 +17,25 @@ type TopLevelPageProps = ReturnType<typeof mapStateToProps> &
 const rootElement = document.querySelector('#root')
 
 const TopLevelPage = ({
-  showCreatePlaylist,
-  showAddToPlaylist
+  showCreateContentList,
+  showAddToContentList
 }: TopLevelPageProps) => {
-  const showPage = showCreatePlaylist || showAddToPlaylist
+  const showPage = showCreateContentList || showAddToContentList
   const isLocked = !!(showPage && rootElement)
   useScrollLock(isLocked)
 
   let page = null
-  if (showCreatePlaylist) {
-    page = <EditPlaylistPage />
-  } else if (showAddToPlaylist) {
-    page = <AddToPlaylistPage />
+  if (showCreateContentList) {
+    page = <EditContentListPage />
+  } else if (showAddToContentList) {
+    page = <AddToContentListPage />
   }
 
   return (
     <div
       className={cn(styles.topLevelPage, {
         [styles.show]: showPage,
-        [styles.darkerBackground]: showAddToPlaylist
+        [styles.darkerBackground]: showAddToContentList
       })}
     >
       {page}
@@ -45,8 +45,8 @@ const TopLevelPage = ({
 
 function mapStateToProps(state: AppState) {
   return {
-    showCreatePlaylist: getIsCreatePlaylistModalOpen(state),
-    showAddToPlaylist: getModalVisibility(state, 'AddToPlaylist')
+    showCreateContentList: getIsCreateContentListModalOpen(state),
+    showAddToContentList: getModalVisibility(state, 'AddToContentList')
   }
 }
 

@@ -1,6 +1,6 @@
 import { Story } from '@storybook/react'
 
-import { IconPlaylists } from 'components/Icons'
+import { IconContentLists } from 'components/Icons'
 
 import { IconButton, IconButtonProps } from './'
 
@@ -15,7 +15,7 @@ const Template: Story<IconButtonProps> = (args) => {
 
 export const Base = Template.bind({})
 const baseProps: IconButtonProps = {
-  icon: <IconPlaylists />,
+  icon: <IconContentLists />,
   'aria-label': 'Add content list'
 }
 

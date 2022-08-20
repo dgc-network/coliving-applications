@@ -68,7 +68,7 @@ export type AgreementTileProps = TileProps & {
   onClickOverflow?: (agreementId: ID) => void
 }
 
-export type PlaylistTileProps = TileProps & {
+export type ContentListTileProps = TileProps & {
   playingUid?: UID | null
   playingAgreementId?: ID | null
   isAlbum: boolean
@@ -198,7 +198,7 @@ export type DesktopAgreementTileProps = {
   showRankIcon: boolean
 }
 
-export type DesktopPlaylistTileProps = {
+export type DesktopContentListTileProps = {
   /** Size of the agreement Tile Large or Small */
   size: AgreementTileSize
 

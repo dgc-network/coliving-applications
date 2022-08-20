@@ -279,15 +279,15 @@ export const content listPage = (
 ) => {
   return `/${encodeUrlName(handle)}/content list/${encodeUrlName(title)}-${id}`
 }
-export const fullPlaylistPage = (handle: string, title: string, id: ID) => {
+export const fullContentListPage = (handle: string, title: string, id: ID) => {
   return `${BASE_URL}${content listPage(handle, title, id)}`
 }
 
-export const liveNftPlaylistPage = (handle: string) => {
+export const liveNftContentListPage = (handle: string) => {
   return `/${encodeUrlName(handle)}/live-nft-content list`
 }
-export const fullAudioNftPlaylistPage = (handle: string) => {
-  return `${BASE_URL}${liveNftPlaylistPage(handle)}`
+export const fullAudioNftContentListPage = (handle: string) => {
+  return `${BASE_URL}${liveNftContentListPage(handle)}`
 }
 
 export const collectibleDetailsPage = (
@@ -318,7 +318,7 @@ export const fullSearchResultsPage = (query: string) => {
   return `${BASE_URL}${searchResultsPage(query)}`
 }
 
-export const exploreMoodPlaylistsPage = (mood: string) => {
+export const exploreMoodContentListsPage = (mood: string) => {
   return `/explore/${mood}`
 }
 

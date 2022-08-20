@@ -1,4 +1,4 @@
-.createPlaylistButton {
+.createContentListButton {
   background: none;
   border: none;
   padding: 0;
@@ -15,23 +15,23 @@
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-no-unknown */
-.createPlaylistButton > *:first {
+.createContentListButton > *:first {
   margin-right: 4px;
 }
 
-.createPlaylistButton g path {
+.createContentListButton g path {
   transition: all ease-in-out 0.04s;
   fill: var(--neutral-light-2);
 }
 
-.createPlaylistButton:hover {
+.createContentListButton:hover {
   color: var(--neutral);
   transform: scale(1.02);
 }
-.createPlaylistButton:hover g path {
+.createContentListButton:hover g path {
   fill: var(--neutral);
 }
 
-.createPlaylistButton:active {
+.createContentListButton:active {
   transform: scale(1);
 }

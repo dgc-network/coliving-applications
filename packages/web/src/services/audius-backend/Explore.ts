@@ -144,7 +144,7 @@ class Explore {
     limit = 20
   ): Promise<Collection[]> {
     try {
-      const content lists = await libs().discoveryProvider.getTopPlaylists(
+      const content lists = await libs().discoveryProvider.getTopContentLists(
         type,
         limit,
         undefined,
@@ -158,13 +158,13 @@ class Explore {
     }
   }
 
-  static async getTopPlaylistsForMood(
+  static async getTopContentListsForMood(
     moods: string[],
     limit = 16
   ): Promise<Collection[]> {
     try {
       const requests = moods.map((mood) => {
-        return libs().discoveryProvider.getTopPlaylists(
+        return libs().discoveryProvider.getTopContentLists(
           'content list',
           limit,
           mood,
@@ -174,11 +174,11 @@ class Explore {
       })
       const content listsByMood = await Promise.all(requests)
 
-      let allPlaylists: CollectionWithScore[] = []
+      let allContentLists: CollectionWithScore[] = []
       content listsByMood.forEach((content lists) => {
-        allPlaylists = allPlaylists.concat(content lists)
+        allContentLists = allContentLists.concat(content lists)
       })
-      return allPlaylists.sort(scoreComparator).slice(0, 20)
+      return allContentLists.sort(scoreComparator).slice(0, 20)
     } catch (e) {
       console.error(e)
       return []

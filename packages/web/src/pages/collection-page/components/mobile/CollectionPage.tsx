@@ -31,7 +31,7 @@ import { computeCollectionMetadataProps } from 'pages/collection-page/store/util
 import styles from './CollectionPage.module.css'
 
 const messages = {
-  emptyPlaylist: 'This content list is empty.'
+  emptyContentList: 'This content list is empty.'
 }
 
 const EmptyAgreementList = ({
@@ -41,7 +41,7 @@ const EmptyAgreementList = ({
 }) => {
   return (
     <div className={styles.emptyListContainer}>
-      <div>{customEmptyText || messages.emptyPlaylist}</div>
+      <div>{customEmptyText || messages.emptyContentList}</div>
     </div>
   )
 }
@@ -64,7 +64,7 @@ export type CollectionPageProps = {
     entries: CollectionAgreement[]
   }
   userId?: ID | null
-  userPlaylists?: any
+  userContentLists?: any
   isQueued: () => boolean
   onHeroAgreementClickArtistName: () => void
   onPlay: (record: any) => void
@@ -93,7 +93,7 @@ const CollectionPage = ({
   collection: { status, metadata, user },
   agreements,
   userId,
-  userPlaylists,
+  userContentLists,
   isQueued,
   onHeroAgreementClickArtistName,
   onPlay,
@@ -150,7 +150,7 @@ const CollectionPage = ({
   const isOwner = userId === content listOwnerId
 
   const isSaved =
-    metadata?.has_current_user_saved || content listId in (userPlaylists ?? {})
+    metadata?.has_current_user_saved || content listId in (userContentLists ?? {})
   const isPublishing =
     metadata && metadata?.variant !== Variant.SMART
       ? metadata._is_publishing
@@ -235,7 +235,7 @@ const CollectionPage = ({
               collectionId={content listId}
               userId={user?.user_id ?? 0}
               loading={
-                typeTitle === 'Audio NFT Playlist'
+                typeTitle === 'Audio NFT ContentList'
                   ? agreementsLoading
                   : collectionLoading
               }
@@ -293,7 +293,7 @@ const CollectionPage = ({
                 />
               )
             ) : null}
-            {collectionLoading && typeTitle === 'Audio NFT Playlist' ? (
+            {collectionLoading && typeTitle === 'Audio NFT ContentList' ? (
               <LoadingSpinner className={styles.spinner} />
             ) : null}
           </div>

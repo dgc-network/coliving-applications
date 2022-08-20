@@ -60,8 +60,8 @@ const ExploreCollectionsPageProvider = ({
   status,
   goToRoute,
   fetch,
-  setRepostPlaylistId,
-  setFavoritePlaylistId,
+  setRepostContentListId,
+  setFavoriteContentListId,
   setRepostUsers,
   setFavoriteUsers,
   setModalVisibility,
@@ -75,7 +75,7 @@ const ExploreCollectionsPageProvider = ({
   const onClickReposts = useCallback(
     (id: ID) => {
       if (isMobile) {
-        setRepostPlaylistId(id)
+        setRepostContentListId(id)
         goToRoute(REPOSTING_USERS_ROUTE)
       } else {
         setRepostUsers(id)
@@ -84,7 +84,7 @@ const ExploreCollectionsPageProvider = ({
     },
     [
       isMobile,
-      setRepostPlaylistId,
+      setRepostContentListId,
       goToRoute,
       setRepostUsers,
       setModalVisibility
@@ -93,7 +93,7 @@ const ExploreCollectionsPageProvider = ({
   const onClickFavorites = useCallback(
     (id: ID) => {
       if (isMobile) {
-        setFavoritePlaylistId(id)
+        setFavoriteContentListId(id)
         goToRoute(FAVORITING_USERS_ROUTE)
       } else {
         setFavoriteUsers(id)
@@ -102,7 +102,7 @@ const ExploreCollectionsPageProvider = ({
     },
     [
       isMobile,
-      setFavoritePlaylistId,
+      setFavoriteContentListId,
       goToRoute,
       setFavoriteUsers,
       setModalVisibility
@@ -125,7 +125,7 @@ const ExploreCollectionsPageProvider = ({
     } else if (variant === ExploreCollectionsVariant.DIRECT_LINK) {
       // no-op
     } else {
-      // Other content list/albums types (e.g. Top Playlist)
+      // Other content list/albums types (e.g. Top ContentList)
       fetch(variant)
       setInfo(EXPLORE_COLLECTIONS_MAP[variant])
     }
@@ -133,7 +133,7 @@ const ExploreCollectionsPageProvider = ({
 
   const title = info
     ? info.variant === ExploreCollectionsVariant.MOOD
-      ? `${info.title} Playlists`
+      ? `${info.title} ContentLists`
       : info.title
     : ''
   const description = info ? info.subtitle || '' : ''
@@ -166,9 +166,9 @@ function mapDispatchToProps(dispatch: Dispatch) {
   return {
     fetch: (variant: ExploreCollectionsVariant, moods?: string[]) =>
       dispatch(fetch({ variant, moods })),
-    setRepostPlaylistId: (collectionId: ID) =>
+    setRepostContentListId: (collectionId: ID) =>
       dispatch(setRepost(collectionId, RepostType.COLLECTION)),
-    setFavoritePlaylistId: (collectionId: ID) =>
+    setFavoriteContentListId: (collectionId: ID) =>
       dispatch(setFavorite(collectionId, FavoriteType.CONTENT_LIST)),
     setRepostUsers: (agreementID: ID) =>
       dispatch(

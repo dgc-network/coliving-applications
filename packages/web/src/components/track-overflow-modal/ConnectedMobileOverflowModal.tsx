@@ -9,7 +9,7 @@ import { push as pushRoute } from 'connected-react-router'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 
-import { publishPlaylist } from 'common/store/cache/collections/actions'
+import { publishContentList } from 'common/store/cache/collections/actions'
 import { getCollection } from 'common/store/cache/collections/selectors'
 import { getAgreement } from 'common/store/cache/agreements/selectors'
 import { getUser } from 'common/store/cache/users/selectors'
@@ -38,9 +38,9 @@ import {
   shareUser,
   unfollowUser
 } from 'common/store/social/users/actions'
-import { requestOpen as openAddToPlaylist } from 'common/store/ui/add-to-content list/actions'
-import { open as openEditPlaylist } from 'common/store/ui/createPlaylistModal/actions'
-import { requestOpen as openDeletePlaylist } from 'common/store/ui/delete-content list-confirmation-modal/slice'
+import { requestOpen as openAddToContentList } from 'common/store/ui/add-to-content list/actions'
+import { open as openEditContentList } from 'common/store/ui/createContentListModal/actions'
+import { requestOpen as openDeleteContentList } from 'common/store/ui/delete-content list-confirmation-modal/slice'
 import { getMobileOverflowModal } from 'common/store/ui/mobile-overflow-menu/selectors'
 import { OverflowSource } from 'common/store/ui/mobile-overflow-menu/types'
 import { getModalVisibility, setVisibility } from 'common/store/ui/modals/slice'
@@ -85,14 +85,14 @@ const ConnectedMobileOverflowModal = ({
   unrepostCollection,
   saveCollection,
   unsaveCollection,
-  addToPlaylist,
-  editPlaylist,
-  deletePlaylist,
-  publishPlaylist,
+  addToContentList,
+  editContentList,
+  deleteContentList,
+  publishContentList,
   visitAgreementPage,
   visitArtistPage,
   visitCollectiblePage,
-  visitPlaylistPage,
+  visitContentListPage,
   visitAlbumPage,
   unsubscribeUser,
   follow,
@@ -106,10 +106,10 @@ const ConnectedMobileOverflowModal = ({
     onFavorite,
     onUnfavorite,
     onShare,
-    onAddToPlaylist,
-    onEditPlaylist,
-    onPublishPlaylist,
-    onDeletePlaylist,
+    onAddToContentList,
+    onEditContentList,
+    onPublishContentList,
+    onDeleteContentList,
     onVisitAgreementPage,
     onVisitArtistPage,
     onVisitCollectionPage,
@@ -123,10 +123,10 @@ const ConnectedMobileOverflowModal = ({
     onFavorite?: () => void
     onUnfavorite?: () => void
     onShare?: () => void
-    onAddToPlaylist?: () => void
-    onEditPlaylist?: () => void
-    onPublishPlaylist?: () => void
-    onDeletePlaylist?: () => void
+    onAddToContentList?: () => void
+    onEditContentList?: () => void
+    onPublishContentList?: () => void
+    onDeleteContentList?: () => void
     onVisitAgreementPage?: () => void
     onVisitArtistPage?: () => void
     onVisitCollectiblePage?: () => void
@@ -144,7 +144,7 @@ const ConnectedMobileOverflowModal = ({
           onUnrepost: () => unrepostAgreement(id as ID),
           onFavorite: () => saveAgreement(id as ID),
           onUnfavorite: () => unsaveAgreement(id as ID),
-          onAddToPlaylist: () => addToPlaylist(id as ID, title),
+          onAddToContentList: () => addToContentList(id as ID, title),
           onVisitCollectiblePage: () => {
             visitCollectiblePage(handle, id as string)
           },
@@ -167,18 +167,18 @@ const ConnectedMobileOverflowModal = ({
           onShare: () => shareCollection(id as ID),
           onVisitArtistPage: () => visitArtistPage(handle),
           onVisitCollectionPage: () =>
-            (isAlbum ? visitAlbumPage : visitPlaylistPage)(
+            (isAlbum ? visitAlbumPage : visitContentListPage)(
               id as ID,
               handle,
               title
             ),
           onVisitCollectiblePage: () =>
             visitCollectiblePage(handle, id as string),
-          onEditPlaylist: isAlbum ? () => {} : () => editPlaylist(id as ID),
-          onDeletePlaylist: isAlbum ? () => {} : () => deletePlaylist(id as ID),
-          onPublishPlaylist: isAlbum
+          onEditContentList: isAlbum ? () => {} : () => editContentList(id as ID),
+          onDeleteContentList: isAlbum ? () => {} : () => deleteContentList(id as ID),
+          onPublishContentList: isAlbum
             ? () => {}
-            : () => publishPlaylist(id as ID)
+            : () => publishContentList(id as ID)
         }
       }
       case OverflowSource.NOTIFICATIONS: {
@@ -214,11 +214,11 @@ const ConnectedMobileOverflowModal = ({
       onFavorite={onFavorite}
       onUnfavorite={onUnfavorite}
       onShare={onShare}
-      onAddToPlaylist={onAddToPlaylist}
+      onAddToContentList={onAddToContentList}
       onVisitAgreementPage={onVisitAgreementPage}
-      onEditPlaylist={onEditPlaylist}
-      onPublishPlaylist={onPublishPlaylist}
-      onDeletePlaylist={onDeletePlaylist}
+      onEditContentList={onEditContentList}
+      onPublishContentList={onPublishContentList}
+      onDeleteContentList={onDeleteContentList}
       onVisitArtistPage={onVisitArtistPage}
       onVisitCollectionPage={onVisitCollectionPage}
       onVisitCollectiblePage={onVisitCollectiblePage}
@@ -347,10 +347,10 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
       dispatch(saveCollection(collectionId, FavoriteSource.OVERFLOW)),
     unsaveCollection: (collectionId: ID) =>
       dispatch(unsaveCollection(collectionId, FavoriteSource.OVERFLOW)),
-    editPlaylist: (content listId: ID) => dispatch(openEditPlaylist(content listId)),
-    deletePlaylist: (content listId: ID) =>
-      dispatch(openDeletePlaylist({ content listId })),
-    publishPlaylist: (content listId: ID) => dispatch(publishPlaylist(content listId)),
+    editContentList: (content listId: ID) => dispatch(openEditContentList(content listId)),
+    deleteContentList: (content listId: ID) =>
+      dispatch(openDeleteContentList({ content listId })),
+    publishContentList: (content listId: ID) => dispatch(publishContentList(content listId)),
 
     // Users
     follow: (userId: ID) => dispatch(followUser(userId, FollowSource.OVERFLOW)),
@@ -363,15 +363,15 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
     unsubscribeUser: (userId: ID) => dispatch(unsubscribeUser(userId)),
 
     // Routes
-    addToPlaylist: (agreementId: ID, title: string) =>
-      dispatch(openAddToPlaylist(agreementId, title)),
+    addToContentList: (agreementId: ID, title: string) =>
+      dispatch(openAddToContentList(agreementId, title)),
     visitAgreementPage: (permalink: string) => dispatch(pushRoute(permalink)),
     visitArtistPage: (handle: string) =>
       dispatch(pushRoute(profilePage(handle))),
     visitCollectiblePage: (handle: string, id: string) => {
       dispatch(pushRoute(collectibleDetailsPage(handle, id)))
     },
-    visitPlaylistPage: (
+    visitContentListPage: (
       content listId: ID,
       handle: string,
       content listTitle: string

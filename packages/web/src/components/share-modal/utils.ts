@@ -3,10 +3,10 @@ import { ShareToTwitter } from '@coliving/common'
 import { ShareModalContent } from 'common/store/ui/share-modal/types'
 import {
   fullAlbumPage,
-  fullPlaylistPage,
+  fullContentListPage,
   fullProfilePage,
   fullAgreementPage,
-  fullAudioNftPlaylistPage
+  fullAudioNftContentListPage
 } from 'utils/route'
 
 import { messages } from './messages'
@@ -15,7 +15,7 @@ type ShareToTwitterEvent = Omit<ShareToTwitter, 'eventName' | 'source'>
 
 export const getTwitterShareText = (
   content: ShareModalContent,
-  isPlaylistOwner = false
+  isContentListOwner = false
 ) => {
   let twitterText = ''
   let link = ''
@@ -56,19 +56,19 @@ export const getTwitterShareText = (
         creator: { handle }
       } = content
       twitterText = messages.content listShareText(content list_name, handle)
-      link = fullPlaylistPage(handle, content list_name, content list_id)
+      link = fullContentListPage(handle, content list_name, content list_id)
       analyticsEvent = { kind: 'content list', id: content list_id, url: link }
       break
     }
-    case 'liveNftPlaylist': {
+    case 'liveNftContentList': {
       const {
         user: { handle, name, user_id }
       } = content
-      twitterText = messages.liveNftPlaylistShareText(
-        isPlaylistOwner ? 'my' : name
+      twitterText = messages.liveNftContentListShareText(
+        isContentListOwner ? 'my' : name
       )
-      link = fullAudioNftPlaylistPage(handle)
-      analyticsEvent = { kind: 'liveNftPlaylist', id: user_id, url: link }
+      link = fullAudioNftContentListPage(handle)
+      analyticsEvent = { kind: 'liveNftContentList', id: user_id, url: link }
       break
     }
   }

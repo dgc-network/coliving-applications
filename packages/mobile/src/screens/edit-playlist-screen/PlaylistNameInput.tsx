@@ -2,10 +2,10 @@ import { FormTextInput } from 'app/components/core'
 
 const messages = {
   label: 'Name',
-  placeholder: 'My Playlist'
+  placeholder: 'My ContentList'
 }
 
-export const PlaylistNameInput = () => {
+export const ContentListNameInput = () => {
   return (
     <FormTextInput
       required

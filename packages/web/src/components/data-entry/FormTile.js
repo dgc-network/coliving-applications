@@ -89,25 +89,25 @@ const BasicForm = (props) => {
                 props.type.charAt(0).toUpperCase() + props.type.slice(1)
               } Name`}
               defaultValue={
-                props.isPlaylist
+                props.isContentList
                   ? props.defaultFields.content list_name
                   : props.defaultFields.title
               }
               isRequired={
-                props.isPlaylist
+                props.isContentList
                   ? props.requiredFields.content list_name
                   : props.requiredFields.title
               }
               characterLimit={64}
               error={
-                props.isPlaylist
+                props.isContentList
                   ? props.invalidFields.content list_name
                   : props.invalidFields.title
               }
               variant={'elevatedPlaceholder'}
               onChange={(value) =>
                 props.onChangeField(
-                  props.isPlaylist ? 'content list_name' : 'title',
+                  props.isContentList ? 'content list_name' : 'title',
                   value
                 )
               }
@@ -715,7 +715,7 @@ FormTile.propTypes = {
   coverArt: PropTypes.string,
   /** If image processing resulted in an error. */
   imageProcessingError: PropTypes.bool,
-  isPlaylist: PropTypes.bool,
+  isContentList: PropTypes.bool,
   onChangeField: PropTypes.func,
   onChangeOrder: PropTypes.func,
   /** Whether or not to show a preview button. */
@@ -764,7 +764,7 @@ FormTile.propTypes = {
 FormTile.defaultProps = {
   showPreview: true,
   type: 'agreement',
-  isPlaylist: false,
+  isContentList: false,
   transformArtworkFunction: resizeImage,
   onChangeOrder: () => {},
   onChangeField: () => {},

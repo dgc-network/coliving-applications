@@ -4,11 +4,11 @@ import { UserCollectionMetadata } from '@coliving/common'
 import { useSpring, animated } from 'react-spring'
 import { useAsyncFn } from 'react-use'
 
-import colivingExclusivesPlaylistImg from 'assets/img/publicSite/ColivingExclusivesPlaylistArt.png'
-import colivingWeeklyPlaylistImg from 'assets/img/publicSite/ColivingWeeklyPlaylistArt.png'
-import hotAndNewPlaylistImg from 'assets/img/publicSite/HotAndNewPlaylistArt.jpeg'
+import colivingExclusivesContentListImg from 'assets/img/publicSite/ColivingExclusivesContentListArt.png'
+import colivingWeeklyContentListImg from 'assets/img/publicSite/ColivingWeeklyContentListArt.png'
+import hotAndNewContentListImg from 'assets/img/publicSite/HotAndNewContentListArt.jpeg'
 import { ReactComponent as IconLines } from 'assets/img/publicSite/Lines.svg'
-import moombahtonPlaylistImg from 'assets/img/publicSite/MoombahtonPlaylistArt.png'
+import moombahtonContentListImg from 'assets/img/publicSite/MoombahtonContentListArt.png'
 import { ReactComponent as IconListenOnColiving } from 'assets/img/publicSite/listen-on-coliving.svg'
 import { fetchExploreContent } from 'common/store/pages/explore/sagas'
 import { handleClickRoute } from 'components/public-site/handleClickRoute'
@@ -25,7 +25,7 @@ const messages = {
   subTitle: 'Check out the content lists we are listening to right now'
 }
 
-type PlaylistTileProps = {
+type ContentListTileProps = {
   title: string
   artist: string
   imageUrl: string | null
@@ -36,30 +36,30 @@ const FALLBACK_CONTENT_LISTS = [
   {
     title: 'Coliving Exclusives',
     artist: 'Coliving',
-    imageUrl: colivingExclusivesPlaylistImg,
+    imageUrl: colivingExclusivesContentListImg,
     link: '/coliving/content list/official-coliving-exclusives-1428'
   },
   {
     title: 'MOOMBAHTON COMES TO COLIVING',
     artist: 'Moombahton',
-    imageUrl: moombahtonPlaylistImg,
+    imageUrl: moombahtonContentListImg,
     link: '/moombahton/content list/moombahton-comes-to-coliving-9601'
   },
   {
     title: 'Hot & New On Coliving 🔥',
     artist: 'Coliving',
-    imageUrl: hotAndNewPlaylistImg,
+    imageUrl: hotAndNewContentListImg,
     link: '/coliving/content list/hot-new-on-coliving-%F0%9F%94%A5-4281'
   },
   {
     title: 'Coliving Weekly',
     artist: 'Coliving',
-    imageUrl: colivingWeeklyPlaylistImg,
+    imageUrl: colivingWeeklyContentListImg,
     link: '/3lau/is-it-love-feat.-yeah-boy-1151'
   }
 ]
 
-const DesktopPlaylistTile = (props: PlaylistTileProps) => {
+const DesktopContentListTile = (props: ContentListTileProps) => {
   const [cardRef, onMove, onLeave, transform] = useCardWeight({
     sensitivity: 1.8
   })
@@ -103,7 +103,7 @@ const DesktopPlaylistTile = (props: PlaylistTileProps) => {
   )
 }
 
-const MobilePlaylistTile = (props: PlaylistTileProps) => (
+const MobileContentListTile = (props: ContentListTileProps) => (
   <div
     key={props.title}
     className={styles.agreementContainer}
@@ -113,7 +113,7 @@ const MobilePlaylistTile = (props: PlaylistTileProps) => (
       className={styles.agreementImage}
       style={{
         backgroundImage: `url(${
-          props.imageUrl || colivingExclusivesPlaylistImg
+          props.imageUrl || colivingExclusivesContentListImg
         })`,
         boxShadow: `0px 10px 50px -2px rgba(56, 14, 13, 0.4)`
       }}
@@ -146,11 +146,11 @@ const getImageUrl = (
 }
 
 const FeaturedContent = (props: FeaturedContentProps) => {
-  const [trendingPlaylistsResponse, fetchTrendingPlaylists] =
+  const [trendingContentListsResponse, fetchTrendingContentLists] =
     useAsyncFn(async () => {
       const featuredContent = await fetchExploreContent()
-      const ids = featuredContent.featuredPlaylists
-      const content lists = ColivingBackend.getPlaylists(
+      const ids = featuredContent.featuredContentLists
+      const content lists = ColivingBackend.getContentLists(
         null,
         ids
       ) as any as UserCollectionMetadata[]
@@ -158,8 +158,8 @@ const FeaturedContent = (props: FeaturedContentProps) => {
     }, [])
 
   useEffect(() => {
-    fetchTrendingPlaylists()
-  }, [fetchTrendingPlaylists])
+    fetchTrendingContentLists()
+  }, [fetchTrendingContentLists])
   // Animate in the title and subtitle text
   const [hasViewed, refInView] = useHasViewed(0.8)
 
@@ -175,19 +175,19 @@ const FeaturedContent = (props: FeaturedContentProps) => {
         <h3 className={styles.title}>{messages.title}</h3>
         <h4 className={styles.subTitle}>{messages.subTitle}</h4>
         <div className={styles.agreementsContainer}>
-          {trendingPlaylistsResponse.value == null ||
-          trendingPlaylistsResponse.value.length < 4
+          {trendingContentListsResponse.value == null ||
+          trendingContentListsResponse.value.length < 4
             ? FALLBACK_CONTENT_LISTS.map((p) => (
-                <MobilePlaylistTile
+                <MobileContentListTile
                   key={p.link}
                   {...p}
                   onClick={handleClickRoute(p.link, props.setRenderPublicSite)}
                 />
               ))
-            : trendingPlaylistsResponse.value
+            : trendingContentListsResponse.value
                 .slice(0, 4)
                 .map((p) => (
-                  <MobilePlaylistTile
+                  <MobileContentListTile
                     key={p.content list_id}
                     title={p.content list_name}
                     artist={p.user.name}
@@ -229,19 +229,19 @@ const FeaturedContent = (props: FeaturedContentProps) => {
           </animated.div>
         </div>
         <div className={styles.agreementsContainer}>
-          {trendingPlaylistsResponse.value == null ||
-          trendingPlaylistsResponse.value.length < 4
+          {trendingContentListsResponse.value == null ||
+          trendingContentListsResponse.value.length < 4
             ? FALLBACK_CONTENT_LISTS.map((p) => (
-                <DesktopPlaylistTile
+                <DesktopContentListTile
                   key={p.title}
                   {...p}
                   onClick={handleClickRoute(p.link, props.setRenderPublicSite)}
                 />
               ))
-            : trendingPlaylistsResponse.value
+            : trendingContentListsResponse.value
                 .slice(0, 4)
                 .map((p) => (
-                  <DesktopPlaylistTile
+                  <DesktopContentListTile
                     key={p.content list_id}
                     title={p.content list_name}
                     artist={p.user.name}

@@ -21,7 +21,7 @@ import {
   followUser,
   unfollowUser
 } from '-client/src/common/store/social/users/actions'
-import { requestOpen as openAddToPlaylistModal } from '-client/src/common/store/ui/add-to-content list/actions'
+import { requestOpen as openAddToContentListModal } from '-client/src/common/store/ui/add-to-content list/actions'
 import { getMobileOverflowModal } from '-client/src/common/store/ui/mobile-overflow-menu/selectors'
 import type { OverflowActionCallbacks } from '-client/src/common/store/ui/mobile-overflow-menu/types'
 import { OverflowAction } from '-client/src/common/store/ui/mobile-overflow-menu/types'
@@ -71,7 +71,7 @@ const AgreementOverflowMenuDrawer = ({ render }: Props) => {
     [OverflowAction.SHARE]: () =>
       dispatchWeb(shareAgreement(id, ShareSource.OVERFLOW)),
     [OverflowAction.ADD_TO_CONTENT_LIST]: () =>
-      dispatchWeb(openAddToPlaylistModal(id, title)),
+      dispatchWeb(openAddToContentListModal(id, title)),
     [OverflowAction.VIEW_AGREEMENT_PAGE]: () => {
       closeNowPlayingDrawer()
       navigation.navigate({

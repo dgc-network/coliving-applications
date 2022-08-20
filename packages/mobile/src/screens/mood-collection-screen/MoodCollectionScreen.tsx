@@ -30,7 +30,7 @@ export const MoodCollectionScreen = ({
 
   return (
     <Screen>
-      <Header text={`${collection.title} Playlists`} />
+      <Header text={`${collection.title} ContentLists`} />
       <WithLoader loading={status === Status.LOADING}>
         <CollectionList collection={exploreData} />
       </WithLoader>

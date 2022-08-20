@@ -1,6 +1,6 @@
 import { ID } from '@coliving/common'
 
-export type CreatePlaylistModalState = {
+export type CreateContentListModalState = {
   isOpen: boolean
   collectionId: ID | null
   hideFolderTab: boolean

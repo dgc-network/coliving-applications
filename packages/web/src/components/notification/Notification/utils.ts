@@ -4,7 +4,7 @@ import { UserListEntityType } from 'store/application/ui/userListModal/types'
 import {
   albumPage,
   fullAlbumPage,
-  fullPlaylistPage,
+  fullContentListPage,
   fullAgreementPage,
   content listPage
 } from 'utils/route'
@@ -22,7 +22,7 @@ export const getEntityLink = (entity: EntityType, fullRoute = false) => {
     )
   }
   if (entity.user) {
-    const getRoute = fullRoute ? fullPlaylistPage : content listPage
+    const getRoute = fullRoute ? fullContentListPage : content listPage
     return getRoute(
       entity.user.handle,
       entity.content list_name,
@@ -52,5 +52,5 @@ export const entityToUserListEntity = {
   [Entity.Agreement]: UserListEntityType.AGREEMENT,
   [Entity.User]: UserListEntityType.USER,
   [Entity.Album]: UserListEntityType.COLLECTION,
-  [Entity.Playlist]: UserListEntityType.COLLECTION
+  [Entity.ContentList]: UserListEntityType.COLLECTION
 }

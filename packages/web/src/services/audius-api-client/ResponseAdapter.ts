@@ -21,7 +21,7 @@ import {
   APIRemix,
   APIRepost,
   APIAgreement,
-  APIPlaylist,
+  APIContentList,
   APISearchUser,
   APIUser,
   APIStem,
@@ -29,7 +29,7 @@ import {
   APISearch,
   APISearchAgreement,
   APISearchAutocomplete,
-  APISearchPlaylist
+  APISearchContentList
 } from './types'
 
 export const makeUser = (
@@ -271,13 +271,13 @@ export const makeAgreementId = (agreement: { id: string }): ID | undefined => {
   return decodedAgreementId
 }
 
-export const makePlaylist = (
-  content list: APIPlaylist | APISearchPlaylist
+export const makeContentList = (
+  content list: APIContentList | APISearchContentList
 ): UserCollectionMetadata | undefined => {
-  const decodedPlaylistId = decodeHashId(content list.id)
+  const decodedContentListId = decodeHashId(content list.id)
   const decodedOwnerId = decodeHashId(content list.user_id)
   const user = makeUser(content list.user)
-  if (!decodedPlaylistId || !decodedOwnerId || !user) {
+  if (!decodedContentListId || !decodedOwnerId || !user) {
     return undefined
   }
 
@@ -332,7 +332,7 @@ export const makePlaylist = (
     variant: Variant.USER_GENERATED,
     user,
     agreements,
-    content list_id: decodedPlaylistId,
+    content list_id: decodedContentListId,
     content list_owner_id: decodedOwnerId,
     followee_saves: saves,
     followee_reposts: reposts,
@@ -370,7 +370,7 @@ export const makeActivity = (
     case 'agreement':
       return makeAgreement(activity.item)
     case 'content list':
-      return makePlaylist(activity.item)
+      return makeContentList(activity.item)
   }
 }
 
@@ -440,18 +440,18 @@ export const adaptSearchResponse = (searchResponse: APIResponse<APISearch>) => {
         ?.map(makeUser)
         .filter(removeNullable) ?? undefined,
     content lists:
-      searchResponse.data.content lists?.map(makePlaylist).filter(removeNullable) ??
+      searchResponse.data.content lists?.map(makeContentList).filter(removeNullable) ??
       undefined,
     saved_content lists:
       searchResponse.data.saved_content lists
-        ?.map(makePlaylist)
+        ?.map(makeContentList)
         .filter(removeNullable) ?? undefined,
     albums:
-      searchResponse.data.albums?.map(makePlaylist).filter(removeNullable) ??
+      searchResponse.data.albums?.map(makeContentList).filter(removeNullable) ??
       undefined,
     saved_albums:
       searchResponse.data.saved_albums
-        ?.map(makePlaylist)
+        ?.map(makeContentList)
         .filter(removeNullable) ?? undefined
   }
 }
@@ -474,18 +474,18 @@ export const adaptSearchAutocompleteResponse = (
         ?.map(makeUser)
         .filter(removeNullable) ?? undefined,
     content lists:
-      searchResponse.data.content lists?.map(makePlaylist).filter(removeNullable) ??
+      searchResponse.data.content lists?.map(makeContentList).filter(removeNullable) ??
       undefined,
     saved_content lists:
       searchResponse.data.saved_content lists
-        ?.map(makePlaylist)
+        ?.map(makeContentList)
         .filter(removeNullable) ?? undefined,
     albums:
-      searchResponse.data.albums?.map(makePlaylist).filter(removeNullable) ??
+      searchResponse.data.albums?.map(makeContentList).filter(removeNullable) ??
       undefined,
     saved_albums:
       searchResponse.data.saved_albums
-        ?.map(makePlaylist)
+        ?.map(makeContentList)
         .filter(removeNullable) ?? undefined
   }
 }

@@ -37,7 +37,7 @@ import { useDispatchWeb } from 'app/hooks/useDispatchWeb'
 import { useNavigation } from 'app/hooks/useNavigation'
 import { useRoute } from 'app/hooks/useRoute'
 import { useSelectorWeb } from 'app/hooks/useSelectorWeb'
-import type { SearchPlaylist, SearchUser } from 'app/store/search/types'
+import type { SearchContentList, SearchUser } from 'app/store/search/types'
 import { makeStyles } from 'app/styles'
 
 import { CollectionScreenDetailsTile } from './CollectionScreenDetailsTile'
@@ -79,7 +79,7 @@ export const CollectionScreen = () => {
 }
 
 type CollectionScreenComponentProps = {
-  collection: Collection | SearchPlaylist
+  collection: Collection | SearchContentList
   user: User | SearchUser
 }
 

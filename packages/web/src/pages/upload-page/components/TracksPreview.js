@@ -10,7 +10,7 @@ import UploadType from './uploadType'
 
 const uploadDescriptions = {
   [UploadType.CONTENT_LIST]:
-    'A content list is a living thing that can change and grow over time. Playlists can contain your own agreements, as well as agreements uploaded by others.',
+    'A content list is a living thing that can change and grow over time. ContentLists can contain your own agreements, as well as agreements uploaded by others.',
   [UploadType.ALBUM]:
     'An album is a curated listening experience that is frozen in time and does not change. Albums can only contain agreements that you upload.',
   [UploadType.INDIVIDUAL_AGREEMENTS]:
@@ -31,7 +31,7 @@ const AgreementsPreview = (props) => {
           options={[
             { key: UploadType.INDIVIDUAL_AGREEMENTS, text: 'Agreements' },
             { key: UploadType.ALBUM, text: 'Album' },
-            { key: UploadType.CONTENT_LIST, text: 'Playlist' }
+            { key: UploadType.CONTENT_LIST, text: 'ContentList' }
           ]}
         />
         <div className={styles.typeDescription}>

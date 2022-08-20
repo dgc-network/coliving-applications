@@ -8,7 +8,7 @@ export enum Tabs {
 }
 
 export type ExploreContent = {
-  featuredPlaylists: ID[]
+  featuredContentLists: ID[]
   featuredProfiles: ID[]
 }
 

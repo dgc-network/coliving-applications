@@ -1,7 +1,7 @@
 import type { ID } from '@/common'
 import { FavoriteSource, RepostSource, ShareSource } from '@/common'
 import type { CommonState } from '-client/src/common/store'
-import { publishPlaylist } from '-client/src/common/store/cache/collections/actions'
+import { publishContentList } from '-client/src/common/store/cache/collections/actions'
 import { getCollection } from '-client/src/common/store/cache/collections/selectors'
 import { getUser } from '-client/src/common/store/cache/users/selectors'
 // Importing directly from -client for now, this will be removed
@@ -13,8 +13,8 @@ import {
   unsaveCollection,
   shareCollection
 } from '-client/src/common/store/social/collections/actions'
-import { open as openEditPlaylist } from '-client/src/common/store/ui/createPlaylistModal/actions'
-import { requestOpen as openDeletePlaylist } from '-client/src/common/store/ui/delete-content list-confirmation-modal/slice'
+import { open as openEditContentList } from '-client/src/common/store/ui/createContentListModal/actions'
+import { requestOpen as openDeleteContentList } from '-client/src/common/store/ui/delete-content list-confirmation-modal/slice'
 import { getMobileOverflowModal } from '-client/src/common/store/ui/mobile-overflow-menu/selectors'
 import type { OverflowActionCallbacks } from '-client/src/common/store/ui/mobile-overflow-menu/types'
 import { OverflowAction } from '-client/src/common/store/ui/mobile-overflow-menu/types'
@@ -87,14 +87,14 @@ const CollectionOverflowMenuDrawer = ({ render }: Props) => {
     },
     [OverflowAction.EDIT_CONTENT_LIST]: () => {
       navigation.navigate({
-        native: { screen: 'EditPlaylist', params: { id } }
+        native: { screen: 'EditContentList', params: { id } }
       })
-      dispatchWeb(openEditPlaylist(id))
+      dispatchWeb(openEditContentList(id))
     },
     [OverflowAction.DELETE_CONTENT_LIST]: () =>
-      dispatchWeb(openDeletePlaylist({ content listId: id })),
+      dispatchWeb(openDeleteContentList({ content listId: id })),
     [OverflowAction.PUBLISH_CONTENT_LIST]: () =>
-      is_album ? () => {} : dispatchWeb(publishPlaylist(Number(id)))
+      is_album ? () => {} : dispatchWeb(publishContentList(Number(id)))
   }
 
   return render(callbacks)

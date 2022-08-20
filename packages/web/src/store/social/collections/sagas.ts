@@ -2,7 +2,7 @@ import {
   Kind,
   ID,
   Name,
-  PlaylistLibrary,
+  ContentListLibrary,
   SmartCollectionVariant,
   User,
   makeUid,
@@ -11,7 +11,7 @@ import {
 import { call, select, takeEvery, put } from 'typed-redux-saga/macro'
 
 import * as accountActions from 'common/store/account/reducer'
-import { getPlaylistLibrary, getUserId } from 'common/store/account/selectors'
+import { getContentListLibrary, getUserId } from 'common/store/account/selectors'
 import * as cacheActions from 'common/store/cache/actions'
 import {
   getCollections,
@@ -20,7 +20,7 @@ import {
 import { adjustUserField } from 'common/store/cache/users/sagas'
 import { getUser } from 'common/store/cache/users/selectors'
 import * as notificationActions from 'common/store/notifications/actions'
-import { removeFromPlaylistLibrary } from 'common/store/content list-library/helpers'
+import { removeFromContentListLibrary } from 'common/store/content list-library/helpers'
 import * as socialActions from 'common/store/social/collections/actions'
 import { formatShareText } from 'common/utils/formatUtil'
 import * as signOnActions from 'pages/sign-on/store/actions'
@@ -29,8 +29,8 @@ import { make } from 'store/analytics/actions'
 import { waitForBackendSetup } from 'store/backend/sagas'
 import * as confirmerActions from 'store/confirmer/actions'
 import { confirmTransaction } from 'store/confirmer/sagas'
-import { update as updatePlaylistLibrary } from 'store/content list-library/slice'
-import { albumPage, liveNftPlaylistPage, content listPage } from 'utils/route'
+import { update as updateContentListLibrary } from 'store/content list-library/slice'
+import { albumPage, liveNftContentListPage, content listPage } from 'utils/route'
 import { share } from 'utils/share'
 
 import watchCollectionErrors from './errorSagas'
@@ -272,8 +272,8 @@ export function* saveSmartCollection(
     yield* put(make(Name.CREATE_ACCOUNT_OPEN, { source: 'social action' }))
     return
   }
-  const content listLibrary = yield* select(getPlaylistLibrary)
-  const newPlaylistLibrary: PlaylistLibrary = {
+  const content listLibrary = yield* select(getContentListLibrary)
+  const newContentListLibrary: ContentListLibrary = {
     ...content listLibrary,
     contents: [
       {
@@ -283,7 +283,7 @@ export function* saveSmartCollection(
       ...(content listLibrary?.contents || [])
     ]
   }
-  yield* put(updatePlaylistLibrary({ content listLibrary: newPlaylistLibrary }))
+  yield* put(updateContentListLibrary({ content listLibrary: newContentListLibrary }))
 
   const event = make(Name.FAVORITE, {
     kind: 'content list',
@@ -329,7 +329,7 @@ export function* saveCollectionAsync(
 
   if (!collection.is_album) {
     yield* put(
-      notificationActions.updatePlaylistLastViewedAt(action.collectionId)
+      notificationActions.updateContentListLastViewedAt(action.collectionId)
     )
   }
 
@@ -345,7 +345,7 @@ export function* saveCollectionAsync(
   )
 
   yield* put(
-    accountActions.addAccountPlaylist({
+    accountActions.addAccountContentList({
       id: collection.content list_id,
       name: collection.content list_name,
       is_album: collection.is_album,
@@ -424,14 +424,14 @@ export function* unsaveSmartCollection(
 ) {
   yield* call(waitForBackendSetup)
 
-  const content listLibrary = yield* select(getPlaylistLibrary)
+  const content listLibrary = yield* select(getContentListLibrary)
   if (!content listLibrary) return
 
-  const newPlaylistLibrary = removeFromPlaylistLibrary(
+  const newContentListLibrary = removeFromContentListLibrary(
     content listLibrary,
     action.smartCollectionName as SmartCollectionVariant
   ).library
-  yield* put(updatePlaylistLibrary({ content listLibrary: newPlaylistLibrary }))
+  yield* put(updateContentListLibrary({ content listLibrary: newContentListLibrary }))
   const event = make(Name.UNFAVORITE, {
     kind: 'content list',
     source: action.source,
@@ -463,7 +463,7 @@ export function* unsaveCollectionAsync(
   )
 
   yield* put(
-    accountActions.removeAccountPlaylist({ collectionId: action.collectionId })
+    accountActions.removeAccountContentList({ collectionId: action.collectionId })
   )
   yield* put(
     cacheActions.update(Kind.COLLECTIONS, [
@@ -549,18 +549,18 @@ export function* watchShareCollection() {
   )
 }
 
-export function* watchShareAudioNftPlaylist() {
+export function* watchShareAudioNftContentList() {
   yield* takeEvery(
     socialActions.SHARE_LIVE_NFT_CONTENT_LIST,
-    function* (action: ReturnType<typeof socialActions.shareAudioNftPlaylist>) {
+    function* (action: ReturnType<typeof socialActions.shareAudioNftContentList>) {
       const { handle } = action
       const user = yield* select(getUser, { handle })
 
-      const link = liveNftPlaylistPage(handle)
-      share(link, formatShareText('Audio NFT Playlist', user?.name ?? handle))
+      const link = liveNftContentListPage(handle)
+      share(link, formatShareText('Audio NFT ContentList', user?.name ?? handle))
 
       const event = make(Name.SHARE, {
-        kind: 'liveNftPlaylist',
+        kind: 'liveNftContentList',
         source: action.source,
         url: link
       })
@@ -579,7 +579,7 @@ const sagas = () => {
     watchUnsaveSmartCollection,
     watchCollectionErrors,
     watchShareCollection,
-    watchShareAudioNftPlaylist
+    watchShareAudioNftContentList
   ]
 }
 

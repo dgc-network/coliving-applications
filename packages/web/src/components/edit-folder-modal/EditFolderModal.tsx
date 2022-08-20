@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react'
 
-import { Name, PlaylistLibraryFolder } from '@coliving/common'
+import { Name, ContentListLibraryFolder } from '@coliving/common'
 import {
   IconFolder,
   Modal,
@@ -11,17 +11,17 @@ import {
 import { useDispatch } from 'react-redux'
 
 import { useModalState } from 'common/hooks/useModalState'
-import { getPlaylistLibrary } from 'common/store/account/selectors'
+import { getContentListLibrary } from 'common/store/account/selectors'
 import {
-  removePlaylistFolderInLibrary,
-  renamePlaylistFolderInLibrary
+  removeContentListFolderInLibrary,
+  renameContentListFolderInLibrary
 } from 'common/store/content list-library/helpers'
 import FolderForm from 'components/create-content list/FolderForm'
 import DeleteConfirmationModal from 'components/delete-confirmation/DeleteConfirmationModal'
 import { make, useRecord } from 'store/analytics/actions'
 import { getFolderId } from 'store/application/ui/editFolderModal/selectors'
 import { setFolderId } from 'store/application/ui/editFolderModal/slice'
-import { update as updatePlaylistLibrary } from 'store/content list-library/slice'
+import { update as updateContentListLibrary } from 'store/content list-library/slice'
 import { useSelector } from 'utils/reducer'
 import { zIndex } from 'utils/zIndex'
 
@@ -40,14 +40,14 @@ const messages = {
 const EditFolderModal = () => {
   const record = useRecord()
   const folderId = useSelector(getFolderId)
-  const content listLibrary = useSelector(getPlaylistLibrary)
+  const content listLibrary = useSelector(getContentListLibrary)
   const [isOpen, setIsOpen] = useModalState('EditFolder')
   const folder =
     content listLibrary == null || folderId == null
       ? null
       : (content listLibrary.contents.find(
           (item) => item.type === 'folder' && item.id === folderId
-        ) as PlaylistLibraryFolder | undefined)
+        ) as ContentListLibraryFolder | undefined)
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false)
   const onCancelDelete = () => setShowDeleteConfirmation(false)
 
@@ -69,12 +69,12 @@ const EditFolderModal = () => {
         !(content listLibrary == null || folderId == null || folder == null) &&
         newName !== folder.name
       ) {
-        const newLibrary = renamePlaylistFolderInLibrary(
+        const newLibrary = renameContentListFolderInLibrary(
           content listLibrary,
           folderId,
           newName
         )
-        dispatch(updatePlaylistLibrary({ content listLibrary: newLibrary }))
+        dispatch(updateContentListLibrary({ content listLibrary: newLibrary }))
       }
       record(make(Name.FOLDER_SUBMIT_EDIT, {}))
       handleClose()
@@ -88,12 +88,12 @@ const EditFolderModal = () => {
 
   const handleConfirmDelete = useCallback(() => {
     if (!(content listLibrary == null || folderId == null || folder == null)) {
-      const newLibrary = removePlaylistFolderInLibrary(
+      const newLibrary = removeContentListFolderInLibrary(
         content listLibrary,
         folderId
       )
       setShowDeleteConfirmation(false)
-      dispatch(updatePlaylistLibrary({ content listLibrary: newLibrary }))
+      dispatch(updateContentListLibrary({ content listLibrary: newLibrary }))
     }
     record(make(Name.FOLDER_DELETE, {}))
     handleClose()

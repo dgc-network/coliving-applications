@@ -21,7 +21,7 @@ import apiClient from 'services/coliving-api-client/ColivingAPIClient'
 
 export const USER_LIST_TAG = 'REPOSTS'
 
-const getPlaylistReposts = createUserListProvider<Collection>({
+const getContentListReposts = createUserListProvider<Collection>({
   getExistingEntity: getCollection,
   extractUserIDSubsetFromEntity: (collection: Collection) =>
     collection.followee_reposts.map((r) => r.user_id),
@@ -31,7 +31,7 @@ const getPlaylistReposts = createUserListProvider<Collection>({
     entityId,
     currentUserId
   }) => {
-    const users = await apiClient.getPlaylistRepostUsers({
+    const users = await apiClient.getContentListRepostUsers({
       limit,
       offset,
       content listId: entityId,
@@ -91,7 +91,7 @@ function* getReposts(currentPage: number, pageSize: number) {
   if (!id) return { userIds: [], hasMore: false }
   const repostType = yield* select(getRepostsType)
   return yield* (
-    repostType === RepostType.AGREEMENT ? getAgreementReposts : getPlaylistReposts
+    repostType === RepostType.AGREEMENT ? getAgreementReposts : getContentListReposts
   )({ id, currentPage, pageSize })
 }
 

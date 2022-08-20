@@ -430,14 +430,14 @@ const keepUidAndKind = (entry) => ({
  *  // contentList.js
  *  // Creates an exports and array of all sagas to be combined in the
  *  // root saga.
- *  class PlaylistSagas extends LineupSagas {
+ *  class ContentListSagas extends LineupSagas {
  *    constructor() {
  *      const selector = store => store.content list
- *      super("CONTENT_LIST", content listActions, selector, Backend.getPlaylist)
+ *      super("CONTENT_LIST", content listActions, selector, Backend.getContentList)
  *    }
  *  }
  *  export default function sagas () {
- *    return new PlaylistSagas().getSagas()
+ *    return new ContentListSagas().getSagas()
  *  }
  */
 export class LineupSagas {

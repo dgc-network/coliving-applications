@@ -2,7 +2,7 @@ import { ReactNode } from 'react'
 
 import { ReactComponent as IconColiving } from 'assets/img/iconAudius.svg'
 import { ReactComponent as IconHeart } from 'assets/img/iconHeart.svg'
-import { ReactComponent as IconPlaylist } from 'assets/img/iconPlaylists.svg'
+import { ReactComponent as IconContentList } from 'assets/img/iconContentLists.svg'
 import { ReactComponent as IconRemixBase } from 'assets/img/iconRemix.svg'
 import { ReactComponent as IconRepostBase } from 'assets/img/iconRepost.svg'
 import { ReactComponent as IconStars } from 'assets/img/iconStars.svg'
@@ -57,6 +57,6 @@ export const IconAnnouncement = () => {
   return <IconColiving className={styles.iconAnnouncement} />
 }
 
-export const IconAddAgreementToPlaylist = () => {
-  return <IconPlaylist className={styles.iconAddAgreementToPlaylist} />
+export const IconAddAgreementToContentList = () => {
+  return <IconContentList className={styles.iconAddAgreementToContentList} />
 }

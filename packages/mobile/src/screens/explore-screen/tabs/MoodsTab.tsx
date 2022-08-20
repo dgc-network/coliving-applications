@@ -14,8 +14,8 @@ import { ColorTile } from '../components/ColorTile'
 import { TabInfo } from '../components/TabInfo'
 
 const messages = {
-  infoHeader: 'Playlists to Fit Your Mood',
-  infoText: 'Playlists made by Coliving users, sorted by mood and feel.'
+  infoHeader: 'ContentLists to Fit Your Mood',
+  infoText: 'ContentLists made by Coliving users, sorted by mood and feel.'
 }
 
 const useStyles = makeStyles(({ spacing }) => ({

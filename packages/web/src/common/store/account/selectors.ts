@@ -9,7 +9,7 @@ import { AccountCollection } from './reducer'
 
 const internalGetAccountCollections = (state: CommonState) =>
   state.account.collections
-const internalGetUserPlaylists = (state: CommonState) =>
+const internalGetUserContentLists = (state: CommonState) =>
   Object.values(state.account.collections)
 const internalGetAccountUser = (state: CommonState) =>
   getUser(state, { id: getUserId(state) })
@@ -17,8 +17,8 @@ const internalGetAccountUser = (state: CommonState) =>
 export const getHasAccount = (state: CommonState) => !!state.account.userId
 export const getUserId = (state: CommonState) => state.account.userId
 export const getAccountStatus = (state: CommonState) => state.account.status
-export const getUserPlaylistOrder = (state: CommonState) =>
-  state.account.orderedPlaylists
+export const getUserContentListOrder = (state: CommonState) =>
+  state.account.orderedContentLists
 export const getConnectivityFailure = (state: CommonState) =>
   state.account.connectivityFailure
 export const getNeedsAccountRecovery = (state: CommonState) =>
@@ -58,7 +58,7 @@ export const getAccountProfilePictureSizes = (state: CommonState) => {
   const user = internalGetAccountUser(state)
   return user ? user._profile_picture_sizes : null
 }
-export const getPlaylistLibrary = (state: CommonState) => {
+export const getContentListLibrary = (state: CommonState) => {
   return getAccountUser(state)?.content list_library ?? null
 }
 
@@ -67,12 +67,12 @@ export const getPlaylistLibrary = (state: CommonState) => {
  * TODO: Add handle directly to content list metadata so we don't need to join against users.
  */
 export const getAccountWithCollections = createSelector(
-  [getAccountUser, internalGetUserPlaylists, getCollections, getUsers],
-  (account, userPlaylists, collections, users) => {
+  [getAccountUser, internalGetUserContentLists, getCollections, getUsers],
+  (account, userContentLists, collections, users) => {
     if (!account) return undefined
     return {
       ...account,
-      collections: [...userPlaylists]
+      collections: [...userContentLists]
         .map((collection) =>
           collections[collection.id] &&
           !collections[collection.id]?._marked_deleted &&
@@ -94,7 +94,7 @@ export const getAccountWithCollections = createSelector(
 /**
  * Gets the account's content list nav bar info
  */
-export const getAccountNavigationPlaylists = (state: CommonState) => {
+export const getAccountNavigationContentLists = (state: CommonState) => {
   return Object.keys(state.account.collections).reduce((acc, cur) => {
     const collection = state.account.collections[cur as unknown as number]
     if (collection.is_album) return acc
@@ -109,8 +109,8 @@ export const getAccountNavigationPlaylists = (state: CommonState) => {
 /**
  * Gets user content lists with content lists marked delete removed.
  */
-export const getUserPlaylists = createSelector(
-  [internalGetUserPlaylists, getCollections],
+export const getUserContentLists = createSelector(
+  [internalGetUserContentLists, getCollections],
   (content lists, collections) => {
     // Strange filter:
     // If we haven't cached the collection (e.g. on first load), always return it.
@@ -136,7 +136,7 @@ export const getAccountCollections = createSelector(
   }
 )
 
-export const getAccountWithPlaylists = createSelector(
+export const getAccountWithContentLists = createSelector(
   [getAccountWithCollections],
   (account) => {
     if (!account) return undefined
@@ -147,7 +147,7 @@ export const getAccountWithPlaylists = createSelector(
   }
 )
 
-export const getAccountWithOwnPlaylists = createSelector(
+export const getAccountWithOwnContentLists = createSelector(
   [getAccountWithCollections],
   (account) => {
     if (!account) return undefined
@@ -171,7 +171,7 @@ export const getAccountWithAlbums = createSelector(
   }
 )
 
-export const getAccountWithPlaylistsAndAlbums = createSelector(
+export const getAccountWithContentListsAndAlbums = createSelector(
   [getAccountWithCollections],
   (account) => {
     if (!account) return undefined
@@ -183,7 +183,7 @@ export const getAccountWithPlaylistsAndAlbums = createSelector(
   }
 )
 
-export const getAccountWithSavedPlaylistsAndAlbums = createSelector(
+export const getAccountWithSavedContentListsAndAlbums = createSelector(
   [getUserHandle, getAccountWithCollections],
   (handle, account) => {
     if (!account) return undefined
@@ -199,27 +199,27 @@ export const getAccountWithSavedPlaylistsAndAlbums = createSelector(
   }
 )
 
-export const getAccountOwnedPlaylists = createSelector(
-  [getUserPlaylists, getUserId],
+export const getAccountOwnedContentLists = createSelector(
+  [getUserContentLists, getUserId],
   (collections, userId) =>
     collections.filter((c) => !c.is_album && c.user.id === userId)
 )
 
 export const getAccountAlbumIds = createSelector(
-  [getUserPlaylists],
+  [getUserContentLists],
   (collections) => collections.filter((c) => c.is_album).map(({ id }) => id)
 )
 
-export const getAccountSavedPlaylistIds = createSelector(
-  [getUserPlaylists, getUserId],
+export const getAccountSavedContentListIds = createSelector(
+  [getUserContentLists, getUserId],
   (collections, userId) =>
     collections
       .filter((c) => !c.is_album && c.user.id !== userId)
       .map(({ id }) => id)
 )
 
-export const getAccountOwnedPlaylistIds = createSelector(
-  [getUserPlaylists, getUserId],
+export const getAccountOwnedContentListIds = createSelector(
+  [getUserContentLists, getUserId],
   (collections, userId) =>
     collections
       .filter((c) => !c.is_album && c.user.id === userId)

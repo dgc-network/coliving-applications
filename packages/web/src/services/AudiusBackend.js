@@ -976,7 +976,7 @@ class ColivingBackend {
 
   static async repostCollection(content listId) {
     try {
-      return colivingLibs.Playlist.addPlaylistRepost(content listId)
+      return colivingLibs.ContentList.addContentListRepost(content listId)
     } catch (err) {
       console.error(err.message)
       throw err
@@ -985,7 +985,7 @@ class ColivingBackend {
 
   static async undoRepostCollection(content listId) {
     try {
-      return colivingLibs.Playlist.deletePlaylistRepost(content listId)
+      return colivingLibs.ContentList.deleteContentListRepost(content listId)
     } catch (err) {
       console.error(err.message)
       throw err
@@ -1324,12 +1324,12 @@ class ColivingBackend {
     return followers
   }
 
-  static async getPlaylists(userId, content listIds) {
+  static async getContentLists(userId, content listIds) {
     try {
       const content lists = await withEagerOption(
         {
-          normal: (libs) => libs.Playlist.getPlaylists,
-          eager: DiscoveryAPI.getPlaylists
+          normal: (libs) => libs.ContentList.getContentLists,
+          eager: DiscoveryAPI.getContentLists
         },
         100,
         0,
@@ -1344,7 +1344,7 @@ class ColivingBackend {
     }
   }
 
-  static async createPlaylist(
+  static async createContentList(
     userId,
     metadata,
     isAlbum = false,
@@ -1358,7 +1358,7 @@ class ColivingBackend {
     if (isAlbum) isPrivate = false
 
     try {
-      const response = await colivingLibs.Playlist.createPlaylist(
+      const response = await colivingLibs.ContentList.createContentList(
         userId,
         content listName,
         isPrivate,
@@ -1374,19 +1374,19 @@ class ColivingBackend {
       // If this content list is being created from an existing cover art, use it.
       if (metadata.cover_art_sizes) {
         updatePromises.push(
-          colivingLibs.contracts.PlaylistFactoryClient.updatePlaylistCoverPhoto(
+          colivingLibs.contracts.ContentListFactoryClient.updateContentListCoverPhoto(
             content listId,
             Utils.formatOptionalMultihash(metadata.cover_art_sizes)
           )
         )
       } else if (coverArt) {
         updatePromises.push(
-          colivingLibs.Playlist.updatePlaylistCoverPhoto(content listId, coverArt)
+          colivingLibs.ContentList.updateContentListCoverPhoto(content listId, coverArt)
         )
       }
       if (description) {
         updatePromises.push(
-          colivingLibs.Playlist.updatePlaylistDescription(content listId, description)
+          colivingLibs.ContentList.updateContentListDescription(content listId, description)
         )
       }
 
@@ -1405,13 +1405,13 @@ class ColivingBackend {
       return { blockHash, blockNumber, content listId }
     } catch (err) {
       // This code path should never execute
-      console.debug('Reached client createPlaylist catch block')
+      console.debug('Reached client createContentList catch block')
       console.error(err.message)
       return { content listId: null, error: true }
     }
   }
 
-  static async updatePlaylist(content listId, metadata) {
+  static async updateContentList(content listId, metadata) {
     const content listName = metadata.content list_name
     const coverPhoto = metadata.artwork.file
     const description = metadata.description
@@ -1421,17 +1421,17 @@ class ColivingBackend {
       const promises = []
       if (content listName) {
         promises.push(
-          colivingLibs.Playlist.updatePlaylistName(content listId, content listName)
+          colivingLibs.ContentList.updateContentListName(content listId, content listName)
         )
       }
       if (coverPhoto) {
         promises.push(
-          colivingLibs.Playlist.updatePlaylistCoverPhoto(content listId, coverPhoto)
+          colivingLibs.ContentList.updateContentListCoverPhoto(content listId, coverPhoto)
         )
       }
       if (description) {
         promises.push(
-          colivingLibs.Playlist.updatePlaylistDescription(content listId, description)
+          colivingLibs.ContentList.updateContentListDescription(content listId, description)
         )
       }
 
@@ -1454,10 +1454,10 @@ class ColivingBackend {
     }
   }
 
-  static async orderPlaylist(content listId, agreementIds, retries) {
+  static async orderContentList(content listId, agreementIds, retries) {
     try {
       const { blockHash, blockNumber } =
-        await colivingLibs.Playlist.orderPlaylistAgreements(
+        await colivingLibs.ContentList.orderContentListAgreements(
           content listId,
           agreementIds,
           retries
@@ -1469,10 +1469,10 @@ class ColivingBackend {
     }
   }
 
-  static async publishPlaylist(content listId) {
+  static async publishContentList(content listId) {
     try {
       const { blockHash, blockNumber } =
-        await colivingLibs.Playlist.updatePlaylistPrivacy(content listId, false)
+        await colivingLibs.ContentList.updateContentListPrivacy(content listId, false)
       return { blockHash, blockNumber }
     } catch (error) {
       console.error(error.message)
@@ -1480,10 +1480,10 @@ class ColivingBackend {
     }
   }
 
-  static async addPlaylistAgreement(content listId, agreementId) {
+  static async addContentListAgreement(content listId, agreementId) {
     try {
       const { blockHash, blockNumber } =
-        await colivingLibs.Playlist.addPlaylistAgreement(content listId, agreementId)
+        await colivingLibs.ContentList.addContentListAgreement(content listId, agreementId)
       return { blockHash, blockNumber }
     } catch (error) {
       console.error(error.message)
@@ -1491,10 +1491,10 @@ class ColivingBackend {
     }
   }
 
-  static async deletePlaylistAgreement(content listId, agreementId, timestamp, retries) {
+  static async deleteContentListAgreement(content listId, agreementId, timestamp, retries) {
     try {
       const { blockHash, blockNumber } =
-        await colivingLibs.Playlist.deletePlaylistAgreement(
+        await colivingLibs.ContentList.deleteContentListAgreement(
           content listId,
           agreementId,
           timestamp,
@@ -1507,10 +1507,10 @@ class ColivingBackend {
     }
   }
 
-  static async validateAgreementsInPlaylist(content listId) {
+  static async validateAgreementsInContentList(content listId) {
     try {
       const { isValid, invalidAgreementIds } =
-        await colivingLibs.Playlist.validateAgreementsInPlaylist(content listId)
+        await colivingLibs.ContentList.validateAgreementsInContentList(content listId)
       return { error: false, isValid, invalidAgreementIds }
     } catch (error) {
       console.error(error.message)
@@ -1521,9 +1521,9 @@ class ColivingBackend {
   // NOTE: This is called to explicitly set a content list agreement ids w/out running validation checks.
   // This should NOT be used to set the content list order
   // It's added for the purpose of manually fixing broken content lists
-  static async dangerouslySetPlaylistOrder(content listId, agreementIds) {
+  static async dangerouslySetContentListOrder(content listId, agreementIds) {
     try {
-      await colivingLibs.contracts.PlaylistFactoryClient.orderPlaylistAgreements(
+      await colivingLibs.contracts.ContentListFactoryClient.orderContentListAgreements(
         content listId,
         agreementIds
       )
@@ -1534,9 +1534,9 @@ class ColivingBackend {
     }
   }
 
-  static async deletePlaylist(content listId) {
+  static async deleteContentList(content listId) {
     try {
-      const { txReceipt } = await colivingLibs.Playlist.deletePlaylist(content listId)
+      const { txReceipt } = await colivingLibs.ContentList.deleteContentList(content listId)
       return {
         blockHash: txReceipt.blockHash,
         blockNumber: txReceipt.blockNumber
@@ -1558,15 +1558,15 @@ class ColivingBackend {
         colivingLibs.Agreement.deleteAgreement(t.agreement)
       )
       const content listDeletionPromise =
-        colivingLibs.Playlist.deletePlaylist(content listId)
+        colivingLibs.ContentList.deleteContentList(content listId)
       const results = await Promise.all(
         agreementDeletionPromises.concat(content listDeletionPromise)
       )
       const deleteAgreementReceipts = results.slice(0, -1).map((r) => r.txReceipt)
-      const deletePlaylistReceipt = results.slice(-1)[0].txReceipt
+      const deleteContentListReceipt = results.slice(-1)[0].txReceipt
 
       const { blockHash, blockNumber } = ColivingBackend.getLatestTxReceipt(
-        deleteAgreementReceipts.concat(deletePlaylistReceipt)
+        deleteAgreementReceipts.concat(deleteContentListReceipt)
       )
       return { blockHash, blockNumber }
     } catch (error) {
@@ -1575,12 +1575,12 @@ class ColivingBackend {
     }
   }
 
-  static async getSavedPlaylists(limit = 100, offset = 0) {
+  static async getSavedContentLists(limit = 100, offset = 0) {
     try {
       const saves = await withEagerOption(
         {
-          normal: (libs) => libs.Playlist.getSavedPlaylists,
-          eager: DiscoveryAPI.getSavedPlaylists
+          normal: (libs) => libs.ContentList.getSavedContentLists,
+          eager: DiscoveryAPI.getSavedContentLists
         },
         limit,
         offset
@@ -1596,7 +1596,7 @@ class ColivingBackend {
     try {
       const saves = await withEagerOption(
         {
-          normal: (libs) => libs.Playlist.getSavedAlbums,
+          normal: (libs) => libs.ContentList.getSavedAlbums,
           eager: DiscoveryAPI.getSavedAlbums
         },
         limit,
@@ -1651,7 +1651,7 @@ class ColivingBackend {
   // Favorite a content list
   static async saveCollection(content listId) {
     try {
-      return await colivingLibs.Playlist.addPlaylistSave(content listId)
+      return await colivingLibs.ContentList.addContentListSave(content listId)
     } catch (err) {
       console.error(err.message)
       throw err
@@ -1671,7 +1671,7 @@ class ColivingBackend {
   // Unfavorite a content list
   static async unsaveCollection(content listId) {
     try {
-      return await colivingLibs.Playlist.deletePlaylistSave(content listId)
+      return await colivingLibs.ContentList.deleteContentListSave(content listId)
     } catch (err) {
       console.error(err.message)
       throw err
@@ -2351,7 +2351,7 @@ class ColivingBackend {
    * Sets the content list as viewed to reset the content list updates notifications timer
    * @param {content listId} content listId content list id or folder id
    */
-  static async updatePlaylistLastViewedAt(content listId) {
+  static async updateContentListLastViewedAt(content listId) {
     if (!getFeatureEnabled(FeatureFlags.CONTENT_LIST_UPDATES_ENABLED)) return
 
     await waitForLibsInit()

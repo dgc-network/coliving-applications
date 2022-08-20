@@ -2,10 +2,10 @@ import { LineupActions } from 'common/store/lineup/actions'
 
 export const PREFIX = 'TRENDING_CONTENT_LISTS'
 
-class TrendingPlaylistLineupActions extends LineupActions {
+class TrendingContentListLineupActions extends LineupActions {
   constructor() {
     super(PREFIX)
   }
 }
 
-export const trendingPlaylistLineupActions = new TrendingPlaylistLineupActions()
+export const trendingContentListLineupActions = new TrendingContentListLineupActions()

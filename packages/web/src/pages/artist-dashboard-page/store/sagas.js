@@ -27,7 +27,7 @@ function* fetchDashboardAsync(action) {
       // the dashboard
       getUnlisted: true
     }),
-    call(ColivingBackend.getPlaylists, account.user_id, [])
+    call(ColivingBackend.getContentLists, account.user_id, [])
   ])
   const listedAgreements = agreements.filter((t) => t.is_unlisted === false)
   const unlistedAgreements = agreements.filter((t) => t.is_unlisted === true)

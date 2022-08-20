@@ -4,7 +4,7 @@ import { StyleSheet, View, Text, TouchableHighlight } from 'react-native'
 import { useDispatch } from 'react-redux'
 
 import IconArrow from 'app/assets/images/iconArrow.svg'
-import PlaylistImage from 'app/components/image/PlaylistImage'
+import ContentListImage from 'app/components/image/ContentListImage'
 import AgreementImage from 'app/components/image/AgreementImage'
 import UserImage from 'app/components/image/UserImage'
 import UserBadges from 'app/components/user-badges/UserBadges'
@@ -12,7 +12,7 @@ import { useNavigation } from 'app/hooks/useNavigation'
 import { close as closeSearch } from 'app/store/search/actions'
 import useSearchHistory from 'app/store/search/hooks'
 import type {
-  SearchPlaylist,
+  SearchContentList,
   SearchAgreement,
   SearchUser,
   SectionHeader
@@ -164,11 +164,11 @@ const AgreementSearchResult = ({ isLast, item: agreement }: AgreementSearchResul
   )
 }
 
-type PlaylistSearchResultProps = { isLast: boolean; item: SearchPlaylist }
-const PlaylistSearchResult = ({
+type ContentListSearchResultProps = { isLast: boolean; item: SearchContentList }
+const ContentListSearchResult = ({
   isLast,
   item: content list
-}: PlaylistSearchResultProps) => {
+}: ContentListSearchResultProps) => {
   const nameStyle = useTheme(styles.name, { color: 'neutral' })
   const userNameStyle = useTheme(styles.name, { color: 'neutralLight4' })
   const squareImageStyles = useTheme(styles.squareImage, {
@@ -194,7 +194,7 @@ const PlaylistSearchResult = ({
 
   return (
     <ItemContainer isLast={isLast} onPress={handlePress}>
-      <PlaylistImage
+      <ContentListImage
         content list={content list}
         user={content list.user}
         imageStyle={squareImageStyles}
@@ -213,7 +213,7 @@ const PlaylistSearchResult = ({
   )
 }
 
-type AlbumSearchResultProps = { isLast: boolean; item: SearchPlaylist }
+type AlbumSearchResultProps = { isLast: boolean; item: SearchContentList }
 const AlbumSearchResult = ({ isLast, item: album }: AlbumSearchResultProps) => {
   const nameStyle = useTheme(styles.name, { color: 'neutral' })
   const userNameStyle = useTheme(styles.name, { color: 'neutralLight4' })
@@ -240,7 +240,7 @@ const AlbumSearchResult = ({ isLast, item: album }: AlbumSearchResultProps) => {
 
   return (
     <ItemContainer isLast={isLast} onPress={handlePress}>
-      <PlaylistImage
+      <ContentListImage
         content list={album}
         user={album.user}
         imageStyle={squareImageStyles}
@@ -262,7 +262,7 @@ const AlbumSearchResult = ({ isLast, item: album }: AlbumSearchResultProps) => {
 type SearchItemProps = {
   isLast: boolean
   type: SectionHeader
-  item: SearchUser | SearchAgreement | SearchPlaylist
+  item: SearchUser | SearchAgreement | SearchContentList
 }
 const SearchItem = ({ isLast, type, item }: SearchItemProps) => {
   switch (type) {
@@ -272,10 +272,10 @@ const SearchItem = ({ isLast, type, item }: SearchItemProps) => {
       return <AgreementSearchResult isLast={isLast} item={item as SearchAgreement} />
     case 'content lists':
       return (
-        <PlaylistSearchResult isLast={isLast} item={item as SearchPlaylist} />
+        <ContentListSearchResult isLast={isLast} item={item as SearchContentList} />
       )
     case 'albums':
-      return <AlbumSearchResult isLast={isLast} item={item as SearchPlaylist} />
+      return <AlbumSearchResult isLast={isLast} item={item as SearchContentList} />
     default:
       return null
   }

@@ -92,7 +92,7 @@ export const shareCollection = createCustomAction(
   (collectionId: ID, source: ShareSource) => ({ collectionId, source })
 )
 
-export const shareAudioNftPlaylist = createCustomAction(
+export const shareAudioNftContentList = createCustomAction(
   SHARE_LIVE_NFT_CONTENT_LIST,
   (handle: string, source: ShareSource) => ({ handle, source })
 )

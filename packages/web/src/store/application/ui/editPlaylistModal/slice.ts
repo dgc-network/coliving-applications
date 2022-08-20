@@ -1,12 +1,12 @@
 import { ID } from '@coliving/common'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-export type EditPlaylistModalState = {
+export type EditContentListModalState = {
   isOpen: boolean
   collectionId: ID | null
 }
 
-const initialState: EditPlaylistModalState = {
+const initialState: EditContentListModalState = {
   isOpen: false,
   collectionId: null
 }
@@ -14,7 +14,7 @@ const initialState: EditPlaylistModalState = {
 type OpenPayload = ID
 
 const slice = createSlice({
-  name: 'application/ui/editPlaylistModal',
+  name: 'application/ui/editContentListModal',
   initialState,
   reducers: {
     open: (state, action: PayloadAction<OpenPayload>) => {

@@ -1,7 +1,7 @@
 import { ID } from '@coliving/common'
 
 import { OPEN, CLOSE } from './actions'
-import { CreatePlaylistModalState } from './types'
+import { CreateContentListModalState } from './types'
 
 const initialState = {
   isOpen: false,
@@ -11,7 +11,7 @@ const initialState = {
 
 const actionsMap = {
   [OPEN](
-    state: CreatePlaylistModalState,
+    state: CreateContentListModalState,
     action: { collectionId: ID; hideFolderTab: boolean }
   ) {
     return {
@@ -21,7 +21,7 @@ const actionsMap = {
       hideFolderTab: action.hideFolderTab
     }
   },
-  [CLOSE](state: CreatePlaylistModalState) {
+  [CLOSE](state: CreateContentListModalState) {
     return {
       ...state,
       isOpen: false,

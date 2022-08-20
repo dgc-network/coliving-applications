@@ -34,24 +34,24 @@ const IS_NATIVE_MOBILE = process.env.REACT_APP_NATIVE_MOBILE
 
 const messages = {
   agreementsTitle: 'Top 5 Agreements Each Week Receive 100 $LIVE',
-  content listTitle: 'Top 5 Playlists Each Week Receive 100 $LIVE',
+  content listTitle: 'Top 5 ContentLists Each Week Receive 100 $LIVE',
   undergroundTitle: 'Top 5 Agreements Each Week Receive 100 $LIVE',
   winners: 'Winners are selected every Friday at Noon PT!',
   lastWeek: "LAST WEEK'S WINNERS",
   agreements: 'AGREEMENTS',
   topAgreements: 'TOP AGREEMENTS',
   content lists: 'CONTENT_LISTS',
-  topPlaylists: 'TOP CONTENT_LISTS',
+  topContentLists: 'TOP CONTENT_LISTS',
   underground: 'UNDERGROUND',
   terms: 'Terms and Conditions Apply',
   agreementsModalTitle: 'Top 5 Trending Agreements',
-  content listsModalTitle: 'Top 5 Trending Playlists',
+  content listsModalTitle: 'Top 5 Trending ContentLists',
   undergroundModalTitle: 'Top 5 Underground Trending Agreements',
   buttonTextAgreements: 'Current Trending Agreements',
-  buttonTextPlaylists: 'Current Trending Playlists',
+  buttonTextContentLists: 'Current Trending ContentLists',
   buttonTextUnderground: 'Current Underground Trending Agreements',
   mobileButtonTextAgreements: 'Trending Agreements',
-  mobileButtonTextPlaylists: 'Trending Playlists',
+  mobileButtonTextContentLists: 'Trending ContentLists',
   mobileButtonTextUnderground: 'Underground Trending Agreements'
 }
 
@@ -65,8 +65,8 @@ const textMap = {
   content lists: {
     modalTitle: messages.content listsModalTitle,
     title: messages.content listTitle,
-    button: messages.buttonTextPlaylists,
-    buttonMobile: messages.mobileButtonTextPlaylists
+    button: messages.buttonTextContentLists,
+    buttonMobile: messages.mobileButtonTextContentLists
   },
   agreements: {
     modalTitle: messages.agreementsModalTitle,
@@ -135,7 +135,7 @@ const TrendingRewardsBody = ({
     },
     {
       key: 'content lists',
-      text: mobile ? messages.content lists : messages.topPlaylists
+      text: mobile ? messages.content lists : messages.topContentLists
     },
     {
       key: 'underground',

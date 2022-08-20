@@ -7,12 +7,12 @@ import { useSelectorWeb } from 'app/hooks/useSelectorWeb'
 import { TabInfo } from '../components/TabInfo'
 
 const messages = {
-  infoHeader: 'Featured Playlists'
+  infoHeader: 'Featured ContentLists'
 }
 
 const getExplore = makeGetExplore()
 
-export const PlaylistsTab = () => {
+export const ContentListsTab = () => {
   const { content lists } = useSelectorWeb(getExplore)
 
   return (

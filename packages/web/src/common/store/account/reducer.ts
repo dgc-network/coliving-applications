@@ -6,7 +6,7 @@ const initialState = {
   collections: {} as { [id: number]: AccountCollection },
   // Used to agreement the ordering of content lists in the user's left nav
   // Array of strings that are either smart collection identifiers or user-generated collection ids
-  orderedPlaylists: [] as string[],
+  orderedContentLists: [] as string[],
   userId: null as number | null,
   status: Status.LOADING,
   hasFavoritedItem: false,
@@ -24,7 +24,7 @@ export type AccountCollection = {
 type FetchAccountSucceededPayload = {
   userId: ID
   collections: AccountCollection[]
-  orderedPlaylists: string[]
+  orderedContentLists: string[]
   hasFavoritedItem: boolean
 }
 
@@ -32,7 +32,7 @@ type FetchAccountFailedPayload = {
   reason: 'ACCOUNT_DEACTIVATED' | 'ACCOUNT_NOT_FOUND' | 'LIBS_ERROR'
 }
 
-type RenameAccountPlaylistPayload = {
+type RenameAccountContentListPayload = {
   collectionId: ID
   name: string
 }
@@ -75,10 +75,10 @@ const slice = createSlice({
       state,
       action: PayloadAction<FetchAccountSucceededPayload>
     ) => {
-      const { userId, orderedPlaylists, collections, hasFavoritedItem } =
+      const { userId, orderedContentLists, collections, hasFavoritedItem } =
         action.payload
       state.userId = userId
-      state.orderedPlaylists = orderedPlaylists
+      state.orderedContentLists = orderedContentLists
       state.collections = keyBy(collections, 'id')
       state.status = Status.SUCCESS
       state.hasFavoritedItem = hasFavoritedItem
@@ -95,19 +95,19 @@ const slice = createSlice({
     setReachable: (state) => {
       state.connectivityFailure = false
     },
-    addAccountPlaylist: (state, action: PayloadAction<AccountCollection>) => {
+    addAccountContentList: (state, action: PayloadAction<AccountCollection>) => {
       state.collections[action.payload.id] = action.payload
     },
-    removeAccountPlaylist: (
+    removeAccountContentList: (
       state,
       action: PayloadAction<{ collectionId: ID }>
     ) => {
       const { collectionId } = action.payload
       delete state.collections[collectionId]
     },
-    renameAccountPlaylist: (
+    renameAccountContentList: (
       state,
-      action: PayloadAction<RenameAccountPlaylistPayload>
+      action: PayloadAction<RenameAccountContentListPayload>
     ) => {
       const { collectionId, name } = action.payload
       state.collections[collectionId].name = name
@@ -124,8 +124,8 @@ const slice = createSlice({
         ...keyBy(collections, 'id')
       }
     },
-    fetchSavedPlaylists: () => {},
-    fetchSavedPlaylistsSucceeded: (
+    fetchSavedContentLists: () => {},
+    fetchSavedContentListsSucceeded: (
       state,
       action: PayloadAction<{ collections: AccountCollection[] }>
     ) => {
@@ -142,9 +142,9 @@ const slice = createSlice({
     setNeedsAccountRecovery: (state) => {
       state.needsAccountRecovery = true
     },
-    setPlaylistOrder: (state, action: PayloadAction<{ order: string[] }>) => {
+    setContentListOrder: (state, action: PayloadAction<{ order: string[] }>) => {
       const { order } = action.payload
-      state.orderedPlaylists = order
+      state.orderedContentLists = order
     },
     fetchBrowserPushNotifications: () => {},
     subscribeBrowserPushNotifications: () => {},
@@ -168,16 +168,16 @@ export const {
   fetchAccountFailed,
   fetchAccountNoInternet,
   setReachable,
-  addAccountPlaylist,
-  removeAccountPlaylist,
-  renameAccountPlaylist,
+  addAccountContentList,
+  removeAccountContentList,
+  renameAccountContentList,
   fetchSavedAlbums,
   fetchSavedAlbumsSucceeded,
-  fetchSavedPlaylists,
-  fetchSavedPlaylistsSucceeded,
+  fetchSavedContentLists,
+  fetchSavedContentListsSucceeded,
   didFavoriteItem,
   setNeedsAccountRecovery,
-  setPlaylistOrder,
+  setContentListOrder,
   fetchBrowserPushNotifications,
   subscribeBrowserPushNotifications,
   unsubscribeBrowserPushNotifications,

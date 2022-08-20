@@ -8,49 +8,49 @@ import {
   ModalContent,
   ModalTitle,
   IconFolder,
-  IconPlaylists
+  IconContentLists
 } from '@coliving/stems'
 
 import { useFlag } from 'hooks/useRemoteConfig'
 import { make, useRecord } from 'store/analytics/actions'
 import zIndex from 'utils/zIndex'
 
-import styles from './CreatePlaylistModal.module.css'
+import styles from './CreateContentListModal.module.css'
 import FolderForm from './FolderForm'
-import PlaylistForm, { PlaylistFormFields } from './PlaylistForm'
+import ContentListForm, { ContentListFormFields } from './ContentListForm'
 
 const messages = {
-  createPlaylistTabTitle: 'Create Playlist',
+  createContentListTabTitle: 'Create ContentList',
   createFolderTabTitle: 'Create Folder'
 }
 
 type TabName = 'create-content list' | 'create-folder'
 const INITIAL_TAB = 'create-content list' as TabName
 
-type CreatePlaylistModalProps = {
+type CreateContentListModalProps = {
   visible?: boolean
   hideFolderTab?: boolean
   onCancel: () => void
-  onCreatePlaylist: (metadata: PlaylistFormFields) => void
+  onCreateContentList: (metadata: ContentListFormFields) => void
   onCreateFolder: (name: string) => void
 }
 
-const CreatePlaylistModal = ({
+const CreateContentListModal = ({
   visible = true,
   hideFolderTab = false,
   onCancel,
   onCreateFolder,
-  onCreatePlaylist
-}: CreatePlaylistModalProps) => {
+  onCreateContentList
+}: CreateContentListModalProps) => {
   const record = useRecord()
-  const { isEnabled: isPlaylistFoldersEnabled } = useFlag(
+  const { isEnabled: isContentListFoldersEnabled } = useFlag(
     FeatureFlags.CONTENT_LIST_FOLDERS
   )
 
   const tabOptions = [
     {
       key: 'create-content list',
-      text: messages.createPlaylistTabTitle
+      text: messages.createContentListTabTitle
     },
     {
       key: 'create-folder',
@@ -114,20 +114,20 @@ const CreatePlaylistModal = ({
         <ModalTitle
           icon={
             currentTabName === 'create-content list' ? (
-              <IconPlaylists />
+              <IconContentLists />
             ) : (
               <IconFolder />
             )
           }
           title={
             currentTabName === 'create-content list'
-              ? messages.createPlaylistTabTitle
+              ? messages.createContentListTabTitle
               : messages.createFolderTabTitle
           }
         />
       </ModalHeader>
       <ModalContent>
-        {!isPlaylistFoldersEnabled || hideFolderTab ? null : (
+        {!isContentListFoldersEnabled || hideFolderTab ? null : (
           <div className={styles.segmentedControlContainer}>
             <SegmentedControl
               options={tabOptions}
@@ -137,10 +137,10 @@ const CreatePlaylistModal = ({
           </div>
         )}
         {currentTabName === 'create-content list' ? (
-          <PlaylistForm
+          <ContentListForm
             onOpenArtworkPopup={onOpenArtworkPopup}
             onCloseArtworkPopup={onCloseArtworkPopup}
-            onSave={onCreatePlaylist}
+            onSave={onCreateContentList}
           />
         ) : (
           <FolderForm onSubmit={handleSubmitFolder} />
@@ -150,4 +150,4 @@ const CreatePlaylistModal = ({
   )
 }
 
-export default CreatePlaylistModal
+export default CreateContentListModal

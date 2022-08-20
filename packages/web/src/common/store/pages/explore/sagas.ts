@@ -24,13 +24,13 @@ function* watchFetchExplore() {
     yield call(waitForBackendSetup)
     try {
       const exploreContent: {
-        featuredPlaylists: ID[]
+        featuredContentLists: ID[]
         featuredProfiles: ID[]
       } = yield call(fetchExploreContent)
       yield call(
         retrieveCollections,
         null,
-        exploreContent.featuredPlaylists,
+        exploreContent.featuredContentLists,
         false
       )
       yield call(fetchUsers, exploreContent.featuredProfiles)

@@ -15,7 +15,7 @@ import cn from 'classnames'
 import { ReactComponent as IconAlbum } from 'assets/img/iconAlbum.svg'
 import { ReactComponent as IconCollectibles } from 'assets/img/iconCollectibles.svg'
 import { ReactComponent as IconNote } from 'assets/img/iconNote.svg'
-import { ReactComponent as IconPlaylists } from 'assets/img/iconPlaylists.svg'
+import { ReactComponent as IconContentLists } from 'assets/img/iconContentLists.svg'
 import { ReactComponent as IconReposts } from 'assets/img/iconRepost.svg'
 import { useSelectTierInfo } from 'common/hooks/wallet'
 import { feedActions } from 'common/store/pages/profile/lineups/feed/actions'
@@ -151,7 +151,7 @@ export const EmptyTab = (props: EmptyTabProps) => {
 const artistTabs = [
   { icon: <IconNote />, text: 'Agreements', label: Tabs.AGREEMENTS },
   { icon: <IconAlbum />, text: 'Albums', label: Tabs.ALBUMS },
-  { icon: <IconPlaylists />, text: 'Playlists', label: Tabs.CONTENT_LISTS },
+  { icon: <IconContentLists />, text: 'ContentLists', label: Tabs.CONTENT_LISTS },
   {
     icon: <IconReposts className={styles.iconReposts} />,
     text: 'Reposts',
@@ -165,7 +165,7 @@ const userTabs = [
     text: 'Reposts',
     label: Tabs.REPOSTS
   },
-  { icon: <IconPlaylists />, text: 'Playlists', label: Tabs.CONTENT_LISTS }
+  { icon: <IconContentLists />, text: 'ContentLists', label: Tabs.CONTENT_LISTS }
 ]
 
 const collectiblesTab = {
@@ -190,7 +190,7 @@ const getMessages = ({
   emptyAlbums: isOwner
     ? "You haven't created any albums yet"
     : `${name} hasn't created any albums yet`,
-  emptyPlaylists: isOwner
+  emptyContentLists: isOwner
     ? "You haven't created any content lists yet"
     : `${name} hasn't created any content lists yet`,
   emptyReposts: isOwner
@@ -460,12 +460,12 @@ const ProfilePage = g(
               />
             )}
           </div>,
-          <div className={styles.cardLineupContainer} key='artistPlaylists'>
+          <div className={styles.cardLineupContainer} key='artistContentLists'>
             {(content lists || []).length === 0 ? (
               <EmptyTab
                 message={
                   <>
-                    {messages.emptyPlaylists}
+                    {messages.emptyContentLists}
                     <i
                       className={cn('emoji', 'face-with-monocle', styles.emoji)}
                     />
@@ -534,7 +534,7 @@ const ProfilePage = g(
               <EmptyTab
                 message={
                   <>
-                    {messages.emptyPlaylists}
+                    {messages.emptyContentLists}
                     <i
                       className={cn('emoji', 'face-with-monocle', styles.emoji)}
                     />

@@ -12,7 +12,7 @@ import {
   AgreementArtwork,
   CollectionArtwork
 } from 'components/agreement/desktop/Artwork'
-import PlaylistTile from 'components/agreement/desktop/PlaylistTile'
+import ContentListTile from 'components/agreement/desktop/ContentListTile'
 import AgreementListItem from 'components/agreement/desktop/AgreementListItem'
 import AgreementTile from 'components/agreement/desktop/AgreementTile'
 import { AgreementTileSize } from 'components/agreement/types'
@@ -44,7 +44,7 @@ const getShareUploadType = (uploadType, agreements) => {
     case UploadType.INDIVIDUAL_AGREEMENTS:
       return 'Agreements'
     case UploadType.CONTENT_LIST:
-      return 'Playlist'
+      return 'ContentList'
     case UploadType.ALBUM:
       return 'Album'
     default:
@@ -273,7 +273,7 @@ class FinishPage extends Component {
       ))
 
       content = (
-        <PlaylistTile
+        <ContentListTile
           header={header}
           userName={userName}
           agreementList={agreementList}
@@ -294,7 +294,7 @@ class FinishPage extends Component {
         continueText = 'View Agreement Page'
         break
       case UploadType.CONTENT_LIST:
-        continueText = 'View Playlist'
+        continueText = 'View ContentList'
         break
       case UploadType.ALBUM:
         continueText = 'View Album'

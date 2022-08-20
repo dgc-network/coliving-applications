@@ -94,7 +94,7 @@ const AgreementListItem = ({
 
   const menu: Omit<AgreementMenuProps, 'children'> = {
     handle: agreement.user.handle,
-    includeAddToPlaylist: true,
+    includeAddToContentList: true,
     includeArtistPick: false,
     includeEdit: false,
     includeFavorite: true,

@@ -17,7 +17,7 @@ type useLineupPropsProps = {
   getLineupSelector: (state: AppState) => LineupState<{}>
   actions: LineupActions
   variant?: LineupVariant
-  numPlaylistSkeletonRows?: number
+  numContentListSkeletonRows?: number
   scrollParent?: HTMLElement
   rankIconCount?: number
   isTrending?: boolean
@@ -27,13 +27,13 @@ type useLineupPropsProps = {
 /**
  * Returns props for a Lineup component.
  * Requires at least a selector and actions
- * See example usage in `TrendingPlaylistPage`
+ * See example usage in `TrendingContentListPage`
  * */
 export const useLineupProps = ({
   getLineupSelector,
   actions,
   variant,
-  numPlaylistSkeletonRows,
+  numContentListSkeletonRows,
   scrollParent,
   rankIconCount,
   isTrending,
@@ -42,7 +42,7 @@ export const useLineupProps = ({
   const dispatch = useDispatch()
 
   // Create memoized selectors
-  const getPlaylistTrendingLineup = useMemo(
+  const getContentListTrendingLineup = useMemo(
     () => makeGetLineupMetadatas(getLineupSelector),
     [getLineupSelector]
   )
@@ -51,7 +51,7 @@ export const useLineupProps = ({
 
   // Selectors
   const currentQueueItem = useSelector(getCurrentQueueItem)
-  const lineup = useSelector(getPlaylistTrendingLineup)
+  const lineup = useSelector(getContentListTrendingLineup)
   const isPlaying = useSelector(getPlaying)
   const isBuffering = useSelector(getBuffering)
 
@@ -75,7 +75,7 @@ export const useLineupProps = ({
     playAgreement,
     actions,
     loadMore,
-    numPlaylistSkeletonRows,
+    numContentListSkeletonRows,
     scrollParent,
     isMobile: isMobile(),
     rankIconCount,

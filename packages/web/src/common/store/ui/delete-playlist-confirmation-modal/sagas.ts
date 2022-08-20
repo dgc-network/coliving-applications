@@ -9,7 +9,7 @@ function* handleRequestOpen(action: OpenPayload) {
   const { payload } = action
   yield* put(open(payload))
   yield* put(
-    setVisibility({ modal: 'DeletePlaylistConfirmation', visible: true })
+    setVisibility({ modal: 'DeleteContentListConfirmation', visible: true })
   )
 }
 

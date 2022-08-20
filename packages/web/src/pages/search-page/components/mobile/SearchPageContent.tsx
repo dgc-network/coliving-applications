@@ -15,7 +15,7 @@ import { Dispatch } from 'redux'
 import { ReactComponent as IconAlbum } from 'assets/img/iconAlbum.svg'
 import { ReactComponent as IconBigSearch } from 'assets/img/iconBigSearch.svg'
 import { ReactComponent as IconNote } from 'assets/img/iconNote.svg'
-import { ReactComponent as IconPlaylists } from 'assets/img/iconPlaylists.svg'
+import { ReactComponent as IconContentLists } from 'assets/img/iconContentLists.svg'
 import { ReactComponent as IconUser } from 'assets/img/iconUser.svg'
 import { agreementsActions } from 'common/store/pages/search-results/lineup/agreements/actions'
 import Card from 'components/card/mobile/Card'
@@ -293,7 +293,7 @@ const messages = {
   tagSearchTitle: 'Tag Search',
   agreementsTitle: 'Agreements',
   albumsTitle: 'Albums',
-  content listsTitle: 'Playlists',
+  content listsTitle: 'ContentLists',
   peopleTitle: 'Profiles'
 }
 
@@ -387,7 +387,7 @@ const SearchPageContent = (props: SearchPageContentProps) => {
               label: Tabs.ALBUMS
             },
             {
-              icon: <IconPlaylists />,
+              icon: <IconContentLists />,
               text: messages.content listsTitle,
               label: Tabs.CONTENT_LISTS
             }

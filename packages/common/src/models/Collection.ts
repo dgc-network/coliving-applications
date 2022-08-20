@@ -14,7 +14,7 @@ export enum Variant {
   SMART = 'smart'
 }
 
-type PlaylistContents = {
+type ContentListContents = {
   agreement_ids: Array<{ time: number; agreement: ID } | { agreement: string }>
 }
 
@@ -68,14 +68,14 @@ export type SmartCollection = {
   description?: string
   makeDescription?: (...args: any) => string
   // Where this type of content list is given a different classification
-  // e.g. "Audio NFT Playlist" instead of just "Playlist"
-  typeTitle?: 'Playlist' | 'Audio NFT Playlist'
+  // e.g. "Audio NFT ContentList" instead of just "ContentList"
+  typeTitle?: 'ContentList' | 'Audio NFT ContentList'
   gradient?: string
   imageOverride?: string
   shadow?: string
   icon?: ReactNode
   link: string
-  content list_contents?: PlaylistContents
+  content list_contents?: ContentListContents
   has_current_user_saved?: boolean
   incentivized?: boolean // Whether we reward winners with Audio
   cardSensitivity?: number

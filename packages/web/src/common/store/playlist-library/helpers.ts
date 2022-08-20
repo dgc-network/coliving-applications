@@ -1,8 +1,8 @@
 import {
   ID,
-  PlaylistLibrary,
-  PlaylistLibraryIdentifier,
-  PlaylistLibraryFolder,
+  ContentListLibrary,
+  ContentListLibraryIdentifier,
+  ContentListLibraryFolder,
   SmartCollectionVariant,
   uuid
 } from '@coliving/common'
@@ -16,17 +16,17 @@ import { AccountCollection } from '../account/reducer'
  * @param content listId
  * @returns the identifier or false
  */
-export const findInPlaylistLibrary = (
-  library: PlaylistLibrary | PlaylistLibraryFolder,
+export const findInContentListLibrary = (
+  library: ContentListLibrary | ContentListLibraryFolder,
   content listId: ID | SmartCollectionVariant | string
-): PlaylistLibraryIdentifier | false => {
+): ContentListLibraryIdentifier | false => {
   if (!library.contents) return false
 
   // Simple DFS (this likely is very small, so this is fine)
   for (const item of library.contents) {
     switch (item.type) {
       case 'folder': {
-        const contains = findInPlaylistLibrary(item, content listId)
+        const contains = findInContentListLibrary(item, content listId)
         if (contains) return contains
         break
       }
@@ -48,8 +48,8 @@ export const findInPlaylistLibrary = (
  * @param entityId
  * @returns {number | number[] | false}
  */
-export const findIndexInPlaylistLibrary = (
-  library: PlaylistLibrary | PlaylistLibraryFolder,
+export const findIndexInContentListLibrary = (
+  library: ContentListLibrary | ContentListLibraryFolder,
   entityId: ID | SmartCollectionVariant | string
 ): number | number[] | -1 => {
   if (!library.contents) return -1
@@ -59,7 +59,7 @@ export const findIndexInPlaylistLibrary = (
     switch (item.type) {
       case 'folder': {
         if (item.id === entityId) return i
-        const indexInFolder = findIndexInPlaylistLibrary(item, entityId)
+        const indexInFolder = findIndexInContentListLibrary(item, entityId)
         if (indexInFolder !== -1) {
           return [i].concat(indexInFolder)
         }
@@ -82,26 +82,26 @@ export const findIndexInPlaylistLibrary = (
  * @param entityId the id of the content list or folder to remove
  * @returns { library, removed }
  */
-export const removeFromPlaylistLibrary = (
-  library: PlaylistLibrary | PlaylistLibraryFolder,
+export const removeFromContentListLibrary = (
+  library: ContentListLibrary | ContentListLibraryFolder,
   entityId: ID | SmartCollectionVariant | string
 ): {
-  library: PlaylistLibrary | PlaylistLibraryFolder
-  removed: PlaylistLibraryIdentifier | PlaylistLibraryFolder | null
+  library: ContentListLibrary | ContentListLibraryFolder
+  removed: ContentListLibraryIdentifier | ContentListLibraryFolder | null
 } => {
   if (!library.contents) return { library, removed: null }
 
-  const newContents: (PlaylistLibraryFolder | PlaylistLibraryIdentifier)[] = []
-  let removed: PlaylistLibraryIdentifier | PlaylistLibraryFolder | null = null
+  const newContents: (ContentListLibraryFolder | ContentListLibraryIdentifier)[] = []
+  let removed: ContentListLibraryIdentifier | ContentListLibraryFolder | null = null
   for (const item of library.contents) {
-    let newItem: PlaylistLibraryFolder | PlaylistLibraryIdentifier | null = item
+    let newItem: ContentListLibraryFolder | ContentListLibraryIdentifier | null = item
     switch (item.type) {
       case 'folder': {
         if (item.id === entityId) {
           removed = item
           newItem = null
         } else {
-          const res = removeFromPlaylistLibrary(item, entityId)
+          const res = removeFromContentListLibrary(item, entityId)
           if (res.removed) {
             removed = res.removed
           }
@@ -136,10 +136,10 @@ export const removeFromPlaylistLibrary = (
   }
 }
 
-export const constructPlaylistFolder = (
+export const constructContentListFolder = (
   name: string,
-  contents: (PlaylistLibraryFolder | PlaylistLibraryIdentifier)[] = []
-): PlaylistLibraryFolder => {
+  contents: (ContentListLibraryFolder | ContentListLibraryIdentifier)[] = []
+): ContentListLibraryFolder => {
   return {
     id: uuid(),
     type: 'folder',
@@ -148,9 +148,9 @@ export const constructPlaylistFolder = (
   }
 }
 
-const content listIdToPlaylistLibraryIdentifier = (
+const content listIdToContentListLibraryIdentifier = (
   content listId: ID | SmartCollectionVariant | string
-): PlaylistLibraryIdentifier => {
+): ContentListLibraryIdentifier => {
   if (typeof content listId === 'number') {
     return {
       type: 'content list',
@@ -181,25 +181,25 @@ const content listIdToPlaylistLibraryIdentifier = (
  * @param folderId
  * @returns the updated content list library
  */
-export const addPlaylistToFolder = (
-  library: PlaylistLibrary,
+export const addContentListToFolder = (
+  library: ContentListLibrary,
   content listId: ID | SmartCollectionVariant | string,
   folderId: string
-): PlaylistLibrary => {
+): ContentListLibrary => {
   if (!library.contents) return library
   let folderIndex = library.contents.findIndex((item) => {
     return item.type === 'folder' && item.id === folderId
   })
   if (folderIndex < 0) return library
-  const folder = library.contents[folderIndex] as PlaylistLibraryFolder
+  const folder = library.contents[folderIndex] as ContentListLibraryFolder
   // If the content list is in the right folder already, return the original library.
-  if (findInPlaylistLibrary(folder, content listId) !== false) {
+  if (findInContentListLibrary(folder, content listId) !== false) {
     return library
   }
 
   // Remove the content list from the library if it's already there but not in the given folder
-  let entry: PlaylistLibraryIdentifier | null
-  const { library: newLibrary, removed } = removeFromPlaylistLibrary(
+  let entry: ContentListLibraryIdentifier | null
+  const { library: newLibrary, removed } = removeFromContentListLibrary(
     library,
     content listId
   )
@@ -208,21 +208,21 @@ export const addPlaylistToFolder = (
     // Shouldn't hit this but this enforces the right type for `removed`
     return library
   }
-  entry = removed as PlaylistLibraryIdentifier
+  entry = removed as ContentListLibraryIdentifier
 
   if (!entry) {
-    entry = content listIdToPlaylistLibraryIdentifier(content listId)
+    entry = content listIdToContentListLibraryIdentifier(content listId)
   } else {
     // If content list was removed the folder index might be different now.
     folderIndex = newLibrary.contents.findIndex((item) => {
       return item.type === 'folder' && item.id === folderId
     })
   }
-  const updatedFolder = reorderPlaylistLibrary(
+  const updatedFolder = reorderContentListLibrary(
     folder,
     content listId,
     -1
-  ) as PlaylistLibraryFolder
+  ) as ContentListLibraryFolder
   const newContents = [...newLibrary.contents]
 
   newContents.splice(folderIndex, 1, updatedFolder)
@@ -243,11 +243,11 @@ export const addPlaylistToFolder = (
  * @param newName
  * @returns the updated content list library
  */
-export const renamePlaylistFolderInLibrary = (
-  library: PlaylistLibrary,
+export const renameContentListFolderInLibrary = (
+  library: ContentListLibrary,
   folderId: string,
   newName: string
-): PlaylistLibrary => {
+): ContentListLibrary => {
   if (!library.contents) return library
   const folderIndex = library.contents.findIndex((item) => {
     return item.type === 'folder' && item.id === folderId
@@ -273,15 +273,15 @@ export const renamePlaylistFolderInLibrary = (
  * @param folderId
  * @returns the updated content list library
  */
-export const removePlaylistFolderInLibrary = (
-  library: PlaylistLibrary,
+export const removeContentListFolderInLibrary = (
+  library: ContentListLibrary,
   folderId: string
-): PlaylistLibrary => {
+): ContentListLibrary => {
   if (!library.contents) return library
   const folder = library.contents.find((item) => {
     return item.type === 'folder' && item.id === folderId
     // Need to cast here because TS doesn't know that the result has to be a folder or undefined due to `item.type === 'folder'`
-  }) as PlaylistLibraryFolder | undefined
+  }) as ContentListLibraryFolder | undefined
   if (!folder) return library
   const folderIndex = library.contents.findIndex((item) => {
     return item.type === 'folder' && item.id === folderId
@@ -303,9 +303,9 @@ export const removePlaylistFolderInLibrary = (
  * @param folder
  */
 export const addFolderToLibrary = (
-  library: PlaylistLibrary | null,
-  folder: PlaylistLibraryFolder
-): PlaylistLibrary => {
+  library: ContentListLibrary | null,
+  folder: ContentListLibraryFolder
+): ContentListLibrary => {
   return {
     ...(library || {}),
     contents: [...(library?.contents || []), folder]
@@ -317,17 +317,17 @@ export const addFolderToLibrary = (
  * @param library
  * @returns a copy of the library with all temp content lists removed
  */
-export const removePlaylistLibraryTempPlaylists = (
-  library: PlaylistLibrary | PlaylistLibraryFolder
+export const removeContentListLibraryTempContentLists = (
+  library: ContentListLibrary | ContentListLibraryFolder
 ) => {
   if (!library.contents) return library
-  const newContents: (PlaylistLibraryFolder | PlaylistLibraryIdentifier)[] = []
+  const newContents: (ContentListLibraryFolder | ContentListLibraryIdentifier)[] = []
   for (const item of library.contents) {
     switch (item.type) {
       case 'folder': {
-        const folder = removePlaylistLibraryTempPlaylists(
+        const folder = removeContentListLibraryTempContentLists(
           item
-        ) as PlaylistLibraryFolder
+        ) as ContentListLibraryFolder
         newContents.push(folder)
         break
       }
@@ -350,12 +350,12 @@ export const removePlaylistLibraryTempPlaylists = (
  * @param library
  * @param ids ids to keep agreement of as we recurse
  */
-export const removePlaylistLibraryDuplicates = (
-  library: PlaylistLibrary | PlaylistLibraryFolder,
+export const removeContentListLibraryDuplicates = (
+  library: ContentListLibrary | ContentListLibraryFolder,
   ids: Set<string> = new Set([])
 ) => {
   if (!library.contents) return library
-  const newContents: (PlaylistLibraryFolder | PlaylistLibraryIdentifier)[] = []
+  const newContents: (ContentListLibraryFolder | ContentListLibraryIdentifier)[] = []
 
   // Simple DFS (this likely is very small, so this is fine)
   for (const item of library.contents) {
@@ -366,10 +366,10 @@ export const removePlaylistLibraryDuplicates = (
           break
         }
         ids.add(item.id)
-        const folder = removePlaylistLibraryDuplicates(
+        const folder = removeContentListLibraryDuplicates(
           item,
           ids
-        ) as PlaylistLibraryFolder
+        ) as ContentListLibraryFolder
         newContents.push(folder)
         break
       }
@@ -399,8 +399,8 @@ export const removePlaylistLibraryDuplicates = (
  * @param draggingId the content list being reordered
  * @param droppingId the content list where the dragged one was dropped onto
  */
-export const reorderPlaylistLibrary = (
-  library: PlaylistLibrary | PlaylistLibraryFolder,
+export const reorderContentListLibrary = (
+  library: ContentListLibrary | ContentListLibraryFolder,
   draggingId: ID | SmartCollectionVariant | string,
   droppingId: ID | SmartCollectionVariant | string,
   draggingKind:
@@ -410,8 +410,8 @@ export const reorderPlaylistLibrary = (
   reorderBeforeTarget = false
 ) => {
   // Find the dragging id and remove it from the library if present.
-  let entry: PlaylistLibraryIdentifier | PlaylistLibraryFolder | null
-  const { library: newLibrary, removed } = removeFromPlaylistLibrary(
+  let entry: ContentListLibraryIdentifier | ContentListLibraryFolder | null
+  const { library: newLibrary, removed } = removeFromContentListLibrary(
     library,
     draggingId
   )
@@ -421,7 +421,7 @@ export const reorderPlaylistLibrary = (
       // Soft fail if the thing being dragged is a folder and it doesn't exist in the library yet. This shouldn't be possible.
       return library
     } else {
-      entry = content listIdToPlaylistLibraryIdentifier(draggingId)
+      entry = content listIdToContentListLibraryIdentifier(draggingId)
     }
   }
 
@@ -433,7 +433,7 @@ export const reorderPlaylistLibrary = (
     index = 0
   } else {
     // Find the droppable id and place the draggable id after it
-    const found = findIndexInPlaylistLibrary(newLibrary, droppingId)
+    const found = findIndexInContentListLibrary(newLibrary, droppingId)
     if (found === -1) return library
     const indexShift = reorderBeforeTarget ? 0 : 1
     if (Array.isArray(found)) {
@@ -448,7 +448,7 @@ export const reorderPlaylistLibrary = (
     // This must be updated if we ever allow nested folders.
     const folderIndex = index[0]
     const dropIndex = index[1]
-    const folder = newContents[folderIndex] as PlaylistLibraryFolder
+    const folder = newContents[folderIndex] as ContentListLibraryFolder
     const updatedFolderContents = [...folder.contents]
     updatedFolderContents.splice(dropIndex, 0, entry)
     const updatedFolder = { ...folder, contents: updatedFolderContents }
@@ -467,8 +467,8 @@ export const reorderPlaylistLibrary = (
  * @param library
  * @returns boolean
  */
-export const containsTempPlaylist = (
-  library: PlaylistLibrary | PlaylistLibraryFolder
+export const containsTempContentList = (
+  library: ContentListLibrary | ContentListLibraryFolder
 ): boolean => {
   if (!library.contents) return false
 
@@ -476,7 +476,7 @@ export const containsTempPlaylist = (
   for (const item of library.contents) {
     switch (item.type) {
       case 'folder': {
-        const contains = containsTempPlaylist(item)
+        const contains = containsTempContentList(item)
         if (contains) return contains
         break
       }
@@ -496,30 +496,30 @@ export const containsTempPlaylist = (
  * @returns boolean
  */
 export const isInsideFolder = (
-  library: PlaylistLibrary | PlaylistLibraryFolder,
+  library: ContentListLibrary | ContentListLibraryFolder,
   id: ID | string | SmartCollectionVariant
 ): boolean => {
-  return Array.isArray(findIndexInPlaylistLibrary(library, id))
+  return Array.isArray(findIndexInContentListLibrary(library, id))
 }
 
 /**
  * Takes a library and returns a list of all temporary content lists from that library
  * @param library
- * @returns PlaylistLibraryIdentifier[]
+ * @returns ContentListLibraryIdentifier[]
  */
-export const extractTempPlaylistsFromLibrary = (
-  library: PlaylistLibrary | PlaylistLibraryFolder
-): PlaylistLibraryIdentifier[] => {
+export const extractTempContentListsFromLibrary = (
+  library: ContentListLibrary | ContentListLibraryFolder
+): ContentListLibraryIdentifier[] => {
   if (isEmpty(library.contents)) return []
   return library.contents.reduce((prevResult, nextContent) => {
     if (nextContent.type === 'folder') {
-      return prevResult.concat(extractTempPlaylistsFromLibrary(nextContent))
+      return prevResult.concat(extractTempContentListsFromLibrary(nextContent))
     } else if (nextContent.type === 'temp_content list') {
       return prevResult.concat(nextContent)
     } else {
       return prevResult
     }
-  }, [] as PlaylistLibraryIdentifier[])
+  }, [] as ContentListLibraryIdentifier[])
 }
 
 /**
@@ -527,24 +527,24 @@ export const extractTempPlaylistsFromLibrary = (
  * content list identifiers, then returns the library (does not mutate original)
  * with temporary content lists replaced by their resolved content list identifiers.
  * @param library
- * @param tempPlaylistIdToResolvedPlaylist object that maps temporary content list ids to their resolved content list identifiers
- * @returns PlaylistLibrary | PlaylistLibraryFolder
+ * @param tempContentListIdToResolvedContentList object that maps temporary content list ids to their resolved content list identifiers
+ * @returns ContentListLibrary | ContentListLibraryFolder
  */
-export const replaceTempWithResolvedPlaylists = <
-  T extends PlaylistLibrary | PlaylistLibraryFolder
+export const replaceTempWithResolvedContentLists = <
+  T extends ContentListLibrary | ContentListLibraryFolder
 >(
   library: T,
-  tempPlaylistIdToResolvedPlaylist: Record<string, PlaylistLibraryIdentifier>
+  tempContentListIdToResolvedContentList: Record<string, ContentListLibraryIdentifier>
 ): T => {
   if (isEmpty(library.contents)) return library
   const newContents = library.contents.map((c) => {
     if (c.type === 'folder') {
-      return replaceTempWithResolvedPlaylists(
+      return replaceTempWithResolvedContentLists(
         c,
-        tempPlaylistIdToResolvedPlaylist
+        tempContentListIdToResolvedContentList
       )
     } else if (c.type === 'temp_content list') {
-      return tempPlaylistIdToResolvedPlaylist[c.content list_id] ?? c
+      return tempContentListIdToResolvedContentList[c.content list_id] ?? c
     } else {
       return c
     }
@@ -553,15 +553,15 @@ export const replaceTempWithResolvedPlaylists = <
 }
 
 /* Returns content lists in `content lists` that are not in the given content list library `library`. */
-export const getPlaylistsNotInLibrary = (
-  library: PlaylistLibrary | null,
+export const getContentListsNotInLibrary = (
+  library: ContentListLibrary | null,
   content lists: {
     [id: number]: AccountCollection
   }
 ) => {
   const result = { ...content lists }
-  const helpComputePlaylistsNotInLibrary = (
-    libraryContentsLevel: PlaylistLibrary['contents']
+  const helpComputeContentListsNotInLibrary = (
+    libraryContentsLevel: ContentListLibrary['contents']
   ) => {
     libraryContentsLevel.forEach((content) => {
       if (content.type === 'temp_content list' || content.type === 'content list') {
@@ -570,12 +570,12 @@ export const getPlaylistsNotInLibrary = (
           delete result[Number(content.content list_id)]
         }
       } else if (content.type === 'folder') {
-        helpComputePlaylistsNotInLibrary(content.contents)
+        helpComputeContentListsNotInLibrary(content.contents)
       }
     })
   }
   if (library && content lists) {
-    helpComputePlaylistsNotInLibrary(library.contents)
+    helpComputeContentListsNotInLibrary(library.contents)
   }
   return result
 }

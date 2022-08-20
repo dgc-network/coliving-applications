@@ -18,7 +18,7 @@ import { useRecord, make } from 'store/analytics/actions'
 import { copyLinkToClipboard } from 'utils/clipboardUtil'
 import {
   fullAlbumPage,
-  fullPlaylistPage,
+  fullContentListPage,
   fullProfilePage,
   fullAgreementPage,
   profilePage,
@@ -31,8 +31,8 @@ import { UploadPageState } from '../store/types'
 
 import styles from './ShareBanner.module.css'
 
-type UploadType = 'Agreement' | 'Agreements' | 'Album' | 'Playlist' | 'Remix'
-type ContinuePage = 'Agreement' | 'Profile' | 'Album' | 'Playlist' | 'Remix'
+type UploadType = 'Agreement' | 'Agreements' | 'Album' | 'ContentList' | 'Remix'
+type ContinuePage = 'Agreement' | 'Profile' | 'Album' | 'ContentList' | 'Remix'
 
 type ShareBannerProps = {
   isHidden: boolean
@@ -116,10 +116,10 @@ const getShareTextUrl = async (
         url
       }
     }
-    case 'Playlist': {
+    case 'ContentList': {
       // @ts-ignore
       const { content list_name: title } = upload.metadata
-      const getPage = fullUrl ? fullPlaylistPage : content listPage
+      const getPage = fullUrl ? fullContentListPage : content listPage
       const url = getPage(user.handle, title, upload.completionId)
       return {
         text: `Check out my new content list, ${title} on @dgc-network #Coliving`,

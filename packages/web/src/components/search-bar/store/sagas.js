@@ -26,13 +26,13 @@ export function* getSearchResults(searchText) {
   const checkedAgreements = (yield call(setAgreementsIsBlocked, agreements)).filter(
     (t) => !t.is_delete && !t._blocked && !t.user.is_deactivated
   )
-  const checkedPlaylists = content lists.filter((t) => !t.user?.is_deactivated)
+  const checkedContentLists = content lists.filter((t) => !t.user?.is_deactivated)
   const checkedAlbums = albums.filter((t) => !t.user?.is_deactivated)
   return {
     users: checkedUsers,
     agreements: checkedAgreements,
     albums: checkedAlbums,
-    content lists: checkedPlaylists
+    content lists: checkedContentLists
   }
 }
 

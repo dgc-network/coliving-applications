@@ -541,7 +541,7 @@ function* followCollections(collectionIds, favoriteSource) {
 function* followArtists() {
   yield call(waitForBackendSetup)
   try {
-    // Auto-follow Hot & New Playlist
+    // Auto-follow Hot & New ContentList
     if (IS_PRODUCTION) {
       yield fork(followCollections, [4281], FavoriteSource.SIGN_UP)
     } else if (IS_STAGING) {

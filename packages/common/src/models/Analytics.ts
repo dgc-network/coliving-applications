@@ -86,24 +86,24 @@ export enum Name {
   FOLLOW = 'Follow',
   UNFOLLOW = 'Unfollow',
 
-  // Playlist creation
-  CONTENT_LIST_ADD = 'Playlist: Add To Playlist',
-  CONTENT_LIST_OPEN_CREATE = 'Playlist: Open Create Playlist',
-  CONTENT_LIST_START_CREATE = 'Playlist: Start Create Playlist',
-  CONTENT_LIST_COMPLETE_CREATE = 'Playlist: Complete Create Playlist',
-  CONTENT_LIST_MAKE_PUBLIC = 'Playlist: Make Public',
-  CONTENT_LIST_OPEN_EDIT_FROM_LIBRARY = 'Playlist: Open Edit Playlist From Sidebar',
+  // ContentList creation
+  CONTENT_LIST_ADD = 'ContentList: Add To ContentList',
+  CONTENT_LIST_OPEN_CREATE = 'ContentList: Open Create ContentList',
+  CONTENT_LIST_START_CREATE = 'ContentList: Start Create ContentList',
+  CONTENT_LIST_COMPLETE_CREATE = 'ContentList: Complete Create ContentList',
+  CONTENT_LIST_MAKE_PUBLIC = 'ContentList: Make Public',
+  CONTENT_LIST_OPEN_EDIT_FROM_LIBRARY = 'ContentList: Open Edit ContentList From Sidebar',
 
   DELETE = 'Delete',
 
   // Folders
-  FOLDER_OPEN_CREATE = 'Folder: Open Create Playlist Folder',
-  FOLDER_SUBMIT_CREATE = 'Folder: Submit Create Playlist Folder',
-  FOLDER_CANCEL_CREATE = 'Folder: Cancel Create Playlist Folder',
-  FOLDER_OPEN_EDIT = 'Folder: Open Edit Playlist Folder',
-  FOLDER_SUBMIT_EDIT = 'Folder: Submit Edit Playlist Folder',
-  FOLDER_DELETE = 'Folder: Delete Playlist Folder',
-  FOLDER_CANCEL_EDIT = 'Folder: Cancel Edit Playlist Folder',
+  FOLDER_OPEN_CREATE = 'Folder: Open Create ContentList Folder',
+  FOLDER_SUBMIT_CREATE = 'Folder: Submit Create ContentList Folder',
+  FOLDER_CANCEL_CREATE = 'Folder: Cancel Create ContentList Folder',
+  FOLDER_OPEN_EDIT = 'Folder: Open Edit ContentList Folder',
+  FOLDER_SUBMIT_EDIT = 'Folder: Submit Edit ContentList Folder',
+  FOLDER_DELETE = 'Folder: Delete ContentList Folder',
+  FOLDER_CANCEL_EDIT = 'Folder: Cancel Edit ContentList Folder',
 
   // Embed
   EMBED_OPEN = 'Embed: Open modal',
@@ -141,7 +141,7 @@ export enum Name {
   NOTIFICATIONS_CLICK_TIP_SENT_TWITTER_SHARE = 'Notifications: Clicked Tip Sent Twitter Share',
   NOTIFICATIONS_CLICK_SUPPORTER_RANK_UP_TWITTER_SHARE = 'Notifications: Clicked Supporter Rank Up Twitter Share',
   NOTIFICATIONS_CLICK_SUPPORTING_RANK_UP_TWITTER_SHARE = 'Notifications: Clicked Supporting Rank Up Twitter Share',
-  NOTIFICATIONS_CLICK_ADD_AGREEMENT_TO_CONTENT_LIST_TWITTER_SHARE = 'Notifications: Clicked Add Agreement to Playlist Twitter Share',
+  NOTIFICATIONS_CLICK_ADD_AGREEMENT_TO_CONTENT_LIST_TWITTER_SHARE = 'Notifications: Clicked Add Agreement to ContentList Twitter Share',
   NOTIFICATIONS_TOGGLE_SETTINGS = 'Notifications: Toggle Setting',
   BROWSER_NOTIFICATION_SETTINGS = 'Browser Push Notification',
 
@@ -211,17 +211,17 @@ export enum Name {
   SERVICE_MONITOR_REQUEST = 'Service Monitor: Request',
   SERVICE_MONITOR_HEALTH_CHECK = 'Service Monitor: Status',
 
-  // Playlist library
-  CONTENT_LIST_LIBRARY_REORDER = 'Playlist Library: Reorder',
-  CONTENT_LIST_LIBRARY_MOVE_CONTENT_LIST_INTO_FOLDER = 'Playlist Library: Move Playlist Into Folder',
-  CONTENT_LIST_LIBRARY_ADD_CONTENT_LIST_TO_FOLDER = 'Playlist Library: Add Playlist To Folder',
-  CONTENT_LIST_LIBRARY_MOVE_CONTENT_LIST_OUT_OF_FOLDER = 'Playlist Library: Move Playlist Out of Folder',
-  CONTENT_LIST_LIBRARY_EXPAND_FOLDER = 'Playlist Library: Expand Folder',
-  CONTENT_LIST_LIBRARY_COLLAPSE_FOLDER = 'Playlist Library: Collapse Folder',
+  // ContentList library
+  CONTENT_LIST_LIBRARY_REORDER = 'ContentList Library: Reorder',
+  CONTENT_LIST_LIBRARY_MOVE_CONTENT_LIST_INTO_FOLDER = 'ContentList Library: Move ContentList Into Folder',
+  CONTENT_LIST_LIBRARY_ADD_CONTENT_LIST_TO_FOLDER = 'ContentList Library: Add ContentList To Folder',
+  CONTENT_LIST_LIBRARY_MOVE_CONTENT_LIST_OUT_OF_FOLDER = 'ContentList Library: Move ContentList Out of Folder',
+  CONTENT_LIST_LIBRARY_EXPAND_FOLDER = 'ContentList Library: Expand Folder',
+  CONTENT_LIST_LIBRARY_COLLAPSE_FOLDER = 'ContentList Library: Collapse Folder',
   // When an update is available in the content list library
-  CONTENT_LIST_LIBRARY_HAS_UPDATE = 'Playlist Library: Has Update',
+  CONTENT_LIST_LIBRARY_HAS_UPDATE = 'ContentList Library: Has Update',
   // When a user clicks on a content list in the library
-  CONTENT_LIST_LIBRARY_CLICKED = 'Playlist Library: Clicked',
+  CONTENT_LIST_LIBRARY_CLICKED = 'ContentList Library: Clicked',
 
   // Deactivate Account
   DEACTIVATE_ACCOUNT_PAGE_VIEW = 'Deactivate Account: Page View',
@@ -502,7 +502,7 @@ type Share = {
 
 export type ShareToTwitter = {
   eventName: Name.SHARE_TO_TWITTER
-  kind: 'profile' | 'album' | 'content list' | 'agreement' | 'liveNftPlaylist'
+  kind: 'profile' | 'album' | 'content list' | 'agreement' | 'liveNftContentList'
   source: ShareSource
   id: number
   url: string
@@ -551,39 +551,39 @@ type TweetFirstUpload = {
   handle: string
 }
 
-// Playlist
-export enum CreatePlaylistSource {
+// ContentList
+export enum CreateContentListSource {
   NAV = 'nav',
   CREATE_PAGE = 'create page',
   FROM_AGREEMENT = 'from agreement',
   FAVORITES_PAGE = 'favorites page'
 }
 
-type PlaylistAdd = {
+type ContentListAdd = {
   eventName: Name.CONTENT_LIST_ADD
   agreementId: string
   content listId: string
 }
-type PlaylistOpenCreate = {
+type ContentListOpenCreate = {
   eventName: Name.CONTENT_LIST_OPEN_CREATE
-  source: CreatePlaylistSource
+  source: CreateContentListSource
 }
-type PlaylistStartCreate = {
+type ContentListStartCreate = {
   eventName: Name.CONTENT_LIST_START_CREATE
-  source: CreatePlaylistSource
+  source: CreateContentListSource
   artworkSource: 'unsplash' | 'original'
 }
-type PlaylistCompleteCreate = {
+type ContentListCompleteCreate = {
   eventName: Name.CONTENT_LIST_COMPLETE_CREATE
-  source: CreatePlaylistSource
+  source: CreateContentListSource
   status: 'success' | 'failure'
 }
-type PlaylistMakePublic = {
+type ContentListMakePublic = {
   eventName: Name.CONTENT_LIST_MAKE_PUBLIC
   id: string
 }
 
-type PlaylistOpenEditFromLibrary = {
+type ContentListOpenEditFromLibrary = {
   eventName: Name.CONTENT_LIST_OPEN_EDIT_FROM_LIBRARY
 }
 
@@ -755,7 +755,7 @@ type NotificationsClickSupportingRankUp = {
   eventName: Name.NOTIFICATIONS_CLICK_SUPPORTING_RANK_UP_TWITTER_SHARE
   text: string
 }
-type NotificationsClickAddAgreementToPlaylist = {
+type NotificationsClickAddAgreementToContentList = {
   eventName: Name.NOTIFICATIONS_CLICK_ADD_AGREEMENT_TO_CONTENT_LIST_TWITTER_SHARE
   text: string
 }
@@ -1024,41 +1024,41 @@ type ServiceMonitorHealthCheck = {
   type: ServiceMonitorType
 } & MonitorPayload
 
-type PlaylistLibraryReorder = {
+type ContentListLibraryReorder = {
   eventName: Name.CONTENT_LIST_LIBRARY_REORDER
   // Whether or not the reorder contains newly created temp content lists
-  containsTemporaryPlaylists: boolean
+  containsTemporaryContentLists: boolean
   kind: 'library-content list' | 'content list' | 'content list-folder'
 }
 
-type PlaylistLibraryHasUpdate = {
+type ContentListLibraryHasUpdate = {
   eventName: Name.CONTENT_LIST_LIBRARY_HAS_UPDATE
   count: number
 }
 
-type PlaylistLibraryClicked = {
+type ContentListLibraryClicked = {
   eventName: Name.CONTENT_LIST_LIBRARY_CLICKED
   content listId: ID
   hasUpdate: boolean
 }
 
-type PlaylistLibraryMovePlaylistIntoFolder = {
+type ContentListLibraryMoveContentListIntoFolder = {
   eventName: Name.CONTENT_LIST_LIBRARY_MOVE_CONTENT_LIST_INTO_FOLDER
 }
 
-type PlaylistLibraryAddPlaylistToFolder = {
+type ContentListLibraryAddContentListToFolder = {
   eventName: Name.CONTENT_LIST_LIBRARY_ADD_CONTENT_LIST_TO_FOLDER
 }
 
-type PlaylistLibraryMovePlaylistOutOfFolder = {
+type ContentListLibraryMoveContentListOutOfFolder = {
   eventName: Name.CONTENT_LIST_LIBRARY_MOVE_CONTENT_LIST_OUT_OF_FOLDER
 }
 
-type PlaylistLibraryExpandFolder = {
+type ContentListLibraryExpandFolder = {
   eventName: Name.CONTENT_LIST_LIBRARY_EXPAND_FOLDER
 }
 
-type PlaylistLibraryCollapseFolder = {
+type ContentListLibraryCollapseFolder = {
   eventName: Name.CONTENT_LIST_LIBRARY_COLLAPSE_FOLDER
 }
 
@@ -1293,12 +1293,12 @@ export type AllAgreementingEvents =
   | Favorite
   | Unfavorite
   | ArtistPickSelectAgreement
-  | PlaylistAdd
-  | PlaylistOpenCreate
-  | PlaylistStartCreate
-  | PlaylistCompleteCreate
-  | PlaylistMakePublic
-  | PlaylistOpenEditFromLibrary
+  | ContentListAdd
+  | ContentListOpenCreate
+  | ContentListStartCreate
+  | ContentListCompleteCreate
+  | ContentListMakePublic
+  | ContentListOpenEditFromLibrary
   | Delete
   | EmbedOpen
   | EmbedCopy
@@ -1326,7 +1326,7 @@ export type AllAgreementingEvents =
   | NotificationsClickTipSent
   | NotificationsClickSupporterRankUp
   | NotificationsClickSupportingRankUp
-  | NotificationsClickAddAgreementToPlaylist
+  | NotificationsClickAddAgreementToContentList
   | NotificationsToggleSettings
   | ProfilePageTabClick
   | ProfilePageSort
@@ -1372,14 +1372,14 @@ export type AllAgreementingEvents =
   | SendAudioFailure
   | ServiceMonitorRequest
   | ServiceMonitorHealthCheck
-  | PlaylistLibraryReorder
-  | PlaylistLibraryHasUpdate
-  | PlaylistLibraryClicked
-  | PlaylistLibraryMovePlaylistIntoFolder
-  | PlaylistLibraryAddPlaylistToFolder
-  | PlaylistLibraryMovePlaylistOutOfFolder
-  | PlaylistLibraryExpandFolder
-  | PlaylistLibraryCollapseFolder
+  | ContentListLibraryReorder
+  | ContentListLibraryHasUpdate
+  | ContentListLibraryClicked
+  | ContentListLibraryMoveContentListIntoFolder
+  | ContentListLibraryAddContentListToFolder
+  | ContentListLibraryMoveContentListOutOfFolder
+  | ContentListLibraryExpandFolder
+  | ContentListLibraryCollapseFolder
   | TransferAudioToWAudioRequest
   | TransferAudioToWAudioSuccess
   | TransferAudioToWAudioFailure

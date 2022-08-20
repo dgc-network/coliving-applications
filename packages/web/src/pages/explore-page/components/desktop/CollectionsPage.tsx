@@ -11,7 +11,7 @@ import Page from 'components/page/Page'
 import { useOrderedLoad } from 'hooks/useOrderedLoad'
 import {
   content listPage,
-  fullPlaylistPage,
+  fullContentListPage,
   albumPage,
   fullAlbumPage,
   BASE_URL,
@@ -40,7 +40,7 @@ const CollectionsPage = ({
   onClickFavorites,
   goToRoute
 }: CollectionsPageProps) => {
-  const { isLoading: isLoadingPlaylist, setDidLoad: setDidLoadPlaylist } =
+  const { isLoading: isLoadingContentList, setDidLoad: setDidLoadContentList } =
     useOrderedLoad(collections.length)
 
   const goToProfilePage = useCallback(
@@ -75,13 +75,13 @@ const CollectionsPage = ({
     return (
       <Card
         index={i}
-        isLoading={isLoadingPlaylist(i)}
-        setDidLoad={setDidLoadPlaylist}
+        isLoading={isLoadingContentList(i)}
+        setDidLoad={setDidLoadContentList}
         key={content list.content list_id}
         id={content list.content list_id}
         userId={content list.content list_owner_id}
         imageSize={content list._cover_art_sizes}
-        isPlaylist={!content list.is_album}
+        isContentList={!content list.is_album}
         isPublic={!content list.is_private}
         size='large'
         content listName={content list.content list_name}
@@ -99,7 +99,7 @@ const CollectionsPage = ({
                 content list.content list_name,
                 content list.content list_id
               )
-            : fullPlaylistPage(
+            : fullContentListPage(
                 content list.user.handle,
                 content list.content list_name,
                 content list.content list_id

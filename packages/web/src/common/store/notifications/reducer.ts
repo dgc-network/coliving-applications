@@ -160,7 +160,7 @@ const actionsMap: any = {
   },
   [actions.SET_CONTENT_LIST_UPDATES](
     state: NotificationState,
-    action: actions.SetPlaylistUpdates
+    action: actions.SetContentListUpdates
   ) {
     if (
       action.content listUpdates.length === 0 &&
@@ -176,7 +176,7 @@ const actionsMap: any = {
   },
   [actions.UPDATE_CONTENT_LIST_VIEW](
     state: NotificationState,
-    action: actions.UpdatePlaylistLastViewedAt
+    action: actions.UpdateContentListLastViewedAt
   ) {
     return {
       ...state,

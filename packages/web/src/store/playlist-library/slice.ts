@@ -1,10 +1,10 @@
-import { PlaylistLibrary } from '@coliving/common'
+import { ContentListLibrary } from '@coliving/common'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 const initialState = {}
 
 export type UpdatePayload = {
-  content listLibrary: PlaylistLibrary
+  content listLibrary: ContentListLibrary
 }
 
 const slice = createSlice({

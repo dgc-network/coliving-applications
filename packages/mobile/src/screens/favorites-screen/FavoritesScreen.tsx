@@ -1,13 +1,13 @@
 import IconAlbum from 'app/assets/images/iconAlbum.svg'
 import IconNote from 'app/assets/images/iconNote.svg'
-import IconPlaylists from 'app/assets/images/iconPlaylists.svg'
+import IconContentLists from 'app/assets/images/iconContentLists.svg'
 import { Screen } from 'app/components/core'
 import { Header } from 'app/components/header'
 import { TopTabNavigator } from 'app/components/top-tab-bar'
 import { usePopToTopOnDrawerOpen } from 'app/hooks/usePopToTopOnDrawerOpen'
 
 import { AlbumsTab } from './AlbumsTab'
-import { PlaylistsTab } from './PlaylistsTab'
+import { ContentListsTab } from './ContentListsTab'
 import { AgreementsTab } from './AgreementsTab'
 
 const favoritesScreens = [
@@ -23,8 +23,8 @@ const favoritesScreens = [
   },
   {
     name: 'content lists',
-    Icon: IconPlaylists,
-    component: PlaylistsTab
+    Icon: IconContentLists,
+    component: ContentListsTab
   }
 ]
 

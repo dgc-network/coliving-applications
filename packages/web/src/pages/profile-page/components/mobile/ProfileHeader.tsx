@@ -46,7 +46,7 @@ const messages = {
   agreements: 'Agreements',
   followers: 'Followers',
   following: 'Following',
-  content lists: 'Playlists',
+  content lists: 'ContentLists',
   showMore: 'Show More',
   showLess: 'Show Less',
   editProfile: 'EDIT PROFILE'

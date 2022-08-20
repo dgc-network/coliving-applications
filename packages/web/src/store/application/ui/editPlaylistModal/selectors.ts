@@ -1,6 +1,6 @@
 import { AppState } from 'store/types'
 
-const getBase = (state: AppState) => state.application.ui.editPlaylistModal
+const getBase = (state: AppState) => state.application.ui.editContentListModal
 export const getIsOpen = (state: AppState) => {
   return getBase(state).isOpen
 }

@@ -62,16 +62,16 @@ const messages = {
   pageDescription: 'Explore featured content on Coliving',
   forYou: 'For You',
   moods: 'Moods',
-  content lists: 'Playlists',
+  content lists: 'ContentLists',
   artists: 'Artists',
-  featuredPlaylists: 'Featured Playlists',
+  featuredContentLists: 'Featured ContentLists',
   featuredArtists: 'Featured Artists',
   justForYou: 'Just For You',
   justForYouDescription: `Content curated for
 you based on your likes, reposts, and follows. Refreshes often so if you like a agreement, favorite it.`,
-  moodPlaylists: 'Playlists to Fit Your Mood',
-  moodPlaylistsDescription:
-    'Playlists made by Coliving users, sorted by mood and feel.'
+  moodContentLists: 'ContentLists to Fit Your Mood',
+  moodContentListsDescription:
+    'ContentLists made by Coliving users, sorted by mood and feel.'
 }
 
 const lifestyle = [
@@ -119,7 +119,7 @@ export type ExplorePageProps = {
   content lists: UserCollection[]
   profiles: User[]
   status: Status
-  formatPlaylistCardSecondaryText: (saves: number, agreements: number) => string
+  formatContentListCardSecondaryText: (saves: number, agreements: number) => string
   formatProfileCardSecondaryText: (followerCount: number) => string
   goToRoute: (route: string) => void
 }
@@ -130,7 +130,7 @@ const ExplorePage = ({
   content lists,
   profiles,
   status,
-  formatPlaylistCardSecondaryText,
+  formatContentListCardSecondaryText,
   formatProfileCardSecondaryText,
   goToRoute
 }: ExplorePageProps) => {
@@ -203,7 +203,7 @@ const ExplorePage = ({
           userId={content list.content list_owner_id}
           imageSize={content list._cover_art_sizes}
           primaryText={content list.content list_name}
-          secondaryText={formatPlaylistCardSecondaryText(
+          secondaryText={formatContentListCardSecondaryText(
             content list.save_count,
             content list.content list_contents.agreement_ids.length
           )}
@@ -255,13 +255,13 @@ const ExplorePage = ({
         </div>
       </TabBodyHeader>,
       <TabBodyHeader
-        key='moodPlaylists'
-        title={messages.moodPlaylists}
-        description={messages.moodPlaylistsDescription}
+        key='moodContentLists'
+        title={messages.moodContentLists}
+        description={messages.moodContentListsDescription}
       >
         <div className={styles.section}>{lifestyleTiles}</div>
       </TabBodyHeader>,
-      <TabBodyHeader key='featuredPlaylists' title={messages.featuredPlaylists}>
+      <TabBodyHeader key='featuredContentLists' title={messages.featuredContentLists}>
         {status === Status.LOADING ? (
           <LoadingSpinner className={styles.spinner} />
         ) : (

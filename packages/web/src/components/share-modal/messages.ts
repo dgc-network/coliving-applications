@@ -4,8 +4,8 @@ const shareTypeMap: Record<ShareType, string> = {
   agreement: 'Agreement',
   profile: 'Profile',
   album: 'Album',
-  content list: 'Playlist',
-  liveNftPlaylist: 'Audio NFT Playlist'
+  content list: 'ContentList',
+  liveNftContentList: 'Audio NFT ContentList'
 }
 
 export const messages = {
@@ -23,6 +23,6 @@ export const messages = {
   content listShareText: (content listName: string, handle: string) =>
     `Check out ${content listName} by ${handle} @dgc-network #Coliving`,
   // TODO: See if you can display my when the account user is the user
-  liveNftPlaylistShareText: (name: string) =>
+  liveNftContentListShareText: (name: string) =>
     `Check out ${name} Audio NFTs in a content list @dgc-network #Coliving`
 }

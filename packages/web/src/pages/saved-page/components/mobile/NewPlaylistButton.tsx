@@ -1,28 +1,28 @@
 import { useCallback } from 'react'
 
-import { Name, CreatePlaylistSource } from '@coliving/common'
+import { Name, CreateContentListSource } from '@coliving/common'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 
-import * as createPlaylistActions from 'common/store/ui/createPlaylistModal/actions'
+import * as createContentListActions from 'common/store/ui/createContentListModal/actions'
 import { useRecord, make } from 'store/analytics/actions'
 import { AppState } from 'store/types'
 
-import styles from './NewPlaylistButton.module.css'
+import styles from './NewContentListButton.module.css'
 
 const messages = {
-  createPlaylist: 'Create a New Playlist'
+  createContentList: 'Create a New ContentList'
 }
 
 type OwnProps = {
   onClick?: () => void
 }
 
-type NewPlaylistButtonProps = OwnProps &
+type NewContentListButtonProps = OwnProps &
   ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>
 
-const NewPlaylistButton = ({ open, onClick }: NewPlaylistButtonProps) => {
+const NewContentListButton = ({ open, onClick }: NewContentListButtonProps) => {
   const record = useRecord()
 
   const handleClick = useCallback(() => {
@@ -33,14 +33,14 @@ const NewPlaylistButton = ({ open, onClick }: NewPlaylistButtonProps) => {
     }
     record(
       make(Name.CONTENT_LIST_OPEN_CREATE, {
-        source: CreatePlaylistSource.FAVORITES_PAGE
+        source: CreateContentListSource.FAVORITES_PAGE
       })
     )
   }, [open, onClick, record])
 
   return (
     <button className={styles.button} onClick={handleClick}>
-      {messages.createPlaylist}
+      {messages.createContentList}
     </button>
   )
 }
@@ -51,8 +51,8 @@ function mapStateToProps(state: AppState) {
 
 function mapDispatchToProps(dispatch: Dispatch) {
   return {
-    open: () => dispatch(createPlaylistActions.open(undefined, true))
+    open: () => dispatch(createContentListActions.open(undefined, true))
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(NewPlaylistButton)
+export default connect(mapStateToProps, mapDispatchToProps)(NewContentListButton)

@@ -1,11 +1,11 @@
 import { MouseEvent, useCallback, useRef, useState } from 'react'
 
 import {
-  CreatePlaylistSource,
+  CreateContentListSource,
   FavoriteSource,
   Name,
   SquareSizes,
-  PlaylistLibrary as PlaylistLibraryType,
+  ContentListLibrary as ContentListLibraryType,
   Status,
   FeatureFlags
 } from '@coliving/common'
@@ -27,16 +27,16 @@ import imageProfilePicEmpty from 'assets/img/imageProfilePicEmpty2X.png'
 import {
   getAccountStatus,
   getAccountUser,
-  getPlaylistLibrary
+  getContentListLibrary
 } from 'common/store/account/selectors'
 import { getDominantColorsByAgreement } from 'common/store/average-color/slice'
 import {
-  addAgreementToPlaylist,
-  createPlaylist
+  addAgreementToContentList,
+  createContentList
 } from 'common/store/cache/collections/actions'
 import {
   toggleNotificationPanel,
-  updatePlaylistLastViewedAt
+  updateContentListLastViewedAt
 } from 'common/store/notifications/actions'
 import {
   getNotificationPanelIsOpen,
@@ -44,17 +44,17 @@ import {
 } from 'common/store/notifications/selectors'
 import {
   addFolderToLibrary,
-  constructPlaylistFolder
+  constructContentListFolder
 } from 'common/store/content list-library/helpers'
 import { makeGetCurrent } from 'common/store/queue/selectors'
 import { saveCollection } from 'common/store/social/collections/actions'
 import { saveAgreement } from 'common/store/social/agreements/actions'
-import * as createPlaylistModalActions from 'common/store/ui/createPlaylistModal/actions'
+import * as createContentListModalActions from 'common/store/ui/createContentListModal/actions'
 import {
   getHideFolderTab,
   getIsOpen
-} from 'common/store/ui/createPlaylistModal/selectors'
-import CreatePlaylistModal from 'components/create-content list/CreatePlaylistModal'
+} from 'common/store/ui/createContentListModal/selectors'
+import CreateContentListModal from 'components/create-content list/CreateContentListModal'
 import { DragAutoscroller } from 'components/drag-autoscroller/DragAutoscroller'
 import Droppable from 'components/dragndrop/Droppable'
 import DynamicImage from 'components/dynamic-image/DynamicImage'
@@ -74,7 +74,7 @@ import { openVisualizer } from 'pages/visualizer/store/slice'
 import { make, useRecord } from 'store/analytics/actions'
 import { getIsDragging } from 'store/dragndrop/selectors'
 import { makeGetCurrent as makeGetCurrentPlayer } from 'store/player/selectors'
-import { update as updatePlaylistLibrary } from 'store/content list-library/slice'
+import { update as updateContentListLibrary } from 'store/content list-library/slice'
 import { AppState } from 'store/types'
 import {
   DASHBOARD_PAGE,
@@ -92,11 +92,11 @@ import {
 import NavAudio from './NavAudio'
 import styles from './NavColumn.module.css'
 import NavHeader from './NavHeader'
-import PlaylistLibrary from './PlaylistLibrary'
+import ContentListLibrary from './ContentListLibrary'
 
 const messages = {
-  newPlaylistOrFolderTooltip: 'New Playlist or Folder',
-  newPlaylistTooltip: 'New Playlist'
+  newContentListOrFolderTooltip: 'New ContentList or Folder',
+  newContentListTooltip: 'New ContentList'
 }
 
 type OwnProps = {
@@ -111,17 +111,17 @@ type NavColumnProps = OwnProps &
 const NavColumn = ({
   account,
   showActionRequiresAccount,
-  createPlaylist,
+  createContentList,
   library,
-  openCreatePlaylistModal,
-  closeCreatePlaylistModal,
+  openCreateContentListModal,
+  closeCreateContentListModal,
   isElectron,
   notificationCount,
   notificationPanelIsOpen,
   toggleNotificationPanel,
-  showCreatePlaylistModal,
-  hideCreatePlaylistModalFolderTab,
-  updatePlaylistLibrary,
+  showCreateContentListModal,
+  hideCreateContentListModalFolderTab,
+  updateContentListLibrary,
   currentQueueItem,
   currentPlayerItem,
   dragging: { dragging, kind, isOwner: draggingIsOwner },
@@ -129,7 +129,7 @@ const NavColumn = ({
   saveCollection,
   upload,
   accountStatus,
-  updatePlaylistLastViewedAt,
+  updateContentListLastViewedAt,
   resetUploadState,
   goToRoute,
   goToSignUp: routeToSignup,
@@ -158,7 +158,7 @@ const NavColumn = ({
     },
     [record, routeToSignup]
   )
-  const { isEnabled: isPlaylistFoldersEnabled } = useFlag(
+  const { isEnabled: isContentListFoldersEnabled } = useFlag(
     FeatureFlags.CONTENT_LIST_FOLDERS
   )
 
@@ -180,35 +180,35 @@ const NavColumn = ({
       record(make(Name.NOTIFICATIONS_OPEN, { source: 'button' }))
   }, [notificationPanelIsOpen, toggleNotificationPanel, record])
 
-  const onCreatePlaylist = useCallback(
+  const onCreateContentList = useCallback(
     (metadata) => {
       const tempId = `${Date.now()}`
-      createPlaylist(tempId, metadata)
-      closeCreatePlaylistModal()
+      createContentList(tempId, metadata)
+      closeCreateContentListModal()
       if (account) {
         goToRoute(content listPage(account.handle, metadata.content list_name, tempId))
       }
     },
-    [account, createPlaylist, closeCreatePlaylistModal, goToRoute]
+    [account, createContentList, closeCreateContentListModal, goToRoute]
   )
 
   const onCreateFolder = useCallback(
     (folderName) => {
       const newLibrary = addFolderToLibrary(
         library,
-        constructPlaylistFolder(folderName)
+        constructContentListFolder(folderName)
       )
-      updatePlaylistLibrary(newLibrary)
-      closeCreatePlaylistModal()
+      updateContentListLibrary(newLibrary)
+      closeCreateContentListModal()
     },
-    [library, updatePlaylistLibrary, closeCreatePlaylistModal]
+    [library, updateContentListLibrary, closeCreateContentListModal]
   )
 
-  const openCreatePlaylist = useCallback(() => {
+  const openCreateContentList = useCallback(() => {
     if (account) {
-      openCreatePlaylistModal()
+      openCreateContentListModal()
       record(
-        make(Name.CONTENT_LIST_OPEN_CREATE, { source: CreatePlaylistSource.NAV })
+        make(Name.CONTENT_LIST_OPEN_CREATE, { source: CreateContentListSource.NAV })
       )
     } else {
       goToSignUp('social action')
@@ -216,7 +216,7 @@ const NavColumn = ({
     }
   }, [
     account,
-    openCreatePlaylistModal,
+    openCreateContentListModal,
     goToSignUp,
     showActionRequiresAccount,
     record
@@ -229,10 +229,10 @@ const NavColumn = ({
         goToSignUp('restricted page')
         showActionRequiresAccount()
       } else if (id) {
-        updatePlaylistLastViewedAt(id)
+        updateContentListLastViewedAt(id)
       }
     },
-    [account, goToSignUp, showActionRequiresAccount, updatePlaylistLastViewedAt]
+    [account, goToSignUp, showActionRequiresAccount, updateContentListLastViewedAt]
   )
 
   const updateScrollTopPosition = useCallback((difference) => {
@@ -461,13 +461,13 @@ const NavColumn = ({
                       [styles.droppableLink]: dragging && kind === 'content list'
                     })}
                   >
-                    Playlists
-                    <div className={styles.newPlaylist}>
+                    ContentLists
+                    <div className={styles.newContentList}>
                       <Tooltip
                         text={
-                          isPlaylistFoldersEnabled
-                            ? messages.newPlaylistOrFolderTooltip
-                            : messages.newPlaylistTooltip
+                          isContentListFoldersEnabled
+                            ? messages.newContentListOrFolderTooltip
+                            : messages.newContentListTooltip
                         }
                         mount='parent'
                       >
@@ -475,13 +475,13 @@ const NavColumn = ({
                           <Pill
                             text='New'
                             icon='save'
-                            onClick={openCreatePlaylist}
+                            onClick={openCreateContentList}
                           />
                         </span>
                       </Tooltip>
                     </div>
                   </div>
-                  <PlaylistLibrary
+                  <ContentListLibrary
                     onClickNavLinkWithAccount={onClickNavLinkWithAccount}
                   />
                 </Droppable>
@@ -489,12 +489,12 @@ const NavColumn = ({
             </div>
           </DragAutoscroller>
         </Scrollbar>
-        <CreatePlaylistModal
-          visible={showCreatePlaylistModal}
-          onCreatePlaylist={onCreatePlaylist}
+        <CreateContentListModal
+          visible={showCreateContentListModal}
+          onCreateContentList={onCreateContentList}
           onCreateFolder={onCreateFolder}
-          onCancel={closeCreatePlaylistModal}
-          hideFolderTab={hideCreatePlaylistModalFolderTab}
+          onCancel={closeCreateContentListModal}
+          hideFolderTab={hideCreateContentListModalFolderTab}
         />
       </div>
       <div className={styles.navAnchor}>
@@ -544,9 +544,9 @@ const mapStateToProps = (state: AppState) => {
     notificationCount: getNotificationUnviewedCount(state),
     notificationPanelIsOpen: getNotificationPanelIsOpen(state),
     upload: state.upload,
-    library: getPlaylistLibrary(state),
-    showCreatePlaylistModal: getIsOpen(state),
-    hideCreatePlaylistModalFolderTab: getHideFolderTab(state),
+    library: getContentListLibrary(state),
+    showCreateContentListModal: getIsOpen(state),
+    hideCreateContentListModalFolderTab: getHideFolderTab(state),
     dominantColors: getDominantColorsByAgreement(state, {
       agreement: currentQueueItem.agreement
     })
@@ -555,24 +555,24 @@ const mapStateToProps = (state: AppState) => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   resetUploadState: () => dispatch(resetUploadState()),
-  createPlaylist: (tempId: string, metadata: Record<string, unknown>) =>
-    dispatch(createPlaylist(tempId, metadata, CreatePlaylistSource.NAV)),
+  createContentList: (tempId: string, metadata: Record<string, unknown>) =>
+    dispatch(createContentList(tempId, metadata, CreateContentListSource.NAV)),
   goToRoute: (route: string) => dispatch(pushRoute(route)),
   saveAgreement: (agreementId: number) =>
     dispatch(saveAgreement(agreementId, FavoriteSource.NAVIGATOR)),
   saveCollection: (collectionId: number) =>
     dispatch(saveCollection(collectionId, FavoriteSource.NAVIGATOR)),
-  addAgreementToPlaylist: (agreementId: number, content listId: number) =>
-    dispatch(addAgreementToPlaylist(agreementId, content listId)),
+  addAgreementToContentList: (agreementId: number, content listId: number) =>
+    dispatch(addAgreementToContentList(agreementId, content listId)),
   showActionRequiresAccount: () =>
     dispatch(signOnActions.showRequiresAccountModal()),
   toggleNotificationPanel: () => dispatch(toggleNotificationPanel()),
-  openCreatePlaylistModal: () => dispatch(createPlaylistModalActions.open()),
-  closeCreatePlaylistModal: () => dispatch(createPlaylistModalActions.close()),
-  updatePlaylistLastViewedAt: (content listId: number) =>
-    dispatch(updatePlaylistLastViewedAt(content listId)),
-  updatePlaylistLibrary: (newLibrary: PlaylistLibraryType) =>
-    dispatch(updatePlaylistLibrary({ content listLibrary: newLibrary })),
+  openCreateContentListModal: () => dispatch(createContentListModalActions.open()),
+  closeCreateContentListModal: () => dispatch(createContentListModalActions.close()),
+  updateContentListLastViewedAt: (content listId: number) =>
+    dispatch(updateContentListLastViewedAt(content listId)),
+  updateContentListLibrary: (newLibrary: ContentListLibraryType) =>
+    dispatch(updateContentListLibrary({ content listLibrary: newLibrary })),
   goToUpload: () => dispatch(pushRoute(UPLOAD_PAGE)),
   goToDashboard: () => dispatch(pushRoute(DASHBOARD_PAGE)),
   goToSignUp: () => dispatch(signOnActions.openSignOn(/** signIn */ false)),

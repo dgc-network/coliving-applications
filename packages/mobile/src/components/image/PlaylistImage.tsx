@@ -6,7 +6,7 @@ import type { UserMultihash } from 'app/models/User'
 import ImageLoader from './ImageLoader'
 import { gateways, publicGateways } from './utils'
 
-const getPlaylistImageUrl = (content list: CollectionImage, cNode: string) => {
+const getContentListImageUrl = (content list: CollectionImage, cNode: string) => {
   if (content list.cover_art_sizes) {
     return `${cNode}/ipfs/${content list.cover_art_sizes}/150x150.jpg`
   }
@@ -20,7 +20,7 @@ const getHasImage = (content list: CollectionImage) => {
   return !!(content list.cover_art_sizes || content list.cover_art)
 }
 
-const usePlaylistImage = (content list: CollectionImage, user: UserMultihash) => {
+const useContentListImage = (content list: CollectionImage, user: UserMultihash) => {
   const cNodes =
     user.content_node_endpoint !== null
       ? user.content_node_endpoint.split(',').filter(Boolean)
@@ -29,7 +29,7 @@ const usePlaylistImage = (content list: CollectionImage, user: UserMultihash) =>
     cNodes.length === 0 || !getHasImage(content list)
   )
   const [source, setSource] = useState(
-    didError ? null : { uri: getPlaylistImageUrl(content list, cNodes[0]) }
+    didError ? null : { uri: getContentListImageUrl(content list, cNodes[0]) }
   )
   const onError = useCallback(() => {
     if (didError) return
@@ -39,10 +39,10 @@ const usePlaylistImage = (content list: CollectionImage, user: UserMultihash) =>
         : gateways
     const numNodes = nodes.length
     const currInd = nodes.findIndex(
-      (cn: string) => (source?.uri ?? '') === getPlaylistImageUrl(content list, cn)
+      (cn: string) => (source?.uri ?? '') === getContentListImageUrl(content list, cn)
     )
     if (currInd !== -1 && currInd < numNodes - 1) {
-      setSource({ uri: getPlaylistImageUrl(content list, nodes[currInd + 1]) })
+      setSource({ uri: getContentListImageUrl(content list, nodes[currInd + 1]) })
     } else {
       // Legacy fallback for image formats (no dir cid)
       const legacyUrls = (user.content_node_endpoint ?? '')
@@ -71,7 +71,7 @@ const usePlaylistImage = (content list: CollectionImage, user: UserMultihash) =>
   return { source, didError, onError }
 }
 
-const PlaylistImage = ({
+const ContentListImage = ({
   content list,
   user,
   imageStyle
@@ -80,7 +80,7 @@ const PlaylistImage = ({
   user: UserMultihash
   imageStyle?: Record<string, any>
 }) => {
-  const { source, onError, didError } = usePlaylistImage(content list, user)
+  const { source, onError, didError } = useContentListImage(content list, user)
   return (
     <ImageLoader
       style={imageStyle}
@@ -94,4 +94,4 @@ const PlaylistImage = ({
   )
 }
 
-export default PlaylistImage
+export default ContentListImage

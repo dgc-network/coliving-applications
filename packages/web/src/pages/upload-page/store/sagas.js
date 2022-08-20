@@ -690,7 +690,7 @@ function* uploadCollection(agreements, userId, collectionMetadata, isAlbum) {
         // Uploaded collections are always public
         const isPrivate = false
         const { blockHash, blockNumber, content listId, error } = yield call(
-          ColivingBackend.createPlaylist,
+          ColivingBackend.createContentList,
           userId,
           collectionMetadata,
           isAlbum,
@@ -701,18 +701,18 @@ function* uploadCollection(agreements, userId, collectionMetadata, isAlbum) {
         if (error) {
           console.debug('Caught an error creating content list')
           if (content listId) {
-            yield put(uploadActions.createPlaylistErrorIDExists(error))
+            yield put(uploadActions.createContentListErrorIDExists(error))
             console.debug('Deleting content list')
             // If we got a content list ID back, that means we
             // created the content list but adding agreements to it failed. So we must delete the content list
-            yield call(ColivingBackend.deletePlaylist, content listId)
-            console.debug('Playlist deleted successfully')
+            yield call(ColivingBackend.deleteContentList, content listId)
+            console.debug('ContentList deleted successfully')
           } else {
             // I think this is what we want
-            yield put(uploadActions.createPlaylistErrorNoId(error))
+            yield put(uploadActions.createContentListErrorNoId(error))
           }
           // Throw to trigger the fail callback
-          throw new Error('Playlist creation error')
+          throw new Error('ContentList creation error')
         }
 
         const confirmed = yield call(confirmTransaction, blockHash, blockNumber)
@@ -721,11 +721,11 @@ function* uploadCollection(agreements, userId, collectionMetadata, isAlbum) {
             `Could not confirm content list creation for content list id ${content listId}`
           )
         }
-        return (yield call(ColivingBackend.getPlaylists, userId, [content listId]))[0]
+        return (yield call(ColivingBackend.getContentLists, userId, [content listId]))[0]
       },
-      function* (confirmedPlaylist) {
+      function* (confirmedContentList) {
         yield put(
-          uploadActions.uploadAgreementsSucceeded(confirmedPlaylist.content list_id)
+          uploadActions.uploadAgreementsSucceeded(confirmedContentList.content list_id)
         )
         const user = yield select(getUser, { id: userId })
         yield put(
@@ -734,7 +734,7 @@ function* uploadCollection(agreements, userId, collectionMetadata, isAlbum) {
               id: userId,
               metadata: {
                 _collectionIds: (user._collectionIds || []).concat(
-                  confirmedPlaylist.content list_id
+                  confirmedContentList.content list_id
                 )
               }
             }
@@ -743,10 +743,10 @@ function* uploadCollection(agreements, userId, collectionMetadata, isAlbum) {
 
         // Add images to the collection since we're not loading it the traditional way with
         // the `fetchCollections` saga
-        confirmedPlaylist = yield call(reformat, confirmedPlaylist)
+        confirmedContentList = yield call(reformat, confirmedContentList)
         const uid = yield makeUid(
           Kind.COLLECTIONS,
-          confirmedPlaylist.content list_id,
+          confirmedContentList.content list_id,
           'account'
         )
         // Create a cache entry and add it to the account so the content list shows in the left nav
@@ -755,19 +755,19 @@ function* uploadCollection(agreements, userId, collectionMetadata, isAlbum) {
             Kind.COLLECTIONS,
             [
               {
-                id: confirmedPlaylist.content list_id,
+                id: confirmedContentList.content list_id,
                 uid,
-                metadata: confirmedPlaylist
+                metadata: confirmedContentList
               }
             ],
             /* replace= */ true // forces cache update
           )
         )
         yield put(
-          accountActions.addAccountPlaylist({
-            id: confirmedPlaylist.content list_id,
-            name: confirmedPlaylist.content list_name,
-            is_album: confirmedPlaylist.is_album,
+          accountActions.addAccountContentList({
+            id: confirmedContentList.content list_id,
+            name: confirmedContentList.content list_name,
+            is_album: confirmedContentList.is_album,
             user: {
               id: user.user_id,
               handle: user.handle
@@ -786,7 +786,7 @@ function* uploadCollection(agreements, userId, collectionMetadata, isAlbum) {
         // All other non-timeout errors have
         // been accounted for at this point
         if (timeout) {
-          yield put(uploadActions.createPlaylistPollingTimeout())
+          yield put(uploadActions.createContentListPollingTimeout())
         }
 
         console.error(

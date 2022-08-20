@@ -6,17 +6,17 @@ import {
   FavoriteSource,
   RepostSource,
   ShareSource,
-  CreatePlaylistSource
+  CreateContentListSource
 } from '@coliving/common'
 import { PopupMenuItem } from '@coliving/stems'
 import { push as pushRoute } from 'connected-react-router'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 
-import { getAccountOwnedPlaylists } from 'common/store/account/selectors'
+import { getAccountOwnedContentLists } from 'common/store/account/selectors'
 import {
-  createPlaylist,
-  addAgreementToPlaylist
+  createContentList,
+  addAgreementToContentList
 } from 'common/store/cache/collections/actions'
 import { getCollectionId } from 'common/store/pages/collection/selectors'
 import {
@@ -26,7 +26,7 @@ import {
   undoRepostAgreement,
   shareAgreement
 } from 'common/store/social/agreements/actions'
-import { requestOpen as openAddToPlaylist } from 'common/store/ui/add-to-content list/actions'
+import { requestOpen as openAddToContentList } from 'common/store/ui/add-to-content list/actions'
 import * as embedModalActions from 'components/embed-modal/store/actions'
 import { ToastContext } from 'components/toast/ToastContext'
 import { newCollectionMetadata } from 'schemas'
@@ -36,8 +36,8 @@ import { AppState } from 'store/types'
 import { profilePage } from 'utils/route'
 
 const messages = {
-  addToNewPlaylist: 'Add to New Playlist',
-  addToPlaylist: 'Add to Playlist',
+  addToNewContentList: 'Add to New ContentList',
+  addToContentList: 'Add to ContentList',
   copiedToClipboard: 'Copied To Clipboard!',
   embed: 'Embed',
   favorite: 'Favorite',
@@ -57,7 +57,7 @@ export type OwnProps = {
   children: (items: PopupMenuItem[]) => JSX.Element
   extraMenuItems?: PopupMenuItem[]
   handle: string
-  includeAddToPlaylist: boolean
+  includeAddToContentList: boolean
   includeArtistPick: boolean
   includeEdit: boolean
   includeEmbed?: boolean
@@ -89,7 +89,7 @@ const AgreementMenu = (props: AgreementMenuProps) => {
       extraMenuItems,
       goToRoute,
       handle,
-      includeAddToPlaylist,
+      includeAddToContentList,
       includeArtistPick,
       includeEdit,
       includeEmbed,
@@ -103,7 +103,7 @@ const AgreementMenu = (props: AgreementMenuProps) => {
       isOwner,
       isOwnerDeactivated,
       isReposted,
-      openAddToPlaylistModal,
+      openAddToContentListModal,
       openEditAgreementModal,
       openEmbedModal,
       repostAgreement,
@@ -147,10 +147,10 @@ const AgreementMenu = (props: AgreementMenuProps) => {
         }, 0)
     }
 
-    const addToPlaylistMenuItem = {
-      text: messages.addToPlaylist,
+    const addToContentListMenuItem = {
+      text: messages.addToContentList,
       onClick: () => {
-        openAddToPlaylistModal(agreementId, agreementTitle)
+        openAddToContentListModal(agreementId, agreementTitle)
       }
     }
 
@@ -198,8 +198,8 @@ const AgreementMenu = (props: AgreementMenuProps) => {
     if (includeFavorite && !isOwner && (!isDeleted || isFavorited)) {
       menu.items.push(favoriteMenuItem)
     }
-    if (includeAddToPlaylist && !isDeleted) {
-      menu.items.push(addToPlaylistMenuItem)
+    if (includeAddToContentList && !isDeleted) {
+      menu.items.push(addToContentListMenuItem)
     }
     if (agreementId && agreementTitle && includeAgreementPage && !isDeleted) {
       menu.items.push(agreementPageMenuItem)
@@ -234,7 +234,7 @@ const AgreementMenu = (props: AgreementMenuProps) => {
 
 function mapStateToProps(state: AppState) {
   return {
-    content lists: getAccountOwnedPlaylists(state),
+    content lists: getAccountOwnedContentLists(state),
     currentCollectionId: getCollectionId(state)
   }
 }
@@ -242,8 +242,8 @@ function mapStateToProps(state: AppState) {
 function mapDispatchToProps(dispatch: Dispatch) {
   return {
     goToRoute: (route: string) => dispatch(pushRoute(route)),
-    addAgreementToPlaylist: (agreementId: ID, content listId: ID) =>
-      dispatch(addAgreementToPlaylist(agreementId, content listId)),
+    addAgreementToContentList: (agreementId: ID, content listId: ID) =>
+      dispatch(addAgreementToContentList(agreementId, content listId)),
     shareAgreement: (agreementId: ID) =>
       dispatch(shareAgreement(agreementId, ShareSource.OVERFLOW)),
     saveAgreement: (agreementId: ID) =>
@@ -257,17 +257,17 @@ function mapDispatchToProps(dispatch: Dispatch) {
     setArtistPick: (agreementId: ID) =>
       dispatch(showSetAsArtistPickConfirmation(agreementId)),
     unsetArtistPick: () => dispatch(showSetAsArtistPickConfirmation()),
-    createEmptyPlaylist: (tempId: ID, name: string, agreementId: ID) =>
+    createEmptyContentList: (tempId: ID, name: string, agreementId: ID) =>
       dispatch(
-        createPlaylist(
+        createContentList(
           tempId,
           newCollectionMetadata({ content list_name: name }),
-          CreatePlaylistSource.FROM_AGREEMENT,
+          CreateContentListSource.FROM_AGREEMENT,
           agreementId
         )
       ),
-    openAddToPlaylistModal: (agreementId: ID, title: string) =>
-      dispatch(openAddToPlaylist(agreementId, title)),
+    openAddToContentListModal: (agreementId: ID, title: string) =>
+      dispatch(openAddToContentList(agreementId, title)),
     openEditAgreementModal: (agreementId: ID) =>
       dispatch(editAgreementModalActions.open(agreementId)),
     openEmbedModal: (agreementId: ID) =>
@@ -284,7 +284,7 @@ AgreementMenu.defaultProps = {
   includeEmbed: true,
   includeFavorite: true,
   includeAgreementPage: true,
-  includeAddToPlaylist: true,
+  includeAddToContentList: true,
   includeArtistPick: true,
   extraMenuItems: []
 }

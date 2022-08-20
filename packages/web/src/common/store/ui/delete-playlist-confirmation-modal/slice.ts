@@ -1,18 +1,18 @@
 import { ID, Nullable } from '@coliving/common'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-type DeletePlaylistConfirmationState = {
+type DeleteContentListConfirmationState = {
   content listId: Nullable<ID>
 }
 
 export type OpenPayload = PayloadAction<{ content listId: ID }>
 
-const initialState: DeletePlaylistConfirmationState = {
+const initialState: DeleteContentListConfirmationState = {
   content listId: null
 }
 
 const slice = createSlice({
-  name: 'applications/ui/deletePlaylistConfirmation',
+  name: 'applications/ui/deleteContentListConfirmation',
   initialState,
   reducers: {
     requestOpen: (state, action: OpenPayload) => {},

@@ -1,12 +1,12 @@
-import { getProfilePlaylists } from '-client/src/common/store/pages/profile/selectors'
+import { getProfileContentLists } from '-client/src/common/store/pages/profile/selectors'
 
 import { CollectionList } from 'app/components/collection-list'
 import { useSelectorWeb } from 'app/hooks/useSelectorWeb'
 
 import { useEmptyProfileText } from './EmptyProfileTile'
 
-export const PlaylistsTab = () => {
-  const content lists = useSelectorWeb(getProfilePlaylists)
+export const ContentListsTab = () => {
+  const content lists = useSelectorWeb(getProfileContentLists)
 
   const emptyListText = useEmptyProfileText('content lists')
 

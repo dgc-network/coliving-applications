@@ -1,10 +1,10 @@
 import { useContext, useState } from 'react'
 
-import { CreatePlaylistSource } from '@/common'
-import { getAccountWithOwnPlaylists } from '-client/src/common/store/account/selectors'
+import { CreateContentListSource } from '@/common'
+import { getAccountWithOwnContentLists } from '-client/src/common/store/account/selectors'
 import {
-  addAgreementToPlaylist,
-  createPlaylist
+  addAgreementToContentList,
+  createContentList
 } from '-client/src/common/store/cache/collections/actions'
 import {
   getAgreementId,
@@ -26,9 +26,9 @@ import { useSelectorWeb } from 'app/hooks/useSelectorWeb'
 import { makeStyles, shadow } from 'app/styles'
 
 const messages = {
-  title: 'Add To Playlist',
-  addedToast: 'Added To Playlist!',
-  createdToast: 'Playlist Created!'
+  title: 'Add To ContentList',
+  addedToast: 'Added To ContentList!',
+  createdToast: 'ContentList Created!'
 }
 
 const useStyles = makeStyles(() => ({
@@ -46,32 +46,32 @@ const useStyles = makeStyles(() => ({
   }
 }))
 
-export const AddToPlaylistDrawer = () => {
+export const AddToContentListDrawer = () => {
   const styles = useStyles()
   const { toast } = useContext(ToastContext)
   const dispatchWeb = useDispatchWeb()
   const pushRouteWeb = usePushRouteWeb()
-  const { onClose } = useDrawerState('AddToPlaylist')
+  const { onClose } = useDrawerState('AddToContentList')
   const agreementId = useSelectorWeb(getAgreementId)
   const agreementTitle = useSelectorWeb(getAgreementTitle)
-  const user = useSelectorWeb(getAccountWithOwnPlaylists)
+  const user = useSelectorWeb(getAccountWithOwnContentLists)
   const [isDrawerGestureSupported, setIsDrawerGestureSupported] = useState(true)
 
   if (!user || !agreementId || !agreementTitle) {
     return null
   }
-  const userPlaylists = user.content lists ?? []
+  const userContentLists = user.content lists ?? []
 
-  const addToNewPlaylist = () => {
+  const addToNewContentList = () => {
     const metadata = newCollectionMetadata({
       content list_name: agreementTitle,
       is_private: false
     })
     const tempId = `${Date.now()}`
     dispatchWeb(
-      createPlaylist(tempId, metadata, CreatePlaylistSource.FROM_AGREEMENT, agreementId)
+      createContentList(tempId, metadata, CreateContentListSource.FROM_AGREEMENT, agreementId)
     )
-    dispatchWeb(addAgreementToPlaylist(agreementId!, tempId))
+    dispatchWeb(addAgreementToContentList(agreementId!, tempId))
     toast({ content: messages.createdToast })
     pushRouteWeb(content listPage(user.handle, agreementTitle, tempId), FEED_PAGE)
     onClose()
@@ -89,7 +89,7 @@ export const AddToPlaylistDrawer = () => {
 
   return (
     <AppDrawer
-      modalName='AddToPlaylist'
+      modalName='AddToContentList'
       isFullscreen
       isGestureSupported={isDrawerGestureSupported}
       title={messages.title}
@@ -97,8 +97,8 @@ export const AddToPlaylistDrawer = () => {
       <View>
         <View style={styles.buttonContainer}>
           <Button
-            title='Create New Playlist'
-            onPress={addToNewPlaylist}
+            title='Create New ContentList'
+            onPress={addToNewContentList}
             containerStyle={styles.button}
             type={ButtonType.COMMON}
           />
@@ -106,7 +106,7 @@ export const AddToPlaylistDrawer = () => {
         <CardList
           onScrollEndDrag={handleScrollEnd}
           contentContainerStyle={styles.cardList}
-          data={userPlaylists}
+          data={userContentLists}
           renderItem={({ item }) => (
             <Card
               key={item.content list_id}
@@ -117,7 +117,7 @@ export const AddToPlaylistDrawer = () => {
               secondaryText={user.name}
               onPress={() => {
                 toast({ content: messages.addedToast })
-                dispatchWeb(addAgreementToPlaylist(agreementId!, item.content list_id))
+                dispatchWeb(addAgreementToContentList(agreementId!, item.content list_id))
                 onClose()
               }}
               user={user}

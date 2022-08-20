@@ -168,7 +168,7 @@ class EditPage extends Component {
             defaultFields={metadata}
             invalidFields={invalidCollectionFields}
             requiredFields={requiredCollectionFields}
-            isPlaylist
+            isContentList
             type={uploadType === UploadType.CONTENT_LIST ? 'content list' : 'album'}
             onChangeField={(field, value, invalid) =>
               this.updateMetadata(field, value, invalid)

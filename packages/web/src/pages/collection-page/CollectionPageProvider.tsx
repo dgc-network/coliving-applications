@@ -28,18 +28,18 @@ import {
   getAccountCollections
 } from 'common/store/account/selectors'
 import {
-  editPlaylist,
-  removeAgreementFromPlaylist,
-  orderPlaylist,
-  publishPlaylist,
-  deletePlaylist
+  editContentList,
+  removeAgreementFromContentList,
+  orderContentList,
+  publishContentList,
+  deleteContentList
 } from 'common/store/cache/collections/actions'
 import {
   makeGetTableMetadatas,
   makeGetLineupOrder
 } from 'common/store/lineup/selectors'
-import { updatePlaylistLastViewedAt } from 'common/store/notifications/actions'
-import { getPlaylistUpdates } from 'common/store/notifications/selectors'
+import { updateContentListLastViewedAt } from 'common/store/notifications/actions'
+import { getContentListUpdates } from 'common/store/notifications/selectors'
 import * as collectionActions from 'common/store/pages/collection/actions'
 import { agreementsActions } from 'common/store/pages/collection/lineup/actions'
 import {
@@ -71,7 +71,7 @@ import { RepostType } from 'common/store/user-list/reposts/types'
 import { formatUrlName } from 'common/utils/formatUtil'
 import DeletedPage from 'pages/deleted-page/DeletedPage'
 import { AgreementEvent, make } from 'store/analytics/actions'
-import { open as openEditCollectionModal } from 'store/application/ui/editPlaylistModal/slice'
+import { open as openEditCollectionModal } from 'store/application/ui/editContentListModal/slice'
 import {
   setUsers,
   setVisibility
@@ -88,7 +88,7 @@ import {
   NOT_FOUND_PAGE,
   REPOSTING_USERS_ROUTE,
   FAVORITING_USERS_ROUTE,
-  fullPlaylistPage,
+  fullContentListPage,
   content listPage,
   albumPage,
   getPathname
@@ -123,7 +123,7 @@ type CollectionPageState = {
   updatingRoute: boolean
 }
 
-type PlaylistAgreement = { time: number; agreement: ID; uid?: UID }
+type ContentListAgreement = { time: number; agreement: ID; uid?: UID }
 
 class CollectionPage extends Component<
   CollectionPageProps,
@@ -177,7 +177,7 @@ class CollectionPage extends Component<
       fetchCollectionSucceeded,
       type,
       content listUpdates,
-      updatePlaylistLastViewedAt
+      updateContentListLastViewedAt
     } = this.props
 
     if (
@@ -185,7 +185,7 @@ class CollectionPage extends Component<
       this.state.content listId &&
       content listUpdates.includes(this.state.content listId)
     ) {
-      updatePlaylistLastViewedAt(this.state.content listId)
+      updateContentListLastViewedAt(this.state.content listId)
     }
 
     if (!prevProps.smartCollection && smartCollection) {
@@ -317,13 +317,13 @@ class CollectionPage extends Component<
   }
 
   playListContentsEqual(
-    prevPlaylistContents: PlaylistAgreement[],
-    curPlaylistContents: PlaylistAgreement[]
+    prevContentListContents: ContentListAgreement[],
+    curContentListContents: ContentListAgreement[]
   ) {
     return (
-      prevPlaylistContents.length === curPlaylistContents.length &&
-      prevPlaylistContents.reduce(
-        (acc, cur, idx) => acc && cur.agreement === curPlaylistContents[idx].agreement,
+      prevContentListContents.length === curContentListContents.length &&
+      prevContentListContents.reduce(
+        (acc, cur, idx) => acc && cur.agreement === curContentListContents[idx].agreement,
         true
       )
     )
@@ -488,7 +488,7 @@ class CollectionPage extends Component<
     timestamp: number
   ) => {
     const { content listId } = this.state
-    this.props.removeAgreementFromPlaylist(
+    this.props.removeAgreementFromContentList(
       agreementId,
       content listId as number,
       uid,
@@ -578,14 +578,14 @@ class CollectionPage extends Component<
 
     this.props.updateLineupOrder(newOrder)
     this.setState({ initialOrder: newOrder })
-    this.props.orderPlaylist(this.state.content listId!, agreementIdAndTimes, newOrder)
+    this.props.orderContentList(this.state.content listId!, agreementIdAndTimes, newOrder)
   }
 
   onPublish = () => {
-    this.props.publishPlaylist(this.state.content listId!)
+    this.props.publishContentList(this.state.content listId!)
   }
 
-  onSavePlaylist = (isSaved: boolean, content listId: number) => {
+  onSaveContentList = (isSaved: boolean, content listId: number) => {
     if (isSaved) {
       this.props.unsaveCollection(content listId)
     } else {
@@ -601,7 +601,7 @@ class CollectionPage extends Component<
     }
   }
 
-  onRepostPlaylist = (isReposted: boolean, content listId: number) => {
+  onRepostContentList = (isReposted: boolean, content listId: number) => {
     if (isReposted) {
       this.props.undoRepostCollection(content listId)
     } else {
@@ -609,7 +609,7 @@ class CollectionPage extends Component<
     }
   }
 
-  onSharePlaylist = (content listId: number) => {
+  onShareContentList = (content listId: number) => {
     this.props.shareCollection(content listId)
   }
 
@@ -626,22 +626,22 @@ class CollectionPage extends Component<
 
   onHeroAgreementShare = () => {
     const { content listId } = this.state
-    this.onSharePlaylist(content listId!)
+    this.onShareContentList(content listId!)
   }
 
   onHeroAgreementSave = () => {
-    const { userPlaylists, collection: metadata, smartCollection } = this.props
+    const { userContentLists, collection: metadata, smartCollection } = this.props
     const { content listId } = this.state
     const isSaved =
       (metadata && content listId
-        ? metadata.has_current_user_saved || content listId in userPlaylists
+        ? metadata.has_current_user_saved || content listId in userContentLists
         : false) ||
       (smartCollection && smartCollection.has_current_user_saved)
 
     if (smartCollection && metadata) {
       this.onSaveSmartCollection(!!isSaved, metadata.content list_name)
     } else {
-      this.onSavePlaylist(!!isSaved, content listId!)
+      this.onSaveContentList(!!isSaved, content listId!)
     }
   }
 
@@ -649,13 +649,13 @@ class CollectionPage extends Component<
     const { collection: metadata } = this.props
     const { content listId } = this.state
     const isReposted = metadata ? metadata.has_current_user_reposted : false
-    this.onRepostPlaylist(isReposted, content listId!)
+    this.onRepostContentList(isReposted, content listId!)
   }
 
   onClickReposts = () => {
     const {
       collection: metadata,
-      setRepostPlaylistId,
+      setRepostContentListId,
       goToRoute,
       isMobile,
       setRepostUsers,
@@ -663,7 +663,7 @@ class CollectionPage extends Component<
     } = this.props
     if (!metadata) return
     if (isMobile) {
-      setRepostPlaylistId(metadata.content list_id)
+      setRepostContentListId(metadata.content list_id)
       goToRoute(REPOSTING_USERS_ROUTE)
     } else {
       setRepostUsers(metadata.content list_id)
@@ -674,7 +674,7 @@ class CollectionPage extends Component<
   onClickFavorites = () => {
     const {
       collection: metadata,
-      setFavoritePlaylistId,
+      setFavoriteContentListId,
       goToRoute,
       isMobile,
       setFavoriteUsers,
@@ -682,7 +682,7 @@ class CollectionPage extends Component<
     } = this.props
     if (!metadata) return
     if (isMobile) {
-      setFavoritePlaylistId(metadata.content list_id)
+      setFavoriteContentListId(metadata.content list_id)
       goToRoute(FAVORITING_USERS_ROUTE)
     } else {
       setFavoriteUsers(metadata.content list_id)
@@ -709,7 +709,7 @@ class CollectionPage extends Component<
       user,
       agreements,
       userId,
-      userPlaylists,
+      userContentLists,
       smartCollection
     } = this.props
 
@@ -719,7 +719,7 @@ class CollectionPage extends Component<
     const description = metadata?.description ?? ''
     const canonicalUrl =
       user && metadata
-        ? fullPlaylistPage(
+        ? fullContentListPage(
             user?.handle,
             metadata?.content list_name,
             metadata?.content list_id
@@ -739,7 +739,7 @@ class CollectionPage extends Component<
         : { status, metadata, user },
       agreements,
       userId,
-      userPlaylists,
+      userContentLists,
       getPlayingUid: this.getPlayingUid,
       getFilteredData: this.getFilteredData,
       isQueued: this.isQueued,
@@ -811,12 +811,12 @@ function makeMapStateToProps() {
       status: getCollectionStatus(state) || '',
       order: getLineupOrder(state),
       userId: getUserId(state),
-      userPlaylists: getAccountCollections(state),
+      userContentLists: getAccountCollections(state),
       currentQueueItem: getCurrentQueueItem(state),
       playing: getPlaying(state),
       buffering: getBuffering(state),
       pathname: getLocationPathname(state),
-      content listUpdates: getPlaylistUpdates(state)
+      content listUpdates: getContentListUpdates(state)
     }
   }
   return mapStateToProps
@@ -836,23 +836,23 @@ function mapDispatchToProps(dispatch: Dispatch) {
     pause: () => dispatch(agreementsActions.pause()),
     updateLineupOrder: (updatedOrderIndices: any) =>
       dispatch(agreementsActions.updateLineupOrder(updatedOrderIndices)),
-    editPlaylist: (content listId: number, formFields: any) =>
-      dispatch(editPlaylist(content listId, formFields)),
-    removeAgreementFromPlaylist: (
+    editContentList: (content listId: number, formFields: any) =>
+      dispatch(editContentList(content listId, formFields)),
+    removeAgreementFromContentList: (
       agreementId: number,
       content listId: number,
       uid: string,
       timestamp: number
     ) => {
-      dispatch(removeAgreementFromPlaylist(agreementId, content listId, timestamp))
+      dispatch(removeAgreementFromContentList(agreementId, content listId, timestamp))
       dispatch(agreementsActions.remove(Kind.AGREEMENTS, uid))
     },
-    orderPlaylist: (content listId: number, agreementIds: any, agreementUids: string[]) =>
-      dispatch(orderPlaylist(content listId, agreementIds, agreementUids)),
-    publishPlaylist: (content listId: number) =>
-      dispatch(publishPlaylist(content listId)),
-    deletePlaylist: (content listId: number) =>
-      dispatch(deletePlaylist(content listId)),
+    orderContentList: (content listId: number, agreementIds: any, agreementUids: string[]) =>
+      dispatch(orderContentList(content listId, agreementIds, agreementUids)),
+    publishContentList: (content listId: number) =>
+      dispatch(publishContentList(content listId)),
+    deleteContentList: (content listId: number) =>
+      dispatch(deleteContentList(content listId)),
 
     saveCollection: (content listId: number) =>
       dispatch(
@@ -953,9 +953,9 @@ function mapDispatchToProps(dispatch: Dispatch) {
           overflowActions
         })
       ),
-    setRepostPlaylistId: (collectionId: ID) =>
+    setRepostContentListId: (collectionId: ID) =>
       dispatch(setRepost(collectionId, RepostType.COLLECTION)),
-    setFavoritePlaylistId: (collectionId: ID) =>
+    setFavoriteContentListId: (collectionId: ID) =>
       dispatch(setFavorite(collectionId, FavoriteType.CONTENT_LIST)),
     record: (event: AgreementEvent) => dispatch(event),
     setRepostUsers: (agreementID: ID) =>
@@ -977,8 +977,8 @@ function mapDispatchToProps(dispatch: Dispatch) {
     setModalVisibility: () => dispatch(setVisibility(true)),
     onEditCollection: (content listId: ID) =>
       dispatch(openEditCollectionModal(content listId)),
-    updatePlaylistLastViewedAt: (content listId: ID) =>
-      dispatch(updatePlaylistLastViewedAt(content listId))
+    updateContentListLastViewedAt: (content listId: ID) =>
+      dispatch(updateContentListLastViewedAt(content listId))
   }
 }
 

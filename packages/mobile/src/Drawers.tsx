@@ -2,7 +2,7 @@ import type { ComponentType } from 'react'
 
 import type { Modals } from '-client/src/common/store/ui/modals/slice'
 
-import { AddToPlaylistDrawer } from 'app/components/add-to-content list-drawer'
+import { AddToContentListDrawer } from 'app/components/add-to-content list-drawer'
 import { ApiRewardsDrawer } from 'app/components/api-rewards-drawer/ApiRewardsDrawer'
 import { AudioBreakdownDrawer } from 'app/components/live-breakdown-drawer'
 import { TiersExplainerDrawer } from 'app/components/live-rewards'
@@ -11,7 +11,7 @@ import { CognitoDrawer } from 'app/components/cognito-drawer/CognitoDrawer'
 import { CollectibleDetailsDrawer } from 'app/components/collectible-details-drawer'
 import { ConnectWalletsDrawer } from 'app/components/connect-wallets-drawer'
 import { DeactivateAccountConfirmationDrawer } from 'app/components/deactivate-account-confirmation-drawer'
-import { DeletePlaylistConfirmationDrawer } from 'app/components/delete-content list-confirmation-drawer'
+import { DeleteContentListConfirmationDrawer } from 'app/components/delete-content list-confirmation-drawer'
 import { DownloadAgreementProgressDrawer } from 'app/components/download-agreement-progress-drawer'
 import { EditCollectiblesDrawer } from 'app/components/edit-collectibles-drawer'
 import { EnablePushNotificationsDrawer } from 'app/components/enable-push-notifications-drawer'
@@ -81,9 +81,9 @@ const commonDrawersMap: { [Modal in Modals]?: ComponentType } = {
   MobileUpload: MobileUploadDrawer,
   Overflow: OverflowMenuDrawer,
   SignOutConfirmation: SignOutConfirmationDrawer,
-  AddToPlaylist: AddToPlaylistDrawer,
+  AddToContentList: AddToContentListDrawer,
   AudioBreakdown: AudioBreakdownDrawer,
-  DeletePlaylistConfirmation: DeletePlaylistConfirmationDrawer
+  DeleteContentListConfirmation: DeleteContentListConfirmationDrawer
 }
 
 const nativeDrawersMap: { [DrawerName in Drawer]?: ComponentType } = {

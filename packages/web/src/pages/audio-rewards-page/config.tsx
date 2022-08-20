@@ -26,7 +26,7 @@ type LinkButtonType =
   | 'verifyAccount'
   | 'trendingAgreements'
   | 'sendFirstTip'
-  | 'firstPlaylist'
+  | 'firstContentList'
 type LinkButtonInfo = {
   label: string
   leftIcon: ReactNode | null
@@ -75,8 +75,8 @@ const linkButtonMap: Record<LinkButtonType, LinkButtonInfo> = {
     rightIcon: <GoldBadgeIconImage />,
     link: () => EXPLORE_HEAVY_ROTATION_PAGE
   },
-  firstPlaylist: {
-    label: 'Create Your First Playlist',
+  firstContentList: {
+    label: 'Create Your First ContentList',
     leftIcon: null,
     rightIcon: <IconArrow />,
     link: () => FAVORITES_PAGE
@@ -257,17 +257,17 @@ export const challengeRewardsConfig: Record<
   },
   'first-content list': {
     id: 'first-content list' as ChallengeRewardID,
-    title: 'Create Your First Playlist',
+    title: 'Create Your First ContentList',
     icon: <i className='emoji large sparkles' />,
     description: (challenge) => `Earn ${challenge?.amount} $LIVE`,
     fullDescription: () => 'Create your first content list & add a agreement to it',
     progressLabel: 'Not Earned',
     amount: amounts['first-content list'],
-    panelButtonText: 'Create Your First Playlist',
+    panelButtonText: 'Create Your First ContentList',
     modalButtonInfo: {
-      incomplete: linkButtonMap.firstPlaylist,
-      inProgress: linkButtonMap.firstPlaylist,
-      complete: linkButtonMap.firstPlaylist
+      incomplete: linkButtonMap.firstContentList,
+      inProgress: linkButtonMap.firstContentList,
+      complete: linkButtonMap.firstContentList
     }
   }
 }
@@ -285,7 +285,7 @@ export const trendingRewardsConfig: Record<
   TrendingRewardsInfo
 > = {
   'trending-content list': {
-    title: 'Top 5 Trending Playlists',
+    title: 'Top 5 Trending ContentLists',
     icon: <i className='emoji large chart-increasing' />,
     description: 'Winners are selected every Friday at Noon PT!',
     buttonText: 'See More',

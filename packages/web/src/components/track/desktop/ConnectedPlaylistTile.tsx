@@ -59,7 +59,7 @@ import { AppState } from 'store/types'
 import {
   albumPage,
   fullAlbumPage,
-  fullPlaylistPage,
+  fullContentListPage,
   fullAgreementPage,
   content listPage,
   profilePage
@@ -68,8 +68,8 @@ import { isDarkMode, isMatrix } from 'utils/theme/theme'
 
 import { getCollectionWithFallback, getUserWithFallback } from '../helpers'
 
-import styles from './ConnectedPlaylistTile.module.css'
-import PlaylistTile from './PlaylistTile'
+import styles from './ConnectedContentListTile.module.css'
+import ContentListTile from './ContentListTile'
 import AgreementListItem from './AgreementListItem'
 import Stats from './stats/Stats'
 import { Flavor } from './stats/StatsText'
@@ -92,11 +92,11 @@ type OwnProps = {
   showRankIcon: boolean
 }
 
-type ConnectedPlaylistTileProps = OwnProps &
+type ConnectedContentListTileProps = OwnProps &
   ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>
 
-const ConnectedPlaylistTile = memo(
+const ConnectedContentListTile = memo(
   ({
     ordered,
     index,
@@ -129,7 +129,7 @@ const ConnectedPlaylistTile = memo(
     unsaveCollection,
     isTrending,
     showRankIcon
-  }: ConnectedPlaylistTileProps) => {
+  }: ConnectedContentListTileProps) => {
     const {
       is_album: isAlbum,
       content list_name: title,
@@ -382,7 +382,7 @@ const ConnectedPlaylistTile = memo(
           link={
             isAlbum
               ? fullAlbumPage(handle, title, id)
-              : fullPlaylistPage(handle, title, id)
+              : fullContentListPage(handle, title, id)
           }
         >
           {children as any}
@@ -471,7 +471,7 @@ const ConnectedPlaylistTile = memo(
       return null
     }
     return (
-      <PlaylistTile
+      <ContentListTile
         // Agreement Tile Props
         size={size}
         order={order}
@@ -574,4 +574,4 @@ function mapDispatchToProps(dispatch: Dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ConnectedPlaylistTile)
+)(ConnectedContentListTile)

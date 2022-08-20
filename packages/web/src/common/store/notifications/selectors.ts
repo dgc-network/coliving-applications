@@ -17,7 +17,7 @@ import {
   Achievement,
   Announcement,
   EntityType,
-  AddAgreementToPlaylist,
+  AddAgreementToContentList,
   CollectionEntity,
   AgreementEntity
 } from './types'
@@ -65,7 +65,7 @@ export const getModalNotification = (state: CommonState) =>
       ] as Announcement) || null
     : null
 
-export const getPlaylistUpdates = (state: CommonState) =>
+export const getContentListUpdates = (state: CommonState) =>
   getBaseState(state).content listUpdates
 
 export const makeGetAllNotifications = () => {
@@ -137,18 +137,18 @@ export const getNotificationEntity = (
   return null
 }
 
-type EntityTypes<T extends AddAgreementToPlaylist | Notification> =
-  T extends AddAgreementToPlaylist
+type EntityTypes<T extends AddAgreementToContentList | Notification> =
+  T extends AddAgreementToContentList
     ? { agreement: AgreementEntity; content list: CollectionEntity }
     : Nullable<EntityType[]>
 
 export const getNotificationEntities = <
-  T extends AddAgreementToPlaylist | Notification
+  T extends AddAgreementToContentList | Notification
 >(
   state: CommonState,
   notification: T
 ): EntityTypes<T> => {
-  if (notification.type === NotificationType.AddAgreementToPlaylist) {
+  if (notification.type === NotificationType.AddAgreementToContentList) {
     const agreement = getAgreement(state, { id: notification.agreementId })
     const currentUser = getAccountUser(state)
     const content list = getCollection(state, { id: notification.content listId })

@@ -1,6 +1,6 @@
 import IconForYou from 'app/assets/images/iconExploreForYou.svg'
 import IconMoods from 'app/assets/images/iconExploreMoods.svg'
-import IconPlaylists from 'app/assets/images/iconPlaylists.svg'
+import IconContentLists from 'app/assets/images/iconContentLists.svg'
 import IconUser from 'app/assets/images/iconUser.svg'
 import { Screen } from 'app/components/core'
 import { Header } from 'app/components/header'
@@ -10,7 +10,7 @@ import { usePopToTopOnDrawerOpen } from 'app/hooks/usePopToTopOnDrawerOpen'
 import { ArtistsTab } from './tabs/ArtistsTab'
 import { ForYouTab } from './tabs/ForYouTab'
 import { MoodsTab } from './tabs/MoodsTab'
-import { PlaylistsTab } from './tabs/PlaylistsTab'
+import { ContentListsTab } from './tabs/ContentListsTab'
 
 const exploreScreens = [
   {
@@ -26,8 +26,8 @@ const exploreScreens = [
   },
   {
     name: 'content lists',
-    Icon: IconPlaylists,
-    component: PlaylistsTab
+    Icon: IconContentLists,
+    component: ContentListsTab
   },
   {
     name: 'artists',

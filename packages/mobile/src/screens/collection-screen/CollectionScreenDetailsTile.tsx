@@ -24,9 +24,9 @@ import { formatCount } from 'app/utils/format'
 
 const messages = {
   album: 'Album',
-  content list: 'Playlist',
+  content list: 'ContentList',
   empty: 'This content list is empty.',
-  privatePlaylist: 'Private Playlist',
+  privateContentList: 'Private ContentList',
   publishing: 'Publishing...',
   detailsPlaceholder: '---'
 }
@@ -153,7 +153,7 @@ export const CollectionScreenDetailsTile = ({
     }
 
     if (isPrivate) {
-      return messages.privatePlaylist
+      return messages.privateContentList
     }
 
     return messages.content list

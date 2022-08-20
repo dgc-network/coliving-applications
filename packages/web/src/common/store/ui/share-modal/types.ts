@@ -13,7 +13,7 @@ export type ShareType =
   | 'profile'
   | 'album'
   | 'content list'
-  | 'liveNftPlaylist'
+  | 'liveNftContentList'
 
 type ShareAgreementContent = {
   type: 'agreement'
@@ -32,14 +32,14 @@ type ShareAlbumContent = {
   artist: User
 }
 
-type SharePlaylistContent = {
+type ShareContentListContent = {
   type: 'content list'
   content list: Collection
   creator: User
 }
 
-type ShareAudioNftPlaylistContent = {
-  type: 'liveNftPlaylist'
+type ShareAudioNftContentListContent = {
+  type: 'liveNftContentList'
   user: User
 }
 
@@ -47,8 +47,8 @@ export type ShareModalContent =
   | ShareAgreementContent
   | ShareProfileContent
   | ShareAlbumContent
-  | SharePlaylistContent
-  | ShareAudioNftPlaylistContent
+  | ShareContentListContent
+  | ShareAudioNftContentListContent
 
 export type ShareModalState = {
   source: Nullable<ShareSource>
@@ -59,7 +59,7 @@ type RequestOpenPayload = { source: ShareSource } & (
   | { type: 'agreement'; agreementId: ID }
   | { type: 'profile'; profileId: ID }
   | { type: 'collection'; collectionId: ID }
-  | { type: 'liveNftPlaylist'; userId: ID }
+  | { type: 'liveNftContentList'; userId: ID }
 )
 
 export type RequestOpenAction = PayloadAction<RequestOpenPayload>
@@ -68,8 +68,8 @@ type OpenPayload = { source: ShareSource } & (
   | ShareAgreementContent
   | ShareProfileContent
   | ShareAlbumContent
-  | SharePlaylistContent
-  | ShareAudioNftPlaylistContent
+  | ShareContentListContent
+  | ShareAudioNftContentListContent
 )
 
 export type OpenAction = PayloadAction<OpenPayload>

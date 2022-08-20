@@ -36,7 +36,7 @@ import { getTheme } from 'common/store/ui/theme/selectors'
 import { setFavorite } from 'common/store/user-list/favorites/actions'
 import { setRepost } from 'common/store/user-list/reposts/actions'
 import { RepostType } from 'common/store/user-list/reposts/types'
-import { PlaylistTileProps } from 'components/agreement/types'
+import { ContentListTileProps } from 'components/agreement/types'
 import { useRecord, make } from 'store/analytics/actions'
 import { getUid, getBuffering, getPlaying } from 'store/player/selectors'
 import { AppState } from 'store/types'
@@ -51,13 +51,13 @@ import { isMatrix, shouldShowDark } from 'utils/theme/theme'
 
 import { getCollectionWithFallback, getUserWithFallback } from '../helpers'
 
-import PlaylistTile from './PlaylistTile'
+import ContentListTile from './ContentListTile'
 
-type ConnectedPlaylistTileProps = PlaylistTileProps &
+type ConnectedContentListTileProps = ContentListTileProps &
   ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>
 
-const ConnectedPlaylistTile = memo(
+const ConnectedContentListTile = memo(
   ({
     uid,
     index,
@@ -81,14 +81,14 @@ const ConnectedPlaylistTile = memo(
     shareCollection,
     unrepostCollection,
     repostCollection,
-    setRepostPlaylistId,
-    setFavoritePlaylistId,
+    setRepostContentListId,
+    setFavoriteContentListId,
     clickOverflow,
     currentUserId,
     darkMode,
     showRankIcon,
     isTrending
-  }: ConnectedPlaylistTileProps) => {
+  }: ConnectedContentListTileProps) => {
     const collection = getCollectionWithFallback(nullableCollection)
     const user = getUserWithFallback(nullableUser)
     const record = useRecord()
@@ -221,19 +221,19 @@ const ConnectedPlaylistTile = memo(
     const makeGoToRepostsPage =
       (collectionId: ID) => (e: MouseEvent<HTMLElement>) => {
         e.stopPropagation()
-        setRepostPlaylistId(collectionId)
+        setRepostContentListId(collectionId)
         goToRoute(REPOSTING_USERS_ROUTE)
       }
 
     const makeGoToFavoritesPage =
       (collectionId: ID) => (e: MouseEvent<HTMLElement>) => {
         e.stopPropagation()
-        setFavoritePlaylistId(collectionId)
+        setFavoriteContentListId(collectionId)
         goToRoute(FAVORITING_USERS_ROUTE)
       }
 
     return (
-      <PlaylistTile
+      <ContentListTile
         uid={uid}
         id={collection.content list_id}
         userId={collection.content list_owner_id}
@@ -293,7 +293,7 @@ const ConnectedPlaylistTile = memo(
   }
 )
 
-function mapStateToProps(state: AppState, ownProps: PlaylistTileProps) {
+function mapStateToProps(state: AppState, ownProps: ContentListTileProps) {
   return {
     collection: getCollection(state, { uid: ownProps.uid }),
     user: getUserFromCollection(state, { uid: ownProps.uid }),
@@ -334,9 +334,9 @@ function mapDispatchToProps(dispatch: Dispatch) {
           overflowActions
         })
       ),
-    setRepostPlaylistId: (collectionId: ID) =>
+    setRepostContentListId: (collectionId: ID) =>
       dispatch(setRepost(collectionId, RepostType.COLLECTION)),
-    setFavoritePlaylistId: (collectionId: ID) =>
+    setFavoriteContentListId: (collectionId: ID) =>
       dispatch(setFavorite(collectionId, FavoriteType.CONTENT_LIST))
   }
 }
@@ -344,4 +344,4 @@ function mapDispatchToProps(dispatch: Dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ConnectedPlaylistTile)
+)(ConnectedContentListTile)

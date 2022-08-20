@@ -1,25 +1,25 @@
 import cn from 'classnames'
 import PropTypes from 'prop-types'
 
-import { ReactComponent as IconCreatePlaylist } from 'assets/img/iconCreatePlaylist.svg'
+import { ReactComponent as IconCreateContentList } from 'assets/img/iconCreateContentList.svg'
 
-import styles from './CreatePlaylistButton.module.css'
+import styles from './CreateContentListButton.module.css'
 
-const CreatePlaylistButton = (props) => {
+const CreateContentListButton = (props) => {
   return (
     <button
-      className={cn(props.className, styles.createPlaylistButton)}
+      className={cn(props.className, styles.createContentListButton)}
       onClick={props.onClick}
     >
-      <IconCreatePlaylist />
-      <div>Create Playlist</div>
+      <IconCreateContentList />
+      <div>Create ContentList</div>
     </button>
   )
 }
 
-CreatePlaylistButton.propTypes = {
+CreateContentListButton.propTypes = {
   className: PropTypes.string,
   onClick: PropTypes.func
 }
 
-export default CreatePlaylistButton
+export default CreateContentListButton

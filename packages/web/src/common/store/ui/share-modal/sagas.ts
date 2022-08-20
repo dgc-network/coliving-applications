@@ -56,13 +56,13 @@ function* handleRequestOpen(action: RequestOpenAction) {
       }
       break
     }
-    case 'liveNftPlaylist': {
+    case 'liveNftContentList': {
       const { userId, source } = action.payload
       const user = yield* select(getUser(userId))
       if (!user) return
       yield put(
         open({
-          type: 'liveNftPlaylist',
+          type: 'liveNftContentList',
           user,
           source
         })

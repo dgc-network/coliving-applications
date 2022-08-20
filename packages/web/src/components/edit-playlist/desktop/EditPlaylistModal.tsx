@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react'
 
 import { ID } from '@coliving/common'
 import {
-  IconPlaylists,
+  IconContentLists,
   Modal,
   ModalContent,
   ModalHeader,
@@ -13,61 +13,61 @@ import { connect } from 'react-redux'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
 import { Dispatch } from 'redux'
 
-import { fetchSavedPlaylists } from 'common/store/account/reducer'
+import { fetchSavedContentLists } from 'common/store/account/reducer'
 import {
-  deletePlaylist,
-  editPlaylist
+  deleteContentList,
+  editContentList
 } from 'common/store/cache/collections/actions'
 import { getCollectionWithUser } from 'common/store/cache/collections/selectors'
-import PlaylistForm from 'components/create-content list/PlaylistForm'
+import ContentListForm from 'components/create-content list/ContentListForm'
 import DeleteConfirmationModal from 'components/delete-confirmation/DeleteConfirmationModal'
 import LoadingSpinner from 'components/loading-spinner/LoadingSpinner'
 import {
   getCollectionId,
   getIsOpen
-} from 'store/application/ui/editPlaylistModal/selectors'
-import { close } from 'store/application/ui/editPlaylistModal/slice'
+} from 'store/application/ui/editContentListModal/selectors'
+import { close } from 'store/application/ui/editContentListModal/slice'
 import { AppState } from 'store/types'
 import { FEED_PAGE, getPathname, content listPage } from 'utils/route'
 import zIndex from 'utils/zIndex'
 
-import styles from './EditPlaylistModal.module.css'
+import styles from './EditContentListModal.module.css'
 
 const messages = {
   edit: 'Edit',
   delete: 'Delete',
   title: {
-    content list: 'Playlist',
+    content list: 'ContentList',
     album: 'Album'
   },
   type: {
-    content list: 'Playlist',
+    content list: 'ContentList',
     album: 'Album'
   }
 }
 
 type OwnProps = {}
-type EditPlaylistModalProps = OwnProps &
+type EditContentListModalProps = OwnProps &
   RouteComponentProps &
   ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>
 
-const EditPlaylistModal = ({
+const EditContentListModal = ({
   isOpen,
   collectionId,
   collection,
   location,
   onClose,
-  fetchSavedPlaylists,
-  editPlaylist,
-  deletePlaylist,
+  fetchSavedContentLists,
+  editContentList,
+  deleteContentList,
   goToRoute
-}: EditPlaylistModalProps) => {
+}: EditContentListModalProps) => {
   useEffect(() => {
     if (collection == null && collectionId != null) {
-      fetchSavedPlaylists()
+      fetchSavedContentLists()
     }
-  }, [collection, collectionId, fetchSavedPlaylists])
+  }, [collection, collectionId, fetchSavedContentLists])
 
   const {
     content list_id: content listId,
@@ -82,7 +82,7 @@ const EditPlaylistModal = ({
   const onDelete = () => {
     setShowDeleteConfirmation(false)
     onClose()
-    deletePlaylist(content listId!)
+    deleteContentList(content listId!)
     if (handle && title) {
       const content listRoute = content listPage(handle, title, content listId!)
       // If on the content list page, direct user to feed
@@ -90,11 +90,11 @@ const EditPlaylistModal = ({
     }
   }
   const onSaveEdit = (formFields: any) => {
-    editPlaylist(content listId!, formFields)
+    editContentList(content listId!, formFields)
     onClose()
   }
 
-  const editPlaylistModalTitle = `${messages.edit} ${
+  const editContentListModalTitle = `${messages.edit} ${
     isAlbum ? messages.title.album : messages.title.content list
   }`
 
@@ -119,13 +119,13 @@ const EditPlaylistModal = ({
         zIndex={zIndex.EDIT_CONTENT_LIST_MODAL}
       >
         <ModalHeader onClose={onClose}>
-          <ModalTitle icon={<IconPlaylists />} title={editPlaylistModalTitle} />
+          <ModalTitle icon={<IconContentLists />} title={editContentListModalTitle} />
         </ModalHeader>
         <ModalContent>
           {collection == null ? (
             <LoadingSpinner className={styles.spinner} />
           ) : (
-            <PlaylistForm
+            <ContentListForm
               isEditMode
               onCloseArtworkPopup={onCloseArtworkPopup}
               onOpenArtworkPopup={onOpenArtworkPopup}
@@ -162,13 +162,13 @@ const mapStateToProps = (state: AppState) => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   onClose: () => dispatch(close()),
-  fetchSavedPlaylists: () => dispatch(fetchSavedPlaylists()),
+  fetchSavedContentLists: () => dispatch(fetchSavedContentLists()),
   goToRoute: (route: string) => dispatch(pushRoute(route)),
-  editPlaylist: (content listId: ID, formFields: any) =>
-    dispatch(editPlaylist(content listId, formFields)),
-  deletePlaylist: (content listId: ID) => dispatch(deletePlaylist(content listId))
+  editContentList: (content listId: ID, formFields: any) =>
+    dispatch(editContentList(content listId, formFields)),
+  deleteContentList: (content listId: ID) => dispatch(deleteContentList(content listId))
 })
 
 export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(EditPlaylistModal)
+  connect(mapStateToProps, mapDispatchToProps)(EditContentListModal)
 )

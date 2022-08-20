@@ -8,7 +8,7 @@ import {
 import {
   ID,
   Name,
-  PlaylistLibraryFolder,
+  ContentListLibraryFolder,
   SmartCollectionVariant
 } from '@coliving/common'
 import {
@@ -28,9 +28,9 @@ import Droppable from 'components/dragndrop/Droppable'
 import { useRecord, make } from 'store/analytics/actions'
 
 import navColumnStyles from './NavColumn.module.css'
-import styles from './PlaylistLibrary.module.css'
+import styles from './ContentListLibrary.module.css'
 
-type PlaylistFolderNavButtonProps = ComponentPropsWithoutRef<'button'>
+type ContentListFolderNavButtonProps = ComponentPropsWithoutRef<'button'>
 
 const FolderNavLink = ({
   id,
@@ -38,7 +38,7 @@ const FolderNavLink = ({
   children,
   className,
   ...buttonProps
-}: PlaylistFolderNavButtonProps) => {
+}: ContentListFolderNavButtonProps) => {
   const [isDragging, setIsDragging] = useState(false)
   const onDrag = useCallback(() => {
     setIsDragging(true)
@@ -68,14 +68,14 @@ const FolderNavLink = ({
   )
 }
 
-type PlaylistFolderNavItemProps = {
-  folder: PlaylistLibraryFolder
+type ContentListFolderNavItemProps = {
+  folder: ContentListLibraryFolder
   hasUpdate: boolean
   dragging: boolean
   draggingKind: string
   onClickEdit: (folderId: string) => void
   onDropInFolder: (
-    folder: PlaylistLibraryFolder,
+    folder: ContentListLibraryFolder,
     draggingKind: 'library-content list' | 'content list',
     draggingId: ID | string | SmartCollectionVariant
   ) => void
@@ -87,7 +87,7 @@ type PlaylistFolderNavItemProps = {
   children?: ReactNode
 }
 
-export const PlaylistFolderNavItem = ({
+export const ContentListFolderNavItem = ({
   folder,
   hasUpdate = false,
   dragging,
@@ -96,7 +96,7 @@ export const PlaylistFolderNavItem = ({
   onDropBelowFolder,
   onDropInFolder,
   children
-}: PlaylistFolderNavItemProps) => {
+}: ContentListFolderNavItemProps) => {
   const { id, name } = folder
   const isDroppableKind =
     draggingKind === 'library-content list' || draggingKind === 'content list'

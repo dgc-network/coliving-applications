@@ -32,7 +32,7 @@ export const FETCH_COVER_ART = 'AGREEMENTS/FETCH_COVER_ART'
 /**
  * @param initAgreementId optional agreement id to pull artwork from.
  */
-export function createPlaylist(
+export function createContentList(
   tempId: number | string,
   formFields: Record<string, unknown>,
   source: string,
@@ -41,15 +41,15 @@ export function createPlaylist(
   return { type: CREATE_CONTENT_LIST, tempId, formFields, source, initAgreementId }
 }
 
-export function createPlaylistRequested() {
+export function createContentListRequested() {
   return { type: CREATE_CONTENT_LIST_REQUESTED }
 }
 
-export function createPlaylistSucceeded() {
+export function createContentListSucceeded() {
   return { type: CREATE_CONTENT_LIST_SUCCEEDED }
 }
 
-export function createPlaylistFailed(
+export function createContentListFailed(
   error: Error,
   params: Record<string, unknown>,
   metadata: Record<string, unknown>
@@ -57,15 +57,15 @@ export function createPlaylistFailed(
   return { type: CREATE_CONTENT_LIST_FAILED, error, params, metadata }
 }
 
-export function editPlaylist(content listId: number, formFields: Collection) {
+export function editContentList(content listId: number, formFields: Collection) {
   return { type: EDIT_CONTENT_LIST, content listId, formFields }
 }
 
-export function editPlaylistSucceeded() {
+export function editContentListSucceeded() {
   return { type: EDIT_CONTENT_LIST_SUCCEEDED }
 }
 
-export function editPlaylistFailed(
+export function editContentListFailed(
   error: Error,
   params: Record<string, unknown>,
   metadata: Record<string, unknown>
@@ -73,14 +73,14 @@ export function editPlaylistFailed(
   return { type: EDIT_CONTENT_LIST_FAILED, error, params, metadata }
 }
 
-export function addAgreementToPlaylist(
+export function addAgreementToContentList(
   agreementId: ID | null,
   content listId: number | string
 ) {
   return { type: ADD_AGREEMENT_TO_CONTENT_LIST, agreementId, content listId }
 }
 
-export function addAgreementToPlaylistFailed(
+export function addAgreementToContentListFailed(
   error: Error,
   params: Record<string, unknown>,
   metadata: Record<string, unknown>
@@ -88,7 +88,7 @@ export function addAgreementToPlaylistFailed(
   return { type: ADD_AGREEMENT_TO_CONTENT_LIST_FAILED, error, params, metadata }
 }
 
-export function removeAgreementFromPlaylist(
+export function removeAgreementFromContentList(
   agreementId: number,
   content listId: number,
   timestamp: number
@@ -96,7 +96,7 @@ export function removeAgreementFromPlaylist(
   return { type: REMOVE_AGREEMENT_FROM_CONTENT_LIST, agreementId, content listId, timestamp }
 }
 
-export function removeAgreementFromPlaylistFailed(
+export function removeAgreementFromContentListFailed(
   error: Error,
   params: Record<string, unknown>,
   metadata: Record<string, unknown>
@@ -104,7 +104,7 @@ export function removeAgreementFromPlaylistFailed(
   return { type: REMOVE_AGREEMENT_FROM_CONTENT_LIST_FAILED, error, params, metadata }
 }
 
-export function orderPlaylist(
+export function orderContentList(
   content listId: number,
   agreementIdsAndTimes: { id: ID; time: number }[],
   agreementUids?: UID[]
@@ -112,7 +112,7 @@ export function orderPlaylist(
   return { type: ORDER_CONTENT_LIST, content listId, agreementIdsAndTimes, agreementUids }
 }
 
-export function orderPlaylistFailed(
+export function orderContentListFailed(
   error: Error,
   params: Record<string, unknown>,
   metadata: Record<string, unknown>
@@ -120,11 +120,11 @@ export function orderPlaylistFailed(
   return { type: ORDER_CONTENT_LIST_FAILED, error, params, metadata }
 }
 
-export function publishPlaylist(content listId: ID) {
+export function publishContentList(content listId: ID) {
   return { type: PUBLISH_CONTENT_LIST, content listId }
 }
 
-export function publishPlaylistFailed(
+export function publishContentListFailed(
   error: Error,
   params: Record<string, unknown>,
   metadata: Record<string, unknown>
@@ -132,19 +132,19 @@ export function publishPlaylistFailed(
   return { type: PUBLISH_CONTENT_LIST_FAILED, error, params, metadata }
 }
 
-export function deletePlaylist(content listId: ID) {
+export function deleteContentList(content listId: ID) {
   return { type: DELETE_CONTENT_LIST, content listId }
 }
 
-export function deletePlaylistRequested() {
+export function deleteContentListRequested() {
   return { type: DELETE_CONTENT_LIST_REQUESTED }
 }
 
-export function deletePlaylistSucceeded() {
+export function deleteContentListSucceeded() {
   return { type: DELETE_CONTENT_LIST_SUCCEEDED }
 }
 
-export function deletePlaylistFailed(
+export function deleteContentListFailed(
   error: Error,
   params: Record<string, unknown>,
   metadata: Record<string, unknown>

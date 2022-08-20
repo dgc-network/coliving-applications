@@ -97,12 +97,12 @@ export const challenges = {
   sendFirstTipProgressLabel: 'Not Earned',
   sendFirstTipButton: 'Find Someone To Tip',
 
-  firstPlaylistTitle: 'Create Your First Playlist',
-  firstPlaylistDescription: 'Create your first content list & add a agreement to it',
-  firstPlaylistShortDescription:
+  firstContentListTitle: 'Create Your First ContentList',
+  firstContentListDescription: 'Create your first content list & add a agreement to it',
+  firstContentListShortDescription:
     'Create your first content list & add a agreement to it',
-  firstPlaylistProgressLabel: 'Not Earned',
-  firstPlaylistButton: 'Create Your First Playlist'
+  firstContentListProgressLabel: 'Not Earned',
+  firstContentListButton: 'Create Your First ContentList'
 }
 
 export type ChallengesParamList = {
@@ -243,12 +243,12 @@ export const challengesConfig: Record<ChallengeRewardID, ChallengeConfig> = {
   },
   'first-content list': {
     icon: Sparkles,
-    title: challenges.firstPlaylistTitle,
-    description: challenges.firstPlaylistDescription,
-    shortDescription: challenges.firstPlaylistShortDescription,
-    progressLabel: challenges.firstPlaylistProgressLabel,
+    title: challenges.firstContentListTitle,
+    description: challenges.firstContentListDescription,
+    shortDescription: challenges.firstContentListShortDescription,
+    progressLabel: challenges.firstContentListProgressLabel,
     buttonInfo: {
-      label: challenges.firstPlaylistButton,
+      label: challenges.firstContentListButton,
       navigation: {
         native: { screen: 'favorites' },
         web: { route: FAVORITES_PAGE }
@@ -260,7 +260,7 @@ export const challengesConfig: Record<ChallengeRewardID, ChallengeConfig> = {
 export const trendingRewardsConfig: Record<TrendingRewardID, ChallengeConfig> =
   {
     'trending-content list': {
-      title: 'Top 5 Trending Playlists',
+      title: 'Top 5 Trending ContentLists',
       icon: ChartIncreasing,
       description: 'Winners are selected every Friday at Noon PT!',
       buttonInfo: {

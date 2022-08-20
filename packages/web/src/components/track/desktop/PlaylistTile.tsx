@@ -5,16 +5,16 @@ import cn from 'classnames'
 
 import {
   AgreementTileSize,
-  DesktopPlaylistTileProps as PlaylistTileProps
+  DesktopContentListTileProps as ContentListTileProps
 } from 'components/agreement/types'
 
-import styles from './PlaylistTile.module.css'
+import styles from './ContentListTile.module.css'
 import AgreementTile from './AgreementTile'
 
 const DefaultTileContainer = ({ children }: { children: ReactChildren }) =>
   children
 
-const PlaylistTile = memo(
+const ContentListTile = memo(
   ({
     size,
     order,
@@ -48,7 +48,7 @@ const PlaylistTile = memo(
     isTrending,
     showRankIcon,
     TileAgreementContainer = DefaultTileContainer
-  }: PlaylistTileProps) => {
+  }: ContentListTileProps) => {
     const renderAgreements = useCallback(
       () => (
         <Scrollbar
@@ -122,4 +122,4 @@ const PlaylistTile = memo(
   }
 )
 
-export default PlaylistTile
+export default ContentListTile

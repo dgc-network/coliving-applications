@@ -44,7 +44,7 @@ import { getHash, LIVE_NFT_CONTENT_LIST_PAGE, profilePage } from 'utils/route'
 import { CollectionPageProps as DesktopCollectionPageProps } from '../collection-page/components/desktop/CollectionPage'
 import { CollectionPageProps as MobileCollectionPageProps } from '../collection-page/components/mobile/CollectionPage'
 
-import styles from './CollectiblesPlaylistPage.module.css'
+import styles from './CollectiblesContentListPage.module.css'
 
 declare global {
   interface HTMLMediaElement {
@@ -54,7 +54,7 @@ declare global {
   }
 }
 
-type CollectiblesPlaylistPageProviderProps = {
+type CollectiblesContentListPageProviderProps = {
   children:
     | ComponentType<MobileCollectionPageProps>
     | ComponentType<DesktopCollectionPageProps>
@@ -80,9 +80,9 @@ const hasAudio = (video: HTMLMediaElement) => {
 
 const getCurrent = makeGetCurrent()
 
-export const CollectiblesPlaylistPageProvider = ({
+export const CollectiblesContentListPageProvider = ({
   children: Children
-}: CollectiblesPlaylistPageProviderProps) => {
+}: CollectiblesContentListPageProviderProps) => {
   const dispatch = useDispatch()
   const currentPlayerItem = useSelector(getCurrent)
   const playing = useSelector(getPlaying)
@@ -420,7 +420,7 @@ export const CollectiblesPlaylistPageProvider = ({
     if (user) {
       dispatch(
         requestOpenShareModal({
-          type: 'liveNftPlaylist',
+          type: 'liveNftContentList',
           userId: user?.user_id,
           source: ShareSource.TILE
         })
@@ -440,7 +440,7 @@ export const CollectiblesPlaylistPageProvider = ({
     imageOverride: (firstLoadedCollectible.current?.imageUrl ??
       firstLoadedCollectible.current?.frameUrl ??
       firstLoadedCollectible.current?.gifUrl) as string | undefined,
-    typeTitle: 'Audio NFT Playlist',
+    typeTitle: 'Audio NFT ContentList',
     customEmptyText: user
       ? `There are no playable live NFTs in any wallets connected to ${user.name}`
       : ''

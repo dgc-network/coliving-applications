@@ -142,7 +142,7 @@ const makeColumns = (account: User, isUnlisted: boolean) => {
             agreementPermalink={val.permalink}
             hiddenUntilHover={false}
             includeEmbed={!isUnlisted && !record.is_delete}
-            includeAddToPlaylist={!isUnlisted}
+            includeAddToContentList={!isUnlisted}
             includeArtistPick={!isUnlisted}
           />
         </div>

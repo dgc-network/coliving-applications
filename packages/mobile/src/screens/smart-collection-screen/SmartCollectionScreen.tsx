@@ -1,9 +1,9 @@
 import { useCallback } from 'react'
 
 import { FavoriteSource } from '@/common'
-import { getPlaylistLibrary } from '-client/src/common/store/account/selectors'
+import { getContentListLibrary } from '-client/src/common/store/account/selectors'
 import { getCollection } from '-client/src/common/store/pages/smart-collection/selectors'
-import { findInPlaylistLibrary } from '-client/src/common/store/content list-library/helpers'
+import { findInContentListLibrary } from '-client/src/common/store/content list-library/helpers'
 import {
   saveSmartCollection,
   unsaveSmartCollection
@@ -50,10 +50,10 @@ export const SmartCollectionScreen = ({
   const content listName = collection?.content list_name ?? smartCollection.title
   const description = collection?.description ?? smartCollection.description
 
-  const content listLibrary = useSelectorWeb(getPlaylistLibrary)
+  const content listLibrary = useSelectorWeb(getContentListLibrary)
 
   const isSaved = content listLibrary
-    ? !!findInPlaylistLibrary(content listLibrary, smartCollection.variant)
+    ? !!findInContentListLibrary(content listLibrary, smartCollection.variant)
     : false
 
   const handlePressSave = useCallback(() => {
@@ -92,7 +92,7 @@ export const SmartCollectionScreen = ({
 
   return (
     <VirtualizedScrollView
-      listKey={`${content listName}_Playlist_Screen`}
+      listKey={`${content listName}_ContentList_Screen`}
       style={styles.root}
     >
       <CollectionScreenDetailsTile

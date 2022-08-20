@@ -7,7 +7,7 @@ import cn from 'classnames'
 import { ReactComponent as IconAlbum } from 'assets/img/iconAlbum.svg'
 import { ReactComponent as IconFilter } from 'assets/img/iconFilter.svg'
 import { ReactComponent as IconNote } from 'assets/img/iconNote.svg'
-import { ReactComponent as IconPlaylists } from 'assets/img/iconPlaylists.svg'
+import { ReactComponent as IconContentLists } from 'assets/img/iconContentLists.svg'
 import {
   Tabs,
   SavedPageAgreement,
@@ -27,7 +27,7 @@ import useTabs from 'hooks/useTabs/useTabs'
 import { make, useRecord } from 'store/analytics/actions'
 import { albumPage, TRENDING_PAGE, content listPage } from 'utils/route'
 
-import NewPlaylistButton from './NewPlaylistButton'
+import NewContentListButton from './NewContentListButton'
 import styles from './SavedPage.module.css'
 
 const emptyTabMessages = {
@@ -240,33 +240,33 @@ const AlbumCardLineup = ({
   )
 }
 
-const PlaylistCardLineup = ({
+const ContentListCardLineup = ({
   content lists,
   goToTrending,
   onFilterChange,
   filterText,
   goToRoute,
-  getFilteredPlaylists,
+  getFilteredContentLists,
   formatCardSecondaryText,
   content listUpdates,
-  updatePlaylistLastViewedAt
+  updateContentListLastViewedAt
 }: {
   content lists: SavedPageCollection[]
   goToTrending: () => void
   onFilterChange: (e: any) => void
   filterText: string
   formatCardSecondaryText: (saves: number, agreements: number) => string
-  getFilteredPlaylists: (
+  getFilteredContentLists: (
     content lists: SavedPageCollection[]
   ) => SavedPageCollection[]
   goToRoute: (route: string) => void
   content listUpdates: number[]
-  updatePlaylistLastViewedAt: (content listId: number) => void
+  updateContentListLastViewedAt: (content listId: number) => void
 }) => {
   const record = useRecord()
 
-  const filteredPlaylists = getFilteredPlaylists(content lists || [])
-  const content listCards = filteredPlaylists.map((content list) => {
+  const filteredContentLists = getFilteredContentLists(content lists || [])
+  const content listCards = filteredContentLists.map((content list) => {
     const hasUpdate = content listUpdates.includes(content list.content list_id)
     return (
       <Card
@@ -287,7 +287,7 @@ const PlaylistCardLineup = ({
               content list.content list_id
             )
           )
-          updatePlaylistLastViewedAt(content list.content list_id)
+          updateContentListLastViewedAt(content list.content list_id)
           record(
             make(Name.CONTENT_LIST_LIBRARY_CLICKED, {
               content listId: content list.content list_id,
@@ -309,28 +309,28 @@ const PlaylistCardLineup = ({
           <EmptyTab
             message={
               <>
-                {messages.emptyPlaylists}
+                {messages.emptyContentLists}
                 <i className={cn('emoji', 'face-with-monocle', styles.emoji)} />
               </>
             }
             onClick={goToTrending}
           />
-          <NewPlaylistButton />
+          <NewContentListButton />
         </>
       ) : (
         <div ref={contentRefCallback} className={styles.tabContainer}>
           <div className={styles.searchContainer}>
             <div className={styles.searchInnerContainer}>
               <input
-                placeholder={messages.filterPlaylists}
+                placeholder={messages.filterContentLists}
                 onChange={onFilterChange}
                 value={filterText}
               />
               <IconFilter className={styles.iconFilter} />
             </div>
           </div>
-          <NewPlaylistButton />
-          {filteredPlaylists.length > 0 && (
+          <NewContentListButton />
+          {filteredContentLists.length > 0 && (
             <div className={styles.cardsContainer}>
               <CardLineup
                 cardsClassName={styles.cardLineup}
@@ -347,19 +347,19 @@ const PlaylistCardLineup = ({
 const messages = {
   emptyAgreements: "You haven't favorited any agreements yet.",
   emptyAlbums: "You haven't favorited any albums yet.",
-  emptyPlaylists: "You haven't favorited any content lists yet.",
+  emptyContentLists: "You haven't favorited any content lists yet.",
   filterAgreements: 'Filter Agreements',
   filterAlbums: 'Filter Albums',
-  filterPlaylists: 'Filter Playlists',
+  filterContentLists: 'Filter ContentLists',
   agreements: 'Agreements',
   albums: 'Albums',
-  content lists: 'Playlists'
+  content lists: 'ContentLists'
 }
 
 const tabHeaders = [
   { icon: <IconNote />, text: messages.agreements, label: Tabs.AGREEMENTS },
   { icon: <IconAlbum />, text: messages.albums, label: Tabs.ALBUMS },
-  { icon: <IconPlaylists />, text: messages.content lists, label: Tabs.CONTENT_LISTS }
+  { icon: <IconContentLists />, text: messages.content lists, label: Tabs.CONTENT_LISTS }
 ]
 
 export type SavedPageProps = {
@@ -391,7 +391,7 @@ export type SavedPageProps = {
   resetSavedAgreements: () => void
   updateLineupOrder: (updatedOrderIndices: UID[]) => void
   getFilteredAlbums: (albums: SavedPageCollection[]) => SavedPageCollection[]
-  getFilteredPlaylists: (
+  getFilteredContentLists: (
     content lists: SavedPageCollection[]
   ) => SavedPageCollection[]
 
@@ -404,7 +404,7 @@ export type SavedPageProps = {
   onClickRemove: any
   onReorderAgreements: any
   content listUpdates: number[]
-  updatePlaylistLastViewedAt: (content listId: number) => void
+  updateContentListLastViewedAt: (content listId: number) => void
 }
 
 const SavedPage = ({
@@ -419,13 +419,13 @@ const SavedPage = ({
   onTogglePlay,
   getFilteredData,
   getFilteredAlbums,
-  getFilteredPlaylists,
+  getFilteredContentLists,
   onFilterChange,
   filterText,
   formatCardSecondaryText,
   onSave,
   content listUpdates,
-  updatePlaylistLastViewedAt
+  updateContentListLastViewedAt
 }: SavedPageProps) => {
   useMainPageHeader()
 
@@ -455,9 +455,9 @@ const SavedPage = ({
       goToRoute={goToRoute}
       formatCardSecondaryText={formatCardSecondaryText}
     />,
-    <PlaylistCardLineup
+    <ContentListCardLineup
       key='content listLineup'
-      getFilteredPlaylists={getFilteredPlaylists}
+      getFilteredContentLists={getFilteredContentLists}
       content lists={account ? account.content lists : []}
       goToTrending={goToTrending}
       onFilterChange={onFilterChange}
@@ -465,7 +465,7 @@ const SavedPage = ({
       goToRoute={goToRoute}
       formatCardSecondaryText={formatCardSecondaryText}
       content listUpdates={content listUpdates}
-      updatePlaylistLastViewedAt={updatePlaylistLastViewedAt}
+      updateContentListLastViewedAt={updateContentListLastViewedAt}
     />
   ]
   const { tabs, body } = useTabs({

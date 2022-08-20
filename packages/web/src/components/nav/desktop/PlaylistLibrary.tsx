@@ -4,8 +4,8 @@ import {
   ID,
   FavoriteSource,
   Name,
-  PlaylistLibrary as PlaylistLibraryType,
-  PlaylistLibraryFolder,
+  ContentListLibrary as ContentListLibraryType,
+  ContentListLibraryFolder,
   SmartCollectionVariant,
   FeatureFlags
 } from '@coliving/common'
@@ -16,19 +16,19 @@ import { useDispatch } from 'react-redux'
 import { useModalState } from 'common/hooks/useModalState'
 import {
   getAccountCollectibles,
-  getAccountNavigationPlaylists,
+  getAccountNavigationContentLists,
   getAccountUser,
-  getPlaylistLibrary
+  getContentListLibrary
 } from 'common/store/account/selectors'
-import { addAgreementToPlaylist } from 'common/store/cache/collections/actions'
-import { getPlaylistUpdates } from 'common/store/notifications/selectors'
+import { addAgreementToContentList } from 'common/store/cache/collections/actions'
+import { getContentListUpdates } from 'common/store/notifications/selectors'
 import {
-  addPlaylistToFolder,
-  containsTempPlaylist,
-  findInPlaylistLibrary,
-  getPlaylistsNotInLibrary,
+  addContentListToFolder,
+  containsTempContentList,
+  findInContentListLibrary,
+  getContentListsNotInLibrary,
   isInsideFolder,
-  reorderPlaylistLibrary
+  reorderContentListLibrary
 } from 'common/store/content list-library/helpers'
 import { saveSmartCollection } from 'common/store/social/collections/actions'
 import Droppable from 'components/dragndrop/Droppable'
@@ -40,30 +40,30 @@ import {
 } from 'pages/smart-collection/smartCollections'
 import { make, useRecord } from 'store/analytics/actions'
 import { setFolderId as setEditFolderModalFolderId } from 'store/application/ui/editFolderModal/slice'
-import { open as openEditPlaylistModal } from 'store/application/ui/editPlaylistModal/slice'
+import { open as openEditContentListModal } from 'store/application/ui/editContentListModal/slice'
 import { getIsDragging } from 'store/dragndrop/selectors'
 import { update } from 'store/content list-library/slice'
 import { useSelector } from 'utils/reducer'
-import { liveNftPlaylistPage, getPathname, content listPage } from 'utils/route'
+import { liveNftContentListPage, getPathname, content listPage } from 'utils/route'
 
 import navColumnStyles from './NavColumn.module.css'
-import { PlaylistFolderNavItem } from './PlaylistFolderNavItem'
-import styles from './PlaylistLibrary.module.css'
-import { PlaylistNavItem, PlaylistNavLink } from './PlaylistNavItem'
+import { ContentListFolderNavItem } from './ContentListFolderNavItem'
+import styles from './ContentListLibrary.module.css'
+import { ContentListNavItem, ContentListNavLink } from './ContentListNavItem'
 
-type PlaylistLibraryProps = {
+type ContentListLibraryProps = {
   onClickNavLinkWithAccount: () => void
 }
 
 type LibraryContentsLevelProps = {
   level?: number
-  contents: PlaylistLibraryType['contents']
-  renderPlaylist: (content listId: number, level: number) => void
-  renderCollectionPlaylist: (
+  contents: ContentListLibraryType['contents']
+  renderContentList: (content listId: number, level: number) => void
+  renderCollectionContentList: (
     content listId: SmartCollectionVariant,
     level: number
   ) => void
-  renderFolder: (folder: PlaylistLibraryFolder, level: number) => void
+  renderFolder: (folder: ContentListLibraryFolder, level: number) => void
 }
 
 const messages = {
@@ -72,12 +72,12 @@ const messages = {
 }
 
 /** Function component for rendering a single level of the content list library.
- * Playlist library consists of up to two content levels (root + inside a folder) */
+ * ContentList library consists of up to two content levels (root + inside a folder) */
 const LibraryContentsLevel = ({
   level = 0,
   contents,
-  renderPlaylist,
-  renderCollectionPlaylist,
+  renderContentList,
+  renderCollectionContentList,
   renderFolder
 }: LibraryContentsLevelProps) => {
   return (
@@ -85,13 +85,13 @@ const LibraryContentsLevel = ({
       {contents.map((content) => {
         switch (content.type) {
           case 'explore_content list': {
-            return renderCollectionPlaylist(content.content list_id, level)
+            return renderCollectionContentList(content.content list_id, level)
           }
           case 'content list': {
-            return renderPlaylist(content.content list_id, level)
+            return renderContentList(content.content list_id, level)
           }
           case 'temp_content list': {
-            return renderPlaylist(parseInt(content.content list_id), level)
+            return renderContentList(parseInt(content.content list_id), level)
           }
           case 'folder':
             return renderFolder(content, level)
@@ -103,17 +103,17 @@ const LibraryContentsLevel = ({
   )
 }
 
-const PlaylistLibrary = ({
+const ContentListLibrary = ({
   onClickNavLinkWithAccount
-}: PlaylistLibraryProps) => {
+}: ContentListLibraryProps) => {
   const account = useSelector(getAccountUser)
-  const content lists = useSelector(getAccountNavigationPlaylists)
-  const library = useSelector(getPlaylistLibrary)
-  const updates = useSelector(getPlaylistUpdates)
+  const content lists = useSelector(getAccountNavigationContentLists)
+  const library = useSelector(getContentListLibrary)
+  const updates = useSelector(getContentListUpdates)
   const updatesSet = new Set(updates)
   const { dragging, kind: draggingKind } = useSelector(getIsDragging)
   const dispatch = useDispatch()
-  const { isEnabled: isPlaylistFoldersEnabled } = useFlag(
+  const { isEnabled: isContentListFoldersEnabled } = useFlag(
     FeatureFlags.CONTENT_LIST_FOLDERS
   )
   const { toast } = useContext(ToastContext)
@@ -134,11 +134,11 @@ const PlaylistLibrary = ({
   // Set live nft content list in library if it is not already set
   useEffect(() => {
     if (library) {
-      const isAudioNftPlaylistInLibrary = !!findInPlaylistLibrary(
+      const isAudioNftContentListInLibrary = !!findInContentListLibrary(
         library,
         SmartCollectionVariant.LIVE_NFT_CONTENT_LIST
       )
-      if (liveCollectibles.length && !isAudioNftPlaylistInLibrary) {
+      if (liveCollectibles.length && !isAudioNftContentListInLibrary) {
         dispatch(
           saveSmartCollection(
             LIVE_NFT_CONTENT_LIST.content list_name,
@@ -158,9 +158,9 @@ const PlaylistLibrary = ({
     [dispatch, record, setIsEditFolderModalOpen]
   )
 
-  const handleClickEditPlaylist = useCallback(
+  const handleClickEditContentList = useCallback(
     (content listId) => {
-      dispatch(openEditPlaylistModal(content listId))
+      dispatch(openEditContentListModal(content listId))
       record(make(Name.CONTENT_LIST_OPEN_EDIT_FROM_LIBRARY, {}))
     },
     [dispatch, record]
@@ -168,18 +168,18 @@ const PlaylistLibrary = ({
 
   const handleDropInFolder = useCallback(
     (
-      folder: PlaylistLibraryFolder,
+      folder: ContentListLibraryFolder,
       droppedKind: 'content list' | 'library-content list',
       droppedId: ID | string | SmartCollectionVariant
     ) => {
       if (!library) return
-      const newLibrary = addPlaylistToFolder(library, droppedId, folder.id)
+      const newLibrary = addContentListToFolder(library, droppedId, folder.id)
 
       // Show a toast if content list dragged from outside of library was already in the library so it simply got moved to the target folder.
       if (
         droppedKind === 'content list' &&
         library !== newLibrary &&
-        findInPlaylistLibrary(library, droppedId)
+        findInContentListLibrary(library, droppedId)
       ) {
         toast(messages.content listMovedToFolderToast(folder.name))
       }
@@ -201,7 +201,7 @@ const PlaylistLibrary = ({
       if (!library) return
       if (draggingId === droppingId) return
       const libraryBeforeReorder = { ...library }
-      const newLibrary = reorderPlaylistLibrary(
+      const newLibrary = reorderContentListLibrary(
         library,
         draggingId,
         droppingId,
@@ -211,7 +211,7 @@ const PlaylistLibrary = ({
       dispatch(update({ content listLibrary: newLibrary }))
       record(
         make(Name.CONTENT_LIST_LIBRARY_REORDER, {
-          containsTemporaryPlaylists: containsTempPlaylist(newLibrary),
+          containsTemporaryContentLists: containsTempContentList(newLibrary),
           kind: draggingKind
         })
       )
@@ -232,23 +232,23 @@ const PlaylistLibrary = ({
     [dispatch, library, record]
   )
 
-  const renderCollectionPlaylist = (
+  const renderCollectionContentList = (
     content listId: SmartCollectionVariant,
     level = 0
   ) => {
-    const isAudioNftPlaylist =
+    const isAudioNftContentList =
       content listId === SmartCollectionVariant.LIVE_NFT_CONTENT_LIST
-    if (isAudioNftPlaylist && !liveCollectibles.length) return null
+    if (isAudioNftContentList && !liveCollectibles.length) return null
     const content list = SMART_COLLECTION_MAP[content listId]
     if (!content list) return null
 
     const name = content list.content list_name
-    const url = isAudioNftPlaylist
-      ? liveNftPlaylistPage(account?.handle ?? '')
+    const url = isAudioNftContentList
+      ? liveNftContentListPage(account?.handle ?? '')
       : content list.link
 
     return (
-      <PlaylistNavLink
+      <ContentListNavLink
         isInsideFolder={level > 0}
         key={content list.link}
         content listId={name as SmartCollectionVariant}
@@ -265,11 +265,11 @@ const PlaylistLibrary = ({
         })}
       >
         {name}
-      </PlaylistNavLink>
+      </ContentListNavLink>
     )
   }
 
-  const onClickPlaylist = useCallback(
+  const onClickContentList = useCallback(
     (content listId: ID, hasUpdate: boolean) => {
       onClickNavLinkWithAccount()
       record(
@@ -281,16 +281,16 @@ const PlaylistLibrary = ({
     },
     [record, onClickNavLinkWithAccount]
   )
-  const renderPlaylist = (content listId: ID, level = 0) => {
+  const renderContentList = (content listId: ID, level = 0) => {
     const content list = content lists[content listId]
     if (!account || !content list) return null
     const { id, name } = content list
     const url = content listPage(content list.user.handle, name, id)
-    const addAgreement = (agreementId: ID) => dispatch(addAgreementToPlaylist(agreementId, id))
+    const addAgreement = (agreementId: ID) => dispatch(addAgreementToContentList(agreementId, id))
     const isOwner = content list.user.handle === account.handle
     const hasUpdate = updatesSet.has(id)
     return (
-      <PlaylistNavItem
+      <ContentListNavItem
         isInsideFolder={level > 0}
         key={id}
         content list={content list}
@@ -301,19 +301,19 @@ const PlaylistLibrary = ({
         onReorder={onReorder}
         dragging={dragging}
         draggingKind={draggingKind}
-        onClickPlaylist={onClickPlaylist}
+        onClickContentList={onClickContentList}
         onClickEdit={
-          isOwner && isPlaylistFoldersEnabled
-            ? handleClickEditPlaylist
+          isOwner && isContentListFoldersEnabled
+            ? handleClickEditContentList
             : undefined
         }
       />
     )
   }
 
-  const renderFolder = (folder: PlaylistLibraryFolder, level = 0) => {
+  const renderFolder = (folder: ContentListLibraryFolder, level = 0) => {
     return (
-      <PlaylistFolderNavItem
+      <ContentListFolderNavItem
         key={folder.id}
         folder={folder}
         hasUpdate={folder.contents.some(
@@ -348,13 +348,13 @@ const PlaylistLibrary = ({
             <LibraryContentsLevel
               level={level + 1}
               contents={folder.contents}
-              renderPlaylist={renderPlaylist}
-              renderCollectionPlaylist={renderCollectionPlaylist}
+              renderContentList={renderContentList}
+              renderCollectionContentList={renderCollectionContentList}
               renderFolder={renderFolder}
             />
           </div>
         )}
-      </PlaylistFolderNavItem>
+      </ContentListFolderNavItem>
     )
   }
 
@@ -362,7 +362,7 @@ const PlaylistLibrary = ({
   /* if the user's library itself does not contain some of the content lists (for example, if a write failed).
   /* This computes those content lists that are attached to the user's account but are not in the user library. */
   const content listsNotInLibrary = useMemo(() => {
-    return getPlaylistsNotInLibrary(library, content lists)
+    return getContentListsNotInLibrary(library, content lists)
   }, [library, content lists])
 
   /** Iterate over content list library and render out available explore/smart
@@ -382,13 +382,13 @@ const PlaylistLibrary = ({
       {account && content lists && library ? (
         <LibraryContentsLevel
           contents={library.contents || []}
-          renderPlaylist={renderPlaylist}
-          renderCollectionPlaylist={renderCollectionPlaylist}
+          renderContentList={renderContentList}
+          renderCollectionContentList={renderCollectionContentList}
           renderFolder={renderFolder}
         />
       ) : null}
       {Object.values(content listsNotInLibrary).map((content list) => {
-        return renderPlaylist(content list.id)
+        return renderContentList(content list.id)
       })}
       {isEmpty(library?.contents) ? (
         <div className={cn(navColumnStyles.link, navColumnStyles.disabled)}>
@@ -399,4 +399,4 @@ const PlaylistLibrary = ({
   )
 }
 
-export default PlaylistLibrary
+export default ContentListLibrary

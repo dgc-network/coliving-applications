@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react'
 
-import { getAccountWithPlaylists } from '-client/src/common/store/account/selectors'
+import { getAccountWithContentLists } from '-client/src/common/store/account/selectors'
 import { FAVORITES_PAGE } from '-client/src/utils/route'
 
 import { CollectionList } from 'app/components/collection-list'
@@ -16,13 +16,13 @@ import type { ExtendedCollection } from './types'
 
 const messages = {
   emptyTabText: "You haven't favorited any content lists yet.",
-  inputPlaceholder: 'Filter Playlists'
+  inputPlaceholder: 'Filter ContentLists'
 }
 
-export const PlaylistsTab = () => {
+export const ContentListsTab = () => {
   const navigation = useNavigation<FavoritesTabScreenParamList>()
   const [filterValue, setFilterValue] = useState('')
-  const user = useSelectorWeb(getAccountWithPlaylists)
+  const user = useSelectorWeb(getAccountWithContentLists)
 
   const matchesFilter = (content list: ExtendedCollection) => {
     const matchValue = filterValue.toLowerCase()
@@ -32,7 +32,7 @@ export const PlaylistsTab = () => {
     )
   }
 
-  const userPlaylists = user?.content lists
+  const userContentLists = user?.content lists
     ?.filter(
       (content list) =>
         !content list.is_album &&
@@ -41,13 +41,13 @@ export const PlaylistsTab = () => {
     )
     .map((content list) => ({ ...content list, user }))
 
-  const handleNavigateToNewPlaylist = useCallback(() => {
-    navigation.push({ native: { screen: 'CreatePlaylist' } })
+  const handleNavigateToNewContentList = useCallback(() => {
+    navigation.push({ native: { screen: 'CreateContentList' } })
   }, [navigation])
 
   return (
     <VirtualizedScrollView listKey='favorites-content lists-view'>
-      {!userPlaylists?.length && !filterValue ? (
+      {!userContentLists?.length && !filterValue ? (
         <EmptyTab message={messages.emptyTabText} />
       ) : (
         <FilterInput
@@ -57,14 +57,14 @@ export const PlaylistsTab = () => {
         />
       )}
       <Button
-        title='Create a New Playlist'
+        title='Create a New ContentList'
         variant='commonAlt'
-        onPress={handleNavigateToNewPlaylist}
+        onPress={handleNavigateToNewContentList}
       />
       <CollectionList
         listKey='favorites-content lists'
         scrollEnabled={false}
-        collection={userPlaylists ?? []}
+        collection={userContentLists ?? []}
         fromPage={FAVORITES_PAGE}
       />
     </VirtualizedScrollView>

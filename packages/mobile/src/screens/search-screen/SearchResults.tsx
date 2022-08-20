@@ -6,7 +6,7 @@ import { getSearchResults } from 'app/store/search/selectors'
 import type {
   SearchUser,
   SearchAgreement,
-  SearchPlaylist,
+  SearchContentList,
   SectionHeader
 } from 'app/store/search/types'
 
@@ -53,7 +53,7 @@ const SearchResults = () => {
 
   const sectionWithMore: {
     title: SectionHeader | 'more'
-    data: (SearchUser | SearchAgreement | SearchPlaylist)[]
+    data: (SearchUser | SearchAgreement | SearchContentList)[]
   }[] = [...sections, { title: 'more', data: [] }]
 
   return (

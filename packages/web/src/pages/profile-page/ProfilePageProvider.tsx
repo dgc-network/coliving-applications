@@ -39,7 +39,7 @@ import {
 import { makeGetCurrent } from 'common/store/queue/selectors'
 import * as socialActions from 'common/store/social/users/actions'
 import { makeGetRelatedArtists } from 'common/store/ui/artist-recommendations/selectors'
-import * as createPlaylistModalActions from 'common/store/ui/createPlaylistModal/actions'
+import * as createContentListModalActions from 'common/store/ui/createContentListModal/actions'
 import { open } from 'common/store/ui/mobile-overflow-menu/slice'
 import {
   OverflowSource,
@@ -721,7 +721,7 @@ class ProfilePage extends PureComponent<ProfilePageProps, ProfilePageState> {
       pauseUserFeedAgreement,
       account,
       goToRoute,
-      openCreatePlaylistModal,
+      openCreateContentListModal,
       currentQueueItem,
       setNotificationSubscription,
       setFollowingUserId,
@@ -924,7 +924,7 @@ class ProfilePage extends PureComponent<ProfilePageProps, ProfilePageState> {
       updatedCoverPhoto,
       updatedProfilePicture,
 
-      openCreatePlaylistModal,
+      openCreateContentListModal,
 
       updateProfile: this.props.updateProfile
     }
@@ -1036,8 +1036,8 @@ function mapDispatchToProps(dispatch: Dispatch) {
     fetchFollowUsers: (followGroup: any, limit: number, offset: number) =>
       dispatch(profileActions.fetchFollowUsers(followGroup, limit, offset)),
 
-    openCreatePlaylistModal: () =>
-      dispatch(createPlaylistModalActions.open(undefined, true)),
+    openCreateContentListModal: () =>
+      dispatch(createContentListModalActions.open(undefined, true)),
     setNotificationSubscription: (userId: ID, isSubscribed: boolean) =>
       dispatch(
         profileActions.setNotificationSubscription(userId, isSubscribed, true)

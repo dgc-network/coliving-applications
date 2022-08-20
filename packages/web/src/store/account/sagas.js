@@ -7,8 +7,8 @@ import {
   getUserHandle,
   getAccountUser,
   getAccountAlbumIds,
-  getAccountSavedPlaylistIds,
-  getAccountOwnedPlaylistIds,
+  getAccountSavedContentListIds,
+  getAccountOwnedContentListIds,
   getAccountToCache
 } from 'common/store/account/selectors'
 import * as cacheActions from 'common/store/cache/actions'
@@ -39,7 +39,7 @@ import { remoteConfigInstance } from 'services/remote-config/remote-config-insta
 import { setSentryUser } from 'services/sentry'
 import { identify } from 'store/analytics/actions'
 import { waitForBackendSetup } from 'store/backend/sagas'
-import { addPlaylistsNotInLibrary } from 'store/content list-library/sagas'
+import { addContentListsNotInLibrary } from 'store/content list-library/sagas'
 import {
   Permission,
   isPushManagerAvailable,
@@ -111,7 +111,7 @@ function* onFetchAccount(account) {
 
   // Add content lists that might not have made it into the user's library.
   // This could happen if the user creates a new content list and then leaves their session.
-  yield fork(addPlaylistsNotInLibrary)
+  yield fork(addContentListsNotInLibrary)
 
   const feePayerOverride = yield select(getFeePayer)
   yield call(createUserBankIfNeeded, feePayerOverride)
@@ -135,7 +135,7 @@ export function* fetchAccountAsync(action) {
       yield call(
         cacheAccount,
         cachedAccountUser,
-        cachedAccountUser.orderedPlaylists
+        cachedAccountUser.orderedContentLists
       )
       yield put(accountActions.fetchAccountSucceeded(cachedAccount))
     } else if (!getCurrentUserExists()) {
@@ -400,7 +400,7 @@ function* fetchSavedAlbumsAsync() {
   }
 }
 
-function* fetchSavedPlaylistsAsync() {
+function* fetchSavedContentListsAsync() {
   yield call(waitForBackendSetup)
   const isAccountSet = (store) => store.account.status
   yield call(
@@ -412,17 +412,17 @@ function* fetchSavedPlaylistsAsync() {
 
   // Fetch other people's content lists you've saved
   yield fork(function* () {
-    const savedPlaylists = yield select(getAccountSavedPlaylistIds)
-    if (savedPlaylists.length > 0) {
-      yield call(retrieveCollections, null, savedPlaylists)
+    const savedContentLists = yield select(getAccountSavedContentListIds)
+    if (savedContentLists.length > 0) {
+      yield call(retrieveCollections, null, savedContentLists)
     }
   })
 
   // Fetch your own content lists
   yield fork(function* () {
-    const ownPlaylists = yield select(getAccountOwnedPlaylistIds)
-    if (ownPlaylists.length > 0) {
-      yield call(retrieveCollections, null, ownPlaylists)
+    const ownContentLists = yield select(getAccountOwnedContentListIds)
+    if (ownContentLists.length > 0) {
+      yield call(retrieveCollections, null, ownContentLists)
     }
   })
 }
@@ -443,15 +443,15 @@ function* watchFetchSavedAlbums() {
   yield takeEvery(accountActions.fetchSavedAlbums.type, fetchSavedAlbumsAsync)
 }
 
-function* watchFetchSavedPlaylists() {
+function* watchFetchSavedContentLists() {
   yield takeEvery(
-    accountActions.fetchSavedPlaylists.type,
-    fetchSavedPlaylistsAsync
+    accountActions.fetchSavedContentLists.type,
+    fetchSavedContentListsAsync
   )
 }
 
-function* watchAddAccountPlaylist() {
-  yield takeEvery(accountActions.addAccountPlaylist.type, reCacheAccount)
+function* watchAddAccountContentList() {
+  yield takeEvery(accountActions.addAccountContentList.type, reCacheAccount)
 }
 
 function* getBrowserPushNotifcations() {
@@ -488,9 +488,9 @@ export default function sagas() {
     watchTwitterLogin,
     watchInstagramLogin,
     watchFetchSavedAlbums,
-    watchFetchSavedPlaylists,
+    watchFetchSavedContentLists,
     watchShowPushNotificationConfirmation,
-    watchAddAccountPlaylist,
+    watchAddAccountContentList,
     getBrowserPushNotifcations,
     subscribeBrowserPushNotification,
     unsubscribeBrowserPushNotification

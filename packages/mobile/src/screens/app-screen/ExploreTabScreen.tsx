@@ -17,7 +17,7 @@ import {
 import {
   LetThemDJScreen,
   TopAlbumsScreen,
-  TrendingPlaylistsScreen,
+  TrendingContentListsScreen,
   TrendingUndergroundScreen
 } from 'app/screens/explore-screen/tabs/ForYouTab'
 import { MoodCollectionScreen } from 'app/screens/mood-collection-screen/MoodCollectionScreen'
@@ -39,13 +39,13 @@ export type ExploreTabScreenParamList = AppTabScreenParamList & {
   TrendingUnderground: undefined
   LetThemDJ: undefined
   TopAlbums: undefined
-  TrendingPlaylists: undefined
+  TrendingContentLists: undefined
   // Mood Screens
-  ChillPlaylists: undefined
-  IntensePlaylists: undefined
-  IntimatePlaylists: undefined
-  UpbeatPlaylists: undefined
-  ProvokingPlaylists: undefined
+  ChillContentLists: undefined
+  IntenseContentLists: undefined
+  IntimateContentLists: undefined
+  UpbeatContentLists: undefined
+  ProvokingContentLists: undefined
 }
 
 const moodCollections = [
@@ -72,8 +72,8 @@ export const ExploreTabScreen =
       <Stack.Screen name='LetThemDJ' component={LetThemDJScreen} />
       <Stack.Screen name='TopAlbums' component={TopAlbumsScreen} />
       <Stack.Screen
-        name='TrendingPlaylists'
-        component={TrendingPlaylistsScreen}
+        name='TrendingContentLists'
+        component={TrendingContentListsScreen}
       />
       <Stack.Screen
         name='TrendingUnderground'

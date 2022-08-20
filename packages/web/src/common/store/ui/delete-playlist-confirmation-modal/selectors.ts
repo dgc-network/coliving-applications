@@ -1,4 +1,4 @@
 import { CommonState } from 'common/store'
 
-export const getPlaylistId = (state: CommonState) =>
-  state.ui.deletePlaylistConfirmationModal.content listId
+export const getContentListId = (state: CommonState) =>
+  state.ui.deleteContentListConfirmationModal.content listId

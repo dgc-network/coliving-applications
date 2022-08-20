@@ -21,7 +21,7 @@ import { getShowTip } from 'common/store/tipping/selectors'
 import { FeedTipTile } from 'components/tipping/feed-tip-tile/FeedTipTile'
 import {
   AgreementTileProps,
-  PlaylistTileProps,
+  ContentListTileProps,
   AgreementTileSize,
   TileProps
 } from 'components/agreement/types'
@@ -107,7 +107,7 @@ export interface LineupProviderProps {
   'aria-label'?: string
   // Tile components
   agreementTile: ComponentType<AgreementTileProps> | any
-  content listTile: ComponentType<PlaylistTileProps> | any
+  content listTile: ComponentType<ContentListTileProps> | any
 
   // Other props
 
@@ -192,7 +192,7 @@ export interface LineupProviderProps {
   actions: LineupActions
   delayLoad?: boolean
   /** How many rows to show for a loading content list tile. Defaults to 0 */
-  numPlaylistSkeletonRows?: number
+  numContentListSkeletonRows?: number
 
   /** Are we in a trending lineup? Allows tiles to specialize their rendering */
   isTrending?: boolean
@@ -223,7 +223,7 @@ type CombinedProps = LineupProviderProps &
 
 /** `LineupProvider` encapsulates the logic for displaying a Lineup (e.g. prefetching items)
  * displaying loading states, etc). This is decoupled from the rendering logic, which
- * is controlled by injecting tiles conforming to `Agreement/Playlist/SkeletonProps interfaces.
+ * is controlled by injecting tiles conforming to `Agreement/ContentList/SkeletonProps interfaces.
  */
 class LineupProvider extends PureComponent<CombinedProps, LineupProviderState> {
   scrollContainer = createRef<HTMLDivElement>()
@@ -475,7 +475,7 @@ class LineupProvider extends PureComponent<CombinedProps, LineupProviderState> {
       isMobile,
       showLeadingElementArtistPick = true,
       lineup: { isMetadataLoading, page },
-      numPlaylistSkeletonRows,
+      numContentListSkeletonRows,
       isTrending = false,
       isFeed = false,
       showTip,
@@ -551,7 +551,7 @@ class LineupProvider extends PureComponent<CombinedProps, LineupProviderState> {
             togglePlay: this.togglePlay,
             isLoading: !this.canLoad(index),
             hasLoaded: this.hasLoaded,
-            numLoadingSkeletonRows: numPlaylistSkeletonRows,
+            numLoadingSkeletonRows: numContentListSkeletonRows,
             isTrending,
             showRankIcon: index < rankIconCount
           }
@@ -592,7 +592,7 @@ class LineupProvider extends PureComponent<CombinedProps, LineupProviderState> {
           ordered: this.props.ordered,
           isLoading: true,
           isTrending,
-          numLoadingSkeletonRows: numPlaylistSkeletonRows
+          numLoadingSkeletonRows: numContentListSkeletonRows
         }
 
         // Skeleton tile should change depending on variant

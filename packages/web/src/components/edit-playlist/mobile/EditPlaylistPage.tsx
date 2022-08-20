@@ -2,7 +2,7 @@ import { useEffect, useState, useCallback, useContext } from 'react'
 
 import {
   ID,
-  CreatePlaylistSource,
+  CreateContentListSource,
   Collection,
   SquareSizes,
   Nullable,
@@ -16,17 +16,17 @@ import { ReactComponent as IconCamera } from 'assets/img/iconCamera.svg'
 import placeholderCoverArt from 'assets/img/imageBlank2x.png'
 import { getAccountUser } from 'common/store/account/selectors'
 import {
-  createPlaylist,
-  editPlaylist,
-  orderPlaylist,
-  removeAgreementFromPlaylist
+  createContentList,
+  editContentList,
+  orderContentList,
+  removeAgreementFromContentList
 } from 'common/store/cache/collections/actions'
 import { agreementsActions } from 'common/store/pages/collection/lineup/actions'
-import * as createPlaylistActions from 'common/store/ui/createPlaylistModal/actions'
+import * as createContentListActions from 'common/store/ui/createContentListModal/actions'
 import {
   getMetadata,
   getAgreements
-} from 'common/store/ui/createPlaylistModal/selectors'
+} from 'common/store/ui/createContentListModal/selectors'
 import DynamicImage from 'components/dynamic-image/DynamicImage'
 import EditableRow, { Format } from 'components/groupable-list/EditableRow'
 import GroupableList from 'components/groupable-list/GroupableList'
@@ -44,18 +44,18 @@ import { resizeImage } from 'utils/imageProcessingUtil'
 import { content listPage } from 'utils/route'
 import { withNullGuard } from 'utils/withNullGuard'
 
-import styles from './EditPlaylistPage.module.css'
-import RemovePlaylistAgreementDrawer from './RemovePlaylistAgreementDrawer'
+import styles from './EditContentListPage.module.css'
+import RemoveContentListAgreementDrawer from './RemoveContentListAgreementDrawer'
 
 const IS_NATIVE_MOBILE = process.env.REACT_APP_NATIVE_MOBILE
 
 const messages = {
-  createPlaylist: 'Create Playlist',
-  editPlaylist: 'Edit Playlist',
+  createContentList: 'Create ContentList',
+  editContentList: 'Edit ContentList',
   randomPhoto: 'Get Random Artwork',
-  placeholderName: 'My Playlist',
+  placeholderName: 'My ContentList',
   placeholderDescription: 'Give your content list a description',
-  toast: 'Playlist Created!'
+  toast: 'ContentList Created!'
 }
 
 const initialFormFields = {
@@ -63,25 +63,25 @@ const initialFormFields = {
   ...schemas.newCollectionMetadata()
 }
 
-type EditPlaylistPageProps = ReturnType<typeof mapStateToProps> &
+type EditContentListPageProps = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>
 
-const g = withNullGuard((props: EditPlaylistPageProps) => {
+const g = withNullGuard((props: EditContentListPageProps) => {
   const { account } = props
   if (account) return { ...props, account }
 })
 
-const EditPlaylistPage = g(
+const EditContentListPage = g(
   ({
     close,
     goToRoute,
     account,
-    createPlaylist,
+    createContentList,
     metadata,
     agreements,
     removeAgreement,
-    editPlaylist,
-    orderPlaylist,
+    editContentList,
+    orderContentList,
     refreshLineup
   }) => {
     // Close the page if the route was changed
@@ -178,7 +178,7 @@ const EditPlaylistPage = g(
       [setFormFields]
     )
 
-    const onReorderPlaylist = useCallback(
+    const onReorderContentList = useCallback(
       (source: number, destination: number) => {
         const reorder = [...reorderedAgreements]
         const tmp = reorder[source]
@@ -225,24 +225,24 @@ const EditPlaylistPage = g(
         if (hasReordered) {
           // Reorder the content list and refresh the lineup just in case it's
           // in the view behind the edit content list page.
-          orderPlaylist(
+          orderContentList(
             metadata.content list_id,
             formatReorder(content listAgreementIds, reorderedAgreements)
           )
-          // Update the content list content agreement_ids so that the editPlaylist
+          // Update the content list content agreement_ids so that the editContentList
           // optimistically update the cached collection agreementIds
           formFields.content list_contents.agreement_ids = reorderedAgreements.map(
             (idx) => content listAgreementIds[idx]
           )
         }
         refreshLineup()
-        editPlaylist(metadata.content list_id, formFields)
+        editContentList(metadata.content list_id, formFields)
 
         close()
       } else {
         // Create new content list
         const tempId = `${Date.now()}`
-        createPlaylist(tempId, formFields)
+        createContentList(tempId, formFields)
         toast(messages.toast)
         close()
         goToRoute(
@@ -251,15 +251,15 @@ const EditPlaylistPage = g(
       }
     }, [
       formFields,
-      createPlaylist,
+      createContentList,
       close,
       account,
       goToRoute,
       metadata,
-      editPlaylist,
+      editContentList,
       hasReordered,
       reorderedAgreements,
-      orderPlaylist,
+      orderContentList,
       refreshLineup,
       toast,
       removeAgreement,
@@ -328,8 +328,8 @@ const EditPlaylistPage = g(
           <TextElement text='Cancel' type={Type.SECONDARY} onClick={close} />
         ),
         center: formFields.content list_id
-          ? messages.editPlaylist
-          : messages.createPlaylist,
+          ? messages.editContentList
+          : messages.createContentList,
         right: (
           <TextElement
             text='Save'
@@ -369,7 +369,7 @@ const EditPlaylistPage = g(
     }
 
     return (
-      <div className={styles.editPlaylistPage}>
+      <div className={styles.editContentListPage}>
         <div className={styles.artwork}>
           <DynamicImage
             image={
@@ -425,13 +425,13 @@ const EditPlaylistPage = g(
                   noDividerMargin
                   isReorderable
                   onRemove={onRemoveAgreement}
-                  onReorder={onReorderPlaylist}
+                  onReorder={onReorderContentList}
                 />
               </Grouping>
             )}
           </GroupableList>
         </div>
-        <RemovePlaylistAgreementDrawer
+        <RemoveContentListAgreementDrawer
           isOpen={showRemoveAgreementDrawer}
           agreementTitle={confirmRemoveAgreement?.title}
           onClose={onDrawerClose}
@@ -452,20 +452,20 @@ function mapStateToProps(state: AppState) {
 
 function mapDispatchToProps(dispatch: Dispatch) {
   return {
-    close: () => dispatch(createPlaylistActions.close()),
-    createPlaylist: (tempId: string, metadata: Collection) =>
+    close: () => dispatch(createContentListActions.close()),
+    createContentList: (tempId: string, metadata: Collection) =>
       dispatch(
-        createPlaylist(tempId, metadata, CreatePlaylistSource.CREATE_PAGE)
+        createContentList(tempId, metadata, CreateContentListSource.CREATE_PAGE)
       ),
-    editPlaylist: (id: ID, metadata: Collection) =>
-      dispatch(editPlaylist(id, metadata)),
-    orderPlaylist: (content listId: ID, idsAndTimes: any) =>
-      dispatch(orderPlaylist(content listId, idsAndTimes)),
+    editContentList: (id: ID, metadata: Collection) =>
+      dispatch(editContentList(id, metadata)),
+    orderContentList: (content listId: ID, idsAndTimes: any) =>
+      dispatch(orderContentList(content listId, idsAndTimes)),
     removeAgreement: (agreementId: ID, content listId: ID, timestamp: number) =>
-      dispatch(removeAgreementFromPlaylist(agreementId, content listId, timestamp)),
+      dispatch(removeAgreementFromContentList(agreementId, content listId, timestamp)),
     refreshLineup: () => dispatch(agreementsActions.fetchLineupMetadatas()),
     goToRoute: (route: string) => dispatch(pushRoute(route))
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(EditPlaylistPage)
+export default connect(mapStateToProps, mapDispatchToProps)(EditContentListPage)

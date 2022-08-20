@@ -23,7 +23,7 @@ import { processSearchResults } from './helper'
 import {
   APIActivity,
   APIBlockConfirmation,
-  APIPlaylist,
+  APIContentList,
   APIResponse,
   APISearch,
   APISearchAutocomplete,
@@ -60,7 +60,7 @@ const FULL_ENDPOINT_MAP = {
     experiment
       ? `/agreements/trending/underground/${experiment}`
       : '/agreements/trending/underground',
-  trendingPlaylists: (experiment: string | null) =>
+  trendingContentLists: (experiment: string | null) =>
     experiment ? `/content lists/trending/${experiment}` : '/content lists/trending',
   recommended: '/agreements/recommended',
   remixables: '/agreements/remixables',
@@ -79,7 +79,7 @@ const FULL_ENDPOINT_MAP = {
     `/users/${userId}/favorites/agreements`,
   userRepostsByHandle: (handle: OpaqueID) => `/users/handle/${handle}/reposts`,
   getRelatedArtists: (userId: OpaqueID) => `/users/${userId}/related`,
-  getPlaylist: (content listId: OpaqueID) => `/content lists/${content listId}`,
+  getContentList: (content listId: OpaqueID) => `/content lists/${content listId}`,
   topGenreUsers: '/users/genre/top',
   topArtists: '/users/top',
   getAgreement: (agreementId: OpaqueID) => `/agreements/${agreementId}`,
@@ -192,14 +192,14 @@ type GetAgreementFavoriteUsersArgs = {
   offset?: number
 }
 
-type GetPlaylistRepostUsersArgs = {
+type GetContentListRepostUsersArgs = {
   content listId: ID
   currentUserId: Nullable<ID>
   limit?: number
   offset?: number
 }
 
-type GetPlaylistFavoriteUsersArgs = {
+type GetContentListFavoriteUsersArgs = {
   content listId: ID
   currentUserId: Nullable<ID>
   limit?: number
@@ -250,7 +250,7 @@ type GetUserRepostsByHandleArgs = {
   limit?: number
 }
 
-type GetPlaylistArgs = {
+type GetContentListArgs = {
   content listId: ID
   currentUserId: Nullable<ID>
 }
@@ -298,7 +298,7 @@ type TrendingIds = {
   allTime: ID[]
 }
 
-type GetTrendingPlaylistsArgs = {
+type GetTrendingContentListsArgs = {
   currentUserId: Nullable<ID>
   limit: number
   offset: number
@@ -683,15 +683,15 @@ class ColivingAPIClient {
     return adapted
   }
 
-  async getPlaylistRepostUsers({
+  async getContentListRepostUsers({
     currentUserId,
     content listId,
     limit,
     offset
-  }: GetPlaylistRepostUsersArgs) {
+  }: GetContentListRepostUsersArgs) {
     this._assertInitialized()
     const encodedCurrentUserId = encodeHashId(currentUserId)
-    const encodedPlaylistId = this._encodeOrThrow(content listId)
+    const encodedContentListId = this._encodeOrThrow(content listId)
     const params = {
       user_id: encodedCurrentUserId || undefined,
       limit,
@@ -700,7 +700,7 @@ class ColivingAPIClient {
 
     const repostUsers: Nullable<APIResponse<APIUser[]>> =
       await this._getResponse(
-        FULL_ENDPOINT_MAP.content listRepostUsers(encodedPlaylistId),
+        FULL_ENDPOINT_MAP.content listRepostUsers(encodedContentListId),
         params
       )
 
@@ -712,15 +712,15 @@ class ColivingAPIClient {
     return adapted
   }
 
-  async getPlaylistFavoriteUsers({
+  async getContentListFavoriteUsers({
     currentUserId,
     content listId,
     limit,
     offset
-  }: GetPlaylistFavoriteUsersArgs) {
+  }: GetContentListFavoriteUsersArgs) {
     this._assertInitialized()
     const encodedCurrentUserId = encodeHashId(currentUserId)
-    const encodedPlaylistId = this._encodeOrThrow(content listId)
+    const encodedContentListId = this._encodeOrThrow(content listId)
     const params = {
       user_id: encodedCurrentUserId || undefined,
       limit,
@@ -729,7 +729,7 @@ class ColivingAPIClient {
 
     const followingResponse: Nullable<APIResponse<APIUser[]>> =
       await this._getResponse(
-        FULL_ENDPOINT_MAP.content listFavoriteUsers(encodedPlaylistId),
+        FULL_ENDPOINT_MAP.content listFavoriteUsers(encodedContentListId),
         params
       )
 
@@ -1054,24 +1054,24 @@ class ColivingAPIClient {
     return adapted
   }
 
-  async getPlaylist({ content listId, currentUserId }: GetPlaylistArgs) {
+  async getContentList({ content listId, currentUserId }: GetContentListArgs) {
     this._assertInitialized()
     const encodedCurrentUserId = encodeHashId(currentUserId)
-    const encodedPlaylistId = this._encodeOrThrow(content listId)
+    const encodedContentListId = this._encodeOrThrow(content listId)
     const params = {
       user_id: encodedCurrentUserId || undefined
     }
 
-    const response: Nullable<APIResponse<APIPlaylist[]>> =
+    const response: Nullable<APIResponse<APIContentList[]>> =
       await this._getResponse(
-        FULL_ENDPOINT_MAP.getPlaylist(encodedPlaylistId),
+        FULL_ENDPOINT_MAP.getContentList(encodedContentListId),
         params
       )
 
     if (!response) return []
 
     const adapted = response.data
-      .map(adapter.makePlaylist)
+      .map(adapter.makeContentList)
       .filter(removeNullable)
     return adapted
   }
@@ -1128,12 +1128,12 @@ class ColivingAPIClient {
     })
   }
 
-  async getTrendingPlaylists({
+  async getTrendingContentLists({
     currentUserId,
     time,
     limit,
     offset
-  }: GetTrendingPlaylistsArgs) {
+  }: GetTrendingContentListsArgs) {
     const encodedUserId = encodeHashId(currentUserId)
     const params = {
       user_id: encodedUserId,
@@ -1145,15 +1145,15 @@ class ColivingAPIClient {
     const experiment = remoteConfigInstance.getRemoteVar(
       StringKeys.CONTENT_LIST_TRENDING_EXPERIMENT
     )
-    const response: Nullable<APIResponse<APIPlaylist[]>> =
+    const response: Nullable<APIResponse<APIContentList[]>> =
       await this._getResponse(
-        FULL_ENDPOINT_MAP.trendingPlaylists(experiment),
+        FULL_ENDPOINT_MAP.trendingContentLists(experiment),
         params
       )
 
     if (!response) return []
     const adapted = response.data
-      .map(adapter.makePlaylist)
+      .map(adapter.makeContentList)
       .filter(removeNullable)
     return adapted
   }

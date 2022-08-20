@@ -15,7 +15,7 @@ const errorsWithoutRedirect = new Set([
   // Associate requires agreement cleanup
   uploadActions.COLLECTION_ASSOCIATE_AGREEMENTS_ERROR,
 
-  // Playlist errors require
+  // ContentList errors require
   // agreement & possibly content list cleanup
   uploadActions.COLLECTION_CREATE_CONTENT_LIST_ID_EXISTS_ERROR,
   uploadActions.COLLECTION_CREATE_CONTENT_LIST_NO_ID_ERROR,

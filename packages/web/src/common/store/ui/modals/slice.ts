@@ -26,8 +26,8 @@ export type Modals =
   | 'EditFolder'
   | 'SignOutConfirmation'
   | 'Overflow'
-  | 'AddToPlaylist'
-  | 'DeletePlaylistConfirmation'
+  | 'AddToContentList'
+  | 'DeleteContentListConfirmation'
   | 'FeatureFlagOverride'
 
 export type ModalsState = { [modal in Modals]: boolean | 'closing' }
@@ -56,8 +56,8 @@ const initialState: ModalsState = {
   EditFolder: false,
   SignOutConfirmation: false,
   Overflow: false,
-  AddToPlaylist: false,
-  DeletePlaylistConfirmation: false,
+  AddToContentList: false,
+  DeleteContentListConfirmation: false,
   FeatureFlagOverride: false
 }
 

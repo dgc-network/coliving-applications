@@ -65,7 +65,7 @@ export const getProfileAlbums = createDeepEqualSelector(
   (collections) => collections?.filter(({ is_album }) => is_album)
 )
 
-export const getProfilePlaylists = createDeepEqualSelector(
+export const getProfileContentLists = createDeepEqualSelector(
   [getProfileCollections],
   (collections) => collections?.filter(({ is_album }) => !is_album)
 )
