@@ -39,11 +39,11 @@ const combineLists = (
 type ProcessSearchResultsArgs = {
   agreements?: UserAgreementMetadata[]
   albums?: UserCollectionMetadata[]
-  content lists?: UserCollectionMetadata[]
+  contentLists?: UserCollectionMetadata[]
   users?: UserMetadata[]
   saved_agreements?: UserAgreementMetadata[]
   saved_albums?: UserCollectionMetadata[]
-  saved_content lists?: UserCollectionMetadata[]
+  saved_contentLists?: UserCollectionMetadata[]
   followed_users?: UserMetadata[]
   searchText?: string | null
   isAutocomplete?: boolean
@@ -66,12 +66,12 @@ export const adaptSearchResponse = (searchResponse: APIResponse<APISearch>) => {
       searchResponse.data.followed_users
         ?.map(adapter.makeUser)
         .filter(removeNullable) ?? undefined,
-    content lists:
-      searchResponse.data.content lists
+    contentLists:
+      searchResponse.data.contentLists
         ?.map(adapter.makeContentList)
         .filter(removeNullable) ?? undefined,
-    saved_content lists:
-      searchResponse.data.saved_content lists
+    saved_contentLists:
+      searchResponse.data.saved_contentLists
         ?.map(adapter.makeContentList)
         .filter(removeNullable) ?? undefined,
     albums:
@@ -87,11 +87,11 @@ export const adaptSearchResponse = (searchResponse: APIResponse<APISearch>) => {
 export const processSearchResults = async ({
   agreements = [],
   albums = [],
-  content lists = [],
+  contentLists = [],
   users = [],
   saved_agreements: savedAgreements = [],
   saved_albums: savedAlbums = [],
-  saved_content lists: savedContentLists = [],
+  saved_contentLists: savedContentLists = [],
   followed_users: followedUsers = [],
   isAutocomplete = false
 }: ProcessSearchResultsArgs) => {
@@ -111,14 +111,14 @@ export const processSearchResults = async ({
   const combinedAlbums = combineLists(
     savedAlbums,
     albums,
-    'content list_id',
+    'contentList_id',
     maxSaved,
     maxTotal
   )
   const combinedContentLists = combineLists(
     savedContentLists,
-    content lists,
-    'content list_id',
+    contentLists,
+    'contentList_id',
     maxSaved,
     maxTotal
   )
@@ -133,7 +133,7 @@ export const processSearchResults = async ({
   return {
     agreements: combinedAgreements,
     albums: combinedAlbums,
-    content lists: combinedContentLists,
+    contentLists: combinedContentLists,
     users: combinedUsers
   }
 }

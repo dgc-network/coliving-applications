@@ -84,7 +84,7 @@ export const TRENDING_CONTENT_LISTS: ExploreCollection = {
   variant: 'Direct Link',
   title: 'Trending ContentLists',
   screen: 'TrendingContentLists',
-  description: 'The top content lists on Coliving right now',
+  description: 'The top contentLists on Coliving right now',
   gradientColors: ['#57ABFF', '#CD98FF'],
   gradientAngle: 315,
   shadowColor: 'rgb(87,170,255)',

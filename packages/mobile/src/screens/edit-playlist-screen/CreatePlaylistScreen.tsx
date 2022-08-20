@@ -3,7 +3,7 @@ import { useCallback } from 'react'
 import { CreateContentListSource } from '@/common'
 import { getUserHandle } from '-client/src/common/store/account/selectors'
 import { createContentList } from '-client/src/common/store/cache/collections/actions'
-import { content listPage } from '-client/src/utils/route'
+import { contentListPage } from '-client/src/utils/route'
 import type { FormikProps } from 'formik'
 import { Formik } from 'formik'
 
@@ -19,11 +19,11 @@ import { ContentListNameInput } from './ContentListNameInput'
 
 const messages = {
   title: 'Create ContentList',
-  content listCreatedToast: 'ContentList Created!'
+  contentListCreatedToast: 'ContentList Created!'
 }
 
 type ContentListValues = {
-  content list_name: string
+  contentList_name: string
   description: string
   artwork: { url: string }
 }
@@ -46,13 +46,13 @@ const CreateContentListForm = (props: FormikProps<ContentListValues>) => {
 }
 
 const initialValues: ContentListValues = {
-  content list_name: '',
+  contentList_name: '',
   description: '',
   artwork: { url: '' }
 }
 
 const initialErrors = {
-  content list_name: 'Required'
+  contentList_name: 'Required'
 }
 
 export const CreateContentListScreen = () => {
@@ -69,9 +69,9 @@ export const CreateContentListScreen = () => {
       )
       navigation.replace({
         native: { screen: 'Collection', params: { id: parseInt(tempId, 10) } },
-        web: { route: content listPage(handle, values.content list_name, tempId) }
+        web: { route: contentListPage(handle, values.contentList_name, tempId) }
       })
-      toast({ content: messages.content listCreatedToast })
+      toast({ content: messages.contentListCreatedToast })
     },
     [dispatchWeb, navigation, handle, toast]
   )

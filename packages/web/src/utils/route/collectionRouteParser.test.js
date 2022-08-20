@@ -4,14 +4,14 @@ import { parseCollectionRoute } from './collectionRouteParser'
 import { mockDecode } from '__mocks__/Hashids'
 
 describe('parseCollectionRoute', () => {
-  it('can decode a content list id route', () => {
-    const route = '/arizmendi/content list/croissants-11'
+  it('can decode a contentList id route', () => {
+    const route = '/arizmendi/contentList/croissants-11'
     const { title, collectionId, handle, collectionType } =
       parseCollectionRoute(route)
     expect(title).toEqual('croissants')
     expect(collectionId).toEqual(11)
     expect(handle).toEqual('arizmendi')
-    expect(collectionType).toEqual('content list')
+    expect(collectionType).toEqual('contentList')
   })
 
   it('can decode an album id route', () => {
@@ -27,7 +27,7 @@ describe('parseCollectionRoute', () => {
   it('can decode a hashed collection id route', () => {
     mockDecode.mockReturnValue([11845])
 
-    const route = '/content lists/eP9k7'
+    const route = '/contentLists/eP9k7'
     const { title, collectionId, handle, collectionType } =
       parseCollectionRoute(route)
     expect(title).toEqual(null)
@@ -36,8 +36,8 @@ describe('parseCollectionRoute', () => {
     expect(collectionType).toEqual(null)
   })
 
-  it('returns null for invalid id in content list id route', () => {
-    const route = '/arizmendi/content list/name-asdf'
+  it('returns null for invalid id in contentList id route', () => {
+    const route = '/arizmendi/contentList/name-asdf'
     const params = parseCollectionRoute(route)
     expect(params).toEqual(null)
   })
@@ -51,7 +51,7 @@ describe('parseCollectionRoute', () => {
   it('returns null for invalid id in hashed collection id route', () => {
     mockDecode.mockReturnValue([NaN])
 
-    const route = '/content lists/asdf'
+    const route = '/contentLists/asdf'
     const params = parseCollectionRoute(route)
     expect(params).toEqual(null)
   })

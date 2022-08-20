@@ -131,14 +131,14 @@ export const unsubscribeUser = (userId: ID) => ({
   userId
 })
 
-export const setContentListUpdates = (content listUpdates: number[]) => ({
+export const setContentListUpdates = (contentListUpdates: number[]) => ({
   type: SET_CONTENT_LIST_UPDATES,
-  content listUpdates
+  contentListUpdates
 })
 
-export const updateContentListLastViewedAt = (content listId: number) => ({
+export const updateContentListLastViewedAt = (contentListId: number) => ({
   type: UPDATE_CONTENT_LIST_VIEW,
-  content listId
+  contentListId
 })
 
 export type FetchNotifications = ReturnType<typeof fetchNotifications>

@@ -8,13 +8,13 @@ import { SearchResultsTab } from './SearchResultsTab'
 const getSearchContentLists = makeGetSearchContentLists()
 
 export const ContentListsTab = () => {
-  const content lists = useSelectorWeb(getSearchContentLists, isEqual)
+  const contentLists = useSelectorWeb(getSearchContentLists, isEqual)
 
   return (
-    <SearchResultsTab noResults={content lists.length === 0}>
+    <SearchResultsTab noResults={contentLists.length === 0}>
       <CollectionList
-        listKey='search-content lists'
-        collection={content lists}
+        listKey='search-contentLists'
+        collection={contentLists}
         fromPage='search'
       />
     </SearchResultsTab>

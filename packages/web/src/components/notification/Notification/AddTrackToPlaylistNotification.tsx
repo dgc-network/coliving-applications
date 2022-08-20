@@ -31,9 +31,9 @@ const messages = {
   shareTwitterText: (
     handle: string,
     agreement: Agreement,
-    content list: CollectionEntity
+    contentList: CollectionEntity
   ) =>
-    `My agreement ${agreement.title} was added to the content list ${content list.content list_name} by ${handle} on @colivingproject! #Coliving`
+    `My agreement ${agreement.title} was added to the contentList ${contentList.contentList_name} by ${handle} on @colivingproject! #Coliving`
 }
 
 type AddAgreementToContentListNotificationProps = {
@@ -45,20 +45,20 @@ export const AddAgreementToContentListNotification = (
 ) => {
   const { notification } = props
   const { timeLabel, isViewed } = notification
-  const { agreement, content list } = useSelector((state) =>
+  const { agreement, contentList } = useSelector((state) =>
     getNotificationEntities(state, notification)
   )
-  const content listOwner = content list.user
+  const contentListOwner = contentList.user
 
   const dispatch = useDispatch()
 
   const handleTwitterShare = useCallback(
     (twitterHandle: string) => {
-      if (agreement && content list && twitterHandle) {
+      if (agreement && contentList && twitterHandle) {
         const shareText = messages.shareTwitterText(
           twitterHandle,
           agreement,
-          content list
+          contentList
         )
         const analytics = make(
           Name.NOTIFICATIONS_CLICK_TIP_REACTION_TWITTER_SHARE,
@@ -68,14 +68,14 @@ export const AddAgreementToContentListNotification = (
       }
       return null
     },
-    [agreement, content list]
+    [agreement, contentList]
   )
 
   const handleClick = useCallback(() => {
-    dispatch(push(getEntityLink(content list)))
-  }, [content list, dispatch])
+    dispatch(push(getEntityLink(contentList)))
+  }, [contentList, dispatch])
 
-  if (!content listOwner || !agreement) return null
+  if (!contentListOwner || !agreement) return null
 
   return (
     <NotificationTile notification={notification} onClick={handleClick}>
@@ -85,21 +85,21 @@ export const AddAgreementToContentListNotification = (
       <NotificationBody className={styles.body}>
         <ProfilePicture
           className={styles.profilePicture}
-          user={content listOwner}
+          user={contentListOwner}
         />
         <span>
-          <UserNameLink user={content listOwner} notification={notification} />
+          <UserNameLink user={contentListOwner} notification={notification} />
           {' added your agreement '}
           <EntityLink entity={agreement} entityType={Entity.Agreement} />
-          {' to their content list '}
-          <EntityLink entity={content list} entityType={Entity.ContentList} />
+          {' to their contentList '}
+          <EntityLink entity={contentList} entityType={Entity.ContentList} />
         </span>
       </NotificationBody>
       <TwitterShareButton
         type='dynamic'
-        handle={content listOwner.handle}
+        handle={contentListOwner.handle}
         shareData={handleTwitterShare}
-        url={getEntityLink(content list, true)}
+        url={getEntityLink(contentList, true)}
       />
       <NotificationFooter timeLabel={timeLabel} isViewed={isViewed} />
     </NotificationTile>

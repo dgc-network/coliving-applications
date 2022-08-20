@@ -178,7 +178,7 @@ const CollectionHeader = ({
   return (
     <div className={styles.collectionHeader}>
       <div className={styles.typeLabel}>
-        {type === 'content list' && !isPublished
+        {type === 'contentList' && !isPublished
           ? isPublishing
             ? messages.publishing
             : messages.privateContentList
@@ -289,7 +289,7 @@ CollectionHeader.propTypes = {
   agreementsLoading: PropTypes.bool,
   playing: PropTypes.bool,
   active: PropTypes.bool,
-  type: PropTypes.oneOf(['content list', 'album']),
+  type: PropTypes.oneOf(['contentList', 'album']),
   title: PropTypes.string,
   artistName: PropTypes.string,
   artistHandle: PropTypes.string,
@@ -323,7 +323,7 @@ CollectionHeader.defaultProps = {
   loading: false,
   playing: false,
   active: true,
-  type: 'content list',
+  type: 'contentList',
   description: '',
 
   isOwner: false,

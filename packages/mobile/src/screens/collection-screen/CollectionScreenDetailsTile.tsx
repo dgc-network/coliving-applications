@@ -24,8 +24,8 @@ import { formatCount } from 'app/utils/format'
 
 const messages = {
   album: 'Album',
-  content list: 'ContentList',
-  empty: 'This content list is empty.',
+  contentList: 'ContentList',
+  empty: 'This contentList is empty.',
   privateContentList: 'Private ContentList',
   publishing: 'Publishing...',
   detailsPlaceholder: '---'
@@ -156,7 +156,7 @@ export const CollectionScreenDetailsTile = ({
       return messages.privateContentList
     }
 
-    return messages.content list
+    return messages.contentList
   }, [isAlbum, isPrivate, isPublishing])
 
   const renderAgreementList = () => {

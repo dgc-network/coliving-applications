@@ -10,11 +10,11 @@ import {
   addAgreementToContentList,
   createContentList
 } from 'common/store/cache/collections/actions'
-import { close } from 'common/store/ui/add-to-content list/actions'
+import { close } from 'common/store/ui/add-to-contentList/actions'
 import {
   getAgreementId,
   getAgreementTitle
-} from 'common/store/ui/add-to-content list/selectors'
+} from 'common/store/ui/add-to-contentList/selectors'
 import Card from 'components/card/mobile/Card'
 import CardLineup from 'components/lineup/CardLineup'
 import MobilePageContainer from 'components/mobile-page-container/MobilePageContainer'
@@ -25,7 +25,7 @@ import useHasChangedRoute from 'hooks/useHasChangedRoute'
 import NewContentListButton from 'pages/saved-page/components/mobile/NewContentListButton'
 import { newCollectionMetadata } from 'schemas'
 import { AppState } from 'store/types'
-import { content listPage } from 'utils/route'
+import { contentListPage } from 'utils/route'
 import { withNullGuard } from 'utils/withNullGuard'
 
 import styles from './AddToContentList.module.css'
@@ -76,18 +76,18 @@ const AddToContentList = g(
 
     const { toast } = useContext(ToastContext)
 
-    const cards = account.content lists.map((content list: any) => {
+    const cards = account.contentLists.map((contentList: any) => {
       return (
         <Card
-          key={content list.content list_id}
-          id={content list.content list_id}
-          userId={content list.owner_id}
-          imageSize={content list._cover_art_sizes}
-          primaryText={content list.content list_name}
-          secondaryText={content list.ownerName}
+          key={contentList.contentList_id}
+          id={contentList.contentList_id}
+          userId={contentList.owner_id}
+          imageSize={contentList._cover_art_sizes}
+          primaryText={contentList.contentList_name}
+          secondaryText={contentList.ownerName}
           onClick={() => {
             toast(messages.addedToast)
-            addAgreementToContentList(agreementId!, content list.content list_id)
+            addAgreementToContentList(agreementId!, contentList.contentList_id)
             close()
           }}
         />
@@ -96,14 +96,14 @@ const AddToContentList = g(
 
     const addToNewContentList = useCallback(() => {
       const metadata = newCollectionMetadata({
-        content list_name: agreementTitle,
+        contentList_name: agreementTitle,
         is_private: false
       })
       const tempId = `${Date.now()}`
       createContentList(tempId, metadata, agreementId!)
       addAgreementToContentList(agreementId!, tempId)
       toast(messages.createdToast)
-      goToRoute(content listPage(account.handle, agreementTitle, tempId))
+      goToRoute(contentListPage(account.handle, agreementTitle, tempId))
       close()
     }, [
       account,
@@ -140,8 +140,8 @@ function mapStateToProps(state: AppState) {
 function mapDispatchToProps(dispatch: Dispatch) {
   return {
     goToRoute: (route: string) => dispatch(pushRoute(route)),
-    addAgreementToContentList: (agreementId: ID, content listId: ID | string) =>
-      dispatch(addAgreementToContentList(agreementId, content listId)),
+    addAgreementToContentList: (agreementId: ID, contentListId: ID | string) =>
+      dispatch(addAgreementToContentList(agreementId, contentListId)),
     createContentList: (tempId: string, metadata: Collection, agreementId: ID) =>
       dispatch(
         createContentList(

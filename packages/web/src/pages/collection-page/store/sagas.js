@@ -24,20 +24,20 @@ function* watchFetchCollection() {
       return
     }
     const collection = collections[collectionId]
-    const userUid = makeUid(Kind.USERS, collection.content list_owner_id)
+    const userUid = makeUid(Kind.USERS, collection.contentList_owner_id)
     const collectionUid = collectionUids[collectionId]
     if (collection) {
       yield put(
         cacheActions.subscribe(Kind.USERS, [
-          { uid: userUid, id: collection.content list_owner_id }
+          { uid: userUid, id: collection.contentList_owner_id }
         ])
       )
       yield put(
         collectionActions.fetchCollectionSucceeded(
-          collection.content list_id,
+          collection.contentList_id,
           collectionUid,
           userUid,
-          collection.content list_contents.agreement_ids.length
+          collection.contentList_contents.agreement_ids.length
         )
       )
     } else {

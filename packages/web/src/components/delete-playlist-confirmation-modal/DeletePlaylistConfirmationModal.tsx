@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { useModalState } from 'common/hooks/useModalState'
 import { deleteContentList } from 'common/store/cache/collections/actions'
-import { getContentListId } from 'common/store/ui/delete-content list-confirmation-modal/selectors'
+import { getContentListId } from 'common/store/ui/delete-contentList-confirmation-modal/selectors'
 import ActionSheetModal from 'components/action-drawer/ActionDrawer'
 import { RouterContext } from 'components/animated-switch/RouterContextProvider'
 import { TRENDING_PAGE } from 'utils/route'
@@ -22,7 +22,7 @@ const actions = [
 
 const DeleteContentListConfirmationModal = () => {
   const [isOpen, setIsOpen] = useModalState('DeleteContentListConfirmation')
-  const content listId = useSelector(getContentListId) ?? -1
+  const contentListId = useSelector(getContentListId) ?? -1
   const dispatch = useDispatch()
   const { setStackReset } = useContext(RouterContext)
 
@@ -33,9 +33,9 @@ const DeleteContentListConfirmationModal = () => {
   const handleDelete = useCallback(() => {
     setStackReset(true)
     dispatch(push(TRENDING_PAGE))
-    dispatch(deleteContentList(content listId))
+    dispatch(deleteContentList(contentListId))
     handleClose()
-  }, [dispatch, setStackReset, content listId, handleClose])
+  }, [dispatch, setStackReset, contentListId, handleClose])
 
   const actionCallbacks = useMemo(
     () => [handleDelete, handleClose],

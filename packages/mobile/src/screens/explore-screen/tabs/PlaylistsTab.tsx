@@ -13,12 +13,12 @@ const messages = {
 const getExplore = makeGetExplore()
 
 export const ContentListsTab = () => {
-  const { content lists } = useSelectorWeb(getExplore)
+  const { contentLists } = useSelectorWeb(getExplore)
 
   return (
     <CollectionList
       ListHeaderComponent={<TabInfo header={messages.infoHeader} />}
-      collection={content lists}
+      collection={contentLists}
       fromPage={EXPLORE_PAGE}
     />
   )

@@ -59,12 +59,12 @@ export const getAccountProfilePictureSizes = (state: CommonState) => {
   return user ? user._profile_picture_sizes : null
 }
 export const getContentListLibrary = (state: CommonState) => {
-  return getAccountUser(state)?.content list_library ?? null
+  return getAccountUser(state)?.contentList_library ?? null
 }
 
 /**
- * Gets the account and full content list metadatas.
- * TODO: Add handle directly to content list metadata so we don't need to join against users.
+ * Gets the account and full contentList metadatas.
+ * TODO: Add handle directly to contentList metadata so we don't need to join against users.
  */
 export const getAccountWithCollections = createSelector(
   [getAccountUser, internalGetUserContentLists, getCollections, getUsers],
@@ -92,7 +92,7 @@ export const getAccountWithCollections = createSelector(
 )
 
 /**
- * Gets the account's content list nav bar info
+ * Gets the account's contentList nav bar info
  */
 export const getAccountNavigationContentLists = (state: CommonState) => {
   return Object.keys(state.account.collections).reduce((acc, cur) => {
@@ -107,15 +107,15 @@ export const getAccountNavigationContentLists = (state: CommonState) => {
 }
 
 /**
- * Gets user content lists with content lists marked delete removed.
+ * Gets user contentLists with contentLists marked delete removed.
  */
 export const getUserContentLists = createSelector(
   [internalGetUserContentLists, getCollections],
-  (content lists, collections) => {
+  (contentLists, collections) => {
     // Strange filter:
     // If we haven't cached the collection (e.g. on first load), always return it.
     // If we have cached it and it's marked delete, don't return it bc we know better now.
-    return content lists.filter(
+    return contentLists.filter(
       (p) => !collections[p.id] || !collections[p.id]._marked_deleted
     )
   }
@@ -142,7 +142,7 @@ export const getAccountWithContentLists = createSelector(
     if (!account) return undefined
     return {
       ...account,
-      content lists: account.collections.filter((c) => !c.is_album)
+      contentLists: account.collections.filter((c) => !c.is_album)
     }
   }
 )
@@ -153,8 +153,8 @@ export const getAccountWithOwnContentLists = createSelector(
     if (!account) return undefined
     return {
       ...account,
-      content lists: account.collections.filter(
-        (c) => account && !c.is_album && account.user_id === c.content list_owner_id
+      contentLists: account.collections.filter(
+        (c) => account && !c.is_album && account.user_id === c.contentList_owner_id
       )
     }
   }
@@ -177,7 +177,7 @@ export const getAccountWithContentListsAndAlbums = createSelector(
     if (!account) return undefined
     return {
       ...account,
-      content lists: account.collections.filter((c) => !c.is_album),
+      contentLists: account.collections.filter((c) => !c.is_album),
       albums: account.collections.filter((c) => c.is_album)
     }
   }
@@ -189,7 +189,7 @@ export const getAccountWithSavedContentListsAndAlbums = createSelector(
     if (!account) return undefined
     return {
       ...account,
-      content lists: account.collections.filter(
+      contentLists: account.collections.filter(
         (c) => !c.is_album && c.ownerHandle !== handle
       ),
       albums: account.collections.filter(

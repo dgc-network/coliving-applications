@@ -57,7 +57,7 @@ const ExplorePage = ({
     description: messages.description,
     // Props from AppState
     account,
-    content lists: explore.content lists,
+    contentLists: explore.contentLists,
     profiles: explore.profiles,
     status: explore.status,
     formatContentListCardSecondaryText,

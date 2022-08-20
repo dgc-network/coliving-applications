@@ -2,8 +2,8 @@ import { useEffect } from 'react'
 
 import { useDispatch } from 'react-redux'
 
-import { trendingContentListLineupActions } from 'common/store/pages/trending-content lists/lineups/actions'
-import { getLineup } from 'common/store/pages/trending-content lists/lineups/selectors'
+import { trendingContentListLineupActions } from 'common/store/pages/trending-contentLists/lineups/actions'
+import { getLineup } from 'common/store/pages/trending-contentLists/lineups/selectors'
 import DesktopHeader from 'components/header/desktop/Header'
 import { useMobileHeader } from 'components/header/mobile/hooks'
 import Lineup from 'components/lineup/Lineup'
@@ -22,7 +22,7 @@ const messages = {
   description: 'Trending ContentLists on Coliving'
 }
 
-/** Wraps useLineupProps to return trending content list lineup props */
+/** Wraps useLineupProps to return trending contentList lineup props */
 const useTrendingContentListLineup = (containerRef: HTMLElement) => {
   return useLineupProps({
     actions: trendingContentListLineupActions,
@@ -57,7 +57,7 @@ const DesktopTrendingContentListPage = ({
       header={header}
     >
       <div className={styles.bannerContainer}>
-        <RewardsBanner bannerType='content lists' />
+        <RewardsBanner bannerType='contentLists' />
       </div>
       <Lineup {...lineupProps} />
     </Page>
@@ -80,7 +80,7 @@ const MobileTrendingContentListPage = ({
     >
       <div className={styles.mobileLineupContainer}>
         <div className={styles.mobileBannerContainer}>
-          <RewardsBanner bannerType='content lists' />
+          <RewardsBanner bannerType='contentLists' />
         </div>
         <Lineup {...lineupProps} />
       </div>

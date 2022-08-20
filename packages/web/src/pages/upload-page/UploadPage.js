@@ -15,7 +15,7 @@ import { dropdownRows as stemRows } from 'components/source-files-modal/SourceFi
 import { processFiles } from 'pages/upload-page/store/utils/processFiles'
 import * as schemas from 'schemas'
 import { make } from 'store/analytics/actions'
-import { content listPage, albumPage, profilePage } from 'utils/route'
+import { contentListPage, albumPage, profilePage } from 'utils/route'
 
 import styles from './UploadPage.module.css'
 import EditPage from './components/EditPage'
@@ -67,7 +67,7 @@ class Upload extends Component {
 
     agreements: this.props.upload.uploading ? this.props.upload.agreements : [],
 
-    // Contains metadata related to the upload itself, e.g. content list vs. agreement.
+    // Contains metadata related to the upload itself, e.g. contentList vs. agreement.
     metadata: this.props.upload.metadata
       ? this.props.upload.metadata
       : schemas.newCollectionMetadata({ artwork: { file: null, url: '' } }),
@@ -310,17 +310,17 @@ class Upload extends Component {
           break
         }
         case UploadType.CONTENT_LIST: {
-          const content listName = upload.metadata.content list_name
-          route = content listPage(
+          const contentListName = upload.metadata.contentList_name
+          route = contentListPage(
             account.handle,
-            content listName,
+            contentListName,
             upload.completionId
           )
-          uploadType = 'content list'
+          uploadType = 'contentList'
           break
         }
         case UploadType.ALBUM: {
-          const albumName = upload.metadata.content list_name
+          const albumName = upload.metadata.contentList_name
           route = albumPage(account.handle, albumName, upload.completionId)
           uploadType = 'album'
           break

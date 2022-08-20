@@ -26,7 +26,7 @@ import {
   undoRepostAgreement,
   shareAgreement
 } from 'common/store/social/agreements/actions'
-import { requestOpen as openAddToContentList } from 'common/store/ui/add-to-content list/actions'
+import { requestOpen as openAddToContentList } from 'common/store/ui/add-to-contentList/actions'
 import * as embedModalActions from 'components/embed-modal/store/actions'
 import { ToastContext } from 'components/toast/ToastContext'
 import { newCollectionMetadata } from 'schemas'
@@ -234,7 +234,7 @@ const AgreementMenu = (props: AgreementMenuProps) => {
 
 function mapStateToProps(state: AppState) {
   return {
-    content lists: getAccountOwnedContentLists(state),
+    contentLists: getAccountOwnedContentLists(state),
     currentCollectionId: getCollectionId(state)
   }
 }
@@ -242,8 +242,8 @@ function mapStateToProps(state: AppState) {
 function mapDispatchToProps(dispatch: Dispatch) {
   return {
     goToRoute: (route: string) => dispatch(pushRoute(route)),
-    addAgreementToContentList: (agreementId: ID, content listId: ID) =>
-      dispatch(addAgreementToContentList(agreementId, content listId)),
+    addAgreementToContentList: (agreementId: ID, contentListId: ID) =>
+      dispatch(addAgreementToContentList(agreementId, contentListId)),
     shareAgreement: (agreementId: ID) =>
       dispatch(shareAgreement(agreementId, ShareSource.OVERFLOW)),
     saveAgreement: (agreementId: ID) =>
@@ -261,7 +261,7 @@ function mapDispatchToProps(dispatch: Dispatch) {
       dispatch(
         createContentList(
           tempId,
-          newCollectionMetadata({ content list_name: name }),
+          newCollectionMetadata({ contentList_name: name }),
           CreateContentListSource.FROM_AGREEMENT,
           agreementId
         )

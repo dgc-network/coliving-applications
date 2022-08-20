@@ -139,19 +139,19 @@ class Explore {
 
   /** CONTENT_LIST ENDPOINTS */
   static async getTopCollections(
-    type?: 'content list' | 'album',
+    type?: 'contentList' | 'album',
     followeesOnly?: boolean,
     limit = 20
   ): Promise<Collection[]> {
     try {
-      const content lists = await libs().discoveryProvider.getTopContentLists(
+      const contentLists = await libs().discoveryProvider.getTopContentLists(
         type,
         limit,
         undefined,
         followeesOnly ? 'followees' : undefined,
         true
       )
-      return content lists
+      return contentLists
     } catch (e) {
       console.error(e)
       return []
@@ -165,18 +165,18 @@ class Explore {
     try {
       const requests = moods.map((mood) => {
         return libs().discoveryProvider.getTopContentLists(
-          'content list',
+          'contentList',
           limit,
           mood,
           undefined,
           true
         )
       })
-      const content listsByMood = await Promise.all(requests)
+      const contentListsByMood = await Promise.all(requests)
 
       let allContentLists: CollectionWithScore[] = []
-      content listsByMood.forEach((content lists) => {
-        allContentLists = allContentLists.concat(content lists)
+      contentListsByMood.forEach((contentLists) => {
+        allContentLists = allContentLists.concat(contentLists)
       })
       return allContentLists.sort(scoreComparator).slice(0, 20)
     } catch (e) {

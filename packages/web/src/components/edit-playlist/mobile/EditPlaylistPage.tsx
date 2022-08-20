@@ -41,7 +41,7 @@ import UploadStub from 'pages/profile-page/components/mobile/UploadStub'
 import * as schemas from 'schemas'
 import { AppState } from 'store/types'
 import { resizeImage } from 'utils/imageProcessingUtil'
-import { content listPage } from 'utils/route'
+import { contentListPage } from 'utils/route'
 import { withNullGuard } from 'utils/withNullGuard'
 
 import styles from './EditContentListPage.module.css'
@@ -54,7 +54,7 @@ const messages = {
   editContentList: 'Edit ContentList',
   randomPhoto: 'Get Random Artwork',
   placeholderName: 'My ContentList',
-  placeholderDescription: 'Give your content list a description',
+  placeholderDescription: 'Give your contentList a description',
   toast: 'ContentList Created!'
 }
 
@@ -120,7 +120,7 @@ const EditContentListPage = g(
     }, [setReorderedAgreements, reorderedAgreements, agreements])
 
     const existingImage = useCollectionCoverArt(
-      formFields.content list_id,
+      formFields.contentList_id,
       formFields._cover_art_sizes,
       SquareSizes.SIZE_1000_BY_1000,
       '' // default
@@ -165,7 +165,7 @@ const EditContentListPage = g(
       (name: string) => {
         setFormFields((formFields: any) => ({
           ...formFields,
-          content list_name: name
+          contentList_name: name
         }))
       },
       [setFormFields]
@@ -209,44 +209,44 @@ const EditContentListPage = g(
       if (formFields.description === undefined) {
         formFields.description = null
       }
-      // Copy the metadata content list contents so that a reference is not changed between
-      // removing agreements, updating agreement order, and edit content list
-      const content listAgreementIds = [
-        ...(metadata?.content list_contents?.agreement_ids ?? [])
+      // Copy the metadata contentList contents so that a reference is not changed between
+      // removing agreements, updating agreement order, and edit contentList
+      const contentListAgreementIds = [
+        ...(metadata?.contentList_contents?.agreement_ids ?? [])
       ]
 
       for (const removedAgreement of removedAgreements) {
-        const { content list_id } = metadata!
-        removeAgreement(removedAgreement.agreementId, content list_id, removedAgreement.timestamp)
+        const { contentList_id } = metadata!
+        removeAgreement(removedAgreement.agreementId, contentList_id, removedAgreement.timestamp)
       }
 
-      if (metadata && formFields.content list_id) {
-        // Edit content list
+      if (metadata && formFields.contentList_id) {
+        // Edit contentList
         if (hasReordered) {
-          // Reorder the content list and refresh the lineup just in case it's
-          // in the view behind the edit content list page.
+          // Reorder the contentList and refresh the lineup just in case it's
+          // in the view behind the edit contentList page.
           orderContentList(
-            metadata.content list_id,
-            formatReorder(content listAgreementIds, reorderedAgreements)
+            metadata.contentList_id,
+            formatReorder(contentListAgreementIds, reorderedAgreements)
           )
-          // Update the content list content agreement_ids so that the editContentList
+          // Update the contentList content agreement_ids so that the editContentList
           // optimistically update the cached collection agreementIds
-          formFields.content list_contents.agreement_ids = reorderedAgreements.map(
-            (idx) => content listAgreementIds[idx]
+          formFields.contentList_contents.agreement_ids = reorderedAgreements.map(
+            (idx) => contentListAgreementIds[idx]
           )
         }
         refreshLineup()
-        editContentList(metadata.content list_id, formFields)
+        editContentList(metadata.contentList_id, formFields)
 
         close()
       } else {
-        // Create new content list
+        // Create new contentList
         const tempId = `${Date.now()}`
         createContentList(tempId, formFields)
         toast(messages.toast)
         close()
         goToRoute(
-          content listPage(account.handle, formFields.content list_name, tempId)
+          contentListPage(account.handle, formFields.contentList_name, tempId)
         )
       }
     }, [
@@ -272,12 +272,12 @@ const EditContentListPage = g(
      */
     const onRemoveAgreement = useCallback(
       (index: number) => {
-        if ((metadata?.content list_contents?.agreement_ids.length ?? 0) <= index)
+        if ((metadata?.contentList_contents?.agreement_ids.length ?? 0) <= index)
           return
         const reorderedIndex = reorderedAgreements[index]
-        const { content list_contents } = metadata!
+        const { contentList_contents } = metadata!
         const { agreement: agreementId, time } =
-          content list_contents.agreement_ids[reorderedIndex]
+          contentList_contents.agreement_ids[reorderedIndex]
         const agreementMetadata = agreements?.find(
           (agreement) => agreement.agreement_id === agreementId
         )
@@ -304,7 +304,7 @@ const EditContentListPage = g(
      */
     const onConfirmRemove = useCallback(() => {
       if (!confirmRemoveAgreement) return
-      const removeIdx = metadata?.content list_contents.agreement_ids.findIndex(
+      const removeIdx = metadata?.contentList_contents.agreement_ids.findIndex(
         (t) =>
           t.agreement === confirmRemoveAgreement.agreementId &&
           t.time === confirmRemoveAgreement.timestamp
@@ -327,14 +327,14 @@ const EditContentListPage = g(
         left: (
           <TextElement text='Cancel' type={Type.SECONDARY} onClick={close} />
         ),
-        center: formFields.content list_id
+        center: formFields.contentList_id
           ? messages.editContentList
           : messages.createContentList,
         right: (
           <TextElement
             text='Save'
             type={Type.PRIMARY}
-            isEnabled={!!formFields.content list_name}
+            isEnabled={!!formFields.contentList_name}
             onClick={onSave}
           />
         )
@@ -349,11 +349,11 @@ const EditContentListPage = g(
     if (agreements && reorderedAgreements.length > 0) {
       agreementList = reorderedAgreements.map((i) => {
         const t = agreements[i]
-        const content listAgreement = metadata?.content list_contents.agreement_ids[i]
+        const contentListAgreement = metadata?.contentList_contents.agreement_ids[i]
         const isRemoveActive =
           showRemoveAgreementDrawer &&
           t.agreement_id === confirmRemoveAgreement?.agreementId &&
-          content listAgreement?.time === confirmRemoveAgreement?.timestamp
+          contentListAgreement?.time === confirmRemoveAgreement?.timestamp
 
         return {
           isLoading: false,
@@ -361,7 +361,7 @@ const EditContentListPage = g(
           artistHandle: t.user.handle,
           agreementTitle: t.title,
           agreementId: t.agreement_id,
-          time: content listAgreement?.time,
+          time: contentListAgreement?.time,
           isDeleted: t.is_delete || !!t.user.is_deactivated,
           isRemoveActive
         }
@@ -399,7 +399,7 @@ const EditContentListPage = g(
               <EditableRow
                 label='Name'
                 format={Format.INPUT}
-                initialValue={formFields.content list_name}
+                initialValue={formFields.contentList_name}
                 placeholderValue={messages.placeholderName}
                 onChange={onUpdateName}
                 maxLength={64}
@@ -459,10 +459,10 @@ function mapDispatchToProps(dispatch: Dispatch) {
       ),
     editContentList: (id: ID, metadata: Collection) =>
       dispatch(editContentList(id, metadata)),
-    orderContentList: (content listId: ID, idsAndTimes: any) =>
-      dispatch(orderContentList(content listId, idsAndTimes)),
-    removeAgreement: (agreementId: ID, content listId: ID, timestamp: number) =>
-      dispatch(removeAgreementFromContentList(agreementId, content listId, timestamp)),
+    orderContentList: (contentListId: ID, idsAndTimes: any) =>
+      dispatch(orderContentList(contentListId, idsAndTimes)),
+    removeAgreement: (agreementId: ID, contentListId: ID, timestamp: number) =>
+      dispatch(removeAgreementFromContentList(agreementId, contentListId, timestamp)),
     refreshLineup: () => dispatch(agreementsActions.fetchLineupMetadatas()),
     goToRoute: (route: string) => dispatch(pushRoute(route))
   }

@@ -25,7 +25,7 @@ const initialState: SearchPageState = {
   searchText: '',
   agreementIds: [],
   albumIds: [],
-  content listIds: [],
+  contentListIds: [],
   artistIds: [],
   agreements: {
     entries: [],
@@ -64,7 +64,7 @@ const actionsMap = {
       newState.searchText = action.searchText
       newState.agreementIds = action.results.agreements || []
       newState.albumIds = action.results.albums || []
-      newState.content listIds = action.results.content lists || []
+      newState.contentListIds = action.results.contentLists || []
       newState.artistIds = action.results.users || []
     }
     return newState
@@ -101,7 +101,7 @@ const actionsMap = {
       newState.agreementIds = action.results.agreements || []
       newState.artistIds = action.results.users || []
       newState.albumIds = []
-      newState.content listIds = []
+      newState.contentListIds = []
     }
 
     return newState

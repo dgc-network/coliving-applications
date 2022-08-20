@@ -213,7 +213,7 @@ export enum StringKeys {
   INSTAGRAM_API_PROFILE_URL = 'INSTAGRAM_API_PROFILE_URL',
 
   /**
-   * User ids omitted from trending content lists (used to omit Coliving from rewards).
+   * User ids omitted from trending contentLists (used to omit Coliving from rewards).
    * Comma-separated.
    */
   TRENDING_CONTENT_LIST_OMITTED_USER_IDS = 'TRENDING_CONTENT_LIST_OMITTED_USER_IDS',
@@ -225,7 +225,7 @@ export enum StringKeys {
   /** Embedded tweet for trending rewards UI agreements */
   REWARDS_TWEET_ID_AGREEMENTS = 'REWARDS_TWEET_ID_AGREEMENTS',
 
-  /** Embedded tweet for trending rewards UI content lists */
+  /** Embedded tweet for trending rewards UI contentLists */
   REWARDS_TWEET_ID_CONTENT_LISTS = 'REWARDS_TWEET_ID_CONTENT_LISTS',
 
   /** Embedded tweet for underground trending rewards UI  */

@@ -107,52 +107,52 @@ const EditContentListForm = (props: FormikProps<ContentListValues>) => {
 }
 
 export const EditContentListScreen = () => {
-  const content list = useSelectorWeb(getMetadata)
+  const contentList = useSelectorWeb(getMetadata)
   const dispatchWeb = useDispatchWeb()
   const agreements = useSelectorWeb(getAgreements)
 
   const coverArt = useCollectionCoverArt({
-    id: content list?.content list_id,
-    sizes: content list?._cover_art_sizes ?? null,
+    id: contentList?.contentList_id,
+    sizes: contentList?._cover_art_sizes ?? null,
     size: SquareSizes.SIZE_1000_BY_1000
   })
 
   const handleSubmit = useCallback(
     (values: ContentListValues) => {
-      if (content list) {
+      if (contentList) {
         values.removedAgreements.forEach(({ agreementId, timestamp }) => {
           dispatchWeb(
-            removeAgreementFromContentList(agreementId, content list.content list_id, timestamp)
+            removeAgreementFromContentList(agreementId, contentList.contentList_id, timestamp)
           )
         })
-        if (!isEqual(content list?.content list_contents.agreement_ids, values.agreement_ids)) {
+        if (!isEqual(contentList?.contentList_contents.agreement_ids, values.agreement_ids)) {
           dispatchWeb(
             orderContentList(
-              content list?.content list_id,
+              contentList?.contentList_id,
               values.agreement_ids.map(({ agreement, time }) => ({ id: agreement, time }))
             )
           )
         }
         dispatchWeb(
-          editContentList(content list.content list_id, values as unknown as Collection)
+          editContentList(contentList.contentList_id, values as unknown as Collection)
         )
         dispatchWeb(agreementsActions.fetchLineupMetadatas())
       }
     },
-    [dispatchWeb, content list]
+    [dispatchWeb, contentList]
   )
 
-  if (!content list) return null
+  if (!contentList) return null
 
-  const { content list_name, description } = content list
+  const { contentList_name, description } = contentList
 
   const initialValues = {
-    content list_name,
+    contentList_name,
     description,
     artwork: { url: coverArt ?? '' },
     removedAgreements: [],
     agreements,
-    agreement_ids: content list.content list_contents.agreement_ids
+    agreement_ids: contentList.contentList_contents.agreement_ids
   }
 
   return (

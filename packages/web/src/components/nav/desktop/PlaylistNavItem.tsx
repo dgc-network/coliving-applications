@@ -19,12 +19,12 @@ const messages = { recentlyUpdatedTooltip: 'Recently Updated' }
 
 type ContentListNavLinkProps = NavLinkProps & {
   droppableKey: ID | SmartCollectionVariant
-  content listId: ID | SmartCollectionVariant
+  contentListId: ID | SmartCollectionVariant
   name: string
   onReorder: (
     draggingId: ID | SmartCollectionVariant | string,
     droppingId: ID | SmartCollectionVariant | string,
-    draggingKind: 'library-content list' | 'content list' | 'content list-folder'
+    draggingKind: 'library-contentList' | 'contentList' | 'contentList-folder'
   ) => void
   link?: string
   isInsideFolder?: boolean
@@ -32,7 +32,7 @@ type ContentListNavLinkProps = NavLinkProps & {
 
 export const ContentListNavLink = ({
   droppableKey,
-  content listId,
+  contentListId,
   name,
   link,
   onReorder,
@@ -54,20 +54,20 @@ export const ContentListNavLink = ({
       className={styles.droppable}
       hoverClassName={styles.droppableHover}
       onDrop={(id: ID | SmartCollectionVariant | string, draggingKind) => {
-        onReorder(id, content listId, draggingKind)
+        onReorder(id, contentListId, draggingKind)
       }}
       stopPropogationOnDrop={true}
       acceptedKinds={
         isInsideFolder
-          ? ['library-content list']
-          : ['library-content list', 'content list-folder']
+          ? ['library-contentList']
+          : ['library-contentList', 'contentList-folder']
       }
     >
       <Draggable
-        id={content listId}
+        id={contentListId}
         text={name}
         link={link}
-        kind='library-content list'
+        kind='library-contentList'
         onDrag={onDrag}
         onDrop={onDrop}
       >
@@ -86,14 +86,14 @@ export const ContentListNavLink = ({
 }
 
 type ContentListNavItemProps = {
-  content list: AccountCollection
+  contentList: AccountCollection
   url: string
   addAgreement: (agreementId: ID) => void
   isOwner: boolean
   onReorder: (
     draggingId: ID | SmartCollectionVariant | string,
     droppingId: ID | SmartCollectionVariant | string,
-    draggingKind: 'library-content list' | 'content list' | 'content list-folder'
+    draggingKind: 'library-contentList' | 'contentList' | 'contentList-folder'
   ) => void
   hasUpdate?: boolean
   dragging: boolean
@@ -103,7 +103,7 @@ type ContentListNavItemProps = {
   isInsideFolder?: boolean
 }
 export const ContentListNavItem = ({
-  content list,
+  contentList,
   hasUpdate = false,
   url,
   addAgreement,
@@ -115,7 +115,7 @@ export const ContentListNavItem = ({
   onClickEdit,
   isInsideFolder
 }: ContentListNavItemProps) => {
-  const { id, name } = content list
+  const { id, name } = contentList
   const [isHovering, setIsHovering] = useState(false)
 
   return (
@@ -130,7 +130,7 @@ export const ContentListNavItem = ({
       <ContentListNavLink
         isInsideFolder={isInsideFolder}
         droppableKey={id}
-        content listId={id}
+        contentListId={id}
         name={name}
         link={url}
         to={url}
@@ -141,13 +141,13 @@ export const ContentListNavItem = ({
           [navColumnStyles.droppableLink]:
             isOwner &&
             dragging &&
-            (draggingKind === 'agreement' || draggingKind === 'content list'),
+            (draggingKind === 'agreement' || draggingKind === 'contentList'),
           [navColumnStyles.editable]: isOwner && onClickEdit != null,
           [navColumnStyles.disabledLink]:
             dragging &&
             ((draggingKind !== 'agreement' &&
-              draggingKind !== 'content list' &&
-              draggingKind !== 'library-content list') ||
+              draggingKind !== 'contentList' &&
+              draggingKind !== 'library-contentList') ||
               !isOwner)
         })}
         onClick={() => onClickContentList(id, hasUpdate)}
@@ -177,7 +177,7 @@ export const ContentListNavItem = ({
           </div>
           {!isOwner || !onClickEdit ? null : (
             <IconButton
-              aria-label='Edit content list'
+              aria-label='Edit contentList'
               className={cn(styles.iconKebabHorizontal, {
                 [styles.hidden]: !isHovering || dragging
               })}

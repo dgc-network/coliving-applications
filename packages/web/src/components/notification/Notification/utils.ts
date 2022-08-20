@@ -6,27 +6,27 @@ import {
   fullAlbumPage,
   fullContentListPage,
   fullAgreementPage,
-  content listPage
+  contentListPage
 } from 'utils/route'
 
 export const getEntityLink = (entity: EntityType, fullRoute = false) => {
   if (!entity.user) return ''
   if ('agreement_id' in entity) {
     return fullRoute ? fullAgreementPage(entity.permalink) : entity.permalink
-  } else if (entity.user && entity.content list_id && entity.is_album) {
+  } else if (entity.user && entity.contentList_id && entity.is_album) {
     const getRoute = fullRoute ? fullAlbumPage : albumPage
     return getRoute(
       entity.user.handle,
-      entity.content list_name,
-      entity.content list_id
+      entity.contentList_name,
+      entity.contentList_id
     )
   }
   if (entity.user) {
-    const getRoute = fullRoute ? fullContentListPage : content listPage
+    const getRoute = fullRoute ? fullContentListPage : contentListPage
     return getRoute(
       entity.user.handle,
-      entity.content list_name,
-      entity.content list_id
+      entity.contentList_name,
+      entity.contentList_id
     )
   }
   return ''

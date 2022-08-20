@@ -14,13 +14,13 @@ import {
   shareCollection
 } from '-client/src/common/store/social/collections/actions'
 import { open as openEditContentList } from '-client/src/common/store/ui/createContentListModal/actions'
-import { requestOpen as openDeleteContentList } from '-client/src/common/store/ui/delete-content list-confirmation-modal/slice'
+import { requestOpen as openDeleteContentList } from '-client/src/common/store/ui/delete-contentList-confirmation-modal/slice'
 import { getMobileOverflowModal } from '-client/src/common/store/ui/mobile-overflow-menu/selectors'
 import type { OverflowActionCallbacks } from '-client/src/common/store/ui/mobile-overflow-menu/types'
 import { OverflowAction } from '-client/src/common/store/ui/mobile-overflow-menu/types'
 import {
   profilePage,
-  content listPage,
+  contentListPage,
   albumPage
 } from '-client/src/utils/route'
 
@@ -38,21 +38,21 @@ const CollectionOverflowMenuDrawer = ({ render }: Props) => {
   const { id: modalId } = useSelectorWeb(getMobileOverflowModal)
   const id = modalId as ID
 
-  const content list = useSelectorWeb((state: CommonState) =>
+  const contentList = useSelectorWeb((state: CommonState) =>
     getCollection(state, { id })
   )
 
   const user = useSelectorWeb((state: CommonState) =>
-    getUser(state, { id: content list?.content list_owner_id })
+    getUser(state, { id: contentList?.contentList_owner_id })
   )
 
-  if (!content list || !user) {
+  if (!contentList || !user) {
     return null
   }
-  const { content list_name, is_album } = content list
+  const { contentList_name, is_album } = contentList
   const { handle } = user
 
-  if (!id || !handle || !content list_name || is_album === undefined) {
+  if (!id || !handle || !contentList_name || is_album === undefined) {
     return null
   }
 
@@ -71,9 +71,9 @@ const CollectionOverflowMenuDrawer = ({ render }: Props) => {
       navigation.navigate({
         native: { screen: 'Collection', params: { id } },
         web: {
-          route: (is_album ? albumPage : content listPage)(
+          route: (is_album ? albumPage : contentListPage)(
             handle,
-            content list_name,
+            contentList_name,
             id
           )
         }
@@ -92,7 +92,7 @@ const CollectionOverflowMenuDrawer = ({ render }: Props) => {
       dispatchWeb(openEditContentList(id))
     },
     [OverflowAction.DELETE_CONTENT_LIST]: () =>
-      dispatchWeb(openDeleteContentList({ content listId: id })),
+      dispatchWeb(openDeleteContentList({ contentListId: id })),
     [OverflowAction.PUBLISH_CONTENT_LIST]: () =>
       is_album ? () => {} : dispatchWeb(publishContentList(Number(id)))
   }

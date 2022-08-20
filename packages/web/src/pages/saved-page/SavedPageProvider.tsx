@@ -159,19 +159,19 @@ class SavedPage extends PureComponent<SavedPageProps, SavedPageState> {
     const filterText = this.state.filterText
     return albums.filter(
       (item: SavedPageCollection) =>
-        item.content list_name.toLowerCase().indexOf(filterText.toLowerCase()) >
+        item.contentList_name.toLowerCase().indexOf(filterText.toLowerCase()) >
           -1 ||
         item.ownerHandle.toLowerCase().indexOf(filterText.toLowerCase()) > -1
     )
   }
 
   getFilteredContentLists = (
-    content lists: SavedPageCollection[]
+    contentLists: SavedPageCollection[]
   ): SavedPageCollection[] => {
     const filterText = this.state.filterText
-    return content lists.filter(
+    return contentLists.filter(
       (item: SavedPageCollection) =>
-        item.content list_name.toLowerCase().indexOf(filterText.toLowerCase()) >
+        item.contentList_name.toLowerCase().indexOf(filterText.toLowerCase()) >
           -1 ||
         item.ownerHandle.toLowerCase().indexOf(filterText.toLowerCase()) > -1
     )
@@ -392,7 +392,7 @@ class SavedPage extends PureComponent<SavedPageProps, SavedPageState> {
     }
 
     const mobileProps = {
-      content listUpdates: this.props.content listUpdates,
+      contentListUpdates: this.props.contentListUpdates,
       updateContentListLastViewedAt: this.props.updateContentListLastViewedAt,
 
       onSave: this.onSave,
@@ -426,7 +426,7 @@ function makeMapStateToProps() {
       currentQueueItem: getCurrentQueueItem(state),
       playing: getPlaying(state),
       buffering: getBuffering(state),
-      content listUpdates: getContentListUpdates(state)
+      contentListUpdates: getContentListUpdates(state)
     }
   }
   return mapStateToProps
@@ -440,8 +440,8 @@ function mapDispatchToProps(dispatch: Dispatch) {
       dispatch(agreementsActions.updateLineupOrder(updatedOrderIndices)),
     fetchSavedAlbums: () => dispatch(accountActions.fetchSavedAlbums()),
     fetchSavedContentLists: () => dispatch(accountActions.fetchSavedContentLists()),
-    updateContentListLastViewedAt: (content listId: number) =>
-      dispatch(updateContentListLastViewedAt(content listId)),
+    updateContentListLastViewedAt: (contentListId: number) =>
+      dispatch(updateContentListLastViewedAt(contentListId)),
     goToRoute: (route: string) => dispatch(pushRoute(route)),
     play: (uid?: UID) => dispatch(agreementsActions.play(uid)),
     pause: () => dispatch(agreementsActions.pause()),

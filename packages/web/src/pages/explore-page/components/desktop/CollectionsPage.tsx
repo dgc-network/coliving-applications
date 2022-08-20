@@ -10,7 +10,7 @@ import LoadingSpinner from 'components/loading-spinner/LoadingSpinner'
 import Page from 'components/page/Page'
 import { useOrderedLoad } from 'hooks/useOrderedLoad'
 import {
-  content listPage,
+  contentListPage,
   fullContentListPage,
   albumPage,
   fullAlbumPage,
@@ -60,14 +60,14 @@ const CollectionsPage = ({
     />
   )
 
-  const cards = collections.map((content list, i) => {
+  const cards = collections.map((contentList, i) => {
     const secondaryText = (
-      <ArtistPopover handle={content list.user.handle}>
+      <ArtistPopover handle={contentList.user.handle}>
         <span
           className={styles.userName}
-          onClick={(e: MouseEvent) => goToProfilePage(e, content list.user.handle)}
+          onClick={(e: MouseEvent) => goToProfilePage(e, contentList.user.handle)}
         >
-          {content list.user.name}
+          {contentList.user.name}
         </span>
       </ArtistPopover>
     )
@@ -77,53 +77,53 @@ const CollectionsPage = ({
         index={i}
         isLoading={isLoadingContentList(i)}
         setDidLoad={setDidLoadContentList}
-        key={content list.content list_id}
-        id={content list.content list_id}
-        userId={content list.content list_owner_id}
-        imageSize={content list._cover_art_sizes}
-        isContentList={!content list.is_album}
-        isPublic={!content list.is_private}
+        key={contentList.contentList_id}
+        id={contentList.contentList_id}
+        userId={contentList.contentList_owner_id}
+        imageSize={contentList._cover_art_sizes}
+        isContentList={!contentList.is_album}
+        isPublic={!contentList.is_private}
         size='large'
-        content listName={content list.content list_name}
-        content listId={content list.content list_id}
-        handle={content list.user.handle}
-        primaryText={content list.content list_name}
+        contentListName={contentList.contentList_name}
+        contentListId={contentList.contentList_id}
+        handle={contentList.user.handle}
+        primaryText={contentList.contentList_name}
         secondaryText={secondaryText}
-        isReposted={content list.has_current_user_reposted}
-        isSaved={content list.has_current_user_saved}
-        cardCoverImageSizes={content list._cover_art_sizes}
+        isReposted={contentList.has_current_user_reposted}
+        isSaved={contentList.has_current_user_saved}
+        cardCoverImageSizes={contentList._cover_art_sizes}
         link={
-          content list.is_album
+          contentList.is_album
             ? fullAlbumPage(
-                content list.user.handle,
-                content list.content list_name,
-                content list.content list_id
+                contentList.user.handle,
+                contentList.contentList_name,
+                contentList.contentList_id
               )
             : fullContentListPage(
-                content list.user.handle,
-                content list.content list_name,
-                content list.content list_id
+                contentList.user.handle,
+                contentList.contentList_name,
+                contentList.contentList_id
               )
         }
-        reposts={content list.repost_count}
-        favorites={content list.save_count}
-        agreementCount={content list.content list_contents.agreement_ids.length}
-        onClickReposts={() => onClickReposts(content list.content list_id)}
-        onClickFavorites={() => onClickFavorites(content list.content list_id)}
+        reposts={contentList.repost_count}
+        favorites={contentList.save_count}
+        agreementCount={contentList.contentList_contents.agreement_ids.length}
+        onClickReposts={() => onClickReposts(contentList.contentList_id)}
+        onClickFavorites={() => onClickFavorites(contentList.contentList_id)}
         onClick={() =>
-          content list.is_album
+          contentList.is_album
             ? goToRoute(
                 albumPage(
-                  content list.user.handle,
-                  content list.content list_name,
-                  content list.content list_id
+                  contentList.user.handle,
+                  contentList.contentList_name,
+                  contentList.contentList_id
                 )
               )
             : goToRoute(
-                content listPage(
-                  content list.user.handle,
-                  content list.content list_name,
-                  content list.content list_id
+                contentListPage(
+                  contentList.user.handle,
+                  contentList.contentList_name,
+                  contentList.contentList_id
                 )
               )
         }

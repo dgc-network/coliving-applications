@@ -47,7 +47,7 @@ export const IOS_APP_STORE_LINK = 'itms-apps://us/app/coliving-music/id149127051
 // Static routes.
 export const FEED_PAGE = '/feed'
 export const TRENDING_PAGE = '/trending'
-export const TRENDING_CONTENT_LISTS_PAGE_LEGACY = '/trending/content lists'
+export const TRENDING_CONTENT_LISTS_PAGE_LEGACY = '/trending/contentLists'
 
 export const EXPLORE_PAGE = '/explore'
 export const EXPLORE_HEAVY_ROTATION_PAGE = '/explore/heavy-rotation'
@@ -58,11 +58,11 @@ export const EXPLORE_TOP_ALBUMS_PAGE = '/explore/top-albums'
 export const EXPLORE_MOST_LOVED_PAGE = '/explore/most-loved'
 export const EXPLORE_FEELING_LUCKY_PAGE = '/explore/feeling-lucky'
 export const EXPLORE_MOOD_CONTENT_LISTS_PAGE = '/explore/:mood'
-export const TRENDING_CONTENT_LISTS_PAGE = '/explore/content lists'
+export const TRENDING_CONTENT_LISTS_PAGE = '/explore/contentLists'
 export const TRENDING_UNDERGROUND_PAGE = '/explore/underground'
 export const EXPLORE_REMIXABLES_PAGE = '/explore/remixables'
 
-export const LIVE_NFT_CONTENT_LIST_PAGE = '/:handle/live-nft-content list'
+export const LIVE_NFT_CONTENT_LIST_PAGE = '/:handle/live-nft-contentList'
 
 export const SAVED_PAGE = '/favorites'
 export const FAVORITES_PAGE = '/favorites'
@@ -71,7 +71,7 @@ export const DASHBOARD_PAGE = '/dashboard'
 export const LIVE_PAGE = '/live'
 export const UPLOAD_PAGE = '/upload'
 export const UPLOAD_ALBUM_PAGE = '/upload/album'
-export const UPLOAD_CONTENT_LIST_PAGE = '/upload/content list'
+export const UPLOAD_CONTENT_LIST_PAGE = '/upload/contentList'
 export const SETTINGS_PAGE = '/settings'
 export const HOME_PAGE = '/'
 export const NOT_FOUND_PAGE = '/404'
@@ -89,14 +89,14 @@ export const NOTIFICATION_USERS_PAGE = '/notification/:notificationId/users'
 export const ANNOUNCEMENT_PAGE = '/notification/:notificationId'
 export const SEARCH_CATEGORY_PAGE = '/search/:query/:category'
 export const SEARCH_PAGE = '/search/:query?'
-export const CONTENT_LIST_PAGE = '/:handle/content list/:content listName'
+export const CONTENT_LIST_PAGE = '/:handle/contentList/:contentListName'
 export const ALBUM_PAGE = '/:handle/album/:albumName'
 export const AGREEMENT_PAGE = '/:handle/:slug'
 export const AGREEMENT_REMIXES_PAGE = '/:handle/:slug/remixes'
 export const PROFILE_PAGE = '/:handle'
 export const PROFILE_PAGE_AGREEMENTS = '/:handle/agreements'
 export const PROFILE_PAGE_ALBUMS = '/:handle/albums'
-export const PROFILE_PAGE_CONTENT_LISTS = '/:handle/content lists'
+export const PROFILE_PAGE_CONTENT_LISTS = '/:handle/contentLists'
 export const PROFILE_PAGE_REPOSTS = '/:handle/reposts'
 export const PROFILE_PAGE_COLLECTIBLES = '/:handle/collectibles'
 export const PROFILE_PAGE_COLLECTIBLE_DETAILS =
@@ -104,7 +104,7 @@ export const PROFILE_PAGE_COLLECTIBLE_DETAILS =
 // Opaque id routes
 export const AGREEMENT_ID_PAGE = '/agreements/:id'
 export const USER_ID_PAGE = '/users/:id'
-export const CONTENT_LIST_ID_PAGE = '/content lists/:id'
+export const CONTENT_LIST_ID_PAGE = '/contentLists/:id'
 
 // Mobile Only Routes
 export const REPOSTING_USERS_ROUTE = '/reposting_users'
@@ -141,12 +141,12 @@ export const COLIVING_HOME_LINK = '/'
 export const COLIVING_LISTENING_LINK = '/trending'
 export const COLIVING_SIGN_UP_LINK = '/signup'
 export const COLIVING_HOT_AND_NEW =
-  '/coliving/content list/hot-new-on-coliving-%F0%9F%94%A5-4281'
+  '/coliving/contentList/hot-new-on-coliving-%F0%9F%94%A5-4281'
 export const COLIVING_EXPLORE_LINK = '/explore'
 
 export const COLIVING_CAREERS_LINK = 'https://jobs.lever.co/coliving'
 export const COLIVING_PODCAST_LINK =
-  'https://www.youtube.com/content list?list=PLKEECkHRxmPag5iYp4dTK5fGoRcoX40RY'
+  'https://www.youtube.com/contentList?list=PLKEECkHRxmPag5iYp4dTK5fGoRcoX40RY'
 export const COLIVING_CYPHER_LINK = 'https://discord.gg/coliving'
 export const COLIVING_API_LINK = 'https://coliving.org/api'
 
@@ -272,19 +272,19 @@ export const fullAlbumPage = (handle: string, title: string, id: ID) => {
   return `${BASE_URL}${albumPage(handle, title, id)}`
 }
 
-export const content listPage = (
+export const contentListPage = (
   handle: string,
   title: string,
   id: ID | string
 ) => {
-  return `/${encodeUrlName(handle)}/content list/${encodeUrlName(title)}-${id}`
+  return `/${encodeUrlName(handle)}/contentList/${encodeUrlName(title)}-${id}`
 }
 export const fullContentListPage = (handle: string, title: string, id: ID) => {
-  return `${BASE_URL}${content listPage(handle, title, id)}`
+  return `${BASE_URL}${contentListPage(handle, title, id)}`
 }
 
 export const liveNftContentListPage = (handle: string) => {
-  return `/${encodeUrlName(handle)}/live-nft-content list`
+  return `/${encodeUrlName(handle)}/live-nft-contentList`
 }
 export const fullAudioNftContentListPage = (handle: string) => {
   return `${BASE_URL}${liveNftContentListPage(handle)}`

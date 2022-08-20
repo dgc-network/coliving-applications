@@ -34,18 +34,18 @@ const IS_NATIVE_MOBILE = process.env.REACT_APP_NATIVE_MOBILE
 
 const messages = {
   agreementsTitle: 'Top 5 Agreements Each Week Receive 100 $LIVE',
-  content listTitle: 'Top 5 ContentLists Each Week Receive 100 $LIVE',
+  contentListTitle: 'Top 5 ContentLists Each Week Receive 100 $LIVE',
   undergroundTitle: 'Top 5 Agreements Each Week Receive 100 $LIVE',
   winners: 'Winners are selected every Friday at Noon PT!',
   lastWeek: "LAST WEEK'S WINNERS",
   agreements: 'AGREEMENTS',
   topAgreements: 'TOP AGREEMENTS',
-  content lists: 'CONTENT_LISTS',
+  contentLists: 'CONTENT_LISTS',
   topContentLists: 'TOP CONTENT_LISTS',
   underground: 'UNDERGROUND',
   terms: 'Terms and Conditions Apply',
   agreementsModalTitle: 'Top 5 Trending Agreements',
-  content listsModalTitle: 'Top 5 Trending ContentLists',
+  contentListsModalTitle: 'Top 5 Trending ContentLists',
   undergroundModalTitle: 'Top 5 Underground Trending Agreements',
   buttonTextAgreements: 'Current Trending Agreements',
   buttonTextContentLists: 'Current Trending ContentLists',
@@ -57,14 +57,14 @@ const messages = {
 
 const TRENDING_PAGES = {
   agreements: TRENDING_PAGE,
-  content lists: TRENDING_CONTENT_LISTS_PAGE,
+  contentLists: TRENDING_CONTENT_LISTS_PAGE,
   underground: TRENDING_UNDERGROUND_PAGE
 }
 
 const textMap = {
-  content lists: {
-    modalTitle: messages.content listsModalTitle,
-    title: messages.content listTitle,
+  contentLists: {
+    modalTitle: messages.contentListsModalTitle,
+    title: messages.contentListTitle,
     button: messages.buttonTextContentLists,
     buttonMobile: messages.mobileButtonTextContentLists
   },
@@ -85,7 +85,7 @@ const textMap = {
 const TOS_URL = 'https://blog.coliving.lol/posts/live-rewards'
 
 // Getters and setters for whether we're looking at
-// trending content lists or trending agreements
+// trending contentLists or trending agreements
 const useRewardsType = (): [
   TrendingRewardsModalType,
   (type: TrendingRewardsModalType) => void
@@ -103,11 +103,11 @@ const useRewardsType = (): [
 
 const useTweetId = (type: TrendingRewardsModalType) => {
   const agreementsId = useRemoteVar(StringKeys.REWARDS_TWEET_ID_AGREEMENTS)
-  const content listsId = useRemoteVar(StringKeys.REWARDS_TWEET_ID_CONTENT_LISTS)
+  const contentListsId = useRemoteVar(StringKeys.REWARDS_TWEET_ID_CONTENT_LISTS)
   const undergroundId = useRemoteVar(StringKeys.REWARDS_TWEET_ID_UNDERGROUND)
   return {
     agreements: agreementsId,
-    content lists: content listsId,
+    contentLists: contentListsId,
     underground: undergroundId
   }[type]
 }
@@ -134,8 +134,8 @@ const TrendingRewardsBody = ({
       text: mobile ? messages.agreements : messages.topAgreements
     },
     {
-      key: 'content lists',
-      text: mobile ? messages.content lists : messages.topContentLists
+      key: 'contentLists',
+      text: mobile ? messages.contentLists : messages.topContentLists
     },
     {
       key: 'underground',

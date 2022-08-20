@@ -16,7 +16,7 @@ import { getCollectionId } from 'common/store/pages/collection/selectors'
 import {
   getAgreementId,
   getAgreementTitle
-} from 'common/store/ui/add-to-content list/selectors'
+} from 'common/store/ui/add-to-contentList/selectors'
 import DynamicImage from 'components/dynamic-image/DynamicImage'
 import SearchBar from 'components/search-bar/SearchBar'
 import { ToastContext } from 'components/toast/ToastContext'
@@ -24,14 +24,14 @@ import ToastLinkContent from 'components/toast/mobile/ToastLinkContent'
 import { useCollectionCoverArt } from 'hooks/useCollectionCoverArt'
 import { newCollectionMetadata } from 'schemas'
 import { AppState } from 'store/types'
-import { content listPage } from 'utils/route'
+import { contentListPage } from 'utils/route'
 
 import styles from './AddToContentListModal.module.css'
 
 const messages = {
   title: 'Add to ContentList',
   newContentList: 'New ContentList',
-  searchPlaceholder: 'Find one of your content lists',
+  searchPlaceholder: 'Find one of your contentLists',
   addedToast: 'Added To ContentList!',
   createdToast: 'ContentList Created!',
   view: 'View'
@@ -52,26 +52,26 @@ const AddToContentListModal = () => {
   const [searchValue, setSearchValue] = useState('')
 
   const filteredContentLists = useMemo(() => {
-    return (account?.content lists ?? []).filter(
-      (content list: Collection) =>
-        // Don't allow adding to this content list if already on this content list's page.
-        content list.content list_id !== currentCollectionId &&
+    return (account?.contentLists ?? []).filter(
+      (contentList: Collection) =>
+        // Don't allow adding to this contentList if already on this contentList's page.
+        contentList.contentList_id !== currentCollectionId &&
         (searchValue
-          ? content list.content list_name
+          ? contentList.contentList_name
               .toLowerCase()
               .includes(searchValue.toLowerCase())
           : true)
     )
   }, [searchValue, account, currentCollectionId])
 
-  const handleContentListClick = (content list: Collection) => {
-    dispatch(addAgreementToContentList(agreementId, content list.content list_id))
+  const handleContentListClick = (contentList: Collection) => {
+    dispatch(addAgreementToContentList(agreementId, contentList.contentList_id))
     if (account && agreementTitle) {
       toast(
         <ToastLinkContent
           text={messages.addedToast}
           linkText={messages.view}
-          link={content listPage(account.handle, agreementTitle, content list.content list_id)}
+          link={contentListPage(account.handle, agreementTitle, contentList.contentList_id)}
         />
       )
     }
@@ -80,7 +80,7 @@ const AddToContentListModal = () => {
 
   const handleCreateContentList = () => {
     const metadata = newCollectionMetadata({
-      content list_name: agreementTitle,
+      contentList_name: agreementTitle,
       is_private: false
     })
     const tempId = `${Date.now()}`
@@ -93,7 +93,7 @@ const AddToContentListModal = () => {
         <ToastLinkContent
           text={messages.createdToast}
           linkText={messages.view}
-          link={content listPage(account.handle, agreementTitle, tempId)}
+          link={contentListPage(account.handle, agreementTitle, tempId)}
         />
       )
     }
@@ -129,10 +129,10 @@ const AddToContentListModal = () => {
             <span>{messages.newContentList}</span>
           </div>
           <div className={styles.list}>
-            {filteredContentLists.map((content list) => (
-              <div key={`${content list.content list_id}`}>
+            {filteredContentLists.map((contentList) => (
+              <div key={`${contentList.contentList_id}`}>
                 <ContentListItem
-                  content list={content list}
+                  contentList={contentList}
                   handleClick={handleContentListClick}
                 />
               </div>
@@ -145,25 +145,25 @@ const AddToContentListModal = () => {
 }
 
 type ContentListItemProps = {
-  handleClick: (content list: Collection) => void
-  content list: Collection
+  handleClick: (contentList: Collection) => void
+  contentList: Collection
 }
 
-const ContentListItem = ({ handleClick, content list }: ContentListItemProps) => {
+const ContentListItem = ({ handleClick, contentList }: ContentListItemProps) => {
   const image = useCollectionCoverArt(
-    content list.content list_id,
-    content list._cover_art_sizes,
+    contentList.contentList_id,
+    contentList._cover_art_sizes,
     SquareSizes.SIZE_150_BY_150
   )
 
   return (
-    <div className={cn(styles.listItem)} onClick={() => handleClick(content list)}>
+    <div className={cn(styles.listItem)} onClick={() => handleClick(contentList)}>
       <DynamicImage
         className={styles.image}
         wrapperClassName={styles.imageWrapper}
         image={image}
       />
-      <span className={styles.content listName}>{content list.content list_name}</span>
+      <span className={styles.contentListName}>{contentList.contentList_name}</span>
     </div>
   )
 }

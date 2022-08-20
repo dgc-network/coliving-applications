@@ -62,7 +62,7 @@ export const CollectionScreen = () => {
   ) as Collection
 
   const cachedUser = useSelectorWeb((state) =>
-    getUser(state, { id: cachedCollection?.content list_owner_id })
+    getUser(state, { id: cachedCollection?.contentList_owner_id })
   )
 
   const collection = cachedCollection ?? searchCollection
@@ -98,22 +98,22 @@ const CollectionScreenComponent = ({
     has_current_user_saved,
     is_album,
     is_private,
-    content list_id,
-    content list_name,
-    content list_owner_id,
+    contentList_id,
+    contentList_name,
+    contentList_owner_id,
     repost_count,
     save_count,
     updated_at
   } = collection
 
   const imageUrl = useCollectionCoverArt({
-    id: content list_id,
+    id: contentList_id,
     sizes: _cover_art_sizes,
     size: SquareSizes.SIZE_480_BY_480
   })
 
   const currentUserId = useSelectorWeb(getUserId)
-  const isOwner = currentUserId === content list_owner_id
+  const isOwner = currentUserId === contentList_owner_id
 
   const extraDetails = useMemo(
     () => [
@@ -148,13 +148,13 @@ const CollectionScreenComponent = ({
     dispatchWeb(
       openOverflowMenu({
         source: OverflowSource.COLLECTIONS,
-        id: content list_id,
+        id: contentList_id,
         overflowActions
       })
     )
   }, [
     dispatchWeb,
-    content list_id,
+    contentList_id,
     isOwner,
     is_album,
     is_private,
@@ -164,58 +164,58 @@ const CollectionScreenComponent = ({
 
   const handlePressSave = useCallback(() => {
     if (has_current_user_saved) {
-      dispatchWeb(unsaveCollection(content list_id, FavoriteSource.COLLECTION_PAGE))
+      dispatchWeb(unsaveCollection(contentList_id, FavoriteSource.COLLECTION_PAGE))
     } else {
-      dispatchWeb(saveCollection(content list_id, FavoriteSource.COLLECTION_PAGE))
+      dispatchWeb(saveCollection(contentList_id, FavoriteSource.COLLECTION_PAGE))
     }
-  }, [dispatchWeb, content list_id, has_current_user_saved])
+  }, [dispatchWeb, contentList_id, has_current_user_saved])
 
   const handlePressShare = useCallback(() => {
     dispatchWeb(
       requestOpenShareModal({
         type: 'collection',
-        collectionId: content list_id,
+        collectionId: contentList_id,
         source: ShareSource.PAGE
       })
     )
-  }, [dispatchWeb, content list_id])
+  }, [dispatchWeb, contentList_id])
 
   const handlePressRepost = useCallback(() => {
     if (has_current_user_reposted) {
       dispatchWeb(
-        undoRepostCollection(content list_id, RepostSource.COLLECTION_PAGE)
+        undoRepostCollection(contentList_id, RepostSource.COLLECTION_PAGE)
       )
     } else {
-      dispatchWeb(repostCollection(content list_id, RepostSource.COLLECTION_PAGE))
+      dispatchWeb(repostCollection(contentList_id, RepostSource.COLLECTION_PAGE))
     }
-  }, [dispatchWeb, content list_id, has_current_user_reposted])
+  }, [dispatchWeb, contentList_id, has_current_user_reposted])
 
   const handlePressFavorites = useCallback(() => {
-    dispatchWeb(setFavorite(content list_id, FavoriteType.CONTENT_LIST))
+    dispatchWeb(setFavorite(contentList_id, FavoriteType.CONTENT_LIST))
     navigation.push({
       native: {
         screen: 'Favorited',
-        params: { id: content list_id, favoriteType: FavoriteType.CONTENT_LIST }
+        params: { id: contentList_id, favoriteType: FavoriteType.CONTENT_LIST }
       },
       web: { route: FAVORITING_USERS_ROUTE }
     })
-  }, [dispatchWeb, content list_id, navigation])
+  }, [dispatchWeb, contentList_id, navigation])
 
   const handlePressReposts = useCallback(() => {
-    dispatchWeb(setRepost(content list_id, RepostType.COLLECTION))
+    dispatchWeb(setRepost(contentList_id, RepostType.COLLECTION))
     navigation.push({
       native: {
         screen: 'Reposts',
-        params: { id: content list_id, repostType: RepostType.COLLECTION }
+        params: { id: contentList_id, repostType: RepostType.COLLECTION }
       },
       web: { route: REPOSTING_USERS_ROUTE }
     })
-  }, [dispatchWeb, content list_id, navigation])
+  }, [dispatchWeb, contentList_id, navigation])
 
   return (
     <Screen>
       <VirtualizedScrollView
-        listKey={`content list-${collection.content list_id}`}
+        listKey={`contentList-${collection.contentList_id}`}
         style={styles.root}
       >
         <CollectionScreenDetailsTile
@@ -235,7 +235,7 @@ const CollectionScreenComponent = ({
           onPressShare={handlePressShare}
           repostCount={repost_count}
           saveCount={save_count}
-          title={content list_name}
+          title={contentList_name}
           user={user}
         />
       </VirtualizedScrollView>

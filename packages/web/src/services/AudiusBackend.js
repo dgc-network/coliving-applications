@@ -325,13 +325,13 @@ class ColivingBackend {
     const coverArtSizes = {}
 
     if (
-      collection.content list_image_sizes_multihash &&
+      collection.contentList_image_sizes_multihash &&
       !collection.cover_art_sizes
     ) {
-      collection.cover_art_sizes = collection.content list_image_sizes_multihash
+      collection.cover_art_sizes = collection.contentList_image_sizes_multihash
     }
-    if (collection.content list_image_multihash && !collection.cover_art) {
-      collection.cover_art = collection.content list_image_multihash
+    if (collection.contentList_image_multihash && !collection.cover_art) {
+      collection.cover_art = collection.contentList_image_multihash
     }
 
     if (!collection.cover_art_sizes && !collection.cover_art) {
@@ -844,7 +844,7 @@ class ColivingBackend {
       console.error(err)
     }
     return feedItems.map((item) => {
-      if (item.content list_id) return ColivingBackend.getCollectionImages(item)
+      if (item.contentList_id) return ColivingBackend.getCollectionImages(item)
       return item
     })
   }
@@ -974,18 +974,18 @@ class ColivingBackend {
     }
   }
 
-  static async repostCollection(content listId) {
+  static async repostCollection(contentListId) {
     try {
-      return colivingLibs.ContentList.addContentListRepost(content listId)
+      return colivingLibs.ContentList.addContentListRepost(contentListId)
     } catch (err) {
       console.error(err.message)
       throw err
     }
   }
 
-  static async undoRepostCollection(content listId) {
+  static async undoRepostCollection(contentListId) {
     try {
-      return colivingLibs.ContentList.deleteContentListRepost(content listId)
+      return colivingLibs.ContentList.deleteContentListRepost(contentListId)
     } catch (err) {
       console.error(err.message)
       throw err
@@ -1011,7 +1011,7 @@ class ColivingBackend {
     )
   }
 
-  // Used to upload multiple agreements as part of an album/content list
+  // Used to upload multiple agreements as part of an album/contentList
   // Returns { metadataMultihash, metadataFileUUID, transcodedAgreementCID, transcodedAgreementUUID }
   static async uploadAgreementToCreatorNode(
     agreementFile,
@@ -1324,20 +1324,20 @@ class ColivingBackend {
     return followers
   }
 
-  static async getContentLists(userId, content listIds) {
+  static async getContentLists(userId, contentListIds) {
     try {
-      const content lists = await withEagerOption(
+      const contentLists = await withEagerOption(
         {
           normal: (libs) => libs.ContentList.getContentLists,
           eager: DiscoveryAPI.getContentLists
         },
         100,
         0,
-        content listIds,
+        contentListIds,
         userId,
         true
       )
-      return (content lists || []).map(ColivingBackend.getCollectionImages)
+      return (contentLists || []).map(ColivingBackend.getCollectionImages)
     } catch (err) {
       console.error(err.message)
       return []
@@ -1351,7 +1351,7 @@ class ColivingBackend {
     agreementIds = [],
     isPrivate = true
   ) {
-    const content listName = metadata.content list_name
+    const contentListName = metadata.contentList_name
     const coverArt = metadata.artwork ? metadata.artwork.file : null
     const description = metadata.description
     // Creating an album is automatically public.
@@ -1360,33 +1360,33 @@ class ColivingBackend {
     try {
       const response = await colivingLibs.ContentList.createContentList(
         userId,
-        content listName,
+        contentListName,
         isPrivate,
         isAlbum,
         agreementIds
       )
-      let { blockHash, blockNumber, content listId, error } = response
+      let { blockHash, blockNumber, contentListId, error } = response
 
-      if (error) return { content listId, error }
+      if (error) return { contentListId, error }
 
       const updatePromises = []
 
-      // If this content list is being created from an existing cover art, use it.
+      // If this contentList is being created from an existing cover art, use it.
       if (metadata.cover_art_sizes) {
         updatePromises.push(
           colivingLibs.contracts.ContentListFactoryClient.updateContentListCoverPhoto(
-            content listId,
+            contentListId,
             Utils.formatOptionalMultihash(metadata.cover_art_sizes)
           )
         )
       } else if (coverArt) {
         updatePromises.push(
-          colivingLibs.ContentList.updateContentListCoverPhoto(content listId, coverArt)
+          colivingLibs.ContentList.updateContentListCoverPhoto(contentListId, coverArt)
         )
       }
       if (description) {
         updatePromises.push(
-          colivingLibs.ContentList.updateContentListDescription(content listId, description)
+          colivingLibs.ContentList.updateContentListDescription(contentListId, description)
         )
       }
 
@@ -1402,36 +1402,36 @@ class ColivingBackend {
         blockNumber = latestReceipt.blockNumber
       }
 
-      return { blockHash, blockNumber, content listId }
+      return { blockHash, blockNumber, contentListId }
     } catch (err) {
       // This code path should never execute
       console.debug('Reached client createContentList catch block')
       console.error(err.message)
-      return { content listId: null, error: true }
+      return { contentListId: null, error: true }
     }
   }
 
-  static async updateContentList(content listId, metadata) {
-    const content listName = metadata.content list_name
+  static async updateContentList(contentListId, metadata) {
+    const contentListName = metadata.contentList_name
     const coverPhoto = metadata.artwork.file
     const description = metadata.description
 
     try {
       let blockHash, blockNumber
       const promises = []
-      if (content listName) {
+      if (contentListName) {
         promises.push(
-          colivingLibs.ContentList.updateContentListName(content listId, content listName)
+          colivingLibs.ContentList.updateContentListName(contentListId, contentListName)
         )
       }
       if (coverPhoto) {
         promises.push(
-          colivingLibs.ContentList.updateContentListCoverPhoto(content listId, coverPhoto)
+          colivingLibs.ContentList.updateContentListCoverPhoto(contentListId, coverPhoto)
         )
       }
       if (description) {
         promises.push(
-          colivingLibs.ContentList.updateContentListDescription(content listId, description)
+          colivingLibs.ContentList.updateContentListDescription(contentListId, description)
         )
       }
 
@@ -1454,11 +1454,11 @@ class ColivingBackend {
     }
   }
 
-  static async orderContentList(content listId, agreementIds, retries) {
+  static async orderContentList(contentListId, agreementIds, retries) {
     try {
       const { blockHash, blockNumber } =
         await colivingLibs.ContentList.orderContentListAgreements(
-          content listId,
+          contentListId,
           agreementIds,
           retries
         )
@@ -1469,10 +1469,10 @@ class ColivingBackend {
     }
   }
 
-  static async publishContentList(content listId) {
+  static async publishContentList(contentListId) {
     try {
       const { blockHash, blockNumber } =
-        await colivingLibs.ContentList.updateContentListPrivacy(content listId, false)
+        await colivingLibs.ContentList.updateContentListPrivacy(contentListId, false)
       return { blockHash, blockNumber }
     } catch (error) {
       console.error(error.message)
@@ -1480,10 +1480,10 @@ class ColivingBackend {
     }
   }
 
-  static async addContentListAgreement(content listId, agreementId) {
+  static async addContentListAgreement(contentListId, agreementId) {
     try {
       const { blockHash, blockNumber } =
-        await colivingLibs.ContentList.addContentListAgreement(content listId, agreementId)
+        await colivingLibs.ContentList.addContentListAgreement(contentListId, agreementId)
       return { blockHash, blockNumber }
     } catch (error) {
       console.error(error.message)
@@ -1491,11 +1491,11 @@ class ColivingBackend {
     }
   }
 
-  static async deleteContentListAgreement(content listId, agreementId, timestamp, retries) {
+  static async deleteContentListAgreement(contentListId, agreementId, timestamp, retries) {
     try {
       const { blockHash, blockNumber } =
         await colivingLibs.ContentList.deleteContentListAgreement(
-          content listId,
+          contentListId,
           agreementId,
           timestamp,
           retries
@@ -1507,10 +1507,10 @@ class ColivingBackend {
     }
   }
 
-  static async validateAgreementsInContentList(content listId) {
+  static async validateAgreementsInContentList(contentListId) {
     try {
       const { isValid, invalidAgreementIds } =
-        await colivingLibs.ContentList.validateAgreementsInContentList(content listId)
+        await colivingLibs.ContentList.validateAgreementsInContentList(contentListId)
       return { error: false, isValid, invalidAgreementIds }
     } catch (error) {
       console.error(error.message)
@@ -1518,13 +1518,13 @@ class ColivingBackend {
     }
   }
 
-  // NOTE: This is called to explicitly set a content list agreement ids w/out running validation checks.
-  // This should NOT be used to set the content list order
-  // It's added for the purpose of manually fixing broken content lists
-  static async dangerouslySetContentListOrder(content listId, agreementIds) {
+  // NOTE: This is called to explicitly set a contentList agreement ids w/out running validation checks.
+  // This should NOT be used to set the contentList order
+  // It's added for the purpose of manually fixing broken contentLists
+  static async dangerouslySetContentListOrder(contentListId, agreementIds) {
     try {
       await colivingLibs.contracts.ContentListFactoryClient.orderContentListAgreements(
-        content listId,
+        contentListId,
         agreementIds
       )
       return { error: false }
@@ -1534,9 +1534,9 @@ class ColivingBackend {
     }
   }
 
-  static async deleteContentList(content listId) {
+  static async deleteContentList(contentListId) {
     try {
-      const { txReceipt } = await colivingLibs.ContentList.deleteContentList(content listId)
+      const { txReceipt } = await colivingLibs.ContentList.deleteContentList(contentListId)
       return {
         blockHash: txReceipt.blockHash,
         blockNumber: txReceipt.blockNumber
@@ -1547,20 +1547,20 @@ class ColivingBackend {
     }
   }
 
-  static async deleteAlbum(content listId, agreementIds) {
+  static async deleteAlbum(contentListId, agreementIds) {
     try {
       console.debug(
-        `Deleting Album ${content listId}, agreements: ${JSON.stringify(
+        `Deleting Album ${contentListId}, agreements: ${JSON.stringify(
           agreementIds.map((t) => t.agreement)
         )}`
       )
       const agreementDeletionPromises = agreementIds.map((t) =>
         colivingLibs.Agreement.deleteAgreement(t.agreement)
       )
-      const content listDeletionPromise =
-        colivingLibs.ContentList.deleteContentList(content listId)
+      const contentListDeletionPromise =
+        colivingLibs.ContentList.deleteContentList(contentListId)
       const results = await Promise.all(
-        agreementDeletionPromises.concat(content listDeletionPromise)
+        agreementDeletionPromises.concat(contentListDeletionPromise)
       )
       const deleteAgreementReceipts = results.slice(0, -1).map((r) => r.txReceipt)
       const deleteContentListReceipt = results.slice(-1)[0].txReceipt
@@ -1648,10 +1648,10 @@ class ColivingBackend {
     }
   }
 
-  // Favorite a content list
-  static async saveCollection(content listId) {
+  // Favorite a contentList
+  static async saveCollection(contentListId) {
     try {
-      return await colivingLibs.ContentList.addContentListSave(content listId)
+      return await colivingLibs.ContentList.addContentListSave(contentListId)
     } catch (err) {
       console.error(err.message)
       throw err
@@ -1668,10 +1668,10 @@ class ColivingBackend {
     }
   }
 
-  // Unfavorite a content list
-  static async unsaveCollection(content listId) {
+  // Unfavorite a contentList
+  static async unsaveCollection(contentListId) {
     try {
-      return await colivingLibs.ContentList.deleteContentListSave(content listId)
+      return await colivingLibs.ContentList.deleteContentListSave(contentListId)
     } catch (err) {
       console.error(err.message)
       throw err
@@ -2348,10 +2348,10 @@ class ColivingBackend {
   }
 
   /**
-   * Sets the content list as viewed to reset the content list updates notifications timer
-   * @param {content listId} content listId content list id or folder id
+   * Sets the contentList as viewed to reset the contentList updates notifications timer
+   * @param {contentListId} contentListId contentList id or folder id
    */
-  static async updateContentListLastViewedAt(content listId) {
+  static async updateContentListLastViewedAt(contentListId) {
     if (!getFeatureEnabled(FeatureFlags.CONTENT_LIST_UPDATES_ENABLED)) return
 
     await waitForLibsInit()
@@ -2361,7 +2361,7 @@ class ColivingBackend {
     try {
       const { data, signature } = await ColivingBackend.signData()
       await fetch(
-        `${IDENTITY_SERVICE}/user_content list_updates?walletAddress=${account.wallet}&content listId=${content listId}`,
+        `${IDENTITY_SERVICE}/user_contentList_updates?walletAddress=${account.wallet}&contentListId=${contentListId}`,
         {
           method: 'POST',
           headers: {

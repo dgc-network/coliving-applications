@@ -55,11 +55,11 @@ export const getCollectionRoute = (
   fullUrl = false
 ) => {
   const handle = collection.user.handle
-  const title = collection.content list_name
-  const id = collection.content list_id
+  const title = collection.contentList_name
+  const id = collection.contentList_id
   const route = collection.is_album
     ? `/${encodeUrlName(handle)}/album/${encodeUrlName(title)}-${id}`
-    : `/${encodeUrlName(handle)}/content list/${encodeUrlName(title)}-${id}`
+    : `/${encodeUrlName(handle)}/contentList/${encodeUrlName(title)}-${id}`
   return fullUrl ? `${COLIVING_URL}${route}` : route
 }
 

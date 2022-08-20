@@ -14,7 +14,7 @@ import { useThemeColors } from 'app/utils/theme'
 const messages = {
   rewards: '$live rewards',
   agreements: 'top 5 agreements each week win $live',
-  content lists: 'top 5 content lists each week win $live',
+  contentLists: 'top 5 contentLists each week win $live',
   underground: 'top 5 agreements each week win $live',
   learnMore: 'learn more'
 }
@@ -57,7 +57,7 @@ const useStyles = makeStyles(({ typography, palette, spacing }) => ({
 }))
 
 type RewardsBannerProps = {
-  type: 'agreements' | 'content lists' | 'underground'
+  type: 'agreements' | 'contentLists' | 'underground'
 }
 
 export const RewardsBanner = (props: RewardsBannerProps) => {

@@ -6,12 +6,12 @@ import {
   GET_AGREEMENT_REPOST_ERROR,
   GET_CONTENT_LIST_REPOST_ERROR,
   agreementRepostError,
-  content listRepostError
+  contentListRepostError
 } from './actions'
 
 type ErrorActions =
   | ReturnType<typeof agreementRepostError>
-  | ReturnType<typeof content listRepostError>
+  | ReturnType<typeof contentListRepostError>
 
 export function* handleRepostError(action: ErrorActions) {
   yield put(

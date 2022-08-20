@@ -49,7 +49,7 @@ const EmptyFeed = (props) => {
                 <i className='emoji small multiple-musical-notes' />
               </div>
               <div className={styles.item}>
-                Create and publish content lists{' '}
+                Create and publish contentLists{' '}
                 <i className='emoji small headphone' />
               </div>
               <div className={styles.item}>and much more!</div>

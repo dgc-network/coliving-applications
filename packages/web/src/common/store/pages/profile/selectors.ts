@@ -99,7 +99,7 @@ export const makeGetProfile = () => {
     ) => {
       const emptyState = {
         profile: null,
-        content lists: null,
+        contentLists: null,
         albums: null,
         mostUsedTags: [],
         isSubscribed: false,
@@ -108,7 +108,7 @@ export const makeGetProfile = () => {
       if (error) return { ...emptyState, error: true }
       if (!(userId in users)) return emptyState
 
-      // Get content lists & albums.
+      // Get contentLists & albums.
       const c = (users[userId]._collectionIds || [])
         .map((id) =>
           id in collections ? collections[id as unknown as number] : null
@@ -116,8 +116,8 @@ export const makeGetProfile = () => {
         .filter(removeNullable)
 
       // Filter out anything marked deleted on backend (is_delete) or locally (_marked_deleted)
-      // Or locally moved content lists (_moved)
-      let content lists = c.filter(
+      // Or locally moved contentLists (_moved)
+      let contentLists = c.filter(
         (c) => (!c.is_album && !(c.is_delete || c._marked_deleted)) || c._moved
       )
       let albums = c.filter(
@@ -125,12 +125,12 @@ export const makeGetProfile = () => {
       )
 
       if (sortMode === CollectionSortMode.SAVE_COUNT) {
-        content lists = content lists.sort((a, b) => b.save_count - a.save_count)
+        contentLists = contentLists.sort((a, b) => b.save_count - a.save_count)
         albums = albums.sort((a, b) => b.save_count - a.save_count)
       } else {
         // This is safe bc moment allows you to subtract timestamps, presumably by
         // overloading `valueOf
-        content lists = content lists.sort(
+        contentLists = contentLists.sort(
           // @ts-ignore
           (a, b) => moment(b.created_at) - moment(a.created_at)
         )
@@ -159,7 +159,7 @@ export const makeGetProfile = () => {
           followees: { status: followees.status, users: followeesPopulated }
         },
         mostUsedTags,
-        content lists,
+        contentLists,
         albums,
         status,
         isSubscribed

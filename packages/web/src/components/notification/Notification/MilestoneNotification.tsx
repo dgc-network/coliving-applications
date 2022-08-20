@@ -71,7 +71,7 @@ const getAchievementText = (
         const link = getEntityLink(entity, true)
         const text = messages.achievementText(
           entityType,
-          'title' in entity ? entity.title : entity.content list_name,
+          'title' in entity ? entity.title : entity.contentList_name,
           value,
           achievement
         )

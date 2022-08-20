@@ -56,13 +56,13 @@ export function* retrieveUserReposts({
     {}
   )
   const processedCollectionsMap = processedCollections.reduce(
-    (acc: any, cur: any) => ({ ...acc, [cur.content list_id]: cur }),
+    (acc: any, cur: any) => ({ ...acc, [cur.contentList_id]: cur }),
     {}
   )
   const processed = reposts.map((m: any) =>
     m.agreement_id
       ? processedAgreementsMap[m.agreement_id]
-      : processedCollectionsMap[m.content list_id]
+      : processedCollectionsMap[m.contentList_id]
   )
 
   return processed

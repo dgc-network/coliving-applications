@@ -11,7 +11,7 @@
   overflow: hidden;
 }
 
-.content listName {
+.contentListName {
   color: var(--neutral);
   font-size: var(--font-m);
   font-weight: var(--font-bold);
@@ -32,7 +32,7 @@
   margin-bottom: 8px;
 }
 
-.content listName,
+.contentListName,
 .nameWrapper {
   transition: color 0.07s ease-in;
   max-width: 240px;
@@ -41,7 +41,7 @@
   white-space: nowrap;
 }
 
-.content listName:hover,
+.contentListName:hover,
 .userName:hover {
   cursor: pointer;
   color: var(--primary);

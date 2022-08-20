@@ -66,7 +66,7 @@ type NotificationsResponse =
   | {
       notifications: ResponseNotification[]
       totalUnread: number
-      content listUpdates: number[]
+      contentListUpdates: number[]
     }
   | {
       error: { message: string }
@@ -105,15 +105,15 @@ const getTimeAgo = (now: moment.Moment, date: string) => {
 
 const NOTIFICATION_LIMIT_DEFAULT = 20
 
-function* recordContentListUpdatesAnalytics(content listUpdates: ID[]) {
+function* recordContentListUpdatesAnalytics(contentListUpdates: ID[]) {
   const existingUpdates: ID[] = yield* select(getContentListUpdates)
-  yield* put(notificationActions.setContentListUpdates(content listUpdates))
+  yield* put(notificationActions.setContentListUpdates(contentListUpdates))
   if (
-    content listUpdates.length > 0 &&
-    existingUpdates.length !== content listUpdates.length
+    contentListUpdates.length > 0 &&
+    existingUpdates.length !== contentListUpdates.length
   ) {
     const event = make(Name.CONTENT_LIST_LIBRARY_HAS_UPDATE, {
-      count: content listUpdates.length
+      count: contentListUpdates.length
     })
     yield* put(event)
   }
@@ -153,14 +153,14 @@ export function* fetchNotifications(
     const {
       notifications: notificationItems,
       totalUnread: totalUnviewed,
-      content listUpdates
+      contentListUpdates
     } = notificationsResponse
 
     const notifications = yield* parseAndProcessNotifications(notificationItems)
 
     const hasMore = notifications.length >= limit
 
-    yield* fork(recordContentListUpdatesAnalytics, content listUpdates)
+    yield* fork(recordContentListUpdatesAnalytics, contentListUpdates)
     yield* put(
       notificationActions.fetchNotificationSucceeded(
         notifications,
@@ -271,8 +271,8 @@ export function* parseAndProcessNotifications(
     }
     if (notification.type === NotificationType.AddAgreementToContentList) {
       agreementIdsToFetch.push(notification.agreementId)
-      userIdsToFetch.push(notification.content listOwnerId)
-      collectionIdsToFetch.push(notification.content listId)
+      userIdsToFetch.push(notification.contentListOwnerId)
+      collectionIdsToFetch.push(notification.contentListId)
     }
   })
 
@@ -393,7 +393,7 @@ export function* unsubscribeUserSettings(
 export function* updateContentListLastViewedAt(
   action: notificationActions.UpdateContentListLastViewedAt
 ) {
-  yield* call(ColivingBackend.updateContentListLastViewedAt, action.content listId)
+  yield* call(ColivingBackend.updateContentListLastViewedAt, action.contentListId)
 }
 
 // Action Watchers
@@ -531,10 +531,10 @@ export function* getNotifications(isFirstFetch: boolean) {
       const {
         notifications: notificationItems,
         totalUnread: totalUnviewed,
-        content listUpdates
+        contentListUpdates
       } = notificationsResponse
 
-      yield* fork(recordContentListUpdatesAnalytics, content listUpdates)
+      yield* fork(recordContentListUpdatesAnalytics, contentListUpdates)
 
       if (notificationItems.length > 0) {
         const currentNotifications = yield* select(makeGetAllNotifications())

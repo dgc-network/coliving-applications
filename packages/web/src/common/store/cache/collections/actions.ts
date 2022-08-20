@@ -57,8 +57,8 @@ export function createContentListFailed(
   return { type: CREATE_CONTENT_LIST_FAILED, error, params, metadata }
 }
 
-export function editContentList(content listId: number, formFields: Collection) {
-  return { type: EDIT_CONTENT_LIST, content listId, formFields }
+export function editContentList(contentListId: number, formFields: Collection) {
+  return { type: EDIT_CONTENT_LIST, contentListId, formFields }
 }
 
 export function editContentListSucceeded() {
@@ -75,9 +75,9 @@ export function editContentListFailed(
 
 export function addAgreementToContentList(
   agreementId: ID | null,
-  content listId: number | string
+  contentListId: number | string
 ) {
-  return { type: ADD_AGREEMENT_TO_CONTENT_LIST, agreementId, content listId }
+  return { type: ADD_AGREEMENT_TO_CONTENT_LIST, agreementId, contentListId }
 }
 
 export function addAgreementToContentListFailed(
@@ -90,10 +90,10 @@ export function addAgreementToContentListFailed(
 
 export function removeAgreementFromContentList(
   agreementId: number,
-  content listId: number,
+  contentListId: number,
   timestamp: number
 ) {
-  return { type: REMOVE_AGREEMENT_FROM_CONTENT_LIST, agreementId, content listId, timestamp }
+  return { type: REMOVE_AGREEMENT_FROM_CONTENT_LIST, agreementId, contentListId, timestamp }
 }
 
 export function removeAgreementFromContentListFailed(
@@ -105,11 +105,11 @@ export function removeAgreementFromContentListFailed(
 }
 
 export function orderContentList(
-  content listId: number,
+  contentListId: number,
   agreementIdsAndTimes: { id: ID; time: number }[],
   agreementUids?: UID[]
 ) {
-  return { type: ORDER_CONTENT_LIST, content listId, agreementIdsAndTimes, agreementUids }
+  return { type: ORDER_CONTENT_LIST, contentListId, agreementIdsAndTimes, agreementUids }
 }
 
 export function orderContentListFailed(
@@ -120,8 +120,8 @@ export function orderContentListFailed(
   return { type: ORDER_CONTENT_LIST_FAILED, error, params, metadata }
 }
 
-export function publishContentList(content listId: ID) {
-  return { type: PUBLISH_CONTENT_LIST, content listId }
+export function publishContentList(contentListId: ID) {
+  return { type: PUBLISH_CONTENT_LIST, contentListId }
 }
 
 export function publishContentListFailed(
@@ -132,8 +132,8 @@ export function publishContentListFailed(
   return { type: PUBLISH_CONTENT_LIST_FAILED, error, params, metadata }
 }
 
-export function deleteContentList(content listId: ID) {
-  return { type: DELETE_CONTENT_LIST, content listId }
+export function deleteContentList(contentListId: ID) {
+  return { type: DELETE_CONTENT_LIST, contentListId }
 }
 
 export function deleteContentListRequested() {

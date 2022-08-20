@@ -52,7 +52,7 @@ const ContentListTile = memo(
     const renderAgreements = useCallback(
       () => (
         <Scrollbar
-          className={cn(styles.content listAgreements, {
+          className={cn(styles.contentListAgreements, {
             [agreementsContainerClassName!]: !!agreementsContainerClassName
           })}
         >

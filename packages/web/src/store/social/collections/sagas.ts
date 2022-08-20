@@ -20,7 +20,7 @@ import {
 import { adjustUserField } from 'common/store/cache/users/sagas'
 import { getUser } from 'common/store/cache/users/selectors'
 import * as notificationActions from 'common/store/notifications/actions'
-import { removeFromContentListLibrary } from 'common/store/content list-library/helpers'
+import { removeFromContentListLibrary } from 'common/store/contentList-library/helpers'
 import * as socialActions from 'common/store/social/collections/actions'
 import { formatShareText } from 'common/utils/formatUtil'
 import * as signOnActions from 'pages/sign-on/store/actions'
@@ -29,8 +29,8 @@ import { make } from 'store/analytics/actions'
 import { waitForBackendSetup } from 'store/backend/sagas'
 import * as confirmerActions from 'store/confirmer/actions'
 import { confirmTransaction } from 'store/confirmer/sagas'
-import { update as updateContentListLibrary } from 'store/content list-library/slice'
-import { albumPage, liveNftContentListPage, content listPage } from 'utils/route'
+import { update as updateContentListLibrary } from 'store/contentList-library/slice'
+import { albumPage, liveNftContentListPage, contentListPage } from 'utils/route'
 import { share } from 'utils/share'
 
 import watchCollectionErrors from './errorSagas'
@@ -68,7 +68,7 @@ export function* repostCollectionAsync(
   }
 
   const event = make(Name.REPOST, {
-    kind: collection.is_album ? 'album' : 'content list',
+    kind: collection.is_album ? 'album' : 'contentList',
     source: action.source,
     id: action.collectionId
   })
@@ -76,7 +76,7 @@ export function* repostCollectionAsync(
 
   yield* call(
     confirmRepostCollection,
-    collection.content list_owner_id,
+    collection.contentList_owner_id,
     action.collectionId,
     user
   )
@@ -170,7 +170,7 @@ export function* undoRepostCollectionAsync(
   const collection = collections[action.collectionId]
 
   const event = make(Name.UNDO_REPOST, {
-    kind: collection.is_album ? 'album' : 'content list',
+    kind: collection.is_album ? 'album' : 'contentList',
     source: action.source,
     id: action.collectionId
   })
@@ -178,7 +178,7 @@ export function* undoRepostCollectionAsync(
 
   yield* call(
     confirmUndoRepostCollection,
-    collection.content list_owner_id,
+    collection.contentList_owner_id,
     action.collectionId,
     user
   )
@@ -272,21 +272,21 @@ export function* saveSmartCollection(
     yield* put(make(Name.CREATE_ACCOUNT_OPEN, { source: 'social action' }))
     return
   }
-  const content listLibrary = yield* select(getContentListLibrary)
+  const contentListLibrary = yield* select(getContentListLibrary)
   const newContentListLibrary: ContentListLibrary = {
-    ...content listLibrary,
+    ...contentListLibrary,
     contents: [
       {
-        type: 'explore_content list',
-        content list_id: action.smartCollectionName as SmartCollectionVariant
+        type: 'explore_contentList',
+        contentList_id: action.smartCollectionName as SmartCollectionVariant
       },
-      ...(content listLibrary?.contents || [])
+      ...(contentListLibrary?.contents || [])
     ]
   }
-  yield* put(updateContentListLibrary({ content listLibrary: newContentListLibrary }))
+  yield* put(updateContentListLibrary({ contentListLibrary: newContentListLibrary }))
 
   const event = make(Name.FAVORITE, {
-    kind: 'content list',
+    kind: 'contentList',
     source: action.source,
     id: action.smartCollectionName
   })
@@ -309,13 +309,13 @@ export function* saveCollectionAsync(
     ids: [action.collectionId]
   })
   const collection = collections[action.collectionId]
-  const user = yield* select(getUser, { id: collection.content list_owner_id })
+  const user = yield* select(getUser, { id: collection.contentList_owner_id })
   if (!user) return
 
   yield* put(accountActions.didFavoriteItem())
 
   const event = make(Name.FAVORITE, {
-    kind: collection.is_album ? 'album' : 'content list',
+    kind: collection.is_album ? 'album' : 'contentList',
     source: action.source,
     id: action.collectionId
   })
@@ -323,7 +323,7 @@ export function* saveCollectionAsync(
 
   yield* call(
     confirmSaveCollection,
-    collection.content list_owner_id,
+    collection.contentList_owner_id,
     action.collectionId
   )
 
@@ -335,19 +335,19 @@ export function* saveCollectionAsync(
 
   const subscribedUid = makeUid(
     Kind.COLLECTIONS,
-    collection.content list_id,
+    collection.contentList_id,
     'account'
   )
   yield* put(
     cacheActions.subscribe(Kind.COLLECTIONS, [
-      { uid: subscribedUid, id: collection.content list_id }
+      { uid: subscribedUid, id: collection.contentList_id }
     ])
   )
 
   yield* put(
     accountActions.addAccountContentList({
-      id: collection.content list_id,
-      name: collection.content list_name,
+      id: collection.contentList_id,
+      name: collection.contentList_name,
       is_album: collection.is_album,
       user: { id: user.user_id, handle: user.handle }
     })
@@ -424,16 +424,16 @@ export function* unsaveSmartCollection(
 ) {
   yield* call(waitForBackendSetup)
 
-  const content listLibrary = yield* select(getContentListLibrary)
-  if (!content listLibrary) return
+  const contentListLibrary = yield* select(getContentListLibrary)
+  if (!contentListLibrary) return
 
   const newContentListLibrary = removeFromContentListLibrary(
-    content listLibrary,
+    contentListLibrary,
     action.smartCollectionName as SmartCollectionVariant
   ).library
-  yield* put(updateContentListLibrary({ content listLibrary: newContentListLibrary }))
+  yield* put(updateContentListLibrary({ contentListLibrary: newContentListLibrary }))
   const event = make(Name.UNFAVORITE, {
-    kind: 'content list',
+    kind: 'contentList',
     source: action.source,
     id: action.smartCollectionName
   })
@@ -450,7 +450,7 @@ export function* unsaveCollectionAsync(
   const collection = collections[action.collectionId]
 
   const event = make(Name.UNFAVORITE, {
-    kind: collection.is_album ? 'album' : 'content list',
+    kind: collection.is_album ? 'album' : 'contentList',
     source: action.source,
     id: action.collectionId
   })
@@ -458,7 +458,7 @@ export function* unsaveCollectionAsync(
 
   yield* call(
     confirmUnsaveCollection,
-    collection.content list_owner_id,
+    collection.contentList_owner_id,
     action.collectionId
   )
 
@@ -522,26 +522,26 @@ export function* watchShareCollection() {
       const collection = yield* select(getCollection, { id: collectionId })
       if (!collection) return
 
-      const user = yield* select(getUser, { id: collection.content list_owner_id })
+      const user = yield* select(getUser, { id: collection.contentList_owner_id })
       if (!user) return
 
       const link = collection.is_album
         ? albumPage(
             user.handle,
-            collection.content list_name,
-            collection.content list_id
+            collection.contentList_name,
+            collection.contentList_id
           )
-        : content listPage(
+        : contentListPage(
             user.handle,
-            collection.content list_name,
-            collection.content list_id
+            collection.contentList_name,
+            collection.contentList_id
           )
-      share(link, formatShareText(collection.content list_name, user.name))
+      share(link, formatShareText(collection.contentList_name, user.name))
 
       const event = make(Name.SHARE, {
-        kind: collection.is_album ? 'album' : 'content list',
+        kind: collection.is_album ? 'album' : 'contentList',
         source: action.source,
-        id: collection.content list_id,
+        id: collection.contentList_id,
         url: link
       })
       yield* put(event)

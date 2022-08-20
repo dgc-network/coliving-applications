@@ -6,7 +6,7 @@ import { processAndCacheUsers } from 'common/store/cache/users/utils'
 import { AppState } from 'store/types'
 
 export type UserListProviderArgs<T, U = void> = {
-  // Gets the agreement or content list we're referencing.
+  // Gets the agreement or contentList we're referencing.
   getExistingEntity: (state: AppState, props: { id: ID }) => T | null
 
   // Pull out a subset of IDs from the entity that

@@ -39,7 +39,7 @@ import { remoteConfigInstance } from 'services/remote-config/remote-config-insta
 import { setSentryUser } from 'services/sentry'
 import { identify } from 'store/analytics/actions'
 import { waitForBackendSetup } from 'store/backend/sagas'
-import { addContentListsNotInLibrary } from 'store/content list-library/sagas'
+import { addContentListsNotInLibrary } from 'store/contentList-library/sagas'
 import {
   Permission,
   isPushManagerAvailable,
@@ -109,8 +109,8 @@ function* onFetchAccount(account) {
     fetchProfile(account.handle, account.user_id, false, false, false, true)
   )
 
-  // Add content lists that might not have made it into the user's library.
-  // This could happen if the user creates a new content list and then leaves their session.
+  // Add contentLists that might not have made it into the user's library.
+  // This could happen if the user creates a new contentList and then leaves their session.
   yield fork(addContentListsNotInLibrary)
 
   const feePayerOverride = yield select(getFeePayer)
@@ -199,7 +199,7 @@ export function* fetchAccountAsync(action) {
 }
 
 function* cacheAccount(account) {
-  const collections = account.content lists || []
+  const collections = account.contentLists || []
 
   yield put(
     cacheActions.add(Kind.USERS, [
@@ -207,7 +207,7 @@ function* cacheAccount(account) {
     ])
   )
   const hasFavoritedItem =
-    collections.some((content list) => content list.user.id !== account.user_id) ||
+    collections.some((contentList) => contentList.user.id !== account.user_id) ||
     account.agreement_save_count > 0
 
   const formattedAccount = {
@@ -410,7 +410,7 @@ function* fetchSavedContentListsAsync() {
     (status) => status === Status.SUCCESS
   )
 
-  // Fetch other people's content lists you've saved
+  // Fetch other people's contentLists you've saved
   yield fork(function* () {
     const savedContentLists = yield select(getAccountSavedContentListIds)
     if (savedContentLists.length > 0) {
@@ -418,7 +418,7 @@ function* fetchSavedContentListsAsync() {
     }
   })
 
-  // Fetch your own content lists
+  // Fetch your own contentLists
   yield fork(function* () {
     const ownContentLists = yield select(getAccountOwnedContentListIds)
     if (ownContentLists.length > 0) {

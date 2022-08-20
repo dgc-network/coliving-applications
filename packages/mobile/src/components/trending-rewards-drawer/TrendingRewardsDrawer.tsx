@@ -37,16 +37,16 @@ const TOS_URL = 'https://blog..co/article/live-rewards'
 
 const messages = {
   agreementsTitle: 'Top 5 Agreements Each Week Receive 100 $LIVE',
-  content listTitle: 'Top 5 ContentLists Each Week Receive 100 $LIVE',
+  contentListTitle: 'Top 5 ContentLists Each Week Receive 100 $LIVE',
   undergroundTitle: 'Top 5 Agreements Each Week Receive 100 $LIVE',
   winners: 'Winners are selected every Friday at Noon PT!',
   lastWeek: "LAST WEEK'S WINNERS",
   agreements: 'AGREEMENTS',
-  content lists: 'CONTENT_LISTS',
+  contentLists: 'CONTENT_LISTS',
   underground: 'UNDERGROUND',
   terms: 'Terms and Conditions Apply',
   agreementsModalTitle: 'Top 5 Trending Agreements',
-  content listsModalTitle: 'Top 5 Trending ContentLists',
+  contentListsModalTitle: 'Top 5 Trending ContentLists',
   undergroundModalTitle: 'Top 5 Underground Trending Agreements',
   buttonTextAgreements: 'Trending Agreements',
   buttonTextContentLists: 'Trending ContentLists',
@@ -58,7 +58,7 @@ const TRENDING_PAGES = {
     native: { screen: 'trending' as const },
     web: { route: TRENDING_PAGE }
   },
-  content lists: {
+  contentLists: {
     native: {
       screen: 'explore' as const,
       params: { screen: 'TrendingContentLists' as const }
@@ -75,9 +75,9 @@ const TRENDING_PAGES = {
 }
 
 const textMap = {
-  content lists: {
-    modalTitle: messages.content listsModalTitle,
-    title: messages.content listTitle,
+  contentLists: {
+    modalTitle: messages.contentListsModalTitle,
+    title: messages.contentListTitle,
     button: messages.buttonTextContentLists
   },
   agreements: {
@@ -149,7 +149,7 @@ const useStyles = makeStyles(({ palette, spacing, typography }) => ({
 }))
 
 // Getters and setters for whether we're looking at
-// trending content lists or trending agreements
+// trending contentLists or trending agreements
 const useRewardsType = (): [
   TrendingRewardsModalType,
   (type: TrendingRewardsModalType) => void
@@ -167,11 +167,11 @@ const useRewardsType = (): [
 
 const useTweetId = (type: TrendingRewardsModalType) => {
   const agreementsId = useRemoteVar(StringKeys.REWARDS_TWEET_ID_AGREEMENTS)
-  const content listsId = useRemoteVar(StringKeys.REWARDS_TWEET_ID_CONTENT_LISTS)
+  const contentListsId = useRemoteVar(StringKeys.REWARDS_TWEET_ID_CONTENT_LISTS)
   const undergroundId = useRemoteVar(StringKeys.REWARDS_TWEET_ID_UNDERGROUND)
   return {
     agreements: agreementsId,
-    content lists: content listsId,
+    contentLists: contentListsId,
     underground: undergroundId
   }[type]
 }
@@ -196,8 +196,8 @@ export const TrendingRewardsDrawer = () => {
       text: messages.agreements
     },
     {
-      key: 'content lists',
-      text: messages.content lists
+      key: 'contentLists',
+      text: messages.contentLists
     },
     {
       key: 'underground',

@@ -4,7 +4,7 @@ import { keyBy } from 'lodash'
 
 const initialState = {
   collections: {} as { [id: number]: AccountCollection },
-  // Used to agreement the ordering of content lists in the user's left nav
+  // Used to agreement the ordering of contentLists in the user's left nav
   // Array of strings that are either smart collection identifiers or user-generated collection ids
   orderedContentLists: [] as string[],
   userId: null as number | null,

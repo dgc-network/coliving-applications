@@ -7,7 +7,7 @@ import { Dispatch } from 'redux'
 import { getContentListLibrary } from 'common/store/account/selectors'
 import { getCollection } from 'common/store/pages/smart-collection/selectors'
 import { fetchSmartCollection } from 'common/store/pages/smart-collection/slice'
-import { findInContentListLibrary } from 'common/store/content list-library/helpers'
+import { findInContentListLibrary } from 'common/store/contentList-library/helpers'
 import CollectionPage from 'pages/collection-page/CollectionPage'
 import { AppState } from 'store/types'
 
@@ -22,7 +22,7 @@ type SmartCollectionPageProps = OwnProps &
 const SmartCollectionPage = ({
   variant,
   collection,
-  content listLibrary,
+  contentListLibrary,
   fetch
 }: SmartCollectionPageProps) => {
   useEffect(() => {
@@ -32,8 +32,8 @@ const SmartCollectionPage = ({
   if (collection) {
     collection = {
       ...collection,
-      has_current_user_saved: content listLibrary
-        ? !!findInContentListLibrary(content listLibrary, variant)
+      has_current_user_saved: contentListLibrary
+        ? !!findInContentListLibrary(contentListLibrary, variant)
         : false
     }
   }
@@ -41,7 +41,7 @@ const SmartCollectionPage = ({
   return (
     <CollectionPage
       key={variant}
-      type='content list'
+      type='contentList'
       smartCollection={collection}
     />
   )
@@ -50,7 +50,7 @@ const SmartCollectionPage = ({
 function mapStateToProps(state: AppState, ownProps: OwnProps) {
   return {
     collection: getCollection(state, { variant: ownProps.variant }),
-    content listLibrary: getContentListLibrary(state)
+    contentListLibrary: getContentListLibrary(state)
   }
 }
 

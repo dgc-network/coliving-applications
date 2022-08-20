@@ -24,8 +24,8 @@ const messages = {
   createFolderTabTitle: 'Create Folder'
 }
 
-type TabName = 'create-content list' | 'create-folder'
-const INITIAL_TAB = 'create-content list' as TabName
+type TabName = 'create-contentList' | 'create-folder'
+const INITIAL_TAB = 'create-contentList' as TabName
 
 type CreateContentListModalProps = {
   visible?: boolean
@@ -49,7 +49,7 @@ const CreateContentListModal = ({
 
   const tabOptions = [
     {
-      key: 'create-content list',
+      key: 'create-contentList',
       text: messages.createContentListTabTitle
     },
     {
@@ -103,7 +103,7 @@ const CreateContentListModal = ({
 
   return (
     <Modal
-      modalKey='createcontent list'
+      modalKey='createcontentList'
       dismissOnClickOutside={!isArtworkPopupOpen}
       bodyClassName={styles.modalBody}
       isOpen={visible}
@@ -113,14 +113,14 @@ const CreateContentListModal = ({
       <ModalHeader onClose={handleClose}>
         <ModalTitle
           icon={
-            currentTabName === 'create-content list' ? (
+            currentTabName === 'create-contentList' ? (
               <IconContentLists />
             ) : (
               <IconFolder />
             )
           }
           title={
-            currentTabName === 'create-content list'
+            currentTabName === 'create-contentList'
               ? messages.createContentListTabTitle
               : messages.createFolderTabTitle
           }
@@ -136,7 +136,7 @@ const CreateContentListModal = ({
             />
           </div>
         )}
-        {currentTabName === 'create-content list' ? (
+        {currentTabName === 'create-contentList' ? (
           <ContentListForm
             onOpenArtworkPopup={onOpenArtworkPopup}
             onCloseArtworkPopup={onCloseArtworkPopup}

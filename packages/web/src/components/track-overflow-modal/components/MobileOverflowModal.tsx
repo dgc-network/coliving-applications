@@ -105,7 +105,7 @@ const MobileOverflowModal = ({
       callbacks[action]!()
     }
     // Eventually: will need some special casing for onAddToContentList, which returns
-    // a function accepting content listId
+    // a function accepting contentListId
     callback()
     onClose()
   }

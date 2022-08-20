@@ -5,7 +5,7 @@ import { getCollection } from 'common/store/cache/collections/selectors'
 import { getAgreement } from 'common/store/cache/agreements/selectors'
 import {
   agreementFavoriteError,
-  content listFavoriteError
+  contentListFavoriteError
 } from 'common/store/user-list/favorites/actions'
 import { watchFavoriteError } from 'common/store/user-list/favorites/errorSagas'
 import {
@@ -33,7 +33,7 @@ const getContentListFavorites = createUserListProvider<Collection>({
     const users = await apiClient.getContentListFavoriteUsers({
       limit,
       offset,
-      content listId: entityId,
+      contentListId: entityId,
       currentUserId
     })
     return { users }
@@ -76,7 +76,7 @@ function* errorDispatcher(error: Error) {
   if (favoriteType === FavoriteType.AGREEMENT) {
     yield* put(agreementFavoriteError(id, error.message))
   } else {
-    yield* put(content listFavoriteError(id, error.message))
+    yield* put(contentListFavoriteError(id, error.message))
   }
 }
 

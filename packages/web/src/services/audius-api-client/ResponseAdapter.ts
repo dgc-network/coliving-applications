@@ -46,7 +46,7 @@ export const makeUser = (
   const album_count = 'album_count' in user ? user.album_count : 0
   const followee_count = 'followee_count' in user ? user.followee_count : 0
   const follower_count = 'follower_count' in user ? user.follower_count : 0
-  const content list_count = 'content list_count' in user ? user.content list_count : 0
+  const contentList_count = 'contentList_count' in user ? user.contentList_count : 0
   const repost_count = 'repost_count' in user ? user.repost_count : 0
   const agreement_count = 'agreement_count' in user ? user.agreement_count : 0
   const current_user_followee_follow_count =
@@ -65,7 +65,7 @@ export const makeUser = (
     album_count,
     followee_count,
     follower_count,
-    content list_count,
+    contentList_count,
     repost_count,
     agreement_count,
     current_user_followee_follow_count,
@@ -272,41 +272,41 @@ export const makeAgreementId = (agreement: { id: string }): ID | undefined => {
 }
 
 export const makeContentList = (
-  content list: APIContentList | APISearchContentList
+  contentList: APIContentList | APISearchContentList
 ): UserCollectionMetadata | undefined => {
-  const decodedContentListId = decodeHashId(content list.id)
-  const decodedOwnerId = decodeHashId(content list.user_id)
-  const user = makeUser(content list.user)
+  const decodedContentListId = decodeHashId(contentList.id)
+  const decodedOwnerId = decodeHashId(contentList.user_id)
+  const user = makeUser(contentList.user)
   if (!decodedContentListId || !decodedOwnerId || !user) {
     return undefined
   }
 
   const saves =
-    'followee_favorites' in content list
-      ? content list.followee_favorites?.map(makeFavorite).filter(removeNullable) ??
+    'followee_favorites' in contentList
+      ? contentList.followee_favorites?.map(makeFavorite).filter(removeNullable) ??
         []
       : []
 
   const reposts =
-    'followee_reposts' in content list
-      ? content list.followee_reposts?.map(makeRepost).filter(removeNullable) ?? []
+    'followee_reposts' in contentList
+      ? contentList.followee_reposts?.map(makeRepost).filter(removeNullable) ?? []
       : []
   const has_current_user_reposted =
-    'has_current_user_reposted' in content list
-      ? content list.has_current_user_reposted
+    'has_current_user_reposted' in contentList
+      ? contentList.has_current_user_reposted
       : false
   const has_current_user_saved =
-    'has_current_user_saved' in content list
-      ? content list.has_current_user_saved
+    'has_current_user_saved' in contentList
+      ? contentList.has_current_user_saved
       : false
-  const save_count = 'favorite_count' in content list ? content list.favorite_count : 0
-  const repost_count = 'repost_count' in content list ? content list.repost_count : 0
+  const save_count = 'favorite_count' in contentList ? contentList.favorite_count : 0
+  const repost_count = 'repost_count' in contentList ? contentList.repost_count : 0
   const total_play_count =
-    'total_play_count' in content list ? content list.total_play_count : 0
-  const agreement_count = 'agreement_count' in content list ? content list.agreement_count : 0
+    'total_play_count' in contentList ? contentList.total_play_count : 0
+  const agreement_count = 'agreement_count' in contentList ? contentList.agreement_count : 0
 
-  const content listContents = {
-    agreement_ids: content list.added_timestamps
+  const contentListContents = {
+    agreement_ids: contentList.added_timestamps
       .map((ts) => {
         const decoded = decodeHashId(ts.agreement_id)
         if (decoded) {
@@ -321,19 +321,19 @@ export const makeContentList = (
   }
 
   const agreements =
-    'agreements' in content list
-      ? content list.agreements
+    'agreements' in contentList
+      ? contentList.agreements
           ?.map((agreement) => makeAgreement(agreement))
           .filter(removeNullable) ?? []
       : []
 
   const marshalled = {
-    ...content list,
+    ...contentList,
     variant: Variant.USER_GENERATED,
     user,
     agreements,
-    content list_id: decodedContentListId,
-    content list_owner_id: decodedOwnerId,
+    contentList_id: decodedContentListId,
+    contentList_owner_id: decodedOwnerId,
     followee_saves: saves,
     followee_reposts: reposts,
     has_current_user_reposted,
@@ -342,7 +342,7 @@ export const makeContentList = (
     repost_count,
     agreement_count,
     total_play_count,
-    content list_contents: content listContents,
+    contentList_contents: contentListContents,
 
     // Fields to prune
     id: undefined,
@@ -369,7 +369,7 @@ export const makeActivity = (
   switch (activity.item_type) {
     case 'agreement':
       return makeAgreement(activity.item)
-    case 'content list':
+    case 'contentList':
       return makeContentList(activity.item)
   }
 }
@@ -439,11 +439,11 @@ export const adaptSearchResponse = (searchResponse: APIResponse<APISearch>) => {
       searchResponse.data.followed_users
         ?.map(makeUser)
         .filter(removeNullable) ?? undefined,
-    content lists:
-      searchResponse.data.content lists?.map(makeContentList).filter(removeNullable) ??
+    contentLists:
+      searchResponse.data.contentLists?.map(makeContentList).filter(removeNullable) ??
       undefined,
-    saved_content lists:
-      searchResponse.data.saved_content lists
+    saved_contentLists:
+      searchResponse.data.saved_contentLists
         ?.map(makeContentList)
         .filter(removeNullable) ?? undefined,
     albums:
@@ -473,11 +473,11 @@ export const adaptSearchAutocompleteResponse = (
       searchResponse.data.followed_users
         ?.map(makeUser)
         .filter(removeNullable) ?? undefined,
-    content lists:
-      searchResponse.data.content lists?.map(makeContentList).filter(removeNullable) ??
+    contentLists:
+      searchResponse.data.contentLists?.map(makeContentList).filter(removeNullable) ??
       undefined,
-    saved_content lists:
-      searchResponse.data.saved_content lists
+    saved_contentLists:
+      searchResponse.data.saved_contentLists
         ?.map(makeContentList)
         .filter(removeNullable) ?? undefined,
     albums:

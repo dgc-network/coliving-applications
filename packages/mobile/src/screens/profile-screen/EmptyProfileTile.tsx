@@ -11,11 +11,11 @@ const messages = {
   hasNot: "hasn't",
   agreements: 'created any agreements yet',
   albums: 'created any albums yet',
-  content lists: 'created any content lists yet',
+  contentLists: 'created any contentLists yet',
   reposts: 'reposted anything yet'
 }
 
-type Tab = 'agreements' | 'albums' | 'content lists' | 'reposts'
+type Tab = 'agreements' | 'albums' | 'contentLists' | 'reposts'
 
 export const useEmptyProfileText = (tab: Tab) => {
   const { user_id, name } = useSelectProfile(['user_id', 'name'])

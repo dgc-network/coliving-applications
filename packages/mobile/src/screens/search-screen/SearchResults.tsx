@@ -17,7 +17,7 @@ import { SeeMoreResultsButton } from './content/SeeMoreResultsButton'
 const messages = {
   profile: 'PROFILES',
   agreements: 'AGREEMENTS',
-  content lists: 'CONTENT_LISTS',
+  contentLists: 'CONTENT_LISTS',
   albums: 'ALBUMS'
 }
 
@@ -30,13 +30,13 @@ const styles = StyleSheet.create({
 const sectionHeaders: SectionHeader[] = [
   'users',
   'agreements',
-  'content lists',
+  'contentLists',
   'albums'
 ]
 const headerMapping: { [key in SectionHeader]: string } = {
   users: messages.profile,
   agreements: messages.agreements,
-  content lists: messages.content lists,
+  contentLists: messages.contentLists,
   albums: messages.albums
 }
 
@@ -65,7 +65,7 @@ const SearchResults = () => {
         keyExtractor={(item) => {
           if ('agreement_id' in item) return `agreement-${item.agreement_id}`
           else if ('user_id' in item) return `user-${item.user_id}`
-          return `content list-${item.content list_id}`
+          return `contentList-${item.contentList_id}`
         }}
         renderItem={({ section: { title, data }, item, index }) => (
           <SearchItem

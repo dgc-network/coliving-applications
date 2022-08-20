@@ -15,7 +15,7 @@ export const agreementFavoriteError = createCustomAction(
   GET_AGREEMENT_FAVORITE_ERROR,
   (id: ID, error: string) => ({ id, error })
 )
-export const content listFavoriteError = createCustomAction(
+export const contentListFavoriteError = createCustomAction(
   GET_CONTENT_LIST_FAVORITE_ERROR,
   (id: ID, error: string) => ({ id, error })
 )

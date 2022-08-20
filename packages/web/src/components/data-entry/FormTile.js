@@ -90,24 +90,24 @@ const BasicForm = (props) => {
               } Name`}
               defaultValue={
                 props.isContentList
-                  ? props.defaultFields.content list_name
+                  ? props.defaultFields.contentList_name
                   : props.defaultFields.title
               }
               isRequired={
                 props.isContentList
-                  ? props.requiredFields.content list_name
+                  ? props.requiredFields.contentList_name
                   : props.requiredFields.title
               }
               characterLimit={64}
               error={
                 props.isContentList
-                  ? props.invalidFields.content list_name
+                  ? props.invalidFields.contentList_name
                   : props.invalidFields.title
               }
               variant={'elevatedPlaceholder'}
               onChange={(value) =>
                 props.onChangeField(
-                  props.isContentList ? 'content list_name' : 'title',
+                  props.isContentList ? 'contentList_name' : 'title',
                   value
                 )
               }
@@ -722,7 +722,7 @@ FormTile.propTypes = {
   showPreview: PropTypes.bool,
   /** Whether or not the preview is playing. */
   playing: PropTypes.bool,
-  type: PropTypes.oneOf(['agreement', 'album', 'content list']),
+  type: PropTypes.oneOf(['agreement', 'album', 'contentList']),
   /** Transform artwork function to apply. */
   transformArtworkFunction: PropTypes.func,
 

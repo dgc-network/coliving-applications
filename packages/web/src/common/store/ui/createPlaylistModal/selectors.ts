@@ -20,7 +20,7 @@ export const getAgreements = (state: CommonState) => {
   const metadata = getMetadata(state)
   if (!metadata) return null
 
-  const agreementIds = metadata.content list_contents.agreement_ids.map((t) => t.agreement)
+  const agreementIds = metadata.contentList_contents.agreement_ids.map((t) => t.agreement)
   const agreements = getCachedAgreements(state, { ids: agreementIds })
   const userIds = Object.keys(agreements).map(
     (agreementId) => agreements[agreementId as unknown as number].owner_id

@@ -6,12 +6,12 @@ import {
   GET_AGREEMENT_FAVORITE_ERROR,
   GET_CONTENT_LIST_FAVORITE_ERROR,
   agreementFavoriteError,
-  content listFavoriteError
+  contentListFavoriteError
 } from './actions'
 
 type ErrorActions =
   | ReturnType<typeof agreementFavoriteError>
-  | ReturnType<typeof content listFavoriteError>
+  | ReturnType<typeof contentListFavoriteError>
 
 export function* handleFavoriteError(action: ErrorActions) {
   yield put(

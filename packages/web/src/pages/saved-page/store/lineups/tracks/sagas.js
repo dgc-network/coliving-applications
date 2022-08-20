@@ -66,7 +66,7 @@ function* getAgreements() {
 const keepDateSaved = (entry) => ({
   uid: entry.uid,
   kind: entry.agreement_id ? Kind.AGREEMENTS : Kind.COLLECTIONS,
-  id: entry.agreement_id || entry.content list_id,
+  id: entry.agreement_id || entry.contentList_id,
   dateSaved: entry.dateSaved
 })
 

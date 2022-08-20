@@ -21,6 +21,6 @@ export const getEntityScreen = (entity: EntityType) => {
   }
   return {
     screen: 'Collection' as const,
-    params: { id: entity.content list_id, fromNotifications: true }
+    params: { id: entity.contentList_id, fromNotifications: true }
   }
 }

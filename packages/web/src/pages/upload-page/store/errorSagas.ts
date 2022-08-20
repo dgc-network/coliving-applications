@@ -16,7 +16,7 @@ const errorsWithoutRedirect = new Set([
   uploadActions.COLLECTION_ASSOCIATE_AGREEMENTS_ERROR,
 
   // ContentList errors require
-  // agreement & possibly content list cleanup
+  // agreement & possibly contentList cleanup
   uploadActions.COLLECTION_CREATE_CONTENT_LIST_ID_EXISTS_ERROR,
   uploadActions.COLLECTION_CREATE_CONTENT_LIST_NO_ID_ERROR,
   uploadActions.COLLECTION_POLL_CONTENT_LIST_TIMEOUT_ERROR

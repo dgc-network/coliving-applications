@@ -45,7 +45,7 @@ import {
   ExploreMoodCollection
 } from 'pages/explore-page/collections'
 import {
-  content listPage,
+  contentListPage,
   albumPage,
   profilePage,
   BASE_URL,
@@ -62,7 +62,7 @@ const messages = {
   pageDescription: 'Explore featured content on Coliving',
   forYou: 'For You',
   moods: 'Moods',
-  content lists: 'ContentLists',
+  contentLists: 'ContentLists',
   artists: 'Artists',
   featuredContentLists: 'Featured ContentLists',
   featuredArtists: 'Featured Artists',
@@ -107,7 +107,7 @@ const tabHeaders = [
   { icon: <IconMoods />, text: messages.moods, label: ExploreTabs.MOODS },
   {
     icon: <IconNote />,
-    text: messages.content lists,
+    text: messages.contentLists,
     label: ExploreTabs.CONTENT_LISTS
   },
   { icon: <IconUser />, text: messages.artists, label: ExploreTabs.PROFILES }
@@ -116,7 +116,7 @@ const tabHeaders = [
 export type ExplorePageProps = {
   title: string
   description: string
-  content lists: UserCollection[]
+  contentLists: UserCollection[]
   profiles: User[]
   status: Status
   formatContentListCardSecondaryText: (saves: number, agreements: number) => string
@@ -127,7 +127,7 @@ export type ExplorePageProps = {
 const ExplorePage = ({
   title,
   description,
-  content lists,
+  contentLists,
   profiles,
   status,
   formatContentListCardSecondaryText,
@@ -142,8 +142,8 @@ const ExplorePage = ({
       if (t.variant === CollectionVariant.SMART) {
         return (
           <ColorTile
-            key={t.content list_name}
-            title={t.content list_name}
+            key={t.contentList_name}
+            title={t.contentList_name}
             link={t.link}
             description={t.description}
             gradient={t.gradient}
@@ -189,38 +189,38 @@ const ExplorePage = ({
     )
   })
 
-  let content listCards: JSX.Element[]
+  let contentListCards: JSX.Element[]
   let profileCards: JSX.Element[]
   if (status === Status.LOADING) {
-    content listCards = []
+    contentListCards = []
     profileCards = []
   } else {
-    content listCards = content lists.map((content list: UserCollection) => {
+    contentListCards = contentLists.map((contentList: UserCollection) => {
       return (
         <Card
-          key={content list.content list_id}
-          id={content list.content list_id}
-          userId={content list.content list_owner_id}
-          imageSize={content list._cover_art_sizes}
-          primaryText={content list.content list_name}
+          key={contentList.contentList_id}
+          id={contentList.contentList_id}
+          userId={contentList.contentList_owner_id}
+          imageSize={contentList._cover_art_sizes}
+          primaryText={contentList.contentList_name}
           secondaryText={formatContentListCardSecondaryText(
-            content list.save_count,
-            content list.content list_contents.agreement_ids.length
+            contentList.save_count,
+            contentList.contentList_contents.agreement_ids.length
           )}
           onClick={() =>
-            content list.is_album
+            contentList.is_album
               ? goToRoute(
                   albumPage(
-                    content list.user.handle,
-                    content list.content list_name,
-                    content list.content list_id
+                    contentList.user.handle,
+                    contentList.contentList_name,
+                    contentList.contentList_id
                   )
                 )
               : goToRoute(
-                  content listPage(
-                    content list.user.handle,
-                    content list.content list_name,
-                    content list.content list_id
+                  contentListPage(
+                    contentList.user.handle,
+                    contentList.contentList_name,
+                    contentList.contentList_id
                   )
                 )
           }
@@ -268,7 +268,7 @@ const ExplorePage = ({
           <CardLineup
             containerClassName={styles.lineupContainer}
             cardsClassName={styles.cardLineup}
-            cards={content listCards}
+            cards={contentListCards}
           />
         )}
       </TabBodyHeader>,
@@ -284,7 +284,7 @@ const ExplorePage = ({
         )}
       </TabBodyHeader>
     ]
-  }, [content listCards, profileCards, justForYouTiles, lifestyleTiles, status])
+  }, [contentListCards, profileCards, justForYouTiles, lifestyleTiles, status])
 
   const initialTab = useSelector(getTab)
   const dispatch = useDispatch()

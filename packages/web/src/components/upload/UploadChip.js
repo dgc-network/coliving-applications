@@ -10,7 +10,7 @@ const messages = {
   agreement: 'Upload Agreement',
   aAgreement: 'Upload A Agreement',
   album: 'Upload New Album',
-  content list: 'Create New ContentList',
+  contentList: 'Create New ContentList',
   artistContentList: 'Upload New ContentList',
   firstAlbum: 'Upload Your First Album',
   firstContentList: 'Create Your First ContentList',
@@ -33,11 +33,11 @@ const UploadChip = ({ type, variant, isArtist = false, isFirst, onClick }) => {
     case 'album':
       text = isFirst ? messages.firstAlbum : messages.album
       break
-    case 'content list':
+    case 'contentList':
       if (isArtist) {
         text = isFirst ? messages.firstArtistContentList : messages.artistContentList
       } else {
-        text = isFirst ? messages.firstContentList : messages.content list
+        text = isFirst ? messages.firstContentList : messages.contentList
       }
       break
     default:
@@ -60,7 +60,7 @@ const UploadChip = ({ type, variant, isArtist = false, isFirst, onClick }) => {
 }
 
 UploadChip.propTypes = {
-  type: PropTypes.oneOf(['agreement', 'album', 'content list']).isRequired,
+  type: PropTypes.oneOf(['agreement', 'album', 'contentList']).isRequired,
   // nav: For display in a nav-like column
   // card: Looks like a 'Card'
   // tile: Looks like a 'AgreementTile'

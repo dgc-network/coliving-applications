@@ -13,7 +13,7 @@ import {
   getUsers,
   getUserTimestamps
 } from 'common/store/cache/users/selectors'
-import { removeContentListLibraryTempContentLists } from 'common/store/content list-library/helpers'
+import { removeContentListLibraryTempContentLists } from 'common/store/contentList-library/helpers'
 import {
   getSelectedServices,
   getStatus
@@ -151,14 +151,14 @@ export function* fetchUserByHandle(
  * @param {number} userId target user id
  */
 export function* fetchUserCollections(userId) {
-  // Get content lists.
-  const content lists = yield call(ColivingBackend.getContentLists, userId)
-  const content listIds = content lists.map((p) => p.content list_id)
+  // Get contentLists.
+  const contentLists = yield call(ColivingBackend.getContentLists, userId)
+  const contentListIds = contentLists.map((p) => p.contentList_id)
 
-  if (!content listIds.length) return
-  const { collections } = yield call(retrieveCollections, userId, content listIds)
+  if (!contentListIds.length) return
+  const { collections } = yield call(retrieveCollections, userId, contentListIds)
   const cachedCollectionIds = Object.values(collections).map(
-    (c) => c.content list_id
+    (c) => c.contentList_id
   )
 
   yield put(
@@ -209,14 +209,14 @@ function* watchSyncLocalStorageUser() {
       const merged = mergeWith({}, existing, addedUser, mergeCustomizer)
       // Remove blob urls if any - blob urls only last for the session so we don't want to store those
       const cleaned = pruneBlobValues(merged)
-      // Remove temp content lists from the content list library since they are only meant to last
-      // in the current session until the content list is finished creating
-      // If we don't do this, temp content lists can get stuck in local storage (resulting in a corrupted state)
-      // if the user reloads before a temp content list is resolved.
-      cleaned.content list_library =
-        cleaned.content list_library == null
-          ? cleaned.content list_library
-          : removeContentListLibraryTempContentLists(cleaned.content list_library)
+      // Remove temp contentLists from the contentList library since they are only meant to last
+      // in the current session until the contentList is finished creating
+      // If we don't do this, temp contentLists can get stuck in local storage (resulting in a corrupted state)
+      // if the user reloads before a temp contentList is resolved.
+      cleaned.contentList_library =
+        cleaned.contentList_library == null
+          ? cleaned.contentList_library
+          : removeContentListLibraryTempContentLists(cleaned.contentList_library)
       // Set user back to local storage
       setColivingAccountUser(cleaned)
     }

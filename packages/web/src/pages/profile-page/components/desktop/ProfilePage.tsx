@@ -38,7 +38,7 @@ import EmptyTab from 'pages/profile-page/components/EmptyTab'
 import { make, useRecord } from 'store/analytics/actions'
 import {
   albumPage,
-  content listPage,
+  contentListPage,
   profilePage,
   fullProfilePage,
   UPLOAD_PAGE,
@@ -90,7 +90,7 @@ export type ProfilePageProps = {
 
   profile: ProfileUser | null
   albums: Collection[] | null
-  content lists: Collection[] | null
+  contentLists: Collection[] | null
   status: Status
   goToRoute: (route: string) => void
   artistAgreements: LineupState<{ id: ID }>
@@ -146,7 +146,7 @@ const ProfilePage = ({
   isOwner,
   profile,
   albums,
-  content lists,
+  contentLists,
   status,
   goToRoute,
   // Agreements
@@ -260,31 +260,31 @@ const ProfilePage = ({
   }, [tabRecalculator])
 
   const getArtistProfileContent = () => {
-    if (!profile || !albums || !content lists) return { headers: [], elements: [] }
+    if (!profile || !albums || !contentLists) return { headers: [], elements: [] }
     const albumCards = albums.map((album, index) => (
       <Card
         key={index}
         size='medium'
         handle={profile.handle}
-        content listName={album.content list_name}
-        content listId={album.content list_id}
-        id={album.content list_id}
-        userId={album.content list_owner_id}
+        contentListName={album.contentList_name}
+        contentListId={album.contentList_id}
+        id={album.contentList_id}
+        userId={album.contentList_owner_id}
         isPublic={!album.is_private}
         imageSize={album._cover_art_sizes}
         isContentList={!album.is_album}
-        primaryText={album.content list_name}
-        // link={fullAlbumPage(profile.handle, album.content list_name, album.content list_id)}
+        primaryText={album.contentList_name}
+        // link={fullAlbumPage(profile.handle, album.contentList_name, album.contentList_id)}
         secondaryText={formatCardSecondaryText(
           album.save_count,
-          album.content list_contents.agreement_ids.length
+          album.contentList_contents.agreement_ids.length
         )}
         cardCoverImageSizes={album._cover_art_sizes}
         isReposted={album.has_current_user_reposted}
         isSaved={album.has_current_user_saved}
         onClick={() =>
           goToRoute(
-            albumPage(profile.handle, album.content list_name, album.content list_id)
+            albumPage(profile.handle, album.contentList_name, album.contentList_id)
           )
         }
       />
@@ -301,48 +301,48 @@ const ProfilePage = ({
       )
     }
 
-    const content listCards = content lists.map((content list, index) => (
+    const contentListCards = contentLists.map((contentList, index) => (
       <Card
         key={index}
         size='medium'
         handle={profile.handle}
-        content listName={content list.content list_name}
-        content listId={content list.content list_id}
-        id={content list.content list_id}
-        imageSize={content list._cover_art_sizes}
-        userId={content list.content list_owner_id}
-        isPublic={!content list.is_private}
-        // isAlbum={content list.is_album}
-        primaryText={content list.content list_name}
-        // link={fullContentListPage(profile.handle, content list.content list_name, content list.content list_id)}
+        contentListName={contentList.contentList_name}
+        contentListId={contentList.contentList_id}
+        id={contentList.contentList_id}
+        imageSize={contentList._cover_art_sizes}
+        userId={contentList.contentList_owner_id}
+        isPublic={!contentList.is_private}
+        // isAlbum={contentList.is_album}
+        primaryText={contentList.contentList_name}
+        // link={fullContentListPage(profile.handle, contentList.contentList_name, contentList.contentList_id)}
         secondaryText={formatCardSecondaryText(
-          content list.save_count,
-          content list.content list_contents.agreement_ids.length,
-          content list.is_private
+          contentList.save_count,
+          contentList.contentList_contents.agreement_ids.length,
+          contentList.is_private
         )}
-        cardCoverImageSizes={content list._cover_art_sizes}
-        isReposted={content list.has_current_user_reposted}
-        isSaved={content list.has_current_user_saved}
+        cardCoverImageSizes={contentList._cover_art_sizes}
+        isReposted={contentList.has_current_user_reposted}
+        isSaved={contentList.has_current_user_saved}
         onClick={() =>
           goToRoute(
-            content listPage(
+            contentListPage(
               profile.handle,
-              content list.content list_name,
-              content list.content list_id
+              contentList.contentList_name,
+              contentList.contentList_id
             )
           )
         }
       />
     ))
     if (isOwner) {
-      content listCards.unshift(
+      contentListCards.unshift(
         <UploadChip
           key='upload-chip'
-          type='content list'
+          type='contentList'
           variant='card'
           onClick={onClickUploadContentList}
           isArtist
-          isFirst={content listCards.length === 0}
+          isFirst={contentListCards.length === 0}
         />
       )
     }
@@ -403,16 +403,16 @@ const ProfilePage = ({
         )}
       </div>,
       <div key={Tabs.CONTENT_LISTS} className={styles.cards}>
-        {content lists.length === 0 && !isOwner ? (
+        {contentLists.length === 0 && !isOwner ? (
           <EmptyTab
             isOwner={isOwner}
             name={profile.name}
-            text={'created any content lists'}
+            text={'created any contentLists'}
           />
         ) : (
           <CardLineup
             cardsClassName={styles.cardLineup}
-            cards={content listCards}
+            cards={contentListCards}
           />
         )}
       </div>,
@@ -480,46 +480,46 @@ const ProfilePage = ({
   }
 
   const getUserProfileContent = () => {
-    if (!profile || !content lists) return { headers: [], elements: [] }
-    const content listCards = content lists.map((content list, index) => (
+    if (!profile || !contentLists) return { headers: [], elements: [] }
+    const contentListCards = contentLists.map((contentList, index) => (
       <Card
         key={index}
         size='medium'
-        id={content list.content list_id}
-        userId={content list.content list_owner_id}
-        imageSize={content list._cover_art_sizes}
+        id={contentList.contentList_id}
+        userId={contentList.contentList_owner_id}
+        imageSize={contentList._cover_art_sizes}
         handle={profile.handle}
-        content listId={content list.content list_id}
-        isPublic={!content list.is_private}
-        content listName={content list.content list_name}
-        // isAlbum={content list.is_album}
-        primaryText={content list.content list_name}
+        contentListId={contentList.contentList_id}
+        isPublic={!contentList.is_private}
+        contentListName={contentList.contentList_name}
+        // isAlbum={contentList.is_album}
+        primaryText={contentList.contentList_name}
         secondaryText={formatCardSecondaryText(
-          content list.save_count,
-          content list.content list_contents.agreement_ids.length,
-          content list.is_private
+          contentList.save_count,
+          contentList.contentList_contents.agreement_ids.length,
+          contentList.is_private
         )}
-        // link={fullContentListPage(profile.handle, content list.content list_name, content list.content list_id)}
-        isReposted={content list.has_current_user_reposted}
-        isSaved={content list.has_current_user_saved}
-        cardCoverImageSizes={content list._cover_art_sizes}
+        // link={fullContentListPage(profile.handle, contentList.contentList_name, contentList.contentList_id)}
+        isReposted={contentList.has_current_user_reposted}
+        isSaved={contentList.has_current_user_saved}
+        cardCoverImageSizes={contentList._cover_art_sizes}
         onClick={() =>
           goToRoute(
-            content listPage(
+            contentListPage(
               profile.handle,
-              content list.content list_name,
-              content list.content list_id
+              contentList.contentList_name,
+              contentList.contentList_id
             )
           )
         }
       />
     ))
-    content listCards.unshift(
+    contentListCards.unshift(
       <UploadChip
-        type='content list'
+        type='contentList'
         variant='card'
         onClick={openCreateContentListModal}
-        isFirst={content listCards.length === 0}
+        isFirst={contentListCards.length === 0}
       />
     )
 
@@ -550,16 +550,16 @@ const ProfilePage = ({
         )}
       </div>,
       <div key={Tabs.CONTENT_LISTS} className={styles.cards}>
-        {content lists.length === 0 && !isOwner ? (
+        {contentLists.length === 0 && !isOwner ? (
           <EmptyTab
             isOwner={isOwner}
             name={profile.name}
-            text={'created any content lists'}
+            text={'created any contentLists'}
           />
         ) : (
           <CardLineup
             cardsClassName={styles.cardLineup}
-            cards={content listCards}
+            cards={contentListCards}
           />
         )}
       </div>

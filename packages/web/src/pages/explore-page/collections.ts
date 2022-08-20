@@ -56,7 +56,7 @@ export const TOP_ALBUMS: ExploreCollection = {
 export const TRENDING_CONTENT_LISTS: ExploreCollection = {
   variant: ExploreCollectionsVariant.DIRECT_LINK,
   title: 'Trending ContentLists',
-  subtitle: 'The top content lists on Coliving right now',
+  subtitle: 'The top contentLists on Coliving right now',
   gradient: 'linear-gradient(315deg, #57ABFF 0%, #CD98FF 100%)',
   shadow: 'rgba(87,170,255,0.35)',
   icon: IconExploreTopContentLists,

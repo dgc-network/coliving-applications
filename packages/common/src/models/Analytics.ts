@@ -218,9 +218,9 @@ export enum Name {
   CONTENT_LIST_LIBRARY_MOVE_CONTENT_LIST_OUT_OF_FOLDER = 'ContentList Library: Move ContentList Out of Folder',
   CONTENT_LIST_LIBRARY_EXPAND_FOLDER = 'ContentList Library: Expand Folder',
   CONTENT_LIST_LIBRARY_COLLAPSE_FOLDER = 'ContentList Library: Collapse Folder',
-  // When an update is available in the content list library
+  // When an update is available in the contentList library
   CONTENT_LIST_LIBRARY_HAS_UPDATE = 'ContentList Library: Has Update',
-  // When a user clicks on a content list in the library
+  // When a user clicks on a contentList in the library
   CONTENT_LIST_LIBRARY_CLICKED = 'ContentList Library: Clicked',
 
   // Deactivate Account
@@ -494,7 +494,7 @@ export enum FollowSource {
 
 type Share = {
   eventName: Name.SHARE
-  kind: 'profile' | 'album' | 'content list' | 'agreement'
+  kind: 'profile' | 'album' | 'contentList' | 'agreement'
   source: ShareSource
   id: string
   url: string
@@ -502,7 +502,7 @@ type Share = {
 
 export type ShareToTwitter = {
   eventName: Name.SHARE_TO_TWITTER
-  kind: 'profile' | 'album' | 'content list' | 'agreement' | 'liveNftContentList'
+  kind: 'profile' | 'album' | 'contentList' | 'agreement' | 'liveNftContentList'
   source: ShareSource
   id: number
   url: string
@@ -562,7 +562,7 @@ export enum CreateContentListSource {
 type ContentListAdd = {
   eventName: Name.CONTENT_LIST_ADD
   agreementId: string
-  content listId: string
+  contentListId: string
 }
 type ContentListOpenCreate = {
   eventName: Name.CONTENT_LIST_OPEN_CREATE
@@ -644,7 +644,7 @@ type AgreementUploadOpen = {
 type AgreementUploadStartUploading = {
   eventName: Name.AGREEMENT_UPLOAD_START_UPLOADING
   count: number
-  kind: 'agreements' | 'album' | 'content list'
+  kind: 'agreements' | 'album' | 'contentList'
 }
 type AgreementUploadAgreementUploading = {
   eventName: Name.AGREEMENT_UPLOAD_AGREEMENT_UPLOADING
@@ -656,19 +656,19 @@ type AgreementUploadAgreementUploading = {
 type AgreementUploadCompleteUpload = {
   eventName: Name.AGREEMENT_UPLOAD_COMPLETE_UPLOAD
   count: number
-  kind: 'agreements' | 'album' | 'content list'
+  kind: 'agreements' | 'album' | 'contentList'
 }
 
 type AgreementUploadSuccess = {
   eventName: Name.AGREEMENT_UPLOAD_SUCCESS
   endpoint: string
-  kind: 'single_agreement' | 'multi_agreement' | 'album' | 'content list'
+  kind: 'single_agreement' | 'multi_agreement' | 'album' | 'contentList'
 }
 
 type AgreementUploadFailure = {
   eventName: Name.AGREEMENT_UPLOAD_FAILURE
   endpoint: string
-  kind: 'single_agreement' | 'multi_agreement' | 'album' | 'content list'
+  kind: 'single_agreement' | 'multi_agreement' | 'album' | 'contentList'
   error?: string
 }
 
@@ -768,7 +768,7 @@ type NotificationsToggleSettings = {
 // Profile
 type ProfilePageTabClick = {
   eventName: Name.PROFILE_PAGE_TAB_CLICK
-  tab: 'agreements' | 'albums' | 'reposts' | 'content lists' | 'collectibles'
+  tab: 'agreements' | 'albums' | 'reposts' | 'contentLists' | 'collectibles'
 }
 type ProfilePageSort = {
   eventName: Name.PROFILE_PAGE_SORT
@@ -820,11 +820,11 @@ type AgreementPagePlayMore = {
 export enum PlaybackSource {
   PLAYBAR = 'playbar',
   NOW_PLAYING = 'now playing',
-  CONTENT_LIST_PAGE = 'content list page',
+  CONTENT_LIST_PAGE = 'contentList page',
   AGREEMENT_PAGE = 'agreement page',
   AGREEMENT_TILE = 'agreement tile',
-  CONTENT_LIST_AGREEMENT = 'content list page agreement list',
-  CONTENT_LIST_TILE_AGREEMENT = 'content list agreement tile',
+  CONTENT_LIST_AGREEMENT = 'contentList page agreement list',
+  CONTENT_LIST_TILE_AGREEMENT = 'contentList agreement tile',
   HISTORY_PAGE = 'history page',
   FAVORITES_PAGE = 'favorites page',
   PASSIVE = 'passive',
@@ -878,13 +878,13 @@ type SearchResultSelect = {
   term: string
   source: 'autocomplete' | 'search results page' | 'more results page'
   id: ID
-  kind: 'agreement' | 'profile' | 'content list' | 'album'
+  kind: 'agreement' | 'profile' | 'contentList' | 'album'
 }
 
 type SearchTabClick = {
   eventName: Name.SEARCH_TAB_CLICK
   term: string
-  tab: 'people' | 'agreements' | 'albums' | 'content lists'
+  tab: 'people' | 'agreements' | 'albums' | 'contentLists'
 }
 type Listen = {
   eventName: Name.LISTEN
@@ -1026,9 +1026,9 @@ type ServiceMonitorHealthCheck = {
 
 type ContentListLibraryReorder = {
   eventName: Name.CONTENT_LIST_LIBRARY_REORDER
-  // Whether or not the reorder contains newly created temp content lists
+  // Whether or not the reorder contains newly created temp contentLists
   containsTemporaryContentLists: boolean
-  kind: 'library-content list' | 'content list' | 'content list-folder'
+  kind: 'library-contentList' | 'contentList' | 'contentList-folder'
 }
 
 type ContentListLibraryHasUpdate = {
@@ -1038,7 +1038,7 @@ type ContentListLibraryHasUpdate = {
 
 type ContentListLibraryClicked = {
   eventName: Name.CONTENT_LIST_LIBRARY_CLICKED
-  content listId: ID
+  contentListId: ID
   hasUpdate: boolean
 }
 

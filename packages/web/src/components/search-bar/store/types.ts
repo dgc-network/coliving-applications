@@ -4,7 +4,7 @@ export default interface SearchBarState {
   searchText: string
   agreements: Agreement[]
   users: User[]
-  content lists: Collection[]
+  contentLists: Collection[]
   albums: Collection[]
   status: Status
   disregardResponses: boolean

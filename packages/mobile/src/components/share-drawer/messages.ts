@@ -4,7 +4,7 @@ const shareTypeMap: Record<ShareType, string> = {
   agreement: 'Agreement',
   profile: 'Profile',
   album: 'Album',
-  content list: 'ContentList',
+  contentList: 'ContentList',
   liveNftContentList: 'Audio NFT ContentList'
 }
 
@@ -21,7 +21,7 @@ export const messages = {
     `Check out ${handle} on @dgc-network #Coliving`,
   albumShareText: (albumName: string, handle: string) =>
     `Check out ${albumName} by ${handle} @dgc-network #Coliving`,
-  content listShareText: (content listName: string, handle: string) =>
-    `Check out ${content listName} by ${handle} @dgc-network #Coliving`,
+  contentListShareText: (contentListName: string, handle: string) =>
+    `Check out ${contentListName} by ${handle} @dgc-network #Coliving`,
   nftContentListShareText: ''
 }

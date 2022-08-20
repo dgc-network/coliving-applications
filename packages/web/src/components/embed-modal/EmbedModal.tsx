@@ -29,7 +29,7 @@ const FlavorMap = {
 
 const KindMap = {
   [PlayableType.AGREEMENT]: 'agreement',
-  [PlayableType.CONTENT_LIST]: 'content list',
+  [PlayableType.CONTENT_LIST]: 'contentList',
   [PlayableType.ALBUM]: 'album'
 }
 

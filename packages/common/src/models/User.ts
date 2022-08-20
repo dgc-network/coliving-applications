@@ -25,7 +25,7 @@ export type UserMetadata = {
   is_verified: boolean
   location: Nullable<string>
   name: string
-  content list_count: number
+  contentList_count: number
   profile_picture: Nullable<CID>
   repost_count: number
   agreement_count: number
@@ -55,7 +55,7 @@ export type UserMetadata = {
   balance?: Nullable<StringWei>
   total_balance?: Nullable<StringWei>
   associated_wallets_balance?: Nullable<StringWei>
-  content list_library?: ContentListLibrary
+  contentList_library?: ContentListLibrary
   userBank?: SolanaWalletAddress
 } & Timestamped
 

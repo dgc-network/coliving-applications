@@ -4,6 +4,6 @@ export type CID = string
 
 export enum PlayableType {
   AGREEMENT = 'agreement',
-  CONTENT_LIST = 'content list',
+  CONTENT_LIST = 'contentList',
   ALBUM = 'album'
 }

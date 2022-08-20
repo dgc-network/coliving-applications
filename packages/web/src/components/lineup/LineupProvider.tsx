@@ -61,7 +61,7 @@ const totalTileHeight = {
   main: 152 + 16,
   section: 124 + 16,
   condensed: 124 + 8,
-  content list: 350
+  contentList: 350
 }
 
 // Load AGREEMENTS_AHEAD x the number of tiles to be displayed on the screen
@@ -107,7 +107,7 @@ export interface LineupProviderProps {
   'aria-label'?: string
   // Tile components
   agreementTile: ComponentType<AgreementTileProps> | any
-  content listTile: ComponentType<ContentListTileProps> | any
+  contentListTile: ComponentType<ContentListTileProps> | any
 
   // Other props
 
@@ -191,7 +191,7 @@ export interface LineupProviderProps {
   emptyElement?: JSX.Element
   actions: LineupActions
   delayLoad?: boolean
-  /** How many rows to show for a loading content list tile. Defaults to 0 */
+  /** How many rows to show for a loading contentList tile. Defaults to 0 */
   numContentListSkeletonRows?: number
 
   /** Are we in a trending lineup? Allows tiles to specialize their rendering */
@@ -411,14 +411,14 @@ class LineupProvider extends PureComponent<CombinedProps, LineupProviderState> {
 
     const isLineupPlaying = lineup.entries.some((entry) => {
       if (entry.agreement_id) return playingUid === entry.uid
-      else if (entry.content list_id)
+      else if (entry.contentList_id)
         return entry.agreements.some((agreement: any) => agreement.uid === playingUid)
       return false
     })
     if (playingAgreementId && !isLineupPlaying && lineup.prefix === playingSource) {
       for (const entry of lineup.entries) {
         if (entry.agreement_id === playingAgreementId) return entry.uid
-        if (entry.content list_id) {
+        if (entry.contentList_id) {
           for (const agreement of entry.agreements) {
             if (agreement.agreement_id === playingAgreementId) return agreement.uid
           }
@@ -535,10 +535,10 @@ class LineupProvider extends PureComponent<CombinedProps, LineupProviderState> {
             agreementProps = { ...agreementProps, ...leadingElementTileProps }
           }
           return <this.props.agreementTile key={index} {...agreementProps} />
-        } else if (entry.kind === Kind.COLLECTIONS || entry.content list_id) {
+        } else if (entry.kind === Kind.COLLECTIONS || entry.contentList_id) {
           // Render a agreement tile if the kind agreements or there's a agreement id present
 
-          const content listProps = {
+          const contentListProps = {
             ...entry,
             key: index,
             index,
@@ -556,12 +556,12 @@ class LineupProvider extends PureComponent<CombinedProps, LineupProviderState> {
             showRankIcon: index < rankIconCount
           }
 
-          return <this.props.content listTile key={index} {...content listProps} />
+          return <this.props.contentListTile key={index} {...contentListProps} />
         }
-        // Poorly formed agreement or content list metatdata.
+        // Poorly formed agreement or contentList metatdata.
         return null
       })
-      // Remove nulls (invalid content lists or agreements)
+      // Remove nulls (invalid contentLists or agreements)
       .filter(Boolean)
       .slice(start, lineupCount)
 
@@ -598,7 +598,7 @@ class LineupProvider extends PureComponent<CombinedProps, LineupProviderState> {
         // Skeleton tile should change depending on variant
         const SkeletonTileElement =
           variant === LineupVariant.CONTENT_LIST
-            ? this.props.content listTile
+            ? this.props.contentListTile
             : this.props.agreementTile
         // If elected to apply leading element styles to the skeletons
         // Create featured content structure around firest skeleton tile

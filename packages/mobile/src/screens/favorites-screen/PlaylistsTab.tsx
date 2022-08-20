@@ -15,7 +15,7 @@ import { FilterInput } from './FilterInput'
 import type { ExtendedCollection } from './types'
 
 const messages = {
-  emptyTabText: "You haven't favorited any content lists yet.",
+  emptyTabText: "You haven't favorited any contentLists yet.",
   inputPlaceholder: 'Filter ContentLists'
 }
 
@@ -24,29 +24,29 @@ export const ContentListsTab = () => {
   const [filterValue, setFilterValue] = useState('')
   const user = useSelectorWeb(getAccountWithContentLists)
 
-  const matchesFilter = (content list: ExtendedCollection) => {
+  const matchesFilter = (contentList: ExtendedCollection) => {
     const matchValue = filterValue.toLowerCase()
     return (
-      content list.content list_name.toLowerCase().indexOf(matchValue) > -1 ||
-      content list.ownerName.toLowerCase().indexOf(matchValue) > -1
+      contentList.contentList_name.toLowerCase().indexOf(matchValue) > -1 ||
+      contentList.ownerName.toLowerCase().indexOf(matchValue) > -1
     )
   }
 
-  const userContentLists = user?.content lists
+  const userContentLists = user?.contentLists
     ?.filter(
-      (content list) =>
-        !content list.is_album &&
-        content list.ownerHandle !== user.handle &&
-        matchesFilter(content list)
+      (contentList) =>
+        !contentList.is_album &&
+        contentList.ownerHandle !== user.handle &&
+        matchesFilter(contentList)
     )
-    .map((content list) => ({ ...content list, user }))
+    .map((contentList) => ({ ...contentList, user }))
 
   const handleNavigateToNewContentList = useCallback(() => {
     navigation.push({ native: { screen: 'CreateContentList' } })
   }, [navigation])
 
   return (
-    <VirtualizedScrollView listKey='favorites-content lists-view'>
+    <VirtualizedScrollView listKey='favorites-contentLists-view'>
       {!userContentLists?.length && !filterValue ? (
         <EmptyTab message={messages.emptyTabText} />
       ) : (
@@ -62,7 +62,7 @@ export const ContentListsTab = () => {
         onPress={handleNavigateToNewContentList}
       />
       <CollectionList
-        listKey='favorites-content lists'
+        listKey='favorites-contentLists'
         scrollEnabled={false}
         collection={userContentLists ?? []}
         fromPage={FAVORITES_PAGE}

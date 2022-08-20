@@ -48,14 +48,14 @@ export const stripPrefix = (prefix: string, actionType: string) => {
  * simple playback.
  * @example
  *  // contentList.js
- *  // Creates lineup actions for a content list, e.g.
+ *  // Creates lineup actions for a contentList, e.g.
  *  // CONTENT_LIST_FETCH_AGREEMENTS_METADATAS.
  *  class ContentListActions extends LineupActions {
  *    constructor () {
  *      super("CONTENT_LIST")
  *    }
  *  }
- *  export const content listActions = new ContentListActions()
+ *  export const contentListActions = new ContentListActions()
  */
 export class LineupActions {
   prefix: string

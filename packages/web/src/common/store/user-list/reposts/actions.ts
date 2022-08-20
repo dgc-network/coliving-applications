@@ -17,7 +17,7 @@ export const agreementRepostError = createCustomAction(
   GET_AGREEMENT_REPOST_ERROR,
   (id: ID, error: string) => ({ id, error })
 )
-export const content listRepostError = createCustomAction(
+export const contentListRepostError = createCustomAction(
   GET_CONTENT_LIST_REPOST_ERROR,
   (id: ID, error: string) => ({ id, error })
 )

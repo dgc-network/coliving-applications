@@ -50,7 +50,7 @@ export const parseUserRoute = (route: string): UserRouteParams => {
     if (
       tab === 'agreements' ||
       tab === 'albums' ||
-      tab === 'content lists' ||
+      tab === 'contentLists' ||
       tab === 'reposts' ||
       tab === 'collectibles'
     ) {

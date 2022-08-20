@@ -51,7 +51,7 @@ const AgreementListItem = ({
   if (forceSkeleton) {
     return (
       <div
-        className={cn(styles.content listAgreement, {
+        className={cn(styles.contentListAgreement, {
           [styles.large]: size === AgreementTileSize.LARGE,
           [styles.small]: size === AgreementTileSize.SMALL
         })}
@@ -115,7 +115,7 @@ const AgreementListItem = ({
 
   return (
     <div
-      className={cn(styles.content listAgreement, {
+      className={cn(styles.contentListAgreement, {
         [styles.large]: size === AgreementTileSize.LARGE,
         [styles.small]: size === AgreementTileSize.SMALL,
         [styles.deleted]: deleted,

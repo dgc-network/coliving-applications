@@ -20,7 +20,7 @@ const initialState: NotificationState = {
     status: undefined,
     limit: 0
   },
-  content listUpdates: []
+  contentListUpdates: []
 }
 
 const actionsMap: any = {
@@ -163,15 +163,15 @@ const actionsMap: any = {
     action: actions.SetContentListUpdates
   ) {
     if (
-      action.content listUpdates.length === 0 &&
-      state.content listUpdates.length === 0
+      action.contentListUpdates.length === 0 &&
+      state.contentListUpdates.length === 0
     ) {
       return state
     }
 
     return {
       ...state,
-      content listUpdates: action.content listUpdates || []
+      contentListUpdates: action.contentListUpdates || []
     }
   },
   [actions.UPDATE_CONTENT_LIST_VIEW](
@@ -180,8 +180,8 @@ const actionsMap: any = {
   ) {
     return {
       ...state,
-      content listUpdates: state.content listUpdates.filter(
-        (id) => id !== action.content listId
+      contentListUpdates: state.contentListUpdates.filter(
+        (id) => id !== action.contentListId
       )
     }
   }

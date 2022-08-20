@@ -14,7 +14,7 @@ const messages = {
   confirmTitle: 'Deactivate Account',
   areYouSureText: 'Are you sure you want to deactivate your account?',
   doubleCheckText:
-    'There is no going back. This will remove all of your agreements, albums, and content lists. You will not be able to re-register with the same email or handle',
+    'There is no going back. This will remove all of your agreements, albums, and contentLists. You will not be able to re-register with the same email or handle',
   confirmText: 'Deactivate',
   cancelText: 'Take me back to safety'
 }

@@ -9,7 +9,7 @@ type CollectionRouteParams =
   | {
       collectionId: ID
       handle: string
-      collectionType: 'content list' | 'album'
+      collectionType: 'contentList' | 'album'
       title: string
     }
   | { collectionId: ID; handle: null; collectionType: null; title: null }
@@ -31,20 +31,20 @@ export const parseCollectionRoute = (route: string): CollectionRouteParams => {
     return { collectionId, handle: null, collectionType: null, title: null }
   }
 
-  const content listPageMatch = matchPath<{
+  const contentListPageMatch = matchPath<{
     handle: string
-    content listName: string
+    contentListName: string
   }>(route, {
     path: CONTENT_LIST_PAGE,
     exact: true
   })
-  if (content listPageMatch) {
-    const { handle, content listName } = content listPageMatch.params
-    const nameParts = content listName.split('-')
+  if (contentListPageMatch) {
+    const { handle, contentListName } = contentListPageMatch.params
+    const nameParts = contentListName.split('-')
     const title = nameParts.slice(0, nameParts.length - 1).join('-')
     const collectionId = parseInt(nameParts[nameParts.length - 1], 10)
     if (!collectionId || isNaN(collectionId)) return null
-    return { title, collectionId, handle, collectionType: 'content list' }
+    return { title, collectionId, handle, collectionType: 'contentList' }
   }
 
   const albumPageMatch = matchPath<{

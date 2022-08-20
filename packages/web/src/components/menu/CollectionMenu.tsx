@@ -15,7 +15,7 @@ import * as socialActions from 'common/store/social/collections/actions'
 import * as embedModalActions from 'components/embed-modal/store/actions'
 import { open as openEditCollectionModal } from 'store/application/ui/editContentListModal/slice'
 import { AppState } from 'store/types'
-import { albumPage, content listPage, profilePage } from 'utils/route'
+import { albumPage, contentListPage, profilePage } from 'utils/route'
 
 type ContentListId = number
 
@@ -36,9 +36,9 @@ export type OwnProps = {
   onClose?: () => void
   onRepost?: () => void
   onShare?: () => void
-  content listId: ContentListId
-  content listName: string
-  type: 'album' | 'content list'
+  contentListId: ContentListId
+  contentListName: string
+  type: 'album' | 'contentList'
 }
 
 export type CollectionMenuProps = OwnProps &
@@ -54,8 +54,8 @@ const CollectionMenu = (props: CollectionMenuProps) => {
     const {
       type,
       handle,
-      content listName,
-      content listId,
+      contentListName,
+      contentListId,
       isOwner,
       isFavorited,
       isReposted,
@@ -80,11 +80,11 @@ const CollectionMenu = (props: CollectionMenuProps) => {
       extraMenuItems
     } = props
 
-    const routePage = type === 'album' ? albumPage : content listPage
+    const routePage = type === 'album' ? albumPage : contentListPage
     const shareMenuItem = {
       text: 'Share',
       onClick: () => {
-        shareCollection(content listId)
+        shareCollection(contentListId)
         if (onShare) onShare()
       }
     }
@@ -93,16 +93,16 @@ const CollectionMenu = (props: CollectionMenuProps) => {
     const favoriteMenuItem = {
       text: isFavorited ? `Unfavorite ${typeName}` : `Favorite ${typeName}`,
       onClick: () =>
-        isFavorited ? unsaveCollection(content listId) : saveCollection(content listId)
+        isFavorited ? unsaveCollection(contentListId) : saveCollection(contentListId)
     }
 
     const repostMenuItem = {
       text: isReposted ? 'Undo Repost' : 'Repost',
       onClick: () => {
         if (isReposted) {
-          undoRepostCollection(content listId)
+          undoRepostCollection(contentListId)
         } else {
-          repostCollection(content listId)
+          repostCollection(contentListId)
           if (onRepost) onRepost()
         }
       }
@@ -113,21 +113,21 @@ const CollectionMenu = (props: CollectionMenuProps) => {
       onClick: () => goToRoute(profilePage(handle))
     }
 
-    const content listPageMenuItem = {
+    const contentListPageMenuItem = {
       text: `Visit ${typeName} Page`,
-      onClick: () => goToRoute(routePage(handle, content listName, content listId))
+      onClick: () => goToRoute(routePage(handle, contentListName, contentListId))
     }
 
     const editCollectionMenuItem = {
       text: `Edit ${typeName}`,
-      onClick: () => editCollection(content listId)
+      onClick: () => editCollection(contentListId)
     }
 
     const embedMenuItem = {
       text: messages.embed,
       onClick: () =>
         openEmbedModal(
-          content listId,
+          contentListId,
           type === 'album' ? PlayableType.ALBUM : PlayableType.CONTENT_LIST
         )
     }
@@ -143,7 +143,7 @@ const CollectionMenu = (props: CollectionMenuProps) => {
     }
     menu.items.push(artistPageMenuItem)
     if (includeVisitPage) {
-      menu.items.push(content listPageMenuItem)
+      menu.items.push(contentListPageMenuItem)
     }
     if (extraMenuItems.length > 0) {
       menu.items = menu.items.concat(extraMenuItems)
@@ -175,28 +175,28 @@ function mapStateToProps(state: AppState, props: OwnProps) {
 function mapDispatchToProps(dispatch: Dispatch) {
   return {
     goToRoute: (route: string) => dispatch(pushRoute(route)),
-    shareCollection: (content listId: ContentListId) =>
-      dispatch(socialActions.shareCollection(content listId, ShareSource.OVERFLOW)),
-    editCollection: (content listId: ID) =>
-      dispatch(openEditCollectionModal(content listId)),
-    saveCollection: (content listId: ContentListId) =>
+    shareCollection: (contentListId: ContentListId) =>
+      dispatch(socialActions.shareCollection(contentListId, ShareSource.OVERFLOW)),
+    editCollection: (contentListId: ID) =>
+      dispatch(openEditCollectionModal(contentListId)),
+    saveCollection: (contentListId: ContentListId) =>
       dispatch(
-        socialActions.saveCollection(content listId, FavoriteSource.OVERFLOW)
+        socialActions.saveCollection(contentListId, FavoriteSource.OVERFLOW)
       ),
-    unsaveCollection: (content listId: ContentListId) =>
+    unsaveCollection: (contentListId: ContentListId) =>
       dispatch(
-        socialActions.unsaveCollection(content listId, FavoriteSource.OVERFLOW)
+        socialActions.unsaveCollection(contentListId, FavoriteSource.OVERFLOW)
       ),
-    repostCollection: (content listId: ContentListId) =>
+    repostCollection: (contentListId: ContentListId) =>
       dispatch(
-        socialActions.repostCollection(content listId, RepostSource.OVERFLOW)
+        socialActions.repostCollection(contentListId, RepostSource.OVERFLOW)
       ),
-    undoRepostCollection: (content listId: ContentListId) =>
+    undoRepostCollection: (contentListId: ContentListId) =>
       dispatch(
-        socialActions.undoRepostCollection(content listId, RepostSource.OVERFLOW)
+        socialActions.undoRepostCollection(contentListId, RepostSource.OVERFLOW)
       ),
-    openEmbedModal: (content listId: ID, kind: PlayableType) =>
-      dispatch(embedModalActions.open(content listId, kind))
+    openEmbedModal: (contentListId: ID, kind: PlayableType) =>
+      dispatch(embedModalActions.open(contentListId, kind))
   }
 }
 

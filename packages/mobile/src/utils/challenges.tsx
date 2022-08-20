@@ -98,9 +98,9 @@ export const challenges = {
   sendFirstTipButton: 'Find Someone To Tip',
 
   firstContentListTitle: 'Create Your First ContentList',
-  firstContentListDescription: 'Create your first content list & add a agreement to it',
+  firstContentListDescription: 'Create your first contentList & add a agreement to it',
   firstContentListShortDescription:
-    'Create your first content list & add a agreement to it',
+    'Create your first contentList & add a agreement to it',
   firstContentListProgressLabel: 'Not Earned',
   firstContentListButton: 'Create Your First ContentList'
 }
@@ -241,7 +241,7 @@ export const challengesConfig: Record<ChallengeRewardID, ChallengeConfig> = {
       }
     }
   },
-  'first-content list': {
+  'first-contentList': {
     icon: Sparkles,
     title: challenges.firstContentListTitle,
     description: challenges.firstContentListDescription,
@@ -259,7 +259,7 @@ export const challengesConfig: Record<ChallengeRewardID, ChallengeConfig> = {
 
 export const trendingRewardsConfig: Record<TrendingRewardID, ChallengeConfig> =
   {
-    'trending-content list': {
+    'trending-contentList': {
       title: 'Top 5 Trending ContentLists',
       icon: ChartIncreasing,
       description: 'Winners are selected every Friday at Noon PT!',

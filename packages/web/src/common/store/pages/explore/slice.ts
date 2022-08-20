@@ -4,7 +4,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import ExplorePageState, { ExploreContent, Tabs } from './types'
 
 const initialState: ExplorePageState = {
-  content lists: [],
+  contentLists: [],
   profiles: [],
   status: Status.SUCCESS,
   tab: Tabs.FOR_YOU
@@ -31,7 +31,7 @@ const slice = createSlice({
     ) => {
       const { featuredContentLists, featuredProfiles } =
         action.payload.exploreContent
-      state.content lists = featuredContentLists
+      state.contentLists = featuredContentLists
       state.profiles = featuredProfiles
       state.status = Status.SUCCESS
     },

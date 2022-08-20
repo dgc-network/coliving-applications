@@ -167,7 +167,7 @@ const AgreementSearchResult = ({ isLast, item: agreement }: AgreementSearchResul
 type ContentListSearchResultProps = { isLast: boolean; item: SearchContentList }
 const ContentListSearchResult = ({
   isLast,
-  item: content list
+  item: contentList
 }: ContentListSearchResultProps) => {
   const nameStyle = useTheme(styles.name, { color: 'neutral' })
   const userNameStyle = useTheme(styles.name, { color: 'neutralLight4' })
@@ -180,33 +180,33 @@ const ContentListSearchResult = ({
   const { appendSearchItem } = useSearchHistory()
 
   const handlePress = useCallback(() => {
-    appendSearchItem(content list.content list_name)
-    const collectionRoute = getCollectionRoute(content list as any)
+    appendSearchItem(contentList.contentList_name)
+    const collectionRoute = getCollectionRoute(contentList as any)
     dispatch(closeSearch())
     navigation.push({
       native: {
         screen: 'Collection',
-        params: { id: content list.content list_id, searchCollection: content list }
+        params: { id: contentList.contentList_id, searchCollection: contentList }
       },
       web: { route: collectionRoute, fromPage: 'search' }
     })
-  }, [content list, dispatch, navigation, appendSearchItem])
+  }, [contentList, dispatch, navigation, appendSearchItem])
 
   return (
     <ItemContainer isLast={isLast} onPress={handlePress}>
       <ContentListImage
-        content list={content list}
-        user={content list.user}
+        contentList={contentList}
+        user={contentList.user}
         imageStyle={squareImageStyles}
       />
       <View style={styles.nameContainer}>
         <Text numberOfLines={1} style={nameStyle}>
-          {content list.content list_name}
+          {contentList.contentList_name}
         </Text>
         <UserBadges
           style={styles.badgeContainer}
           nameStyle={userNameStyle}
-          user={content list.user}
+          user={contentList.user}
         />
       </View>
     </ItemContainer>
@@ -226,13 +226,13 @@ const AlbumSearchResult = ({ isLast, item: album }: AlbumSearchResultProps) => {
   const { appendSearchItem } = useSearchHistory()
 
   const handlePress = useCallback(() => {
-    appendSearchItem(album.content list_name)
+    appendSearchItem(album.contentList_name)
     const collectionRoute = getCollectionRoute(album as any)
     dispatch(closeSearch())
     navigation.push({
       native: {
         screen: 'Collection',
-        params: { id: album.content list_id, searchCollection: album }
+        params: { id: album.contentList_id, searchCollection: album }
       },
       web: { route: collectionRoute, fromPage: 'search' }
     })
@@ -241,13 +241,13 @@ const AlbumSearchResult = ({ isLast, item: album }: AlbumSearchResultProps) => {
   return (
     <ItemContainer isLast={isLast} onPress={handlePress}>
       <ContentListImage
-        content list={album}
+        contentList={album}
         user={album.user}
         imageStyle={squareImageStyles}
       />
       <View style={styles.nameContainer}>
         <Text numberOfLines={1} style={nameStyle}>
-          {album.content list_name}
+          {album.contentList_name}
         </Text>
         <UserBadges
           style={styles.badgeContainer}
@@ -270,7 +270,7 @@ const SearchItem = ({ isLast, type, item }: SearchItemProps) => {
       return <UserSearchResult isLast={isLast} item={item as SearchUser} />
     case 'agreements':
       return <AgreementSearchResult isLast={isLast} item={item as SearchAgreement} />
-    case 'content lists':
+    case 'contentLists':
       return (
         <ContentListSearchResult isLast={isLast} item={item as SearchContentList} />
       )

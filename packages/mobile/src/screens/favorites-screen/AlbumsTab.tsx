@@ -20,22 +20,22 @@ export const AlbumsTab = () => {
   const [filterValue, setFilterValue] = useState('')
   const user = useSelectorWeb(getAccountWithAlbums)
 
-  const matchesFilter = (content list: ExtendedCollection) => {
+  const matchesFilter = (contentList: ExtendedCollection) => {
     const matchValue = filterValue.toLowerCase()
     return (
-      content list.content list_name.toLowerCase().indexOf(matchValue) > -1 ||
-      content list.ownerName.toLowerCase().indexOf(matchValue) > -1
+      contentList.contentList_name.toLowerCase().indexOf(matchValue) > -1 ||
+      contentList.ownerName.toLowerCase().indexOf(matchValue) > -1
     )
   }
 
   const userAlbums = user?.albums
     ?.filter(
-      (content list) =>
-        content list.is_album &&
-        content list.ownerHandle !== user.handle &&
-        matchesFilter(content list)
+      (contentList) =>
+        contentList.is_album &&
+        contentList.ownerHandle !== user.handle &&
+        matchesFilter(contentList)
     )
-    .map((content list) => ({ ...content list, user }))
+    .map((contentList) => ({ ...contentList, user }))
 
   return (
     <VirtualizedScrollView listKey='favorites-albums-view'>

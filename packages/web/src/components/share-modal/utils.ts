@@ -42,22 +42,22 @@ export const getTwitterShareText = (
     }
     case 'album': {
       const {
-        album: { content list_name, content list_id },
+        album: { contentList_name, contentList_id },
         artist: { handle }
       } = content
-      twitterText = messages.albumShareText(content list_name, handle)
-      link = fullAlbumPage(handle, content list_name, content list_id)
-      analyticsEvent = { kind: 'album', id: content list_id, url: link }
+      twitterText = messages.albumShareText(contentList_name, handle)
+      link = fullAlbumPage(handle, contentList_name, contentList_id)
+      analyticsEvent = { kind: 'album', id: contentList_id, url: link }
       break
     }
-    case 'content list': {
+    case 'contentList': {
       const {
-        content list: { content list_name, content list_id },
+        contentList: { contentList_name, contentList_id },
         creator: { handle }
       } = content
-      twitterText = messages.content listShareText(content list_name, handle)
-      link = fullContentListPage(handle, content list_name, content list_id)
-      analyticsEvent = { kind: 'content list', id: content list_id, url: link }
+      twitterText = messages.contentListShareText(contentList_name, handle)
+      link = fullContentListPage(handle, contentList_name, contentList_id)
+      analyticsEvent = { kind: 'contentList', id: contentList_id, url: link }
       break
     }
     case 'liveNftContentList': {

@@ -16,7 +16,7 @@ const Template: Story<IconButtonProps> = (args) => {
 export const Base = Template.bind({})
 const baseProps: IconButtonProps = {
   icon: <IconContentLists />,
-  'aria-label': 'Add content list'
+  'aria-label': 'Add contentList'
 }
 
 Base.args = baseProps

@@ -38,9 +38,9 @@ import {
   shareUser,
   unfollowUser
 } from 'common/store/social/users/actions'
-import { requestOpen as openAddToContentList } from 'common/store/ui/add-to-content list/actions'
+import { requestOpen as openAddToContentList } from 'common/store/ui/add-to-contentList/actions'
 import { open as openEditContentList } from 'common/store/ui/createContentListModal/actions'
-import { requestOpen as openDeleteContentList } from 'common/store/ui/delete-content list-confirmation-modal/slice'
+import { requestOpen as openDeleteContentList } from 'common/store/ui/delete-contentList-confirmation-modal/slice'
 import { getMobileOverflowModal } from 'common/store/ui/mobile-overflow-menu/selectors'
 import { OverflowSource } from 'common/store/ui/mobile-overflow-menu/types'
 import { getModalVisibility, setVisibility } from 'common/store/ui/modals/slice'
@@ -48,7 +48,7 @@ import { AppState } from 'store/types'
 import {
   albumPage,
   collectibleDetailsPage,
-  content listPage,
+  contentListPage,
   profilePage
 } from 'utils/route'
 
@@ -282,12 +282,12 @@ const getAdditionalInfo = ({
     case OverflowSource.COLLECTIONS: {
       const col = getCollection(state, { id: id as number })
       if (!col) return {}
-      const user = getUser(state, { id: col.content list_owner_id })
+      const user = getUser(state, { id: col.contentList_owner_id })
       if (!user) return {}
       return {
         handle: user.handle,
         artistName: user.name,
-        title: col.content list_name,
+        title: col.contentList_name,
         isAlbum: col.is_album
       }
     }
@@ -347,10 +347,10 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
       dispatch(saveCollection(collectionId, FavoriteSource.OVERFLOW)),
     unsaveCollection: (collectionId: ID) =>
       dispatch(unsaveCollection(collectionId, FavoriteSource.OVERFLOW)),
-    editContentList: (content listId: ID) => dispatch(openEditContentList(content listId)),
-    deleteContentList: (content listId: ID) =>
-      dispatch(openDeleteContentList({ content listId })),
-    publishContentList: (content listId: ID) => dispatch(publishContentList(content listId)),
+    editContentList: (contentListId: ID) => dispatch(openEditContentList(contentListId)),
+    deleteContentList: (contentListId: ID) =>
+      dispatch(openDeleteContentList({ contentListId })),
+    publishContentList: (contentListId: ID) => dispatch(publishContentList(contentListId)),
 
     // Users
     follow: (userId: ID) => dispatch(followUser(userId, FollowSource.OVERFLOW)),
@@ -372,10 +372,10 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
       dispatch(pushRoute(collectibleDetailsPage(handle, id)))
     },
     visitContentListPage: (
-      content listId: ID,
+      contentListId: ID,
       handle: string,
-      content listTitle: string
-    ) => dispatch(pushRoute(content listPage(handle, content listTitle, content listId))),
+      contentListTitle: string
+    ) => dispatch(pushRoute(contentListPage(handle, contentListTitle, contentListId))),
     visitAlbumPage: (albumId: ID, handle: string, albumTitle: string) =>
       dispatch(pushRoute(albumPage(handle, albumTitle, albumId)))
   }

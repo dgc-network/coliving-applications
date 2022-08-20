@@ -46,8 +46,8 @@ export type ContentListFormFields = Partial<Collection> & {
       | 'updated_at'
       | 'cover_art'
       | 'cover_art_sizes'
-      | 'content list_name'
-      | 'content list_owner_id'
+      | 'contentList_name'
+      | 'contentList_owner_id'
       | 'save_count'
       | 'upc'
       | 'description'
@@ -82,13 +82,13 @@ const ContentListForm = ({
     ...schemas.newCollectionMetadata(metadata)
   })
   const [errors, setErrors] = useState({
-    content listName: false,
+    contentListName: false,
     artwork: false
   })
   const [hasSubmitted, setHasSubmitted] = useState(false)
 
   const coverArt = useCollectionCoverArt(
-    formFields.content list_id,
+    formFields.contentList_id,
     formFields?._cover_art_sizes ? formFields._cover_art_sizes : null,
     SquareSizes.SIZE_1000_BY_1000
   )
@@ -99,7 +99,7 @@ const ContentListForm = ({
       setFormFields((oldFormFields) => ({
         ...schemas.newCollectionMetadata(metadata),
         artwork: oldFormFields.artwork,
-        content list_name: oldFormFields.content list_name,
+        contentList_name: oldFormFields.contentList_name,
         description: oldFormFields.description
       }))
     }
@@ -132,10 +132,10 @@ const ContentListForm = ({
   const onChangeContentListName = (name: string) => {
     setFormFields((formFields: ContentListFormFields) => ({
       ...formFields,
-      content list_name: name
+      contentList_name: name
     }))
     if (name) {
-      setErrors({ ...errors, content listName: false })
+      setErrors({ ...errors, contentListName: false })
     }
   }
 
@@ -147,13 +147,13 @@ const ContentListForm = ({
   }
 
   const onSave = () => {
-    const nameIsEmpty = !formFields.content list_name
+    const nameIsEmpty = !formFields.contentList_name
     const artworkIsEmpty = !formFields.artwork.file && !coverArt
     if (nameIsEmpty || artworkIsEmpty) {
       setErrors({
         ...errors,
         artwork: artworkIsEmpty,
-        content listName: nameIsEmpty
+        contentListName: nameIsEmpty
       })
     } else {
       setHasSubmitted(true)
@@ -163,7 +163,7 @@ const ContentListForm = ({
 
   return (
     <div>
-      <div className={styles.content listForm}>
+      <div className={styles.contentListForm}>
         <UploadArtwork
           artworkUrl={formFields.artwork.url || coverArt}
           onDropArtwork={onDropArtwork}
@@ -176,8 +176,8 @@ const ContentListForm = ({
           <Input
             variant='elevatedPlaceholder'
             placeholder={`${isAlbum ? 'Album' : 'ContentList'} Name`}
-            defaultValue={formFields.content list_name || ''}
-            error={errors.content listName}
+            defaultValue={formFields.contentList_name || ''}
+            error={errors.contentListName}
             onChange={onChangeContentListName}
             characterLimit={64}
           />

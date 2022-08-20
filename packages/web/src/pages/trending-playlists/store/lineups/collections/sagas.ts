@@ -6,8 +6,8 @@ import { processAndCacheCollections } from 'common/store/cache/collections/utils
 import {
   PREFIX,
   trendingContentListLineupActions
-} from 'common/store/pages/trending-content lists/lineups/actions'
-import { getLineup } from 'common/store/pages/trending-content lists/lineups/selectors'
+} from 'common/store/pages/trending-contentLists/lineups/actions'
+import { getLineup } from 'common/store/pages/trending-contentLists/lineups/selectors'
 import apiClient from 'services/coliving-api-client/ColivingAPIClient'
 import { remoteConfigInstance } from 'services/remote-config/remote-config-instance'
 import { LineupSagas } from 'store/lineup/sagas'
@@ -20,7 +20,7 @@ function* getContentLists({ limit, offset }: { limit: number; offset: number }) 
 
   const time = 'week' as const
   const currentUserId: ReturnType<typeof getUserId> = yield select(getUserId)
-  let content lists: UserCollectionMetadata[] = yield call(
+  let contentLists: UserCollectionMetadata[] = yield call(
     (args) => apiClient.getTrendingContentLists(args),
     {
       currentUserId,
@@ -30,13 +30,13 @@ function* getContentLists({ limit, offset }: { limit: number; offset: number }) 
     }
   )
   if (TF.size > 0) {
-    content lists = content lists.filter((p) => {
-      const shaId = window.Web3.utils.sha3(p.content list_id.toString())
+    contentLists = contentLists.filter((p) => {
+      const shaId = window.Web3.utils.sha3(p.contentList_id.toString())
       return !TF.has(shaId)
     })
   }
 
-  // Omit content lists owned by Coliving
+  // Omit contentLists owned by Coliving
   const userIdsToOmit = new Set(
     (
       remoteConfigInstance.getRemoteVar(
@@ -44,8 +44,8 @@ function* getContentLists({ limit, offset }: { limit: number; offset: number }) 
       ) || ''
     ).split(',')
   )
-  const trendingContentLists = content lists.filter(
-    (content list) => !userIdsToOmit.has(`${content list.content list_owner_id}`)
+  const trendingContentLists = contentLists.filter(
+    (contentList) => !userIdsToOmit.has(`${contentList.contentList_owner_id}`)
   )
 
   const processed: Collection[] = yield processAndCacheCollections(

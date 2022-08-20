@@ -23,7 +23,7 @@ import { useDrawerNavigation } from '../useDrawerNavigation'
 const messages = {
   title: 'Agreement Added to ContentList',
   addedAgreement: ' added your agreement ',
-  toContentList: ' to their content list '
+  toContentList: ' to their contentList '
 }
 type AddAgreementToContentListNotificationProps = {
   notification: AddAgreementToContentList
@@ -37,19 +37,19 @@ export const AddAgreementToContentListNotification = (
     (state) => getNotificationEntities(state, notification),
     isEqual
   )
-  const { agreement, content list } = entities
-  const content listOwner = content list.user
+  const { agreement, contentList } = entities
+  const contentListOwner = contentList.user
 
   const navigation = useDrawerNavigation()
 
   const handlePress = useCallback(() => {
-    if (content list) {
+    if (contentList) {
       navigation.navigate({
-        native: getEntityScreen(content list),
-        web: { route: getEntityRoute(content list) }
+        native: getEntityScreen(contentList),
+        web: { route: getEntityRoute(contentList) }
       })
     }
-  }, [content list, navigation])
+  }, [contentList, navigation])
 
   return (
     <NotificationTile notification={notification} onPress={handlePress}>
@@ -57,14 +57,14 @@ export const AddAgreementToContentListNotification = (
         <NotificationTitle>{messages.title}</NotificationTitle>
       </NotificationHeader>
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-        <ProfilePicture profile={content listOwner} />
+        <ProfilePicture profile={contentListOwner} />
         <View style={{ flex: 1 }}>
           <NotificationText>
-            <UserNameLink user={content listOwner} />
+            <UserNameLink user={contentListOwner} />
             {messages.addedAgreement}
             <EntityLink entity={agreement} />
             {messages.toContentList}
-            <EntityLink entity={content list} />
+            <EntityLink entity={contentList} />
           </NotificationText>
         </View>
       </View>

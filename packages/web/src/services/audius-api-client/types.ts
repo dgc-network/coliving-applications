@@ -30,7 +30,7 @@ export type APIUser = {
   is_deactivated: boolean
   location: Nullable<string>
   name: string
-  content list_count: number
+  contentList_count: number
   profile_picture: ProfilePictureSizes
   repost_count: number
   agreement_count: number
@@ -57,7 +57,7 @@ export type APISearchUser = Omit<
   | 'album_count'
   | 'followee_count'
   | 'follower_count'
-  | 'content list_count'
+  | 'contentList_count'
   | 'repost_count'
   | 'agreement_count'
   | 'current_user_followee_follow_count'
@@ -158,7 +158,7 @@ export type APIContentList = {
   description: Nullable<string>
   id: OpaqueID
   is_album: boolean
-  content list_name: string
+  contentList_name: string
   repost_count: number
   favorite_count: number
   total_play_count: number
@@ -191,11 +191,11 @@ export type APISearchContentList = Omit<
   | 'agreements'
 >
 
-export type APIItemType = 'agreement' | 'content list'
+export type APIItemType = 'agreement' | 'contentList'
 
 export type APIActivity = { timestamp: string } & (
   | { item_type: 'agreement'; item: APIAgreement }
-  | { item_type: 'content list'; item: APIContentList }
+  | { item_type: 'contentList'; item: APIContentList }
 )
 
 export type APISearch = {
@@ -203,8 +203,8 @@ export type APISearch = {
   followed_users?: APIUser[]
   agreements?: APIAgreement[]
   saved_agreements?: APIAgreement[]
-  content lists?: APIContentList[]
-  saved_content lists?: APIContentList[]
+  contentLists?: APIContentList[]
+  saved_contentLists?: APIContentList[]
   albums?: APIContentList[]
   saved_albums?: APIContentList[]
 }
@@ -214,8 +214,8 @@ export type APISearchAutocomplete = {
   followed_users?: APISearchUser[]
   agreements?: APISearchAgreement[]
   saved_agreements?: APISearchAgreement[]
-  content lists?: APISearchContentList[]
-  saved_content lists?: APISearchContentList[]
+  contentLists?: APISearchContentList[]
+  saved_contentLists?: APISearchContentList[]
   albums?: APISearchContentList[]
   saved_albums?: APISearchContentList[]
 }

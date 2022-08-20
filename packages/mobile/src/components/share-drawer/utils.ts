@@ -27,10 +27,10 @@ export const getContentUrl = (content: ShareModalContent) => {
         true
       )
     }
-    case 'content list': {
-      const { content list, creator } = content
+    case 'contentList': {
+      const { contentList, creator } = content
       return getCollectionRoute(
-        { ...content list, user: creator } as unknown as UserCollection,
+        { ...contentList, user: creator } as unknown as UserCollection,
         true
       )
     }
@@ -58,17 +58,17 @@ export const getTwitterShareText = (content: ShareModalContent) => {
     }
     case 'album': {
       const {
-        album: { content list_name },
+        album: { contentList_name },
         artist: { handle }
       } = content
-      return messages.albumShareText(content list_name, handle)
+      return messages.albumShareText(contentList_name, handle)
     }
-    case 'content list': {
+    case 'contentList': {
       const {
-        content list: { content list_name },
+        contentList: { contentList_name },
         creator: { handle }
       } = content
-      return messages.content listShareText(content list_name, handle)
+      return messages.contentListShareText(contentList_name, handle)
     }
     case 'liveNftContentList': {
       return messages.nftContentListShareText

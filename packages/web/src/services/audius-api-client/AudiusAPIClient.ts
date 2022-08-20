@@ -61,17 +61,17 @@ const FULL_ENDPOINT_MAP = {
       ? `/agreements/trending/underground/${experiment}`
       : '/agreements/trending/underground',
   trendingContentLists: (experiment: string | null) =>
-    experiment ? `/content lists/trending/${experiment}` : '/content lists/trending',
+    experiment ? `/contentLists/trending/${experiment}` : '/contentLists/trending',
   recommended: '/agreements/recommended',
   remixables: '/agreements/remixables',
   following: (userId: OpaqueID) => `/users/${userId}/following`,
   followers: (userId: OpaqueID) => `/users/${userId}/followers`,
   agreementRepostUsers: (agreementId: OpaqueID) => `/agreements/${agreementId}/reposts`,
   agreementFavoriteUsers: (agreementId: OpaqueID) => `/agreements/${agreementId}/favorites`,
-  content listRepostUsers: (content listId: OpaqueID) =>
-    `/content lists/${content listId}/reposts`,
-  content listFavoriteUsers: (content listId: OpaqueID) =>
-    `/content lists/${content listId}/favorites`,
+  contentListRepostUsers: (contentListId: OpaqueID) =>
+    `/contentLists/${contentListId}/reposts`,
+  contentListFavoriteUsers: (contentListId: OpaqueID) =>
+    `/contentLists/${contentListId}/favorites`,
   getUser: (userId: OpaqueID) => `/users/${userId}`,
   userByHandle: (handle: OpaqueID) => `/users/handle/${handle}`,
   userAgreementsByHandle: (handle: OpaqueID) => `/users/handle/${handle}/agreements`,
@@ -79,7 +79,7 @@ const FULL_ENDPOINT_MAP = {
     `/users/${userId}/favorites/agreements`,
   userRepostsByHandle: (handle: OpaqueID) => `/users/handle/${handle}/reposts`,
   getRelatedArtists: (userId: OpaqueID) => `/users/${userId}/related`,
-  getContentList: (content listId: OpaqueID) => `/content lists/${content listId}`,
+  getContentList: (contentListId: OpaqueID) => `/contentLists/${contentListId}`,
   topGenreUsers: '/users/genre/top',
   topArtists: '/users/top',
   getAgreement: (agreementId: OpaqueID) => `/agreements/${agreementId}`,
@@ -193,14 +193,14 @@ type GetAgreementFavoriteUsersArgs = {
 }
 
 type GetContentListRepostUsersArgs = {
-  content listId: ID
+  contentListId: ID
   currentUserId: Nullable<ID>
   limit?: number
   offset?: number
 }
 
 type GetContentListFavoriteUsersArgs = {
-  content listId: ID
+  contentListId: ID
   currentUserId: Nullable<ID>
   limit?: number
   offset?: number
@@ -251,7 +251,7 @@ type GetUserRepostsByHandleArgs = {
 }
 
 type GetContentListArgs = {
-  content listId: ID
+  contentListId: ID
   currentUserId: Nullable<ID>
 }
 
@@ -405,8 +405,8 @@ const emptySearchResponse: APIResponse<APISearch> = {
     followed_users: [],
     agreements: [],
     saved_agreements: [],
-    content lists: [],
-    saved_content lists: [],
+    contentLists: [],
+    saved_contentLists: [],
     saved_albums: [],
     albums: []
   }
@@ -685,13 +685,13 @@ class ColivingAPIClient {
 
   async getContentListRepostUsers({
     currentUserId,
-    content listId,
+    contentListId,
     limit,
     offset
   }: GetContentListRepostUsersArgs) {
     this._assertInitialized()
     const encodedCurrentUserId = encodeHashId(currentUserId)
-    const encodedContentListId = this._encodeOrThrow(content listId)
+    const encodedContentListId = this._encodeOrThrow(contentListId)
     const params = {
       user_id: encodedCurrentUserId || undefined,
       limit,
@@ -700,7 +700,7 @@ class ColivingAPIClient {
 
     const repostUsers: Nullable<APIResponse<APIUser[]>> =
       await this._getResponse(
-        FULL_ENDPOINT_MAP.content listRepostUsers(encodedContentListId),
+        FULL_ENDPOINT_MAP.contentListRepostUsers(encodedContentListId),
         params
       )
 
@@ -714,13 +714,13 @@ class ColivingAPIClient {
 
   async getContentListFavoriteUsers({
     currentUserId,
-    content listId,
+    contentListId,
     limit,
     offset
   }: GetContentListFavoriteUsersArgs) {
     this._assertInitialized()
     const encodedCurrentUserId = encodeHashId(currentUserId)
-    const encodedContentListId = this._encodeOrThrow(content listId)
+    const encodedContentListId = this._encodeOrThrow(contentListId)
     const params = {
       user_id: encodedCurrentUserId || undefined,
       limit,
@@ -729,7 +729,7 @@ class ColivingAPIClient {
 
     const followingResponse: Nullable<APIResponse<APIUser[]>> =
       await this._getResponse(
-        FULL_ENDPOINT_MAP.content listFavoriteUsers(encodedContentListId),
+        FULL_ENDPOINT_MAP.contentListFavoriteUsers(encodedContentListId),
         params
       )
 
@@ -1054,10 +1054,10 @@ class ColivingAPIClient {
     return adapted
   }
 
-  async getContentList({ content listId, currentUserId }: GetContentListArgs) {
+  async getContentList({ contentListId, currentUserId }: GetContentListArgs) {
     this._assertInitialized()
     const encodedCurrentUserId = encodeHashId(currentUserId)
-    const encodedContentListId = this._encodeOrThrow(content listId)
+    const encodedContentListId = this._encodeOrThrow(contentListId)
     const params = {
       user_id: encodedCurrentUserId || undefined
     }

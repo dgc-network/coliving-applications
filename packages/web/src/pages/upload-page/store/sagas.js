@@ -55,8 +55,8 @@ const UPLOAD_TIMEOUT_MILLIS =
   2 /* hour */ * 60 /* min */ * 60 /* sec */ * 1000 /* ms */
 
 /**
- * Combines the metadata for a agreement and a collection (content list or album),
- * taking the metadata from the content list when the agreement is missing it.
+ * Combines the metadata for a agreement and a collection (contentList or album),
+ * taking the metadata from the contentList when the agreement is missing it.
  * @param {object} agreementMetadata
  * @param {object} collectionMetadata
  */
@@ -512,10 +512,10 @@ export function* handleUploads({
   const uploadType = isCollection
     ? isAlbum
       ? 'album'
-      : 'content list'
+      : 'contentList'
     : 'multi_agreement'
   yield reportSuccessAndFailureEvents({
-    // Don't report non-uploaded agreements due to content list upload abort
+    // Don't report non-uploaded agreements due to contentList upload abort
     numSuccess: numSuccessRequests,
     numFailure: failedRequests.length,
     errors: failedRequests.map((r) => r.message),
@@ -677,19 +677,19 @@ function* uploadCollection(agreements, userId, collectionMetadata, isAlbum) {
 
   // If we errored, return early
   if (error) {
-    console.debug('Saw an error, not going to create a content list.')
+    console.debug('Saw an error, not going to create a contentList.')
     return
   }
 
-  // Finally, create the content list
+  // Finally, create the contentList
   yield put(
     confirmerActions.requestConfirmation(
-      `${collectionMetadata.content list_name}_${Date.now()}`,
+      `${collectionMetadata.contentList_name}_${Date.now()}`,
       function* () {
-        console.debug('Creating content list')
+        console.debug('Creating contentList')
         // Uploaded collections are always public
         const isPrivate = false
-        const { blockHash, blockNumber, content listId, error } = yield call(
+        const { blockHash, blockNumber, contentListId, error } = yield call(
           ColivingBackend.createContentList,
           userId,
           collectionMetadata,
@@ -699,13 +699,13 @@ function* uploadCollection(agreements, userId, collectionMetadata, isAlbum) {
         )
 
         if (error) {
-          console.debug('Caught an error creating content list')
-          if (content listId) {
+          console.debug('Caught an error creating contentList')
+          if (contentListId) {
             yield put(uploadActions.createContentListErrorIDExists(error))
-            console.debug('Deleting content list')
-            // If we got a content list ID back, that means we
-            // created the content list but adding agreements to it failed. So we must delete the content list
-            yield call(ColivingBackend.deleteContentList, content listId)
+            console.debug('Deleting contentList')
+            // If we got a contentList ID back, that means we
+            // created the contentList but adding agreements to it failed. So we must delete the contentList
+            yield call(ColivingBackend.deleteContentList, contentListId)
             console.debug('ContentList deleted successfully')
           } else {
             // I think this is what we want
@@ -718,14 +718,14 @@ function* uploadCollection(agreements, userId, collectionMetadata, isAlbum) {
         const confirmed = yield call(confirmTransaction, blockHash, blockNumber)
         if (!confirmed) {
           throw new Error(
-            `Could not confirm content list creation for content list id ${content listId}`
+            `Could not confirm contentList creation for contentList id ${contentListId}`
           )
         }
-        return (yield call(ColivingBackend.getContentLists, userId, [content listId]))[0]
+        return (yield call(ColivingBackend.getContentLists, userId, [contentListId]))[0]
       },
       function* (confirmedContentList) {
         yield put(
-          uploadActions.uploadAgreementsSucceeded(confirmedContentList.content list_id)
+          uploadActions.uploadAgreementsSucceeded(confirmedContentList.contentList_id)
         )
         const user = yield select(getUser, { id: userId })
         yield put(
@@ -734,7 +734,7 @@ function* uploadCollection(agreements, userId, collectionMetadata, isAlbum) {
               id: userId,
               metadata: {
                 _collectionIds: (user._collectionIds || []).concat(
-                  confirmedContentList.content list_id
+                  confirmedContentList.contentList_id
                 )
               }
             }
@@ -746,16 +746,16 @@ function* uploadCollection(agreements, userId, collectionMetadata, isAlbum) {
         confirmedContentList = yield call(reformat, confirmedContentList)
         const uid = yield makeUid(
           Kind.COLLECTIONS,
-          confirmedContentList.content list_id,
+          confirmedContentList.contentList_id,
           'account'
         )
-        // Create a cache entry and add it to the account so the content list shows in the left nav
+        // Create a cache entry and add it to the account so the contentList shows in the left nav
         yield put(
           cacheActions.add(
             Kind.COLLECTIONS,
             [
               {
-                id: confirmedContentList.content list_id,
+                id: confirmedContentList.contentList_id,
                 uid,
                 metadata: confirmedContentList
               }
@@ -765,8 +765,8 @@ function* uploadCollection(agreements, userId, collectionMetadata, isAlbum) {
         )
         yield put(
           accountActions.addAccountContentList({
-            id: confirmedContentList.content list_id,
-            name: confirmedContentList.content list_name,
+            id: confirmedContentList.contentList_id,
+            name: confirmedContentList.contentList_name,
             is_album: confirmedContentList.is_album,
             user: {
               id: user.user_id,
@@ -777,7 +777,7 @@ function* uploadCollection(agreements, userId, collectionMetadata, isAlbum) {
         yield put(
           make(Name.AGREEMENT_UPLOAD_COMPLETE_UPLOAD, {
             count: agreementIds.length,
-            kind: isAlbum ? 'album' : 'content list'
+            kind: isAlbum ? 'album' : 'contentList'
           })
         )
         yield put(cacheActions.setExpired(Kind.USERS, userId))
@@ -790,7 +790,7 @@ function* uploadCollection(agreements, userId, collectionMetadata, isAlbum) {
         }
 
         console.error(
-          `Create content list call failed, deleting agreements: ${JSON.stringify(
+          `Create contentList call failed, deleting agreements: ${JSON.stringify(
             agreementIds
           )}`
         )
@@ -1110,7 +1110,7 @@ function* uploadAgreementsAsync(action) {
   const uploadType = (() => {
     switch (action.uploadType) {
       case UploadType.CONTENT_LIST:
-        return 'content list'
+        return 'contentList'
       case UploadType.ALBUM:
         return 'album'
       case UploadType.INDIVIDUAL_AGREEMENT:

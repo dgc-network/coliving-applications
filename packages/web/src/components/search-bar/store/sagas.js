@@ -21,18 +21,18 @@ export function* getSearchResults(searchText) {
     offset: 0
   })
 
-  const { agreements, albums, content lists, users } = results
+  const { agreements, albums, contentLists, users } = results
   const checkedUsers = users.filter((t) => !t.is_deactivated)
   const checkedAgreements = (yield call(setAgreementsIsBlocked, agreements)).filter(
     (t) => !t.is_delete && !t._blocked && !t.user.is_deactivated
   )
-  const checkedContentLists = content lists.filter((t) => !t.user?.is_deactivated)
+  const checkedContentLists = contentLists.filter((t) => !t.user?.is_deactivated)
   const checkedAlbums = albums.filter((t) => !t.user?.is_deactivated)
   return {
     users: checkedUsers,
     agreements: checkedAgreements,
     albums: checkedAlbums,
-    content lists: checkedContentLists
+    contentLists: checkedContentLists
   }
 }
 
@@ -44,7 +44,7 @@ function* fetchSearchAsync(action) {
     const previousResults = {
       agreements: search.agreements,
       albums: search.albums,
-      content lists: search.content lists,
+      contentLists: search.contentLists,
       users: search.users
     }
     yield put(

@@ -19,7 +19,7 @@ import {
   editContentList
 } from 'common/store/cache/collections/actions'
 import { getCollectionWithUser } from 'common/store/cache/collections/selectors'
-import ContentListForm from 'components/create-content list/ContentListForm'
+import ContentListForm from 'components/create-contentList/ContentListForm'
 import DeleteConfirmationModal from 'components/delete-confirmation/DeleteConfirmationModal'
 import LoadingSpinner from 'components/loading-spinner/LoadingSpinner'
 import {
@@ -28,7 +28,7 @@ import {
 } from 'store/application/ui/editContentListModal/selectors'
 import { close } from 'store/application/ui/editContentListModal/slice'
 import { AppState } from 'store/types'
-import { FEED_PAGE, getPathname, content listPage } from 'utils/route'
+import { FEED_PAGE, getPathname, contentListPage } from 'utils/route'
 import zIndex from 'utils/zIndex'
 
 import styles from './EditContentListModal.module.css'
@@ -37,11 +37,11 @@ const messages = {
   edit: 'Edit',
   delete: 'Delete',
   title: {
-    content list: 'ContentList',
+    contentList: 'ContentList',
     album: 'Album'
   },
   type: {
-    content list: 'ContentList',
+    contentList: 'ContentList',
     album: 'Album'
   }
 }
@@ -70,9 +70,9 @@ const EditContentListModal = ({
   }, [collection, collectionId, fetchSavedContentLists])
 
   const {
-    content list_id: content listId,
+    contentList_id: contentListId,
     is_album: isAlbum,
-    content list_name: title,
+    contentList_name: title,
     user
   } = collection || {}
   const { handle } = user || {}
@@ -82,20 +82,20 @@ const EditContentListModal = ({
   const onDelete = () => {
     setShowDeleteConfirmation(false)
     onClose()
-    deleteContentList(content listId!)
+    deleteContentList(contentListId!)
     if (handle && title) {
-      const content listRoute = content listPage(handle, title, content listId!)
-      // If on the content list page, direct user to feed
-      if (getPathname(location) === content listRoute) goToRoute(FEED_PAGE)
+      const contentListRoute = contentListPage(handle, title, contentListId!)
+      // If on the contentList page, direct user to feed
+      if (getPathname(location) === contentListRoute) goToRoute(FEED_PAGE)
     }
   }
   const onSaveEdit = (formFields: any) => {
-    editContentList(content listId!, formFields)
+    editContentList(contentListId!, formFields)
     onClose()
   }
 
   const editContentListModalTitle = `${messages.edit} ${
-    isAlbum ? messages.title.album : messages.title.content list
+    isAlbum ? messages.title.album : messages.title.contentList
   }`
 
   const [isArtworkPopupOpen, setIsArtworkPopupOpen] = useState(false)
@@ -112,7 +112,7 @@ const EditContentListModal = ({
     <>
       <Modal
         bodyClassName={styles.modalBody}
-        modalKey='editcontent list'
+        modalKey='editcontentList'
         dismissOnClickOutside={!isArtworkPopupOpen}
         isOpen={isOpen}
         onClose={onClose}
@@ -140,9 +140,9 @@ const EditContentListModal = ({
       </Modal>
       <DeleteConfirmationModal
         title={`${messages.delete} ${
-          isAlbum ? messages.title.album : messages.title.content list
+          isAlbum ? messages.title.album : messages.title.contentList
         }`}
-        entity={isAlbum ? messages.type.album : messages.type.content list}
+        entity={isAlbum ? messages.type.album : messages.type.contentList}
         visible={showDeleteConfirmation}
         onDelete={onDelete}
         onCancel={onCancelDelete}
@@ -164,9 +164,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   onClose: () => dispatch(close()),
   fetchSavedContentLists: () => dispatch(fetchSavedContentLists()),
   goToRoute: (route: string) => dispatch(pushRoute(route)),
-  editContentList: (content listId: ID, formFields: any) =>
-    dispatch(editContentList(content listId, formFields)),
-  deleteContentList: (content listId: ID) => dispatch(deleteContentList(content listId))
+  editContentList: (contentListId: ID, formFields: any) =>
+    dispatch(editContentList(contentListId, formFields)),
+  deleteContentList: (contentListId: ID) => dispatch(deleteContentList(contentListId))
 })
 
 export default withRouter(

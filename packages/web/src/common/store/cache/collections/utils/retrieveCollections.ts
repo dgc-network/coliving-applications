@@ -26,13 +26,13 @@ function* markCollectionDeleted(
   collectionMetadatas: CollectionMetadata[]
 ): Generator<any, CollectionMetadata[], any> {
   const collections = yield select(getCollections, {
-    ids: collectionMetadatas.map((c) => c.content list_id)
+    ids: collectionMetadatas.map((c) => c.contentList_id)
   })
   return collectionMetadatas.map((metadata) => {
-    if (!(metadata.content list_id in collections)) return metadata
+    if (!(metadata.contentList_id in collections)) return metadata
     return {
       ...metadata,
-      _marked_deleted: !!collections[metadata.content list_id]._marked_deleted
+      _marked_deleted: !!collections[metadata.contentList_id]._marked_deleted
     }
   })
 }
@@ -42,7 +42,7 @@ export function* retrieveAgreementsForCollections(
   excludedAgreementIdSet: Set<ID>
 ) {
   const allAgreementIds = collections.reduce((acc, cur) => {
-    const agreementIds = cur.content list_contents.agreement_ids.map((t) => t.agreement)
+    const agreementIds = cur.contentList_contents.agreement_ids.map((t) => t.agreement)
     return [...acc, ...agreementIds]
   }, [] as ID[])
   const filteredAgreementIds = [
@@ -63,19 +63,19 @@ export function* retrieveAgreementsForCollections(
 
   return collections.map((c) => {
     // Filter out unfetched agreements
-    const filteredIds = c.content list_contents.agreement_ids.filter(
+    const filteredIds = c.contentList_contents.agreement_ids.filter(
       (t) => !unfetchedIdSet.has(t.agreement)
     )
     // Add UIDs
     const withUids = filteredIds.map((t) => ({
       ...t,
       // Make a new UID if one doesn't already exist
-      uid: t.uid || makeUid(Kind.AGREEMENTS, t.agreement, `collection:${c.content list_id}`)
+      uid: t.uid || makeUid(Kind.AGREEMENTS, t.agreement, `collection:${c.contentList_id}`)
     }))
 
     return {
       ...c,
-      content list_contents: {
+      contentList_contents: {
         agreement_ids: withUids
       }
     }
@@ -84,22 +84,22 @@ export function* retrieveAgreementsForCollections(
 
 /**
  * Retrieves a single collection via API client
- * @param content listId
+ * @param contentListId
  */
-export function* retrieveCollection(content listId: ID) {
+export function* retrieveCollection(contentListId: ID) {
   const userId: ReturnType<typeof getUserId> = yield select(getUserId)
-  const content lists: UserCollectionMetadata[] = yield apiClient.getContentList({
-    content listId,
+  const contentLists: UserCollectionMetadata[] = yield apiClient.getContentList({
+    contentListId,
     currentUserId: userId
   })
-  return content lists
+  return contentLists
 }
 
 /**
  * Retrieves collections from the cache or from source
  * @param userId optional owner of collections to fetch (TODO: to be removed)
  * @param collectionIds ids to retrieve
- * @param fetchAgreements whether or not to fetch the agreements inside the content list
+ * @param fetchAgreements whether or not to fetch the agreements inside the contentList
  * @param requiresAllAgreements whether or not fetching this collection requires it to have all its agreements.
  * In the case where a collection is already cached with partial agreements, use this flag to refetch from source.
  * @returns
@@ -170,7 +170,7 @@ export function* retrieveCollections(
       return reformattedCollections
     },
     kind: Kind.COLLECTIONS,
-    idField: 'content list_id',
+    idField: 'contentList_id',
     forceRetrieveFromSource: false,
     shouldSetLoading: true,
     deleteExistingEntry: false

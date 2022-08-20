@@ -1,7 +1,7 @@
 import { takeEvery, put } from 'redux-saga/effects'
 
 import { fetchSavedContentLists } from 'common/store/account/reducer'
-import * as actions from 'common/store/ui/add-to-content list/actions'
+import * as actions from 'common/store/ui/add-to-contentList/actions'
 import { setVisibility } from 'common/store/ui/modals/slice'
 import { requiresAccount } from 'utils/sagaHelpers'
 

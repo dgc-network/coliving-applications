@@ -28,7 +28,7 @@ import {
 } from '-client/src/common/store/ui/mobile-overflow-menu/types'
 import { requestOpen as requestOpenShareModal } from '-client/src/common/store/ui/share-modal/slice'
 import { RepostType } from '-client/src/common/store/user-list/reposts/types'
-import { albumPage, content listPage } from '-client/src/utils/route'
+import { albumPage, contentListPage } from '-client/src/utils/route'
 import { open as openOverflowMenu } from 'common/store/ui/mobile-overflow-menu/slice'
 import { useSelector } from 'react-redux'
 
@@ -112,26 +112,26 @@ const CollectionTileComponent = ({
     has_current_user_reposted,
     has_current_user_saved,
     is_album,
-    content list_id,
-    content list_name,
-    content list_owner_id
+    contentList_id,
+    contentList_name,
+    contentList_owner_id
   } = collection
 
-  const isOwner = content list_owner_id === currentUserId
+  const isOwner = contentList_owner_id === currentUserId
 
   const imageUrl = useCollectionCoverArt({
-    id: content list_id,
+    id: contentList_id,
     sizes: _cover_art_sizes,
     size: SquareSizes.SIZE_150_BY_150
   })
 
   const routeWeb = useMemo(() => {
     return collection.is_album
-      ? albumPage(user.handle, collection.content list_name, collection.content list_id)
-      : content listPage(
+      ? albumPage(user.handle, collection.contentList_name, collection.contentList_id)
+      : contentListPage(
           user.handle,
-          collection.content list_name,
-          collection.content list_id
+          collection.contentList_name,
+          collection.contentList_id
         )
   }, [collection, user])
 
@@ -152,10 +152,10 @@ const CollectionTileComponent = ({
 
   const handlePressTitle = useCallback(() => {
     navigation.push({
-      native: { screen: 'Collection', params: { id: content list_id } },
+      native: { screen: 'Collection', params: { id: contentList_id } },
       web: { route: routeWeb }
     })
-  }, [content list_id, routeWeb, navigation])
+  }, [contentList_id, routeWeb, navigation])
 
   const duration = useMemo(() => {
     return agreements.reduce(
@@ -165,7 +165,7 @@ const CollectionTileComponent = ({
   }, [agreements])
 
   const handlePressOverflow = useCallback(() => {
-    if (content list_id === undefined) {
+    if (contentList_id === undefined) {
       return
     }
     const overflowActions = [
@@ -186,12 +186,12 @@ const CollectionTileComponent = ({
     dispatchWeb(
       openOverflowMenu({
         source: OverflowSource.COLLECTIONS,
-        id: content list_id,
+        id: contentList_id,
         overflowActions
       })
     )
   }, [
-    content list_id,
+    contentList_id,
     dispatchWeb,
     isOwner,
     has_current_user_reposted,
@@ -200,39 +200,39 @@ const CollectionTileComponent = ({
   ])
 
   const handlePressShare = useCallback(() => {
-    if (content list_id === undefined) {
+    if (contentList_id === undefined) {
       return
     }
     dispatchWeb(
       requestOpenShareModal({
         type: 'collection',
-        collectionId: content list_id,
+        collectionId: contentList_id,
         source: ShareSource.TILE
       })
     )
-  }, [dispatchWeb, content list_id])
+  }, [dispatchWeb, contentList_id])
 
   const handlePressSave = useCallback(() => {
-    if (content list_id === undefined) {
+    if (contentList_id === undefined) {
       return
     }
     if (has_current_user_saved) {
-      dispatchWeb(unsaveCollection(content list_id, FavoriteSource.TILE))
+      dispatchWeb(unsaveCollection(contentList_id, FavoriteSource.TILE))
     } else {
-      dispatchWeb(saveCollection(content list_id, FavoriteSource.TILE))
+      dispatchWeb(saveCollection(contentList_id, FavoriteSource.TILE))
     }
-  }, [content list_id, dispatchWeb, has_current_user_saved])
+  }, [contentList_id, dispatchWeb, has_current_user_saved])
 
   const handlePressRepost = useCallback(() => {
-    if (content list_id === undefined) {
+    if (contentList_id === undefined) {
       return
     }
     if (has_current_user_reposted) {
-      dispatchWeb(undoRepostCollection(content list_id, RepostSource.TILE))
+      dispatchWeb(undoRepostCollection(contentList_id, RepostSource.TILE))
     } else {
-      dispatchWeb(repostCollection(content list_id, RepostSource.TILE))
+      dispatchWeb(repostCollection(contentList_id, RepostSource.TILE))
     }
-  }, [content list_id, dispatchWeb, has_current_user_reposted])
+  }, [contentList_id, dispatchWeb, has_current_user_reposted])
 
   return (
     <LineupTile
@@ -240,7 +240,7 @@ const CollectionTileComponent = ({
       duration={duration}
       favoriteType={FavoriteType.CONTENT_LIST}
       repostType={RepostType.COLLECTION}
-      id={content list_id}
+      id={contentList_id}
       imageUrl={imageUrl}
       isPlayingUid={isPlayingUid}
       onPress={handlePress}
@@ -249,7 +249,7 @@ const CollectionTileComponent = ({
       onPressSave={handlePressSave}
       onPressShare={handlePressShare}
       onPressTitle={handlePressTitle}
-      title={content list_name}
+      title={contentList_name}
       item={collection}
       user={user}
     >

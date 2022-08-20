@@ -70,7 +70,7 @@ import { getStatus as getSignOnStatus } from 'pages/sign-on/store/selectors'
 import { Pages as SignOnPages } from 'pages/sign-on/store/types'
 import AgreementPage from 'pages/agreement-page/AgreementPage'
 import TrendingPage from 'pages/trending-page/TrendingPage'
-import TrendingContentListsPage from 'pages/trending-content lists/TrendingContentListPage'
+import TrendingContentListsPage from 'pages/trending-contentLists/TrendingContentListPage'
 import TrendingUndergroundPage from 'pages/trending-underground/TrendingUndergroundPage'
 import UploadType from 'pages/upload-page/components/uploadType'
 import Visualizer from 'pages/visualizer/Visualizer'
@@ -164,7 +164,7 @@ import TopLevelPage from '../components/nav/mobile/TopLevelPage'
 import Notice from '../components/notice/Notice'
 
 import styles from './App.module.css'
-import { CollectiblesContentListPage } from './collectibles-content list-page'
+import { CollectiblesContentListPage } from './collectibles-contentList-page'
 import { DeactivateAccountPage } from './deactivate-account-page/DeactivateAccountPage'
 import ExploreCollectionsPage from './explore-page/ExploreCollectionsPage'
 import FollowersPage from './followers-page/FollowersPage'
@@ -856,7 +856,7 @@ class App extends Component {
               <Route
                 exact
                 path={CONTENT_LIST_PAGE}
-                render={() => <CollectionPage type='content list' />}
+                render={() => <CollectionPage type='contentList' />}
               />
               <Route
                 exact

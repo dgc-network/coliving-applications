@@ -26,7 +26,7 @@ describe('repost', () => {
           },
           collections: {
             entries: {
-              1: { metadata: { content list_owner_id: 2, repost_count: 5 } }
+              1: { metadata: { contentList_owner_id: 2, repost_count: 5 } }
             }
           },
           users: {
@@ -67,7 +67,7 @@ describe('repost', () => {
           },
           collections: {
             entries: {
-              1: { metadata: { content list_owner_id: 2, repost_count: 5 } }
+              1: { metadata: { contentList_owner_id: 2, repost_count: 5 } }
             }
           },
           users: {
@@ -118,8 +118,8 @@ describe('save', () => {
             entries: {
               1: {
                 metadata: {
-                  content list_name: 'test',
-                  content list_owner_id: 2,
+                  contentList_name: 'test',
+                  contentList_owner_id: 2,
                   save_count: 5,
                   is_album: false
                 }
@@ -167,8 +167,8 @@ describe('save', () => {
             entries: {
               1: {
                 metadata: {
-                  content list_name: 'test',
-                  content list_owner_id: 2,
+                  contentList_name: 'test',
+                  contentList_owner_id: 2,
                   save_count: 5,
                   is_album: false
                 }

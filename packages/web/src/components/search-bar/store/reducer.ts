@@ -15,7 +15,7 @@ const initialState = {
   searchText: '',
   agreements: [],
   users: [],
-  content lists: [],
+  contentLists: [],
   albums: [],
   status: Status.SUCCESS,
   disregardResponses: false
@@ -41,8 +41,8 @@ const actionsMap: ActionsMap<SearchBarState> = {
       newState.searchText = action.searchText
       newState.agreements = action.results.agreements ? action.results.agreements : []
       newState.albums = action.results.albums ? action.results.albums : []
-      newState.content lists = action.results.content lists
-        ? action.results.content lists
+      newState.contentLists = action.results.contentLists
+        ? action.results.contentLists
         : []
       newState.users = action.results.users ? action.results.users : []
     }

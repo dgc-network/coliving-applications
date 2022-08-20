@@ -6,30 +6,30 @@ import type { UserMultihash } from 'app/models/User'
 import ImageLoader from './ImageLoader'
 import { gateways, publicGateways } from './utils'
 
-const getContentListImageUrl = (content list: CollectionImage, cNode: string) => {
-  if (content list.cover_art_sizes) {
-    return `${cNode}/ipfs/${content list.cover_art_sizes}/150x150.jpg`
+const getContentListImageUrl = (contentList: CollectionImage, cNode: string) => {
+  if (contentList.cover_art_sizes) {
+    return `${cNode}/ipfs/${contentList.cover_art_sizes}/150x150.jpg`
   }
-  if (content list.cover_art) {
-    return `${cNode}/ipfs/${content list.cover_art}`
+  if (contentList.cover_art) {
+    return `${cNode}/ipfs/${contentList.cover_art}`
   }
   return null
 }
 
-const getHasImage = (content list: CollectionImage) => {
-  return !!(content list.cover_art_sizes || content list.cover_art)
+const getHasImage = (contentList: CollectionImage) => {
+  return !!(contentList.cover_art_sizes || contentList.cover_art)
 }
 
-const useContentListImage = (content list: CollectionImage, user: UserMultihash) => {
+const useContentListImage = (contentList: CollectionImage, user: UserMultihash) => {
   const cNodes =
     user.content_node_endpoint !== null
       ? user.content_node_endpoint.split(',').filter(Boolean)
       : gateways
   const [didError, setDidError] = useState(
-    cNodes.length === 0 || !getHasImage(content list)
+    cNodes.length === 0 || !getHasImage(contentList)
   )
   const [source, setSource] = useState(
-    didError ? null : { uri: getContentListImageUrl(content list, cNodes[0]) }
+    didError ? null : { uri: getContentListImageUrl(contentList, cNodes[0]) }
   )
   const onError = useCallback(() => {
     if (didError) return
@@ -39,10 +39,10 @@ const useContentListImage = (content list: CollectionImage, user: UserMultihash)
         : gateways
     const numNodes = nodes.length
     const currInd = nodes.findIndex(
-      (cn: string) => (source?.uri ?? '') === getContentListImageUrl(content list, cn)
+      (cn: string) => (source?.uri ?? '') === getContentListImageUrl(contentList, cn)
     )
     if (currInd !== -1 && currInd < numNodes - 1) {
-      setSource({ uri: getContentListImageUrl(content list, nodes[currInd + 1]) })
+      setSource({ uri: getContentListImageUrl(contentList, nodes[currInd + 1]) })
     } else {
       // Legacy fallback for image formats (no dir cid)
       const legacyUrls = (user.content_node_endpoint ?? '')
@@ -50,12 +50,12 @@ const useContentListImage = (content list: CollectionImage, user: UserMultihash)
         .filter(Boolean)
         .concat(gateways)
         .concat(publicGateways)
-        .map((gateway) => `${gateway}/ipfs/${content list.cover_art_sizes}`)
+        .map((gateway) => `${gateway}/ipfs/${contentList.cover_art_sizes}`)
       const legacyIdx = legacyUrls.findIndex(
         (route: string) => (source?.uri ?? '') === route
       )
       if (
-        content list.cover_art_sizes &&
+        contentList.cover_art_sizes &&
         source?.uri?.endsWith('.jpg') &&
         legacyUrls.length > 0
       ) {
@@ -66,21 +66,21 @@ const useContentListImage = (content list: CollectionImage, user: UserMultihash)
         setDidError(true)
       }
     }
-  }, [content list, source, didError, user])
+  }, [contentList, source, didError, user])
 
   return { source, didError, onError }
 }
 
 const ContentListImage = ({
-  content list,
+  contentList,
   user,
   imageStyle
 }: {
-  content list: CollectionImage
+  contentList: CollectionImage
   user: UserMultihash
   imageStyle?: Record<string, any>
 }) => {
-  const { source, onError, didError } = useContentListImage(content list, user)
+  const { source, onError, didError } = useContentListImage(contentList, user)
   return (
     <ImageLoader
       style={imageStyle}

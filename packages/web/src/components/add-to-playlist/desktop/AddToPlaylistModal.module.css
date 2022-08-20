@@ -83,7 +83,7 @@
   border-radius: 4px;
 }
 
-.content listName {
+.contentListName {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

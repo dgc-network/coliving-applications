@@ -25,7 +25,7 @@ type AgreementItemProps = {
   forceSkeleton?: boolean
 }
 
-// Max number of agreement to display in a content list
+// Max number of agreement to display in a contentList
 const DISPLAY_AGREEMENT_COUNT = 5
 
 const AgreementItem = (props: AgreementItemProps) => {
@@ -166,7 +166,7 @@ const ContentListTile = (props: ContentListTileProps & ExtraProps) => {
             })}
           >
             <div className={styles.title} onClick={props.goToCollectionPage}>
-              <div className={cn(fadeIn)}>{props.content listTitle}</div>
+              <div className={cn(fadeIn)}>{props.contentListTitle}</div>
               {props.isPlaying && <IconVolume />}
               {!shouldShow && (
                 <Skeleton

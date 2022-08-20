@@ -45,7 +45,7 @@ import {
 import {
   addFolderToLibrary,
   constructContentListFolder
-} from 'common/store/content list-library/helpers'
+} from 'common/store/contentList-library/helpers'
 import { makeGetCurrent } from 'common/store/queue/selectors'
 import { saveCollection } from 'common/store/social/collections/actions'
 import { saveAgreement } from 'common/store/social/agreements/actions'
@@ -54,7 +54,7 @@ import {
   getHideFolderTab,
   getIsOpen
 } from 'common/store/ui/createContentListModal/selectors'
-import CreateContentListModal from 'components/create-content list/CreateContentListModal'
+import CreateContentListModal from 'components/create-contentList/CreateContentListModal'
 import { DragAutoscroller } from 'components/drag-autoscroller/DragAutoscroller'
 import Droppable from 'components/dragndrop/Droppable'
 import DynamicImage from 'components/dynamic-image/DynamicImage'
@@ -74,7 +74,7 @@ import { openVisualizer } from 'pages/visualizer/store/slice'
 import { make, useRecord } from 'store/analytics/actions'
 import { getIsDragging } from 'store/dragndrop/selectors'
 import { makeGetCurrent as makeGetCurrentPlayer } from 'store/player/selectors'
-import { update as updateContentListLibrary } from 'store/content list-library/slice'
+import { update as updateContentListLibrary } from 'store/contentList-library/slice'
 import { AppState } from 'store/types'
 import {
   DASHBOARD_PAGE,
@@ -82,7 +82,7 @@ import {
   FEED_PAGE,
   fullAgreementPage,
   HISTORY_PAGE,
-  content listPage,
+  contentListPage,
   profilePage,
   SAVED_PAGE,
   TRENDING_PAGE,
@@ -186,7 +186,7 @@ const NavColumn = ({
       createContentList(tempId, metadata)
       closeCreateContentListModal()
       if (account) {
-        goToRoute(content listPage(account.handle, metadata.content list_name, tempId))
+        goToRoute(contentListPage(account.handle, metadata.contentList_name, tempId))
       }
     },
     [account, createContentList, closeCreateContentListModal, goToRoute]
@@ -426,7 +426,7 @@ const NavColumn = ({
                     className={cn(styles.link, {
                       [styles.disabledLink]:
                         !account ||
-                        (dragging && kind === 'content list') ||
+                        (dragging && kind === 'contentList') ||
                         draggingIsOwner,
                       [styles.droppableLink]:
                         dragging &&
@@ -454,11 +454,11 @@ const NavColumn = ({
                   className={styles.droppableGroup}
                   hoverClassName={styles.droppableGroupHover}
                   onDrop={saveCollection}
-                  acceptedKinds={['content list']}
+                  acceptedKinds={['contentList']}
                 >
                   <div
                     className={cn(styles.groupHeader, {
-                      [styles.droppableLink]: dragging && kind === 'content list'
+                      [styles.droppableLink]: dragging && kind === 'contentList'
                     })}
                   >
                     ContentLists
@@ -562,17 +562,17 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(saveAgreement(agreementId, FavoriteSource.NAVIGATOR)),
   saveCollection: (collectionId: number) =>
     dispatch(saveCollection(collectionId, FavoriteSource.NAVIGATOR)),
-  addAgreementToContentList: (agreementId: number, content listId: number) =>
-    dispatch(addAgreementToContentList(agreementId, content listId)),
+  addAgreementToContentList: (agreementId: number, contentListId: number) =>
+    dispatch(addAgreementToContentList(agreementId, contentListId)),
   showActionRequiresAccount: () =>
     dispatch(signOnActions.showRequiresAccountModal()),
   toggleNotificationPanel: () => dispatch(toggleNotificationPanel()),
   openCreateContentListModal: () => dispatch(createContentListModalActions.open()),
   closeCreateContentListModal: () => dispatch(createContentListModalActions.close()),
-  updateContentListLastViewedAt: (content listId: number) =>
-    dispatch(updateContentListLastViewedAt(content listId)),
+  updateContentListLastViewedAt: (contentListId: number) =>
+    dispatch(updateContentListLastViewedAt(contentListId)),
   updateContentListLibrary: (newLibrary: ContentListLibraryType) =>
-    dispatch(updateContentListLibrary({ content listLibrary: newLibrary })),
+    dispatch(updateContentListLibrary({ contentListLibrary: newLibrary })),
   goToUpload: () => dispatch(pushRoute(UPLOAD_PAGE)),
   goToDashboard: () => dispatch(pushRoute(DASHBOARD_PAGE)),
   goToSignUp: () => dispatch(signOnActions.openSignOn(/** signIn */ false)),

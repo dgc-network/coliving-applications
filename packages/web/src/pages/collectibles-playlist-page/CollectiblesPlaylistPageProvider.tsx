@@ -430,9 +430,9 @@ export const CollectiblesContentListPageProvider = ({
 
   const metadata: SmartCollection | Collection = {
     ...LIVE_NFT_CONTENT_LIST,
-    content list_name: title,
+    contentList_name: title,
     description: LIVE_NFT_CONTENT_LIST.makeDescription?.(user?.name) ?? '',
-    content list_contents: {
+    contentList_contents: {
       agreement_ids: entries.map((entry) => ({
         agreement: entry.id
       }))
@@ -450,9 +450,9 @@ export const CollectiblesContentListPageProvider = ({
     title,
     description: '',
     canonicalUrl: '',
-    content listId: SmartCollectionVariant.LIVE_NFT_CONTENT_LIST,
+    contentListId: SmartCollectionVariant.LIVE_NFT_CONTENT_LIST,
     playing,
-    type: 'content list' as const,
+    type: 'contentList' as const,
     collection: {
       status: agreementsLoading ? Status.LOADING : Status.SUCCESS,
       metadata,

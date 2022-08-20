@@ -51,7 +51,7 @@ const FolderNavLink = ({
     <Draggable
       id={id}
       text={name}
-      kind='content list-folder'
+      kind='contentList-folder'
       onDrag={onDrag}
       onDrop={onDrop}
     >
@@ -76,12 +76,12 @@ type ContentListFolderNavItemProps = {
   onClickEdit: (folderId: string) => void
   onDropInFolder: (
     folder: ContentListLibraryFolder,
-    draggingKind: 'library-content list' | 'content list',
+    draggingKind: 'library-contentList' | 'contentList',
     draggingId: ID | string | SmartCollectionVariant
   ) => void
   onDropBelowFolder: (
     folderId: string,
-    draggingKind: 'content list-folder' | 'library-content list',
+    draggingKind: 'contentList-folder' | 'library-contentList',
     draggingId: ID | string | SmartCollectionVariant
   ) => void
   children?: ReactNode
@@ -99,7 +99,7 @@ export const ContentListFolderNavItem = ({
 }: ContentListFolderNavItemProps) => {
   const { id, name } = folder
   const isDroppableKind =
-    draggingKind === 'library-content list' || draggingKind === 'content list'
+    draggingKind === 'library-contentList' || draggingKind === 'contentList'
   const [isHovering, setIsHovering] = useState(false)
   const [isExpanded, setIsExpanded] = useState(false)
   const record = useRecord()
@@ -123,14 +123,14 @@ export const ContentListFolderNavItem = ({
 
   return (
     <>
-      {/* This is the droppable area for adding a content list into a folder */}
+      {/* This is the droppable area for adding a contentList into a folder */}
       <Droppable
         className={navColumnStyles.droppable}
         hoverClassName={navColumnStyles.droppableHover}
-        onDrop={(content listId, kind) => {
-          onDropInFolder(folder, kind, content listId)
+        onDrop={(contentListId, kind) => {
+          onDropInFolder(folder, kind, contentListId)
         }}
-        acceptedKinds={['library-content list', 'content list']}
+        acceptedKinds={['library-contentList', 'contentList']}
       >
         <FolderNavLink
           onMouseEnter={() => {
@@ -172,7 +172,7 @@ export const ContentListFolderNavItem = ({
               })}
             />
             <IconButton
-              aria-label='More content list actions'
+              aria-label='More contentList actions'
               className={cn(styles.iconKebabHorizontal, {
                 [styles.hidden]: !isHovering || dragging
               })}
@@ -191,7 +191,7 @@ export const ContentListFolderNavItem = ({
           </animated.div>
         )}
       </Droppable>
-      {/* This is the droppable area for reordering something below this content list
+      {/* This is the droppable area for reordering something below this contentList
       folder item. */}
       <Droppable
         className={styles.droppable}
@@ -199,7 +199,7 @@ export const ContentListFolderNavItem = ({
         onDrop={(draggingId, kind) => {
           onDropBelowFolder(id, kind, draggingId)
         }}
-        acceptedKinds={['content list-folder', 'library-content list']}
+        acceptedKinds={['contentList-folder', 'library-contentList']}
       />
     </>
   )

@@ -9,7 +9,7 @@ import CardLineup from 'components/lineup/CardLineup'
 import LoadingSpinner from 'components/loading-spinner/LoadingSpinner'
 import MobilePageContainer from 'components/mobile-page-container/MobilePageContainer'
 import { useSubPageHeader } from 'components/nav/store/context'
-import { content listPage, albumPage, BASE_URL, EXPLORE_PAGE } from 'utils/route'
+import { contentListPage, albumPage, BASE_URL, EXPLORE_PAGE } from 'utils/route'
 
 import styles from './CollectionsPage.module.css'
 
@@ -34,35 +34,35 @@ const ExplorePage = ({
 }: CollectionsPageProps) => {
   useSubPageHeader()
 
-  const content listCards = collections.map((content list: UserCollection) => {
+  const contentListCards = collections.map((contentList: UserCollection) => {
     return (
       <Card
-        key={content list.content list_id}
-        id={content list.content list_id}
-        userId={content list.content list_owner_id}
-        imageSize={content list._cover_art_sizes}
-        primaryText={content list.content list_name}
-        secondaryText={content list.user.name}
-        agreementCount={content list.content list_contents.agreement_ids.length}
-        reposts={content list.repost_count}
-        favorites={content list.save_count}
-        isContentList={!content list.is_album}
-        onClickReposts={() => onClickReposts(content list.content list_id)}
-        onClickFavorites={() => onClickFavorites(content list.content list_id)}
+        key={contentList.contentList_id}
+        id={contentList.contentList_id}
+        userId={contentList.contentList_owner_id}
+        imageSize={contentList._cover_art_sizes}
+        primaryText={contentList.contentList_name}
+        secondaryText={contentList.user.name}
+        agreementCount={contentList.contentList_contents.agreement_ids.length}
+        reposts={contentList.repost_count}
+        favorites={contentList.save_count}
+        isContentList={!contentList.is_album}
+        onClickReposts={() => onClickReposts(contentList.contentList_id)}
+        onClickFavorites={() => onClickFavorites(contentList.contentList_id)}
         onClick={() =>
-          content list.is_album
+          contentList.is_album
             ? goToRoute(
                 albumPage(
-                  content list.user.handle,
-                  content list.content list_name,
-                  content list.content list_id
+                  contentList.user.handle,
+                  contentList.contentList_name,
+                  contentList.contentList_id
                 )
               )
             : goToRoute(
-                content listPage(
-                  content list.user.handle,
-                  content list.content list_name,
-                  content list.content list_id
+                contentListPage(
+                  contentList.user.handle,
+                  contentList.contentList_name,
+                  contentList.contentList_id
                 )
               )
         }
@@ -74,7 +74,7 @@ const ExplorePage = ({
     <CardLineup
       containerClassName={styles.lineupContainer}
       cardsClassName={styles.cardLineup}
-      cards={content listCards}
+      cards={contentListCards}
     />
   )
 

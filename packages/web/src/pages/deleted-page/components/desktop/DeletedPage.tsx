@@ -26,7 +26,7 @@ import styles from './DeletedPage.module.css'
 const messages = {
   agreementDeleted: 'Agreement [Deleted]',
   agreementDeletedByArtist: 'Agreement [Deleted By Artist]',
-  content listDeleted: 'ContentList [Deleted by Artist]',
+  contentListDeleted: 'ContentList [Deleted by Artist]',
   albumDeleted: 'Album [Deleted By Artist]',
   checkOut: (name: string) => `Check out more by ${name}`,
   moreBy: (name: string) => `More by ${name}`
@@ -99,7 +99,7 @@ const DeletedPage = g(
     const headingText = isContentList
       ? isAlbum
         ? messages.albumDeleted
-        : messages.content listDeleted
+        : messages.contentListDeleted
       : deletedByArtist
       ? messages.agreementDeletedByArtist
       : messages.agreementDeleted
@@ -110,7 +110,7 @@ const DeletedPage = g(
           {playable.type === PlayableType.CONTENT_LIST ||
           playable.type === PlayableType.ALBUM ? (
             <CollectionArt
-              collectionId={playable.metadata.content list_id}
+              collectionId={playable.metadata.contentList_id}
               coverArtSizes={playable.metadata._cover_art_sizes}
             />
           ) : (
@@ -125,7 +125,7 @@ const DeletedPage = g(
               <h1>
                 {playable.type === PlayableType.CONTENT_LIST ||
                 playable.type === PlayableType.ALBUM
-                  ? playable.metadata.content list_name
+                  ? playable.metadata.contentList_name
                   : playable.metadata.title}
               </h1>
             </div>

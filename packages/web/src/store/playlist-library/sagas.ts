@@ -31,7 +31,7 @@ import {
   getContentListsNotInLibrary,
   removeContentListLibraryDuplicates,
   replaceTempWithResolvedContentLists
-} from 'common/store/content list-library/helpers'
+} from 'common/store/contentList-library/helpers'
 import { updateProfileAsync } from 'pages/profile-page/sagas'
 import { waitForBackendSetup } from 'store/backend/sagas'
 import { getResult } from 'store/confirmer/selectors'
@@ -42,42 +42,42 @@ import { update } from './slice'
 const TEMP_CONTENT_LIST_UPDATE_HELPER = 'TEMP_CONTENT_LIST_UPDATE_HELPER'
 
 /**
- * Given a temp content list, resolves it to a proper content list
- * @param content list
- * @returns a content list library identifier
+ * Given a temp contentList, resolves it to a proper contentList
+ * @param contentList
+ * @returns a contentList library identifier
  */
 function* resolveTempContentLists(
-  content list: ContentListLibraryIdentifier | ContentListLibraryFolder
+  contentList: ContentListLibraryIdentifier | ContentListLibraryFolder
 ) {
-  if (content list.type === 'temp_content list') {
-    const { content list_id }: { content list_id: ID } = yield call(
+  if (contentList.type === 'temp_contentList') {
+    const { contentList_id }: { contentList_id: ID } = yield call(
       waitForValue,
       getResult,
       {
-        uid: makeKindId(Kind.COLLECTIONS, content list.content list_id),
+        uid: makeKindId(Kind.COLLECTIONS, contentList.contentList_id),
         index: 0
       },
-      // The content list has been created
+      // The contentList has been created
       (res) => Object.keys(res).length > 0
     )
     return {
-      type: 'content list',
-      content list_id
+      type: 'contentList',
+      contentList_id
     }
   }
-  return content list
+  return contentList
 }
 
 function* watchUpdateContentListLibrary() {
   yield takeEvery(
     update.type,
     function* updateContentListLibrary(action: ReturnType<typeof update>) {
-      const { content listLibrary } = action.payload
+      const { contentListLibrary } = action.payload
       yield call(waitForBackendSetup)
 
       const account: User = yield select(getAccountUser)
-      account.content list_library =
-        removeContentListLibraryDuplicates(content listLibrary)
+      account.contentList_library =
+        removeContentListLibraryDuplicates(contentListLibrary)
       yield put(
         cacheActions.update(Kind.USERS, [
           {
@@ -87,14 +87,14 @@ function* watchUpdateContentListLibrary() {
         ])
       )
 
-      const containsTemps = containsTempContentList(content listLibrary)
+      const containsTemps = containsTempContentList(contentListLibrary)
       if (containsTemps) {
-        // Deal with temp content lists
-        // If there's a temp content list, write to the cache, but dispatch
+        // Deal with temp contentLists
+        // If there's a temp contentList, write to the cache, but dispatch
         // to a helper to watch for the update.
         yield put({
           type: TEMP_CONTENT_LIST_UPDATE_HELPER,
-          payload: { content listLibrary }
+          payload: { contentListLibrary }
         })
       } else {
         // Otherwise, just write the profile update
@@ -107,65 +107,65 @@ function* watchUpdateContentListLibrary() {
 /**
  * Helper to watch for updates to the library with temp playlits in it.
  * Here we intentionally take latest so that we only do one write to the
- * backend once we've resolved the temp content list ids to actual ids
+ * backend once we've resolved the temp contentList ids to actual ids
  */
 function* watchUpdateContentListLibraryWithTempContentList() {
   yield takeLatest(
     TEMP_CONTENT_LIST_UPDATE_HELPER,
     function* makeUpdate(action: ReturnType<typeof update>) {
-      const { content listLibrary: rawContentListLibrary } = action.payload
-      const content listLibrary =
+      const { contentListLibrary: rawContentListLibrary } = action.payload
+      const contentListLibrary =
         removeContentListLibraryDuplicates(rawContentListLibrary)
       const account: User = yield select(getAccountUser)
 
-      // Map over content list library contents and resolve each temp id content list
+      // Map over contentList library contents and resolve each temp id contentList
       // to one with an actual id. Once we have the actual id, we can proceed
       // with writing the library to the user metadata (profile update)
-      const tempContentLists = extractTempContentListsFromLibrary(content listLibrary)
+      const tempContentLists = extractTempContentListsFromLibrary(contentListLibrary)
       const resolvedContentLists: ContentListLibraryIdentifier[] = yield all(
-        tempContentLists.map((content list) => call(resolveTempContentLists, content list))
+        tempContentLists.map((contentList) => call(resolveTempContentLists, contentList))
       )
       const tempContentListIdToResolvedContentList = tempContentLists.reduce(
         (result, nextTempContentList, index) => ({
           ...result,
-          [nextTempContentList.content list_id]: resolvedContentLists[index]
+          [nextTempContentList.contentList_id]: resolvedContentLists[index]
         }),
         {} as { [key: string]: ContentListLibraryIdentifier }
       )
 
-      content listLibrary.contents = replaceTempWithResolvedContentLists(
-        content listLibrary,
+      contentListLibrary.contents = replaceTempWithResolvedContentLists(
+        contentListLibrary,
         tempContentListIdToResolvedContentList
       ).contents
-      account.content list_library = content listLibrary
-      // Update content list library on chain via an account profile update
+      account.contentList_library = contentListLibrary
+      // Update contentList library on chain via an account profile update
       yield call(updateProfileAsync, { metadata: account })
     }
   )
 }
 
 /**
- * Goes through the account content lists and adds content lists that are
- * not in the user's set content list library
+ * Goes through the account contentLists and adds contentLists that are
+ * not in the user's set contentList library
  */
 export function* addContentListsNotInLibrary() {
   let library: ContentListLibrary = yield select(getContentListLibrary)
   if (!library) library = { contents: [] }
-  const content lists: { [id: number]: AccountCollection } = yield select(
+  const contentLists: { [id: number]: AccountCollection } = yield select(
     getAccountNavigationContentLists
   )
-  const notInLibrary = getContentListsNotInLibrary(library, content lists)
+  const notInLibrary = getContentListsNotInLibrary(library, contentLists)
   if (Object.keys(notInLibrary).length > 0) {
     const newEntries = Object.values(notInLibrary).map(
-      (content list) =>
+      (contentList) =>
         ({
-          content list_id: content list.id,
-          type: 'content list'
+          contentList_id: contentList.id,
+          type: 'contentList'
         } as ContentListIdentifier)
     )
     const newContents = library.contents.concat(newEntries)
     yield put(
-      update({ content listLibrary: { ...library, contents: newContents } })
+      update({ contentListLibrary: { ...library, contents: newContents } })
     )
   }
 }

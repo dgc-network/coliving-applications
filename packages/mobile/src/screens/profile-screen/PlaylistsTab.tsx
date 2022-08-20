@@ -6,14 +6,14 @@ import { useSelectorWeb } from 'app/hooks/useSelectorWeb'
 import { useEmptyProfileText } from './EmptyProfileTile'
 
 export const ContentListsTab = () => {
-  const content lists = useSelectorWeb(getProfileContentLists)
+  const contentLists = useSelectorWeb(getProfileContentLists)
 
-  const emptyListText = useEmptyProfileText('content lists')
+  const emptyListText = useEmptyProfileText('contentLists')
 
   return (
     <CollectionList
-      listKey='profile-content lists'
-      collection={content lists}
+      listKey='profile-contentLists'
+      collection={contentLists}
       emptyListText={emptyListText}
       disableTopTabScroll
       fromPage='profile'

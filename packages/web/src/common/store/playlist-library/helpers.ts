@@ -11,14 +11,14 @@ import isEmpty from 'lodash/isEmpty'
 import { AccountCollection } from '../account/reducer'
 
 /**
- * Finds a content list by id in the content list library
+ * Finds a contentList by id in the contentList library
  * @param library
- * @param content listId
+ * @param contentListId
  * @returns the identifier or false
  */
 export const findInContentListLibrary = (
   library: ContentListLibrary | ContentListLibraryFolder,
-  content listId: ID | SmartCollectionVariant | string
+  contentListId: ID | SmartCollectionVariant | string
 ): ContentListLibraryIdentifier | false => {
   if (!library.contents) return false
 
@@ -26,14 +26,14 @@ export const findInContentListLibrary = (
   for (const item of library.contents) {
     switch (item.type) {
       case 'folder': {
-        const contains = findInContentListLibrary(item, content listId)
+        const contains = findInContentListLibrary(item, contentListId)
         if (contains) return contains
         break
       }
-      case 'content list':
-      case 'explore_content list':
-      case 'temp_content list':
-        if (item.content list_id === content listId) return item
+      case 'contentList':
+      case 'explore_contentList':
+      case 'temp_contentList':
+        if (item.contentList_id === contentListId) return item
         break
     }
   }
@@ -41,7 +41,7 @@ export const findInContentListLibrary = (
 }
 
 /**
- * Finds the index of a content list or folder id in the library, returning -1 if not found
+ * Finds the index of a contentList or folder id in the library, returning -1 if not found
  * If the target item is nested in a folder, this returns a tuple where the first value is the
  * index of the folder and the second value is the index of the item within that folder's contents.
  * @param library
@@ -65,10 +65,10 @@ export const findIndexInContentListLibrary = (
         }
         break
       }
-      case 'content list':
-      case 'explore_content list':
-      case 'temp_content list':
-        if (item.content list_id === entityId) return i
+      case 'contentList':
+      case 'explore_contentList':
+      case 'temp_contentList':
+        if (item.contentList_id === entityId) return i
         break
     }
   }
@@ -76,10 +76,10 @@ export const findIndexInContentListLibrary = (
 }
 
 /**
- * Removes a content list or folder from the library and returns the removed item as well as the
+ * Removes a contentList or folder from the library and returns the removed item as well as the
  * updated library (does not mutate)
  * @param library
- * @param entityId the id of the content list or folder to remove
+ * @param entityId the id of the contentList or folder to remove
  * @returns { library, removed }
  */
 export const removeFromContentListLibrary = (
@@ -114,10 +114,10 @@ export const removeFromContentListLibrary = (
         }
         break
       }
-      case 'content list':
-      case 'explore_content list':
-      case 'temp_content list':
-        if (item.content list_id === entityId) {
+      case 'contentList':
+      case 'explore_contentList':
+      case 'temp_contentList':
+        if (item.contentList_id === entityId) {
           removed = item
           newItem = null
         }
@@ -148,42 +148,42 @@ export const constructContentListFolder = (
   }
 }
 
-const content listIdToContentListLibraryIdentifier = (
-  content listId: ID | SmartCollectionVariant | string
+const contentListIdToContentListLibraryIdentifier = (
+  contentListId: ID | SmartCollectionVariant | string
 ): ContentListLibraryIdentifier => {
-  if (typeof content listId === 'number') {
+  if (typeof contentListId === 'number') {
     return {
-      type: 'content list',
-      content list_id: content listId
+      type: 'contentList',
+      contentList_id: contentListId
     }
   } else if (
-    (Object.values(SmartCollectionVariant) as string[]).includes(content listId)
+    (Object.values(SmartCollectionVariant) as string[]).includes(contentListId)
   ) {
     return {
-      type: 'explore_content list',
-      content list_id: content listId as SmartCollectionVariant
+      type: 'explore_contentList',
+      contentList_id: contentListId as SmartCollectionVariant
     }
   } else {
     // This is a temp ID which requires special attention
     return {
-      type: 'temp_content list',
-      content list_id: content listId
+      type: 'temp_contentList',
+      contentList_id: contentListId
     }
   }
 }
 
 /**
- * Adds content list with given id to folder with given id and returns the resulting updated library.
- * If the content list is already in the library but not in the folder, it removes the content list from its current position and into the folder.
- * This is a no op if the folder is not in the library or the content list is already in the target folder. In these cases, the original library is returned.
+ * Adds contentList with given id to folder with given id and returns the resulting updated library.
+ * If the contentList is already in the library but not in the folder, it removes the contentList from its current position and into the folder.
+ * This is a no op if the folder is not in the library or the contentList is already in the target folder. In these cases, the original library is returned.
  * @param library
- * @param content listId
+ * @param contentListId
  * @param folderId
- * @returns the updated content list library
+ * @returns the updated contentList library
  */
 export const addContentListToFolder = (
   library: ContentListLibrary,
-  content listId: ID | SmartCollectionVariant | string,
+  contentListId: ID | SmartCollectionVariant | string,
   folderId: string
 ): ContentListLibrary => {
   if (!library.contents) return library
@@ -192,16 +192,16 @@ export const addContentListToFolder = (
   })
   if (folderIndex < 0) return library
   const folder = library.contents[folderIndex] as ContentListLibraryFolder
-  // If the content list is in the right folder already, return the original library.
-  if (findInContentListLibrary(folder, content listId) !== false) {
+  // If the contentList is in the right folder already, return the original library.
+  if (findInContentListLibrary(folder, contentListId) !== false) {
     return library
   }
 
-  // Remove the content list from the library if it's already there but not in the given folder
+  // Remove the contentList from the library if it's already there but not in the given folder
   let entry: ContentListLibraryIdentifier | null
   const { library: newLibrary, removed } = removeFromContentListLibrary(
     library,
-    content listId
+    contentListId
   )
 
   if (removed?.type === 'folder') {
@@ -211,16 +211,16 @@ export const addContentListToFolder = (
   entry = removed as ContentListLibraryIdentifier
 
   if (!entry) {
-    entry = content listIdToContentListLibraryIdentifier(content listId)
+    entry = contentListIdToContentListLibraryIdentifier(contentListId)
   } else {
-    // If content list was removed the folder index might be different now.
+    // If contentList was removed the folder index might be different now.
     folderIndex = newLibrary.contents.findIndex((item) => {
       return item.type === 'folder' && item.id === folderId
     })
   }
   const updatedFolder = reorderContentListLibrary(
     folder,
-    content listId,
+    contentListId,
     -1
   ) as ContentListLibraryFolder
   const newContents = [...newLibrary.contents]
@@ -241,7 +241,7 @@ export const addContentListToFolder = (
  * @param library
  * @param folderId
  * @param newName
- * @returns the updated content list library
+ * @returns the updated contentList library
  */
 export const renameContentListFolderInLibrary = (
   library: ContentListLibrary,
@@ -265,13 +265,13 @@ export const renameContentListFolderInLibrary = (
 
 /**
  * Removes folder with given id from the library.
- * Any content lists or temporary content lists in the deleted
+ * Any contentLists or temporary contentLists in the deleted
  * folder are moved out of the folder.
  * Note that this assumes that folders cannot be nested within one another.
  * If we enable nesting folders in the future, this function must be updated.
  * @param library
  * @param folderId
- * @returns the updated content list library
+ * @returns the updated contentList library
  */
 export const removeContentListFolderInLibrary = (
   library: ContentListLibrary,
@@ -297,7 +297,7 @@ export const removeContentListFolderInLibrary = (
 }
 
 /**
- * Adds new folder to a content list library and returns the result.
+ * Adds new folder to a contentList library and returns the result.
  * Does not mutate.
  * @param library
  * @param folder
@@ -313,9 +313,9 @@ export const addFolderToLibrary = (
 }
 
 /**
- * Removes temp content lists from content list library (without mutating)
+ * Removes temp contentLists from contentList library (without mutating)
  * @param library
- * @returns a copy of the library with all temp content lists removed
+ * @returns a copy of the library with all temp contentLists removed
  */
 export const removeContentListLibraryTempContentLists = (
   library: ContentListLibrary | ContentListLibraryFolder
@@ -331,10 +331,10 @@ export const removeContentListLibraryTempContentLists = (
         newContents.push(folder)
         break
       }
-      case 'temp_content list':
+      case 'temp_contentList':
         break
-      case 'explore_content list':
-      case 'content list':
+      case 'explore_contentList':
+      case 'contentList':
         newContents.push(item)
         break
     }
@@ -346,7 +346,7 @@ export const removeContentListLibraryTempContentLists = (
 }
 
 /**
- * Removes duplicates in a content list library
+ * Removes duplicates in a contentList library
  * @param library
  * @param ids ids to keep agreement of as we recurse
  */
@@ -373,14 +373,14 @@ export const removeContentListLibraryDuplicates = (
         newContents.push(folder)
         break
       }
-      case 'content list':
-      case 'explore_content list':
-      case 'temp_content list':
-        // If we've seen this content list already, don't include it in our final result.
-        if (ids.has(`${item.content list_id}`)) {
+      case 'contentList':
+      case 'explore_contentList':
+      case 'temp_contentList':
+        // If we've seen this contentList already, don't include it in our final result.
+        if (ids.has(`${item.contentList_id}`)) {
           break
         }
-        ids.add(`${item.content list_id}`)
+        ids.add(`${item.contentList_id}`)
         newContents.push(item)
         break
     }
@@ -392,21 +392,21 @@ export const removeContentListLibraryDuplicates = (
 }
 
 /**
- * Reorders a content list library
+ * Reorders a contentList library
  * Note that this helper assumes that folders cannot be inside folders.
  * If we ever support nesting folders, this must be updated.
  * @param library
- * @param draggingId the content list being reordered
- * @param droppingId the content list where the dragged one was dropped onto
+ * @param draggingId the contentList being reordered
+ * @param droppingId the contentList where the dragged one was dropped onto
  */
 export const reorderContentListLibrary = (
   library: ContentListLibrary | ContentListLibraryFolder,
   draggingId: ID | SmartCollectionVariant | string,
   droppingId: ID | SmartCollectionVariant | string,
   draggingKind:
-    | 'library-content list'
-    | 'content list'
-    | 'content list-folder' = 'library-content list',
+    | 'library-contentList'
+    | 'contentList'
+    | 'contentList-folder' = 'library-contentList',
   reorderBeforeTarget = false
 ) => {
   // Find the dragging id and remove it from the library if present.
@@ -417,11 +417,11 @@ export const reorderContentListLibrary = (
   )
   entry = removed
   if (!entry) {
-    if (draggingKind === 'content list-folder') {
+    if (draggingKind === 'contentList-folder') {
       // Soft fail if the thing being dragged is a folder and it doesn't exist in the library yet. This shouldn't be possible.
       return library
     } else {
-      entry = content listIdToContentListLibraryIdentifier(draggingId)
+      entry = contentListIdToContentListLibraryIdentifier(draggingId)
     }
   }
 
@@ -463,7 +463,7 @@ export const reorderContentListLibrary = (
 }
 
 /**
- * Determines whether or not a library contains a temp content list
+ * Determines whether or not a library contains a temp contentList
  * @param library
  * @returns boolean
  */
@@ -480,7 +480,7 @@ export const containsTempContentList = (
         if (contains) return contains
         break
       }
-      case 'temp_content list':
+      case 'temp_contentList':
         return true
       default:
         break
@@ -490,9 +490,9 @@ export const containsTempContentList = (
 }
 
 /**
- * Determines whether or not a content list or folder is inside a folder
+ * Determines whether or not a contentList or folder is inside a folder
  * @param library
- * @param id (content list or folder id)
+ * @param id (contentList or folder id)
  * @returns boolean
  */
 export const isInsideFolder = (
@@ -503,7 +503,7 @@ export const isInsideFolder = (
 }
 
 /**
- * Takes a library and returns a list of all temporary content lists from that library
+ * Takes a library and returns a list of all temporary contentLists from that library
  * @param library
  * @returns ContentListLibraryIdentifier[]
  */
@@ -514,7 +514,7 @@ export const extractTempContentListsFromLibrary = (
   return library.contents.reduce((prevResult, nextContent) => {
     if (nextContent.type === 'folder') {
       return prevResult.concat(extractTempContentListsFromLibrary(nextContent))
-    } else if (nextContent.type === 'temp_content list') {
+    } else if (nextContent.type === 'temp_contentList') {
       return prevResult.concat(nextContent)
     } else {
       return prevResult
@@ -523,11 +523,11 @@ export const extractTempContentListsFromLibrary = (
 }
 
 /**
- * Takes a library and mapping of temporary content list ids to their resolved
- * content list identifiers, then returns the library (does not mutate original)
- * with temporary content lists replaced by their resolved content list identifiers.
+ * Takes a library and mapping of temporary contentList ids to their resolved
+ * contentList identifiers, then returns the library (does not mutate original)
+ * with temporary contentLists replaced by their resolved contentList identifiers.
  * @param library
- * @param tempContentListIdToResolvedContentList object that maps temporary content list ids to their resolved content list identifiers
+ * @param tempContentListIdToResolvedContentList object that maps temporary contentList ids to their resolved contentList identifiers
  * @returns ContentListLibrary | ContentListLibraryFolder
  */
 export const replaceTempWithResolvedContentLists = <
@@ -543,8 +543,8 @@ export const replaceTempWithResolvedContentLists = <
         c,
         tempContentListIdToResolvedContentList
       )
-    } else if (c.type === 'temp_content list') {
-      return tempContentListIdToResolvedContentList[c.content list_id] ?? c
+    } else if (c.type === 'temp_contentList') {
+      return tempContentListIdToResolvedContentList[c.contentList_id] ?? c
     } else {
       return c
     }
@@ -552,29 +552,29 @@ export const replaceTempWithResolvedContentLists = <
   return { ...library, contents: newContents }
 }
 
-/* Returns content lists in `content lists` that are not in the given content list library `library`. */
+/* Returns contentLists in `contentLists` that are not in the given contentList library `library`. */
 export const getContentListsNotInLibrary = (
   library: ContentListLibrary | null,
-  content lists: {
+  contentLists: {
     [id: number]: AccountCollection
   }
 ) => {
-  const result = { ...content lists }
+  const result = { ...contentLists }
   const helpComputeContentListsNotInLibrary = (
     libraryContentsLevel: ContentListLibrary['contents']
   ) => {
     libraryContentsLevel.forEach((content) => {
-      if (content.type === 'temp_content list' || content.type === 'content list') {
-        const content list = content lists[Number(content.content list_id)]
-        if (content list) {
-          delete result[Number(content.content list_id)]
+      if (content.type === 'temp_contentList' || content.type === 'contentList') {
+        const contentList = contentLists[Number(content.contentList_id)]
+        if (contentList) {
+          delete result[Number(content.contentList_id)]
         }
       } else if (content.type === 'folder') {
         helpComputeContentListsNotInLibrary(content.contents)
       }
     })
   }
-  if (library && content lists) {
+  if (library && contentLists) {
     helpComputeContentListsNotInLibrary(library.contents)
   }
   return result

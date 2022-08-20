@@ -56,7 +56,7 @@ const MINIMUM_INITIAL_LOAD_AGREEMENTS_MULTIPLIER = 1
 // tile height + margin
 const totalTileHeight = {
   main: 152 + 16,
-  content list: 350
+  contentList: 350
 }
 
 // Helper to calculate an item count based on the Lineup variant and a multiplier
@@ -270,7 +270,7 @@ export const Lineup = ({
         return null
       }
       return AgreementTile
-    } else if (item.kind === Kind.COLLECTIONS || item.content list_id) {
+    } else if (item.kind === Kind.COLLECTIONS || item.contentList_id) {
       return CollectionTile
     }
     return null

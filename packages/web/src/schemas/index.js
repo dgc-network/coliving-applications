@@ -72,8 +72,8 @@ const collectionMetadataSchema = {
   updated_at: null,
   cover_art: null,
   cover_art_sizes: null,
-  content list_name: '',
-  content list_owner_id: null,
+  contentList_name: '',
+  contentList_owner_id: null,
   save_count: null,
   license: null,
   upc: null,
@@ -84,7 +84,7 @@ export const newCollectionMetadata = (fields, validate = false) => {
   const validFields = validate
     ? pick(
         fields,
-        Object.keys(collectionMetadataSchema).concat(['content list_id'])
+        Object.keys(collectionMetadataSchema).concat(['contentList_id'])
       )
     : fields
   return {
@@ -109,7 +109,7 @@ const userMetadataSchema = {
   associated_wallets: null,
   associated_sol_wallets: null,
   collectibles: null,
-  content list_library: null,
+  contentList_library: null,
   events: null,
   is_deactivated: false
 }

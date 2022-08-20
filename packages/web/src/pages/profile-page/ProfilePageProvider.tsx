@@ -520,13 +520,13 @@ class ProfilePage extends PureComponent<ProfilePageProps, ProfilePageState> {
     } = this.props
 
     let agreementCount = 0
-    let content listCount = 0
+    let contentListCount = 0
     let followerCount = 0
     let followingCount = 0
 
     if (profile) {
       agreementCount = profile.agreement_count
-      content listCount = profile.content list_count
+      contentListCount = profile.contentList_count
       followerCount = profile.follower_count
       followingCount = profile.followee_count
     }
@@ -547,9 +547,9 @@ class ProfilePage extends PureComponent<ProfilePageProps, ProfilePageState> {
         ]
       : [
           {
-            number: content listCount,
-            title: content listCount === 1 ? 'content list' : 'content lists',
-            key: 'content list'
+            number: contentListCount,
+            title: contentListCount === 1 ? 'contentList' : 'contentLists',
+            key: 'contentList'
           },
           {
             number: followerCount,
@@ -707,7 +707,7 @@ class ProfilePage extends PureComponent<ProfilePageProps, ProfilePageState> {
         profile,
         status: profileLoadingStatus,
         albums,
-        content lists,
+        contentLists,
         mostUsedTags,
         isSubscribed
       },
@@ -850,7 +850,7 @@ class ProfilePage extends PureComponent<ProfilePageProps, ProfilePageState> {
       profile,
       status: profileLoadingStatus,
       albums,
-      content lists,
+      contentLists,
       artistAgreements,
       playArtistAgreement,
       pauseArtistAgreement,
@@ -1058,7 +1058,7 @@ function mapDispatchToProps(dispatch: Dispatch) {
             | 'agreements'
             | 'albums'
             | 'reposts'
-            | 'content lists'
+            | 'contentLists'
             | 'collectibles'
         })
         dispatch(agreementEvent)

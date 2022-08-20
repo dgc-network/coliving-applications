@@ -23,7 +23,7 @@ import {
   fullAgreementPage,
   profilePage,
   albumPage,
-  content listPage
+  contentListPage
 } from 'utils/route'
 import { openTwitterLink } from 'utils/tweet'
 
@@ -108,7 +108,7 @@ const getShareTextUrl = async (
     }
     case 'Album': {
       // @ts-ignore
-      const { content list_name: title } = upload.metadata
+      const { contentList_name: title } = upload.metadata
       const getPage = fullUrl ? fullAlbumPage : albumPage
       const url = getPage(user.handle, title, upload.completionId)
       return {
@@ -118,11 +118,11 @@ const getShareTextUrl = async (
     }
     case 'ContentList': {
       // @ts-ignore
-      const { content list_name: title } = upload.metadata
-      const getPage = fullUrl ? fullContentListPage : content listPage
+      const { contentList_name: title } = upload.metadata
+      const getPage = fullUrl ? fullContentListPage : contentListPage
       const url = getPage(user.handle, title, upload.completionId)
       return {
-        text: `Check out my new content list, ${title} on @dgc-network #Coliving`,
+        text: `Check out my new contentList, ${title} on @dgc-network #Coliving`,
         url
       }
     }

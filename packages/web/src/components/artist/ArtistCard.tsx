@@ -24,7 +24,7 @@ export const ArtistCard = (props: ArtistCardProps) => {
     user_id,
     bio,
     agreement_count,
-    content list_count,
+    contentList_count,
     follower_count,
     followee_count,
     does_current_user_follow
@@ -56,9 +56,9 @@ export const ArtistCard = (props: ArtistCardProps) => {
     }
     return [
       {
-        number: content list_count,
-        title: content list_count === 1 ? 'content list' : 'content lists',
-        key: 'content list'
+        number: contentList_count,
+        title: contentList_count === 1 ? 'contentList' : 'contentLists',
+        key: 'contentList'
       },
       {
         number: follower_count,
@@ -67,7 +67,7 @@ export const ArtistCard = (props: ArtistCardProps) => {
       },
       { number: followee_count, title: 'following', key: 'following' }
     ]
-  }, [isArtist, agreement_count, follower_count, followee_count, content list_count])
+  }, [isArtist, agreement_count, follower_count, followee_count, contentList_count])
 
   const handleFollow = useCallback(() => {
     dispatch(followUser(user_id, FollowSource.HOVER_TILE))

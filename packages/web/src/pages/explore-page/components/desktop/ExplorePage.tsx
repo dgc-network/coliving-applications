@@ -79,7 +79,7 @@ const lifestyle = [
 export type ExplorePageProps = {
   title: string
   description: string
-  content lists: UserCollection[]
+  contentLists: UserCollection[]
   profiles: User[]
   status: Status
   goToRoute: (route: string) => void
@@ -88,13 +88,13 @@ export type ExplorePageProps = {
 const ExplorePage = ({
   title,
   description,
-  content lists,
+  contentLists,
   profiles,
   status,
   goToRoute
 }: ExplorePageProps) => {
   const { isLoading: isLoadingContentList, setDidLoad: setDidLoadContentList } =
-    useOrderedLoad(content lists.length)
+    useOrderedLoad(contentLists.length)
   const { isLoading: isLoadingProfiles, setDidLoad: setDidLoadProfile } =
     useOrderedLoad(profiles.length)
 
@@ -128,7 +128,7 @@ const ExplorePage = ({
       >
         {justForYou.map((i) => {
           const title =
-            i.variant === CollectionVariant.SMART ? i.content list_name : i.title
+            i.variant === CollectionVariant.SMART ? i.contentList_name : i.title
           const subtitle =
             i.variant === CollectionVariant.SMART ? i.description : i.subtitle
           const Icon = i.icon ? i.icon : Fragment
@@ -181,11 +181,11 @@ const ExplorePage = ({
             />
           </div>
         ) : (
-          content lists.map((content list: UserCollection, i: number) => {
+          contentLists.map((contentList: UserCollection, i: number) => {
             return (
               <CollectionArtCard
-                key={content list.content list_id}
-                id={content list.content list_id}
+                key={contentList.contentList_id}
+                id={contentList.contentList_id}
                 index={i}
                 isLoading={isLoadingContentList(i)}
                 setDidLoad={setDidLoadContentList}

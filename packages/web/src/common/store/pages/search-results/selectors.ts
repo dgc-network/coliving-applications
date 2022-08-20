@@ -37,7 +37,7 @@ export const makeGetSearchAlbums = () => {
       .map((album) => {
         return {
           ...album,
-          user: users[album.content list_owner_id]
+          user: users[album.contentList_owner_id]
         }
       })
       .filter((album) => !!album.user && !album.user.is_deactivated)
@@ -45,19 +45,19 @@ export const makeGetSearchAlbums = () => {
 }
 
 const getSearchContentLists = (state: CommonState) =>
-  getCollections(state, { ids: getBaseState(state).content listIds })
+  getCollections(state, { ids: getBaseState(state).contentListIds })
 export const makeGetSearchContentLists = () => {
   return createShallowSelector(
     [getSearchContentLists, getUsers],
-    (content lists, users) =>
-      Object.values(content lists)
-        .map((content list) => {
+    (contentLists, users) =>
+      Object.values(contentLists)
+        .map((contentList) => {
           return {
-            ...content list,
-            user: users[content list.content list_owner_id],
-            agreementCount: (content list.content list_contents.agreement_ids || []).length
+            ...contentList,
+            user: users[contentList.contentList_owner_id],
+            agreementCount: (contentList.contentList_contents.agreement_ids || []).length
           }
         })
-        .filter((content list) => !!content list.user && !content list.user.is_deactivated)
+        .filter((contentList) => !!contentList.user && !contentList.user.is_deactivated)
   )
 }

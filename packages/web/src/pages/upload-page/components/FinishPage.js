@@ -214,7 +214,7 @@ class FinishPage extends Component {
 
       const status =
         // Don't show complete until inProgress = false, to allow
-        // the saga to perform final processing steps (e.g. create a content list after uploading agreements)
+        // the saga to perform final processing steps (e.g. create a contentList after uploading agreements)
         uploadProgress
           .map((u) => u.status)
           .every((s) => s === ProgressStatus.COMPLETE) && !inProgress
@@ -277,7 +277,7 @@ class FinishPage extends Component {
           header={header}
           userName={userName}
           agreementList={agreementList}
-          title={metadata.content list_name}
+          title={metadata.contentList_name}
           artwork={artwork}
           activeAgreementUid={false} // No agreement should show as active
           bottomBar={bottomBar}

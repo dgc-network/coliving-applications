@@ -330,7 +330,7 @@ class PlayBar extends Component {
       favorited = agreement.has_current_user_saved || false
       isAgreementUnlisted = agreement.is_unlisted
     } else if (collectible && user) {
-      // Special case for live nft content list
+      // Special case for live nft contentList
       agreementTitle = collectible.name
       artistName = user.name
       artistHandle = user.handle

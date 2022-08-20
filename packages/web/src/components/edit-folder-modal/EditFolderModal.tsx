@@ -15,13 +15,13 @@ import { getContentListLibrary } from 'common/store/account/selectors'
 import {
   removeContentListFolderInLibrary,
   renameContentListFolderInLibrary
-} from 'common/store/content list-library/helpers'
-import FolderForm from 'components/create-content list/FolderForm'
+} from 'common/store/contentList-library/helpers'
+import FolderForm from 'components/create-contentList/FolderForm'
 import DeleteConfirmationModal from 'components/delete-confirmation/DeleteConfirmationModal'
 import { make, useRecord } from 'store/analytics/actions'
 import { getFolderId } from 'store/application/ui/editFolderModal/selectors'
 import { setFolderId } from 'store/application/ui/editFolderModal/slice'
-import { update as updateContentListLibrary } from 'store/content list-library/slice'
+import { update as updateContentListLibrary } from 'store/contentList-library/slice'
 import { useSelector } from 'utils/reducer'
 import { zIndex } from 'utils/zIndex'
 
@@ -33,19 +33,19 @@ const messages = {
   confirmDeleteFolderModalHeader:
     'Are you sure you want to delete this folder?',
   confirmDeleteFolderModalDescription:
-    'Any content lists inside will be moved out before the folder is deleted.',
+    'Any contentLists inside will be moved out before the folder is deleted.',
   folderEntity: 'Folder'
 }
 
 const EditFolderModal = () => {
   const record = useRecord()
   const folderId = useSelector(getFolderId)
-  const content listLibrary = useSelector(getContentListLibrary)
+  const contentListLibrary = useSelector(getContentListLibrary)
   const [isOpen, setIsOpen] = useModalState('EditFolder')
   const folder =
-    content listLibrary == null || folderId == null
+    contentListLibrary == null || folderId == null
       ? null
-      : (content listLibrary.contents.find(
+      : (contentListLibrary.contents.find(
           (item) => item.type === 'folder' && item.id === folderId
         ) as ContentListLibraryFolder | undefined)
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false)
@@ -66,20 +66,20 @@ const EditFolderModal = () => {
   const handleSubmit = useCallback(
     (newName: string) => {
       if (
-        !(content listLibrary == null || folderId == null || folder == null) &&
+        !(contentListLibrary == null || folderId == null || folder == null) &&
         newName !== folder.name
       ) {
         const newLibrary = renameContentListFolderInLibrary(
-          content listLibrary,
+          contentListLibrary,
           folderId,
           newName
         )
-        dispatch(updateContentListLibrary({ content listLibrary: newLibrary }))
+        dispatch(updateContentListLibrary({ contentListLibrary: newLibrary }))
       }
       record(make(Name.FOLDER_SUBMIT_EDIT, {}))
       handleClose()
     },
-    [dispatch, folder, folderId, handleClose, content listLibrary, record]
+    [dispatch, folder, folderId, handleClose, contentListLibrary, record]
   )
 
   const handleClickDelete = useCallback(() => {
@@ -87,17 +87,17 @@ const EditFolderModal = () => {
   }, [])
 
   const handleConfirmDelete = useCallback(() => {
-    if (!(content listLibrary == null || folderId == null || folder == null)) {
+    if (!(contentListLibrary == null || folderId == null || folder == null)) {
       const newLibrary = removeContentListFolderInLibrary(
-        content listLibrary,
+        contentListLibrary,
         folderId
       )
       setShowDeleteConfirmation(false)
-      dispatch(updateContentListLibrary({ content listLibrary: newLibrary }))
+      dispatch(updateContentListLibrary({ contentListLibrary: newLibrary }))
     }
     record(make(Name.FOLDER_DELETE, {}))
     handleClose()
-  }, [dispatch, folder, folderId, handleClose, content listLibrary, record])
+  }, [dispatch, folder, folderId, handleClose, contentListLibrary, record])
 
   return (
     <>

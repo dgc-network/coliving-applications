@@ -39,7 +39,7 @@ import TierExplainerDrawer from 'components/user-badges/TierExplainerDrawer'
 import useAsyncPoll from 'hooks/useAsyncPoll'
 import useTabs from 'hooks/useTabs/useTabs'
 import { MIN_COLLECTIBLES_TIER } from 'pages/profile-page/ProfilePageProvider'
-import { albumPage, content listPage, fullProfilePage } from 'utils/route'
+import { albumPage, contentListPage, fullProfilePage } from 'utils/route'
 import { withNullGuard } from 'utils/withNullGuard'
 
 import { DeactivatedProfileTombstone } from '../DeactivatedProfileTombstone'
@@ -90,7 +90,7 @@ export type ProfilePageProps = {
 
   profile: ProfileUser | null
   albums: Collection[] | null
-  content lists: Collection[] | null
+  contentLists: Collection[] | null
   status: Status
   goToRoute: (route: string) => void
   artistAgreements: LineupState<{ id: ID }>
@@ -191,17 +191,17 @@ const getMessages = ({
     ? "You haven't created any albums yet"
     : `${name} hasn't created any albums yet`,
   emptyContentLists: isOwner
-    ? "You haven't created any content lists yet"
-    : `${name} hasn't created any content lists yet`,
+    ? "You haven't created any contentLists yet"
+    : `${name} hasn't created any contentLists yet`,
   emptyReposts: isOwner
     ? "You haven't reposted anything yet"
     : `${name} hasn't reposted anything yet`
 })
 
 const g = withNullGuard((props: ProfilePageProps) => {
-  const { profile, albums, content lists } = props
-  if (profile && albums && content lists) {
-    return { ...props, profile, albums, content lists }
+  const { profile, albums, contentLists } = props
+  if (profile && albums && contentLists) {
+    return { ...props, profile, albums, contentLists }
   }
 })
 
@@ -230,7 +230,7 @@ const ProfilePage = g(
     website,
     donation,
     albums,
-    content lists,
+    contentLists,
     artistAgreements,
     userFeed,
     isUserConfirming,
@@ -368,24 +368,24 @@ const ProfilePage = g(
         />
       )
     } else {
-      const content listCards = (content lists || []).map((content list) => (
+      const contentListCards = (contentLists || []).map((contentList) => (
         <Card
-          key={content list.content list_id}
-          id={content list.content list_id}
-          userId={content list.content list_owner_id}
-          imageSize={content list._cover_art_sizes}
-          primaryText={content list.content list_name}
+          key={contentList.contentList_id}
+          id={contentList.contentList_id}
+          userId={contentList.contentList_owner_id}
+          imageSize={contentList._cover_art_sizes}
+          primaryText={contentList.contentList_name}
           secondaryText={formatCardSecondaryText(
-            content list.save_count,
-            content list.content list_contents.agreement_ids.length,
-            content list.is_private
+            contentList.save_count,
+            contentList.contentList_contents.agreement_ids.length,
+            contentList.is_private
           )}
           onClick={() =>
             goToRoute(
-              content listPage(
+              contentListPage(
                 profile.handle,
-                content list.content list_name,
-                content list.content list_id
+                contentList.contentList_name,
+                contentList.contentList_id
               )
             )
           }
@@ -394,21 +394,21 @@ const ProfilePage = g(
       if (isArtist) {
         const albumCards = (albums || []).map((album) => (
           <Card
-            key={album.content list_id}
-            id={album.content list_id}
-            userId={album.content list_owner_id}
+            key={album.contentList_id}
+            id={album.contentList_id}
+            userId={album.contentList_owner_id}
             imageSize={album._cover_art_sizes}
-            primaryText={album.content list_name}
+            primaryText={album.contentList_name}
             secondaryText={formatCardSecondaryText(
               album.save_count,
-              album.content list_contents.agreement_ids.length
+              album.contentList_contents.agreement_ids.length
             )}
             onClick={() =>
               goToRoute(
                 albumPage(
                   profile.handle,
-                  album.content list_name,
-                  album.content list_id
+                  album.contentList_name,
+                  album.contentList_id
                 )
               )
             }
@@ -461,7 +461,7 @@ const ProfilePage = g(
             )}
           </div>,
           <div className={styles.cardLineupContainer} key='artistContentLists'>
-            {(content lists || []).length === 0 ? (
+            {(contentLists || []).length === 0 ? (
               <EmptyTab
                 message={
                   <>
@@ -475,7 +475,7 @@ const ProfilePage = g(
             ) : (
               <CardLineup
                 cardsClassName={styles.cardLineup}
-                cards={content listCards}
+                cards={contentListCards}
               />
             )}
           </div>,
@@ -529,8 +529,8 @@ const ProfilePage = g(
               />
             )}
           </div>,
-          <div className={styles.cardLineupContainer} key='content lists'>
-            {(content lists || []).length === 0 ? (
+          <div className={styles.cardLineupContainer} key='contentLists'>
+            {(contentLists || []).length === 0 ? (
               <EmptyTab
                 message={
                   <>
@@ -544,7 +544,7 @@ const ProfilePage = g(
             ) : (
               <CardLineup
                 cardsClassName={styles.cardLineup}
-                cards={content listCards}
+                cards={contentListCards}
               />
             )}
           </div>
@@ -637,7 +637,7 @@ const ProfilePage = g(
                 coverPhotoSizes={coverPhotoSizes}
                 profilePictureSizes={profilePictureSizes}
                 hasProfilePicture={hasProfilePicture}
-                content listCount={profile.content list_count}
+                contentListCount={profile.contentList_count}
                 agreementCount={profile.agreement_count}
                 followerCount={profile.follower_count}
                 followingCount={profile.followee_count}

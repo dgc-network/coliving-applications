@@ -1,4 +1,4 @@
-.content listAgreement {
+.contentListAgreement {
   border-bottom: 1px solid rgba(133, 129, 153, 0.1);
   border-left: 1px solid rgba(133, 129, 153, 0.1);
   border-right: 1px solid rgba(133, 129, 153, 0.1);
@@ -13,39 +13,39 @@
   align-items: center;
 }
 
-.content listAgreement.noBorder {
+.contentListAgreement.noBorder {
   border: none;
 }
 
-.content listAgreement.disabled {
+.contentListAgreement.disabled {
   cursor: default;
 }
 
-.content listAgreement.deleted:hover,
-.content listAgreement.deleted {
+.contentListAgreement.deleted:hover,
+.contentListAgreement.deleted {
   background-color: var(--neutral-light-9);
   color: var(--neutral-light-4);
 }
 
-.large.content listAgreement,
-.small.content listAgreement {
+.large.contentListAgreement,
+.small.contentListAgreement {
   height: 40px;
   padding: 8px;
 }
 
-.content listAgreement:not(.disabled):hover {
+.contentListAgreement:not(.disabled):hover {
   background: var(--neutral-light-9);
 }
 
-.content listAgreement:not(.disabled):hover .more {
+.contentListAgreement:not(.disabled):hover .more {
   opacity: 1;
 }
 
-.content listAgreement:not(.disabled):hover .listButton {
+.contentListAgreement:not(.disabled):hover .listButton {
   opacity: 1;
 }
 
-.content listAgreement.active .listButton {
+.contentListAgreement.active .listButton {
   opacity: 1;
 }
 

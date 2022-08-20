@@ -3,7 +3,7 @@ import { useCallback } from 'react'
 import { FavoriteSource } from '@/common'
 import { getContentListLibrary } from '-client/src/common/store/account/selectors'
 import { getCollection } from '-client/src/common/store/pages/smart-collection/selectors'
-import { findInContentListLibrary } from '-client/src/common/store/content list-library/helpers'
+import { findInContentListLibrary } from '-client/src/common/store/contentList-library/helpers'
 import {
   saveSmartCollection,
   unsaveSmartCollection
@@ -47,13 +47,13 @@ export const SmartCollectionScreen = ({
     getCollection(state, { variant: smartCollection.variant })
   )
 
-  const content listName = collection?.content list_name ?? smartCollection.title
+  const contentListName = collection?.contentList_name ?? smartCollection.title
   const description = collection?.description ?? smartCollection.description
 
-  const content listLibrary = useSelectorWeb(getContentListLibrary)
+  const contentListLibrary = useSelectorWeb(getContentListLibrary)
 
-  const isSaved = content listLibrary
-    ? !!findInContentListLibrary(content listLibrary, smartCollection.variant)
+  const isSaved = contentListLibrary
+    ? !!findInContentListLibrary(contentListLibrary, smartCollection.variant)
     : false
 
   const handlePressSave = useCallback(() => {
@@ -92,7 +92,7 @@ export const SmartCollectionScreen = ({
 
   return (
     <VirtualizedScrollView
-      listKey={`${content listName}_ContentList_Screen`}
+      listKey={`${contentListName}_ContentList_Screen`}
       style={styles.root}
     >
       <CollectionScreenDetailsTile
@@ -105,7 +105,7 @@ export const SmartCollectionScreen = ({
         hideShare
         onPressSave={handlePressSave}
         renderImage={renderImage}
-        title={content listName}
+        title={contentListName}
       />
     </VirtualizedScrollView>
   )

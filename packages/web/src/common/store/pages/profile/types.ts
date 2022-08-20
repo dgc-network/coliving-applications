@@ -53,7 +53,7 @@ export enum Tabs {
 export enum TabRoute {
   AGREEMENTS = 'agreements',
   ALBUMS = 'albums',
-  CONTENT_LISTS = 'content lists',
+  CONTENT_LISTS = 'contentLists',
   REPOSTS = 'reposts',
   COLLECTIBLES = 'collectibles'
 }

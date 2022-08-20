@@ -66,7 +66,7 @@ export const getModalNotification = (state: CommonState) =>
     : null
 
 export const getContentListUpdates = (state: CommonState) =>
-  getBaseState(state).content listUpdates
+  getBaseState(state).contentListUpdates
 
 export const makeGetAllNotifications = () => {
   return createSelector(
@@ -126,7 +126,7 @@ export const getNotificationEntity = (
     const entity = getEntity(state, { id: notification.entityId })
     if (entity) {
       const userId =
-        'owner_id' in entity ? entity.owner_id : entity.content list_owner_id
+        'owner_id' in entity ? entity.owner_id : entity.contentList_owner_id
       return {
         ...entity,
         user: getUser(state, { id: userId })
@@ -139,7 +139,7 @@ export const getNotificationEntity = (
 
 type EntityTypes<T extends AddAgreementToContentList | Notification> =
   T extends AddAgreementToContentList
-    ? { agreement: AgreementEntity; content list: CollectionEntity }
+    ? { agreement: AgreementEntity; contentList: CollectionEntity }
     : Nullable<EntityType[]>
 
 export const getNotificationEntities = <
@@ -151,11 +151,11 @@ export const getNotificationEntities = <
   if (notification.type === NotificationType.AddAgreementToContentList) {
     const agreement = getAgreement(state, { id: notification.agreementId })
     const currentUser = getAccountUser(state)
-    const content list = getCollection(state, { id: notification.content listId })
-    const content listOwner = getUser(state, { id: notification.content listOwnerId })
+    const contentList = getCollection(state, { id: notification.contentListId })
+    const contentListOwner = getUser(state, { id: notification.contentListOwnerId })
     return {
       agreement: { ...agreement, user: currentUser },
-      content list: { ...content list, user: content listOwner }
+      contentList: { ...contentList, user: contentListOwner }
     } as EntityTypes<T>
   }
 
@@ -168,7 +168,7 @@ export const getNotificationEntities = <
       .map((entity: Agreement | Collection | null) => {
         if (entity) {
           const userId =
-            'owner_id' in entity ? entity.owner_id : entity.content list_owner_id
+            'owner_id' in entity ? entity.owner_id : entity.contentList_owner_id
           return {
             ...entity,
             user: getUser(state, { id: userId })

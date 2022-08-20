@@ -47,7 +47,7 @@ export const getCollections = (
     props.uids.forEach((uid) => {
       const collection = getCollection(state, { uid })
       if (collection) {
-        collections[collection.content list_id] = collection
+        collections[collection.contentList_id] = collection
       }
     })
     return collections
@@ -83,14 +83,14 @@ export const getAgreementsFromCollection = (
 
   if (
     !collection ||
-    !collection.content list_contents ||
-    !collection.content list_contents.agreement_ids
+    !collection.contentList_contents ||
+    !collection.contentList_contents.agreement_ids
   )
     return emptyList
 
   const collectionSource = Uid.fromString(props.uid).source
 
-  const ids = collection.content list_contents.agreement_ids.map((t) => t.agreement)
+  const ids = collection.contentList_contents.agreement_ids.map((t) => t.agreement)
   const agreements = getAgreements(state, { ids })
 
   const userIds = Object.keys(agreements)
@@ -108,7 +108,7 @@ export const getAgreementsFromCollection = (
   if (!users || Object.keys(users).length === 0) return emptyList
 
   // Return agreements & rebuild UIDs for the agreement so they refer directly to this collection
-  return collection.content list_contents.agreement_ids
+  return collection.contentList_contents.agreement_ids
     .map((t, i) => {
       const agreementUid = Uid.fromString(t.uid ?? '')
       agreementUid.source = `${collectionSource}:${agreementUid.source}`
@@ -133,7 +133,7 @@ export const getCollectionWithUser = (
   props: { id?: ID }
 ): EnhancedCollection | null => {
   const collection = getCollection(state, { id: props.id })
-  const userId = collection?.content list_owner_id
+  const userId = collection?.contentList_owner_id
   const user = getUserById(state, { id: userId })
   if (collection && user) {
     return {

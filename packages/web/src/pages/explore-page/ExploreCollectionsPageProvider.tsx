@@ -111,7 +111,7 @@ const ExploreCollectionsPageProvider = ({
 
   useEffect(() => {
     if (variant === ExploreCollectionsVariant.MOOD) {
-      // Mood content list
+      // Mood contentList
       const match = matchPath<{
         mood: string
       }>(getPathname(location), {
@@ -125,7 +125,7 @@ const ExploreCollectionsPageProvider = ({
     } else if (variant === ExploreCollectionsVariant.DIRECT_LINK) {
       // no-op
     } else {
-      // Other content list/albums types (e.g. Top ContentList)
+      // Other contentList/albums types (e.g. Top ContentList)
       fetch(variant)
       setInfo(EXPLORE_COLLECTIONS_MAP[variant])
     }

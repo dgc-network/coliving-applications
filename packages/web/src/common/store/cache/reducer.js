@@ -13,7 +13,7 @@ import {
 } from 'common/store/cache/actions'
 
 /**
- * The cache is implemented as primarily a map of ids to metadata (agreement, content list, collection).
+ * The cache is implemented as primarily a map of ids to metadata (agreement, contentList, collection).
  * Each entry can have N number of uids that point to it, e.g. a agreement may appear
  * on the page twice, only cached once, but referenced to by different uids.
  *
@@ -65,7 +65,7 @@ const forceUpdateKeys = new Set([
 
 // Customize lodash recursive merge to never merge
 // the forceUpdateKeys, and special-case
-// content list_contents
+// contentList_contents
 export const mergeCustomizer = (objValue, srcValue, key) => {
   if (forceUpdateKeys.has(key)) {
     return srcValue
@@ -79,13 +79,13 @@ export const mergeCustomizer = (objValue, srcValue, key) => {
     return objValue
   }
 
-  // For content list_contents, this is trickier.
-  // We want to never merge because content lists can have
+  // For contentList_contents, this is trickier.
+  // We want to never merge because contentLists can have
   // agreements be deleted since last time, but
   // new fetches won't have UIDs, so we need to preserve those.
-  if (objValue && key === 'content list_contents') {
+  if (objValue && key === 'contentList_contents') {
     // Map out agreements keyed by id, but store as an array-value
-    // because a content list can contain multiple of the same agreement id
+    // because a contentList can contain multiple of the same agreement id
     const agreementMap = {}
     objValue.agreement_ids.forEach((t) => {
       const id = t.agreement

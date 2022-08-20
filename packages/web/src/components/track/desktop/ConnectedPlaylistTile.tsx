@@ -61,7 +61,7 @@ import {
   fullAlbumPage,
   fullContentListPage,
   fullAgreementPage,
-  content listPage,
+  contentListPage,
   profilePage
 } from 'utils/route'
 import { isDarkMode, isMatrix } from 'utils/theme/theme'
@@ -132,8 +132,8 @@ const ConnectedContentListTile = memo(
   }: ConnectedContentListTileProps) => {
     const {
       is_album: isAlbum,
-      content list_name: title,
-      content list_id: id,
+      contentList_name: title,
+      contentList_id: id,
       is_private: isPrivate,
       _cover_art_sizes: coverArtSizes,
       repost_count: repostCount,
@@ -212,7 +212,7 @@ const ConnectedContentListTile = memo(
         goToRoute(
           isAlbum
             ? albumPage(handle, title, id)
-            : content listPage(handle, title, id)
+            : contentListPage(handle, title, id)
         )
       },
       [goToRoute, isAlbum, handle, title, id]
@@ -253,9 +253,9 @@ const ConnectedContentListTile = memo(
         handle,
         isFavorited,
         isReposted,
-        type: isAlbum ? 'album' : 'content list', // content list or album
-        content listId: id,
-        content listName: title,
+        type: isAlbum ? 'album' : 'contentList', // contentList or album
+        contentListId: id,
+        contentListName: title,
         isPublic: !isPrivate,
         isOwner,
         includeEmbed: true,
@@ -323,7 +323,7 @@ const ConnectedContentListTile = memo(
     }, [setRepostUsers, id, setModalVisibility])
 
     const renderStats = () => {
-      const contentTitle = 'agreement' // undefined,  content list or album -  undefined is agreement
+      const contentTitle = 'agreement' // undefined,  contentList or album -  undefined is agreement
       const sz = 'large'
       return (
         <div className={cn(styles.socialInfo)}>
@@ -376,7 +376,7 @@ const ConnectedContentListTile = memo(
           key={id}
           isDisabled={disableActions}
           text={title}
-          kind={isAlbum ? 'album' : 'content list'}
+          kind={isAlbum ? 'album' : 'contentList'}
           id={id}
           isOwner={isOwner}
           link={
@@ -466,7 +466,7 @@ const ConnectedContentListTile = memo(
           : 'CONTENT_LIST'
         : undefined
 
-    // Failsafe check - should never get this far, lineups should filter deactivated content lists
+    // Failsafe check - should never get this far, lineups should filter deactivated contentLists
     if (isOwnerDeactivated) {
       return null
     }

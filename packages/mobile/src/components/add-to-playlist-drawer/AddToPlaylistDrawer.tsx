@@ -9,9 +9,9 @@ import {
 import {
   getAgreementId,
   getAgreementTitle
-} from '-client/src/common/store/ui/add-to-content list/selectors'
+} from '-client/src/common/store/ui/add-to-contentList/selectors'
 import { newCollectionMetadata } from '-client/src/schemas'
-import { FEED_PAGE, content listPage } from '-client/src/utils/route'
+import { FEED_PAGE, contentListPage } from '-client/src/utils/route'
 import type { NativeScrollEvent, NativeSyntheticEvent } from 'react-native'
 import { View } from 'react-native'
 
@@ -60,11 +60,11 @@ export const AddToContentListDrawer = () => {
   if (!user || !agreementId || !agreementTitle) {
     return null
   }
-  const userContentLists = user.content lists ?? []
+  const userContentLists = user.contentLists ?? []
 
   const addToNewContentList = () => {
     const metadata = newCollectionMetadata({
-      content list_name: agreementTitle,
+      contentList_name: agreementTitle,
       is_private: false
     })
     const tempId = `${Date.now()}`
@@ -73,7 +73,7 @@ export const AddToContentListDrawer = () => {
     )
     dispatchWeb(addAgreementToContentList(agreementId!, tempId))
     toast({ content: messages.createdToast })
-    pushRouteWeb(content listPage(user.handle, agreementTitle, tempId), FEED_PAGE)
+    pushRouteWeb(contentListPage(user.handle, agreementTitle, tempId), FEED_PAGE)
     onClose()
   }
 
@@ -109,15 +109,15 @@ export const AddToContentListDrawer = () => {
           data={userContentLists}
           renderItem={({ item }) => (
             <Card
-              key={item.content list_id}
-              id={item.content list_id}
+              key={item.contentList_id}
+              id={item.contentList_id}
               type='collection'
               imageSize={item._cover_art_sizes}
-              primaryText={item.content list_name}
+              primaryText={item.contentList_name}
               secondaryText={user.name}
               onPress={() => {
                 toast({ content: messages.addedToast })
-                dispatchWeb(addAgreementToContentList(agreementId!, item.content list_id))
+                dispatchWeb(addAgreementToContentList(agreementId!, item.contentList_id))
                 onClose()
               }}
               user={user}

@@ -36,7 +36,7 @@ import { getLocationPathname } from 'store/routing/selectors'
 import { useSelector } from 'utils/reducer'
 import {
   albumPage,
-  content listPage,
+  contentListPage,
   profilePage,
   fullSearchResultsPage,
   SEARCH_PAGE
@@ -48,7 +48,7 @@ const NATIVE_MOBILE = process.env.REACT_APP_NATIVE_MOBILE
 
 type SearchPageContentProps = {
   agreements: LineupState<{}>
-  content lists: UserCollection[]
+  contentLists: UserCollection[]
   albums: UserCollection[]
   artists: User[]
   match: any
@@ -66,7 +66,7 @@ type SearchPageContentProps = {
   search: {
     albumUids: UID[]
     artistUids: UID[]
-    content listUids: UID[]
+    contentListUids: UID[]
     agreementUids: UID[]
     searchText: string
     status: Status
@@ -198,11 +198,11 @@ const cardSearchPageMessages = {
 }
 
 /*
- * Component capable of rendering albums/content lists/people
+ * Component capable of rendering albums/contentLists/people
  */
 const CardSearchPage = ({
   albums,
-  content lists,
+  contentLists,
   artists,
   goToRoute,
   cardType,
@@ -215,7 +215,7 @@ const CardSearchPage = ({
       case CardType.ALBUM:
         return albums
       case CardType.CONTENT_LIST:
-        return content lists
+        return contentLists
       case CardType.USER:
         return artists
     }
@@ -241,17 +241,17 @@ const CardSearchPage = ({
           case CardType.ALBUM:
           case CardType.CONTENT_LIST: {
             const routeFunc =
-              cardType === CardType.ALBUM ? albumPage : content listPage
+              cardType === CardType.ALBUM ? albumPage : contentListPage
             const collection = e as UserCollection
             return {
-              userId: collection.content list_owner_id,
-              id: collection.content list_id,
+              userId: collection.contentList_owner_id,
+              id: collection.contentList_id,
               route: routeFunc(
                 collection.user.handle,
-                collection.content list_name,
-                collection.content list_id
+                collection.contentList_name,
+                collection.contentList_id
               ),
-              primaryText: collection.content list_name,
+              primaryText: collection.contentList_name,
               secondaryText: collection.user.handle,
               imageSize: collection._cover_art_sizes,
               isVerified: false
@@ -293,7 +293,7 @@ const messages = {
   tagSearchTitle: 'Tag Search',
   agreementsTitle: 'Agreements',
   albumsTitle: 'Albums',
-  content listsTitle: 'ContentLists',
+  contentListsTitle: 'ContentLists',
   peopleTitle: 'Profiles'
 }
 
@@ -335,7 +335,7 @@ const SearchPageContent = (props: SearchPageContentProps) => {
               | 'people'
               | 'agreements'
               | 'albums'
-              | 'content lists'
+              | 'contentLists'
           })
         )
     },
@@ -388,7 +388,7 @@ const SearchPageContent = (props: SearchPageContentProps) => {
             },
             {
               icon: <IconContentLists />,
-              text: messages.content listsTitle,
+              text: messages.contentListsTitle,
               label: Tabs.CONTENT_LISTS
             }
           ],
@@ -405,7 +405,7 @@ const SearchPageContent = (props: SearchPageContentProps) => {
               cardType={CardType.ALBUM}
             />,
             <CardSearchPage
-              key='content listSearch'
+              key='contentListSearch'
               {...props}
               cardType={CardType.CONTENT_LIST}
             />

@@ -42,9 +42,9 @@ export const remoteConfigStringDefaults: {
   // Coliving user id
   [StringKeys.TRENDING_CONTENT_LIST_OMITTED_USER_IDS]: '51',
   [StringKeys.TRENDING_REWARD_IDS]:
-    'trending-agreement,trending-content list,trending-underground,top-api',
+    'trending-agreement,trending-contentList,trending-underground,top-api',
   [StringKeys.CHALLENGE_REWARD_IDS]:
-    'agreement-upload,invite-friends,mobile-app,connect-verified,listen-streak,profile-completion,send-first-tip,first-content list',
+    'agreement-upload,invite-friends,mobile-app,connect-verified,listen-streak,profile-completion,send-first-tip,first-contentList',
   [StringKeys.REWARDS_TWEET_ID_AGREEMENTS]: '1374856377651187713',
   [StringKeys.REWARDS_TWEET_ID_CONTENT_LISTS]: '1374856377651187713',
   [StringKeys.REWARDS_TWEET_ID_UNDERGROUND]: '1374856377651187713',

@@ -13,7 +13,7 @@ import { getTierForUser } from 'common/store/wallet/utils'
 import { getSearch } from 'components/search-bar/store/selectors'
 import Bar from 'components/search/SearchBar'
 import { make } from 'store/analytics/actions'
-import { albumPage, content listPage, profilePage, getPathname } from 'utils/route'
+import { albumPage, contentListPage, profilePage, getPathname } from 'utils/route'
 
 import styles from './ConnectedSearchBar.module.css'
 import { fetchSearch, cancelFetchSearch, clearSearch } from './store/actions'
@@ -91,23 +91,23 @@ class ConnectedSearchBar extends Component {
         (t) => value === (t.user ? t.permalink : '')
       )
       if (selectedAgreement) return { kind: 'agreement', id: selectedAgreement.agreement_id }
-      const selectedContentList = this.props.search.content lists.find(
+      const selectedContentList = this.props.search.contentLists.find(
         (p) =>
           value ===
           (p.user
-            ? content listPage(p.user.handle, p.content list_name, p.content list_id)
+            ? contentListPage(p.user.handle, p.contentList_name, p.contentList_id)
             : '')
       )
       if (selectedContentList)
-        return { kind: 'content list', id: selectedContentList.content list_id }
+        return { kind: 'contentList', id: selectedContentList.contentList_id }
       const selectedAlbum = this.props.search.albums.find(
         (a) =>
           value ===
           (a.user
-            ? albumPage(a.user.handle, a.content list_name, a.content list_id)
+            ? albumPage(a.user.handle, a.contentList_name, a.contentList_id)
             : '')
       )
-      if (selectedAlbum) return { kind: 'album', id: selectedAlbum.content list_id }
+      if (selectedAlbum) return { kind: 'album', id: selectedAlbum.contentList_id }
       return {}
     })()
     this.props.recordSearchResultClick({
@@ -166,29 +166,29 @@ class ConnectedSearchBar extends Component {
         },
         {
           title: 'ContentLists',
-          children: this.props.search.content lists.map((content list) => {
+          children: this.props.search.contentLists.map((contentList) => {
             return {
-              primary: content list.content list_name,
-              secondary: content list.user ? content list.user.name : '',
-              key: content list.user
-                ? content listPage(
-                    content list.user.handle,
-                    content list.content list_name,
-                    content list.content list_id
+              primary: contentList.contentList_name,
+              secondary: contentList.user ? contentList.user.name : '',
+              key: contentList.user
+                ? contentListPage(
+                    contentList.user.handle,
+                    contentList.contentList_name,
+                    contentList.contentList_id
                   )
                 : '',
-              id: content list.content list_id,
-              userId: content list.content list_owner_id,
-              imageMultihash: content list.cover_art_sizes || content list.cover_art,
-              size: content list.cover_art_sizes
+              id: contentList.contentList_id,
+              userId: contentList.contentList_owner_id,
+              imageMultihash: contentList.cover_art_sizes || contentList.cover_art,
+              size: contentList.cover_art_sizes
                 ? SquareSizes.SIZE_150_BY_150
                 : null,
               defaultImage: placeholderArt,
-              contentNodeEndpoint: content list.user
-                ? content list.user.content_node_endpoint
+              contentNodeEndpoint: contentList.user
+                ? contentList.user.content_node_endpoint
                 : '',
-              isVerifiedUser: content list.user.is_verified,
-              tier: getTierForUser(content list.user)
+              isVerifiedUser: contentList.user.is_verified,
+              tier: getTierForUser(contentList.user)
             }
           })
         },
@@ -199,14 +199,14 @@ class ConnectedSearchBar extends Component {
               key: album.user
                 ? albumPage(
                     album.user.handle,
-                    album.content list_name,
-                    album.content list_id
+                    album.contentList_name,
+                    album.contentList_id
                   )
                 : '',
-              primary: album.content list_name,
+              primary: album.contentList_name,
               secondary: album.user ? album.user.name : '',
-              id: album.content list_id,
-              userId: album.content list_owner_id,
+              id: album.contentList_id,
+              userId: album.contentList_owner_id,
               imageMultihash: album.cover_art_sizes || album.cover_art,
               size: album.cover_art_sizes ? SquareSizes.SIZE_150_BY_150 : null,
               defaultImage: placeholderArt,

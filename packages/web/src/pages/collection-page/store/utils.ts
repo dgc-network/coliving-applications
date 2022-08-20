@@ -4,15 +4,15 @@ export const computeCollectionMetadataProps = (
   metadata: Collection | SmartCollection | null
 ) => {
   const agreementCount =
-    metadata && metadata.content list_contents
-      ? metadata.content list_contents.agreement_ids.length
+    metadata && metadata.contentList_contents
+      ? metadata.contentList_contents.agreement_ids.length
       : 0
   const isEmpty = metadata && agreementCount === 0
   const lastModified =
     metadata && metadata.variant !== Variant.SMART
       ? metadata.updated_at || Date.now()
       : ''
-  const content listName = metadata ? metadata.content list_name : ''
+  const contentListName = metadata ? metadata.contentList_name : ''
   const description =
     metadata && metadata.description ? metadata.description : ''
   const isPrivate =
@@ -23,11 +23,11 @@ export const computeCollectionMetadataProps = (
     metadata && metadata.variant !== Variant.SMART
       ? metadata._is_publishing
       : false
-  const content listSaveCount =
+  const contentListSaveCount =
     metadata && metadata.variant !== Variant.SMART
       ? metadata.save_count || 0
       : 0
-  const content listRepostCount =
+  const contentListRepostCount =
     metadata && metadata.variant !== Variant.SMART
       ? metadata.repost_count || 0
       : 0
@@ -40,13 +40,13 @@ export const computeCollectionMetadataProps = (
     agreementCount,
     isEmpty,
     lastModified,
-    content listName,
+    contentListName,
     description,
     isPrivate,
     isAlbum,
     isPublishing,
-    content listSaveCount,
-    content listRepostCount,
+    contentListSaveCount,
+    contentListRepostCount,
     isReposted
   }
 }

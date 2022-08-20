@@ -13,7 +13,7 @@ import { ExploreCollectionsVariant } from '../types'
 import { fetch, fetchSucceeded } from './slice'
 
 function* fetchLetThemDJ() {
-  const collections = yield* call(Explore.getTopCollections, 'content list', true)
+  const collections = yield* call(Explore.getTopCollections, 'contentList', true)
   return collections
 }
 
@@ -67,7 +67,7 @@ function* watchFetch() {
       /* shouldRetrieveAgreements= */ false
     )
 
-    const collectionIds = collections.map((c: Collection) => c.content list_id)
+    const collectionIds = collections.map((c: Collection) => c.contentList_id)
 
     yield* put(
       fetchSucceeded({

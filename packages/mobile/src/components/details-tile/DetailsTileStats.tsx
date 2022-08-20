@@ -40,7 +40,7 @@ const createStyles = (themeColors: ThemeColors) =>
   })
 
 /**
- * The stats displayed on agreement and content list screens
+ * The stats displayed on agreement and contentList screens
  */
 export const DetailsTileStats = ({
   favoriteCount,

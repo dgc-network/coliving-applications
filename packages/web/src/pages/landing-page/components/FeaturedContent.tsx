@@ -16,13 +16,13 @@ import useCardWeight from 'hooks/useCardWeight'
 import useHasViewed from 'hooks/useHasViewed'
 import ColivingBackend from 'services/ColivingBackend'
 import { getCreatorNodeIPFSGateways } from 'utils/gatewayUtil'
-import { content listPage } from 'utils/route'
+import { contentListPage } from 'utils/route'
 
 import styles from './FeaturedContent.module.css'
 
 const messages = {
   title: 'Featured Content',
-  subTitle: 'Check out the content lists we are listening to right now'
+  subTitle: 'Check out the contentLists we are listening to right now'
 }
 
 type ContentListTileProps = {
@@ -37,19 +37,19 @@ const FALLBACK_CONTENT_LISTS = [
     title: 'Coliving Exclusives',
     artist: 'Coliving',
     imageUrl: colivingExclusivesContentListImg,
-    link: '/coliving/content list/official-coliving-exclusives-1428'
+    link: '/coliving/contentList/official-coliving-exclusives-1428'
   },
   {
     title: 'MOOMBAHTON COMES TO COLIVING',
     artist: 'Moombahton',
     imageUrl: moombahtonContentListImg,
-    link: '/moombahton/content list/moombahton-comes-to-coliving-9601'
+    link: '/moombahton/contentList/moombahton-comes-to-coliving-9601'
   },
   {
     title: 'Hot & New On Coliving 🔥',
     artist: 'Coliving',
     imageUrl: hotAndNewContentListImg,
-    link: '/coliving/content list/hot-new-on-coliving-%F0%9F%94%A5-4281'
+    link: '/coliving/contentList/hot-new-on-coliving-%F0%9F%94%A5-4281'
   },
   {
     title: 'Coliving Weekly',
@@ -150,11 +150,11 @@ const FeaturedContent = (props: FeaturedContentProps) => {
     useAsyncFn(async () => {
       const featuredContent = await fetchExploreContent()
       const ids = featuredContent.featuredContentLists
-      const content lists = ColivingBackend.getContentLists(
+      const contentLists = ColivingBackend.getContentLists(
         null,
         ids
       ) as any as UserCollectionMetadata[]
-      return content lists
+      return contentLists
     }, [])
 
   useEffect(() => {
@@ -188,8 +188,8 @@ const FeaturedContent = (props: FeaturedContentProps) => {
                 .slice(0, 4)
                 .map((p) => (
                   <MobileContentListTile
-                    key={p.content list_id}
-                    title={p.content list_name}
+                    key={p.contentList_id}
+                    title={p.contentList_name}
                     artist={p.user.name}
                     imageUrl={getImageUrl(
                       'small',
@@ -197,10 +197,10 @@ const FeaturedContent = (props: FeaturedContentProps) => {
                       p.user.content_node_endpoint
                     )}
                     onClick={handleClickRoute(
-                      content listPage(
+                      contentListPage(
                         p.user.handle,
-                        p.content list_name,
-                        p.content list_id
+                        p.contentList_name,
+                        p.contentList_id
                       ),
                       props.setRenderPublicSite
                     )}
@@ -242,8 +242,8 @@ const FeaturedContent = (props: FeaturedContentProps) => {
                 .slice(0, 4)
                 .map((p) => (
                   <DesktopContentListTile
-                    key={p.content list_id}
-                    title={p.content list_name}
+                    key={p.contentList_id}
+                    title={p.contentList_name}
                     artist={p.user.name}
                     imageUrl={getImageUrl(
                       'large',
@@ -251,10 +251,10 @@ const FeaturedContent = (props: FeaturedContentProps) => {
                       p.user.content_node_endpoint
                     )}
                     onClick={handleClickRoute(
-                      content listPage(
+                      contentListPage(
                         p.user.handle,
-                        p.content list_name,
-                        p.content list_id
+                        p.contentList_name,
+                        p.contentList_id
                       ),
                       props.setRenderPublicSite
                     )}
