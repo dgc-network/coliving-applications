@@ -74,7 +74,7 @@ const getShareTextUrl = async (
       const { title, permalink } = upload.agreements[0].metadata
       const url = fullUrl ? fullAgreementPage(permalink) : permalink
       return {
-        text: `Check out my new agreement, ${title} on @dgc.network #Coliving`,
+        text: `Check out my new agreement, ${title} on @dgc-network #Coliving`,
         url
       }
     }
@@ -97,14 +97,14 @@ const getShareTextUrl = async (
       else twitterHandle = `@${twitterHandle}`
 
       return {
-        text: `Check out my new remix of ${parentAgreement.title} by ${twitterHandle} on @dgc.network #Coliving`,
+        text: `Check out my new remix of ${parentAgreement.title} by ${twitterHandle} on @dgc-network #Coliving`,
         url
       }
     }
     case 'Agreements': {
       const getPage = fullUrl ? fullProfilePage : profilePage
       const url = getPage(user.handle)
-      return { text: `Check out my new agreements on @dgc.network #Coliving`, url }
+      return { text: `Check out my new agreements on @dgc-network #Coliving`, url }
     }
     case 'Album': {
       // @ts-ignore
@@ -112,7 +112,7 @@ const getShareTextUrl = async (
       const getPage = fullUrl ? fullAlbumPage : albumPage
       const url = getPage(user.handle, title, upload.completionId)
       return {
-        text: `Check out my new album, ${title} on @dgc.network #Coliving`,
+        text: `Check out my new album, ${title} on @dgc-network #Coliving`,
         url
       }
     }
@@ -122,7 +122,7 @@ const getShareTextUrl = async (
       const getPage = fullUrl ? fullPlaylistPage : playlistPage
       const url = getPage(user.handle, title, upload.completionId)
       return {
-        text: `Check out my new playlist, ${title} on @dgc.network #Coliving`,
+        text: `Check out my new playlist, ${title} on @dgc-network #Coliving`,
         url
       }
     }

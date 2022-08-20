@@ -39,7 +39,7 @@ const messages = {
   your: 'Your',
   reached: 'has reached over',
   followerAchievementText: (followersCount: number) =>
-    `I just hit over ${followersCount} followers on @dgc.network #Coliving!`,
+    `I just hit over ${followersCount} followers on @dgc-network #Coliving!`,
   achievementText: (
     type: string,
     name: string,
@@ -48,7 +48,7 @@ const messages = {
   ) => {
     const achievementText =
       achievement === Achievement.Listens ? 'plays' : achievement
-    return `My ${type} ${name} has more than ${value} ${achievementText} on @dgc.network #Coliving
+    return `My ${type} ${name} has more than ${value} ${achievementText} on @dgc-network #Coliving
 Check it out!`
   }
 }

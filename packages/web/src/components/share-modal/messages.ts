@@ -15,14 +15,14 @@ export const messages = {
   copyLink: (asset: ShareType) => `Copy Link to ${shareTypeMap[asset]}`,
   toast: (asset: ShareType) => `Copied Link to ${shareTypeMap[asset]}`,
   agreementShareText: (title: string, handle: string) =>
-    `Check out ${title} by ${handle} on @dgc.network #Coliving`,
+    `Check out ${title} by ${handle} on @dgc-network #Coliving`,
   profileShareText: (handle: string) =>
-    `Check out ${handle} on @dgc.network #Coliving`,
+    `Check out ${handle} on @dgc-network #Coliving`,
   albumShareText: (albumName: string, handle: string) =>
-    `Check out ${albumName} by ${handle} @dgc.network #Coliving`,
+    `Check out ${albumName} by ${handle} @dgc-network #Coliving`,
   playlistShareText: (playlistName: string, handle: string) =>
-    `Check out ${playlistName} by ${handle} @dgc.network #Coliving`,
+    `Check out ${playlistName} by ${handle} @dgc-network #Coliving`,
   // TODO: See if you can display my when the account user is the user
   liveNftPlaylistShareText: (name: string) =>
-    `Check out ${name} Audio NFTs in a playlist @dgc.network #Coliving`
+    `Check out ${name} Audio NFTs in a playlist @dgc-network #Coliving`
 }

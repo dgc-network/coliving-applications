@@ -26,7 +26,7 @@ const messages = {
   sent: 'You successfully sent a tip of',
   to: 'to',
   twitterShare: (senderHandle: string, uiAmount: number) =>
-    `I just tipped ${senderHandle} ${uiAmount} $LIVE on @dgc.network #Coliving #LIVETip`
+    `I just tipped ${senderHandle} ${uiAmount} $LIVE on @dgc-network #Coliving #LIVETip`
 }
 
 type TipSentNotificationProps = {

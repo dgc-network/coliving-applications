@@ -1,4 +1,4 @@
-git_url("git@github.com:dgc.network/certs-and-profiles.git")
+git_url("git@github.com:dgc-network/certs-and-profiles.git")
 
 storage_mode("git")
 

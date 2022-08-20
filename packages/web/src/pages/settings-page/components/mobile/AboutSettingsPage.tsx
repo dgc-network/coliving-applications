@@ -26,7 +26,7 @@ const NATIVE_MOBILE = process.env.REACT_APP_NATIVE_MOBILE
 const links = {
   discord: 'https://discordapp.com/invite/yNUg2e2',
   instagram: 'https://www.instagram.com/colivingmusic/',
-  twitter: 'https://twitter.com/dgc.network',
+  twitter: 'https://twitter.com/dgc-network',
   contact: 'mailto:contact@coliving.co',
   careers: 'https://jobs.lever.co/coliving',
   help: 'https://help.coliving.co/',

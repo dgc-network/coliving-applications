@@ -27,7 +27,7 @@ const messages = {
   title: 'New remix of your agreement',
   by: 'by',
   shareTwitterText: (agreement: AgreementEntity, handle: string) =>
-    `New remix of ${agreement.title} by ${handle} on @dgc.network #Coliving`
+    `New remix of ${agreement.title} by ${handle} on @dgc-network #Coliving`
 }
 
 type RemixCreateNotificationProps = {

@@ -27,7 +27,7 @@ const messages = {
   twitterShareText: (entityTitle: string, rank: number) =>
     `My agreement ${entityTitle} is trending ${rank}${getRankSuffix(
       rank
-    )} on @dgc.network! #ColivingTrending #Coliving`
+    )} on @dgc-network! #ColivingTrending #Coliving`
 }
 
 type TrendingAgreementNotificationProps = {

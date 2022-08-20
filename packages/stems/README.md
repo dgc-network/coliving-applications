@@ -63,7 +63,7 @@ npm start
 Run local Stems against another repo:
 
 ```bash
-git clone git@github.com:dgc.network/stems.git
+git clone git@github.com:dgc-network/stems.git
 # Create a system link
 npm link
 

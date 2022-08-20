@@ -132,6 +132,6 @@ try {
   console.log(`Error configuring local env: ${e}`)
   console.error(`
     Did not find ~/${COLIVING_CONFIG} configuration file.
-    See https://github.com/dgc.network/coliving-e2e-tests to configure a local dev environment.
+    See https://github.com/dgc-network/coliving-e2e-tests to configure a local dev environment.
   `)
 }

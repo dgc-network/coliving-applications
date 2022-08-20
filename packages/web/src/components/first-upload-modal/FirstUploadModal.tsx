@@ -29,7 +29,7 @@ const messages = {
   shareButton: 'Share With Your Fans',
   // Note: twitter auto appends the link to the text
   tweet:
-    'I just joined @dgc.network and uploaded my first agreement! Check out my profile here: '
+    'I just joined @dgc-network and uploaded my first agreement! Check out my profile here: '
 }
 
 const Title = () => {

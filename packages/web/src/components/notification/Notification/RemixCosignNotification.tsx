@@ -28,7 +28,7 @@ const messages = {
   title: 'Remix Co-sign',
   cosign: 'Co-signed your Remix of',
   shareTwitterText: (agreementTitle: string, handle: string) =>
-    `My remix of ${agreementTitle} was Co-Signed by ${handle} on @dgc.network #Coliving`
+    `My remix of ${agreementTitle} was Co-Signed by ${handle} on @dgc-network #Coliving`
 }
 
 type RemixCosignNotificationProps = {

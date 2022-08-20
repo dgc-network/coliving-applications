@@ -36,7 +36,7 @@ const messages = {
   findUsInstagram: 'Find Us On Instagram'
 }
 
-const TWITTER_LINK = 'https://twitter.com/dgc.network'
+const TWITTER_LINK = 'https://twitter.com/dgc-network'
 const IG_LINK = 'https://www.instagram.com/colivingmusic/?hl=en'
 
 const onClickTwitter = () => {
@@ -105,7 +105,7 @@ const VerifiedUpload = ({ dismissModal }: { dismissModal: () => void }) => {
           <div className={styles.ctaRight}>
             <span>{messages.findUsTwitter}</span>
             <div className={styles.link} onClick={onClickTwitter}>
-              @dgc.network
+              @dgc-network
             </div>
           </div>
         </div>

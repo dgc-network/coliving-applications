@@ -21,7 +21,7 @@ const messages = {
   congrats: (tierLabel: string, amount: number) =>
     `Congrats, you’ve reached ${tierLabel} Tier by having over ${amount} $LIVE! You now have access to exclusive features & a shiny new badge by your name.`,
   twitterShareText: (tier: string, icon: string) =>
-    `I've reached ${tier} Tier on @dgc.network! Check out the shiny new badge next to my name ${icon}`
+    `I've reached ${tier} Tier on @dgc-network! Check out the shiny new badge next to my name ${icon}`
 }
 
 const tierInfoMap = {

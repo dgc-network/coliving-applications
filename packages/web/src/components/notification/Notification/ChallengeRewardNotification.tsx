@@ -25,7 +25,7 @@ const messages = {
   body: (amount: number) =>
     `You've earned ${amount} $LIVE for completing this challenge!`,
   twitterShareText:
-    'I earned $LIVE for completing challenges on @dgc.network #AudioRewards'
+    'I earned $LIVE for completing challenges on @dgc-network #AudioRewards'
 }
 
 type ChallengeRewardNotificationProps = {

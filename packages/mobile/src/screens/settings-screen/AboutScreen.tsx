@@ -61,7 +61,7 @@ export const AboutScreen = () => {
       <SettingsRow url='https://discordapp.com/invite/yNUg2e2' firstItem>
         <SettingsRowLabel label={messages.discord} icon={IconDiscord} />
       </SettingsRow>
-      <SettingsRow url='https://twitter.com/dgc.network'>
+      <SettingsRow url='https://twitter.com/dgc-network'>
         <SettingsRowLabel label={messages.twitter} icon={IconTwitter} />
       </SettingsRow>
       <SettingsRow url='https://www.instagram.com/colivingmusic/'>
