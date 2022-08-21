@@ -148,7 +148,7 @@ class PlayBar extends Component {
     }
   }
 
-  goToArtistPage = () => {
+  goToLandlordPage = () => {
     const {
       currentQueueItem: { user },
       goToRoute
@@ -301,9 +301,9 @@ class PlayBar extends Component {
     const { mediaKey } = this.state
 
     let agreementTitle = ''
-    let artistName = ''
-    let artistHandle = ''
-    let artistUserId = null
+    let landlordName = ''
+    let landlordHandle = ''
+    let landlordUserId = null
     let isVerified = false
     let profilePictureSizes = null
     let agreementId = null
@@ -316,9 +316,9 @@ class PlayBar extends Component {
 
     if (uid && agreement && user) {
       agreementTitle = agreement.title
-      artistName = user.name
-      artistHandle = user.handle
-      artistUserId = user.user_id
+      landlordName = user.name
+      landlordHandle = user.handle
+      landlordUserId = user.user_id
       isVerified = user.is_verified
       profilePictureSizes = user._profile_picture_sizes
       isOwner = agreement.owner_id === userId
@@ -332,9 +332,9 @@ class PlayBar extends Component {
     } else if (collectible && user) {
       // Special case for live nft contentList
       agreementTitle = collectible.name
-      artistName = user.name
-      artistHandle = user.handle
-      artistUserId = user.user_id
+      landlordName = user.name
+      landlordHandle = user.handle
+      landlordUserId = user.user_id
       isVerified = user.is_verified
       profilePictureSizes = user._profile_picture_sizes
       isOwner = this.props.accountUser?.user_id === user.user_id
@@ -368,13 +368,13 @@ class PlayBar extends Component {
               isOwner={isOwner}
               agreementTitle={agreementTitle}
               agreementPermalink={agreementPermalink}
-              artistName={artistName}
-              artistHandle={artistHandle}
-              artistUserId={artistUserId}
+              landlordName={landlordName}
+              landlordHandle={landlordHandle}
+              landlordUserId={landlordUserId}
               isVerified={isVerified}
               isAgreementUnlisted={isAgreementUnlisted}
               onClickAgreementTitle={this.goToAgreementPage}
-              onClickArtistName={this.goToArtistPage}
+              onClickLandlordName={this.goToLandlordPage}
               hasShadow={false}
             />
           </div>

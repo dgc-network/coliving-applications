@@ -52,7 +52,7 @@ export const SendTipButton = ({ receiver }: SendTipButtonProps) => {
 
   const handlePress = useCallback(() => {
     dispatchWeb(beginTip({ user: receiver, source: 'feed' }))
-    navigation.navigate({ native: { screen: 'TipArtist' } })
+    navigation.navigate({ native: { screen: 'TipLandlord' } })
   }, [dispatchWeb, receiver, navigation])
 
   const handlePressIn = useCallback(() => {

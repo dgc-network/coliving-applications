@@ -7,12 +7,12 @@ import { Dispatch } from 'redux'
 
 import { getAccountUser } from 'common/store/account/selectors'
 import {
-  setArtistPick,
-  unsetArtistPick
+  setLandlordPick,
+  unsetLandlordPick
 } from 'common/store/social/agreements/actions'
-import { cancelSetAsArtistPick } from 'store/application/ui/setAsArtistPickConfirmation/actions'
-import { getSetAsArtistPickConfirmation } from 'store/application/ui/setAsArtistPickConfirmation/selectors'
-import { PinAgreementAction } from 'store/application/ui/setAsArtistPickConfirmation/types'
+import { cancelSetAsLandlordPick } from 'store/application/ui/setAsLandlordPickConfirmation/actions'
+import { getSetAsLandlordPickConfirmation } from 'store/application/ui/setAsLandlordPickConfirmation/selectors'
+import { PinAgreementAction } from 'store/application/ui/setAsLandlordPickConfirmation/types'
 import { AppState } from 'store/types'
 
 import styles from './PinAgreementConfirmation.module.css'
@@ -22,19 +22,19 @@ type PinAgreementConfirmationProps = ReturnType<typeof mapStateToProps> &
 
 const pinAgreementActionMessages = {
   [PinAgreementAction.ADD]: {
-    title: 'SET YOUR ARTIST PICK',
+    title: 'SET YOUR LANDLORD PICK',
     description:
       'This agreement will appear at the top of your profile, above your recent uploads, until you change or remove it.',
     confirm: 'PICK AGREEMENT'
   },
   [PinAgreementAction.UPDATE]: {
-    title: 'CHANGE YOUR ARTIST PICK?',
+    title: 'CHANGE YOUR LANDLORD PICK?',
     description:
       'This agreement will appear at the top of your profile and replace your previously picked agreement.',
     confirm: 'CHANGE AGREEMENT'
   },
   [PinAgreementAction.REMOVE]: {
-    title: 'UNSET AS ARTIST PICK',
+    title: 'UNSET AS LANDLORD PICK',
     description: (
       <div className={styles.multiline}>
         <p>{'Are you sure you want to remove your pick?'}</p>
@@ -55,8 +55,8 @@ const getMessages = (action?: PinAgreementAction) => {
 }
 
 const PinAgreementConfirmation = (props: PinAgreementConfirmationProps) => {
-  const { _artist_pick: artistPick } = props.user || { _artist_pick: null }
-  const pinAction = !artistPick
+  const { _landlord_pick: landlordPick } = props.user || { _landlord_pick: null }
+  const pinAction = !landlordPick
     ? PinAgreementAction.ADD
     : props.pinAgreement.agreementId
     ? PinAgreementAction.UPDATE
@@ -64,7 +64,7 @@ const PinAgreementConfirmation = (props: PinAgreementConfirmationProps) => {
   const messages = getMessages(pinAction)
 
   const onConfirm = () => {
-    props.setArtistPick(props.pinAgreement.agreementId)
+    props.setLandlordPick(props.pinAgreement.agreementId)
     props.onCancel()
   }
 
@@ -109,15 +109,15 @@ PinAgreementConfirmation.defaultProps = {
 function mapStateToProps(state: AppState) {
   return {
     user: getAccountUser(state),
-    pinAgreement: getSetAsArtistPickConfirmation(state)
+    pinAgreement: getSetAsLandlordPickConfirmation(state)
   }
 }
 
 function mapDispatchToProps(dispatch: Dispatch) {
   return {
-    onCancel: () => dispatch(cancelSetAsArtistPick()),
-    setArtistPick: (agreementId?: ID) =>
-      dispatch(agreementId ? setArtistPick(agreementId) : unsetArtistPick())
+    onCancel: () => dispatch(cancelSetAsLandlordPick()),
+    setLandlordPick: (agreementId?: ID) =>
+      dispatch(agreementId ? setLandlordPick(agreementId) : unsetLandlordPick())
   }
 }
 

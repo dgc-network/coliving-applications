@@ -132,7 +132,7 @@
   margin-left: 4px;
 }
 
-.artist {
+.landlord {
   font-weight: var(--font-medium);
   line-height: normal;
   max-width: 100%;
@@ -144,7 +144,7 @@
   min-height: 20px;
 }
 
-.artist:active {
+.landlord:active {
   text-decoration: underline;
 }
 
@@ -222,7 +222,7 @@
   margin-right: 4px;
 }
 
-.agreementItem .byArtist {
+.agreementItem .byLandlord {
   color: var(--neutral-light-4);
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -231,7 +231,7 @@
 
 .agreementItem.activeAgreementItem .index,
 .agreementItem.activeAgreementItem .agreementTitle,
-.agreementItem.activeAgreementItem .byArtist {
+.agreementItem.activeAgreementItem .byLandlord {
   color: var(--primary);
 }
 

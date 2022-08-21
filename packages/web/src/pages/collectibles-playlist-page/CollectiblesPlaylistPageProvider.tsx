@@ -258,7 +258,7 @@ export const CollectiblesContentListPageProvider = ({
       agreement_id: collectible.id,
       id: collectible.id,
       uid: collectible.id,
-      artistId: user?.user_id,
+      landlordId: user?.user_id,
       collectible,
       title: collectible.name,
       source: Source.COLLECTIBLE_CONTENT_LIST_AGREEMENTS
@@ -292,7 +292,7 @@ export const CollectiblesContentListPageProvider = ({
     setIsDetailsModalOpen(true)
   }
 
-  const onHeroAgreementClickArtistName = () => {
+  const onHeroAgreementClickLandlordName = () => {
     if (user) dispatch(push(profilePage(user?.handle)))
   }
 
@@ -328,7 +328,7 @@ export const CollectiblesContentListPageProvider = ({
         ...metadata.collectible,
         key: `${metadata.collectible?.name}_${metadata.uid}_${i}`,
         name: metadata.collectible?.name as string,
-        artist: '',
+        landlord: '',
         handle: '',
         date: metadata.dateAdded || metadata.created_at,
         time: 0,
@@ -471,7 +471,7 @@ export const CollectiblesContentListPageProvider = ({
     onHeroAgreementShare,
     onClickRow,
     onClickAgreementName,
-    onHeroAgreementClickArtistName
+    onHeroAgreementClickLandlordName
   }
 
   // @ts-ignore TODO: remove provider pattern

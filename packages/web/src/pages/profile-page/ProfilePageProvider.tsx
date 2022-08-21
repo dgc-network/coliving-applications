@@ -38,7 +38,7 @@ import {
 } from 'common/store/pages/profile/types'
 import { makeGetCurrent } from 'common/store/queue/selectors'
 import * as socialActions from 'common/store/social/users/actions'
-import { makeGetRelatedArtists } from 'common/store/ui/artist-recommendations/selectors'
+import { makeGetRelatedLandlords } from 'common/store/ui/landlord-recommendations/selectors'
 import * as createContentListModalActions from 'common/store/ui/createContentListModal/actions'
 import { open } from 'common/store/ui/mobile-overflow-menu/slice'
 import {
@@ -105,7 +105,7 @@ type ProfilePageState = {
   updatedWebsite: string | null
   updatedDonation: string | null
   agreementsLineupOrder: AgreementsSortMode
-  areArtistRecommendationsVisible: boolean
+  areLandlordRecommendationsVisible: boolean
 }
 
 export const MIN_COLLECTIBLES_TIER: BadgeTier = 'silver'
@@ -118,7 +118,7 @@ class ProfilePage extends PureComponent<ProfilePageProps, ProfilePageState> {
     editMode: false,
     shouldMaskContent: false,
     agreementsLineupOrder: AgreementsSortMode.RECENT,
-    areArtistRecommendationsVisible: false,
+    areLandlordRecommendationsVisible: false,
     ...INITIAL_UPDATE_FIELDS
   }
 
@@ -128,7 +128,7 @@ class ProfilePage extends PureComponent<ProfilePageProps, ProfilePageState> {
     // If routing from a previous profile page
     // the lineups must be reset to refetch & update for new user
     this.props.resetProfile()
-    this.props.resetArtistAgreements()
+    this.props.resetLandlordAgreements()
     this.props.resetUserFeedAgreements()
     this.fetchProfile(getPathname(this.props.location))
 
@@ -140,7 +140,7 @@ class ProfilePage extends PureComponent<ProfilePageProps, ProfilePageState> {
         action === 'POP'
       ) {
         this.props.resetProfile()
-        this.props.resetArtistAgreements()
+        this.props.resetLandlordAgreements()
         this.props.resetUserFeedAgreements()
         const params = parseUserRoute(getPathname(location))
         if (params) {
@@ -165,7 +165,7 @@ class ProfilePage extends PureComponent<ProfilePageProps, ProfilePageState> {
   }
 
   componentDidUpdate(prevProps: ProfilePageProps, prevState: ProfilePageState) {
-    const { pathname, profile, artistAgreements, goToRoute } = this.props
+    const { pathname, profile, landlordAgreements, goToRoute } = this.props
     const { editMode, activeTab } = this.state
 
     if (profile && profile.status === Status.ERROR) {
@@ -176,7 +176,7 @@ class ProfilePage extends PureComponent<ProfilePageProps, ProfilePageState> {
       !activeTab &&
       profile &&
       profile.profile &&
-      artistAgreements.status === Status.SUCCESS
+      landlordAgreements.status === Status.SUCCESS
     ) {
       if (profile.profile.agreement_count > 0) {
         this.setState({
@@ -213,25 +213,25 @@ class ProfilePage extends PureComponent<ProfilePageProps, ProfilePageState> {
     if (prevProps.profile?.profile?.handle !== profile?.profile?.handle) {
       // If editing profile and route to another user profile, exit edit mode
       if (editMode) this.setState({ editMode: false })
-      // Close artist recommendations when the profile changes
-      this.setState({ areArtistRecommendationsVisible: false })
+      // Close landlord recommendations when the profile changes
+      this.setState({ areLandlordRecommendationsVisible: false })
     }
   }
 
-  // Check that the sorted order has the _artist_pick agreement as the first
-  updateOrderArtistPickCheck = (agreements: Array<{ agreement_id: ID }>) => {
+  // Check that the sorted order has the _landlord_pick agreement as the first
+  updateOrderLandlordPickCheck = (agreements: Array<{ agreement_id: ID }>) => {
     const {
       profile: { profile }
     } = this.props
     if (!profile) return []
-    const artistPick = profile._artist_pick
-    const artistAgreementIndex = agreements.findIndex(
-      (agreement) => agreement.agreement_id === artistPick
+    const landlordPick = profile._landlord_pick
+    const landlordAgreementIndex = agreements.findIndex(
+      (agreement) => agreement.agreement_id === landlordPick
     )
-    if (artistAgreementIndex > -1) {
-      return [agreements[artistAgreementIndex]]
-        .concat(agreements.slice(0, artistAgreementIndex))
-        .concat(agreements.slice(artistAgreementIndex + 1))
+    if (landlordAgreementIndex > -1) {
+      return [agreements[landlordAgreementIndex]]
+        .concat(agreements.slice(0, landlordAgreementIndex))
+        .concat(agreements.slice(landlordAgreementIndex + 1))
     }
     return agreements
   }
@@ -245,8 +245,8 @@ class ProfilePage extends PureComponent<ProfilePageProps, ProfilePageState> {
     if (this.props.account) {
       this.props.updateCurrentUserFollows(true)
     }
-    if (this.props.relatedArtists && this.props.relatedArtists.length > 0) {
-      this.setState({ areArtistRecommendationsVisible: true })
+    if (this.props.relatedLandlords && this.props.relatedLandlords.length > 0) {
+      this.setState({ areLandlordRecommendationsVisible: true })
     }
   }
 
@@ -264,8 +264,8 @@ class ProfilePage extends PureComponent<ProfilePageProps, ProfilePageState> {
     }
   }
 
-  onCloseArtistRecommendations = () => {
-    this.setState({ areArtistRecommendationsVisible: false })
+  onCloseLandlordRecommendations = () => {
+    this.setState({ areLandlordRecommendationsVisible: false })
   }
 
   fetchProfile = (
@@ -395,7 +395,7 @@ class ProfilePage extends PureComponent<ProfilePageProps, ProfilePageState> {
 
     // Once the hero card settles into place, then turn the mask off
     setTimeout(() => {
-      const firstTab = this.getIsArtist() ? 'AGREEMENTS' : 'REPOSTS'
+      const firstTab = this.getIsLandlord() ? 'AGREEMENTS' : 'REPOSTS'
       this.setState({
         shouldMaskContent: tab !== firstTab
       })
@@ -514,7 +514,7 @@ class ProfilePage extends PureComponent<ProfilePageProps, ProfilePageState> {
     })
   }
 
-  getStats = (isArtist: boolean) => {
+  getStats = (isLandlord: boolean) => {
     const {
       profile: { profile }
     } = this.props
@@ -531,7 +531,7 @@ class ProfilePage extends PureComponent<ProfilePageProps, ProfilePageState> {
       followingCount = profile.followee_count
     }
 
-    return isArtist
+    return isLandlord
       ? [
           {
             number: agreementCount,
@@ -562,7 +562,7 @@ class ProfilePage extends PureComponent<ProfilePageProps, ProfilePageState> {
 
   onSortByRecent = () => {
     const {
-      artistAgreements,
+      landlordAgreements,
       updateCollectionOrder,
       profile: { profile },
       agreementUpdateSort
@@ -571,9 +571,9 @@ class ProfilePage extends PureComponent<ProfilePageProps, ProfilePageState> {
     this.setState({ agreementsLineupOrder: AgreementsSortMode.RECENT })
     updateCollectionOrder(CollectionSortMode.TIMESTAMP)
     agreementUpdateSort('recent')
-    this.props.loadMoreArtistAgreements(
+    this.props.loadMoreLandlordAgreements(
       0,
-      artistAgreements.entries.length,
+      landlordAgreements.entries.length,
       profile.user_id,
       AgreementsSortMode.RECENT
     )
@@ -581,16 +581,16 @@ class ProfilePage extends PureComponent<ProfilePageProps, ProfilePageState> {
 
   onSortByPopular = () => {
     const {
-      artistAgreements,
+      landlordAgreements,
       updateCollectionOrder,
       profile: { profile },
       agreementUpdateSort
     } = this.props
     if (!profile) return
     this.setState({ agreementsLineupOrder: AgreementsSortMode.POPULAR })
-    this.props.loadMoreArtistAgreements(
+    this.props.loadMoreLandlordAgreements(
       0,
-      artistAgreements.entries.length,
+      landlordAgreements.entries.length,
       profile.user_id,
       AgreementsSortMode.POPULAR
     )
@@ -598,12 +598,12 @@ class ProfilePage extends PureComponent<ProfilePageProps, ProfilePageState> {
     agreementUpdateSort('popular')
   }
 
-  loadMoreArtistAgreements = (offset: number, limit: number) => {
+  loadMoreLandlordAgreements = (offset: number, limit: number) => {
     const {
       profile: { profile }
     } = this.props
     if (!profile) return
-    this.props.loadMoreArtistAgreements(
+    this.props.loadMoreLandlordAgreements(
       offset,
       limit,
       profile.user_id,
@@ -619,7 +619,7 @@ class ProfilePage extends PureComponent<ProfilePageProps, ProfilePageState> {
     if (profile) {
       let tab = `/${currLabel.toLowerCase()}`
       if (profile.agreement_count > 0) {
-        // An artist, default route is agreements
+        // An landlord, default route is agreements
         if (currLabel === Tabs.AGREEMENTS) {
           tab = ''
         }
@@ -688,7 +688,7 @@ class ProfilePage extends PureComponent<ProfilePageProps, ProfilePageState> {
     fetchFollowUsers(FollowType.FOLLOWEES, 22, followees.length)
   }
 
-  getIsArtist = () => {
+  getIsLandlord = () => {
     const { profile } = this.props.profile
     return !!profile && profile.agreement_count > 0
   }
@@ -712,9 +712,9 @@ class ProfilePage extends PureComponent<ProfilePageProps, ProfilePageState> {
         isSubscribed
       },
       // Agreements
-      artistAgreements,
-      playArtistAgreement,
-      pauseArtistAgreement,
+      landlordAgreements,
+      playLandlordAgreement,
+      pauseLandlordAgreement,
       // Feed
       userFeed,
       playUserFeedAgreement,
@@ -731,7 +731,7 @@ class ProfilePage extends PureComponent<ProfilePageProps, ProfilePageState> {
       activeTab,
       editMode,
       shouldMaskContent,
-      areArtistRecommendationsVisible,
+      areLandlordRecommendationsVisible,
       updatedName,
       updatedBio,
       updatedLocation,
@@ -745,10 +745,10 @@ class ProfilePage extends PureComponent<ProfilePageProps, ProfilePageState> {
     } = this.state
 
     const accountUserId = account ? account.user_id : null
-    const isArtist = this.getIsArtist()
+    const isLandlord = this.getIsLandlord()
     const isOwner = this.getIsOwner()
     const mode = this.getMode(isOwner)
-    const stats = this.getStats(isArtist)
+    const stats = this.getStats(isLandlord)
 
     const userId = profile ? profile.user_id : null
     const handle = profile ? `@${profile.handle}` : ''
@@ -821,7 +821,7 @@ class ProfilePage extends PureComponent<ProfilePageProps, ProfilePageState> {
       // Computed
       accountUserId,
       userId,
-      isArtist,
+      isLandlord,
       isOwner,
       handle,
       verified,
@@ -851,9 +851,9 @@ class ProfilePage extends PureComponent<ProfilePageProps, ProfilePageState> {
       status: profileLoadingStatus,
       albums,
       contentLists,
-      artistAgreements,
-      playArtistAgreement,
-      pauseArtistAgreement,
+      landlordAgreements,
+      playLandlordAgreement,
+      pauseLandlordAgreement,
       goToRoute,
 
       // Methods
@@ -861,7 +861,7 @@ class ProfilePage extends PureComponent<ProfilePageProps, ProfilePageState> {
       getLineupProps: this.getLineupProps,
       onSortByRecent: this.onSortByRecent,
       onSortByPopular: this.onSortByPopular,
-      loadMoreArtistAgreements: this.loadMoreArtistAgreements,
+      loadMoreLandlordAgreements: this.loadMoreLandlordAgreements,
       loadMoreUserFeed: this.loadMoreUserFeed,
       formatCardSecondaryText: this.formatCardSecondaryText,
       refreshProfile: this.refreshProfile,
@@ -910,8 +910,8 @@ class ProfilePage extends PureComponent<ProfilePageProps, ProfilePageState> {
       editMode,
       shouldMaskContent,
 
-      areArtistRecommendationsVisible,
-      onCloseArtistRecommendations: this.onCloseArtistRecommendations,
+      areLandlordRecommendationsVisible,
+      onCloseLandlordRecommendations: this.onCloseLandlordRecommendations,
       setNotificationSubscription,
       isSubscribed: !!isSubscribed,
 
@@ -941,17 +941,17 @@ class ProfilePage extends PureComponent<ProfilePageProps, ProfilePageState> {
 }
 
 function makeMapStateToProps() {
-  const getArtistAgreementsMetadatas = makeGetLineupMetadatas(
+  const getLandlordAgreementsMetadatas = makeGetLineupMetadatas(
     getProfileAgreementsLineup
   )
   const getUserFeedMetadatas = makeGetLineupMetadatas(getProfileFeedLineup)
   const getProfile = makeGetProfile()
   const getCurrentQueueItem = makeGetCurrent()
-  const getRelatedArtists = makeGetRelatedArtists()
+  const getRelatedLandlords = makeGetRelatedLandlords()
   const mapStateToProps = (state: AppState) => ({
     account: getAccountUser(state),
     profile: getProfile(state),
-    artistAgreements: getArtistAgreementsMetadatas(state),
+    landlordAgreements: getLandlordAgreementsMetadatas(state),
     userFeed: getUserFeedMetadatas(state),
     currentQueueItem: getCurrentQueueItem(state),
     playing: getPlaying(state),
@@ -960,7 +960,7 @@ function makeMapStateToProps() {
     isUserConfirming: !getIsDone(state, {
       uid: makeKindId(Kind.USERS, getAccountUser(state)?.user_id)
     }),
-    relatedArtists: getRelatedArtists(state, { id: getProfileUserId(state) })
+    relatedLandlords: getRelatedLandlords(state, { id: getProfileUserId(state) })
   })
   return mapStateToProps
 }
@@ -1007,8 +1007,8 @@ function mapDispatchToProps(dispatch: Dispatch) {
     updateCurrentUserFollows: (follow: any) =>
       dispatch(profileActions.updateCurrentUserFollows(follow)),
 
-    // Artist Agreements
-    loadMoreArtistAgreements: (
+    // Landlord Agreements
+    loadMoreLandlordAgreements: (
       offset: number,
       limit: number,
       id: ID,
@@ -1021,9 +1021,9 @@ function mapDispatchToProps(dispatch: Dispatch) {
         })
       )
     },
-    resetArtistAgreements: () => dispatch(agreementsActions.reset()),
-    playArtistAgreement: (uid: string) => dispatch(agreementsActions.play(uid)),
-    pauseArtistAgreement: () => dispatch(agreementsActions.pause()),
+    resetLandlordAgreements: () => dispatch(agreementsActions.reset()),
+    playLandlordAgreement: (uid: string) => dispatch(agreementsActions.play(uid)),
+    pauseLandlordAgreement: () => dispatch(agreementsActions.pause()),
     // User Feed
     loadMoreUserFeed: (offset: number, limit: number, id: ID) =>
       dispatch(

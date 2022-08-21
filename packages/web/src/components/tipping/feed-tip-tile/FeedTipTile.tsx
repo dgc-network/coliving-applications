@@ -11,7 +11,7 @@ import { getAccountUser } from 'common/store/account/selectors'
 import { getUsers } from 'common/store/cache/users/selectors'
 import { getShowTip, getTipToDisplay } from 'common/store/tipping/selectors'
 import { beginTip, fetchRecentTips, hideTip } from 'common/store/tipping/slice'
-import { ArtistPopover } from 'components/artist/ArtistPopover'
+import { LandlordPopover } from 'components/landlord/LandlordPopover'
 import { ProfilePicture } from 'components/notification/Notification/components/ProfilePicture'
 import Skeleton from 'components/skeleton/Skeleton'
 import UserBadges from 'components/user-badges/UserBadges'
@@ -228,7 +228,7 @@ export const FeedTipTile = () => {
           className={styles.profilePicture}
           user={usersMap[tipToDisplay.receiver_id]}
         />
-        <ArtistPopover
+        <LandlordPopover
           handle={usersMap[tipToDisplay.receiver_id].handle}
           component='div'
         >
@@ -241,7 +241,7 @@ export const FeedTipTile = () => {
               inline
             />
           </div>
-        </ArtistPopover>
+        </LandlordPopover>
         <WasTippedBy />
         <Tippers
           tippers={[

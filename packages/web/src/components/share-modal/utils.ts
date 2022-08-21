@@ -24,7 +24,7 @@ export const getTwitterShareText = (
     case 'agreement': {
       const {
         agreement: { title, permalink, agreement_id },
-        artist: { handle }
+        landlord: { handle }
       } = content
       twitterText = messages.agreementShareText(title, handle)
       link = fullAgreementPage(permalink)
@@ -43,7 +43,7 @@ export const getTwitterShareText = (
     case 'album': {
       const {
         album: { contentList_name, contentList_id },
-        artist: { handle }
+        landlord: { handle }
       } = content
       twitterText = messages.albumShareText(contentList_name, handle)
       link = fullAlbumPage(handle, contentList_name, contentList_id)

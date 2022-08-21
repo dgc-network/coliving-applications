@@ -1,6 +1,6 @@
 import { User } from '@coliving/common'
 
-import { FollowArtistsCategory } from 'pages/sign-on/store/types'
+import { FollowLandlordsCategory } from 'pages/sign-on/store/types'
 
 import { NativeMobileMessage } from './helpers'
 import { MessageType } from './types'
@@ -35,21 +35,21 @@ export class SignUpValidateHandleSuccessMessage extends NativeMobileMessage {
   }
 }
 
-export class FetchAllFollowArtistsSuccessMessage extends NativeMobileMessage {
+export class FetchAllFollowLandlordsSuccessMessage extends NativeMobileMessage {
   constructor({
     category,
     userIds
   }: {
-    category: FollowArtistsCategory
+    category: FollowLandlordsCategory
     userIds: number[]
   }) {
-    super(MessageType.FETCH_ALL_FOLLOW_ARTISTS_SUCCEEDED, { category, userIds })
+    super(MessageType.FETCH_ALL_FOLLOW_LANDLORDS_SUCCEEDED, { category, userIds })
   }
 }
 
-export class FetchAllFollowArtistsFailureMessage extends NativeMobileMessage {
+export class FetchAllFollowLandlordsFailureMessage extends NativeMobileMessage {
   constructor({ error }: { error: any }) {
-    super(MessageType.FETCH_ALL_FOLLOW_ARTISTS_FAILED, { error })
+    super(MessageType.FETCH_ALL_FOLLOW_LANDLORDS_FAILED, { error })
   }
 }
 

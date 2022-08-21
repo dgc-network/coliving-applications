@@ -4,20 +4,20 @@ import { CommonState } from 'common/store'
 import { getUsers } from 'common/store/cache/users/selectors'
 import { createDeepEqualSelector } from 'common/utils/selectorHelpers'
 
-const getRelatedArtistIds = (state: CommonState, props: { id: ID }) =>
-  state.ui.artistRecommendations[props.id]?.relatedArtistIds
+const getRelatedLandlordIds = (state: CommonState, props: { id: ID }) =>
+  state.ui.landlordRecommendations[props.id]?.relatedLandlordIds
 
-export const makeGetRelatedArtists = () =>
+export const makeGetRelatedLandlords = () =>
   createDeepEqualSelector(
-    [getRelatedArtistIds, getUsers],
-    (relatedArtistIds, users) => {
-      if (!relatedArtistIds) return []
-      const relatedArtistsPopulated = relatedArtistIds
+    [getRelatedLandlordIds, getUsers],
+    (relatedLandlordIds, users) => {
+      if (!relatedLandlordIds) return []
+      const relatedLandlordsPopulated = relatedLandlordIds
         .map((id) => {
           if (id in users) return users[id]
           return null
         })
         .filter(removeNullable)
-      return relatedArtistsPopulated
+      return relatedLandlordsPopulated
     }
   )

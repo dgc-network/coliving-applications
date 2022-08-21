@@ -27,7 +27,7 @@ export type CollectionAgreement = LineupAgreement & { dateAdded: Moment } & {
 export type AgreementRecord = CollectionAgreement & {
   key: string
   name: string
-  artist: string
+  landlord: string
   handle: string
   date: Moment
   time: number

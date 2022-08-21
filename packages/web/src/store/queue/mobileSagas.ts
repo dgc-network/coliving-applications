@@ -64,7 +64,7 @@ function* getAgreementInfo(id: ID, uid: UID) {
   const m3u8 = generateM3U8Variants(agreement.agreement_segments, [], m3u8Gateways)
   return {
     title: agreement.title,
-    artist: owner.name,
+    landlord: owner.name,
     artwork: getImageUrl(imageHash!, gateways[0]),
     largeArtwork: getImageUrl(largeImageHash!, gateways[0]),
     uid,

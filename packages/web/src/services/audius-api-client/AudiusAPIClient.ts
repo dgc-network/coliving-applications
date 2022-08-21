@@ -78,10 +78,10 @@ const FULL_ENDPOINT_MAP = {
   userFavoritedAgreements: (userId: OpaqueID) =>
     `/users/${userId}/favorites/agreements`,
   userRepostsByHandle: (handle: OpaqueID) => `/users/handle/${handle}/reposts`,
-  getRelatedArtists: (userId: OpaqueID) => `/users/${userId}/related`,
+  getRelatedLandlords: (userId: OpaqueID) => `/users/${userId}/related`,
   getContentList: (contentListId: OpaqueID) => `/contentLists/${contentListId}`,
   topGenreUsers: '/users/genre/top',
-  topArtists: '/users/top',
+  topLandlords: '/users/top',
   getAgreement: (agreementId: OpaqueID) => `/agreements/${agreementId}`,
   getAgreementByHandleAndSlug: `/agreements`,
   getStems: (agreementId: OpaqueID) => `/agreements/${agreementId}/stems`,
@@ -132,7 +132,7 @@ type PaginationArgs = {
 
 type CurrentUserIdArg = { currentUserId: Nullable<ID> }
 
-type GetTopArtistsArgs = PaginationArgs & CurrentUserIdArg
+type GetTopLandlordsArgs = PaginationArgs & CurrentUserIdArg
 
 type GetTrendingArgs = {
   timeRange?: TimeRange
@@ -225,7 +225,7 @@ type GetUserAgreementsByHandleArgs = {
   getUnlisted: boolean
 }
 
-type GetRelatedArtistsArgs = CurrentUserIdArg &
+type GetRelatedLandlordsArgs = CurrentUserIdArg &
   PaginationArgs & {
     userId: ID
   }
@@ -237,7 +237,7 @@ type GetProfileListArgs = {
   offset?: number
 }
 
-type GetTopArtistGenresArgs = {
+type GetTopLandlordGenresArgs = {
   genres?: string[]
   limit?: number
   offset?: number
@@ -995,17 +995,17 @@ class ColivingAPIClient {
     return adapted
   }
 
-  async getRelatedArtists({
+  async getRelatedLandlords({
     userId,
     currentUserId,
     offset,
     limit
-  }: GetRelatedArtistsArgs) {
+  }: GetRelatedLandlordsArgs) {
     this._assertInitialized()
     const encodedCurrentUserId = encodeHashId(currentUserId)
     const encodedUserId = this._encodeOrThrow(userId)
     const response: Nullable<APIResponse<APIUser[]>> = await this._getResponse(
-      FULL_ENDPOINT_MAP.getRelatedArtists(encodedUserId),
+      FULL_ENDPOINT_MAP.getRelatedLandlords(encodedUserId),
       { user_id: encodedCurrentUserId || undefined, offset, limit }
     )
     if (!response) return []
@@ -1013,7 +1013,7 @@ class ColivingAPIClient {
     return adapted
   }
 
-  async getTopArtistGenres({ genres, limit, offset }: GetTopArtistGenresArgs) {
+  async getTopLandlordGenres({ genres, limit, offset }: GetTopLandlordGenresArgs) {
     this._assertInitialized()
 
     const params = {
@@ -1033,7 +1033,7 @@ class ColivingAPIClient {
     return adapted
   }
 
-  async getTopArtists({ limit, offset, currentUserId }: GetTopArtistsArgs) {
+  async getTopLandlords({ limit, offset, currentUserId }: GetTopLandlordsArgs) {
     this._assertInitialized()
     const encodedUserId = encodeHashId(currentUserId)
 
@@ -1043,12 +1043,12 @@ class ColivingAPIClient {
       user_id: encodedUserId
     }
 
-    const topArtistsResponse: Nullable<APIResponse<APIUser[]>> =
-      await this._getResponse(FULL_ENDPOINT_MAP.topArtists, params)
+    const topLandlordsResponse: Nullable<APIResponse<APIUser[]>> =
+      await this._getResponse(FULL_ENDPOINT_MAP.topLandlords, params)
 
-    if (!topArtistsResponse) return []
+    if (!topLandlordsResponse) return []
 
-    const adapted = topArtistsResponse.data
+    const adapted = topLandlordsResponse.data
       .map(adapter.makeUser)
       .filter(removeNullable)
     return adapted

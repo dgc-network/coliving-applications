@@ -31,7 +31,7 @@ type ConnectedUserListOwnProps = {
   // Optional sideeffects on/before performing actions
   afterFollow?: () => void
   afterUnfollow?: () => void
-  beforeClickArtistName?: () => void
+  beforeClickLandlordName?: () => void
   getScrollParent?: () => HTMLElement | null
   onNavigateAway?: () => void
 }
@@ -51,9 +51,9 @@ const ConnectedUserList = (props: ConnectedUserListProps) => {
     if (!props.loggedIn && props.afterUnfollow) props.afterUnfollow()
   }
 
-  const onClickArtistName = (handle: string) => {
-    props.beforeClickArtistName && props.beforeClickArtistName()
-    props.onClickArtistName(handle)
+  const onClickLandlordName = (handle: string) => {
+    props.beforeClickLandlordName && props.beforeClickLandlordName()
+    props.onClickLandlordName(handle)
   }
 
   const { loadMore, reset } = props
@@ -72,7 +72,7 @@ const ConnectedUserList = (props: ConnectedUserListProps) => {
        * more users as we scroll down the modal.
        * The reason why we reset on initial load rather than on
        * exiting the modal is because it's possible that one modal
-       * opens another (e.g. clicking artist hover tile supporting section),
+       * opens another (e.g. clicking landlord hover tile supporting section),
        * and resetting on modal exit in that case may reset the data for the
        * incoming modal after it loads and end up showing an empty modal.
        */
@@ -90,7 +90,7 @@ const ConnectedUserList = (props: ConnectedUserListProps) => {
       users={props.users}
       loading={props.loading}
       userId={props.userId}
-      onClickArtistName={onClickArtistName}
+      onClickLandlordName={onClickLandlordName}
       loadMore={props.loadMore}
       isMobile={props.isMobile}
       getScrollParent={props.getScrollParent}
@@ -141,7 +141,7 @@ function mapDispatchToProps(
         dispatch(setNotificationSubscription(userId, false, true))
       }
     },
-    onClickArtistName: (handle: string) =>
+    onClickLandlordName: (handle: string) =>
       dispatch(pushRoute(profilePage(handle))),
     loadMore: () => dispatch(loadMore(ownProps.tag)),
     reset: () => dispatch(reset(ownProps.tag))

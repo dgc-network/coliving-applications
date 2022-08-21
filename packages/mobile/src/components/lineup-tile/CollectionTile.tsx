@@ -180,7 +180,7 @@ const CollectionTileComponent = ({
         : OverflowAction.VIEW_CONTENT_LIST_PAGE,
       isOwner && !is_album ? OverflowAction.PUBLISH_CONTENT_LIST : null,
       isOwner && !is_album ? OverflowAction.DELETE_CONTENT_LIST : null,
-      OverflowAction.VIEW_ARTIST_PAGE
+      OverflowAction.VIEW_LANDLORD_PAGE
     ].filter(Boolean) as OverflowAction[]
 
     dispatchWeb(

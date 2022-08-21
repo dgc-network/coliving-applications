@@ -20,13 +20,13 @@ interface PlayingAgreementInfoProps {
   profilePictureSizes: ProfilePictureSizes
   isVerified: boolean
   isAgreementUnlisted: boolean
-  artistUserId: ID
-  artistName: string
-  artistHandle: string
+  landlordUserId: ID
+  landlordName: string
+  landlordHandle: string
   hasShadow: boolean
   dominantColor?: Color
   onClickAgreementTitle: () => void
-  onClickArtistName: () => void
+  onClickLandlordName: () => void
 }
 
 const springProps = {
@@ -42,25 +42,25 @@ const PlayingAgreementInfo = ({
   agreementTitle,
   agreementPermalink,
   profilePictureSizes,
-  artistUserId,
-  artistName,
+  landlordUserId,
+  landlordName,
   onClickAgreementTitle,
-  onClickArtistName,
+  onClickLandlordName,
   isAgreementUnlisted,
   hasShadow,
   dominantColor
 }: PlayingAgreementInfoProps) => {
-  const [artistSpringProps, setArtistSpringProps] = useSpring(() => springProps)
+  const [landlordSpringProps, setLandlordSpringProps] = useSpring(() => springProps)
   const [agreementSpringProps, setAgreementSpringProps] = useSpring(() => springProps)
   const image = useUserProfilePicture(
-    artistUserId,
+    landlordUserId,
     profilePictureSizes,
     SquareSizes.SIZE_150_BY_150
   )
 
   useEffect(() => {
-    setArtistSpringProps(springProps)
-  }, [artistUserId, setArtistSpringProps])
+    setLandlordSpringProps(springProps)
+  }, [landlordUserId, setLandlordSpringProps])
 
   useEffect(() => {
     setAgreementSpringProps(springProps)
@@ -78,7 +78,7 @@ const PlayingAgreementInfo = ({
       <div className={styles.profilePictureWrapper}>
         <DynamicImage
           image={image}
-          onClick={onClickArtistName}
+          onClick={onClickLandlordName}
           className={cn(styles.profilePicture, {
             [styles.isDefault]: !!agreementId
           })}
@@ -107,19 +107,19 @@ const PlayingAgreementInfo = ({
           </animated.div>
         </Draggable>
         <animated.div
-          className={styles.artistNameWrapper}
-          style={artistSpringProps}
+          className={styles.landlordNameWrapper}
+          style={landlordSpringProps}
         >
           <div
-            className={cn(styles.artistName, {
+            className={cn(styles.landlordName, {
               [styles.textShadow]: hasShadow
             })}
-            onClick={onClickArtistName}
+            onClick={onClickLandlordName}
           >
-            {artistName}
+            {landlordName}
           </div>
           <UserBadges
-            userId={artistUserId}
+            userId={landlordUserId}
             badgeSize={10}
             className={styles.iconVerified}
           />

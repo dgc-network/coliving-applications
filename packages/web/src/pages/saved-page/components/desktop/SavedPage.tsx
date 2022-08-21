@@ -39,7 +39,7 @@ export type SavedPageProps = {
   onClickRow: (record: AgreementRecord) => void
   onClickSave: (record: AgreementRecord) => void
   onClickAgreementName: (record: AgreementRecord) => void
-  onClickArtistName: (record: AgreementRecord) => void
+  onClickLandlordName: (record: AgreementRecord) => void
   onClickRepost: (record: AgreementRecord) => void
   onPlay: () => void
   onSortAgreements: (sorters: any) => void
@@ -86,7 +86,7 @@ const SavedPage = ({
   onClickRow,
   onClickSave,
   onClickAgreementName,
-  onClickArtistName,
+  onClickLandlordName,
   onClickRepost,
   onClickRemove,
   onSortAgreements,
@@ -219,7 +219,7 @@ const SavedPage = ({
             onClickRow={onClickRow}
             onClickFavorite={onClickSave}
             onClickAgreementName={onClickAgreementName}
-            onClickArtistName={onClickArtistName}
+            onClickLandlordName={onClickLandlordName}
             onClickRepost={onClickRepost}
             onClickRemove={onClickRemove}
             onSortAgreements={onSortAgreements}

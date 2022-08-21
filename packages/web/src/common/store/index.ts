@@ -56,9 +56,9 @@ import tippingReducer from 'common/store/tipping/slice'
 import addToContentListReducer, {
   AddToContentListState
 } from 'common/store/ui/add-to-contentList/reducer'
-import artistRecommendationsReducer, {
-  ArtistRecommendationsState
-} from 'common/store/ui/artist-recommendations/slice'
+import landlordRecommendationsReducer, {
+  LandlordRecommendationsState
+} from 'common/store/ui/landlord-recommendations/slice'
 import collectibleDetailsReducer, {
   CollectibleDetailsState
 } from 'common/store/ui/collectible-details/slice'
@@ -133,7 +133,7 @@ export const reducers = (ctx: CommonStoreContext) => ({
   ui: combineReducers({
     averageColor: averageColorReducer,
     addToContentList: addToContentListReducer,
-    artistRecommendations: artistRecommendationsReducer,
+    landlordRecommendations: landlordRecommendationsReducer,
     changePassword: changePasswordReducer,
     createContentListModal: createContentListModalReducer,
     collectibleDetails: collectibleDetailsReducer,
@@ -277,7 +277,7 @@ export type CommonState = {
   ui: {
     averageColor: ReturnType<typeof averageColorReducer>
     addToContentList: AddToContentListState
-    artistRecommendations: ArtistRecommendationsState
+    landlordRecommendations: LandlordRecommendationsState
     changePassword: ChangePasswordState
     createContentListModal: CreateContentListModalState
     collectibleDetails: CollectibleDetailsState

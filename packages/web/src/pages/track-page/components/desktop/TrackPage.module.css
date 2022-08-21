@@ -23,7 +23,7 @@
   justify-content: center;
 }
 
-.moreByArtistLineupWrapper {
+.moreByLandlordLineupWrapper {
   width: 834px;
   margin-top: 48px;
   margin-bottom: 35px;
@@ -32,12 +32,12 @@
   user-select: none;
 }
 
-.moreByArtistContainer {
+.moreByLandlordContainer {
   width: 720px;
   margin: auto;
 }
 
-.moreByArtistLineupWrapper .lineupHeader {
+.moreByLandlordLineupWrapper .lineupHeader {
   text-align: center;
   text-transform: uppercase;
 
@@ -48,7 +48,7 @@
   margin-bottom: 16px;
 }
 
-.moreByArtistLineupWrapper .lineupHeader.large {
+.moreByLandlordLineupWrapper .lineupHeader.large {
   font-size: var(--font-xl);
 }
 

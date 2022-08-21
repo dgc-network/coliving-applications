@@ -22,8 +22,8 @@ import lazyWithPreload from 'utils/lazyWithPreload'
 import { profilePage, TRENDING_PAGE } from 'utils/route'
 import { withClassNullGuard } from 'utils/withNullGuard'
 
-import styles from './ArtistDashboardPage.module.css'
-import ArtistProfile from './components/ArtistProfile'
+import styles from './LandlordDashboardPage.module.css'
+import LandlordProfile from './components/LandlordProfile'
 import {
   fetchDashboard,
   fetchDashboardListenData,
@@ -96,7 +96,7 @@ const makeColumns = (account: User, isUnlisted: boolean) => {
       render: (val: string, record: DataSourceAgreement) => (
         <div className={styles.agreementName}>
           {val}
-          {record.is_delete ? ' [Deleted By Artist]' : ''}
+          {record.is_delete ? ' [Deleted By Landlord]' : ''}
         </div>
       )
     },
@@ -135,7 +135,7 @@ const makeColumns = (account: User, isUnlisted: boolean) => {
             agreementId={val.agreement_id}
             isFavorited={val.has_current_user_saved}
             isOwner
-            isArtistPick={account._artist_pick === val.agreement_id}
+            isLandlordPick={account._landlord_pick === val.agreement_id}
             isUnlisted={record.is_unlisted}
             index={index}
             agreementTitle={val.name}
@@ -143,7 +143,7 @@ const makeColumns = (account: User, isUnlisted: boolean) => {
             hiddenUntilHover={false}
             includeEmbed={!isUnlisted && !record.is_delete}
             includeAddToContentList={!isUnlisted}
-            includeArtistPick={!isUnlisted}
+            includeLandlordPick={!isUnlisted}
           />
         </div>
       )
@@ -227,16 +227,16 @@ const AgreementsTableContainer = ({
   )
 }
 
-type ArtistDashboardPageProps = ReturnType<typeof mapDispatchToProps> &
+type LandlordDashboardPageProps = ReturnType<typeof mapDispatchToProps> &
   ReturnType<ReturnType<typeof makeMapStateToProps>> &
   RouteComponentProps
 
-const mapper = (props: ArtistDashboardPageProps) => {
+const mapper = (props: LandlordDashboardPageProps) => {
   const { account } = props
   return { ...props, account }
 }
 
-export class ArtistDashboardPage extends Component<
+export class LandlordDashboardPage extends Component<
   NonNullable<ReturnType<typeof mapper>>
 > {
   state = {
@@ -361,7 +361,7 @@ export class ArtistDashboardPage extends Component<
 
     return (
       <div className={styles.profileContainer}>
-        <ArtistProfile
+        <LandlordProfile
           userId={account.user_id}
           profilePictureSizes={account._profile_picture_sizes}
           isVerified={account.is_verified}
@@ -418,5 +418,5 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 const g = withClassNullGuard(mapper)
 
 export default withRouter(
-  connect(makeMapStateToProps, mapDispatchToProps)(g(ArtistDashboardPage))
+  connect(makeMapStateToProps, mapDispatchToProps)(g(LandlordDashboardPage))
 )

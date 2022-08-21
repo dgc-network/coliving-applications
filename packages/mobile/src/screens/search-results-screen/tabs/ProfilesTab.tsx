@@ -1,12 +1,12 @@
-import { makeGetSearchArtists } from '-client/src/common/store/pages/search-results/selectors'
+import { makeGetSearchLandlords } from '-client/src/common/store/pages/search-results/selectors'
 
-import { ArtistCard } from 'app/components/artist-card'
+import { LandlordCard } from 'app/components/landlord-card'
 import { CardList } from 'app/components/core'
 import { useSelectorWeb } from 'app/hooks/useSelectorWeb'
 
 import { SearchResultsTab } from './SearchResultsTab'
 
-const getSearchUsers = makeGetSearchArtists()
+const getSearchUsers = makeGetSearchLandlords()
 
 export const ProfilesTab = () => {
   const users = useSelectorWeb(getSearchUsers)
@@ -16,7 +16,7 @@ export const ProfilesTab = () => {
       <CardList
         data={users}
         renderItem={({ item }) => (
-          <ArtistCard artist={item} fromPage='search' />
+          <LandlordCard landlord={item} fromPage='search' />
         )}
       />
     </SearchResultsTab>

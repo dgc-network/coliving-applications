@@ -35,7 +35,7 @@ import { ErrorText } from './ErrorText'
 import { ReceiverDetails } from './ReceiverDetails'
 import { TipInput } from './TipInput'
 import { TipScreen } from './TipScreen'
-import type { TipArtistNavigationParamList } from './navigation'
+import type { TipLandlordNavigationParamList } from './navigation'
 
 const messages = {
   sendTip: 'Send Tip',
@@ -55,7 +55,7 @@ export const SendTipScreen = () => {
   const [tipAmount, setTipAmount] = useState('')
   const accountBalance = (useSelectorWeb(getAccountBalance) ??
     new BN('0')) as BNWei
-  const navigation = useNavigation<TipArtistNavigationParamList>()
+  const navigation = useNavigation<TipLandlordNavigationParamList>()
   const dispatchWeb = useDispatchWeb()
 
   const account = useSelectorWeb(getAccountUser)

@@ -41,7 +41,7 @@ const ConnectedRemixCard = g(({ agreement, user, goToRoute }) => {
   const goToAgreementPage = useCallback(() => {
     goToRoute(agreement.permalink)
   }, [goToRoute, agreement])
-  const goToArtistPage = useCallback(() => {
+  const goToLandlordPage = useCallback(() => {
     goToRoute(profilePage(user.handle))
   }, [goToRoute, user])
 
@@ -50,10 +50,10 @@ const ConnectedRemixCard = g(({ agreement, user, goToRoute }) => {
       profilePictureImage={profilePictureImage}
       coverArtImage={coverArtImage}
       coSign={agreement._co_sign}
-      artistName={user.name}
-      artistHandle={user.handle}
+      landlordName={user.name}
+      landlordHandle={user.handle}
       onClick={goToAgreementPage}
-      onClickArtistName={goToArtistPage}
+      onClickLandlordName={goToLandlordPage}
       userId={user.user_id}
     />
   )

@@ -25,8 +25,8 @@ import { setVisibility } from './store/slice'
 const messages = {
   first: 'You just uploaded your first agreement to Coliving!',
   deal: 'That’s a pretty big deal.',
-  share: 'Share with your fans and let them know you’re here!',
-  shareButton: 'Share With Your Fans',
+  share: 'Share with your residents and let them know you’re here!',
+  shareButton: 'Share With Your Residents',
   // Note: twitter auto appends the link to the text
   tweet:
     'I just joined @dgc-network and uploaded my first agreement! Check out my profile here: '
@@ -85,7 +85,7 @@ const FirstUploadModal = g(({ account, isOpen, close }) => {
         title={<Title />}
       >
         <div className={styles.content}>
-          <div className={styles.artist}>
+          <div className={styles.landlord}>
             <DynamicImage
               image={image}
               wrapperClassName={styles.imageWrapper}

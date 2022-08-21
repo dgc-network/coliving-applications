@@ -75,8 +75,8 @@ type AgreementHeaderProps = {
   agreementId: ID
   userId: ID
   coverArtSizes: CoverArtSizes | null
-  artistName: string
-  artistVerified: boolean
+  landlordName: string
+  landlordVerified: boolean
   description: string
   released: string
   genre: string
@@ -92,7 +92,7 @@ type AgreementHeaderProps = {
   fieldVisibility: FieldVisibility
   coSign: Remix | null
   onClickTag: (tag: string) => void
-  onClickArtistName: () => void
+  onClickLandlordName: () => void
   onClickMobileOverflow: (
     agreementId: ID,
     overflowActions: OverflowAction[]
@@ -116,8 +116,8 @@ const AgreementHeader = ({
   agreementId,
   userId,
   coverArtSizes,
-  artistName,
-  artistVerified,
+  landlordName,
+  landlordVerified,
   description,
   isOwner,
   isFollowing,
@@ -138,7 +138,7 @@ const AgreementHeader = ({
   credits,
   genre,
   tags,
-  onClickArtistName,
+  onClickLandlordName,
   onClickTag,
   onPlay,
   onShare,
@@ -206,9 +206,9 @@ const AgreementHeader = ({
         : OverflowAction.FAVORITE,
       OverflowAction.ADD_TO_CONTENT_LIST,
       isFollowing
-        ? OverflowAction.UNFOLLOW_ARTIST
-        : OverflowAction.FOLLOW_ARTIST,
-      OverflowAction.VIEW_ARTIST_PAGE
+        ? OverflowAction.UNFOLLOW_LANDLORD
+        : OverflowAction.FOLLOW_LANDLORD,
+      OverflowAction.VIEW_LANDLORD_PAGE
     ].filter(Boolean) as OverflowAction[]
 
     onClickMobileOverflow(agreementId, overflowActions)
@@ -297,8 +297,8 @@ const AgreementHeader = ({
       )}
       {imageElement}
       <h1 className={styles.title}>{title}</h1>
-      <div className={styles.artist} onClick={onClickArtistName}>
-        <h2>{artistName}</h2>
+      <div className={styles.landlord} onClick={onClickLandlordName}>
+        <h2>{landlordName}</h2>
         <UserBadges
           className={styles.verified}
           badgeSize={16}
@@ -368,7 +368,7 @@ AgreementHeader.defaultProps = {
   playing: false,
   active: true,
   coverArtUrl: placeholderArt,
-  artistVerified: false,
+  landlordVerified: false,
   description: '',
 
   isOwner: false,

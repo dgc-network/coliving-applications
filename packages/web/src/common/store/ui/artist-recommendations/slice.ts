@@ -1,30 +1,30 @@
 import { ID, Status } from '@coliving/common'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-export type ArtistRecommendationsState = Record<
+export type LandlordRecommendationsState = Record<
   ID,
-  { relatedArtistIds: ID[]; status: Status }
+  { relatedLandlordIds: ID[]; status: Status }
 >
 
-const initialState: ArtistRecommendationsState = {}
+const initialState: LandlordRecommendationsState = {}
 
 const slice = createSlice({
-  name: 'artist-recommendations',
+  name: 'landlord-recommendations',
   initialState,
   reducers: {
-    fetchRelatedArtists: (state, action: PayloadAction<{ userId: ID }>) => {
+    fetchRelatedLandlords: (state, action: PayloadAction<{ userId: ID }>) => {
       state[action.payload.userId] = {
         ...state[action.payload.userId],
         status: Status.LOADING
       }
     },
-    fetchRelatedArtistsSucceeded: (
+    fetchRelatedLandlordsSucceeded: (
       state,
-      action: PayloadAction<{ userId: ID; relatedArtistIds: ID[] }>
+      action: PayloadAction<{ userId: ID; relatedLandlordIds: ID[] }>
     ) => {
-      if (!state[action.payload.userId].relatedArtistIds) {
+      if (!state[action.payload.userId].relatedLandlordIds) {
         state[action.payload.userId] = {
-          relatedArtistIds: action.payload.relatedArtistIds,
+          relatedLandlordIds: action.payload.relatedLandlordIds,
           status: Status.SUCCESS
         }
       }
@@ -32,6 +32,6 @@ const slice = createSlice({
   }
 })
 
-export const { fetchRelatedArtists, fetchRelatedArtistsSucceeded } =
+export const { fetchRelatedLandlords, fetchRelatedLandlordsSucceeded } =
   slice.actions
 export default slice.reducer

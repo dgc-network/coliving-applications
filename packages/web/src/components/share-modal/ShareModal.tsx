@@ -40,7 +40,7 @@ export const ShareModal = () => {
   )
 
   const isOwner =
-    content?.type === 'agreement' && account?.user_id === content.artist.user_id
+    content?.type === 'agreement' && account?.user_id === content.landlord.user_id
 
   const handleShareToTwitter = useCallback(() => {
     if (!source || !content) return

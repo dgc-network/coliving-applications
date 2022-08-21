@@ -22,12 +22,12 @@ const rowMessageMap = {
   [OverflowAction.DELETE_CONTENT_LIST]: 'Delete ContentList',
   [OverflowAction.PUBLISH_CONTENT_LIST]: 'Publish ContentList',
   [OverflowAction.VIEW_AGREEMENT_PAGE]: 'View Agreement Page',
-  [OverflowAction.VIEW_ARTIST_PAGE]: 'View Artist Page',
+  [OverflowAction.VIEW_LANDLORD_PAGE]: 'View Landlord Page',
   [OverflowAction.VIEW_CONTENT_LIST_PAGE]: 'View ContentList Page',
   [OverflowAction.VIEW_ALBUM_PAGE]: 'View Album Page',
   [OverflowAction.UNSUBSCRIBER_USER]: 'Unsubscribe',
-  [OverflowAction.FOLLOW_ARTIST]: 'Follow Artist',
-  [OverflowAction.UNFOLLOW_ARTIST]: 'Unfollow Artist',
+  [OverflowAction.FOLLOW_LANDLORD]: 'Follow Landlord',
+  [OverflowAction.UNFOLLOW_LANDLORD]: 'Unfollow Landlord',
   [OverflowAction.FOLLOW]: 'Follow',
   [OverflowAction.UNFOLLOW]: 'Unfollow'
 }

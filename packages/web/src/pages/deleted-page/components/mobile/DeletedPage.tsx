@@ -9,7 +9,7 @@ import {
 } from '@coliving/common'
 import { Button, ButtonType, IconUser } from '@coliving/stems'
 
-import { ArtistPopover } from 'components/artist/ArtistPopover'
+import { LandlordPopover } from 'components/landlord/LandlordPopover'
 import DynamicImage from 'components/dynamic-image/DynamicImage'
 import Lineup, { LineupWithoutTile } from 'components/lineup/Lineup'
 import MobilePageContainer from 'components/mobile-page-container/MobilePageContainer'
@@ -22,9 +22,9 @@ import styles from './DeletedPage.module.css'
 
 const messages = {
   agreementDeleted: 'Agreement [Deleted]',
-  agreementDeletedByArtist: 'Agreement [Deleted By Artist]',
-  contentListDeleted: 'ContentList [Deleted by Artist]',
-  albumDeleted: 'Album [Deleted By Artist]',
+  agreementDeletedByLandlord: 'Agreement [Deleted By Landlord]',
+  contentListDeleted: 'ContentList [Deleted by Landlord]',
+  albumDeleted: 'Album [Deleted By Landlord]',
   checkOut: (name: string) => `Check out more by ${name}`,
   moreBy: (name: string) => `More by ${name}`
 }
@@ -63,12 +63,12 @@ export type DeletedPageProps = {
   title: string
   description: string
   canonicalUrl: string
-  deletedByArtist: boolean
+  deletedByLandlord: boolean
 
   playable: Playable
   user: User | null
   getLineupProps: () => LineupWithoutTile
-  goToArtistPage: () => void
+  goToLandlordPage: () => void
 }
 
 const g = withNullGuard(
@@ -83,10 +83,10 @@ const DeletedPage = g(
     description,
     canonicalUrl,
     playable,
-    deletedByArtist = true,
+    deletedByLandlord = true,
     user,
     getLineupProps,
-    goToArtistPage
+    goToLandlordPage
   }) => {
     const isContentList =
       playable.type === PlayableType.CONTENT_LIST ||
@@ -97,8 +97,8 @@ const DeletedPage = g(
       ? isAlbum
         ? messages.albumDeleted
         : messages.contentListDeleted
-      : deletedByArtist
-      ? messages.agreementDeletedByArtist
+      : deletedByLandlord
+      ? messages.agreementDeletedByLandlord
       : messages.agreementDeleted
 
     const renderTile = () => {
@@ -125,10 +125,10 @@ const DeletedPage = g(
                 : playable.metadata.title}
             </h1>
           </div>
-          <div className={styles.artistWrapper}>
+          <div className={styles.landlordWrapper}>
             <span>By</span>
-            <ArtistPopover handle={user.handle}>
-              <h2 className={styles.artist} onClick={goToArtistPage}>
+            <LandlordPopover handle={user.handle}>
+              <h2 className={styles.landlord} onClick={goToLandlordPage}>
                 {user.name}
                 <UserBadges
                   userId={user.user_id}
@@ -136,14 +136,14 @@ const DeletedPage = g(
                   className={styles.verified}
                 />
               </h2>
-            </ArtistPopover>
+            </LandlordPopover>
           </div>
           <Button
             textClassName={styles.buttonText}
             text={messages.checkOut(user.name)}
             type={ButtonType.COMMON}
             leftIcon={<IconUser />}
-            onClick={goToArtistPage}
+            onClick={goToLandlordPage}
           />
         </div>
       )

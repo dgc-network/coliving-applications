@@ -113,7 +113,7 @@
   text-overflow: ellipsis;
 }
 
-.artist {
+.landlord {
   color: var(--neutral-light-2);
   font-size: var(--font-l);
   font-weight: var(--font-medium);
@@ -126,7 +126,7 @@
   align-items: center;
 }
 
-.artist:active {
+.landlord:active {
   text-decoration: underline;
 }
 

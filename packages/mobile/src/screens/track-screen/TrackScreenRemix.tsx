@@ -57,7 +57,7 @@ const useStyles = makeStyles(({ palette, spacing, typography }) => ({
     borderRadius: 18
   },
 
-  artist: {
+  landlord: {
     marginTop: spacing(2),
     ...flexRowCentered(),
     ...typography.body,
@@ -70,7 +70,7 @@ const useStyles = makeStyles(({ palette, spacing, typography }) => ({
     maxWidth: 128
   },
 
-  artistName: {
+  landlordName: {
     color: palette.secondary
   },
 
@@ -137,7 +137,7 @@ const AgreementScreenRemixComponent = ({
     })
   }, [navigation, permalink, agreement_id])
 
-  const handlePressArtist = useCallback(() => {
+  const handlePressLandlord = useCallback(() => {
     navigation.push({
       native: { screen: 'Profile', params: { handle } },
       web: { route: profilePage(handle) }
@@ -160,10 +160,10 @@ const AgreementScreenRemixComponent = ({
       <Pressable onPress={handlePressAgreement}>
         {_co_sign ? <CoSign size={Size.MEDIUM}>{images}</CoSign> : images}
       </Pressable>
-      <Pressable style={styles.artist} onPress={handlePressArtist}>
+      <Pressable style={styles.landlord} onPress={handlePressLandlord}>
         <View style={styles.name}>
           <Text>{messages.by}</Text>
-          <Text style={styles.artistName} numberOfLines={1}>
+          <Text style={styles.landlordName} numberOfLines={1}>
             {name}
           </Text>
           <View style={styles.badges}>

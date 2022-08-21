@@ -40,7 +40,7 @@ export const useChromecast = () => {
                 }
               ],
               title: agreement.title,
-              artist: agreement.artist
+              landlord: agreement.landlord
             }
           },
           startTime

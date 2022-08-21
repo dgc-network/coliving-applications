@@ -9,30 +9,30 @@ import { MainContentContext } from 'pages/MainContentContext'
 import { AppState } from 'store/types'
 import zIndex from 'utils/zIndex'
 
-import { ArtistRecommendations } from './ArtistRecommendations'
-import styles from './ArtistRecommendationsPopup.module.css'
+import { LandlordRecommendations } from './LandlordRecommendations'
+import styles from './LandlordRecommendationsPopup.module.css'
 
-type ArtistRecommendationsPopupProps = {
+type LandlordRecommendationsPopupProps = {
   anchorRef: MutableRefObject<HTMLElement>
-  artistId: ID
+  landlordId: ID
   isVisible: boolean
   onClose: () => void
-  onArtistNameClicked: (handle: string) => void
+  onLandlordNameClicked: (handle: string) => void
   onFollowAll: (userIds: ID[]) => void
   onUnfollowAll: (userIds: ID[]) => void
 }
 
-export const ArtistRecommendationsPopup = ({
+export const LandlordRecommendationsPopup = ({
   anchorRef,
-  artistId,
+  landlordId,
   isVisible,
   onClose
-}: ArtistRecommendationsPopupProps) => {
+}: LandlordRecommendationsPopupProps) => {
   const { mainContentRef } = useContext(MainContentContext)
 
-  // Get the artist
+  // Get the landlord
   const user = useSelector<AppState, User | null>((state) =>
-    getUser(state, { id: artistId })
+    getUser(state, { id: landlordId })
   )
   if (!user) return null
   const { name } = user
@@ -47,17 +47,17 @@ export const ArtistRecommendationsPopup = ({
       className={styles.popup}
       containerRef={mainContentRef}
     >
-      <ArtistRecommendations
+      <LandlordRecommendations
         itemClassName={styles.popupItem}
         renderHeader={() => (
-          <h2 className={styles.headerTitle}>Suggested Artists</h2>
+          <h2 className={styles.headerTitle}>Suggested Landlords</h2>
         )}
         renderSubheader={() => (
           <p className={styles.popupItem}>
             Here are some accounts that vibe well with {name}
           </p>
         )}
-        artistId={artistId}
+        landlordId={landlordId}
         onClose={onClose}
       />
     </Popup>

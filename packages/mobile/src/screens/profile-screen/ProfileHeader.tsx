@@ -8,7 +8,7 @@ import { useToggle } from 'react-use'
 import { useSelectorWeb } from 'app/hooks/useSelectorWeb'
 import { makeStyles } from 'app/styles'
 
-import { ArtistRecommendations } from './ArtistRecommendations'
+import { LandlordRecommendations } from './LandlordRecommendations'
 import { CoverPhoto } from './CoverPhoto'
 import { ExpandableBio } from './ExpandableBio'
 import { ProfileInfo } from './ProfileInfo'
@@ -52,7 +52,7 @@ export const ProfileHeader = (props: ProfileHeaderProps) => {
     }
   }, [setHasUserFollowed, profile])
 
-  const handleCloseArtistRecs = useCallback(() => {
+  const handleCloseLandlordRecs = useCallback(() => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
     setHasUserFollowed(false)
   }, [setHasUserFollowed])
@@ -72,7 +72,7 @@ export const ProfileHeader = (props: ProfileHeaderProps) => {
         <ProfileSocials />
         <ExpandableBio />
         {!hasUserFollowed ? null : (
-          <ArtistRecommendations onClose={handleCloseArtistRecs} />
+          <LandlordRecommendations onClose={handleCloseLandlordRecs} />
         )}
         {isOwner ? <UploadAgreementButton /> : null}
       </View>

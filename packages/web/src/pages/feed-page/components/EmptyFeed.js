@@ -5,7 +5,7 @@ import cn from 'classnames'
 import PropTypes from 'prop-types'
 
 import styles from './EmptyFeed.module.css'
-import FollowArtists from './FollowUsers'
+import FollowLandlords from './FollowUsers'
 
 const messages = {
   noFollowers: 'Awkward. It looks like you’re not following anyone!'
@@ -24,7 +24,7 @@ const EmptyFeed = (props) => {
       <div className={styles.contentWrapper}>
         <div className={styles.body}>
           {props.hasAccount ? (
-            <FollowArtists
+            <FollowLandlords
               header={
                 <>
                   {messages.noFollowers}{' '}
@@ -41,7 +41,7 @@ const EmptyFeed = (props) => {
                 With an Coliving account you can...
               </div>
               <div className={styles.item}>
-                Follow your favorite artists{' '}
+                Follow your favorite landlords{' '}
                 <i className='emoji small grinning-face-with-star-eyes' />
               </div>
               <div className={styles.item}>

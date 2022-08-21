@@ -10,10 +10,10 @@ import {
   SignUpValidateHandleFailureMessage,
   SignUpValidateHandleSuccessMessage,
   SignUpSuccessMessage,
-  FetchAllFollowArtistsSuccessMessage,
+  FetchAllFollowLandlordsSuccessMessage,
   SetUsersMessage,
   SetAccountAvailableMessage,
-  FetchAllFollowArtistsFailureMessage
+  FetchAllFollowLandlordsFailureMessage
 } from 'services/native-mobile-interface/signon'
 import { MessageType } from 'services/native-mobile-interface/types'
 import { dataURLtoFile } from 'utils/fileUtils'
@@ -22,7 +22,7 @@ import { FEED_PAGE } from 'utils/route'
 
 import * as signOnActions from './actions'
 import { getSignOn } from './selectors'
-import { FollowArtistsCategory } from './types'
+import { FollowLandlordsCategory } from './types'
 
 const GENERAL_ADMISSION = process.env.REACT_APP_GENERAL_ADMISSION
 
@@ -124,25 +124,25 @@ function* watchSignupValidateHandleSuccess() {
   )
 }
 
-function* watchFetchAllFollowArtists() {
+function* watchFetchAllFollowLandlords() {
   yield takeEvery(
-    [MessageType.FETCH_ALL_FOLLOW_ARTISTS],
+    [MessageType.FETCH_ALL_FOLLOW_LANDLORDS],
     function* (action: { type: string }) {
-      yield put(signOnActions.fetchAllFollowArtists())
+      yield put(signOnActions.fetchAllFollowLandlords())
     }
   )
 }
 
-function* watchFetchFollowArtistsSucceeded() {
+function* watchFetchFollowLandlordsSucceeded() {
   yield takeEvery(
-    [signOnActions.FETCH_FOLLOW_ARTISTS_SUCCEEDED],
+    [signOnActions.FETCH_FOLLOW_LANDLORDS_SUCCEEDED],
     function* (action: {
       type: string
-      category: FollowArtistsCategory
+      category: FollowLandlordsCategory
       userIds: number[]
     }) {
       const { category, userIds } = action
-      const message = new FetchAllFollowArtistsSuccessMessage({
+      const message = new FetchAllFollowLandlordsSuccessMessage({
         category,
         userIds
       })
@@ -151,11 +151,11 @@ function* watchFetchFollowArtistsSucceeded() {
   )
 }
 
-function* watchFetchFollowArtistsFailed() {
+function* watchFetchFollowLandlordsFailed() {
   yield takeEvery(
-    [signOnActions.FETCH_FOLLOW_ARTISTS_FAILED],
+    [signOnActions.FETCH_FOLLOW_LANDLORDS_FAILED],
     function* (action: { type: string; error: any }) {
-      const message = new FetchAllFollowArtistsFailureMessage({
+      const message = new FetchAllFollowLandlordsFailureMessage({
         error: action.error
       })
       message.send()
@@ -190,7 +190,7 @@ function* watchAccountAvailable(): any {
     yield all([
       take(signOnActions.SIGN_UP_SUCCEEDED),
       take(accountActions.fetchAccountSucceeded.type),
-      take(signOnActions.FOLLOW_ARTISTS)
+      take(signOnActions.FOLLOW_LANDLORDS)
     ])
   ) {
     yield put(pushRoute(FEED_PAGE, { noAnimation: true }))
@@ -203,20 +203,20 @@ function* watchAccountAvailable(): any {
   }
 }
 
-function* watchSetFollowArtists() {
+function* watchSetFollowLandlords() {
   yield takeEvery(
-    [MessageType.SET_FOLLOW_ARTISTS],
+    [MessageType.SET_FOLLOW_LANDLORDS],
     function* (action: {
       type: string
-      followArtists: {
-        selectedCategory: FollowArtistsCategory
-        categories: { [key in FollowArtistsCategory]?: number[] }
+      followLandlords: {
+        selectedCategory: FollowLandlordsCategory
+        categories: { [key in FollowLandlordsCategory]?: number[] }
         selectedUserIds: number[]
       }
     }) {
-      yield put(signOnActions.setField('followArtists', action.followArtists))
+      yield put(signOnActions.setField('followLandlords', action.followLandlords))
       yield put(
-        signOnActions.followArtists(action.followArtists.selectedUserIds)
+        signOnActions.followLandlords(action.followLandlords.selectedUserIds)
       )
     }
   )
@@ -352,12 +352,12 @@ const sagas = () => {
     watchSignupValidateHandle,
     watchSignupValidateHandleFailed,
     watchSignupValidateHandleSuccess,
-    watchFetchAllFollowArtists,
-    watchFetchFollowArtistsSucceeded,
-    watchFetchFollowArtistsFailed,
+    watchFetchAllFollowLandlords,
+    watchFetchFollowLandlordsSucceeded,
+    watchFetchFollowLandlordsFailed,
     watchGetUsersToFollow,
     watchSetUsersToFollow,
-    watchSetFollowArtists,
+    watchSetFollowLandlords,
     watchAccountAvailable,
     watchSignUp,
     watchSignupSuccess

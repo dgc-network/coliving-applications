@@ -15,7 +15,7 @@ const Stack = createNativeStackNavigator()
 
 const screenOptionOverrides = { headerRight: () => null }
 
-export const TipArtistModal = () => {
+export const TipLandlordModal = () => {
   const screenOptions = useAppScreenOptions(screenOptionOverrides)
   const dispatchWeb = useDispatchWeb()
 

@@ -8,8 +8,8 @@ import {
   SET_VALUE_FIELD,
   SET_TWITTER_PROFILE,
   SET_INSTAGRAM_PROFILE,
-  FETCH_FOLLOW_ARTISTS_SUCCEEDED,
-  SET_FOLLOW_ARTIST_CATEGORY,
+  FETCH_FOLLOW_LANDLORDS_SUCCEEDED,
+  SET_FOLLOW_LANDLORD_CATEGORY,
   VALIDATE_EMAIL,
   VALIDATE_EMAIL_SUCCEEDED,
   VALIDATE_EMAIL_FAILED,
@@ -32,11 +32,11 @@ import {
   SET_TOAST,
   UPDATE_ROUTE_ON_COMPLETION,
   UPDATE_ROUTE_ON_EXIT,
-  ADD_FOLLOW_ARTISTS,
-  REMOVE_FOLLOW_ARTISTS,
+  ADD_FOLLOW_LANDLORDS,
+  REMOVE_FOLLOW_LANDLORDS,
   SET_REFERRER
 } from './actions'
-import { Pages, FollowArtistsCategory } from './types'
+import { Pages, FollowLandlordsCategory } from './types'
 
 const NATIVE_MOBILE = process.env.REACT_APP_NATIVE_MOBILE
 
@@ -68,8 +68,8 @@ const initialState = {
   toastText: null,
   page: Pages.EMAIL,
   startedSignOnProcess: false,
-  followArtists: {
-    selectedCategory: FollowArtistsCategory.FEATURED,
+  followLandlords: {
+    selectedCategory: FollowLandlordsCategory.FEATURED,
     categories: {},
     selectedUserIds: []
   },
@@ -91,7 +91,7 @@ const actionsMap = {
       routeOnCompletion: state.routeOnCompletion,
       routeOnExit: state.routeOnExit,
       isMobileSignOnVisible: state.isMobileSignOnVisible,
-      followArtists: state.followArtists
+      followLandlords: state.followLandlords
     }
   },
   [OPEN_SIGN_ON](state, action) {
@@ -347,45 +347,45 @@ const actionsMap = {
       routeOnCompletion: action.route
     }
   },
-  [FETCH_FOLLOW_ARTISTS_SUCCEEDED](state, action) {
+  [FETCH_FOLLOW_LANDLORDS_SUCCEEDED](state, action) {
     return {
       ...state,
-      followArtists: {
-        ...state.followArtists,
+      followLandlords: {
+        ...state.followLandlords,
         categories: {
-          ...state.followArtists.categories,
+          ...state.followLandlords.categories,
           [action.category]: action.userIds
         }
       }
     }
   },
-  [SET_FOLLOW_ARTIST_CATEGORY](state, action) {
+  [SET_FOLLOW_LANDLORD_CATEGORY](state, action) {
     return {
       ...state,
-      followArtists: {
-        ...state.followArtists,
+      followLandlords: {
+        ...state.followLandlords,
         selectedCategory: action.category
       }
     }
   },
-  [ADD_FOLLOW_ARTISTS](state, action) {
+  [ADD_FOLLOW_LANDLORDS](state, action) {
     return {
       ...state,
-      followArtists: {
-        ...state.followArtists,
+      followLandlords: {
+        ...state.followLandlords,
         selectedUserIds: [
-          ...new Set(state.followArtists.selectedUserIds.concat(action.userIds))
+          ...new Set(state.followLandlords.selectedUserIds.concat(action.userIds))
         ]
       }
     }
   },
-  [REMOVE_FOLLOW_ARTISTS](state, action) {
+  [REMOVE_FOLLOW_LANDLORDS](state, action) {
     const removeUserIds = new Set(action.userIds)
     return {
       ...state,
-      followArtists: {
-        ...state.followArtists,
-        selectedUserIds: state.followArtists.selectedUserIds.filter(
+      followLandlords: {
+        ...state.followLandlords,
+        selectedUserIds: state.followLandlords.selectedUserIds.filter(
           (id) => !removeUserIds.has(id)
         )
       }

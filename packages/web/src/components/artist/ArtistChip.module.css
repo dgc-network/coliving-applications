@@ -1,10 +1,10 @@
-.artistChip {
+.landlordChip {
   flex: 1;
   display: flex;
   align-items: flex-start;
   overflow: hidden;
 }
-.artistChip > div {
+.landlordChip > div {
   display: flex;
 }
 
@@ -50,12 +50,12 @@
   cursor: pointer;
   line-height: normal;
 }
-.text > .identity :global(.artistPopover) {
+.text > .identity :global(.landlordPopover) {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.text > .identity :global(.artistPopover) span {
+.text > .identity :global(.landlordPopover) span {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

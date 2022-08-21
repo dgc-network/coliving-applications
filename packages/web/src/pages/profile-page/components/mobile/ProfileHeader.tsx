@@ -21,10 +21,10 @@ import {
 import cn from 'classnames'
 import Linkify from 'linkifyjs/react'
 
-import { ReactComponent as BadgeArtist } from 'assets/img/badgeArtist.svg'
+import { ReactComponent as BadgeLandlord } from 'assets/img/badgeLandlord.svg'
 import imageCoverPhotoBlank from 'assets/img/imageCoverPhotoBlank.jpg'
 import { formatCount, squashNewLines } from 'common/utils/formatUtil'
-import { ArtistRecommendationsDropdown } from 'components/artist-recommendations/ArtistRecommendationsDropdown'
+import { LandlordRecommendationsDropdown } from 'components/landlord-recommendations/LandlordRecommendationsDropdown'
 import DynamicImage from 'components/dynamic-image/DynamicImage'
 import FollowButton from 'components/follow-button/FollowButton'
 import Skeleton from 'components/skeleton/Skeleton'
@@ -60,7 +60,7 @@ const LoadingProfileHeader = () => {
           className={cn(styles.loadingSkeleton, styles.loadingSkeletonAvatar)}
         />
       </div>
-      <div className={cn(styles.artistInfo, styles.loadingInfo)}>
+      <div className={cn(styles.landlordInfo, styles.loadingInfo)}>
         <div className={styles.loadingNameContainer}>
           <Skeleton
             className={cn(styles.loadingSkeleton, styles.loadingShortName)}
@@ -79,7 +79,7 @@ type ProfileHeaderProps = {
   isDeactivated: boolean
   name: string
   handle: string
-  isArtist: boolean
+  isLandlord: boolean
   bio: string
   verified: boolean
   userId: ID
@@ -118,8 +118,8 @@ type ProfileHeaderProps = {
     source: 'original' | 'unsplash' | 'url'
   ) => void
   setNotificationSubscription: (userId: ID, isSubscribed: boolean) => void
-  areArtistRecommendationsVisible: boolean
-  onCloseArtistRecommendations: () => void
+  areLandlordRecommendationsVisible: boolean
+  onCloseLandlordRecommendations: () => void
 }
 
 function isEllipsisActive(e: HTMLElement) {
@@ -130,7 +130,7 @@ const ProfileHeader = ({
   isDeactivated,
   name,
   handle,
-  isArtist,
+  isLandlord,
   bio,
   userId,
   loading,
@@ -160,8 +160,8 @@ const ProfileHeader = ({
   onUpdateCoverPhoto,
   onUpdateProfilePicture,
   setNotificationSubscription,
-  areArtistRecommendationsVisible,
-  onCloseArtistRecommendations
+  areLandlordRecommendationsVisible,
+  onCloseLandlordRecommendations
 }: ProfileHeaderProps) => {
   const [hasEllipsis, setHasEllipsis] = useState(false)
   const [isDescriptionMinimized, setIsDescriptionMinimized] = useState(true)
@@ -319,8 +319,8 @@ const ProfileHeader = ({
           [styles.isEditing]: isEditing
         })}
       >
-        {isArtist && !isEditing && !isDeactivated ? (
-          <BadgeArtist className={styles.badgeArtist} />
+        {isLandlord && !isEditing && !isDeactivated ? (
+          <BadgeLandlord className={styles.badgeLandlord} />
         ) : null}
         {isEditing && <UploadStub onChange={onUpdateCoverPhoto} />}
       </GrowingCoverPhoto>
@@ -334,10 +334,10 @@ const ProfileHeader = ({
         {isEditing && <UploadStub onChange={onUpdateProfilePicture} />}
       </DynamicImage>
       {!isEditing && !isDeactivated && (
-        <div className={styles.artistInfo}>
+        <div className={styles.landlordInfo}>
           <div className={styles.titleContainer}>
             <div className={styles.left}>
-              <div className={styles.artistName}>
+              <div className={styles.landlordName}>
                 <h1>
                   {`${name} `}
                   <span className={styles.badgesSpan}>
@@ -349,8 +349,8 @@ const ProfileHeader = ({
                   </span>
                 </h1>
               </div>
-              <div className={styles.artistHandleWrapper}>
-                <h2 className={styles.artistHandle}>{handle}</h2>
+              <div className={styles.landlordHandleWrapper}>
+                <h2 className={styles.landlordHandle}>{handle}</h2>
                 {doesFollowCurrentUser ? <FollowsYouBadge /> : null}
               </div>
             </div>
@@ -382,34 +382,34 @@ const ProfileHeader = ({
               )}
             </div>
           </div>
-          <div className={styles.artistMetrics}>
-            <div className={styles.artistMetric}>
-              <div className={styles.artistMetricValue}>
-                {formatCount(isArtist ? agreementCount : contentListCount)}
+          <div className={styles.landlordMetrics}>
+            <div className={styles.landlordMetric}>
+              <div className={styles.landlordMetricValue}>
+                {formatCount(isLandlord ? agreementCount : contentListCount)}
               </div>
-              <div className={styles.artistMetricLabel}>
-                {isArtist ? messages.agreements : messages.contentLists}
+              <div className={styles.landlordMetricLabel}>
+                {isLandlord ? messages.agreements : messages.contentLists}
               </div>
             </div>
             <div
-              className={styles.artistMetric}
+              className={styles.landlordMetric}
               onClick={followerCount! > 0 ? onGoToFollowersPage : () => {}}
             >
-              <div className={styles.artistMetricValue}>
+              <div className={styles.landlordMetricValue}>
                 {formatCount(followerCount)}
               </div>
-              <div className={styles.artistMetricLabel}>
+              <div className={styles.landlordMetricLabel}>
                 {messages.followers}
               </div>
             </div>
             <div
-              className={styles.artistMetric}
+              className={styles.landlordMetric}
               onClick={followingCount! > 0 ? onGoToFollowingPage : () => {}}
             >
-              <div className={styles.artistMetricValue}>
+              <div className={styles.landlordMetricValue}>
                 {formatCount(followingCount)}
               </div>
-              <div className={styles.artistMetricLabel}>
+              <div className={styles.landlordMetricLabel}>
                 {messages.following}
               </div>
             </div>
@@ -490,13 +490,13 @@ const ProfileHeader = ({
               {isDescriptionMinimized ? messages.showMore : messages.showLess}
             </div>
           ) : null}
-          <ArtistRecommendationsDropdown
-            isVisible={areArtistRecommendationsVisible}
+          <LandlordRecommendationsDropdown
+            isVisible={areLandlordRecommendationsVisible}
             renderHeader={() => (
               <p>Here are some accounts that vibe well with {name}</p>
             )}
-            artistId={userId}
-            onClose={onCloseArtistRecommendations}
+            landlordId={userId}
+            onClose={onCloseLandlordRecommendations}
           />
         </div>
       )}

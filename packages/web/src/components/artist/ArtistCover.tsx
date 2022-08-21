@@ -6,38 +6,38 @@ import {
   WidthSizes
 } from '@coliving/common'
 
-import { ReactComponent as BadgeArtist } from 'assets/img/badgeArtist.svg'
+import { ReactComponent as BadgeLandlord } from 'assets/img/badgeLandlord.svg'
 import DynamicImage from 'components/dynamic-image/DynamicImage'
 import FollowsYouBadge from 'components/user-badges/FollowsYouBadge'
 import UserBadges from 'components/user-badges/UserBadges'
 import { useUserCoverPhoto } from 'hooks/useUserCoverPhoto'
 import { useUserProfilePicture } from 'hooks/useUserProfilePicture'
 
-import styles from './ArtistCard.module.css'
+import styles from './LandlordCard.module.css'
 
 const gradient = `linear-gradient(180deg, rgba(0, 0, 0, 0.001) 0%, rgba(0, 0, 0, 0.005) 67.71%, rgba(0, 0, 0, 0.15) 79.17%, rgba(0, 0, 0, 0.25) 100%)`
 
-type ArtistCoverProps = {
+type LandlordCoverProps = {
   userId: ID
   name: string
   handle: string
-  isArtist: boolean
+  isLandlord: boolean
   doesFollowCurrentUser: boolean
   onNameClick: () => void
   coverPhotoSizes: CoverPhotoSizes
   profilePictureSizes: ProfilePictureSizes
 }
 
-export const ArtistCover = ({
+export const LandlordCover = ({
   userId,
   name,
   handle,
-  isArtist,
+  isLandlord,
   doesFollowCurrentUser,
   onNameClick,
   profilePictureSizes,
   coverPhotoSizes
-}: ArtistCoverProps) => {
+}: LandlordCoverProps) => {
   const coverPhoto = useUserCoverPhoto(
     userId,
     coverPhotoSizes,
@@ -53,12 +53,12 @@ export const ArtistCover = ({
 
   return (
     <DynamicImage
-      wrapperClassName={styles.artistCoverPhoto}
+      wrapperClassName={styles.landlordCoverPhoto}
       image={darkenedCoverPhoto}
       immediate
     >
       <div className={styles.coverPhotoContentContainer}>
-        {isArtist ? <BadgeArtist className={styles.badgeArtist} /> : null}
+        {isLandlord ? <BadgeLandlord className={styles.badgeLandlord} /> : null}
         <DynamicImage
           wrapperClassName={styles.profilePictureWrapper}
           className={styles.profilePicture}
@@ -67,7 +67,7 @@ export const ArtistCover = ({
         />
         <div className={styles.headerTextContainer}>
           <div className={styles.nameContainer}>
-            <div className={styles.artistName} onClick={onNameClick}>
+            <div className={styles.landlordName} onClick={onNameClick}>
               {name}
             </div>
             <UserBadges
@@ -77,9 +77,9 @@ export const ArtistCover = ({
               useSVGTiers
             />
           </div>
-          <div className={styles.artistHandleWrapper}>
+          <div className={styles.landlordHandleWrapper}>
             <div
-              className={styles.artistHandle}
+              className={styles.landlordHandle}
               onClick={onNameClick}
             >{`@${handle}`}</div>
             {doesFollowCurrentUser ? <FollowsYouBadge /> : null}

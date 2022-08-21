@@ -66,7 +66,7 @@ const CollectionMenu = (props: CollectionMenuProps) => {
       includeEmbed,
       includeVisitPage,
       isPublic,
-      isArtist,
+      isLandlord,
       onShare,
       goToRoute,
       openEmbedModal,
@@ -108,8 +108,8 @@ const CollectionMenu = (props: CollectionMenuProps) => {
       }
     }
 
-    const artistPageMenuItem = {
-      text: `Visit ${isArtist ? 'Artist' : 'User'} Page`,
+    const landlordPageMenuItem = {
+      text: `Visit ${isLandlord ? 'Landlord' : 'User'} Page`,
       onClick: () => goToRoute(profilePage(handle))
     }
 
@@ -141,7 +141,7 @@ const CollectionMenu = (props: CollectionMenuProps) => {
       if (includeRepost) menu.items.push(repostMenuItem)
       if (includeFavorite) menu.items.push(favoriteMenuItem)
     }
-    menu.items.push(artistPageMenuItem)
+    menu.items.push(landlordPageMenuItem)
     if (includeVisitPage) {
       menu.items.push(contentListPageMenuItem)
     }
@@ -168,7 +168,7 @@ function mapStateToProps(state: AppState, props: OwnProps) {
     handle: props.handle ? props.handle.toLowerCase() : null
   })
   return {
-    isArtist: user ? user.agreement_count > 0 : false
+    isLandlord: user ? user.agreement_count > 0 : false
   }
 }
 
@@ -206,7 +206,7 @@ CollectionMenu.defaultProps = {
   isFavorited: false,
   isReposted: false,
   includeFavorite: true,
-  isArtist: false,
+  isLandlord: false,
   includeVisitPage: true,
   includeEmbed: true,
   extraMenuItems: []

@@ -43,7 +43,7 @@ const AgreementItem = (props: AgreementItemProps) => {
           <>
             <div className={styles.index}> {props.index + 1} </div>
             <div className={styles.agreementTitle}> {props.agreement.title} </div>
-            <div className={styles.byArtist}>
+            <div className={styles.byLandlord}>
               {' '}
               {`by ${props.agreement.user.name}`}{' '}
             </div>
@@ -109,7 +109,7 @@ type ExtraProps = {
   isPlaying: boolean
   isActive: boolean
   goToCollectionPage: (e: MouseEvent<HTMLElement>) => void
-  goToArtistPage: (e: MouseEvent<HTMLElement>) => void
+  goToLandlordPage: (e: MouseEvent<HTMLElement>) => void
   toggleSave: () => void
   toggleRepost: () => void
   onClickOverflow: () => void
@@ -176,9 +176,9 @@ const ContentListTile = (props: ContentListTileProps & ExtraProps) => {
                 />
               )}
             </div>
-            <div className={styles.artist} onClick={props.goToArtistPage}>
+            <div className={styles.landlord} onClick={props.goToLandlordPage}>
               <span className={cn(styles.userName, fadeIn)}>
-                {props.artistName}
+                {props.landlordName}
               </span>
               <UserBadges
                 userId={props.ownerId}

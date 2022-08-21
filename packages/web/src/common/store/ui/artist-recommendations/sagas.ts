@@ -8,56 +8,56 @@ import { processAndCacheUsers } from 'common/store/cache/users/utils'
 import apiClient from 'services/coliving-api-client/ColivingAPIClient'
 import { remoteConfigInstance } from 'services/remote-config/remote-config-instance'
 
-import * as artistRecommendationsActions from './slice'
+import * as landlordRecommendationsActions from './slice'
 
-export function* fetchRelatedArtists(action: Action) {
-  if (artistRecommendationsActions.fetchRelatedArtists.match(action)) {
+export function* fetchRelatedLandlords(action: Action) {
+  if (landlordRecommendationsActions.fetchRelatedLandlords.match(action)) {
     const userId = action.payload.userId
     const currentUserId: ID = yield select(getUserId)
-    const relatedArtists: User[] = yield apiClient.getRelatedArtists({
+    const relatedLandlords: User[] = yield apiClient.getRelatedLandlords({
       userId,
       currentUserId,
       limit: 50
     })
 
-    let filteredArtists = relatedArtists
+    let filteredLandlords = relatedLandlords
       .filter((user) => !user.does_current_user_follow && !user.is_deactivated)
       .slice(0, 5)
-    if (filteredArtists.length === 0) {
-      const showTopArtistRecommendationsPercent =
+    if (filteredLandlords.length === 0) {
+      const showTopLandlordRecommendationsPercent =
         remoteConfigInstance.getRemoteVar(
-          DoubleKeys.SHOW_ARTIST_RECOMMENDATIONS_FALLBACK_PERCENT
+          DoubleKeys.SHOW_LANDLORD_RECOMMENDATIONS_FALLBACK_PERCENT
         ) || 0
-      const showTopArtists = Math.random() < showTopArtistRecommendationsPercent
-      if (showTopArtists) {
-        filteredArtists = yield fetchTopArtists()
+      const showTopLandlords = Math.random() < showTopLandlordRecommendationsPercent
+      if (showTopLandlords) {
+        filteredLandlords = yield fetchTopLandlords()
       }
     }
-    if (filteredArtists.length > 0) {
-      const relatedArtistIds: ID[] = yield call(cacheUsers, filteredArtists)
+    if (filteredLandlords.length > 0) {
+      const relatedLandlordIds: ID[] = yield call(cacheUsers, filteredLandlords)
       yield put(
-        artistRecommendationsActions.fetchRelatedArtistsSucceeded({
+        landlordRecommendationsActions.fetchRelatedLandlordsSucceeded({
           userId,
-          relatedArtistIds
+          relatedLandlordIds
         })
       )
     }
   }
 }
 
-function* fetchTopArtists() {
+function* fetchTopLandlords() {
   const currentUserId: ID = yield select(getUserId)
-  const topArtists: User[] = yield apiClient.getTopArtists({
+  const topLandlords: User[] = yield apiClient.getTopLandlords({
     currentUserId,
     limit: 50
   })
-  const filteredArtists = topArtists.filter(
+  const filteredLandlords = topLandlords.filter(
     (user) => !user.does_current_user_follow && !user.is_deactivated
   )
-  if (filteredArtists.length > 0) {
+  if (filteredLandlords.length > 0) {
     // Pick 5 at random
-    const selectedArtists = shuffle(filteredArtists).slice(0, 5)
-    return selectedArtists
+    const selectedLandlords = shuffle(filteredLandlords).slice(0, 5)
+    return selectedLandlords
   }
   return []
 }
@@ -71,13 +71,13 @@ function* cacheUsers(users: User[]) {
   return users.map((f) => f.user_id)
 }
 
-function* watchFetchRelatedArtists() {
+function* watchFetchRelatedLandlords() {
   yield takeEvery(
-    artistRecommendationsActions.fetchRelatedArtists,
-    fetchRelatedArtists
+    landlordRecommendationsActions.fetchRelatedLandlords,
+    fetchRelatedLandlords
   )
 }
 
 export default function sagas() {
-  return [watchFetchRelatedArtists]
+  return [watchFetchRelatedLandlords]
 }

@@ -44,8 +44,8 @@ type ShareBannerProps = {
 const messages = {
   title: (type: UploadType) =>
     `Your ${type} ${type === 'Agreements' ? 'Are' : 'Is'} Live!`,
-  description: 'Now it’s time to spread the word and share it with your fans!',
-  share: 'Share With Your Fans',
+  description: 'Now it’s time to spread the word and share it with your residents!',
+  share: 'Share With Your Residents',
   shareToTikTok: 'Share Sound to TikTok',
   copy: (page: ContinuePage) => `Copy Link to ${page}`,
   copiedToClipboard: 'Copied to Clipboard'

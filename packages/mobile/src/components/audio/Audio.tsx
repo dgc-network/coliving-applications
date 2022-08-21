@@ -215,7 +215,7 @@ const Audio = ({
       MusicControl.setNowPlaying({
         title: agreement.title,
         artwork: Platform.OS === 'ios' ? agreement.artwork : agreement.largeArtwork,
-        artist: agreement.artist,
+        landlord: agreement.landlord,
         duration
       })
       if (webRef.current) {

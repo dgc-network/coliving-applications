@@ -4,21 +4,21 @@ import { ReactComponent as IconUser } from 'assets/img/iconUser.svg'
 import { formatCount } from 'common/utils/formatUtil'
 import FollowsYouBadge from 'components/user-badges/FollowsYouBadge'
 
-import styles from './ArtistChip.module.css'
+import styles from './LandlordChip.module.css'
 
 const messages = {
   follower: 'Follower',
   followers: 'Followers'
 }
 
-type ArtistChipFollowersProps = {
+type LandlordChipFollowersProps = {
   followerCount: number
   doesFollowCurrentUser: boolean
 }
-export const ArtistChipFollowers = ({
+export const LandlordChipFollowers = ({
   followerCount,
   doesFollowCurrentUser
-}: ArtistChipFollowersProps) => {
+}: LandlordChipFollowersProps) => {
   return (
     <div className={styles.followersContainer}>
       <div className={cn(styles.followers, 'followers')}>

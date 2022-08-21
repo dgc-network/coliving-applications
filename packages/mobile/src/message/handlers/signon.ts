@@ -19,16 +19,16 @@ export const messageHandlers: Partial<MessageHandlers> = {
   [MessageType.SIGN_UP_VALIDATE_HANDLE_SUCCESS]: ({ dispatch, message }) => {
     dispatch(signonActions.signupValidateHandleSuceeded())
   },
-  [MessageType.FETCH_ALL_FOLLOW_ARTISTS_SUCCEEDED]: ({ dispatch, message }) => {
+  [MessageType.FETCH_ALL_FOLLOW_LANDLORDS_SUCCEEDED]: ({ dispatch, message }) => {
     dispatch(
-      signonActions.fetchAllFollowArtistsSucceeded(
+      signonActions.fetchAllFollowLandlordsSucceeded(
         message.category,
         message.userIds
       )
     )
   },
-  [MessageType.FETCH_ALL_FOLLOW_ARTISTS_FAILED]: ({ dispatch, message }) => {
-    dispatch(signonActions.fetchAllFollowArtistsFailed(message.error))
+  [MessageType.FETCH_ALL_FOLLOW_LANDLORDS_FAILED]: ({ dispatch, message }) => {
+    dispatch(signonActions.fetchAllFollowLandlordsFailed(message.error))
   },
   [MessageType.SET_USERS_TO_FOLLOW]: ({ dispatch, message }) => {
     dispatch(signonActions.setUsersToFollow(message.users))

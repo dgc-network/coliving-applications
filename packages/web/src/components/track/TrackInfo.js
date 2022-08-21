@@ -4,7 +4,7 @@ import cn from 'classnames'
 import PropTypes from 'prop-types'
 
 import { ReactComponent as IconVolume } from 'assets/img/iconVolume.svg'
-import { ArtistPopover } from 'components/artist/ArtistPopover'
+import { LandlordPopover } from 'components/landlord/LandlordPopover'
 import Skeleton from 'components/skeleton/Skeleton'
 import UserBadges from 'components/user-badges/UserBadges'
 
@@ -17,10 +17,10 @@ class AgreementInfo extends PureComponent {
       this.props.onClickAgreementName()
   }
 
-  onClickArtistName = (e) => {
+  onClickLandlordName = (e) => {
     e.stopPropagation()
-    if (!this.props.disabled && this.props.onClickArtistName)
-      this.props.onClickArtistName()
+    if (!this.props.disabled && this.props.onClickLandlordName)
+      this.props.onClickLandlordName()
   }
 
   render() {
@@ -29,12 +29,12 @@ class AgreementInfo extends PureComponent {
       isLoading,
       agreementTitle,
       active,
-      artistName,
+      landlordName,
       disabled,
-      artistHandle,
+      landlordHandle,
       size,
       onClickAgreementName,
-      onClickArtistName,
+      onClickLandlordName,
       popover,
       condense,
       userId
@@ -53,7 +53,7 @@ class AgreementInfo extends PureComponent {
       [styles.active]: active,
       [styles.condense]: condense
     })
-    const artistNameStyle = cn(styles.artistName, style, {
+    const landlordNameStyle = cn(styles.landlordName, style, {
       [styles.active]: active,
       [styles.contentListCreator]: contentTitle === 'contentList'
     })
@@ -87,28 +87,28 @@ class AgreementInfo extends PureComponent {
           </div>
           {isLoading && <Skeleton width='80%' className={styles.skeleton} />}
         </div>
-        <div className={artistNameStyle}>
+        <div className={landlordNameStyle}>
           <div className={hideShow}>
             {contentTitle === 'contentList' ? (
               <span className={styles.createdBy}>{'Created by'}</span>
             ) : null}
             {popover ? (
-              <ArtistPopover handle={artistHandle}>
+              <LandlordPopover handle={landlordHandle}>
                 <span
-                  className={cn({ [styles.artistNameLink]: onClickArtistName })}
-                  onClick={this.onClickArtistName}
+                  className={cn({ [styles.landlordNameLink]: onClickLandlordName })}
+                  onClick={this.onClickLandlordName}
                 >
-                  {artistName}
+                  {landlordName}
                 </span>
-              </ArtistPopover>
+              </LandlordPopover>
             ) : (
               <span
-                className={cn(styles.artistName, {
-                  [styles.artistNameLink]: onClickArtistName
+                className={cn(styles.landlordName, {
+                  [styles.landlordNameLink]: onClickLandlordName
                 })}
-                onClick={this.onClickArtistName}
+                onClick={this.onClickLandlordName}
               >
-                {artistName}
+                {landlordName}
               </span>
             )}
             {
@@ -128,8 +128,8 @@ class AgreementInfo extends PureComponent {
 
 AgreementInfo.propTypes = {
   agreementTitle: PropTypes.string,
-  artistName: PropTypes.string,
-  artistHandle: PropTypes.string,
+  landlordName: PropTypes.string,
+  landlordHandle: PropTypes.string,
   isLoading: PropTypes.bool,
   condense: PropTypes.bool,
   size: PropTypes.oneOf([
@@ -143,20 +143,20 @@ AgreementInfo.propTypes = {
   popover: PropTypes.bool,
   disabled: PropTypes.bool,
   onClickAgreementName: PropTypes.func,
-  onClickArtistName: PropTypes.func,
+  onClickLandlordName: PropTypes.func,
   userId: PropTypes.number
 }
 
 AgreementInfo.defaultProps = {
   agreementTitle: '\u200B',
-  artistName: '\u200B',
-  artistHandle: '',
+  landlordName: '\u200B',
+  landlordHandle: '',
   size: 'medium',
   active: false,
   disabled: false,
   condense: false,
   isLoading: false,
-  routeArtistPage: false,
+  routeLandlordPage: false,
   routeAgreementPage: false,
   popover: true
 }

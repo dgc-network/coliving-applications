@@ -20,7 +20,7 @@ import styles from './NavPopupMenu.module.css'
 
 const messages = {
   settings: 'Settings',
-  dashboard: 'Artist Dashboard',
+  dashboard: 'Landlord Dashboard',
   live: '$LIVE & Rewards'
 }
 

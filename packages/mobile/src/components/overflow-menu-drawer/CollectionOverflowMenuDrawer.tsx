@@ -79,7 +79,7 @@ const CollectionOverflowMenuDrawer = ({ render }: Props) => {
         }
       })
     },
-    [OverflowAction.VIEW_ARTIST_PAGE]: () => {
+    [OverflowAction.VIEW_LANDLORD_PAGE]: () => {
       navigation.navigate({
         native: { screen: 'Profile', params: { handle } },
         web: { route: profilePage(handle) }

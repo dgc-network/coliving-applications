@@ -23,7 +23,7 @@ import styles from './AgreementTile.module.css'
 
 const messages = {
   getPlays: (listenCount: number) => ` ${pluralize('Play', listenCount)}`,
-  artistPick: 'Artist Pick',
+  landlordPick: 'Landlord Pick',
   hiddenAgreement: 'Hidden Agreement',
   repostLabel: 'Repost',
   unrepostLabel: 'Unrepost'
@@ -69,7 +69,7 @@ const AgreementTile = memo(
     isActive,
     isDisabled,
     isLoading,
-    isArtistPick,
+    isLandlordPick,
     artwork,
     rightActions,
     header,
@@ -162,7 +162,7 @@ const AgreementTile = memo(
         >
           {artwork}
         </div>
-        {isArtistPick && (
+        {isLandlordPick && (
           <AgreementBannerIcon
             type={AgreementBannerIconType.STAR}
             isMatrixMode={isMatrixMode}
@@ -216,10 +216,10 @@ const AgreementTile = memo(
               )}
             </div>
             <div className={styles.topRight}>
-              {isArtistPick && (
+              {isLandlordPick && (
                 <div className={styles.topRightIconLabel}>
                   <IconStar className={styles.topRightIcon} />
-                  {messages.artistPick}
+                  {messages.landlordPick}
                 </div>
               )}
               {isUnlisted && (

@@ -11,13 +11,13 @@ const messages = {
   aAgreement: 'Upload A Agreement',
   album: 'Upload New Album',
   contentList: 'Create New ContentList',
-  artistContentList: 'Upload New ContentList',
+  landlordContentList: 'Upload New ContentList',
   firstAlbum: 'Upload Your First Album',
   firstContentList: 'Create Your First ContentList',
-  firstArtistContentList: 'Upload Your First ContentList'
+  firstLandlordContentList: 'Upload Your First ContentList'
 }
 
-const UploadChip = ({ type, variant, isArtist = false, isFirst, onClick }) => {
+const UploadChip = ({ type, variant, isLandlord = false, isFirst, onClick }) => {
   const icon =
     type === 'agreement' || type === 'album' ? (
       <IconUpload className={styles.iconUpload} />
@@ -34,8 +34,8 @@ const UploadChip = ({ type, variant, isArtist = false, isFirst, onClick }) => {
       text = isFirst ? messages.firstAlbum : messages.album
       break
     case 'contentList':
-      if (isArtist) {
-        text = isFirst ? messages.firstArtistContentList : messages.artistContentList
+      if (isLandlord) {
+        text = isFirst ? messages.firstLandlordContentList : messages.landlordContentList
       } else {
         text = isFirst ? messages.firstContentList : messages.contentList
       }

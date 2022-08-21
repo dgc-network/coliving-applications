@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { toggleNotificationPanel } from 'common/store/notifications/actions'
 import { getNotificationPanelIsOpen } from 'common/store/notifications/selectors'
 import { Notification } from 'common/store/notifications/types'
-import { ArtistPopover } from 'components/artist/ArtistPopover'
+import { LandlordPopover } from 'components/landlord/LandlordPopover'
 import UserBadges from 'components/user-badges/UserBadges'
 import { make, useRecord } from 'store/analytics/actions'
 import { isMobile } from 'utils/clientUtil'
@@ -86,13 +86,13 @@ export const UserNameLink = (props: UserNameLinkProps) => {
 
   if (!isMobile()) {
     userNameElement = (
-      <ArtistPopover
+      <LandlordPopover
         handle={handle}
         component='span'
         onNavigateAway={handleNavigateAway}
       >
         {userNameElement}
-      </ArtistPopover>
+      </LandlordPopover>
     )
   }
 

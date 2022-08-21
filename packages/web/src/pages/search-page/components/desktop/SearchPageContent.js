@@ -110,7 +110,7 @@ class SearchPageContent extends Component {
       currentQueueItem,
       playing,
       buffering,
-      artists,
+      landlords,
       contentLists,
       albums,
       goToRoute,
@@ -123,14 +123,14 @@ class SearchPageContent extends Component {
     } = this.props
     const { cardToast } = this.state
     const searchTitle = isTagSearch ? `Tag Search` : `Search`
-    const artistCards = artists.map((artist, ind) => {
-      const toastId = `user-${artist.user_id}`
+    const landlordCards = landlords.map((landlord, ind) => {
+      const toastId = `user-${landlord.user_id}`
       const onClick = () => {
-        goToRoute(profilePage(artist.handle))
+        goToRoute(profilePage(landlord.handle))
         recordSearchResultClick({
           term: searchText,
           kind: 'profile',
-          id: artist.user_id,
+          id: landlord.user_id,
           source:
             searchResultsCategory === 'all'
               ? 'search results page'
@@ -139,27 +139,27 @@ class SearchPageContent extends Component {
       }
       return (
         <Toast
-          key={artist.user_id}
+          key={landlord.user_id}
           text={cardToast[toastId] && cardToast[toastId].message}
           open={cardToast[toastId] && cardToast[toastId].open}
           placement='bottom'
           fillParent={false}
         >
           <Card
-            id={artist.user_id}
-            userId={artist.user_id}
-            imageSize={artist._profile_picture_sizes}
+            id={landlord.user_id}
+            userId={landlord.user_id}
+            imageSize={landlord._profile_picture_sizes}
             isUser
             size={'small'}
-            primaryText={artist.name}
-            secondaryText={`${formatCount(artist.follower_count)} Followers`}
+            primaryText={landlord.name}
+            secondaryText={`${formatCount(landlord.follower_count)} Followers`}
             onClick={onClick}
             menu={{
               type: 'user',
-              handle: artist.handle,
-              userId: artist.user_id,
-              currentUserFollows: artist.does_current_user_follow,
-              onShare: this.onShare('user', artist.user_id)
+              handle: landlord.handle,
+              userId: landlord.user_id,
+              currentUserFollows: landlord.does_current_user_follow,
+              onShare: this.onShare('user', landlord.user_id)
             }}
           />
         </Toast>
@@ -293,7 +293,7 @@ class SearchPageContent extends Component {
     })
 
     const foundResults =
-      artistCards.length > 0 ||
+      landlordCards.length > 0 ||
       agreements.entries.length > 0 ||
       contentListCards.length > 0 ||
       albumCards.length > 0
@@ -303,8 +303,8 @@ class SearchPageContent extends Component {
       content = (
         <CardLineup
           categoryName={'Profiles'}
-          cards={artistCards}
-          containerClassName={styles.artistSearchResultsContainer}
+          cards={landlordCards}
+          containerClassName={styles.landlordSearchResultsContainer}
           cardsClassName={styles.cardsContainer}
         />
       )
@@ -373,16 +373,16 @@ class SearchPageContent extends Component {
       header = <SearchHeader searchText={searchText} title={searchTitle} />
       content = (
         <>
-          {artistCards.length > 0 ? (
+          {landlordCards.length > 0 ? (
             <CardLineup
               categoryName={'Profiles'}
               onMore={
-                artistCards.length >= 4
+                landlordCards.length >= 4
                   ? handleViewMoreResults('profiles')
                   : null
               }
-              cards={artistCards.slice(0, Math.min(4, artistCards.length))}
-              containerClassName={styles.artistSearchResultsContainer}
+              cards={landlordCards.slice(0, Math.min(4, landlordCards.length))}
+              containerClassName={styles.landlordSearchResultsContainer}
               cardsClassName={styles.cardsContainer}
             />
           ) : null}

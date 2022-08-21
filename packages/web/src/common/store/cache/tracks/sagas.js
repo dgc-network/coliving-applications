@@ -304,15 +304,15 @@ function* deleteAgreementAsync(action) {
   }
   const handle = yield select(getUserHandle)
 
-  // Before deleting, check if the agreement is set as the artist pick & delete if so
+  // Before deleting, check if the agreement is set as the landlord pick & delete if so
   const socials = yield call(ColivingBackend.getCreatorSocialHandle, handle)
   if (socials.pinnedAgreementId === action.agreementId) {
-    yield call(ColivingBackend.setArtistPick)
+    yield call(ColivingBackend.setLandlordPick)
     yield put(
       cacheActions.update(Kind.USERS, [
         {
           id: userId,
-          metadata: { _artist_pick: null }
+          metadata: { _landlord_pick: null }
         }
       ])
     )

@@ -3,7 +3,7 @@ import { ComponentPropsWithoutRef } from 'react'
 import { ID, SquareSizes, User } from '@coliving/common'
 import cn from 'classnames'
 
-import { ArtistPopover } from 'components/artist/ArtistPopover'
+import { LandlordPopover } from 'components/landlord/LandlordPopover'
 import DynamicImage from 'components/dynamic-image/DynamicImage'
 import { MountPlacement } from 'components/types'
 import UserBadges from 'components/user-badges/UserBadges'
@@ -11,16 +11,16 @@ import { useUserProfilePicture } from 'hooks/useUserProfilePicture'
 import { USER_LIST_TAG as SUPPORTING_USER_LIST_TAG } from 'pages/supporting-page/sagas'
 import { USER_LIST_TAG as TOP_SUPPORTERS_USER_LIST_TAG } from 'pages/top-supporters-page/sagas'
 
-import styles from './ArtistChip.module.css'
-import { ArtistChipFollowers } from './ArtistChipFollowers'
-import { ArtistChipTips } from './ArtistChipTips'
+import styles from './LandlordChip.module.css'
+import { LandlordChipFollowers } from './LandlordChipFollowers'
+import { LandlordChipTips } from './LandlordChipTips'
 
 const TIP_SUPPORT_TAGS = new Set([
   SUPPORTING_USER_LIST_TAG,
   TOP_SUPPORTERS_USER_LIST_TAG
 ])
 
-type ArtistIdentifierProps = {
+type LandlordIdentifierProps = {
   userId: ID
   name: string
   handle: string
@@ -28,17 +28,17 @@ type ArtistIdentifierProps = {
   popoverMount?: MountPlacement
   onNavigateAway?: () => void
 } & ComponentPropsWithoutRef<'div'>
-const ArtistIdentifier = ({
+const LandlordIdentifier = ({
   userId,
   name,
   handle,
   showPopover,
   popoverMount,
   onNavigateAway
-}: ArtistIdentifierProps) => {
+}: LandlordIdentifierProps) => {
   return showPopover ? (
     <div>
-      <ArtistPopover
+      <LandlordPopover
         handle={handle}
         mouseEnterDelay={0.3}
         mount={popoverMount}
@@ -53,15 +53,15 @@ const ArtistIdentifier = ({
             inline
           />
         </div>
-      </ArtistPopover>
-      <ArtistPopover
+      </LandlordPopover>
+      <LandlordPopover
         handle={handle}
         mouseEnterDelay={0.3}
         mount={popoverMount}
         onNavigateAway={onNavigateAway}
       >
         <div className={styles.handle}>@{handle}</div>
-      </ArtistPopover>
+      </LandlordPopover>
     </div>
   ) : (
     <div>
@@ -79,24 +79,24 @@ const ArtistIdentifier = ({
   )
 }
 
-type ArtistChipProps = {
+type LandlordChipProps = {
   user: User
-  onClickArtistName: () => void
+  onClickLandlordName: () => void
   showPopover?: boolean
   tag?: string
   className?: string
   popoverMount?: MountPlacement
   onNavigateAway?: () => void
 }
-const ArtistChip = ({
+const LandlordChip = ({
   user,
-  onClickArtistName,
+  onClickLandlordName,
   showPopover = true,
   tag,
   className = '',
   popoverMount = MountPlacement.PAGE,
   onNavigateAway
-}: ArtistChipProps) => {
+}: LandlordChipProps) => {
   const {
     user_id: userId,
     name,
@@ -114,13 +114,13 @@ const ArtistChip = ({
 
   return (
     <div
-      className={cn(styles.artistChip, {
+      className={cn(styles.landlordChip, {
         [className]: !!className
       })}
-      onClick={onClickArtistName}
+      onClick={onClickLandlordName}
     >
       {showPopover ? (
-        <ArtistPopover
+        <LandlordPopover
           handle={handle}
           mouseEnterDelay={0.3}
           mount={popoverMount}
@@ -132,7 +132,7 @@ const ArtistChip = ({
             className={styles.profilePicture}
             image={profilePicture}
           />
-        </ArtistPopover>
+        </LandlordPopover>
       ) : (
         <DynamicImage
           wrapperClassName={styles.profilePictureWrapper}
@@ -143,7 +143,7 @@ const ArtistChip = ({
       )}
       <div className={styles.text}>
         <div className={cn(styles.identity, 'name')}>
-          <ArtistIdentifier
+          <LandlordIdentifier
             userId={userId}
             name={name}
             handle={handle}
@@ -152,16 +152,16 @@ const ArtistChip = ({
             onNavigateAway={onNavigateAway}
           />
         </div>
-        <ArtistChipFollowers
+        <LandlordChipFollowers
           followerCount={followers}
           doesFollowCurrentUser={!!doesFollowCurrentUser}
         />
         {tag && TIP_SUPPORT_TAGS.has(tag) ? (
-          <ArtistChipTips artistId={user.user_id} tag={tag} />
+          <LandlordChipTips landlordId={user.user_id} tag={tag} />
         ) : null}
       </div>
     </div>
   )
 }
 
-export default ArtistChip
+export default LandlordChip

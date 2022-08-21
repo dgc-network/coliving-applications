@@ -19,8 +19,8 @@ export const UNSAVE_AGREEMENT = 'SOCIAL/UNSAVE_AGREEMENT'
 export const UNSAVE_AGREEMENT_SUCCEEDED = 'SOCIAL/UNSAVE_AGREEMENT_SUCCEEDED'
 export const UNSAVE_AGREEMENT_FAILED = 'SOCIAL/UNSAVE_AGREEMENT_FAILED'
 
-export const SET_ARTIST_PICK = 'SOCIAL/SET_ARTIST_PICK'
-export const UNSET_ARTIST_PICK = 'SOCIAL/UNSET_ARTIST_PICK'
+export const SET_LANDLORD_PICK = 'SOCIAL/SET_LANDLORD_PICK'
+export const UNSET_LANDLORD_PICK = 'SOCIAL/UNSET_LANDLORD_PICK'
 
 export const RECORD_LISTEN = 'SOCIAL/RECORD_LISTEN'
 export const DOWNLOAD_AGREEMENT = 'SOCIAL/DOWNLOAD_AGREEMENT'
@@ -72,13 +72,13 @@ export const unsaveAgreementFailed = createCustomAction(
   (agreementId: ID, error: any) => ({ agreementId, error })
 )
 
-export const setArtistPick = createCustomAction(
-  SET_ARTIST_PICK,
+export const setLandlordPick = createCustomAction(
+  SET_LANDLORD_PICK,
   (agreementId: ID) => ({ agreementId })
 )
 
-export const unsetArtistPick = createCustomAction(UNSET_ARTIST_PICK, () => {
-  console.log('artist pick ')
+export const unsetLandlordPick = createCustomAction(UNSET_LANDLORD_PICK, () => {
+  console.log('landlord pick ')
 })
 
 export const recordListen = createCustomAction(

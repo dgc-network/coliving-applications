@@ -73,7 +73,7 @@
   user-select: none;
 }
 
-.artistsContainer {
+.landlordsContainer {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -83,27 +83,27 @@
   width: calc(100% + 60px);
 }
 
-/*  Artist Component */
+/*  Landlord Component */
 
-.artistContainer {
+.landlordContainer {
   display: inline-flex;
   flex-direction: column;
   margin: 34px 0 0 60px;
 }
 
-.artistImageWrapper {
+.landlordImageWrapper {
   border-radius: 50%;
   height: 200px;
   width: 200px;
   overflow: hidden;
 }
 
-.artistImage {
+.landlordImage {
   height: 100%;
   width: 100%;
 }
 
-.artistName {
+.landlordName {
   color: #858199;
   font-size: 21px;
   font-weight: 500;
@@ -112,7 +112,7 @@
   margin: 18px auto 0px;
 }
 
-.byArtistName {
+.byLandlordName {
   color: #ffffff;
   font-size: 18px;
   font-weight: bold;
@@ -154,7 +154,7 @@
   text-align: center;
 }
 
-.mobileContainer .artistsContainer {
+.mobileContainer .landlordsContainer {
   margin: unset;
   max-width: 400px;
   z-index: 1;
@@ -165,11 +165,11 @@
   justify-content: center;
 }
 
-.mobileContainer .artistCard {
+.mobileContainer .landlordCard {
   margin: 0px 12px 16px;
 }
 
-.mobileContainer .overflowArtistCard {
+.mobileContainer .overflowLandlordCard {
   display: inline-block;
   overflow: hidden;
   height: 125px;
@@ -178,16 +178,16 @@
   border: solid 4px #ffffff;
 }
 
-.mobileContainer .overflowArtistCard:not(:first-child) {
+.mobileContainer .overflowLandlordCard:not(:first-child) {
   margin-left: -53px;
 }
 
-.mobileContainer .overflowArtistsContainer {
+.mobileContainer .overflowLandlordsContainer {
   max-width: 400px;
   justify-content: center;
 }
 
-.mobileContainer .overflowArtistsText {
+.mobileContainer .overflowLandlordsText {
   color: #7e1bcc;
   font-weight: 500;
   font-size: 18px;
@@ -197,13 +197,13 @@
   text-align: center;
 }
 
-.mobileContainer .artistImageWrapper {
+.mobileContainer .landlordImageWrapper {
   width: 150px;
   height: 150px;
   margin-bottom: 8px;
 }
 
-.mobileContainer .artistName {
+.mobileContainer .landlordName {
   color: #7e1bcc;
   font-size: 16px;
   font-weight: 500;

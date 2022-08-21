@@ -6,7 +6,7 @@ import {
   TwitterProfile
 } from 'common/store/account/reducer'
 
-import { FollowArtistsCategory, Pages } from './types'
+import { FollowLandlordsCategory, Pages } from './types'
 
 export const SET_FIELD = 'SIGN_ON/SET_FIELD'
 export const SET_VALUE_FIELD = 'SIGN_ON/SET_VALUE_FIELD'
@@ -21,7 +21,7 @@ export const VALIDATE_HANDLE = 'SIGN_ON/VALIDATE_HANDLE'
 export const VALIDATE_HANDLE_SUCCEEDED = 'SIGN_ON/VALIDATE_HANDLE_SUCCEEDED'
 export const VALIDATE_HANDLE_FAILED = 'SIGN_ON/VALIDATE_HANDLE_FAILED'
 
-export const FOLLOW_ARTISTS = 'SIGN_ON/FOLLOW_ARTISTS'
+export const FOLLOW_LANDLORDS = 'SIGN_ON/FOLLOW_LANDLORDS'
 export const SET_ACCOUNT_READY = 'SIGN_ON/SET_ACCOUNT_READY'
 
 export const CHECK_EMAIL = 'SIGN_ON/CHECK_EMAIL'
@@ -56,13 +56,13 @@ export const UPDATE_ROUTE_ON_EXIT = 'SIGN_ON/UPDATE_ROUTE_ON_EXIT'
 
 export const GET_USERS_TO_FOLLOW = 'SIGN_ON/GET_USERS_TO_FOLLOW'
 export const SET_USERS_TO_FOLLOW = 'SIGN_ON/SET_USERS'
-export const FETCH_ALL_FOLLOW_ARTISTS = 'SIGN_ON/FETCH_ALL_FOLLOW_ARTISTS'
-export const FETCH_FOLLOW_ARTISTS_SUCCEEDED =
-  'SIGN_ON/FETCH_FOLLOW_ARTISTS_SUCCEEDED'
-export const FETCH_FOLLOW_ARTISTS_FAILED = 'SIGN_ON/FETCH_FOLLOW_ARTISTS_FAILED'
-export const SET_FOLLOW_ARTIST_CATEGORY = 'SIGN_ON/SET_FOLLOW_ARTIST_CATEGORY'
-export const ADD_FOLLOW_ARTISTS = 'SIGN_ON/ADD_FOLLOW_ARTISTS'
-export const REMOVE_FOLLOW_ARTISTS = 'SIGN_ON/REMOVE_FOLLOW_ARTISTS'
+export const FETCH_ALL_FOLLOW_LANDLORDS = 'SIGN_ON/FETCH_ALL_FOLLOW_LANDLORDS'
+export const FETCH_FOLLOW_LANDLORDS_SUCCEEDED =
+  'SIGN_ON/FETCH_FOLLOW_LANDLORDS_SUCCEEDED'
+export const FETCH_FOLLOW_LANDLORDS_FAILED = 'SIGN_ON/FETCH_FOLLOW_LANDLORDS_FAILED'
+export const SET_FOLLOW_LANDLORD_CATEGORY = 'SIGN_ON/SET_FOLLOW_LANDLORD_CATEGORY'
+export const ADD_FOLLOW_LANDLORDS = 'SIGN_ON/ADD_FOLLOW_LANDLORDS'
+export const REMOVE_FOLLOW_LANDLORDS = 'SIGN_ON/REMOVE_FOLLOW_LANDLORDS'
 
 export const SEND_WELCOME_EMAIL = 'SIGN_ON/SEND_WELCOME_EMAIL'
 
@@ -211,52 +211,52 @@ export const signInFailed = (
 })
 
 /**
- * Requests all the follow artist metadata is fetched
+ * Requests all the follow landlord metadata is fetched
  */
-export function fetchAllFollowArtists() {
-  return { type: FETCH_ALL_FOLLOW_ARTISTS }
+export function fetchAllFollowLandlords() {
+  return { type: FETCH_ALL_FOLLOW_LANDLORDS }
 }
 
 /**
- * Requests all the users from which to pick suggested followed artists
+ * Requests all the users from which to pick suggested followed landlords
  */
 export function getUsersToFollow() {
   return { type: GET_USERS_TO_FOLLOW }
 }
 
 /**
- * Requests all the users from which to pick suggested followed artists
+ * Requests all the users from which to pick suggested followed landlords
  */
 export function setUsersToFollow(users: User[]) {
   return { type: SET_USERS_TO_FOLLOW, users }
 }
 
 /**
- * Set the user ids for the follow artists category
+ * Set the user ids for the follow landlords category
  * @param category The genre category to set the user ids for
  * @param userIds The top user ids for a category
  */
-export function fetchFollowArtistsSucceeded(
-  category: FollowArtistsCategory,
+export function fetchFollowLandlordsSucceeded(
+  category: FollowLandlordsCategory,
   userIds: ID[]
 ) {
-  return { type: FETCH_FOLLOW_ARTISTS_SUCCEEDED, category, userIds }
+  return { type: FETCH_FOLLOW_LANDLORDS_SUCCEEDED, category, userIds }
 }
 
 /**
- * Sets the Follow artist category
+ * Sets the Follow landlord category
  * @param category The genre category to display to the user
  */
-export function setFollowAristsCategory(category: FollowArtistsCategory) {
-  return { type: SET_FOLLOW_ARTIST_CATEGORY, category }
+export function setFollowAristsCategory(category: FollowLandlordsCategory) {
+  return { type: SET_FOLLOW_LANDLORD_CATEGORY, category }
 }
 
 /**
  * error response
- * @param error The error for fetch follow artists
+ * @param error The error for fetch follow landlords
  */
-export function fetchFollowArtistsFailed(error: string) {
-  return { type: FETCH_FOLLOW_ARTISTS_FAILED, error }
+export function fetchFollowLandlordsFailed(error: string) {
+  return { type: FETCH_FOLLOW_LANDLORDS_FAILED, error }
 }
 
 export function setTwitterProfile(
@@ -299,8 +299,8 @@ export function setInstagramProfileError(error: string) {
  * Follows users in signup flow after user is created
  * @param userIds array of userIds to follow
  */
-export function followArtists(userIds: ID[]) {
-  return { type: FOLLOW_ARTISTS, userIds }
+export function followLandlords(userIds: ID[]) {
+  return { type: FOLLOW_LANDLORDS, userIds }
 }
 
 /**
@@ -326,16 +326,16 @@ export function setAccountReady() {
  * Adds the user ids to be followed on account completion
  * @param userIds The user ids to add as selected and follow
  */
-export function addFollowArtists(userIds: ID[]) {
-  return { type: ADD_FOLLOW_ARTISTS, userIds }
+export function addFollowLandlords(userIds: ID[]) {
+  return { type: ADD_FOLLOW_LANDLORDS, userIds }
 }
 
 /**
  * Removes the user ids from the selected userIds array
  * @param userIds The user ids to remove from selected
  */
-export function removeFollowArtists(userIds: ID[]) {
-  return { type: REMOVE_FOLLOW_ARTISTS, userIds }
+export function removeFollowLandlords(userIds: ID[]) {
+  return { type: REMOVE_FOLLOW_LANDLORDS, userIds }
 }
 
 /**

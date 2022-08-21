@@ -22,9 +22,9 @@ function* handleRequestOpen(action: RequestOpenAction) {
       const { agreementId, source, type } = action.payload
       const agreement = yield* select(getAgreement(agreementId))
       if (!agreement) return
-      const artist = yield* select(getUser(agreement.owner_id))
-      if (!artist) return
-      yield put(open({ type, agreement, source, artist }))
+      const landlord = yield* select(getUser(agreement.owner_id))
+      if (!landlord) return
+      yield put(open({ type, agreement, source, landlord }))
       break
     }
     case 'profile': {
@@ -42,7 +42,7 @@ function* handleRequestOpen(action: RequestOpenAction) {
       if (!owner) return
       if (collection.is_album) {
         yield put(
-          open({ type: 'album', album: collection, artist: owner, source })
+          open({ type: 'album', album: collection, landlord: owner, source })
         )
       } else {
         yield put(

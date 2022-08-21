@@ -11,17 +11,17 @@ import {
   VALIDATE_EMAIL_FAILED,
   VALIDATE_HANDLE_SUCEEDED,
   VALIDATE_HANDLE_FAILED,
-  FETCH_ALL_FOLLOW_ARTISTS_SUCCEEDED,
-  FETCH_ALL_FOLLOW_ARTISTS_FAILED,
+  FETCH_ALL_FOLLOW_LANDLORDS_SUCCEEDED,
+  FETCH_ALL_FOLLOW_LANDLORDS_FAILED,
   SIGN_UP_SUCCEEDED,
-  SET_FOLLOW_ARTISTS_CATEGORY,
-  SET_FOLLOWED_ARTISTS,
+  SET_FOLLOW_LANDLORDS_CATEGORY,
+  SET_FOLLOWED_LANDLORDS,
   SET_USERS_TO_FOLLOW,
   SET_ACCOUNT_AVAILABLE,
   RESET_SIGNON_STATE,
   SET_EMAIL_STATUS
 } from './actions'
-import { FollowArtistsCategory } from './types'
+import { FollowLandlordsCategory } from './types'
 
 export type SignonState = {
   isError: boolean
@@ -33,9 +33,9 @@ export type SignonState = {
   handleError: string
   accountAvailable: boolean
   userId: number | null
-  followArtists: {
-    selectedCategory: FollowArtistsCategory
-    categories: { [key in FollowArtistsCategory]?: number[] }
+  followLandlords: {
+    selectedCategory: FollowLandlordsCategory
+    categories: { [key in FollowLandlordsCategory]?: number[] }
     selectedUserIds: number[]
     usersToFollow: any[]
   }
@@ -53,8 +53,8 @@ const initialSignonState: SignonState = {
   handleStatus: 'editing',
   accountAvailable: false,
   userId: 0,
-  followArtists: {
-    selectedCategory: FollowArtistsCategory.FEATURED,
+  followLandlords: {
+    selectedCategory: FollowLandlordsCategory.FEATURED,
     categories: {},
     selectedUserIds: [],
     usersToFollow: []
@@ -116,45 +116,45 @@ const reducer = (
         handleStatus: 'done',
         handleError: action.error
       }
-    case FETCH_ALL_FOLLOW_ARTISTS_SUCCEEDED:
+    case FETCH_ALL_FOLLOW_LANDLORDS_SUCCEEDED:
       return {
         ...state,
-        followArtists: {
-          ...state.followArtists,
+        followLandlords: {
+          ...state.followLandlords,
           categories: {
-            ...state.followArtists.categories,
+            ...state.followLandlords.categories,
             [action.category]: action.userIds
           }
         }
       }
-    case FETCH_ALL_FOLLOW_ARTISTS_FAILED:
+    case FETCH_ALL_FOLLOW_LANDLORDS_FAILED:
       return {
         ...state,
-        followArtists: {
-          ...state.followArtists
+        followLandlords: {
+          ...state.followLandlords
         }
       }
-    case SET_FOLLOW_ARTISTS_CATEGORY:
+    case SET_FOLLOW_LANDLORDS_CATEGORY:
       return {
         ...state,
-        followArtists: {
-          ...state.followArtists,
+        followLandlords: {
+          ...state.followLandlords,
           selectedCategory: action.category
         }
       }
-    case SET_FOLLOWED_ARTISTS:
+    case SET_FOLLOWED_LANDLORDS:
       return {
         ...state,
-        followArtists: {
-          ...state.followArtists,
+        followLandlords: {
+          ...state.followLandlords,
           selectedUserIds: action.userIds
         }
       }
     case SET_USERS_TO_FOLLOW:
       return {
         ...state,
-        followArtists: {
-          ...state.followArtists,
+        followLandlords: {
+          ...state.followLandlords,
           usersToFollow: action.users
         }
       }

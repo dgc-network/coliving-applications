@@ -1,1 +1,1 @@
-export * from './ArtistCard'
+export * from './LandlordCard'

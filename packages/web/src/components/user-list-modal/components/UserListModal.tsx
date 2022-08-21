@@ -180,7 +180,7 @@ const UserListModal = ({
           stateSelector={selector!}
           tag={tag}
           getScrollParent={() => scrollParentRef.current || null}
-          beforeClickArtistName={onClose}
+          beforeClickLandlordName={onClose}
           onNavigateAway={onClose}
           afterFollow={onClose}
           afterUnfollow={onClose}

@@ -93,7 +93,7 @@ const HistoryPage = g((props) => {
       ...entry,
       key: `${entry.title}_${entry.dateListened}_${i}`,
       name: entry.title,
-      artist: entry.user.name,
+      landlord: entry.user.name,
       handle: entry.user.handle,
       date: entry.dateListened,
       time: entry.duration,
@@ -204,7 +204,7 @@ const HistoryPage = g((props) => {
     [goToRoute]
   )
 
-  const onClickArtistName = useCallback(
+  const onClickLandlordName = useCallback(
     (record) => {
       goToRoute(profilePage(record.handle))
     },
@@ -298,7 +298,7 @@ const HistoryPage = g((props) => {
     onClickSave,
     onClickRow,
     onClickAgreementName,
-    onClickArtistName,
+    onClickLandlordName,
     onSortAgreements
   }
 

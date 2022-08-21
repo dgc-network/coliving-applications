@@ -49,11 +49,11 @@ function* getAgreements({
     }
   }
 
-  let moreByArtistAgreementsOffset: number
+  let moreByLandlordAgreementsOffset: number
   if (heroAgreementRemixParentAgreementId) {
-    moreByArtistAgreementsOffset = offset <= 1 ? 0 : offset - 2
+    moreByLandlordAgreementsOffset = offset <= 1 ? 0 : offset - 2
   } else {
-    moreByArtistAgreementsOffset = offset === 0 ? 0 : offset - 1
+    moreByLandlordAgreementsOffset = offset === 0 ? 0 : offset - 1
   }
 
   const processed = yield* call(retrieveUserAgreements, {
@@ -62,7 +62,7 @@ function* getAgreements({
     sort: 'plays',
     limit: limit + 2,
     // The hero agreement is always our first agreement and the remix parent is always the second agreement (if any):
-    offset: moreByArtistAgreementsOffset
+    offset: moreByLandlordAgreementsOffset
   })
 
   return lineup

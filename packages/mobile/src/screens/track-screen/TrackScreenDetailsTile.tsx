@@ -300,9 +300,9 @@ export const AgreementScreenDetailsTile = ({
         : OverflowAction.FAVORITE,
       OverflowAction.ADD_TO_CONTENT_LIST,
       user.does_current_user_follow
-        ? OverflowAction.UNFOLLOW_ARTIST
-        : OverflowAction.FOLLOW_ARTIST,
-      OverflowAction.VIEW_ARTIST_PAGE
+        ? OverflowAction.UNFOLLOW_LANDLORD
+        : OverflowAction.FOLLOW_LANDLORD,
+      OverflowAction.VIEW_LANDLORD_PAGE
     ].filter(Boolean) as OverflowAction[]
 
     dispatchWeb(

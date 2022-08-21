@@ -8,7 +8,7 @@ import useHasViewed from 'hooks/useHasViewed'
 import styles from './PlatformTagline.module.css'
 
 const messages = {
-  tagline: 'Finally, a modern streaming service designed with artists in mind.'
+  tagline: 'Finally, a modern streaming service designed with landlords in mind.'
 }
 
 type PlatformTaglineProps = {

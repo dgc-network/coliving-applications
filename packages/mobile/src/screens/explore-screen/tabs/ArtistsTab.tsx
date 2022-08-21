@@ -1,19 +1,19 @@
 import { makeGetExplore } from '-client/src/common/store/pages/explore/selectors'
 import { EXPLORE_PAGE } from '-client/src/utils/route'
 
-import { ArtistCard } from 'app/components/artist-card'
+import { LandlordCard } from 'app/components/landlord-card'
 import { CardList } from 'app/components/core'
 import { useSelectorWeb } from 'app/hooks/useSelectorWeb'
 
 import { TabInfo } from '../components/TabInfo'
 
 const messages = {
-  infoHeader: 'Featured Artists'
+  infoHeader: 'Featured Landlords'
 }
 
 const getExplore = makeGetExplore()
 
-export const ArtistsTab = () => {
+export const LandlordsTab = () => {
   const { profiles } = useSelectorWeb(getExplore)
 
   return (
@@ -21,7 +21,7 @@ export const ArtistsTab = () => {
       ListHeaderComponent={<TabInfo header={messages.infoHeader} />}
       data={profiles}
       renderItem={({ item }) => (
-        <ArtistCard artist={item} fromPage={EXPLORE_PAGE} />
+        <LandlordCard landlord={item} fromPage={EXPLORE_PAGE} />
       )}
     />
   )

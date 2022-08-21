@@ -12,8 +12,8 @@ import { MountPlacement } from 'components/types'
 import { useUserCoverPhoto } from 'hooks/useUserCoverPhoto'
 import { useUserProfilePicture } from 'hooks/useUserProfilePicture'
 
-import { ArtistCard } from './ArtistCard'
-import styles from './ArtistPopover.module.css'
+import { LandlordCard } from './LandlordCard'
+import styles from './LandlordPopover.module.css'
 
 enum Placement {
   Top = 'top',
@@ -30,7 +30,7 @@ enum Placement {
   RightBottom = 'rightBottom'
 }
 
-type ArtistPopoverProps = {
+type LandlordPopoverProps = {
   mount?: MountPlacement
   handle: string
   placement?: Placement
@@ -40,7 +40,7 @@ type ArtistPopoverProps = {
   onNavigateAway?: () => void
 }
 
-export const ArtistPopover = ({
+export const LandlordPopover = ({
   handle,
   children,
   placement = Placement.RightBottom,
@@ -48,7 +48,7 @@ export const ArtistPopover = ({
   mouseEnterDelay = 0.5,
   component: Component = 'div',
   onNavigateAway
-}: ArtistPopoverProps) => {
+}: LandlordPopoverProps) => {
   const [isPopupVisible, setIsPopupVisible] = useState(false)
   const creator = useSelector((state: CommonState) =>
     getUser(state, { handle: handle.toLowerCase() })
@@ -77,8 +77,8 @@ export const ArtistPopover = ({
 
   const content =
     creator && userId !== creator.user_id ? (
-      <ArtistCard
-        artist={creator}
+      <LandlordCard
+        landlord={creator}
         onNavigateAway={() => {
           setIsPopupVisible(false)
           onNavigateAway?.()
@@ -101,7 +101,7 @@ export const ArtistPopover = ({
 
   return (
     <Component
-      className={cn(styles.popoverContainer, 'artistPopover')}
+      className={cn(styles.popoverContainer, 'landlordPopover')}
       onMouseEnter={onMouseEnter}
     >
       <Popover

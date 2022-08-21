@@ -21,14 +21,14 @@ const useStyles = makeStyles(() => ({
   }
 }))
 
-export const TipArtistButton = () => {
+export const TipLandlordButton = () => {
   const navigation = useNavigation()
   const profile = useSelectProfile(['user_id'])
   const dispatchWeb = useDispatchWeb()
 
   const handlePress = useCallback(() => {
     dispatchWeb(beginTip({ user: profile, source: 'profile' }))
-    navigation.navigate({ native: { screen: 'TipArtist' } })
+    navigation.navigate({ native: { screen: 'TipLandlord' } })
   }, [dispatchWeb, profile, navigation])
 
   const styles = useStyles()

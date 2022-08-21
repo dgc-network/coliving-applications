@@ -21,7 +21,7 @@ class TableOptionsButton extends Component {
       isFavorited,
       isOwner,
       isOwnerDeactivated,
-      isArtistPick,
+      isLandlordPick,
       onRemove,
       removeText,
       hiddenUntilHover
@@ -39,7 +39,7 @@ class TableOptionsButton extends Component {
         includeShare: true,
         isOwner,
         isOwnerDeactivated,
-        isArtistPick,
+        isLandlordPick,
         ...this.props,
         extraMenuItems: onRemove ? [removeMenuItem] : []
       }
@@ -94,7 +94,7 @@ TableOptionsButton.propTypes = {
   onClick: PropTypes.func,
   onRemove: PropTypes.func,
   removeText: PropTypes.string,
-  isArtistPick: PropTypes.bool,
+  isLandlordPick: PropTypes.bool,
   isOwner: PropTypes.bool,
   isOwnerDeactivated: PropTypes.bool,
   hiddenUntilHover: PropTypes.bool,

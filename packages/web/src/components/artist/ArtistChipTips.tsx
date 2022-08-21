@@ -17,19 +17,19 @@ import { USER_LIST_TAG as SUPPORTING_USER_LIST_TAG } from 'pages/supporting-page
 import { USER_LIST_TAG as TOP_SUPPORTERS_USER_LIST_TAG } from 'pages/top-supporters-page/sagas'
 import { TIPPING_TOP_RANK_THRESHOLD } from 'utils/constants'
 
-import styles from './ArtistChip.module.css'
+import styles from './LandlordChip.module.css'
 
 const messages = {
   live: '$LIVE',
   supporter: 'Supporter'
 }
 
-type ArtistChipTipsProps = {
-  artistId: ID
+type LandlordChipTipsProps = {
+  landlordId: ID
   tag: string
 }
 
-export const ArtistChipTips = ({ artistId, tag }: ArtistChipTipsProps) => {
+export const LandlordChipTips = ({ landlordId, tag }: LandlordChipTipsProps) => {
   const supportingId = useSelector(getSupportingId)
   const supportersId = useSelector(getSupportersId)
   const supportingMap = useSelector(getOptimisticSupporting)
@@ -38,21 +38,21 @@ export const ArtistChipTips = ({ artistId, tag }: ArtistChipTipsProps) => {
   const [rank, setRank] = useState<Nullable<number>>(null)
 
   useEffect(() => {
-    if (artistId && supportingId && tag === SUPPORTING_USER_LIST_TAG) {
+    if (landlordId && supportingId && tag === SUPPORTING_USER_LIST_TAG) {
       const userSupportingMap = supportingMap[supportingId] ?? {}
-      const artistSupporting = userSupportingMap[artistId] ?? {}
-      setAmount(artistSupporting.amount ?? null)
+      const landlordSupporting = userSupportingMap[landlordId] ?? {}
+      setAmount(landlordSupporting.amount ?? null)
     } else if (
-      artistId &&
+      landlordId &&
       supportersId &&
       tag === TOP_SUPPORTERS_USER_LIST_TAG
     ) {
       const userSupportersMap = supportersMap[supportersId] ?? {}
-      const artistSupporter = userSupportersMap[artistId] ?? {}
-      setRank(artistSupporter.rank ?? null)
-      setAmount(artistSupporter.amount ?? null)
+      const landlordSupporter = userSupportersMap[landlordId] ?? {}
+      setRank(landlordSupporter.rank ?? null)
+      setAmount(landlordSupporter.amount ?? null)
     }
-  }, [artistId, supportingId, supportersId, supportingMap, supportersMap, tag])
+  }, [landlordId, supportingId, supportersId, supportingMap, supportersMap, tag])
 
   return (
     <div className={styles.tipContainer}>

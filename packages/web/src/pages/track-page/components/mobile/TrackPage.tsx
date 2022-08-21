@@ -127,7 +127,7 @@ const AgreementPage = ({
   const onRepost = isOwner
     ? () => {}
     : () => heroAgreement && onHeroRepost(isReposted, heroAgreement.agreement_id)
-  const onClickArtistName = () => goToProfilePage(user ? user.handle : '')
+  const onClickLandlordName = () => goToProfilePage(user ? user.handle : '')
   const onShare = () => {
     heroAgreement && onHeroShare(heroAgreement.agreement_id)
   }
@@ -182,8 +182,8 @@ const AgreementPage = ({
             title={defaults.title}
             agreementId={defaults.agreementId}
             userId={heroAgreement?.owner_id ?? 0}
-            artistName={emptyStringGuard(user?.name)}
-            artistVerified={user?.is_verified ?? false}
+            landlordName={emptyStringGuard(user?.name)}
+            landlordVerified={user?.is_verified ?? false}
             coverArtSizes={defaults.coverArtSizes}
             tags={defaults.tags}
             description={defaults.description}
@@ -199,7 +199,7 @@ const AgreementPage = ({
             isSaved={isSaved}
             coSign={defaults.coSign}
             // Actions (Wire up once we add backend integrations)
-            onClickArtistName={onClickArtistName}
+            onClickLandlordName={onClickLandlordName}
             onClickMobileOverflow={onClickMobileOverflow}
             onClickTag={onClickTag}
             onPlay={onPlay}
@@ -242,7 +242,7 @@ const AgreementPage = ({
                 </div>
               }
               leadingElementClassName={styles.originalAgreement}
-              showLeadingElementArtistPick={false}
+              showLeadingElementLandlordPick={false}
               // Don't render the first tile in the lineup.
               start={1}
               // Show max 5 loading tiles

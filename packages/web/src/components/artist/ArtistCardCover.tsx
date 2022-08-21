@@ -4,7 +4,7 @@ import { SquareSizes, WidthSizes, User } from '@coliving/common'
 import { push } from 'connected-react-router'
 import { useDispatch } from 'react-redux'
 
-import { ReactComponent as BadgeArtist } from 'assets/img/badgeArtist.svg'
+import { ReactComponent as BadgeLandlord } from 'assets/img/badgeLandlord.svg'
 import DynamicImage from 'components/dynamic-image/DynamicImage'
 import FollowsYouBadge from 'components/user-badges/FollowsYouBadge'
 import UserBadges from 'components/user-badges/UserBadges'
@@ -12,18 +12,18 @@ import { useUserCoverPhoto } from 'hooks/useUserCoverPhoto'
 import { useUserProfilePicture } from 'hooks/useUserProfilePicture'
 import { profilePage } from 'utils/route'
 
-import styles from './ArtistCardCover.module.css'
+import styles from './LandlordCardCover.module.css'
 
 const gradient = `linear-gradient(180deg, rgba(0, 0, 0, 0.001) 0%, rgba(0, 0, 0, 0.005) 67.71%, rgba(0, 0, 0, 0.15) 79.17%, rgba(0, 0, 0, 0.25) 100%)`
 
-type ArtistCoverProps = {
-  artist: User
-  isArtist: boolean
+type LandlordCoverProps = {
+  landlord: User
+  isLandlord: boolean
   onNavigateAway?: () => void
 }
 
-export const ArtistCardCover = (props: ArtistCoverProps) => {
-  const { isArtist, artist, onNavigateAway } = props
+export const LandlordCardCover = (props: LandlordCoverProps) => {
+  const { isLandlord, landlord, onNavigateAway } = props
 
   const {
     user_id,
@@ -32,7 +32,7 @@ export const ArtistCardCover = (props: ArtistCoverProps) => {
     _cover_photo_sizes,
     _profile_picture_sizes,
     does_follow_current_user
-  } = artist
+  } = landlord
   const dispatch = useDispatch()
 
   const coverPhoto = useUserCoverPhoto(
@@ -57,12 +57,12 @@ export const ArtistCardCover = (props: ArtistCoverProps) => {
 
   return (
     <DynamicImage
-      wrapperClassName={styles.artistCoverPhoto}
+      wrapperClassName={styles.landlordCoverPhoto}
       image={darkenedCoverPhoto}
       immediate
     >
       <div className={styles.coverPhotoContentContainer}>
-        {isArtist ? <BadgeArtist className={styles.badgeArtist} /> : null}
+        {isLandlord ? <BadgeLandlord className={styles.badgeLandlord} /> : null}
         <DynamicImage
           wrapperClassName={styles.profilePictureWrapper}
           skeletonClassName={styles.profilePictureSkeleton}
@@ -72,7 +72,7 @@ export const ArtistCardCover = (props: ArtistCoverProps) => {
         />
         <div className={styles.headerTextContainer}>
           <div className={styles.nameContainer}>
-            <div className={styles.artistName} onClick={handleClickUser}>
+            <div className={styles.landlordName} onClick={handleClickUser}>
               {name}
             </div>
             <UserBadges
@@ -82,9 +82,9 @@ export const ArtistCardCover = (props: ArtistCoverProps) => {
               useSVGTiers
             />
           </div>
-          <div className={styles.artistHandleWrapper}>
+          <div className={styles.landlordHandleWrapper}>
             <div
-              className={styles.artistHandle}
+              className={styles.landlordHandle}
               onClick={handleClickUser}
             >{`@${handle}`}</div>
             {does_follow_current_user ? <FollowsYouBadge /> : null}

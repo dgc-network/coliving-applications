@@ -13,7 +13,7 @@ interface EditableField {
   status: EditingStatus
 }
 
-export enum FollowArtistsCategory {
+export enum FollowLandlordsCategory {
   FEATURED = 'Featured',
   ALL_GENRES = 'All Genres',
   ELECTRONIC = 'Electronic',
@@ -23,13 +23,13 @@ export enum FollowArtistsCategory {
 }
 
 // Order list fo the enum above
-export const artistCategories = [
-  FollowArtistsCategory.FEATURED,
-  FollowArtistsCategory.ALL_GENRES,
-  FollowArtistsCategory.ELECTRONIC,
-  FollowArtistsCategory.HIP_HOP_RAP,
-  FollowArtistsCategory.ALTERNATIVE,
-  FollowArtistsCategory.POP
+export const landlordCategories = [
+  FollowLandlordsCategory.FEATURED,
+  FollowLandlordsCategory.ALL_GENRES,
+  FollowLandlordsCategory.ELECTRONIC,
+  FollowLandlordsCategory.HIP_HOP_RAP,
+  FollowLandlordsCategory.ALTERNATIVE,
+  FollowLandlordsCategory.POP
 ]
 
 export default interface SignOnPageState {
@@ -49,10 +49,10 @@ export default interface SignOnPageState {
   followIds: ID[]
   status: EditingStatus
   toastText: string | null
-  followArtists: {
-    selectedCategory: FollowArtistsCategory
+  followLandlords: {
+    selectedCategory: FollowLandlordsCategory
     categories: {
-      [key in keyof typeof FollowArtistsCategory]?: ID[]
+      [key in keyof typeof FollowLandlordsCategory]?: ID[]
     }
     selectedUserIds: ID[]
   }

@@ -55,12 +55,12 @@ export type ProfilePageProps = {
   // State
   editMode: boolean
   shouldMaskContent: boolean
-  areArtistRecommendationsVisible: boolean
+  areLandlordRecommendationsVisible: boolean
 
   mostUsedTags: string[]
   // Computed
   accountUserId: ID | null
-  isArtist: boolean
+  isLandlord: boolean
   isOwner: boolean
   userId: ID | null
   handle: string
@@ -93,9 +93,9 @@ export type ProfilePageProps = {
   contentLists: Collection[] | null
   status: Status
   goToRoute: (route: string) => void
-  artistAgreements: LineupState<{ id: ID }>
-  playArtistAgreement: (uid: UID) => void
-  pauseArtistAgreement: () => void
+  landlordAgreements: LineupState<{ id: ID }>
+  playLandlordAgreement: (uid: UID) => void
+  pauseLandlordAgreement: () => void
   // Feed
   userFeed: LineupState<{ id: ID }>
   playUserFeedAgreement: (uid: UID) => void
@@ -120,7 +120,7 @@ export type ProfilePageProps = {
   onCancel: () => void
   onSortByRecent: () => void
   onSortByPopular: () => void
-  loadMoreArtistAgreements: (offset: number, limit: number) => void
+  loadMoreLandlordAgreements: (offset: number, limit: number) => void
   loadMoreUserFeed: (offset: number, limit: number) => void
   formatCardSecondaryText: (
     saves: number,
@@ -139,7 +139,7 @@ export type ProfilePageProps = {
   ) => Promise<void>
   setNotificationSubscription: (userId: ID, isSubscribed: boolean) => void
   didChangeTabsFrom: (prevLabel: string, currentLabel: string) => void
-  onCloseArtistRecommendations: () => void
+  onCloseLandlordRecommendations: () => void
 }
 
 const ProfilePage = ({
@@ -150,9 +150,9 @@ const ProfilePage = ({
   status,
   goToRoute,
   // Agreements
-  artistAgreements,
-  playArtistAgreement,
-  pauseArtistAgreement,
+  landlordAgreements,
+  playLandlordAgreement,
+  pauseLandlordAgreement,
   getLineupProps,
   // Feed
   userFeed,
@@ -160,7 +160,7 @@ const ProfilePage = ({
   pauseUserFeedAgreement,
   formatCardSecondaryText,
   loadMoreUserFeed,
-  loadMoreArtistAgreements,
+  loadMoreLandlordAgreements,
   openCreateContentListModal,
   updateProfile,
 
@@ -186,13 +186,13 @@ const ProfilePage = ({
   onCancel,
   onSortByRecent,
   onSortByPopular,
-  isArtist,
+  isLandlord,
   status: profileLoadingStatus,
   activeTab,
   shouldMaskContent,
   editMode,
-  areArtistRecommendationsVisible,
-  onCloseArtistRecommendations,
+  areLandlordRecommendationsVisible,
+  onCloseLandlordRecommendations,
 
   accountUserId,
   userId,
@@ -259,7 +259,7 @@ const ProfilePage = ({
     tabRecalculator.recalculate()
   }, [tabRecalculator])
 
-  const getArtistProfileContent = () => {
+  const getLandlordProfileContent = () => {
     if (!profile || !albums || !contentLists) return { headers: [], elements: [] }
     const albumCards = albums.map((album, index) => (
       <Card
@@ -341,7 +341,7 @@ const ProfilePage = ({
           type='contentList'
           variant='card'
           onClick={onClickUploadContentList}
-          isArtist
+          isLandlord
           isFirst={contentListCards.length === 0}
         />
       )
@@ -370,8 +370,8 @@ const ProfilePage = ({
       <div key={Tabs.AGREEMENTS} className={styles.tiles}>
         {renderProfileCompletionCard()}
         {status !== Status.LOADING ? (
-          artistAgreements.status !== Status.LOADING &&
-          artistAgreements.entries.length === 0 ? (
+          landlordAgreements.status !== Status.LOADING &&
+          landlordAgreements.entries.length === 0 ? (
             <EmptyTab
               isOwner={isOwner}
               name={profile.name}
@@ -379,13 +379,13 @@ const ProfilePage = ({
             />
           ) : (
             <Lineup
-              {...getLineupProps(artistAgreements)}
+              {...getLineupProps(landlordAgreements)}
               extraPrecedingElement={agreementUploadChip}
               animateLeadingElement
-              leadingElementId={profile._artist_pick}
-              loadMore={loadMoreArtistAgreements}
-              playAgreement={playArtistAgreement}
-              pauseAgreement={pauseArtistAgreement}
+              leadingElementId={profile._landlord_pick}
+              loadMore={loadMoreLandlordAgreements}
+              playAgreement={playLandlordAgreement}
+              pauseAgreement={pauseLandlordAgreement}
               actions={agreementsActions}
             />
           )
@@ -600,8 +600,8 @@ const ProfilePage = ({
   }
 
   const { headers, elements } = profile
-    ? isArtist
-      ? getArtistProfileContent()
+    ? isLandlord
+      ? getLandlordProfileContent()
       : getUserProfileContent()
     : { headers: [], elements: [] }
 
@@ -635,7 +635,7 @@ const ProfilePage = ({
           hasProfilePicture={hasProfilePicture}
           doesFollowCurrentUser={profile?.does_follow_current_user || false}
           isOwner={isOwner}
-          isArtist={isArtist}
+          isLandlord={isLandlord}
           editMode={editMode}
           name={name}
           handle={handle}
@@ -681,9 +681,9 @@ const ProfilePage = ({
             userId={accountUserId}
             handle={handle}
             profileId={profile?.user_id}
-            areArtistRecommendationsVisible={areArtistRecommendationsVisible}
-            onCloseArtistRecommendations={onCloseArtistRecommendations}
-            onClickArtistName={(handle: string) => {
+            areLandlordRecommendationsVisible={areLandlordRecommendationsVisible}
+            onCloseLandlordRecommendations={onCloseLandlordRecommendations}
+            onClickLandlordName={(handle: string) => {
               goToRoute(profilePage(handle))
             }}
             onEdit={onEdit}
@@ -703,7 +703,7 @@ const ProfilePage = ({
               dropdownDisabled={dropdownDisabled}
               onChange={changeTab}
               activeTab={activeTab}
-              isArtist={isArtist}
+              isLandlord={isLandlord}
               onSortByRecent={onSortByRecent}
               onSortByPopular={onSortByPopular}
               shouldMaskContent={shouldMaskContent}

@@ -45,7 +45,7 @@ export type TileProps = {
 
 export type AgreementTileProps = TileProps & {
   title: string
-  showArtistPick?: boolean
+  showLandlordPick?: boolean
   showListens?: boolean
   disableActions?: boolean
   showArtworkIcon?: boolean
@@ -54,15 +54,15 @@ export type AgreementTileProps = TileProps & {
   listenCount?: number
   saveCount: number
   fieldVisibility?: FieldVisibility
-  artistName: string
-  artistHandle: string
-  artistIsVerified: boolean
+  landlordName: string
+  landlordHandle: string
+  landlordIsVerified: boolean
   ordered?: boolean
   uploading?: boolean
   uploadPercent?: number
   uploadText?: string
   uploadError?: boolean
-  isArtistPick?: boolean
+  isLandlordPick?: boolean
   isUnlisted?: boolean
   coSign?: Remix | null
   onClickOverflow?: (agreementId: ID) => void
@@ -75,9 +75,9 @@ export type ContentListTileProps = TileProps & {
   isPublic: boolean
   contentTitle: string
   contentListTitle: string
-  artistName: string
-  artistHandle: string
-  artistIsVerified: boolean
+  landlordName: string
+  landlordHandle: string
+  landlordIsVerified: boolean
   activeAgreementUid: UID | null
   saveCount: number
   agreements: LineupAgreement[]
@@ -125,8 +125,8 @@ export type DesktopAgreementTileProps = {
   /** Number of rows to show when in loading state, if any */
   numLoadingSkeletonRows?: number
 
-  /** If the artist selected this agreement as featured, displays a star and artst pick label */
-  isArtistPick?: boolean
+  /** If the landlord selected this agreement as featured, displays a star and artst pick label */
+  isLandlordPick?: boolean
 
   /** If in dark mode for the bottom buttons to be colored */
   isDarkMode?: boolean
@@ -217,8 +217,8 @@ export type DesktopContentListTileProps = {
   /** Number of rows to show when in loading state, if any */
   numLoadingSkeletonRows?: number
 
-  /** If the artist selected this agreement as featured, displays a star and artst pick label */
-  isArtistPick?: boolean
+  /** If the landlord selected this agreement as featured, displays a star and artst pick label */
+  isLandlordPick?: boolean
 
   /** If in dark mode for the bottom buttons to be colored */
   isDarkMode?: boolean

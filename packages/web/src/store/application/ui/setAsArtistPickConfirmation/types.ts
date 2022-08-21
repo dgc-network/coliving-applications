@@ -6,7 +6,7 @@ export enum PinAgreementAction {
   UPDATE = 'UPDATE'
 }
 
-export interface SetAsArtistPickConfirmationState {
+export interface SetAsLandlordPickConfirmationState {
   isVisible: boolean
   agreementId?: ID
 }

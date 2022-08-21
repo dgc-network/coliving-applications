@@ -52,7 +52,7 @@ import { ShareUserButton } from './ShareUserButton'
 export type ProfilePageProps = {
   // Computed
   accountUserId: ID | null
-  isArtist: boolean
+  isLandlord: boolean
   isOwner: boolean
   userId: ID | null
   handle: string
@@ -93,10 +93,10 @@ export type ProfilePageProps = {
   contentLists: Collection[] | null
   status: Status
   goToRoute: (route: string) => void
-  artistAgreements: LineupState<{ id: ID }>
+  landlordAgreements: LineupState<{ id: ID }>
   userFeed: LineupState<{ id: ID }>
-  playArtistAgreement: (uid: UID) => void
-  pauseArtistAgreement: () => void
+  playLandlordAgreement: (uid: UID) => void
+  pauseLandlordAgreement: () => void
   playUserFeedAgreement: (uid: UID) => void
   pauseUserFeedAgreement: () => void
   refreshProfile: () => void
@@ -108,7 +108,7 @@ export type ProfilePageProps = {
   // Methods
   changeTab: (tab: Tabs) => void
   getLineupProps: (lineup: any) => any
-  loadMoreArtistAgreements: (offset: number, limit: number) => void
+  loadMoreLandlordAgreements: (offset: number, limit: number) => void
   loadMoreUserFeed: (offset: number, limit: number) => void
   formatCardSecondaryText: (
     saves: number,
@@ -136,8 +136,8 @@ export type ProfilePageProps = {
   ) => Promise<void>
   setNotificationSubscription: (userId: ID, isSubscribed: boolean) => void
   didChangeTabsFrom: (prevLabel: string, currentLabel: string) => void
-  areArtistRecommendationsVisible: boolean
-  onCloseArtistRecommendations: () => void
+  areLandlordRecommendationsVisible: boolean
+  onCloseLandlordRecommendations: () => void
 }
 
 type EmptyTabProps = {
@@ -148,7 +148,7 @@ export const EmptyTab = (props: EmptyTabProps) => {
   return <div className={styles.emptyTab}>{props.message}</div>
 }
 
-const artistTabs = [
+const landlordTabs = [
   { icon: <IconNote />, text: 'Agreements', label: Tabs.AGREEMENTS },
   { icon: <IconAlbum />, text: 'Albums', label: Tabs.ALBUMS },
   { icon: <IconContentLists />, text: 'ContentLists', label: Tabs.CONTENT_LISTS },
@@ -174,7 +174,7 @@ const collectiblesTab = {
   label: Tabs.COLLECTIBLES
 }
 
-const artistTabsWithCollectibles = [...artistTabs, collectiblesTab]
+const landlordTabsWithCollectibles = [...landlordTabs, collectiblesTab]
 const userTabsWithCollectibles = [...userTabs, collectiblesTab]
 
 const getMessages = ({
@@ -215,7 +215,7 @@ const ProfilePage = g(
     bio,
     location,
     status,
-    isArtist,
+    isLandlord,
     isOwner,
     verified,
     coverPhotoSizes,
@@ -231,14 +231,14 @@ const ProfilePage = g(
     donation,
     albums,
     contentLists,
-    artistAgreements,
+    landlordAgreements,
     userFeed,
     isUserConfirming,
     getLineupProps,
-    loadMoreArtistAgreements,
+    loadMoreLandlordAgreements,
     loadMoreUserFeed,
-    playArtistAgreement,
-    pauseArtistAgreement,
+    playLandlordAgreement,
+    pauseLandlordAgreement,
     playUserFeedAgreement,
     pauseUserFeedAgreement,
     formatCardSecondaryText,
@@ -270,8 +270,8 @@ const ProfilePage = g(
     setNotificationSubscription,
     didChangeTabsFrom,
     activeTab,
-    areArtistRecommendationsVisible,
-    onCloseArtistRecommendations
+    areLandlordRecommendationsVisible,
+    onCloseLandlordRecommendations
   }) => {
     const { setHeader } = useContext(HeaderContext)
     useEffect(() => {
@@ -391,7 +391,7 @@ const ProfilePage = g(
           }
         />
       ))
-      if (isArtist) {
+      if (isLandlord) {
         const albumCards = (albums || []).map((album) => (
           <Card
             key={album.contentList_id}
@@ -415,9 +415,9 @@ const ProfilePage = g(
           />
         ))
 
-        profileTabs = artistTabs
+        profileTabs = landlordTabs
         profileElements = [
-          <div className={styles.agreementsLineupContainer} key='artistAgreements'>
+          <div className={styles.agreementsLineupContainer} key='landlordAgreements'>
             {profile.agreement_count === 0 ? (
               <EmptyTab
                 message={
@@ -431,17 +431,17 @@ const ProfilePage = g(
               />
             ) : (
               <Lineup
-                {...getLineupProps(artistAgreements)}
-                leadingElementId={profile._artist_pick}
+                {...getLineupProps(landlordAgreements)}
+                leadingElementId={profile._landlord_pick}
                 limit={profile.agreement_count}
-                loadMore={loadMoreArtistAgreements}
-                playAgreement={playArtistAgreement}
-                pauseAgreement={pauseArtistAgreement}
+                loadMore={loadMoreLandlordAgreements}
+                playAgreement={playLandlordAgreement}
+                pauseAgreement={pauseLandlordAgreement}
                 actions={agreementsActions}
               />
             )}
           </div>,
-          <div className={styles.cardLineupContainer} key='artistAlbums'>
+          <div className={styles.cardLineupContainer} key='landlordAlbums'>
             {(albums || []).length === 0 ? (
               <EmptyTab
                 message={
@@ -460,7 +460,7 @@ const ProfilePage = g(
               />
             )}
           </div>,
-          <div className={styles.cardLineupContainer} key='artistContentLists'>
+          <div className={styles.cardLineupContainer} key='landlordContentLists'>
             {(contentLists || []).length === 0 ? (
               <EmptyTab
                 message={
@@ -479,7 +479,7 @@ const ProfilePage = g(
               />
             )}
           </div>,
-          <div className={styles.agreementsLineupContainer} key='artistUsers'>
+          <div className={styles.agreementsLineupContainer} key='landlordUsers'>
             {profile.repost_count === 0 ? (
               <EmptyTab
                 message={
@@ -560,8 +560,8 @@ const ProfilePage = g(
           (profileHasVisibleImageOrVideoCollectibles ||
             (profileHasCollectibles && isUserOnTheirProfile)))
       ) {
-        profileTabs = isArtist
-          ? artistTabsWithCollectibles
+        profileTabs = isLandlord
+          ? landlordTabsWithCollectibles
           : userTabsWithCollectibles
         profileElements.push(
           <div key='collectibles' className={styles.agreementsLineupContainer}>
@@ -629,7 +629,7 @@ const ProfilePage = g(
                 isDeactivated={profile?.is_deactivated}
                 name={name}
                 handle={handle}
-                isArtist={isArtist}
+                isLandlord={isLandlord}
                 bio={bio}
                 verified={verified}
                 userId={profile.user_id}
@@ -666,10 +666,10 @@ const ProfilePage = g(
                 onUpdateProfilePicture={updateProfilePicture}
                 onUpdateCoverPhoto={updateCoverPhoto}
                 setNotificationSubscription={setNotificationSubscription}
-                areArtistRecommendationsVisible={
-                  areArtistRecommendationsVisible
+                areLandlordRecommendationsVisible={
+                  areLandlordRecommendationsVisible
                 }
-                onCloseArtistRecommendations={onCloseArtistRecommendations}
+                onCloseLandlordRecommendations={onCloseLandlordRecommendations}
               />
               {content}
             </PullToRefresh>

@@ -10,7 +10,7 @@ import styles from './StartPlatformPage.module.css'
 
 const messages = {
   title: "It's Time To Start Your Coliving Journey!",
-  subTitle: 'Coliving is a platform for both artists and listeners.',
+  subTitle: 'Coliving is a platform for both landlords and listeners.',
   uploadMusic: {
     button: 'Upload Agreement',
     title: 'Why Upload My Music?',
@@ -21,7 +21,7 @@ const messages = {
     button: 'Start Listening',
     title: 'Nothing To Upload Yet?',
     description:
-      'Support artists you like by listening and sharing their agreements with your friends.'
+      'Support landlords you like by listening and sharing their agreements with your friends.'
   }
 }
 

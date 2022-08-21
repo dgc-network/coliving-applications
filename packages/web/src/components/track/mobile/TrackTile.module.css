@@ -175,7 +175,7 @@
   margin-left: 8px;
 }
 
-.artist {
+.landlord {
   margin-bottom: auto;
   font-weight: 500;
   line-height: normal;
@@ -188,7 +188,7 @@
   display: flex;
 }
 
-.artist:active {
+.landlord:active {
   text-decoration: underline;
 }
 

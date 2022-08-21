@@ -11,7 +11,7 @@ import placeholderArt from 'assets/img/imageBlank2x.png'
 import { getUserId } from 'common/store/account/selectors'
 import { getCollection } from 'common/store/cache/collections/selectors'
 import { getUserFromCollection } from 'common/store/cache/users/selectors'
-import { ArtistPopover } from 'components/artist/ArtistPopover'
+import { LandlordPopover } from 'components/landlord/LandlordPopover'
 import DynamicImage from 'components/dynamic-image/DynamicImage'
 import Menu, { MenuType } from 'components/menu/Menu'
 import PerspectiveCard from 'components/perspective-card/PerspectiveCard'
@@ -172,11 +172,11 @@ const CollectionArtCard = g(
           {contentList_name}
         </div>
         <div className={styles.nameWrapper}>
-          <ArtistPopover handle={handle}>
+          <LandlordPopover handle={handle}>
             <span className={styles.userName} onClick={goToProfile}>
               {name}
             </span>
-          </ArtistPopover>
+          </LandlordPopover>
         </div>
         <RepostFavoritesStats
           isUnlisted={false}

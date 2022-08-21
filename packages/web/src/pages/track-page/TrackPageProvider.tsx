@@ -240,7 +240,7 @@ class AgreementPageProvider extends Component<
       play,
       pause,
       currentQueueItem,
-      moreByArtist: { entries },
+      moreByLandlord: { entries },
       record
     } = this.props
     if (!entries || !entries[0]) return
@@ -277,12 +277,12 @@ class AgreementPageProvider extends Component<
     }
   }
 
-  onMoreByArtistAgreementsPlay = (uid?: string) => {
-    const { play, recordPlayMoreByArtist } = this.props
+  onMoreByLandlordAgreementsPlay = (uid?: string) => {
+    const { play, recordPlayMoreByLandlord } = this.props
     play(uid)
     if (uid) {
       const agreementId = Uid.fromString(uid).id
-      recordPlayMoreByArtist(agreementId)
+      recordPlayMoreByLandlord(agreementId)
     }
   }
 
@@ -375,7 +375,7 @@ class AgreementPageProvider extends Component<
       remixParentAgreement,
       user,
       agreementRank,
-      moreByArtist,
+      moreByLandlord,
       currentQueueItem,
       playing,
       buffering,
@@ -433,7 +433,7 @@ class AgreementPageProvider extends Component<
     if ((agreement?.is_delete || agreement?._marked_deleted) && user) {
       // Agreement has not been blocked and is content-available, meaning the owner
       // deleted themselves via transaction.
-      const deletedByArtist = !agreement._blocked && agreement.is_available
+      const deletedByLandlord = !agreement._blocked && agreement.is_available
 
       return (
         <DeletedPage
@@ -442,7 +442,7 @@ class AgreementPageProvider extends Component<
           canonicalUrl={canonicalUrl}
           playable={{ metadata: agreement, type: PlayableType.AGREEMENT }}
           user={user}
-          deletedByArtist={deletedByArtist}
+          deletedByLandlord={deletedByLandlord}
         />
       )
     }
@@ -472,11 +472,11 @@ class AgreementPageProvider extends Component<
       goToRepostsPage: this.goToRepostsPage,
 
       // Agreements Lineup Props
-      agreements: moreByArtist,
+      agreements: moreByLandlord,
       currentQueueItem,
       isPlaying: playing,
       isBuffering: buffering,
-      play: this.onMoreByArtistAgreementsPlay,
+      play: this.onMoreByLandlordAgreementsPlay,
       pause,
       onExternalLinkClick
     }
@@ -499,7 +499,7 @@ const shouldRedirectAgreement = (agreementId: ID) =>
   agreementId >= REDIRECT_AGREEMENT_ID_RANGE[0] && agreementId <= REDIRECT_AGREEMENT_ID_RANGE[1]
 
 function makeMapStateToProps() {
-  const getMoreByArtistLineup = makeGetLineupMetadatas(getLineup)
+  const getMoreByLandlordLineup = makeGetLineupMetadatas(getLineup)
   const getCurrentQueueItem = makeGetCurrent()
 
   const mapStateToProps = (state: AppState) => {
@@ -510,7 +510,7 @@ function makeMapStateToProps() {
       remixParentAgreement: getRemixParentAgreement(state),
       user: getUser(state),
       status: getStatus(state),
-      moreByArtist: getMoreByArtistLineup(state),
+      moreByLandlord: getMoreByLandlordLineup(state),
       userId: getUserId(state),
 
       currentQueueItem: getCurrentQueueItem(state),
@@ -547,7 +547,7 @@ function mapDispatchToProps(dispatch: Dispatch) {
     replaceRoute: (route: string) => dispatch(replace(route)),
     reset: (source?: string) => dispatch(agreementsActions.reset(source)),
     play: (uid?: string) => dispatch(agreementsActions.play(uid)),
-    recordPlayMoreByArtist: (agreementId: ID) => {
+    recordPlayMoreByLandlord: (agreementId: ID) => {
       const agreementEvent: AgreementEvent = make(Name.AGREEMENT_PAGE_PLAY_MORE, {
         id: agreementId
       })

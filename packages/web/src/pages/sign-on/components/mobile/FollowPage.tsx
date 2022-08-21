@@ -9,12 +9,12 @@ import UserCard from 'components/card/UserCard'
 import SelectablePills from 'components/selectable-pill/SelectablePills'
 import { MAIN_CONTENT_ID } from 'pages/App'
 
-import { FollowArtistsCategory, artistCategories } from '../../store/types'
+import { FollowLandlordsCategory, landlordCategories } from '../../store/types'
 
 import styles from './FollowPage.module.css'
 
 const messages = {
-  title: 'Follow At Least 3 Artists To Get Started',
+  title: 'Follow At Least 3 Landlords To Get Started',
   subTitle:
     'Agreements uploaded or reposted by people you follow will appear in your feed.',
   pickForMe: 'Pick Some For Me',
@@ -24,19 +24,19 @@ const messages = {
 const MINIMUM_FOLLOWER_COUNT = 3
 
 export type FollowPageProps = {
-  selectedCategory: FollowArtistsCategory
-  onSelectArtistCategory: (category: FollowArtistsCategory) => void
+  selectedCategory: FollowLandlordsCategory
+  onSelectLandlordCategory: (category: FollowLandlordsCategory) => void
   onAddFollows: (followIds: number[]) => void
   onRemoveFollows: (followIds: number[]) => void
   onAutoSelect: () => void
-  followedArtists: ID[]
+  followedLandlords: ID[]
   users: User[]
 }
 
 const FollowPage = ({
-  followedArtists,
+  followedLandlords,
   selectedCategory,
-  onSelectArtistCategory,
+  onSelectLandlordCategory,
   onAddFollows,
   onRemoveFollows,
   onAutoSelect,
@@ -62,13 +62,13 @@ const FollowPage = ({
 
   const onToggleSelect = useCallback(
     (userId) => () => {
-      if (followedArtists.includes(userId)) {
+      if (followedLandlords.includes(userId)) {
         onRemoveFollows([userId])
       } else {
         onAddFollows([userId])
       }
     },
-    [onAddFollows, onRemoveFollows, followedArtists]
+    [onAddFollows, onRemoveFollows, followedLandlords]
   )
 
   const [isTransitioning, setIsTransitioning] = useState(false)
@@ -76,9 +76,9 @@ const FollowPage = ({
   const onClickPillIndex = useCallback(
     (index: number) => {
       setIsTransitioning(true)
-      onSelectArtistCategory(artistCategories[index])
+      onSelectLandlordCategory(landlordCategories[index])
     },
-    [onSelectArtistCategory]
+    [onSelectLandlordCategory]
   )
 
   useEffect(() => {
@@ -86,9 +86,9 @@ const FollowPage = ({
   }, [selectedCategory, setIsTransitioning])
 
   const seletablePillProps = {
-    selectedIndex: artistCategories.findIndex((c) => c === selectedCategory),
+    selectedIndex: landlordCategories.findIndex((c) => c === selectedCategory),
     onClickIndex: onClickPillIndex,
-    content: artistCategories,
+    content: landlordCategories,
     disableDelayHandler: true
   }
 
@@ -121,7 +121,7 @@ const FollowPage = ({
               name={user.name}
               id={user.user_id}
               imageSizes={user._profile_picture_sizes}
-              selected={followedArtists.includes(user.user_id)}
+              selected={followedLandlords.includes(user.user_id)}
               className={styles.userCard}
               followers={user.follower_count}
               onClick={onToggleSelect(user.user_id)}
@@ -135,16 +135,16 @@ const FollowPage = ({
 
 type BottomSectionProps = {
   onNextPage: () => void
-  followedArtists: ID[]
+  followedLandlords: ID[]
 }
 
 export const BottomSection = (props: BottomSectionProps) => {
-  const { followedArtists, onNextPage } = props
+  const { followedLandlords, onNextPage } = props
   const onClickNextPage = useCallback(() => {
-    if (followedArtists.length >= MINIMUM_FOLLOWER_COUNT) {
+    if (followedLandlords.length >= MINIMUM_FOLLOWER_COUNT) {
       onNextPage()
     }
-  }, [followedArtists, onNextPage])
+  }, [followedLandlords, onNextPage])
 
   const onRef = useCallback((node: HTMLDivElement) => {
     if (node !== null) {
@@ -159,7 +159,7 @@ export const BottomSection = (props: BottomSectionProps) => {
         name='continue'
         rightIcon={<IconArrow />}
         type={
-          followedArtists.length >= MINIMUM_FOLLOWER_COUNT
+          followedLandlords.length >= MINIMUM_FOLLOWER_COUNT
             ? ButtonType.PRIMARY_ALT
             : ButtonType.DISABLED
         }
@@ -169,9 +169,9 @@ export const BottomSection = (props: BottomSectionProps) => {
       />
       <div className={styles.followCount}>
         {`${messages.following} ${
-          followedArtists.length > MINIMUM_FOLLOWER_COUNT
-            ? followedArtists.length
-            : `${followedArtists.length}/${MINIMUM_FOLLOWER_COUNT}`
+          followedLandlords.length > MINIMUM_FOLLOWER_COUNT
+            ? followedLandlords.length
+            : `${followedLandlords.length}/${MINIMUM_FOLLOWER_COUNT}`
         }`}
       </div>
     </div>

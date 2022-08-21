@@ -6,7 +6,7 @@ import cn from 'classnames'
 import { ReactComponent as IconKebabHorizontal } from 'assets/img/iconKebabHorizontal.svg'
 import { EnhancedCollectionAgreement } from 'common/store/cache/collections/selectors'
 import { formatSeconds } from 'common/utils/timeUtil'
-import { ArtistPopover } from 'components/artist/ArtistPopover'
+import { LandlordPopover } from 'components/landlord/LandlordPopover'
 import Menu from 'components/menu/Menu'
 import { OwnProps as AgreementMenuProps } from 'components/menu/AgreementMenu'
 import Skeleton from 'components/skeleton/Skeleton'
@@ -18,7 +18,7 @@ import { AgreementTileSize } from '../types'
 import styles from './AgreementListItem.module.css'
 
 const makeStrings = ({ deleted }: { deleted: boolean }) => ({
-  deleted: deleted ? ` [Deleted By Artist]` : '',
+  deleted: deleted ? ` [Deleted By Landlord]` : '',
   by: 'by'
 })
 
@@ -31,7 +31,7 @@ type AgreementListItemProps = {
   playing: boolean
   togglePlay: (uid: UID, id: ID) => void
   goToRoute: (route: string) => void
-  artistHandle: string
+  landlordHandle: string
   agreement?: EnhancedCollectionAgreement
   forceSkeleton?: boolean
 }
@@ -66,7 +66,7 @@ const AgreementListItem = ({
   const deleted = agreement.is_delete || !!agreement.user?.is_deactivated
   const strings = makeStrings({ deleted })
 
-  const onClickArtistName = (e: MouseEvent) => {
+  const onClickLandlordName = (e: MouseEvent) => {
     e.stopPropagation()
     if (goToRoute) goToRoute(profilePage(agreement.user.handle))
   }
@@ -95,13 +95,13 @@ const AgreementListItem = ({
   const menu: Omit<AgreementMenuProps, 'children'> = {
     handle: agreement.user.handle,
     includeAddToContentList: true,
-    includeArtistPick: false,
+    includeLandlordPick: false,
     includeEdit: false,
     includeFavorite: true,
     includeRepost: true,
     includeShare: false,
     includeAgreementPage: true,
-    isArtistPick: agreement.user._artist_pick === agreement.agreement_id,
+    isLandlordPick: agreement.user._landlord_pick === agreement.agreement_id,
     isDeleted: deleted,
     isFavorited: agreement.has_current_user_saved,
     isOwner: false,
@@ -142,19 +142,19 @@ const AgreementListItem = ({
           </div>
         ) : null}
         <div className={styles.agreementNumber}>{index + 1}</div>
-        <div className={styles.nameArtistContainer}>
+        <div className={styles.nameLandlordContainer}>
           <div className={styles.agreementTitle} onClick={onClickAgreementName}>
             {agreement.title}
             {strings.deleted}
           </div>
-          <div className={styles.artistName} onClick={onClickArtistName}>
+          <div className={styles.landlordName} onClick={onClickLandlordName}>
             <div className={styles.by}>{strings.by}</div>
             {agreement.user.is_deactivated ? (
               `${agreement.user.name} [Deactivated]`
             ) : (
-              <ArtistPopover handle={agreement.user.handle}>
+              <LandlordPopover handle={agreement.user.handle}>
                 {agreement.user.name}
-              </ArtistPopover>
+              </LandlordPopover>
             )}
           </div>
         </div>

@@ -9,7 +9,7 @@ import { formatCount } from 'common/utils/formatUtil'
 import DropdownInput from 'components/data-entry/DropdownInput'
 import Dropdown from 'components/navigation/Dropdown'
 
-import { messages } from '../ArtistDashboardPage'
+import { messages } from '../LandlordDashboardPage'
 
 import styles from './TotalPlaysChart.module.css'
 

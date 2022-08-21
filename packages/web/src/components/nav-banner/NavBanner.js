@@ -28,7 +28,7 @@ const NavBanner = (props) => {
         >
           <div className={styles.tabs}>{props.tabs}</div>
 
-          {props.isArtist && (
+          {props.isLandlord && (
             <div className={styles.dropdown}>
               {!props.dropdownDisabled && (
                 <PopupMenuIconButton
@@ -54,7 +54,7 @@ NavBanner.propTypes = {
   onSortByPopular: PropTypes.func,
   shouldMaskContent: PropTypes.bool,
   activeTab: PropTypes.string,
-  isArtist: PropTypes.bool
+  isLandlord: PropTypes.bool
 }
 
 NavBanner.defaultProps = {

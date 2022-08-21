@@ -125,7 +125,7 @@ export const Lineup = ({
   rankIconCount = 0,
   refresh,
   refreshing,
-  showLeadingElementArtistPick = true,
+  showLeadingElementLandlordPick = true,
   start = 0,
   variant = LineupVariant.MAIN,
   listKey,
@@ -304,8 +304,8 @@ export const Lineup = ({
               {...item}
               index={index}
               isTrending={isTrending}
-              showArtistPick={
-                showLeadingElementArtistPick && !!leadingElementId
+              showLandlordPick={
+                showLeadingElementLandlordPick && !!leadingElementId
               }
               showRankIcon={index < rankIconCount}
               togglePlay={togglePlay}
@@ -375,11 +375,11 @@ export const Lineup = ({
       return result
     }
 
-    if (leadingElementId && showLeadingElementArtistPick) {
-      const [artistPick, ...restEntries] = [...items, ...skeletonItems]
+    if (leadingElementId && showLeadingElementLandlordPick) {
+      const [landlordPick, ...restEntries] = [...items, ...skeletonItems]
 
       const result: Section[] = [
-        { delineate: false, data: [artistPick] },
+        { delineate: false, data: [landlordPick] },
         { delineate: true, data: restEntries, hasLeadingElement: true }
       ]
       result[0].data = prependFeedTipTileIfNeeded(result[0].data)
@@ -411,7 +411,7 @@ export const Lineup = ({
     lineup,
     pageItemCount,
     leadingElementId,
-    showLeadingElementArtistPick,
+    showLeadingElementLandlordPick,
     start,
     limit,
     isFeed,

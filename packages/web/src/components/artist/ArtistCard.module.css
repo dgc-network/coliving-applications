@@ -2,7 +2,7 @@
   display: flex;
 }
 
-.artistCardContainer {
+.landlordCardContainer {
   max-width: 460px;
   min-width: 296px;
   border-radius: 6px;
@@ -13,7 +13,7 @@
   overflow: hidden;
 }
 
-.artistStatsContainer {
+.landlordStatsContainer {
   display: inline-flex;
   justify-content: space-evenly;
   height: 48px;

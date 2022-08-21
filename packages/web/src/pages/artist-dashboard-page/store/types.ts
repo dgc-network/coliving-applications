@@ -1,6 +1,6 @@
 import { Status, Collection, Agreement } from '@coliving/common'
 
-export default interface ArtistDashboardState {
+export default interface LandlordDashboardState {
   status: Status
   agreements: Agreement[]
   unlistedAgreements: Agreement[]

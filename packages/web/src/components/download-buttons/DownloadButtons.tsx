@@ -34,7 +34,7 @@ export type DownloadButtonProps = {
 export const messages = {
   downloadableAgreement: 'Download this Agreement',
   downloadableStem: 'Download this source file',
-  followToDownload: 'Must follow artist to download',
+  followToDownload: 'Must follow landlord to download',
   processingAgreement: 'Processing',
   processingStem: 'Uploading',
   addDownloadPrefix: (label: string) => `Download ${label}`

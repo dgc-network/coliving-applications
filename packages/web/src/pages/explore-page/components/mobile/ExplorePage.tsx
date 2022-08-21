@@ -63,9 +63,9 @@ const messages = {
   forYou: 'For You',
   moods: 'Moods',
   contentLists: 'ContentLists',
-  artists: 'Artists',
+  landlords: 'Landlords',
   featuredContentLists: 'Featured ContentLists',
-  featuredArtists: 'Featured Artists',
+  featuredLandlords: 'Featured Landlords',
   justForYou: 'Just For You',
   justForYouDescription: `Content curated for
 you based on your likes, reposts, and follows. Refreshes often so if you like a agreement, favorite it.`,
@@ -110,7 +110,7 @@ const tabHeaders = [
     text: messages.contentLists,
     label: ExploreTabs.CONTENT_LISTS
   },
-  { icon: <IconUser />, text: messages.artists, label: ExploreTabs.PROFILES }
+  { icon: <IconUser />, text: messages.landlords, label: ExploreTabs.PROFILES }
 ]
 
 export type ExplorePageProps = {
@@ -272,7 +272,7 @@ const ExplorePage = ({
           />
         )}
       </TabBodyHeader>,
-      <TabBodyHeader key='featuredArtists' title={messages.featuredArtists}>
+      <TabBodyHeader key='featuredLandlords' title={messages.featuredLandlords}>
         {status === Status.LOADING ? (
           <LoadingSpinner className={styles.spinner} />
         ) : (

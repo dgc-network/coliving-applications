@@ -41,7 +41,7 @@ export const LineupTile = ({
   onPressTitle,
   playCount,
   repostType,
-  showArtistPick,
+  showLandlordPick,
   showRankIcon,
   title,
   item,
@@ -54,7 +54,7 @@ export const LineupTile = ({
     repost_count,
     save_count
   } = item
-  const { _artist_pick, name, user_id } = user
+  const { _landlord_pick, name, user_id } = user
   const isPlaying = useSelector(getPlaying)
   const currentUserId = useSelectorWeb(getUserId)
 
@@ -83,7 +83,7 @@ export const LineupTile = ({
 
   return (
     <LineupTileRoot onPress={handlePress}>
-      {showArtistPick && _artist_pick === id ? (
+      {showLandlordPick && _landlord_pick === id ? (
         <LineupTileBannerIcon type={LineupTileBannerIconType.STAR} />
       ) : null}
       {isUnlisted ? (
@@ -92,12 +92,12 @@ export const LineupTile = ({
       <Animated.View style={fadeIn}>
         <LineupTileTopRight
           duration={duration}
-          isArtistPick={_artist_pick === id}
+          isLandlordPick={_landlord_pick === id}
           isUnlisted={isUnlisted}
-          showArtistPick={showArtistPick}
+          showLandlordPick={showLandlordPick}
         />
         <LineupTileMetadata
-          artistName={name}
+          landlordName={name}
           coSign={coSign}
           imageUrl={imageUrl}
           onPressTitle={onPressTitle}

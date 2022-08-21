@@ -194,7 +194,7 @@ class AudioStream {
     onEnd: () => void,
     prefetchedSegments = [],
     gateways = [],
-    info = { id: '', title: '', artist: '' },
+    info = { id: '', title: '', landlord: '' },
     forceStreamSrc: string | null = null
   ) => {
     if (forceStreamSrc) {
@@ -281,8 +281,8 @@ class AudioStream {
 
         this.live.src = m3u8
         this.live.title =
-          info.title && info.artist
-            ? `${info.title} by ${info.artist}`
+          info.title && info.landlord
+            ? `${info.title} by ${info.landlord}`
             : 'Coliving'
       }
     }

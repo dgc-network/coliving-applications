@@ -22,9 +22,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import { ReactComponent as IconClose } from 'assets/img/iconRemove.svg'
 import { CommonState } from 'common/store'
 import * as socialActions from 'common/store/social/users/actions'
-import { makeGetRelatedArtists } from 'common/store/ui/artist-recommendations/selectors'
-import { fetchRelatedArtists } from 'common/store/ui/artist-recommendations/slice'
-import { ArtistPopover } from 'components/artist/ArtistPopover'
+import { makeGetRelatedLandlords } from 'common/store/ui/landlord-recommendations/selectors'
+import { fetchRelatedLandlords } from 'common/store/ui/landlord-recommendations/slice'
+import { LandlordPopover } from 'components/landlord/LandlordPopover'
 import DynamicImage from 'components/dynamic-image/DynamicImage'
 import FollowButton from 'components/follow-button/FollowButton'
 import LoadingSpinner from 'components/loading-spinner/LoadingSpinner'
@@ -35,15 +35,15 @@ import { make, useRecord } from 'store/analytics/actions'
 import { useIsMobile } from 'utils/clientUtil'
 import { profilePage } from 'utils/route'
 
-import styles from './ArtistRecommendations.module.css'
+import styles from './LandlordRecommendations.module.css'
 
-export type ArtistRecommendationsProps = {
+export type LandlordRecommendationsProps = {
   ref?: MutableRefObject<HTMLDivElement>
   itemClassName?: string
   className?: string
   renderHeader: () => ReactNode
   renderSubheader?: () => ReactNode
-  artistId: ID
+  landlordId: ID
   onClose: () => void
 }
 
@@ -53,7 +53,7 @@ const messages = {
   following: 'Following',
   featuring: 'Featuring'
 }
-const ArtistProfilePictureWrapper = ({
+const LandlordProfilePictureWrapper = ({
   userId,
   handle,
   profilePictureSizes
@@ -74,41 +74,41 @@ const ArtistProfilePictureWrapper = ({
     )
   }
   return (
-    <ArtistPopover mount={MountPlacement.PARENT} handle={handle}>
+    <LandlordPopover mount={MountPlacement.PARENT} handle={handle}>
       <div>
         <DynamicImage
           className={styles.profilePicture}
           image={profilePicture}
         />
       </div>
-    </ArtistPopover>
+    </LandlordPopover>
   )
 }
 
-const ArtistPopoverWrapper = ({
+const LandlordPopoverWrapper = ({
   userId,
   handle,
   name,
-  onArtistNameClicked,
+  onLandlordNameClicked,
   closeParent
 }: {
   userId: ID
   handle: string
   name: string
-  onArtistNameClicked: (handle: string) => void
+  onLandlordNameClicked: (handle: string) => void
   closeParent: () => void
 }) => {
-  const onArtistNameClick = useCallback(() => {
-    onArtistNameClicked(handle)
+  const onLandlordNameClick = useCallback(() => {
+    onLandlordNameClicked(handle)
     closeParent()
-  }, [onArtistNameClicked, handle, closeParent])
+  }, [onLandlordNameClicked, handle, closeParent])
   const isMobile = useIsMobile()
   return (
-    <div className={styles.artistLink} role='link' onClick={onArtistNameClick}>
+    <div className={styles.landlordLink} role='link' onClick={onLandlordNameClick}>
       {!isMobile ? (
-        <ArtistPopover mount={MountPlacement.PARENT} handle={handle}>
+        <LandlordPopover mount={MountPlacement.PARENT} handle={handle}>
           {name}
-        </ArtistPopover>
+        </LandlordPopover>
       ) : (
         name
       )}
@@ -122,66 +122,66 @@ const ArtistPopoverWrapper = ({
   )
 }
 
-export const ArtistRecommendations = forwardRef(
+export const LandlordRecommendations = forwardRef(
   (
     {
       className,
       itemClassName,
-      artistId,
+      landlordId,
       renderHeader,
       renderSubheader,
       onClose
-    }: ArtistRecommendationsProps,
+    }: LandlordRecommendationsProps,
     ref: any
   ) => {
     const dispatch = useDispatch()
 
-    // Start fetching the related artists
+    // Start fetching the related landlords
     useEffect(() => {
       dispatch(
-        fetchRelatedArtists({
-          userId: artistId
+        fetchRelatedLandlords({
+          userId: landlordId
         })
       )
-    }, [dispatch, artistId])
+    }, [dispatch, landlordId])
 
-    // Get the related artists
-    const getRelatedArtists = useMemo(makeGetRelatedArtists, [artistId])
-    const suggestedArtists = useSelector<CommonState, User[]>((state) =>
-      getRelatedArtists(state, { id: artistId })
+    // Get the related landlords
+    const getRelatedLandlords = useMemo(makeGetRelatedLandlords, [landlordId])
+    const suggestedLandlords = useSelector<CommonState, User[]>((state) =>
+      getRelatedLandlords(state, { id: landlordId })
     )
 
     // Follow/Unfollow listeners
     const onFollowAllClicked = useCallback(() => {
-      suggestedArtists.forEach((a) => {
+      suggestedLandlords.forEach((a) => {
         dispatch(
           socialActions.followUser(
             a.user_id,
-            FollowSource.ARTIST_RECOMMENDATIONS_POPUP
+            FollowSource.LANDLORD_RECOMMENDATIONS_POPUP
           )
         )
       })
-    }, [dispatch, suggestedArtists])
+    }, [dispatch, suggestedLandlords])
     const onUnfollowAllClicked = useCallback(() => {
-      suggestedArtists.forEach((a) => {
+      suggestedLandlords.forEach((a) => {
         dispatch(
           socialActions.unfollowUser(
             a.user_id,
-            FollowSource.ARTIST_RECOMMENDATIONS_POPUP
+            FollowSource.LANDLORD_RECOMMENDATIONS_POPUP
           )
         )
       })
-    }, [dispatch, suggestedArtists])
+    }, [dispatch, suggestedLandlords])
 
-    // Navigate to profile pages on artist links
-    const onArtistNameClicked = useCallback(
+    // Navigate to profile pages on landlord links
+    const onLandlordNameClicked = useCallback(
       (handle) => {
         dispatch(push(profilePage(handle)))
       },
       [dispatch]
     )
 
-    const isLoading = !suggestedArtists || suggestedArtists.length === 0
+    const isLoading = !suggestedLandlords || suggestedLandlords.length === 0
     const renderMainContent = () => {
       if (isLoading) return <LoadingSpinner className={styles.spinner} />
       return (
@@ -193,9 +193,9 @@ export const ArtistRecommendations = forwardRef(
               itemClassName
             )}
           >
-            {suggestedArtists.map((a) => (
+            {suggestedLandlords.map((a) => (
               <div key={a.user_id} className={styles.profilePictureWrapper}>
-                <ArtistProfilePictureWrapper
+                <LandlordProfilePictureWrapper
                   userId={a.user_id}
                   handle={a.handle}
                   profilePictureSizes={a._profile_picture_sizes}
@@ -205,21 +205,21 @@ export const ArtistRecommendations = forwardRef(
           </div>
           <div className={cn(styles.contentItem, itemClassName)}>
             {`${messages.featuring} `}
-            {suggestedArtists
+            {suggestedLandlords
               .slice(0, 3)
               .map<ReactNode>((a, i) => (
-                <ArtistPopoverWrapper
+                <LandlordPopoverWrapper
                   key={a.user_id}
                   userId={a.user_id}
                   handle={a.handle}
                   name={a.name}
-                  onArtistNameClicked={onArtistNameClicked}
+                  onLandlordNameClicked={onLandlordNameClicked}
                   closeParent={onClose}
                 />
               ))
               .reduce((prev, curr) => [prev, ', ', curr])}
-            {suggestedArtists.length > 3
-              ? `, and ${suggestedArtists.length - 3} others.`
+            {suggestedLandlords.length > 3
+              ? `, and ${suggestedLandlords.length - 3} others.`
               : ''}
           </div>
         </>
@@ -229,11 +229,11 @@ export const ArtistRecommendations = forwardRef(
     const record = useRecord()
     useEffect(() => {
       record(
-        make(Name.PROFILE_PAGE_SHOWN_ARTIST_RECOMMENDATIONS, {
-          userId: artistId
+        make(Name.PROFILE_PAGE_SHOWN_LANDLORD_RECOMMENDATIONS, {
+          userId: landlordId
         })
       )
-    }, [record, artistId])
+    }, [record, landlordId])
 
     return (
       <div className={cn(styles.content, className)} ref={ref}>
@@ -255,7 +255,7 @@ export const ArtistRecommendations = forwardRef(
         <div className={cn(styles.contentItem, itemClassName)}>
           <FollowButton
             isDisabled={isLoading}
-            following={suggestedArtists.every(
+            following={suggestedLandlords.every(
               (a) => a.does_current_user_follow
             )}
             invertedColor={true}

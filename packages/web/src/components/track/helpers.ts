@@ -70,7 +70,7 @@ export const getCollectionWithFallback = (collection: Collection | null) => {
 export const getUserWithFallback = (user: User | null) => {
   return (
     user || {
-      _artist_pick: -1,
+      _landlord_pick: -1,
       name: '',
       handle: '',
       is_verified: false,

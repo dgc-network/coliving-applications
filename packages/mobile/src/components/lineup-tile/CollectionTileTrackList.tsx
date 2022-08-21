@@ -40,7 +40,7 @@ const useStyles = makeStyles(({ palette, spacing, typography }) => ({
     flexShrink: 1
   },
 
-  artist: {
+  landlord: {
     flexShrink: 1
   },
 
@@ -86,7 +86,7 @@ const AgreementItem = ({ agreement, active, index, showSkeleton }: AgreementItem
               {agreement.title}
             </Text>
             <Text
-              style={[styles.text, styles.artist, active && styles.active]}
+              style={[styles.text, styles.landlord, active && styles.active]}
               numberOfLines={1}
             >
               {`by ${agreement.user.name}`}

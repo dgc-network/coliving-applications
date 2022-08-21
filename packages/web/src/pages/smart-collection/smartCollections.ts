@@ -33,7 +33,7 @@ export const HEAVY_ROTATION: SmartCollection = {
 export const BEST_NEW_RELEASES: SmartCollection = {
   variant: Variant.SMART,
   contentList_name: SmartCollectionVariant.BEST_NEW_RELEASES,
-  description: 'From the artists you follow',
+  description: 'From the landlords you follow',
   gradient: 'linear-gradient(135deg, #FF3C6C 0%, #A04B8E 100%)',
   shadow: 'rgba(160,74,141,0.35)',
   icon: IconExploreNewReleases,
@@ -43,7 +43,7 @@ export const BEST_NEW_RELEASES: SmartCollection = {
 export const UNDER_THE_RADAR: SmartCollection = {
   variant: Variant.SMART,
   contentList_name: SmartCollectionVariant.UNDER_THE_RADAR,
-  description: 'Agreements you might have missed from the artists you follow',
+  description: 'Agreements you might have missed from the landlords you follow',
   gradient: 'linear-gradient(135deg, #FFA63B 0%, #FF2525 100%)',
   shadow: 'rgba(255,47,39,0.35)',
   icon: IconExploreUnderRadar,

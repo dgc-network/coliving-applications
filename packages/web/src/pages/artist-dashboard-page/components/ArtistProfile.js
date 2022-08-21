@@ -7,24 +7,24 @@ import DynamicImage from 'components/dynamic-image/DynamicImage'
 import UserBadges from 'components/user-badges/UserBadges'
 import { useUserProfilePicture } from 'hooks/useUserProfilePicture'
 
-import styles from './ArtistProfile.module.css'
+import styles from './LandlordProfile.module.css'
 
-const ArtistProfile = (props) => {
+const LandlordProfile = (props) => {
   const profilePicture = useUserProfilePicture(
     props.userId,
     props.profilePictureSizes,
     SquareSizes.SIZE_150_BY_150
   )
   return (
-    <div className={styles.artistProfileContainer}>
-      <div className={styles.artistLeftContainer}>
+    <div className={styles.landlordProfileContainer}>
+      <div className={styles.landlordLeftContainer}>
         <DynamicImage
-          wrapperClassName={styles.artistProfilePictureWrapper}
-          className={styles.artistProfilePicture}
+          wrapperClassName={styles.landlordProfilePictureWrapper}
+          className={styles.landlordProfilePicture}
           image={profilePicture}
         />
-        <div className={styles.artistNameContainer}>
-          <div className={styles.artistName}>
+        <div className={styles.landlordNameContainer}>
+          <div className={styles.landlordName}>
             <span>{props.name}</span>
             <UserBadges
               userId={props.userId}
@@ -32,7 +32,7 @@ const ArtistProfile = (props) => {
               className={styles.iconVerified}
             />
           </div>
-          <span className={styles.artistHandle}>{`@${props.handle}`}</span>
+          <span className={styles.landlordHandle}>{`@${props.handle}`}</span>
         </div>
       </div>
       <div>
@@ -41,12 +41,12 @@ const ArtistProfile = (props) => {
           onClick={props.onViewProfile}
           type={ButtonType.COMMON}
           rightIcon={<IconArrow />}
-          className={styles.artistProfileButton}
-          textClassName={styles.artistProfileButtonText}
+          className={styles.landlordProfileButton}
+          textClassName={styles.landlordProfileButtonText}
         />
       </div>
     </div>
   )
 }
 
-export default memo(ArtistProfile)
+export default memo(LandlordProfile)

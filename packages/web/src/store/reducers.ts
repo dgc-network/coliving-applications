@@ -14,7 +14,7 @@ import remixSettingsModal from 'components/remix-settings-modal/store/slice'
 import searchBar from 'components/search-bar/store/reducer'
 import serviceSelection from 'components/service-selection/store/slice'
 import unfollowConfirmation from 'components/unfollow-confirmation-modal/store/reducers'
-import dashboard from 'pages/artist-dashboard-page/store/reducer'
+import dashboard from 'pages/landlord-dashboard-page/store/reducer'
 import deactivateAccount from 'pages/deactivate-account-page/store/slice'
 import deleted from 'pages/deleted-page/store/slice'
 import signOn from 'pages/sign-on/store/reducer'
@@ -27,7 +27,7 @@ import editContentListModal from 'store/application/ui/editContentListModal/slic
 import editAgreementModal from 'store/application/ui/editAgreementModal/reducer'
 import mobileKeyboard from 'store/application/ui/mobileKeyboard/reducer'
 import scrollLock from 'store/application/ui/scrollLock/reducer'
-import setAsArtistPickConfirmation from 'store/application/ui/setAsArtistPickConfirmation/reducer'
+import setAsLandlordPickConfirmation from 'store/application/ui/setAsLandlordPickConfirmation/reducer'
 import userListModal from 'store/application/ui/userListModal/slice'
 import backend from 'store/backend/reducer'
 import confirmer from 'store/confirmer/reducer'
@@ -87,7 +87,7 @@ const createRootReducer = (routeHistory: History) =>
         musicConfetti,
         remixSettingsModal,
         scrollLock,
-        setAsArtistPickConfirmation,
+        setAsLandlordPickConfirmation,
         userListModal,
         visualizer
       }),

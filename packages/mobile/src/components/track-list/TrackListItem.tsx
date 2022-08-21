@@ -48,7 +48,7 @@ const useStyles = makeStyles(({ palette, spacing }) => ({
     paddingVertical: spacing(3),
     paddingHorizontal: spacing(6)
   },
-  nameArtistContainer: {
+  nameLandlordContainer: {
     flex: 1,
     justifyContent: 'center',
     overflow: 'hidden',
@@ -61,7 +61,7 @@ const useStyles = makeStyles(({ palette, spacing }) => ({
     ...font('demiBold'),
     color: palette.neutral
   },
-  artistName: {
+  landlordName: {
     ...font('medium'),
     color: palette.neutralLight2,
     alignItems: 'center'
@@ -81,7 +81,7 @@ const useStyles = makeStyles(({ palette, spacing }) => ({
 }))
 
 const getMessages = ({ isDeleted = false }: { isDeleted?: boolean } = {}) => ({
-  deleted: isDeleted ? ' [Deleted By Artist]' : ''
+  deleted: isDeleted ? ' [Deleted By Landlord]' : ''
 })
 
 export type AgreementListItemProps = {
@@ -164,7 +164,7 @@ export const AgreementListItem = ({
         : null,
       OverflowAction.ADD_TO_CONTENT_LIST,
       OverflowAction.VIEW_AGREEMENT_PAGE,
-      OverflowAction.VIEW_ARTIST_PAGE
+      OverflowAction.VIEW_LANDLORD_PAGE
     ].filter(Boolean) as OverflowAction[]
 
     dispatchWeb(
@@ -233,7 +233,7 @@ export const AgreementListItem = ({
           </View>
         ) : null}
         {isReorderable && <IconDrag style={styles.dragIcon} />}
-        <View style={styles.nameArtistContainer}>
+        <View style={styles.nameLandlordContainer}>
           <View
             style={styles.agreementTitle}
             onLayout={(e) => setTitleWidth(e.nativeEvent.layout.width)}
@@ -256,7 +256,7 @@ export const AgreementListItem = ({
               {messages.deleted}
             </Text>
           </View>
-          <Text numberOfLines={1} style={styles.artistName}>
+          <Text numberOfLines={1} style={styles.landlordName}>
             {name}
             <UserBadges user={agreement.user} badgeSize={12} hideName />
           </Text>

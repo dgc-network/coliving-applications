@@ -13,12 +13,12 @@ const useStyles = makeStyles(({ typography, spacing }) => ({
   agreementTitle: {
     textAlign: 'center'
   },
-  artistInfo: {
+  landlordInfo: {
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: spacing(3)
   },
-  artist: {
+  landlord: {
     marginBottom: 0,
     fontFamily: typography.fontByWeight.medium
   }
@@ -27,12 +27,12 @@ const useStyles = makeStyles(({ typography, spacing }) => ({
 type AgreementInfoProps = {
   agreement: Agreement
   user: User
-  onPressArtist: GestureResponderHandler
+  onPressLandlord: GestureResponderHandler
   onPressTitle: GestureResponderHandler
 }
 
 export const AgreementInfo = ({
-  onPressArtist,
+  onPressLandlord,
   onPressTitle,
   agreement,
   user
@@ -47,11 +47,11 @@ export const AgreementInfo = ({
               {agreement.title}
             </Text>
           </Pressable>
-          <Pressable onPress={onPressArtist}>
-            <View style={styles.artistInfo}>
+          <Pressable onPress={onPressLandlord}>
+            <View style={styles.landlordInfo}>
               <Text
                 numberOfLines={1}
-                style={styles.artist}
+                style={styles.landlord}
                 variant='h1'
                 color='secondary'
               >

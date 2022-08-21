@@ -5,8 +5,8 @@ import {
   followUser,
   unfollowUser
 } from '-client/src/common/store/social/users/actions'
-import { makeGetRelatedArtists } from '-client/src/common/store/ui/artist-recommendations/selectors'
-import { fetchRelatedArtists } from '-client/src/common/store/ui/artist-recommendations/slice'
+import { makeGetRelatedLandlords } from '-client/src/common/store/ui/landlord-recommendations/selectors'
+import { fetchRelatedLandlords } from '-client/src/common/store/ui/landlord-recommendations/slice'
 import { TouchableOpacity, View } from 'react-native'
 import { useEffectOnce } from 'react-use'
 
@@ -24,7 +24,7 @@ import { agreement, make } from 'app/utils/analytics'
 
 import { useSelectProfile } from '../selectors'
 
-import { ArtistLink } from './ArtistLink'
+import { LandlordLink } from './LandlordLink'
 
 const messages = {
   description: 'Here are some accounts that vibe well with',
@@ -53,18 +53,18 @@ const useStyles = makeStyles(({ spacing, palette, typography }) => ({
     width: 24,
     fill: palette.neutralLight4
   },
-  suggestedArtistsPhotos: {
+  suggestedLandlordsPhotos: {
     flexDirection: 'row',
     justifyContent: 'center',
     marginVertical: spacing(2)
   },
-  suggestedArtistPhoto: {
+  suggestedLandlordPhoto: {
     height: 52,
     width: 52,
     marginRight: -7,
     borderWidth: 1
   },
-  suggestedArtistsText: {
+  suggestedLandlordsText: {
     flexDirection: 'row',
     justifyContent: 'center',
     flexWrap: 'wrap',
@@ -75,13 +75,13 @@ const useStyles = makeStyles(({ spacing, palette, typography }) => ({
   }
 }))
 
-type ArtistRecommendationsProps = {
+type LandlordRecommendationsProps = {
   onClose: () => void
 }
 
-const getRelatedArtistIds = makeGetRelatedArtists()
+const getRelatedLandlordIds = makeGetRelatedLandlords()
 
-export const ArtistRecommendations = (props: ArtistRecommendationsProps) => {
+export const LandlordRecommendations = (props: LandlordRecommendationsProps) => {
   const { onClose } = props
   const styles = useStyles()
   const navigation = useNavigation()
@@ -90,55 +90,55 @@ export const ArtistRecommendations = (props: ArtistRecommendationsProps) => {
   const dispatchWeb = useDispatchWeb()
 
   useEffectOnce(() => {
-    dispatchWeb(fetchRelatedArtists({ userId: user_id }))
+    dispatchWeb(fetchRelatedLandlords({ userId: user_id }))
 
     agreement(
       make({
-        eventName: EventNames.PROFILE_PAGE_SHOWN_ARTIST_RECOMMENDATIONS,
+        eventName: EventNames.PROFILE_PAGE_SHOWN_LANDLORD_RECOMMENDATIONS,
         userId: user_id
       })
     )
   })
 
-  const suggestedArtists = useSelectorWeb(
-    (state) => getRelatedArtistIds(state, { id: user_id }),
+  const suggestedLandlords = useSelectorWeb(
+    (state) => getRelatedLandlordIds(state, { id: user_id }),
     (a, b) => a.length === b.length
   )
 
-  const isFollowingAllArtists = suggestedArtists.every(
-    (artist) => artist.does_current_user_follow
+  const isFollowingAllLandlords = suggestedLandlords.every(
+    (landlord) => landlord.does_current_user_follow
   )
 
   const handlePressFollow = useCallback(() => {
-    suggestedArtists.forEach((artist) => {
-      if (isFollowingAllArtists) {
+    suggestedLandlords.forEach((landlord) => {
+      if (isFollowingAllLandlords) {
         dispatchWeb(
           unfollowUser(
-            artist.user_id,
-            FollowSource.ARTIST_RECOMMENDATIONS_POPUP
+            landlord.user_id,
+            FollowSource.LANDLORD_RECOMMENDATIONS_POPUP
           )
         )
       } else {
         dispatchWeb(
-          followUser(artist.user_id, FollowSource.ARTIST_RECOMMENDATIONS_POPUP)
+          followUser(landlord.user_id, FollowSource.LANDLORD_RECOMMENDATIONS_POPUP)
         )
       }
     })
-  }, [suggestedArtists, isFollowingAllArtists, dispatchWeb])
+  }, [suggestedLandlords, isFollowingAllLandlords, dispatchWeb])
 
-  const handlePressArtist = useCallback(
-    (artist) => () => {
+  const handlePressLandlord = useCallback(
+    (landlord) => () => {
       navigation.push({
-        native: { screen: 'Profile', params: { handle: artist.handle } },
-        web: { route: `/${artist.handle}` }
+        native: { screen: 'Profile', params: { handle: landlord.handle } },
+        web: { route: `/${landlord.handle}` }
       })
     },
     [navigation]
   )
 
-  const suggestedArtistNames = suggestedArtists.slice(0, 3)
+  const suggestedLandlordNames = suggestedLandlords.slice(0, 3)
 
-  if (suggestedArtists.length === 0) {
+  if (suggestedLandlords.length === 0) {
     return null
   }
 
@@ -157,41 +157,41 @@ export const ArtistRecommendations = (props: ArtistRecommendationsProps) => {
           </Text>
         </View>
       </View>
-      <View style={styles.suggestedArtistsPhotos} pointerEvents='box-none'>
-        {suggestedArtists.map((artist) => (
+      <View style={styles.suggestedLandlordsPhotos} pointerEvents='box-none'>
+        {suggestedLandlords.map((landlord) => (
           <TouchableOpacity
-            onPress={handlePressArtist(artist)}
-            key={artist.user_id}
+            onPress={handlePressLandlord(landlord)}
+            key={landlord.user_id}
           >
             <ProfilePicture
-              profile={artist}
-              style={styles.suggestedArtistPhoto}
+              profile={landlord}
+              style={styles.suggestedLandlordPhoto}
             />
           </TouchableOpacity>
         ))}
       </View>
-      <View style={styles.suggestedArtistsText} pointerEvents='box-none'>
+      <View style={styles.suggestedLandlordsText} pointerEvents='box-none'>
         <View pointerEvents='none'>
           <Text variant='body1'>Featuring </Text>
         </View>
-        {suggestedArtistNames.map((artist) => (
-          <Fragment key={artist.user_id}>
-            <ArtistLink artist={artist} onPress={handlePressArtist(artist)} />
+        {suggestedLandlordNames.map((landlord) => (
+          <Fragment key={landlord.user_id}>
+            <LandlordLink landlord={landlord} onPress={handlePressLandlord(landlord)} />
             <Text variant='body1'>, </Text>
           </Fragment>
         ))}
         <View pointerEvents='none'>
           <Text variant='body1'>{`and ${
-            suggestedArtists.length - suggestedArtistNames.length
+            suggestedLandlords.length - suggestedLandlordNames.length
           } others`}</Text>
         </View>
       </View>
       <Button
         variant='primary'
         title={
-          isFollowingAllArtists ? messages.followingAll : messages.followAll
+          isFollowingAllLandlords ? messages.followingAll : messages.followAll
         }
-        icon={isFollowingAllArtists ? IconFollowing : IconFollow}
+        icon={isFollowingAllLandlords ? IconFollowing : IconFollow}
         iconPosition='left'
         fullWidth
         onPress={handlePressFollow}

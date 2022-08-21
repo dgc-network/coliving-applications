@@ -18,7 +18,7 @@ export type ShareType =
 type ShareAgreementContent = {
   type: 'agreement'
   agreement: Agreement
-  artist: User
+  landlord: User
 }
 
 type ShareProfileContent = {
@@ -29,7 +29,7 @@ type ShareProfileContent = {
 type ShareAlbumContent = {
   type: 'album'
   album: Collection
-  artist: User
+  landlord: User
 }
 
 type ShareContentListContent = {

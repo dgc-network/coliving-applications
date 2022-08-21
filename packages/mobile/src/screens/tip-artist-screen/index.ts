@@ -1,1 +1,1 @@
-export * from './TipArtistModal'
+export * from './TipLandlordModal'

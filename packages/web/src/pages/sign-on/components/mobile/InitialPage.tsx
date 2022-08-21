@@ -28,7 +28,7 @@ const NATIVE_MOBILE = process.env.REACT_APP_NATIVE_MOBILE
 const messages = {
   title: 'Sign Up For Coliving',
   header1: 'Stream the music you love.',
-  header2: 'Support the artists you care about.',
+  header2: 'Support the landlords you care about.',
   signinDescription: 'Sign Into Your Coliving Account',
   signUp: 'Sign Up',
   signIn: 'Sign In'

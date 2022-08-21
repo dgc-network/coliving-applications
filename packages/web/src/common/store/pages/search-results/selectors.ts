@@ -15,17 +15,17 @@ export const getSearchStatus = (state: CommonState) =>
 export const getSearchResultsPageAgreements = (state: CommonState) =>
   getBaseState(state).agreementIds || []
 
-const getSearchArtistsIds = (state: CommonState) =>
-  getBaseState(state).artistIds || []
-const getUnsortedSearchArtists = createShallowSelector(
-  [getSearchArtistsIds, (state) => state],
-  (artistIds, state) => getUsers(state, { ids: artistIds })
+const getSearchLandlordsIds = (state: CommonState) =>
+  getBaseState(state).landlordIds || []
+const getUnsortedSearchLandlords = createShallowSelector(
+  [getSearchLandlordsIds, (state) => state],
+  (landlordIds, state) => getUsers(state, { ids: landlordIds })
 )
-export const makeGetSearchArtists = () => {
+export const makeGetSearchLandlords = () => {
   return createSelector(
-    [getSearchArtistsIds, getUnsortedSearchArtists],
-    (ids, artists) =>
-      ids.map((id) => artists[id]).filter((a) => !a.is_deactivated)
+    [getSearchLandlordsIds, getUnsortedSearchLandlords],
+    (ids, landlords) =>
+      ids.map((id) => landlords[id]).filter((a) => !a.is_deactivated)
   )
 }
 

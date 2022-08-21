@@ -72,7 +72,7 @@ const ConnectedMobileOverflowModal = ({
   notification,
   ownerId,
   handle,
-  artistName,
+  landlordName,
   title,
   permalink,
   isAlbum,
@@ -90,7 +90,7 @@ const ConnectedMobileOverflowModal = ({
   deleteContentList,
   publishContentList,
   visitAgreementPage,
-  visitArtistPage,
+  visitLandlordPage,
   visitCollectiblePage,
   visitContentListPage,
   visitAlbumPage,
@@ -111,7 +111,7 @@ const ConnectedMobileOverflowModal = ({
     onPublishContentList,
     onDeleteContentList,
     onVisitAgreementPage,
-    onVisitArtistPage,
+    onVisitLandlordPage,
     onVisitCollectionPage,
     onVisitCollectiblePage,
     onUnsubscribeUser,
@@ -128,7 +128,7 @@ const ConnectedMobileOverflowModal = ({
     onPublishContentList?: () => void
     onDeleteContentList?: () => void
     onVisitAgreementPage?: () => void
-    onVisitArtistPage?: () => void
+    onVisitLandlordPage?: () => void
     onVisitCollectiblePage?: () => void
     onVisitCollectionPage?: () => void
     onUnsubscribeUser?: () => void
@@ -152,7 +152,7 @@ const ConnectedMobileOverflowModal = ({
             permalink === undefined
               ? console.error(`Permalink missing for agreement ${id}`)
               : visitAgreementPage(permalink),
-          onVisitArtistPage: () => visitArtistPage(handle),
+          onVisitLandlordPage: () => visitLandlordPage(handle),
           onFollow: () => follow(ownerId),
           onUnfollow: () => unfollow(ownerId)
         }
@@ -165,7 +165,7 @@ const ConnectedMobileOverflowModal = ({
           onFavorite: () => saveCollection(id as ID),
           onUnfavorite: () => unsaveCollection(id as ID),
           onShare: () => shareCollection(id as ID),
-          onVisitArtistPage: () => visitArtistPage(handle),
+          onVisitLandlordPage: () => visitLandlordPage(handle),
           onVisitCollectionPage: () =>
             (isAlbum ? visitAlbumPage : visitContentListPage)(
               id as ID,
@@ -193,7 +193,7 @@ const ConnectedMobileOverflowModal = ({
       }
 
       case OverflowSource.PROFILE: {
-        if (!id || !handle || !artistName) return {}
+        if (!id || !handle || !landlordName) return {}
         return {
           onFollow: () => follow(id as ID),
           onUnfollow: () => unfollow(id as ID),
@@ -219,7 +219,7 @@ const ConnectedMobileOverflowModal = ({
       onEditContentList={onEditContentList}
       onPublishContentList={onPublishContentList}
       onDeleteContentList={onDeleteContentList}
-      onVisitArtistPage={onVisitArtistPage}
+      onVisitLandlordPage={onVisitLandlordPage}
       onVisitCollectionPage={onVisitCollectionPage}
       onVisitCollectiblePage={onVisitCollectiblePage}
       onUnsubscribeUser={onUnsubscribeUser}
@@ -241,7 +241,7 @@ const getAdditionalInfo = ({
 }): {
   id?: string
   handle?: string
-  artistName?: string
+  landlordName?: string
   title?: string
   permalink?: string
   isAlbum?: boolean
@@ -262,7 +262,7 @@ const getAdditionalInfo = ({
           title: collectible.name ?? '',
           ownerId: user.user_id,
           handle: user.handle,
-          artistName: user.name,
+          landlordName: user.name,
           permalink: '',
           isAlbum: false
         }
@@ -272,7 +272,7 @@ const getAdditionalInfo = ({
       if (!user) return {}
       return {
         handle: user.handle,
-        artistName: user.name,
+        landlordName: user.name,
         title: agreement.title,
         permalink: agreement.permalink,
         isAlbum: false,
@@ -286,7 +286,7 @@ const getAdditionalInfo = ({
       if (!user) return {}
       return {
         handle: user.handle,
-        artistName: user.name,
+        landlordName: user.name,
         title: col.contentList_name,
         isAlbum: col.is_album
       }
@@ -296,7 +296,7 @@ const getAdditionalInfo = ({
       if (!user) return {}
       return {
         handle: user.handle,
-        artistName: user.name
+        landlordName: user.name
       }
     }
     case OverflowSource.NOTIFICATIONS: {
@@ -366,7 +366,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
     addToContentList: (agreementId: ID, title: string) =>
       dispatch(openAddToContentList(agreementId, title)),
     visitAgreementPage: (permalink: string) => dispatch(pushRoute(permalink)),
-    visitArtistPage: (handle: string) =>
+    visitLandlordPage: (handle: string) =>
       dispatch(pushRoute(profilePage(handle))),
     visitCollectiblePage: (handle: string, id: string) => {
       dispatch(pushRoute(collectibleDetailsPage(handle, id)))

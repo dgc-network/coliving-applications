@@ -48,7 +48,7 @@
   margin-bottom: 8px;
 }
 
-.artist {
+.landlord {
   color: var(--secondary);
   font-family: var(--font-family);
   font-size: var(--font-l);
@@ -60,12 +60,12 @@
   align-items: center;
 }
 
-.artist h2 {
+.landlord h2 {
   color: var(--secondary);
   display: inline;
 }
 
-.artist:active {
+.landlord:active {
   text-decoration: underline;
 }
 

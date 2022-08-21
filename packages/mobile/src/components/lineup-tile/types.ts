@@ -26,8 +26,8 @@ export type LineupItemProps = {
   /** Function to call when item & art has loaded */
   onLoad?: (index: number) => void
 
-  /** Whether or not to show the artist pick indicators */
-  showArtistPick?: boolean
+  /** Whether or not to show the landlord pick indicators */
+  showLandlordPick?: boolean
 
   /** Whether to show an icon indicating rank in lineup */
   showRankIcon?: boolean

@@ -48,7 +48,7 @@ export const ProfileTabNavigator = ({
 
   const initialParams = { id: user_id, handle: params.handle }
 
-  const isArtist = agreement_count > 0
+  const isLandlord = agreement_count > 0
 
   const showCollectiblesTab = useShouldShowCollectiblesTab()
 
@@ -102,7 +102,7 @@ export const ProfileTabNavigator = ({
     scrollY: animatedValue
   })
 
-  if (isArtist) {
+  if (isLandlord) {
     return (
       <CollapsibleTabNavigator
         renderHeader={renderHeader}

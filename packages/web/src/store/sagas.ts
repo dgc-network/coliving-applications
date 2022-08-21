@@ -12,7 +12,7 @@ import reachabilitySagas from 'common/store/reachability/sagas'
 import recoveryEmailSagas from 'common/store/recovery-email/sagas'
 import remoteConfigSagas from 'common/store/remote-config/sagas'
 import signOutSagas from 'common/store/sign-out/sagas'
-import artistRecommendationsSagas from 'common/store/ui/artist-recommendations/sagas'
+import landlordRecommendationsSagas from 'common/store/ui/landlord-recommendations/sagas'
 import deleteContentListConfirmationModalSagas from 'common/store/ui/delete-contentList-confirmation-modal/sagas'
 import overflowMenuSagas from 'common/store/ui/mobile-overflow-menu/sagas'
 import reactionSagas from 'common/store/ui/reactions/sagas'
@@ -28,7 +28,7 @@ import remixSettingsModalSagas from 'components/remix-settings-modal/store/sagas
 import searchBarSagas from 'components/search-bar/store/sagas'
 import serviceSelectionSagas from 'components/service-selection/store/sagas'
 import shareSoundToTikTokModalSagas from 'components/share-sound-to-tiktok-modal/store/sagas'
-import dashboardSagas from 'pages/artist-dashboard-page/store/sagas'
+import dashboardSagas from 'pages/landlord-dashboard-page/store/sagas'
 import rewardsPageSagas from 'pages/live-rewards-page/store/sagas'
 import collectionSagas from 'pages/collection-page/store/sagas'
 import deactivateAccountSagas from 'pages/deactivate-account-page/store/sagas'
@@ -140,7 +140,7 @@ export default function* rootSaga() {
 
     // Application
     addToContentListSagas(),
-    artistRecommendationsSagas(),
+    landlordRecommendationsSagas(),
     changePasswordSagas(),
     deactivateAccountSagas(),
     deletedSagas(),

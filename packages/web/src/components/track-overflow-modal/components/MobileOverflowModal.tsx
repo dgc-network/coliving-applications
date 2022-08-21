@@ -21,7 +21,7 @@ type MobileOverflowModalProps = {
   onDeleteContentList?: () => void
   onPublishContentList?: () => void
   onVisitAgreementPage?: () => void
-  onVisitArtistPage?: () => void
+  onVisitLandlordPage?: () => void
   onVisitCollectiblePage?: () => void
   onVisitCollectionPage?: () => void
   onUnsubscribeUser?: () => void
@@ -40,13 +40,13 @@ const rowMessageMap = {
   [OverflowAction.DELETE_CONTENT_LIST]: 'Delete ContentList',
   [OverflowAction.PUBLISH_CONTENT_LIST]: 'Publish ContentList',
   [OverflowAction.VIEW_AGREEMENT_PAGE]: 'View Agreement Page',
-  [OverflowAction.VIEW_ARTIST_PAGE]: 'View Artist Page',
+  [OverflowAction.VIEW_LANDLORD_PAGE]: 'View Landlord Page',
   [OverflowAction.VIEW_CONTENT_LIST_PAGE]: 'View ContentList Page',
   [OverflowAction.VIEW_COLLECTIBLE_PAGE]: 'View Collectible Page',
   [OverflowAction.VIEW_ALBUM_PAGE]: 'View Album Page',
   [OverflowAction.UNSUBSCRIBER_USER]: 'Unsubscribe',
-  [OverflowAction.FOLLOW_ARTIST]: 'Follow Artist',
-  [OverflowAction.UNFOLLOW_ARTIST]: 'Unfollow Artist',
+  [OverflowAction.FOLLOW_LANDLORD]: 'Follow Landlord',
+  [OverflowAction.UNFOLLOW_LANDLORD]: 'Unfollow Landlord',
   [OverflowAction.FOLLOW]: 'Follow',
   [OverflowAction.UNFOLLOW]: 'Unfollow'
 }
@@ -68,7 +68,7 @@ const MobileOverflowModal = ({
   onDeleteContentList,
   onPublishContentList,
   onVisitAgreementPage,
-  onVisitArtistPage,
+  onVisitLandlordPage,
   onVisitCollectionPage,
   onVisitCollectiblePage,
   onUnsubscribeUser,
@@ -87,13 +87,13 @@ const MobileOverflowModal = ({
     [OverflowAction.DELETE_CONTENT_LIST]: onDeleteContentList,
     [OverflowAction.PUBLISH_CONTENT_LIST]: onPublishContentList,
     [OverflowAction.VIEW_AGREEMENT_PAGE]: onVisitAgreementPage,
-    [OverflowAction.VIEW_ARTIST_PAGE]: onVisitArtistPage,
+    [OverflowAction.VIEW_LANDLORD_PAGE]: onVisitLandlordPage,
     [OverflowAction.VIEW_COLLECTIBLE_PAGE]: onVisitCollectiblePage,
     [OverflowAction.VIEW_CONTENT_LIST_PAGE]: onVisitCollectionPage,
     [OverflowAction.VIEW_ALBUM_PAGE]: onVisitCollectionPage,
     [OverflowAction.UNSUBSCRIBER_USER]: onUnsubscribeUser,
-    [OverflowAction.FOLLOW_ARTIST]: onFollow,
-    [OverflowAction.UNFOLLOW_ARTIST]: onUnfollow,
+    [OverflowAction.FOLLOW_LANDLORD]: onFollow,
+    [OverflowAction.UNFOLLOW_LANDLORD]: onUnfollow,
     [OverflowAction.FOLLOW]: onFollow,
     [OverflowAction.UNFOLLOW]: onUnfollow
   }

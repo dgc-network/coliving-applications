@@ -31,7 +31,7 @@ import * as embedModalActions from 'components/embed-modal/store/actions'
 import { ToastContext } from 'components/toast/ToastContext'
 import { newCollectionMetadata } from 'schemas'
 import * as editAgreementModalActions from 'store/application/ui/editAgreementModal/actions'
-import { showSetAsArtistPickConfirmation } from 'store/application/ui/setAsArtistPickConfirmation/actions'
+import { showSetAsLandlordPickConfirmation } from 'store/application/ui/setAsLandlordPickConfirmation/actions'
 import { AppState } from 'store/types'
 import { profilePage } from 'utils/route'
 
@@ -43,13 +43,13 @@ const messages = {
   favorite: 'Favorite',
   repost: 'Repost',
   reposted: 'Reposted!',
-  setArtistPick: 'Set as Artist Pick',
+  setLandlordPick: 'Set as Landlord Pick',
   share: 'Share',
   undoRepost: 'Undo Repost',
   unfavorite: 'Unfavorite',
   unreposted: 'Un-Reposted!',
-  unsetArtistPick: 'Unset as Artist Pick',
-  visitArtistPage: 'Visit Artist Page',
+  unsetLandlordPick: 'Unset as Landlord Pick',
+  visitLandlordPage: 'Visit Landlord Page',
   visitAgreementPage: 'Visit Agreement Page'
 }
 
@@ -58,14 +58,14 @@ export type OwnProps = {
   extraMenuItems?: PopupMenuItem[]
   handle: string
   includeAddToContentList: boolean
-  includeArtistPick: boolean
+  includeLandlordPick: boolean
   includeEdit: boolean
   includeEmbed?: boolean
   includeFavorite: boolean
   includeRepost: boolean
   includeShare: boolean
   includeAgreementPage: boolean
-  isArtistPick: boolean
+  isLandlordPick: boolean
   isDeleted: boolean
   isFavorited: boolean
   isOwner: boolean
@@ -90,14 +90,14 @@ const AgreementMenu = (props: AgreementMenuProps) => {
       goToRoute,
       handle,
       includeAddToContentList,
-      includeArtistPick,
+      includeLandlordPick,
       includeEdit,
       includeEmbed,
       includeFavorite,
       includeRepost,
       includeShare,
       includeAgreementPage,
-      isArtistPick,
+      isLandlordPick,
       isDeleted,
       isFavorited,
       isOwner,
@@ -108,14 +108,14 @@ const AgreementMenu = (props: AgreementMenuProps) => {
       openEmbedModal,
       repostAgreement,
       saveAgreement,
-      setArtistPick,
+      setLandlordPick,
       shareAgreement,
       agreementId,
       agreementTitle,
       agreementPermalink,
       undoRepostAgreement,
       unsaveAgreement,
-      unsetArtistPick
+      unsetLandlordPick
     } = props
 
     const shareMenuItem = {
@@ -165,16 +165,16 @@ const AgreementMenu = (props: AgreementMenuProps) => {
     //   onClick: () => goToRoute(albumPage(handle, albumName, albumId))
     // }
 
-    const artistPageMenuItem = {
-      text: messages.visitArtistPage,
+    const landlordPageMenuItem = {
+      text: messages.visitLandlordPage,
       onClick: () => goToRoute(profilePage(handle))
     }
 
-    const artistPickMenuItem = {
-      text: isArtistPick ? messages.unsetArtistPick : messages.setArtistPick,
-      onClick: isArtistPick
-        ? () => unsetArtistPick()
-        : () => setArtistPick(agreementId)
+    const landlordPickMenuItem = {
+      text: isLandlordPick ? messages.unsetLandlordPick : messages.setLandlordPick,
+      onClick: isLandlordPick
+        ? () => unsetLandlordPick()
+        : () => setLandlordPick(agreementId)
     }
 
     const editAgreementMenuItem = {
@@ -204,15 +204,15 @@ const AgreementMenu = (props: AgreementMenuProps) => {
     if (agreementId && agreementTitle && includeAgreementPage && !isDeleted) {
       menu.items.push(agreementPageMenuItem)
     }
-    if (agreementId && isOwner && includeArtistPick && !isDeleted) {
-      menu.items.push(artistPickMenuItem)
+    if (agreementId && isOwner && includeLandlordPick && !isDeleted) {
+      menu.items.push(landlordPickMenuItem)
     }
     // TODO: Add back go to album when we have better album linking.
     // if (albumId && albumName) {
     //   menu.items.push(albumPageMenuItem)
     // }
     if (handle && !isOwnerDeactivated) {
-      menu.items.push(artistPageMenuItem)
+      menu.items.push(landlordPageMenuItem)
     }
     if (includeEdit && isOwner && !isDeleted) {
       menu.items.push(editAgreementMenuItem)
@@ -254,9 +254,9 @@ function mapDispatchToProps(dispatch: Dispatch) {
       dispatch(repostAgreement(agreementId, RepostSource.OVERFLOW)),
     undoRepostAgreement: (agreementId: ID) =>
       dispatch(undoRepostAgreement(agreementId, RepostSource.OVERFLOW)),
-    setArtistPick: (agreementId: ID) =>
-      dispatch(showSetAsArtistPickConfirmation(agreementId)),
-    unsetArtistPick: () => dispatch(showSetAsArtistPickConfirmation()),
+    setLandlordPick: (agreementId: ID) =>
+      dispatch(showSetAsLandlordPickConfirmation(agreementId)),
+    unsetLandlordPick: () => dispatch(showSetAsLandlordPickConfirmation()),
     createEmptyContentList: (tempId: ID, name: string, agreementId: ID) =>
       dispatch(
         createContentList(
@@ -285,7 +285,7 @@ AgreementMenu.defaultProps = {
   includeFavorite: true,
   includeAgreementPage: true,
   includeAddToContentList: true,
-  includeArtistPick: true,
+  includeLandlordPick: true,
   extraMenuItems: []
 }
 

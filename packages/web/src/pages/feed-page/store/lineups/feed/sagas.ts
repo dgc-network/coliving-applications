@@ -60,7 +60,7 @@ function* getAgreements({
   if (startedSignOn) {
     const isAccountReady = yield select(getAccountReady)
     if (!isAccountReady) {
-      // Get the artists the user selected in signup:
+      // Get the landlords the user selected in signup:
       const followeeUserIds = yield select(getFollowIds)
       params.followee_user_ids = followeeUserIds
     }

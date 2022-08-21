@@ -57,7 +57,7 @@
   background-color: var(--default-profile-picture-background);
 }
 
-.artistLink {
+.landlordLink {
   display: inline-block;
   color: var(--secondary);
   font-weight: var(--font-bold);
@@ -65,7 +65,7 @@
   cursor: pointer;
   line-height: normal;
 }
-.artistLink :global(.artistPopover) {
+.landlordLink :global(.landlordPopover) {
   display: inline-block;
 }
 

@@ -184,7 +184,7 @@ export class ActionsTab extends PureComponent {
       agreementTitle,
       currentUserSaved,
       currentUserReposted,
-      isArtistPick,
+      isLandlordPick,
       isPublic,
       includeEdit
     } = this.props
@@ -196,14 +196,14 @@ export class ActionsTab extends PureComponent {
         isReposted: currentUserReposted,
         mount: 'page',
         isOwner: handle === userHandle,
-        isArtistPick
+        isLandlordPick
       }
     }
     if (variant === 'agreement') {
       overflowMenu.menu.type = 'agreement'
       overflowMenu.menu.agreementId = agreementId
       overflowMenu.menu.agreementTitle = agreementTitle
-      overflowMenu.menu.isArtistPick = isArtistPick
+      overflowMenu.menu.isLandlordPick = isLandlordPick
     } else if (variant === 'contentList' || variant === 'album') {
       overflowMenu.menu.type = variant === 'contentList' ? 'contentList' : 'album'
       overflowMenu.menu.contentListId = contentListId

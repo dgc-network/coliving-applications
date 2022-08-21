@@ -20,7 +20,7 @@ import { ReceiverDetails } from './ReceiverDetails'
 import { SendTipStatusText } from './SendTipStatusText'
 import { TipHeader } from './TipHeader'
 import { TipScreen } from './TipScreen'
-import type { TipArtistNavigationParamList } from './navigation'
+import type { TipLandlordNavigationParamList } from './navigation'
 
 const messages = {
   title: 'Confirm Tip',
@@ -42,7 +42,7 @@ const useStyles = makeStyles(({ spacing }) => ({
 }))
 
 type ConfirmSendTipScreenProps = NativeStackScreenProps<
-  TipArtistNavigationParamList,
+  TipLandlordNavigationParamList,
   'ConfirmTip'
 >
 
@@ -55,7 +55,7 @@ export const ConfirmSendTipScreen = ({
     status: sendStatus,
     source
   } = useSelectorWeb(getSendTipData)
-  const navigation = useNavigation<TipArtistNavigationParamList>()
+  const navigation = useNavigation<TipLandlordNavigationParamList>()
   const dispatchWeb = useDispatchWeb()
 
   const handleConfirm = useCallback(() => {

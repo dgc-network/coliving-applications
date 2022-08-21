@@ -20,7 +20,7 @@
   background-color: var(--white);
 }
 
-.artistChipContainer :global(.name) {
+.landlordChipContainer :global(.name) {
   color: var(--neutral);
   font-family: var(--font-family);
   font-size: var(--font-s);
@@ -28,7 +28,7 @@
   line-height: normal;
   margin-bottom: 8px;
 }
-.artistChipContainer :global(.followers) {
+.landlordChipContainer :global(.followers) {
   text-align: left;
   width: 104px;
   color: var(--neutral);

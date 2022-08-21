@@ -73,7 +73,7 @@ const useStyles = makeStyles(({ palette, spacing }) => ({
     marginRight: spacing(1),
     fontSize: spacing(4)
   },
-  artist: {
+  landlord: {
     color: palette.neutral,
     maxWidth: Dimensions.get('window').width / 4,
     fontSize: spacing(3)
@@ -166,7 +166,7 @@ export const PlayBar = ({
             >
               {agreement ? '•' : ''}
             </Text>
-            <Text numberOfLines={1} weight='medium' style={styles.artist}>
+            <Text numberOfLines={1} weight='medium' style={styles.landlord}>
               {user?.name ?? ''}
             </Text>
           </View>

@@ -5,21 +5,21 @@ import { Text } from 'app/components/core'
 import UserBadges from 'app/components/user-badges'
 import type { GestureResponderHandler } from 'app/types/gesture'
 
-type ArtistLinkProps = {
-  artist: User
+type LandlordLinkProps = {
+  landlord: User
   onPress: GestureResponderHandler
 }
 
-export const ArtistLink = (props: ArtistLinkProps) => {
-  const { artist, onPress } = props
-  const { name } = artist
+export const LandlordLink = (props: LandlordLinkProps) => {
+  const { landlord, onPress } = props
+  const { name } = landlord
 
   return (
     <TouchableOpacity style={{ flexDirection: 'row' }} onPress={onPress}>
       <Text color='secondary' variant='h3'>
         {name}
       </Text>
-      <UserBadges user={artist} hideName badgeSize={8} />
+      <UserBadges user={landlord} hideName badgeSize={8} />
     </TouchableOpacity>
   )
 }

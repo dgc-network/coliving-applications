@@ -45,7 +45,7 @@ const AgreementInfo = g(({ agreement, user }) => {
       <DynamicImage wrapperClassName={styles.artwork} image={image} />
       {agreement.title}
       <div className={styles.by}>{messages.by}</div>
-      <div className={styles.artistName}>
+      <div className={styles.landlordName}>
         {user.name}
         <UserBadges
           className={styles.iconVerified}

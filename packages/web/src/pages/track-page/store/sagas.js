@@ -106,7 +106,7 @@ function* addAgreementToLineup(agreement) {
   yield put(agreementsActions.add(formattedAgreement, agreement.agreement_id))
 }
 
-/** Get "more by this artist" and put into the lineup + queue */
+/** Get "more by this landlord" and put into the lineup + queue */
 function* getRestOfLineup(permalink, ownerHandle) {
   yield put(
     agreementsActions.fetchLineupMetadatas(1, 5, false, {

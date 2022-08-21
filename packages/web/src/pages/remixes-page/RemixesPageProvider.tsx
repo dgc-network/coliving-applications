@@ -77,7 +77,7 @@ const RemixesPageProvider = ({
     }
   }, [goToRoute, originalAgreement, user])
 
-  const goToArtistPage = useCallback(() => {
+  const goToLandlordPage = useCallback(() => {
     if (user) {
       goToRoute(profilePage(user?.handle))
     }
@@ -110,7 +110,7 @@ const RemixesPageProvider = ({
     originalAgreement,
     user,
     goToAgreementPage,
-    goToArtistPage,
+    goToLandlordPage,
     getLineupProps
   }
 

@@ -387,7 +387,7 @@ class CollectionPage extends Component<
       ...metadata,
       key: `${metadata.title}_${metadata.uid}_${i}`,
       name: metadata.title,
-      artist: metadata.user.name,
+      landlord: metadata.user.name,
       handle: metadata.user.handle,
       date: metadata.dateAdded || metadata.created_at,
       time: metadata.duration,
@@ -469,7 +469,7 @@ class CollectionPage extends Component<
     this.props.goToRoute(record.permalink)
   }
 
-  onClickArtistName = (record: AgreementRecord) => {
+  onClickLandlordName = (record: AgreementRecord) => {
     this.props.goToRoute(profilePage(record.handle))
   }
 
@@ -613,7 +613,7 @@ class CollectionPage extends Component<
     this.props.shareCollection(contentListId)
   }
 
-  onHeroAgreementClickArtistName = () => {
+  onHeroAgreementClickLandlordName = () => {
     const { goToRoute, user } = this.props
     const contentListOwnerHandle = user ? user.handle : ''
     goToRoute(profilePage(contentListOwnerHandle))
@@ -743,7 +743,7 @@ class CollectionPage extends Component<
       getPlayingUid: this.getPlayingUid,
       getFilteredData: this.getFilteredData,
       isQueued: this.isQueued,
-      onHeroAgreementClickArtistName: this.onHeroAgreementClickArtistName,
+      onHeroAgreementClickLandlordName: this.onHeroAgreementClickLandlordName,
       onFilterChange: this.onFilterChange,
       onPlay: this.onPlay,
       onHeroAgreementEdit: this.onHeroAgreementEdit,
@@ -754,7 +754,7 @@ class CollectionPage extends Component<
       onClickRow: this.onClickRow,
       onClickSave: this.onClickSave,
       onClickAgreementName: this.onClickAgreementName,
-      onClickArtistName: this.onClickArtistName,
+      onClickLandlordName: this.onClickLandlordName,
       onClickRepostAgreement: this.onClickRepostAgreement,
       onClickDescriptionExternalLink: this.onClickDescriptionExternalLink,
       onSortAgreements: this.onSortAgreements,

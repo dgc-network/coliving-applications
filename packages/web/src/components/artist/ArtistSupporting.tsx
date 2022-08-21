@@ -20,37 +20,37 @@ import {
   UserListEntityType,
   UserListType
 } from 'store/application/ui/userListModal/types'
-import { MAX_ARTIST_HOVER_TOP_SUPPORTING } from 'utils/constants'
+import { MAX_LANDLORD_HOVER_TOP_SUPPORTING } from 'utils/constants'
 
-import styles from './ArtistSupporting.module.css'
+import styles from './LandlordSupporting.module.css'
 
 const messages = {
   supporting: 'Supporting'
 }
 
-type ArtistSupportingProps = {
-  artist: User
+type LandlordSupportingProps = {
+  landlord: User
   onNavigateAway?: () => void
 }
-export const ArtistSupporting = (props: ArtistSupportingProps) => {
-  const { artist, onNavigateAway } = props
-  const { user_id, supporting_count } = artist
+export const LandlordSupporting = (props: LandlordSupportingProps) => {
+  const { landlord, onNavigateAway } = props
+  const { user_id, supporting_count } = landlord
   const dispatch = useDispatch()
 
   const supportingMap = useSelector(getOptimisticSupporting)
-  const hasNotPreviouslyFetchedSupportingForArtist =
+  const hasNotPreviouslyFetchedSupportingForLandlord =
     supportingMap[user_id] === undefined
-  const supportingForArtist = supportingMap[user_id] ?? {}
-  const supportingForArtistIds = Object.keys(
-    supportingForArtist
+  const supportingForLandlord = supportingMap[user_id] ?? {}
+  const supportingForLandlordIds = Object.keys(
+    supportingForLandlord
   ) as unknown as ID[]
-  const rankedSupportingList = supportingForArtistIds
+  const rankedSupportingList = supportingForLandlordIds
     .sort((k1, k2) => {
-      const amount1BN = stringWeiToBN(supportingForArtist[k1].amount)
-      const amount2BN = stringWeiToBN(supportingForArtist[k2].amount)
+      const amount1BN = stringWeiToBN(supportingForLandlord[k1].amount)
+      const amount2BN = stringWeiToBN(supportingForLandlord[k2].amount)
       return amount1BN.gte(amount2BN) ? -1 : 1
     })
-    .map((k) => supportingForArtist[k])
+    .map((k) => supportingForLandlord[k])
 
   const rankedSupporting = useSelector((state) => {
     const usersMap = getUsers(state, {
@@ -63,14 +63,14 @@ export const ArtistSupporting = (props: ArtistSupportingProps) => {
   })
 
   /**
-   * It's possible that we don't have the data for which artists
-   * this artist is supporting. Thus, we fetch in this case.
+   * It's possible that we don't have the data for which landlords
+   * this landlord is supporting. Thus, we fetch in this case.
    */
   useEffect(() => {
-    if (hasNotPreviouslyFetchedSupportingForArtist) {
+    if (hasNotPreviouslyFetchedSupportingForLandlord) {
       dispatch(fetchSupportingForUser({ userId: user_id }))
     }
-  }, [dispatch, hasNotPreviouslyFetchedSupportingForArtist, user_id])
+  }, [dispatch, hasNotPreviouslyFetchedSupportingForLandlord, user_id])
 
   const handleClick = useCallback(() => {
     /**
@@ -80,7 +80,7 @@ export const ArtistSupporting = (props: ArtistSupportingProps) => {
      * Clicking on the supporting section is supposed to
      * load a new user list modal that shows the users who
      * are being supported by the user represented by the
-     * artist card.
+     * landlord card.
      */
     dispatch(reset(SUPPORTING_TAG))
     dispatch(
@@ -111,7 +111,7 @@ export const ArtistSupporting = (props: ArtistSupportingProps) => {
       </div>
       <div className={styles.line} />
       <UserProfilePictureList
-        limit={MAX_ARTIST_HOVER_TOP_SUPPORTING}
+        limit={MAX_LANDLORD_HOVER_TOP_SUPPORTING}
         users={rankedSupporting}
         totalUserCount={supporting_count}
         disableProfileClick

@@ -28,10 +28,10 @@ export const AgreementsTab = () => {
     profileHandle === params?.handle ||
     (params?.handle === 'accountUser' && isOwner)
 
-  const { user_id, agreement_count, _artist_pick } = useSelectProfile([
+  const { user_id, agreement_count, _landlord_pick } = useSelectProfile([
     'user_id',
     'agreement_count',
-    '_artist_pick'
+    '_landlord_pick'
   ])
 
   // TODO: use fetchPayload (or change Remixes page)
@@ -52,7 +52,7 @@ export const AgreementsTab = () => {
    */
   return (
     <Lineup
-      leadingElementId={_artist_pick}
+      leadingElementId={_landlord_pick}
       listKey='profile-agreements'
       actions={agreementsActions}
       lineup={isProfileLoaded ? lineup : { ...lineup, entries: [] }}

@@ -179,7 +179,7 @@ const PlayBar = ({
             )}
             <div className={styles.title}>{title}</div>
             <div className={styles.separator}>•</div>
-            <div className={styles.artist}>{name}</div>
+            <div className={styles.landlord}>{name}</div>
           </div>
           <div className={styles.play}>
             <PlayButton

@@ -82,7 +82,7 @@ export enum Name {
   UNDO_REPOST = 'Undo Repost',
   FAVORITE = 'Favorite',
   UNFAVORITE = 'Unfavorite',
-  ARTIST_PICK_SELECT_AGREEMENT = 'Artist Pick: Select Agreement',
+  LANDLORD_PICK_SELECT_AGREEMENT = 'Landlord Pick: Select Agreement',
   FOLLOW = 'Follow',
   UNFOLLOW = 'Unfollow',
 
@@ -115,7 +115,7 @@ export enum Name {
   AGREEMENT_UPLOAD_AGREEMENT_UPLOADING = 'Agreement Upload: Agreement Uploading',
   AGREEMENT_UPLOAD_COMPLETE_UPLOAD = 'Agreement Upload: Complete Upload',
   AGREEMENT_UPLOAD_COPY_LINK = 'Agreement Upload: Copy Link',
-  AGREEMENT_UPLOAD_SHARE_WITH_FANS = 'Agreement Upload: Share with your fans',
+  AGREEMENT_UPLOAD_SHARE_WITH_FANS = 'Agreement Upload: Share with your residents',
   AGREEMENT_UPLOAD_SHARE_SOUND_TO_TIKTOK = 'Agreement Upload: Share sound to TikTok',
   AGREEMENT_UPLOAD_VIEW_AGREEMENT_PAGE = 'Agreement Upload: View Agreement page',
   AGREEMENT_UPLOAD_SUCCESS = 'Agreement Upload: Success',
@@ -153,11 +153,11 @@ export enum Name {
   PROFILE_PAGE_CLICK_TIKTOK = 'Profile Page: Go To TikTok',
   PROFILE_PAGE_CLICK_WEBSITE = 'ProfilePage: Go To Website',
   PROFILE_PAGE_CLICK_DONATION = 'ProfilePage: Go To Donation',
-  PROFILE_PAGE_SHOWN_ARTIST_RECOMMENDATIONS = 'ProfilePage: Shown Artist Recommendations',
+  PROFILE_PAGE_SHOWN_LANDLORD_RECOMMENDATIONS = 'ProfilePage: Shown Landlord Recommendations',
 
   // Agreement page
   AGREEMENT_PAGE_DOWNLOAD = 'Agreement Page: Download',
-  AGREEMENT_PAGE_PLAY_MORE = 'Agreement Page: Play More By This Artist',
+  AGREEMENT_PAGE_PLAY_MORE = 'Agreement Page: Play More By This Landlord',
 
   // Playback
   PLAYBACK_PLAY = 'Playback: Play',
@@ -488,7 +488,7 @@ export enum FollowSource {
   HOVER_TILE = 'hover tile',
   OVERFLOW = 'overflow',
   USER_LIST = 'user list',
-  ARTIST_RECOMMENDATIONS_POPUP = 'artist recommendations popup',
+  LANDLORD_RECOMMENDATIONS_POPUP = 'landlord recommendations popup',
   EMPTY_FEED = 'empty feed'
 }
 
@@ -532,8 +532,8 @@ type Unfavorite = {
   source: FavoriteSource
   id: string
 }
-type ArtistPickSelectAgreement = {
-  eventName: Name.ARTIST_PICK_SELECT_AGREEMENT
+type LandlordPickSelectAgreement = {
+  eventName: Name.LANDLORD_PICK_SELECT_AGREEMENT
   id: string
 }
 type Follow = {
@@ -799,8 +799,8 @@ type ProfilePageClickDonation = {
   handle: string
   donation: string
 }
-type ProfilePageShownArtistRecommendations = {
-  eventName: Name.PROFILE_PAGE_SHOWN_ARTIST_RECOMMENDATIONS
+type ProfilePageShownLandlordRecommendations = {
+  eventName: Name.PROFILE_PAGE_SHOWN_LANDLORD_RECOMMENDATIONS
   userId: number
 }
 
@@ -1292,7 +1292,7 @@ export type AllAgreementingEvents =
   | UndoRepost
   | Favorite
   | Unfavorite
-  | ArtistPickSelectAgreement
+  | LandlordPickSelectAgreement
   | ContentListAdd
   | ContentListOpenCreate
   | ContentListStartCreate
@@ -1335,7 +1335,7 @@ export type AllAgreementingEvents =
   | ProfilePageClickTikTok
   | ProfilePageClickWebsite
   | ProfilePageClickDonation
-  | ProfilePageShownArtistRecommendations
+  | ProfilePageShownLandlordRecommendations
   | AgreementPageDownload
   | AgreementPagePlayMore
   | PlaybackPlay

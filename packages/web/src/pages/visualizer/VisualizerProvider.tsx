@@ -134,7 +134,7 @@ const Visualizer = ({
     }
   }, [currentQueueItem])
 
-  const goToArtistPage = useCallback(() => {
+  const goToLandlordPage = useCallback(() => {
     const { user } = currentQueueItem
     if (user) {
       goToRoute(profilePage(user.handle))
@@ -154,17 +154,17 @@ const Visualizer = ({
           isOwner={agreement.owner_id === user.user_id}
           agreementTitle={agreement.title}
           agreementPermalink={agreement.permalink}
-          artistName={user.name}
-          artistHandle={user.handle}
-          artistUserId={user.user_id}
+          landlordName={user.name}
+          landlordHandle={user.handle}
+          landlordUserId={user.user_id}
           isVerified={user.is_verified}
           isAgreementUnlisted={agreement.is_unlisted}
           onClickAgreementTitle={() => {
             goToAgreementPage()
             onClose()
           }}
-          onClickArtistName={() => {
-            goToArtistPage()
+          onClickLandlordName={() => {
+            goToLandlordPage()
             onClose()
           }}
           hasShadow={true}

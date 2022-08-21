@@ -5,12 +5,12 @@ import { ReactComponent as IconTrophy } from 'assets/img/iconTrophy.svg'
 import styles from './AchievementTile.module.css'
 
 const getAchievement = () => {
-  // TODO: Use some information about the artist to calculate the 'achievement'
+  // TODO: Use some information about the landlord to calculate the 'achievement'
   return { value: '300', valueLabel: 'th', label: 'Most Played' }
 }
 
 const AchievementTile = (props) => {
-  const { value, valueLabel, label } = getAchievement(props.artistStats)
+  const { value, valueLabel, label } = getAchievement(props.landlordStats)
   return (
     <div className={styles.achievementTileContainer}>
       <IconTrophy className={styles.achievementTrophy} />

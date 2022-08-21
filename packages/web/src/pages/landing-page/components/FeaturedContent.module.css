@@ -133,7 +133,7 @@
   text-align: center;
 }
 
-.agreement .agreementArtist {
+.agreement .agreementLandlord {
   opacity: 0;
   color: rgba(255, 255, 255, 1);
   font-size: 18px;
@@ -154,7 +154,7 @@
   opacity: 1;
 }
 
-.agreement:hover .agreementArtist {
+.agreement:hover .agreementLandlord {
   opacity: 1;
 }
 
@@ -251,7 +251,7 @@
   fill: #858199;
 }
 
-.mobileContainer .agreementArtist {
+.mobileContainer .agreementLandlord {
   color: #858199;
   font-size: 14px;
   font-weight: 500;

@@ -74,7 +74,7 @@ const CollectionHeader = ({
   userId,
   title,
   coverArtSizes,
-  artistName,
+  landlordName,
   description,
   isOwner,
   isReposted,
@@ -89,7 +89,7 @@ const CollectionHeader = ({
   playing,
   saves,
   repostCount,
-  onClickArtistName,
+  onClickLandlordName,
   onPlay,
   onShare,
   onSave,
@@ -123,7 +123,7 @@ const CollectionHeader = ({
         ? OverflowAction.PUBLISH_CONTENT_LIST
         : null,
       isOwner && !isAlbum ? OverflowAction.DELETE_CONTENT_LIST : null,
-      OverflowAction.VIEW_ARTIST_PAGE
+      OverflowAction.VIEW_LANDLORD_PAGE
     ].filter(Boolean)
 
     onClickMobileOverflow(collectionId, overflowActions)
@@ -192,7 +192,7 @@ const CollectionHeader = ({
           <div className={styles.title}>
             <Loading variant='title' />
           </div>
-          <div className={styles.artist} onClick={onClickArtistName}>
+          <div className={styles.landlord} onClick={onClickLandlordName}>
             <Loading variant='name' />
           </div>
 
@@ -217,9 +217,9 @@ const CollectionHeader = ({
             )}
           </DynamicImage>
           <h1 className={styles.title}>{title}</h1>
-          {artistName && (
-            <div className={styles.artist} onClick={onClickArtistName}>
-              <h2>{artistName}</h2>
+          {landlordName && (
+            <div className={styles.landlord} onClick={onClickLandlordName}>
+              <h2>{landlordName}</h2>
               <UserBadges
                 userId={userId}
                 badgeSize={16}
@@ -291,8 +291,8 @@ CollectionHeader.propTypes = {
   active: PropTypes.bool,
   type: PropTypes.oneOf(['contentList', 'album']),
   title: PropTypes.string,
-  artistName: PropTypes.string,
-  artistHandle: PropTypes.string,
+  landlordName: PropTypes.string,
+  landlordHandle: PropTypes.string,
   coverArtSizes: PropTypes.object,
   description: PropTypes.string,
 
@@ -307,7 +307,7 @@ CollectionHeader.propTypes = {
   repostCount: PropTypes.number,
 
   // Actions
-  onClickArtistName: PropTypes.func,
+  onClickLandlordName: PropTypes.func,
   onRepost: PropTypes.func,
   onPlay: PropTypes.func,
   onClickFavorites: PropTypes.func,

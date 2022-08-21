@@ -18,7 +18,7 @@ import PropTypes from 'prop-types'
 import { squashNewLines } from 'common/utils/formatUtil'
 import { getCanonicalName } from 'common/utils/genres'
 import { formatDate, formatSeconds } from 'common/utils/timeUtil'
-import { ArtistPopover } from 'components/artist/ArtistPopover'
+import { LandlordPopover } from 'components/landlord/LandlordPopover'
 import DownloadButtons from 'components/download-buttons/DownloadButtons'
 import LoadingSpinner from 'components/loading-spinner/LoadingSpinner'
 import Menu from 'components/menu/Menu'
@@ -357,20 +357,20 @@ class GiantAgreementTile extends PureComponent {
       agreementId,
       agreementTitle,
       coverArtSizes,
-      artistName,
-      artistHandle,
+      landlordName,
+      landlordHandle,
       description,
       duration,
       credits,
       isOwner,
       isSaved,
       badge,
-      onClickArtistName,
+      onClickLandlordName,
       onPlay,
       following,
       onFollow,
       onUnfollow,
-      isArtistPick,
+      isLandlordPick,
       isUnlisted,
       onExternalLinkClick,
       coSign,
@@ -384,7 +384,7 @@ class GiantAgreementTile extends PureComponent {
     const overflowMenuExtraItems = []
     if (!isOwner) {
       overflowMenuExtraItems.push({
-        text: following ? 'Unfollow Artist' : 'Follow Artist',
+        text: following ? 'Unfollow Landlord' : 'Follow Landlord',
         onClick: () =>
           setTimeout(() => (following ? onUnfollow() : onFollow()), 0)
       })
@@ -395,15 +395,15 @@ class GiantAgreementTile extends PureComponent {
         type: 'agreement',
         agreementId,
         agreementTitle,
-        handle: artistHandle,
+        handle: landlordHandle,
         isFavorited: isSaved,
         mount: 'page',
         isOwner,
         includeFavorite: false,
         includeAgreementPage: false,
-        isArtistPick,
+        isLandlordPick,
         includeEmbed: !isUnlisted,
-        includeArtistPick: !isUnlisted,
+        includeLandlordPick: !isUnlisted,
         includeAddToContentList: !isUnlisted,
         extraMenuItems: overflowMenuExtraItems
       }
@@ -430,19 +430,19 @@ class GiantAgreementTile extends PureComponent {
                 <h1 className={cn(fadeIn)}>{agreementTitle}</h1>
                 {isLoading && <Skeleton className={styles.skeleton} />}
               </div>
-              <div className={styles.artistWrapper}>
+              <div className={styles.landlordWrapper}>
                 <div className={cn(fadeIn)}>
                   <span>By</span>
-                  <ArtistPopover handle={artistHandle}>
-                    <h2 className={styles.artist} onClick={onClickArtistName}>
-                      {artistName}
+                  <LandlordPopover handle={landlordHandle}>
+                    <h2 className={styles.landlord} onClick={onClickLandlordName}>
+                      {landlordName}
                       <UserBadges
                         className={styles.verified}
                         badgeSize={18}
                         userId={userId}
                       />
                     </h2>
-                  </ArtistPopover>
+                  </LandlordPopover>
                 </div>
                 {isLoading && (
                   <Skeleton className={styles.skeleton} width='60%' />
@@ -543,8 +543,8 @@ GiantAgreementTile.propTypes = {
   active: PropTypes.bool,
   agreementTitle: PropTypes.string,
   agreementId: PropTypes.number,
-  artistName: PropTypes.string,
-  artistHandle: PropTypes.string,
+  landlordName: PropTypes.string,
+  landlordHandle: PropTypes.string,
   coverArtSizes: PropTypes.object,
   tags: PropTypes.string,
   description: PropTypes.string,
@@ -567,7 +567,7 @@ GiantAgreementTile.propTypes = {
   fieldVisibility: PropTypes.object,
   coSign: PropTypes.object,
   // Actions
-  onClickArtistName: PropTypes.func,
+  onClickLandlordName: PropTypes.func,
   onPlay: PropTypes.func,
   onShare: PropTypes.func,
   onRepost: PropTypes.func,
@@ -597,7 +597,7 @@ GiantAgreementTile.defaultProps = {
   isSaved: false,
   badge: '',
   // Actions
-  onClickArtistName: () => {},
+  onClickLandlordName: () => {},
   onPlay: () => {},
   onShare: () => {},
   onRepost: () => {},

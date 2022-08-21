@@ -53,7 +53,7 @@ const messages = {
 }
 
 type Props = {
-  artistName: string
+  landlordName: string
   coSign?: Remix | null
   imageUrl?: string
   isPlaying: boolean
@@ -64,7 +64,7 @@ type Props = {
 }
 
 export const LineupTileMetadata = ({
-  artistName,
+  landlordName,
   coSign,
   imageUrl,
   isPlaying,
@@ -78,7 +78,7 @@ export const LineupTileMetadata = ({
   const agreementTileStyles = useThemedStyles(createAgreementTileStyles)
   const { primary } = useThemeColors()
 
-  const handleArtistPress = useCallback(() => {
+  const handleLandlordPress = useCallback(() => {
     navigation.push({
       native: { screen: 'Profile', params: { handle: user.handle } },
       web: { route: `/${user.handle}` }
@@ -114,7 +114,7 @@ export const LineupTileMetadata = ({
             </>
           )}
         </Pressable>
-        <Pressable style={agreementTileStyles.artist} onPress={handleArtistPress}>
+        <Pressable style={agreementTileStyles.landlord} onPress={handleLandlordPress}>
           {({ pressed }) => (
             <>
               <Text
@@ -126,7 +126,7 @@ export const LineupTileMetadata = ({
                 weight='medium'
                 numberOfLines={1}
               >
-                {artistName}
+                {landlordName}
               </Text>
               <UserBadges
                 user={user}

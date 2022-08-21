@@ -7,7 +7,7 @@ import { Header } from 'app/components/header'
 import { TopTabNavigator } from 'app/components/top-tab-bar'
 import { usePopToTopOnDrawerOpen } from 'app/hooks/usePopToTopOnDrawerOpen'
 
-import { ArtistsTab } from './tabs/ArtistsTab'
+import { LandlordsTab } from './tabs/LandlordsTab'
 import { ForYouTab } from './tabs/ForYouTab'
 import { MoodsTab } from './tabs/MoodsTab'
 import { ContentListsTab } from './tabs/ContentListsTab'
@@ -30,9 +30,9 @@ const exploreScreens = [
     component: ContentListsTab
   },
   {
-    name: 'artists',
+    name: 'landlords',
     Icon: IconUser,
-    component: ArtistsTab
+    component: LandlordsTab
   }
 ]
 

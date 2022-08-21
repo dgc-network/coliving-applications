@@ -73,7 +73,7 @@
   font-weight: 600;
 }
 
-.artistWrapper {
+.landlordWrapper {
   color: var(--neutral-light-5);
   font-size: var(--font-l);
   font-weight: var(--font-bold);
@@ -83,11 +83,11 @@
   position: relative;
 }
 
-.artistWrapper :global(.artistPopover) {
+.landlordWrapper :global(.landlordPopover) {
   display: inline;
 }
 
-.artistWrapper .artist {
+.landlordWrapper .landlord {
   display: inline-flex;
   color: var(--secondary);
   font-size: var(--font-l);
@@ -96,7 +96,7 @@
   align-items: center;
 }
 
-.artistWrapper .artist:hover {
+.landlordWrapper .landlord:hover {
   color: var(--primary);
   cursor: pointer;
   text-decoration: underline;

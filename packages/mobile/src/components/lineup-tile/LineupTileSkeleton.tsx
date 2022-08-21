@@ -35,7 +35,7 @@ export const LineupTileSkeleton = () => {
           <View style={agreementTileStyles.title}>
             <Skeleton style={styles.skeleton} width='80%' height='80%' />
           </View>
-          <View style={[agreementTileStyles.artist, { width: '100%' }]}>
+          <View style={[agreementTileStyles.landlord, { width: '100%' }]}>
             <Skeleton style={styles.skeleton} width='60%' height='80%' />
           </View>
         </View>

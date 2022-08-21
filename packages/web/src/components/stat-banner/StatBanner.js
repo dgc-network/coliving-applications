@@ -9,7 +9,7 @@ import {
 } from '@coliving/stems'
 import PropTypes from 'prop-types'
 
-import { ArtistRecommendationsPopup } from 'components/artist-recommendations/ArtistRecommendationsPopup'
+import { LandlordRecommendationsPopup } from 'components/landlord-recommendations/LandlordRecommendationsPopup'
 import FollowButton from 'components/follow-button/FollowButton'
 import Stats from 'components/stats/Stats'
 import SubscribeButton from 'components/subscribe-button/SubscribeButton'
@@ -90,11 +90,11 @@ const StatBanner = (props) => {
             widthToHideText={BUTTON_COLLAPSE_WIDTHS.second}
             className={styles.followButton}
           />
-          <ArtistRecommendationsPopup
+          <LandlordRecommendationsPopup
             anchorRef={followButtonRef}
-            artistId={props.profileId}
-            isVisible={props.areArtistRecommendationsVisible}
-            onClose={props.onCloseArtistRecommendations}
+            landlordId={props.profileId}
+            isVisible={props.areLandlordRecommendationsVisible}
+            onClose={props.onCloseLandlordRecommendations}
           />
         </div>
       )
@@ -141,10 +141,10 @@ StatBanner.propTypes = {
   empty: PropTypes.bool,
   handle: PropTypes.string,
   profileId: PropTypes.number,
-  areArtistRecommendationsVisible: PropTypes.bool,
-  onCloseArtistRecommendations: PropTypes.func,
+  areLandlordRecommendationsVisible: PropTypes.bool,
+  onCloseLandlordRecommendations: PropTypes.func,
   userId: PropTypes.number,
-  onClickArtistName: PropTypes.func,
+  onClickLandlordName: PropTypes.func,
   onEdit: PropTypes.func,
   onShare: PropTypes.func,
   onSave: PropTypes.func,
@@ -164,7 +164,7 @@ StatBanner.defaultProps = {
   ],
   mode: 'visitor',
   empty: false,
-  showSuggestedArtists: false
+  showSuggestedLandlords: false
 }
 
 export default StatBanner

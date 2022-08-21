@@ -4,7 +4,7 @@ import InfiniteScroll from 'react-infinite-scroller'
 import Lottie from 'react-lottie'
 
 import loadingSpinner from 'assets/animations/loadingSpinner.json'
-import ArtistChip from 'components/artist/ArtistChip'
+import LandlordChip from 'components/landlord/LandlordChip'
 import FollowButton from 'components/follow-button/FollowButton'
 import { MountPlacement } from 'components/types'
 
@@ -20,7 +20,7 @@ type UserListProps = {
   isMobile: boolean
   tag: string
   loadMore: () => void
-  onClickArtistName: (handle: string) => void
+  onClickLandlordName: (handle: string) => void
   onFollow: (userId: ID) => void
   onUnfollow: (userId: ID) => void
   getScrollParent?: () => HTMLElement | null
@@ -46,15 +46,15 @@ const UserList = (props: UserListProps) => {
               [styles.notLastUser]: index !== props.users.length - 1
             })}
           >
-            <ArtistChip
+            <LandlordChip
               user={user}
-              onClickArtistName={() => {
-                props.onClickArtistName(user.handle)
+              onClickLandlordName={() => {
+                props.onClickLandlordName(user.handle)
               }}
               onNavigateAway={props.onNavigateAway}
               showPopover={!props.isMobile}
               tag={props.tag}
-              className={styles.artistChipContainer}
+              className={styles.landlordChipContainer}
               popoverMount={MountPlacement.BODY}
             />
             {user.user_id !== props.userId ? (

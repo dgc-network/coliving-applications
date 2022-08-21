@@ -1,4 +1,4 @@
-.artistPick {
+.landlordPick {
   position: absolute;
   z-index: 10;
   width: 80px;
@@ -31,7 +31,7 @@
   transform: rotate(45deg) translateX(-68px);
 }
 
-.artistPick svg {
+.landlordPick svg {
   position: absolute;
   left: 0;
   top: 0;
@@ -46,6 +46,6 @@
   height: 16px;
 }
 
-.artistPick svg path {
+.landlordPick svg path {
   fill: var(--static-white);
 }

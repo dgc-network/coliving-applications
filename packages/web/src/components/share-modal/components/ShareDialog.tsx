@@ -71,7 +71,7 @@ export const ShareDialog = ({
       <ModalContent>
         <div className={styles.modalContent}>
           <p className={styles.description}>
-            Spread the word! Share with your friends and fans!
+            Spread the word! Share with your friends and residents!
           </p>
           <ul className={styles.actionList}>
             <ShareActionListItem

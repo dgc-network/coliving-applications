@@ -62,7 +62,7 @@ export type LineupProps = {
   isFeed?: boolean
 
   /**
-   * Indicator if a agreement should be displayed differently (ie. artist pick)
+   * Indicator if a agreement should be displayed differently (ie. landlord pick)
    * The leadingElementId is displayed at the top of the lineup
    */
   leadingElementId?: ID
@@ -107,10 +107,10 @@ export type LineupProps = {
   selfLoad?: boolean
 
   /**
-   * Whether to show the artist pick on the leading element.
+   * Whether to show the landlord pick on the leading element.
    * Defaults to true.
    */
-  showLeadingElementArtistPick?: boolean
+  showLeadingElementLandlordPick?: boolean
 
   /**
    * Which item to start the lineup at (previous items will not be rendered)

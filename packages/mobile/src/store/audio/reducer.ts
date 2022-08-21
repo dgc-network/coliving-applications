@@ -21,7 +21,7 @@ type Uri = string
 type Info = {
   uid: string
   title: string
-  artist: string
+  landlord: string
   artwork: string
   largeArtwork: string
   agreementId: number

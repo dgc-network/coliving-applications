@@ -273,7 +273,7 @@ const CreatePassword = ({ navigation, route }: CreatePasswordProps) => {
   const dispatch = useDispatch()
   const dispatchWeb = useDispatchWeb()
   const onSignOn = useSelector(getOnSignUp)
-  const [didFetchArtists, setDidFetchArtists] = useState(false)
+  const [didFetchLandlords, setDidFetchLandlords] = useState(false)
   const [passwordBorderColor, setPasswordBorderColor] =
     useState(defaultBorderColor)
   const [passwordConfirmationBorderColor, setPasswordConfirmationBorderColor] =
@@ -308,14 +308,14 @@ const CreatePassword = ({ navigation, route }: CreatePasswordProps) => {
   })
 
   useEffect(() => {
-    if (!didFetchArtists) {
-      setDidFetchArtists(true)
+    if (!didFetchLandlords) {
+      setDidFetchLandlords(true)
       dispatchWeb({
-        type: MessageType.FETCH_ALL_FOLLOW_ARTISTS,
+        type: MessageType.FETCH_ALL_FOLLOW_LANDLORDS,
         isAction: true
       })
     }
-  }, [didFetchArtists, dispatchWeb])
+  }, [didFetchLandlords, dispatchWeb])
 
   useEffect(() => {
     setIsDisabled(

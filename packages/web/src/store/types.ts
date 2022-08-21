@@ -26,7 +26,7 @@ import RemixSettingsModalReducer from 'components/remix-settings-modal/store/sli
 import SearchBarState from 'components/search-bar/store/types'
 import ServiceSelectionReducer from 'components/service-selection/store/slice'
 import { UnfollowConfirmationModalState } from 'components/unfollow-confirmation-modal/store/types'
-import ArtistDashboardState from 'pages/artist-dashboard-page/store/types'
+import LandlordDashboardState from 'pages/landlord-dashboard-page/store/types'
 import { DeactivateAccountState } from 'pages/deactivate-account-page/store/slice'
 import DeletedPageReducer from 'pages/deleted-page/store/slice'
 import SignOnPageState from 'pages/sign-on/store/types'
@@ -42,7 +42,7 @@ import { EditContentListModalState } from './application/ui/editContentListModal
 import EditAgreementModalState from './application/ui/editAgreementModal/types'
 import { MobileKeyboardState } from './application/ui/mobileKeyboard/types'
 import { ScrollLockState } from './application/ui/scrollLock/types'
-import { SetAsArtistPickConfirmationState } from './application/ui/setAsArtistPickConfirmation/types'
+import { SetAsLandlordPickConfirmationState } from './application/ui/setAsLandlordPickConfirmation/types'
 import { UserListModalState } from './application/ui/userListModal/types'
 import { BackendState } from './backend/types'
 import { ConfirmerState } from './confirmer/types'
@@ -80,7 +80,7 @@ export type AppState = CommonState & {
       musicConfetti: ReturnType<typeof MusicConfetti>
       remixSettingsModal: ReturnType<typeof RemixSettingsModalReducer>
       scrollLock: ScrollLockState
-      setAsArtistPickConfirmation: SetAsArtistPickConfirmationState
+      setAsLandlordPickConfirmation: SetAsLandlordPickConfirmationState
       stemsUpload: ReturnType<typeof StemsUploadReducer>
       userListModal: UserListModalState
       visualizer: ReturnType<typeof VisualizerReducer>
@@ -100,7 +100,7 @@ export type AppState = CommonState & {
 
   // Pages
   upload: UploadPageState
-  dashboard: ArtistDashboardState
+  dashboard: LandlordDashboardState
   signOn: SignOnPageState
   history: HistoryPageState
   searchBar: SearchBarState

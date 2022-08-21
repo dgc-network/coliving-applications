@@ -107,7 +107,7 @@ class SavedPage extends PureComponent<SavedPageProps, SavedPageState> {
       ...entry,
       key: `${entry.title}_${entry.uid}_${i}`,
       name: entry.title,
-      artist: entry.user.name,
+      landlord: entry.user.name,
       handle: entry.user.handle,
       date: entry.dateSaved,
       time: entry.duration,
@@ -257,7 +257,7 @@ class SavedPage extends PureComponent<SavedPageProps, SavedPageState> {
     this.props.goToRoute(record.permalink)
   }
 
-  onClickArtistName = (record: AgreementRecord) => {
+  onClickLandlordName = (record: AgreementRecord) => {
     this.props.goToRoute(profilePage(record.handle))
   }
 
@@ -405,7 +405,7 @@ class SavedPage extends PureComponent<SavedPageProps, SavedPageState> {
       onClickRow: this.onClickRow,
       onClickSave: this.onClickSave,
       onClickAgreementName: this.onClickAgreementName,
-      onClickArtistName: this.onClickArtistName,
+      onClickLandlordName: this.onClickLandlordName,
       onClickRepost: this.onClickRepost
     }
 

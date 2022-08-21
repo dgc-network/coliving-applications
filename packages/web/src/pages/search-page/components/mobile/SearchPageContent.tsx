@@ -50,7 +50,7 @@ type SearchPageContentProps = {
   agreements: LineupState<{}>
   contentLists: UserCollection[]
   albums: UserCollection[]
-  artists: User[]
+  landlords: User[]
   match: any
   searchText: string
   dispatch: Dispatch
@@ -65,7 +65,7 @@ type SearchPageContentProps = {
   }
   search: {
     albumUids: UID[]
-    artistUids: UID[]
+    landlordUids: UID[]
     contentListUids: UID[]
     agreementUids: UID[]
     searchText: string
@@ -183,7 +183,7 @@ const AgreementsSearchPage = ({
   )
 }
 
-const ALBUM_CATEGORY_NAME = 'Artists'
+const ALBUM_CATEGORY_NAME = 'Landlords'
 
 enum CardType {
   ALBUM = 'ALBUM',
@@ -203,7 +203,7 @@ const cardSearchPageMessages = {
 const CardSearchPage = ({
   albums,
   contentLists,
-  artists,
+  landlords,
   goToRoute,
   cardType,
   search,
@@ -217,7 +217,7 @@ const CardSearchPage = ({
       case CardType.CONTENT_LIST:
         return contentLists
       case CardType.USER:
-        return artists
+        return landlords
     }
   })()
 

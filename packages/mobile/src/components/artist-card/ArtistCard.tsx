@@ -12,8 +12,8 @@ const formatProfileCardSecondaryText = (followers: number) => {
   return `${formatCount(followers)} ${followersText}`
 }
 
-type ArtistCardProps = {
-  artist: User
+type LandlordCardProps = {
+  landlord: User
   /**
    * Optional source page that establishes the `fromPage` for web-routes.
    */
@@ -21,8 +21,8 @@ type ArtistCardProps = {
   style?: StyleProp<ViewStyle>
 }
 
-export const ArtistCard = ({ artist, fromPage, style }: ArtistCardProps) => {
-  const { handle } = artist
+export const LandlordCard = ({ landlord, fromPage, style }: LandlordCardProps) => {
+  const { handle } = landlord
   const navigation = useNavigation()
   const handlePress = useCallback(() => {
     navigation.push({
@@ -34,13 +34,13 @@ export const ArtistCard = ({ artist, fromPage, style }: ArtistCardProps) => {
   return (
     <Card
       style={style}
-      id={artist.user_id}
-      imageSize={artist._profile_picture_sizes}
-      primaryText={artist.name}
-      secondaryText={formatProfileCardSecondaryText(artist.follower_count)}
+      id={landlord.user_id}
+      imageSize={landlord._profile_picture_sizes}
+      primaryText={landlord.name}
+      secondaryText={formatProfileCardSecondaryText(landlord.follower_count)}
       onPress={handlePress}
       type='user'
-      user={artist}
+      user={landlord}
     />
   )
 }

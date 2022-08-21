@@ -4,7 +4,7 @@ import IconBigSearch from 'app/assets/images/iconBigSearch.svg'
 import { useColor, useTheme } from 'app/utils/theme'
 
 const messages = {
-  empty: 'Search for Artists, Agreements, ContentLists, & Albums',
+  empty: 'Search for Landlords, Agreements, ContentLists, & Albums',
   noResults: 'Sorry, we couldn’t find anything that matches'
 }
 

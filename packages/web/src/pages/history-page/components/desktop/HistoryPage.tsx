@@ -25,7 +25,7 @@ export type HistoryPageProps = {
   onClickRow: (record: any) => void
   onClickSave: (record: any) => void
   onClickAgreementName: (record: any) => void
-  onClickArtistName: (record: any) => void
+  onClickLandlordName: (record: any) => void
   onClickRepost: (record: any) => void
   onSortAgreements: (sorters: any) => void
   goToRoute: (route: string) => void
@@ -47,7 +47,7 @@ const HistoryPage = ({
   onClickRow,
   onClickSave,
   onClickAgreementName,
-  onClickArtistName,
+  onClickLandlordName,
   onClickRepost,
   onSortAgreements,
   goToRoute,
@@ -75,7 +75,7 @@ const HistoryPage = ({
         onClickFavorite: onClickSave,
         onClickRow,
         onClickAgreementName,
-        onClickArtistName,
+        onClickLandlordName,
         onClickRepost,
         onSortAgreements
       }

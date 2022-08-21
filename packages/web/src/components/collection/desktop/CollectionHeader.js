@@ -20,7 +20,7 @@ import PropTypes from 'prop-types'
 import { ReactComponent as IconFilter } from 'assets/img/iconFilter.svg'
 import { squashNewLines } from 'common/utils/formatUtil'
 import { formatSecondsAsText, formatDate } from 'common/utils/timeUtil'
-import { ArtistPopover } from 'components/artist/ArtistPopover'
+import { LandlordPopover } from 'components/landlord/LandlordPopover'
 import DynamicImage from 'components/dynamic-image/DynamicImage'
 import { Input } from 'components/input'
 import LoadingSpinner from 'components/loading-spinner/LoadingSpinner'
@@ -517,8 +517,8 @@ class CollectionHeader extends PureComponent {
       type,
       title,
       coverArtSizes,
-      artistName,
-      artistHandle,
+      landlordName,
+      landlordHandle,
       description,
       isOwner,
       isAlbum,
@@ -535,7 +535,7 @@ class CollectionHeader extends PureComponent {
       isFollowing,
       reposts,
       saves,
-      onClickArtistName,
+      onClickLandlordName,
       onClickDescriptionExternalLink,
       onPlay,
       onEdit,
@@ -577,20 +577,20 @@ class CollectionHeader extends PureComponent {
               <h1 className={cn(fadeIn)}>{title}</h1>
               {isLoading && <Skeleton className={styles.skeleton} />}
             </div>
-            {artistName && (
-              <div className={styles.artistWrapper}>
+            {landlordName && (
+              <div className={styles.landlordWrapper}>
                 <div className={cn(fadeIn)}>
                   <span>By</span>
-                  <ArtistPopover handle={artistHandle}>
-                    <h2 className={styles.artist} onClick={onClickArtistName}>
-                      {artistName}
+                  <LandlordPopover handle={landlordHandle}>
+                    <h2 className={styles.landlord} onClick={onClickLandlordName}>
+                      {landlordName}
                       <UserBadges
                         userId={userId}
                         badgeSize={16}
                         className={styles.verified}
                       />
                     </h2>
-                  </ArtistPopover>
+                  </LandlordPopover>
                 </div>
                 {isLoading && (
                   <Skeleton className={styles.skeleton} width='60%' />
@@ -643,7 +643,7 @@ class CollectionHeader extends PureComponent {
                   contentListName={title}
                   isOwner={isOwner}
                   type={type}
-                  ownerHandle={artistHandle}
+                  ownerHandle={landlordHandle}
                   isAlbum={isAlbum}
                   hasAgreements={numAgreements > 0}
                   isPublished={isPublished}
@@ -696,8 +696,8 @@ CollectionHeader.propTypes = {
   active: PropTypes.bool,
   type: PropTypes.oneOf(['contentList', 'album']),
   title: PropTypes.string,
-  artistName: PropTypes.string,
-  artistHandle: PropTypes.string,
+  landlordName: PropTypes.string,
+  landlordHandle: PropTypes.string,
   coverArtSizes: PropTypes.object,
   tags: PropTypes.array,
   description: PropTypes.string,
@@ -713,7 +713,7 @@ CollectionHeader.propTypes = {
   saves: PropTypes.number,
 
   // Actions
-  onClickArtistName: PropTypes.func,
+  onClickLandlordName: PropTypes.func,
   onFilterChange: PropTypes.func,
   onPlay: PropTypes.func,
   onEdit: PropTypes.func,

@@ -516,41 +516,41 @@ export function* confirmUnsaveAgreement(agreementId: ID) {
   )
 }
 
-export function* watchSetArtistPick() {
+export function* watchSetLandlordPick() {
   yield* takeEvery(
-    socialActions.SET_ARTIST_PICK,
-    function* (action: ReturnType<typeof socialActions.setArtistPick>) {
+    socialActions.SET_LANDLORD_PICK,
+    function* (action: ReturnType<typeof socialActions.setLandlordPick>) {
       const userId = yield* select(getUserId)
       yield* put(
         cacheActions.update(Kind.USERS, [
           {
             id: userId,
-            metadata: { _artist_pick: action.agreementId }
+            metadata: { _landlord_pick: action.agreementId }
           }
         ])
       )
-      yield* call(ColivingBackend.setArtistPick, action.agreementId)
+      yield* call(ColivingBackend.setLandlordPick, action.agreementId)
 
-      const event = make(Name.ARTIST_PICK_SELECT_AGREEMENT, { id: action.agreementId })
+      const event = make(Name.LANDLORD_PICK_SELECT_AGREEMENT, { id: action.agreementId })
       yield* put(event)
     }
   )
 }
 
-export function* watchUnsetArtistPick() {
-  yield* takeEvery(socialActions.UNSET_ARTIST_PICK, function* (action) {
+export function* watchUnsetLandlordPick() {
+  yield* takeEvery(socialActions.UNSET_LANDLORD_PICK, function* (action) {
     const userId = yield* select(getUserId)
     yield* put(
       cacheActions.update(Kind.USERS, [
         {
           id: userId,
-          metadata: { _artist_pick: null }
+          metadata: { _landlord_pick: null }
         }
       ])
     )
-    yield* call(ColivingBackend.setArtistPick)
+    yield* call(ColivingBackend.setLandlordPick)
 
-    const event = make(Name.ARTIST_PICK_SELECT_AGREEMENT, { id: 'none' })
+    const event = make(Name.LANDLORD_PICK_SELECT_AGREEMENT, { id: 'none' })
     yield* put(event)
   })
 }
@@ -687,8 +687,8 @@ const sagas = () => {
     watchSaveAgreement,
     watchUnsaveAgreement,
     watchRecordListen,
-    watchSetArtistPick,
-    watchUnsetArtistPick,
+    watchSetLandlordPick,
+    watchUnsetLandlordPick,
     watchDownloadAgreement,
     watchShareAgreement,
     watchAgreementErrors

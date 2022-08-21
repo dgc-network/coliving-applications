@@ -9,7 +9,7 @@ import UserCard from 'components/card/UserCard'
 import styles from './FollowUsers.module.css'
 
 const messages = {
-  cta: `Let’s fix that by following some of these artists!`
+  cta: `Let’s fix that by following some of these landlords!`
 }
 
 const FollowUsers = (props) => {
@@ -59,7 +59,7 @@ const FollowUsers = (props) => {
       </div>
       <div className={styles.buttonContainer}>
         <Button
-          text={`Follow Selected Artists`}
+          text={`Follow Selected Landlords`}
           type={disabled ? ButtonType.DISABLED : ButtonType.PRIMARY_ALT}
           size={ButtonSize.MEDIUM}
           leftIcon={<IconFollow />}

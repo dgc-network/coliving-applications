@@ -18,9 +18,9 @@ const MOBILE_WIDTH_MEDIA_QUERY = window.matchMedia(
 )
 
 const messages = {
-  title: 'Coliving Listens to Artists',
+  title: 'Coliving Listens to Landlords',
   subTitle:
-    'Coliving listens to the needs of artists and fans - not just corporations & major labels'
+    'Coliving listens to the needs of landlords and residents - not just corporations & major labels'
 }
 
 type FeatureProps = {
@@ -47,7 +47,7 @@ const features: Array<Omit<FeatureProps, 'iconPosition'>> = [
     title: 'EXCLUSIVE CONTENT',
     description: (
       <>
-        {`Your fans can download stems and find remixes of your agreements right from
+        {`Your residents can download stems and find remixes of your agreements right from
         the agreement page. `}
         <a
           href='https://twitter.com/dgc-network/status/1272614652623519744?s=20'

@@ -111,7 +111,7 @@ const AgreementPage = ({
   const onSave = isOwner
     ? () => {}
     : () => heroAgreement && onSaveAgreement(isSaved, heroAgreement.agreement_id)
-  const onClickArtistName = () =>
+  const onClickLandlordName = () =>
     goToProfilePage(emptyStringGuard(user?.handle))
   const onShare = () => (heroAgreement ? onHeroShare(heroAgreement.agreement_id) : null)
   const onRepost = () =>
@@ -144,8 +144,8 @@ const AgreementPage = ({
       agreementTitle={defaults.title}
       agreementId={defaults.agreementId}
       userId={user?.user_id ?? 0}
-      artistName={emptyStringGuard(user?.name)}
-      artistHandle={emptyStringGuard(user?.handle)}
+      landlordName={emptyStringGuard(user?.name)}
+      landlordHandle={emptyStringGuard(user?.handle)}
       coverArtSizes={defaults.coverArtSizes}
       tags={defaults.tags}
       description={defaults.description}
@@ -160,8 +160,8 @@ const AgreementPage = ({
       isReposted={isReposted}
       isOwner={isOwner}
       currentUserId={userId}
-      isArtistPick={
-        heroAgreement && user ? user._artist_pick === heroAgreement.agreement_id : false
+      isLandlordPick={
+        heroAgreement && user ? user._landlord_pick === heroAgreement.agreement_id : false
       }
       isSaved={isSaved}
       badge={badge}
@@ -172,7 +172,7 @@ const AgreementPage = ({
       fieldVisibility={defaults.fieldVisibility}
       coSign={defaults.coSign}
       // Actions
-      onClickArtistName={onClickArtistName}
+      onClickLandlordName={onClickLandlordName}
       onClickTag={onClickTag}
       onPlay={onPlay}
       onShare={onShare}
@@ -232,7 +232,7 @@ const AgreementPage = ({
             />
           </div>
         )}
-      <div className={styles.moreByArtistLineupWrapper}>
+      <div className={styles.moreByLandlordLineupWrapper}>
         {hasValidRemixParent ? renderOriginalAgreementTitle() : renderMoreByTitle()}
         <Lineup
           lineup={agreements}
@@ -248,9 +248,9 @@ const AgreementPage = ({
             </div>
           }
           leadingElementTileProps={{ size: AgreementTileSize.LARGE }}
-          laggingContainerClassName={styles.moreByArtistContainer}
+          laggingContainerClassName={styles.moreByLandlordContainer}
           leadingElementClassName={styles.originalAgreement}
-          showLeadingElementArtistPick={false}
+          showLeadingElementLandlordPick={false}
           applyLeadingElementStylesToSkeleton
           // Don't render the first tile in the lineup since it's actually the "giant"
           // agreement tile this page is about.

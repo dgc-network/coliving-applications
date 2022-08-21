@@ -75,7 +75,7 @@ import { make } from 'store/analytics/actions'
 import mobileSagas from 'store/tipping/mobileSagas'
 import {
   FEED_TIP_DISMISSAL_TIME_LIMIT,
-  MAX_ARTIST_HOVER_TOP_SUPPORTING,
+  MAX_LANDLORD_HOVER_TOP_SUPPORTING,
   MAX_PROFILE_TOP_SUPPORTERS
 } from 'utils/constants'
 import { decodeHashId, encodeHashId } from 'utils/route/hashIds'
@@ -342,7 +342,7 @@ function* refreshSupportAsync({
       supportingParams.limit =
         account?.user_id === senderUserId
           ? account.supporting_count
-          : MAX_ARTIST_HOVER_TOP_SUPPORTING + 1
+          : MAX_LANDLORD_HOVER_TOP_SUPPORTING + 1
     }
 
     const supportersParams: SupportRequest = {
@@ -424,8 +424,8 @@ function* fetchSupportingForUserAsync({
   /**
    * If the user id is that of the logged in user, then
    * get all its supporting data so that when the logged in
-   * user is trying to tip an artist, we'll know whether or
-   * not that artist is already being supported by the logged in
+   * user is trying to tip an landlord, we'll know whether or
+   * not that landlord is already being supported by the logged in
    * user and thus correctly calculate how much more live to tip
    * to become the top supporter.
    */
@@ -433,7 +433,7 @@ function* fetchSupportingForUserAsync({
   const limit =
     account?.user_id === userId
       ? account.supporting_count
-      : MAX_ARTIST_HOVER_TOP_SUPPORTING + 1
+      : MAX_LANDLORD_HOVER_TOP_SUPPORTING + 1
   const supportingList = yield* call(fetchSupporting, {
     encodedUserId,
     limit

@@ -64,7 +64,7 @@ export const AgreementRemixesScreen = () => {
     })
   }
 
-  const handlePressArtistName = () => {
+  const handlePressLandlordName = () => {
     if (!user) {
       return
     }
@@ -93,7 +93,7 @@ export const AgreementRemixesScreen = () => {
                   {agreement.title}
                 </Text>{' '}
                 <Text>{messages.by}</Text>{' '}
-                <Text onPress={handlePressArtistName}>
+                <Text onPress={handlePressLandlordName}>
                   <Text style={styles.link}>{user.name}</Text>
                   {user ? (
                     <UserBadges user={user} badgeSize={10} hideName />

@@ -6,7 +6,7 @@ export type SearchPageState = {
   agreementIds: ID[]
   albumIds: ID[]
   contentListIds: ID[]
-  artistIds: ID[]
+  landlordIds: ID[]
   agreements: LineupState<Agreement>
 }
 

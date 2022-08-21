@@ -310,13 +310,13 @@ const NowPlaying = g(
         !collectible ? OverflowAction.ADD_TO_CONTENT_LIST : null,
         agreement && OverflowAction.VIEW_AGREEMENT_PAGE,
         collectible && OverflowAction.VIEW_COLLECTIBLE_PAGE,
-        OverflowAction.VIEW_ARTIST_PAGE
+        OverflowAction.VIEW_LANDLORD_PAGE
       ].filter(Boolean) as OverflowAction[]
 
       const overflowCallbacks = {
         [OverflowAction.VIEW_AGREEMENT_PAGE]: onClose,
         [OverflowAction.VIEW_COLLECTIBLE_PAGE]: onClose,
-        [OverflowAction.VIEW_ARTIST_PAGE]: onClose
+        [OverflowAction.VIEW_LANDLORD_PAGE]: onClose
       }
 
       clickOverflow(agreement_id, overflowActions, overflowCallbacks)
@@ -420,7 +420,7 @@ const NowPlaying = g(
           <div className={styles.title} onClick={goToAgreementPage}>
             {title}
           </div>
-          <div className={styles.artist} onClick={goToProfilePage}>
+          <div className={styles.landlord} onClick={goToProfilePage}>
             {name}
             <UserBadges
               userId={owner_id}

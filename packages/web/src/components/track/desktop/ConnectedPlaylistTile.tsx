@@ -38,7 +38,7 @@ import {
   undoRepostCollection
 } from 'common/store/social/collections/actions'
 import { requestOpen as requestOpenShareModal } from 'common/store/ui/share-modal/slice'
-import { ArtistPopover } from 'components/artist/ArtistPopover'
+import { LandlordPopover } from 'components/landlord/LandlordPopover'
 import Draggable from 'components/dragndrop/Draggable'
 import { OwnProps as CollectionkMenuProps } from 'components/menu/CollectionMenu'
 import Menu from 'components/menu/Menu'
@@ -281,7 +281,7 @@ const ConnectedContentListTile = memo(
         </Menu>
       )
     }
-    const onClickArtistName = useCallback(
+    const onClickLandlordName = useCallback(
       (e) => {
         e.stopPropagation()
         if (goToRoute) goToRoute(profilePage(handle))
@@ -293,16 +293,16 @@ const ConnectedContentListTile = memo(
       return (
         <div className={styles.userName}>
           <span className={styles.createdBy}>{'Created by'}</span>
-          <ArtistPopover handle={handle}>
+          <LandlordPopover handle={handle}>
             <span
               className={cn(styles.name, {
-                [styles.artistNameLink]: onClickArtistName
+                [styles.landlordNameLink]: onClickLandlordName
               })}
-              onClick={onClickArtistName}
+              onClick={onClickLandlordName}
             >
               {name}
             </span>
-          </ArtistPopover>
+          </LandlordPopover>
           <UserBadges
             userId={user?.user_id ?? 0}
             className={styles.iconVerified}
@@ -410,7 +410,7 @@ const ConnectedContentListTile = memo(
             playing={isPlaying}
             togglePlay={togglePlay}
             goToRoute={goToRoute}
-            artistHandle={handle}
+            landlordHandle={handle}
           />
         ))
       }
@@ -434,7 +434,7 @@ const ConnectedContentListTile = memo(
             agreement={agreement}
             togglePlay={togglePlay}
             goToRoute={goToRoute}
-            artistHandle={handle}
+            landlordHandle={handle}
           />
         </Draggable>
       ))

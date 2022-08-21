@@ -25,7 +25,7 @@ export type SavedPageAgreement = LineupAgreement & { dateSaved: string }
 export type AgreementRecord = SavedPageAgreement & {
   key: string
   name: string
-  artist: string
+  landlord: string
   handle: string
   date: Moment
   time: number

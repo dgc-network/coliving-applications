@@ -23,7 +23,7 @@ type OwnProps = {
   canonicalUrl: string
   user: User
   playable: Playable
-  deletedByArtist: boolean
+  deletedByLandlord: boolean
 
   children:
     | ComponentType<DesktopDeletedPageProps>
@@ -40,7 +40,7 @@ const DeletedPageProvider = ({
   description,
   canonicalUrl,
   user,
-  deletedByArtist = true,
+  deletedByLandlord = true,
   playable,
   children: Children,
   currentQueueItem,
@@ -59,7 +59,7 @@ const DeletedPageProvider = ({
     }
   }, [resetAgreements])
 
-  const goToArtistPage = useCallback(() => {
+  const goToLandlordPage = useCallback(() => {
     goToRoute(profilePage(user?.handle))
   }, [goToRoute, user])
 
@@ -89,9 +89,9 @@ const DeletedPageProvider = ({
     canonicalUrl,
     playable,
     user,
-    goToArtistPage,
+    goToLandlordPage,
     getLineupProps,
-    deletedByArtist
+    deletedByLandlord
   }
 
   return <Children {...childProps} />

@@ -67,7 +67,7 @@ export type CollectionPageProps = {
   userId?: ID | null
   userContentLists?: any
   isQueued: () => boolean
-  onHeroAgreementClickArtistName: () => void
+  onHeroAgreementClickLandlordName: () => void
   onPlay: (record: AgreementRecord) => void
   onHeroAgreementShare: (record: AgreementRecord) => void
   onHeroAgreementSave?: (record: AgreementRecord) => void
@@ -80,7 +80,7 @@ export type CollectionPageProps = {
   onPublish: () => void
   onHeroAgreementRepost?: any
   onClickAgreementName: (record: AgreementRecord) => void
-  onClickArtistName: (record: AgreementRecord) => void
+  onClickLandlordName: (record: AgreementRecord) => void
   onClickRepostAgreement: (record: AgreementRecord) => void
   onSortAgreements: (sorters: any) => void
   onReorderAgreements: (source: number, destination: number) => void
@@ -112,7 +112,7 @@ const CollectionPage = ({
   userContentLists,
   getFilteredData,
   isQueued,
-  onHeroAgreementClickArtistName,
+  onHeroAgreementClickLandlordName,
   onFilterChange,
   onPlay,
   onHeroAgreementEdit,
@@ -123,7 +123,7 @@ const CollectionPage = ({
   onClickRow,
   onClickSave,
   onClickAgreementName,
-  onClickArtistName,
+  onClickLandlordName,
   onClickRepostAgreement,
   onSortAgreements,
   onReorderAgreements,
@@ -197,8 +197,8 @@ const CollectionPage = ({
       agreementsLoading={agreementsLoading}
       type={typeTitle}
       title={contentListName}
-      artistName={contentListOwnerName}
-      artistHandle={contentListOwnerHandle}
+      landlordName={contentListOwnerName}
+      landlordHandle={contentListOwnerHandle}
       coverArtSizes={coverArtSizes}
       description={description}
       isOwner={isOwner}
@@ -215,7 +215,7 @@ const CollectionPage = ({
       saves={contentListSaveCount}
       playing={queuedAndPlaying}
       // Actions
-      onClickArtistName={onHeroAgreementClickArtistName}
+      onClickLandlordName={onHeroAgreementClickLandlordName}
       onFilterChange={onFilterChange}
       onPlay={onPlay}
       onEdit={onHeroAgreementEdit}
@@ -268,7 +268,7 @@ const CollectionPage = ({
               onClickRow={onClickRow}
               onClickFavorite={onClickSave}
               onClickAgreementName={onClickAgreementName}
-              onClickArtistName={onClickArtistName}
+              onClickLandlordName={onClickLandlordName}
               onClickRepost={onClickRepostAgreement}
               onSortAgreements={onSortAgreements}
               onReorderAgreements={onReorderAgreements}

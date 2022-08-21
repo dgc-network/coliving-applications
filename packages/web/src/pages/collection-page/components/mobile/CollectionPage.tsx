@@ -66,7 +66,7 @@ export type CollectionPageProps = {
   userId?: ID | null
   userContentLists?: any
   isQueued: () => boolean
-  onHeroAgreementClickArtistName: () => void
+  onHeroAgreementClickLandlordName: () => void
   onPlay: (record: any) => void
   onHeroAgreementShare: () => void
   onHeroAgreementSave?: () => void
@@ -95,7 +95,7 @@ const CollectionPage = ({
   userId,
   userContentLists,
   isQueued,
-  onHeroAgreementClickArtistName,
+  onHeroAgreementClickLandlordName,
   onPlay,
   onHeroAgreementShare,
   onHeroAgreementSave,
@@ -211,8 +211,8 @@ const CollectionPage = ({
     isReposted: entry.has_current_user_reposted,
     isActive: playingUid === entry.uid,
     isPlaying: queuedAndPlaying && playingUid === entry.uid,
-    artistName: entry?.user?.name,
-    artistHandle: entry?.user?.handle,
+    landlordName: entry?.user?.name,
+    landlordHandle: entry?.user?.handle,
     agreementTitle: entry.title,
     agreementId: entry.agreement_id,
     uid: entry.uid,
@@ -242,8 +242,8 @@ const CollectionPage = ({
               agreementsLoading={agreementsLoading}
               type={typeTitle}
               title={contentListName}
-              artistName={contentListOwnerName}
-              artistHandle={contentListOwnerHandle}
+              landlordName={contentListOwnerName}
+              landlordHandle={contentListOwnerHandle}
               coverArtSizes={coverArtSizes}
               description={description}
               isOwner={isOwner}
@@ -259,7 +259,7 @@ const CollectionPage = ({
               repostCount={contentListRepostCount}
               isReposted={isReposted}
               // Actions
-              onClickArtistName={onHeroAgreementClickArtistName}
+              onClickLandlordName={onHeroAgreementClickLandlordName}
               onPlay={onPlay}
               onShare={onHeroAgreementShare}
               onSave={onHeroAgreementSave}

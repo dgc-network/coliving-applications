@@ -147,20 +147,20 @@ function* fetchRemixables() {
     75 // limit
   )
 
-  // Limit the number of times an artist can appear
-  const artistLimit = 3
-  const artistCount: Record<number, number> = {}
+  // Limit the number of times an landlord can appear
+  const landlordLimit = 3
+  const landlordCount: Record<number, number> = {}
 
   const filteredAgreements = agreements.filter((agreementMetadata) => {
     if (agreementMetadata.user?.is_deactivated) {
       return false
     }
     const id = agreementMetadata.owner_id
-    if (!artistCount[id]) {
-      artistCount[id] = 0
+    if (!landlordCount[id]) {
+      landlordCount[id] = 0
     }
-    artistCount[id]++
-    return artistCount[id] <= artistLimit
+    landlordCount[id]++
+    return landlordCount[id] <= landlordLimit
   })
 
   const processedAgreements = yield* call(

@@ -32,7 +32,7 @@ import type { SearchContentList, SearchAgreement } from 'app/store/search/types'
 
 import { EditContentListScreen } from '../edit-contentList-screen/EditContentListScreen'
 import { NotificationsDrawerNavigationContext } from '../notifications-screen/NotificationsDrawerNavigationContext'
-import { TipArtistModal } from '../tip-artist-screen'
+import { TipLandlordModal } from '../tip-landlord-screen'
 import { AgreementRemixesScreen } from '../agreement-screen/AgreementRemixesScreen'
 
 import { useAppScreenOptions } from './useAppScreenOptions'
@@ -58,7 +58,7 @@ export type AppTabScreenParamList = {
     notificationType: NotificationType
     count: number
   }
-  TipArtist: undefined
+  TipLandlord: undefined
 }
 
 const forFade = ({ current }) => ({
@@ -127,7 +127,7 @@ export const AppTabScreen = ({ baseScreen, Stack }: AppTabScreenProps) => {
               e.target?.includes('Search') &&
               !e.target?.includes('SearchResults')
             ) &&
-            !e.target?.includes('TipArtist') &&
+            !e.target?.includes('TipLandlord') &&
             !e.target?.includes('TopSupporters') &&
             !e.target?.includes('SupportingUsers')
           ) {
@@ -218,8 +218,8 @@ export const AppTabScreen = ({ baseScreen, Stack }: AppTabScreenProps) => {
         options={screenOptions}
       />
       <Stack.Screen
-        name='TipArtist'
-        component={TipArtistModal}
+        name='TipLandlord'
+        component={TipLandlordModal}
         options={{
           headerShown: false,
           presentation: 'fullScreenModal'

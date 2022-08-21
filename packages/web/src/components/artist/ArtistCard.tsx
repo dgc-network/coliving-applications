@@ -9,17 +9,17 @@ import FollowButton from 'components/follow-button/FollowButton'
 import Stats, { StatProps } from 'components/stats/Stats'
 import { getFeatureEnabled } from 'services/remote-config/featureFlagHelpers'
 
-import styles from './ArtistCard.module.css'
-import { ArtistCardCover } from './ArtistCardCover'
-import { ArtistSupporting } from './ArtistSupporting'
+import styles from './LandlordCard.module.css'
+import { LandlordCardCover } from './LandlordCardCover'
+import { LandlordSupporting } from './LandlordSupporting'
 
-type ArtistCardProps = {
-  artist: User
+type LandlordCardProps = {
+  landlord: User
   onNavigateAway: () => void
 }
 
-export const ArtistCard = (props: ArtistCardProps) => {
-  const { artist, onNavigateAway } = props
+export const LandlordCard = (props: LandlordCardProps) => {
+  const { landlord, onNavigateAway } = props
   const {
     user_id,
     bio,
@@ -28,10 +28,10 @@ export const ArtistCard = (props: ArtistCardProps) => {
     follower_count,
     followee_count,
     does_current_user_follow
-  } = artist
+  } = landlord
 
   const dispatch = useDispatch()
-  const isArtist = agreement_count > 0
+  const isLandlord = agreement_count > 0
   const isTippingEnabled = getFeatureEnabled(FeatureFlags.TIPPING_ENABLED)
 
   const handleClick: MouseEventHandler = useCallback((event) => {
@@ -39,7 +39,7 @@ export const ArtistCard = (props: ArtistCardProps) => {
   }, [])
 
   const stats = useMemo((): StatProps[] => {
-    if (isArtist) {
+    if (isLandlord) {
       return [
         {
           number: agreement_count,
@@ -67,7 +67,7 @@ export const ArtistCard = (props: ArtistCardProps) => {
       },
       { number: followee_count, title: 'following', key: 'following' }
     ]
-  }, [isArtist, agreement_count, follower_count, followee_count, contentList_count])
+  }, [isLandlord, agreement_count, follower_count, followee_count, contentList_count])
 
   const handleFollow = useCallback(() => {
     dispatch(followUser(user_id, FollowSource.HOVER_TILE))
@@ -80,13 +80,13 @@ export const ArtistCard = (props: ArtistCardProps) => {
 
   return (
     <div className={styles.popoverContainer} onClick={handleClick}>
-      <div className={styles.artistCardContainer}>
-        <ArtistCardCover
-          artist={artist}
-          isArtist={isArtist}
+      <div className={styles.landlordCardContainer}>
+        <LandlordCardCover
+          landlord={landlord}
+          isLandlord={isLandlord}
           onNavigateAway={onNavigateAway}
         />
-        <div className={styles.artistStatsContainer}>
+        <div className={styles.landlordStatsContainer}>
           <Stats
             userId={user_id}
             stats={stats}
@@ -97,8 +97,8 @@ export const ArtistCard = (props: ArtistCardProps) => {
         <div className={styles.contentContainer}>
           <div>
             {isTippingEnabled ? (
-              <ArtistSupporting
-                artist={artist}
+              <LandlordSupporting
+                landlord={landlord}
                 onNavigateAway={onNavigateAway}
               />
             ) : null}

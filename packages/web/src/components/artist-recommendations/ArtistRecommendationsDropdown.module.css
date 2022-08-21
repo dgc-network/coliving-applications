@@ -2,12 +2,12 @@
   overflow: hidden;
 }
 
-.artistRecommendations {
+.landlordRecommendations {
   margin-top: 10px;
   padding: 12px 10px;
   border-top: 1px solid var(--neutral-light-7);
 }
 
-.artistRecommendationsItem {
+.landlordRecommendationsItem {
   margin: 8px 0;
 }

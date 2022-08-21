@@ -44,7 +44,7 @@ export const createStyles = (themeColors: ThemeColors) =>
       marginBottom: 2,
       paddingRight: 20
     },
-    artist: {
+    landlord: {
       ...flexRowCentered(),
       marginBottom: 'auto',
       paddingRight: 40,

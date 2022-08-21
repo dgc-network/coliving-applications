@@ -1,7 +1,7 @@
 import { ID, ProfilePictureSizes, Nullable } from '@coliving/common'
 import cn from 'classnames'
 
-import { ReactComponent as BadgeArtist } from 'assets/img/badgeArtist.svg'
+import { ReactComponent as BadgeLandlord } from 'assets/img/badgeLandlord.svg'
 import ProfilePicture from 'components/profile-picture/ProfilePicture'
 import FollowsYouBadge from 'components/user-badges/FollowsYouBadge'
 import EditableName from 'pages/profile-page/components/EditableName'
@@ -19,7 +19,7 @@ type ProfileWrappingProps = {
   hasProfilePicture: boolean
   doesFollowCurrentUser: boolean
   isOwner: boolean
-  isArtist: boolean
+  isLandlord: boolean
   editMode: boolean
   name: string
   handle: string
@@ -60,7 +60,7 @@ const ProfileWrapping = (props: ProfileWrappingProps) => {
     hasProfilePicture,
     doesFollowCurrentUser,
     isOwner,
-    isArtist,
+    isLandlord,
     editMode,
     name,
     handle,
@@ -103,9 +103,9 @@ const ProfileWrapping = (props: ProfileWrappingProps) => {
           onDrop={onUpdateProfilePicture}
         />
         <div className={styles.nameWrapper}>
-          <BadgeArtist
-            className={cn(styles.badgeArtist, {
-              [styles.hide]: !isArtist || loading || isDeactivated
+          <BadgeLandlord
+            className={cn(styles.badgeLandlord, {
+              [styles.hide]: !isLandlord || loading || isDeactivated
             })}
           />
           {!isDeactivated && (
@@ -133,7 +133,7 @@ const ProfileWrapping = (props: ProfileWrappingProps) => {
             isDeactivated={isDeactivated}
             loading={loading}
             isOwner={isOwner}
-            isArtist={isArtist}
+            isLandlord={isLandlord}
             editMode={editMode}
             handle={handle}
             bio={bio}

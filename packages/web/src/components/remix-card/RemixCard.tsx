@@ -1,6 +1,6 @@
 import { ID, Remix } from '@coliving/common'
 
-import { ArtistPopover } from 'components/artist/ArtistPopover'
+import { LandlordPopover } from 'components/landlord/LandlordPopover'
 import CoSign from 'components/co-sign/CoSign'
 import { Size } from 'components/co-sign/types'
 import DynamicImage from 'components/dynamic-image/DynamicImage'
@@ -16,10 +16,10 @@ type RemixCardProps = {
   profilePictureImage: string
   coverArtImage: string
   coSign?: Remix | null
-  artistName: string
-  artistHandle: string
+  landlordName: string
+  landlordHandle: string
   onClick: () => void
-  onClickArtistName: () => void
+  onClickLandlordName: () => void
   userId: ID
 }
 
@@ -27,10 +27,10 @@ const RemixCard = ({
   profilePictureImage,
   coverArtImage,
   coSign,
-  artistName,
-  artistHandle,
+  landlordName,
+  landlordHandle,
   onClick,
-  onClickArtistName,
+  onClickLandlordName,
   userId
 }: RemixCardProps) => {
   const images = (
@@ -60,11 +60,11 @@ const RemixCard = ({
           images
         )}
       </div>
-      <div className={styles.artist} onClick={onClickArtistName}>
-        <ArtistPopover handle={artistHandle}>
+      <div className={styles.landlord} onClick={onClickLandlordName}>
+        <LandlordPopover handle={landlordHandle}>
           <div className={styles.name}>
             <div className={styles.by}>{messages.by}</div>
-            <div className={styles.hoverable}>{artistName}</div>
+            <div className={styles.hoverable}>{landlordName}</div>
             <UserBadges
               className={styles.badges}
               userId={userId}
@@ -72,7 +72,7 @@ const RemixCard = ({
               inline
             />
           </div>
-        </ArtistPopover>
+        </LandlordPopover>
       </div>
     </div>
   )

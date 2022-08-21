@@ -42,13 +42,13 @@ const Menu = (props: UserMenuProps) => {
         currentUserFollows ? unFollowUser(userId) : followUser(userId)
     }
 
-    const artistPageMenuItem = {
-      text: 'Visit Artist Page',
+    const landlordPageMenuItem = {
+      text: 'Visit Landlord Page',
       onClick: () => goToRoute(profilePage(handle))
     }
 
     const menu = {
-      items: [shareMenuItem, followMenuItem, artistPageMenuItem]
+      items: [shareMenuItem, followMenuItem, landlordPageMenuItem]
     }
     return menu
   }

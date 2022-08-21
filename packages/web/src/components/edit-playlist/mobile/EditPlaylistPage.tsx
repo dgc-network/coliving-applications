@@ -357,8 +357,8 @@ const EditContentListPage = g(
 
         return {
           isLoading: false,
-          artistName: t.user.name,
-          artistHandle: t.user.handle,
+          landlordName: t.user.name,
+          landlordHandle: t.user.handle,
           agreementTitle: t.title,
           agreementId: t.agreement_id,
           time: contentListAgreement?.time,

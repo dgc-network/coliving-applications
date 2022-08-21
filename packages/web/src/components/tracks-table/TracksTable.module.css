@@ -232,13 +232,13 @@
   text-decoration-color: var(--primary-light-2);
 }
 
-:global(.colArtistName) {
+:global(.colLandlordName) {
   min-width: 200px !important;
   width: 250px !important;
   vertical-align: bottom;
 }
 
-.artistName {
+.landlordName {
   max-width: 250px;
 }
 
@@ -297,7 +297,7 @@ tr.deleted:hover td {
 }
 
 .activeRow :global(.colAgreementName),
-.activeRow :global(.colArtistName),
+.activeRow :global(.colLandlordName),
 .activeRow :global(.colDate),
 .activeRow :global(.colTime),
 .activeRow :global(.colPlays) {

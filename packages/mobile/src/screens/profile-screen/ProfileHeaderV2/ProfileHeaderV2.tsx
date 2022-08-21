@@ -9,12 +9,12 @@ import { Divider } from 'app/components/core'
 import { useSelectorWeb } from 'app/hooks/useSelectorWeb'
 import { makeStyles } from 'app/styles'
 
-import { ArtistRecommendations } from '../ArtistRecommendations'
+import { LandlordRecommendations } from '../LandlordRecommendations'
 import { CoverPhoto } from '../CoverPhoto'
 import { ProfileInfo } from '../ProfileInfo'
 import { ProfileMetrics } from '../ProfileMetrics'
 import { ProfilePicture } from '../ProfilePicture'
-import { TipArtistButton } from '../TipArtistButton'
+import { TipLandlordButton } from '../TipLandlordButton'
 import { UploadAgreementButton } from '../UploadAgreementButton'
 import { useSelectProfileRoot } from '../selectors'
 
@@ -59,7 +59,7 @@ export const ProfileHeaderV2 = (props: ProfileHeaderV2Props) => {
     }
   }, [setHasUserFollowed, profile])
 
-  const handleCloseArtistRecs = useCallback(() => {
+  const handleCloseLandlordRecs = useCallback(() => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
     setHasUserFollowed(false)
   }, [setHasUserFollowed])
@@ -83,9 +83,9 @@ export const ProfileHeaderV2 = (props: ProfileHeaderV2Props) => {
         />
         <Divider style={styles.divider} />
         {!hasUserFollowed ? null : (
-          <ArtistRecommendations onClose={handleCloseArtistRecs} />
+          <LandlordRecommendations onClose={handleCloseLandlordRecs} />
         )}
-        {isOwner ? <UploadAgreementButton /> : <TipArtistButton />}
+        {isOwner ? <UploadAgreementButton /> : <TipLandlordButton />}
         <TopSupporters />
         <Divider style={styles.bottomDivider} />
       </View>

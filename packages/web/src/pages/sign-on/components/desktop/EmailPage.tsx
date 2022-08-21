@@ -18,7 +18,7 @@ import { MetaMaskOption } from './MetaMaskOption'
 const messages = {
   title: 'Sign Up For Coliving',
   header1: 'Stream the music you love.',
-  header2: 'Support the artists you care about.',
+  header2: 'Support the landlords you care about.',
   forgotPasswordText: 'Forgot your password?'
 }
 

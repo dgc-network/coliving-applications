@@ -35,7 +35,7 @@ const ConnectedAgreementListItem = (props: ConnectedAgreementListItemProps) => {
       props.isSaved ? OverflowAction.UNFAVORITE : OverflowAction.FAVORITE,
       OverflowAction.ADD_TO_CONTENT_LIST,
       OverflowAction.VIEW_AGREEMENT_PAGE,
-      OverflowAction.VIEW_ARTIST_PAGE
+      OverflowAction.VIEW_LANDLORD_PAGE
     ].filter(Boolean) as OverflowAction[]
     props.clickOverflow(props.agreementId, overflowActions)
   }

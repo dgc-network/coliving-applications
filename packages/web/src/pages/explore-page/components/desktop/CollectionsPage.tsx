@@ -2,7 +2,7 @@ import { useCallback, MouseEvent } from 'react'
 
 import { ID, UserCollection, Status } from '@coliving/common'
 
-import { ArtistPopover } from 'components/artist/ArtistPopover'
+import { LandlordPopover } from 'components/landlord/LandlordPopover'
 import Card from 'components/card/desktop/Card'
 import Header from 'components/header/desktop/Header'
 import CardLineup from 'components/lineup/CardLineup'
@@ -62,14 +62,14 @@ const CollectionsPage = ({
 
   const cards = collections.map((contentList, i) => {
     const secondaryText = (
-      <ArtistPopover handle={contentList.user.handle}>
+      <LandlordPopover handle={contentList.user.handle}>
         <span
           className={styles.userName}
           onClick={(e: MouseEvent) => goToProfilePage(e, contentList.user.handle)}
         >
           {contentList.user.name}
         </span>
-      </ArtistPopover>
+      </LandlordPopover>
     )
 
     return (

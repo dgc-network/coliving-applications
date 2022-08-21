@@ -137,7 +137,7 @@ const ConnectedContentListTile = memo(
       [goToRoute, getRoute]
     )
 
-    const goToArtistPage = useCallback(
+    const goToLandlordPage = useCallback(
       (e: MouseEvent<HTMLElement>) => {
         e.stopPropagation()
         goToRoute(profilePage(user.handle))
@@ -164,7 +164,7 @@ const ConnectedContentListTile = memo(
           ? OverflowAction.PUBLISH_CONTENT_LIST
           : null,
         isOwner && !collection.is_album ? OverflowAction.DELETE_CONTENT_LIST : null,
-        OverflowAction.VIEW_ARTIST_PAGE
+        OverflowAction.VIEW_LANDLORD_PAGE
       ].filter(Boolean)
 
       clickOverflow(
@@ -246,9 +246,9 @@ const ConnectedContentListTile = memo(
         isPublic={!collection.is_private}
         contentTitle={collection.is_album ? 'album' : 'contentList'}
         contentListTitle={collection.contentList_name}
-        artistHandle={user.handle}
-        artistName={user.name}
-        artistIsVerified={user.is_verified}
+        landlordHandle={user.handle}
+        landlordName={user.name}
+        landlordIsVerified={user.is_verified}
         ownerId={collection.contentList_owner_id}
         coverArtSizes={collection._cover_art_sizes}
         duration={agreements.reduce(
@@ -275,7 +275,7 @@ const ConnectedContentListTile = memo(
         isLoading={isActive && isBuffering}
         activeAgreementUid={playingUid || null}
         goToRoute={goToRoute}
-        goToArtistPage={goToArtistPage}
+        goToLandlordPage={goToLandlordPage}
         goToCollectionPage={goToCollectionPage}
         toggleSave={toggleSave}
         toggleRepost={toggleRepost}

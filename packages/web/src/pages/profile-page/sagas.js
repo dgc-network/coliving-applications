@@ -29,7 +29,7 @@ import {
 import { FollowType } from 'common/store/pages/profile/types'
 import { getIsReachable } from 'common/store/reachability/selectors'
 import { refreshSupport } from 'common/store/tipping/slice'
-import * as artistRecommendationsActions from 'common/store/ui/artist-recommendations/slice'
+import * as landlordRecommendationsActions from 'common/store/ui/landlord-recommendations/slice'
 import { squashNewLines } from 'common/utils/formatUtil'
 import ColivingBackend, { fetchCID } from 'services/ColivingBackend'
 import { setColivingAccountUser } from 'services/LocalStorage'
@@ -43,7 +43,7 @@ import * as confirmerActions from 'store/confirmer/actions'
 import { confirmTransaction } from 'store/confirmer/sagas'
 import { isMobile } from 'utils/clientUtil'
 import {
-  MAX_ARTIST_HOVER_TOP_SUPPORTING,
+  MAX_LANDLORD_HOVER_TOP_SUPPORTING,
   MAX_PROFILE_SUPPORTING_TILES,
   MAX_PROFILE_TOP_SUPPORTERS
 } from 'utils/constants'
@@ -158,8 +158,8 @@ function* fetchSupportersAndSupporting(userId) {
   /**
    * If the profile is that of the logged in user, then
    * get all its supporting data so that when the logged in
-   * user is trying to tip an artist, we'll know whether or
-   * not that artist is already being supported by the logged in
+   * user is trying to tip an landlord, we'll know whether or
+   * not that landlord is already being supported by the logged in
    * user and thus correctly calculate how much more live to tip
    * to become the top supporter.
    */
@@ -169,7 +169,7 @@ function* fetchSupportersAndSupporting(userId) {
       ? account.supporting_count
       : Math.max(
           MAX_PROFILE_SUPPORTING_TILES,
-          MAX_ARTIST_HOVER_TOP_SUPPORTING
+          MAX_LANDLORD_HOVER_TOP_SUPPORTING
         ) + 1
   yield put(
     refreshSupport({
@@ -244,11 +244,11 @@ function* fetchProfileAsync(action) {
       }
     }
 
-    const showArtistRecommendationsPercent =
-      getRemoteVar(DoubleKeys.SHOW_ARTIST_RECOMMENDATIONS_PERCENT) || 0
-    if (Math.random() < showArtistRecommendationsPercent) {
+    const showLandlordRecommendationsPercent =
+      getRemoteVar(DoubleKeys.SHOW_LANDLORD_RECOMMENDATIONS_PERCENT) || 0
+    if (Math.random() < showLandlordRecommendationsPercent) {
       yield put(
-        artistRecommendationsActions.fetchRelatedArtists({
+        landlordRecommendationsActions.fetchRelatedLandlords({
           userId: user.user_id
         })
       )
@@ -286,7 +286,7 @@ const MOST_USED_TAGS_COUNT = 5
 // so the number of user agreements plus a large agreement number are fetched
 const LARGE_AGREEMENTCOUNT_TAGS = 100
 function* fetchMostUsedTags(userId, agreementCount) {
-  const agreementResponse = yield call(ColivingBackend.getArtistAgreements, {
+  const agreementResponse = yield call(ColivingBackend.getLandlordAgreements, {
     offset: 0,
     limit: agreementCount + LARGE_AGREEMENTCOUNT_TAGS,
     userId,

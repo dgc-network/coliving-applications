@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { toggleNotificationPanel } from 'common/store/notifications/actions'
 import { getNotificationPanelIsOpen } from 'common/store/notifications/selectors'
-import { ArtistPopover } from 'components/artist/ArtistPopover'
+import { LandlordPopover } from 'components/landlord/LandlordPopover'
 import DynamicImage from 'components/dynamic-image/DynamicImage'
 import { useUserProfilePicture } from 'hooks/useUserProfilePicture'
 
@@ -80,12 +80,12 @@ export const ProfilePicture = (props: ProfilePictureProps) => {
   if (disablePopover) return profilePictureElement
 
   return (
-    <ArtistPopover
+    <LandlordPopover
       handle={user.handle}
       component='span'
       onNavigateAway={handleNavigateAway}
     >
       {profilePictureElement}
-    </ArtistPopover>
+    </LandlordPopover>
   )
 }

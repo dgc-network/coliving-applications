@@ -21,8 +21,8 @@ const messages = {
   remixes: 'Remix',
   by: 'by',
   of: 'of',
-  getDescription: (agreementName: string, artistName: string) =>
-    `${messages.remixes} ${messages.of} ${agreementName} ${messages.by} ${artistName}`
+  getDescription: (agreementName: string, landlordName: string) =>
+    `${messages.remixes} ${messages.of} ${agreementName} ${messages.by} ${landlordName}`
 }
 
 export type RemixesPageProps = {
@@ -32,7 +32,7 @@ export type RemixesPageProps = {
   user: User | null
   getLineupProps: () => LineupWithoutTile
   goToAgreementPage: () => void
-  goToArtistPage: () => void
+  goToLandlordPage: () => void
 }
 
 const g = withNullGuard(
@@ -48,7 +48,7 @@ const RemixesPage = g(
     user,
     getLineupProps,
     goToAgreementPage,
-    goToArtistPage
+    goToLandlordPage
   }) => {
     useSubPageHeader()
 
@@ -71,7 +71,7 @@ const RemixesPage = g(
           />
         </>
       )
-    }, [setHeader, title, originalAgreement, user, goToArtistPage, goToAgreementPage])
+    }, [setHeader, title, originalAgreement, user, goToLandlordPage, goToAgreementPage])
 
     return (
       <MobilePageContainer
@@ -93,7 +93,7 @@ const RemixesPage = g(
                 {originalAgreement.title}
               </div>
               {messages.by}
-              <div className={styles.link} onClick={goToArtistPage}>
+              <div className={styles.link} onClick={goToLandlordPage}>
                 {user.name}
                 <UserBadges
                   userId={user.user_id}

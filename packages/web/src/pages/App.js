@@ -45,7 +45,7 @@ import DesktopRoute from 'components/routes/DesktopRoute'
 import MobileRoute from 'components/routes/MobileRoute'
 import TrendingGenreSelectionPage from 'components/trending-genre-selection/TrendingGenreSelectionPage'
 import AnnouncementPage from 'pages/announcement-page/AnnoucementPage'
-import ArtistDashboardPage from 'pages/artist-dashboard-page/ArtistDashboardPage'
+import LandlordDashboardPage from 'pages/landlord-dashboard-page/LandlordDashboardPage'
 import AudioRewardsPage from 'pages/live-rewards-page/AudioRewardsPage'
 import CheckPage from 'pages/check-page/CheckPage'
 import CollectionPage from 'pages/collection-page/CollectionPage'
@@ -796,7 +796,7 @@ class App extends Component {
                 exact
                 path={DASHBOARD_PAGE}
                 isMobile={isMobileClient}
-                component={ArtistDashboardPage}
+                component={LandlordDashboardPage}
               />
               <Route
                 exact

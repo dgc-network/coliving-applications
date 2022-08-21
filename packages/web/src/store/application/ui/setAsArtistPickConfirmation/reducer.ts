@@ -1,26 +1,26 @@
-import * as pinAgreementActions from 'store/application/ui/setAsArtistPickConfirmation/actions'
+import * as pinAgreementActions from 'store/application/ui/setAsLandlordPickConfirmation/actions'
 import { makeReducer } from 'utils/reducer'
 
-import { SetAsArtistPickConfirmationState } from './types'
+import { SetAsLandlordPickConfirmationState } from './types'
 
-const initialState: SetAsArtistPickConfirmationState = {
+const initialState: SetAsLandlordPickConfirmationState = {
   isVisible: false
 }
 
 const actionMap = {
-  [pinAgreementActions.SHOW_SET_AS_ARTIST_PICK_CONFIRMATION](
-    state: SetAsArtistPickConfirmationState,
-    action: pinAgreementActions.ShowSetAsArtistPickConfirmation
-  ): SetAsArtistPickConfirmationState {
+  [pinAgreementActions.SHOW_SET_AS_LANDLORD_PICK_CONFIRMATION](
+    state: SetAsLandlordPickConfirmationState,
+    action: pinAgreementActions.ShowSetAsLandlordPickConfirmation
+  ): SetAsLandlordPickConfirmationState {
     return {
       isVisible: true,
       agreementId: action.agreementId
     }
   },
-  [pinAgreementActions.HIDE_SET_AS_ARTIST_PICK_CONFIRMATION](
-    state: SetAsArtistPickConfirmationState,
-    action: pinAgreementActions.CancelSetAsArtistPick
-  ): SetAsArtistPickConfirmationState {
+  [pinAgreementActions.HIDE_SET_AS_LANDLORD_PICK_CONFIRMATION](
+    state: SetAsLandlordPickConfirmationState,
+    action: pinAgreementActions.CancelSetAsLandlordPick
+  ): SetAsLandlordPickConfirmationState {
     return { isVisible: false }
   }
 }

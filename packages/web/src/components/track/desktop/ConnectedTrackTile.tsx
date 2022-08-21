@@ -23,7 +23,7 @@ import {
   undoRepostAgreement
 } from 'common/store/social/agreements/actions'
 import { requestOpen as requestOpenShareModal } from 'common/store/ui/share-modal/slice'
-import { ArtistPopover } from 'components/artist/ArtistPopover'
+import { LandlordPopover } from 'components/landlord/LandlordPopover'
 import Draggable from 'components/dragndrop/Draggable'
 import Menu from 'components/menu/Menu'
 import { OwnProps as AgreementMenuProps } from 'components/menu/AgreementMenu'
@@ -56,7 +56,7 @@ type OwnProps = {
   order: number
   containerClassName?: string
   size: AgreementTileSize
-  showArtistPick: boolean
+  showLandlordPick: boolean
   ordered: boolean
   togglePlay: (uid: UID, id: ID) => void
   isLoading: boolean
@@ -77,7 +77,7 @@ const ConnectedAgreementTile = memo(
     agreement,
     user,
     ordered,
-    showArtistPick,
+    showLandlordPick,
     goToRoute,
     togglePlay,
     isBuffering,
@@ -118,7 +118,7 @@ const ConnectedAgreementTile = memo(
     } = getAgreementWithFallback(agreement)
 
     const {
-      _artist_pick,
+      _landlord_pick,
       name,
       handle,
       is_deactivated: isOwnerDeactivated
@@ -128,7 +128,7 @@ const ConnectedAgreementTile = memo(
     const isAgreementBuffering = isActive && isBuffering
     const isAgreementPlaying = isActive && isPlaying
     const isOwner = handle === userHandle
-    const isArtistPick = showArtistPick && _artist_pick === agreementId
+    const isLandlordPick = showLandlordPick && _landlord_pick === agreementId
 
     const onClickStatRepost = () => {
       setRepostUsers(agreementId)
@@ -168,14 +168,14 @@ const ConnectedAgreementTile = memo(
         extraMenuItems: [],
         handle,
         includeAddToContentList: true,
-        includeArtistPick: handle === userHandle && !isUnlisted,
+        includeLandlordPick: handle === userHandle && !isUnlisted,
         includeEdit: handle === userHandle,
         includeEmbed: true,
         includeFavorite: false,
         includeRepost: false,
         includeShare: false,
         includeAgreementPage: true,
-        isArtistPick,
+        isLandlordPick,
         isDeleted: is_delete || isOwnerDeactivated,
         isFavorited,
         isOwner,
@@ -208,7 +208,7 @@ const ConnectedAgreementTile = memo(
       )
     }
 
-    const onClickArtistName = useCallback(
+    const onClickLandlordName = useCallback(
       (e) => {
         e.stopPropagation()
         if (goToRoute) goToRoute(profilePage(handle))
@@ -227,16 +227,16 @@ const ConnectedAgreementTile = memo(
     const renderUserName = () => {
       return (
         <div className={styles.userName}>
-          <ArtistPopover handle={handle}>
+          <LandlordPopover handle={handle}>
             <span
               className={cn(styles.name, {
-                [styles.artistNameLink]: onClickArtistName
+                [styles.landlordNameLink]: onClickLandlordName
               })}
-              onClick={onClickArtistName}
+              onClick={onClickLandlordName}
             >
               {name}
             </span>
-          </ArtistPopover>
+          </LandlordPopover>
           <UserBadges
             userId={user?.user_id ?? 0}
             badgeSize={14}
@@ -329,7 +329,7 @@ const ConnectedAgreementTile = memo(
           isMatrixMode={isMatrix()}
           listenCount={play_count}
           isActive={isActive}
-          isArtistPick={isArtistPick}
+          isLandlordPick={isLandlordPick}
           artwork={artwork}
           rightActions={rightActions}
           title={title}

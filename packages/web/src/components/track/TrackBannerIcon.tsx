@@ -30,7 +30,7 @@ const AgreementBannerIcon = ({
 
   return (
     <div
-      className={cn(styles.artistPick, {
+      className={cn(styles.landlordPick, {
         [styles.isMobile]: isMobile,
         [styles.matrix]: isMatrixMode
       })}

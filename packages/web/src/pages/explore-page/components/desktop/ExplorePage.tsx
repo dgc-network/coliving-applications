@@ -45,9 +45,9 @@ import Section, { Layout } from './Section'
 
 const messages = {
   featuredContentLists: 'ContentLists We Love Right Now',
-  featuredProfiles: 'Artists You Should Follow',
+  featuredProfiles: 'Landlords You Should Follow',
   exploreMoreContentLists: 'Explore More ContentLists',
-  exploreMoreProfiles: 'Explore More Artists',
+  exploreMoreProfiles: 'Explore More Landlords',
   justForYou: 'Just For You',
   justForYouSubtitle: `Content curated for you based on your likes,
 reposts, and follows. Refreshes often so if you like a agreement, favorite it.`,

@@ -268,7 +268,7 @@ class FinishPage extends Component {
           disableActions={true}
           playing={false}
           agreement={agreement}
-          artistHandle={account.handle}
+          landlordHandle={account.handle}
         />
       ))
 

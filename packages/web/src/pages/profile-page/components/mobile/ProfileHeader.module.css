@@ -45,14 +45,14 @@
   background-color: var(--default-profile-picture-background);
 }
 
-.badgeArtist {
+.badgeLandlord {
   position: absolute;
   top: 21px;
   right: 13px;
   box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.3);
 }
 
-.artistInfo {
+.landlordInfo {
   padding: 30px 12px 12px;
   display: inline-flex;
   flex-direction: column;
@@ -89,7 +89,7 @@
   top: -1px;
 }
 
-.artistName {
+.landlordName {
   color: var(--neutral);
   font-family: var(--font-family);
   font-size: 18px;
@@ -101,12 +101,12 @@
   margin-right: 8px;
 }
 
-.artistName h1 {
+.landlordName h1 {
   color: var(--neutral);
   display: inline;
 }
 
-.artistName > .iconVerified {
+.landlordName > .iconVerified {
   margin-left: 4px;
 }
 
@@ -114,12 +114,12 @@
   display: inline-block;
 }
 
-.artistHandleWrapper {
+.landlordHandleWrapper {
   text-align: left;
   margin-bottom: 14px;
 }
 
-.artistHandle {
+.landlordHandle {
   color: var(--neutral-light-4);
   font-family: var(--font-family);
   font-size: var(--font-s);
@@ -129,25 +129,25 @@
   margin-right: 8px;
 }
 
-.artistMetrics {
+.landlordMetrics {
   display: inline-flex;
   justify-content: flex-start;
   width: 100%;
   margin-bottom: 8px;
 }
 
-.artistMetric {
+.landlordMetric {
   transition: opacity 0.17s ease-in-out;
   display: inline-flex;
   margin-right: 16px;
 }
 
-.artistMetric:active {
+.landlordMetric:active {
   transition: none;
   opacity: 0.8;
 }
 
-.artistMetricValue {
+.landlordMetricValue {
   color: var(--neutral);
   font-family: var(--font-family);
   font-size: var(--font-s);
@@ -156,7 +156,7 @@
   margin-right: 3px;
 }
 
-.artistMetricLabel {
+.landlordMetricLabel {
   color: var(--neutral-light-4);
   font-family: var(--font-family);
   font-size: var(--font-s);

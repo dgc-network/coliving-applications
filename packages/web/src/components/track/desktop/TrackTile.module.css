@@ -208,7 +208,7 @@
 }
 
 .title:hover,
-.creatorRow .name.artistNameLink:hover {
+.creatorRow .name.landlordNameLink:hover {
   cursor: pointer;
   color: var(--primary);
   text-decoration: underline;
@@ -216,7 +216,7 @@
 }
 
 .isDisabled .title:hover,
-.isDisabled .creatorRow .name.artistNameLink:hover {
+.isDisabled .creatorRow .name.landlordNameLink:hover {
   cursor: default;
   color: inherit;
   text-decoration: none;

@@ -30,7 +30,7 @@ import ProfilePage from 'pages/sign-on/components/desktop/ProfilePage'
 import { SignInPage } from 'pages/sign-on/components/desktop/SignInPage'
 import StartPlatformPage from 'pages/sign-on/components/desktop/StartPlatformPage'
 import { getStatus } from 'pages/sign-on/store/selectors'
-import { Pages, FollowArtistsCategory } from 'pages/sign-on/store/types'
+import { Pages, FollowLandlordsCategory } from 'pages/sign-on/store/types'
 import lazyWithPreload from 'utils/lazyWithPreload'
 import { useSelector } from 'utils/reducer'
 import { BASE_URL, SIGN_UP_PAGE } from 'utils/route'
@@ -103,7 +103,7 @@ export type SignOnProps = {
   recordTwitterStart: () => void
   recordInstagramStart: () => void
   suggestedFollows: User[]
-  onSelectArtistCategory: (category: FollowArtistsCategory) => void
+  onSelectLandlordCategory: (category: FollowLandlordsCategory) => void
   onEmailSubmitted: (email: string) => void
 }
 
@@ -168,7 +168,7 @@ const SignOnProvider = ({
   suggestedFollows: suggestedFollowEntries,
   recordTwitterStart,
   recordInstagramStart,
-  onSelectArtistCategory,
+  onSelectLandlordCategory,
   onEmailSubmitted
 }: SignOnProps) => {
   const {
@@ -180,7 +180,7 @@ const SignOnProvider = ({
     verified,
     profileImage,
     status,
-    followArtists: { selectedCategory, selectedUserIds }
+    followLandlords: { selectedCategory, selectedUserIds }
   } = fields
 
   const accountStatus = useSelector(getAccountStatus)
@@ -295,13 +295,13 @@ const SignOnProvider = ({
       >
         <FollowPage
           users={suggestedFollowEntries}
-          followedArtists={selectedUserIds}
+          followedLandlords={selectedUserIds}
           onAddFollows={onAddFollows}
           onRemoveFollows={onRemoveFollows}
           onNextPage={onNextPage}
           onAutoSelect={onAutoSelect}
           selectedCategory={selectedCategory}
-          onSelectArtistCategory={onSelectArtistCategory}
+          onSelectLandlordCategory={onSelectLandlordCategory}
         />
       </animated.div>
     ),

@@ -90,7 +90,7 @@ const Artwork = ({
 }
 
 const getMessages = ({ isDeleted = false }: { isDeleted?: boolean } = {}) => ({
-  deleted: isDeleted ? ' [Deleted By Artist]' : ''
+  deleted: isDeleted ? ' [Deleted By Landlord]' : ''
 })
 
 export type AgreementListItemProps = {
@@ -104,8 +104,8 @@ export type AgreementListItemProps = {
   isRemoveActive?: boolean
   isDeleted: boolean
   coverArtSizes?: CoverArtSizes
-  artistName: string
-  artistHandle: string
+  landlordName: string
+  landlordHandle: string
   agreementTitle: string
   agreementId: ID
   userId: ID
@@ -127,7 +127,7 @@ const AgreementListItem = ({
   isActive = false,
   isPlaying = false,
   isRemoveActive = false,
-  artistName,
+  landlordName,
   agreementTitle,
   agreementId,
   userId,
@@ -190,13 +190,13 @@ const AgreementListItem = ({
       ) : null}
       {isReorderable && <IconDrag className={styles.dragIcon} />}
 
-      <div className={styles.nameArtistContainer}>
+      <div className={styles.nameLandlordContainer}>
         <div className={styles.agreementTitle}>
           {agreementTitle}
           {messages.deleted}
         </div>
-        <div className={styles.artistName}>
-          {artistName}
+        <div className={styles.landlordName}>
+          {landlordName}
           <UserBadges
             userId={userId}
             badgeSize={12}

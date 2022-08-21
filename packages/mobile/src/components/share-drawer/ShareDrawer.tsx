@@ -81,7 +81,7 @@ export const ShareDrawer = () => {
   const isOwner =
     content?.type === 'agreement' &&
     account &&
-    account.user_id === content.artist.user_id
+    account.user_id === content.landlord.user_id
   const shareType = content?.type ?? 'agreement'
 
   const handleShareToTwitter = useCallback(async () => {

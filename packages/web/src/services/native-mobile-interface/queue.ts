@@ -9,7 +9,7 @@ import { MessageType } from './types'
 type AgreementInfo = {
   uri: string
   title: string
-  artist: string
+  landlord: string
   artwork: string
   id: ID
   currentUserId: ID

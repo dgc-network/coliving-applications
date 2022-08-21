@@ -16,7 +16,7 @@ import {
   getProfileAgreementsLineup,
   getProfileUserHandle
 } from 'common/store/pages/profile/selectors'
-import { SET_ARTIST_PICK } from 'common/store/social/agreements/actions'
+import { SET_LANDLORD_PICK } from 'common/store/social/agreements/actions'
 import { LineupSagas } from 'store/lineup/sagas'
 import { waitForValue } from 'utils/sagaHelpers'
 
@@ -30,8 +30,8 @@ function* getAgreements({ offset, limit, payload }) {
 
   // Wait for user to receive social handles
   // We need to know ahead of time whether we want to request
-  // the "artist pick" agreement in addition to the artist's agreements.
-  // TODO: Move artist pick to chain/discprov to avoid this extra trip
+  // the "landlord pick" agreement in addition to the landlord's agreements.
+  // TODO: Move landlord pick to chain/discprov to avoid this extra trip
   const user = yield call(
     waitForValue,
     getUser,
@@ -43,9 +43,9 @@ function* getAgreements({ offset, limit, payload }) {
   const sort = payload.sort === AgreementsSortMode.POPULAR ? 'plays' : 'date'
   const getUnlisted = true
 
-  if (user._artist_pick) {
+  if (user._landlord_pick) {
     let [pinnedAgreement, processed] = yield all([
-      call(retrieveAgreements, { agreementIds: [user._artist_pick] }),
+      call(retrieveAgreements, { agreementIds: [user._landlord_pick] }),
       call(retrieveUserAgreements, {
         handle,
         currentUserId,
@@ -64,7 +64,7 @@ function* getAgreements({ offset, limit, payload }) {
     }
 
     const pinnedAgreementIndex = processed.findIndex(
-      (agreement) => agreement.agreement_id === user._artist_pick
+      (agreement) => agreement.agreement_id === user._landlord_pick
     )
     if (offset === 0) {
       // If pinned agreement found in agreementsResponse,
@@ -117,15 +117,15 @@ class AgreementsSagas extends LineupSagas {
   }
 }
 
-function* watchSetArtistPick() {
-  yield takeEvery(SET_ARTIST_PICK, function* (action) {
+function* watchSetLandlordPick() {
+  yield takeEvery(SET_LANDLORD_PICK, function* (action) {
     const lineup = yield select(getProfileAgreementsLineup)
     const updatedOrderUid = []
     for (const [entryUid, order] of Object.entries(lineup.order)) {
       const agreement = yield select(getAgreement, { uid: entryUid })
-      const isArtistPick = agreement.agreement_id === action.agreementId
+      const isLandlordPick = agreement.agreement_id === action.agreementId
 
-      if (isArtistPick) updatedOrderUid.push({ uid: entryUid, order: 0 })
+      if (isLandlordPick) updatedOrderUid.push({ uid: entryUid, order: 0 })
       else updatedOrderUid.push({ uid: entryUid, order: order + 1 })
     }
     updatedOrderUid.sort((a, b) => a.order - b.order)
@@ -150,5 +150,5 @@ function* watchDeleteAgreement() {
 
 export default function sagas() {
   const agreementSagas = new AgreementsSagas().getSagas()
-  return agreementSagas.concat([watchSetArtistPick, watchDeleteAgreement])
+  return agreementSagas.concat([watchSetLandlordPick, watchDeleteAgreement])
 }

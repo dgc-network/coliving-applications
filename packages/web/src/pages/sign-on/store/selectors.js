@@ -19,9 +19,9 @@ export const getStartedSignOnProcess = (state) =>
 export const getReferrer = (state) => state.signOn.referrer
 
 export const getFollowIds = (state) =>
-  state.signOn.followArtists.selectedUserIds
+  state.signOn.followLandlords.selectedUserIds
 export const getSuggestedFollowIds = (state) => {
-  const { selectedCategory, categories } = state.signOn.followArtists
+  const { selectedCategory, categories } = state.signOn.followLandlords
   return categories[selectedCategory] || []
 }
 
@@ -30,7 +30,7 @@ export const getSuggestedFollowIds = (state) => {
  *   const getLineupMetadatas = makeGetLineupMetadatas(ownProps.lineupSelector)
  *   const mapStateToProps = (state, props) => ({ lineup: getLineupMetadatas(state) })
  */
-export const makeGetFollowArtists = () =>
-  createSelector([getSuggestedFollowIds, getUsers], (artistIds, users) =>
-    artistIds.map((aId) => users[aId]).filter(Boolean)
+export const makeGetFollowLandlords = () =>
+  createSelector([getSuggestedFollowIds, getUsers], (landlordIds, users) =>
+    landlordIds.map((aId) => users[aId]).filter(Boolean)
   )

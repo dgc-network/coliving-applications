@@ -21,15 +21,15 @@ import { useDispatchWeb } from 'app/hooks/useDispatchWeb'
 import { usePressScaleAnimation } from 'app/hooks/usePressScaleAnimation'
 import { MessageType } from 'app/message/types'
 import {
-  setFollowArtistsCategory,
-  setFollowedArtists
+  setFollowLandlordsCategory,
+  setFollowedLandlords
 } from 'app/store/signon/actions'
 import {
-  getAllFollowArtists,
-  makeGetFollowArtists
+  getAllFollowLandlords,
+  makeGetFollowLandlords
 } from 'app/store/signon/selectors'
-import type { FollowArtistsCategory } from 'app/store/signon/types'
-import { artistCategories } from 'app/store/signon/types'
+import type { FollowLandlordsCategory } from 'app/store/signon/types'
+import { landlordCategories } from 'app/store/signon/types'
 import { EventNames } from 'app/types/analytics'
 import { agreement, make } from 'app/utils/analytics'
 
@@ -260,7 +260,7 @@ const styles = StyleSheet.create({
 })
 
 const messages = {
-  title: 'Follow At Least 3 Artists To Get Started',
+  title: 'Follow At Least 3 Landlords To Get Started',
   subTitle:
     'Agreements uploaded or reposted by people you follow will appear in your feed.',
   pickForMe: 'Pick Some For Me',
@@ -328,7 +328,7 @@ const PickForMeButton = ({ active }: { active: boolean }) => {
   )
 }
 
-export const FollowArtistCard = ({
+export const FollowLandlordCard = ({
   user,
   isSelected
 }: {
@@ -371,37 +371,37 @@ const FirstFollows = ({ navigation, route }: FirstFollowsProps) => {
   const { email, handle } = route.params
   const dispatch = useDispatch()
   const dispatchWeb = useDispatchWeb()
-  const getSuggestedFollows = makeGetFollowArtists()
-  const suggestedFollowArtists = useSelector(getSuggestedFollows)
-  const suggestedFollowArtistsMap = suggestedFollowArtists.reduce(
+  const getSuggestedFollows = makeGetFollowLandlords()
+  const suggestedFollowLandlords = useSelector(getSuggestedFollows)
+  const suggestedFollowLandlordsMap = suggestedFollowLandlords.reduce(
     (result, user) => ({ ...result, [user.user_id]: user }),
     {}
   )
-  const followArtists = useSelector(getAllFollowArtists)
+  const followLandlords = useSelector(getAllFollowLandlords)
   const {
     categories,
     selectedCategory,
-    selectedUserIds: followedArtistIds
-  } = followArtists
+    selectedUserIds: followedLandlordIds
+  } = followLandlords
   const [isDisabled, setIsDisabled] = useState(false)
-  const [didFetchArtistsToFollow, setDidFetchArtistsToFollow] = useState(false)
+  const [didFetchLandlordsToFollow, setDidFetchLandlordsToFollow] = useState(false)
   const [isPickForMeActive, setIsPickForMeActive] = useState(false)
   const pickForMeScale = useRef(new Animated.Value(1)).current
   const cardOpacity = useRef(new Animated.Value(1)).current
 
   useEffect(() => {
-    if (!didFetchArtistsToFollow) {
-      setDidFetchArtistsToFollow(true)
+    if (!didFetchLandlordsToFollow) {
+      setDidFetchLandlordsToFollow(true)
       dispatchWeb({
         type: MessageType.GET_USERS_TO_FOLLOW,
         isAction: true
       })
     }
-  }, [didFetchArtistsToFollow, dispatchWeb])
+  }, [didFetchLandlordsToFollow, dispatchWeb])
 
   useEffect(() => {
-    setIsDisabled(followedArtistIds.length < MINIMUM_FOLLOWER_COUNT)
-  }, [followedArtistIds])
+    setIsDisabled(followedLandlordIds.length < MINIMUM_FOLLOWER_COUNT)
+  }, [followedLandlordIds])
 
   useEffect(() => {
     Animated.timing(cardOpacity, {
@@ -411,31 +411,31 @@ const FirstFollows = ({ navigation, route }: FirstFollowsProps) => {
     }).start()
   }, [selectedCategory, cardOpacity])
 
-  const toggleFollowedArtist = useCallback(
+  const toggleFollowedLandlord = useCallback(
     (userId: number) => {
-      const newFollowedArtists = followedArtistIds.includes(userId)
-        ? followedArtistIds.filter((id) => id !== userId)
-        : followedArtistIds.concat([userId])
-      dispatch(setFollowedArtists(newFollowedArtists))
+      const newFollowedLandlords = followedLandlordIds.includes(userId)
+        ? followedLandlordIds.filter((id) => id !== userId)
+        : followedLandlordIds.concat([userId])
+      dispatch(setFollowedLandlords(newFollowedLandlords))
     },
-    [followedArtistIds, dispatch]
+    [followedLandlordIds, dispatch]
   )
 
-  const addFollowedArtists = useCallback(
+  const addFollowedLandlords = useCallback(
     (userIds: number[]) => {
       const newUserIds = userIds.filter(
-        (userId) => !followedArtistIds.includes(userId)
+        (userId) => !followedLandlordIds.includes(userId)
       )
-      dispatch(setFollowedArtists(followedArtistIds.concat(newUserIds)))
+      dispatch(setFollowedLandlords(followedLandlordIds.concat(newUserIds)))
     },
-    [followedArtistIds, dispatch]
+    [followedLandlordIds, dispatch]
   )
 
   // The autoselect or 'pick for me'
   // Selects the first three aritsts in the current category along with 2 additinal
-  // random artist from the top 10
+  // random landlord from the top 10
   const onPickForMe = () => {
-    const selectedIds = new Set(followedArtistIds)
+    const selectedIds = new Set(followedLandlordIds)
 
     const toUnselectedUserIds = (users: any[]) =>
       users
@@ -443,19 +443,19 @@ const FirstFollows = ({ navigation, route }: FirstFollowsProps) => {
         .filter((userId: number) => !selectedIds.has(userId))
 
     const firstThreeUserIds = toUnselectedUserIds(
-      suggestedFollowArtists.slice(0, 3)
+      suggestedFollowLandlords.slice(0, 3)
     )
     const suggestedUserIds = toUnselectedUserIds(
-      suggestedFollowArtists.slice(3, 10)
+      suggestedFollowLandlords.slice(3, 10)
     )
 
     const followUsers = firstThreeUserIds.concat(
       sampleSize(suggestedUserIds, 2)
     )
-    addFollowedArtists(followUsers)
+    addFollowedLandlords(followUsers)
   }
 
-  const Pill = ({ category }: { category: FollowArtistsCategory }) => {
+  const Pill = ({ category }: { category: FollowLandlordsCategory }) => {
     const dispatch = useDispatch()
     const isActive = selectedCategory === category
     const { scale, handlePressIn, handlePressOut } = usePressScaleAnimation(0.9)
@@ -466,7 +466,7 @@ const FirstFollows = ({ navigation, route }: FirstFollowsProps) => {
           toValue: 0,
           duration: 0,
           useNativeDriver: true
-        }).start(() => dispatch(setFollowArtistsCategory(category)))
+        }).start(() => dispatch(setFollowLandlordsCategory(category)))
       }
     }, [isActive, category, dispatch])
 
@@ -493,8 +493,8 @@ const FirstFollows = ({ navigation, route }: FirstFollowsProps) => {
 
   const onContinuePress = () => {
     dispatchWeb({
-      type: MessageType.SET_FOLLOW_ARTISTS,
-      followArtists,
+      type: MessageType.SET_FOLLOW_LANDLORDS,
+      followLandlords,
       isAction: true
     })
 
@@ -503,8 +503,8 @@ const FirstFollows = ({ navigation, route }: FirstFollowsProps) => {
         eventName: EventNames.CREATE_ACCOUNT_COMPLETE_FOLLOW,
         emailAddress: email,
         handle,
-        users: followedArtistIds.join('|'),
-        count: followedArtistIds.length
+        users: followedLandlordIds.join('|'),
+        count: followedLandlordIds.length
       })
     )
 
@@ -521,7 +521,7 @@ const FirstFollows = ({ navigation, route }: FirstFollowsProps) => {
               <FormTitle />
               <Text style={styles.instruction}>{messages.subTitle}</Text>
               <View style={styles.pillsContainer}>
-                {artistCategories.map((category) => (
+                {landlordCategories.map((category) => (
                   <Pill key={category} category={category} />
                 ))}
               </View>
@@ -558,19 +558,19 @@ const FirstFollows = ({ navigation, route }: FirstFollowsProps) => {
               </TouchableOpacity>
               <View style={styles.containerCards}>
                 {(categories[selectedCategory] || [])
-                  .filter((artistId) => suggestedFollowArtistsMap[artistId])
-                  .map((artistId) => (
+                  .filter((landlordId) => suggestedFollowLandlordsMap[landlordId])
+                  .map((landlordId) => (
                     <Animated.View
                       style={{ opacity: cardOpacity }}
-                      key={`${selectedCategory}-${artistId}`}
+                      key={`${selectedCategory}-${landlordId}`}
                     >
                       <TouchableOpacity
                         activeOpacity={1}
-                        onPress={() => toggleFollowedArtist(artistId)}
+                        onPress={() => toggleFollowedLandlord(landlordId)}
                       >
-                        <FollowArtistCard
-                          user={suggestedFollowArtistsMap[artistId]}
-                          isSelected={followedArtistIds.includes(artistId)}
+                        <FollowLandlordCard
+                          user={suggestedFollowLandlordsMap[landlordId]}
+                          isSelected={followedLandlordIds.includes(landlordId)}
                         />
                       </TouchableOpacity>
                     </Animated.View>
@@ -584,9 +584,9 @@ const FirstFollows = ({ navigation, route }: FirstFollowsProps) => {
           <ContinueButton onPress={onContinuePress} disabled={isDisabled} />
           <Text style={styles.followCounter}>
             {`${messages.following} ${
-              followedArtistIds.length > MINIMUM_FOLLOWER_COUNT
-                ? followedArtistIds.length
-                : `${followedArtistIds.length}/${MINIMUM_FOLLOWER_COUNT}`
+              followedLandlordIds.length > MINIMUM_FOLLOWER_COUNT
+                ? followedLandlordIds.length
+                : `${followedLandlordIds.length}/${MINIMUM_FOLLOWER_COUNT}`
             }`}
           </Text>
         </View>

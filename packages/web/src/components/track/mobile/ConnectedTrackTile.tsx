@@ -57,7 +57,7 @@ const ConnectedAgreementTile = memo(
     user,
     ordered,
     agreementTileStyles,
-    showArtistPick,
+    showLandlordPick,
     goToRoute,
     togglePlay,
     isBuffering,
@@ -98,7 +98,7 @@ const ConnectedAgreementTile = memo(
       duration
     } = getAgreementWithFallback(agreement)
 
-    const { _artist_pick, user_id, handle, name, is_verified } =
+    const { _landlord_pick, user_id, handle, name, is_verified } =
       getUserWithFallback(user)
 
     const isOwner = user_id === currentUserId
@@ -124,7 +124,7 @@ const ConnectedAgreementTile = memo(
       goToRoute(permalink)
     }
 
-    const goToArtistPage = (e: MouseEvent<HTMLElement>) => {
+    const goToLandlordPage = (e: MouseEvent<HTMLElement>) => {
       e.stopPropagation()
       goToRoute(profilePage(handle))
     }
@@ -161,7 +161,7 @@ const ConnectedAgreementTile = memo(
           : null,
         OverflowAction.ADD_TO_CONTENT_LIST,
         OverflowAction.VIEW_AGREEMENT_PAGE,
-        OverflowAction.VIEW_ARTIST_PAGE
+        OverflowAction.VIEW_LANDLORD_PAGE
       ].filter(Boolean) as OverflowAction[]
 
       clickOverflow(agreementId, overflowActions)
@@ -194,19 +194,19 @@ const ConnectedAgreementTile = memo(
         listenCount={play_count}
         fieldVisibility={field_visibility}
         coSign={_co_sign}
-        // Artist Pick
-        showArtistPick={showArtistPick}
-        isArtistPick={_artist_pick === agreement_id}
-        // Artist
-        artistHandle={handle}
-        artistName={name}
-        artistIsVerified={is_verified}
+        // Landlord Pick
+        showLandlordPick={showLandlordPick}
+        isLandlordPick={_landlord_pick === agreement_id}
+        // Landlord
+        landlordHandle={handle}
+        landlordName={name}
+        landlordIsVerified={is_verified}
         // Playback
         togglePlay={togglePlay}
         isActive={uid === playingUid}
         isLoading={isBuffering}
         isPlaying={uid === playingUid && isPlaying}
-        goToArtistPage={goToArtistPage}
+        goToLandlordPage={goToLandlordPage}
         goToAgreementPage={goToAgreementPage}
         toggleSave={toggleSave}
         onShare={onShare}

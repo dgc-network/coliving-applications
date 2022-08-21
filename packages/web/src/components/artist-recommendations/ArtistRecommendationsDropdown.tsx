@@ -3,13 +3,13 @@ import { useRef } from 'react'
 import { useSpring, animated } from 'react-spring'
 
 import {
-  ArtistRecommendations,
-  ArtistRecommendationsProps
-} from './ArtistRecommendations'
-import styles from './ArtistRecommendationsDropdown.module.css'
+  LandlordRecommendations,
+  LandlordRecommendationsProps
+} from './LandlordRecommendations'
+import styles from './LandlordRecommendationsDropdown.module.css'
 
-type ArtistRecommendationsDropdownProps = Omit<
-  ArtistRecommendationsProps,
+type LandlordRecommendationsDropdownProps = Omit<
+  LandlordRecommendationsProps,
   'ref' | 'className' | 'itemClassName'
 > & {
   isVisible: boolean
@@ -20,8 +20,8 @@ const fast = {
   friction: 40
 }
 
-export const ArtistRecommendationsDropdown = (
-  props: ArtistRecommendationsDropdownProps
+export const LandlordRecommendationsDropdown = (
+  props: LandlordRecommendationsDropdownProps
 ) => {
   const { isVisible } = props
   const childRef = useRef<HTMLElement | null>(null)
@@ -38,10 +38,10 @@ export const ArtistRecommendationsDropdown = (
 
   return (
     <animated.div className={styles.dropdown} style={spring}>
-      <ArtistRecommendations
+      <LandlordRecommendations
         ref={childRef}
-        className={styles.artistRecommendations}
-        itemClassName={styles.artistRecommendationsItem}
+        className={styles.landlordRecommendations}
+        itemClassName={styles.landlordRecommendationsItem}
         {...props}
       />
     </animated.div>

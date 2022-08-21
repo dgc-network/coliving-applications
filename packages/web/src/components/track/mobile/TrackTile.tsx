@@ -21,7 +21,7 @@ import styles from './AgreementTile.module.css'
 import AgreementTileArt from './AgreementTileArt'
 
 const messages = {
-  artistPick: "Artist's Pick",
+  landlordPick: "Landlord's Pick",
   coSign: 'Co-Sign',
   reposted: 'Reposted',
   favorited: 'Favorited',
@@ -31,7 +31,7 @@ const messages = {
 
 type ExtraProps = {
   goToAgreementPage: (e: MouseEvent<HTMLElement>) => void
-  goToArtistPage: (e: MouseEvent<HTMLElement>) => void
+  goToLandlordPage: (e: MouseEvent<HTMLElement>) => void
   toggleSave: (agreementId: ID) => void
   toggleRepost: (agreementId: ID) => void
   onShare: (agreementId: ID) => void
@@ -132,7 +132,7 @@ const AgreementTile = (props: AgreementTileProps & ExtraProps) => {
 
   return (
     <div className={styles.container}>
-      {props.showArtistPick && props.isArtistPick && (
+      {props.showLandlordPick && props.isLandlordPick && (
         <AgreementBannerIcon
           type={AgreementBannerIconType.STAR}
           isMobile
@@ -154,10 +154,10 @@ const AgreementTile = (props: AgreementTileProps & ExtraProps) => {
         }}
       >
         <div className={cn(styles.topRight, styles.statText)}>
-          {props.showArtistPick && props.isArtistPick && (
+          {props.showLandlordPick && props.isLandlordPick && (
             <div className={styles.topRightIcon}>
               <IconStar />
-              {messages.artistPick}
+              {messages.landlordPick}
             </div>
           )}
           {props.isUnlisted && (
@@ -197,9 +197,9 @@ const AgreementTile = (props: AgreementTileProps & ExtraProps) => {
                 />
               )}
             </div>
-            <div className={styles.artist} onClick={props.goToArtistPage}>
+            <div className={styles.landlord} onClick={props.goToLandlordPage}>
               <span className={cn(fadeIn, styles.userName)}>
-                {props.artistName}
+                {props.landlordName}
               </span>
               <UserBadges
                 userId={userId}

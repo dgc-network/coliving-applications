@@ -13,7 +13,7 @@ import {
 import { ReactComponent as IconCarrotDown } from 'assets/img/iconCaretDown.svg'
 import { formatCount } from 'common/utils/formatUtil'
 import { formatSeconds } from 'common/utils/timeUtil'
-import { ArtistPopover } from 'components/artist/ArtistPopover'
+import { LandlordPopover } from 'components/landlord/LandlordPopover'
 import Draggable from 'components/dragndrop/Draggable'
 import Skeleton from 'components/skeleton/Skeleton'
 import Tooltip from 'components/tooltip/Tooltip'
@@ -74,33 +74,33 @@ const agreementNameCell = (val, record, props) => {
     >
       <div className={cn(styles.textCell, { [styles.agreementName]: !deleted })}>
         {val}
-        {deleted ? ` [Deleted By Artist]` : ''}
+        {deleted ? ` [Deleted By Landlord]` : ''}
       </div>
     </div>
   )
 }
 
-const artistNameCell = (val, record, props) => {
+const landlordNameCell = (val, record, props) => {
   if (record.user?.is_deactivated) {
     return `${record.user?.name} [Deactivated]`
   }
   return (
-    <ArtistPopover handle={record.handle}>
+    <LandlordPopover handle={record.handle}>
       <div
         className={styles.textContainer}
         onClick={(e) => {
           e.stopPropagation()
-          props.onClickArtistName(record)
+          props.onClickLandlordName(record)
         }}
       >
-        <div className={cn(styles.textCell, styles.artistName)}>{val}</div>
+        <div className={cn(styles.textCell, styles.landlordName)}>{val}</div>
         <UserBadges
           userId={record.owner_id}
           badgeSize={12}
           className={styles.badges}
         />
       </div>
-    </ArtistPopover>
+    </LandlordPopover>
   )
 }
 
@@ -141,7 +141,7 @@ const optionsButtonCell = (val, record, index, props) => {
       isFavorited={val.has_current_user_saved}
       isOwner={record.owner_id === props.userId}
       isOwnerDeactivated={!!record.user.is_deactivated}
-      isArtistPick={val.user._artist_pick === val.agreement_id}
+      isLandlordPick={val.user._landlord_pick === val.agreement_id}
       index={index}
       agreementTitle={val.name}
       albumId={null}
@@ -265,7 +265,7 @@ const columns = {
     minWidth: 16
   },
   colAgreementName: { name: 'colAgreementName', minWidth: 200 },
-  colArtistName: { name: 'colArtistName', minWidth: 200 },
+  colLandlordName: { name: 'colLandlordName', minWidth: 200 },
   colDate: { name: 'colDate', minWidth: 140 },
   colTime: { name: 'colTime', minWidth: 85 },
   colPlays: { name: 'colPlays', minWidth: 72 },
@@ -437,15 +437,15 @@ class AgreementsTable extends Component {
             loading ? <Loading /> : agreementNameCell(val, record, this.props)
         },
         {
-          title: <Tooltip text='Artist'>{'Artist'}</Tooltip>,
-          dataIndex: 'artist',
-          key: 'artist',
-          className: 'colArtistName',
+          title: <Tooltip text='Landlord'>{'Landlord'}</Tooltip>,
+          dataIndex: 'landlord',
+          key: 'landlord',
+          className: 'colLandlordName',
           sorter: loading
             ? null
-            : (a, b) => alphaSortFn(a.artist, b.artist, a.key, b.key),
+            : (a, b) => alphaSortFn(a.landlord, b.landlord, a.key, b.key),
           render: (val, record) =>
-            loading ? <Loading /> : artistNameCell(val, record, this.props)
+            loading ? <Loading /> : landlordNameCell(val, record, this.props)
         },
         this.state.displayedColumns.colDate && {
           title: <Tooltip text='Date Added'>{'Date'}</Tooltip>,
@@ -639,7 +639,7 @@ AgreementsTable.propTypes = {
   onClickRow: PropTypes.func,
   onClickFavorite: PropTypes.func,
   onClickAgreementName: PropTypes.func,
-  onClickArtistName: PropTypes.func,
+  onClickLandlordName: PropTypes.func,
   onClickRepost: PropTypes.func,
   onSortAgreements: PropTypes.func,
   onReorderAgreements: PropTypes.func,
@@ -660,7 +660,7 @@ AgreementsTable.defaultProps = {
   onClickRow: () => {},
   onClickFavorite: () => {},
   onClickAgreementName: () => {},
-  onClickArtistName: () => {},
+  onClickLandlordName: () => {},
   onClickRepost: () => {},
   onSortAgreements: () => {},
   onReorderAgreements: () => {},

@@ -19,9 +19,9 @@ export const getHandleError = (state: AppState) =>
   getBaseState(state).handleError
 export const getUserId = (state: AppState) => getBaseState(state).userId
 export const getUsersToFollow = (state: AppState) =>
-  getBaseState(state).followArtists.usersToFollow
-export const getAllFollowArtists = (state: AppState) =>
-  getBaseState(state).followArtists
+  getBaseState(state).followLandlords.usersToFollow
+export const getAllFollowLandlords = (state: AppState) =>
+  getBaseState(state).followLandlords
 export const getAccountAvailable = (state: AppState) =>
   getBaseState(state).accountAvailable
 export const getFinalEmail = (state: AppState) => getBaseState(state).finalEmail
@@ -29,12 +29,12 @@ export const getFinalHandle = (state: AppState) =>
   getBaseState(state).finalHandle
 
 const getSuggestedFollowIds = (state: AppState) => {
-  const { selectedCategory, categories } = getBaseState(state).followArtists
+  const { selectedCategory, categories } = getBaseState(state).followLandlords
   return categories[selectedCategory] || []
 }
-export const makeGetFollowArtists = () =>
+export const makeGetFollowLandlords = () =>
   createSelector(
     [getSuggestedFollowIds, getUsersToFollow],
-    (artistIds: number[], users: any[]) =>
-      artistIds.map((aId) => users[aId]).filter(Boolean)
+    (landlordIds: number[], users: any[]) =>
+      landlordIds.map((aId) => users[aId]).filter(Boolean)
   )

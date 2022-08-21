@@ -2,7 +2,7 @@ import { WidthSizes } from '@/common'
 import { BlurView } from '@react-native-community/blur'
 import { Animated, Platform, StyleSheet } from 'react-native'
 
-import BadgeArtist from 'app/assets/images/badgeArtist.svg'
+import BadgeLandlord from 'app/assets/images/badgeLandlord.svg'
 import { DynamicImage } from 'app/components/core'
 import { useUserCoverPhoto } from 'app/hooks/useUserCoverPhoto'
 import { makeStyles } from 'app/styles/makeStyles'
@@ -12,7 +12,7 @@ import { useSelectProfile } from './selectors'
 const AnimatedBlurView = Animated.createAnimatedComponent(BlurView)
 
 const useStyles = makeStyles(({ spacing }) => ({
-  artistBadge: {
+  landlordBadge: {
     position: 'absolute',
     top: spacing(5),
     right: spacing(3)
@@ -57,7 +57,7 @@ export const CoverPhoto = ({ scrollY }: { scrollY?: Animated.Value }) => {
 
   const isDefaultImage = coverPhoto && /imageCoverPhotoBlank/.test(coverPhoto)
 
-  const isArtist = agreement_count > 0
+  const isLandlord = agreement_count > 0
 
   return (
     <>
@@ -85,10 +85,10 @@ export const CoverPhoto = ({ scrollY }: { scrollY?: Animated.Value }) => {
           />
         ) : null}
       </DynamicImage>
-      {isArtist ? (
+      {isLandlord ? (
         <Animated.View
           style={[
-            styles.artistBadge,
+            styles.landlordBadge,
             scrollY
               ? {
                   transform: [
@@ -100,7 +100,7 @@ export const CoverPhoto = ({ scrollY }: { scrollY?: Animated.Value }) => {
               : undefined
           ]}
         >
-          <BadgeArtist />
+          <BadgeLandlord />
         </Animated.View>
       ) : null}
     </>

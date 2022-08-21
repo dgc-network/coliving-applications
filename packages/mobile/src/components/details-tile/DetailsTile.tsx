@@ -71,12 +71,12 @@ const useStyles = makeStyles(({ palette, spacing, typography }) => ({
     marginBottom: spacing(4)
   },
 
-  artistContainer: {
+  landlordContainer: {
     ...flexRowCentered(),
     marginBottom: spacing(4)
   },
 
-  artist: {
+  landlord: {
     color: palette.secondary,
     fontSize: 18
   },
@@ -192,7 +192,7 @@ export const DetailsTile = ({
 
   const isOwner = user?.user_id === currentUserId
 
-  const handlePressArtistName = useCallback(() => {
+  const handlePressLandlordName = useCallback(() => {
     if (!user) {
       return
     }
@@ -261,9 +261,9 @@ export const DetailsTile = ({
           {title}
         </Text>
         {user ? (
-          <TouchableOpacity onPress={handlePressArtistName}>
-            <View style={styles.artistContainer}>
-              <Text style={styles.artist}>{user.name}</Text>
+          <TouchableOpacity onPress={handlePressLandlordName}>
+            <View style={styles.landlordContainer}>
+              <Text style={styles.landlord}>{user.name}</Text>
               <UserBadges
                 style={styles.badge}
                 badgeSize={16}

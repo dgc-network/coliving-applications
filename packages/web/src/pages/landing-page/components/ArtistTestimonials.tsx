@@ -1,20 +1,20 @@
 import { Parallax } from 'react-scroll-parallax'
 import { useSpring, animated } from 'react-spring'
 
-import artist3lau from 'assets/img/publicSite/ImgArtist3LAU.jpg'
-import artistAlinaBaraz from 'assets/img/publicSite/ImgArtistAlinaBaraz.jpg'
-import artistDeadmau5 from 'assets/img/publicSite/ImgArtistDeadmau5.jpg'
-import artistJasonDerulo from 'assets/img/publicSite/ImgArtistJasonDerulo.jpg'
-import artistKatyPerry from 'assets/img/publicSite/ImgArtistKatyPerry.jpg'
-import artistNas from 'assets/img/publicSite/ImgArtistNas.jpg'
-import artistRezz from 'assets/img/publicSite/ImgArtistREZZ.jpg'
-import artistSkrillex from 'assets/img/publicSite/ImgArtistSkrillex.jpg'
-import artistSteveAoki from 'assets/img/publicSite/ImgArtistSteveAoki.jpg'
-import artistChainsmokers from 'assets/img/publicSite/ImgArtistTheChainsmokers.jpg'
+import landlord3lau from 'assets/img/publicSite/ImgLandlord3LAU.jpg'
+import landlordAlinaBaraz from 'assets/img/publicSite/ImgLandlordAlinaBaraz.jpg'
+import landlordDeadmau5 from 'assets/img/publicSite/ImgLandlordDeadmau5.jpg'
+import landlordJasonDerulo from 'assets/img/publicSite/ImgLandlordJasonDerulo.jpg'
+import landlordKatyPerry from 'assets/img/publicSite/ImgLandlordKatyPerry.jpg'
+import landlordNas from 'assets/img/publicSite/ImgLandlordNas.jpg'
+import landlordRezz from 'assets/img/publicSite/ImgLandlordREZZ.jpg'
+import landlordSkrillex from 'assets/img/publicSite/ImgLandlordSkrillex.jpg'
+import landlordSteveAoki from 'assets/img/publicSite/ImgLandlordSteveAoki.jpg'
+import landlordChainsmokers from 'assets/img/publicSite/ImgLandlordTheChainsmokers.jpg'
 import dots2x from 'assets/img/publicSite/dots@2x.jpg'
 import useHasViewed from 'hooks/useHasViewed'
 
-import styles from './ArtistTestimonials.module.css'
+import styles from './LandlordTestimonials.module.css'
 
 const messages = {
   title: 'Built With The Best',
@@ -26,98 +26,98 @@ type AristProps = {
   name: string
 }
 
-const Artist = (props: AristProps) => {
+const Landlord = (props: AristProps) => {
   return (
     <div className={styles.cardMoveContainer}>
-      <div className={styles.artistContainer}>
-        <div className={styles.artistImageWrapper}>
-          <animated.img src={props.imageUrl} className={styles.artistImage} />
+      <div className={styles.landlordContainer}>
+        <div className={styles.landlordImageWrapper}>
+          <animated.img src={props.imageUrl} className={styles.landlordImage} />
         </div>
-        <div className={styles.artistName}>{props.name}</div>
+        <div className={styles.landlordName}>{props.name}</div>
       </div>
     </div>
   )
 }
 
-type MobileArtistProps = {
+type MobileLandlordProps = {
   imageUrl: string
   name: string
 }
-const MobileArtist = (props: MobileArtistProps) => {
+const MobileLandlord = (props: MobileLandlordProps) => {
   return (
-    <div className={styles.artistCard}>
-      <div className={styles.artistImageWrapper}>
+    <div className={styles.landlordCard}>
+      <div className={styles.landlordImageWrapper}>
         <img
           src={props.imageUrl}
-          className={styles.artistImage}
-          alt='Coliving Artist'
+          className={styles.landlordImage}
+          alt='Coliving Landlord'
         />
       </div>
-      <div className={styles.artistName}>{props.name}</div>
+      <div className={styles.landlordName}>{props.name}</div>
     </div>
   )
 }
 
-const MobileOverflowArtist = (props: MobileArtistProps) => {
+const MobileOverflowLandlord = (props: MobileLandlordProps) => {
   return (
-    <div className={styles.overflowArtistCard}>
+    <div className={styles.overflowLandlordCard}>
       <img
         src={props.imageUrl}
-        className={styles.artistImage}
-        alt='Coliving Artist'
+        className={styles.landlordImage}
+        alt='Coliving Landlord'
       />
     </div>
   )
 }
 
-const artists = [
+const landlords = [
   {
     name: 'deadmau5',
-    imageUrl: artistDeadmau5
+    imageUrl: landlordDeadmau5
   },
   {
     name: 'Katy Perry',
-    imageUrl: artistKatyPerry
+    imageUrl: landlordKatyPerry
   },
   {
     name: 'Nas',
-    imageUrl: artistNas
+    imageUrl: landlordNas
   },
   {
     name: 'Jason Derulo',
-    imageUrl: artistJasonDerulo
+    imageUrl: landlordJasonDerulo
   },
   {
     name: 'Steve Aoki',
-    imageUrl: artistSteveAoki
+    imageUrl: landlordSteveAoki
   },
   {
     name: 'SKRILLEX',
-    imageUrl: artistSkrillex
+    imageUrl: landlordSkrillex
   },
   {
     name: 'REZZ',
-    imageUrl: artistRezz
+    imageUrl: landlordRezz
   },
   {
     name: 'The Chainsmokers',
-    imageUrl: artistChainsmokers
+    imageUrl: landlordChainsmokers
   },
   {
     name: 'alina baraz',
-    imageUrl: artistAlinaBaraz
+    imageUrl: landlordAlinaBaraz
   },
   {
     name: '3LAU',
-    imageUrl: artist3lau
+    imageUrl: landlord3lau
   }
 ]
 
-type ArtistTestimonialsProps = {
+type LandlordTestimonialsProps = {
   isMobile: boolean
 }
 
-const ArtistTestimonials = (props: ArtistTestimonialsProps) => {
+const LandlordTestimonials = (props: LandlordTestimonialsProps) => {
   // Animate in the title and subtitle text
   const [hasViewed, refInView] = useHasViewed()
   // @ts-ignore
@@ -132,17 +132,17 @@ const ArtistTestimonials = (props: ArtistTestimonialsProps) => {
       <div className={styles.mobileContainer}>
         <h3 className={styles.title}>{messages.title}</h3>
         <h3 className={styles.subTitle}>{messages.subtitle}</h3>
-        <div className={styles.artistsContainer}>
-          {artists.slice(0, -4).map((artist, i) => (
-            <MobileArtist key={artist.name} {...artist} />
+        <div className={styles.landlordsContainer}>
+          {landlords.slice(0, -4).map((landlord, i) => (
+            <MobileLandlord key={landlord.name} {...landlord} />
           ))}
         </div>
-        <div className={styles.overflowArtistsContainer}>
-          {artists.slice(-4).map((artist) => (
-            <MobileOverflowArtist key={artist.name} {...artist} />
+        <div className={styles.overflowLandlordsContainer}>
+          {landlords.slice(-4).map((landlord) => (
+            <MobileOverflowLandlord key={landlord.name} {...landlord} />
           ))}
         </div>
-        <div className={styles.overflowArtistsText}>&amp; so many more</div>
+        <div className={styles.overflowLandlordsText}>&amp; so many more</div>
       </div>
     )
   }
@@ -166,9 +166,9 @@ const ArtistTestimonials = (props: ArtistTestimonialsProps) => {
               <h3 className={styles.subTitle}>{messages.subtitle}</h3>
             </animated.div>
           </div>
-          <div className={styles.artistsContainer}>
-            {artists.map((artist) => (
-              <Artist key={artist.name} {...artist} />
+          <div className={styles.landlordsContainer}>
+            {landlords.map((landlord) => (
+              <Landlord key={landlord.name} {...landlord} />
             ))}
           </div>
         </div>
@@ -190,4 +190,4 @@ const ArtistTestimonials = (props: ArtistTestimonialsProps) => {
   )
 }
 
-export default ArtistTestimonials
+export default LandlordTestimonials

@@ -21,9 +21,9 @@ export const getContentUrl = (content: ShareModalContent) => {
       return getUserRoute(profile, true)
     }
     case 'album': {
-      const { album, artist } = content
+      const { album, landlord } = content
       return getCollectionRoute(
-        { ...album, user: artist } as unknown as UserCollection,
+        { ...album, user: landlord } as unknown as UserCollection,
         true
       )
     }
@@ -46,7 +46,7 @@ export const getTwitterShareText = (content: ShareModalContent) => {
     case 'agreement': {
       const {
         agreement: { title },
-        artist: { handle }
+        landlord: { handle }
       } = content
       return messages.agreementShareText(title, handle)
     }
@@ -59,7 +59,7 @@ export const getTwitterShareText = (content: ShareModalContent) => {
     case 'album': {
       const {
         album: { contentList_name },
-        artist: { handle }
+        landlord: { handle }
       } = content
       return messages.albumShareText(contentList_name, handle)
     }

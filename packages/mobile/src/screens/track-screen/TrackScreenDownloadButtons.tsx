@@ -29,7 +29,7 @@ export type DownloadButtonProps = {
 }
 
 export const messages = {
-  followToDownload: 'Must follow artist to download',
+  followToDownload: 'Must follow landlord to download',
   addDownloadPrefix: (label: string) => `Download ${label}`
 }
 

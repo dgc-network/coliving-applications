@@ -697,7 +697,7 @@ class ColivingBackend {
         account.tiktok_handle = body.tikTokHandle || null
         account.website = body.website || null
         account.donation = body.donation || null
-        account._artist_pick = body.pinnedAgreementId || null
+        account._landlord_pick = body.pinnedAgreementId || null
         account.twitterVerified = body.twitterVerified || false
         account.instagramVerified = body.instagramVerified || false
       } catch (e) {
@@ -780,7 +780,7 @@ class ColivingBackend {
     }
   }
 
-  static async getArtistAgreements({
+  static async getLandlordAgreements({
     offset,
     limit,
     userId,
@@ -1679,14 +1679,14 @@ class ColivingBackend {
   }
 
   /**
-   * Sets the artist pick for a user
-   * @param {number?} agreementId if null, unsets the artist pick
+   * Sets the landlord pick for a user
+   * @param {number?} agreementId if null, unsets the landlord pick
    */
-  static async setArtistPick(agreementId = null) {
+  static async setLandlordPick(agreementId = null) {
     await waitForLibsInit()
     try {
       const { data, signature } = await ColivingBackend.signData()
-      await fetch(`${IDENTITY_SERVICE}/artist_pick`, {
+      await fetch(`${IDENTITY_SERVICE}/landlord_pick`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

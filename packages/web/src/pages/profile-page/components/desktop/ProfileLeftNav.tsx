@@ -37,7 +37,7 @@ const messages = {
 type ProfileLeftNavProps = {
   userId: ID
   handle: string
-  isArtist: boolean
+  isLandlord: boolean
   created: string
   editMode: boolean
   loading: boolean
@@ -67,7 +67,7 @@ export const ProfileLeftNav = (props: ProfileLeftNavProps) => {
   const {
     userId,
     handle,
-    isArtist,
+    isLandlord,
     created,
     editMode,
     loading,
@@ -207,9 +207,9 @@ export const ProfileLeftNav = (props: ProfileLeftNavProps) => {
         ) : null}
         {isTippingEnabled && <SupportingList />}
         {isTippingEnabled && <TopSupporters />}
-        {isArtist ? <ProfileTags goToRoute={goToRoute} tags={tags} /> : null}
+        {isLandlord ? <ProfileTags goToRoute={goToRoute} tags={tags} /> : null}
         <ProfileMutuals />
-        {isOwner && !isArtist && (
+        {isOwner && !isLandlord && (
           <UploadChip type='agreement' variant='nav' onClick={onClickUploadChip} />
         )}
       </div>

@@ -1,1 +1,1 @@
-export * from './ArtistRecommendations'
+export * from './LandlordRecommendations'

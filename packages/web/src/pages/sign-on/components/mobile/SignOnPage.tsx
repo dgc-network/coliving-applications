@@ -23,7 +23,7 @@ import InitialPage from 'pages/sign-on/components/mobile/InitialPage'
 import NotificationPermissionsPage from 'pages/sign-on/components/mobile/NotificationPermissionsPage'
 import PasswordPage from 'pages/sign-on/components/mobile/PasswordPage'
 import ProfilePage from 'pages/sign-on/components/mobile/ProfilePage'
-import { Pages, FollowArtistsCategory } from 'pages/sign-on/store/types'
+import { Pages, FollowLandlordsCategory } from 'pages/sign-on/store/types'
 import { PromptPushNotificationPermissions } from 'services/native-mobile-interface/notifications'
 import { BASE_URL, SIGN_UP_PAGE } from 'utils/route'
 
@@ -76,7 +76,7 @@ export type SignOnProps = {
   onAddFollows: (followIds: ID[]) => void
   onRemoveFollows: (followIds: ID[]) => void
   onAutoSelect: () => void
-  onSelectArtistCategory: (category: FollowArtistsCategory) => void
+  onSelectLandlordCategory: (category: FollowLandlordsCategory) => void
   onNextPage: () => void
   suggestedFollows: User[]
 }
@@ -118,7 +118,7 @@ const SignOnPage = ({
   onAddFollows,
   onRemoveFollows,
   onAutoSelect,
-  onSelectArtistCategory,
+  onSelectLandlordCategory,
   onNextPage,
   suggestedFollows: suggestedFollowEntries,
   togglePushNotificationSetting
@@ -133,7 +133,7 @@ const SignOnPage = ({
     profileImage,
     status,
     accountReady,
-    followArtists: { selectedCategory, selectedUserIds }
+    followLandlords: { selectedCategory, selectedUserIds }
   } = fields
 
   useEffect(() => {
@@ -269,9 +269,9 @@ const SignOnPage = ({
           <Header />
           <FollowPage
             users={suggestedFollowEntries}
-            followedArtists={selectedUserIds}
+            followedLandlords={selectedUserIds}
             selectedCategory={selectedCategory}
-            onSelectArtistCategory={onSelectArtistCategory}
+            onSelectLandlordCategory={onSelectLandlordCategory}
             onAddFollows={onAddFollows}
             onRemoveFollows={onRemoveFollows}
             onAutoSelect={onAutoSelect}
@@ -279,7 +279,7 @@ const SignOnPage = ({
         </animated.div>,
         <animated.div style={{ opacity: (style as any).opacity }} key='bottom'>
           <FollowPageBottom
-            followedArtists={selectedUserIds}
+            followedLandlords={selectedUserIds}
             onNextPage={onNextPage}
           />
         </animated.div>

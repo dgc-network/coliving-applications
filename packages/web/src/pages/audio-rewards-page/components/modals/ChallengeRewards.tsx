@@ -80,7 +80,7 @@ const messages = {
     'Something has gone wrong, not all your rewards were claimed. Please try again.',
   claimYourReward: 'Claim Your Reward',
   twitterShare: (modalType: 'referrals' | 'ref-v') =>
-    `Share Invite With Your ${modalType === 'referrals' ? 'Friends' : 'Fans'}`,
+    `Share Invite With Your ${modalType === 'referrals' ? 'Friends' : 'Residents'}`,
   twitterCopy: `Come support me on @colivingproject! Use my link and we both earn $LIVE when you sign up.\n\n #coliving #liverewards\n\n`,
   verifiedChallenge: 'VERIFIED CHALLENGE',
   claimAmountLabel: '$LIVE available to claim',

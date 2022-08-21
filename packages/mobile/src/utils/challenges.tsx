@@ -52,7 +52,7 @@ export const challenges = {
   // Profile Completion
   profileCompletionTitle: 'Complete Your Profile',
   profileCompletionDescription:
-    'Fill out the missing details on your Coliving profile and start interacting with agreements and artists!',
+    'Fill out the missing details on your Coliving profile and start interacting with agreements and landlords!',
   profileCompletionShortDescription:
     'Complete your Coliving profile to earn 1 $LIVE',
   profileCompletionButton: 'More Info',
@@ -68,9 +68,9 @@ export const challenges = {
   referralsButton: 'Invite your Friends',
 
   // Verified Referrals
-  referreralsVerifiedTitle: 'Invite your Fans',
+  referreralsVerifiedTitle: 'Invite your Residents',
   referralsVerifiedDescription:
-    'Invite your fans! You’ll earn 1 $LIVE for each friend who joins with your link (and they’ll get an $LIVE too)',
+    'Invite your residents! You’ll earn 1 $LIVE for each friend who joins with your link (and they’ll get an $LIVE too)',
   referralsVerifiedShortDescription: 'Earn up to 5,000 $LIVE',
   referralsVerifiedProgressLabel: '%0/%1 Invites Accepted',
   referralsVerifiedRemainingLabel: '%0/%1 Invites Remain',
@@ -91,9 +91,9 @@ export const challenges = {
   // Send First Tip
   sendFirstTipTitle: 'Send Your First Tip',
   sendFirstTipDescription:
-    'Show some love to your favorite artist and send them a tip',
+    'Show some love to your favorite landlord and send them a tip',
   sendFirstTipShortDescription:
-    'Show some love to your favorite artist and send them a tip',
+    'Show some love to your favorite landlord and send them a tip',
   sendFirstTipProgressLabel: 'Not Earned',
   sendFirstTipButton: 'Find Someone To Tip',
 

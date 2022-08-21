@@ -85,7 +85,7 @@
   margin-right: 11px;
 }
 
-.nameArtistContainer {
+.nameLandlordContainer {
   flex: 1;
   display: flex;
   text-overflow: ellipsis;
@@ -107,12 +107,12 @@
 }
 
 .agreementTitle,
-.artistName {
+.landlordName {
   align-items: center;
   padding-right: 8px;
 }
 
-.artistName {
+.landlordName {
   display: flex;
   color: var(--neutral-light-2);
   font-family: var(--font-family);
@@ -121,16 +121,16 @@
   flex: 1 0;
 }
 
-.disabled .artistName :global(.ant-popover-open):hover {
+.disabled .landlordName :global(.ant-popover-open):hover {
   color: var(--neutral-light-2);
   text-decoration: none;
 }
 
-.artistName .by {
+.landlordName .by {
   margin-right: 4px;
 }
 
-.active .artistName {
+.active .landlordName {
   color: var(--primary);
 }
 

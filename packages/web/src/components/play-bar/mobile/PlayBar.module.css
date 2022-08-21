@@ -74,7 +74,7 @@
   font-weight: var(--font-bold);
 }
 
-.artist {
+.landlord {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

@@ -135,7 +135,7 @@ export interface LineupProviderProps {
   delineate?: boolean
 
   /**
-   * Indicator if a agreement should be displayed differently (ie. artist pick)
+   * Indicator if a agreement should be displayed differently (ie. landlord pick)
    * The leadingElementId is displayed at the top of the lineup
    */
   leadingElementId?: ID
@@ -156,10 +156,10 @@ export interface LineupProviderProps {
   leadingElementClassName?: string
 
   /**
-   * Whether to show the artist pick on the leading element.
+   * Whether to show the landlord pick on the leading element.
    * Defaults to true.
    */
-  showLeadingElementArtistPick?: boolean
+  showLeadingElementLandlordPick?: boolean
 
   /**
    * Class name to optionally apply to the container after the leading element
@@ -473,7 +473,7 @@ class LineupProvider extends PureComponent<CombinedProps, LineupProviderState> {
       endOfLineup,
       lineupContainerStyles,
       isMobile,
-      showLeadingElementArtistPick = true,
+      showLeadingElementLandlordPick = true,
       lineup: { isMetadataLoading, page },
       numContentListSkeletonRows,
       isTrending = false,
@@ -525,7 +525,7 @@ class LineupProvider extends PureComponent<CombinedProps, LineupProviderState> {
             size: tileSize,
             containerClassName,
             uid: entry.uid,
-            showArtistPick: showLeadingElementArtistPick && !!leadingElementId,
+            showLandlordPick: showLeadingElementLandlordPick && !!leadingElementId,
             isLoading: !this.canLoad(index),
             hasLoaded: this.hasLoaded,
             isTrending,

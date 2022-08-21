@@ -127,7 +127,7 @@ export const ActionsBar = ({ agreement }: ActionsBarProps) => {
         OverflowAction.SHARE,
         OverflowAction.ADD_TO_CONTENT_LIST,
         OverflowAction.VIEW_AGREEMENT_PAGE,
-        OverflowAction.VIEW_ARTIST_PAGE
+        OverflowAction.VIEW_LANDLORD_PAGE
       ].filter(Boolean) as OverflowAction[]
 
       dispatchWeb(

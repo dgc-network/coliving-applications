@@ -27,7 +27,7 @@ const messages = {
 
 type ContentListTileProps = {
   title: string
-  artist: string
+  landlord: string
   imageUrl: string | null
   onClick: () => void
 }
@@ -35,25 +35,25 @@ type ContentListTileProps = {
 const FALLBACK_CONTENT_LISTS = [
   {
     title: 'Coliving Exclusives',
-    artist: 'Coliving',
+    landlord: 'Coliving',
     imageUrl: colivingExclusivesContentListImg,
     link: '/coliving/contentList/official-coliving-exclusives-1428'
   },
   {
     title: 'MOOMBAHTON COMES TO COLIVING',
-    artist: 'Moombahton',
+    landlord: 'Moombahton',
     imageUrl: moombahtonContentListImg,
     link: '/moombahton/contentList/moombahton-comes-to-coliving-9601'
   },
   {
     title: 'Hot & New On Coliving 🔥',
-    artist: 'Coliving',
+    landlord: 'Coliving',
     imageUrl: hotAndNewContentListImg,
     link: '/coliving/contentList/hot-new-on-coliving-%F0%9F%94%A5-4281'
   },
   {
     title: 'Coliving Weekly',
-    artist: 'Coliving',
+    landlord: 'Coliving',
     imageUrl: colivingWeeklyContentListImg,
     link: '/3lau/is-it-love-feat.-yeah-boy-1151'
   }
@@ -91,7 +91,7 @@ const DesktopContentListTile = (props: ContentListTileProps) => {
           }}
         >
           <div className={styles.agreementContent}>
-            <div className={styles.agreementArtist}>{`By ${props.artist}`}</div>
+            <div className={styles.agreementLandlord}>{`By ${props.landlord}`}</div>
             <IconListenOnColiving className={styles.listenOnColiving} />
           </div>
         </div>
@@ -190,7 +190,7 @@ const FeaturedContent = (props: FeaturedContentProps) => {
                   <MobileContentListTile
                     key={p.contentList_id}
                     title={p.contentList_name}
-                    artist={p.user.name}
+                    landlord={p.user.name}
                     imageUrl={getImageUrl(
                       'small',
                       p,
@@ -244,7 +244,7 @@ const FeaturedContent = (props: FeaturedContentProps) => {
                   <DesktopContentListTile
                     key={p.contentList_id}
                     title={p.contentList_name}
-                    artist={p.user.name}
+                    landlord={p.user.name}
                     imageUrl={getImageUrl(
                       'large',
                       p,

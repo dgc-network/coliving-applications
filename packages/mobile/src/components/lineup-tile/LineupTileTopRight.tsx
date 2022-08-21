@@ -13,7 +13,7 @@ import { useThemeColors } from 'app/utils/theme'
 import { createStyles as createAgreementTileStyles } from './styles'
 
 const messages = {
-  artistPick: "Artist's Pick",
+  landlordPick: "Landlord's Pick",
   hiddenAgreement: 'Hidden Agreement'
 }
 
@@ -67,31 +67,31 @@ type Props = {
    */
   duration?: number
   /**
-   * Whether or not the agreement is the artist pick
+   * Whether or not the agreement is the landlord pick
    */
-  isArtistPick?: boolean
+  isLandlordPick?: boolean
   /**
    * Whether or not the agreement is unlisted (hidden)
    */
   isUnlisted?: boolean
   /**
-   * Whether or not to show the artist pick icon
+   * Whether or not to show the landlord pick icon
    */
-  showArtistPick?: boolean
+  showLandlordPick?: boolean
 }
 
 export const LineupTileTopRight = ({
   duration,
-  isArtistPick,
+  isLandlordPick,
   isUnlisted,
-  showArtistPick
+  showLandlordPick
 }: Props) => {
   const agreementTileStyles = useThemedStyles(createAgreementTileStyles)
 
   return (
     <View style={styles.topRight}>
-      {showArtistPick && isArtistPick && (
-        <LineupTileTopRightItem icon={IconStar} label={messages.artistPick} />
+      {showLandlordPick && isLandlordPick && (
+        <LineupTileTopRightItem icon={IconStar} label={messages.landlordPick} />
       )}
       {isUnlisted && (
         <LineupTileTopRightItem

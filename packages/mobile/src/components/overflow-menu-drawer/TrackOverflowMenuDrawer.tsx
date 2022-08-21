@@ -79,16 +79,16 @@ const AgreementOverflowMenuDrawer = ({ render }: Props) => {
         web: { route: permalink }
       })
     },
-    [OverflowAction.VIEW_ARTIST_PAGE]: () => {
+    [OverflowAction.VIEW_LANDLORD_PAGE]: () => {
       closeNowPlayingDrawer()
       navigation.navigate({
         native: { screen: 'Profile', params: { handle } },
         web: { route: profilePage(handle) }
       })
     },
-    [OverflowAction.FOLLOW_ARTIST]: () =>
+    [OverflowAction.FOLLOW_LANDLORD]: () =>
       dispatchWeb(followUser(owner_id, FollowSource.OVERFLOW)),
-    [OverflowAction.UNFOLLOW_ARTIST]: () =>
+    [OverflowAction.UNFOLLOW_LANDLORD]: () =>
       dispatchWeb(unfollowUser(owner_id, FollowSource.OVERFLOW))
   }
 

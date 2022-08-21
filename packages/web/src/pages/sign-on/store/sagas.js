@@ -53,7 +53,7 @@ import * as signOnActions from './actions'
 import { watchSignOnError } from './errorSagas'
 import mobileSagas from './mobileSagas'
 import { getRouteOnCompletion, getSignOn } from './selectors'
-import { FollowArtistsCategory, Pages } from './types'
+import { FollowLandlordsCategory, Pages } from './types'
 import { checkHandle } from './verifiedChecker'
 
 const { waitForRemoteConfig } = remoteConfigInstance
@@ -72,7 +72,7 @@ const messages = {
     'Oops, it looks like your account was never fully completed!'
 }
 
-// Users ID to filter out of the suggested artists to follow list and to follow by default
+// Users ID to filter out of the suggested landlords to follow list and to follow by default
 let defaultFollowUserIds = new Set([])
 if (IS_PRODUCTION) {
   // user id 51: official coliving account
@@ -86,45 +86,45 @@ export const fetchSuggestedFollowUserIds = async () => {
   return fetch(SUGGESTED_FOLLOW_USER_HANDLE_URL).then((d) => d.json())
 }
 
-const followArtistCategoryGenreMappings = {
-  [FollowArtistsCategory.ALL_GENRES]: [],
-  [FollowArtistsCategory.ELECTRONIC]: [FollowArtistsCategory.ELECTRONIC].concat(
+const followLandlordCategoryGenreMappings = {
+  [FollowLandlordsCategory.ALL_GENRES]: [],
+  [FollowLandlordsCategory.ELECTRONIC]: [FollowLandlordsCategory.ELECTRONIC].concat(
     Object.keys(ELECTRONIC_SUBGENRES)
   ),
-  [FollowArtistsCategory.HIP_HOP_RAP]: [Genre.HIP_HOP_RAP],
-  [FollowArtistsCategory.ALTERNATIVE]: [Genre.ALTERNATIVE],
-  [FollowArtistsCategory.POP]: [Genre.POP]
+  [FollowLandlordsCategory.HIP_HOP_RAP]: [Genre.HIP_HOP_RAP],
+  [FollowLandlordsCategory.ALTERNATIVE]: [Genre.ALTERNATIVE],
+  [FollowLandlordsCategory.POP]: [Genre.POP]
 }
 
-function* getArtistsToFollow() {
+function* getLandlordsToFollow() {
   const users = yield select(getUsers)
   yield put(signOnActions.setUsersToFollow(users))
 }
 
-function* fetchAllFollowArtist() {
+function* fetchAllFollowLandlord() {
   yield call(waitForBackendSetup)
   try {
-    // Fetch Featured Follow artists first
+    // Fetch Featured Follow landlords first
     const suggestedUserFollowIds = yield call(fetchSuggestedFollowUserIds)
     yield call(fetchUsers, suggestedUserFollowIds)
     yield put(
-      signOnActions.fetchFollowArtistsSucceeded(
-        FollowArtistsCategory.FEATURED,
+      signOnActions.fetchFollowLandlordsSucceeded(
+        FollowLandlordsCategory.FEATURED,
         suggestedUserFollowIds
       )
     )
     yield all(
-      Object.keys(followArtistCategoryGenreMappings).map(fetchFollowArtistGenre)
+      Object.keys(followLandlordCategoryGenreMappings).map(fetchFollowLandlordGenre)
     )
   } catch (e) {
     console.error('Unable to fetch sign up follows', e)
   }
 }
 
-function* fetchFollowArtistGenre(followArtistCategory) {
-  const genres = followArtistCategoryGenreMappings[followArtistCategory]
+function* fetchFollowLandlordGenre(followLandlordCategory) {
+  const genres = followLandlordCategoryGenreMappings[followLandlordCategory]
   try {
-    const users = yield apiClient.getTopArtistGenres({
+    const users = yield apiClient.getTopLandlordGenres({
       genres,
       limit: 31,
       offset: 0
@@ -136,10 +136,10 @@ function* fetchFollowArtistGenre(followArtistCategory) {
     yield call(processAndCacheUsers, userOptions)
     const userIds = userOptions.map(({ user_id: id }) => id)
     yield put(
-      signOnActions.fetchFollowArtistsSucceeded(followArtistCategory, userIds)
+      signOnActions.fetchFollowLandlordsSucceeded(followLandlordCategory, userIds)
     )
   } catch (err) {
-    yield put(signOnActions.fetchFollowArtistsFailed(err))
+    yield put(signOnActions.fetchFollowLandlordsFailed(err))
   }
 }
 
@@ -538,7 +538,7 @@ function* followCollections(collectionIds, favoriteSource) {
   }
 }
 
-function* followArtists() {
+function* followLandlords() {
   yield call(waitForBackendSetup)
   try {
     // Auto-follow Hot & New ContentList
@@ -550,7 +550,7 @@ function* followArtists() {
 
     const signOn = yield select(getSignOn)
     const {
-      followArtists: { selectedUserIds }
+      followLandlords: { selectedUserIds }
     } = signOn
     const userIdsToFollow = [
       ...new Set([...defaultFollowUserIds, ...selectedUserIds])
@@ -593,12 +593,12 @@ function* configureMetaMask() {
   }
 }
 
-function* watchGetArtistsToFollow() {
-  yield takeEvery(signOnActions.GET_USERS_TO_FOLLOW, getArtistsToFollow)
+function* watchGetLandlordsToFollow() {
+  yield takeEvery(signOnActions.GET_USERS_TO_FOLLOW, getLandlordsToFollow)
 }
 
-function* watchFetchAllFollowArtists() {
-  yield takeEvery(signOnActions.FETCH_ALL_FOLLOW_ARTISTS, fetchAllFollowArtist)
+function* watchFetchAllFollowLandlords() {
+  yield takeEvery(signOnActions.FETCH_ALL_FOLLOW_LANDLORDS, fetchAllFollowLandlord)
 }
 
 function* watchFetchReferrer() {
@@ -629,15 +629,15 @@ function* watchConfigureMetaMask() {
   yield takeLatest(signOnActions.CONFIGURE_META_MASK, configureMetaMask)
 }
 
-function* watchFollowArtists() {
+function* watchFollowLandlords() {
   while (
     yield all([
       take(signOnActions.SIGN_UP_SUCCEEDED),
       take(accountActions.fetchAccountSucceeded.type),
-      take(signOnActions.FOLLOW_ARTISTS)
+      take(signOnActions.FOLLOW_LANDLORDS)
     ])
   ) {
-    yield call(followArtists)
+    yield call(followLandlords)
   }
 }
 
@@ -667,15 +667,15 @@ function* watchSendWelcomeEmail() {
 
 export default function sagas() {
   const sagas = [
-    watchFetchAllFollowArtists,
+    watchFetchAllFollowLandlords,
     watchFetchReferrer,
     watchCheckEmail,
     watchValidateEmail,
     watchValidateHandle,
     watchSignUp,
     watchSignIn,
-    watchFollowArtists,
-    watchGetArtistsToFollow,
+    watchFollowLandlords,
+    watchGetLandlordsToFollow,
     watchConfigureMetaMask,
     watchShowToast,
     watchOpenSignOn,

@@ -118,7 +118,7 @@ export function* watchPlay() {
           {
             id: encodedAgreementId,
             title: agreement.title,
-            artist: owner?.name
+            landlord: owner?.name
           },
           forceStreamMp3Url
         )
@@ -157,7 +157,7 @@ export function* watchCollectiblePlay() {
             id: collectible.id,
             title: collectible.name ?? 'Collectible',
             // TODO: Add account user name here
-            artist: 'YOUR NAME HERE',
+            landlord: 'YOUR NAME HERE',
             artwork:
               collectible.imageUrl ??
               collectible.frameUrl ??

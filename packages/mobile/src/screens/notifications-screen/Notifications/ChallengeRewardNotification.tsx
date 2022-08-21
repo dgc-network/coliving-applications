@@ -41,7 +41,7 @@ const challengeInfoMap: Record<
     amount: 1
   },
   'ref-v': {
-    title: '📨 Invite your Fans',
+    title: '📨 Invite your Residents',
     amount: 1
   },
   referred: {

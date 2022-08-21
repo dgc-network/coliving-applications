@@ -215,7 +215,7 @@ const NowPlayingDrawer = ({ translationAnim }: NowPlayingDrawerProps) => {
     setIsGestureEnabled(true)
   }, [setIsGestureEnabled])
 
-  const handlePressArtist = useCallback(() => {
+  const handlePressLandlord = useCallback(() => {
     if (!user) {
       return
     }
@@ -287,7 +287,7 @@ const NowPlayingDrawer = ({ translationAnim }: NowPlayingDrawerProps) => {
             </Pressable>
             <View style={styles.agreementInfoContainer}>
               <AgreementInfo
-                onPressArtist={handlePressArtist}
+                onPressLandlord={handlePressLandlord}
                 onPressTitle={handlePressTitle}
                 agreement={agreement}
                 user={user}

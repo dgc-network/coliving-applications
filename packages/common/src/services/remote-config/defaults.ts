@@ -63,8 +63,8 @@ export const remoteConfigStringDefaults: {
 export const remoteConfigDoubleDefaults: {
   [key in DoubleKeys]: number | null
 } = {
-  [DoubleKeys.SHOW_ARTIST_RECOMMENDATIONS_FALLBACK_PERCENT]: 0.3333,
-  [DoubleKeys.SHOW_ARTIST_RECOMMENDATIONS_PERCENT]: 1.0
+  [DoubleKeys.SHOW_LANDLORD_RECOMMENDATIONS_FALLBACK_PERCENT]: 0.3333,
+  [DoubleKeys.SHOW_LANDLORD_RECOMMENDATIONS_PERCENT]: 1.0
 }
 export const remoteConfigBooleanDefaults: {
   [key in BooleanKeys]: boolean | null

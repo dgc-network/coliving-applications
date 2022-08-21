@@ -20,8 +20,8 @@ type AgreementListProps = {
     isActive?: boolean
     isPlaying?: boolean
     isRemoveActive?: boolean
-    artistHandle: string
-    artistName: string
+    landlordHandle: string
+    landlordName: string
     agreementTitle: string
     agreementId: ID
     uid?: string
@@ -104,8 +104,8 @@ const AgreementList = ({
           isReposted={agreement.isReposted}
           isActive={agreement.isActive}
           isPlaying={agreement.isPlaying}
-          artistHandle={agreement.artistHandle}
-          artistName={agreement.artistName}
+          landlordHandle={agreement.landlordHandle}
+          landlordName={agreement.landlordName}
           agreementTitle={agreement.agreementTitle}
           coverArtSizes={agreement.coverArtSizes}
           uid={agreement.uid}

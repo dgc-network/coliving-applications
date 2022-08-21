@@ -68,7 +68,7 @@
   margin-right: 4px;
 }
 
-.name.artistNameLink:hover {
+.name.landlordNameLink:hover {
   cursor: pointer;
   color: var(--primary);
   text-decoration: underline;

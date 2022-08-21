@@ -19,7 +19,7 @@ import {
   TwitterProfile
 } from 'common/store/account/reducer'
 import { getHasAccount } from 'common/store/account/selectors'
-import { Pages, FollowArtistsCategory } from 'pages/sign-on/store/types'
+import { Pages, FollowLandlordsCategory } from 'pages/sign-on/store/types'
 import { make, AgreementEvent } from 'store/analytics/actions'
 import { AppState } from 'store/types'
 import { isElectron } from 'utils/clientUtil'
@@ -45,7 +45,7 @@ import {
   getSignOn,
   getIsMobileSignOnVisible,
   getToastText,
-  makeGetFollowArtists,
+  makeGetFollowLandlords,
   getRouteOnExit
 } from './store/selectors'
 
@@ -137,7 +137,7 @@ export class SignOnProvider extends Component<SignOnProps, SignOnState> {
   }
 
   UNSAFE_componentWillMount() {
-    this.props.fetchFollowArtists()
+    this.props.fetchFollowLandlords()
     this.setState({ hasOpened: true })
   }
 
@@ -206,11 +206,11 @@ export class SignOnProvider extends Component<SignOnProps, SignOnState> {
     }
     if (page === Pages.FOLLOW) {
       const {
-        followArtists: { selectedUserIds },
+        followLandlords: { selectedUserIds },
         email,
         handle
       } = this.props.fields
-      this.props.followArtists(selectedUserIds)
+      this.props.followLandlords(selectedUserIds)
       this.props.recordCompleteFollow(
         selectedUserIds.join('|'),
         selectedUserIds.length,
@@ -291,18 +291,18 @@ export class SignOnProvider extends Component<SignOnProps, SignOnState> {
     this.props.recordSignInClick()
   }
 
-  onSelectArtistCategory = (category: FollowArtistsCategory) => {
+  onSelectLandlordCategory = (category: FollowLandlordsCategory) => {
     this.props.setFollowAristsCategory(category)
   }
 
   // The autoselect or 'pick for me'
   // Selects the first three aritsts in the current category along with 2 additinal
-  // random artist from the top 10
+  // random landlord from the top 10
   onAutoSelect = () => {
     const {
       suggestedFollows,
       fields: {
-        followArtists: { selectedUserIds }
+        followLandlords: { selectedUserIds }
       }
     } = this.props
     const selectedIds = new Set(selectedUserIds)
@@ -434,7 +434,7 @@ export class SignOnProvider extends Component<SignOnProps, SignOnState> {
       onAddFollows: this.props.addFollows,
       onRemoveFollows: this.props.removeFollows,
       onAutoSelect: this.onAutoSelect,
-      onSelectArtistCategory: this.props.setFollowAristsCategory,
+      onSelectLandlordCategory: this.props.setFollowAristsCategory,
       onSetProfileImage: this.onSetProfileImage,
       onHandleChange: this.onHandleChange,
       finishSignup: this.finishSignup,
@@ -460,7 +460,7 @@ export class SignOnProvider extends Component<SignOnProps, SignOnState> {
 }
 
 function makeMapStateToProps(state: AppState) {
-  const getSuggestedFollows = makeGetFollowArtists()
+  const getSuggestedFollows = makeGetFollowLandlords()
   return {
     suggestedFollows: getSuggestedFollows(state),
     fields: getSignOn(state),
@@ -478,7 +478,7 @@ function mapDispatchToProps(dispatch: Dispatch) {
       dispatch(signOnAction.checkEmail(email)),
     onSignIn: (email: string, password: string) =>
       dispatch(signOnAction.signIn(email, password)),
-    fetchFollowArtists: () => dispatch(signOnAction.fetchAllFollowArtists()),
+    fetchFollowLandlords: () => dispatch(signOnAction.fetchAllFollowLandlords()),
     fetchReferrer: (handle: string) =>
       dispatch(signOnAction.fetchReferrer(handle)),
     signUp: () => dispatch(signOnAction.signUp()),
@@ -524,15 +524,15 @@ function mapDispatchToProps(dispatch: Dispatch) {
     nextPage: (isMobile: boolean) => dispatch(signOnAction.nextPage(isMobile)),
     previousPage: () => dispatch(signOnAction.previousPage()),
     goToPage: (page: Pages) => dispatch(signOnAction.goToPage(page)),
-    followArtists: (userIds: ID[]) =>
-      dispatch(signOnAction.followArtists(userIds)),
+    followLandlords: (userIds: ID[]) =>
+      dispatch(signOnAction.followLandlords(userIds)),
     addFollows: (userIds: ID[]) =>
-      dispatch(signOnAction.addFollowArtists(userIds)),
+      dispatch(signOnAction.addFollowLandlords(userIds)),
     removeFollows: (userIds: ID[]) =>
-      dispatch(signOnAction.removeFollowArtists(userIds)),
+      dispatch(signOnAction.removeFollowLandlords(userIds)),
     onSetupMetaMask: () => dispatch(signOnAction.configureMetaMask()),
     clearToast: () => dispatch(signOnAction.clearToast()),
-    setFollowAristsCategory: (category: FollowArtistsCategory) =>
+    setFollowAristsCategory: (category: FollowLandlordsCategory) =>
       dispatch(signOnAction.setFollowAristsCategory(category)),
     showPushNotificationConfirmation: () =>
       dispatch(showPushNotificationConfirmation()),

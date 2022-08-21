@@ -20,7 +20,7 @@ import { makeStyles } from 'app/styles'
 
 import { AgreementScreenMainContent } from './AgreementScreenMainContent'
 
-const getMoreByArtistLineup = makeGetLineupMetadatas(getLineup)
+const getMoreByLandlordLineup = makeGetLineupMetadatas(getLineup)
 
 const messages = {
   moreBy: 'More By',
@@ -45,7 +45,7 @@ const useStyles = makeStyles(({ palette, spacing, typography }) => ({
 }))
 
 /**
- * `AgreementScreen` displays a single agreement and a Lineup of more agreements by the artist
+ * `AgreementScreen` displays a single agreement and a Lineup of more agreements by the landlord
  */
 export const AgreementScreen = () => {
   const styles = useStyles()
@@ -76,7 +76,7 @@ export const AgreementScreen = () => {
   const user = cachedUser ?? searchAgreement?.user
 
   const lineup = useSelectorWeb(
-    getMoreByArtistLineup,
+    getMoreByLandlordLineup,
     // Checking for equality between the entries themselves, because
     // lineup reset state changes cause extra renders
     (a, b) => (!a.entries && !b.entries) || isEqual(a.entries, b.entries)
@@ -104,7 +104,7 @@ export const AgreementScreen = () => {
   }
 
   const remixParentAgreementId = agreement.remix_of?.agreements?.[0]?.parent_agreement_id
-  const showMoreByArtistTitle =
+  const showMoreByLandlordTitle =
     (remixParentAgreementId && lineup.entries.length > 2) ||
     (!remixParentAgreementId && lineup.entries.length > 1)
 
@@ -114,7 +114,7 @@ export const AgreementScreen = () => {
     remixParentAgreement.is_delete === false &&
     !remixParentAgreement.user?.is_deactivated
 
-  const moreByArtistTitle = showMoreByArtistTitle ? (
+  const moreByLandlordTitle = showMoreByLandlordTitle ? (
     <Text
       style={styles.lineupHeader}
     >{`${messages.moreBy} ${user?.name}`}</Text>
@@ -136,7 +136,7 @@ export const AgreementScreen = () => {
             agreement={agreement}
             user={user}
             lineupHeader={
-              hasValidRemixParent ? originalAgreementTitle : moreByArtistTitle
+              hasValidRemixParent ? originalAgreementTitle : moreByLandlordTitle
             }
           />
         }
@@ -156,7 +156,7 @@ export const AgreementScreen = () => {
                 }}
               />
             </View>
-            {moreByArtistTitle}
+            {moreByLandlordTitle}
           </>
         }
         lineup={lineup}

@@ -1,4 +1,4 @@
-import type { FollowArtistsCategory } from './types'
+import type { FollowLandlordsCategory } from './types'
 
 export const SIGN_IN_FAILED = 'SIGN_ON/SIGN_IN_FAILED'
 export const SIGN_IN_FAILED_RESET = 'SIGN_ON/SIGN_IN_FAILED_RESET'
@@ -9,12 +9,12 @@ export const VALIDATE_EMAIL_FAILED = 'SIGN_ON/VALIDATE_EMAIL_FAILED'
 export const SET_HANDLE_STATUS = 'SIGN_ON/SET_HANDLE_STATUS'
 export const VALIDATE_HANDLE_FAILED = 'SIGN_ON/VALIDATE_HANDLE_FAILED'
 export const VALIDATE_HANDLE_SUCEEDED = 'SIGN_ON/VALIDATE_HANDLE_SUCCEEDED'
-export const FETCH_ALL_FOLLOW_ARTISTS_SUCCEEDED =
-  'SIGN_ON/FETCH_ALL_FOLLOW_ARTISTS_SUCCEEDED'
-export const FETCH_ALL_FOLLOW_ARTISTS_FAILED =
-  'SIGN_ON/FETCH_ALL_FOLLOW_ARTISTS_FAILED'
-export const SET_FOLLOW_ARTISTS_CATEGORY = 'SIGN_ON/SET_FOLLOW_ARTISTS_CATEGORY'
-export const SET_FOLLOWED_ARTISTS = 'SIGN_ON/SET_FOLLOWED_ARTISTS'
+export const FETCH_ALL_FOLLOW_LANDLORDS_SUCCEEDED =
+  'SIGN_ON/FETCH_ALL_FOLLOW_LANDLORDS_SUCCEEDED'
+export const FETCH_ALL_FOLLOW_LANDLORDS_FAILED =
+  'SIGN_ON/FETCH_ALL_FOLLOW_LANDLORDS_FAILED'
+export const SET_FOLLOW_LANDLORDS_CATEGORY = 'SIGN_ON/SET_FOLLOW_LANDLORDS_CATEGORY'
+export const SET_FOLLOWED_LANDLORDS = 'SIGN_ON/SET_FOLLOWED_LANDLORDS'
 export const SET_USERS_TO_FOLLOW = 'SIGN_ON/SET_USERS_TO_FOLLOW'
 export const SET_ACCOUNT_AVAILABLE = 'SIGN_ON/SET_ACCOUNT_AVAILABLE'
 export const SIGN_UP_SUCCEEDED = 'SIGN_ON/SIGN_UP_SUCCEEDED'
@@ -62,23 +62,23 @@ type SignupValidateHandleSuceededAction = {
   type: typeof VALIDATE_HANDLE_SUCEEDED
 }
 
-type FetchAllFollowArtistsSucceededAction = {
-  type: typeof FETCH_ALL_FOLLOW_ARTISTS_SUCCEEDED
-  category: FollowArtistsCategory
+type FetchAllFollowLandlordsSucceededAction = {
+  type: typeof FETCH_ALL_FOLLOW_LANDLORDS_SUCCEEDED
+  category: FollowLandlordsCategory
   userIds: number[]
 }
-type FetchAllFollowArtistsFailedAction = {
-  type: typeof FETCH_ALL_FOLLOW_ARTISTS_FAILED
+type FetchAllFollowLandlordsFailedAction = {
+  type: typeof FETCH_ALL_FOLLOW_LANDLORDS_FAILED
   error: any
 }
 
-type SetFollowArtistsCategoryAction = {
-  type: typeof SET_FOLLOW_ARTISTS_CATEGORY
-  category: FollowArtistsCategory
+type SetFollowLandlordsCategoryAction = {
+  type: typeof SET_FOLLOW_LANDLORDS_CATEGORY
+  category: FollowLandlordsCategory
 }
 
-type SetFollowedArtistsAction = {
-  type: typeof SET_FOLLOWED_ARTISTS
+type SetFollowedLandlordsAction = {
+  type: typeof SET_FOLLOWED_LANDLORDS
   userIds: number[]
 }
 
@@ -112,10 +112,10 @@ export type SignonActions =
   | SignupSetHandleStatusAction
   | SignupValidateHandleFailedAction
   | SignupValidateHandleSuceededAction
-  | FetchAllFollowArtistsSucceededAction
-  | FetchAllFollowArtistsFailedAction
-  | SetFollowArtistsCategoryAction
-  | SetFollowedArtistsAction
+  | FetchAllFollowLandlordsSucceededAction
+  | FetchAllFollowLandlordsFailedAction
+  | SetFollowLandlordsCategoryAction
+  | SetFollowedLandlordsAction
   | SignupSuceededAction
   | SetUsersToFollowAction
   | SetAccountAvailableAction
@@ -164,30 +164,30 @@ export const signupValidateHandleSuceeded =
   (): SignupValidateHandleSuceededAction => ({
     type: VALIDATE_HANDLE_SUCEEDED
   })
-export const fetchAllFollowArtistsSucceeded = (
-  category: FollowArtistsCategory,
+export const fetchAllFollowLandlordsSucceeded = (
+  category: FollowLandlordsCategory,
   userIds: number[]
-): FetchAllFollowArtistsSucceededAction => ({
-  type: FETCH_ALL_FOLLOW_ARTISTS_SUCCEEDED,
+): FetchAllFollowLandlordsSucceededAction => ({
+  type: FETCH_ALL_FOLLOW_LANDLORDS_SUCCEEDED,
   category,
   userIds
 })
-export const fetchAllFollowArtistsFailed = (
+export const fetchAllFollowLandlordsFailed = (
   error: any
-): FetchAllFollowArtistsFailedAction => ({
-  type: FETCH_ALL_FOLLOW_ARTISTS_FAILED,
+): FetchAllFollowLandlordsFailedAction => ({
+  type: FETCH_ALL_FOLLOW_LANDLORDS_FAILED,
   error
 })
-export const setFollowArtistsCategory = (
-  category: FollowArtistsCategory
-): SetFollowArtistsCategoryAction => ({
-  type: SET_FOLLOW_ARTISTS_CATEGORY,
+export const setFollowLandlordsCategory = (
+  category: FollowLandlordsCategory
+): SetFollowLandlordsCategoryAction => ({
+  type: SET_FOLLOW_LANDLORDS_CATEGORY,
   category
 })
-export const setFollowedArtists = (
+export const setFollowedLandlords = (
   userIds: number[]
-): SetFollowedArtistsAction => ({
-  type: SET_FOLLOWED_ARTISTS,
+): SetFollowedLandlordsAction => ({
+  type: SET_FOLLOWED_LANDLORDS,
   userIds
 })
 export const setUsersToFollow = (users: any[]): SetUsersToFollowAction => ({

@@ -33,7 +33,7 @@ const messages = {
     </h2>
   ),
   description:
-    'Turn on browser notifications to be notified when your favorite artists release new content!',
+    'Turn on browser notifications to be notified when your favorite landlords release new content!',
   reason:
     'You’ll also be notified whenever someone follows, reposts, or favorites your agreements!',
   close: 'Maybe Later',

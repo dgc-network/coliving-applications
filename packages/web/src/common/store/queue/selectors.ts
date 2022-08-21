@@ -46,8 +46,8 @@ const getCurrentAgreement = (state: AppState) =>
 const getCurrentUser = (state: AppState) => {
   const agreement = getCurrentAgreement(state)
   const queueable = state.queue.order[state.queue.index]
-  if (agreement || queueable?.artistId) {
-    return getUser(state, { id: agreement?.owner_id ?? queueable.artistId })
+  if (agreement || queueable?.landlordId) {
+    return getUser(state, { id: agreement?.owner_id ?? queueable.landlordId })
   }
   return null
 }

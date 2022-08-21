@@ -125,16 +125,16 @@ export const challengeRewardsConfig: Record<
   },
   'ref-v': {
     id: 'ref-v' as ChallengeRewardID,
-    title: 'Invite your Fans',
+    title: 'Invite your Residents',
     icon: <i className='emoji large incoming-envelope' />,
     description: (challenge) =>
       `Earn up to ${formatNumberCommas(challenge?.totalAmount ?? '')} $LIVE`,
     fullDescription: (challenge) =>
-      `Invite your fans! You’ll earn ${challenge?.amount} $LIVE for each fan who joins with your link (and they’ll get an $LIVE too)`,
+      `Invite your residents! You’ll earn ${challenge?.amount} $LIVE for each resident who joins with your link (and they’ll get an $LIVE too)`,
     progressLabel: '%0/%1 Invites Accepted',
     remainingLabel: '%0/%1 Invites Remain',
     amount: amounts.referrals,
-    panelButtonText: 'Invite your Fans',
+    panelButtonText: 'Invite your Residents',
     modalButtonInfo: {
       incomplete: null,
       inProgress: null,
@@ -214,7 +214,7 @@ export const challengeRewardsConfig: Record<
     description: (challenge) =>
       `Complete your Coliving profile to earn ${challenge?.amount} $LIVE`,
     fullDescription: () =>
-      'Fill out the missing details on your Coliving profile and start interacting with agreements and artists!',
+      'Fill out the missing details on your Coliving profile and start interacting with agreements and landlords!',
     progressLabel: '%0/%1 Complete',
     amount: amounts['profile-completion'],
     panelButtonText: 'More Info',
@@ -245,7 +245,7 @@ export const challengeRewardsConfig: Record<
     icon: <i className='emoji large money-mouth-face' />,
     description: (challenge) => `Earn ${challenge?.amount} $LIVE`,
     fullDescription: () =>
-      'Show some love to your favorite artist and send them a tip',
+      'Show some love to your favorite landlord and send them a tip',
     progressLabel: 'Not Earned',
     amount: amounts['send-first-tip'],
     panelButtonText: 'Find Someone To Tip',
