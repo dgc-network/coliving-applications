@@ -1,6 +1,6 @@
 <p align="center">
   <p align="center">
-    An live-forward React Component library built with ❤️ from the team <a href="https://coliving.org">@Coliving</a>.
+    An live-forward React Component library built with ❤️ from the team <a href="https://coliving.lol">@Coliving</a>.
   </p>
   <p align="center">
     <b>🚧  Actively under development, not recommended for production use! 🚧</b>

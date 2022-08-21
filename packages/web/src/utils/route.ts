@@ -132,10 +132,10 @@ export const COLIVING_REMIX_CONTESTS_LINK = 'https://remix.coliving.lol/'
 export const COLIVING_BLOG_LINK = 'https://blog.coliving.lol/'
 
 // Org Links
-export const COLIVING_ORG = 'https://coliving.org'
-export const COLIVING_DOCS_LINK = 'https://docs.coliving.org'
-export const COLIVING_TEAM_LINK = 'https://coliving.org/team'
-export const COLIVING_DEV_STAKER_LINK = 'https://coliving.org/protocol'
+export const COLIVING_ORG = 'https://coliving.lol'
+export const COLIVING_DOCS_LINK = 'https://docs.coliving.lol'
+export const COLIVING_TEAM_LINK = 'https://coliving.lol/team'
+export const COLIVING_DEV_STAKER_LINK = 'https://coliving.lol/protocol'
 
 export const COLIVING_HOME_LINK = '/'
 export const COLIVING_LISTENING_LINK = '/trending'
@@ -148,7 +148,7 @@ export const COLIVING_CAREERS_LINK = 'https://jobs.lever.co/coliving'
 export const COLIVING_PODCAST_LINK =
   'https://www.youtube.com/contentList?list=PLKEECkHRxmPag5iYp4dTK5fGoRcoX40RY'
 export const COLIVING_CYPHER_LINK = 'https://discord.gg/coliving'
-export const COLIVING_API_LINK = 'https://coliving.org/api'
+export const COLIVING_API_LINK = 'https://coliving.lol/api'
 
 export const authenticatedRoutes = [
   FEED_PAGE,
