@@ -26,7 +26,7 @@ export const fetchSupporting = async ({
 }: SupportRequest): Promise<SupportingResponse[]> => {
   try {
     await waitForLibsInit()
-    const response = await libs().discoveryProvider._makeRequest({
+    const response = await libs().discoveryNode._makeRequest({
       endpoint: `/v1/full/users/${encodedUserId}/supporting`,
       queryParams: { limit, offset }
     })
@@ -48,7 +48,7 @@ export const fetchSupporters = async ({
 }: SupportRequest): Promise<SupporterResponse[]> => {
   try {
     await waitForLibsInit()
-    const response = await libs().discoveryProvider._makeRequest({
+    const response = await libs().discoveryNode._makeRequest({
       endpoint: `/v1/full/users/${encodedUserId}/supporters`,
       queryParams: { limit, offset }
     })
@@ -108,7 +108,7 @@ export const fetchRecentUserTips = async ({
     tx_signatures: txSignatures
   }
   try {
-    const response = await libs().discoveryProvider._makeRequest({
+    const response = await libs().discoveryNode._makeRequest({
       endpoint: `/v1/full/tips`,
       queryParams
     })

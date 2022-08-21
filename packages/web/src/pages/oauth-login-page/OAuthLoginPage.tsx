@@ -22,7 +22,7 @@ import LoadingSpinner from 'components/loading-spinner/LoadingSpinner'
 import { ProfileInfo } from 'components/profile-info/ProfileInfo'
 import ColivingBackend from 'services/ColivingBackend'
 import { make, useRecord } from 'store/analytics/actions'
-import { getCreatorNodeIPFSGateways } from 'utils/gatewayUtil'
+import { getContentNodeIPFSGateways } from 'utils/gatewayUtil'
 import { ERROR_PAGE, SIGN_UP_PAGE } from 'utils/route'
 import { encodeHashId } from 'utils/route/hashIds'
 import { signOut } from 'utils/signOut'
@@ -271,7 +271,7 @@ export const OAuthLoginPage = () => {
       email = userEmail
     }
 
-    const gateways = getCreatorNodeIPFSGateways(account.content_node_endpoint)
+    const gateways = getContentNodeIPFSGateways(account.content_node_endpoint)
     const cNode = gateways[0]
     let profilePicture:
       | { '150x150': string; '480x480': string; '1000x1000': string }

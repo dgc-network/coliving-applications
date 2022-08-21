@@ -2,8 +2,8 @@ import { User } from '@coliving/common'
 import { CURRENT_USER_EXISTS_LOCAL_STORAGE_KEY } from '@coliving/sdk/dist/core'
 
 // TODO: the following should come from @coliving/libs/dist/core when
-// discoveryProvider/constants is migrated to typescript.
-const DISCOVERY_PROVIDER_TIMESTAMP = '@coliving/libs:discovery-node-timestamp'
+// discoveryNode/constants is migrated to typescript.
+const DISCOVERY_NODE_TIMESTAMP = '@coliving/libs:discovery-node-timestamp'
 
 const COLIVING_ACCOUNT_KEY = '@coliving/account'
 const COLIVING_ACCOUNT_USER_KEY = '@coliving/coliving-user'
@@ -59,5 +59,5 @@ export const clearColivingAccountUser = () => removeItem(COLIVING_ACCOUNT_USER_K
 export const getCurrentUserExists = () =>
   getValue(CURRENT_USER_EXISTS_LOCAL_STORAGE_KEY)
 
-export const getCachedDiscoveryProvider = () =>
-  getJSONValue(DISCOVERY_PROVIDER_TIMESTAMP)
+export const getCachedDiscoveryNode = () =>
+  getJSONValue(DISCOVERY_NODE_TIMESTAMP)

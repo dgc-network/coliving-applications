@@ -918,13 +918,13 @@ type Performance = {
   value: number
 }
 
-type DiscoveryProviderSelection = {
+type DiscoveryNodeSelection = {
   eventName: Name.DISCOVERY_PROVIDER_SELECTION
   endpoint: string
   reason: string
 }
 
-type CreatorNodeSelection = {
+type ContentNodeSelection = {
   eventName: Name.CONTENT_NODE_SELECTION
   selectedAs: 'primary' | 'secondary'
   endpoint: string
@@ -1357,8 +1357,8 @@ export type AllAgreementingEvents =
   | NotOnFirstPage
   | BrowserNotificationSetting
   | TweetFirstUpload
-  | DiscoveryProviderSelection
-  | CreatorNodeSelection
+  | DiscoveryNodeSelection
+  | ContentNodeSelection
   | WebVitals
   | Performance
   | StemCompleteUpload

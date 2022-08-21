@@ -27,7 +27,7 @@ import {
 } from 'services/native-mobile-interface/queue'
 import { MessageType, Message } from 'services/native-mobile-interface/types'
 import * as playerActions from 'store/player/slice'
-import { getCreatorNodeIPFSGateways } from 'utils/gatewayUtil'
+import { getContentNodeIPFSGateways } from 'utils/gatewayUtil'
 import { generateM3U8Variants } from 'utils/hlsUtil'
 
 const PUBLIC_IPFS_GATEWAY = 'http://cloudflare-ipfs.com/ipfs/'
@@ -50,7 +50,7 @@ function* getAgreementInfo(id: ID, uid: UID) {
   if (!owner) return null
 
   const gateways = owner
-    ? getCreatorNodeIPFSGateways(owner.content_node_endpoint)
+    ? getContentNodeIPFSGateways(owner.content_node_endpoint)
     : []
 
   const imageHash = agreement.cover_art_sizes

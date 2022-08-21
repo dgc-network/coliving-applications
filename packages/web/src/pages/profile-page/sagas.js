@@ -48,7 +48,7 @@ import {
   MAX_PROFILE_TOP_SUPPORTERS
 } from 'utils/constants'
 import { dataURLtoFile } from 'utils/fileUtils'
-import { getCreatorNodeIPFSGateways } from 'utils/gatewayUtil'
+import { getContentNodeIPFSGateways } from 'utils/gatewayUtil'
 
 const { getRemoteVar, waitForRemoteConfig } = remoteConfigInstance
 
@@ -57,7 +57,7 @@ function* watchFetchProfile() {
 }
 
 function* fetchProfileCustomizedCollectibles(user) {
-  const gateways = getCreatorNodeIPFSGateways(user.content_node_endpoint)
+  const gateways = getContentNodeIPFSGateways(user.content_node_endpoint)
   const cid = user?.metadata_multihash ?? null
   if (cid) {
     const metadata = yield call(
@@ -355,7 +355,7 @@ export function* updateProfileAsync(action) {
   )
 
   // Get existing metadata and combine with it
-  const gateways = getCreatorNodeIPFSGateways(metadata.content_node_endpoint)
+  const gateways = getContentNodeIPFSGateways(metadata.content_node_endpoint)
   const cid = metadata.metadata_multihash ?? null
   if (cid) {
     try {

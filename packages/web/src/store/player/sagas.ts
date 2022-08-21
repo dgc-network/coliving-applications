@@ -38,7 +38,7 @@ import {
   seek,
   error as errorAction
 } from 'store/player/slice'
-import { getCreatorNodeIPFSGateways } from 'utils/gatewayUtil'
+import { getContentNodeIPFSGateways } from 'utils/gatewayUtil'
 import { encodeHashId } from 'utils/route/hashIds'
 import { actionChannelDispatcher, waitForValue } from 'utils/sagaHelpers'
 
@@ -95,7 +95,7 @@ export function* watchPlay() {
       })
 
       const gateways = owner
-        ? getCreatorNodeIPFSGateways(owner.content_node_endpoint)
+        ? getContentNodeIPFSGateways(owner.content_node_endpoint)
         : []
       const encodedAgreementId = encodeHashId(agreementId)
       const forceStreamMp3 =

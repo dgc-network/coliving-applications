@@ -8,7 +8,7 @@ import placeholderArt from 'assets/img/imageBlank2x.png'
 import DynamicImage from 'components/dynamic-image/DynamicImage'
 import UserBadges from 'components/user-badges/UserBadges'
 import ColivingBackend from 'services/ColivingBackend'
-import { getCreatorNodeIPFSGateways } from 'utils/gatewayUtil'
+import { getContentNodeIPFSGateways } from 'utils/gatewayUtil'
 
 import searchBarStyles from './SearchBar.module.css'
 import styles from './SearchBarResult.module.css'
@@ -21,7 +21,7 @@ const Image = memo((props) => {
     let isCanceled = false
     const getImage = async () => {
       try {
-        const gateways = getCreatorNodeIPFSGateways(props.contentNodeEndpoint)
+        const gateways = getContentNodeIPFSGateways(props.contentNodeEndpoint)
         const url = await ColivingBackend.getImageUrl(
           imageMultihash,
           size,

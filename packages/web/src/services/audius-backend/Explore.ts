@@ -65,7 +65,7 @@ class Explore {
     limit = 25
   ): Promise<UserAgreement[]> {
     try {
-      const agreements = await libs().discoveryProvider.getTopFolloweeWindowed(
+      const agreements = await libs().discoveryNode.getTopFolloweeWindowed(
         'agreement',
         window,
         limit,
@@ -119,7 +119,7 @@ class Explore {
   static async getTopFolloweeSaves(limit = 25) {
     try {
       const agreements: UserAgreement[] =
-        await libs().discoveryProvider.getTopFolloweeSaves('agreement', limit, true)
+        await libs().discoveryNode.getTopFolloweeSaves('agreement', limit, true)
       return agreements
     } catch (e) {
       console.error(e)
@@ -129,7 +129,7 @@ class Explore {
 
   static async getLatestAgreementID(): Promise<number> {
     try {
-      const latestAgreementID = await libs().discoveryProvider.getLatest('agreement')
+      const latestAgreementID = await libs().discoveryNode.getLatest('agreement')
       return latestAgreementID
     } catch (e) {
       console.error(e)
@@ -144,7 +144,7 @@ class Explore {
     limit = 20
   ): Promise<Collection[]> {
     try {
-      const contentLists = await libs().discoveryProvider.getTopContentLists(
+      const contentLists = await libs().discoveryNode.getTopContentLists(
         type,
         limit,
         undefined,
@@ -164,7 +164,7 @@ class Explore {
   ): Promise<Collection[]> {
     try {
       const requests = moods.map((mood) => {
-        return libs().discoveryProvider.getTopContentLists(
+        return libs().discoveryNode.getTopContentLists(
           'contentList',
           limit,
           mood,

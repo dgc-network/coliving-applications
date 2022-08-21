@@ -35,7 +35,7 @@ import { remoteConfigInstance } from 'services/remote-config/remote-config-insta
 import { IS_MOBILE_USER_KEY } from 'store/account/mobileSagas'
 import { agreement } from 'store/analytics/providers/amplitude'
 import { isElectron } from 'utils/clientUtil'
-import { getCreatorNodeIPFSGateways } from 'utils/gatewayUtil'
+import { getContentNodeIPFSGateways } from 'utils/gatewayUtil'
 import { Timer } from 'utils/performance'
 import { encodeHashId } from 'utils/route/hashIds'
 
@@ -158,7 +158,7 @@ const notDeleted = (e) => !e.is_delete
 /**
  *
  * @param {number} cid
- * @param {string[]} creatorNodeGateways
+ * @param {string[]} contentNodeGateways
  * @param {boolean} cache
  * @param {boolean} asUrl
  * @param {Nullable<number>} agreementId
@@ -166,7 +166,7 @@ const notDeleted = (e) => !e.is_delete
  */
 export const fetchCID = async (
   cid,
-  creatorNodeGateways = [],
+  contentNodeGateways = [],
   cache = true,
   asUrl = true,
   agreementId = null
@@ -175,7 +175,7 @@ export const fetchCID = async (
   try {
     const res = await colivingLibs.File.fetchCID(
       cid,
-      creatorNodeGateways,
+      contentNodeGateways,
       () => {},
       // If requesting a url (we mean a blob url for the file),
       // otherwise, default to JSON
@@ -242,13 +242,13 @@ const preloadImage = async (url) => {
   })
 }
 
-const fetchImageCID = async (cid, creatorNodeGateways = [], cache = true) => {
+const fetchImageCID = async (cid, contentNodeGateways = [], cache = true) => {
   if (CIDCache.has(cid)) {
     return CIDCache.get(cid)
   }
 
-  creatorNodeGateways.push(`${USER_NODE}/ipfs`)
-  const primary = creatorNodeGateways[0]
+  contentNodeGateways.push(`${USER_NODE}/ipfs`)
+  const primary = contentNodeGateways[0]
   if (primary) {
     // Attempt to fetch/load the image using the first content node gateway
     const firstImageUrl = `${primary}${cid}`
@@ -264,7 +264,7 @@ const fetchImageCID = async (cid, creatorNodeGateways = [], cache = true) => {
   try {
     const image = await colivingLibs.File.fetchCID(
       cid,
-      creatorNodeGateways,
+      contentNodeGateways,
       () => {}
     )
 
@@ -282,13 +282,13 @@ const fetchImageCID = async (cid, creatorNodeGateways = [], cache = true) => {
 }
 
 class ColivingBackend {
-  static currentDiscoveryProvider = null
-  static didSelectDiscoveryProviderListeners = []
+  static currentDiscoveryNode = null
+  static didSelectDiscoveryNodeListeners = []
 
-  static addDiscoveryProviderSelectionListener(listener) {
-    ColivingBackend.didSelectDiscoveryProviderListeners.push(listener)
-    if (ColivingBackend.currentDiscoveryProvider !== null) {
-      listener(ColivingBackend.currentDiscoveryProvider)
+  static addDiscoveryNodeSelectionListener(listener) {
+    ColivingBackend.didSelectDiscoveryNodeListeners.push(listener)
+    if (ColivingBackend.currentDiscoveryNode !== null) {
+      listener(ColivingBackend.currentDiscoveryNode)
     }
   }
 
@@ -366,17 +366,17 @@ class ColivingBackend {
   }
 
   // Record the endpoint and reason for selecting the endpoint
-  static discoveryProviderSelectionCallback(endpoint, decisionTree) {
+  static discoveryNodeSelectionCallback(endpoint, decisionTree) {
     agreement(Name.DISCOVERY_PROVIDER_SELECTION, {
       endpoint,
       reason: decisionTree.map((reason) => reason.stage).join(' -> ')
     })
-    ColivingBackend.didSelectDiscoveryProviderListeners.forEach((listener) =>
+    ColivingBackend.didSelectDiscoveryNodeListeners.forEach((listener) =>
       listener(endpoint)
     )
   }
 
-  static creatorNodeSelectionCallback(primary, secondaries, reason) {
+  static contentNodeSelectionCallback(primary, secondaries, reason) {
     agreement(Name.CONTENT_NODE_SELECTION, {
       endpoint: primary,
       selectedAs: 'primary',
@@ -452,12 +452,12 @@ class ColivingBackend {
         solanaWeb3Config,
         solanaColivingDataConfig,
         wormholeConfig,
-        discoveryProviderConfig: {
+        discoveryNodeConfig: {
           blacklist: discoveryNodeBlockList,
           reselectTimeout: getRemoteVar(
             IntKeys.DISCOVERY_PROVIDER_SELECTION_TIMEOUT_MS
           ),
-          selectionCallback: ColivingBackend.discoveryProviderSelectionCallback,
+          selectionCallback: ColivingBackend.discoveryNodeSelectionCallback,
           monitoringCallbacks: monitoringCallbacks.discoveryNode,
           selectionRequestTimeout: getRemoteVar(
             IntKeys.DISCOVERY_NODE_SELECTION_REQUEST_TIMEOUT
@@ -474,7 +474,7 @@ class ColivingBackend {
         },
         identityServiceConfig:
           ColivingLibs.configIdentityService(IDENTITY_SERVICE),
-        creatorNodeConfig: ColivingLibs.configCreatorNode(
+        contentNodeConfig: ColivingLibs.configContentNode(
           USER_NODE,
           /* lazyConnect */ true,
           /* passList */ null,
@@ -640,29 +640,29 @@ class ColivingBackend {
     }
   }
 
-  static async setCreatorNodeEndpoint(endpoint) {
-    return colivingLibs.creatorNode.setEndpoint(endpoint)
+  static async setContentNodeEndpoint(endpoint) {
+    return colivingLibs.contentNode.setEndpoint(endpoint)
   }
 
-  static async isCreatorNodeSyncing(endpoint) {
+  static async isContentNodeSyncing(endpoint) {
     try {
       const { isBehind, isConfigured } =
-        await colivingLibs.creatorNode.getSyncStatus(endpoint)
+        await colivingLibs.contentNode.getSyncStatus(endpoint)
       return isBehind && isConfigured
     } catch (e) {
       return true
     }
   }
 
-  static async listCreatorNodes() {
-    return colivingLibs.ServiceProvider.listCreatorNodes()
+  static async listContentNodes() {
+    return colivingLibs.ServiceProvider.listContentNodes()
   }
 
-  static async autoSelectCreatorNodes() {
-    return colivingLibs.ServiceProvider.autoSelectCreatorNodes({})
+  static async autoSelectContentNodes() {
+    return colivingLibs.ServiceProvider.autoSelectContentNodes({})
   }
 
-  static async getSelectableCreatorNodes() {
+  static async getSelectableContentNodes() {
     let contentNodeBlockList = getRemoteVar(StringKeys.CONTENT_NODE_BLOCK_LIST)
     if (contentNodeBlockList) {
       try {
@@ -672,7 +672,7 @@ class ColivingBackend {
         contentNodeBlockList = null
       }
     }
-    return colivingLibs.ServiceProvider.getSelectableCreatorNodes(
+    return colivingLibs.ServiceProvider.getSelectableContentNodes(
       /* whitelist */ null,
       /* blacklist */ contentNodeBlockList
     )
@@ -684,7 +684,7 @@ class ColivingBackend {
       let account
       if (fromSource) {
         const wallet = colivingLibs.Account.getCurrentUser().wallet
-        account = await colivingLibs.discoveryProvider.getUserAccount(wallet)
+        account = await colivingLibs.discoveryNode.getUserAccount(wallet)
         colivingLibs.userStateManager.setCurrentUser(account)
       } else {
         account = colivingLibs.Account.getCurrentUser()
@@ -994,10 +994,10 @@ class ColivingBackend {
 
   /**
    * Upgrades a user to a creator
-   * @param {string} newCreatorNodeEndpoint will follow the structure 'cn1,cn2,cn3'
+   * @param {string} newContentNodeEndpoint will follow the structure 'cn1,cn2,cn3'
    */
-  static async upgradeToCreator(newCreatorNodeEndpoint) {
-    return colivingLibs.User.upgradeToCreator(USER_NODE, newCreatorNodeEndpoint)
+  static async upgradeToCreator(newContentNodeEndpoint) {
+    return colivingLibs.User.upgradeToCreator(USER_NODE, newContentNodeEndpoint)
   }
 
   // Uploads a single agreement
@@ -1013,13 +1013,13 @@ class ColivingBackend {
 
   // Used to upload multiple agreements as part of an album/contentList
   // Returns { metadataMultihash, metadataFileUUID, transcodedAgreementCID, transcodedAgreementUUID }
-  static async uploadAgreementToCreatorNode(
+  static async uploadAgreementToContentNode(
     agreementFile,
     coverArtFile,
     metadata,
     onProgress
   ) {
-    return colivingLibs.Agreement.uploadAgreementContentToCreatorNode(
+    return colivingLibs.Agreement.uploadAgreementContentToContentNode(
       agreementFile,
       coverArtFile,
       metadata,
@@ -1036,7 +1036,7 @@ class ColivingBackend {
   /**
    * Takes an array of [{metadataMultihash, metadataFileUUID}, {}, ]
    * Adds agreements to chain for this user
-   * Associates agreements with user on creatorNode
+   * Associates agreements with user on contentNode
    */
   static async registerUploadedAgreements(uploadedAgreements) {
     return colivingLibs.Agreement.addAgreementsToChainAndCnode(uploadedAgreements)
@@ -1099,7 +1099,7 @@ class ColivingBackend {
    * @returns Object The associated wallets mapping of address to nested signature
    */
   static async fetchUserAssociatedEthWallets(user) {
-    const gateways = getCreatorNodeIPFSGateways(user.content_node_endpoint)
+    const gateways = getContentNodeIPFSGateways(user.content_node_endpoint)
     const cid = user?.metadata_multihash ?? null
     if (cid) {
       const metadata = await fetchCID(
@@ -1121,7 +1121,7 @@ class ColivingBackend {
    * @returns Object The associated wallets mapping of address to nested signature
    */
   static async fetchUserAssociatedSolWallets(user) {
-    const gateways = getCreatorNodeIPFSGateways(user.content_node_endpoint)
+    const gateways = getContentNodeIPFSGateways(user.content_node_endpoint)
     const cid = user?.metadata_multihash ?? null
     if (cid) {
       const metadata = await fetchCID(
@@ -1143,7 +1143,7 @@ class ColivingBackend {
    * @returns Object The associated wallets mapping of address to nested signature
    */
   static async fetchUserAssociatedWallets(user) {
-    const gateways = getCreatorNodeIPFSGateways(user.content_node_endpoint)
+    const gateways = getContentNodeIPFSGateways(user.content_node_endpoint)
     const cid = user?.metadata_multihash ?? null
     if (cid) {
       const metadata = await fetchCID(

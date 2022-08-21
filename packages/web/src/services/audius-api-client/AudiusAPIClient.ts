@@ -1408,7 +1408,7 @@ class ColivingAPIClient {
     }
 
     // Listen for libs on chain selection
-    ColivingBackend.addDiscoveryProviderSelectionListener((endpoint: string) => {
+    ColivingBackend.addDiscoveryNodeSelectionListener((endpoint: string) => {
       console.debug(`APIClient: Setting to libs discprov: ${endpoint}`)
       this.initializationState = {
         state: 'initialized',
@@ -1456,7 +1456,7 @@ class ColivingAPIClient {
 
     const formattedPath = this._formatPath(pathType, path)
     if (this.initializationState.type === 'libs' && window.colivingLibs) {
-      const data = await window.colivingLibs.discoveryProvider._makeRequest(
+      const data = await window.colivingLibs.discoveryNode._makeRequest(
         {
           endpoint: formattedPath,
           queryParams: sanitizedParams,

@@ -31,20 +31,20 @@ export function* watchFetchServices() {
         services: { [name: string]: Service }
 
       if (currentUser.content_node_endpoint) {
-        services = yield* call(ColivingBackend.getSelectableCreatorNodes)
+        services = yield* call(ColivingBackend.getSelectableContentNodes)
         const userEndpoints = currentUser.content_node_endpoint.split(',')
         primary = userEndpoints[0]
         secondaries = userEndpoints.slice(1)
         // Filter out a secondary that is unhealthy.
         secondaries = secondaries.filter(Boolean).filter((s) => services[s])
       } else {
-        const autoselect = yield* call(ColivingBackend.autoSelectCreatorNodes)
+        const autoselect = yield* call(ColivingBackend.autoSelectContentNodes)
         primary = autoselect.primary
         secondaries = autoselect.secondaries
         services = autoselect.services
 
         yield* call(
-          ColivingBackend.creatorNodeSelectionCallback,
+          ColivingBackend.contentNodeSelectionCallback,
           primary,
           secondaries,
           'autoselect'
@@ -74,7 +74,7 @@ export function* watchFetchServices() {
 const checkIsSyncing = async (service: string) => {
   return new Promise<void>((resolve) => {
     const interval = setInterval(async () => {
-      const isSyncing = await ColivingBackend.isCreatorNodeSyncing(service)
+      const isSyncing = await ColivingBackend.isContentNodeSyncing(service)
       if (!isSyncing) {
         clearInterval(interval)
         resolve()
@@ -102,7 +102,7 @@ function* watchSetSelected() {
       const currentSecondaries = yield* select(getSecondaries)
       const { primary, secondaries } = action.payload
       yield* call(
-        ColivingBackend.creatorNodeSelectionCallback,
+        ColivingBackend.contentNodeSelectionCallback,
         primary,
         secondaries,
         'manual'
@@ -130,7 +130,7 @@ function* watchSetSelected() {
         })
       )
 
-      yield* call(ColivingBackend.setCreatorNodeEndpoint, primary)
+      yield* call(ColivingBackend.setContentNodeEndpoint, primary)
       user.content_node_endpoint = newEndpoint
       const success = yield* call(
         ColivingBackend.updateCreator,

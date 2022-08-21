@@ -1,6 +1,6 @@
 import { USER_NODE, LEGACY_USER_NODE } from 'services/ColivingBackend'
 
-export const getCreatorNodeIPFSGateways = (endpoint) => {
+export const getContentNodeIPFSGateways = (endpoint) => {
   if (endpoint) {
     return endpoint
       .split(',')

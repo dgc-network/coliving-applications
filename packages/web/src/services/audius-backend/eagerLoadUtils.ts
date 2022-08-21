@@ -4,13 +4,13 @@
  */
 import {
   getColivingAccountUser,
-  getCachedDiscoveryProvider
+  getCachedDiscoveryNode
 } from 'services/LocalStorage'
 
 export const LIBS_INITTED_EVENT = 'LIBS_INITTED_EVENT'
 
 const user = getColivingAccountUser()
-const cachedDiscprov = getCachedDiscoveryProvider()
+const cachedDiscprov = getCachedDiscoveryNode()
 
 const EAGER_DISCOVERY_NODES = process.env.REACT_APP_EAGER_DISCOVERY_NODES
   ? process.env.REACT_APP_EAGER_DISCOVERY_NODES.split(',')

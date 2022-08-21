@@ -36,7 +36,7 @@ import { make } from 'store/analytics/actions'
 import { waitForBackendSetup } from 'store/backend/sagas'
 import * as confirmerActions from 'store/confirmer/actions'
 import { confirmTransaction } from 'store/confirmer/sagas'
-import { getCreatorNodeIPFSGateways } from 'utils/gatewayUtil'
+import { getContentNodeIPFSGateways } from 'utils/gatewayUtil'
 import { dominantColor } from 'utils/imageProcessingUtil'
 import { waitForValue } from 'utils/sagaHelpers'
 
@@ -59,7 +59,7 @@ function* fetchRepostInfo(entries) {
 
 function* fetchSegment(metadata) {
   const user = yield call(waitForValue, getUser, { id: metadata.owner_id })
-  const gateways = getCreatorNodeIPFSGateways(user.content_node_endpoint)
+  const gateways = getContentNodeIPFSGateways(user.content_node_endpoint)
   if (!metadata.agreement_segments[0]) return
   const cid = metadata.agreement_segments[0].multihash
   return yield call(fetchCID, cid, gateways, /* cache */ false)
@@ -409,7 +409,7 @@ function* watchFetchCoverArt() {
       const user = yield call(waitForValue, getUser, { id: agreement.owner_id })
       if (!agreement || !user || (!agreement.cover_art_sizes && !agreement.cover_art))
         return
-      const gateways = getCreatorNodeIPFSGateways(user.content_node_endpoint)
+      const gateways = getContentNodeIPFSGateways(user.content_node_endpoint)
       const multihash = agreement.cover_art_sizes || agreement.cover_art
       const coverArtSize = multihash === agreement.cover_art_sizes ? size : null
       const url = yield call(

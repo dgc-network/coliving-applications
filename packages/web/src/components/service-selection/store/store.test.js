@@ -97,7 +97,7 @@ describe('fetchServices', () => {
       .provide([
         [matchers.call.fn(waitForBackendSetup), true],
         [
-          matchers.call.fn(ColivingBackend.getSelectableCreatorNodes),
+          matchers.call.fn(ColivingBackend.getSelectableContentNodes),
           {
             'http://test_endpoint1': service1,
             'http://test_endpoint2': service2

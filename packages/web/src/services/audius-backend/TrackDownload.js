@@ -16,8 +16,8 @@ class AgreementDownload {
     )
   }
 
-  static async downloadAgreementMobile(cid, creatorNodeGateways, filename) {
-    const urls = creatorNodeGateways.map(
+  static async downloadAgreementMobile(cid, contentNodeGateways, filename) {
+    const urls = contentNodeGateways.map(
       (gateway) => new URL(`${gateway}${cid}?filename=${filename}`)
     )
 

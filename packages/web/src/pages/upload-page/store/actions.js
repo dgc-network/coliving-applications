@@ -109,12 +109,12 @@ export const multiAgreementTimeoutError = () => ({
   type: MULTI_AGREEMENT_TIMEOUT_ERROR
 })
 
-export const creatorNodeUploadError = (error) => ({
+export const contentNodeUploadError = (error) => ({
   type: COLLECTION_CONTENT_NODE_UPLOAD_ERROR,
   error
 })
 
-export const creatorNodeTimeoutError = () => ({
+export const contentNodeTimeoutError = () => ({
   type: COLLECTION_CONTENT_NODE_TIMEOUT_ERROR
 })
 

@@ -227,7 +227,7 @@ function* uploadWorker(requestChan, respChan, progressChan) {
     return function* () {
       console.debug(`Beginning collection upload for agreement: ${metadata.title}`)
       return yield call(
-        ColivingBackend.uploadAgreementToCreatorNode,
+        ColivingBackend.uploadAgreementToContentNode,
         agreement.file,
         artwork,
         metadata,
@@ -445,7 +445,7 @@ export function* handleUploads({
   let numOutstandingRequests = agreements.length
   let numSuccessRequests = 0 // Technically not needed, but adding defensively
   const agreementIds = []
-  const creatorNodeMetadata = []
+  const contentNodeMetadata = []
   const failedRequests = [] // Array of shape [{ id, timeout, message }]
 
   // We should only stop the whole upload if a request fails
@@ -484,7 +484,7 @@ export function* handleUploads({
     // If it's not a collection, rejoice because we have the agreementId already.
     // Otherwise, save our metadata and continue on.
     if (isCollection) {
-      creatorNodeMetadata.push({
+      contentNodeMetadata.push({
         metadataMultihash,
         metadataFileUUID,
         transcodedAgreementCID,
@@ -529,7 +529,7 @@ export function* handleUploads({
       // First, re-sort the CNODE metadata
       // to match what was originally sent by the user.
       const sortedMetadata = []
-      creatorNodeMetadata.forEach((m) => {
+      contentNodeMetadata.forEach((m) => {
         const originalIndex = idToAgreementMap[m.originalId].index
         sortedMetadata[originalIndex] = m
       })
@@ -620,9 +620,9 @@ export function* handleUploads({
       // failed request
       const { timeout, message } = failedRequests[0]
       if (timeout) {
-        yield put(uploadActions.creatorNodeTimeoutError())
+        yield put(uploadActions.contentNodeTimeoutError())
       } else {
-        yield put(uploadActions.creatorNodeUploadError(message))
+        yield put(uploadActions.contentNodeUploadError(message))
       }
       returnVal = { error: true }
     }

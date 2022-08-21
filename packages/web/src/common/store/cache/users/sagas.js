@@ -25,7 +25,7 @@ import {
   setColivingAccountUser
 } from 'services/LocalStorage'
 import apiClient from 'services/coliving-api-client/ColivingAPIClient'
-import { getCreatorNodeIPFSGateways } from 'utils/gatewayUtil'
+import { getContentNodeIPFSGateways } from 'utils/gatewayUtil'
 import { waitForValue } from 'utils/sagaHelpers'
 
 import { pruneBlobValues, reformat } from './utils'
@@ -254,7 +254,7 @@ function* watchFetchProfilePicture() {
         const user = yield select(getUser, { id: userId })
         if (!user || (!user.profile_picture_sizes && !user.profile_picture))
           return
-        const gateways = getCreatorNodeIPFSGateways(user.content_node_endpoint)
+        const gateways = getContentNodeIPFSGateways(user.content_node_endpoint)
         if (user.profile_picture_sizes) {
           const url = yield call(
             ColivingBackend.getImageUrl,
@@ -324,7 +324,7 @@ function* watchFetchCoverPhoto() {
         return
       }
 
-      const gateways = getCreatorNodeIPFSGateways(user.content_node_endpoint)
+      const gateways = getContentNodeIPFSGateways(user.content_node_endpoint)
       if (user.cover_photo_sizes) {
         const url = yield call(
           ColivingBackend.getImageUrl,
