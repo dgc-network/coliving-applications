@@ -1,7 +1,7 @@
 import type { ChallengeRewardID } from '@/common'
 import type { ChallengeReward } from '-client/src/common/store/notifications/types'
 
-import IconColiving from 'app/assets/images/iconAudius.svg'
+import IconColiving from 'app/assets/images/iconColiving.svg'
 
 import {
   NotificationTile,

@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 
-import { ReactComponent as IconColiving } from 'assets/img/iconAudius.svg'
+import { ReactComponent as IconColiving } from 'assets/img/iconColiving.svg'
 import { ReactComponent as IconHeart } from 'assets/img/iconHeart.svg'
 import { ReactComponent as IconContentList } from 'assets/img/iconContentLists.svg'
 import { ReactComponent as IconRemixBase } from 'assets/img/iconRemix.svg'
