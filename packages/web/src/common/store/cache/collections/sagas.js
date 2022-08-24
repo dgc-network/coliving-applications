@@ -90,10 +90,10 @@ function* createContentListAsync(action) {
     action.formFields,
     action.source
   )
-  contentList.contentList_id = uid
-  contentList.contentList_owner_id = userId
+  contentList.content_list_id = uid
+  contentList.content_list_owner_id = userId
   contentList.is_private = true
-  contentList.contentList_contents = { agreement_ids: [] }
+  contentList.content_list_contents = { agreement_ids: [] }
   if (contentList.artwork) {
     contentList._cover_art_sizes = {
       ...contentList._cover_art_sizes,
@@ -108,7 +108,7 @@ function* createContentListAsync(action) {
       Kind.COLLECTIONS,
       [
         {
-          id: contentList.contentList_id,
+          id: contentList.content_list_id,
           uid: subscribedUid,
           metadata: { ...contentList, is_album: false }
         }
@@ -120,8 +120,8 @@ function* createContentListAsync(action) {
   const user = yield select(getUser, { id: userId })
   yield put(
     accountActions.addAccountContentList({
-      id: contentList.contentList_id,
-      name: contentList.contentList_name,
+      id: contentList.content_list_id,
+      name: contentList.content_list_name,
       isAlbum: contentList.is_album,
       user: { id: userId, handle: user.handle }
     })
@@ -175,7 +175,7 @@ function* confirmCreateContentList(uid, userId, formFields, source) {
 
         const subscribedUid = makeUid(
           Kind.COLLECTIONS,
-          confirmedContentList.contentList_id,
+          confirmedContentList.content_list_id,
           'account'
         )
         const movedCollection = yield select(getCollection, { id: uid })
@@ -185,7 +185,7 @@ function* confirmCreateContentList(uid, userId, formFields, source) {
         const reformattedContentList = {
           ...reformat(confirmedContentList),
           ...movedCollection,
-          contentList_id: confirmedContentList.contentList_id,
+          content_list_id: confirmedContentList.content_list_id,
           _temp: false
         }
 
@@ -194,7 +194,7 @@ function* confirmCreateContentList(uid, userId, formFields, source) {
         yield put(
           cacheActions.add(Kind.COLLECTIONS, [
             {
-              id: confirmedContentList.contentList_id,
+              id: confirmedContentList.content_list_id,
               uid: subscribedUid,
               metadata: reformattedContentList
             }
@@ -207,8 +207,8 @@ function* confirmCreateContentList(uid, userId, formFields, source) {
               id: userId,
               metadata: {
                 _collectionIds: (user._collectionIds || [])
-                  .filter((cId) => cId !== uid && confirmedContentList.contentList_id)
-                  .concat(confirmedContentList.contentList_id)
+                  .filter((cId) => cId !== uid && confirmedContentList.content_list_id)
+                  .concat(confirmedContentList.content_list_id)
               }
             }
           ])
@@ -221,10 +221,10 @@ function* confirmCreateContentList(uid, userId, formFields, source) {
         yield put(accountActions.removeAccountContentList({ collectionId: uid }))
         yield put(
           accountActions.addAccountContentList({
-            id: confirmedContentList.contentList_id,
+            id: confirmedContentList.content_list_id,
             // Take contentList name from the "local" state because the user
             // may have edited the name before we got the confirmed result back.
-            name: reformattedContentList.contentList_name,
+            name: reformattedContentList.content_list_name,
             isAlbum: confirmedContentList.is_album,
             user: {
               id: user.user_id,
@@ -279,7 +279,7 @@ function* editContentListAsync(action) {
   yield put(
     accountActions.renameAccountContentList({
       collectionId: action.contentListId,
-      name: action.formFields.contentList_name
+      name: action.formFields.content_list_name
     })
   )
 
@@ -292,7 +292,7 @@ function* editContentListAsync(action) {
 
   yield call(confirmEditContentList, action.contentListId, userId, contentList)
 
-  contentList.contentList_id = action.contentListId
+  contentList.content_list_id = action.contentListId
   if (contentList.artwork) {
     contentList._cover_art_sizes = {
       ...contentList._cover_art_sizes
@@ -304,7 +304,7 @@ function* editContentListAsync(action) {
   yield put(
     cacheActions.update(Kind.COLLECTIONS, [
       {
-        id: contentList.contentList_id,
+        id: contentList.content_list_id,
         metadata: contentList
       }
     ])
@@ -343,7 +343,7 @@ function* confirmEditContentList(contentListId, userId, formFields) {
         yield put(
           cacheActions.update(Kind.COLLECTIONS, [
             {
-              id: confirmedContentList.contentList_id,
+              id: confirmedContentList.content_list_id,
               metadata: { ...reformat(confirmedContentList), artwork: {} }
             }
           ])
@@ -358,7 +358,7 @@ function* confirmEditContentList(contentListId, userId, formFields) {
           )
         )
       },
-      (result) => (result.contentList_id ? result.contentList_id : contentListId)
+      (result) => (result.content_list_id ? result.content_list_id : contentListId)
     )
   )
 }
@@ -395,14 +395,14 @@ function* addAgreementToContentListAsync(action) {
     action.agreementId,
     `collection:${action.contentListId}`
   )
-  contentList.contentList_contents = {
-    agreement_ids: contentList.contentList_contents.agreement_ids.concat({
+  contentList.content_list_contents = {
+    agreement_ids: contentList.content_list_contents.agreement_ids.concat({
       agreement: action.agreementId,
       time: Math.round(Date.now() / 1000),
       uid: agreementUid
     })
   }
-  const count = countAgreementIds(contentList.contentList_contents, action.agreementId)
+  const count = countAgreementIds(contentList.content_list_contents, action.agreementId)
 
   const event = make(Name.CONTENT_LIST_ADD, {
     agreementId: action.agreementId,
@@ -420,9 +420,9 @@ function* addAgreementToContentListAsync(action) {
   yield put(
     cacheActions.update(Kind.COLLECTIONS, [
       {
-        id: contentList.contentList_id,
+        id: contentList.content_list_id,
         metadata: {
-          contentList_contents: contentList.contentList_contents
+          content_list_contents: contentList.content_list_contents
         }
       }
     ])
@@ -465,16 +465,16 @@ function* confirmAddAgreementToContentList(userId, contentListId, agreementId, c
          * if not, we reorder them into the correct order.
          */
         const numberOfAgreementsMatch =
-          confirmedContentList.contentList_contents.agreement_ids.length ===
-          contentList.contentList_contents.agreement_ids.length
+          confirmedContentList.content_list_contents.agreement_ids.length ===
+          contentList.content_list_contents.agreement_ids.length
 
         const confirmedContentListHasAgreements =
-          confirmedContentList.contentList_contents.agreement_ids.length > 0
+          confirmedContentList.content_list_contents.agreement_ids.length > 0
 
         if (numberOfAgreementsMatch && confirmedContentListHasAgreements) {
           const confirmedContentListAgreements =
-            confirmedContentList.contentList_contents.agreement_ids.map((t) => t.agreement)
-          const cachedContentListAgreements = contentList.contentList_contents.agreement_ids.map(
+            confirmedContentList.content_list_contents.agreement_ids.map((t) => t.agreement)
+          const cachedContentListAgreements = contentList.content_list_contents.agreement_ids.map(
             (t) => t.agreement
           )
           if (!isEqual(confirmedContentListAgreements, cachedContentListAgreements)) {
@@ -488,7 +488,7 @@ function* confirmAddAgreementToContentList(userId, contentListId, agreementId, c
             yield put(
               cacheActions.update(Kind.COLLECTIONS, [
                 {
-                  id: confirmedContentList.contentList_id,
+                  id: confirmedContentList.content_list_id,
                   metadata: confirmedContentList
                 }
               ])
@@ -506,7 +506,7 @@ function* confirmAddAgreementToContentList(userId, contentListId, agreementId, c
           )
         )
       },
-      (result) => (result.contentList_id ? result.contentList_id : contentListId),
+      (result) => (result.content_list_id ? result.content_list_id : contentListId),
       undefined,
       {
         operationId: ContentListOperations.ADD_AGREEMENT,
@@ -537,7 +537,7 @@ function* removeAgreementFromContentListAsync(action) {
   const contentList = yield select(getCollection, { id: action.contentListId })
 
   // Find the index of the agreement based on the agreement's id and timestamp
-  const index = contentList.contentList_contents.agreement_ids.findIndex(
+  const index = contentList.content_list_contents.agreement_ids.findIndex(
     (t) => t.time === action.timestamp && t.agreement === action.agreementId
   )
   if (index === -1) {
@@ -545,9 +545,9 @@ function* removeAgreementFromContentListAsync(action) {
     return
   }
 
-  const agreement = contentList.contentList_contents.agreement_ids[index]
-  contentList.contentList_contents.agreement_ids.splice(index, 1)
-  const count = countAgreementIds(contentList.contentList_contents, action.agreementId)
+  const agreement = contentList.content_list_contents.agreement_ids[index]
+  contentList.content_list_contents.agreement_ids.splice(index, 1)
+  const count = countAgreementIds(contentList.content_list_contents, action.agreementId)
 
   yield call(
     confirmRemoveAgreementFromContentList,
@@ -560,9 +560,9 @@ function* removeAgreementFromContentListAsync(action) {
   yield put(
     cacheActions.update(Kind.COLLECTIONS, [
       {
-        id: contentList.contentList_id,
+        id: contentList.content_list_id,
         metadata: {
-          contentList_contents: contentList.contentList_contents
+          content_list_contents: contentList.content_list_contents
         }
       }
     ])
@@ -576,7 +576,7 @@ function* fixInvalidAgreementsInContentList(contentListId, userId, invalidAgreem
 
   const contentList = yield select(getCollection, { id: contentListId })
 
-  const agreementIds = contentList.contentList_contents.agreement_ids
+  const agreementIds = contentList.content_list_contents.agreement_ids
     .map(({ agreement }) => agreement)
     .filter((id) => !removedAgreementIds.has(id))
   const { error } = yield call(
@@ -632,7 +632,7 @@ function* confirmRemoveAgreementFromContentList(
               invalidAgreementIds
             )
             const isAgreementRemoved =
-              countAgreementIds(updatedContentList.contentList_contents, agreementId) <= count
+              countAgreementIds(updatedContentList.content_list_contents, agreementId) <= count
             if (isAgreementRemoved) return updatedContentList
           }
           const response = yield call(
@@ -663,7 +663,7 @@ function* confirmRemoveAgreementFromContentList(
         yield put(
           cacheActions.update(Kind.COLLECTIONS, [
             {
-              id: confirmedContentList.contentList_id,
+              id: confirmedContentList.content_list_id,
               metadata: confirmedContentList
             }
           ])
@@ -679,7 +679,7 @@ function* confirmRemoveAgreementFromContentList(
           )
         )
       },
-      (result) => (result.contentList_id ? result.contentList_id : contentListId),
+      (result) => (result.content_list_id ? result.content_list_id : contentListId),
       undefined,
       {
         operationId: ContentListOperations.REMOVE_AGREEMENT,
@@ -709,8 +709,8 @@ function* orderContentListAsync(action) {
   const agreementIds = []
   const updatedContentList = {
     ...contentList,
-    contentList_contents: {
-      ...contentList.contentList_contents,
+    content_list_contents: {
+      ...contentList.content_list_contents,
       agreement_ids: action.agreementIdsAndTimes.map(({ id, time }) => {
         agreementIds.push(id)
         return { agreement: id, time }
@@ -722,7 +722,7 @@ function* orderContentListAsync(action) {
   yield put(
     cacheActions.update(Kind.COLLECTIONS, [
       {
-        id: updatedContentList.contentList_id,
+        id: updatedContentList.content_list_id,
         metadata: updatedContentList
       }
     ])
@@ -789,7 +789,7 @@ function* confirmOrderContentList(userId, contentListId, agreementIds) {
         yield put(
           cacheActions.update(Kind.COLLECTIONS, [
             {
-              id: confirmedContentList.contentList_id,
+              id: confirmedContentList.content_list_id,
               metadata: confirmedContentList
             }
           ])
@@ -805,7 +805,7 @@ function* confirmOrderContentList(userId, contentListId, agreementIds) {
           )
         )
       },
-      (result) => (result.contentList_id ? result.contentList_id : contentListId),
+      (result) => (result.content_list_id ? result.content_list_id : contentListId),
       undefined,
       { operationId: ContentListOperations.REORDER, squashable: true }
     )
@@ -834,7 +834,7 @@ function* publishContentListAsync(action) {
   yield put(
     cacheActions.update(Kind.COLLECTIONS, [
       {
-        id: contentList.contentList_id,
+        id: contentList.content_list_id,
         metadata: { _is_publishing: true }
       }
     ])
@@ -870,7 +870,7 @@ function* confirmPublishContentList(userId, contentListId) {
         yield put(
           cacheActions.update(Kind.COLLECTIONS, [
             {
-              id: confirmedContentList.contentList_id,
+              id: confirmedContentList.content_list_id,
               metadata: confirmedContentList
             }
           ])
@@ -886,7 +886,7 @@ function* confirmPublishContentList(userId, contentListId) {
           )
         )
       },
-      (result) => (result.contentList_id ? result.contentList_id : contentListId)
+      (result) => (result.content_list_id ? result.content_list_id : contentListId)
     )
   )
 }
@@ -913,7 +913,7 @@ function* deleteContentListAsync(action) {
 
   const isAlbum = collection.is_album
   if (isAlbum) {
-    const agreementIds = collection.contentList_contents.agreement_ids
+    const agreementIds = collection.content_list_contents.agreement_ids
 
     const event = make(Name.DELETE, { kind: 'album', id: action.contentListId })
     yield put(event)
@@ -1031,8 +1031,8 @@ function* confirmDeleteAlbum(contentListId, agreementIds, userId) {
           ),
           put(
             accountActions.addAccountContentList({
-              id: contentList.contentList_id,
-              name: contentList.contentList_name,
+              id: contentList.content_list_id,
+              name: contentList.content_list_name,
               isAlbum: contentList.is_album,
               user: { id: user.user_id, handle: user.handle }
             })
@@ -1105,8 +1105,8 @@ function* confirmDeleteContentList(userId, contentListId) {
           ),
           put(
             accountActions.addAccountContentList({
-              id: contentList.contentList_id,
-              name: contentList.contentList_name,
+              id: contentList.content_list_id,
+              name: contentList.content_list_name,
               isAlbum: contentList.is_album,
               user: { id: user.user_id, handle: user.handle }
             })
@@ -1120,7 +1120,7 @@ function* confirmDeleteContentList(userId, contentListId) {
           )
         )
       },
-      (result) => (result.contentList_id ? result.contentList_id : contentListId)
+      (result) => (result.content_list_id ? result.content_list_id : contentListId)
     )
   )
 }
@@ -1183,7 +1183,7 @@ function* watchFetchCoverArt() {
 
       try {
         let collection = yield select(getCollection, { id: collectionId })
-        const user = yield select(getUser, { id: collection.contentList_owner_id })
+        const user = yield select(getUser, { id: collection.content_list_owner_id })
         if (
           !collection ||
           !user ||

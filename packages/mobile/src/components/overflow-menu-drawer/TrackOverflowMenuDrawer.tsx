@@ -21,7 +21,7 @@ import {
   followUser,
   unfollowUser
 } from '-client/src/common/store/social/users/actions'
-import { requestOpen as openAddToContentListModal } from '-client/src/common/store/ui/add-to-contentList/actions'
+import { requestOpen as openAddToContentListModal } from '-client/src/common/store/ui/add-to-content-list/actions'
 import { getMobileOverflowModal } from '-client/src/common/store/ui/mobile-overflow-menu/selectors'
 import type { OverflowActionCallbacks } from '-client/src/common/store/ui/mobile-overflow-menu/types'
 import { OverflowAction } from '-client/src/common/store/ui/mobile-overflow-menu/types'

@@ -26,7 +26,7 @@ import {
   undoRepostAgreement,
   shareAgreement
 } from 'common/store/social/agreements/actions'
-import { requestOpen as openAddToContentList } from 'common/store/ui/add-to-contentList/actions'
+import { requestOpen as openAddToContentList } from 'common/store/ui/add-to-content-list/actions'
 import * as embedModalActions from 'components/embed-modal/store/actions'
 import { ToastContext } from 'components/toast/ToastContext'
 import { newCollectionMetadata } from 'schemas'
@@ -261,7 +261,7 @@ function mapDispatchToProps(dispatch: Dispatch) {
       dispatch(
         createContentList(
           tempId,
-          newCollectionMetadata({ contentList_name: name }),
+          newCollectionMetadata({ content_list_name: name }),
           CreateContentListSource.FROM_AGREEMENT,
           agreementId
         )

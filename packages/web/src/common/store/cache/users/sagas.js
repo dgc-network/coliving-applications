@@ -13,7 +13,7 @@ import {
   getUsers,
   getUserTimestamps
 } from 'common/store/cache/users/selectors'
-import { removeContentListLibraryTempContentLists } from 'common/store/contentList-library/helpers'
+import { removeContentListLibraryTempContentLists } from 'common/store/content-list-library/helpers'
 import {
   getSelectedServices,
   getStatus
@@ -153,12 +153,12 @@ export function* fetchUserByHandle(
 export function* fetchUserCollections(userId) {
   // Get contentLists.
   const contentLists = yield call(ColivingBackend.getContentLists, userId)
-  const contentListIds = contentLists.map((p) => p.contentList_id)
+  const contentListIds = contentLists.map((p) => p.content_list_id)
 
   if (!contentListIds.length) return
   const { collections } = yield call(retrieveCollections, userId, contentListIds)
   const cachedCollectionIds = Object.values(collections).map(
-    (c) => c.contentList_id
+    (c) => c.content_list_id
   )
 
   yield put(
@@ -213,10 +213,10 @@ function* watchSyncLocalStorageUser() {
       // in the current session until the contentList is finished creating
       // If we don't do this, temp contentLists can get stuck in local storage (resulting in a corrupted state)
       // if the user reloads before a temp contentList is resolved.
-      cleaned.contentList_library =
-        cleaned.contentList_library == null
-          ? cleaned.contentList_library
-          : removeContentListLibraryTempContentLists(cleaned.contentList_library)
+      cleaned.content_list_library =
+        cleaned.content_list_library == null
+          ? cleaned.content_list_library
+          : removeContentListLibraryTempContentLists(cleaned.content_list_library)
       // Set user back to local storage
       setColivingAccountUser(cleaned)
     }

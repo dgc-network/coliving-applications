@@ -98,8 +98,8 @@ function* fetchSearchPageResults(action) {
   if (results) {
     results.users = results.users.map(({ user_id: id }) => id)
     results.agreements = results.agreements.map(({ agreement_id: id }) => id)
-    results.albums = results.albums.map(({ contentList_id: id }) => id)
-    results.contentLists = results.contentLists.map(({ contentList_id: id }) => id)
+    results.albums = results.albums.map(({ content_list_id: id }) => id)
+    results.contentLists = results.contentLists.map(({ content_list_id: id }) => id)
     yield put(
       searchPageActions.fetchSearchPageResultsSucceeded(
         results,

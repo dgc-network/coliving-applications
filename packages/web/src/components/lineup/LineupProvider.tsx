@@ -411,14 +411,14 @@ class LineupProvider extends PureComponent<CombinedProps, LineupProviderState> {
 
     const isLineupPlaying = lineup.entries.some((entry) => {
       if (entry.agreement_id) return playingUid === entry.uid
-      else if (entry.contentList_id)
+      else if (entry.content_list_id)
         return entry.agreements.some((agreement: any) => agreement.uid === playingUid)
       return false
     })
     if (playingAgreementId && !isLineupPlaying && lineup.prefix === playingSource) {
       for (const entry of lineup.entries) {
         if (entry.agreement_id === playingAgreementId) return entry.uid
-        if (entry.contentList_id) {
+        if (entry.content_list_id) {
           for (const agreement of entry.agreements) {
             if (agreement.agreement_id === playingAgreementId) return agreement.uid
           }
@@ -535,7 +535,7 @@ class LineupProvider extends PureComponent<CombinedProps, LineupProviderState> {
             agreementProps = { ...agreementProps, ...leadingElementTileProps }
           }
           return <this.props.agreementTile key={index} {...agreementProps} />
-        } else if (entry.kind === Kind.COLLECTIONS || entry.contentList_id) {
+        } else if (entry.kind === Kind.COLLECTIONS || entry.content_list_id) {
           // Render a agreement tile if the kind agreements or there's a agreement id present
 
           const contentListProps = {

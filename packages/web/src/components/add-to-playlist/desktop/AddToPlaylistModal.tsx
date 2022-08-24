@@ -16,7 +16,7 @@ import { getCollectionId } from 'common/store/pages/collection/selectors'
 import {
   getAgreementId,
   getAgreementTitle
-} from 'common/store/ui/add-to-contentList/selectors'
+} from 'common/store/ui/add-to-content-list/selectors'
 import DynamicImage from 'components/dynamic-image/DynamicImage'
 import SearchBar from 'components/search-bar/SearchBar'
 import { ToastContext } from 'components/toast/ToastContext'
@@ -55,9 +55,9 @@ const AddToContentListModal = () => {
     return (account?.contentLists ?? []).filter(
       (contentList: Collection) =>
         // Don't allow adding to this contentList if already on this contentList's page.
-        contentList.contentList_id !== currentCollectionId &&
+        contentList.content_list_id !== currentCollectionId &&
         (searchValue
-          ? contentList.contentList_name
+          ? contentList.content_list_name
               .toLowerCase()
               .includes(searchValue.toLowerCase())
           : true)
@@ -65,13 +65,13 @@ const AddToContentListModal = () => {
   }, [searchValue, account, currentCollectionId])
 
   const handleContentListClick = (contentList: Collection) => {
-    dispatch(addAgreementToContentList(agreementId, contentList.contentList_id))
+    dispatch(addAgreementToContentList(agreementId, contentList.content_list_id))
     if (account && agreementTitle) {
       toast(
         <ToastLinkContent
           text={messages.addedToast}
           linkText={messages.view}
-          link={contentListPage(account.handle, agreementTitle, contentList.contentList_id)}
+          link={contentListPage(account.handle, agreementTitle, contentList.content_list_id)}
         />
       )
     }
@@ -80,7 +80,7 @@ const AddToContentListModal = () => {
 
   const handleCreateContentList = () => {
     const metadata = newCollectionMetadata({
-      contentList_name: agreementTitle,
+      content_list_name: agreementTitle,
       is_private: false
     })
     const tempId = `${Date.now()}`
@@ -130,7 +130,7 @@ const AddToContentListModal = () => {
           </div>
           <div className={styles.list}>
             {filteredContentLists.map((contentList) => (
-              <div key={`${contentList.contentList_id}`}>
+              <div key={`${contentList.content_list_id}`}>
                 <ContentListItem
                   contentList={contentList}
                   handleClick={handleContentListClick}
@@ -151,7 +151,7 @@ type ContentListItemProps = {
 
 const ContentListItem = ({ handleClick, contentList }: ContentListItemProps) => {
   const image = useCollectionCoverArt(
-    contentList.contentList_id,
+    contentList.content_list_id,
     contentList._cover_art_sizes,
     SquareSizes.SIZE_150_BY_150
   )
@@ -163,7 +163,7 @@ const ContentListItem = ({ handleClick, contentList }: ContentListItemProps) => 
         wrapperClassName={styles.imageWrapper}
         image={image}
       />
-      <span className={styles.contentListName}>{contentList.contentList_name}</span>
+      <span className={styles.contentListName}>{contentList.content_list_name}</span>
     </div>
   )
 }

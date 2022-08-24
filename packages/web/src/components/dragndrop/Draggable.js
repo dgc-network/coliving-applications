@@ -108,8 +108,8 @@ Draggable.propTypes = {
     'agreement',
     'album',
     'contentList',
-    'library-contentList',
-    'contentList-folder'
+    'library-content-list',
+    'content-list-folder'
   ]),
   id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]), // One of agreementId, collectionId, userId
   children: PropTypes.element,

@@ -1,7 +1,7 @@
 import { useCallback, useMemo } from 'react'
 
 import { deleteContentList } from 'common/store/cache/collections/actions'
-import { getContentListId } from 'common/store/ui/delete-contentList-confirmation-modal/selectors'
+import { getContentListId } from 'common/store/ui/delete-content-list-confirmation-modal/selectors'
 
 import ActionDrawer from 'app/components/action-drawer'
 import { useDispatchWeb } from 'app/hooks/useDispatchWeb'

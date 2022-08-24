@@ -13,7 +13,7 @@ export const ContentListsTab = () => {
   return (
     <SearchResultsTab noResults={contentLists.length === 0}>
       <CollectionList
-        listKey='search-contentLists'
+        listKey='search-content-lists'
         collection={contentLists}
         fromPage='search'
       />

@@ -26,12 +26,12 @@ export const getCollections = (
 
   const collectionsList = collectionIds.map((id) => collections[id])
 
-  const userIds = collectionsList.map((c: Collection) => c.contentList_owner_id)
+  const userIds = collectionsList.map((c: Collection) => c.content_list_owner_id)
   const users = getUsers(state, { ids: userIds })
 
   const userCollections = collectionsList.map((c: Collection) => ({
     ...c,
-    user: users[c.contentList_owner_id]
+    user: users[c.content_list_owner_id]
   }))
 
   return userCollections.filter((contentList) => !contentList.user.is_deactivated)

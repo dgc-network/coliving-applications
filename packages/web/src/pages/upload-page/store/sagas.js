@@ -684,7 +684,7 @@ function* uploadCollection(agreements, userId, collectionMetadata, isAlbum) {
   // Finally, create the contentList
   yield put(
     confirmerActions.requestConfirmation(
-      `${collectionMetadata.contentList_name}_${Date.now()}`,
+      `${collectionMetadata.content_list_name}_${Date.now()}`,
       function* () {
         console.debug('Creating contentList')
         // Uploaded collections are always public
@@ -725,7 +725,7 @@ function* uploadCollection(agreements, userId, collectionMetadata, isAlbum) {
       },
       function* (confirmedContentList) {
         yield put(
-          uploadActions.uploadAgreementsSucceeded(confirmedContentList.contentList_id)
+          uploadActions.uploadAgreementsSucceeded(confirmedContentList.content_list_id)
         )
         const user = yield select(getUser, { id: userId })
         yield put(
@@ -734,7 +734,7 @@ function* uploadCollection(agreements, userId, collectionMetadata, isAlbum) {
               id: userId,
               metadata: {
                 _collectionIds: (user._collectionIds || []).concat(
-                  confirmedContentList.contentList_id
+                  confirmedContentList.content_list_id
                 )
               }
             }
@@ -746,7 +746,7 @@ function* uploadCollection(agreements, userId, collectionMetadata, isAlbum) {
         confirmedContentList = yield call(reformat, confirmedContentList)
         const uid = yield makeUid(
           Kind.COLLECTIONS,
-          confirmedContentList.contentList_id,
+          confirmedContentList.content_list_id,
           'account'
         )
         // Create a cache entry and add it to the account so the contentList shows in the left nav
@@ -755,7 +755,7 @@ function* uploadCollection(agreements, userId, collectionMetadata, isAlbum) {
             Kind.COLLECTIONS,
             [
               {
-                id: confirmedContentList.contentList_id,
+                id: confirmedContentList.content_list_id,
                 uid,
                 metadata: confirmedContentList
               }
@@ -765,8 +765,8 @@ function* uploadCollection(agreements, userId, collectionMetadata, isAlbum) {
         )
         yield put(
           accountActions.addAccountContentList({
-            id: confirmedContentList.contentList_id,
-            name: confirmedContentList.contentList_name,
+            id: confirmedContentList.content_list_id,
+            name: confirmedContentList.content_list_name,
             is_album: confirmedContentList.is_album,
             user: {
               id: user.user_id,

@@ -34,7 +34,7 @@ import { UploadPageState } from 'pages/upload-page/store/types'
 import VisualizerReducer from 'pages/visualizer/store/slice'
 import AppCTAModalReducer from 'store/application/ui/app-cta-modal/slice'
 import PlayerReducer from 'store/player/slice'
-import ContentListLibraryReducer from 'store/contentList-library/slice'
+import ContentListLibraryReducer from 'store/content-list-library/slice'
 
 import { CookieBannerState } from './application/ui/cookieBanner/types'
 import { EditFolderModalState } from './application/ui/editFolderModal/slice'

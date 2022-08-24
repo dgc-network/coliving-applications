@@ -85,11 +85,11 @@ function* getAgreements({
   )
   const processedCollectionsMap = processedCollections.reduce<
     Record<ID, Collection>
-  >((acc, cur) => ({ ...acc, [cur.contentList_id]: cur }), {})
+  >((acc, cur) => ({ ...acc, [cur.content_list_id]: cur }), {})
   const processedFeed: FeedItem[] = filteredFeed.map((m) =>
     (m as LineupAgreement).agreement_id
       ? processedAgreementsMap[(m as LineupAgreement).agreement_id]
-      : processedCollectionsMap[(m as UserCollectionMetadata).contentList_id]
+      : processedCollectionsMap[(m as UserCollectionMetadata).content_list_id]
   )
   return processedFeed
 }
@@ -110,7 +110,7 @@ const keepActivityTimeStamp = (
 ) => ({
   uid: entry.uid,
   kind: (entry as LineupAgreement).agreement_id ? Kind.AGREEMENTS : Kind.COLLECTIONS,
-  id: (entry as LineupAgreement).agreement_id || (entry as Collection).contentList_id,
+  id: (entry as LineupAgreement).agreement_id || (entry as Collection).content_list_id,
   activityTimestamp: entry.activity_timestamp
 })
 

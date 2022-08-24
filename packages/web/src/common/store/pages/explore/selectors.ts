@@ -24,7 +24,7 @@ export const makeGetExplore = () => {
         .filter(Boolean)
         .map((collection) => ({
           ...collection,
-          user: users[collection.contentList_owner_id] || {}
+          user: users[collection.content_list_owner_id] || {}
         }))
       const profiles = explore.profiles.map((id) => users[id]).filter(Boolean)
       return {

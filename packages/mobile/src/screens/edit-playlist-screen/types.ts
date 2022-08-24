@@ -12,7 +12,7 @@ export type Image = {
 }
 
 export type ContentListValues = {
-  contentList_name: string
+  content_list_name: string
   description: Nullable<string>
   artwork: Image
   agreements: ReturnType<typeof getAgreements>

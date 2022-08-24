@@ -15,7 +15,7 @@ import { Panel } from './Panel'
 
 const validRewardIds: Set<TrendingRewardID> = new Set([
   'trending-agreement',
-  'trending-contentList',
+  'trending-content-list',
   'top-api',
   'verified-upload',
   'trending-underground'
@@ -49,7 +49,7 @@ export const TrendingRewards = () => {
       case 'top-api':
         modal = 'APIRewardsExplainer'
         break
-      case 'trending-contentList':
+      case 'trending-content-list':
         modal = 'TrendingRewardsExplainer'
         modalType = 'contentLists'
         break

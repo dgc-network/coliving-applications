@@ -167,19 +167,19 @@ class SearchPageContent extends Component {
     })
 
     const contentListCards = contentLists.map((contentList, ind) => {
-      const toastId = `contentList-${contentList.contentList_id}`
+      const toastId = `content-list-${contentList.content_list_id}`
       const onClick = () => {
         goToRoute(
           contentListPage(
             contentList.user.handle,
-            contentList.contentList_name,
-            contentList.contentList_id
+            contentList.content_list_name,
+            contentList.content_list_id
           )
         )
         recordSearchResultClick({
           term: searchText,
           kind: 'contentList',
-          id: contentList.contentList_id,
+          id: contentList.content_list_id,
           source:
             searchResultsCategory === 'all'
               ? 'search results page'
@@ -189,25 +189,25 @@ class SearchPageContent extends Component {
       return (
         // TODO: Refactor cards and the way draggable wraps them.
         <Toast
-          key={contentList.contentList_id}
+          key={contentList.content_list_id}
           text={cardToast[toastId] && cardToast[toastId].message}
           open={cardToast[toastId] && cardToast[toastId].open}
           placement='bottom'
           fillParent={false}
-          contentListId={contentList.contentList_id}
+          contentListId={contentList.content_list_id}
           isAlbum={contentList.is_album}
           link={fullContentListPage(
             contentList.user.handle,
-            contentList.contentList_name,
-            contentList.contentList_id
+            contentList.content_list_name,
+            contentList.content_list_id
           )}
-          primaryText={contentList.contentList_name}
+          primaryText={contentList.content_list_name}
         >
           <Card
             size={'small'}
-            id={contentList.contentList_id}
+            id={contentList.content_list_id}
             imageSize={contentList._cover_art_sizes}
-            primaryText={contentList.contentList_name}
+            primaryText={contentList.content_list_name}
             secondaryText={`${contentList.user.name} • ${
               contentList.agreementCount
             } Agreement${contentList.agreementCount > 1 ? 's' : ''}`}
@@ -215,17 +215,17 @@ class SearchPageContent extends Component {
             menu={{
               type: 'contentList',
               handle: contentList.user.handle,
-              name: contentList.contentList_name,
+              name: contentList.content_list_name,
               isOwner: contentList.user.user_id === userId,
-              contentListId: contentList.contentList_id,
+              contentListId: contentList.content_list_id,
               currentUserSaved: contentList.has_current_user_saved,
               currentUserReposted: contentList.has_current_user_reposted,
               metadata: contentList,
               includeShare: true,
               includeRepost: true,
               isPublic: !contentList.is_private,
-              onShare: this.onShare('contentList', contentList.contentList_id),
-              onRepost: this.onRepost('contentList', contentList.contentList_id)
+              onShare: this.onShare('contentList', contentList.content_list_id),
+              onRepost: this.onRepost('contentList', contentList.content_list_id)
             }}
           />
         </Toast>
@@ -233,15 +233,15 @@ class SearchPageContent extends Component {
     })
 
     const albumCards = albums.map((album, ind) => {
-      const toastId = `album-${album.contentList_id}`
+      const toastId = `album-${album.content_list_id}`
       const onClick = () => {
         goToRoute(
-          albumPage(album.user.handle, album.contentList_name, album.contentList_id)
+          albumPage(album.user.handle, album.content_list_name, album.content_list_id)
         )
         recordSearchResultClick({
           term: searchText,
           kind: 'album',
-          id: album.contentList_id,
+          id: album.content_list_id,
           source:
             searchResultsCategory === 'all'
               ? 'search results page'
@@ -251,32 +251,32 @@ class SearchPageContent extends Component {
       return (
         // TODO: Refactor cards and the way draggable wraps them.
         <Toast
-          key={album.contentList_id}
+          key={album.content_list_id}
           text={cardToast[toastId] && cardToast[toastId].message}
           open={cardToast[toastId] && cardToast[toastId].open}
           placement='bottom'
           fillParent={false}
-          contentListId={album.contentList_id}
+          contentListId={album.content_list_id}
           isAlbum={album.is_album}
           link={fullAlbumPage(
             album.user.handle,
-            album.contentList_name,
-            album.contentList_id
+            album.content_list_name,
+            album.content_list_id
           )}
-          primaryText={album.contentList_name}
+          primaryText={album.content_list_name}
         >
           <Card
             size={'small'}
-            id={album.contentList_id}
+            id={album.content_list_id}
             imageSize={album._cover_art_sizes}
-            primaryText={album.contentList_name}
+            primaryText={album.content_list_name}
             secondaryText={album.user.name}
             onClick={onClick}
             menu={{
               type: 'album',
               handle: album.user.handle,
-              name: album.contentList_name,
-              contentListId: album.contentList_id,
+              name: album.content_list_name,
+              contentListId: album.content_list_id,
               isOwner: album.user.user_id === userId,
               metadata: album,
               isPublic: !album.is_private,
@@ -284,8 +284,8 @@ class SearchPageContent extends Component {
               currentUserReposted: album.has_current_user_reposted,
               includeShare: true,
               includeRepost: true,
-              onShare: this.onShare('album', album.contentList_id),
-              onRepost: this.onRepost('album', album.contentList_id)
+              onShare: this.onShare('album', album.content_list_id),
+              onRepost: this.onRepost('album', album.content_list_id)
             }}
           />
         </Toast>

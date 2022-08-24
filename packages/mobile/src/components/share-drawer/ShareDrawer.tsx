@@ -118,10 +118,10 @@ export const ShareDrawer = () => {
         dispatchWeb(shareUser(content.profile.user_id, source))
         break
       case 'album':
-        dispatchWeb(shareCollection(content.album.contentList_id, source))
+        dispatchWeb(shareCollection(content.album.content_list_id, source))
         break
       case 'contentList':
-        dispatchWeb(shareCollection(content.contentList.contentList_id, source))
+        dispatchWeb(shareCollection(content.contentList.content_list_id, source))
         break
     }
   }, [dispatchWeb, content, source])

@@ -135,8 +135,8 @@ const NavigationContainer = ({ children }: Props) => {
       } else {
         // If the path has two parts
         if (path.match(/^\/[^/]+\/[^/]+$/)) {
-          // If the path is to live-nft-contentList, reroute to feed
-          if (path.match(/^\/[^/]+\/live-nft-contentList$/)) {
+          // If the path is to live-nft-content-list, reroute to feed
+          if (path.match(/^\/[^/]+\/live-nft-content-list$/)) {
             path = '/feed'
           }
           // If the path doesn't match a profile tab, it's a agreement

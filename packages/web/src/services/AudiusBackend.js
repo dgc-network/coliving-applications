@@ -325,13 +325,13 @@ class ColivingBackend {
     const coverArtSizes = {}
 
     if (
-      collection.contentList_image_sizes_multihash &&
+      collection.content_list_image_sizes_multihash &&
       !collection.cover_art_sizes
     ) {
-      collection.cover_art_sizes = collection.contentList_image_sizes_multihash
+      collection.cover_art_sizes = collection.content_list_image_sizes_multihash
     }
-    if (collection.contentList_image_multihash && !collection.cover_art) {
-      collection.cover_art = collection.contentList_image_multihash
+    if (collection.content_list_image_multihash && !collection.cover_art) {
+      collection.cover_art = collection.content_list_image_multihash
     }
 
     if (!collection.cover_art_sizes && !collection.cover_art) {
@@ -844,7 +844,7 @@ class ColivingBackend {
       console.error(err)
     }
     return feedItems.map((item) => {
-      if (item.contentList_id) return ColivingBackend.getCollectionImages(item)
+      if (item.content_list_id) return ColivingBackend.getCollectionImages(item)
       return item
     })
   }
@@ -1351,7 +1351,7 @@ class ColivingBackend {
     agreementIds = [],
     isPrivate = true
   ) {
-    const contentListName = metadata.contentList_name
+    const contentListName = metadata.content_list_name
     const coverArt = metadata.artwork ? metadata.artwork.file : null
     const description = metadata.description
     // Creating an album is automatically public.
@@ -1412,7 +1412,7 @@ class ColivingBackend {
   }
 
   static async updateContentList(contentListId, metadata) {
-    const contentListName = metadata.contentList_name
+    const contentListName = metadata.content_list_name
     const coverPhoto = metadata.artwork.file
     const description = metadata.description
 
@@ -2361,7 +2361,7 @@ class ColivingBackend {
     try {
       const { data, signature } = await ColivingBackend.signData()
       await fetch(
-        `${IDENTITY_SERVICE}/user_contentList_updates?walletAddress=${account.wallet}&contentListId=${contentListId}`,
+        `${IDENTITY_SERVICE}/user_content_list_updates?walletAddress=${account.wallet}&contentListId=${contentListId}`,
         {
           method: 'POST',
           headers: {

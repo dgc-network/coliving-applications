@@ -65,7 +65,7 @@ const SearchResults = () => {
         keyExtractor={(item) => {
           if ('agreement_id' in item) return `agreement-${item.agreement_id}`
           else if ('user_id' in item) return `user-${item.user_id}`
-          return `contentList-${item.contentList_id}`
+          return `content-list-${item.content_list_id}`
         }}
         renderItem={({ section: { title, data }, item, index }) => (
           <SearchItem

@@ -370,22 +370,22 @@ const ProfilePage = g(
     } else {
       const contentListCards = (contentLists || []).map((contentList) => (
         <Card
-          key={contentList.contentList_id}
-          id={contentList.contentList_id}
-          userId={contentList.contentList_owner_id}
+          key={contentList.content_list_id}
+          id={contentList.content_list_id}
+          userId={contentList.content_list_owner_id}
           imageSize={contentList._cover_art_sizes}
-          primaryText={contentList.contentList_name}
+          primaryText={contentList.content_list_name}
           secondaryText={formatCardSecondaryText(
             contentList.save_count,
-            contentList.contentList_contents.agreement_ids.length,
+            contentList.content_list_contents.agreement_ids.length,
             contentList.is_private
           )}
           onClick={() =>
             goToRoute(
               contentListPage(
                 profile.handle,
-                contentList.contentList_name,
-                contentList.contentList_id
+                contentList.content_list_name,
+                contentList.content_list_id
               )
             )
           }
@@ -394,21 +394,21 @@ const ProfilePage = g(
       if (isLandlord) {
         const albumCards = (albums || []).map((album) => (
           <Card
-            key={album.contentList_id}
-            id={album.contentList_id}
-            userId={album.contentList_owner_id}
+            key={album.content_list_id}
+            id={album.content_list_id}
+            userId={album.content_list_owner_id}
             imageSize={album._cover_art_sizes}
-            primaryText={album.contentList_name}
+            primaryText={album.content_list_name}
             secondaryText={formatCardSecondaryText(
               album.save_count,
-              album.contentList_contents.agreement_ids.length
+              album.content_list_contents.agreement_ids.length
             )}
             onClick={() =>
               goToRoute(
                 albumPage(
                   profile.handle,
-                  album.contentList_name,
-                  album.contentList_id
+                  album.content_list_name,
+                  album.content_list_id
                 )
               )
             }
@@ -637,7 +637,7 @@ const ProfilePage = g(
                 coverPhotoSizes={coverPhotoSizes}
                 profilePictureSizes={profilePictureSizes}
                 hasProfilePicture={hasProfilePicture}
-                contentListCount={profile.contentList_count}
+                contentListCount={profile.content_list_count}
                 agreementCount={profile.agreement_count}
                 followerCount={profile.follower_count}
                 followingCount={profile.followee_count}

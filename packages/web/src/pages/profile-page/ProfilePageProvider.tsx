@@ -526,7 +526,7 @@ class ProfilePage extends PureComponent<ProfilePageProps, ProfilePageState> {
 
     if (profile) {
       agreementCount = profile.agreement_count
-      contentListCount = profile.contentList_count
+      contentListCount = profile.content_list_count
       followerCount = profile.follower_count
       followingCount = profile.followee_count
     }

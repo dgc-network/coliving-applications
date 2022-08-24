@@ -10,11 +10,11 @@ import {
   addAgreementToContentList,
   createContentList
 } from 'common/store/cache/collections/actions'
-import { close } from 'common/store/ui/add-to-contentList/actions'
+import { close } from 'common/store/ui/add-to-content-list/actions'
 import {
   getAgreementId,
   getAgreementTitle
-} from 'common/store/ui/add-to-contentList/selectors'
+} from 'common/store/ui/add-to-content-list/selectors'
 import Card from 'components/card/mobile/Card'
 import CardLineup from 'components/lineup/CardLineup'
 import MobilePageContainer from 'components/mobile-page-container/MobilePageContainer'
@@ -79,15 +79,15 @@ const AddToContentList = g(
     const cards = account.contentLists.map((contentList: any) => {
       return (
         <Card
-          key={contentList.contentList_id}
-          id={contentList.contentList_id}
+          key={contentList.content_list_id}
+          id={contentList.content_list_id}
           userId={contentList.owner_id}
           imageSize={contentList._cover_art_sizes}
-          primaryText={contentList.contentList_name}
+          primaryText={contentList.content_list_name}
           secondaryText={contentList.ownerName}
           onClick={() => {
             toast(messages.addedToast)
-            addAgreementToContentList(agreementId!, contentList.contentList_id)
+            addAgreementToContentList(agreementId!, contentList.content_list_id)
             close()
           }}
         />
@@ -96,7 +96,7 @@ const AddToContentList = g(
 
     const addToNewContentList = useCallback(() => {
       const metadata = newCollectionMetadata({
-        contentList_name: agreementTitle,
+        content_list_name: agreementTitle,
         is_private: false
       })
       const tempId = `${Date.now()}`

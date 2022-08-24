@@ -310,7 +310,7 @@ class Upload extends Component {
           break
         }
         case UploadType.CONTENT_LIST: {
-          const contentListName = upload.metadata.contentList_name
+          const contentListName = upload.metadata.content_list_name
           route = contentListPage(
             account.handle,
             contentListName,
@@ -320,7 +320,7 @@ class Upload extends Component {
           break
         }
         case UploadType.ALBUM: {
-          const albumName = upload.metadata.contentList_name
+          const albumName = upload.metadata.content_list_name
           route = albumPage(account.handle, albumName, upload.completionId)
           uploadType = 'album'
           break

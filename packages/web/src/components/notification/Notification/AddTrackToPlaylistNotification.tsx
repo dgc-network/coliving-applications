@@ -33,7 +33,7 @@ const messages = {
     agreement: Agreement,
     contentList: CollectionEntity
   ) =>
-    `My agreement ${agreement.title} was added to the contentList ${contentList.contentList_name} by ${handle} on @colivingproject! #Coliving`
+    `My agreement ${agreement.title} was added to the contentList ${contentList.content_list_name} by ${handle} on @colivingproject! #Coliving`
 }
 
 type AddAgreementToContentListNotificationProps = {

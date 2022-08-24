@@ -367,10 +367,10 @@ export function* updateProfileAsync(action) {
         /* asUrl */ false
       )
       const collectibles = metadata.collectibles
-      const contentList_library = metadata.contentList_library
+      const content_list_library = metadata.content_list_library
       metadata = merge(metadataFromIPFS, metadata)
       metadata.collectibles = collectibles
-      metadata.contentList_library = contentList_library
+      metadata.content_list_library = content_list_library
     } catch (e) {
       // Although we failed to fetch the existing user metadata, this should only
       // happen if the user's account data is unavailable across the whole network.

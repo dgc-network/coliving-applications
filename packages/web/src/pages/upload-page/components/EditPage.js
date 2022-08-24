@@ -39,7 +39,7 @@ class EditPage extends Component {
 
   getRequiredCollectionFields = (metadata) => {
     const fields = mapValues(metadata, (v) => false)
-    fields.contentList_name = true
+    fields.content_list_name = true
     fields.genre = true
     fields.artwork = true
     return fields
@@ -105,7 +105,7 @@ class EditPage extends Component {
   validateCollectionFields = (formFields) => {
     const newInvalidCollectionFields = {
       ...this.state.invalidCollectionFields,
-      contentList_name: !formFields.contentList_name,
+      content_list_name: !formFields.content_list_name,
       genre: !formFields.genre,
       artwork: !formFields.artwork.file
     }

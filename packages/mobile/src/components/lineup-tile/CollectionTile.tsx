@@ -112,26 +112,26 @@ const CollectionTileComponent = ({
     has_current_user_reposted,
     has_current_user_saved,
     is_album,
-    contentList_id,
-    contentList_name,
-    contentList_owner_id
+    content_list_id,
+    content_list_name,
+    content_list_owner_id
   } = collection
 
-  const isOwner = contentList_owner_id === currentUserId
+  const isOwner = content_list_owner_id === currentUserId
 
   const imageUrl = useCollectionCoverArt({
-    id: contentList_id,
+    id: content_list_id,
     sizes: _cover_art_sizes,
     size: SquareSizes.SIZE_150_BY_150
   })
 
   const routeWeb = useMemo(() => {
     return collection.is_album
-      ? albumPage(user.handle, collection.contentList_name, collection.contentList_id)
+      ? albumPage(user.handle, collection.content_list_name, collection.content_list_id)
       : contentListPage(
           user.handle,
-          collection.contentList_name,
-          collection.contentList_id
+          collection.content_list_name,
+          collection.content_list_id
         )
   }, [collection, user])
 
@@ -152,10 +152,10 @@ const CollectionTileComponent = ({
 
   const handlePressTitle = useCallback(() => {
     navigation.push({
-      native: { screen: 'Collection', params: { id: contentList_id } },
+      native: { screen: 'Collection', params: { id: content_list_id } },
       web: { route: routeWeb }
     })
-  }, [contentList_id, routeWeb, navigation])
+  }, [content_list_id, routeWeb, navigation])
 
   const duration = useMemo(() => {
     return agreements.reduce(
@@ -165,7 +165,7 @@ const CollectionTileComponent = ({
   }, [agreements])
 
   const handlePressOverflow = useCallback(() => {
-    if (contentList_id === undefined) {
+    if (content_list_id === undefined) {
       return
     }
     const overflowActions = [
@@ -186,12 +186,12 @@ const CollectionTileComponent = ({
     dispatchWeb(
       openOverflowMenu({
         source: OverflowSource.COLLECTIONS,
-        id: contentList_id,
+        id: content_list_id,
         overflowActions
       })
     )
   }, [
-    contentList_id,
+    content_list_id,
     dispatchWeb,
     isOwner,
     has_current_user_reposted,
@@ -200,39 +200,39 @@ const CollectionTileComponent = ({
   ])
 
   const handlePressShare = useCallback(() => {
-    if (contentList_id === undefined) {
+    if (content_list_id === undefined) {
       return
     }
     dispatchWeb(
       requestOpenShareModal({
         type: 'collection',
-        collectionId: contentList_id,
+        collectionId: content_list_id,
         source: ShareSource.TILE
       })
     )
-  }, [dispatchWeb, contentList_id])
+  }, [dispatchWeb, content_list_id])
 
   const handlePressSave = useCallback(() => {
-    if (contentList_id === undefined) {
+    if (content_list_id === undefined) {
       return
     }
     if (has_current_user_saved) {
-      dispatchWeb(unsaveCollection(contentList_id, FavoriteSource.TILE))
+      dispatchWeb(unsaveCollection(content_list_id, FavoriteSource.TILE))
     } else {
-      dispatchWeb(saveCollection(contentList_id, FavoriteSource.TILE))
+      dispatchWeb(saveCollection(content_list_id, FavoriteSource.TILE))
     }
-  }, [contentList_id, dispatchWeb, has_current_user_saved])
+  }, [content_list_id, dispatchWeb, has_current_user_saved])
 
   const handlePressRepost = useCallback(() => {
-    if (contentList_id === undefined) {
+    if (content_list_id === undefined) {
       return
     }
     if (has_current_user_reposted) {
-      dispatchWeb(undoRepostCollection(contentList_id, RepostSource.TILE))
+      dispatchWeb(undoRepostCollection(content_list_id, RepostSource.TILE))
     } else {
-      dispatchWeb(repostCollection(contentList_id, RepostSource.TILE))
+      dispatchWeb(repostCollection(content_list_id, RepostSource.TILE))
     }
-  }, [contentList_id, dispatchWeb, has_current_user_reposted])
+  }, [content_list_id, dispatchWeb, has_current_user_reposted])
 
   return (
     <LineupTile
@@ -240,7 +240,7 @@ const CollectionTileComponent = ({
       duration={duration}
       favoriteType={FavoriteType.CONTENT_LIST}
       repostType={RepostType.COLLECTION}
-      id={contentList_id}
+      id={content_list_id}
       imageUrl={imageUrl}
       isPlayingUid={isPlayingUid}
       onPress={handlePress}
@@ -249,7 +249,7 @@ const CollectionTileComponent = ({
       onPressSave={handlePressSave}
       onPressShare={handlePressShare}
       onPressTitle={handlePressTitle}
-      title={contentList_name}
+      title={content_list_name}
       item={collection}
       user={user}
     >

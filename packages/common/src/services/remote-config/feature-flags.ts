@@ -1,7 +1,7 @@
 /* FeatureFlags must be lowercase snake case */
 export enum FeatureFlags {
   SOLANA_LISTEN_ENABLED = 'solana_listen_enabled',
-  CONTENT_LIST_UPDATES_ENABLED = 'contentList_updates_enabled',
+  CONTENT_LIST_UPDATES_ENABLED = 'content_list_updates_enabled',
   SHARE_SOUND_TO_TIKTOK = 'share_sound_to_tiktok',
   CHALLENGE_REWARDS_UI = 'challenge_rewards_ui',
   SOL_WALLET_LIVE_ENABLED = 'sol_wallet_live_enabled',
@@ -9,7 +9,7 @@ export enum FeatureFlags {
   PREFER_HIGHER_PATCH_FOR_PRIMARY = 'prefer_higher_patch_for_primary',
   PREFER_HIGHER_PATCH_FOR_SECONDARIES = 'prefer_higher_patch_for_secondaries',
   ENABLE_SPL_LIVE = 'enable_spl_live',
-  CONTENT_LIST_FOLDERS = 'contentList_folders',
+  CONTENT_LIST_FOLDERS = 'content_list_folders',
   DISABLE_SIGN_UP_CONFIRMATION = 'disable_sign_up_confirmation',
   TIPPING_ENABLED = 'tipping_enabled',
   WRITE_QUORUM_ENABLED = 'write_quorum_enabled'

@@ -255,14 +255,14 @@ export const challengeRewardsConfig: Record<
       complete: linkButtonMap.sendFirstTip
     }
   },
-  'first-contentList': {
-    id: 'first-contentList' as ChallengeRewardID,
+  'first-content-list': {
+    id: 'first-content-list' as ChallengeRewardID,
     title: 'Create Your First ContentList',
     icon: <i className='emoji large sparkles' />,
     description: (challenge) => `Earn ${challenge?.amount} $LIVE`,
     fullDescription: () => 'Create your first contentList & add a agreement to it',
     progressLabel: 'Not Earned',
-    amount: amounts['first-contentList'],
+    amount: amounts['first-content-list'],
     panelButtonText: 'Create Your First ContentList',
     modalButtonInfo: {
       incomplete: linkButtonMap.firstContentList,
@@ -284,12 +284,12 @@ export const trendingRewardsConfig: Record<
   TrendingRewardID,
   TrendingRewardsInfo
 > = {
-  'trending-contentList': {
+  'trending-content-list': {
     title: 'Top 5 Trending ContentLists',
     icon: <i className='emoji large chart-increasing' />,
     description: 'Winners are selected every Friday at Noon PT!',
     buttonText: 'See More',
-    id: 'trending-contentList'
+    id: 'trending-content-list'
   },
   'trending-agreement': {
     title: 'Top 5 Trending Agreements',

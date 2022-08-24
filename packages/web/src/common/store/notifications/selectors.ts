@@ -126,7 +126,7 @@ export const getNotificationEntity = (
     const entity = getEntity(state, { id: notification.entityId })
     if (entity) {
       const userId =
-        'owner_id' in entity ? entity.owner_id : entity.contentList_owner_id
+        'owner_id' in entity ? entity.owner_id : entity.content_list_owner_id
       return {
         ...entity,
         user: getUser(state, { id: userId })
@@ -168,7 +168,7 @@ export const getNotificationEntities = <
       .map((entity: Agreement | Collection | null) => {
         if (entity) {
           const userId =
-            'owner_id' in entity ? entity.owner_id : entity.contentList_owner_id
+            'owner_id' in entity ? entity.owner_id : entity.content_list_owner_id
           return {
             ...entity,
             user: getUser(state, { id: userId })

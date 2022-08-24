@@ -128,7 +128,7 @@ const ExplorePage = ({
       >
         {justForYou.map((i) => {
           const title =
-            i.variant === CollectionVariant.SMART ? i.contentList_name : i.title
+            i.variant === CollectionVariant.SMART ? i.content_list_name : i.title
           const subtitle =
             i.variant === CollectionVariant.SMART ? i.description : i.subtitle
           const Icon = i.icon ? i.icon : Fragment
@@ -184,8 +184,8 @@ const ExplorePage = ({
           contentLists.map((contentList: UserCollection, i: number) => {
             return (
               <CollectionArtCard
-                key={contentList.contentList_id}
-                id={contentList.contentList_id}
+                key={contentList.content_list_id}
+                id={contentList.content_list_id}
                 index={i}
                 isLoading={isLoadingContentList(i)}
                 setDidLoad={setDidLoadContentList}

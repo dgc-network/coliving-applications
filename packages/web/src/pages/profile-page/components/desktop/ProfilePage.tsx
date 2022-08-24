@@ -266,25 +266,25 @@ const ProfilePage = ({
         key={index}
         size='medium'
         handle={profile.handle}
-        contentListName={album.contentList_name}
-        contentListId={album.contentList_id}
-        id={album.contentList_id}
-        userId={album.contentList_owner_id}
+        contentListName={album.content_list_name}
+        contentListId={album.content_list_id}
+        id={album.content_list_id}
+        userId={album.content_list_owner_id}
         isPublic={!album.is_private}
         imageSize={album._cover_art_sizes}
         isContentList={!album.is_album}
-        primaryText={album.contentList_name}
-        // link={fullAlbumPage(profile.handle, album.contentList_name, album.contentList_id)}
+        primaryText={album.content_list_name}
+        // link={fullAlbumPage(profile.handle, album.content_list_name, album.content_list_id)}
         secondaryText={formatCardSecondaryText(
           album.save_count,
-          album.contentList_contents.agreement_ids.length
+          album.content_list_contents.agreement_ids.length
         )}
         cardCoverImageSizes={album._cover_art_sizes}
         isReposted={album.has_current_user_reposted}
         isSaved={album.has_current_user_saved}
         onClick={() =>
           goToRoute(
-            albumPage(profile.handle, album.contentList_name, album.contentList_id)
+            albumPage(profile.handle, album.content_list_name, album.content_list_id)
           )
         }
       />
@@ -306,18 +306,18 @@ const ProfilePage = ({
         key={index}
         size='medium'
         handle={profile.handle}
-        contentListName={contentList.contentList_name}
-        contentListId={contentList.contentList_id}
-        id={contentList.contentList_id}
+        contentListName={contentList.content_list_name}
+        contentListId={contentList.content_list_id}
+        id={contentList.content_list_id}
         imageSize={contentList._cover_art_sizes}
-        userId={contentList.contentList_owner_id}
+        userId={contentList.content_list_owner_id}
         isPublic={!contentList.is_private}
         // isAlbum={contentList.is_album}
-        primaryText={contentList.contentList_name}
-        // link={fullContentListPage(profile.handle, contentList.contentList_name, contentList.contentList_id)}
+        primaryText={contentList.content_list_name}
+        // link={fullContentListPage(profile.handle, contentList.content_list_name, contentList.content_list_id)}
         secondaryText={formatCardSecondaryText(
           contentList.save_count,
-          contentList.contentList_contents.agreement_ids.length,
+          contentList.content_list_contents.agreement_ids.length,
           contentList.is_private
         )}
         cardCoverImageSizes={contentList._cover_art_sizes}
@@ -327,8 +327,8 @@ const ProfilePage = ({
           goToRoute(
             contentListPage(
               profile.handle,
-              contentList.contentList_name,
-              contentList.contentList_id
+              contentList.content_list_name,
+              contentList.content_list_id
             )
           )
         }
@@ -485,21 +485,21 @@ const ProfilePage = ({
       <Card
         key={index}
         size='medium'
-        id={contentList.contentList_id}
-        userId={contentList.contentList_owner_id}
+        id={contentList.content_list_id}
+        userId={contentList.content_list_owner_id}
         imageSize={contentList._cover_art_sizes}
         handle={profile.handle}
-        contentListId={contentList.contentList_id}
+        contentListId={contentList.content_list_id}
         isPublic={!contentList.is_private}
-        contentListName={contentList.contentList_name}
+        contentListName={contentList.content_list_name}
         // isAlbum={contentList.is_album}
-        primaryText={contentList.contentList_name}
+        primaryText={contentList.content_list_name}
         secondaryText={formatCardSecondaryText(
           contentList.save_count,
-          contentList.contentList_contents.agreement_ids.length,
+          contentList.content_list_contents.agreement_ids.length,
           contentList.is_private
         )}
-        // link={fullContentListPage(profile.handle, contentList.contentList_name, contentList.contentList_id)}
+        // link={fullContentListPage(profile.handle, contentList.content_list_name, contentList.content_list_id)}
         isReposted={contentList.has_current_user_reposted}
         isSaved={contentList.has_current_user_saved}
         cardCoverImageSizes={contentList._cover_art_sizes}
@@ -507,8 +507,8 @@ const ProfilePage = ({
           goToRoute(
             contentListPage(
               profile.handle,
-              contentList.contentList_name,
-              contentList.contentList_id
+              contentList.content_list_name,
+              contentList.content_list_id
             )
           )
         }

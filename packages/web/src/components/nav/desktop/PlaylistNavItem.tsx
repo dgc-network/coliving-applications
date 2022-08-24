@@ -24,7 +24,7 @@ type ContentListNavLinkProps = NavLinkProps & {
   onReorder: (
     draggingId: ID | SmartCollectionVariant | string,
     droppingId: ID | SmartCollectionVariant | string,
-    draggingKind: 'library-contentList' | 'contentList' | 'contentList-folder'
+    draggingKind: 'library-content-list' | 'contentList' | 'content-list-folder'
   ) => void
   link?: string
   isInsideFolder?: boolean
@@ -59,15 +59,15 @@ export const ContentListNavLink = ({
       stopPropogationOnDrop={true}
       acceptedKinds={
         isInsideFolder
-          ? ['library-contentList']
-          : ['library-contentList', 'contentList-folder']
+          ? ['library-content-list']
+          : ['library-content-list', 'content-list-folder']
       }
     >
       <Draggable
         id={contentListId}
         text={name}
         link={link}
-        kind='library-contentList'
+        kind='library-content-list'
         onDrag={onDrag}
         onDrop={onDrop}
       >
@@ -93,7 +93,7 @@ type ContentListNavItemProps = {
   onReorder: (
     draggingId: ID | SmartCollectionVariant | string,
     droppingId: ID | SmartCollectionVariant | string,
-    draggingKind: 'library-contentList' | 'contentList' | 'contentList-folder'
+    draggingKind: 'library-content-list' | 'contentList' | 'content-list-folder'
   ) => void
   hasUpdate?: boolean
   dragging: boolean
@@ -147,7 +147,7 @@ export const ContentListNavItem = ({
             dragging &&
             ((draggingKind !== 'agreement' &&
               draggingKind !== 'contentList' &&
-              draggingKind !== 'library-contentList') ||
+              draggingKind !== 'library-content-list') ||
               !isOwner)
         })}
         onClick={() => onClickContentList(id, hasUpdate)}

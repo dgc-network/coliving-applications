@@ -182,18 +182,18 @@ const AlbumCardLineup = ({
   const albumCards = filteredAlbums.map((album) => {
     return (
       <Card
-        key={album.contentList_id}
-        id={album.contentList_id}
-        userId={album.contentList_owner_id}
+        key={album.content_list_id}
+        id={album.content_list_id}
+        userId={album.content_list_owner_id}
         imageSize={album._cover_art_sizes}
-        primaryText={album.contentList_name}
+        primaryText={album.content_list_name}
         secondaryText={formatCardSecondaryText(
           album.save_count,
-          album.contentList_contents.agreement_ids.length
+          album.content_list_contents.agreement_ids.length
         )}
         onClick={() =>
           goToRoute(
-            albumPage(album.ownerHandle, album.contentList_name, album.contentList_id)
+            albumPage(album.ownerHandle, album.content_list_name, album.content_list_id)
           )
         }
       />
@@ -267,30 +267,30 @@ const ContentListCardLineup = ({
 
   const filteredContentLists = getFilteredContentLists(contentLists || [])
   const contentListCards = filteredContentLists.map((contentList) => {
-    const hasUpdate = contentListUpdates.includes(contentList.contentList_id)
+    const hasUpdate = contentListUpdates.includes(contentList.content_list_id)
     return (
       <Card
-        key={contentList.contentList_id}
-        id={contentList.contentList_id}
-        userId={contentList.contentList_owner_id}
+        key={contentList.content_list_id}
+        id={contentList.content_list_id}
+        userId={contentList.content_list_owner_id}
         imageSize={contentList._cover_art_sizes}
-        primaryText={contentList.contentList_name}
+        primaryText={contentList.content_list_name}
         secondaryText={formatCardSecondaryText(
           contentList.save_count,
-          contentList.contentList_contents.agreement_ids.length
+          contentList.content_list_contents.agreement_ids.length
         )}
         onClick={() => {
           goToRoute(
             contentListPage(
               contentList.ownerHandle,
-              contentList.contentList_name,
-              contentList.contentList_id
+              contentList.content_list_name,
+              contentList.content_list_id
             )
           )
-          updateContentListLastViewedAt(contentList.contentList_id)
+          updateContentListLastViewedAt(contentList.content_list_id)
           record(
             make(Name.CONTENT_LIST_LIBRARY_CLICKED, {
-              contentListId: contentList.contentList_id,
+              contentListId: contentList.content_list_id,
               hasUpdate
             })
           )

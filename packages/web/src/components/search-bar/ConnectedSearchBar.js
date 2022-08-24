@@ -95,19 +95,19 @@ class ConnectedSearchBar extends Component {
         (p) =>
           value ===
           (p.user
-            ? contentListPage(p.user.handle, p.contentList_name, p.contentList_id)
+            ? contentListPage(p.user.handle, p.content_list_name, p.content_list_id)
             : '')
       )
       if (selectedContentList)
-        return { kind: 'contentList', id: selectedContentList.contentList_id }
+        return { kind: 'contentList', id: selectedContentList.content_list_id }
       const selectedAlbum = this.props.search.albums.find(
         (a) =>
           value ===
           (a.user
-            ? albumPage(a.user.handle, a.contentList_name, a.contentList_id)
+            ? albumPage(a.user.handle, a.content_list_name, a.content_list_id)
             : '')
       )
-      if (selectedAlbum) return { kind: 'album', id: selectedAlbum.contentList_id }
+      if (selectedAlbum) return { kind: 'album', id: selectedAlbum.content_list_id }
       return {}
     })()
     this.props.recordSearchResultClick({
@@ -168,17 +168,17 @@ class ConnectedSearchBar extends Component {
           title: 'ContentLists',
           children: this.props.search.contentLists.map((contentList) => {
             return {
-              primary: contentList.contentList_name,
+              primary: contentList.content_list_name,
               secondary: contentList.user ? contentList.user.name : '',
               key: contentList.user
                 ? contentListPage(
                     contentList.user.handle,
-                    contentList.contentList_name,
-                    contentList.contentList_id
+                    contentList.content_list_name,
+                    contentList.content_list_id
                   )
                 : '',
-              id: contentList.contentList_id,
-              userId: contentList.contentList_owner_id,
+              id: contentList.content_list_id,
+              userId: contentList.content_list_owner_id,
               imageMultihash: contentList.cover_art_sizes || contentList.cover_art,
               size: contentList.cover_art_sizes
                 ? SquareSizes.SIZE_150_BY_150
@@ -199,14 +199,14 @@ class ConnectedSearchBar extends Component {
               key: album.user
                 ? albumPage(
                     album.user.handle,
-                    album.contentList_name,
-                    album.contentList_id
+                    album.content_list_name,
+                    album.content_list_id
                   )
                 : '',
-              primary: album.contentList_name,
+              primary: album.content_list_name,
               secondary: album.user ? album.user.name : '',
-              id: album.contentList_id,
-              userId: album.contentList_owner_id,
+              id: album.content_list_id,
+              userId: album.content_list_owner_id,
               imageMultihash: album.cover_art_sizes || album.cover_art,
               size: album.cover_art_sizes ? SquareSizes.SIZE_150_BY_150 : null,
               defaultImage: placeholderArt,

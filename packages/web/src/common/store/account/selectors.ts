@@ -59,7 +59,7 @@ export const getAccountProfilePictureSizes = (state: CommonState) => {
   return user ? user._profile_picture_sizes : null
 }
 export const getContentListLibrary = (state: CommonState) => {
-  return getAccountUser(state)?.contentList_library ?? null
+  return getAccountUser(state)?.content_list_library ?? null
 }
 
 /**
@@ -154,7 +154,7 @@ export const getAccountWithOwnContentLists = createSelector(
     return {
       ...account,
       contentLists: account.collections.filter(
-        (c) => account && !c.is_album && account.user_id === c.contentList_owner_id
+        (c) => account && !c.is_album && account.user_id === c.content_list_owner_id
       )
     }
   }

@@ -45,7 +45,7 @@ import {
 import {
   addFolderToLibrary,
   constructContentListFolder
-} from 'common/store/contentList-library/helpers'
+} from 'common/store/content-list-library/helpers'
 import { makeGetCurrent } from 'common/store/queue/selectors'
 import { saveCollection } from 'common/store/social/collections/actions'
 import { saveAgreement } from 'common/store/social/agreements/actions'
@@ -54,7 +54,7 @@ import {
   getHideFolderTab,
   getIsOpen
 } from 'common/store/ui/createContentListModal/selectors'
-import CreateContentListModal from 'components/create-contentList/CreateContentListModal'
+import CreateContentListModal from 'components/create-content-list/CreateContentListModal'
 import { DragAutoscroller } from 'components/drag-autoscroller/DragAutoscroller'
 import Droppable from 'components/dragndrop/Droppable'
 import DynamicImage from 'components/dynamic-image/DynamicImage'
@@ -74,7 +74,7 @@ import { openVisualizer } from 'pages/visualizer/store/slice'
 import { make, useRecord } from 'store/analytics/actions'
 import { getIsDragging } from 'store/dragndrop/selectors'
 import { makeGetCurrent as makeGetCurrentPlayer } from 'store/player/selectors'
-import { update as updateContentListLibrary } from 'store/contentList-library/slice'
+import { update as updateContentListLibrary } from 'store/content-list-library/slice'
 import { AppState } from 'store/types'
 import {
   DASHBOARD_PAGE,
@@ -186,7 +186,7 @@ const NavColumn = ({
       createContentList(tempId, metadata)
       closeCreateContentListModal()
       if (account) {
-        goToRoute(contentListPage(account.handle, metadata.contentList_name, tempId))
+        goToRoute(contentListPage(account.handle, metadata.content_list_name, tempId))
       }
     },
     [account, createContentList, closeCreateContentListModal, goToRoute]

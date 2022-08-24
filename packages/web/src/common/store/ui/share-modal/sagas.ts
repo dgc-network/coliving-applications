@@ -38,7 +38,7 @@ function* handleRequestOpen(action: RequestOpenAction) {
       const { collectionId, source } = action.payload
       const collection = yield* select(getCollection(collectionId))
       if (!collection) return
-      const owner = yield* select(getUser(collection.contentList_owner_id))
+      const owner = yield* select(getUser(collection.content_list_owner_id))
       if (!owner) return
       if (collection.is_album) {
         yield put(

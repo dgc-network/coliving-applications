@@ -29,16 +29,16 @@ export type CollectionMetadata = {
   is_album: boolean
   is_delete: boolean
   is_private: boolean
-  contentList_contents: {
+  content_list_contents: {
     agreement_ids: Array<{ time: number; agreement: ID; uid?: UID }>
   }
   agreements?: UserAgreementMetadata[]
   agreement_count: number
-  contentList_id: ID
+  content_list_id: ID
   cover_art: CID | null
   cover_art_sizes: Nullable<CID>
-  contentList_name: string
-  contentList_owner_id: ID
+  content_list_name: string
+  content_list_owner_id: ID
   repost_count: number
   save_count: number
   upc?: string | null
@@ -64,7 +64,7 @@ export type UserCollection = Collection & {
 
 export type SmartCollection = {
   variant: Variant.SMART
-  contentList_name: string
+  content_list_name: string
   description?: string
   makeDescription?: (...args: any) => string
   // Where this type of contentList is given a different classification
@@ -75,7 +75,7 @@ export type SmartCollection = {
   shadow?: string
   icon?: ReactNode
   link: string
-  contentList_contents?: ContentListContents
+  content_list_contents?: ContentListContents
   has_current_user_saved?: boolean
   incentivized?: boolean // Whether we reward winners with Audio
   cardSensitivity?: number

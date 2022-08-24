@@ -46,7 +46,7 @@ export const makeUser = (
   const album_count = 'album_count' in user ? user.album_count : 0
   const followee_count = 'followee_count' in user ? user.followee_count : 0
   const follower_count = 'follower_count' in user ? user.follower_count : 0
-  const contentList_count = 'contentList_count' in user ? user.contentList_count : 0
+  const content_list_count = 'content_list_count' in user ? user.content_list_count : 0
   const repost_count = 'repost_count' in user ? user.repost_count : 0
   const agreement_count = 'agreement_count' in user ? user.agreement_count : 0
   const current_user_followee_follow_count =
@@ -65,7 +65,7 @@ export const makeUser = (
     album_count,
     followee_count,
     follower_count,
-    contentList_count,
+    content_list_count,
     repost_count,
     agreement_count,
     current_user_followee_follow_count,
@@ -332,8 +332,8 @@ export const makeContentList = (
     variant: Variant.USER_GENERATED,
     user,
     agreements,
-    contentList_id: decodedContentListId,
-    contentList_owner_id: decodedOwnerId,
+    content_list_id: decodedContentListId,
+    content_list_owner_id: decodedOwnerId,
     followee_saves: saves,
     followee_reposts: reposts,
     has_current_user_reposted,
@@ -342,7 +342,7 @@ export const makeContentList = (
     repost_count,
     agreement_count,
     total_play_count,
-    contentList_contents: contentListContents,
+    content_list_contents: contentListContents,
 
     // Fields to prune
     id: undefined,
@@ -442,8 +442,8 @@ export const adaptSearchResponse = (searchResponse: APIResponse<APISearch>) => {
     contentLists:
       searchResponse.data.contentLists?.map(makeContentList).filter(removeNullable) ??
       undefined,
-    saved_contentLists:
-      searchResponse.data.saved_contentLists
+    saved_content_lists:
+      searchResponse.data.saved_content_lists
         ?.map(makeContentList)
         .filter(removeNullable) ?? undefined,
     albums:
@@ -476,8 +476,8 @@ export const adaptSearchAutocompleteResponse = (
     contentLists:
       searchResponse.data.contentLists?.map(makeContentList).filter(removeNullable) ??
       undefined,
-    saved_contentLists:
-      searchResponse.data.saved_contentLists
+    saved_content_lists:
+      searchResponse.data.saved_content_lists
         ?.map(makeContentList)
         .filter(removeNullable) ?? undefined,
     albums:

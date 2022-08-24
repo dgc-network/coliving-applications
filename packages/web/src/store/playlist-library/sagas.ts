@@ -31,7 +31,7 @@ import {
   getContentListsNotInLibrary,
   removeContentListLibraryDuplicates,
   replaceTempWithResolvedContentLists
-} from 'common/store/contentList-library/helpers'
+} from 'common/store/content-list-library/helpers'
 import { updateProfileAsync } from 'pages/profile-page/sagas'
 import { waitForBackendSetup } from 'store/backend/sagas'
 import { getResult } from 'store/confirmer/selectors'
@@ -49,12 +49,12 @@ const TEMP_CONTENT_LIST_UPDATE_HELPER = 'TEMP_CONTENT_LIST_UPDATE_HELPER'
 function* resolveTempContentLists(
   contentList: ContentListLibraryIdentifier | ContentListLibraryFolder
 ) {
-  if (contentList.type === 'temp_contentList') {
-    const { contentList_id }: { contentList_id: ID } = yield call(
+  if (contentList.type === 'temp_content_list') {
+    const { content_list_id }: { content_list_id: ID } = yield call(
       waitForValue,
       getResult,
       {
-        uid: makeKindId(Kind.COLLECTIONS, contentList.contentList_id),
+        uid: makeKindId(Kind.COLLECTIONS, contentList.content_list_id),
         index: 0
       },
       // The contentList has been created
@@ -62,7 +62,7 @@ function* resolveTempContentLists(
     )
     return {
       type: 'contentList',
-      contentList_id
+      content_list_id
     }
   }
   return contentList
@@ -76,7 +76,7 @@ function* watchUpdateContentListLibrary() {
       yield call(waitForBackendSetup)
 
       const account: User = yield select(getAccountUser)
-      account.contentList_library =
+      account.content_list_library =
         removeContentListLibraryDuplicates(contentListLibrary)
       yield put(
         cacheActions.update(Kind.USERS, [
@@ -128,7 +128,7 @@ function* watchUpdateContentListLibraryWithTempContentList() {
       const tempContentListIdToResolvedContentList = tempContentLists.reduce(
         (result, nextTempContentList, index) => ({
           ...result,
-          [nextTempContentList.contentList_id]: resolvedContentLists[index]
+          [nextTempContentList.content_list_id]: resolvedContentLists[index]
         }),
         {} as { [key: string]: ContentListLibraryIdentifier }
       )
@@ -137,7 +137,7 @@ function* watchUpdateContentListLibraryWithTempContentList() {
         contentListLibrary,
         tempContentListIdToResolvedContentList
       ).contents
-      account.contentList_library = contentListLibrary
+      account.content_list_library = contentListLibrary
       // Update contentList library on chain via an account profile update
       yield call(updateProfileAsync, { metadata: account })
     }
@@ -159,7 +159,7 @@ export function* addContentListsNotInLibrary() {
     const newEntries = Object.values(notInLibrary).map(
       (contentList) =>
         ({
-          contentList_id: contentList.id,
+          content_list_id: contentList.id,
           type: 'contentList'
         } as ContentListIdentifier)
     )

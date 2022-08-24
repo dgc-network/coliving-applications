@@ -4,15 +4,15 @@ export const computeCollectionMetadataProps = (
   metadata: Collection | SmartCollection | null
 ) => {
   const agreementCount =
-    metadata && metadata.contentList_contents
-      ? metadata.contentList_contents.agreement_ids.length
+    metadata && metadata.content_list_contents
+      ? metadata.content_list_contents.agreement_ids.length
       : 0
   const isEmpty = metadata && agreementCount === 0
   const lastModified =
     metadata && metadata.variant !== Variant.SMART
       ? metadata.updated_at || Date.now()
       : ''
-  const contentListName = metadata ? metadata.contentList_name : ''
+  const contentListName = metadata ? metadata.content_list_name : ''
   const description =
     metadata && metadata.description ? metadata.description : ''
   const isPrivate =

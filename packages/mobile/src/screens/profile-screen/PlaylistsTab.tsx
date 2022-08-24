@@ -12,7 +12,7 @@ export const ContentListsTab = () => {
 
   return (
     <CollectionList
-      listKey='profile-contentLists'
+      listKey='profile-content-lists'
       collection={contentLists}
       emptyListText={emptyListText}
       disableTopTabScroll

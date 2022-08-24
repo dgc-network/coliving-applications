@@ -43,7 +43,7 @@ type ProcessSearchResultsArgs = {
   users?: UserMetadata[]
   saved_agreements?: UserAgreementMetadata[]
   saved_albums?: UserCollectionMetadata[]
-  saved_contentLists?: UserCollectionMetadata[]
+  saved_content_lists?: UserCollectionMetadata[]
   followed_users?: UserMetadata[]
   searchText?: string | null
   isAutocomplete?: boolean
@@ -70,8 +70,8 @@ export const adaptSearchResponse = (searchResponse: APIResponse<APISearch>) => {
       searchResponse.data.contentLists
         ?.map(adapter.makeContentList)
         .filter(removeNullable) ?? undefined,
-    saved_contentLists:
-      searchResponse.data.saved_contentLists
+    saved_content_lists:
+      searchResponse.data.saved_content_lists
         ?.map(adapter.makeContentList)
         .filter(removeNullable) ?? undefined,
     albums:
@@ -91,7 +91,7 @@ export const processSearchResults = async ({
   users = [],
   saved_agreements: savedAgreements = [],
   saved_albums: savedAlbums = [],
-  saved_contentLists: savedContentLists = [],
+  saved_content_lists: savedContentLists = [],
   followed_users: followedUsers = [],
   isAutocomplete = false
 }: ProcessSearchResultsArgs) => {
@@ -111,14 +111,14 @@ export const processSearchResults = async ({
   const combinedAlbums = combineLists(
     savedAlbums,
     albums,
-    'contentList_id',
+    'content_list_id',
     maxSaved,
     maxTotal
   )
   const combinedContentLists = combineLists(
     savedContentLists,
     contentLists,
-    'contentList_id',
+    'content_list_id',
     maxSaved,
     maxTotal
   )

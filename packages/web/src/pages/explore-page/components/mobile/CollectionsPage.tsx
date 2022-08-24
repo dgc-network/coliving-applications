@@ -37,32 +37,32 @@ const ExplorePage = ({
   const contentListCards = collections.map((contentList: UserCollection) => {
     return (
       <Card
-        key={contentList.contentList_id}
-        id={contentList.contentList_id}
-        userId={contentList.contentList_owner_id}
+        key={contentList.content_list_id}
+        id={contentList.content_list_id}
+        userId={contentList.content_list_owner_id}
         imageSize={contentList._cover_art_sizes}
-        primaryText={contentList.contentList_name}
+        primaryText={contentList.content_list_name}
         secondaryText={contentList.user.name}
-        agreementCount={contentList.contentList_contents.agreement_ids.length}
+        agreementCount={contentList.content_list_contents.agreement_ids.length}
         reposts={contentList.repost_count}
         favorites={contentList.save_count}
         isContentList={!contentList.is_album}
-        onClickReposts={() => onClickReposts(contentList.contentList_id)}
-        onClickFavorites={() => onClickFavorites(contentList.contentList_id)}
+        onClickReposts={() => onClickReposts(contentList.content_list_id)}
+        onClickFavorites={() => onClickFavorites(contentList.content_list_id)}
         onClick={() =>
           contentList.is_album
             ? goToRoute(
                 albumPage(
                   contentList.user.handle,
-                  contentList.contentList_name,
-                  contentList.contentList_id
+                  contentList.content_list_name,
+                  contentList.content_list_id
                 )
               )
             : goToRoute(
                 contentListPage(
                   contentList.user.handle,
-                  contentList.contentList_name,
-                  contentList.contentList_id
+                  contentList.content_list_name,
+                  contentList.content_list_id
                 )
               )
         }

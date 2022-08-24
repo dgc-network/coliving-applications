@@ -23,7 +23,7 @@ const messages = {
 }
 
 type ContentListValues = {
-  contentList_name: string
+  content_list_name: string
   description: string
   artwork: { url: string }
 }
@@ -46,13 +46,13 @@ const CreateContentListForm = (props: FormikProps<ContentListValues>) => {
 }
 
 const initialValues: ContentListValues = {
-  contentList_name: '',
+  content_list_name: '',
   description: '',
   artwork: { url: '' }
 }
 
 const initialErrors = {
-  contentList_name: 'Required'
+  content_list_name: 'Required'
 }
 
 export const CreateContentListScreen = () => {
@@ -69,7 +69,7 @@ export const CreateContentListScreen = () => {
       )
       navigation.replace({
         native: { screen: 'Collection', params: { id: parseInt(tempId, 10) } },
-        web: { route: contentListPage(handle, values.contentList_name, tempId) }
+        web: { route: contentListPage(handle, values.content_list_name, tempId) }
       })
       toast({ content: messages.contentListCreatedToast })
     },

@@ -13,7 +13,7 @@ export type LineupItem = {
   id: ID
   kind: Kind
   agreement_id?: ID
-  contentList_id?: ID
+  content_list_id?: ID
   uid: UID
   _marked_deleted?: boolean
   activityTimestamp?: Maybe<number | string>

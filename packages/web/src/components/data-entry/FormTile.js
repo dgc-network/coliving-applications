@@ -90,24 +90,24 @@ const BasicForm = (props) => {
               } Name`}
               defaultValue={
                 props.isContentList
-                  ? props.defaultFields.contentList_name
+                  ? props.defaultFields.content_list_name
                   : props.defaultFields.title
               }
               isRequired={
                 props.isContentList
-                  ? props.requiredFields.contentList_name
+                  ? props.requiredFields.content_list_name
                   : props.requiredFields.title
               }
               characterLimit={64}
               error={
                 props.isContentList
-                  ? props.invalidFields.contentList_name
+                  ? props.invalidFields.content_list_name
                   : props.invalidFields.title
               }
               variant={'elevatedPlaceholder'}
               onChange={(value) =>
                 props.onChangeField(
-                  props.isContentList ? 'contentList_name' : 'title',
+                  props.isContentList ? 'content_list_name' : 'title',
                   value
                 )
               }

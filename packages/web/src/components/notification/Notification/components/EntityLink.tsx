@@ -46,7 +46,7 @@ export const useGoToEntity = (
 
 export const EntityLink = (props: EntityLinkProps) => {
   const { entity, entityType } = props
-  const title = 'contentList_id' in entity ? entity.contentList_name : entity.title
+  const title = 'content_list_id' in entity ? entity.content_list_name : entity.title
 
   const handleClick = useGoToEntity(entity, entityType)
 

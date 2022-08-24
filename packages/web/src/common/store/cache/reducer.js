@@ -65,7 +65,7 @@ const forceUpdateKeys = new Set([
 
 // Customize lodash recursive merge to never merge
 // the forceUpdateKeys, and special-case
-// contentList_contents
+// content_list_contents
 export const mergeCustomizer = (objValue, srcValue, key) => {
   if (forceUpdateKeys.has(key)) {
     return srcValue
@@ -79,11 +79,11 @@ export const mergeCustomizer = (objValue, srcValue, key) => {
     return objValue
   }
 
-  // For contentList_contents, this is trickier.
+  // For content_list_contents, this is trickier.
   // We want to never merge because contentLists can have
   // agreements be deleted since last time, but
   // new fetches won't have UIDs, so we need to preserve those.
-  if (objValue && key === 'contentList_contents') {
+  if (objValue && key === 'content_list_contents') {
     // Map out agreements keyed by id, but store as an array-value
     // because a contentList can contain multiple of the same agreement id
     const agreementMap = {}

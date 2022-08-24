@@ -142,8 +142,8 @@ const ExplorePage = ({
       if (t.variant === CollectionVariant.SMART) {
         return (
           <ColorTile
-            key={t.contentList_name}
-            title={t.contentList_name}
+            key={t.content_list_name}
+            title={t.content_list_name}
             link={t.link}
             description={t.description}
             gradient={t.gradient}
@@ -198,29 +198,29 @@ const ExplorePage = ({
     contentListCards = contentLists.map((contentList: UserCollection) => {
       return (
         <Card
-          key={contentList.contentList_id}
-          id={contentList.contentList_id}
-          userId={contentList.contentList_owner_id}
+          key={contentList.content_list_id}
+          id={contentList.content_list_id}
+          userId={contentList.content_list_owner_id}
           imageSize={contentList._cover_art_sizes}
-          primaryText={contentList.contentList_name}
+          primaryText={contentList.content_list_name}
           secondaryText={formatContentListCardSecondaryText(
             contentList.save_count,
-            contentList.contentList_contents.agreement_ids.length
+            contentList.content_list_contents.agreement_ids.length
           )}
           onClick={() =>
             contentList.is_album
               ? goToRoute(
                   albumPage(
                     contentList.user.handle,
-                    contentList.contentList_name,
-                    contentList.contentList_id
+                    contentList.content_list_name,
+                    contentList.content_list_id
                   )
                 )
               : goToRoute(
                   contentListPage(
                     contentList.user.handle,
-                    contentList.contentList_name,
-                    contentList.contentList_id
+                    contentList.content_list_name,
+                    contentList.content_list_id
                   )
                 )
           }

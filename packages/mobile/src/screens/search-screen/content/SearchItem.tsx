@@ -180,13 +180,13 @@ const ContentListSearchResult = ({
   const { appendSearchItem } = useSearchHistory()
 
   const handlePress = useCallback(() => {
-    appendSearchItem(contentList.contentList_name)
+    appendSearchItem(contentList.content_list_name)
     const collectionRoute = getCollectionRoute(contentList as any)
     dispatch(closeSearch())
     navigation.push({
       native: {
         screen: 'Collection',
-        params: { id: contentList.contentList_id, searchCollection: contentList }
+        params: { id: contentList.content_list_id, searchCollection: contentList }
       },
       web: { route: collectionRoute, fromPage: 'search' }
     })
@@ -201,7 +201,7 @@ const ContentListSearchResult = ({
       />
       <View style={styles.nameContainer}>
         <Text numberOfLines={1} style={nameStyle}>
-          {contentList.contentList_name}
+          {contentList.content_list_name}
         </Text>
         <UserBadges
           style={styles.badgeContainer}
@@ -226,13 +226,13 @@ const AlbumSearchResult = ({ isLast, item: album }: AlbumSearchResultProps) => {
   const { appendSearchItem } = useSearchHistory()
 
   const handlePress = useCallback(() => {
-    appendSearchItem(album.contentList_name)
+    appendSearchItem(album.content_list_name)
     const collectionRoute = getCollectionRoute(album as any)
     dispatch(closeSearch())
     navigation.push({
       native: {
         screen: 'Collection',
-        params: { id: album.contentList_id, searchCollection: album }
+        params: { id: album.content_list_id, searchCollection: album }
       },
       web: { route: collectionRoute, fromPage: 'search' }
     })
@@ -247,7 +247,7 @@ const AlbumSearchResult = ({ isLast, item: album }: AlbumSearchResultProps) => {
       />
       <View style={styles.nameContainer}>
         <Text numberOfLines={1} style={nameStyle}>
-          {album.contentList_name}
+          {album.content_list_name}
         </Text>
         <UserBadges
           style={styles.badgeContainer}

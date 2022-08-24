@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { useModalState } from 'common/hooks/useModalState'
 import { deleteContentList } from 'common/store/cache/collections/actions'
-import { getContentListId } from 'common/store/ui/delete-contentList-confirmation-modal/selectors'
+import { getContentListId } from 'common/store/ui/delete-content-list-confirmation-modal/selectors'
 import ActionSheetModal from 'components/action-drawer/ActionDrawer'
 import { RouterContext } from 'components/animated-switch/RouterContextProvider'
 import { TRENDING_PAGE } from 'utils/route'

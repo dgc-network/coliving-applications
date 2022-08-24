@@ -67,7 +67,7 @@ function* watchFetch() {
       /* shouldRetrieveAgreements= */ false
     )
 
-    const collectionIds = collections.map((c: Collection) => c.contentList_id)
+    const collectionIds = collections.map((c: Collection) => c.content_list_id)
 
     yield* put(
       fetchSucceeded({

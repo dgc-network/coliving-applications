@@ -220,7 +220,7 @@ class CollectionPage extends Component<
       if (
         params &&
         params.collectionId === this.state.contentListId &&
-        metadata?.contentList_owner_id !== this.props.userId
+        metadata?.content_list_owner_id !== this.props.userId
       ) {
         // Only route to not found page if still on the collection page and
         // it is erroring on the correct contentListId
@@ -243,7 +243,7 @@ class CollectionPage extends Component<
       // TODO: Put fetch collection succeeded and then replace route
       fetchCollectionSucceeded(collectionId, metadata._moved, userUid)
       const newPath = pathname.replace(
-        `${metadata.contentList_id}`,
+        `${metadata.content_list_id}`,
         collectionId.toString()
       )
       this.setState(
@@ -266,21 +266,21 @@ class CollectionPage extends Component<
       const params = parseCollectionRoute(pathname)
       if (params) {
         const { collectionId, title, collectionType, handle } = params
-        const newCollectionName = formatUrlName(metadata.contentList_name)
+        const newCollectionName = formatUrlName(metadata.content_list_name)
 
         const routeLacksCollectionInfo =
           (title === null || handle === null || collectionType === null) && user
         if (routeLacksCollectionInfo) {
           // Check if we are coming from a non-canonical route and replace route if necessary.
           const newPath = metadata.is_album
-            ? albumPage(user!.handle, metadata.contentList_name, collectionId)
-            : contentListPage(user!.handle, metadata.contentList_name, collectionId)
+            ? albumPage(user!.handle, metadata.content_list_name, collectionId)
+            : contentListPage(user!.handle, metadata.content_list_name, collectionId)
           this.props.replaceRoute(newPath)
         } else {
           // Id matches or temp id matches
           const idMatches =
-            collectionId === metadata.contentList_id ||
-            (metadata._temp && `${collectionId}` === `${metadata.contentList_id}`)
+            collectionId === metadata.content_list_id ||
+            (metadata._temp && `${collectionId}` === `${metadata.content_list_id}`)
           // Check that the contentList name hasn't changed. If so, update url.
           if (idMatches && title) {
             if (newCollectionName !== title) {
@@ -297,8 +297,8 @@ class CollectionPage extends Component<
       metadata &&
       prevMetadata &&
       !this.playListContentsEqual(
-        metadata.contentList_contents.agreement_ids,
-        prevMetadata.contentList_contents.agreement_ids
+        metadata.content_list_contents.agreement_ids,
+        prevMetadata.content_list_contents.agreement_ids
       )
     ) {
       this.props.fetchAgreements()
@@ -348,7 +348,7 @@ class CollectionPage extends Component<
 
     if (
       this.props.smartCollection &&
-      this.props.smartCollection.contentList_contents
+      this.props.smartCollection.content_list_contents
     ) {
       this.props.fetchAgreements()
     }
@@ -639,7 +639,7 @@ class CollectionPage extends Component<
       (smartCollection && smartCollection.has_current_user_saved)
 
     if (smartCollection && metadata) {
-      this.onSaveSmartCollection(!!isSaved, metadata.contentList_name)
+      this.onSaveSmartCollection(!!isSaved, metadata.content_list_name)
     } else {
       this.onSaveContentList(!!isSaved, contentListId!)
     }
@@ -663,10 +663,10 @@ class CollectionPage extends Component<
     } = this.props
     if (!metadata) return
     if (isMobile) {
-      setRepostContentListId(metadata.contentList_id)
+      setRepostContentListId(metadata.content_list_id)
       goToRoute(REPOSTING_USERS_ROUTE)
     } else {
-      setRepostUsers(metadata.contentList_id)
+      setRepostUsers(metadata.content_list_id)
       setModalVisibility()
     }
   }
@@ -682,22 +682,22 @@ class CollectionPage extends Component<
     } = this.props
     if (!metadata) return
     if (isMobile) {
-      setFavoriteContentListId(metadata.contentList_id)
+      setFavoriteContentListId(metadata.content_list_id)
       goToRoute(FAVORITING_USERS_ROUTE)
     } else {
-      setFavoriteUsers(metadata.contentList_id)
+      setFavoriteUsers(metadata.content_list_id)
       setModalVisibility()
     }
   }
 
   onFollow = () => {
     const { onFollow, collection: metadata } = this.props
-    if (metadata) onFollow(metadata.contentList_owner_id)
+    if (metadata) onFollow(metadata.content_list_owner_id)
   }
 
   onUnfollow = () => {
     const { onUnfollow, collection: metadata } = this.props
-    if (metadata) onUnfollow(metadata.contentList_owner_id)
+    if (metadata) onUnfollow(metadata.content_list_owner_id)
   }
 
   render() {
@@ -715,14 +715,14 @@ class CollectionPage extends Component<
 
     const { contentListId, allowReordering } = this.state
 
-    const title = metadata?.contentList_name ?? ''
+    const title = metadata?.content_list_name ?? ''
     const description = metadata?.description ?? ''
     const canonicalUrl =
       user && metadata
         ? fullContentListPage(
             user?.handle,
-            metadata?.contentList_name,
-            metadata?.contentList_id
+            metadata?.content_list_name,
+            metadata?.content_list_id
           )
         : ''
 

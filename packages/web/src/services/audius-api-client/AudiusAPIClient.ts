@@ -406,7 +406,7 @@ const emptySearchResponse: APIResponse<APISearch> = {
     agreements: [],
     saved_agreements: [],
     contentLists: [],
-    saved_contentLists: [],
+    saved_content_lists: [],
     saved_albums: [],
     albums: []
   }

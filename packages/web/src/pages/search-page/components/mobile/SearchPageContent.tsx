@@ -244,14 +244,14 @@ const CardSearchPage = ({
               cardType === CardType.ALBUM ? albumPage : contentListPage
             const collection = e as UserCollection
             return {
-              userId: collection.contentList_owner_id,
-              id: collection.contentList_id,
+              userId: collection.content_list_owner_id,
+              id: collection.content_list_id,
               route: routeFunc(
                 collection.user.handle,
-                collection.contentList_name,
-                collection.contentList_id
+                collection.content_list_name,
+                collection.content_list_id
               ),
-              primaryText: collection.contentList_name,
+              primaryText: collection.content_list_name,
               secondaryText: collection.user.handle,
               imageSize: collection._cover_art_sizes,
               isVerified: false

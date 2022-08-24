@@ -6,8 +6,8 @@ import { processAndCacheCollections } from 'common/store/cache/collections/utils
 import {
   PREFIX,
   trendingContentListLineupActions
-} from 'common/store/pages/trending-contentLists/lineups/actions'
-import { getLineup } from 'common/store/pages/trending-contentLists/lineups/selectors'
+} from 'common/store/pages/trending-content-lists/lineups/actions'
+import { getLineup } from 'common/store/pages/trending-content-lists/lineups/selectors'
 import apiClient from 'services/coliving-api-client/ColivingAPIClient'
 import { remoteConfigInstance } from 'services/remote-config/remote-config-instance'
 import { LineupSagas } from 'store/lineup/sagas'
@@ -31,7 +31,7 @@ function* getContentLists({ limit, offset }: { limit: number; offset: number }) 
   )
   if (TF.size > 0) {
     contentLists = contentLists.filter((p) => {
-      const shaId = window.Web3.utils.sha3(p.contentList_id.toString())
+      const shaId = window.Web3.utils.sha3(p.content_list_id.toString())
       return !TF.has(shaId)
     })
   }
@@ -45,7 +45,7 @@ function* getContentLists({ limit, offset }: { limit: number; offset: number }) 
     ).split(',')
   )
   const trendingContentLists = contentLists.filter(
-    (contentList) => !userIdsToOmit.has(`${contentList.contentList_owner_id}`)
+    (contentList) => !userIdsToOmit.has(`${contentList.content_list_owner_id}`)
   )
 
   const processed: Collection[] = yield processAndCacheCollections(

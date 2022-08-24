@@ -13,51 +13,51 @@ import {
   replaceTempWithResolvedContentLists,
   removeContentListLibraryTempContentLists,
   getContentListsNotInLibrary
-} from 'common/store/contentList-library/helpers'
+} from 'common/store/content-list-library/helpers'
 
 describe('findInContentListLibrary', () => {
   it('finds an index in the library', () => {
     const library = {
       contents: [
-        { type: 'contentList', contentList_id: 1 },
-        { type: 'contentList', contentList_id: 2 },
-        { type: 'contentList', contentList_id: 3 },
-        { type: 'contentList', contentList_id: 4 }
+        { type: 'contentList', content_list_id: 1 },
+        { type: 'contentList', content_list_id: 2 },
+        { type: 'contentList', content_list_id: 3 },
+        { type: 'contentList', content_list_id: 4 }
       ]
     }
     const found = findInContentListLibrary(library, 2)
-    expect(found).toEqual({ type: 'contentList', contentList_id: 2 })
+    expect(found).toEqual({ type: 'contentList', content_list_id: 2 })
   })
 
   it('finds an index in the library with folders', () => {
     const library = {
       contents: [
-        { type: 'contentList', contentList_id: 1 },
-        { type: 'contentList', contentList_id: 2 },
+        { type: 'contentList', content_list_id: 1 },
+        { type: 'contentList', content_list_id: 2 },
         {
           type: 'folder',
           name: 'favorites',
-          contents: [{ type: 'contentList', contentList_id: 3 }]
+          contents: [{ type: 'contentList', content_list_id: 3 }]
         },
-        { type: 'contentList', contentList_id: 4 }
+        { type: 'contentList', content_list_id: 4 }
       ]
     }
     const found = findInContentListLibrary(library, 3)
-    expect(found).toEqual({ type: 'contentList', contentList_id: 3 })
+    expect(found).toEqual({ type: 'contentList', content_list_id: 3 })
   })
 
   it('does not find something not in the library', () => {
     const library = {
       contents: [
-        { type: 'contentList', contentList_id: 1 },
-        { type: 'contentList', contentList_id: 2 },
+        { type: 'contentList', content_list_id: 1 },
+        { type: 'contentList', content_list_id: 2 },
         {
           type: 'folder',
           name: 'favorites',
           id: 'fake-uuid',
-          contents: [{ type: 'contentList', contentList_id: 3 }]
+          contents: [{ type: 'contentList', content_list_id: 3 }]
         },
-        { type: 'contentList', contentList_id: 4 }
+        { type: 'contentList', content_list_id: 4 }
       ]
     }
     const found = findInContentListLibrary(library, 10)
@@ -69,10 +69,10 @@ describe('findIndexInContentListLibrary', () => {
   it('finds an index in the library', () => {
     const library = {
       contents: [
-        { type: 'contentList', contentList_id: 1 },
-        { type: 'contentList', contentList_id: 2 },
-        { type: 'contentList', contentList_id: 3 },
-        { type: 'contentList', contentList_id: 4 }
+        { type: 'contentList', content_list_id: 1 },
+        { type: 'contentList', content_list_id: 2 },
+        { type: 'contentList', content_list_id: 3 },
+        { type: 'contentList', content_list_id: 4 }
       ]
     }
     const index = findIndexInContentListLibrary(library, 2)
@@ -82,10 +82,10 @@ describe('findIndexInContentListLibrary', () => {
   it('does not find something not in the library', () => {
     const library = {
       contents: [
-        { type: 'contentList', contentList_id: 1 },
-        { type: 'contentList', contentList_id: 2 },
-        { type: 'contentList', contentList_id: 3 },
-        { type: 'contentList', contentList_id: 4 }
+        { type: 'contentList', content_list_id: 1 },
+        { type: 'contentList', content_list_id: 2 },
+        { type: 'contentList', content_list_id: 3 },
+        { type: 'contentList', content_list_id: 4 }
       ]
     }
     const index = findIndexInContentListLibrary(library, 10)
@@ -95,17 +95,17 @@ describe('findIndexInContentListLibrary', () => {
   it('finds folder in the library', () => {
     const library = {
       contents: [
-        { type: 'contentList', contentList_id: 1 },
-        { type: 'contentList', contentList_id: 2 },
-        { type: 'contentList', contentList_id: 3 },
-        { type: 'contentList', contentList_id: 4 },
+        { type: 'contentList', content_list_id: 1 },
+        { type: 'contentList', content_list_id: 2 },
+        { type: 'contentList', content_list_id: 3 },
+        { type: 'contentList', content_list_id: 4 },
         {
           type: 'folder',
           name: 'favorites',
           id: 'fake-uuid',
           contents: [
-            { type: 'contentList', contentList_id: 7 },
-            { type: 'contentList', contentList_id: 10 }
+            { type: 'contentList', content_list_id: 7 },
+            { type: 'contentList', content_list_id: 10 }
           ]
         }
       ]
@@ -117,26 +117,26 @@ describe('findIndexInContentListLibrary', () => {
   it('finds contentList inside folder', () => {
     const library = {
       contents: [
-        { type: 'contentList', contentList_id: 1 },
-        { type: 'contentList', contentList_id: 2 },
-        { type: 'contentList', contentList_id: 3 },
-        { type: 'contentList', contentList_id: 4 },
+        { type: 'contentList', content_list_id: 1 },
+        { type: 'contentList', content_list_id: 2 },
+        { type: 'contentList', content_list_id: 3 },
+        { type: 'contentList', content_list_id: 4 },
         {
           type: 'folder',
           name: 'favorites',
           id: 'fake-uuid',
           contents: [
-            { type: 'contentList', contentList_id: 7 },
-            { type: 'contentList', contentList_id: 10 },
-            { type: 'temp_contentList', contentList_id: '33' },
+            { type: 'contentList', content_list_id: 7 },
+            { type: 'contentList', content_list_id: 10 },
+            { type: 'temp_content_list', content_list_id: '33' },
             {
               type: 'folder',
               name: 'favorites 2',
               id: 'fake-uuid-2',
               contents: [
-                { type: 'contentList', contentList_id: 11 },
-                { type: 'contentList', contentList_id: 12 },
-                { type: 'temp_contentList', contentList_id: 13 }
+                { type: 'contentList', content_list_id: 11 },
+                { type: 'contentList', content_list_id: 12 },
+                { type: 'temp_content_list', content_list_id: 13 }
               ]
             }
           ]
@@ -156,26 +156,26 @@ describe('findIndexInContentListLibrary', () => {
   it('finds folder inside folder', () => {
     const library = {
       contents: [
-        { type: 'contentList', contentList_id: 1 },
-        { type: 'contentList', contentList_id: 2 },
-        { type: 'contentList', contentList_id: 3 },
-        { type: 'contentList', contentList_id: 4 },
+        { type: 'contentList', content_list_id: 1 },
+        { type: 'contentList', content_list_id: 2 },
+        { type: 'contentList', content_list_id: 3 },
+        { type: 'contentList', content_list_id: 4 },
         {
           type: 'folder',
           name: 'favorites',
           id: 'fake-uuid',
           contents: [
-            { type: 'contentList', contentList_id: 7 },
-            { type: 'contentList', contentList_id: 10 },
-            { type: 'temp_contentList', contentList_id: '33' },
+            { type: 'contentList', content_list_id: 7 },
+            { type: 'contentList', content_list_id: 10 },
+            { type: 'temp_content_list', content_list_id: '33' },
             {
               type: 'folder',
               name: 'favorites 2',
               id: 'fake-uuid-2',
               contents: [
-                { type: 'contentList', contentList_id: 11 },
-                { type: 'contentList', contentList_id: 12 },
-                { type: 'temp_contentList', contentList_id: 13 }
+                { type: 'contentList', content_list_id: 11 },
+                { type: 'contentList', content_list_id: 12 },
+                { type: 'temp_content_list', content_list_id: 13 }
               ]
             }
           ]
@@ -191,33 +191,33 @@ describe('removeFromContentListLibrary', () => {
   it('removes contentList from the library', () => {
     const library = {
       contents: [
-        { type: 'contentList', contentList_id: 1 },
-        { type: 'contentList', contentList_id: 2 },
-        { type: 'contentList', contentList_id: 3 },
-        { type: 'contentList', contentList_id: 4 }
+        { type: 'contentList', content_list_id: 1 },
+        { type: 'contentList', content_list_id: 2 },
+        { type: 'contentList', content_list_id: 3 },
+        { type: 'contentList', content_list_id: 4 }
       ]
     }
     const { library: ret, removed } = removeFromContentListLibrary(library, 2)
     expect(ret).toEqual({
       contents: [
-        { type: 'contentList', contentList_id: 1 },
-        { type: 'contentList', contentList_id: 3 },
-        { type: 'contentList', contentList_id: 4 }
+        { type: 'contentList', content_list_id: 1 },
+        { type: 'contentList', content_list_id: 3 },
+        { type: 'contentList', content_list_id: 4 }
       ]
     })
-    expect(removed).toEqual({ type: 'contentList', contentList_id: 2 })
+    expect(removed).toEqual({ type: 'contentList', content_list_id: 2 })
   })
 
   it('removes folder from the library', () => {
     const library = {
       contents: [
-        { type: 'contentList', contentList_id: 1 },
-        { type: 'contentList', contentList_id: 2 },
-        { type: 'contentList', contentList_id: 3 },
-        { type: 'contentList', contentList_id: 4 },
+        { type: 'contentList', content_list_id: 1 },
+        { type: 'contentList', content_list_id: 2 },
+        { type: 'contentList', content_list_id: 3 },
+        { type: 'contentList', content_list_id: 4 },
         {
           type: 'folder',
-          contents: [{ type: 'contentList', contentList_id: 5 }],
+          contents: [{ type: 'contentList', content_list_id: 5 }],
           id: 'fake-uuid',
           name: 'Foldar'
         }
@@ -229,15 +229,15 @@ describe('removeFromContentListLibrary', () => {
     )
     expect(ret).toEqual({
       contents: [
-        { type: 'contentList', contentList_id: 1 },
-        { type: 'contentList', contentList_id: 2 },
-        { type: 'contentList', contentList_id: 3 },
-        { type: 'contentList', contentList_id: 4 }
+        { type: 'contentList', content_list_id: 1 },
+        { type: 'contentList', content_list_id: 2 },
+        { type: 'contentList', content_list_id: 3 },
+        { type: 'contentList', content_list_id: 4 }
       ]
     })
     expect(removed).toEqual({
       type: 'folder',
-      contents: [{ type: 'contentList', contentList_id: 5 }],
+      contents: [{ type: 'contentList', content_list_id: 5 }],
       id: 'fake-uuid',
       name: 'Foldar'
     })
@@ -246,65 +246,65 @@ describe('removeFromContentListLibrary', () => {
   it('removes contentList from the library with folders present', () => {
     const library = {
       contents: [
-        { type: 'contentList', contentList_id: 1 },
-        { type: 'contentList', contentList_id: 2 },
+        { type: 'contentList', content_list_id: 1 },
+        { type: 'contentList', content_list_id: 2 },
         {
           type: 'folder',
           name: 'favorites',
           contents: [
-            { type: 'contentList', contentList_id: 3 },
-            { type: 'contentList', contentList_id: 5 }
+            { type: 'contentList', content_list_id: 3 },
+            { type: 'contentList', content_list_id: 5 }
           ]
         },
-        { type: 'contentList', contentList_id: 4 }
+        { type: 'contentList', content_list_id: 4 }
       ]
     }
     const { library: ret, removed } = removeFromContentListLibrary(library, 3)
     expect(ret).toEqual({
       contents: [
-        { type: 'contentList', contentList_id: 1 },
-        { type: 'contentList', contentList_id: 2 },
+        { type: 'contentList', content_list_id: 1 },
+        { type: 'contentList', content_list_id: 2 },
         {
           type: 'folder',
           name: 'favorites',
-          contents: [{ type: 'contentList', contentList_id: 5 }]
+          contents: [{ type: 'contentList', content_list_id: 5 }]
         },
-        { type: 'contentList', contentList_id: 4 }
+        { type: 'contentList', content_list_id: 4 }
       ]
     })
-    expect(removed).toEqual({ type: 'contentList', contentList_id: 3 })
+    expect(removed).toEqual({ type: 'contentList', content_list_id: 3 })
   })
 
   it('does not remove something not in the library', () => {
     const library = {
       contents: [
-        { type: 'contentList', contentList_id: 1 },
-        { type: 'contentList', contentList_id: 2 },
+        { type: 'contentList', content_list_id: 1 },
+        { type: 'contentList', content_list_id: 2 },
         {
           type: 'folder',
           name: 'favorites',
           contents: [
-            { type: 'contentList', contentList_id: 3 },
-            { type: 'contentList', contentList_id: 5 }
+            { type: 'contentList', content_list_id: 3 },
+            { type: 'contentList', content_list_id: 5 }
           ]
         },
-        { type: 'contentList', contentList_id: 4 }
+        { type: 'contentList', content_list_id: 4 }
       ]
     }
     const { library: ret, removed } = removeFromContentListLibrary(library, 100)
     expect(ret).toEqual({
       contents: [
-        { type: 'contentList', contentList_id: 1 },
-        { type: 'contentList', contentList_id: 2 },
+        { type: 'contentList', content_list_id: 1 },
+        { type: 'contentList', content_list_id: 2 },
         {
           type: 'folder',
           name: 'favorites',
           contents: [
-            { type: 'contentList', contentList_id: 3 },
-            { type: 'contentList', contentList_id: 5 }
+            { type: 'contentList', content_list_id: 3 },
+            { type: 'contentList', content_list_id: 5 }
           ]
         },
-        { type: 'contentList', contentList_id: 4 }
+        { type: 'contentList', content_list_id: 4 }
       ]
     })
     expect(removed).toEqual(null)
@@ -315,18 +315,18 @@ describe('removeContentListLibraryDuplicates', () => {
   it('can remove single dupes', () => {
     const library = {
       contents: [
-        { type: 'contentList', contentList_id: 1 },
-        { type: 'contentList', contentList_id: 2 },
-        { type: 'contentList', contentList_id: 3 },
-        { type: 'contentList', contentList_id: 1 }
+        { type: 'contentList', content_list_id: 1 },
+        { type: 'contentList', content_list_id: 2 },
+        { type: 'contentList', content_list_id: 3 },
+        { type: 'contentList', content_list_id: 1 }
       ]
     }
     const ret = removeContentListLibraryDuplicates(library)
     expect(ret).toEqual({
       contents: [
-        { type: 'contentList', contentList_id: 1 },
-        { type: 'contentList', contentList_id: 2 },
-        { type: 'contentList', contentList_id: 3 }
+        { type: 'contentList', content_list_id: 1 },
+        { type: 'contentList', content_list_id: 2 },
+        { type: 'contentList', content_list_id: 3 }
       ]
     })
   })
@@ -334,23 +334,23 @@ describe('removeContentListLibraryDuplicates', () => {
   it('does not remove non duplicates', () => {
     const library = {
       contents: [
-        { type: 'contentList', contentList_id: 1 },
-        { type: 'contentList', contentList_id: 2 },
-        { type: 'contentList', contentList_id: 3 },
-        { type: 'contentList', contentList_id: 4 },
-        { type: 'contentList', contentList_id: 5 },
-        { type: 'contentList', contentList_id: 6 }
+        { type: 'contentList', content_list_id: 1 },
+        { type: 'contentList', content_list_id: 2 },
+        { type: 'contentList', content_list_id: 3 },
+        { type: 'contentList', content_list_id: 4 },
+        { type: 'contentList', content_list_id: 5 },
+        { type: 'contentList', content_list_id: 6 }
       ]
     }
     const ret = removeContentListLibraryDuplicates(library)
     expect(ret).toEqual({
       contents: [
-        { type: 'contentList', contentList_id: 1 },
-        { type: 'contentList', contentList_id: 2 },
-        { type: 'contentList', contentList_id: 3 },
-        { type: 'contentList', contentList_id: 4 },
-        { type: 'contentList', contentList_id: 5 },
-        { type: 'contentList', contentList_id: 6 }
+        { type: 'contentList', content_list_id: 1 },
+        { type: 'contentList', content_list_id: 2 },
+        { type: 'contentList', content_list_id: 3 },
+        { type: 'contentList', content_list_id: 4 },
+        { type: 'contentList', content_list_id: 5 },
+        { type: 'contentList', content_list_id: 6 }
       ]
     })
   })
@@ -358,22 +358,22 @@ describe('removeContentListLibraryDuplicates', () => {
   it('can remove multiple dupes', () => {
     const library = {
       contents: [
-        { type: 'contentList', contentList_id: 1 },
-        { type: 'contentList', contentList_id: 2 },
-        { type: 'contentList', contentList_id: 3 },
-        { type: 'contentList', contentList_id: 1 },
-        { type: 'contentList', contentList_id: 2 },
-        { type: 'contentList', contentList_id: 3 },
-        { type: 'contentList', contentList_id: 3 },
-        { type: 'contentList', contentList_id: 3 }
+        { type: 'contentList', content_list_id: 1 },
+        { type: 'contentList', content_list_id: 2 },
+        { type: 'contentList', content_list_id: 3 },
+        { type: 'contentList', content_list_id: 1 },
+        { type: 'contentList', content_list_id: 2 },
+        { type: 'contentList', content_list_id: 3 },
+        { type: 'contentList', content_list_id: 3 },
+        { type: 'contentList', content_list_id: 3 }
       ]
     }
     const ret = removeContentListLibraryDuplicates(library)
     expect(ret).toEqual({
       contents: [
-        { type: 'contentList', contentList_id: 1 },
-        { type: 'contentList', contentList_id: 2 },
-        { type: 'contentList', contentList_id: 3 }
+        { type: 'contentList', content_list_id: 1 },
+        { type: 'contentList', content_list_id: 2 },
+        { type: 'contentList', content_list_id: 3 }
       ]
     })
   })
@@ -381,31 +381,31 @@ describe('removeContentListLibraryDuplicates', () => {
   it('can remove nested dupes', () => {
     const library = {
       contents: [
-        { type: 'contentList', contentList_id: 1 },
-        { type: 'contentList', contentList_id: 2 },
-        { type: 'contentList', contentList_id: 3 },
+        { type: 'contentList', content_list_id: 1 },
+        { type: 'contentList', content_list_id: 2 },
+        { type: 'contentList', content_list_id: 3 },
         {
           type: 'folder',
           name: 'favorites',
           contents: [
-            { type: 'contentList', contentList_id: 2 },
-            { type: 'contentList', contentList_id: 3 },
-            { type: 'contentList', contentList_id: 5 }
+            { type: 'contentList', content_list_id: 2 },
+            { type: 'contentList', content_list_id: 3 },
+            { type: 'contentList', content_list_id: 5 }
           ]
         },
-        { type: 'contentList', contentList_id: 3 }
+        { type: 'contentList', content_list_id: 3 }
       ]
     }
     const ret = removeContentListLibraryDuplicates(library)
     expect(ret).toEqual({
       contents: [
-        { type: 'contentList', contentList_id: 1 },
-        { type: 'contentList', contentList_id: 2 },
-        { type: 'contentList', contentList_id: 3 },
+        { type: 'contentList', content_list_id: 1 },
+        { type: 'contentList', content_list_id: 2 },
+        { type: 'contentList', content_list_id: 3 },
         {
           type: 'folder',
           name: 'favorites',
-          contents: [{ type: 'contentList', contentList_id: 5 }]
+          contents: [{ type: 'contentList', content_list_id: 5 }]
         }
       ]
     })
@@ -414,17 +414,17 @@ describe('removeContentListLibraryDuplicates', () => {
   it('can remove dupe folders', () => {
     const library = {
       contents: [
-        { type: 'contentList', contentList_id: 1 },
-        { type: 'contentList', contentList_id: 2 },
-        { type: 'contentList', contentList_id: 3 },
+        { type: 'contentList', content_list_id: 1 },
+        { type: 'contentList', content_list_id: 2 },
+        { type: 'contentList', content_list_id: 3 },
         {
           type: 'folder',
           name: 'favorites',
           id: 'my-uuid',
           contents: [
-            { type: 'contentList', contentList_id: 4 },
-            { type: 'contentList', contentList_id: 5 },
-            { type: 'contentList', contentList_id: 6 }
+            { type: 'contentList', content_list_id: 4 },
+            { type: 'contentList', content_list_id: 5 },
+            { type: 'contentList', content_list_id: 6 }
           ]
         },
         {
@@ -432,9 +432,9 @@ describe('removeContentListLibraryDuplicates', () => {
           name: 'favorites',
           id: 'my-uuid',
           contents: [
-            { type: 'contentList', contentList_id: 4 },
-            { type: 'contentList', contentList_id: 5 },
-            { type: 'contentList', contentList_id: 6 }
+            { type: 'contentList', content_list_id: 4 },
+            { type: 'contentList', content_list_id: 5 },
+            { type: 'contentList', content_list_id: 6 }
           ]
         },
         {
@@ -442,9 +442,9 @@ describe('removeContentListLibraryDuplicates', () => {
           name: 'favorites',
           id: 'different-uuid',
           contents: [
-            { type: 'contentList', contentList_id: 4 },
-            { type: 'contentList', contentList_id: 5 },
-            { type: 'contentList', contentList_id: 6 }
+            { type: 'contentList', content_list_id: 4 },
+            { type: 'contentList', content_list_id: 5 },
+            { type: 'contentList', content_list_id: 6 }
           ]
         }
       ]
@@ -453,17 +453,17 @@ describe('removeContentListLibraryDuplicates', () => {
 
     const expectedResult = {
       contents: [
-        { type: 'contentList', contentList_id: 1 },
-        { type: 'contentList', contentList_id: 2 },
-        { type: 'contentList', contentList_id: 3 },
+        { type: 'contentList', content_list_id: 1 },
+        { type: 'contentList', content_list_id: 2 },
+        { type: 'contentList', content_list_id: 3 },
         {
           type: 'folder',
           name: 'favorites',
           id: 'my-uuid',
           contents: [
-            { type: 'contentList', contentList_id: 4 },
-            { type: 'contentList', contentList_id: 5 },
-            { type: 'contentList', contentList_id: 6 }
+            { type: 'contentList', content_list_id: 4 },
+            { type: 'contentList', content_list_id: 5 },
+            { type: 'contentList', content_list_id: 6 }
           ]
         },
         {
@@ -482,37 +482,37 @@ describe('removeContentListLibraryTempContentLists', () => {
   it('can remove temporary contentLists', () => {
     const library = {
       contents: [
-        { type: 'temp_contentList', contentList_id: '33' },
-        { type: 'explore_contentList', contentList_id: 'Heavy Rotation' },
+        { type: 'temp_content_list', content_list_id: '33' },
+        { type: 'explore_content_list', content_list_id: 'Heavy Rotation' },
         {
           type: 'folder',
           name: 'My folder',
           id: 'uuid',
           contents: [
-            { type: 'temp_contentList', contentList_id: '44' },
-            { type: 'contentList', contentList_id: 5 },
-            { type: 'contentList', contentList_id: 6 }
+            { type: 'temp_content_list', content_list_id: '44' },
+            { type: 'contentList', content_list_id: 5 },
+            { type: 'contentList', content_list_id: 6 }
           ]
         },
-        { type: 'contentList', contentList_id: 3 },
-        { type: 'contentList', contentList_id: 1 }
+        { type: 'contentList', content_list_id: 3 },
+        { type: 'contentList', content_list_id: 1 }
       ]
     }
     const ret = removeContentListLibraryTempContentLists(library)
     expect(ret).toEqual({
       contents: [
-        { type: 'explore_contentList', contentList_id: 'Heavy Rotation' },
+        { type: 'explore_content_list', content_list_id: 'Heavy Rotation' },
         {
           type: 'folder',
           name: 'My folder',
           id: 'uuid',
           contents: [
-            { type: 'contentList', contentList_id: 5 },
-            { type: 'contentList', contentList_id: 6 }
+            { type: 'contentList', content_list_id: 5 },
+            { type: 'contentList', content_list_id: 6 }
           ]
         },
-        { type: 'contentList', contentList_id: 3 },
-        { type: 'contentList', contentList_id: 1 }
+        { type: 'contentList', content_list_id: 3 },
+        { type: 'contentList', content_list_id: 1 }
       ]
     })
   })
@@ -520,21 +520,21 @@ describe('removeContentListLibraryTempContentLists', () => {
   it('does not remove non temp contentLists', () => {
     const library = {
       contents: [
-        { type: 'contentList', contentList_id: 1 },
-        { type: 'contentList', contentList_id: 2 },
-        { type: 'explore_contentList', contentList_id: 'Heavy Rotation' },
+        { type: 'contentList', content_list_id: 1 },
+        { type: 'contentList', content_list_id: 2 },
+        { type: 'explore_content_list', content_list_id: 'Heavy Rotation' },
         {
           type: 'folder',
           name: 'My folder',
           id: 'uuid',
           contents: [
-            { type: 'contentList', contentList_id: 10 },
-            { type: 'contentList', contentList_id: 11 }
+            { type: 'contentList', content_list_id: 10 },
+            { type: 'contentList', content_list_id: 11 }
           ]
         },
-        { type: 'contentList', contentList_id: 4 },
-        { type: 'contentList', contentList_id: 5 },
-        { type: 'contentList', contentList_id: 6 }
+        { type: 'contentList', content_list_id: 4 },
+        { type: 'contentList', content_list_id: 5 },
+        { type: 'contentList', content_list_id: 6 }
       ]
     }
     const ret = removeContentListLibraryTempContentLists(library)
@@ -558,39 +558,39 @@ describe('reorderContentListLibrary', () => {
   it('can reorder adjacent contentLists', () => {
     const library = {
       contents: [
-        { type: 'contentList', contentList_id: 1 },
-        { type: 'contentList', contentList_id: 2 },
-        { type: 'contentList', contentList_id: 3 },
+        { type: 'contentList', content_list_id: 1 },
+        { type: 'contentList', content_list_id: 2 },
+        { type: 'contentList', content_list_id: 3 },
         {
           type: 'folder',
           name: 'favorites',
           id: 'my-uuid',
           contents: [
-            { type: 'temp_contentList', contentList_id: '10' },
-            { type: 'explore_contentList', contentList_id: 'Heavy Rotation' },
-            { type: 'contentList', contentList_id: 12 }
+            { type: 'temp_content_list', content_list_id: '10' },
+            { type: 'explore_content_list', content_list_id: 'Heavy Rotation' },
+            { type: 'contentList', content_list_id: 12 }
           ]
         },
-        { type: 'contentList', contentList_id: 4 }
+        { type: 'contentList', content_list_id: 4 }
       ]
     }
     const ret = reorderContentListLibrary(library, 2, 3)
     expect(ret).toEqual({
       contents: [
-        { type: 'contentList', contentList_id: 1 },
-        { type: 'contentList', contentList_id: 3 },
-        { type: 'contentList', contentList_id: 2 },
+        { type: 'contentList', content_list_id: 1 },
+        { type: 'contentList', content_list_id: 3 },
+        { type: 'contentList', content_list_id: 2 },
         {
           type: 'folder',
           name: 'favorites',
           id: 'my-uuid',
           contents: [
-            { type: 'temp_contentList', contentList_id: '10' },
-            { type: 'explore_contentList', contentList_id: 'Heavy Rotation' },
-            { type: 'contentList', contentList_id: 12 }
+            { type: 'temp_content_list', content_list_id: '10' },
+            { type: 'explore_content_list', content_list_id: 'Heavy Rotation' },
+            { type: 'contentList', content_list_id: 12 }
           ]
         },
-        { type: 'contentList', contentList_id: 4 }
+        { type: 'contentList', content_list_id: 4 }
       ]
     })
   })
@@ -598,18 +598,18 @@ describe('reorderContentListLibrary', () => {
   it('can reorder the start contentList', () => {
     const library = {
       contents: [
-        { type: 'contentList', contentList_id: 1 },
-        { type: 'contentList', contentList_id: 2 },
-        { type: 'contentList', contentList_id: 3 },
-        { type: 'contentList', contentList_id: 4 },
+        { type: 'contentList', content_list_id: 1 },
+        { type: 'contentList', content_list_id: 2 },
+        { type: 'contentList', content_list_id: 3 },
+        { type: 'contentList', content_list_id: 4 },
         {
           type: 'folder',
           name: 'favorites',
           id: 'my-uuid',
           contents: [
-            { type: 'temp_contentList', contentList_id: '10' },
-            { type: 'explore_contentList', contentList_id: 'Heavy Rotation' },
-            { type: 'contentList', contentList_id: 12 }
+            { type: 'temp_content_list', content_list_id: '10' },
+            { type: 'explore_content_list', content_list_id: 'Heavy Rotation' },
+            { type: 'contentList', content_list_id: 12 }
           ]
         }
       ]
@@ -617,18 +617,18 @@ describe('reorderContentListLibrary', () => {
     const ret = reorderContentListLibrary(library, 1, 4)
     expect(ret).toEqual({
       contents: [
-        { type: 'contentList', contentList_id: 2 },
-        { type: 'contentList', contentList_id: 3 },
-        { type: 'contentList', contentList_id: 4 },
-        { type: 'contentList', contentList_id: 1 },
+        { type: 'contentList', content_list_id: 2 },
+        { type: 'contentList', content_list_id: 3 },
+        { type: 'contentList', content_list_id: 4 },
+        { type: 'contentList', content_list_id: 1 },
         {
           type: 'folder',
           name: 'favorites',
           id: 'my-uuid',
           contents: [
-            { type: 'temp_contentList', contentList_id: '10' },
-            { type: 'explore_contentList', contentList_id: 'Heavy Rotation' },
-            { type: 'contentList', contentList_id: 12 }
+            { type: 'temp_content_list', content_list_id: '10' },
+            { type: 'explore_content_list', content_list_id: 'Heavy Rotation' },
+            { type: 'contentList', content_list_id: 12 }
           ]
         }
       ]
@@ -638,39 +638,39 @@ describe('reorderContentListLibrary', () => {
   it('can reorder the end contentList', () => {
     const library = {
       contents: [
-        { type: 'contentList', contentList_id: 1 },
-        { type: 'contentList', contentList_id: 2 },
+        { type: 'contentList', content_list_id: 1 },
+        { type: 'contentList', content_list_id: 2 },
         {
           type: 'folder',
           name: 'favorites',
           id: 'my-uuid',
           contents: [
-            { type: 'temp_contentList', contentList_id: '10' },
-            { type: 'explore_contentList', contentList_id: 'Heavy Rotation' },
-            { type: 'contentList', contentList_id: 12 }
+            { type: 'temp_content_list', content_list_id: '10' },
+            { type: 'explore_content_list', content_list_id: 'Heavy Rotation' },
+            { type: 'contentList', content_list_id: 12 }
           ]
         },
-        { type: 'contentList', contentList_id: 3 },
-        { type: 'contentList', contentList_id: 4 }
+        { type: 'contentList', content_list_id: 3 },
+        { type: 'contentList', content_list_id: 4 }
       ]
     }
     const ret = reorderContentListLibrary(library, 4, 1)
     expect(ret).toEqual({
       contents: [
-        { type: 'contentList', contentList_id: 1 },
-        { type: 'contentList', contentList_id: 4 },
-        { type: 'contentList', contentList_id: 2 },
+        { type: 'contentList', content_list_id: 1 },
+        { type: 'contentList', content_list_id: 4 },
+        { type: 'contentList', content_list_id: 2 },
         {
           type: 'folder',
           name: 'favorites',
           id: 'my-uuid',
           contents: [
-            { type: 'temp_contentList', contentList_id: '10' },
-            { type: 'explore_contentList', contentList_id: 'Heavy Rotation' },
-            { type: 'contentList', contentList_id: 12 }
+            { type: 'temp_content_list', content_list_id: '10' },
+            { type: 'explore_content_list', content_list_id: 'Heavy Rotation' },
+            { type: 'contentList', content_list_id: 12 }
           ]
         },
-        { type: 'contentList', contentList_id: 3 }
+        { type: 'contentList', content_list_id: 3 }
       ]
     })
   })
@@ -678,39 +678,39 @@ describe('reorderContentListLibrary', () => {
   it('can reorder a contentList inside a folder', () => {
     const library = {
       contents: [
-        { type: 'contentList', contentList_id: 1 },
-        { type: 'contentList', contentList_id: 2 },
+        { type: 'contentList', content_list_id: 1 },
+        { type: 'contentList', content_list_id: 2 },
         {
           type: 'folder',
           name: 'favorites',
           id: 'my-uuid',
           contents: [
-            { type: 'temp_contentList', contentList_id: '10' },
-            { type: 'explore_contentList', contentList_id: 'Heavy Rotation' },
-            { type: 'contentList', contentList_id: 12 }
+            { type: 'temp_content_list', content_list_id: '10' },
+            { type: 'explore_content_list', content_list_id: 'Heavy Rotation' },
+            { type: 'contentList', content_list_id: 12 }
           ]
         },
-        { type: 'contentList', contentList_id: 3 },
-        { type: 'contentList', contentList_id: 4 }
+        { type: 'contentList', content_list_id: 3 },
+        { type: 'contentList', content_list_id: 4 }
       ]
     }
     const ret = reorderContentListLibrary(library, '10', 2)
     expect(ret).toEqual({
       contents: [
-        { type: 'contentList', contentList_id: 1 },
-        { type: 'contentList', contentList_id: 2 },
-        { type: 'temp_contentList', contentList_id: '10' },
+        { type: 'contentList', content_list_id: 1 },
+        { type: 'contentList', content_list_id: 2 },
+        { type: 'temp_content_list', content_list_id: '10' },
         {
           type: 'folder',
           name: 'favorites',
           id: 'my-uuid',
           contents: [
-            { type: 'explore_contentList', contentList_id: 'Heavy Rotation' },
-            { type: 'contentList', contentList_id: 12 }
+            { type: 'explore_content_list', content_list_id: 'Heavy Rotation' },
+            { type: 'contentList', content_list_id: 12 }
           ]
         },
-        { type: 'contentList', contentList_id: 3 },
-        { type: 'contentList', contentList_id: 4 }
+        { type: 'contentList', content_list_id: 3 },
+        { type: 'contentList', content_list_id: 4 }
       ]
     })
   })
@@ -718,39 +718,39 @@ describe('reorderContentListLibrary', () => {
   it('can reorder a contentList to the beginning', () => {
     const library = {
       contents: [
-        { type: 'contentList', contentList_id: 1 },
-        { type: 'contentList', contentList_id: 2 },
+        { type: 'contentList', content_list_id: 1 },
+        { type: 'contentList', content_list_id: 2 },
         {
           type: 'folder',
           name: 'favorites',
           id: 'my-uuid',
           contents: [
-            { type: 'temp_contentList', contentList_id: '10' },
-            { type: 'explore_contentList', contentList_id: 'Heavy Rotation' },
-            { type: 'contentList', contentList_id: 12 }
+            { type: 'temp_content_list', content_list_id: '10' },
+            { type: 'explore_content_list', content_list_id: 'Heavy Rotation' },
+            { type: 'contentList', content_list_id: 12 }
           ]
         },
-        { type: 'contentList', contentList_id: 3 },
-        { type: 'contentList', contentList_id: 4 }
+        { type: 'contentList', content_list_id: 3 },
+        { type: 'contentList', content_list_id: 4 }
       ]
     }
     const ret = reorderContentListLibrary(library, 3, -1)
     expect(ret).toEqual({
       contents: [
-        { type: 'contentList', contentList_id: 3 },
-        { type: 'contentList', contentList_id: 1 },
-        { type: 'contentList', contentList_id: 2 },
+        { type: 'contentList', content_list_id: 3 },
+        { type: 'contentList', content_list_id: 1 },
+        { type: 'contentList', content_list_id: 2 },
         {
           type: 'folder',
           name: 'favorites',
           id: 'my-uuid',
           contents: [
-            { type: 'temp_contentList', contentList_id: '10' },
-            { type: 'explore_contentList', contentList_id: 'Heavy Rotation' },
-            { type: 'contentList', contentList_id: 12 }
+            { type: 'temp_content_list', content_list_id: '10' },
+            { type: 'explore_content_list', content_list_id: 'Heavy Rotation' },
+            { type: 'contentList', content_list_id: 12 }
           ]
         },
-        { type: 'contentList', contentList_id: 4 }
+        { type: 'contentList', content_list_id: 4 }
       ]
     })
   })
@@ -758,16 +758,16 @@ describe('reorderContentListLibrary', () => {
   it('can reorder a contentList to a folder', () => {
     const library = {
       contents: [
-        { type: 'contentList', contentList_id: 1 },
-        { type: 'contentList', contentList_id: 2 },
+        { type: 'contentList', content_list_id: 1 },
+        { type: 'contentList', content_list_id: 2 },
         {
           type: 'folder',
           name: 'favorites',
           id: 'my-uuid',
           contents: [
-            { type: 'temp_contentList', contentList_id: '10' },
-            { type: 'explore_contentList', contentList_id: 'Heavy Rotation' },
-            { type: 'contentList', contentList_id: 12 }
+            { type: 'temp_content_list', content_list_id: '10' },
+            { type: 'explore_content_list', content_list_id: 'Heavy Rotation' },
+            { type: 'contentList', content_list_id: 12 }
           ]
         },
         {
@@ -775,29 +775,29 @@ describe('reorderContentListLibrary', () => {
           name: 'favorites 2',
           id: 'my-uuid-2',
           contents: [
-            { type: 'temp_contentList', contentList_id: '100' },
-            { type: 'explore_contentList', contentList_id: 'Best New Releases' },
-            { type: 'contentList', contentList_id: 120 }
+            { type: 'temp_content_list', content_list_id: '100' },
+            { type: 'explore_content_list', content_list_id: 'Best New Releases' },
+            { type: 'contentList', content_list_id: 120 }
           ]
         },
-        { type: 'contentList', contentList_id: 3 },
-        { type: 'contentList', contentList_id: 4 }
+        { type: 'contentList', content_list_id: 3 },
+        { type: 'contentList', content_list_id: 4 }
       ]
     }
     const ret = reorderContentListLibrary(library, 3, -1)
     expect(ret).toEqual({
       contents: [
-        { type: 'contentList', contentList_id: 3 },
-        { type: 'contentList', contentList_id: 1 },
-        { type: 'contentList', contentList_id: 2 },
+        { type: 'contentList', content_list_id: 3 },
+        { type: 'contentList', content_list_id: 1 },
+        { type: 'contentList', content_list_id: 2 },
         {
           type: 'folder',
           name: 'favorites',
           id: 'my-uuid',
           contents: [
-            { type: 'temp_contentList', contentList_id: '10' },
-            { type: 'explore_contentList', contentList_id: 'Heavy Rotation' },
-            { type: 'contentList', contentList_id: 12 }
+            { type: 'temp_content_list', content_list_id: '10' },
+            { type: 'explore_content_list', content_list_id: 'Heavy Rotation' },
+            { type: 'contentList', content_list_id: 12 }
           ]
         },
         {
@@ -805,30 +805,30 @@ describe('reorderContentListLibrary', () => {
           name: 'favorites 2',
           id: 'my-uuid-2',
           contents: [
-            { type: 'temp_contentList', contentList_id: '100' },
-            { type: 'explore_contentList', contentList_id: 'Best New Releases' },
-            { type: 'contentList', contentList_id: 120 }
+            { type: 'temp_content_list', content_list_id: '100' },
+            { type: 'explore_content_list', content_list_id: 'Best New Releases' },
+            { type: 'contentList', content_list_id: 120 }
           ]
         },
-        { type: 'contentList', contentList_id: 4 }
+        { type: 'contentList', content_list_id: 4 }
       ]
     })
 
     const ret2 = reorderContentListLibrary(ret, '100', '10')
     expect(ret2).toEqual({
       contents: [
-        { type: 'contentList', contentList_id: 3 },
-        { type: 'contentList', contentList_id: 1 },
-        { type: 'contentList', contentList_id: 2 },
+        { type: 'contentList', content_list_id: 3 },
+        { type: 'contentList', content_list_id: 1 },
+        { type: 'contentList', content_list_id: 2 },
         {
           type: 'folder',
           name: 'favorites',
           id: 'my-uuid',
           contents: [
-            { type: 'temp_contentList', contentList_id: '10' },
-            { type: 'temp_contentList', contentList_id: '100' },
-            { type: 'explore_contentList', contentList_id: 'Heavy Rotation' },
-            { type: 'contentList', contentList_id: 12 }
+            { type: 'temp_content_list', content_list_id: '10' },
+            { type: 'temp_content_list', content_list_id: '100' },
+            { type: 'explore_content_list', content_list_id: 'Heavy Rotation' },
+            { type: 'contentList', content_list_id: 12 }
           ]
         },
         {
@@ -836,11 +836,11 @@ describe('reorderContentListLibrary', () => {
           name: 'favorites 2',
           id: 'my-uuid-2',
           contents: [
-            { type: 'explore_contentList', contentList_id: 'Best New Releases' },
-            { type: 'contentList', contentList_id: 120 }
+            { type: 'explore_content_list', content_list_id: 'Best New Releases' },
+            { type: 'contentList', content_list_id: 120 }
           ]
         },
-        { type: 'contentList', contentList_id: 4 }
+        { type: 'contentList', content_list_id: 4 }
       ]
     })
   })
@@ -848,39 +848,39 @@ describe('reorderContentListLibrary', () => {
   it('can reorder a contentList inside a folder to another position inside the folder', () => {
     const library = {
       contents: [
-        { type: 'contentList', contentList_id: 1 },
-        { type: 'contentList', contentList_id: 2 },
+        { type: 'contentList', content_list_id: 1 },
+        { type: 'contentList', content_list_id: 2 },
         {
           type: 'folder',
           name: 'favorites',
           id: 'my-uuid',
           contents: [
-            { type: 'temp_contentList', contentList_id: '10' },
-            { type: 'explore_contentList', contentList_id: 'Heavy Rotation' },
-            { type: 'contentList', contentList_id: 12 }
+            { type: 'temp_content_list', content_list_id: '10' },
+            { type: 'explore_content_list', content_list_id: 'Heavy Rotation' },
+            { type: 'contentList', content_list_id: 12 }
           ]
         },
-        { type: 'contentList', contentList_id: 3 },
-        { type: 'contentList', contentList_id: 4 }
+        { type: 'contentList', content_list_id: 3 },
+        { type: 'contentList', content_list_id: 4 }
       ]
     }
     const ret = reorderContentListLibrary(library, 'Heavy Rotation', 12)
     expect(ret).toEqual({
       contents: [
-        { type: 'contentList', contentList_id: 1 },
-        { type: 'contentList', contentList_id: 2 },
+        { type: 'contentList', content_list_id: 1 },
+        { type: 'contentList', content_list_id: 2 },
         {
           type: 'folder',
           name: 'favorites',
           id: 'my-uuid',
           contents: [
-            { type: 'temp_contentList', contentList_id: '10' },
-            { type: 'contentList', contentList_id: 12 },
-            { type: 'explore_contentList', contentList_id: 'Heavy Rotation' }
+            { type: 'temp_content_list', content_list_id: '10' },
+            { type: 'contentList', content_list_id: 12 },
+            { type: 'explore_content_list', content_list_id: 'Heavy Rotation' }
           ]
         },
-        { type: 'contentList', contentList_id: 3 },
-        { type: 'contentList', contentList_id: 4 }
+        { type: 'contentList', content_list_id: 3 },
+        { type: 'contentList', content_list_id: 4 }
       ]
     })
   })
@@ -888,39 +888,39 @@ describe('reorderContentListLibrary', () => {
   it('does not reorder a contentList to a location outside of the library', () => {
     const library = {
       contents: [
-        { type: 'contentList', contentList_id: 1 },
-        { type: 'contentList', contentList_id: 2 },
-        { type: 'contentList', contentList_id: 3 },
+        { type: 'contentList', content_list_id: 1 },
+        { type: 'contentList', content_list_id: 2 },
+        { type: 'contentList', content_list_id: 3 },
         {
           type: 'folder',
           name: 'favorites',
           id: 'my-uuid',
           contents: [
-            { type: 'temp_contentList', contentList_id: '10' },
-            { type: 'explore_contentList', contentList_id: 'Heavy Rotation' },
-            { type: 'contentList', contentList_id: 12 }
+            { type: 'temp_content_list', content_list_id: '10' },
+            { type: 'explore_content_list', content_list_id: 'Heavy Rotation' },
+            { type: 'contentList', content_list_id: 12 }
           ]
         },
-        { type: 'contentList', contentList_id: 4 }
+        { type: 'contentList', content_list_id: 4 }
       ]
     }
     const ret = reorderContentListLibrary(library, 3, 10)
     expect(ret).toEqual({
       contents: [
-        { type: 'contentList', contentList_id: 1 },
-        { type: 'contentList', contentList_id: 2 },
-        { type: 'contentList', contentList_id: 3 },
+        { type: 'contentList', content_list_id: 1 },
+        { type: 'contentList', content_list_id: 2 },
+        { type: 'contentList', content_list_id: 3 },
         {
           type: 'folder',
           name: 'favorites',
           id: 'my-uuid',
           contents: [
-            { type: 'temp_contentList', contentList_id: '10' },
-            { type: 'explore_contentList', contentList_id: 'Heavy Rotation' },
-            { type: 'contentList', contentList_id: 12 }
+            { type: 'temp_content_list', content_list_id: '10' },
+            { type: 'explore_content_list', content_list_id: 'Heavy Rotation' },
+            { type: 'contentList', content_list_id: 12 }
           ]
         },
-        { type: 'contentList', contentList_id: 4 }
+        { type: 'contentList', content_list_id: 4 }
       ]
     })
   })
@@ -928,60 +928,60 @@ describe('reorderContentListLibrary', () => {
   it('inserts a new contentList that was not in the original order', () => {
     const library = {
       contents: [
-        { type: 'contentList', contentList_id: 1 },
-        { type: 'contentList', contentList_id: 2 },
+        { type: 'contentList', content_list_id: 1 },
+        { type: 'contentList', content_list_id: 2 },
         {
           type: 'folder',
           name: 'favorites',
           id: 'my-uuid',
           contents: [
-            { type: 'temp_contentList', contentList_id: '10' },
-            { type: 'explore_contentList', contentList_id: 'Heavy Rotation' },
-            { type: 'contentList', contentList_id: 12 }
+            { type: 'temp_content_list', content_list_id: '10' },
+            { type: 'explore_content_list', content_list_id: 'Heavy Rotation' },
+            { type: 'contentList', content_list_id: 12 }
           ]
         },
-        { type: 'contentList', contentList_id: 3 },
-        { type: 'contentList', contentList_id: 4 }
+        { type: 'contentList', content_list_id: 3 },
+        { type: 'contentList', content_list_id: 4 }
       ]
     }
     const ret = reorderContentListLibrary(library, 5, 2)
     expect(ret).toEqual({
       contents: [
-        { type: 'contentList', contentList_id: 1 },
-        { type: 'contentList', contentList_id: 2 },
-        { type: 'contentList', contentList_id: 5 },
+        { type: 'contentList', content_list_id: 1 },
+        { type: 'contentList', content_list_id: 2 },
+        { type: 'contentList', content_list_id: 5 },
         {
           type: 'folder',
           name: 'favorites',
           id: 'my-uuid',
           contents: [
-            { type: 'temp_contentList', contentList_id: '10' },
-            { type: 'explore_contentList', contentList_id: 'Heavy Rotation' },
-            { type: 'contentList', contentList_id: 12 }
+            { type: 'temp_content_list', content_list_id: '10' },
+            { type: 'explore_content_list', content_list_id: 'Heavy Rotation' },
+            { type: 'contentList', content_list_id: 12 }
           ]
         },
-        { type: 'contentList', contentList_id: 3 },
-        { type: 'contentList', contentList_id: 4 }
+        { type: 'contentList', content_list_id: 3 },
+        { type: 'contentList', content_list_id: 4 }
       ]
     })
     const res2 = reorderContentListLibrary(library, 22, 'Heavy Rotation')
     expect(res2).toEqual({
       contents: [
-        { type: 'contentList', contentList_id: 1 },
-        { type: 'contentList', contentList_id: 2 },
+        { type: 'contentList', content_list_id: 1 },
+        { type: 'contentList', content_list_id: 2 },
         {
           type: 'folder',
           name: 'favorites',
           id: 'my-uuid',
           contents: [
-            { type: 'temp_contentList', contentList_id: '10' },
-            { type: 'explore_contentList', contentList_id: 'Heavy Rotation' },
-            { type: 'contentList', contentList_id: 22 },
-            { type: 'contentList', contentList_id: 12 }
+            { type: 'temp_content_list', content_list_id: '10' },
+            { type: 'explore_content_list', content_list_id: 'Heavy Rotation' },
+            { type: 'contentList', content_list_id: 22 },
+            { type: 'contentList', content_list_id: 12 }
           ]
         },
-        { type: 'contentList', contentList_id: 3 },
-        { type: 'contentList', contentList_id: 4 }
+        { type: 'contentList', content_list_id: 3 },
+        { type: 'contentList', content_list_id: 4 }
       ]
     })
   })
@@ -989,27 +989,27 @@ describe('reorderContentListLibrary', () => {
   it('soft fails if the dragging item is a folder but it is not in the library', () => {
     const library = {
       contents: [
-        { type: 'contentList', contentList_id: 1 },
-        { type: 'contentList', contentList_id: 2 },
+        { type: 'contentList', content_list_id: 1 },
+        { type: 'contentList', content_list_id: 2 },
         {
           type: 'folder',
           name: 'favorites',
           id: 'my-uuid',
           contents: [
-            { type: 'temp_contentList', contentList_id: '10' },
-            { type: 'explore_contentList', contentList_id: 'Heavy Rotation' },
-            { type: 'contentList', contentList_id: 12 }
+            { type: 'temp_content_list', content_list_id: '10' },
+            { type: 'explore_content_list', content_list_id: 'Heavy Rotation' },
+            { type: 'contentList', content_list_id: 12 }
           ]
         },
-        { type: 'contentList', contentList_id: 3 },
-        { type: 'contentList', contentList_id: 4 }
+        { type: 'contentList', content_list_id: 3 },
+        { type: 'contentList', content_list_id: 4 }
       ]
     }
     const ret = reorderContentListLibrary(
       library,
       'not-exist-folder',
       2,
-      'contentList-folder'
+      'content-list-folder'
     )
     expect(ret).toEqual(library)
   })
@@ -1017,27 +1017,27 @@ describe('reorderContentListLibrary', () => {
   it('is a no op if the dragging id and dropping id are the same', () => {
     const library = {
       contents: [
-        { type: 'contentList', contentList_id: 1 },
-        { type: 'contentList', contentList_id: 2 },
+        { type: 'contentList', content_list_id: 1 },
+        { type: 'contentList', content_list_id: 2 },
         {
           type: 'folder',
           name: 'favorites',
           id: 'my-uuid',
           contents: [
-            { type: 'temp_contentList', contentList_id: '10' },
-            { type: 'explore_contentList', contentList_id: 'Heavy Rotation' },
-            { type: 'contentList', contentList_id: 12 }
+            { type: 'temp_content_list', content_list_id: '10' },
+            { type: 'explore_content_list', content_list_id: 'Heavy Rotation' },
+            { type: 'contentList', content_list_id: 12 }
           ]
         },
-        { type: 'contentList', contentList_id: 3 },
-        { type: 'contentList', contentList_id: 4 }
+        { type: 'contentList', content_list_id: 3 },
+        { type: 'contentList', content_list_id: 4 }
       ]
     }
     const ret = reorderContentListLibrary(
       library,
       'my-uuid',
       'my-uuid',
-      'contentList-folder'
+      'content-list-folder'
     )
     expect(ret).toEqual(library)
   })
@@ -1045,27 +1045,27 @@ describe('reorderContentListLibrary', () => {
   it('can reorder a folder to the beginning of the library', () => {
     const library = {
       contents: [
-        { type: 'contentList', contentList_id: 1 },
-        { type: 'contentList', contentList_id: 2 },
+        { type: 'contentList', content_list_id: 1 },
+        { type: 'contentList', content_list_id: 2 },
         {
           type: 'folder',
           name: 'favorites',
           id: 'my-uuid',
           contents: [
-            { type: 'temp_contentList', contentList_id: '10' },
-            { type: 'explore_contentList', contentList_id: 'Heavy Rotation' },
-            { type: 'contentList', contentList_id: 12 }
+            { type: 'temp_content_list', content_list_id: '10' },
+            { type: 'explore_content_list', content_list_id: 'Heavy Rotation' },
+            { type: 'contentList', content_list_id: 12 }
           ]
         },
-        { type: 'contentList', contentList_id: 3 },
-        { type: 'contentList', contentList_id: 4 }
+        { type: 'contentList', content_list_id: 3 },
+        { type: 'contentList', content_list_id: 4 }
       ]
     }
     const ret = reorderContentListLibrary(
       library,
       'my-uuid',
       -1,
-      'contentList-folder'
+      'content-list-folder'
     )
     expect(ret).toEqual({
       contents: [
@@ -1074,15 +1074,15 @@ describe('reorderContentListLibrary', () => {
           name: 'favorites',
           id: 'my-uuid',
           contents: [
-            { type: 'temp_contentList', contentList_id: '10' },
-            { type: 'explore_contentList', contentList_id: 'Heavy Rotation' },
-            { type: 'contentList', contentList_id: 12 }
+            { type: 'temp_content_list', content_list_id: '10' },
+            { type: 'explore_content_list', content_list_id: 'Heavy Rotation' },
+            { type: 'contentList', content_list_id: 12 }
           ]
         },
-        { type: 'contentList', contentList_id: 1 },
-        { type: 'contentList', contentList_id: 2 },
-        { type: 'contentList', contentList_id: 3 },
-        { type: 'contentList', contentList_id: 4 }
+        { type: 'contentList', content_list_id: 1 },
+        { type: 'contentList', content_list_id: 2 },
+        { type: 'contentList', content_list_id: 3 },
+        { type: 'contentList', content_list_id: 4 }
       ]
     })
   })
@@ -1090,37 +1090,37 @@ describe('reorderContentListLibrary', () => {
   it('can reorder a folder to the end of the library', () => {
     const library = {
       contents: [
-        { type: 'contentList', contentList_id: 1 },
-        { type: 'contentList', contentList_id: 2 },
+        { type: 'contentList', content_list_id: 1 },
+        { type: 'contentList', content_list_id: 2 },
         {
           type: 'folder',
           name: 'favorites',
           id: 'my-uuid',
           contents: [
-            { type: 'temp_contentList', contentList_id: '10' },
-            { type: 'explore_contentList', contentList_id: 'Heavy Rotation' },
-            { type: 'contentList', contentList_id: 12 }
+            { type: 'temp_content_list', content_list_id: '10' },
+            { type: 'explore_content_list', content_list_id: 'Heavy Rotation' },
+            { type: 'contentList', content_list_id: 12 }
           ]
         },
-        { type: 'contentList', contentList_id: 3 },
-        { type: 'contentList', contentList_id: 4 }
+        { type: 'contentList', content_list_id: 3 },
+        { type: 'contentList', content_list_id: 4 }
       ]
     }
-    const ret = reorderContentListLibrary(library, 'my-uuid', 4, 'contentList-folder')
+    const ret = reorderContentListLibrary(library, 'my-uuid', 4, 'content-list-folder')
     expect(ret).toEqual({
       contents: [
-        { type: 'contentList', contentList_id: 1 },
-        { type: 'contentList', contentList_id: 2 },
-        { type: 'contentList', contentList_id: 3 },
-        { type: 'contentList', contentList_id: 4 },
+        { type: 'contentList', content_list_id: 1 },
+        { type: 'contentList', content_list_id: 2 },
+        { type: 'contentList', content_list_id: 3 },
+        { type: 'contentList', content_list_id: 4 },
         {
           type: 'folder',
           name: 'favorites',
           id: 'my-uuid',
           contents: [
-            { type: 'temp_contentList', contentList_id: '10' },
-            { type: 'explore_contentList', contentList_id: 'Heavy Rotation' },
-            { type: 'contentList', contentList_id: 12 }
+            { type: 'temp_content_list', content_list_id: '10' },
+            { type: 'explore_content_list', content_list_id: 'Heavy Rotation' },
+            { type: 'contentList', content_list_id: 12 }
           ]
         }
       ]
@@ -1130,39 +1130,39 @@ describe('reorderContentListLibrary', () => {
   it('can reorder a folder to the middle of the library', () => {
     const library = {
       contents: [
-        { type: 'contentList', contentList_id: 1 },
-        { type: 'contentList', contentList_id: 2 },
+        { type: 'contentList', content_list_id: 1 },
+        { type: 'contentList', content_list_id: 2 },
         {
           type: 'folder',
           name: 'favorites',
           id: 'my-uuid',
           contents: [
-            { type: 'temp_contentList', contentList_id: '10' },
-            { type: 'explore_contentList', contentList_id: 'Heavy Rotation' },
-            { type: 'contentList', contentList_id: 12 }
+            { type: 'temp_content_list', content_list_id: '10' },
+            { type: 'explore_content_list', content_list_id: 'Heavy Rotation' },
+            { type: 'contentList', content_list_id: 12 }
           ]
         },
-        { type: 'contentList', contentList_id: 3 },
-        { type: 'contentList', contentList_id: 4 }
+        { type: 'contentList', content_list_id: 3 },
+        { type: 'contentList', content_list_id: 4 }
       ]
     }
-    const ret = reorderContentListLibrary(library, 'my-uuid', 3, 'contentList-folder')
+    const ret = reorderContentListLibrary(library, 'my-uuid', 3, 'content-list-folder')
     expect(ret).toEqual({
       contents: [
-        { type: 'contentList', contentList_id: 1 },
-        { type: 'contentList', contentList_id: 2 },
-        { type: 'contentList', contentList_id: 3 },
+        { type: 'contentList', content_list_id: 1 },
+        { type: 'contentList', content_list_id: 2 },
+        { type: 'contentList', content_list_id: 3 },
         {
           type: 'folder',
           name: 'favorites',
           id: 'my-uuid',
           contents: [
-            { type: 'temp_contentList', contentList_id: '10' },
-            { type: 'explore_contentList', contentList_id: 'Heavy Rotation' },
-            { type: 'contentList', contentList_id: 12 }
+            { type: 'temp_content_list', content_list_id: '10' },
+            { type: 'explore_content_list', content_list_id: 'Heavy Rotation' },
+            { type: 'contentList', content_list_id: 12 }
           ]
         },
-        { type: 'contentList', contentList_id: 4 }
+        { type: 'contentList', content_list_id: 4 }
       ]
     })
   })
@@ -1170,16 +1170,16 @@ describe('reorderContentListLibrary', () => {
   it('can reorder a contentList or folder after a folder', () => {
     const library = {
       contents: [
-        { type: 'contentList', contentList_id: 1 },
-        { type: 'contentList', contentList_id: 2 },
+        { type: 'contentList', content_list_id: 1 },
+        { type: 'contentList', content_list_id: 2 },
         {
           type: 'folder',
           name: 'favorites',
           id: 'my-uuid',
           contents: [
-            { type: 'temp_contentList', contentList_id: '10' },
-            { type: 'explore_contentList', contentList_id: 'Heavy Rotation' },
-            { type: 'contentList', contentList_id: 12 }
+            { type: 'temp_content_list', content_list_id: '10' },
+            { type: 'explore_content_list', content_list_id: 'Heavy Rotation' },
+            { type: 'contentList', content_list_id: 12 }
           ]
         },
         {
@@ -1187,31 +1187,31 @@ describe('reorderContentListLibrary', () => {
           name: 'favorites 2',
           id: 'my-uuid-2',
           contents: [
-            { type: 'explore_contentList', contentList_id: 'Best New Releases' },
-            { type: 'contentList', contentList_id: 120 }
+            { type: 'explore_content_list', content_list_id: 'Best New Releases' },
+            { type: 'contentList', content_list_id: 120 }
           ]
         },
-        { type: 'contentList', contentList_id: 3 },
-        { type: 'contentList', contentList_id: 4 }
+        { type: 'contentList', content_list_id: 3 },
+        { type: 'contentList', content_list_id: 4 }
       ]
     }
     const ret = reorderContentListLibrary(
       library,
       'my-uuid',
       'my-uuid-2',
-      'contentList-folder'
+      'content-list-folder'
     )
     expect(ret).toEqual({
       contents: [
-        { type: 'contentList', contentList_id: 1 },
-        { type: 'contentList', contentList_id: 2 },
+        { type: 'contentList', content_list_id: 1 },
+        { type: 'contentList', content_list_id: 2 },
         {
           type: 'folder',
           name: 'favorites 2',
           id: 'my-uuid-2',
           contents: [
-            { type: 'explore_contentList', contentList_id: 'Best New Releases' },
-            { type: 'contentList', contentList_id: 120 }
+            { type: 'explore_content_list', content_list_id: 'Best New Releases' },
+            { type: 'contentList', content_list_id: 120 }
           ]
         },
         {
@@ -1219,26 +1219,26 @@ describe('reorderContentListLibrary', () => {
           name: 'favorites',
           id: 'my-uuid',
           contents: [
-            { type: 'temp_contentList', contentList_id: '10' },
-            { type: 'explore_contentList', contentList_id: 'Heavy Rotation' },
-            { type: 'contentList', contentList_id: 12 }
+            { type: 'temp_content_list', content_list_id: '10' },
+            { type: 'explore_content_list', content_list_id: 'Heavy Rotation' },
+            { type: 'contentList', content_list_id: 12 }
           ]
         },
-        { type: 'contentList', contentList_id: 3 },
-        { type: 'contentList', contentList_id: 4 }
+        { type: 'contentList', content_list_id: 3 },
+        { type: 'contentList', content_list_id: 4 }
       ]
     })
     const ret2 = reorderContentListLibrary(ret, 2, 'my-uuid', 'contentList')
     expect(ret2).toEqual({
       contents: [
-        { type: 'contentList', contentList_id: 1 },
+        { type: 'contentList', content_list_id: 1 },
         {
           type: 'folder',
           name: 'favorites 2',
           id: 'my-uuid-2',
           contents: [
-            { type: 'explore_contentList', contentList_id: 'Best New Releases' },
-            { type: 'contentList', contentList_id: 120 }
+            { type: 'explore_content_list', content_list_id: 'Best New Releases' },
+            { type: 'contentList', content_list_id: 120 }
           ]
         },
         {
@@ -1246,14 +1246,14 @@ describe('reorderContentListLibrary', () => {
           name: 'favorites',
           id: 'my-uuid',
           contents: [
-            { type: 'temp_contentList', contentList_id: '10' },
-            { type: 'explore_contentList', contentList_id: 'Heavy Rotation' },
-            { type: 'contentList', contentList_id: 12 }
+            { type: 'temp_content_list', content_list_id: '10' },
+            { type: 'explore_content_list', content_list_id: 'Heavy Rotation' },
+            { type: 'contentList', content_list_id: 12 }
           ]
         },
-        { type: 'contentList', contentList_id: 2 },
-        { type: 'contentList', contentList_id: 3 },
-        { type: 'contentList', contentList_id: 4 }
+        { type: 'contentList', content_list_id: 2 },
+        { type: 'contentList', content_list_id: 3 },
+        { type: 'contentList', content_list_id: 4 }
       ]
     })
   })
@@ -1261,16 +1261,16 @@ describe('reorderContentListLibrary', () => {
   it('can reorder an item before the target item', () => {
     const library = {
       contents: [
-        { type: 'contentList', contentList_id: 1 },
-        { type: 'contentList', contentList_id: 2 },
+        { type: 'contentList', content_list_id: 1 },
+        { type: 'contentList', content_list_id: 2 },
         {
           type: 'folder',
           name: 'favorites',
           id: 'my-uuid',
           contents: [
-            { type: 'temp_contentList', contentList_id: '10' },
-            { type: 'explore_contentList', contentList_id: 'Heavy Rotation' },
-            { type: 'contentList', contentList_id: 12 }
+            { type: 'temp_content_list', content_list_id: '10' },
+            { type: 'explore_content_list', content_list_id: 'Heavy Rotation' },
+            { type: 'contentList', content_list_id: 12 }
           ]
         },
         {
@@ -1278,19 +1278,19 @@ describe('reorderContentListLibrary', () => {
           name: 'favorites 2',
           id: 'my-uuid-2',
           contents: [
-            { type: 'explore_contentList', contentList_id: 'Best New Releases' },
-            { type: 'contentList', contentList_id: 120 }
+            { type: 'explore_content_list', content_list_id: 'Best New Releases' },
+            { type: 'contentList', content_list_id: 120 }
           ]
         },
-        { type: 'contentList', contentList_id: 3 },
-        { type: 'contentList', contentList_id: 4 }
+        { type: 'contentList', content_list_id: 3 },
+        { type: 'contentList', content_list_id: 4 }
       ]
     }
     const ret = reorderContentListLibrary(
       library,
       'my-uuid',
       1,
-      'contentList-folder',
+      'content-list-folder',
       true
     )
     expect(ret).toEqual({
@@ -1300,24 +1300,24 @@ describe('reorderContentListLibrary', () => {
           name: 'favorites',
           id: 'my-uuid',
           contents: [
-            { type: 'temp_contentList', contentList_id: '10' },
-            { type: 'explore_contentList', contentList_id: 'Heavy Rotation' },
-            { type: 'contentList', contentList_id: 12 }
+            { type: 'temp_content_list', content_list_id: '10' },
+            { type: 'explore_content_list', content_list_id: 'Heavy Rotation' },
+            { type: 'contentList', content_list_id: 12 }
           ]
         },
-        { type: 'contentList', contentList_id: 1 },
-        { type: 'contentList', contentList_id: 2 },
+        { type: 'contentList', content_list_id: 1 },
+        { type: 'contentList', content_list_id: 2 },
         {
           type: 'folder',
           name: 'favorites 2',
           id: 'my-uuid-2',
           contents: [
-            { type: 'explore_contentList', contentList_id: 'Best New Releases' },
-            { type: 'contentList', contentList_id: 120 }
+            { type: 'explore_content_list', content_list_id: 'Best New Releases' },
+            { type: 'contentList', content_list_id: 120 }
           ]
         },
-        { type: 'contentList', contentList_id: 3 },
-        { type: 'contentList', contentList_id: 4 }
+        { type: 'contentList', content_list_id: 3 },
+        { type: 'contentList', content_list_id: 4 }
       ]
     })
     const ret2 = reorderContentListLibrary(ret, 1, '10', 'contentList', true)
@@ -1328,24 +1328,24 @@ describe('reorderContentListLibrary', () => {
           name: 'favorites',
           id: 'my-uuid',
           contents: [
-            { type: 'contentList', contentList_id: 1 },
-            { type: 'temp_contentList', contentList_id: '10' },
-            { type: 'explore_contentList', contentList_id: 'Heavy Rotation' },
-            { type: 'contentList', contentList_id: 12 }
+            { type: 'contentList', content_list_id: 1 },
+            { type: 'temp_content_list', content_list_id: '10' },
+            { type: 'explore_content_list', content_list_id: 'Heavy Rotation' },
+            { type: 'contentList', content_list_id: 12 }
           ]
         },
-        { type: 'contentList', contentList_id: 2 },
+        { type: 'contentList', content_list_id: 2 },
         {
           type: 'folder',
           name: 'favorites 2',
           id: 'my-uuid-2',
           contents: [
-            { type: 'explore_contentList', contentList_id: 'Best New Releases' },
-            { type: 'contentList', contentList_id: 120 }
+            { type: 'explore_content_list', content_list_id: 'Best New Releases' },
+            { type: 'contentList', content_list_id: 120 }
           ]
         },
-        { type: 'contentList', contentList_id: 3 },
-        { type: 'contentList', contentList_id: 4 }
+        { type: 'contentList', content_list_id: 3 },
+        { type: 'contentList', content_list_id: 4 }
       ]
     })
   })
@@ -1355,10 +1355,10 @@ describe('containsTempContentList', () => {
   it('finds a temp', () => {
     const library = {
       contents: [
-        { type: 'contentList', contentList_id: 1 },
-        { type: 'contentList', contentList_id: 2 },
-        { type: 'contentList', contentList_id: 3 },
-        { type: 'temp_contentList', contentList_id: 'asdf' }
+        { type: 'contentList', content_list_id: 1 },
+        { type: 'contentList', content_list_id: 2 },
+        { type: 'contentList', content_list_id: 3 },
+        { type: 'temp_content_list', content_list_id: 'asdf' }
       ]
     }
     const ret = containsTempContentList(library)
@@ -1368,17 +1368,17 @@ describe('containsTempContentList', () => {
   it('finds a temp in a folder', () => {
     const library = {
       contents: [
-        { type: 'contentList', contentList_id: 1 },
-        { type: 'contentList', contentList_id: 2 },
+        { type: 'contentList', content_list_id: 1 },
+        { type: 'contentList', content_list_id: 2 },
         {
           type: 'folder',
           name: 'favorites',
           contents: [
-            { type: 'contentList', contentList_id: 3 },
-            { type: 'temp_contentList', contentList_id: 'asdf' }
+            { type: 'contentList', content_list_id: 3 },
+            { type: 'temp_content_list', content_list_id: 'asdf' }
           ]
         },
-        { type: 'contentList', contentList_id: 4 }
+        { type: 'contentList', content_list_id: 4 }
       ]
     }
     const ret = containsTempContentList(library)
@@ -1388,9 +1388,9 @@ describe('containsTempContentList', () => {
   it('finds no temp', () => {
     const library = {
       contents: [
-        { type: 'contentList', contentList_id: 1 },
-        { type: 'contentList', contentList_id: 2 },
-        { type: 'contentList', contentList_id: 3 }
+        { type: 'contentList', content_list_id: 1 },
+        { type: 'contentList', content_list_id: 2 },
+        { type: 'contentList', content_list_id: 3 }
       ]
     }
     const ret = containsTempContentList(library)
@@ -1402,10 +1402,10 @@ describe('addFolderToLibrary', () => {
   it('Adds a new folder to the end of a contentList library and returns the result', () => {
     const library = {
       contents: [
-        { type: 'contentList', contentList_id: 1 },
-        { type: 'contentList', contentList_id: 2 },
-        { type: 'contentList', contentList_id: 3 },
-        { type: 'temp_contentList', contentList_id: 'asdf' }
+        { type: 'contentList', content_list_id: 1 },
+        { type: 'contentList', content_list_id: 2 },
+        { type: 'contentList', content_list_id: 3 },
+        { type: 'temp_content_list', content_list_id: 'asdf' }
       ]
     }
     const folder = {
@@ -1417,10 +1417,10 @@ describe('addFolderToLibrary', () => {
     const result = addFolderToLibrary(library, folder)
     const expectedResult = {
       contents: [
-        { type: 'contentList', contentList_id: 1 },
-        { type: 'contentList', contentList_id: 2 },
-        { type: 'contentList', contentList_id: 3 },
-        { type: 'temp_contentList', contentList_id: 'asdf' },
+        { type: 'contentList', content_list_id: 1 },
+        { type: 'contentList', content_list_id: 2 },
+        { type: 'contentList', content_list_id: 3 },
+        { type: 'temp_content_list', content_list_id: 'asdf' },
         {
           id: 'fake-uuid',
           name: 'Foldero',
@@ -1497,11 +1497,11 @@ describe('renameContentListFolderInLibrary', () => {
   it('changes the name of given folder in library', () => {
     const library = {
       contents: [
-        { type: 'contentList', contentList_id: 1 },
-        { type: 'contentList', contentList_id: 2 },
+        { type: 'contentList', content_list_id: 1 },
+        { type: 'contentList', content_list_id: 2 },
         { type: 'folder', name: 'Foldero', id: 'fake-uuid', contents: [] },
-        { type: 'contentList', contentList_id: 3 },
-        { type: 'temp_contentList', contentList_id: 'asdf' }
+        { type: 'contentList', content_list_id: 3 },
+        { type: 'temp_content_list', content_list_id: 'asdf' }
       ]
     }
 
@@ -1512,16 +1512,16 @@ describe('renameContentListFolderInLibrary', () => {
     )
     const expectedResult = {
       contents: [
-        { type: 'contentList', contentList_id: 1 },
-        { type: 'contentList', contentList_id: 2 },
+        { type: 'contentList', content_list_id: 1 },
+        { type: 'contentList', content_list_id: 2 },
         {
           id: 'fake-uuid',
           name: 'Foldera',
           contents: [],
           type: 'folder'
         },
-        { type: 'contentList', contentList_id: 3 },
-        { type: 'temp_contentList', contentList_id: 'asdf' }
+        { type: 'contentList', content_list_id: 3 },
+        { type: 'temp_content_list', content_list_id: 'asdf' }
       ]
     }
     expect(result).toEqual(expectedResult)
@@ -1530,11 +1530,11 @@ describe('renameContentListFolderInLibrary', () => {
   it('is a no op if the given folder is not in the library', () => {
     const library = {
       contents: [
-        { type: 'contentList', contentList_id: 1 },
-        { type: 'contentList', contentList_id: 2 },
+        { type: 'contentList', content_list_id: 1 },
+        { type: 'contentList', content_list_id: 2 },
         { type: 'folder', name: 'Foldero', id: 'fake-uuid', contents: [] },
-        { type: 'contentList', contentList_id: 3 },
-        { type: 'temp_contentList', contentList_id: 'asdf' }
+        { type: 'contentList', content_list_id: 3 },
+        { type: 'temp_content_list', content_list_id: 'asdf' }
       ]
     }
     const result = renameContentListFolderInLibrary(
@@ -1550,21 +1550,21 @@ describe('removeContentListFolderInLibrary', () => {
   it('removes folder from library', () => {
     const library = {
       contents: [
-        { type: 'contentList', contentList_id: 1 },
-        { type: 'contentList', contentList_id: 2 },
+        { type: 'contentList', content_list_id: 1 },
+        { type: 'contentList', content_list_id: 2 },
         { type: 'folder', name: 'Foldero', id: 'fake-uuid', contents: [] },
-        { type: 'contentList', contentList_id: 3 },
-        { type: 'temp_contentList', contentList_id: 'asdf' }
+        { type: 'contentList', content_list_id: 3 },
+        { type: 'temp_content_list', content_list_id: 'asdf' }
       ]
     }
 
     const result = removeContentListFolderInLibrary(library, 'fake-uuid')
     const expectedResult = {
       contents: [
-        { type: 'contentList', contentList_id: 1 },
-        { type: 'contentList', contentList_id: 2 },
-        { type: 'contentList', contentList_id: 3 },
-        { type: 'temp_contentList', contentList_id: 'asdf' }
+        { type: 'contentList', content_list_id: 1 },
+        { type: 'contentList', content_list_id: 2 },
+        { type: 'contentList', content_list_id: 3 },
+        { type: 'temp_content_list', content_list_id: 'asdf' }
       ]
     }
     expect(result).toEqual(expectedResult)
@@ -1573,16 +1573,16 @@ describe('removeContentListFolderInLibrary', () => {
   it('moves contents of folder to upper level before deleting', () => {
     const library = {
       contents: [
-        { type: 'contentList', contentList_id: 1 },
-        { type: 'contentList', contentList_id: 2 },
+        { type: 'contentList', content_list_id: 1 },
+        { type: 'contentList', content_list_id: 2 },
         {
           type: 'folder',
           name: 'Foldero',
           id: 'fake-uuid',
           contents: [
-            { type: 'contentList', contentList_id: 4 },
-            { type: 'contentList', contentList_id: 5 },
-            { type: 'temp_contentList', contentList_id: 'ghji' },
+            { type: 'contentList', content_list_id: 4 },
+            { type: 'contentList', content_list_id: 5 },
+            { type: 'temp_content_list', content_list_id: 'ghji' },
             {
               type: 'folder',
               name: 'Folderino',
@@ -1591,21 +1591,21 @@ describe('removeContentListFolderInLibrary', () => {
             }
           ]
         },
-        { type: 'contentList', contentList_id: 3 },
-        { type: 'temp_contentList', contentList_id: 'asdf' }
+        { type: 'contentList', content_list_id: 3 },
+        { type: 'temp_content_list', content_list_id: 'asdf' }
       ]
     }
     const result = removeContentListFolderInLibrary(library, 'fake-uuid')
     const expectedResult = {
       contents: [
-        { type: 'contentList', contentList_id: 1 },
-        { type: 'contentList', contentList_id: 2 },
-        { type: 'contentList', contentList_id: 4 },
-        { type: 'contentList', contentList_id: 5 },
-        { type: 'temp_contentList', contentList_id: 'ghji' },
+        { type: 'contentList', content_list_id: 1 },
+        { type: 'contentList', content_list_id: 2 },
+        { type: 'contentList', content_list_id: 4 },
+        { type: 'contentList', content_list_id: 5 },
+        { type: 'temp_content_list', content_list_id: 'ghji' },
         { type: 'folder', name: 'Folderino', id: 'fake-uuid-2', contents: [] },
-        { type: 'contentList', contentList_id: 3 },
-        { type: 'temp_contentList', contentList_id: 'asdf' }
+        { type: 'contentList', content_list_id: 3 },
+        { type: 'temp_content_list', content_list_id: 'asdf' }
       ]
     }
     expect(result).toEqual(expectedResult)
@@ -1614,11 +1614,11 @@ describe('removeContentListFolderInLibrary', () => {
   it('is a no op if the given folder is not in the library', () => {
     const library = {
       contents: [
-        { type: 'contentList', contentList_id: 1 },
-        { type: 'contentList', contentList_id: 2 },
+        { type: 'contentList', content_list_id: 1 },
+        { type: 'contentList', content_list_id: 2 },
         { type: 'folder', name: 'Foldero', id: 'fake-uuid', contents: [] },
-        { type: 'contentList', contentList_id: 3 },
-        { type: 'temp_contentList', contentList_id: 'asdf' }
+        { type: 'contentList', content_list_id: 3 },
+        { type: 'temp_content_list', content_list_id: 'asdf' }
       ]
     }
     const result = removeContentListFolderInLibrary(
@@ -1633,15 +1633,15 @@ describe('addContentListToFolder', () => {
   it('adds contentList to given folder', () => {
     const library = {
       contents: [
-        { type: 'contentList', contentList_id: 1 },
-        { type: 'contentList', contentList_id: 2 },
+        { type: 'contentList', content_list_id: 1 },
+        { type: 'contentList', content_list_id: 2 },
         {
           type: 'folder',
           name: 'Foldero',
           id: 'fake-uuid',
           contents: [
-            { type: 'contentList', contentList_id: 3 },
-            { type: 'temp_contentList', contentList_id: 'asdf' }
+            { type: 'contentList', content_list_id: 3 },
+            { type: 'temp_content_list', content_list_id: 'asdf' }
           ]
         }
       ]
@@ -1650,16 +1650,16 @@ describe('addContentListToFolder', () => {
     const result = addContentListToFolder(library, 'Heavy Rotation', 'fake-uuid')
     const expectedResult = {
       contents: [
-        { type: 'contentList', contentList_id: 1 },
-        { type: 'contentList', contentList_id: 2 },
+        { type: 'contentList', content_list_id: 1 },
+        { type: 'contentList', content_list_id: 2 },
         {
           type: 'folder',
           name: 'Foldero',
           id: 'fake-uuid',
           contents: [
-            { type: 'explore_contentList', contentList_id: 'Heavy Rotation' },
-            { type: 'contentList', contentList_id: 3 },
-            { type: 'temp_contentList', contentList_id: 'asdf' }
+            { type: 'explore_content_list', content_list_id: 'Heavy Rotation' },
+            { type: 'contentList', content_list_id: 3 },
+            { type: 'temp_content_list', content_list_id: 'asdf' }
           ]
         }
       ]
@@ -1670,15 +1670,15 @@ describe('addContentListToFolder', () => {
   it('returns the original unchanged library if the contentList is already in the folder', () => {
     const library = {
       contents: [
-        { type: 'contentList', contentList_id: 1 },
-        { type: 'contentList', contentList_id: 2 },
+        { type: 'contentList', content_list_id: 1 },
+        { type: 'contentList', content_list_id: 2 },
         {
           type: 'folder',
           name: 'Foldero',
           id: 'fake-uuid',
           contents: [
-            { type: 'contentList', contentList_id: 3 },
-            { type: 'temp_contentList', contentList_id: 'asdf' }
+            { type: 'contentList', content_list_id: 3 },
+            { type: 'temp_content_list', content_list_id: 'asdf' }
           ]
         }
       ]
@@ -1691,15 +1691,15 @@ describe('addContentListToFolder', () => {
   it('returns the original unchanged library if folder does not exist', () => {
     const library = {
       contents: [
-        { type: 'contentList', contentList_id: 1 },
-        { type: 'contentList', contentList_id: 2 },
+        { type: 'contentList', content_list_id: 1 },
+        { type: 'contentList', content_list_id: 2 },
         {
           type: 'folder',
           name: 'Foldero',
           id: 'fake-uuid',
           contents: [
-            { type: 'contentList', contentList_id: 3 },
-            { type: 'temp_contentList', contentList_id: 'asdf' }
+            { type: 'contentList', content_list_id: 3 },
+            { type: 'temp_content_list', content_list_id: 'asdf' }
           ]
         }
       ]
@@ -1723,15 +1723,15 @@ describe('addContentListToFolder', () => {
   it('moves the contentList into the folder if the contentList is already in the library but not in the folder', () => {
     const library = {
       contents: [
-        { type: 'contentList', contentList_id: 1 },
-        { type: 'contentList', contentList_id: 2 },
+        { type: 'contentList', content_list_id: 1 },
+        { type: 'contentList', content_list_id: 2 },
         {
           type: 'folder',
           name: 'Foldero',
           id: 'fake-uuid',
           contents: [
-            { type: 'contentList', contentList_id: 3 },
-            { type: 'temp_contentList', contentList_id: 'asdf' }
+            { type: 'contentList', content_list_id: 3 },
+            { type: 'temp_content_list', content_list_id: 'asdf' }
           ]
         }
       ]
@@ -1740,15 +1740,15 @@ describe('addContentListToFolder', () => {
     const result = addContentListToFolder(library, 2, 'fake-uuid')
     const expectedResult = {
       contents: [
-        { type: 'contentList', contentList_id: 1 },
+        { type: 'contentList', content_list_id: 1 },
         {
           type: 'folder',
           name: 'Foldero',
           id: 'fake-uuid',
           contents: [
-            { type: 'contentList', contentList_id: 2 },
-            { type: 'contentList', contentList_id: 3 },
-            { type: 'temp_contentList', contentList_id: 'asdf' }
+            { type: 'contentList', content_list_id: 2 },
+            { type: 'contentList', content_list_id: 3 },
+            { type: 'temp_content_list', content_list_id: 'asdf' }
           ]
         }
       ]
@@ -1761,32 +1761,32 @@ describe('extractTempContentListsFromLibrary', () => {
   it('returns all temp contentLists in library', () => {
     const library = {
       contents: [
-        { type: 'contentList', contentList_id: 1 },
-        { type: 'contentList', contentList_id: 2 },
-        { type: 'explore_contentList', contentList_id: 'Heavy Rotation' },
-        { type: 'temp_contentList', contentList_id: 'e' },
+        { type: 'contentList', content_list_id: 1 },
+        { type: 'contentList', content_list_id: 2 },
+        { type: 'explore_content_list', content_list_id: 'Heavy Rotation' },
+        { type: 'temp_content_list', content_list_id: 'e' },
         {
           type: 'folder',
           id: 'my id',
           name: 'Favorites',
           contents: [
-            { type: 'contentList', contentList_id: 10 },
-            { type: 'temp_contentList', contentList_id: 'a' },
-            { type: 'temp_contentList', contentList_id: 'b' },
-            { type: 'contentList', contentList_id: 11 },
-            { type: 'temp_contentList', contentList_id: 'c' },
-            { type: 'temp_contentList', contentList_id: 'd' }
+            { type: 'contentList', content_list_id: 10 },
+            { type: 'temp_content_list', content_list_id: 'a' },
+            { type: 'temp_content_list', content_list_id: 'b' },
+            { type: 'contentList', content_list_id: 11 },
+            { type: 'temp_content_list', content_list_id: 'c' },
+            { type: 'temp_content_list', content_list_id: 'd' }
           ]
         }
       ]
     }
     const ret = extractTempContentListsFromLibrary(library)
     expect(ret).toEqual([
-      { type: 'temp_contentList', contentList_id: 'e' },
-      { type: 'temp_contentList', contentList_id: 'a' },
-      { type: 'temp_contentList', contentList_id: 'b' },
-      { type: 'temp_contentList', contentList_id: 'c' },
-      { type: 'temp_contentList', contentList_id: 'd' }
+      { type: 'temp_content_list', content_list_id: 'e' },
+      { type: 'temp_content_list', content_list_id: 'a' },
+      { type: 'temp_content_list', content_list_id: 'b' },
+      { type: 'temp_content_list', content_list_id: 'c' },
+      { type: 'temp_content_list', content_list_id: 'd' }
     ])
   })
 
@@ -1803,16 +1803,16 @@ describe('extractTempContentListsFromLibrary', () => {
   it('returns empty array if no temp contentLists in library', () => {
     const library = {
       contents: [
-        { type: 'contentList', contentList_id: 1 },
-        { type: 'contentList', contentList_id: 2 },
-        { type: 'explore_contentList', contentList_id: 'Heavy Rotation' },
+        { type: 'contentList', content_list_id: 1 },
+        { type: 'contentList', content_list_id: 2 },
+        { type: 'explore_content_list', content_list_id: 'Heavy Rotation' },
         {
           type: 'folder',
           id: 'my id',
           name: 'Favorites',
           contents: [
-            { type: 'contentList', contentList_id: 10 },
-            { type: 'contentList', contentList_id: 11 }
+            { type: 'contentList', content_list_id: 10 },
+            { type: 'contentList', content_list_id: 11 }
           ]
         }
       ]
@@ -1826,31 +1826,31 @@ describe('replaceTempWithResolvedContentLists', () => {
   it('returns all temp contentLists in library', () => {
     const library = {
       contents: [
-        { type: 'contentList', contentList_id: 1 },
-        { type: 'contentList', contentList_id: 2 },
-        { type: 'explore_contentList', contentList_id: 'Heavy Rotation' },
-        { type: 'temp_contentList', contentList_id: 'e' },
+        { type: 'contentList', content_list_id: 1 },
+        { type: 'contentList', content_list_id: 2 },
+        { type: 'explore_content_list', content_list_id: 'Heavy Rotation' },
+        { type: 'temp_content_list', content_list_id: 'e' },
         {
           type: 'folder',
           id: 'my id',
           name: 'Favorites',
           contents: [
-            { type: 'contentList', contentList_id: 10 },
-            { type: 'temp_contentList', contentList_id: 'a' },
-            { type: 'temp_contentList', contentList_id: 'b' },
-            { type: 'contentList', contentList_id: 11 },
-            { type: 'temp_contentList', contentList_id: 'c' },
-            { type: 'temp_contentList', contentList_id: 'd' }
+            { type: 'contentList', content_list_id: 10 },
+            { type: 'temp_content_list', content_list_id: 'a' },
+            { type: 'temp_content_list', content_list_id: 'b' },
+            { type: 'contentList', content_list_id: 11 },
+            { type: 'temp_content_list', content_list_id: 'c' },
+            { type: 'temp_content_list', content_list_id: 'd' }
           ]
         }
       ]
     }
     const tempContentListIdToResolvedContentList = {
-      e: { type: 'contentList', contentList_id: 12 },
-      a: { type: 'contentList', contentList_id: 13 },
-      b: { type: 'contentList', contentList_id: 14 },
-      c: { type: 'contentList', contentList_id: 15 },
-      d: { type: 'contentList', contentList_id: 16 }
+      e: { type: 'contentList', content_list_id: 12 },
+      a: { type: 'contentList', content_list_id: 13 },
+      b: { type: 'contentList', content_list_id: 14 },
+      c: { type: 'contentList', content_list_id: 15 },
+      d: { type: 'contentList', content_list_id: 16 }
     }
 
     const ret = replaceTempWithResolvedContentLists(
@@ -1859,21 +1859,21 @@ describe('replaceTempWithResolvedContentLists', () => {
     )
     expect(ret).toEqual({
       contents: [
-        { type: 'contentList', contentList_id: 1 },
-        { type: 'contentList', contentList_id: 2 },
-        { type: 'explore_contentList', contentList_id: 'Heavy Rotation' },
-        { type: 'contentList', contentList_id: 12 },
+        { type: 'contentList', content_list_id: 1 },
+        { type: 'contentList', content_list_id: 2 },
+        { type: 'explore_content_list', content_list_id: 'Heavy Rotation' },
+        { type: 'contentList', content_list_id: 12 },
         {
           type: 'folder',
           id: 'my id',
           name: 'Favorites',
           contents: [
-            { type: 'contentList', contentList_id: 10 },
-            { type: 'contentList', contentList_id: 13 },
-            { type: 'contentList', contentList_id: 14 },
-            { type: 'contentList', contentList_id: 11 },
-            { type: 'contentList', contentList_id: 15 },
-            { type: 'contentList', contentList_id: 16 }
+            { type: 'contentList', content_list_id: 10 },
+            { type: 'contentList', content_list_id: 13 },
+            { type: 'contentList', content_list_id: 14 },
+            { type: 'contentList', content_list_id: 11 },
+            { type: 'contentList', content_list_id: 15 },
+            { type: 'contentList', content_list_id: 16 }
           ]
         }
       ]
@@ -1898,32 +1898,32 @@ describe('replaceTempWithResolvedContentLists', () => {
   it('can deal with empty folders', () => {
     const library = {
       contents: [
-        { type: 'contentList', contentList_id: 1 },
-        { type: 'contentList', contentList_id: 2 },
-        { type: 'explore_contentList', contentList_id: 'Heavy Rotation' },
-        { type: 'temp_contentList', contentList_id: 'e' },
+        { type: 'contentList', content_list_id: 1 },
+        { type: 'contentList', content_list_id: 2 },
+        { type: 'explore_content_list', content_list_id: 'Heavy Rotation' },
+        { type: 'temp_content_list', content_list_id: 'e' },
         {
           type: 'folder',
           id: 'my id',
           name: 'Favorites',
           contents: [
-            { type: 'contentList', contentList_id: 10 },
-            { type: 'temp_contentList', contentList_id: 'a' },
-            { type: 'temp_contentList', contentList_id: 'b' },
-            { type: 'contentList', contentList_id: 11 },
-            { type: 'temp_contentList', contentList_id: 'c' },
-            { type: 'temp_contentList', contentList_id: 'd' }
+            { type: 'contentList', content_list_id: 10 },
+            { type: 'temp_content_list', content_list_id: 'a' },
+            { type: 'temp_content_list', content_list_id: 'b' },
+            { type: 'contentList', content_list_id: 11 },
+            { type: 'temp_content_list', content_list_id: 'c' },
+            { type: 'temp_content_list', content_list_id: 'd' }
           ]
         },
         { type: 'folder', id: 'my id 2', name: 'Favorites 2', contents: [] }
       ]
     }
     const tempContentListIdToResolvedContentList = {
-      e: { type: 'contentList', contentList_id: 12 },
-      a: { type: 'contentList', contentList_id: 13 },
-      b: { type: 'contentList', contentList_id: 14 },
-      c: { type: 'contentList', contentList_id: 15 },
-      d: { type: 'contentList', contentList_id: 16 }
+      e: { type: 'contentList', content_list_id: 12 },
+      a: { type: 'contentList', content_list_id: 13 },
+      b: { type: 'contentList', content_list_id: 14 },
+      c: { type: 'contentList', content_list_id: 15 },
+      d: { type: 'contentList', content_list_id: 16 }
     }
 
     const ret = replaceTempWithResolvedContentLists(
@@ -1932,21 +1932,21 @@ describe('replaceTempWithResolvedContentLists', () => {
     )
     expect(ret).toEqual({
       contents: [
-        { type: 'contentList', contentList_id: 1 },
-        { type: 'contentList', contentList_id: 2 },
-        { type: 'explore_contentList', contentList_id: 'Heavy Rotation' },
-        { type: 'contentList', contentList_id: 12 },
+        { type: 'contentList', content_list_id: 1 },
+        { type: 'contentList', content_list_id: 2 },
+        { type: 'explore_content_list', content_list_id: 'Heavy Rotation' },
+        { type: 'contentList', content_list_id: 12 },
         {
           type: 'folder',
           id: 'my id',
           name: 'Favorites',
           contents: [
-            { type: 'contentList', contentList_id: 10 },
-            { type: 'contentList', contentList_id: 13 },
-            { type: 'contentList', contentList_id: 14 },
-            { type: 'contentList', contentList_id: 11 },
-            { type: 'contentList', contentList_id: 15 },
-            { type: 'contentList', contentList_id: 16 }
+            { type: 'contentList', content_list_id: 10 },
+            { type: 'contentList', content_list_id: 13 },
+            { type: 'contentList', content_list_id: 14 },
+            { type: 'contentList', content_list_id: 11 },
+            { type: 'contentList', content_list_id: 15 },
+            { type: 'contentList', content_list_id: 16 }
           ]
         },
         { type: 'folder', id: 'my id 2', name: 'Favorites 2', contents: [] }
@@ -1957,30 +1957,30 @@ describe('replaceTempWithResolvedContentLists', () => {
   it('can deal with missing temp contentList mapping', () => {
     const library = {
       contents: [
-        { type: 'contentList', contentList_id: 1 },
-        { type: 'contentList', contentList_id: 2 },
-        { type: 'explore_contentList', contentList_id: 'Heavy Rotation' },
-        { type: 'temp_contentList', contentList_id: 'e' },
+        { type: 'contentList', content_list_id: 1 },
+        { type: 'contentList', content_list_id: 2 },
+        { type: 'explore_content_list', content_list_id: 'Heavy Rotation' },
+        { type: 'temp_content_list', content_list_id: 'e' },
         {
           type: 'folder',
           id: 'my id',
           name: 'Favorites',
           contents: [
-            { type: 'contentList', contentList_id: 10 },
-            { type: 'temp_contentList', contentList_id: 'a' },
-            { type: 'temp_contentList', contentList_id: 'b' },
-            { type: 'contentList', contentList_id: 11 },
-            { type: 'temp_contentList', contentList_id: 'c' },
-            { type: 'temp_contentList', contentList_id: 'd' }
+            { type: 'contentList', content_list_id: 10 },
+            { type: 'temp_content_list', content_list_id: 'a' },
+            { type: 'temp_content_list', content_list_id: 'b' },
+            { type: 'contentList', content_list_id: 11 },
+            { type: 'temp_content_list', content_list_id: 'c' },
+            { type: 'temp_content_list', content_list_id: 'd' }
           ]
         }
       ]
     }
     const tempContentListIdToResolvedContentList = {
-      e: { type: 'contentList', contentList_id: 12 },
-      b: { type: 'contentList', contentList_id: 14 },
-      c: { type: 'contentList', contentList_id: 15 },
-      d: { type: 'contentList', contentList_id: 16 }
+      e: { type: 'contentList', content_list_id: 12 },
+      b: { type: 'contentList', content_list_id: 14 },
+      c: { type: 'contentList', content_list_id: 15 },
+      d: { type: 'contentList', content_list_id: 16 }
     }
 
     const ret = replaceTempWithResolvedContentLists(
@@ -1989,21 +1989,21 @@ describe('replaceTempWithResolvedContentLists', () => {
     )
     expect(ret).toEqual({
       contents: [
-        { type: 'contentList', contentList_id: 1 },
-        { type: 'contentList', contentList_id: 2 },
-        { type: 'explore_contentList', contentList_id: 'Heavy Rotation' },
-        { type: 'contentList', contentList_id: 12 },
+        { type: 'contentList', content_list_id: 1 },
+        { type: 'contentList', content_list_id: 2 },
+        { type: 'explore_content_list', content_list_id: 'Heavy Rotation' },
+        { type: 'contentList', content_list_id: 12 },
         {
           type: 'folder',
           id: 'my id',
           name: 'Favorites',
           contents: [
-            { type: 'contentList', contentList_id: 10 },
-            { type: 'temp_contentList', contentList_id: 'a' },
-            { type: 'contentList', contentList_id: 14 },
-            { type: 'contentList', contentList_id: 11 },
-            { type: 'contentList', contentList_id: 15 },
-            { type: 'contentList', contentList_id: 16 }
+            { type: 'contentList', content_list_id: 10 },
+            { type: 'temp_content_list', content_list_id: 'a' },
+            { type: 'contentList', content_list_id: 14 },
+            { type: 'contentList', content_list_id: 11 },
+            { type: 'contentList', content_list_id: 15 },
+            { type: 'contentList', content_list_id: 16 }
           ]
         }
       ]
@@ -2015,18 +2015,18 @@ describe('getContentListsNotInLibrary', () => {
   it('returns the contentLists that are not already in the library', () => {
     const library = {
       contents: [
-        { type: 'contentList', contentList_id: 1 },
-        { type: 'contentList', contentList_id: 2 },
-        { type: 'explore_contentList', contentList_id: 'Heavy Rotation' },
-        { type: 'temp_contentList', contentList_id: 'e' },
+        { type: 'contentList', content_list_id: 1 },
+        { type: 'contentList', content_list_id: 2 },
+        { type: 'explore_content_list', content_list_id: 'Heavy Rotation' },
+        { type: 'temp_content_list', content_list_id: 'e' },
         {
           type: 'folder',
           id: 'my id',
           name: 'Favorites',
           contents: [
-            { type: 'contentList', contentList_id: 10 },
-            { type: 'contentList', contentList_id: 11 },
-            { type: 'temp_contentList', contentList_id: 'd' }
+            { type: 'contentList', content_list_id: 10 },
+            { type: 'contentList', content_list_id: 11 },
+            { type: 'temp_content_list', content_list_id: 'd' }
           ]
         }
       ]

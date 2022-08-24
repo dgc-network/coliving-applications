@@ -270,7 +270,7 @@ export const Lineup = ({
         return null
       }
       return AgreementTile
-    } else if (item.kind === Kind.COLLECTIONS || item.contentList_id) {
+    } else if (item.kind === Kind.COLLECTIONS || item.content_list_id) {
       return CollectionTile
     }
     return null

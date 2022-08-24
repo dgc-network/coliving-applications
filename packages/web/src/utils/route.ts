@@ -62,7 +62,7 @@ export const TRENDING_CONTENT_LISTS_PAGE = '/explore/contentLists'
 export const TRENDING_UNDERGROUND_PAGE = '/explore/underground'
 export const EXPLORE_REMIXABLES_PAGE = '/explore/remixables'
 
-export const LIVE_NFT_CONTENT_LIST_PAGE = '/:handle/live-nft-contentList'
+export const LIVE_NFT_CONTENT_LIST_PAGE = '/:handle/live-nft-content-list'
 
 export const SAVED_PAGE = '/favorites'
 export const FAVORITES_PAGE = '/favorites'
@@ -284,7 +284,7 @@ export const fullContentListPage = (handle: string, title: string, id: ID) => {
 }
 
 export const liveNftContentListPage = (handle: string) => {
-  return `/${encodeUrlName(handle)}/live-nft-contentList`
+  return `/${encodeUrlName(handle)}/live-nft-content-list`
 }
 export const fullAudioNftContentListPage = (handle: string) => {
   return `${BASE_URL}${liveNftContentListPage(handle)}`

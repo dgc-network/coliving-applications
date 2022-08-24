@@ -39,7 +39,7 @@ import { remoteConfigInstance } from 'services/remote-config/remote-config-insta
 import { setSentryUser } from 'services/sentry'
 import { identify } from 'store/analytics/actions'
 import { waitForBackendSetup } from 'store/backend/sagas'
-import { addContentListsNotInLibrary } from 'store/contentList-library/sagas'
+import { addContentListsNotInLibrary } from 'store/content-list-library/sagas'
 import {
   Permission,
   isPushManagerAvailable,

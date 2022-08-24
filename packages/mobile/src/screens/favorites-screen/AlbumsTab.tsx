@@ -23,7 +23,7 @@ export const AlbumsTab = () => {
   const matchesFilter = (contentList: ExtendedCollection) => {
     const matchValue = filterValue.toLowerCase()
     return (
-      contentList.contentList_name.toLowerCase().indexOf(matchValue) > -1 ||
+      contentList.content_list_name.toLowerCase().indexOf(matchValue) > -1 ||
       contentList.ownerName.toLowerCase().indexOf(matchValue) > -1
     )
   }

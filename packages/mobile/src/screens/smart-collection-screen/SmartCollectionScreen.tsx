@@ -3,7 +3,7 @@ import { useCallback } from 'react'
 import { FavoriteSource } from '@/common'
 import { getContentListLibrary } from '-client/src/common/store/account/selectors'
 import { getCollection } from '-client/src/common/store/pages/smart-collection/selectors'
-import { findInContentListLibrary } from '-client/src/common/store/contentList-library/helpers'
+import { findInContentListLibrary } from '-client/src/common/store/content-list-library/helpers'
 import {
   saveSmartCollection,
   unsaveSmartCollection
@@ -47,7 +47,7 @@ export const SmartCollectionScreen = ({
     getCollection(state, { variant: smartCollection.variant })
   )
 
-  const contentListName = collection?.contentList_name ?? smartCollection.title
+  const contentListName = collection?.content_list_name ?? smartCollection.title
   const description = collection?.description ?? smartCollection.description
 
   const contentListLibrary = useSelectorWeb(getContentListLibrary)

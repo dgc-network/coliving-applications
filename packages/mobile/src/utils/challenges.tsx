@@ -241,7 +241,7 @@ export const challengesConfig: Record<ChallengeRewardID, ChallengeConfig> = {
       }
     }
   },
-  'first-contentList': {
+  'first-content-list': {
     icon: Sparkles,
     title: challenges.firstContentListTitle,
     description: challenges.firstContentListDescription,
@@ -259,7 +259,7 @@ export const challengesConfig: Record<ChallengeRewardID, ChallengeConfig> = {
 
 export const trendingRewardsConfig: Record<TrendingRewardID, ChallengeConfig> =
   {
-    'trending-contentList': {
+    'trending-content-list': {
       title: 'Top 5 Trending ContentLists',
       icon: ChartIncreasing,
       description: 'Winners are selected every Friday at Noon PT!',

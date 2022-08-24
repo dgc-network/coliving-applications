@@ -1,6 +1,6 @@
 import { makeGetLineupMetadatas } from '-client/src/common/store/lineup/selectors'
-import { trendingContentListLineupActions } from '-client/src/common/store/pages/trending-contentLists/lineups/actions'
-import { getLineup } from '-client/src/common/store/pages/trending-contentLists/lineups/selectors'
+import { trendingContentListLineupActions } from '-client/src/common/store/pages/trending-content-lists/lineups/actions'
+import { getLineup } from '-client/src/common/store/pages/trending-content-lists/lineups/selectors'
 
 import { RewardsBanner } from 'app/components/live-rewards'
 import { Screen } from 'app/components/core'

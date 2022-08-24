@@ -46,7 +46,7 @@ function* filterDeletes(agreementsMetadata, removeDeleted) {
         return null
       else if (
         removeDeleted &&
-        users[metadata.contentList_owner_id]?.is_deactivated
+        users[metadata.content_list_owner_id]?.is_deactivated
       )
         return null
       // If the agreement was not cached, keep it
@@ -74,20 +74,20 @@ function getCollectionCacheables(
   agreementSubscriptions,
   agreementSubscribers
 ) {
-  collectionsToCache.push({ id: metadata.contentList_id, uid, metadata })
+  collectionsToCache.push({ id: metadata.content_list_id, uid, metadata })
 
-  const agreementIds = metadata.contentList_contents.agreement_ids.map((t) => t.agreement)
+  const agreementIds = metadata.content_list_contents.agreement_ids.map((t) => t.agreement)
   const agreementUids = agreementIds.map((id) =>
-    makeUid(Kind.AGREEMENTS, id, `collection:${metadata.contentList_id}`)
+    makeUid(Kind.AGREEMENTS, id, `collection:${metadata.content_list_id}`)
   )
 
   agreementSubscriptions.push({
-    id: metadata.contentList_id,
+    id: metadata.content_list_id,
     kind: Kind.AGREEMENTS,
     uids: agreementUids
   })
-  metadata.contentList_contents.agreement_ids =
-    metadata.contentList_contents.agreement_ids.map((t, i) => {
+  metadata.content_list_contents.agreement_ids =
+    metadata.content_list_contents.agreement_ids.map((t, i) => {
       const agreementUid = t.uid || agreementUids[i]
       agreementSubscribers.push({ uid: agreementUid, id: t.agreement })
       return { uid: agreementUid, ...t }
@@ -178,7 +178,7 @@ function* fetchLineupMetadatasAsync(
         metadata.agreement_id ? Kind.AGREEMENTS : Kind.COLLECTIONS
       )
       const ids = allMetadatas.map(
-        (metadata) => metadata.agreement_id || metadata.contentList_id
+        (metadata) => metadata.agreement_id || metadata.content_list_id
       )
       const uids = makeUids(kinds, ids, source)
 
@@ -190,7 +190,7 @@ function* fetchLineupMetadatasAsync(
 
       allMetadatas.forEach((metadata, i) => {
         // Need to update the UIDs on the contentList agreements
-        if (metadata.contentList_id) {
+        if (metadata.content_list_id) {
           getCollectionCacheables(
             metadata,
             uids[i],
@@ -204,17 +204,17 @@ function* fetchLineupMetadatasAsync(
       })
 
       const lineupCollections = allMetadatas.filter(
-        (item) => !!item.contentList_id
+        (item) => !!item.content_list_id
       )
 
       lineupCollections.forEach((metadata) => {
-        const agreementUids = metadata.contentList_contents.agreement_ids.map(
+        const agreementUids = metadata.content_list_contents.agreement_ids.map(
           (agreement, idx) => {
             const id = agreement.agreement
             const uid = new Uid(
               Kind.AGREEMENTS,
               id,
-              makeCollectionSourceId(source, metadata.contentList_id),
+              makeCollectionSourceId(source, metadata.content_list_id),
               idx
             )
             return { id, uid: uid.toString() }
@@ -349,12 +349,12 @@ function* reset(
     }
     if (entry.kind === Kind.COLLECTIONS) {
       const collection = yield select(getCollection, { uid: entry.uid })
-      const removeAgreementIds = collection.contentList_contents.agreement_ids.map(
+      const removeAgreementIds = collection.content_list_contents.agreement_ids.map(
         ({ agreement: agreementId }, idx) => {
           const agreementUid = new Uid(
             Kind.AGREEMENTS,
             agreementId,
-            makeCollectionSourceId(source, collection.contentList_id),
+            makeCollectionSourceId(source, collection.content_list_id),
             idx
           )
           return { UID: agreementUid.toString() }
@@ -420,7 +420,7 @@ function* refreshInView(lineupActions, lineupSelector, action) {
 const keepUidAndKind = (entry) => ({
   uid: entry.uid,
   kind: entry.agreement_id ? Kind.AGREEMENTS : Kind.COLLECTIONS,
-  id: entry.agreement_id || entry.contentList_id
+  id: entry.agreement_id || entry.content_list_id
 })
 
 /**

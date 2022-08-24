@@ -37,7 +37,7 @@ export const makeGetSearchAlbums = () => {
       .map((album) => {
         return {
           ...album,
-          user: users[album.contentList_owner_id]
+          user: users[album.content_list_owner_id]
         }
       })
       .filter((album) => !!album.user && !album.user.is_deactivated)
@@ -54,8 +54,8 @@ export const makeGetSearchContentLists = () => {
         .map((contentList) => {
           return {
             ...contentList,
-            user: users[contentList.contentList_owner_id],
-            agreementCount: (contentList.contentList_contents.agreement_ids || []).length
+            user: users[contentList.content_list_owner_id],
+            agreementCount: (contentList.content_list_contents.agreement_ids || []).length
           }
         })
         .filter((contentList) => !!contentList.user && !contentList.user.is_deactivated)

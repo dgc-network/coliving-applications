@@ -120,7 +120,7 @@ const EditContentListPage = g(
     }, [setReorderedAgreements, reorderedAgreements, agreements])
 
     const existingImage = useCollectionCoverArt(
-      formFields.contentList_id,
+      formFields.content_list_id,
       formFields._cover_art_sizes,
       SquareSizes.SIZE_1000_BY_1000,
       '' // default
@@ -165,7 +165,7 @@ const EditContentListPage = g(
       (name: string) => {
         setFormFields((formFields: any) => ({
           ...formFields,
-          contentList_name: name
+          content_list_name: name
         }))
       },
       [setFormFields]
@@ -212,31 +212,31 @@ const EditContentListPage = g(
       // Copy the metadata contentList contents so that a reference is not changed between
       // removing agreements, updating agreement order, and edit contentList
       const contentListAgreementIds = [
-        ...(metadata?.contentList_contents?.agreement_ids ?? [])
+        ...(metadata?.content_list_contents?.agreement_ids ?? [])
       ]
 
       for (const removedAgreement of removedAgreements) {
-        const { contentList_id } = metadata!
-        removeAgreement(removedAgreement.agreementId, contentList_id, removedAgreement.timestamp)
+        const { content_list_id } = metadata!
+        removeAgreement(removedAgreement.agreementId, content_list_id, removedAgreement.timestamp)
       }
 
-      if (metadata && formFields.contentList_id) {
+      if (metadata && formFields.content_list_id) {
         // Edit contentList
         if (hasReordered) {
           // Reorder the contentList and refresh the lineup just in case it's
           // in the view behind the edit contentList page.
           orderContentList(
-            metadata.contentList_id,
+            metadata.content_list_id,
             formatReorder(contentListAgreementIds, reorderedAgreements)
           )
           // Update the contentList content agreement_ids so that the editContentList
           // optimistically update the cached collection agreementIds
-          formFields.contentList_contents.agreement_ids = reorderedAgreements.map(
+          formFields.content_list_contents.agreement_ids = reorderedAgreements.map(
             (idx) => contentListAgreementIds[idx]
           )
         }
         refreshLineup()
-        editContentList(metadata.contentList_id, formFields)
+        editContentList(metadata.content_list_id, formFields)
 
         close()
       } else {
@@ -246,7 +246,7 @@ const EditContentListPage = g(
         toast(messages.toast)
         close()
         goToRoute(
-          contentListPage(account.handle, formFields.contentList_name, tempId)
+          contentListPage(account.handle, formFields.content_list_name, tempId)
         )
       }
     }, [
@@ -272,12 +272,12 @@ const EditContentListPage = g(
      */
     const onRemoveAgreement = useCallback(
       (index: number) => {
-        if ((metadata?.contentList_contents?.agreement_ids.length ?? 0) <= index)
+        if ((metadata?.content_list_contents?.agreement_ids.length ?? 0) <= index)
           return
         const reorderedIndex = reorderedAgreements[index]
-        const { contentList_contents } = metadata!
+        const { content_list_contents } = metadata!
         const { agreement: agreementId, time } =
-          contentList_contents.agreement_ids[reorderedIndex]
+          content_list_contents.agreement_ids[reorderedIndex]
         const agreementMetadata = agreements?.find(
           (agreement) => agreement.agreement_id === agreementId
         )
@@ -304,7 +304,7 @@ const EditContentListPage = g(
      */
     const onConfirmRemove = useCallback(() => {
       if (!confirmRemoveAgreement) return
-      const removeIdx = metadata?.contentList_contents.agreement_ids.findIndex(
+      const removeIdx = metadata?.content_list_contents.agreement_ids.findIndex(
         (t) =>
           t.agreement === confirmRemoveAgreement.agreementId &&
           t.time === confirmRemoveAgreement.timestamp
@@ -327,14 +327,14 @@ const EditContentListPage = g(
         left: (
           <TextElement text='Cancel' type={Type.SECONDARY} onClick={close} />
         ),
-        center: formFields.contentList_id
+        center: formFields.content_list_id
           ? messages.editContentList
           : messages.createContentList,
         right: (
           <TextElement
             text='Save'
             type={Type.PRIMARY}
-            isEnabled={!!formFields.contentList_name}
+            isEnabled={!!formFields.content_list_name}
             onClick={onSave}
           />
         )
@@ -349,7 +349,7 @@ const EditContentListPage = g(
     if (agreements && reorderedAgreements.length > 0) {
       agreementList = reorderedAgreements.map((i) => {
         const t = agreements[i]
-        const contentListAgreement = metadata?.contentList_contents.agreement_ids[i]
+        const contentListAgreement = metadata?.content_list_contents.agreement_ids[i]
         const isRemoveActive =
           showRemoveAgreementDrawer &&
           t.agreement_id === confirmRemoveAgreement?.agreementId &&
@@ -399,7 +399,7 @@ const EditContentListPage = g(
               <EditableRow
                 label='Name'
                 format={Format.INPUT}
-                initialValue={formFields.contentList_name}
+                initialValue={formFields.content_list_name}
                 placeholderValue={messages.placeholderName}
                 onChange={onUpdateName}
                 maxLength={64}

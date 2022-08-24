@@ -77,17 +77,17 @@ const CollectionsPage = ({
         index={i}
         isLoading={isLoadingContentList(i)}
         setDidLoad={setDidLoadContentList}
-        key={contentList.contentList_id}
-        id={contentList.contentList_id}
-        userId={contentList.contentList_owner_id}
+        key={contentList.content_list_id}
+        id={contentList.content_list_id}
+        userId={contentList.content_list_owner_id}
         imageSize={contentList._cover_art_sizes}
         isContentList={!contentList.is_album}
         isPublic={!contentList.is_private}
         size='large'
-        contentListName={contentList.contentList_name}
-        contentListId={contentList.contentList_id}
+        contentListName={contentList.content_list_name}
+        contentListId={contentList.content_list_id}
         handle={contentList.user.handle}
-        primaryText={contentList.contentList_name}
+        primaryText={contentList.content_list_name}
         secondaryText={secondaryText}
         isReposted={contentList.has_current_user_reposted}
         isSaved={contentList.has_current_user_saved}
@@ -96,34 +96,34 @@ const CollectionsPage = ({
           contentList.is_album
             ? fullAlbumPage(
                 contentList.user.handle,
-                contentList.contentList_name,
-                contentList.contentList_id
+                contentList.content_list_name,
+                contentList.content_list_id
               )
             : fullContentListPage(
                 contentList.user.handle,
-                contentList.contentList_name,
-                contentList.contentList_id
+                contentList.content_list_name,
+                contentList.content_list_id
               )
         }
         reposts={contentList.repost_count}
         favorites={contentList.save_count}
-        agreementCount={contentList.contentList_contents.agreement_ids.length}
-        onClickReposts={() => onClickReposts(contentList.contentList_id)}
-        onClickFavorites={() => onClickFavorites(contentList.contentList_id)}
+        agreementCount={contentList.content_list_contents.agreement_ids.length}
+        onClickReposts={() => onClickReposts(contentList.content_list_id)}
+        onClickFavorites={() => onClickFavorites(contentList.content_list_id)}
         onClick={() =>
           contentList.is_album
             ? goToRoute(
                 albumPage(
                   contentList.user.handle,
-                  contentList.contentList_name,
-                  contentList.contentList_id
+                  contentList.content_list_name,
+                  contentList.content_list_id
                 )
               )
             : goToRoute(
                 contentListPage(
                   contentList.user.handle,
-                  contentList.contentList_name,
-                  contentList.contentList_id
+                  contentList.content_list_name,
+                  contentList.content_list_id
                 )
               )
         }

@@ -1028,7 +1028,7 @@ type ContentListLibraryReorder = {
   eventName: Name.CONTENT_LIST_LIBRARY_REORDER
   // Whether or not the reorder contains newly created temp contentLists
   containsTemporaryContentLists: boolean
-  kind: 'library-contentList' | 'contentList' | 'contentList-folder'
+  kind: 'library-content-list' | 'contentList' | 'content-list-folder'
 }
 
 type ContentListLibraryHasUpdate = {

@@ -27,7 +27,7 @@ export const ContentListsTab = () => {
   const matchesFilter = (contentList: ExtendedCollection) => {
     const matchValue = filterValue.toLowerCase()
     return (
-      contentList.contentList_name.toLowerCase().indexOf(matchValue) > -1 ||
+      contentList.content_list_name.toLowerCase().indexOf(matchValue) > -1 ||
       contentList.ownerName.toLowerCase().indexOf(matchValue) > -1
     )
   }
@@ -46,7 +46,7 @@ export const ContentListsTab = () => {
   }, [navigation])
 
   return (
-    <VirtualizedScrollView listKey='favorites-contentLists-view'>
+    <VirtualizedScrollView listKey='favorites-content-lists-view'>
       {!userContentLists?.length && !filterValue ? (
         <EmptyTab message={messages.emptyTabText} />
       ) : (
@@ -62,7 +62,7 @@ export const ContentListsTab = () => {
         onPress={handleNavigateToNewContentList}
       />
       <CollectionList
-        listKey='favorites-contentLists'
+        listKey='favorites-content-lists'
         scrollEnabled={false}
         collection={userContentLists ?? []}
         fromPage={FAVORITES_PAGE}

@@ -15,13 +15,13 @@ import { getContentListLibrary } from 'common/store/account/selectors'
 import {
   removeContentListFolderInLibrary,
   renameContentListFolderInLibrary
-} from 'common/store/contentList-library/helpers'
-import FolderForm from 'components/create-contentList/FolderForm'
+} from 'common/store/content-list-library/helpers'
+import FolderForm from 'components/create-content-list/FolderForm'
 import DeleteConfirmationModal from 'components/delete-confirmation/DeleteConfirmationModal'
 import { make, useRecord } from 'store/analytics/actions'
 import { getFolderId } from 'store/application/ui/editFolderModal/selectors'
 import { setFolderId } from 'store/application/ui/editFolderModal/slice'
-import { update as updateContentListLibrary } from 'store/contentList-library/slice'
+import { update as updateContentListLibrary } from 'store/content-list-library/slice'
 import { useSelector } from 'utils/reducer'
 import { zIndex } from 'utils/zIndex'
 

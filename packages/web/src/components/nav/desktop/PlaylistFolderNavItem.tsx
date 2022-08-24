@@ -51,7 +51,7 @@ const FolderNavLink = ({
     <Draggable
       id={id}
       text={name}
-      kind='contentList-folder'
+      kind='content-list-folder'
       onDrag={onDrag}
       onDrop={onDrop}
     >
@@ -76,12 +76,12 @@ type ContentListFolderNavItemProps = {
   onClickEdit: (folderId: string) => void
   onDropInFolder: (
     folder: ContentListLibraryFolder,
-    draggingKind: 'library-contentList' | 'contentList',
+    draggingKind: 'library-content-list' | 'contentList',
     draggingId: ID | string | SmartCollectionVariant
   ) => void
   onDropBelowFolder: (
     folderId: string,
-    draggingKind: 'contentList-folder' | 'library-contentList',
+    draggingKind: 'content-list-folder' | 'library-content-list',
     draggingId: ID | string | SmartCollectionVariant
   ) => void
   children?: ReactNode
@@ -99,7 +99,7 @@ export const ContentListFolderNavItem = ({
 }: ContentListFolderNavItemProps) => {
   const { id, name } = folder
   const isDroppableKind =
-    draggingKind === 'library-contentList' || draggingKind === 'contentList'
+    draggingKind === 'library-content-list' || draggingKind === 'contentList'
   const [isHovering, setIsHovering] = useState(false)
   const [isExpanded, setIsExpanded] = useState(false)
   const record = useRecord()
@@ -130,7 +130,7 @@ export const ContentListFolderNavItem = ({
         onDrop={(contentListId, kind) => {
           onDropInFolder(folder, kind, contentListId)
         }}
-        acceptedKinds={['library-contentList', 'contentList']}
+        acceptedKinds={['library-content-list', 'contentList']}
       >
         <FolderNavLink
           onMouseEnter={() => {
@@ -199,7 +199,7 @@ export const ContentListFolderNavItem = ({
         onDrop={(draggingId, kind) => {
           onDropBelowFolder(id, kind, draggingId)
         }}
-        acceptedKinds={['contentList-folder', 'library-contentList']}
+        acceptedKinds={['content-list-folder', 'library-content-list']}
       />
     </>
   )

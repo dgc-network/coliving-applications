@@ -58,17 +58,17 @@ export const getTwitterShareText = (content: ShareModalContent) => {
     }
     case 'album': {
       const {
-        album: { contentList_name },
+        album: { content_list_name },
         landlord: { handle }
       } = content
-      return messages.albumShareText(contentList_name, handle)
+      return messages.albumShareText(content_list_name, handle)
     }
     case 'contentList': {
       const {
-        contentList: { contentList_name },
+        contentList: { content_list_name },
         creator: { handle }
       } = content
-      return messages.contentListShareText(contentList_name, handle)
+      return messages.contentListShareText(content_list_name, handle)
     }
     case 'liveNftContentList': {
       return messages.nftContentListShareText

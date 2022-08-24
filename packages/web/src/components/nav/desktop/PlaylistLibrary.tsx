@@ -29,7 +29,7 @@ import {
   getContentListsNotInLibrary,
   isInsideFolder,
   reorderContentListLibrary
-} from 'common/store/contentList-library/helpers'
+} from 'common/store/content-list-library/helpers'
 import { saveSmartCollection } from 'common/store/social/collections/actions'
 import Droppable from 'components/dragndrop/Droppable'
 import { ToastContext } from 'components/toast/ToastContext'
@@ -42,7 +42,7 @@ import { make, useRecord } from 'store/analytics/actions'
 import { setFolderId as setEditFolderModalFolderId } from 'store/application/ui/editFolderModal/slice'
 import { open as openEditContentListModal } from 'store/application/ui/editContentListModal/slice'
 import { getIsDragging } from 'store/dragndrop/selectors'
-import { update } from 'store/contentList-library/slice'
+import { update } from 'store/content-list-library/slice'
 import { useSelector } from 'utils/reducer'
 import { liveNftContentListPage, getPathname, contentListPage } from 'utils/route'
 
@@ -84,14 +84,14 @@ const LibraryContentsLevel = ({
     <>
       {contents.map((content) => {
         switch (content.type) {
-          case 'explore_contentList': {
-            return renderCollectionContentList(content.contentList_id, level)
+          case 'explore_content_list': {
+            return renderCollectionContentList(content.content_list_id, level)
           }
           case 'contentList': {
-            return renderContentList(content.contentList_id, level)
+            return renderContentList(content.content_list_id, level)
           }
-          case 'temp_contentList': {
-            return renderContentList(parseInt(content.contentList_id), level)
+          case 'temp_content_list': {
+            return renderContentList(parseInt(content.content_list_id), level)
           }
           case 'folder':
             return renderFolder(content, level)
@@ -141,7 +141,7 @@ const ContentListLibrary = ({
       if (liveCollectibles.length && !isAudioNftContentListInLibrary) {
         dispatch(
           saveSmartCollection(
-            LIVE_NFT_CONTENT_LIST.contentList_name,
+            LIVE_NFT_CONTENT_LIST.content_list_name,
             FavoriteSource.IMPLICIT
           )
         )
@@ -169,7 +169,7 @@ const ContentListLibrary = ({
   const handleDropInFolder = useCallback(
     (
       folder: ContentListLibraryFolder,
-      droppedKind: 'contentList' | 'library-contentList',
+      droppedKind: 'contentList' | 'library-content-list',
       droppedId: ID | string | SmartCollectionVariant
     ) => {
       if (!library) return
@@ -195,7 +195,7 @@ const ContentListLibrary = ({
     (
       draggingId: ID | SmartCollectionVariant | string,
       droppingId: ID | SmartCollectionVariant | string,
-      draggingKind: 'library-contentList' | 'contentList' | 'contentList-folder',
+      draggingKind: 'library-content-list' | 'contentList' | 'content-list-folder',
       reorderBeforeTarget = false
     ) => {
       if (!library) return
@@ -242,7 +242,7 @@ const ContentListLibrary = ({
     const contentList = SMART_COLLECTION_MAP[contentListId]
     if (!contentList) return null
 
-    const name = contentList.contentList_name
+    const name = contentList.content_list_name
     const url = isAudioNftContentList
       ? liveNftContentListPage(account?.handle ?? '')
       : contentList.link
@@ -261,7 +261,7 @@ const ContentListLibrary = ({
         onClick={onClickNavLinkWithAccount}
         className={cn(navColumnStyles.link, {
           [navColumnStyles.disabledLink]:
-            !account || (dragging && draggingKind !== 'library-contentList')
+            !account || (dragging && draggingKind !== 'library-content-list')
         })}
       >
         {name}
@@ -317,7 +317,7 @@ const ContentListLibrary = ({
         key={folder.id}
         folder={folder}
         hasUpdate={folder.contents.some(
-          (c) => c.type !== 'folder' && updatesSet.has(Number(c.contentList_id))
+          (c) => c.type !== 'folder' && updatesSet.has(Number(c.content_list_id))
         )}
         dragging={dragging}
         draggingKind={draggingKind}
@@ -338,12 +338,12 @@ const ContentListLibrary = ({
                   draggingId,
                   folder.contents[0].type === 'folder'
                     ? folder.contents[0].id
-                    : folder.contents[0].contentList_id,
+                    : folder.contents[0].content_list_id,
                   draggingKind,
                   true
                 )
               }}
-              acceptedKinds={['contentList-folder', 'library-contentList']}
+              acceptedKinds={['content-list-folder', 'library-content-list']}
             />
             <LibraryContentsLevel
               level={level + 1}
@@ -377,7 +377,7 @@ const ContentListLibrary = ({
         onDrop={(id: ID | SmartCollectionVariant, kind) =>
           onReorder(id, -1, kind)
         }
-        acceptedKinds={['library-contentList', 'contentList-folder']}
+        acceptedKinds={['library-content-list', 'content-list-folder']}
       />
       {account && contentLists && library ? (
         <LibraryContentsLevel

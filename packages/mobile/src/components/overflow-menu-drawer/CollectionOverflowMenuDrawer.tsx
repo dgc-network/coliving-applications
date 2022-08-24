@@ -14,7 +14,7 @@ import {
   shareCollection
 } from '-client/src/common/store/social/collections/actions'
 import { open as openEditContentList } from '-client/src/common/store/ui/createContentListModal/actions'
-import { requestOpen as openDeleteContentList } from '-client/src/common/store/ui/delete-contentList-confirmation-modal/slice'
+import { requestOpen as openDeleteContentList } from '-client/src/common/store/ui/delete-content-list-confirmation-modal/slice'
 import { getMobileOverflowModal } from '-client/src/common/store/ui/mobile-overflow-menu/selectors'
 import type { OverflowActionCallbacks } from '-client/src/common/store/ui/mobile-overflow-menu/types'
 import { OverflowAction } from '-client/src/common/store/ui/mobile-overflow-menu/types'
@@ -43,16 +43,16 @@ const CollectionOverflowMenuDrawer = ({ render }: Props) => {
   )
 
   const user = useSelectorWeb((state: CommonState) =>
-    getUser(state, { id: contentList?.contentList_owner_id })
+    getUser(state, { id: contentList?.content_list_owner_id })
   )
 
   if (!contentList || !user) {
     return null
   }
-  const { contentList_name, is_album } = contentList
+  const { content_list_name, is_album } = contentList
   const { handle } = user
 
-  if (!id || !handle || !contentList_name || is_album === undefined) {
+  if (!id || !handle || !content_list_name || is_album === undefined) {
     return null
   }
 
@@ -73,7 +73,7 @@ const CollectionOverflowMenuDrawer = ({ render }: Props) => {
         web: {
           route: (is_album ? albumPage : contentListPage)(
             handle,
-            contentList_name,
+            content_list_name,
             id
           )
         }

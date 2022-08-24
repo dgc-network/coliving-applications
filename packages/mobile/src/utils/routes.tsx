@@ -55,8 +55,8 @@ export const getCollectionRoute = (
   fullUrl = false
 ) => {
   const handle = collection.user.handle
-  const title = collection.contentList_name
-  const id = collection.contentList_id
+  const title = collection.content_list_name
+  const id = collection.content_list_id
   const route = collection.is_album
     ? `/${encodeUrlName(handle)}/album/${encodeUrlName(title)}-${id}`
     : `/${encodeUrlName(handle)}/contentList/${encodeUrlName(title)}-${id}`

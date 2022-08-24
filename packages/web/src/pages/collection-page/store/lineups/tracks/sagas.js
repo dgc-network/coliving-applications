@@ -30,7 +30,7 @@ function* getCollectionAgreements() {
     collection = yield call(waitForValue, getCollection)
   }
 
-  const agreement = collection.contentList_contents.agreement_ids
+  const agreement = collection.content_list_contents.agreement_ids
 
   const agreementIds = agreement.map((t) => t.agreement)
   // TODO: Conform all timestamps to be of the same format so we don't have to do any special work here.

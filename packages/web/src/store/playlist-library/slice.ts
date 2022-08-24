@@ -8,7 +8,7 @@ export type UpdatePayload = {
 }
 
 const slice = createSlice({
-  name: 'contentList-library',
+  name: 'content-list-library',
   initialState,
   reducers: {
     update: (state, action: PayloadAction<UpdatePayload>) => {}

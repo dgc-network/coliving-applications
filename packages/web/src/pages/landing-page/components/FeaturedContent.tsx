@@ -188,8 +188,8 @@ const FeaturedContent = (props: FeaturedContentProps) => {
                 .slice(0, 4)
                 .map((p) => (
                   <MobileContentListTile
-                    key={p.contentList_id}
-                    title={p.contentList_name}
+                    key={p.content_list_id}
+                    title={p.content_list_name}
                     landlord={p.user.name}
                     imageUrl={getImageUrl(
                       'small',
@@ -199,8 +199,8 @@ const FeaturedContent = (props: FeaturedContentProps) => {
                     onClick={handleClickRoute(
                       contentListPage(
                         p.user.handle,
-                        p.contentList_name,
-                        p.contentList_id
+                        p.content_list_name,
+                        p.content_list_id
                       ),
                       props.setRenderPublicSite
                     )}
@@ -242,8 +242,8 @@ const FeaturedContent = (props: FeaturedContentProps) => {
                 .slice(0, 4)
                 .map((p) => (
                   <DesktopContentListTile
-                    key={p.contentList_id}
-                    title={p.contentList_name}
+                    key={p.content_list_id}
+                    title={p.content_list_name}
                     landlord={p.user.name}
                     imageUrl={getImageUrl(
                       'large',
@@ -253,8 +253,8 @@ const FeaturedContent = (props: FeaturedContentProps) => {
                     onClick={handleClickRoute(
                       contentListPage(
                         p.user.handle,
-                        p.contentList_name,
-                        p.contentList_id
+                        p.content_list_name,
+                        p.content_list_id
                       ),
                       props.setRenderPublicSite
                     )}

@@ -30,7 +30,7 @@ import {
 } from 'app/screens/user-list-screen'
 import type { SearchContentList, SearchAgreement } from 'app/store/search/types'
 
-import { EditContentListScreen } from '../edit-contentList-screen/EditContentListScreen'
+import { EditContentListScreen } from '../edit-content-list-screen/EditContentListScreen'
 import { NotificationsDrawerNavigationContext } from '../notifications-screen/NotificationsDrawerNavigationContext'
 import { TipLandlordModal } from '../tip-landlord-screen'
 import { AgreementRemixesScreen } from '../agreement-screen/AgreementRemixesScreen'

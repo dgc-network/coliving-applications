@@ -24,7 +24,7 @@ export const LandlordCard = (props: LandlordCardProps) => {
     user_id,
     bio,
     agreement_count,
-    contentList_count,
+    content_list_count,
     follower_count,
     followee_count,
     does_current_user_follow
@@ -56,8 +56,8 @@ export const LandlordCard = (props: LandlordCardProps) => {
     }
     return [
       {
-        number: contentList_count,
-        title: contentList_count === 1 ? 'contentList' : 'contentLists',
+        number: content_list_count,
+        title: content_list_count === 1 ? 'contentList' : 'contentLists',
         key: 'contentList'
       },
       {
@@ -67,7 +67,7 @@ export const LandlordCard = (props: LandlordCardProps) => {
       },
       { number: followee_count, title: 'following', key: 'following' }
     ]
-  }, [isLandlord, agreement_count, follower_count, followee_count, contentList_count])
+  }, [isLandlord, agreement_count, follower_count, followee_count, content_list_count])
 
   const handleFollow = useCallback(() => {
     dispatch(followUser(user_id, FollowSource.HOVER_TILE))

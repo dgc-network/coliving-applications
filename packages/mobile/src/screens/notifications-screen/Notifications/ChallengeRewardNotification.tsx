@@ -60,7 +60,7 @@ const challengeInfoMap: Record<
     title: '🤑 Send Your First Tip',
     amount: 2
   },
-  'first-contentList': {
+  'first-content-list': {
     title: '✨ Create Your First ContentList',
     amount: 2
   }

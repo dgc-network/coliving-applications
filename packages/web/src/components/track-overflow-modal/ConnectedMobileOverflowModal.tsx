@@ -38,9 +38,9 @@ import {
   shareUser,
   unfollowUser
 } from 'common/store/social/users/actions'
-import { requestOpen as openAddToContentList } from 'common/store/ui/add-to-contentList/actions'
+import { requestOpen as openAddToContentList } from 'common/store/ui/add-to-content-list/actions'
 import { open as openEditContentList } from 'common/store/ui/createContentListModal/actions'
-import { requestOpen as openDeleteContentList } from 'common/store/ui/delete-contentList-confirmation-modal/slice'
+import { requestOpen as openDeleteContentList } from 'common/store/ui/delete-content-list-confirmation-modal/slice'
 import { getMobileOverflowModal } from 'common/store/ui/mobile-overflow-menu/selectors'
 import { OverflowSource } from 'common/store/ui/mobile-overflow-menu/types'
 import { getModalVisibility, setVisibility } from 'common/store/ui/modals/slice'
@@ -282,12 +282,12 @@ const getAdditionalInfo = ({
     case OverflowSource.COLLECTIONS: {
       const col = getCollection(state, { id: id as number })
       if (!col) return {}
-      const user = getUser(state, { id: col.contentList_owner_id })
+      const user = getUser(state, { id: col.content_list_owner_id })
       if (!user) return {}
       return {
         handle: user.handle,
         landlordName: user.name,
-        title: col.contentList_name,
+        title: col.content_list_name,
         isAlbum: col.is_album
       }
     }

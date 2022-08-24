@@ -132,8 +132,8 @@ const ConnectedContentListTile = memo(
   }: ConnectedContentListTileProps) => {
     const {
       is_album: isAlbum,
-      contentList_name: title,
-      contentList_id: id,
+      content_list_name: title,
+      content_list_id: id,
       is_private: isPrivate,
       _cover_art_sizes: coverArtSizes,
       repost_count: repostCount,

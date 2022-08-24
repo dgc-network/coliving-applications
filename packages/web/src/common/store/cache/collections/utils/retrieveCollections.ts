@@ -26,13 +26,13 @@ function* markCollectionDeleted(
   collectionMetadatas: CollectionMetadata[]
 ): Generator<any, CollectionMetadata[], any> {
   const collections = yield select(getCollections, {
-    ids: collectionMetadatas.map((c) => c.contentList_id)
+    ids: collectionMetadatas.map((c) => c.content_list_id)
   })
   return collectionMetadatas.map((metadata) => {
-    if (!(metadata.contentList_id in collections)) return metadata
+    if (!(metadata.content_list_id in collections)) return metadata
     return {
       ...metadata,
-      _marked_deleted: !!collections[metadata.contentList_id]._marked_deleted
+      _marked_deleted: !!collections[metadata.content_list_id]._marked_deleted
     }
   })
 }
@@ -42,7 +42,7 @@ export function* retrieveAgreementsForCollections(
   excludedAgreementIdSet: Set<ID>
 ) {
   const allAgreementIds = collections.reduce((acc, cur) => {
-    const agreementIds = cur.contentList_contents.agreement_ids.map((t) => t.agreement)
+    const agreementIds = cur.content_list_contents.agreement_ids.map((t) => t.agreement)
     return [...acc, ...agreementIds]
   }, [] as ID[])
   const filteredAgreementIds = [
@@ -63,19 +63,19 @@ export function* retrieveAgreementsForCollections(
 
   return collections.map((c) => {
     // Filter out unfetched agreements
-    const filteredIds = c.contentList_contents.agreement_ids.filter(
+    const filteredIds = c.content_list_contents.agreement_ids.filter(
       (t) => !unfetchedIdSet.has(t.agreement)
     )
     // Add UIDs
     const withUids = filteredIds.map((t) => ({
       ...t,
       // Make a new UID if one doesn't already exist
-      uid: t.uid || makeUid(Kind.AGREEMENTS, t.agreement, `collection:${c.contentList_id}`)
+      uid: t.uid || makeUid(Kind.AGREEMENTS, t.agreement, `collection:${c.content_list_id}`)
     }))
 
     return {
       ...c,
-      contentList_contents: {
+      content_list_contents: {
         agreement_ids: withUids
       }
     }
@@ -170,7 +170,7 @@ export function* retrieveCollections(
       return reformattedCollections
     },
     kind: Kind.COLLECTIONS,
-    idField: 'contentList_id',
+    idField: 'content_list_id',
     forceRetrieveFromSource: false,
     shouldSetLoading: true,
     deleteExistingEntry: false

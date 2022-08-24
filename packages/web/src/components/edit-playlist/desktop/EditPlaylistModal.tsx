@@ -19,7 +19,7 @@ import {
   editContentList
 } from 'common/store/cache/collections/actions'
 import { getCollectionWithUser } from 'common/store/cache/collections/selectors'
-import ContentListForm from 'components/create-contentList/ContentListForm'
+import ContentListForm from 'components/create-content-list/ContentListForm'
 import DeleteConfirmationModal from 'components/delete-confirmation/DeleteConfirmationModal'
 import LoadingSpinner from 'components/loading-spinner/LoadingSpinner'
 import {
@@ -70,9 +70,9 @@ const EditContentListModal = ({
   }, [collection, collectionId, fetchSavedContentLists])
 
   const {
-    contentList_id: contentListId,
+    content_list_id: contentListId,
     is_album: isAlbum,
-    contentList_name: title,
+    content_list_name: title,
     user
   } = collection || {}
   const { handle } = user || {}

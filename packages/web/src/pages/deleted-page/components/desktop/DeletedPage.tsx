@@ -110,7 +110,7 @@ const DeletedPage = g(
           {playable.type === PlayableType.CONTENT_LIST ||
           playable.type === PlayableType.ALBUM ? (
             <CollectionArt
-              collectionId={playable.metadata.contentList_id}
+              collectionId={playable.metadata.content_list_id}
               coverArtSizes={playable.metadata._cover_art_sizes}
             />
           ) : (
@@ -125,7 +125,7 @@ const DeletedPage = g(
               <h1>
                 {playable.type === PlayableType.CONTENT_LIST ||
                 playable.type === PlayableType.ALBUM
-                  ? playable.metadata.contentList_name
+                  ? playable.metadata.content_list_name
                   : playable.metadata.title}
               </h1>
             </div>

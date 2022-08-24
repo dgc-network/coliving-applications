@@ -277,7 +277,7 @@ class FinishPage extends Component {
           header={header}
           userName={userName}
           agreementList={agreementList}
-          title={metadata.contentList_name}
+          title={metadata.content_list_name}
           artwork={artwork}
           activeAgreementUid={false} // No agreement should show as active
           bottomBar={bottomBar}

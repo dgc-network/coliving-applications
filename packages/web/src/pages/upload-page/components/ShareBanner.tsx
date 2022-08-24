@@ -108,7 +108,7 @@ const getShareTextUrl = async (
     }
     case 'Album': {
       // @ts-ignore
-      const { contentList_name: title } = upload.metadata
+      const { content_list_name: title } = upload.metadata
       const getPage = fullUrl ? fullAlbumPage : albumPage
       const url = getPage(user.handle, title, upload.completionId)
       return {
@@ -118,7 +118,7 @@ const getShareTextUrl = async (
     }
     case 'ContentList': {
       // @ts-ignore
-      const { contentList_name: title } = upload.metadata
+      const { content_list_name: title } = upload.metadata
       const getPage = fullUrl ? fullContentListPage : contentListPage
       const url = getPage(user.handle, title, upload.completionId)
       return {

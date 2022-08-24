@@ -46,8 +46,8 @@ export type ContentListFormFields = Partial<Collection> & {
       | 'updated_at'
       | 'cover_art'
       | 'cover_art_sizes'
-      | 'contentList_name'
-      | 'contentList_owner_id'
+      | 'content_list_name'
+      | 'content_list_owner_id'
       | 'save_count'
       | 'upc'
       | 'description'
@@ -88,7 +88,7 @@ const ContentListForm = ({
   const [hasSubmitted, setHasSubmitted] = useState(false)
 
   const coverArt = useCollectionCoverArt(
-    formFields.contentList_id,
+    formFields.content_list_id,
     formFields?._cover_art_sizes ? formFields._cover_art_sizes : null,
     SquareSizes.SIZE_1000_BY_1000
   )
@@ -99,7 +99,7 @@ const ContentListForm = ({
       setFormFields((oldFormFields) => ({
         ...schemas.newCollectionMetadata(metadata),
         artwork: oldFormFields.artwork,
-        contentList_name: oldFormFields.contentList_name,
+        content_list_name: oldFormFields.content_list_name,
         description: oldFormFields.description
       }))
     }
@@ -132,7 +132,7 @@ const ContentListForm = ({
   const onChangeContentListName = (name: string) => {
     setFormFields((formFields: ContentListFormFields) => ({
       ...formFields,
-      contentList_name: name
+      content_list_name: name
     }))
     if (name) {
       setErrors({ ...errors, contentListName: false })
@@ -147,7 +147,7 @@ const ContentListForm = ({
   }
 
   const onSave = () => {
-    const nameIsEmpty = !formFields.contentList_name
+    const nameIsEmpty = !formFields.content_list_name
     const artworkIsEmpty = !formFields.artwork.file && !coverArt
     if (nameIsEmpty || artworkIsEmpty) {
       setErrors({
@@ -176,7 +176,7 @@ const ContentListForm = ({
           <Input
             variant='elevatedPlaceholder'
             placeholder={`${isAlbum ? 'Album' : 'ContentList'} Name`}
-            defaultValue={formFields.contentList_name || ''}
+            defaultValue={formFields.content_list_name || ''}
             error={errors.contentListName}
             onChange={onChangeContentListName}
             characterLimit={64}

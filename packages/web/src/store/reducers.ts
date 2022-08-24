@@ -33,7 +33,7 @@ import backend from 'store/backend/reducer'
 import confirmer from 'store/confirmer/reducer'
 import dragndrop from 'store/dragndrop/reducer'
 import player from 'store/player/slice'
-import contentListLibrary from 'store/contentList-library/slice'
+import contentListLibrary from 'store/content-list-library/slice'
 
 import { webStoreContext } from './storeContext'
 

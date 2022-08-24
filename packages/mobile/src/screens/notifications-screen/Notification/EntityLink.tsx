@@ -33,7 +33,7 @@ export const EntityLink = (props: EntityLinkProps) => {
       navigation.navigate({
         native: {
           screen: 'Collection',
-          params: { id: entity.contentList_id, fromNotifications: true }
+          params: { id: entity.content_list_id, fromNotifications: true }
         },
         web: { route: getCollectionRoute({ ...entity, user }) }
       })
@@ -43,7 +43,7 @@ export const EntityLink = (props: EntityLinkProps) => {
 
   return (
     <Text fontSize='large' weight='medium' color='secondary' onPress={onPress}>
-      {'title' in entity ? entity.title : entity.contentList_name}
+      {'title' in entity ? entity.title : entity.content_list_name}
     </Text>
   )
 }

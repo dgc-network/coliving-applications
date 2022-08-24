@@ -37,7 +37,7 @@ const validRewardIds: Set<ChallengeRewardID> = new Set([
   'profile-completion',
   'referred',
   'send-first-tip',
-  'first-contentList'
+  'first-content-list'
 ])
 
 /** Pulls rewards from remoteconfig */

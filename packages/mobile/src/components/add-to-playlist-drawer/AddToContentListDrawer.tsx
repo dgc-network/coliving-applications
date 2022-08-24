@@ -9,7 +9,7 @@ import {
 import {
   getAgreementId,
   getAgreementTitle
-} from '-client/src/common/store/ui/add-to-contentList/selectors'
+} from '-client/src/common/store/ui/add-to-content-list/selectors'
 import { newCollectionMetadata } from '-client/src/schemas'
 import { FEED_PAGE, contentListPage } from '-client/src/utils/route'
 import type { NativeScrollEvent, NativeSyntheticEvent } from 'react-native'
@@ -64,7 +64,7 @@ export const AddToContentListDrawer = () => {
 
   const addToNewContentList = () => {
     const metadata = newCollectionMetadata({
-      contentList_name: agreementTitle,
+      content_list_name: agreementTitle,
       is_private: false
     })
     const tempId = `${Date.now()}`
@@ -109,15 +109,15 @@ export const AddToContentListDrawer = () => {
           data={userContentLists}
           renderItem={({ item }) => (
             <Card
-              key={item.contentList_id}
-              id={item.contentList_id}
+              key={item.content_list_id}
+              id={item.content_list_id}
               type='collection'
               imageSize={item._cover_art_sizes}
-              primaryText={item.contentList_name}
+              primaryText={item.content_list_name}
               secondaryText={user.name}
               onPress={() => {
                 toast({ content: messages.addedToast })
-                dispatchWeb(addAgreementToContentList(agreementId!, item.contentList_id))
+                dispatchWeb(addAgreementToContentList(agreementId!, item.content_list_id))
                 onClose()
               }}
               user={user}

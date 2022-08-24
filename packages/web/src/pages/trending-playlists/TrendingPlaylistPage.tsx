@@ -2,8 +2,8 @@ import { useEffect } from 'react'
 
 import { useDispatch } from 'react-redux'
 
-import { trendingContentListLineupActions } from 'common/store/pages/trending-contentLists/lineups/actions'
-import { getLineup } from 'common/store/pages/trending-contentLists/lineups/selectors'
+import { trendingContentListLineupActions } from 'common/store/pages/trending-content-lists/lineups/actions'
+import { getLineup } from 'common/store/pages/trending-content-lists/lineups/selectors'
 import DesktopHeader from 'components/header/desktop/Header'
 import { useMobileHeader } from 'components/header/mobile/hooks'
 import Lineup from 'components/lineup/Lineup'

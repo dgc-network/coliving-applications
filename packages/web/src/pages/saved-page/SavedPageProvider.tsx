@@ -159,7 +159,7 @@ class SavedPage extends PureComponent<SavedPageProps, SavedPageState> {
     const filterText = this.state.filterText
     return albums.filter(
       (item: SavedPageCollection) =>
-        item.contentList_name.toLowerCase().indexOf(filterText.toLowerCase()) >
+        item.content_list_name.toLowerCase().indexOf(filterText.toLowerCase()) >
           -1 ||
         item.ownerHandle.toLowerCase().indexOf(filterText.toLowerCase()) > -1
     )
@@ -171,7 +171,7 @@ class SavedPage extends PureComponent<SavedPageProps, SavedPageState> {
     const filterText = this.state.filterText
     return contentLists.filter(
       (item: SavedPageCollection) =>
-        item.contentList_name.toLowerCase().indexOf(filterText.toLowerCase()) >
+        item.content_list_name.toLowerCase().indexOf(filterText.toLowerCase()) >
           -1 ||
         item.ownerHandle.toLowerCase().indexOf(filterText.toLowerCase()) > -1
     )

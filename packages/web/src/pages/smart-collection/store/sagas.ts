@@ -51,7 +51,7 @@ function* fetchHeavyRotation() {
 
   return {
     ...HEAVY_ROTATION,
-    contentList_contents: {
+    content_list_contents: {
       agreement_ids: agreementIds
     }
   }
@@ -71,7 +71,7 @@ function* fetchBestNewReleases() {
 
   return {
     ...BEST_NEW_RELEASES,
-    contentList_contents: {
+    content_list_contents: {
       agreement_ids: agreementIds
     }
   }
@@ -92,7 +92,7 @@ function* fetchUnderTheRadar() {
   // feed minus listened
   return {
     ...UNDER_THE_RADAR,
-    contentList_contents: {
+    content_list_contents: {
       agreement_ids: agreementIds
     }
   }
@@ -112,7 +112,7 @@ function* fetchMostLoved() {
 
   return {
     ...MOST_LOVED,
-    contentList_contents: {
+    content_list_contents: {
       agreement_ids: agreementIds
     }
   }
@@ -130,7 +130,7 @@ function* fetchFeelingLucky() {
 
   return {
     ...FEELING_LUCKY,
-    contentList_contents: {
+    content_list_contents: {
       agreement_ids: agreementIds
     }
   }
@@ -175,7 +175,7 @@ function* fetchRemixables() {
 
   return {
     ...REMIXABLES,
-    contentList_contents: {
+    content_list_contents: {
       agreement_ids: agreementIds
     }
   }

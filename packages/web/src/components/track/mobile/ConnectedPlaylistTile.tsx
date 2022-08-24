@@ -96,21 +96,21 @@ const ConnectedContentListTile = memo(
       return agreements.some((agreement) => agreement.uid === playingUid)
     }, [agreements, playingUid])
 
-    const isOwner = collection.contentList_owner_id === currentUserId
+    const isOwner = collection.content_list_owner_id === currentUserId
 
     const toggleSave = useCallback(() => {
       if (collection.has_current_user_saved) {
-        unsaveCollection(collection.contentList_id)
+        unsaveCollection(collection.content_list_id)
       } else {
-        saveCollection(collection.contentList_id)
+        saveCollection(collection.content_list_id)
       }
     }, [collection, unsaveCollection, saveCollection])
 
     const toggleRepost = useCallback(() => {
       if (collection.has_current_user_reposted) {
-        unrepostCollection(collection.contentList_id)
+        unrepostCollection(collection.content_list_id)
       } else {
-        repostCollection(collection.contentList_id)
+        repostCollection(collection.content_list_id)
       }
     }, [collection, unrepostCollection, repostCollection])
 
@@ -118,13 +118,13 @@ const ConnectedContentListTile = memo(
       return collection.is_album
         ? albumPage(
             user.handle,
-            collection.contentList_name,
-            collection.contentList_id
+            collection.content_list_name,
+            collection.content_list_id
           )
         : contentListPage(
             user.handle,
-            collection.contentList_name,
-            collection.contentList_id
+            collection.content_list_name,
+            collection.content_list_id
           )
     }, [collection, user])
 
@@ -146,8 +146,8 @@ const ConnectedContentListTile = memo(
     )
 
     const onShare = useCallback(() => {
-      shareCollection(collection.contentList_id)
-    }, [shareCollection, collection.contentList_id])
+      shareCollection(collection.content_list_id)
+    }, [shareCollection, collection.content_list_id])
 
     const onClickOverflow = useCallback(() => {
       const overflowActions = [
@@ -168,7 +168,7 @@ const ConnectedContentListTile = memo(
       ].filter(Boolean)
 
       clickOverflow(
-        collection.contentList_id,
+        collection.content_list_id,
         // @ts-ignore
         overflowActions
       )
@@ -235,21 +235,21 @@ const ConnectedContentListTile = memo(
     return (
       <ContentListTile
         uid={uid}
-        id={collection.contentList_id}
-        userId={collection.contentList_owner_id}
+        id={collection.content_list_id}
+        userId={collection.content_list_owner_id}
         index={index}
-        key={`${index}-${collection.contentList_name}`}
+        key={`${index}-${collection.content_list_name}`}
         showSkeleton={isLoading}
         hasLoaded={hasLoaded}
         // UI
         isAlbum={collection.is_album}
         isPublic={!collection.is_private}
         contentTitle={collection.is_album ? 'album' : 'contentList'}
-        contentListTitle={collection.contentList_name}
+        contentListTitle={collection.content_list_name}
         landlordHandle={user.handle}
         landlordName={user.name}
         landlordIsVerified={user.is_verified}
-        ownerId={collection.contentList_owner_id}
+        ownerId={collection.content_list_owner_id}
         coverArtSizes={collection._cover_art_sizes}
         duration={agreements.reduce(
           (duration: number, agreement: Agreement) => duration + agreement.duration,

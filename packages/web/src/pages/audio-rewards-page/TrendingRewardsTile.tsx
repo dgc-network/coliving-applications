@@ -54,7 +54,7 @@ type RewardsTileProps = {
 
 const validRewardIds: Set<TrendingRewardID> = new Set([
   'trending-agreement',
-  'trending-contentList',
+  'trending-content-list',
   'top-api',
   'verified-upload',
   'trending-underground'
@@ -84,7 +84,7 @@ const RewardsTile = ({ className }: RewardsTileProps) => {
       dispatch(setTrendingRewardsModalType({ modalType: 'agreements' }))
       setVisibility('TrendingRewardsExplainer')(true)
     },
-    'trending-contentList': () => {
+    'trending-content-list': () => {
       dispatch(setTrendingRewardsModalType({ modalType: 'contentLists' }))
       setVisibility('TrendingRewardsExplainer')(true)
     },

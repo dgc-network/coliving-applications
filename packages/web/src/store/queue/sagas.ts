@@ -71,7 +71,7 @@ export function* getToQueue(prefix: string, entry: { kind: Kind; uid: UID }) {
     if (!collection) return
 
     const {
-      contentList_contents: { agreement_ids: agreementIds }
+      content_list_contents: { agreement_ids: agreementIds }
     } = collection
     // Replace the agreement uid source w/ the full source including collection source
     // Replace the agreement count w/ it's index in the array

@@ -31,9 +31,9 @@ export const findInContentListLibrary = (
         break
       }
       case 'contentList':
-      case 'explore_contentList':
-      case 'temp_contentList':
-        if (item.contentList_id === contentListId) return item
+      case 'explore_content_list':
+      case 'temp_content_list':
+        if (item.content_list_id === contentListId) return item
         break
     }
   }
@@ -66,9 +66,9 @@ export const findIndexInContentListLibrary = (
         break
       }
       case 'contentList':
-      case 'explore_contentList':
-      case 'temp_contentList':
-        if (item.contentList_id === entityId) return i
+      case 'explore_content_list':
+      case 'temp_content_list':
+        if (item.content_list_id === entityId) return i
         break
     }
   }
@@ -115,9 +115,9 @@ export const removeFromContentListLibrary = (
         break
       }
       case 'contentList':
-      case 'explore_contentList':
-      case 'temp_contentList':
-        if (item.contentList_id === entityId) {
+      case 'explore_content_list':
+      case 'temp_content_list':
+        if (item.content_list_id === entityId) {
           removed = item
           newItem = null
         }
@@ -154,20 +154,20 @@ const contentListIdToContentListLibraryIdentifier = (
   if (typeof contentListId === 'number') {
     return {
       type: 'contentList',
-      contentList_id: contentListId
+      content_list_id: contentListId
     }
   } else if (
     (Object.values(SmartCollectionVariant) as string[]).includes(contentListId)
   ) {
     return {
-      type: 'explore_contentList',
-      contentList_id: contentListId as SmartCollectionVariant
+      type: 'explore_content_list',
+      content_list_id: contentListId as SmartCollectionVariant
     }
   } else {
     // This is a temp ID which requires special attention
     return {
-      type: 'temp_contentList',
-      contentList_id: contentListId
+      type: 'temp_content_list',
+      content_list_id: contentListId
     }
   }
 }
@@ -331,9 +331,9 @@ export const removeContentListLibraryTempContentLists = (
         newContents.push(folder)
         break
       }
-      case 'temp_contentList':
+      case 'temp_content_list':
         break
-      case 'explore_contentList':
+      case 'explore_content_list':
       case 'contentList':
         newContents.push(item)
         break
@@ -374,13 +374,13 @@ export const removeContentListLibraryDuplicates = (
         break
       }
       case 'contentList':
-      case 'explore_contentList':
-      case 'temp_contentList':
+      case 'explore_content_list':
+      case 'temp_content_list':
         // If we've seen this contentList already, don't include it in our final result.
-        if (ids.has(`${item.contentList_id}`)) {
+        if (ids.has(`${item.content_list_id}`)) {
           break
         }
-        ids.add(`${item.contentList_id}`)
+        ids.add(`${item.content_list_id}`)
         newContents.push(item)
         break
     }
@@ -404,9 +404,9 @@ export const reorderContentListLibrary = (
   draggingId: ID | SmartCollectionVariant | string,
   droppingId: ID | SmartCollectionVariant | string,
   draggingKind:
-    | 'library-contentList'
+    | 'library-content-list'
     | 'contentList'
-    | 'contentList-folder' = 'library-contentList',
+    | 'content-list-folder' = 'library-content-list',
   reorderBeforeTarget = false
 ) => {
   // Find the dragging id and remove it from the library if present.
@@ -417,7 +417,7 @@ export const reorderContentListLibrary = (
   )
   entry = removed
   if (!entry) {
-    if (draggingKind === 'contentList-folder') {
+    if (draggingKind === 'content-list-folder') {
       // Soft fail if the thing being dragged is a folder and it doesn't exist in the library yet. This shouldn't be possible.
       return library
     } else {
@@ -480,7 +480,7 @@ export const containsTempContentList = (
         if (contains) return contains
         break
       }
-      case 'temp_contentList':
+      case 'temp_content_list':
         return true
       default:
         break
@@ -514,7 +514,7 @@ export const extractTempContentListsFromLibrary = (
   return library.contents.reduce((prevResult, nextContent) => {
     if (nextContent.type === 'folder') {
       return prevResult.concat(extractTempContentListsFromLibrary(nextContent))
-    } else if (nextContent.type === 'temp_contentList') {
+    } else if (nextContent.type === 'temp_content_list') {
       return prevResult.concat(nextContent)
     } else {
       return prevResult
@@ -543,8 +543,8 @@ export const replaceTempWithResolvedContentLists = <
         c,
         tempContentListIdToResolvedContentList
       )
-    } else if (c.type === 'temp_contentList') {
-      return tempContentListIdToResolvedContentList[c.contentList_id] ?? c
+    } else if (c.type === 'temp_content_list') {
+      return tempContentListIdToResolvedContentList[c.content_list_id] ?? c
     } else {
       return c
     }
@@ -564,10 +564,10 @@ export const getContentListsNotInLibrary = (
     libraryContentsLevel: ContentListLibrary['contents']
   ) => {
     libraryContentsLevel.forEach((content) => {
-      if (content.type === 'temp_contentList' || content.type === 'contentList') {
-        const contentList = contentLists[Number(content.contentList_id)]
+      if (content.type === 'temp_content_list' || content.type === 'contentList') {
+        const contentList = contentLists[Number(content.content_list_id)]
         if (contentList) {
-          delete result[Number(content.contentList_id)]
+          delete result[Number(content.content_list_id)]
         }
       } else if (content.type === 'folder') {
         helpComputeContentListsNotInLibrary(content.contents)

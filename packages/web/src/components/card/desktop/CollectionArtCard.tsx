@@ -71,8 +71,8 @@ const CollectionArtCard = g(
     goToRoute
   }) => {
     const {
-      contentList_id,
-      contentList_name,
+      content_list_id,
+      content_list_name,
       is_album,
       _cover_art_sizes,
       has_current_user_reposted,
@@ -87,14 +87,14 @@ const CollectionArtCard = g(
     const goToCollection = useCallback(() => {
       if (isPerspectiveDisabled) return
       const link = is_album
-        ? albumPage(handle, contentList_name, contentList_id)
-        : contentListPage(handle, contentList_name, contentList_id)
+        ? albumPage(handle, content_list_name, content_list_id)
+        : contentListPage(handle, content_list_name, content_list_id)
       goToRoute(link)
     }, [
       is_album,
       handle,
-      contentList_name,
-      contentList_id,
+      content_list_name,
+      content_list_id,
       goToRoute,
       isPerspectiveDisabled
     ])
@@ -105,17 +105,17 @@ const CollectionArtCard = g(
     }, [handle, goToRoute])
 
     const onClickReposts = useCallback(() => {
-      setRepostUsers(contentList_id)
+      setRepostUsers(content_list_id)
       setModalVisibility()
-    }, [setRepostUsers, setModalVisibility, contentList_id])
+    }, [setRepostUsers, setModalVisibility, content_list_id])
 
     const onClickFavorites = useCallback(() => {
-      setFavoriteUsers(contentList_id)
+      setFavoriteUsers(content_list_id)
       setModalVisibility()
-    }, [setFavoriteUsers, setModalVisibility, contentList_id])
+    }, [setFavoriteUsers, setModalVisibility, content_list_id])
 
     const image = useCollectionCoverArt(
-      contentList_id,
+      content_list_id,
       _cover_art_sizes,
       SquareSizes.SIZE_480_BY_480,
       placeholderArt
@@ -125,8 +125,8 @@ const CollectionArtCard = g(
     const menu = {
       type: (is_album ? 'album' : 'contentList') as MenuType,
       handle,
-      contentListId: contentList_id,
-      contentListName: contentList_name,
+      contentListId: content_list_id,
+      contentListName: content_list_name,
       isOwner: currentUserId === user_id,
       includeShare: true,
       includeRepost: true,
@@ -135,7 +135,7 @@ const CollectionArtCard = g(
       isFavorited: has_current_user_saved,
       isReposted: has_current_user_reposted,
       metadata: collection,
-      name: contentList_name
+      name: content_list_name
     }
 
     return (
@@ -169,7 +169,7 @@ const CollectionArtCard = g(
           </DynamicImage>
         </PerspectiveCard>
         <div className={styles.contentListName} onClick={goToCollection}>
-          {contentList_name}
+          {content_list_name}
         </div>
         <div className={styles.nameWrapper}>
           <LandlordPopover handle={handle}>

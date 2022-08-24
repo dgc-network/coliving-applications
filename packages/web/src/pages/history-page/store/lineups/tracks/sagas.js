@@ -47,7 +47,7 @@ function* getHistoryAgreements() {
 const keepAgreementIdAndDateListened = (entry) => ({
   uid: entry.uid,
   kind: entry.agreement_id ? Kind.AGREEMENTS : Kind.COLLECTIONS,
-  id: entry.agreement_id || entry.contentList_id,
+  id: entry.agreement_id || entry.content_list_id,
   dateListened: entry.dateListened
 })
 

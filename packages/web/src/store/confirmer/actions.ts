@@ -154,7 +154,7 @@ export const _setConfirmationResult = createCustomAction(
   }
 )
 
-/** Enqueues a completion call to make, e.g. "cache the contentList" */
+/** Enqueues a completion call to make, e.g. "cache the content list" */
 export const _addCompletionCall = createCustomAction(
   ADD_COMPLETION_CALL,
   (uid: string, completionCall: any) => {
