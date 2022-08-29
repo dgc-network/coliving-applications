@@ -124,7 +124,7 @@ const reducer = createReducer<ConfirmerState, ConfirmerActions>(initialState, {
       newComplete[action.uid][index] = noop
       const newLength = newComplete[action.uid].push(action.completionCall)
 
-      // Update the agreementer with new index of the operation's success call
+      // Update the tracker with new index of the operation's success call
       newOperationSuccessCallIdx[action.uid][action.operationId] = newLength - 1
     } else {
       let newLength: number

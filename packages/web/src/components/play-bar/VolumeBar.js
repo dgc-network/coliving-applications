@@ -58,7 +58,7 @@ class VolumeBar extends Component {
    * @param {boolean} persist whether or not toe persist the change to local storage
    */
   volumeChange = (value, persist = true) => {
-    // Round the volume bar agreementer's right edge when it reaches 100%
+    // Round the volume bar tracker's right edge when it reaches 100%
     if (persist) {
       window.localStorage.setItem('volume', value)
     }

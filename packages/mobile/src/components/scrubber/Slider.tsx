@@ -29,8 +29,8 @@ const createStyles = (themeColors: ThemeColors) =>
       height: 4,
       overflow: 'hidden'
     },
-    agreementer: {
-      // The agreementer must be the full width of the rail
+    tracker: {
+      // The tracker must be the full width of the rail
       // so that it can have rounded edges. It animates
       // by sliding (translateX) instead of by growing.
       flexGrow: 1,
@@ -112,7 +112,7 @@ export const Slider = memo(
     const styles = useThemedStyles(createStyles)
     const { primaryLight2, primaryDark2 } = useThemeColors()
 
-    // Animation to translate the handle and agreementer
+    // Animation to translate the handle and tracker
     const translationAnim = useRef(new Animated.Value(0)).current
     // Scale animation for the handle
     const {
@@ -314,7 +314,7 @@ export const Slider = memo(
         >
           <Animated.View
             style={[
-              styles.agreementer,
+              styles.tracker,
               {
                 transform: [
                   {
@@ -327,14 +327,14 @@ export const Slider = memo(
               }
             ]}
           >
-            {/* While dragging, show the gradient agreementer */}
+            {/* While dragging, show the gradient tracker */}
             <Animated.View
               style={[
                 {
                   flex: 1,
                   // Interpolate the handle scale animation to
                   // capture the same timing/easing for the fade in
-                  // of the agreementer.
+                  // of the tracker.
                   opacity: handleScale.interpolate({
                     inputRange: [1, HANDLE_GROW_SCALE],
                     outputRange: [0, 1]

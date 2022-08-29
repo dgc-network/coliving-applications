@@ -18,7 +18,7 @@ const createStyles = (themeColors: ThemeColors) =>
       width: '100%',
       backgroundColor: themeColors.neutralLight7
     },
-    agreementer: {
+    tracker: {
       height: 2,
       backgroundColor: 'red'
     }
@@ -60,12 +60,12 @@ export const AgreementingBar = ({ translationAnim }: AgreementingBarProps) => {
         styles.rail,
         {
           opacity: translationAnim.interpolate({
-            // Interpolate the animation such that the agreementer fades out
+            // Interpolate the animation such that the tracker fades out
             // at 5% up the screen.
-            // The agreementer is important to fade away shortly after
+            // The tracker is important to fade away shortly after
             // the now playing drawer is opened so that the drawer may
             // animate in corner radius without showing at the same time
-            // as the agreementer.
+            // as the tracker.
             inputRange: [0, 0.9 * NOW_PLAYING_HEIGHT, NOW_PLAYING_HEIGHT],
             outputRange: [0, 0, 2]
           })
@@ -74,7 +74,7 @@ export const AgreementingBar = ({ translationAnim }: AgreementingBarProps) => {
     >
       <View
         style={[
-          styles.agreementer,
+          styles.tracker,
           {
             width: `${percentComplete * 100}%`
           }

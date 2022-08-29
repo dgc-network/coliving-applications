@@ -77,7 +77,7 @@ class Upload extends Component {
 
     preview: null,
     previewIndex: -1,
-    uploadAgreementerror: null,
+    uploadAgreementError: null,
     isFirstUpload: false
   }
 
@@ -118,7 +118,7 @@ class Upload extends Component {
   }
 
   invalidAudioFile = (name, reason) => {
-    this.setState({ uploadAgreementerror: { reason } })
+    this.setState({ uploadAgreementError: { reason } })
   }
 
   onSelectAgreements = async (selectedFiles) => {
@@ -142,7 +142,7 @@ class Upload extends Component {
     )
     const agreements = (await Promise.all(processedFiles)).filter(Boolean)
     if (agreements.length === processedFiles.length) {
-      this.setState({ uploadAgreementerror: null })
+      this.setState({ uploadAgreementError: null })
     }
 
     let uploadType = this.state.uploadType
@@ -269,7 +269,7 @@ class Upload extends Component {
       metadata: schemas.newCollectionMetadata({
         artwork: { file: null, url: '' }
       }),
-      uploadAgreementerror: null
+      uploadAgreementError: null
     })
     this.props.resetUpload()
   }
@@ -351,7 +351,7 @@ class Upload extends Component {
       agreements,
       metadata,
       uploadType,
-      uploadAgreementerror,
+      uploadAgreementError,
       isFirstUpload
     } = this.state
 
@@ -380,7 +380,7 @@ class Upload extends Component {
           <SelectPage
             account={account}
             agreements={agreements}
-            error={uploadAgreementerror}
+            error={uploadAgreementError}
             uploadType={uploadType}
             setUploadType={this.setUploadType}
             openMultiAgreementNotification={openMultiAgreementNotification}
