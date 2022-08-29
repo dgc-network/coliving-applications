@@ -21,7 +21,7 @@ varying vec2 uvCoords;
 #define HAS_VERTEX_SAMPLER
 #define PI 3.14
 
-#pragma glslify: analyse = require('gl-live-analyser')
+#pragma glslify: analyse = require('gl-audio-analyser')
 #pragma glslify: noise4d = require('glsl-noise/simplex/4d')
 #pragma glslify: noise3d = require('glsl-noise/simplex/3d')
 

@@ -1,4 +1,4 @@
-import Analyser from 'web-live-analyser'
+import Analyser from 'web-audio-analyser'
 import Texture from 'gl-texture2d'
 import ndarray from 'ndarray'
 
