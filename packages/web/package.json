@@ -6,8 +6,7 @@
   "version": "1.2.2",
   "private": true,
   "dependencies": {
-    "@coliving/libs": "1.2.2",
-    "@coliving/sdk": "0.0.22",
+    "@coliving/sdk": "file:../libs",
     "@coliving/stems": "1.1.14",
     "@coinbase/cbpay-js": "1.0.2",
     "@craco/craco": "7.0.0-alpha.3",
