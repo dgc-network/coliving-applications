@@ -1,18 +1,18 @@
-import styles from './AgreementingBar.module.css'
+import styles from './TrackingBar.module.css'
 
-type AgreementingBarProps = {
+type TrackingBarProps = {
   percentComplete: number
 }
 
-const AgreementingBar = ({ percentComplete }: AgreementingBarProps) => {
+const TrackingBar = ({ percentComplete }: TrackingBarProps) => {
   return (
     <div className={styles.rail}>
       <div
-        className={styles.agreementer}
+        className={styles.tracker}
         style={{ width: `${percentComplete}%` }}
       />
     </div>
   )
 }
 
-export default AgreementingBar
+export default TrackingBar

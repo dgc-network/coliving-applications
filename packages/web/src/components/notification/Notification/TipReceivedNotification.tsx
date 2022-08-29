@@ -3,7 +3,7 @@ import { ComponentType, useCallback, useState } from 'react'
 import { Name, Nullable } from '@coliving/common'
 import { useDispatch } from 'react-redux'
 
-import { useUIAudio } from 'common/hooks/useUIAudio'
+import { useUIAudio } from 'common/hooks/useUILive'
 import { getNotificationUser } from 'common/store/notifications/selectors'
 import { TipReceive } from 'common/store/notifications/types'
 import {

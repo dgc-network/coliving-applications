@@ -47,10 +47,10 @@ function* getIsBalanceFrozen() {
  * @param action.playload.chain 'eth' or 'sol'
  */
 function* sendAsync({
-  payload: { recipientWallet, amount: weiAudioAmount, chain }
+  payload: { recipientWallet, amount: weiLiveAmount, chain }
 }: ReturnType<typeof send>) {
   const account = yield* select(getAccountUser)
-  const weiBNAmount = stringWeiToBN(weiAudioAmount)
+  const weiBNAmount = stringWeiToBN(weiLiveAmount)
   const accountBalance = yield* select(getAccountBalance)
   const weiBNBalance = accountBalance ?? (new BN('0') as BNWei)
 
@@ -112,7 +112,7 @@ function* sendAsync({
       getAccountBalance
     )
     if (newBalance?.eq(weiBNBalance)) {
-      yield* put(decreaseBalance({ amount: weiAudioAmount }))
+      yield* put(decreaseBalance({ amount: weiLiveAmount }))
     }
 
     yield* put(sendSucceeded())

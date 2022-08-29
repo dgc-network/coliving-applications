@@ -2,7 +2,7 @@ import { useCallback } from 'react'
 
 import { Name } from '@coliving/common'
 
-import { useUIAudio } from 'common/hooks/useUIAudio'
+import { useUIAudio } from 'common/hooks/useUILive'
 import { getNotificationUser } from 'common/store/notifications/selectors'
 import { Reaction } from 'common/store/notifications/types'
 import { getReactionFromRawValue } from 'common/store/ui/reactions/slice'
