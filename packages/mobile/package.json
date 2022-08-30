@@ -37,7 +37,7 @@
   },
   "dependencies": {
     "@amplitude/react-native": "2.6.0",
-    "@coliving/common": "1.2.2",
+    "@coliving/common": "file: ./common",
     "@gorhom/portal": "1.0.9",
     "@hcaptcha/react-native-hcaptcha": "1.3.4",
     "@optimizely/react-sdk": "2.7.0",
