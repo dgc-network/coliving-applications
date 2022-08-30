@@ -1,4 +1,4 @@
-import { FollowSource } from '@/common'
+import { FollowSource } from '@coliving/common'
 import { View, Text } from 'react-native'
 
 import { FollowButton, FollowsYouChip } from 'app/components/user'

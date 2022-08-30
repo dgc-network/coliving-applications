@@ -1,5 +1,5 @@
-import type { User } from '@/common'
-import { SquareSizes } from '@/common'
+import type { User } from '@coliving/common'
+import { SquareSizes } from '@coliving/common'
 
 import type { DynamicImageProps } from 'app/components/core'
 import { DynamicImage } from 'app/components/core'

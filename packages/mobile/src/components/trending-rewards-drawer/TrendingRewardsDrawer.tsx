@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 
-import { Theme, StringKeys } from '@/common'
+import { Theme, StringKeys } from '@coliving/common'
 import { getTrendingRewardsModalType } from '-client/src/common/store/pages/live-rewards/selectors'
 import type { TrendingRewardsModalType } from '-client/src/common/store/pages/live-rewards/slice'
 import { setTrendingRewardsModalType } from '-client/src/common/store/pages/live-rewards/slice'

@@ -1,7 +1,7 @@
 import React from 'react'
 
-import type { Agreement } from '@/common'
-import { SquareSizes } from '@/common'
+import type { Agreement } from '@coliving/common'
+import { SquareSizes } from '@coliving/common'
 import { getDominantColorsByAgreement } from '-client/src/common/store/average-color/slice'
 import { Dimensions, StyleSheet, View } from 'react-native'
 import { Shadow } from 'react-native-shadow-2'

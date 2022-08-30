@@ -1,4 +1,4 @@
-import type { Theme } from '@/common'
+import type { Theme } from '@coliving/common'
 import { Platform } from 'react-native'
 import type { Dispatch } from 'redux'
 

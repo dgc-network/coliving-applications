@@ -1,7 +1,7 @@
 import type { RefObject } from 'react'
 import { useRef, useState, useEffect, useCallback, useContext } from 'react'
 
-import type { Theme } from '@/common'
+import type { Theme } from '@coliving/common'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import type { NativeSyntheticEvent } from 'react-native'
 import { Platform, Linking, StatusBar, StyleSheet } from 'react-native'

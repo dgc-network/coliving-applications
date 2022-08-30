@@ -4,7 +4,7 @@ import type {
   WidthSizes,
   Maybe,
   Nullable
-} from '@/common'
+} from '@coliving/common'
 import { useImageSize as useImageSizeCommon } from '-client/src/common/hooks/useImageSize'
 import type { ImageSourcePropType } from 'react-native'
 import { Image } from 'react-native'

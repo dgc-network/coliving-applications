@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 
-import type { User } from '@/common'
+import type { User } from '@coliving/common'
 import { View } from 'react-native'
 
 import IconTip from 'app/assets/images/iconTip.svg'

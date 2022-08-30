@@ -1,6 +1,6 @@
 import { useContext, useEffect } from 'react'
 
-import type { ID, FavoriteType } from '@/common'
+import type { ID, FavoriteType } from '@coliving/common'
 import type { EventArg, NavigationState } from '@react-navigation/native'
 import type { createNativeStackNavigator } from '@react-navigation/native-stack'
 import type { NotificationType } from '-client/src/common/store/notifications/types'

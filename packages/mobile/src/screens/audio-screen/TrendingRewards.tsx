@@ -1,5 +1,5 @@
-import { StringKeys } from '@/common'
-import type { TrendingRewardID } from '@/common'
+import { StringKeys } from '@coliving/common'
+import type { TrendingRewardID } from '@coliving/common'
 import type { TrendingRewardsModalType } from '-client/src/common/store/pages/live-rewards/slice'
 import { setTrendingRewardsModalType } from '-client/src/common/store/pages/live-rewards/slice'
 import type { Modals } from '-client/src/common/store/ui/modals/slice'

@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react'
 
-import type { Collectible } from '@/common'
-import { CollectibleMediaType } from '@/common'
+import type { Collectible } from '@coliving/common'
+import { CollectibleMediaType } from '@coliving/common'
 import type { ImageStyle } from 'react-native'
 import { StyleSheet, TouchableWithoutFeedback, View } from 'react-native'
 

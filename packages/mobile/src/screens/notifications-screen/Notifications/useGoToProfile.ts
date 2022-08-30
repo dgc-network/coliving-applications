@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 
-import type { User, Nullable } from '@/common'
+import type { User, Nullable } from '@coliving/common'
 import { NOTIFICATION_PAGE } from '-client/src/utils/route'
 
 import { useNavigation } from 'app/hooks/useNavigation'

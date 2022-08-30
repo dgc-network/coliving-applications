@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from 'react'
 
-import type { ID, Collectible } from '@/common'
+import type { ID, Collectible } from '@coliving/common'
 import { getUserId } from '-client/src/common/store/account/selectors'
 import { setCollectible } from '-client/src/common/store/ui/collectible-details/slice'
 import { setVisibility } from '-client/src/common/store/ui/modals/slice'

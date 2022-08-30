@@ -1,6 +1,6 @@
 import type { ReactElement } from 'react'
 
-import type { ID, UID } from '@/common'
+import type { ID, UID } from '@coliving/common'
 import type { FlatListProps } from 'react-native'
 import { FlatList, View } from 'react-native'
 import type { DraggableFlatListProps } from 'react-native-draggable-flatlist'

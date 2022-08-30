@@ -1,4 +1,4 @@
-import type { ID, Nullable } from '@/common'
+import type { ID, Nullable } from '@coliving/common'
 import type { getAgreements } from 'common/store/ui/createContentListModal/selectors'
 
 export type Image = {

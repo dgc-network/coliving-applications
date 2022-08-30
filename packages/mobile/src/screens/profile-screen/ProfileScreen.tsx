@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 
-import { Status, ShareSource, FeatureFlags } from '@/common'
+import { Status, ShareSource, FeatureFlags } from '@coliving/common'
 import { PortalHost } from '@gorhom/portal'
 import { getUserId } from '-client/src/common/store/account/selectors'
 import { fetchProfile } from '-client/src/common/store/pages/profile/actions'

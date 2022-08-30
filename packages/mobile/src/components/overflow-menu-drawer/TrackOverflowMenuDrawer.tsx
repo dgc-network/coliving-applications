@@ -1,10 +1,10 @@
-import type { ID } from '@/common'
+import type { ID } from '@coliving/common'
 import {
   FavoriteSource,
   FollowSource,
   RepostSource,
   ShareSource
-} from '@/common'
+} from '@coliving/common'
 import type { CommonState } from '-client/src/common/store'
 import { getAgreement } from '-client/src/common/store/cache/agreements/selectors'
 import { getUser } from '-client/src/common/store/cache/users/selectors'

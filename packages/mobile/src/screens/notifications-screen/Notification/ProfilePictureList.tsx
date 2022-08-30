@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 
-import type { User } from '@/common'
+import type { User } from '@coliving/common'
 import { formatCount } from '-client/src/common/utils/formatUtil'
 import type { StyleProp, ViewStyle } from 'react-native'
 import { View, Text } from 'react-native'

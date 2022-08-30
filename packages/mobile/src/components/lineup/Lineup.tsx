@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
-import type { ID, UID } from '@/common'
-import { Name, PlaybackSource, Kind, Status } from '@/common'
+import type { ID, UID } from '@coliving/common'
+import { Name, PlaybackSource, Kind, Status } from '@coliving/common'
 import { getShowTip } from '-client/src/common/store/tipping/selectors'
 import { range } from 'lodash'
 import type { SectionList as RNSectionList } from 'react-native'

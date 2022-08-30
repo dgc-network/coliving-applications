@@ -8,7 +8,7 @@ import type {
   FavoriteType,
   Agreement,
   User
-} from '@/common'
+} from '@coliving/common'
 import type { RepostType } from '-client/src/common/store/user-list/reposts/types'
 
 import type { GestureResponderHandler } from 'app/types/gesture'

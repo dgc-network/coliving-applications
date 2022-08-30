@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
 
-import type { CID, ID, User } from '@/common'
-import { Name } from '@/common'
+import type { CID, ID, User } from '@coliving/common'
+import { Name } from '@coliving/common'
 import type { ButtonType as DownloadButtonType } from '-client/src/common/hooks/useDownloadAgreementButtons'
 import {
   ButtonState,

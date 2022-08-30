@@ -1,4 +1,4 @@
-import type { UserCollection, User } from '@/common'
+import type { UserCollection, User } from '@coliving/common'
 import Config from 'react-native-config'
 
 type UserHandle = Pick<User, 'handle'>

@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
 
-import type { ID, Agreement, User } from '@/common'
-import { SquareSizes } from '@/common'
+import type { ID, Agreement, User } from '@coliving/common'
+import { SquareSizes } from '@coliving/common'
 import { getAgreement } from '-client/src/common/store/cache/agreements/selectors'
 import { getUserFromAgreement } from '-client/src/common/store/cache/users/selectors'
 import { profilePage } from '-client/src/utils/route'

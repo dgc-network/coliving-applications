@@ -1,4 +1,4 @@
-import type { Nullable } from '@/common'
+import type { Nullable } from '@coliving/common'
 import { Platform, Share } from 'react-native'
 import type {
   FetchBlobResponse,

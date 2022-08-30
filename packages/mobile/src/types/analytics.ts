@@ -1,5 +1,5 @@
-import type { AllAgreementingEvents as CommonAgreementingEvents } from '@/common'
-import { Name as CommonEventNames } from '@/common'
+import type { AllAgreementingEvents as CommonAgreementingEvents } from '@coliving/common'
+import { Name as CommonEventNames } from '@coliving/common'
 
 import type { Message } from 'app/message'
 
@@ -45,4 +45,4 @@ export {
   FavoriteSource,
   FollowSource,
   CreateContentListSource
-} from '@/common'
+} from '@coliving/common'

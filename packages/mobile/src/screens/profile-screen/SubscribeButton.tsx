@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 
-import type { User } from '@/common'
+import type { User } from '@coliving/common'
 import { setNotificationSubscription } from '-client/src/common/store/pages/profile/actions'
 
 import IconNotification from 'app/assets/images/iconNotification.svg'

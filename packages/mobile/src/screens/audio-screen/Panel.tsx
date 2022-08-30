@@ -1,4 +1,4 @@
-import type { OptimisticUserChallenge } from '@/common'
+import type { OptimisticUserChallenge } from '@coliving/common'
 import { fillString } from '-client/src/common/utils/fillString'
 import { formatNumberCommas } from '-client/src/common/utils/formatUtil'
 import { View, Image } from 'react-native'

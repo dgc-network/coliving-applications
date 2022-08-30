@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 
-import type { BNWei, StringWei, Nullable } from '@/common'
+import type { BNWei, StringWei, Nullable } from '@coliving/common'
 import { useFocusEffect } from '@react-navigation/native'
 import { getHasAssociatedWallets } from '-client/src/common/store/pages/token-dashboard/selectors'
 import {

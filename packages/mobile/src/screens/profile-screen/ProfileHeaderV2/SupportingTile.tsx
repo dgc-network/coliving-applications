@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
 
-import type { Supporting } from '@/common'
-import { WidthSizes } from '@/common'
+import type { Supporting } from '@coliving/common'
+import { WidthSizes } from '@coliving/common'
 import { getUser } from '-client/src/common/store/cache/users/selectors'
 import { TIPPING_TOP_RANK_THRESHOLD } from '-client/src/utils/constants'
 import { profilePage } from '-client/src/utils/route'

@@ -1,7 +1,7 @@
 import type { ReactElement, ReactNode } from 'react'
 import { useLayoutEffect } from 'react'
 
-import type { Nullable } from '@/common'
+import type { Nullable } from '@coliving/common'
 import { useNavigation } from '@react-navigation/native'
 import { pickBy, negate, isUndefined } from 'lodash'
 import type { Animated, StyleProp, ViewStyle } from 'react-native'

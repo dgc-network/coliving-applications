@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 
-import type { Nullable } from '@/common'
+import type { Nullable } from '@coliving/common'
 import {
   getStatus,
   getAgreement

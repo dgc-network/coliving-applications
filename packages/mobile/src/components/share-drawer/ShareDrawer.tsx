@@ -1,6 +1,6 @@
 import { useCallback, useContext } from 'react'
 
-import { FeatureFlags } from '@/common'
+import { FeatureFlags } from '@coliving/common'
 import Clipboard from '@react-native-clipboard/clipboard'
 import { getAccountUser } from '-client/src/common/store/account/selectors'
 import { shareCollection } from '-client/src/common/store/social/collections/actions'

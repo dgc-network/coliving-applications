@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from 'react'
 
-import { Chain } from '@/common'
+import { Chain } from '@coliving/common'
 import { getUser } from '-client/src/common/store/cache/users/selectors'
 import {
   getCollectible,

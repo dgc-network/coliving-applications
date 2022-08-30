@@ -1,4 +1,4 @@
-import { WidthSizes } from '@/common'
+import { WidthSizes } from '@coliving/common'
 import { BlurView } from '@react-native-community/blur'
 import { Animated, Platform, StyleSheet } from 'react-native'
 

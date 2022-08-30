@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
 
-import type { BNWei } from '@/common'
-import { Chain } from '@/common'
+import type { BNWei } from '@coliving/common'
+import { Chain } from '@coliving/common'
 import { getAssociatedWallets } from '-client/src/common/store/pages/token-dashboard/selectors'
 import type { AssociatedWallet } from '-client/src/common/store/pages/token-dashboard/types'
 import { getAccountBalance } from '-client/src/common/store/wallet/selectors'

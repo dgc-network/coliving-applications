@@ -1,4 +1,4 @@
-import type { Nullable } from '@/common'
+import type { Nullable } from '@coliving/common'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import { createSlice } from '@reduxjs/toolkit'
 

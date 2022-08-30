@@ -1,4 +1,4 @@
-import type { BadgeTier } from '@/common'
+import type { BadgeTier } from '@coliving/common'
 
 import type { GradientTextProps } from 'app/components/core'
 import { GradientText } from 'app/components/core'

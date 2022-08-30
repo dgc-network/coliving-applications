@@ -1,13 +1,13 @@
 import { useCallback, useMemo } from 'react'
 
-import type { Collection, User } from '@/common'
+import type { Collection, User } from '@coliving/common'
 import {
   FavoriteSource,
   RepostSource,
   ShareSource,
   FavoriteType,
   SquareSizes
-} from '@/common'
+} from '@coliving/common'
 import { getUserId } from '-client/src/common/store/account/selectors'
 import {
   repostCollection,

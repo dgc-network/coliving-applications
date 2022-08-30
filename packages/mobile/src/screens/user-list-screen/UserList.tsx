@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
-import { FeatureFlags } from '@/common'
-import type { ID, User } from '@/common'
+import { FeatureFlags } from '@coliving/common'
+import type { ID, User } from '@coliving/common'
 import { useFocusEffect, useIsFocused } from '@react-navigation/native'
 import type { CommonState } from '-client/src/common/store'
 import { getUserId } from '-client/src/common/store/account/selectors'

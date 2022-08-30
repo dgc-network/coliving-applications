@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useState } from 'react'
 
-import type { ID } from '@/common'
+import type { ID } from '@coliving/common'
 import { getUserId } from '-client/src/common/store/account/selectors'
 import {
   OverflowAction,

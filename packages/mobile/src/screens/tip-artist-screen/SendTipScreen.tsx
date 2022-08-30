@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 
-import type { BNWei, StringWei } from '@/common'
+import type { BNWei, StringWei } from '@coliving/common'
 import { useFocusEffect } from '@react-navigation/native'
 import { getAccountUser } from '-client/src/common/store/account/selectors'
 import {

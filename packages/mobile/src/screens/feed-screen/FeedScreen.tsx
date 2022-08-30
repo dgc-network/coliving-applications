@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 
-import { Name } from '@/common'
+import { Name } from '@coliving/common'
 import { makeGetLineupMetadatas } from '-client/src/common/store/lineup/selectors'
 import { feedActions } from '-client/src/common/store/pages/feed/lineup/actions'
 import {

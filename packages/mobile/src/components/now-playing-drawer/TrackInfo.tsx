@@ -1,4 +1,4 @@
-import type { Agreement, User } from '@/common'
+import type { Agreement, User } from '@coliving/common'
 import { Pressable, View } from 'react-native'
 
 import { Text } from 'app/components/core'

@@ -1,5 +1,5 @@
-import type { ID } from '@/common'
-import { FollowSource, ShareSource } from '@/common'
+import type { ID } from '@coliving/common'
+import { FollowSource, ShareSource } from '@coliving/common'
 import type { CommonState } from '-client/src/common/store'
 import { getUser } from '-client/src/common/store/cache/users/selectors'
 import {

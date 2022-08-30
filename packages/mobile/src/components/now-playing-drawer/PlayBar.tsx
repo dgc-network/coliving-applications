@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
 
-import type { Agreement, User } from '@/common'
-import { FavoriteSource, SquareSizes } from '@/common'
+import type { Agreement, User } from '@coliving/common'
+import { FavoriteSource, SquareSizes } from '@coliving/common'
 import {
   saveAgreement,
   unsaveAgreement

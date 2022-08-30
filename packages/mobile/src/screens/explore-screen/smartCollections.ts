@@ -1,6 +1,6 @@
 import type { ComponentType } from 'react'
 
-import { SmartCollectionVariant } from '@/common'
+import { SmartCollectionVariant } from '@coliving/common'
 import type { SvgProps } from 'react-native-svg'
 import {
   EXPLORE_HEAVY_ROTATION_PAGE,

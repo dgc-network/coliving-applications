@@ -3,7 +3,7 @@ import { useMemo } from 'react'
 // import { createUseFeatureFlagHook } from '-client/src/common/hooks/useFeatureFlag'
 // import { createUseRemoteVarHook } from '-client/src/common/hooks/useRemoteVar'
 
-import { FeatureFlagCohortType, flagCohortType } from '@/common'
+import { FeatureFlagCohortType, flagCohortType } from '@coliving/common'
 import type {
   AllRemoteConfigKeys,
   BooleanKeys,
@@ -11,7 +11,7 @@ import type {
   IntKeys,
   StringKeys,
   FeatureFlags
-} from '@/common'
+} from '@coliving/common'
 import { getAccountUser } from '-client/src/common/store/account/selectors'
 import { isRemoteConfigLoaded } from '-client/src/common/store/remote-config/selectors'
 import { useSelector } from 'react-redux'

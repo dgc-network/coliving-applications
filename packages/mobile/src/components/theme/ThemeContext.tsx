@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react'
 import { createContext, useCallback } from 'react'
 
-import { Name } from '@/common'
+import { Name } from '@coliving/common'
 import { setTheme } from '-client/src/common/store/ui/theme/actions'
 import { getTheme } from '-client/src/common/store/ui/theme/selectors'
 import { useDarkMode } from 'react-native-dark-mode'

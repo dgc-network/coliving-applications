@@ -1,7 +1,7 @@
 import { useCallback, useLayoutEffect } from 'react'
 
-import type { Agreement } from '@/common'
-import { FavoriteSource, RepostSource, ShareSource } from '@/common'
+import type { Agreement } from '@coliving/common'
+import { FavoriteSource, RepostSource, ShareSource } from '@coliving/common'
 import { updateMethod } from '-client/src/common/store/cast/slice'
 import {
   repostAgreement,

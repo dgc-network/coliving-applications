@@ -1,4 +1,4 @@
-import type { User } from '@/common'
+import type { User } from '@coliving/common'
 import { TouchableOpacity } from 'react-native'
 
 import { Text } from 'app/components/core'

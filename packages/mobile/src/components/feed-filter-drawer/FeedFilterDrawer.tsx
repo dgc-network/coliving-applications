@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from 'react'
 
-import { FeedFilter, Name } from '@/common'
+import { FeedFilter, Name } from '@coliving/common'
 import { setFeedFilter } from '-client/src/common/store/pages/feed/actions'
 import { feedActions } from '-client/src/common/store/pages/feed/lineup/actions'
 import { Text } from 'react-native'

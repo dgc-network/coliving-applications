@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react'
 
-import type { User } from '@/common'
+import type { User } from '@coliving/common'
 import { beginTip } from '-client/src/common/store/tipping/slice'
 import { View } from 'react-native'
 

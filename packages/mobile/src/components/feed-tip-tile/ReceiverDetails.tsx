@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 
-import type { User } from '@/common'
+import type { User } from '@coliving/common'
 import { profilePage } from '-client/src/utils/route'
 import { View } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'

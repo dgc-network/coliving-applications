@@ -1,4 +1,4 @@
-import type { UserCollection } from '@/common'
+import type { UserCollection } from '@coliving/common'
 
 import { CollectionCard } from 'app/components/collection-card'
 import type { CardListProps } from 'app/components/core'

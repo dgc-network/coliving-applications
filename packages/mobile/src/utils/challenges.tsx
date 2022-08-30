@@ -1,4 +1,4 @@
-import type { ChallengeRewardID, TrendingRewardID } from '@/common'
+import type { ChallengeRewardID, TrendingRewardID } from '@coliving/common'
 import {
   ACCOUNT_VERIFICATION_SETTINGS_PAGE,
   TRENDING_PAGE,

@@ -1,4 +1,4 @@
-import { FeedFilter } from '@/common'
+import { FeedFilter } from '@coliving/common'
 
 import { messages } from 'app/components/feed-filter-drawer'
 import { HeaderButton } from 'app/components/header'

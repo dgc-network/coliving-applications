@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 
-import type { Nullable } from '@/common'
+import type { Nullable } from '@coliving/common'
 import { getUser } from '-client/src/common/store/cache/users/selectors'
 import { useTwitterButtonStatus } from 'common/hooks/useTwitterButtonStatus'
 import { fetchUserSocials } from 'common/store/cache/users/actions'

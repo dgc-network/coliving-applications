@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
 
-import type { User } from '@/common'
-import { FollowSource } from '@/common'
+import type { User } from '@coliving/common'
+import { FollowSource } from '@coliving/common'
 import { getUserId } from '-client/src/common/store/account/selectors'
 import { Pressable, View, Animated } from 'react-native'
 

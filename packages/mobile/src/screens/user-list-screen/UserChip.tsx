@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
 
-import type { ID, User, Nullable } from '@/common'
-import { FollowSource } from '@/common'
+import type { ID, User, Nullable } from '@coliving/common'
+import { FollowSource } from '@coliving/common'
 import { View, Text, Pressable } from 'react-native'
 
 import { ProfilePicture, FollowButton } from 'app/components/user'

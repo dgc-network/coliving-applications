@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 
-import { Name, TimeRange } from '@/common'
+import { Name, TimeRange } from '@coliving/common'
 import { useNavigation } from '@react-navigation/native'
 import { makeGetLineupMetadatas } from '-client/src/common/store/lineup/selectors'
 import { setTrendingTimeRange } from '-client/src/common/store/pages/trending/actions'

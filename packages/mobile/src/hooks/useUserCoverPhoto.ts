@@ -1,4 +1,4 @@
-import type { WidthSizes } from '@/common'
+import type { WidthSizes } from '@coliving/common'
 import { fetchCoverPhoto } from '-client/src/common/store/cache/users/actions'
 
 import imageCoverPhotoBlank from 'app/assets/images/imageCoverPhotoBlank.jpg'

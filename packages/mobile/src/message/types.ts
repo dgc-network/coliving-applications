@@ -1,4 +1,4 @@
-import type { Theme } from '@/common'
+import type { Theme } from '@coliving/common'
 import type { Dispatch } from 'redux'
 
 import type { AnalyticsMessage } from '../types/analytics'

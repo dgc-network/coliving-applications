@@ -1,4 +1,4 @@
-import type { Remix } from '@/common'
+import type { Remix } from '@coliving/common'
 import { StyleSheet, View } from 'react-native'
 
 import Text from 'app/components/text'

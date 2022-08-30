@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 
-import { CreateContentListSource } from '@/common'
+import { CreateContentListSource } from '@coliving/common'
 import { getUserHandle } from '-client/src/common/store/account/selectors'
 import { createContentList } from '-client/src/common/store/cache/collections/actions'
 import { contentListPage } from '-client/src/utils/route'

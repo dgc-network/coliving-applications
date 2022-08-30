@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 
-import type { Remix, User } from '@/common'
+import type { Remix, User } from '@coliving/common'
 import { StyleSheet, View } from 'react-native'
 
 import IconVolume from 'app/assets/images/iconVolume.svg'

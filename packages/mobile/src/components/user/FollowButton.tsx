@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 
-import type { FollowSource, User } from '@/common'
+import type { FollowSource, User } from '@coliving/common'
 import {
   followUser,
   unfollowUser

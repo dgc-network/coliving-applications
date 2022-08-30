@@ -1,5 +1,5 @@
-import type { ID } from '@/common'
-import { FavoriteSource, RepostSource, ShareSource } from '@/common'
+import type { ID } from '@coliving/common'
+import { FavoriteSource, RepostSource, ShareSource } from '@coliving/common'
 import type { CommonState } from '-client/src/common/store'
 import { publishContentList } from '-client/src/common/store/cache/collections/actions'
 import { getCollection } from '-client/src/common/store/cache/collections/selectors'

@@ -1,6 +1,6 @@
 import { Fragment, useCallback } from 'react'
 
-import { FollowSource } from '@/common'
+import { FollowSource } from '@coliving/common'
 import {
   followUser,
   unfollowUser

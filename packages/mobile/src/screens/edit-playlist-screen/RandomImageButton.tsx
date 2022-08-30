@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 
-import { RandomImage } from '@/common'
+import { RandomImage } from '@coliving/common'
 import { useField } from 'formik'
 
 import IconCamera from 'app/assets/images/iconCamera.svg'

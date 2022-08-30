@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 
-import type { Agreement, User } from '@/common'
+import type { Agreement, User } from '@coliving/common'
 import {
   PlaybackSource,
   FavoriteSource,
@@ -8,7 +8,7 @@ import {
   ShareSource,
   FavoriteType,
   SquareSizes
-} from '@/common'
+} from '@coliving/common'
 import { getUserId } from '-client/src/common/store/account/selectors'
 import { getAgreement } from '-client/src/common/store/cache/agreements/selectors'
 import { getUserFromAgreement } from '-client/src/common/store/cache/users/selectors'

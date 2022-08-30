@@ -1,4 +1,4 @@
-import type { LineupAgreement } from '@/common'
+import type { LineupAgreement } from '@coliving/common'
 import { range } from 'lodash'
 import { Pressable, Text, View } from 'react-native'
 import { useSelector } from 'react-redux'

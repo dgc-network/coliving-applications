@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 
-import type { Nullable } from '@/common'
+import type { Nullable } from '@coliving/common'
 import { useUIAudio } from '-client/src/common/hooks/useUIAudio'
 import { getNotificationUser } from '-client/src/common/store/notifications/selectors'
 import type { TipReceive } from '-client/src/common/store/notifications/types'

@@ -1,7 +1,7 @@
 import { useCallback, useContext, useEffect } from 'react'
 
-import type { Maybe } from '@/common'
-import { IntKeys, StringKeys } from '@/common'
+import type { Maybe } from '@coliving/common'
+import { IntKeys, StringKeys } from '@coliving/common'
 import { getOptimisticUserChallenges } from '-client/src/common/store/challenges/selectors/optimistic-challenges'
 import {
   getChallengeRewardsModalType,

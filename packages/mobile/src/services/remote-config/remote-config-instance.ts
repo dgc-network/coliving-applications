@@ -1,4 +1,4 @@
-import { remoteConfig } from '@/common'
+import { remoteConfig } from '@coliving/common'
 import * as optimizely from '@optimizely/react-sdk'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import Config from 'react-native-config'

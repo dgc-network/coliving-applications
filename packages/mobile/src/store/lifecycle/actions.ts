@@ -1,4 +1,4 @@
-import type { User } from '@/common'
+import type { User } from '@coliving/common'
 
 export const BACKEND_LOADED = 'LIFECYCLE/BACKEND_LOADED'
 export const BACKEND_TEAR_DOWN = 'LIFECYCLE/BACKEND_TEAR_DOWN'

@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
 
-import type { Collection } from '@/common'
-import { SquareSizes } from '@/common'
+import type { Collection } from '@coliving/common'
+import { SquareSizes } from '@coliving/common'
 import {
   editContentList,
   orderContentList,

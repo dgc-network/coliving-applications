@@ -3,8 +3,8 @@ import type {
   CoverArtSizes,
   ProfilePictureSizes,
   User
-} from '@/common'
-import { SquareSizes } from '@/common'
+} from '@coliving/common'
+import { SquareSizes } from '@coliving/common'
 import type { StyleProp, ViewStyle } from 'react-native'
 import { Text, View } from 'react-native'
 

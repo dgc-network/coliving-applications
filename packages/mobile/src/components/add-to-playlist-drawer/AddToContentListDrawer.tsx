@@ -1,6 +1,6 @@
 import { useContext, useState } from 'react'
 
-import { CreateContentListSource } from '@/common'
+import { CreateContentListSource } from '@coliving/common'
 import { getAccountWithOwnContentLists } from '-client/src/common/store/account/selectors'
 import {
   addAgreementToContentList,

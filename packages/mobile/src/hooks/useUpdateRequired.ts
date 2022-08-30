@@ -1,4 +1,4 @@
-import { StringKeys } from '@/common'
+import { StringKeys } from '@coliving/common'
 import VersionNumber from 'react-native-version-number'
 import semver from 'semver'
 

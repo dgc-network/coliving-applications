@@ -1,4 +1,4 @@
-import type { BNWei } from '@/common'
+import type { BNWei } from '@coliving/common'
 import { getAccountBalance } from '-client/src/common/store/wallet/selectors'
 import { formatWei } from '-client/src/common/utils/wallet'
 import BN from 'bn.js'

@@ -1,4 +1,4 @@
-import { TimeRange } from '@/common'
+import { TimeRange } from '@coliving/common'
 import { getTrendingGenre } from '-client/src/common/store/pages/trending/selectors'
 
 import IconAllTime from 'app/assets/images/iconAllTime.svg'

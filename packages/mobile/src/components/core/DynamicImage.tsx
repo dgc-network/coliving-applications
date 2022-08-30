@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react'
 import { memo, useCallback, useEffect, useRef, useState } from 'react'
 
-import type { Maybe } from '@/common'
+import type { Maybe } from '@coliving/common'
 import useInstanceVar from '-client/src/common/hooks/useInstanceVar'
 import type {
   ImageProps,

@@ -1,4 +1,4 @@
-import type { User } from '@/common'
+import type { User } from '@coliving/common'
 import { getOptimisticSupporting } from '-client/src/common/store/tipping/selectors'
 import { getId as getSupportingId } from 'common/store/user-list/supporting/selectors'
 

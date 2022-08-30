@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 
-import type { Nullable } from '@/common'
+import type { Nullable } from '@coliving/common'
 import { getNotificationEntity } from '-client/src/common/store/notifications/selectors'
 import type {
   AgreementEntity,

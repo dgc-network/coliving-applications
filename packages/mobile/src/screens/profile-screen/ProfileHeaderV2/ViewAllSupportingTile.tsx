@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 
-import type { ID } from '@/common'
+import type { ID } from '@coliving/common'
 import { getUsers } from '-client/src/common/store/cache/users/selectors'
 import { getOptimisticSupportingForUser } from '-client/src/common/store/tipping/selectors'
 import type { SupportingMapForUser } from '-client/src/common/store/tipping/types'

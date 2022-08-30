@@ -1,4 +1,4 @@
-import type { StringWei } from '@/common'
+import type { StringWei } from '@coliving/common'
 import { formatWei, stringWeiToBN } from '-client/src/common/utils/wallet'
 import { View } from 'react-native'
 

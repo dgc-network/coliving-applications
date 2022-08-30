@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 
-import type { ChallengeRewardID } from '@/common'
-import { removeNullable, StringKeys } from '@/common'
+import type { ChallengeRewardID } from '@coliving/common'
+import { removeNullable, StringKeys } from '@coliving/common'
 import { getOptimisticUserChallenges } from '-client/src/common/store/challenges/selectors/optimistic-challenges'
 import {
   getUserChallenges,

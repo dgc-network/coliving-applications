@@ -1,4 +1,4 @@
-import type { User } from '@/common'
+import type { User } from '@coliving/common'
 import type { ViewStyle, StyleProp, TextStyle } from 'react-native'
 import { StyleSheet, View, Text } from 'react-native'
 

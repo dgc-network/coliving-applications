@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 
-import type { UserCollection } from '@/common'
+import type { UserCollection } from '@coliving/common'
 import type { StyleProp, ViewStyle } from 'react-native'
 
 import { Card } from 'app/components/card'

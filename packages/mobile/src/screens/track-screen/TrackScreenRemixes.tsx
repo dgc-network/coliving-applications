@@ -1,4 +1,4 @@
-import type { ID } from '@/common'
+import type { ID } from '@coliving/common'
 import { View } from 'react-native'
 
 import IconArrow from 'app/assets/images/iconArrow.svg'

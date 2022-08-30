@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
 
-import type { Agreement, User } from '@/common'
+import type { Agreement, User } from '@coliving/common'
 import type { TextStyle } from 'react-native'
 
 import type { SearchUser } from 'app/store/search/types'

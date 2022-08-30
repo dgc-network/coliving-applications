@@ -1,4 +1,4 @@
-import type { Repost, AgreementSegment, User } from '@/common'
+import type { Repost, AgreementSegment, User } from '@coliving/common'
 
 import type { CollectionImage } from 'app/models/Collection'
 import type { AgreementImage } from 'app/models/Agreement'

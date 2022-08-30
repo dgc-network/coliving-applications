@@ -1,7 +1,7 @@
 import { useCallback, useMemo } from 'react'
 
-import type { ID, UID } from '@/common'
-import { Status, Name, PlaybackSource } from '@/common'
+import type { ID, UID } from '@coliving/common'
+import { Status, Name, PlaybackSource } from '@coliving/common'
 import { makeGetTableMetadatas } from '-client/src/common/store/lineup/selectors'
 import { agreementsActions } from '-client/src/common/store/pages/collection/lineup/actions'
 import { getCollectionAgreementsLineup } from '-client/src/common/store/pages/collection/selectors'

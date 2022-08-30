@@ -1,5 +1,5 @@
-import type { ID, CoverArtSizes } from '@/common'
-import { SquareSizes } from '@/common'
+import type { ID, CoverArtSizes } from '@coliving/common'
+import { SquareSizes } from '@coliving/common'
 import { View } from 'react-native'
 
 import IconPause from 'app/assets/images/pbIconPauseAlt.svg'

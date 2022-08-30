@@ -1,4 +1,4 @@
-import type { ID } from '@/common'
+import type { ID } from '@coliving/common'
 import { makeGetTierAndVerifiedForUser } from '-client/src/common/store/wallet/utils'
 
 import { isEqual, useSelectorWeb } from './useSelectorWeb'

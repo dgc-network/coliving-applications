@@ -1,6 +1,6 @@
 import type { ComponentType } from 'react'
 
-import type { BadgeTier } from '@/common'
+import type { BadgeTier } from '@coliving/common'
 import type { SvgProps } from 'react-native-svg'
 
 import IconBronzeBadge from 'app/assets/images/IconBronzeBadge.svg'

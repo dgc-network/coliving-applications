@@ -1,4 +1,4 @@
-import type { Maybe } from '@/common'
+import type { Maybe } from '@coliving/common'
 
 import type { Message } from '../message'
 import { MessageType } from '../message'

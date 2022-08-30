@@ -1,7 +1,7 @@
 import { useCallback, useEffect } from 'react'
 
-import type { User } from '@/common'
-import { FeatureFlags } from '@/common'
+import type { User } from '@coliving/common'
+import { FeatureFlags } from '@coliving/common'
 import { getAccountUser } from '-client/src/common/store/account/selectors'
 import { getUsers } from '-client/src/common/store/cache/users/selectors'
 import {

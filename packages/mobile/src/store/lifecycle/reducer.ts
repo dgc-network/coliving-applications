@@ -1,4 +1,4 @@
-import type { User } from '@/common'
+import type { User } from '@coliving/common'
 
 import type { LifecycleActions } from './actions'
 import {

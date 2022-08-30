@@ -1,4 +1,4 @@
-import type { SquareSizes } from '@/common'
+import type { SquareSizes } from '@coliving/common'
 import { fetchCoverArt } from '-client/src/common/store/cache/collections/actions'
 
 import imageEmpty from 'app/assets/images/imageBlank2x.png'

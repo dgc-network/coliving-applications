@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 
-import type { ID, FavoriteType } from '@/common'
+import type { ID, FavoriteType } from '@coliving/common'
 import { setFavorite } from '-client/src/common/store/user-list/favorites/actions'
 import { setRepost } from '-client/src/common/store/user-list/reposts/actions'
 import type { RepostType } from '-client/src/common/store/user-list/reposts/types'

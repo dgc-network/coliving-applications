@@ -1,6 +1,6 @@
 import React from 'react'
 
-import type { UserChallengeState } from '@/common'
+import type { UserChallengeState } from '@coliving/common'
 import { ClaimStatus } from '-client/src/common/store/pages/live-rewards/slice'
 import { fillString } from '-client/src/common/utils/fillString'
 import { formatNumberCommas } from '-client/src/common/utils/formatUtil'

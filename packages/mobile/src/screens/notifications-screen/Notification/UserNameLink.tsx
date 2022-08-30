@@ -1,6 +1,6 @@
 import { useCallback, useContext } from 'react'
 
-import type { User as UserType } from '@/common'
+import type { User as UserType } from '@coliving/common'
 import { NOTIFICATION_PAGE } from '-client/src/utils/route'
 import { useDispatch } from 'react-redux'
 

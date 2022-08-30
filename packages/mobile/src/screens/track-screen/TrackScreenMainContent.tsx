@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
 
-import type { ID, LineupState, Agreement, User, Nullable } from '@/common'
+import type { ID, LineupState, Agreement, User, Nullable } from '@coliving/common'
 import { agreementRemixesPage } from '-client/src/utils/route'
 import { View } from 'react-native'
 

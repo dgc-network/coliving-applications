@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 
-import { Status } from '@/common'
+import { Status } from '@coliving/common'
 import {
   getCognitoFlowUrl,
   getCognitoFlowUrlStatus

@@ -1,4 +1,4 @@
-import { Status } from '@/common'
+import { Status } from '@coliving/common'
 import {
   getCollections,
   getStatus

@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from 'react'
 
-import type { Collection, Agreement, User } from '@/common'
+import type { Collection, Agreement, User } from '@coliving/common'
 import {
   FavoriteSource,
   PlaybackSource,
@@ -8,7 +8,7 @@ import {
   ShareSource,
   FavoriteType,
   SquareSizes
-} from '@/common'
+} from '@coliving/common'
 import { getUserId } from '-client/src/common/store/account/selectors'
 import type { EnhancedCollectionAgreement } from '-client/src/common/store/cache/collections/selectors'
 import {

@@ -1,4 +1,4 @@
-import type { RecentTipsStorage } from '@/common'
+import type { RecentTipsStorage } from '@coliving/common'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { RECENT_TIPS_KEY } from 'utils/constants'
 
