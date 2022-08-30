@@ -1,5 +1,6 @@
 0 silly argv {
-0 silly argv   _: [ 'link' ],
+0 silly argv   _: [ 'bootstrap' ],
+0 silly argv   ci: false,
 0 silly argv   lernaVersion: '5.1.8',
 0 silly argv   '$0': '/Users/roverchen/Documents/coliving-projects/coliving-client/node_modules/.bin/lerna'
 0 silly argv }
