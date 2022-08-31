@@ -7,7 +7,8 @@ import { useDevModeHotkey } from 'hooks/useHotkey'
 
 import styles from './DiscoveryNodeSelection.module.css'
 
-const localStorageKey = '@coliving/libs:discovery-node-timestamp'
+//const localStorageKey = '@coliving/libs:discovery-node-timestamp'
+const localStorageKey = '@coliving/sdk:discovery-node-timestamp'
 
 const DiscoveryNodeSelection = () => {
   const isEnabled = useDevModeHotkey(68 /* d */)

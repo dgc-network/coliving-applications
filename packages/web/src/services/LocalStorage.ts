@@ -3,7 +3,8 @@ import { CURRENT_USER_EXISTS_LOCAL_STORAGE_KEY } from '@coliving/sdk/dist/core'
 
 // TODO: the following should come from @coliving/libs/dist/core when
 // discoveryNode/constants is migrated to typescript.
-const DISCOVERY_NODE_TIMESTAMP = '@coliving/libs:discovery-node-timestamp'
+//const DISCOVERY_NODE_TIMESTAMP = '@coliving/libs:discovery-node-timestamp'
+const DISCOVERY_NODE_TIMESTAMP = '@coliving/sdk:discovery-node-timestamp'
 
 const COLIVING_ACCOUNT_KEY = '@coliving/account'
 const COLIVING_ACCOUNT_USER_KEY = '@coliving/coliving-user'
