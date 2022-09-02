@@ -1,6 +1,6 @@
 import Hls from 'hls.js'
 
-import AudioStream from 'live/AudioStream'
+import AudioStream from 'audio/AudioStream'
 
 jest.mock('hls.js', () => {
   const hls = jest.fn().mockImplementation(() => ({

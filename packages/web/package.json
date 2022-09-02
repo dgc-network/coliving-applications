@@ -7,7 +7,7 @@
   "private": true,
   "dependencies": {
     "@coinbase/cbpay-js": "1.0.2",
-    "@coliving/sdk": "file:../libs",
+    "@coliving/common": "file:../common",
     "@coliving/stems": "file:../stems",
     "@craco/craco": "^5.9.0",
     "@fingerprintjs/fingerprintjs-pro": "3.5.6",
