@@ -17,7 +17,7 @@ const messages = {
     ' for being referred! Invite your friends to join to earn more!',
   challengeCompleteText: ' for completing this challenge!',
   twitterShareText:
-    'I earned $LIVE for completing challenges on @dgc-network #AudioRewards'
+    'I earned $LIVE for completing challenges on @dgc-network #LiveRewards'
 }
 
 const challengeInfoMap: Record<

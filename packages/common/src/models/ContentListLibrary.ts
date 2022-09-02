@@ -10,7 +10,7 @@ export type ExploreContentListIdentifier = {
   content_list_id: SmartCollectionVariant
 }
 
-export type AudioNftContentListIdentifier = {
+export type LiveNftContentListIdentifier = {
   type: 'live_nft_content_list'
   content_list_id: SmartCollectionVariant.LIVE_NFT_CONTENT_LIST
 }
@@ -24,7 +24,7 @@ export type TempContentListIdentifier = {
 export type ContentListLibraryIdentifier =
   | ContentListIdentifier
   | ExploreContentListIdentifier
-  | AudioNftContentListIdentifier
+  | LiveNftContentListIdentifier
   | TempContentListIdentifier
 
 export type ContentListLibraryFolder = {

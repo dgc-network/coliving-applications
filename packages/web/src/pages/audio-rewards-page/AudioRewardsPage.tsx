@@ -19,7 +19,7 @@ import { useWithMobileStyle } from 'hooks/useWithMobileStyle'
 import { isMobile } from 'utils/clientUtil'
 import { LIVE_PAGE, BASE_URL, TRENDING_PAGE } from 'utils/route'
 
-import styles from './AudioRewardsPage.module.css'
+import styles from './LiveRewardsPage.module.css'
 import ChallengeRewardsTile from './ChallengeRewardsTile'
 import Tiers from './Tiers'
 import { BalanceTile, WalletTile } from './Tiles'
@@ -97,7 +97,7 @@ export const MobilePage = ({ children }: { children: ReactNode }) => {
   )
 }
 
-export const AudioRewardsPage = () => {
+export const LiveRewardsPage = () => {
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(getBalance())
@@ -110,4 +110,4 @@ export const AudioRewardsPage = () => {
   )
 }
 
-export default AudioRewardsPage
+export default LiveRewardsPage

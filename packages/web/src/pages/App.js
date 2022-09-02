@@ -46,7 +46,7 @@ import MobileRoute from 'components/routes/MobileRoute'
 import TrendingGenreSelectionPage from 'components/trending-genre-selection/TrendingGenreSelectionPage'
 import AnnouncementPage from 'pages/announcement-page/AnnoucementPage'
 import LandlordDashboardPage from 'pages/landlord-dashboard-page/LandlordDashboardPage'
-import AudioRewardsPage from 'pages/live-rewards-page/AudioRewardsPage'
+import LiveRewardsPage from 'pages/live-rewards-page/LiveRewardsPage'
 import CheckPage from 'pages/check-page/CheckPage'
 import CollectionPage from 'pages/collection-page/CollectionPage'
 import EmptyPage from 'pages/empty-page/EmptyPage'
@@ -802,7 +802,7 @@ class App extends Component {
                 exact
                 path={LIVE_PAGE}
                 isMobile={isMobileClient}
-                component={AudioRewardsPage}
+                component={LiveRewardsPage}
               />
               <Route
                 exact

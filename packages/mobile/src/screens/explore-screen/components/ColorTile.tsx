@@ -11,7 +11,7 @@ import { Animated, Image, StyleSheet, View } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
 import type { SvgProps } from 'react-native-svg'
 
-import IconAudioRewardsPill from 'app/assets/images/iconAudioRewardsPill.svg'
+import IconLiveRewardsPill from 'app/assets/images/iconLiveRewardsPill.svg'
 import { Pressable } from 'app/components/core'
 import Text from 'app/components/text'
 import { useNavigation } from 'app/hooks/useNavigation'
@@ -194,7 +194,7 @@ export const ColorTile = ({
           </View>
           {isIncentivized ? (
             <View style={styles.rewardsPill}>
-              <IconAudioRewardsPill />
+              <IconLiveRewardsPill />
             </View>
           ) : null}
         </Pressable>

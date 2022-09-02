@@ -3,7 +3,7 @@ import { ReactNode } from 'react'
 import cn from 'classnames'
 import { animated } from 'react-spring'
 
-import { ReactComponent as IconAudioRewardsPill } from 'assets/img/iconAudioRewardsPill.svg'
+import { ReactComponent as IconLiveRewardsPill } from 'assets/img/iconLiveRewardsPill.svg'
 import useCardWeight from 'hooks/useCardWeight'
 
 import styles from './PerspectiveCard.module.css'
@@ -63,7 +63,7 @@ const PerspectiveCard = ({
         >
           {isIncentivized ? (
             <div className={styles.rewardsPill}>
-              <IconAudioRewardsPill />
+              <IconLiveRewardsPill />
             </div>
           ) : null}
           {children}
