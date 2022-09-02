@@ -6,7 +6,7 @@ import { stringAudioToBN, weiToAudio } from 'common/utils/wallet'
 import { ModalBodyTitle, ModalBodyWrapper } from '../WalletModal'
 
 import DashboardTokenValueSlider from './DashboardTokenValueSlider'
-import DisplayAudio from './DisplayAudio'
+import DisplayLive from './DisplayLive'
 import styles from './SendInputConfirmation.module.css'
 
 const messages = {
@@ -46,7 +46,7 @@ const SendInputConfirmation = ({
         max={weiToAudio(balance)}
         value={weiToAudio(amountToTransfer)}
       />
-      <DisplayAudio amount={amountToTransfer} />
+      <DisplayLive amount={amountToTransfer} />
       <AddressWithArrow address={recipientAddress} />
       <div className={styles.buttonWrapper}>
         <Button

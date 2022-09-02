@@ -4,7 +4,7 @@ import { formatWei } from 'common/utils/wallet'
 
 import { ModalBodyTitle, ModalBodyWrapper } from '../WalletModal'
 
-import DisplayAudio from './DisplayAudio'
+import DisplayLive from './DisplayLive'
 import PurpleBox from './PurpleBox'
 import { AddressWithArrow } from './SendInputConfirmation'
 import styles from './SendInputSuccess.module.css'
@@ -33,7 +33,7 @@ const SendInputSuccess = ({
       <div className={styles.titleWrapper}>
         <ModalBodyTitle text={messages.success} />
       </div>
-      <DisplayAudio amount={sentAmount} />
+      <DisplayLive amount={sentAmount} />
       <AddressWithArrow address={recipientAddress} />
       <div className={styles.noteWrapper}>{messages.note}</div>
       <PurpleBox

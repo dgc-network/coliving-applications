@@ -5,7 +5,7 @@ import LoadingSpinner from 'components/loading-spinner/LoadingSpinner'
 
 import { ModalBodyTitle, ModalBodyWrapper } from '../WalletModal'
 
-import DisplayAudio from './DisplayAudio'
+import DisplayLive from './DisplayLive'
 import { AddressWithArrow } from './SendInputConfirmation'
 import styles from './SendingModalBody.module.css'
 
@@ -28,7 +28,7 @@ const SendingModalBody = ({
       <div className={styles.titleWrapper}>
         <ModalBodyTitle text={messages.title} />
       </div>
-      <DisplayAudio amount={amountToTransfer} className={styles.displayAudio} />
+      <DisplayLive amount={amountToTransfer} className={styles.displayAudio} />
       <AddressWithArrow address={recipientAddress} />
       <LoadingSpinner className={styles.spinner} />
       <div className={cn(styles.message, styles.msgWidth)}>

@@ -27,7 +27,7 @@ import { copyToClipboard } from 'utils/clipboardUtil'
 import { NEW_WALLET_CONNECTED_TOAST_TIMEOUT_MILLIS } from 'utils/constants'
 import { useSelector } from 'utils/reducer'
 
-import DisplayAudio from './DisplayAudio'
+import DisplayLive from './DisplayLive'
 import styles from './WalletsTable.module.css'
 
 const COPIED_TOAST_TIMEOUT = 2000
@@ -119,7 +119,7 @@ const Wallet = ({
       )}
       <div className={cn(styles.liveBalance, styles.walletText)}>
         {(chain === Chain.Eth || solWalletAudioEnabled) && (
-          <DisplayAudio
+          <DisplayLive
             showLabel={false}
             amount={liveBalance}
             className={styles.balanceContainer}

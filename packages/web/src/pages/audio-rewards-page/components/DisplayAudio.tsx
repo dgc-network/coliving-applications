@@ -3,10 +3,10 @@ import cn from 'classnames'
 
 import { formatWei } from 'common/utils/wallet'
 
-import styles from './DisplayAudio.module.css'
+import styles from './DisplayLive.module.css'
 import TokenHoverTooltip from './TokenHoverTooltip'
 
-type DisplayAudioProps = {
+type DisplayLiveProps = {
   amount: BNWei
   showLabel?: boolean
   className?: string
@@ -17,12 +17,12 @@ const messages = {
   currency: '$LIVE'
 }
 
-const DisplayAudio = ({
+const DisplayLive = ({
   amount,
   showLabel = true,
   className,
   tokenClassName
-}: DisplayAudioProps) => {
+}: DisplayLiveProps) => {
   return (
     <div className={cn({ [className!]: !!className })}>
       <TokenHoverTooltip balance={amount} parentMount>
@@ -39,4 +39,4 @@ const DisplayAudio = ({
   )
 }
 
-export default DisplayAudio
+export default DisplayLive

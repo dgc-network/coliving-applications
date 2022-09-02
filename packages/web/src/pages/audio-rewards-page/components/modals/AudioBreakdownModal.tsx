@@ -9,7 +9,7 @@ import Tooltip from 'components/tooltip/Tooltip'
 import { useWithMobileStyle } from 'hooks/useWithMobileStyle'
 import { useSelector } from 'utils/reducer'
 
-import DisplayAudio from '../DisplayAudio'
+import DisplayLive from '../DisplayLive'
 import WalletsTable from '../WalletsTable'
 
 import styles from './AudioBreakdownModal.module.css'
@@ -45,7 +45,7 @@ const AudioBreakdownBody = () => {
 
   return (
     <div className={wm(styles.container)}>
-      <DisplayAudio
+      <DisplayLive
         showLabel={false}
         amount={totalBalance}
         className={wm(styles.sectionAmountContainer)}
@@ -55,7 +55,7 @@ const AudioBreakdownBody = () => {
       <div className={styles.section}>
         <div className={styles.sectionTitle}>
           {messages.colivingWallet}
-          <DisplayAudio
+          <DisplayLive
             showLabel={false}
             amount={accountBalance}
             className={wm(styles.sectionAmountContainer)}
@@ -69,7 +69,7 @@ const AudioBreakdownBody = () => {
       <div className={styles.section}>
         <div className={styles.sectionTitle}>
           {messages.linkedWallets}
-          <DisplayAudio
+          <DisplayLive
             showLabel={false}
             amount={linkedWalletsBalance}
             className={wm(styles.sectionAmountContainer)}
