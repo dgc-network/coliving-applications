@@ -4,20 +4,20 @@ import type { BottomTabBarProps as RNBottomTabBarProps } from '@react-navigation
 // eslint-disable-next-line import/no-unresolved
 import type { BottomTabNavigationEventMap } from '@react-navigation/bottom-tabs/lib/typescript/src/types'
 import type { NavigationHelpers, ParamListBase } from '@react-navigation/native'
-import { getUserHandle } from '-client/src/common/store/account/selectors'
-import { setTab } from '-client/src/common/store/pages/explore/slice'
-import { Tabs } from '-client/src/common/store/pages/explore/types'
+import { getUserHandle } from '@coliving/web/src/common/store/account/selectors'
+import { setTab } from '@coliving/web/src/common/store/pages/explore/slice'
+import { Tabs } from '@coliving/web/src/common/store/pages/explore/types'
 import {
   openSignOn as _openSignOn,
   showRequiresAccountModal
-} from '-client/src/pages/sign-on/store/actions'
+} from '@coliving/web/src/pages/sign-on/store/actions'
 import {
   FEED_PAGE,
   TRENDING_PAGE,
   EXPLORE_PAGE,
   FAVORITES_PAGE,
   profilePage
-} from '-client/src/utils/route'
+} from '@coliving/web/src/utils/route'
 import { Animated } from 'react-native'
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
 

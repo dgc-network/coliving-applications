@@ -1,4 +1,4 @@
-import type { Genre } from '-client/src/common/utils/genres'
+import type { Genre } from '@coliving/web/src/common/utils/genres'
 
 import { EventNames, PlaybackSource } from 'app/types/analytics'
 import { agreement, make } from 'app/utils/analytics'

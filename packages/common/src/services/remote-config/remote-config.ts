@@ -1,4 +1,9 @@
-import optimizely from '@optimizely/optimizely-sdk'
+//import optimizely from '@optimizely/optimizely-sdk'
+const optimizely = require("@optimizely/optimizely-sdk");
+
+const optimizelyClient = optimizely.createInstance({
+  sdkKey: "<Your_SDK_KEY>" // Provide the sdkKey of your desired environment here
+});
 
 import { ID } from 'models/Identifiers'
 import {
@@ -46,7 +51,7 @@ type RemoteConfigOptions<Client> = {
 
 export const remoteConfig = <
   Client extends Pick<
-    optimizely.Client,
+    Client,
     | 'getFeatureVariableBoolean'
     | 'getFeatureVariableDouble'
     | 'getFeatureVariableInteger'
@@ -88,7 +93,8 @@ export const remoteConfig = <
 
     client = await createOptimizelyClient()
 
-    client.onReady().then(() => {
+    //client.onReady().then(() => {
+    optimizelyClient.onReady().then(() => {
       state.didInitialize = true
 
       // Call initializationCallbacks
@@ -147,7 +153,8 @@ export const remoteConfig = <
         remoteConfigIntDefaults,
         key,
         id,
-        client.getFeatureVariableInteger.bind(client)
+        //client.getFeatureVariableInteger.bind(client)
+        optimizelyClient.getFeatureVariableInteger.bind(optimizelyClient)
       )
     }
 
@@ -158,7 +165,8 @@ export const remoteConfig = <
         remoteConfigStringDefaults,
         key as unknown as string,
         id,
-        client.getFeatureVariableString.bind(client)
+        //client.getFeatureVariableInteger.bind(client)
+        optimizelyClient.getFeatureVariableInteger.bind(optimizelyClient)
       )
     }
 
@@ -167,7 +175,8 @@ export const remoteConfig = <
         remoteConfigDoubleDefaults,
         key as unknown as string,
         id,
-        client.getFeatureVariableDouble.bind(client)
+        //client.getFeatureVariableInteger.bind(client)
+        optimizelyClient.getFeatureVariableInteger.bind(optimizelyClient)
       )
     }
 
@@ -175,7 +184,8 @@ export const remoteConfig = <
       remoteConfigBooleanDefaults,
       key as unknown as string,
       id,
-      client.getFeatureVariableBoolean.bind(client)
+      //client.getFeatureVariableInteger.bind(client)
+      optimizelyClient.getFeatureVariableInteger.bind(optimizelyClient)
     )
   }
 
@@ -208,7 +218,8 @@ export const remoteConfig = <
 
     try {
       const enabled = state.didInitialize
-        ? client.isFeatureEnabled(flag as unknown as string, id) ?? defaultVal
+        //? client.isFeatureEnabled(flag as unknown as string, id) ?? defaultVal
+        ? optimizelyClient.isFeatureEnabled(flag as unknown as string, id) ?? defaultVal
         : defaultVal
       return enabled
     } catch (err) {

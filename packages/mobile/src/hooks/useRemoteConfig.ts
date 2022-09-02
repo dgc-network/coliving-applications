@@ -12,8 +12,8 @@ import type {
   StringKeys,
   FeatureFlags
 } from '@coliving/common'
-import { getAccountUser } from '-client/src/common/store/account/selectors'
-import { isRemoteConfigLoaded } from '-client/src/common/store/remote-config/selectors'
+import { getAccountUser } from '@coliving/web/src/common/store/account/selectors'
+import { isRemoteConfigLoaded } from '@coliving/web/src/common/store/remote-config/selectors'
 import { useSelector } from 'react-redux'
 
 import { useSelectorWeb } from 'app/hooks/useSelectorWeb'
