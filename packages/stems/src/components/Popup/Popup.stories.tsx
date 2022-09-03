@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react'
+import * as React from 'react'
 
 import { Story } from '@storybook/react'
 
@@ -20,7 +21,7 @@ const Template: Story<PopupProps> = (args) => {
     <>
       <Button
         text='Click me'
-        ref={anchorRef}
+        //ref={anchorRef}
         onClick={() => setIsVisible(!isVisible)}
       />
       <Popup

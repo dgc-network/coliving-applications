@@ -1,4 +1,5 @@
 import { SVGAttributes } from 'react'
+import * as React from 'react'
 
 import { Story } from '@storybook/react'
 

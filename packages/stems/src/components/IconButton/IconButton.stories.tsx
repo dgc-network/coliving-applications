@@ -1,4 +1,5 @@
 import { Story } from '@storybook/react'
+import * as React from 'react'
 
 import { IconContentLists } from 'components/Icons'
 
