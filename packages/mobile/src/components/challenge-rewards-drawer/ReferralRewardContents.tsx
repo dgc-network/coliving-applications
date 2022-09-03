@@ -1,6 +1,7 @@
-import React from 'react'
+//import React from 'react'
+import * as React from 'react'
 
-import { getUserHandle } from '-client/src/common/store/account/selectors'
+import { getUserHandle } from 'coliving-web-client/src/common/store/account/selectors'
 
 import { useSelectorWeb } from 'app/hooks/useSelectorWeb'
 

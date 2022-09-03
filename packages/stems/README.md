@@ -27,7 +27,8 @@ npm install --save @coliving/stems
 ## Usage
 
 ```js
-import React from 'react'
+//import React from 'react'
+import * as React from 'react'
 import { Button } from '@coliving/stems'
 
 import '@coliving/stems/dist/stems.css'

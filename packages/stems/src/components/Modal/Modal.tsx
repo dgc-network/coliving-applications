@@ -1,4 +1,3 @@
-import React from 'react'
 import {
   useEffect,
   useState,
@@ -7,6 +6,7 @@ import {
   forwardRef,
   MouseEventHandler
 } from 'react'
+import * as React from 'react'
 
 import cn from 'classnames'
 import uniqueId from 'lodash/uniqueId'

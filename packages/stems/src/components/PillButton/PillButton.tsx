@@ -1,5 +1,5 @@
-import React from 'react'
 import cn from 'classnames'
+import * as React from 'react'
 
 import { Button, Type as ButtonType } from 'components/Button'
 

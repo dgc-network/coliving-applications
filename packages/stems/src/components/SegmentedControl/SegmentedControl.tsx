@@ -1,5 +1,5 @@
-import React from 'react'
 import { createRef, Fragment, useState, useEffect, useRef } from 'react'
+import * as React from 'react'
 
 import cn from 'classnames'
 import { useSpring, animated } from 'react-spring'

@@ -1,7 +1,9 @@
-import React, { useCallback } from 'react'
+import { useCallback } from 'react'
+import * as React from 'react'
 
 import { Linking, StyleSheet } from 'react-native'
-import type { Color } from 'react-native-svg'
+//import type { Color } from 'react-native-svg'
+import type Color from 'react-native-svg'
 
 import IconTwitterBird from 'app/assets/images/iconTwitterBird.svg'
 import Button from 'app/components/button'
