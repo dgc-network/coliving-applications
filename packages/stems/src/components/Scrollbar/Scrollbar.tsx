@@ -1,3 +1,4 @@
+import React from 'react'
 import { useEffect, useRef, useMemo } from 'react'
 
 import { ResizeObserver } from '@juggle/resize-observer'
