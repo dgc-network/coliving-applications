@@ -2,7 +2,7 @@ import {
   ChallengeRewardID,
   FailureReason,
   UserChallenge,
-  StringAudio,
+  StringLive,
   IntKeys,
   StringKeys
 } from '@coliving/common'
@@ -376,7 +376,7 @@ describe('Rewards Page Sagas', () => {
           // Assertions
           .put(
             increaseBalance({
-              amount: stringAudioToStringWei('10' as StringAudio)
+              amount: stringAudioToStringWei('10' as StringLive)
             })
           )
           .put(

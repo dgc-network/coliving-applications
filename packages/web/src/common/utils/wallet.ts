@@ -1,7 +1,7 @@
 import {
   BNAudio,
   BNWei,
-  StringAudio,
+  StringLive,
   StringWei,
   Nullable
 } from '@coliving/common'
@@ -16,17 +16,17 @@ import {
   convertFloatToWei
 } from 'common/utils/formatUtil'
 
-export const weiToAudioString = (bnWei: BNWei): StringAudio => {
-  const stringAudio = formatWeiToAudioString(bnWei) as StringAudio
+export const weiToAudioString = (bnWei: BNWei): StringLive => {
+  const stringAudio = formatWeiToAudioString(bnWei) as StringLive
   return stringAudio
 }
 
 export const weiToAudio = (bnWei: BNWei): BNAudio => {
-  const stringAudio = formatWeiToAudioString(bnWei) as StringAudio
+  const stringAudio = formatWeiToAudioString(bnWei) as StringLive
   return stringAudioToBN(stringAudio)
 }
 
-export const liveToWei = (stringAudio: StringAudio): BNWei => {
+export const liveToWei = (stringAudio: StringLive): BNWei => {
   const wei = parseWeiNumber(stringAudio) as BNWei
   return wei
 }
@@ -35,7 +35,7 @@ export const stringWeiToBN = (stringWei: StringWei): BNWei => {
   return new BN(stringWei) as BNWei
 }
 
-export const stringAudioToBN = (stringAudio: StringAudio): BNAudio => {
+export const stringAudioToBN = (stringAudio: StringLive): BNAudio => {
   return new BN(stringAudio) as BNAudio
 }
 
@@ -49,11 +49,11 @@ export const weiToString = (wei: BNWei): StringWei => {
   return wei.toString() as StringWei
 }
 
-export const stringAudioToStringWei = (stringAudio: StringAudio): StringWei => {
+export const stringAudioToStringWei = (stringAudio: StringLive): StringWei => {
   return weiToString(liveToWei(stringAudio))
 }
 
-export const parseAudioInputToWei = (live: StringAudio): Nullable<BNWei> => {
+export const parseAudioInputToWei = (live: StringLive): Nullable<BNWei> => {
   if (!live.length) return null
   // First try converting from float, in case live has decimal value
   const floatWei = convertFloatToWei(live) as Nullable<BNWei>
@@ -77,11 +77,11 @@ export const formatWei = (
   amount: BNWei,
   shouldTruncate = false,
   significantDigits = 4
-): StringAudio => {
+): StringLive => {
   const aud = amount.div(WEI)
   const wei = amount.sub(aud.mul(WEI))
   if (wei.isZero()) {
-    return formatNumberCommas(aud.toString()) as StringAudio
+    return formatNumberCommas(aud.toString()) as StringLive
   }
   const decimals = wei.toString().padStart(18, '0')
 
@@ -98,7 +98,7 @@ export const formatWei = (
       trimmed = `${before}.${after}`
     }
   }
-  return formatNumberCommas(trimmed) as StringAudio
+  return formatNumberCommas(trimmed) as StringLive
 }
 
 export const shortenSPLAddress = (addr: string) => {

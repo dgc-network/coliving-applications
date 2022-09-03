@@ -1,6 +1,6 @@
 import { cloneElement, useCallback, useEffect, useState } from 'react'
 
-import { BadgeTier, BNWei, StringAudio, StringWei } from '@coliving/common'
+import { BadgeTier, BNWei, StringLive, StringWei } from '@coliving/common'
 import { Format, IconTrophy, TokenValueInput } from '@coliving/stems'
 import BN from 'bn.js'
 import cn from 'classnames'
@@ -89,7 +89,7 @@ export const SendTip = () => {
 
   const handleTipAmountChange = useCallback(
     (value: string) => {
-      setTipAmount(value as StringAudio)
+      setTipAmount(value as StringLive)
     },
     [setTipAmount]
   )

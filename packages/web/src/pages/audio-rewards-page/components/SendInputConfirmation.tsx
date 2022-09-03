@@ -1,4 +1,4 @@
-import { BNWei, StringAudio, WalletAddress } from '@coliving/common'
+import { BNWei, StringLive, WalletAddress } from '@coliving/common'
 import { Button, ButtonType, IconArrow } from '@coliving/stems'
 
 import { stringAudioToBN, weiToAudio } from 'common/utils/wallet'
@@ -42,7 +42,7 @@ const SendInputConfirmation = ({
         <ModalBodyTitle text={messages.title} />
       </div>
       <DashboardTokenValueSlider
-        min={stringAudioToBN('0' as StringAudio)}
+        min={stringAudioToBN('0' as StringLive)}
         max={weiToAudio(balance)}
         value={weiToAudio(amountToTransfer)}
       />

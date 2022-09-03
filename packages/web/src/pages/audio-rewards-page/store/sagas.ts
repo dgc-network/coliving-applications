@@ -1,7 +1,7 @@
 import {
   FailureReason,
   UserChallenge,
-  StringAudio,
+  StringLive,
   IntKeys,
   StringKeys
 } from '@coliving/common'
@@ -312,7 +312,7 @@ function* claimChallengeRewardAsync(
     } else {
       yield put(
         increaseBalance({
-          amount: stringAudioToStringWei(amount.toString() as StringAudio)
+          amount: stringAudioToStringWei(amount.toString() as StringLive)
         })
       )
       yield put(setUserChallengesDisbursed({ challengeId, specifiers }))

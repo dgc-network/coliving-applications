@@ -5,7 +5,7 @@ import {
   Supporter,
   User,
   BNWei,
-  StringAudio,
+  StringLive,
   StringWei,
   Nullable
 } from '@coliving/common'
@@ -16,7 +16,7 @@ import { parseAudioInputToWei, stringWeiToBN } from 'common/utils/wallet'
 
 const zeroWei = stringWeiToBN('0' as StringWei)
 
-const parseToBNWei = (tipAmount: StringAudio) => {
+const parseToBNWei = (tipAmount: StringLive) => {
   if (!tipAmount) return zeroWei
   return parseAudioInputToWei(tipAmount) as BNWei
 }

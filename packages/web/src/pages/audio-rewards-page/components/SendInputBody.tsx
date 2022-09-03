@@ -5,7 +5,7 @@ import {
   BNAudio,
   BNWei,
   SolanaWalletAddress,
-  StringAudio,
+  StringLive,
   StringWei,
   WalletAddress,
   Nullable,
@@ -142,14 +142,14 @@ const validateEthWallet = (
 }
 
 const validateSendAmount = (
-  stringAudioAmount: StringAudio,
+  stringAudioAmount: StringLive,
   balanceWei: BNWei,
   minAudioSendAmount: number
 ): Nullable<BalanceError> => {
   if (!stringAudioAmount.length) return 'EMPTY'
   const sendWeiBN = parseAudioInputToWei(stringAudioAmount)
   const minWeiBN = parseAudioInputToWei(
-    (minAudioSendAmount?.toString() as StringAudio) ?? ('0' as StringAudio)
+    (minAudioSendAmount?.toString() as StringLive) ?? ('0' as StringLive)
   )
   if (!sendWeiBN) return 'MALFORMED'
   if (minWeiBN && sendWeiBN.lt(minWeiBN)) return 'LESS_THAN_MIN'
@@ -173,8 +173,8 @@ const SendInputBody = ({
   wallet,
   solWallet
 }: SendInputBodyProps) => {
-  const [amountToSend, setAmountToSend] = useState<StringAudio>(
-    '' as StringAudio
+  const [amountToSend, setAmountToSend] = useState<StringLive>(
+    '' as StringLive
   )
   const amountToSendBNWei: BNWei = useMemo(() => {
     const zeroWei = stringWeiToBN('0' as StringWei)
@@ -183,7 +183,7 @@ const SendInputBody = ({
   const [destinationAddress, setDestinationAddress] = useState('')
 
   const [min, max]: [BNAudio, BNAudio] = useMemo(() => {
-    const min = stringAudioToBN('0' as StringAudio)
+    const min = stringAudioToBN('0' as StringLive)
     const max = weiToAudio(currentBalance)
     return [min, max]
   }, [currentBalance])
@@ -194,7 +194,7 @@ const SendInputBody = ({
 
   const onChangeAmount = useCallback(
     (value: string) => {
-      setAmountToSend(value as StringAudio)
+      setAmountToSend(value as StringLive)
       if (balanceError) setBalanceError(null)
     },
     [balanceError, setBalanceError, setAmountToSend]

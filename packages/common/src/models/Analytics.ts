@@ -2,7 +2,7 @@ import { FeedFilter } from 'models/FeedFilter'
 import { ID, PlayableType } from 'models/Identifiers'
 import { MonitorPayload, ServiceMonitorType } from 'models/Services'
 import { TimeRange } from 'models/TimeRange'
-import { SolanaWalletAddress, StringAudio, WalletAddress } from 'models/Wallet'
+import { SolanaWalletAddress, StringLive, WalletAddress } from 'models/Wallet'
 
 const ANALYTICS_AGREEMENT_EVENT = 'ANALYTICS/AGREEMENT_EVENT'
 
@@ -1154,7 +1154,7 @@ type RewardsClaimUnknown = {
 
 type TipAudioRequest = {
   eventName: Name.TIP_LIVE_REQUEST
-  amount: StringAudio
+  amount: StringLive
   senderWallet: SolanaWalletAddress
   recipientWallet: SolanaWalletAddress
   senderHandle: string
@@ -1165,7 +1165,7 @@ type TipAudioRequest = {
 
 type TipAudioSuccess = {
   eventName: Name.TIP_LIVE_SUCCESS
-  amount: StringAudio
+  amount: StringLive
   senderWallet: SolanaWalletAddress
   recipientWallet: SolanaWalletAddress
   senderHandle: string
@@ -1176,7 +1176,7 @@ type TipAudioSuccess = {
 
 type TipAudioFailure = {
   eventName: Name.TIP_LIVE_FAILURE
-  amount: StringAudio
+  amount: StringLive
   senderWallet: SolanaWalletAddress
   recipientWallet: SolanaWalletAddress
   senderHandle: string
@@ -1188,7 +1188,7 @@ type TipAudioFailure = {
 
 type TipAudioTwitterShare = {
   eventName: Name.TIP_LIVE_TWITTER_SHARE
-  amount: StringAudio
+  amount: StringLive
   senderWallet: SolanaWalletAddress
   recipientWallet: SolanaWalletAddress
   senderHandle: string
