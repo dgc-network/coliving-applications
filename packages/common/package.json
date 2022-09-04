@@ -30,9 +30,6 @@
     "react": "17.0.2"
   },
   "devDependencies": {
-    "@types/bn.js": "4.11.6",
-    "@types/react": "17.0.2",
-    "@typescript-eslint/eslint-plugin": "^5.36.1",
     "eslint": "8.19.0",
     "eslint-config-coliving": "file:../eslint-config-coliving",
     "eslint-config-prettier": "^8.5.0",

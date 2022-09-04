@@ -1,7 +1,8 @@
 import { merge } from 'lodash'
 import type { ViewStyle, TextStyle, StyleProp } from 'react-native'
 import { TouchableHighlight, StyleSheet, View, Animated } from 'react-native'
-import type { Color } from 'react-native-svg'
+//import type { Color } from 'react-native-svg'
+import type Color from 'react-native-svg'
 
 import Text from 'app/components/text'
 import { usePressScaleAnimation } from 'app/hooks/usePressScaleAnimation'
@@ -181,13 +182,13 @@ const Button = ({
         <View style={styles.buttonContent}>
           {(icon || renderIcon) && iconPosition === 'left' ? (
             <View style={[styles.iconLeft, iconStyle]}>
-              {renderIcon ? renderIcon(styles.icon.color as Color) : icon}
+              {renderIcon ? renderIcon(styles.icon.color as unknown as Color) : icon}
             </View>
           ) : null}
           <Text style={[styles.buttonText, textStyle]}>{title}</Text>
           {(icon || renderIcon) && iconPosition === 'right' ? (
             <View style={[styles.iconRight, iconStyle]}>
-              {renderIcon ? renderIcon(styles.icon.color as Color) : icon}
+              {renderIcon ? renderIcon(styles.icon.color as unknown as Color) : icon}
             </View>
           ) : null}
         </View>
