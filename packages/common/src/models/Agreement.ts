@@ -134,10 +134,13 @@ export type LineupAgreement = UserAgreement & {
 }
 
 // Agreement with known non-optional stem
-export type StemAgreementMetadata = AgreementMetadata & Required<Pick<Agreement, 'stem_of'>>
+export type StemAgreementMetadata = AgreementMetadata &
+  Required<Pick<Agreement, 'stem_of'>>
 export type StemAgreement = Agreement & Required<Pick<Agreement, 'stem_of'>>
-export type StemUserAgreement = UserAgreement & Required<Pick<Agreement, 'stem_of'>>
+export type StemUserAgreement = UserAgreement &
+  Required<Pick<Agreement, 'stem_of'>>
 
 // Agreement with known non-optional remix parent
 export type RemixAgreement = Agreement & Required<Pick<Agreement, 'remix_of'>>
-export type RemixUserAgreement = UserAgreement & Required<Pick<Agreement, 'remix_of'>>
+export type RemixUserAgreement = UserAgreement &
+  Required<Pick<Agreement, 'remix_of'>>

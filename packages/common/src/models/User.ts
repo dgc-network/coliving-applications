@@ -1,8 +1,8 @@
 import { Collectible, CollectiblesMetadata } from 'models/Collectible'
 import { Color } from 'models/Color'
+import { ContentListLibrary } from 'models/ContentListLibrary'
 import { CID, ID } from 'models/Identifiers'
 import { CoverPhotoSizes, ProfilePictureSizes } from 'models/ImageSizes'
-import { ContentListLibrary } from 'models/ContentListLibrary'
 import { SolanaWalletAddress, StringWei, WalletAddress } from 'models/Wallet'
 import { Nullable } from 'utils/typeUtils'
 

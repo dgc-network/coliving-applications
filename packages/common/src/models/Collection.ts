@@ -5,8 +5,8 @@ import { CoverArtSizes } from 'models/ImageSizes'
 import { Repost } from 'models/Repost'
 import { Nullable } from 'utils/typeUtils'
 
-import { Favorite } from './Favorite'
 import { UserAgreementMetadata } from './Agreement'
+import { Favorite } from './Favorite'
 import { User, UserMetadata } from './User'
 
 export enum Variant {
