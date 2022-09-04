@@ -55,7 +55,7 @@ To run against a local staging or production build, build the client and copy th
 # -client
 npm run build:mobile-stage
 
-# -mobile-client
+# @coliving/mobile
 npm run copy:local-staging
 
 # production
@@ -63,7 +63,7 @@ npm run copy:local-staging
 # -client
 npm run build:mobile-prod
 
-# -mobile-client
+# @coliving/mobile
 npm run copy:local-production
 ```
 

@@ -8,7 +8,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context'
 import type WebView from 'react-native-webview'
 import { Provider } from 'react-redux'
 
-import Audio from 'app/components/live/Audio'
+import Audio from 'app/components/live/Live'
 import HCaptcha from 'app/components/hcaptcha'
 import NavigationContainer from 'app/components/navigation-container'
 import OAuth from 'app/components/oauth/OAuth'

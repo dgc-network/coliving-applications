@@ -36,7 +36,7 @@ declare module '@react-native-masked-view/masked-view' {
   export default class MaskedViewComponent extends React.Component<MaskedViewProps> {}
 }
 
-// Remove everything below when -mobile-client is no longer dependent on -client
+// Remove everything below when @coliving/mobile is no longer dependent on -client
 // These are needed because we currently have to include -client in the typechecking
 declare module '*.module.css' {
   const value: any

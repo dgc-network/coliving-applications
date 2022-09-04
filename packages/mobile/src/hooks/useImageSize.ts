@@ -5,7 +5,7 @@ import type {
   Maybe,
   Nullable
 } from '@coliving/common'
-import { useImageSize as useImageSizeCommon } from '-client/src/common/hooks/useImageSize'
+import { useImageSize as useImageSizeCommon } from '@coliving/web/src/common/hooks/useImageSize'
 import type { ImageSourcePropType } from 'react-native'
 import { Image } from 'react-native'
 import type { useDispatch } from 'react-redux'

@@ -2,8 +2,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import type {
   Credentials,
   UseTikTokAuthArguments
-} from '-client/src/common/hooks/useTikTokAuth'
-import { createUseTikTokAuthHook } from '-client/src/common/hooks/useTikTokAuth'
+} from '@coliving/web/src/common/hooks/useTikTokAuth'
+import { createUseTikTokAuthHook } from '@coliving/web/src/common/hooks/useTikTokAuth'
 import Config from 'react-native-config'
 import { useDispatch } from 'react-redux'
 

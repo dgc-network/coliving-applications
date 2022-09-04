@@ -2,9 +2,9 @@
 import * as React from 'react'
 
 import type { UserChallengeState } from '@coliving/common'
-import { ClaimStatus } from 'coliving-web-client/src/common/store/pages/live-rewards/slice'
-import { fillString } from 'coliving-web-client/src/common/utils/fillString'
-import { formatNumberCommas } from 'coliving-web-client/src/common/utils/formatUtil'
+import { ClaimStatus } from '@coliving/web/src/common/store/pages/live-rewards/slice'
+import { fillString } from '@coliving/web/src/common/utils/fillString'
+import { formatNumberCommas } from '@coliving/web/src/common/utils/formatUtil'
 import type { ImageSourcePropType } from 'react-native'
 import { StyleSheet, View } from 'react-native'
 

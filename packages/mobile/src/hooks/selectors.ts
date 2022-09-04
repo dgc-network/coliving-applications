@@ -1,4 +1,4 @@
-import { getProfileUser } from '-client/src/common/store/pages/profile/selectors'
+import { getProfileUser } from '@coliving/web/src/common/store/pages/profile/selectors'
 
 import { isEqual, useSelectorWeb } from './useSelectorWeb'
 

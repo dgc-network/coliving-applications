@@ -1,5 +1,5 @@
 import type { ID } from '@coliving/common'
-import { makeGetTierAndVerifiedForUser } from '-client/src/common/store/wallet/utils'
+import { makeGetTierAndVerifiedForUser } from '@coliving/web/src/common/store/wallet/utils'
 
 import { isEqual, useSelectorWeb } from './useSelectorWeb'
 

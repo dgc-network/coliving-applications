@@ -1,4 +1,4 @@
-import type { CommonState } from '-client/src/common/store'
+import type { CommonState } from '@coliving/web/src/common/store'
 import { isEqual as lodashIsEqual } from 'lodash'
 import type { Selector } from 'react-redux'
 import { useSelector } from 'react-redux'

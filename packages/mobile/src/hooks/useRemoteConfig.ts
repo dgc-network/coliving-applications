@@ -20,7 +20,7 @@ import { useSelectorWeb } from 'app/hooks/useSelectorWeb'
 import { remoteConfigInstance } from 'app/services/remote-config/remote-config-instance'
 
 // Duplicating these hooks here instead of using `createUseFeatureFlagHook` and `createUseRemoteVarHook`
-// because the react version mismatch between -mobile-client and -client is causing
+// because the react version mismatch between @coliving/mobile and -client is causing
 // any hooks imported from -client to throw an "Invalid hook call" error.
 // When the react versions are matched, this can be updated
 

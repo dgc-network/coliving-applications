@@ -1,5 +1,5 @@
 import type { SquareSizes } from '@coliving/common'
-import { fetchProfilePicture } from '-client/src/common/store/cache/users/actions'
+import { fetchProfilePicture } from '@coliving/web/src/common/store/cache/users/actions'
 
 import profilePicEmpty from 'app/assets/images/imageProfilePicEmpty2X.png'
 import { getUseImageSizeHook } from 'app/hooks/useImageSize'

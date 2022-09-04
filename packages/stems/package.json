@@ -64,7 +64,7 @@
     "cross-env": "^5.2.1",
     "css-loader": "^3.2.0",
     "eslint": "8.19.0",
-    "eslint-config-coliving": "file: ./eslint-config-coliving",
+    "eslint-config-coliving": "file:../eslint-config-coliving",
     "eslint-plugin-storybook": "^0.6.1",
     "gh-pages": "^2.1.1",
     "jest": "^24.9.0",

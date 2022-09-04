@@ -1,5 +1,5 @@
 import type { WidthSizes } from '@coliving/common'
-import { fetchCoverPhoto } from '-client/src/common/store/cache/users/actions'
+import { fetchCoverPhoto } from '@coliving/web/src/common/store/cache/users/actions'
 
 import imageCoverPhotoBlank from 'app/assets/images/imageCoverPhotoBlank.jpg'
 import { getUseImageSizeHook } from 'app/hooks/useImageSize'

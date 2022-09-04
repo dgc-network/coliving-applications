@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 
-import { MessageType } from '-client/src/services/native-mobile-interface/types'
+import { MessageType } from '@coliving/web/src/services/native-mobile-interface/types'
 
 import { useDispatchWeb } from './useDispatchWeb'
 

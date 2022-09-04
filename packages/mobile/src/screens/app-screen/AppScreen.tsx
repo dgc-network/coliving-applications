@@ -3,7 +3,7 @@ import { useEffect } from 'react'
 import { useAppState } from '@react-native-community/hooks'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import type { NavigatorScreenParams } from '@react-navigation/native'
-import { getBalance } from '-client/src/common/store/wallet/slice'
+import { getBalance } from '@coliving/web/src/common/store/wallet/slice'
 
 import { useDispatchWeb } from 'app/hooks/useDispatchWeb'
 
