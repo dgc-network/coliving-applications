@@ -1,8 +1,8 @@
 import { useCallback } from 'react'
 
-import { togglePushNotificationSetting } from '-client/src/common/store/pages/settings/actions'
-import { getPushNotificationSettings } from '-client/src/common/store/pages/settings/selectors'
-import { PushNotificationSetting } from '-client/src/common/store/pages/settings/types'
+import { togglePushNotificationSetting } from '@coliving/web/src/common/store/pages/settings/actions'
+import { getPushNotificationSettings } from '@coliving/web/src/common/store/pages/settings/selectors'
+import { PushNotificationSetting } from '@coliving/web/src/common/store/pages/settings/types'
 import { View } from 'react-native'
 
 import { Switch } from 'app/components/core'

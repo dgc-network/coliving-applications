@@ -1,5 +1,5 @@
 import type { UserCollection } from '@coliving/common'
-import type { ShareModalContent } from '-client/src/common/store/ui/share-modal/types'
+import type { ShareModalContent } from '@coliving/web/src/common/store/ui/share-modal/types'
 
 import {
   getCollectionRoute,

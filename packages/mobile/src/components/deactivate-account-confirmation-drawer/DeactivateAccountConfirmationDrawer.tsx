@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 
-import { deactivateAccount } from '-client/src/pages/deactivate-account-page/store/slice'
+import { deactivateAccount } from '@coliving/web/src/pages/deactivate-account-page/store/slice'
 import { View } from 'react-native'
 
 import { useDispatchWeb } from 'app/hooks/useDispatchWeb'

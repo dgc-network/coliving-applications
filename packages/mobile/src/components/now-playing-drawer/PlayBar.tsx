@@ -5,7 +5,7 @@ import { FavoriteSource, SquareSizes } from '@coliving/common'
 import {
   saveAgreement,
   unsaveAgreement
-} from '-client/src/common/store/social/agreements/actions'
+} from '@coliving/web/src/common/store/social/agreements/actions'
 import { TouchableOpacity, Animated, View, Dimensions } from 'react-native'
 
 import { DynamicImage } from 'app/components/core'

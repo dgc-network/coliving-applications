@@ -1,8 +1,8 @@
 import { useCallback, useContext, useRef, useState } from 'react'
 
 import type { Nullable } from '@coliving/common'
-import type { ReactionTypes } from '-client/src/common/store/ui/reactions/slice'
-import { reactionOrder } from '-client/src/common/store/ui/reactions/slice'
+import type { ReactionTypes } from '@coliving/web/src/common/store/ui/reactions/slice'
+import { reactionOrder } from '@coliving/web/src/common/store/ui/reactions/slice'
 import type { PanResponderGestureState } from 'react-native'
 import { View, PanResponder } from 'react-native'
 

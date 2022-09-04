@@ -1,8 +1,8 @@
 import { useCallback } from 'react'
 
-import { getAccountUser } from '-client/src/common/store/account/selectors'
-import type { CastMethod } from '-client/src/common/store/cast/slice'
-import { updateMethod } from '-client/src/common/store/cast/slice'
+import { getAccountUser } from '@coliving/web/src/common/store/account/selectors'
+import type { CastMethod } from '@coliving/web/src/common/store/cast/slice'
+import { updateMethod } from '@coliving/web/src/common/store/cast/slice'
 import { getMethod as getCastMethod } from 'common/store/cast/selectors'
 
 import Appearance from 'app/assets/images/emojis/waning-crescent-moon.png'

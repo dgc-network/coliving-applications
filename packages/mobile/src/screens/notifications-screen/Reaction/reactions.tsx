@@ -1,6 +1,6 @@
 import type { ComponentType } from 'react'
 
-import type { ReactionTypes } from '-client/src/common/store/ui/reactions/slice'
+import type { ReactionTypes } from '@coliving/web/src/common/store/ui/reactions/slice'
 
 import type { ReactionProps as BaseReactionProps } from './Reaction'
 import { Reaction } from './Reaction'

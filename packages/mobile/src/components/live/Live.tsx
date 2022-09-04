@@ -1,7 +1,7 @@
 import type { RefObject } from 'react'
 import { useState, useRef, useEffect, useCallback } from 'react'
 
-import { Genre } from '-client/src/common/utils/genres'
+import { Genre } from '@coliving/web/src/common/utils/genres'
 import { Platform, StyleSheet, View } from 'react-native'
 import MusicControl from 'react-native-music-control'
 import { Command } from 'react-native-music-control/lib/types'

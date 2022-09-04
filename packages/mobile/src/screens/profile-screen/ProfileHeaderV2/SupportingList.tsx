@@ -1,8 +1,8 @@
 import { useMemo } from 'react'
 
 import type { ID, Supporting } from '@coliving/common'
-import { stringWeiToBN } from '-client/src/common/utils/wallet'
-import { MAX_PROFILE_SUPPORTING_TILES } from '-client/src/utils/constants'
+import { stringWeiToBN } from '@coliving/web/src/common/utils/wallet'
+import { MAX_PROFILE_SUPPORTING_TILES } from '@coliving/web/src/utils/constants'
 import { getOptimisticSupportingForUser } from 'common/store/tipping/selectors'
 import { FlatList } from 'react-native'
 

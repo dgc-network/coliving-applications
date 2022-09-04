@@ -1,4 +1,4 @@
-import { badgeTiers } from '-client/src/common/store/wallet/utils'
+import { badgeTiers } from '@coliving/web/src/common/store/wallet/utils'
 
 import { useSelectTierInfo } from 'app/hooks/useSelectTierInfo'
 import { useSelectorWeb } from 'app/hooks/useSelectorWeb'

@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 
 import { Status } from '@coliving/common'
-import { getConfirmCredentialsStatus } from '-client/src/common/store/change-password/selectors'
-import { confirmCredentials } from '-client/src/common/store/change-password/slice'
+import { getConfirmCredentialsStatus } from '@coliving/web/src/common/store/change-password/selectors'
+import { confirmCredentials } from '@coliving/web/src/common/store/change-password/slice'
 import { View } from 'react-native'
 
 import IconArrow from 'app/assets/images/iconArrow.svg'

@@ -1,11 +1,11 @@
 import { useCallback, useEffect } from 'react'
 
 import type { NativeStackScreenProps } from '@react-navigation/native-stack'
-import { getSendTipData } from '-client/src/common/store/tipping/selectors'
+import { getSendTipData } from '@coliving/web/src/common/store/tipping/selectors'
 import {
   beginTip,
   confirmSendTip
-} from '-client/src/common/store/tipping/slice'
+} from '@coliving/web/src/common/store/tipping/slice'
 
 import IconCaretLeft from 'app/assets/images/iconCaretLeft.svg'
 import IconCheck from 'app/assets/images/iconCheck.svg'

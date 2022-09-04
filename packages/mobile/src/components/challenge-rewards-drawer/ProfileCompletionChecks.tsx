@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
 
-import { getAccountUser } from '-client/src/common/store/account/selectors'
-import { getCompletionStages } from '-client/src/common/store/challenges/selectors/profile-progress'
+import { getAccountUser } from '@coliving/web/src/common/store/account/selectors'
+import { getCompletionStages } from '@coliving/web/src/common/store/challenges/selectors/profile-progress'
 import { StyleSheet, View } from 'react-native'
 
 import IconArrow from 'app/assets/images/iconArrow.svg'

@@ -1,5 +1,5 @@
 import type { User } from '@coliving/common'
-import { getOptimisticSupporting } from '-client/src/common/store/tipping/selectors'
+import { getOptimisticSupporting } from '@coliving/web/src/common/store/tipping/selectors'
 import { getId as getSupportingId } from 'common/store/user-list/supporting/selectors'
 
 import { useSelectorWeb } from 'app/hooks/useSelectorWeb'

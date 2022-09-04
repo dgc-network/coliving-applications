@@ -1,8 +1,8 @@
 import { useCallback } from 'react'
 
-import { setMutuals } from '-client/src/common/store/user-list/mutuals/actions'
-import { getUserList } from '-client/src/common/store/user-list/mutuals/selectors'
-import { USER_LIST_TAG } from '-client/src/common/store/user-list/mutuals/types'
+import { setMutuals } from '@coliving/web/src/common/store/user-list/mutuals/actions'
+import { getUserList } from '@coliving/web/src/common/store/user-list/mutuals/selectors'
+import { USER_LIST_TAG } from '@coliving/web/src/common/store/user-list/mutuals/types'
 
 import IconTrophy from 'app/assets/images/iconTrophy.svg'
 import { useDispatchWeb } from 'app/hooks/useDispatchWeb'

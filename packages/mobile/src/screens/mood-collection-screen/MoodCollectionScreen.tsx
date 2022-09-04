@@ -2,8 +2,8 @@ import { Status } from '@coliving/common'
 import {
   getCollections,
   getStatus
-} from '-client/src/common/store/pages/explore/exploreCollections/selectors'
-import { ExploreCollectionsVariant } from '-client/src/common/store/pages/explore/types'
+} from '@coliving/web/src/common/store/pages/explore/exploreCollections/selectors'
+import { ExploreCollectionsVariant } from '@coliving/web/src/common/store/pages/explore/types'
 
 import { CollectionList } from 'app/components/collection-list'
 import { Screen } from 'app/components/core'

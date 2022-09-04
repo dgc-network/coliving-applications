@@ -1,5 +1,5 @@
-import type { Notification } from '-client/src/common/store/notifications/types'
-import { NotificationType } from '-client/src/common/store/notifications/types'
+import type { Notification } from '@coliving/web/src/common/store/notifications/types'
+import { NotificationType } from '@coliving/web/src/common/store/notifications/types'
 
 import { NotificationErrorBoundary } from './NotificationErrorBoundary'
 import {

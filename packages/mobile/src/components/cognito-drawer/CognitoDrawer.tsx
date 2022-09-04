@@ -4,12 +4,12 @@ import { Status } from '@coliving/common'
 import {
   getCognitoFlowUrl,
   getCognitoFlowUrlStatus
-} from '-client/src/common/store/pages/live-rewards/selectors'
+} from '@coliving/web/src/common/store/pages/live-rewards/selectors'
 import {
   CognitoFlowStatus,
   fetchCognitoFlowUrl,
   setCognitoFlowStatus
-} from '-client/src/common/store/pages/live-rewards/slice'
+} from '@coliving/web/src/common/store/pages/live-rewards/slice'
 import { StyleSheet, View } from 'react-native'
 import WebView from 'react-native-webview'
 

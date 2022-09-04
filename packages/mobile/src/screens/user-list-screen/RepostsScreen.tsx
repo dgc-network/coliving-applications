@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
 
-import { setRepost } from '-client/src/common/store/user-list/reposts/actions'
-import { getUserList } from '-client/src/common/store/user-list/reposts/selectors'
+import { setRepost } from '@coliving/web/src/common/store/user-list/reposts/actions'
+import { getUserList } from '@coliving/web/src/common/store/user-list/reposts/selectors'
 
 import IconRepost from 'app/assets/images/iconRepost.svg'
 import { useDispatchWeb } from 'app/hooks/useDispatchWeb'

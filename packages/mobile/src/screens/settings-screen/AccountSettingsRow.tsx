@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 
-import { getAccountUser } from '-client/src/common/store/account/selectors'
+import { getAccountUser } from '@coliving/web/src/common/store/account/selectors'
 import { Text, View } from 'react-native'
 
 import { ProfilePicture } from 'app/components/user'

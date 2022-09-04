@@ -1,8 +1,8 @@
 import { useCallback } from 'react'
 
-import { useUIAudio } from '-client/src/common/hooks/useUIAudio'
-import { getNotificationUser } from '-client/src/common/store/notifications/selectors'
-import type { TipSend } from '-client/src/common/store/notifications/types'
+import { useUIAudio } from '@coliving/web/src/common/hooks/useUIAudio'
+import { getNotificationUser } from '@coliving/web/src/common/store/notifications/selectors'
+import type { TipSend } from '@coliving/web/src/common/store/notifications/types'
 import { View } from 'react-native'
 
 import IconTip from 'app/assets/images/iconTip.svg'

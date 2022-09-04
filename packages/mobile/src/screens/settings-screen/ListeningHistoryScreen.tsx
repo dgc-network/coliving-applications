@@ -2,9 +2,9 @@ import { useCallback } from 'react'
 
 import type { ID, UID } from '@coliving/common'
 import { Status, Name, PlaybackSource } from '@coliving/common'
-import { makeGetTableMetadatas } from '-client/src/common/store/lineup/selectors'
-import { agreementsActions } from '-client/src/common/store/pages/history-page/lineups/agreements/actions'
-import { getHistoryAgreementsLineup } from '-client/src/common/store/pages/history-page/selectors'
+import { makeGetTableMetadatas } from '@coliving/web/src/common/store/lineup/selectors'
+import { agreementsActions } from '@coliving/web/src/common/store/pages/history-page/lineups/agreements/actions'
+import { getHistoryAgreementsLineup } from '@coliving/web/src/common/store/pages/history-page/selectors'
 import { useSelector } from 'react-redux'
 
 import { Screen, Tile, VirtualizedScrollView } from 'app/components/core'

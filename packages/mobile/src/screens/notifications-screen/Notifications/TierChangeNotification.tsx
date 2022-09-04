@@ -1,6 +1,6 @@
-import { getUser } from '-client/src/common/store/cache/users/selectors'
-import type { TierChange } from '-client/src/common/store/notifications/types'
-import { fullProfilePage } from '-client/src/utils/route'
+import { getUser } from '@coliving/web/src/common/store/cache/users/selectors'
+import type { TierChange } from '@coliving/web/src/common/store/notifications/types'
+import { fullProfilePage } from '@coliving/web/src/utils/route'
 
 import IconBronzeBadge from 'app/assets/images/IconBronzeBadge.svg'
 import IconGoldBadge from 'app/assets/images/IconGoldBadge.svg'

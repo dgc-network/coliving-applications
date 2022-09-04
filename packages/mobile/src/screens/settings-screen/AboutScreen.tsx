@@ -1,4 +1,4 @@
-import { COPYRIGHT_TEXT } from '-client/src/utils/copyright'
+import { COPYRIGHT_TEXT } from '@coliving/web/src/utils/copyright'
 import { View, Image } from 'react-native'
 import VersionNumber from 'react-native-version-number'
 

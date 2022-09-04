@@ -1,18 +1,18 @@
 import { useCallback, useMemo, useState } from 'react'
 
-import { setTrendingGenre } from '-client/src/common/store/pages/trending/actions'
+import { setTrendingGenre } from '@coliving/web/src/common/store/pages/trending/actions'
 import {
   trendingWeekActions,
   trendingMonthActions,
   trendingAllTimeActions
-} from '-client/src/common/store/pages/trending/lineup/actions'
-import { getTrendingGenre } from '-client/src/common/store/pages/trending/selectors'
+} from '@coliving/web/src/common/store/pages/trending/lineup/actions'
+import { getTrendingGenre } from '@coliving/web/src/common/store/pages/trending/selectors'
 import {
   ELECTRONIC_PREFIX,
   ELECTRONIC_SUBGENRES,
   Genre,
   GENRES
-} from '-client/src/common/utils/genres'
+} from '@coliving/web/src/common/utils/genres'
 import { FlatList, Keyboard, View } from 'react-native'
 
 import { TextInput, Button } from 'app/components/core'

@@ -2,7 +2,7 @@ import type {
   AccountImage,
   InstagramProfile,
   TwitterProfile
-} from '-client/src/common/store/account/reducer'
+} from '@coliving/web/src/common/store/account/reducer'
 
 import type { Message } from 'app/message'
 

@@ -4,7 +4,7 @@ import {
   TRENDING_PAGE,
   EXPLORE_HEAVY_ROTATION_PAGE,
   FAVORITES_PAGE
-} from '-client/src/utils/route'
+} from '@coliving/web/src/utils/route'
 import type { ImageSourcePropType } from 'react-native'
 
 import ChartIncreasing from 'app/assets/images/emojis/chart-increasing.png'

@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 
-import { getUserId } from '-client/src/common/store/account/selectors'
+import { getUserId } from '@coliving/web/src/common/store/account/selectors'
 import { Animated, Easing } from 'react-native'
 import { useSelector } from 'react-redux'
 

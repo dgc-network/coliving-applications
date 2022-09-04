@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
 
-import { setFavorite } from '-client/src/common/store/user-list/favorites/actions'
-import { getUserList } from '-client/src/common/store/user-list/favorites/selectors'
+import { setFavorite } from '@coliving/web/src/common/store/user-list/favorites/actions'
+import { getUserList } from '@coliving/web/src/common/store/user-list/favorites/selectors'
 
 import IconHeart from 'app/assets/images/iconHeart.svg'
 import { useDispatchWeb } from 'app/hooks/useDispatchWeb'

@@ -6,8 +6,8 @@ import type {
   NativeStackNavigationProp
 } from '@react-navigation/native-stack'
 import { CardStyleInterpolators } from '@react-navigation/stack'
-import { markAllAsViewed } from '-client/src/common/store/notifications/actions'
-import { getNotificationUnviewedCount } from '-client/src/common/store/notifications/selectors'
+import { markAllAsViewed } from '@coliving/web/src/common/store/notifications/actions'
+import { getNotificationUnviewedCount } from '@coliving/web/src/common/store/notifications/selectors'
 import { Text, View } from 'react-native'
 
 import ColivingLogo from 'app/assets/images/colivingLogoHorizontal.svg'

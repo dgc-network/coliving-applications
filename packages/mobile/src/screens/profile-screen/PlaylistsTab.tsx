@@ -1,4 +1,4 @@
-import { getProfileContentLists } from '-client/src/common/store/pages/profile/selectors'
+import { getProfileContentLists } from '@coliving/web/src/common/store/pages/profile/selectors'
 
 import { CollectionList } from 'app/components/collection-list'
 import { useSelectorWeb } from 'app/hooks/useSelectorWeb'

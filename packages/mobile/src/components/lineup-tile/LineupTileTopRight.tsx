@@ -1,4 +1,4 @@
-import { formatSeconds } from '-client/src/common/utils/timeUtil'
+import { formatSeconds } from '@coliving/web/src/common/utils/timeUtil'
 import type { ViewStyle } from 'react-native'
 import { StyleSheet, View } from 'react-native'
 import type { SvgProps } from 'react-native-svg'

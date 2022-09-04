@@ -4,9 +4,9 @@ import { FollowSource } from '@coliving/common'
 import {
   followUser,
   unfollowUser
-} from '-client/src/common/store/social/users/actions'
-import { makeGetRelatedLandlords } from '-client/src/common/store/ui/landlord-recommendations/selectors'
-import { fetchRelatedLandlords } from '-client/src/common/store/ui/landlord-recommendations/slice'
+} from '@coliving/web/src/common/store/social/users/actions'
+import { makeGetRelatedLandlords } from '@coliving/web/src/common/store/ui/landlord-recommendations/selectors'
+import { fetchRelatedLandlords } from '@coliving/web/src/common/store/ui/landlord-recommendations/slice'
 import { TouchableOpacity, View } from 'react-native'
 import { useEffectOnce } from 'react-use'
 

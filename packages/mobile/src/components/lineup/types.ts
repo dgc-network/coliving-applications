@@ -1,7 +1,7 @@
 import type { ReactElement } from 'react'
 
 import type { ID, UID, Kind, Lineup as LineupData, Maybe } from '@coliving/common'
-import type { LineupActions } from '-client/src/common/store/lineup/actions'
+import type { LineupActions } from '@coliving/web/src/common/store/lineup/actions'
 import type { SectionListProps } from 'react-native'
 
 export enum LineupVariant {

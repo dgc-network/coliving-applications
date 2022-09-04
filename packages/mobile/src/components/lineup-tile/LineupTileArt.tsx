@@ -1,5 +1,5 @@
 import type { Remix } from '@coliving/common'
-import { useLoadImageWithTimeout } from '-client/src/common/hooks/useImageSize'
+import { useLoadImageWithTimeout } from '@coliving/web/src/common/hooks/useImageSize'
 import type { ImageStyle, StyleProp, ViewStyle } from 'react-native'
 import { View } from 'react-native'
 

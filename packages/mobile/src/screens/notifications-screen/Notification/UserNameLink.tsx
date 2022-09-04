@@ -1,7 +1,7 @@
 import { useCallback, useContext } from 'react'
 
 import type { User as UserType } from '@coliving/common'
-import { NOTIFICATION_PAGE } from '-client/src/utils/route'
+import { NOTIFICATION_PAGE } from '@coliving/web/src/utils/route'
 import { useDispatch } from 'react-redux'
 
 import type { TextProps } from 'app/components/core'

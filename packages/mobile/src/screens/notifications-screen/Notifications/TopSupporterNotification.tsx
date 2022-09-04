@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 
-import { getNotificationUser } from '-client/src/common/store/notifications/selectors'
+import { getNotificationUser } from '@coliving/web/src/common/store/notifications/selectors'
 import type { SupporterRankUp } from 'common/store/notifications/types'
 
 import { isEqual, useSelectorWeb } from 'app/hooks/useSelectorWeb'

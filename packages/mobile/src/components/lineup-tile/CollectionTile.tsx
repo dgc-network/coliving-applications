@@ -9,26 +9,26 @@ import {
   FavoriteType,
   SquareSizes
 } from '@coliving/common'
-import { getUserId } from '-client/src/common/store/account/selectors'
-import type { EnhancedCollectionAgreement } from '-client/src/common/store/cache/collections/selectors'
+import { getUserId } from '@coliving/web/src/common/store/account/selectors'
+import type { EnhancedCollectionAgreement } from '@coliving/web/src/common/store/cache/collections/selectors'
 import {
   getCollection,
   getAgreementsFromCollection
-} from '-client/src/common/store/cache/collections/selectors'
-import { getUserFromCollection } from '-client/src/common/store/cache/users/selectors'
+} from '@coliving/web/src/common/store/cache/collections/selectors'
+import { getUserFromCollection } from '@coliving/web/src/common/store/cache/users/selectors'
 import {
   repostCollection,
   saveCollection,
   undoRepostCollection,
   unsaveCollection
-} from '-client/src/common/store/social/collections/actions'
+} from '@coliving/web/src/common/store/social/collections/actions'
 import {
   OverflowAction,
   OverflowSource
-} from '-client/src/common/store/ui/mobile-overflow-menu/types'
-import { requestOpen as requestOpenShareModal } from '-client/src/common/store/ui/share-modal/slice'
-import { RepostType } from '-client/src/common/store/user-list/reposts/types'
-import { albumPage, contentListPage } from '-client/src/utils/route'
+} from '@coliving/web/src/common/store/ui/mobile-overflow-menu/types'
+import { requestOpen as requestOpenShareModal } from '@coliving/web/src/common/store/ui/share-modal/slice'
+import { RepostType } from '@coliving/web/src/common/store/user-list/reposts/types'
+import { albumPage, contentListPage } from '@coliving/web/src/utils/route'
 import { open as openOverflowMenu } from 'common/store/ui/mobile-overflow-menu/slice'
 import { useSelector } from 'react-redux'
 

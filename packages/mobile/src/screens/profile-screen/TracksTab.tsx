@@ -2,11 +2,11 @@ import { useCallback } from 'react'
 
 import type { RouteProp } from '@react-navigation/core'
 import { useRoute } from '@react-navigation/core'
-import { agreementsActions } from '-client/src/common/store/pages/profile/lineups/agreements/actions'
+import { agreementsActions } from '@coliving/web/src/common/store/pages/profile/lineups/agreements/actions'
 import {
   getProfileAgreementsLineup,
   getProfileUserHandle
-} from '-client/src/common/store/pages/profile/selectors'
+} from '@coliving/web/src/common/store/pages/profile/selectors'
 
 import { Lineup } from 'app/components/lineup'
 import { useDispatchWeb } from 'app/hooks/useDispatchWeb'

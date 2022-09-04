@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 
-// import { createUseFeatureFlagHook } from '-client/src/common/hooks/useFeatureFlag'
-// import { createUseRemoteVarHook } from '-client/src/common/hooks/useRemoteVar'
+// import { createUseFeatureFlagHook } from '@coliving/web/src/common/hooks/useFeatureFlag'
+// import { createUseRemoteVarHook } from '@coliving/web/src/common/hooks/useRemoteVar'
 
 import { FeatureFlagCohortType, flagCohortType } from '@coliving/common'
 import type {

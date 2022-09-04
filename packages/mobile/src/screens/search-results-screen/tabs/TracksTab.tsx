@@ -1,5 +1,5 @@
-import { agreementsActions } from '-client/src/common/store/pages/search-results/lineup/agreements/actions'
-import { getSearchAgreementsLineup } from '-client/src/common/store/pages/search-results/selectors'
+import { agreementsActions } from '@coliving/web/src/common/store/pages/search-results/lineup/agreements/actions'
+import { getSearchAgreementsLineup } from '@coliving/web/src/common/store/pages/search-results/selectors'
 
 import { Lineup } from 'app/components/lineup'
 import { useSelectorWeb, isEqual } from 'app/hooks/useSelectorWeb'

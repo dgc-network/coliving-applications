@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 
-import { getUserId } from '-client/src/common/store/account/selectors'
+import { getUserId } from '@coliving/web/src/common/store/account/selectors'
 import type { Animated } from 'react-native'
 import { LayoutAnimation, View } from 'react-native'
 import { useToggle } from 'react-use'

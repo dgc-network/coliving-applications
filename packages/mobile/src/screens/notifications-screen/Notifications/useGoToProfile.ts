@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
 
 import type { User, Nullable } from '@coliving/common'
-import { NOTIFICATION_PAGE } from '-client/src/utils/route'
+import { NOTIFICATION_PAGE } from '@coliving/web/src/utils/route'
 
 import { useNavigation } from 'app/hooks/useNavigation'
 import { getUserRoute } from 'app/utils/routes'

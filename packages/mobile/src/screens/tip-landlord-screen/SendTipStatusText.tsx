@@ -1,4 +1,4 @@
-import { getSendStatus } from '-client/src/common/store/tipping/selectors'
+import { getSendStatus } from '@coliving/web/src/common/store/tipping/selectors'
 import { View } from 'react-native'
 
 import { useSelectorWeb } from 'app/hooks/useSelectorWeb'

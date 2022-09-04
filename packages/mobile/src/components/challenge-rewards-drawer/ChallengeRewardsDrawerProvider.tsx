@@ -2,17 +2,17 @@ import { useCallback, useContext, useEffect } from 'react'
 
 import type { Maybe } from '@coliving/common'
 import { IntKeys, StringKeys } from '@coliving/common'
-import { getOptimisticUserChallenges } from '-client/src/common/store/challenges/selectors/optimistic-challenges'
+import { getOptimisticUserChallenges } from '@coliving/web/src/common/store/challenges/selectors/optimistic-challenges'
 import {
   getChallengeRewardsModalType,
   getClaimStatus
-} from '-client/src/common/store/pages/live-rewards/selectors'
+} from '@coliving/web/src/common/store/pages/live-rewards/selectors'
 import {
   claimChallengeReward,
   ClaimStatus,
   resetAndCancelClaimReward
-} from '-client/src/common/store/pages/live-rewards/slice'
-import { setVisibility } from '-client/src/common/store/ui/modals/slice'
+} from '@coliving/web/src/common/store/pages/live-rewards/slice'
+import { setVisibility } from '@coliving/web/src/common/store/ui/modals/slice'
 
 import { useDispatchWeb } from 'app/hooks/useDispatchWeb'
 import { useNavigation } from 'app/hooks/useNavigation'

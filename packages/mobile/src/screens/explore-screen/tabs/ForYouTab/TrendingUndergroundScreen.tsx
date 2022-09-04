@@ -1,6 +1,6 @@
-import { makeGetLineupMetadatas } from '-client/src/common/store/lineup/selectors'
-import { trendingUndergroundLineupActions } from '-client/src/common/store/pages/trending-underground/lineup/actions'
-import { getLineup } from '-client/src/common/store/pages/trending-underground/lineup/selectors'
+import { makeGetLineupMetadatas } from '@coliving/web/src/common/store/lineup/selectors'
+import { trendingUndergroundLineupActions } from '@coliving/web/src/common/store/pages/trending-underground/lineup/actions'
+import { getLineup } from '@coliving/web/src/common/store/pages/trending-underground/lineup/selectors'
 
 import { RewardsBanner } from 'app/components/live-rewards'
 import { Header } from 'app/components/header'

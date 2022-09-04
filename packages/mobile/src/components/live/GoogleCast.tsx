@@ -1,6 +1,6 @@
 import { useCallback, useEffect } from 'react'
 
-import { setIsCasting } from '-client/src/common/store/cast/slice'
+import { setIsCasting } from '@coliving/web/src/common/store/cast/slice'
 import {
   CastState,
   useCastState,

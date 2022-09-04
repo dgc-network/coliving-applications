@@ -2,13 +2,13 @@ import { useCallback, useEffect } from 'react'
 
 import type { User } from '@coliving/common'
 import { FeatureFlags } from '@coliving/common'
-import { getAccountUser } from '-client/src/common/store/account/selectors'
-import { getUsers } from '-client/src/common/store/cache/users/selectors'
+import { getAccountUser } from '@coliving/web/src/common/store/account/selectors'
+import { getUsers } from '@coliving/web/src/common/store/cache/users/selectors'
 import {
   getShowTip,
   getTipToDisplay
-} from '-client/src/common/store/tipping/selectors'
-import { hideTip } from '-client/src/common/store/tipping/slice'
+} from '@coliving/web/src/common/store/tipping/selectors'
+import { hideTip } from '@coliving/web/src/common/store/tipping/slice'
 import { View } from 'react-native'
 
 import IconRemove from 'app/assets/images/iconRemove.svg'

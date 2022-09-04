@@ -1,5 +1,5 @@
 import { TimeRange } from '@coliving/common'
-import { getTrendingGenre } from '-client/src/common/store/pages/trending/selectors'
+import { getTrendingGenre } from '@coliving/web/src/common/store/pages/trending/selectors'
 
 import IconAllTime from 'app/assets/images/iconAllTime.svg'
 import IconDay from 'app/assets/images/iconDay.svg'

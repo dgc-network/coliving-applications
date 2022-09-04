@@ -1,14 +1,14 @@
 import { useCallback } from 'react'
 
 import type { ID, FavoriteType } from '@coliving/common'
-import { setFavorite } from '-client/src/common/store/user-list/favorites/actions'
-import { setRepost } from '-client/src/common/store/user-list/reposts/actions'
-import type { RepostType } from '-client/src/common/store/user-list/reposts/types'
-import { formatCount } from '-client/src/common/utils/formatUtil'
+import { setFavorite } from '@coliving/web/src/common/store/user-list/favorites/actions'
+import { setRepost } from '@coliving/web/src/common/store/user-list/reposts/actions'
+import type { RepostType } from '@coliving/web/src/common/store/user-list/reposts/types'
+import { formatCount } from '@coliving/web/src/common/utils/formatUtil'
 import {
   FAVORITING_USERS_ROUTE,
   REPOSTING_USERS_ROUTE
-} from '-client/src/utils/route'
+} from '@coliving/web/src/utils/route'
 import { View, Pressable, StyleSheet } from 'react-native'
 
 import IconHeart from 'app/assets/images/iconHeart.svg'

@@ -1,10 +1,10 @@
 import { useCallback } from 'react'
 
-import type { Modals } from '-client/src/common/store/ui/modals/slice'
+import type { Modals } from '@coliving/web/src/common/store/ui/modals/slice'
 import {
   getModalVisibility,
   setVisibility
-} from '-client/src/common/store/ui/modals/slice'
+} from '@coliving/web/src/common/store/ui/modals/slice'
 import type { SetOptional } from 'type-fest'
 
 import { useDispatchWeb } from 'app/hooks/useDispatchWeb'

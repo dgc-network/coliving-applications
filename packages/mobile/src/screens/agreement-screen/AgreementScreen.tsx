@@ -1,12 +1,12 @@
-import { makeGetLineupMetadatas } from '-client/src/common/store/lineup/selectors'
-import { agreementsActions } from '-client/src/common/store/pages/agreement/lineup/actions'
+import { makeGetLineupMetadatas } from '@coliving/web/src/common/store/lineup/selectors'
+import { agreementsActions } from '@coliving/web/src/common/store/pages/agreement/lineup/actions'
 import {
   getLineup,
   getRemixParentAgreement,
   getAgreement,
   getUser
-} from '-client/src/common/store/pages/agreement/selectors'
-import { agreementRemixesPage } from '-client/src/utils/route'
+} from '@coliving/web/src/common/store/pages/agreement/selectors'
+import { agreementRemixesPage } from '@coliving/web/src/utils/route'
 import { omit } from 'lodash'
 import { Text, View } from 'react-native'
 

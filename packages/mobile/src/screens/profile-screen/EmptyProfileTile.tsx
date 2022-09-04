@@ -1,4 +1,4 @@
-import { getUserId } from '-client/src/common/store/account/selectors'
+import { getUserId } from '@coliving/web/src/common/store/account/selectors'
 
 import { EmptyTile } from 'app/components/core'
 import { useSelectorWeb } from 'app/hooks/useSelectorWeb'

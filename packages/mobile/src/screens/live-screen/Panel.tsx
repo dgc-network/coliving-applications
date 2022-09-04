@@ -1,6 +1,6 @@
 import type { OptimisticUserChallenge } from '@coliving/common'
-import { fillString } from '-client/src/common/utils/fillString'
-import { formatNumberCommas } from '-client/src/common/utils/formatUtil'
+import { fillString } from '@coliving/web/src/common/utils/fillString'
+import { formatNumberCommas } from '@coliving/web/src/common/utils/formatUtil'
 import { View, Image } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 

@@ -4,16 +4,16 @@ import type { User, Nullable } from '@coliving/common'
 import {
   getNotificationEntity,
   getNotificationUser
-} from '-client/src/common/store/notifications/selectors'
+} from '@coliving/web/src/common/store/notifications/selectors'
 import type {
   EntityType,
   Milestone
-} from '-client/src/common/store/notifications/types'
-import { Achievement } from '-client/src/common/store/notifications/types'
+} from '@coliving/web/src/common/store/notifications/types'
+import { Achievement } from '@coliving/web/src/common/store/notifications/types'
 import {
   fullProfilePage,
   NOTIFICATION_PAGE
-} from '-client/src/utils/route'
+} from '@coliving/web/src/utils/route'
 
 import IconTrophy from 'app/assets/images/iconTrophy.svg'
 import { useSelectorWeb, isEqual } from 'app/hooks/useSelectorWeb'

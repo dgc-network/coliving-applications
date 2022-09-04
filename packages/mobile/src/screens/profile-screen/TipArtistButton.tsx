@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 
-import { beginTip } from '-client/src/common/store/tipping/slice'
+import { beginTip } from '@coliving/web/src/common/store/tipping/slice'
 
 import IconGoldBadge from 'app/assets/images/IconGoldBadge.svg'
 import { Button } from 'app/components/core'

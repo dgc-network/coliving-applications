@@ -1,5 +1,5 @@
-import { makeGetExplore } from '-client/src/common/store/pages/explore/selectors'
-import { EXPLORE_PAGE } from '-client/src/utils/route'
+import { makeGetExplore } from '@coliving/web/src/common/store/pages/explore/selectors'
+import { EXPLORE_PAGE } from '@coliving/web/src/utils/route'
 
 import { CollectionList } from 'app/components/collection-list'
 import { useSelectorWeb } from 'app/hooks/useSelectorWeb'

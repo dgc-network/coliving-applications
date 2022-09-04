@@ -1,11 +1,11 @@
 import { useCallback } from 'react'
 
-import { getUser } from '-client/src/common/store/cache/users/selectors'
-import { setTopSupporters } from '-client/src/common/store/user-list/top-supporters/actions'
+import { getUser } from '@coliving/web/src/common/store/cache/users/selectors'
+import { setTopSupporters } from '@coliving/web/src/common/store/user-list/top-supporters/actions'
 import {
   getUserList,
   getId as getSupportersId
-} from '-client/src/common/store/user-list/top-supporters/selectors'
+} from '@coliving/web/src/common/store/user-list/top-supporters/selectors'
 import { View } from 'react-native'
 
 import IconTrophy from 'app/assets/images/iconTrophy.svg'

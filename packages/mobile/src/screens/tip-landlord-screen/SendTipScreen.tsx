@@ -2,20 +2,20 @@ import { useCallback, useEffect, useState } from 'react'
 
 import type { BNWei, StringWei } from '@coliving/common'
 import { useFocusEffect } from '@react-navigation/native'
-import { getAccountUser } from '-client/src/common/store/account/selectors'
+import { getAccountUser } from '@coliving/web/src/common/store/account/selectors'
 import {
   getOptimisticSupporters,
   getOptimisticSupporting,
   getSendUser
-} from '-client/src/common/store/tipping/selectors'
+} from '@coliving/web/src/common/store/tipping/selectors'
 import {
   sendTip,
   fetchUserSupporter
-} from '-client/src/common/store/tipping/slice'
-import { getAccountBalance } from '-client/src/common/store/wallet/selectors'
-import { getBalance } from '-client/src/common/store/wallet/slice'
-import { stringWeiToBN } from '-client/src/common/utils/wallet'
-import { useGetFirstOrTopSupporter } from '-client/src/hooks/useGetFirstOrTopSupporter'
+} from '@coliving/web/src/common/store/tipping/slice'
+import { getAccountBalance } from '@coliving/web/src/common/store/wallet/selectors'
+import { getBalance } from '@coliving/web/src/common/store/wallet/slice'
+import { stringWeiToBN } from '@coliving/web/src/common/utils/wallet'
+import { useGetFirstOrTopSupporter } from '@coliving/web/src/hooks/useGetFirstOrTopSupporter'
 import BN from 'bn.js'
 
 import IconArrow from 'app/assets/images/iconArrow.svg'

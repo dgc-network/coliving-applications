@@ -6,7 +6,7 @@ import {
   getStateFromPath,
   NavigationContainer as RNNavigationContainer
 } from '@react-navigation/native'
-import { getAccountUser } from '-client/src/common/store/account/selectors'
+import { getAccountUser } from '@coliving/web/src/common/store/account/selectors'
 
 import { usePushRouteWeb } from 'app/hooks/usePushRouteWeb'
 import { useSelectorWeb } from 'app/hooks/useSelectorWeb'

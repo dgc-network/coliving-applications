@@ -9,21 +9,21 @@ import {
   FavoriteType,
   SquareSizes
 } from '@coliving/common'
-import { getUserId } from '-client/src/common/store/account/selectors'
-import { getAgreement } from '-client/src/common/store/cache/agreements/selectors'
-import { getUserFromAgreement } from '-client/src/common/store/cache/users/selectors'
+import { getUserId } from '@coliving/web/src/common/store/account/selectors'
+import { getAgreement } from '@coliving/web/src/common/store/cache/agreements/selectors'
+import { getUserFromAgreement } from '@coliving/web/src/common/store/cache/users/selectors'
 import {
   repostAgreement,
   saveAgreement,
   undoRepostAgreement,
   unsaveAgreement
-} from '-client/src/common/store/social/agreements/actions'
+} from '@coliving/web/src/common/store/social/agreements/actions'
 import {
   OverflowAction,
   OverflowSource
-} from '-client/src/common/store/ui/mobile-overflow-menu/types'
-import { requestOpen as requestOpenShareModal } from '-client/src/common/store/ui/share-modal/slice'
-import { RepostType } from '-client/src/common/store/user-list/reposts/types'
+} from '@coliving/web/src/common/store/ui/mobile-overflow-menu/types'
+import { requestOpen as requestOpenShareModal } from '@coliving/web/src/common/store/ui/share-modal/slice'
+import { RepostType } from '@coliving/web/src/common/store/user-list/reposts/types'
 import { open as openOverflowMenu } from 'common/store/ui/mobile-overflow-menu/slice'
 import { useSelector } from 'react-redux'
 

@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
 
-import type { Modals } from '-client/src/common/store/ui/modals/slice'
+import type { Modals } from '@coliving/web/src/common/store/ui/modals/slice'
 import type { TextStyle, ViewStyle } from 'react-native'
 import { StyleSheet, TouchableHighlight, View } from 'react-native'
 

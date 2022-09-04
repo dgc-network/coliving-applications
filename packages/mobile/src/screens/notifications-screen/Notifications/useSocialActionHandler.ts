@@ -5,9 +5,9 @@ import type {
   Favorite,
   Follow,
   Repost
-} from '-client/src/common/store/notifications/types'
-import { setNotificationId } from '-client/src/common/store/user-list/notifications/actions'
-import { NOTIFICATION_PAGE } from '-client/src/utils/route'
+} from '@coliving/web/src/common/store/notifications/types'
+import { setNotificationId } from '@coliving/web/src/common/store/user-list/notifications/actions'
+import { NOTIFICATION_PAGE } from '@coliving/web/src/utils/route'
 
 import { useDispatchWeb } from 'app/hooks/useDispatchWeb'
 import { getUserRoute } from 'app/utils/routes'

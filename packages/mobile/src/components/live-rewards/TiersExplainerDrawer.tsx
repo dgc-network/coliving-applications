@@ -1,6 +1,6 @@
-import { getProfileUserId } from '-client/src/common/store/pages/profile/selectors'
-import type { BadgeTierInfo } from '-client/src/common/store/wallet/utils'
-import { badgeTiers } from '-client/src/common/store/wallet/utils'
+import { getProfileUserId } from '@coliving/web/src/common/store/pages/profile/selectors'
+import type { BadgeTierInfo } from '@coliving/web/src/common/store/wallet/utils'
+import { badgeTiers } from '@coliving/web/src/common/store/wallet/utils'
 import { Text, View } from 'react-native'
 
 import { useSelectTierInfo } from 'app/hooks/useSelectTierInfo'

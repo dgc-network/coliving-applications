@@ -5,9 +5,9 @@ import {
   RepostSource,
   ShareSource
 } from '@coliving/common'
-import type { CommonState } from '-client/src/common/store'
-import { getAgreement } from '-client/src/common/store/cache/agreements/selectors'
-import { getUser } from '-client/src/common/store/cache/users/selectors'
+import type { CommonState } from '@coliving/web/src/common/store'
+import { getAgreement } from '@coliving/web/src/common/store/cache/agreements/selectors'
+import { getUser } from '@coliving/web/src/common/store/cache/users/selectors'
 // Importing directly from -client for now, this will be removed
 // when the profile page is implemented in RN
 import {
@@ -16,16 +16,16 @@ import {
   saveAgreement,
   unsaveAgreement,
   shareAgreement
-} from '-client/src/common/store/social/agreements/actions'
+} from '@coliving/web/src/common/store/social/agreements/actions'
 import {
   followUser,
   unfollowUser
-} from '-client/src/common/store/social/users/actions'
-import { requestOpen as openAddToContentListModal } from '-client/src/common/store/ui/add-to-content-list/actions'
-import { getMobileOverflowModal } from '-client/src/common/store/ui/mobile-overflow-menu/selectors'
-import type { OverflowActionCallbacks } from '-client/src/common/store/ui/mobile-overflow-menu/types'
-import { OverflowAction } from '-client/src/common/store/ui/mobile-overflow-menu/types'
-import { profilePage } from '-client/src/utils/route'
+} from '@coliving/web/src/common/store/social/users/actions'
+import { requestOpen as openAddToContentListModal } from '@coliving/web/src/common/store/ui/add-to-content-list/actions'
+import { getMobileOverflowModal } from '@coliving/web/src/common/store/ui/mobile-overflow-menu/selectors'
+import type { OverflowActionCallbacks } from '@coliving/web/src/common/store/ui/mobile-overflow-menu/types'
+import { OverflowAction } from '@coliving/web/src/common/store/ui/mobile-overflow-menu/types'
+import { profilePage } from '@coliving/web/src/utils/route'
 
 import { useDispatchWeb } from 'app/hooks/useDispatchWeb'
 import { useDrawer } from 'app/hooks/useDrawer'

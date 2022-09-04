@@ -3,12 +3,12 @@ import { useCallback } from 'react'
 import {
   getNotificationEntities,
   getNotificationUser
-} from '-client/src/common/store/notifications/selectors'
+} from '@coliving/web/src/common/store/notifications/selectors'
 import type {
   EntityType,
   RemixCreate,
   AgreementEntity
-} from '-client/src/common/store/notifications/types'
+} from '@coliving/web/src/common/store/notifications/types'
 
 import IconRemix from 'app/assets/images/iconRemix.svg'
 import { useSelectorWeb, isEqual } from 'app/hooks/useSelectorWeb'

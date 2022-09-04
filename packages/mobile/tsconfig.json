@@ -12,15 +12,15 @@
     "paths": {
       "app/*": ["./src/*"],
       // Remove these when no longer dependent on -client
-      "live/*": ["./node_modules/-client/src/live/*"],
-      "common/*": ["./node_modules/-client/src/common/*"],
-      "components/*": ["./node_modules/-client/src/components/*"],
-      "hooks/*": ["./node_modules/-client/src/hooks/*"],
-      "pages/*": ["./node_modules/-client/src/pages/*"],
-      "models/*": ["./node_modules/-client/src/models/*"],
-      "services/*": ["./node_modules/-client/src/services/*"],
-      "store/*": ["./node_modules/-client/src/store/*"],
-      "utils/*": ["./node_modules/-client/src/utils/*"]
+      "live/*": ["./node_modules/@coliving/web/src/live/*"],
+      "common/*": ["./node_modules/@coliving/web/src/common/*"],
+      "components/*": ["./node_modules/@coliving/web/src/components/*"],
+      "hooks/*": ["./node_modules/@coliving/web/src/hooks/*"],
+      "pages/*": ["./node_modules/@coliving/web/src/pages/*"],
+      "models/*": ["./node_modules/@coliving/web/src/models/*"],
+      "services/*": ["./node_modules/@coliving/web/src/services/*"],
+      "store/*": ["./node_modules/@coliving/web/src/store/*"],
+      "utils/*": ["./node_modules/@coliving/web/src/utils/*"]
     },
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,

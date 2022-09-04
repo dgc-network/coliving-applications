@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
 
-import { getNotificationEntities } from '-client/src/common/store/notifications/selectors'
-import type { AddAgreementToContentList } from '-client/src/common/store/notifications/types'
+import { getNotificationEntities } from '@coliving/web/src/common/store/notifications/selectors'
+import type { AddAgreementToContentList } from '@coliving/web/src/common/store/notifications/types'
 import { isEqual } from 'lodash'
 import { View } from 'react-native'
 

@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useState } from 'react'
 
 import { Status } from '@coliving/common'
-import { getAccountUser } from '-client/src/common/store/account/selectors'
-import { NOTIFICATION_PAGE } from '-client/src/utils/route'
+import { getAccountUser } from '@coliving/web/src/common/store/account/selectors'
+import { NOTIFICATION_PAGE } from '@coliving/web/src/utils/route'
 import { Image, View } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 

@@ -3,10 +3,10 @@ import { useCallback } from 'react'
 import {
   getNotificationEntities,
   getNotificationUser
-} from '-client/src/common/store/notifications/selectors'
-import type { UserSubscription } from '-client/src/common/store/notifications/types'
-import { Entity } from '-client/src/common/store/notifications/types'
-import { profilePage } from '-client/src/utils/route'
+} from '@coliving/web/src/common/store/notifications/selectors'
+import type { UserSubscription } from '@coliving/web/src/common/store/notifications/types'
+import { Entity } from '@coliving/web/src/common/store/notifications/types'
+import { profilePage } from '@coliving/web/src/utils/route'
 import { View } from 'react-native'
 
 import IconStars from 'app/assets/images/iconStars.svg'

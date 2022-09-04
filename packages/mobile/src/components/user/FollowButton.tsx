@@ -4,7 +4,7 @@ import type { FollowSource, User } from '@coliving/common'
 import {
   followUser,
   unfollowUser
-} from '-client/src/common/store/social/users/actions'
+} from '@coliving/web/src/common/store/social/users/actions'
 import type { GestureResponderEvent, StyleProp, ViewStyle } from 'react-native'
 
 import IconFollow from 'app/assets/images/iconFollow.svg'

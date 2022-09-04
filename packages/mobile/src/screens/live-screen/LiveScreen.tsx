@@ -2,16 +2,16 @@ import { useCallback } from 'react'
 
 import type { BNWei, StringWei, Nullable } from '@coliving/common'
 import { useFocusEffect } from '@react-navigation/native'
-import { getHasAssociatedWallets } from '-client/src/common/store/pages/token-dashboard/selectors'
+import { getHasAssociatedWallets } from '@coliving/web/src/common/store/pages/token-dashboard/selectors'
 import {
   setModalState,
   setModalVisibility
-} from '-client/src/common/store/pages/token-dashboard/slice'
-import { setVisibility } from '-client/src/common/store/ui/modals/slice'
-import { getAccountTotalBalance } from '-client/src/common/store/wallet/selectors'
-import { getBalance } from '-client/src/common/store/wallet/slice'
-import { getTierAndNumberForBalance } from '-client/src/common/store/wallet/utils'
-import { formatWei } from '-client/src/common/utils/wallet'
+} from '@coliving/web/src/common/store/pages/token-dashboard/slice'
+import { setVisibility } from '@coliving/web/src/common/store/ui/modals/slice'
+import { getAccountTotalBalance } from '@coliving/web/src/common/store/wallet/selectors'
+import { getBalance } from '@coliving/web/src/common/store/wallet/slice'
+import { getTierAndNumberForBalance } from '@coliving/web/src/common/store/wallet/utils'
+import { formatWei } from '@coliving/web/src/common/utils/wallet'
 import BN from 'bn.js'
 import { Image, Linking, View } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'

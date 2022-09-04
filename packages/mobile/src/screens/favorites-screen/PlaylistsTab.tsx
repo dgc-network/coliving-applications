@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react'
 
-import { getAccountWithContentLists } from '-client/src/common/store/account/selectors'
-import { FAVORITES_PAGE } from '-client/src/utils/route'
+import { getAccountWithContentLists } from '@coliving/web/src/common/store/account/selectors'
+import { FAVORITES_PAGE } from '@coliving/web/src/utils/route'
 
 import { CollectionList } from 'app/components/collection-list'
 import { VirtualizedScrollView, Button } from 'app/components/core'

@@ -1,4 +1,4 @@
-import { makeGetSearchLandlords } from '-client/src/common/store/pages/search-results/selectors'
+import { makeGetSearchLandlords } from '@coliving/web/src/common/store/pages/search-results/selectors'
 
 import { LandlordCard } from 'app/components/landlord-card'
 import { CardList } from 'app/components/core'

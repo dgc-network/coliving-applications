@@ -1,13 +1,13 @@
 import { useCallback } from 'react'
 
 import { FavoriteSource } from '@coliving/common'
-import { getContentListLibrary } from '-client/src/common/store/account/selectors'
-import { getCollection } from '-client/src/common/store/pages/smart-collection/selectors'
-import { findInContentListLibrary } from '-client/src/common/store/content-list-library/helpers'
+import { getContentListLibrary } from '@coliving/web/src/common/store/account/selectors'
+import { getCollection } from '@coliving/web/src/common/store/pages/smart-collection/selectors'
+import { findInContentListLibrary } from '@coliving/web/src/common/store/content-list-library/helpers'
 import {
   saveSmartCollection,
   unsaveSmartCollection
-} from '-client/src/common/store/social/collections/actions'
+} from '@coliving/web/src/common/store/social/collections/actions'
 import { View } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
 

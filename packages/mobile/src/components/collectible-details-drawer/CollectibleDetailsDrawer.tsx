@@ -1,11 +1,11 @@
 import { useCallback, useMemo } from 'react'
 
 import { Chain } from '@coliving/common'
-import { getUser } from '-client/src/common/store/cache/users/selectors'
+import { getUser } from '@coliving/web/src/common/store/cache/users/selectors'
 import {
   getCollectible,
   getCollectibleOwnerId
-} from '-client/src/common/store/ui/collectible-details/selectors'
+} from '@coliving/web/src/common/store/ui/collectible-details/selectors'
 import { ScrollView, View } from 'react-native'
 
 import IconShare from 'app/assets/images/iconShare.svg'

@@ -1,7 +1,7 @@
 import { memo, useEffect } from 'react'
 
 import { useDrawerStatus } from '@react-navigation/drawer'
-import { markAllAsViewed } from '-client/src/common/store/notifications/actions'
+import { markAllAsViewed } from '@coliving/web/src/common/store/notifications/actions'
 import { View } from 'react-native'
 import { usePrevious } from 'react-use'
 

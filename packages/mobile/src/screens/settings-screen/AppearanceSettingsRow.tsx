@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 
-import { getUserId } from '-client/src/common/store/account/selectors'
+import { getUserId } from '@coliving/web/src/common/store/account/selectors'
 import Config from 'react-native-config'
 
 import Appearance from 'app/assets/images/emojis/waning-crescent-moon.png'

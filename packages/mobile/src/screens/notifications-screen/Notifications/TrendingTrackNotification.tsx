@@ -1,11 +1,11 @@
 import { useCallback } from 'react'
 
 import type { Nullable } from '@coliving/common'
-import { getNotificationEntity } from '-client/src/common/store/notifications/selectors'
+import { getNotificationEntity } from '@coliving/web/src/common/store/notifications/selectors'
 import type {
   AgreementEntity,
   TrendingAgreement
-} from '-client/src/common/store/notifications/types'
+} from '@coliving/web/src/common/store/notifications/types'
 
 import IconTrending from 'app/assets/images/iconTrending.svg'
 import { isEqual, useSelectorWeb } from 'app/hooks/useSelectorWeb'

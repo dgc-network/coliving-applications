@@ -1,4 +1,4 @@
-import { formatDateWithTimezoneOffset } from '-client/src/common/utils/timeUtil'
+import { formatDateWithTimezoneOffset } from '@coliving/web/src/common/utils/timeUtil'
 import { StyleSheet, View } from 'react-native'
 
 import Text from 'app/components/text'

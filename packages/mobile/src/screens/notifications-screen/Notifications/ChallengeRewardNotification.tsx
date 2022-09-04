@@ -1,5 +1,5 @@
 import type { ChallengeRewardID } from '@coliving/common'
-import type { ChallengeReward } from '-client/src/common/store/notifications/types'
+import type { ChallengeReward } from '@coliving/web/src/common/store/notifications/types'
 
 import IconColiving from 'app/assets/images/iconColiving.svg'
 

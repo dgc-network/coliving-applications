@@ -1,4 +1,4 @@
-import { getUserId } from '-client/src/common/store/account/selectors'
+import { getUserId } from '@coliving/web/src/common/store/account/selectors'
 import { View } from 'react-native'
 
 import IconTip from 'app/assets/images/iconTip.svg'

@@ -2,8 +2,8 @@ import type { ReactNode } from 'react'
 import { createContext, useCallback } from 'react'
 
 import { Name } from '@coliving/common'
-import { setTheme } from '-client/src/common/store/ui/theme/actions'
-import { getTheme } from '-client/src/common/store/ui/theme/selectors'
+import { setTheme } from '@coliving/web/src/common/store/ui/theme/actions'
+import { getTheme } from '@coliving/web/src/common/store/ui/theme/selectors'
 import { useDarkMode } from 'react-native-dark-mode'
 
 import { useDispatchWeb } from 'app/hooks/useDispatchWeb'

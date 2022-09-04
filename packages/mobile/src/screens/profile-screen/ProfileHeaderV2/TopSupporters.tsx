@@ -1,9 +1,9 @@
 import { useCallback } from 'react'
 
 import type { ID } from '@coliving/common'
-import { getUsers } from '-client/src/common/store/cache/users/selectors'
-import { getOptimisticSupportersForUser } from '-client/src/common/store/tipping/selectors'
-import type { SupportersMapForUser } from '-client/src/common/store/tipping/types'
+import { getUsers } from '@coliving/web/src/common/store/cache/users/selectors'
+import { getOptimisticSupportersForUser } from '@coliving/web/src/common/store/tipping/selectors'
+import type { SupportersMapForUser } from '@coliving/web/src/common/store/tipping/types'
 import { Text, View } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 

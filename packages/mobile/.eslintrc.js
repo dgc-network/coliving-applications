@@ -24,8 +24,8 @@ module.exports = {
       alias: {
         map: [
           ['app', './src'],
-          ['utils', '-client/src/utils'],
-          ['common', '-client/src/common']
+          ['utils', '@coliving/web/src/utils'],
+          ['common', '@coliving/web/src/common']
         ],
         extensions: ['.ts', '.tsx', '.js', '.jsx', '.json']
       }

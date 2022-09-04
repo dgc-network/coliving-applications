@@ -4,13 +4,13 @@ import type { Nullable } from '@coliving/common'
 import {
   getStatus,
   getAgreement
-} from '-client/src/common/store/ui/share-sound-to-tiktok-modal/selectors'
+} from '@coliving/web/src/common/store/ui/share-sound-to-tiktok-modal/selectors'
 import {
   authenticated,
   setStatus,
   share
-} from '-client/src/common/store/ui/share-sound-to-tiktok-modal/slice'
-import { Status } from '-client/src/common/store/ui/share-sound-to-tiktok-modal/types'
+} from '@coliving/web/src/common/store/ui/share-sound-to-tiktok-modal/slice'
+import { Status } from '@coliving/web/src/common/store/ui/share-sound-to-tiktok-modal/types'
 import { StyleSheet, View } from 'react-native'
 
 import IconTikTok from 'app/assets/images/iconTikTok.svg'

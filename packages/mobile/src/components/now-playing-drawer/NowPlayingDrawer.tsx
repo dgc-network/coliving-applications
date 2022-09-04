@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 
-import { getAgreement } from '-client/src/common/store/cache/agreements/selectors'
-import { getUser } from '-client/src/common/store/cache/users/selectors'
-import { next, previous } from '-client/src/common/store/queue/slice'
-import { Genre } from '-client/src/common/utils/genres'
+import { getAgreement } from '@coliving/web/src/common/store/cache/agreements/selectors'
+import { getUser } from '@coliving/web/src/common/store/cache/users/selectors'
+import { next, previous } from '@coliving/web/src/common/store/queue/slice'
+import { Genre } from '@coliving/web/src/common/utils/genres'
 import type {
   Animated,
   GestureResponderEvent,

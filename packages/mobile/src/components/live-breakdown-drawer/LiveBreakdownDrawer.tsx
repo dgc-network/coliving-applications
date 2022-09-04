@@ -2,14 +2,14 @@ import { useCallback } from 'react'
 
 import type { BNWei } from '@coliving/common'
 import { Chain } from '@coliving/common'
-import { getAssociatedWallets } from '-client/src/common/store/pages/token-dashboard/selectors'
-import type { AssociatedWallet } from '-client/src/common/store/pages/token-dashboard/types'
-import { getAccountBalance } from '-client/src/common/store/wallet/selectors'
+import { getAssociatedWallets } from '@coliving/web/src/common/store/pages/token-dashboard/selectors'
+import type { AssociatedWallet } from '@coliving/web/src/common/store/pages/token-dashboard/types'
+import { getAccountBalance } from '@coliving/web/src/common/store/wallet/selectors'
 import {
   formatWei,
   shortenEthAddress,
   shortenSPLAddress
-} from '-client/src/common/utils/wallet'
+} from '@coliving/web/src/common/utils/wallet'
 import BN from 'bn.js'
 import {
   StyleSheet,

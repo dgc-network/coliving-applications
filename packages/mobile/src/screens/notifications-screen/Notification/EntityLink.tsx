@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 
-import type { EntityType } from '-client/src/common/store/notifications/types'
+import type { EntityType } from '@coliving/web/src/common/store/notifications/types'
 import { useDispatch } from 'react-redux'
 
 import { Text } from 'app/components/core'

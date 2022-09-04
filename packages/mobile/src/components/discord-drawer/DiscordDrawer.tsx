@@ -4,12 +4,12 @@ import {
   getDiscordCode,
   getModalState,
   getModalVisible
-} from '-client/src/common/store/pages/token-dashboard/selectors'
+} from '@coliving/web/src/common/store/pages/token-dashboard/selectors'
 import {
   setModalState,
   setModalVisibility
-} from '-client/src/common/store/pages/token-dashboard/slice'
-import { COLIVING_DISCORD_LINK } from '-client/src/utils/route'
+} from '@coliving/web/src/common/store/pages/token-dashboard/slice'
+import { COLIVING_DISCORD_LINK } from '@coliving/web/src/utils/route'
 import { View } from 'react-native'
 
 import IconDiscord from 'app/assets/images/iconDiscord.svg'

@@ -10,31 +10,31 @@ import {
   FavoriteType,
   SquareSizes
 } from '@coliving/common'
-import { getUserId } from '-client/src/common/store/account/selectors'
-import { agreementsActions } from '-client/src/common/store/pages/agreement/lineup/actions'
+import { getUserId } from '@coliving/web/src/common/store/account/selectors'
+import { agreementsActions } from '@coliving/web/src/common/store/pages/agreement/lineup/actions'
 import {
   repostAgreement,
   saveAgreement,
   undoRepostAgreement,
   unsaveAgreement
-} from '-client/src/common/store/social/agreements/actions'
+} from '@coliving/web/src/common/store/social/agreements/actions'
 import {
   OverflowAction,
   OverflowSource
-} from '-client/src/common/store/ui/mobile-overflow-menu/types'
-import { requestOpen as requestOpenShareModal } from '-client/src/common/store/ui/share-modal/slice'
-import { setFavorite } from '-client/src/common/store/user-list/favorites/actions'
-import { setRepost } from '-client/src/common/store/user-list/reposts/actions'
-import { RepostType } from '-client/src/common/store/user-list/reposts/types'
-import { getCanonicalName } from '-client/src/common/utils/genres'
+} from '@coliving/web/src/common/store/ui/mobile-overflow-menu/types'
+import { requestOpen as requestOpenShareModal } from '@coliving/web/src/common/store/ui/share-modal/slice'
+import { setFavorite } from '@coliving/web/src/common/store/user-list/favorites/actions'
+import { setRepost } from '@coliving/web/src/common/store/user-list/reposts/actions'
+import { RepostType } from '@coliving/web/src/common/store/user-list/reposts/types'
+import { getCanonicalName } from '@coliving/web/src/common/utils/genres'
 import {
   formatSeconds,
   formatDate
-} from '-client/src/common/utils/timeUtil'
+} from '@coliving/web/src/common/utils/timeUtil'
 import {
   FAVORITING_USERS_ROUTE,
   REPOSTING_USERS_ROUTE
-} from '-client/src/utils/route'
+} from '@coliving/web/src/utils/route'
 import { open as openOverflowMenu } from 'common/store/ui/mobile-overflow-menu/slice'
 import { Image, Pressable, View } from 'react-native'
 import { useSelector } from 'react-redux'

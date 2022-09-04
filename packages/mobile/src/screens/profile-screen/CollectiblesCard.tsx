@@ -1,9 +1,9 @@
 import { useCallback, useMemo } from 'react'
 
 import type { ID, Collectible } from '@coliving/common'
-import { getUserId } from '-client/src/common/store/account/selectors'
-import { setCollectible } from '-client/src/common/store/ui/collectible-details/slice'
-import { setVisibility } from '-client/src/common/store/ui/modals/slice'
+import { getUserId } from '@coliving/web/src/common/store/account/selectors'
+import { setCollectible } from '@coliving/web/src/common/store/ui/collectible-details/slice'
+import { setVisibility } from '@coliving/web/src/common/store/ui/modals/slice'
 import type { StyleProp, ViewStyle } from 'react-native'
 import { ImageBackground, Text, View } from 'react-native'
 

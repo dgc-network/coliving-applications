@@ -1,4 +1,4 @@
-import type { makeGetTableMetadatas } from '-client/src/common/store/lineup/selectors'
+import type { makeGetTableMetadatas } from '@coliving/web/src/common/store/lineup/selectors'
 import type { SetOptional } from 'type-fest'
 
 export type AgreementMetadata = SetOptional<

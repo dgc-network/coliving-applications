@@ -1,11 +1,11 @@
 import { useCallback, useMemo, useState } from 'react'
 
 import type { ID } from '@coliving/common'
-import { getUserId } from '-client/src/common/store/account/selectors'
+import { getUserId } from '@coliving/web/src/common/store/account/selectors'
 import {
   OverflowAction,
   OverflowSource
-} from '-client/src/common/store/ui/mobile-overflow-menu/types'
+} from '@coliving/web/src/common/store/ui/mobile-overflow-menu/types'
 import { open as openOverflowMenu } from 'common/store/ui/mobile-overflow-menu/slice'
 import type { NativeSyntheticEvent, NativeTouchEvent } from 'react-native'
 import { Text, TouchableOpacity, View } from 'react-native'

@@ -2,9 +2,9 @@ import { useCallback } from 'react'
 
 import type { ID, Agreement, User } from '@coliving/common'
 import { SquareSizes } from '@coliving/common'
-import { getAgreement } from '-client/src/common/store/cache/agreements/selectors'
-import { getUserFromAgreement } from '-client/src/common/store/cache/users/selectors'
-import { profilePage } from '-client/src/utils/route'
+import { getAgreement } from '@coliving/web/src/common/store/cache/agreements/selectors'
+import { getUserFromAgreement } from '@coliving/web/src/common/store/cache/users/selectors'
+import { profilePage } from '@coliving/web/src/utils/route'
 import type { StyleProp, ViewStyle } from 'react-native'
 import { Pressable, View } from 'react-native'
 

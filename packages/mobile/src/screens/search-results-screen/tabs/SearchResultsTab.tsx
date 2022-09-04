@@ -2,7 +2,7 @@ import type { ReactNode } from 'react'
 import { useContext, useEffect, useState } from 'react'
 
 import { Status } from '@coliving/common'
-import { getSearchStatus } from '-client/src/common/store/pages/search-results/selectors'
+import { getSearchStatus } from '@coliving/web/src/common/store/pages/search-results/selectors'
 
 import { WithLoader } from 'app/components/with-loader/WithLoader'
 import { useSelectorWeb } from 'app/hooks/useSelectorWeb'

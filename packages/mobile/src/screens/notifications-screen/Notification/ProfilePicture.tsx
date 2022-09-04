@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 
-import { NOTIFICATION_PAGE } from '-client/src/utils/route'
+import { NOTIFICATION_PAGE } from '@coliving/web/src/utils/route'
 import { TouchableOpacity } from 'react-native'
 import { useDispatch } from 'react-redux'
 

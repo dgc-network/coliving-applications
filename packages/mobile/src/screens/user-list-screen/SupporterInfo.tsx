@@ -1,6 +1,6 @@
 import type { User } from '@coliving/common'
-import { getOptimisticSupporters } from '-client/src/common/store/tipping/selectors'
-import { getId as getSupportersId } from '-client/src/common/store/user-list/top-supporters/selectors'
+import { getOptimisticSupporters } from '@coliving/web/src/common/store/tipping/selectors'
+import { getId as getSupportersId } from '@coliving/web/src/common/store/user-list/top-supporters/selectors'
 import { View } from 'react-native'
 
 import IconTrending from 'app/assets/images/iconTrending.svg'

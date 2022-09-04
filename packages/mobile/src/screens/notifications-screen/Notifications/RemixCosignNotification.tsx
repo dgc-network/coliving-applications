@@ -4,11 +4,11 @@ import type { Nullable } from '@coliving/common'
 import {
   getNotificationEntities,
   getNotificationUser
-} from '-client/src/common/store/notifications/selectors'
+} from '@coliving/web/src/common/store/notifications/selectors'
 import type {
   RemixCosign,
   AgreementEntity
-} from '-client/src/common/store/notifications/types'
+} from '@coliving/web/src/common/store/notifications/types'
 import { View } from 'react-native'
 
 import IconRemix from 'app/assets/images/iconRemix.svg'

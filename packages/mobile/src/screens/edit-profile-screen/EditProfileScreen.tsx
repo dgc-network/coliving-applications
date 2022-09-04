@@ -2,7 +2,7 @@ import { useCallback } from 'react'
 
 import type { UserMetadata } from '@coliving/common'
 import { SquareSizes, WidthSizes } from '@coliving/common'
-import { updateProfile } from '-client/src/common/store/pages/profile/actions'
+import { updateProfile } from '@coliving/web/src/common/store/pages/profile/actions'
 import type { FormikProps } from 'formik'
 import { Formik } from 'formik'
 import { View } from 'react-native'

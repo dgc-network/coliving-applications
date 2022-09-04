@@ -1,4 +1,4 @@
-import type { ShareType } from '-client/src/common/store/ui/share-modal/types'
+import type { ShareType } from '@coliving/web/src/common/store/ui/share-modal/types'
 
 const shareTypeMap: Record<ShareType, string> = {
   agreement: 'Agreement',

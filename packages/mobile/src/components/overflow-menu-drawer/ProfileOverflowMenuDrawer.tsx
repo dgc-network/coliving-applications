@@ -1,15 +1,15 @@
 import type { ID } from '@coliving/common'
 import { FollowSource, ShareSource } from '@coliving/common'
-import type { CommonState } from '-client/src/common/store'
-import { getUser } from '-client/src/common/store/cache/users/selectors'
+import type { CommonState } from '@coliving/web/src/common/store'
+import { getUser } from '@coliving/web/src/common/store/cache/users/selectors'
 import {
   followUser,
   unfollowUser,
   shareUser
-} from '-client/src/common/store/social/users/actions'
-import { getMobileOverflowModal } from '-client/src/common/store/ui/mobile-overflow-menu/selectors'
-import type { OverflowActionCallbacks } from '-client/src/common/store/ui/mobile-overflow-menu/types'
-import { OverflowAction } from '-client/src/common/store/ui/mobile-overflow-menu/types'
+} from '@coliving/web/src/common/store/social/users/actions'
+import { getMobileOverflowModal } from '@coliving/web/src/common/store/ui/mobile-overflow-menu/selectors'
+import type { OverflowActionCallbacks } from '@coliving/web/src/common/store/ui/mobile-overflow-menu/types'
+import { OverflowAction } from '@coliving/web/src/common/store/ui/mobile-overflow-menu/types'
 
 import { useDispatchWeb } from 'app/hooks/useDispatchWeb'
 import { useSelectorWeb } from 'app/hooks/useSelectorWeb'

@@ -2,17 +2,17 @@ import { useEffect, useState } from 'react'
 
 import type { ChallengeRewardID } from '@coliving/common'
 import { removeNullable, StringKeys } from '@coliving/common'
-import { getOptimisticUserChallenges } from '-client/src/common/store/challenges/selectors/optimistic-challenges'
+import { getOptimisticUserChallenges } from '@coliving/web/src/common/store/challenges/selectors/optimistic-challenges'
 import {
   getUserChallenges,
   getUserChallengesLoading
-} from '-client/src/common/store/pages/live-rewards/selectors'
-import type { ChallengeRewardsModalType } from '-client/src/common/store/pages/live-rewards/slice'
+} from '@coliving/web/src/common/store/pages/live-rewards/selectors'
+import type { ChallengeRewardsModalType } from '@coliving/web/src/common/store/pages/live-rewards/slice'
 import {
   fetchUserChallenges,
   setChallengeRewardsModalType
-} from '-client/src/common/store/pages/live-rewards/slice'
-import { setVisibility } from '-client/src/common/store/ui/modals/slice'
+} from '@coliving/web/src/common/store/pages/live-rewards/slice'
+import { setVisibility } from '@coliving/web/src/common/store/ui/modals/slice'
 import { View } from 'react-native'
 
 import LoadingSpinner from 'app/components/loading-spinner'

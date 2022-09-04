@@ -1,17 +1,17 @@
 import { useContext, useState } from 'react'
 
 import { CreateContentListSource } from '@coliving/common'
-import { getAccountWithOwnContentLists } from '-client/src/common/store/account/selectors'
+import { getAccountWithOwnContentLists } from '@coliving/web/src/common/store/account/selectors'
 import {
   addAgreementToContentList,
   createContentList
-} from '-client/src/common/store/cache/collections/actions'
+} from '@coliving/web/src/common/store/cache/collections/actions'
 import {
   getAgreementId,
   getAgreementTitle
-} from '-client/src/common/store/ui/add-to-content-list/selectors'
-import { newCollectionMetadata } from '-client/src/schemas'
-import { FEED_PAGE, contentListPage } from '-client/src/utils/route'
+} from '@coliving/web/src/common/store/ui/add-to-content-list/selectors'
+import { newCollectionMetadata } from '@coliving/web/src/schemas'
+import { FEED_PAGE, contentListPage } from '@coliving/web/src/utils/route'
 import type { NativeScrollEvent, NativeSyntheticEvent } from 'react-native'
 import { View } from 'react-native'
 

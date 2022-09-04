@@ -1,5 +1,5 @@
-import { getSendAmount } from '-client/src/common/store/tipping/selectors'
-import { formatNumberCommas } from '-client/src/common/utils/formatUtil'
+import { getSendAmount } from '@coliving/web/src/common/store/tipping/selectors'
+import { formatNumberCommas } from '@coliving/web/src/common/utils/formatUtil'
 import { View } from 'react-native'
 
 import IconCheck from 'app/assets/images/iconCheck.svg'

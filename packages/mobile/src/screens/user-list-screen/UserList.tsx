@@ -3,16 +3,16 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { FeatureFlags } from '@coliving/common'
 import type { ID, User } from '@coliving/common'
 import { useFocusEffect, useIsFocused } from '@react-navigation/native'
-import type { CommonState } from '-client/src/common/store'
-import { getUserId } from '-client/src/common/store/account/selectors'
-import { getUsers } from '-client/src/common/store/cache/users/selectors'
+import type { CommonState } from '@coliving/web/src/common/store'
+import { getUserId } from '@coliving/web/src/common/store/account/selectors'
+import { getUsers } from '@coliving/web/src/common/store/cache/users/selectors'
 import {
   loadMore,
   reset,
   setLoading
-} from '-client/src/common/store/user-list/actions'
-import { makeGetOptimisticUserIdsIfNeeded } from '-client/src/common/store/user-list/selectors'
-import type { UserListStoreState } from '-client/src/common/store/user-list/types'
+} from '@coliving/web/src/common/store/user-list/actions'
+import { makeGetOptimisticUserIdsIfNeeded } from '@coliving/web/src/common/store/user-list/selectors'
+import type { UserListStoreState } from '@coliving/web/src/common/store/user-list/types'
 import { View } from 'react-native'
 import type { Selector } from 'react-redux'
 

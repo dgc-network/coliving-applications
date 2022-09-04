@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
 
-import { getUserId } from '-client/src/common/store/account/selectors'
-import { squashNewLines } from '-client/src/common/utils/formatUtil'
+import { getUserId } from '@coliving/web/src/common/store/account/selectors'
+import { squashNewLines } from '@coliving/web/src/common/utils/formatUtil'
 import type { ImageStyle } from 'react-native'
 import { TouchableOpacity, View } from 'react-native'
 

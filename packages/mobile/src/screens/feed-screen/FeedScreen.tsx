@@ -1,13 +1,13 @@
 import { useCallback, useEffect, useState } from 'react'
 
 import { Name } from '@coliving/common'
-import { makeGetLineupMetadatas } from '-client/src/common/store/lineup/selectors'
-import { feedActions } from '-client/src/common/store/pages/feed/lineup/actions'
+import { makeGetLineupMetadatas } from '@coliving/web/src/common/store/lineup/selectors'
+import { feedActions } from '@coliving/web/src/common/store/pages/feed/lineup/actions'
 import {
   getDiscoverFeedLineup,
   getFeedFilter
-} from '-client/src/common/store/pages/feed/selectors'
-import { setVisibility } from '-client/src/common/store/ui/modals/slice'
+} from '@coliving/web/src/common/store/pages/feed/selectors'
+import { setVisibility } from '@coliving/web/src/common/store/ui/modals/slice'
 import { omit } from 'lodash'
 import { useSelector } from 'react-redux'
 

@@ -1,4 +1,4 @@
-import { formatNumberCommas } from '-client/src/common/utils/formatUtil'
+import { formatNumberCommas } from '@coliving/web/src/common/utils/formatUtil'
 
 import { AudioText } from 'app/components/core'
 

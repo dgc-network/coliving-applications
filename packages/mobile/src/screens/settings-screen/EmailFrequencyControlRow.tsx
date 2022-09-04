@@ -1,8 +1,8 @@
 import { useCallback } from 'react'
 
-import { updateEmailFrequency } from '-client/src/common/store/pages/settings/actions'
-import { getEmailFrequency } from '-client/src/common/store/pages/settings/selectors'
-import { EmailFrequency } from '-client/src/common/store/pages/settings/types'
+import { updateEmailFrequency } from '@coliving/web/src/common/store/pages/settings/actions'
+import { getEmailFrequency } from '@coliving/web/src/common/store/pages/settings/selectors'
+import { EmailFrequency } from '@coliving/web/src/common/store/pages/settings/types'
 
 import { SegmentedControl } from 'app/components/core'
 import { useDispatchWeb } from 'app/hooks/useDispatchWeb'

@@ -1,8 +1,8 @@
 import { useCallback } from 'react'
 
-import { getTrendingGenre } from '-client/src/common/store/pages/trending/selectors'
-import { setVisibility } from '-client/src/common/store/ui/modals/slice'
-import { Genre } from '-client/src/common/utils/genres'
+import { getTrendingGenre } from '@coliving/web/src/common/store/pages/trending/selectors'
+import { setVisibility } from '@coliving/web/src/common/store/ui/modals/slice'
+import { Genre } from '@coliving/web/src/common/utils/genres'
 
 import { HeaderButton } from 'app/components/header'
 import { useDispatchWeb } from 'app/hooks/useDispatchWeb'

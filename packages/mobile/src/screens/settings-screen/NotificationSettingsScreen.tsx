@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 
-import { PushNotificationSetting } from '-client/src/common/store/pages/settings/types'
+import { PushNotificationSetting } from '@coliving/web/src/common/store/pages/settings/types'
 import { useDispatch } from 'react-redux'
 
 import { Screen } from 'app/components/core'

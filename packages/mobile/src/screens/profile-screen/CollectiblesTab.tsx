@@ -1,7 +1,7 @@
 import { useCallback, useContext, useRef } from 'react'
 
 import Clipboard from '@react-native-clipboard/clipboard'
-import { getUserId } from '-client/src/common/store/account/selectors'
+import { getUserId } from '@coliving/web/src/common/store/account/selectors'
 import type { FlatList as RNFlatList } from 'react-native'
 import { View, Text } from 'react-native'
 

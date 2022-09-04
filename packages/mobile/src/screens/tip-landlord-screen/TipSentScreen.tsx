@@ -1,9 +1,9 @@
 import { useCallback } from 'react'
 
 import { useNavigation } from '@react-navigation/native'
-import { getAccountUser } from '-client/src/common/store/account/selectors'
-import { getSendTipData } from '-client/src/common/store/tipping/selectors'
-import { formatNumberCommas } from '-client/src/common/utils/formatUtil'
+import { getAccountUser } from '@coliving/web/src/common/store/account/selectors'
+import { getSendTipData } from '@coliving/web/src/common/store/tipping/selectors'
+import { formatNumberCommas } from '@coliving/web/src/common/utils/formatUtil'
 
 import IconCheck from 'app/assets/images/iconCheck.svg'
 import IconRemove from 'app/assets/images/iconRemove.svg'

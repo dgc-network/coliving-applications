@@ -1,12 +1,12 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 
 import HCaptcha from '@hcaptcha/react-native-hcaptcha'
-import { getHCaptchaStatus } from '-client/src/common/store/pages/live-rewards/selectors'
-import { HCaptchaStatus } from '-client/src/common/store/pages/live-rewards/slice'
+import { getHCaptchaStatus } from '@coliving/web/src/common/store/pages/live-rewards/selectors'
+import { HCaptchaStatus } from '@coliving/web/src/common/store/pages/live-rewards/slice'
 import {
   getModalVisibility,
   setVisibility
-} from '-client/src/common/store/ui/modals/slice'
+} from '@coliving/web/src/common/store/ui/modals/slice'
 import type { NativeSyntheticEvent } from 'react-native'
 import Config from 'react-native-config'
 

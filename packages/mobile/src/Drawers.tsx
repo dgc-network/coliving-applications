@@ -1,6 +1,6 @@
 import type { ComponentType } from 'react'
 
-import type { Modals } from '-client/src/common/store/ui/modals/slice'
+import type { Modals } from '@coliving/web/src/common/store/ui/modals/slice'
 
 import { AddToContentListDrawer } from 'app/components/add-to-content-list-drawer'
 import { ApiRewardsDrawer } from 'app/components/api-rewards-drawer/ApiRewardsDrawer'
@@ -37,7 +37,7 @@ type CommonDrawerProps = {
 }
 
 /*
- * Conditionally renders the drawers hooked up to -client/src/common/ui/modal slice
+ * Conditionally renders the drawers hooked up to @coliving/web/src/common/ui/modal slice
  */
 const CommonDrawer = ({ modal: Modal, modalName }: CommonDrawerProps) => {
   const { modalState } = useDrawerState(modalName)

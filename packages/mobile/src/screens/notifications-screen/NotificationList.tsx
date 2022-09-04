@@ -4,13 +4,13 @@ import { Status } from '@coliving/common'
 import {
   fetchNotifications,
   refreshNotifications
-} from '-client/src/common/store/notifications/actions'
+} from '@coliving/web/src/common/store/notifications/actions'
 import {
   getNotificationHasMore,
   getNotificationStatus,
   makeGetAllNotifications
-} from '-client/src/common/store/notifications/selectors'
-import type { Notification } from '-client/src/common/store/notifications/types'
+} from '@coliving/web/src/common/store/notifications/selectors'
+import type { Notification } from '@coliving/web/src/common/store/notifications/types'
 import type { ViewToken } from 'react-native'
 import { View } from 'react-native'
 

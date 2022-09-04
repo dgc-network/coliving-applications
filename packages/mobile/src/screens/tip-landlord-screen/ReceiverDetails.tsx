@@ -1,4 +1,4 @@
-import { getSendUser } from '-client/src/common/store/tipping/selectors'
+import { getSendUser } from '@coliving/web/src/common/store/tipping/selectors'
 import { View } from 'react-native'
 
 import { Text } from 'app/components/core'

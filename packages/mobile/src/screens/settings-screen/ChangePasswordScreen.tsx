@@ -4,12 +4,12 @@ import { Status } from '@coliving/common'
 import {
   getChangePasswordStatus,
   getCurrentPage
-} from '-client/src/common/store/change-password/selectors'
+} from '@coliving/web/src/common/store/change-password/selectors'
 import {
   changePage,
   changePassword,
   Page
-} from '-client/src/common/store/change-password/slice'
+} from '@coliving/web/src/common/store/change-password/slice'
 import { View } from 'react-native'
 
 import { ConfirmCredentials } from 'app/components/confirm-credentials'

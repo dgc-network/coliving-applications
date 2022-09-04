@@ -1,9 +1,9 @@
 import { StringKeys } from '@coliving/common'
 import type { TrendingRewardID } from '@coliving/common'
-import type { TrendingRewardsModalType } from '-client/src/common/store/pages/live-rewards/slice'
-import { setTrendingRewardsModalType } from '-client/src/common/store/pages/live-rewards/slice'
-import type { Modals } from '-client/src/common/store/ui/modals/slice'
-import { setVisibility } from '-client/src/common/store/ui/modals/slice'
+import type { TrendingRewardsModalType } from '@coliving/web/src/common/store/pages/live-rewards/slice'
+import { setTrendingRewardsModalType } from '@coliving/web/src/common/store/pages/live-rewards/slice'
+import type { Modals } from '@coliving/web/src/common/store/ui/modals/slice'
+import { setVisibility } from '@coliving/web/src/common/store/ui/modals/slice'
 import { View } from 'react-native'
 
 import { useDispatchWeb } from 'app/hooks/useDispatchWeb'

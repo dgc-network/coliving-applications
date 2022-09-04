@@ -1,5 +1,5 @@
 import type { StringWei } from '@coliving/common'
-import { formatWei, stringWeiToBN } from '-client/src/common/utils/wallet'
+import { formatWei, stringWeiToBN } from '@coliving/web/src/common/utils/wallet'
 import { View } from 'react-native'
 
 import IconTip from 'app/assets/images/iconTip.svg'

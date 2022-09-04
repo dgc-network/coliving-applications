@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react'
 
 import type { User } from '@coliving/common'
-import { beginTip } from '-client/src/common/store/tipping/slice'
+import { beginTip } from '@coliving/web/src/common/store/tipping/slice'
 import { View } from 'react-native'
 
 import { Text, Button } from 'app/components/core'

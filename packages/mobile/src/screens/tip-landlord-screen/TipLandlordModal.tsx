@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import { resetSend } from '-client/src/common/store/tipping/slice'
+import { resetSend } from '@coliving/web/src/common/store/tipping/slice'
 
 import { useDispatchWeb } from 'app/hooks/useDispatchWeb'
 

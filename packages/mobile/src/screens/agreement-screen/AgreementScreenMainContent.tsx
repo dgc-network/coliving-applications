@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react'
 
 import type { ID, LineupState, Agreement, User, Nullable } from '@coliving/common'
-import { agreementRemixesPage } from '-client/src/utils/route'
+import { agreementRemixesPage } from '@coliving/web/src/utils/route'
 import { View } from 'react-native'
 
 import { useNavigation } from 'app/hooks/useNavigation'

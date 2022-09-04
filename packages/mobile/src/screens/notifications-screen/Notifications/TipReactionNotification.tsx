@@ -1,9 +1,9 @@
 import { useCallback } from 'react'
 
-import { useUIAudio } from '-client/src/common/hooks/useUIAudio'
-import { getNotificationUser } from '-client/src/common/store/notifications/selectors'
-import type { Reaction } from '-client/src/common/store/notifications/types'
-import { getReactionFromRawValue } from '-client/src/common/store/ui/reactions/slice'
+import { useUIAudio } from '@coliving/web/src/common/hooks/useUIAudio'
+import { getNotificationUser } from '@coliving/web/src/common/store/notifications/selectors'
+import type { Reaction } from '@coliving/web/src/common/store/notifications/types'
+import { getReactionFromRawValue } from '@coliving/web/src/common/store/ui/reactions/slice'
 import { View } from 'react-native'
 
 import IconTip from 'app/assets/images/iconTip.svg'

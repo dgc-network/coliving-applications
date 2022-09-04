@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
 
-import { setFollowers } from '-client/src/common/store/user-list/followers/actions'
-import { setFollowing } from '-client/src/common/store/user-list/following/actions'
+import { setFollowers } from '@coliving/web/src/common/store/user-list/followers/actions'
+import { setFollowing } from '@coliving/web/src/common/store/user-list/following/actions'
 import { Pressable, Text, View } from 'react-native'
 
 import { useDispatchWeb } from 'app/hooks/useDispatchWeb'

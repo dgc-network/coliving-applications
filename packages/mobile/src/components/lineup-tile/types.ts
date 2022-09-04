@@ -9,7 +9,7 @@ import type {
   Agreement,
   User
 } from '@coliving/common'
-import type { RepostType } from '-client/src/common/store/user-list/reposts/types'
+import type { RepostType } from '@coliving/web/src/common/store/user-list/reposts/types'
 
 import type { GestureResponderHandler } from 'app/types/gesture'
 

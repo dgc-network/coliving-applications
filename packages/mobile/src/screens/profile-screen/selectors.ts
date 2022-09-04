@@ -2,13 +2,13 @@ import type { User } from '@coliving/common'
 import {
   getAccountUser,
   getUserId
-} from '-client/src/common/store/account/selectors'
+} from '@coliving/web/src/common/store/account/selectors'
 import {
   getProfileUser,
   getProfileUserHandle,
   getProfileUserId,
   makeGetProfile
-} from '-client/src/common/store/pages/profile/selectors'
+} from '@coliving/web/src/common/store/pages/profile/selectors'
 import { isEqual } from 'lodash'
 import { createSelector } from 'reselect'
 

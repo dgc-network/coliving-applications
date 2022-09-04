@@ -1,4 +1,4 @@
-import { makeGetSearchContentLists } from '-client/src/common/store/pages/search-results/selectors'
+import { makeGetSearchContentLists } from '@coliving/web/src/common/store/pages/search-results/selectors'
 
 import { CollectionList } from 'app/components/collection-list/CollectionList'
 import { useSelectorWeb, isEqual } from 'app/hooks/useSelectorWeb'

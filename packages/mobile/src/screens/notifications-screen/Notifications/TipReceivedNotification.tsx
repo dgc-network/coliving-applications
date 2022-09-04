@@ -1,15 +1,15 @@
 import { useCallback } from 'react'
 
 import type { Nullable } from '@coliving/common'
-import { useUIAudio } from '-client/src/common/hooks/useUIAudio'
-import { getNotificationUser } from '-client/src/common/store/notifications/selectors'
-import type { TipReceive } from '-client/src/common/store/notifications/types'
-import type { ReactionTypes } from '-client/src/common/store/ui/reactions/slice'
+import { useUIAudio } from '@coliving/web/src/common/hooks/useUIAudio'
+import { getNotificationUser } from '@coliving/web/src/common/store/notifications/selectors'
+import type { TipReceive } from '@coliving/web/src/common/store/notifications/types'
+import type { ReactionTypes } from '@coliving/web/src/common/store/ui/reactions/slice'
 import {
   makeGetReactionForSignature,
   writeReactionValue
-} from '-client/src/common/store/ui/reactions/slice'
-import { formatNumberCommas } from '-client/src/common/utils/formatUtil'
+} from '@coliving/web/src/common/store/ui/reactions/slice'
+import { formatNumberCommas } from '@coliving/web/src/common/utils/formatUtil'
 import { Image, View } from 'react-native'
 
 import Checkmark from 'app/assets/images/emojis/white-heavy-check-mark.png'

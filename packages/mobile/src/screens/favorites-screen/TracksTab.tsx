@@ -2,16 +2,16 @@ import { useCallback, useState } from 'react'
 
 import type { ID, UID } from '@coliving/common'
 import { Status, FavoriteSource, Name, PlaybackSource } from '@coliving/common'
-import { makeGetTableMetadatas } from '-client/src/common/store/lineup/selectors'
-import { agreementsActions } from '-client/src/common/store/pages/saved-page/lineups/agreements/actions'
+import { makeGetTableMetadatas } from '@coliving/web/src/common/store/lineup/selectors'
+import { agreementsActions } from '@coliving/web/src/common/store/pages/saved-page/lineups/agreements/actions'
 import {
   getSavedAgreementsLineup,
   getSavedAgreementsStatus
-} from '-client/src/common/store/pages/saved-page/selectors'
+} from '@coliving/web/src/common/store/pages/saved-page/selectors'
 import {
   saveAgreement,
   unsaveAgreement
-} from '-client/src/common/store/social/agreements/actions'
+} from '@coliving/web/src/common/store/social/agreements/actions'
 import { shallowEqual, useSelector } from 'react-redux'
 
 import { Tile, VirtualizedScrollView } from 'app/components/core'

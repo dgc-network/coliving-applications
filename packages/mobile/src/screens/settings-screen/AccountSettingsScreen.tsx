@@ -1,8 +1,8 @@
 import { useCallback, useContext } from 'react'
 
-import { getAccountUser } from '-client/src/common/store/account/selectors'
-import { resendRecoveryEmail } from '-client/src/common/store/recovery-email/slice'
-import { setVisibility } from '-client/src/common/store/ui/modals/slice'
+import { getAccountUser } from '@coliving/web/src/common/store/account/selectors'
+import { resendRecoveryEmail } from '@coliving/web/src/common/store/recovery-email/slice'
+import { setVisibility } from '@coliving/web/src/common/store/ui/modals/slice'
 import { Text, View } from 'react-native'
 
 import Door from 'app/assets/images/emojis/door.png'

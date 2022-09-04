@@ -1,6 +1,6 @@
-import { makeGetLineupMetadatas } from '-client/src/common/store/lineup/selectors'
-import { feedActions } from '-client/src/common/store/pages/profile/lineups/feed/actions'
-import { getProfileFeedLineup } from '-client/src/common/store/pages/profile/selectors'
+import { makeGetLineupMetadatas } from '@coliving/web/src/common/store/lineup/selectors'
+import { feedActions } from '@coliving/web/src/common/store/pages/profile/lineups/feed/actions'
+import { getProfileFeedLineup } from '@coliving/web/src/common/store/pages/profile/selectors'
 
 import { Lineup } from 'app/components/lineup'
 import { isEqual, useSelectorWeb } from 'app/hooks/useSelectorWeb'

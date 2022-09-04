@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 
-import { signOut } from '-client/src/common/store/sign-out/slice'
+import { signOut } from '@coliving/web/src/common/store/sign-out/slice'
 import { View } from 'react-native'
 
 import { Button, Text } from 'app/components/core'

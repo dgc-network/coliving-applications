@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
 
-import { setTrendingRewardsModalType } from '-client/src/common/store/pages/live-rewards/slice'
-import { setVisibility } from '-client/src/common/store/ui/modals/slice'
+import { setTrendingRewardsModalType } from '@coliving/web/src/common/store/pages/live-rewards/slice'
+import { setVisibility } from '@coliving/web/src/common/store/ui/modals/slice'
 import { Text, View } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
 

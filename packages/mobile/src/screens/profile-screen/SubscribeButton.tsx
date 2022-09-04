@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
 
 import type { User } from '@coliving/common'
-import { setNotificationSubscription } from '-client/src/common/store/pages/profile/actions'
+import { setNotificationSubscription } from '@coliving/web/src/common/store/pages/profile/actions'
 
 import IconNotification from 'app/assets/images/iconNotification.svg'
 import { Button } from 'app/components/core'

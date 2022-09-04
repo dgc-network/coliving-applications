@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 
-import { setVisibility } from '-client/src/common/store/ui/modals/slice'
+import { setVisibility } from '@coliving/web/src/common/store/ui/modals/slice'
 import { View } from 'react-native'
 
 import { IconAudioBadge, TierText } from 'app/components/live-rewards'

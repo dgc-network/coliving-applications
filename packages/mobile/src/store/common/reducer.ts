@@ -1,4 +1,4 @@
-import type { CommonState } from '-client/src/common/store'
+import type { CommonState } from '@coliving/web/src/common/store'
 
 import type { CommonActions } from './actions'
 import { RECEIVE } from './actions'

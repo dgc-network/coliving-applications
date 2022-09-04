@@ -1,14 +1,14 @@
 import { useCallback } from 'react'
 
 import { Theme, StringKeys } from '@coliving/common'
-import { getTrendingRewardsModalType } from '-client/src/common/store/pages/live-rewards/selectors'
-import type { TrendingRewardsModalType } from '-client/src/common/store/pages/live-rewards/slice'
-import { setTrendingRewardsModalType } from '-client/src/common/store/pages/live-rewards/slice'
+import { getTrendingRewardsModalType } from '@coliving/web/src/common/store/pages/live-rewards/selectors'
+import type { TrendingRewardsModalType } from '@coliving/web/src/common/store/pages/live-rewards/slice'
+import { setTrendingRewardsModalType } from '@coliving/web/src/common/store/pages/live-rewards/slice'
 import {
   TRENDING_PAGE,
   TRENDING_CONTENT_LISTS_PAGE,
   TRENDING_UNDERGROUND_PAGE
-} from '-client/src/utils/route'
+} from '@coliving/web/src/utils/route'
 import type { ImageStyle } from 'react-native'
 import { Image, ScrollView, View } from 'react-native'
 

@@ -2,13 +2,13 @@ import { useCallback, useLayoutEffect } from 'react'
 
 import type { Agreement } from '@coliving/common'
 import { FavoriteSource, RepostSource, ShareSource } from '@coliving/common'
-import { updateMethod } from '-client/src/common/store/cast/slice'
+import { updateMethod } from '@coliving/web/src/common/store/cast/slice'
 import {
   repostAgreement,
   saveAgreement,
   undoRepostAgreement,
   unsaveAgreement
-} from '-client/src/common/store/social/agreements/actions'
+} from '@coliving/web/src/common/store/social/agreements/actions'
 import { getUserId } from 'common/store/account/selectors'
 import {
   getMethod as getCastMethod,

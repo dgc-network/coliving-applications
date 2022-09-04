@@ -8,26 +8,26 @@ import {
   FavoriteType,
   SquareSizes
 } from '@coliving/common'
-import { getUserId } from '-client/src/common/store/account/selectors'
+import { getUserId } from '@coliving/web/src/common/store/account/selectors'
 import {
   repostCollection,
   saveCollection,
   undoRepostCollection,
   unsaveCollection
-} from '-client/src/common/store/social/collections/actions'
+} from '@coliving/web/src/common/store/social/collections/actions'
 import {
   OverflowAction,
   OverflowSource
-} from '-client/src/common/store/ui/mobile-overflow-menu/types'
-import { requestOpen as requestOpenShareModal } from '-client/src/common/store/ui/share-modal/slice'
-import { setFavorite } from '-client/src/common/store/user-list/favorites/actions'
-import { setRepost } from '-client/src/common/store/user-list/reposts/actions'
-import { RepostType } from '-client/src/common/store/user-list/reposts/types'
-import { formatDate } from '-client/src/common/utils/timeUtil'
+} from '@coliving/web/src/common/store/ui/mobile-overflow-menu/types'
+import { requestOpen as requestOpenShareModal } from '@coliving/web/src/common/store/ui/share-modal/slice'
+import { setFavorite } from '@coliving/web/src/common/store/user-list/favorites/actions'
+import { setRepost } from '@coliving/web/src/common/store/user-list/reposts/actions'
+import { RepostType } from '@coliving/web/src/common/store/user-list/reposts/types'
+import { formatDate } from '@coliving/web/src/common/utils/timeUtil'
 import {
   FAVORITING_USERS_ROUTE,
   REPOSTING_USERS_ROUTE
-} from '-client/src/utils/route'
+} from '@coliving/web/src/utils/route'
 import { getCollection, getUser } from 'common/store/pages/collection/selectors'
 import { open as openOverflowMenu } from 'common/store/ui/mobile-overflow-menu/slice'
 

@@ -1,4 +1,4 @@
-import { getNotificationUsers } from '-client/src/common/store/notifications/selectors'
+import { getNotificationUsers } from '@coliving/web/src/common/store/notifications/selectors'
 import type { Follow } from 'common/store/notifications/types'
 import { formatCount } from 'common/utils/formatUtil'
 

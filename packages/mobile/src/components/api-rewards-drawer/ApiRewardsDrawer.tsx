@@ -1,4 +1,4 @@
-import { COLIVING_API_LINK } from '-client/src/utils/route'
+import { COLIVING_API_LINK } from '@coliving/web/src/utils/route'
 import type { ImageStyle } from 'react-native'
 import { Image, View } from 'react-native'
 

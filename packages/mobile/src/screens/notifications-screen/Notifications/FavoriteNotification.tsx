@@ -1,7 +1,7 @@
 import {
   getNotificationEntity,
   getNotificationUsers
-} from '-client/src/common/store/notifications/selectors'
+} from '@coliving/web/src/common/store/notifications/selectors'
 import type { Favorite } from 'common/store/notifications/types'
 import { formatCount } from 'common/utils/formatUtil'
 

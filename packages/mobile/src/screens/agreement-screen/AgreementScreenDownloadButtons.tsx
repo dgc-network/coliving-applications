@@ -2,12 +2,12 @@ import { useCallback } from 'react'
 
 import type { CID, ID, User } from '@coliving/common'
 import { Name } from '@coliving/common'
-import type { ButtonType as DownloadButtonType } from '-client/src/common/hooks/useDownloadAgreementButtons'
+import type { ButtonType as DownloadButtonType } from '@coliving/web/src/common/hooks/useDownloadAgreementButtons'
 import {
   ButtonState,
   useDownloadAgreementButtons
-} from '-client/src/common/hooks/useDownloadAgreementButtons'
-import { downloadAgreement } from '-client/src/common/store/social/agreements/actions'
+} from '@coliving/web/src/common/hooks/useDownloadAgreementButtons'
+import { downloadAgreement } from '@coliving/web/src/common/store/social/agreements/actions'
 import { View } from 'react-native'
 import type { useSelector } from 'react-redux'
 

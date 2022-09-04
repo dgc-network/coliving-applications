@@ -2,18 +2,18 @@ import { useCallback, useEffect, useState } from 'react'
 
 import { Name, TimeRange } from '@coliving/common'
 import { useNavigation } from '@react-navigation/native'
-import { makeGetLineupMetadatas } from '-client/src/common/store/lineup/selectors'
-import { setTrendingTimeRange } from '-client/src/common/store/pages/trending/actions'
+import { makeGetLineupMetadatas } from '@coliving/web/src/common/store/lineup/selectors'
+import { setTrendingTimeRange } from '@coliving/web/src/common/store/pages/trending/actions'
 import {
   trendingWeekActions,
   trendingMonthActions,
   trendingAllTimeActions
-} from '-client/src/common/store/pages/trending/lineup/actions'
+} from '@coliving/web/src/common/store/pages/trending/lineup/actions'
 import {
   getDiscoverTrendingAllTimeLineup,
   getDiscoverTrendingMonthLineup,
   getDiscoverTrendingWeekLineup
-} from '-client/src/common/store/pages/trending/selectors'
+} from '@coliving/web/src/common/store/pages/trending/selectors'
 
 import { Lineup } from 'app/components/lineup'
 import type { LineupProps } from 'app/components/lineup/types'

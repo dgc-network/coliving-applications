@@ -1,8 +1,8 @@
 import { useCallback } from 'react'
 
-import { NotificationType } from '-client/src/common/store/notifications/types'
-import { setNotificationId } from '-client/src/common/store/user-list/notifications/actions'
-import { getUserList } from '-client/src/common/store/user-list/notifications/selectors'
+import { NotificationType } from '@coliving/web/src/common/store/notifications/types'
+import { setNotificationId } from '@coliving/web/src/common/store/user-list/notifications/actions'
+import { getUserList } from '@coliving/web/src/common/store/user-list/notifications/selectors'
 
 import { Screen } from 'app/components/core'
 import { useDispatchWeb } from 'app/hooks/useDispatchWeb'

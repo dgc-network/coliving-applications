@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
 
-import type { Notification } from '-client/src/common/store/notifications/types'
+import type { Notification } from '@coliving/web/src/common/store/notifications/types'
 import { View } from 'react-native'
 
 import { Tile, Text } from 'app/components/core'

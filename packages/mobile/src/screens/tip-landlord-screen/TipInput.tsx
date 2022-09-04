@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react'
 
-import { formatNumberCommas } from '-client/src/common/utils/formatUtil'
+import { formatNumberCommas } from '@coliving/web/src/common/utils/formatUtil'
 
 import type { TextInputProps } from 'app/components/core'
 import { AudioText, TextInput } from 'app/components/core'

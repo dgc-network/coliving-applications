@@ -1,11 +1,11 @@
 import { useCallback } from 'react'
 
 import type { ID } from '@coliving/common'
-import { getUsers } from '-client/src/common/store/cache/users/selectors'
-import { getOptimisticSupportingForUser } from '-client/src/common/store/tipping/selectors'
-import type { SupportingMapForUser } from '-client/src/common/store/tipping/types'
-import { stringWeiToBN } from '-client/src/common/utils/wallet'
-import { MAX_PROFILE_SUPPORTING_TILES } from '-client/src/utils/constants'
+import { getUsers } from '@coliving/web/src/common/store/cache/users/selectors'
+import { getOptimisticSupportingForUser } from '@coliving/web/src/common/store/tipping/selectors'
+import type { SupportingMapForUser } from '@coliving/web/src/common/store/tipping/types'
+import { stringWeiToBN } from '@coliving/web/src/common/utils/wallet'
+import { MAX_PROFILE_SUPPORTING_TILES } from '@coliving/web/src/utils/constants'
 
 import IconArrow from 'app/assets/images/iconArrow.svg'
 import { Tile, TextButton } from 'app/components/core'

@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
 
-import { setFollowers } from '-client/src/common/store/user-list/followers/actions'
-import { getUserList } from '-client/src/common/store/user-list/followers/selectors'
+import { setFollowers } from '@coliving/web/src/common/store/user-list/followers/actions'
+import { getUserList } from '@coliving/web/src/common/store/user-list/followers/selectors'
 
 import IconUser from 'app/assets/images/iconUser.svg'
 import { useDispatchWeb } from 'app/hooks/useDispatchWeb'

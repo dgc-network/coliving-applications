@@ -1,4 +1,4 @@
-import type { Announcement } from '-client/src/common/store/notifications/types'
+import type { Announcement } from '@coliving/web/src/common/store/notifications/types'
 import Markdown from 'react-native-markdown-display'
 
 import IconColiving from 'app/assets/images/iconColiving.svg'

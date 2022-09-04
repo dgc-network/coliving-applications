@@ -1,8 +1,8 @@
-import { getMobileOverflowModal } from '-client/src/common/store/ui/mobile-overflow-menu/selectors'
+import { getMobileOverflowModal } from '@coliving/web/src/common/store/ui/mobile-overflow-menu/selectors'
 import {
   OverflowAction,
   OverflowSource
-} from '-client/src/common/store/ui/mobile-overflow-menu/types'
+} from '@coliving/web/src/common/store/ui/mobile-overflow-menu/types'
 
 import ActionDrawer from 'app/components/action-drawer'
 import { useSelectorWeb } from 'app/hooks/useSelectorWeb'
