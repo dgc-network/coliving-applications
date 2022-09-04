@@ -59,8 +59,7 @@
     "gl-quad": "^1.0.0",
     "gl-shader-core": "^2.2.0",
     "glsl-random": "0.0.4",
-    "glslify": "^1.6.0",
-    "inherits": "^2.0.1"
+    "glslify": "^1.6.0"
   },
   "deprecated": false,
   "description": "a soft gradient background in WebGL",
