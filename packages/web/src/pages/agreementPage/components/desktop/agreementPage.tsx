@@ -12,7 +12,7 @@ import SectionButton from 'components/sectionButton/sectionButton'
 import StatBanner from 'components/statBanner/statBanner'
 import GiantAgreementTile from 'components/agreement/giantAgreementTile'
 import { AgreementTileSize } from 'components/agreement/types'
-import { getAgreementDefaults, emptyStringGuard } from 'pages/agreement-page/utils'
+import { getAgreementDefaults, emptyStringGuard } from 'pages/agreementPage/utils'
 
 import Remixes from './remixes'
 import styles from './AgreementPage.module.css'

@@ -2,7 +2,7 @@ import { combineReducers } from 'redux'
 import { createReducer, ActionType } from 'typesafe-actions'
 
 import { UserListReducerFactory } from 'common/store/userList/reducer'
-import { USER_LIST_TAG } from 'pages/supporting-page/sagas'
+import { USER_LIST_TAG } from 'pages/supportingPage/sagas'
 
 import * as actions from './actions'
 import { SupportingOwnState } from './types'

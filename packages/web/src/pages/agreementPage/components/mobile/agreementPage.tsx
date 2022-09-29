@@ -16,10 +16,10 @@ import NavContext, {
 } from 'components/nav/store/context'
 import NetworkConnectivityMonitor from 'components/networkConnectivity/networkConnectivityMonitor'
 import SectionButton from 'components/sectionButton/sectionButton'
-import { getAgreementDefaults, emptyStringGuard } from 'pages/agreement-page/utils'
+import { getAgreementDefaults, emptyStringGuard } from 'pages/agreementPage/utils'
 
 import Remixes from './remixes'
-import AgreementPageHeader from './AgreementHeader'
+import AgreementPageHeader from './agreementHeader'
 import styles from './AgreementPage.module.css'
 
 const messages = {

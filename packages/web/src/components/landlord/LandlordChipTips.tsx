@@ -13,7 +13,7 @@ import {
 import { getId as getSupportingId } from 'common/store/userList/supporting/selectors'
 import { getId as getSupportersId } from 'common/store/userList/topSupporters/selectors'
 import { formatWei, stringWeiToBN } from 'common/utils/wallet'
-import { USER_LIST_TAG as SUPPORTING_USER_LIST_TAG } from 'pages/supporting-page/sagas'
+import { USER_LIST_TAG as SUPPORTING_USER_LIST_TAG } from 'pages/supportingPage/sagas'
 import { USER_LIST_TAG as TOP_SUPPORTERS_USER_LIST_TAG } from 'pages/topSupportersPage/sagas'
 import { TIPPING_TOP_RANK_THRESHOLD } from 'utils/constants'
 

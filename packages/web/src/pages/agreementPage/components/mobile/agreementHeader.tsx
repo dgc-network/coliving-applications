@@ -29,7 +29,7 @@ import { make, useRecord } from 'store/analytics/actions'
 import { moodMap } from 'utils/moods'
 import { isDarkMode } from 'utils/theme/theme'
 
-import HiddenAgreementHeader from '../HiddenAgreementHeader'
+import HiddenAgreementHeader from '../hiddenAgreementHeader'
 
 import ActionButtonRow from './actionButtonRow'
 import StatsButtonRow from './statsButtonRow'
