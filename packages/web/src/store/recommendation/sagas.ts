@@ -2,10 +2,10 @@ import { ID, UserAgreement, Nullable } from '@coliving/common'
 import { call } from 'typed-redux-saga'
 
 import { processAndCacheAgreements } from 'common/store/cache/agreements/utils'
-import apiClient from 'services/coliving-api-client/ColivingAPIClient'
+import apiClient from 'services/colivingAPIClient/colivingAPIClient'
 
-import ColivingBackend from '../../services/ColivingBackend'
-import Explore from '../../services/coliving-backend/Explore'
+import ColivingBackend from '../../services/colivingBackend'
+import Explore from '../../services/colivingBackend/explore'
 
 export function* getRecommendedAgreements(
   genre: string,

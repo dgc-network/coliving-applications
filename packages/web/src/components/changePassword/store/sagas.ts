@@ -9,7 +9,7 @@ import {
   changePasswordSucceeded,
   changePasswordFailed
 } from 'common/store/changePassword/slice'
-import ColivingBackend from 'services/ColivingBackend'
+import ColivingBackend from 'services/colivingBackend'
 import { make, AgreementEvent } from 'store/analytics/actions'
 import { waitForBackendSetup } from 'store/backend/sagas'
 

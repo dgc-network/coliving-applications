@@ -9,7 +9,7 @@ import {
   UseTikTokAuthArguments,
   createUseTikTokAuthHook
 } from 'common/hooks/useTikTokAuth'
-import { IDENTITY_SERVICE } from 'services/ColivingBackend'
+import { IDENTITY_SERVICE } from 'services/colivingBackend'
 import { useRecord, make } from 'store/analytics/actions'
 
 /**

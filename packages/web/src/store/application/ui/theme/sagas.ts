@@ -7,8 +7,8 @@ import {
   ThemeActions,
   setTheme as setThemeAction
 } from 'common/store/ui/theme/actions'
-import { PrefersColorSchemeMessage } from 'services/native-mobile-interface/android/theme'
-import { ThemeChangeMessage } from 'services/native-mobile-interface/theme'
+import { PrefersColorSchemeMessage } from 'services/nativeMobileInterface/android/theme'
+import { ThemeChangeMessage } from 'services/nativeMobileInterface/theme'
 import { getIsIOS } from 'utils/browser'
 import { actionChannelDispatcher } from 'utils/sagaHelpers'
 import { setTheme, PREFERS_DARK_MEDIA_QUERY } from 'utils/theme/theme'

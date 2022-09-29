@@ -4,7 +4,7 @@ import {
   OpenSeaAssetExtended,
   OpenSeaEvent,
   OpenSeaEventExtended
-} from 'services/opensea-client/types'
+} from 'services/openseaClient/types'
 import { gifPreview } from 'utils/imageProcessingUtil'
 
 const fetchWithTimeout = async (

@@ -2,7 +2,7 @@ import { combineReducers } from 'redux'
 import { expectSaga } from 'redux-saga-test-plan'
 import * as matchers from 'redux-saga-test-plan/matchers'
 
-import ColivingBackend from 'services/ColivingBackend'
+import ColivingBackend from 'services/colivingBackend'
 import { waitForBackendSetup } from 'store/backend/sagas'
 import { noopReducer } from 'store/testHelper'
 

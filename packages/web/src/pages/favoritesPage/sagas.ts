@@ -16,7 +16,7 @@ import {
 } from 'common/store/userList/favorites/selectors'
 import UserListSagaFactory from 'common/store/userList/sagas'
 import { createUserListProvider } from 'components/userList/utils'
-import apiClient from 'services/coliving-api-client/ColivingAPIClient'
+import apiClient from 'services/colivingAPIClient/colivingAPIClient'
 
 export const USER_LIST_TAG = 'FAVORITES'
 

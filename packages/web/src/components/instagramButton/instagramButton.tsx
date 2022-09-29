@@ -2,7 +2,7 @@ import { Button, ButtonType, ButtonSize } from '@coliving/stems'
 import cn from 'classnames'
 
 import { ReactComponent as IconInstagram } from 'assets/img/iconInstagram.svg'
-import { IDENTITY_SERVICE } from 'services/ColivingBackend'
+import { IDENTITY_SERVICE } from 'services/colivingBackend'
 
 import InstagramAuth from '../instagramAuth/instagramAuth'
 

@@ -3,7 +3,7 @@ import { takeEvery, call, put } from 'typed-redux-saga/macro'
 
 import { getAccountStatus } from 'common/store/account/selectors'
 import { processAndCacheCollections } from 'common/store/cache/collections/utils'
-import Explore from 'services/coliving-backend/Explore'
+import Explore from 'services/colivingBackend/explore'
 import { waitForBackendSetup } from 'store/backend/sagas'
 import { EXPLORE_PAGE } from 'utils/route'
 import { waitForValue, requiresAccount } from 'utils/sagaHelpers'

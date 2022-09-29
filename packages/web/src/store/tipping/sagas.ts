@@ -59,18 +59,18 @@ import {
   weiToAudioString,
   weiToString
 } from 'common/utils/wallet'
-import ColivingAPIClient from 'services/coliving-api-client/ColivingAPIClient'
+import ColivingAPIClient from 'services/colivingAPIClient/colivingAPIClient'
 import {
   fetchRecentUserTips,
   fetchSupporters,
   fetchSupporting,
   SupportRequest,
   UserTipRequest
-} from 'services/coliving-backend/Tipping'
-import { UpdateTipsStorageMessage } from 'services/native-mobile-interface/tipping'
-import { getFeatureEnabled } from 'services/remote-config/featureFlagHelpers'
-import { remoteConfigInstance } from 'services/remote-config/remote-config-instance'
-import walletClient from 'services/wallet-client/WalletClient'
+} from 'services/colivingBackend/tipping'
+import { UpdateTipsStorageMessage } from 'services/nativeMobileInterface/tipping'
+import { getFeatureEnabled } from 'services/remoteConfig/featureFlagHelpers'
+import { remoteConfigInstance } from 'services/remoteConfig/remoteConfigInstance'
+import walletClient from 'services/walletClient/walletClient'
 import { make } from 'store/analytics/actions'
 import mobileSagas from 'store/tipping/mobileSagas'
 import {

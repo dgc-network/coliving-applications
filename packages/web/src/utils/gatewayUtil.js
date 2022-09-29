@@ -1,4 +1,4 @@
-import { USER_NODE, LEGACY_USER_NODE } from 'services/ColivingBackend'
+import { USER_NODE, LEGACY_USER_NODE } from 'services/colivingBackend'
 
 export const getContentNodeIPFSGateways = (endpoint) => {
   if (endpoint) {

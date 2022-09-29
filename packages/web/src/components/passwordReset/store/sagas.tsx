@@ -1,6 +1,6 @@
 import { call, put, takeEvery } from 'redux-saga/effects'
 
-import ColivingBackend from 'services/ColivingBackend'
+import ColivingBackend from 'services/colivingBackend'
 
 import * as actions from './actions'
 

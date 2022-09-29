@@ -1,7 +1,7 @@
 import { put, call, take } from 'typed-redux-saga'
 
 import { setFeePayer } from 'common/store/solana/slice'
-import ColivingBackend from 'services/ColivingBackend'
+import ColivingBackend from 'services/colivingBackend'
 import * as backendActions from 'store/backend/actions'
 
 function* watchForFeePayer() {

@@ -15,7 +15,7 @@ import { LandlordPopover } from 'components/landlord/landlordPopover'
 import { ProfilePicture } from 'components/notification/notification/components/profilePicture'
 import Skeleton from 'components/skeleton/skeleton'
 import UserBadges from 'components/userBadges/userBadges'
-import { getFeatureEnabled } from 'services/remote-config/featureFlagHelpers'
+import { getFeatureEnabled } from 'services/remoteConfig/featureFlagHelpers'
 import { useRecord, make } from 'store/analytics/actions'
 import {
   setUsers,

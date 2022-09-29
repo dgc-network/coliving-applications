@@ -1,6 +1,6 @@
 import { takeEvery, put } from 'redux-saga/effects'
 
-import { MessageType } from 'services/native-mobile-interface/types'
+import { MessageType } from 'services/nativeMobileInterface/types'
 import * as oauthActions from 'store/oauth/actions'
 
 function* watchTwitterAuth() {

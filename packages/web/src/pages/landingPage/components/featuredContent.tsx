@@ -14,7 +14,7 @@ import { fetchExploreContent } from 'common/store/pages/explore/sagas'
 import { handleClickRoute } from 'components/publicSite/handleClickRoute'
 import useCardWeight from 'hooks/useCardWeight'
 import useHasViewed from 'hooks/useHasViewed'
-import ColivingBackend from 'services/ColivingBackend'
+import ColivingBackend from 'services/colivingBackend'
 import { getContentNodeIPFSGateways } from 'utils/gatewayUtil'
 import { contentListPage } from 'utils/route'
 

@@ -10,8 +10,8 @@ import {
   OnFirstPage,
   NotOnFirstPage,
   ChangedPage
-} from 'services/native-mobile-interface/lifecycle'
-import { MessageType } from 'services/native-mobile-interface/types'
+} from 'services/nativeMobileInterface/lifecycle'
+import { MessageType } from 'services/nativeMobileInterface/types'
 import {
   SIGN_IN_PAGE,
   SIGN_UP_PAGE,

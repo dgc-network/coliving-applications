@@ -10,7 +10,7 @@ import GroupableList from 'components/groupableList/groupableList'
 import Grouping from 'components/groupableList/grouping'
 import Row from 'components/groupableList/row'
 import Page from 'components/page/page'
-import { GetVersion } from 'services/native-mobile-interface/version'
+import { GetVersion } from 'services/nativeMobileInterface/version'
 import { COPYRIGHT_TEXT } from 'utils/copyright'
 
 import packageInfo from '../../../../../package.json'

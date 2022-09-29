@@ -8,7 +8,7 @@ import {
 } from 'common/store/pages/remixes/lineup/actions'
 import { getAgreementId, getLineup } from 'common/store/pages/remixes/selectors'
 import { setCount } from 'common/store/pages/remixes/slice'
-import apiClient from 'services/coliving-api-client/ColivingAPIClient'
+import apiClient from 'services/colivingAPIClient/colivingAPIClient'
 import { LineupSagas } from 'store/lineup/sagas'
 import { AppState } from 'store/types'
 

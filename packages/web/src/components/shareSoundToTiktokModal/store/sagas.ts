@@ -20,7 +20,7 @@ import {
 } from 'common/store/ui/shareSoundToTiktokModal/slice'
 import { Status } from 'common/store/ui/shareSoundToTiktokModal/types'
 import { show as showConfetti } from 'components/musicConfetti/store/slice'
-import apiClient from 'services/coliving-api-client/ColivingAPIClient'
+import apiClient from 'services/colivingAPIClient/colivingAPIClient'
 import { make } from 'store/analytics/actions'
 import { AppState } from 'store/types'
 import { getErrorMessage } from 'utils/error'

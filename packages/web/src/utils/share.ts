@@ -1,4 +1,4 @@
-import { ShareMessage } from 'services/native-mobile-interface/share'
+import { ShareMessage } from 'services/nativeMobileInterface/share'
 import { getIsIOS } from 'utils/browser'
 import { isMobile } from 'utils/clientUtil'
 import { copyLinkToClipboard, getCopyableLink } from 'utils/clipboardUtil'

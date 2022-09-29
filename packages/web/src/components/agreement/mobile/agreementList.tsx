@@ -4,7 +4,7 @@ import { ID, CoverArtSizes } from '@coliving/common'
 import cn from 'classnames'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 
-import { HapticFeedbackMessage } from 'services/native-mobile-interface/haptics'
+import { HapticFeedbackMessage } from 'services/nativeMobileInterface/haptics'
 
 import AgreementListItem from './connectedAgreementListItem'
 import styles from './AgreementList.module.css'

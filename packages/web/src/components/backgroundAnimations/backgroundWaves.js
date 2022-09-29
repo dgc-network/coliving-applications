@@ -3,7 +3,7 @@ import { useRef, useEffect, useCallback } from 'react'
 import cn from 'classnames'
 import PropTypes from 'prop-types'
 
-import WaveBG from 'utils/animations/background-waves'
+import WaveBG from 'utils/animations/backgroundWaves'
 import { useOnResizeEffect } from 'utils/effects'
 
 const waveConfig = [

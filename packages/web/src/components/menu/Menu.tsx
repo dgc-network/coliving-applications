@@ -7,7 +7,7 @@ import {
   PopupPosition
 } from '@coliving/stems'
 
-import { MainContentContext } from 'pages/MainContentContext'
+import { MainContentContext } from 'pages/mainContentContext'
 
 import CollectionMenu, {
   OwnProps as CollectionMenuProps

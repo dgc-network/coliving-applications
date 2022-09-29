@@ -11,7 +11,7 @@ import {
   SolanaNFT,
   SolanaNFTType,
   StarAtlasNFT
-} from 'services/solana-client/types'
+} from 'services/solanaClient/types'
 
 type SolanaNFTMedia = {
   collectibleMediaType: CollectibleMediaType

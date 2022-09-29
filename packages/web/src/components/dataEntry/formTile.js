@@ -24,7 +24,7 @@ import Switch from 'components/switch/switch'
 import UnlistedAgreementModal from 'components/unlisted-agreement-modal/UnlistedAgreementModal'
 import PreviewButton from 'components/upload/previewButton'
 import UploadArtwork from 'components/upload/uploadArtwork'
-import { createRemixOfMetadata } from 'pages/upload-page/store/utils/remixes'
+import { createRemixOfMetadata } from 'pages/uploadPage/store/utils/remixes'
 import {
   ALL_RIGHTS_RESERVED_TYPE,
   computeLicense,

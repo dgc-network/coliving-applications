@@ -23,7 +23,7 @@ export const NO_VISUALIZER_ROUTES = new Set([
 ])
 
 // Fetch the visualizer 1s after initial load
-const VisualizerProvider = lazyWithPreload(() => import('./VisualizerProvider'))
+const VisualizerProvider = lazyWithPreload(() => import('./visualizerProvider'))
 
 type VisualizerProps = {} & ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>

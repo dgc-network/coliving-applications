@@ -1,7 +1,7 @@
 import { Name } from '@coliving/common'
 import { takeLatest, put } from 'redux-saga/effects'
 
-import ColivingBackend from 'services/ColivingBackend'
+import ColivingBackend from 'services/colivingBackend'
 import { make } from 'store/analytics/actions'
 
 import { resendRecoveryEmail as resendRecoveryEmailAction } from './slice'

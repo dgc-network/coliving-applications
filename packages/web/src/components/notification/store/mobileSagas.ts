@@ -2,9 +2,9 @@ import { call, put, select, takeEvery } from 'typed-redux-saga/macro'
 
 import { getHasAccount } from 'common/store/account/selectors'
 import * as notificationActions from 'common/store/notifications/actions'
-import ColivingBackend from 'services/ColivingBackend'
-import { ResetNotificationsBadgeCount } from 'services/native-mobile-interface/notifications'
-import { MessageType } from 'services/native-mobile-interface/types'
+import ColivingBackend from 'services/colivingBackend'
+import { ResetNotificationsBadgeCount } from 'services/nativeMobileInterface/notifications'
+import { MessageType } from 'services/nativeMobileInterface/types'
 import { waitForBackendSetup } from 'store/backend/sagas'
 
 // Clear the notification badges if the user is signed in

@@ -8,11 +8,11 @@ import {
   PushNotifications,
   PushNotificationSetting
 } from 'common/store/pages/settings/types'
-import ColivingBackend from 'services/ColivingBackend'
+import ColivingBackend from 'services/colivingBackend'
 import {
   EnablePushNotificationsMessage,
   DisablePushNotificationsMessage
-} from 'services/native-mobile-interface/notifications'
+} from 'services/nativeMobileInterface/notifications'
 import { waitForBackendSetup } from 'store/backend/sagas'
 import { getErrorMessage } from 'utils/error'
 import { waitForValue } from 'utils/sagaHelpers'

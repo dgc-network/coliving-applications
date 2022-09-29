@@ -14,7 +14,7 @@ import MobilePageContainer from 'components/mobilePageContainer/mobilePageContai
 import SignOutPage from 'components/nav/mobile/signOut'
 import { ToastContext } from 'components/toast/toastContext'
 import { useUserProfilePicture } from 'hooks/useUserProfilePicture'
-import ColivingBackend from 'services/ColivingBackend'
+import ColivingBackend from 'services/colivingBackend'
 import { make, useRecord } from 'store/analytics/actions'
 import {
   ACCOUNT_VERIFICATION_SETTINGS_PAGE,

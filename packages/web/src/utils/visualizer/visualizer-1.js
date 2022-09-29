@@ -3,7 +3,7 @@ import vertexShader from './shaders/visualizer-1.vert'
 import fragmentShader from './shaders/visualizer-1.frag'
 
 import createLine from './gl-line-3d'
-import vignette from './gl-vignette-background'
+import vignette from './glVignetteBackground'
 import GLAudioAnalyser from 'utils/visualizer/GLAudioAnalyser'
 import { webglSupported } from 'pages/visualizer/utils'
 

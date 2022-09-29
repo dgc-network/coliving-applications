@@ -14,8 +14,8 @@ import { retrieve } from 'common/store/cache/sagas'
 import { getEntryTimestamp } from 'common/store/cache/selectors'
 import * as agreementActions from 'common/store/cache/agreements/actions'
 import { getAgreements as getAgreementsSelector } from 'common/store/cache/agreements/selectors'
-import ColivingBackend from 'services/ColivingBackend'
-import apiClient from 'services/coliving-api-client/ColivingAPIClient'
+import ColivingBackend from 'services/colivingBackend'
+import apiClient from 'services/colivingAPIClient/colivingAPIClient'
 
 import { setAgreementsIsBlocked } from './blocklist'
 import {

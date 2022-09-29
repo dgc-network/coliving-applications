@@ -29,9 +29,9 @@ import imageCoverPhotoBlank from 'assets/img/imageCoverPhotoBlank.jpg'
 import placeholderProfilePicture from 'assets/img/imageProfilePicEmpty2X.png'
 import CIDCache from 'common/store/cache/cidCache'
 import * as schemas from 'schemas'
-import { ClientRewardsReporter } from 'services/coliving-backend/Rewards'
-import { getFeatureEnabled } from 'services/remote-config/featureFlagHelpers'
-import { remoteConfigInstance } from 'services/remote-config/remote-config-instance'
+import { ClientRewardsReporter } from 'services/colivingBackend/rewards'
+import { getFeatureEnabled } from 'services/remoteConfig/featureFlagHelpers'
+import { remoteConfigInstance } from 'services/remoteConfig/remoteConfigInstance'
 import { IS_MOBILE_USER_KEY } from 'store/account/mobileSagas'
 import { agreement } from 'store/analytics/providers/amplitude'
 import { isElectron } from 'utils/clientUtil'
@@ -43,7 +43,7 @@ import {
   waitForLibsInit,
   withEagerOption,
   LIBS_INITTED_EVENT
-} from './coliving-backend/eagerLoadUtils'
+} from './colivingBackend/eagerLoadUtils'
 import { monitoringCallbacks } from './serviceMonitoring'
 dayjs.extend(utc)
 dayjs.extend(timezone)
@@ -409,7 +409,7 @@ class ColivingBackend {
     // Wait for optimizely to load if necessary
     await waitForRemoteConfig()
 
-    const { libs } = await import('./coliving-backend/ColivingLibsLazyLoader')
+    const { libs } = await import('./colivingBackend/colivingLibsLazyLoader')
 
     ColivingLibs = libs
     Utils = libs.Utils

@@ -7,7 +7,7 @@ import {
   delay
 } from 'typed-redux-saga/macro'
 
-import { MessageType, Message } from 'services/native-mobile-interface/types'
+import { MessageType, Message } from 'services/nativeMobileInterface/types'
 import { isMobile } from 'utils/clientUtil'
 
 import { setUnreachable, setReachable } from './actions'

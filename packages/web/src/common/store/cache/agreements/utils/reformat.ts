@@ -1,7 +1,7 @@
 import { CoverArtSizes, Agreement, AgreementMetadata } from '@coliving/common'
 import { omit } from 'lodash'
 
-import ColivingBackend from 'services/ColivingBackend'
+import ColivingBackend from 'services/colivingBackend'
 
 /**
  * Adds _cover_art_sizes to a agreement object if it does not have one set

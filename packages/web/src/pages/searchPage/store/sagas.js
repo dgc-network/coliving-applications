@@ -9,8 +9,8 @@ import * as searchPageActions from 'common/store/pages/searchResults/actions'
 import { agreementsActions as agreementsLineupActions } from 'common/store/pages/searchResults/lineup/agreements/actions'
 import { trimToAlphaNumeric } from 'common/utils/formatUtil'
 import agreementsSagas from 'pages/search-page/store/lineups/agreements/sagas'
-import ColivingBackend from 'services/ColivingBackend'
-import apiClient from 'services/coliving-api-client/ColivingAPIClient'
+import ColivingBackend from 'services/colivingBackend'
+import apiClient from 'services/colivingAPIClient/colivingAPIClient'
 import { waitForBackendSetup } from 'store/backend/sagas'
 
 export function* getTagSearchResults(tag, kind, limit, offset) {

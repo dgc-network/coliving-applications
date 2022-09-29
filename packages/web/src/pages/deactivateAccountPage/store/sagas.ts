@@ -2,7 +2,7 @@ import { ID, Name, Nullable } from '@coliving/common'
 import { call, delay, put, select, takeEvery } from 'redux-saga/effects'
 
 import { getAccountUser, getUserId } from 'common/store/account/selectors'
-import ColivingBackend from 'services/ColivingBackend'
+import ColivingBackend from 'services/colivingBackend'
 import { make } from 'store/analytics/actions'
 import { waitForBackendSetup } from 'store/backend/sagas'
 import { requestConfirmation } from 'store/confirmer/actions'

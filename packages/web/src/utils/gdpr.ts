@@ -1,4 +1,4 @@
-import { getLocation } from 'services/Location'
+import { getLocation } from 'services/location'
 
 const DISMISSED_COOKIE_BANNER_KEY = 'dismissCookieBanner'
 

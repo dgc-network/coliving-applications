@@ -21,7 +21,7 @@ import {
 } from 'common/store/pages/settings/actions'
 import { getFeePayer } from 'common/store/solana/selectors'
 import { setVisibility } from 'common/store/ui/modals/slice'
-import ColivingBackend from 'services/ColivingBackend'
+import ColivingBackend from 'services/colivingBackend'
 import {
   getColivingAccount,
   getColivingAccountUser,
@@ -30,16 +30,16 @@ import {
   setColivingAccountUser,
   clearColivingAccount,
   clearColivingAccountUser
-} from 'services/LocalStorage'
-import { recordIP } from 'services/coliving-backend/RecordIP'
-import { createUserBankIfNeeded } from 'services/coliving-backend/wlive'
-import fingerprintClient from 'services/fingerprint/FingerprintClient'
-import { SignedIn } from 'services/native-mobile-interface/lifecycle'
-import { remoteConfigInstance } from 'services/remote-config/remote-config-instance'
+} from 'services/localStorage'
+import { recordIP } from 'services/colivingBackend/recordIP'
+import { createUserBankIfNeeded } from 'services/colivingBackend/wlive'
+import fingerprintClient from 'services/fingerprint/fingerprintClient'
+import { SignedIn } from 'services/nativeMobileInterface/lifecycle'
+import { remoteConfigInstance } from 'services/remoteConfig/remoteConfigInstance'
 import { setSentryUser } from 'services/sentry'
 import { identify } from 'store/analytics/actions'
 import { waitForBackendSetup } from 'store/backend/sagas'
-import { addContentListsNotInLibrary } from 'store/content-list-library/sagas'
+import { addContentListsNotInLibrary } from 'store/contentListLibrary/sagas'
 import {
   Permission,
   isPushManagerAvailable,

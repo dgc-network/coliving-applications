@@ -5,9 +5,9 @@ import { Modal, Button, IconDownload, ButtonType } from '@coliving/stems'
 import { useDispatch } from 'react-redux'
 
 import QRCode from 'assets/img/imageQR.png'
-import DownloadApp from 'services/download-app/DownloadApp'
+import DownloadApp from 'services/downloadApp/downloadApp'
 import { make } from 'store/analytics/actions'
-import { setVisibility } from 'store/application/ui/app-cta-modal/slice'
+import { setVisibility } from 'store/application/ui/appCTAModal/slice'
 import { getOS } from 'utils/clientUtil'
 import { useSelector } from 'utils/reducer'
 

@@ -7,7 +7,7 @@ import Lottie from 'react-lottie'
 import loadingSpinner from 'assets/animations/loadingSpinner.json'
 import { ReactComponent as IconSearch } from 'assets/img/iconSearch.svg'
 import Tooltip from 'components/tooltip/tooltip'
-import { OpenSearchMessage } from 'services/native-mobile-interface/search'
+import { OpenSearchMessage } from 'services/nativeMobileInterface/search'
 
 import styles from './SearchBar.module.css'
 

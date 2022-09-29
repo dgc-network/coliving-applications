@@ -8,7 +8,7 @@ import {
   HCaptchaStatus,
   setHCaptchaStatus
 } from 'common/store/pages/live-rewards/slice'
-import ColivingBackend from 'services/ColivingBackend'
+import ColivingBackend from 'services/colivingBackend'
 
 import styles from './HCaptchaModal.module.css'
 import ModalDrawer from './modalDrawer'

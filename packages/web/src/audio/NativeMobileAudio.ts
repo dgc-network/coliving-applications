@@ -5,7 +5,7 @@ import {
   PauseAgreementMessage,
   GetPositionMessage,
   SeekMessage
-} from 'services/native-mobile-interface/player'
+} from 'services/nativeMobileInterface/player'
 import { Info } from 'store/player/types'
 import { generateM3U8Variants } from 'utils/hlsUtil'
 

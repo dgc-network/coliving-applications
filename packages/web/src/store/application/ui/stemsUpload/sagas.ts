@@ -8,8 +8,8 @@ import {
   startStemUploads,
   stemUploadsSucceeded
 } from 'common/store/stemsUpload/slice'
-import { handleUploads } from 'pages/upload-page/store/sagas'
-import { createStemMetadata } from 'pages/upload-page/store/utils/stems'
+import { handleUploads } from 'pages/uploadPage/store/sagas'
+import { createStemMetadata } from 'pages/uploadPage/store/utils/stems'
 import { make } from 'store/analytics/actions'
 
 function* watchUploadStems() {

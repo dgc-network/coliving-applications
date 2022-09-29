@@ -7,7 +7,7 @@ import { Button, ButtonType, LogoSol } from '@coliving/stems'
 import cn from 'classnames'
 
 import { useLocalStorage } from 'hooks/useLocalStorage'
-import { getFeatureEnabled } from 'services/remote-config/featureFlagHelpers'
+import { getFeatureEnabled } from 'services/remoteConfig/featureFlagHelpers'
 
 import { ModalBodyWrapper } from '../walletModal'
 

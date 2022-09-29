@@ -23,7 +23,7 @@ import {
 } from 'pages/signOn/store/selectors'
 import apiClient, {
   GetSocialFeedArgs
-} from 'services/coliving-api-client/ColivingAPIClient'
+} from 'services/colivingAPIClient/colivingAPIClient'
 import { LineupSagas } from 'store/lineup/sagas'
 
 type FeedItem = LineupAgreement | Collection

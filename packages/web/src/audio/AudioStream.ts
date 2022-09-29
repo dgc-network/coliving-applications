@@ -1,7 +1,7 @@
 import { AgreementSegment } from '@coliving/common'
 import Hls from 'hls.js'
 
-import { fetchCID } from 'services/ColivingBackend'
+import { fetchCID } from 'services/colivingBackend'
 import { generateM3U8, generateM3U8Variants } from 'utils/hlsUtil'
 import { decodeHashId } from 'utils/route/hashIds'
 

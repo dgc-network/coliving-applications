@@ -37,12 +37,12 @@ import { useFlag } from 'hooks/useRemoteConfig'
 import {
   LIVE_NFT_CONTENT_LIST,
   SMART_COLLECTION_MAP
-} from 'pages/smart-collection/smartCollections'
+} from 'pages/smartCollection/smartCollections'
 import { make, useRecord } from 'store/analytics/actions'
 import { setFolderId as setEditFolderModalFolderId } from 'store/application/ui/editFolderModal/slice'
 import { open as openEditContentListModal } from 'store/application/ui/editContentListModal/slice'
 import { getIsDragging } from 'store/dragndrop/selectors'
-import { update } from 'store/content-list-library/slice'
+import { update } from 'store/contentListLibrary/slice'
 import { useSelector } from 'utils/reducer'
 import { liveNftContentListPage, getPathname, contentListPage } from 'utils/route'
 

@@ -7,7 +7,7 @@ import cn from 'classnames'
 import { ReactComponent as IconWand } from 'assets/img/iconWand.svg'
 import UserCard from 'components/card/userCard'
 import SelectablePills from 'components/selectablePill/selectablePills'
-import { MAIN_CONTENT_ID } from 'pages/App'
+import { MAIN_CONTENT_ID } from 'pages/app'
 
 import { FollowLandlordsCategory, landlordCategories } from '../../store/types'
 

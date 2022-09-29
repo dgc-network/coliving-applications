@@ -12,8 +12,8 @@ import cn from 'classnames'
 import { CastMethod } from 'common/store/cast/slice'
 import FavoriteButton from 'components/altButton/favoriteButton'
 import RepostButton from 'components/altButton/repostButton'
-import { AirplayMessage } from 'services/native-mobile-interface/cast'
-import { ShowGoogleCastPickerMessage } from 'services/native-mobile-interface/googleCast'
+import { AirplayMessage } from 'services/nativeMobileInterface/cast'
+import { ShowGoogleCastPickerMessage } from 'services/nativeMobileInterface/googleCast'
 
 import styles from './ActionsBar.module.css'
 

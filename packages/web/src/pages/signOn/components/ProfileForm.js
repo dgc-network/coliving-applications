@@ -13,7 +13,7 @@ import LoadingSpinner from 'components/loadingSpinner/loadingSpinner'
 import ProfilePicture from 'components/profilePicture/profilePicture'
 import StatusMessage from 'components/statusMessage/statusMessage'
 import { useDelayedEffect } from 'hooks/useDelayedEffect'
-import { IDENTITY_SERVICE } from 'services/ColivingBackend'
+import { IDENTITY_SERVICE } from 'services/colivingBackend'
 import { resizeImage } from 'utils/imageProcessingUtil'
 
 import {

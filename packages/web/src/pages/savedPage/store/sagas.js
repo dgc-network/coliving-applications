@@ -5,7 +5,7 @@ import { processAndCacheAgreements } from 'common/store/cache/agreements/utils'
 import * as actions from 'common/store/pages/savedPage/actions'
 import { agreementsActions } from 'common/store/pages/savedPage/lineups/agreements/actions'
 import { getSaves } from 'common/store/pages/savedPage/selectors'
-import apiClient from 'services/coliving-api-client/ColivingAPIClient'
+import apiClient from 'services/colivingAPIClient/colivingAPIClient'
 import { waitForValue } from 'utils/sagaHelpers'
 
 import agreementsSagas from './lineups/agreements/sagas'

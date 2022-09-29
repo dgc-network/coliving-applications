@@ -9,8 +9,8 @@ import {
 import {
   CognitoFlowResponse,
   getCognitoFlow
-} from 'services/coliving-backend/Cognito'
-import { MessageType } from 'services/native-mobile-interface/types'
+} from 'services/colivingBackend/cognito'
+import { MessageType } from 'services/nativeMobileInterface/types'
 
 function* fetchCognitoFlowUriAsync() {
   try {

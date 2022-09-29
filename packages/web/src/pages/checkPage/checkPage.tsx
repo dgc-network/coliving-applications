@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { getAccountUser } from 'common/store/account/selectors'
 import { useScript } from 'hooks/useScript'
-import { getCognitoSignature } from 'services/coliving-backend/Cognito'
+import { getCognitoSignature } from 'services/colivingBackend/cognito'
 import { COGNITO_SCRIPT_URL } from 'utils/constants'
 import { SIGN_IN_PAGE, TRENDING_PAGE } from 'utils/route'
 

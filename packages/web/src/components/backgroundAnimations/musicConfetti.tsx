@@ -8,7 +8,7 @@ import noteIconPrimary from 'assets/img/particles/particleNotePrimary.svg'
 import noteIconSecondary from 'assets/img/particles/particleNoteSecondary.svg'
 import contentListsIconPrimary from 'assets/img/particles/particleContentListPrimary.svg'
 import contentListsIconSecondary from 'assets/img/particles/particleContentListSecondary.svg'
-import Confetti from 'utils/animations/music-confetti'
+import Confetti from 'utils/animations/musicConfetti'
 import { useOnResizeEffect } from 'utils/effects'
 
 const DEFAULT_IMAGES = [

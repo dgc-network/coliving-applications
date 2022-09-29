@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 
-import { IDENTITY_SERVICE } from 'services/ColivingBackend'
+import { IDENTITY_SERVICE } from 'services/colivingBackend'
 
 import TwitterButton from '../twitterButton/twitterButton'
 

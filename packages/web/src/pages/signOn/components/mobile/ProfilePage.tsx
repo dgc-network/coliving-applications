@@ -7,9 +7,9 @@ import {
   InstagramProfile,
   TwitterProfile
 } from 'common/store/account/reducer'
-import { MAIN_CONTENT_ID } from 'pages/App'
-import ProfileForm from 'pages/signOn/components/ProfileForm'
-import TwitterOverlay from 'pages/signOn/components/mobile/TwitterOverlay'
+import { MAIN_CONTENT_ID } from 'pages/app'
+import ProfileForm from 'pages/signOn/components/profileForm'
+import TwitterOverlay from 'pages/signOn/components/mobile/twitterOverlay'
 import {
   formatInstagramProfile,
   formatTwitterProfile

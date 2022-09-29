@@ -5,7 +5,7 @@ import { Popup, PopupPosition } from '@coliving/stems'
 import { useSelector } from 'react-redux'
 
 import { getUser } from 'common/store/cache/users/selectors'
-import { MainContentContext } from 'pages/MainContentContext'
+import { MainContentContext } from 'pages/mainContentContext'
 import { AppState } from 'store/types'
 import zIndex from 'utils/zIndex'
 

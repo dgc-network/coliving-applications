@@ -1,6 +1,6 @@
 import { createUseFeatureFlagHook } from 'common/hooks/useFeatureFlag'
 import { createUseRemoteVarHook } from 'common/hooks/useRemoteVar'
-import { remoteConfigInstance } from 'services/remote-config/remote-config-instance'
+import { remoteConfigInstance } from 'services/remoteConfig/remoteConfigInstance'
 
 export const useFlag = createUseFeatureFlagHook({
   remoteConfigInstance,

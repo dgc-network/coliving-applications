@@ -1,4 +1,4 @@
-import { IDENTITY_SERVICE } from 'services/ColivingBackend'
+import { IDENTITY_SERVICE } from 'services/colivingBackend'
 import { isElectron } from 'utils/clientUtil'
 
 export enum Permission {

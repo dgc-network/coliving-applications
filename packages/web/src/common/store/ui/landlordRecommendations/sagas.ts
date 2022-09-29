@@ -5,8 +5,8 @@ import { call, put, select, takeEvery } from 'redux-saga/effects'
 
 import { getUserId } from 'common/store/account/selectors'
 import { processAndCacheUsers } from 'common/store/cache/users/utils'
-import apiClient from 'services/coliving-api-client/ColivingAPIClient'
-import { remoteConfigInstance } from 'services/remote-config/remote-config-instance'
+import apiClient from 'services/colivingAPIClient/colivingAPIClient'
+import { remoteConfigInstance } from 'services/remoteConfig/remoteConfigInstance'
 
 import * as landlordRecommendationsActions from './slice'
 

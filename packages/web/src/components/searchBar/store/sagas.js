@@ -4,7 +4,7 @@ import { call, cancel, fork, put, race, select, take } from 'redux-saga/effects'
 import { getUserId } from 'common/store/account/selectors'
 import { setAgreementsIsBlocked } from 'common/store/cache/agreements/utils/blocklist'
 import * as searchActions from 'components/searchBar/store/actions'
-import apiClient from 'services/coliving-api-client/ColivingAPIClient'
+import apiClient from 'services/colivingAPIClient/colivingAPIClient'
 import { make } from 'store/analytics/actions'
 import { waitForBackendSetup } from 'store/backend/sagas'
 

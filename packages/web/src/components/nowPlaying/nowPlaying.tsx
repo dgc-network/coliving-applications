@@ -52,7 +52,7 @@ import ShuffleButtonProvider from 'components/playBar/shuffleButton/shuffleButto
 import { PlayButtonStatus } from 'components/playBar/types'
 import UserBadges from 'components/userBadges/userBadges'
 import { useAgreementCoverArt } from 'hooks/useAgreementCoverArt'
-import { HapticFeedbackMessage } from 'services/native-mobile-interface/haptics'
+import { HapticFeedbackMessage } from 'services/nativeMobileInterface/haptics'
 import { useRecord, make } from 'store/analytics/actions'
 import {
   getAudio,

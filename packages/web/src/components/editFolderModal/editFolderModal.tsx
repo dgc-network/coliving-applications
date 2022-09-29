@@ -21,7 +21,7 @@ import DeleteConfirmationModal from 'components/deleteConfirmation/deleteConfirm
 import { make, useRecord } from 'store/analytics/actions'
 import { getFolderId } from 'store/application/ui/editFolderModal/selectors'
 import { setFolderId } from 'store/application/ui/editFolderModal/slice'
-import { update as updateContentListLibrary } from 'store/content-list-library/slice'
+import { update as updateContentListLibrary } from 'store/contentListLibrary/slice'
 import { useSelector } from 'utils/reducer'
 import { zIndex } from 'utils/zIndex'
 

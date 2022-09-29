@@ -3,7 +3,7 @@ import { HeaderContextProvider } from 'components/header/mobile/headerContextPro
 import { NavProvider } from 'components/nav/store/context'
 import { ScrollProvider } from 'components/scrollProvider/scrollProvider'
 import { ToastContextProvider } from 'components/toast/toastContext'
-import { MainContentContextProvider } from 'pages/MainContentContext'
+import { MainContentContextProvider } from 'pages/mainContentContext'
 
 type AppContextProps = {
   children: JSX.Element

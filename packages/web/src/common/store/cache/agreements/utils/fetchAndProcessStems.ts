@@ -2,7 +2,7 @@ import { ID, Kind, StemCategory, Stem, StemAgreementMetadata } from '@coliving/c
 import { call, put } from 'redux-saga/effects'
 
 import * as cacheActions from 'common/store/cache/actions'
-import apiClient from 'services/coliving-api-client/ColivingAPIClient'
+import apiClient from 'services/colivingAPIClient/colivingAPIClient'
 import { waitForValue } from 'utils/sagaHelpers'
 
 import { getAgreement } from '../selectors'

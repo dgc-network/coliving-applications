@@ -9,7 +9,7 @@ import { MountPlacement } from 'components/types'
 import UserBadges from 'components/userBadges/userBadges'
 import { useUserProfilePicture } from 'hooks/useUserProfilePicture'
 import { USER_LIST_TAG as SUPPORTING_USER_LIST_TAG } from 'pages/supporting-page/sagas'
-import { USER_LIST_TAG as TOP_SUPPORTERS_USER_LIST_TAG } from 'pages/top-supporters-page/sagas'
+import { USER_LIST_TAG as TOP_SUPPORTERS_USER_LIST_TAG } from 'pages/topSupportersPage/sagas'
 
 import styles from './LandlordChip.module.css'
 import { LandlordChipFollowers } from './landlordChipFollowers'

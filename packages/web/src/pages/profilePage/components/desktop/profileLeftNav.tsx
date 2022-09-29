@@ -17,7 +17,7 @@ import ProfilePageBadge from 'components/userBadges/profilePageBadge'
 import { Type } from 'pages/profilePage/components/socialLink'
 import SocialLinkInput from 'pages/profilePage/components/socialLinkInput'
 import { ProfileTags } from 'pages/profilePage/components/desktop/profileTags'
-import { getFeatureEnabled } from 'services/remote-config/featureFlagHelpers'
+import { getFeatureEnabled } from 'services/remoteConfig/featureFlagHelpers'
 import { make, useRecord } from 'store/analytics/actions'
 import { UPLOAD_PAGE } from 'utils/route'
 

@@ -2,7 +2,7 @@ import { useEffect, useContext } from 'react'
 
 import MobilePageContainer from 'components/mobilePageContainer/mobilePageContainer'
 import NavContext, { LeftPreset } from 'components/nav/store/context'
-import GenreSelectionList from 'pages/trending-page/components/GenreSelectionList'
+import GenreSelectionList from 'pages/trendingPage/components/genreSelectionList'
 
 import styles from './TrendingGenreSelectionPage.module.css'
 

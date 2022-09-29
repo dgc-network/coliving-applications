@@ -26,7 +26,7 @@ import NavContext, {
   RightPreset
 } from 'components/nav/store/context'
 import SearchBar from 'components/searchBar/searchBar'
-import { OpenNotificationsMessage } from 'services/native-mobile-interface/notifications'
+import { OpenNotificationsMessage } from 'services/nativeMobileInterface/notifications'
 import { getIsIOS } from 'utils/browser'
 import { onNativeBack } from 'utils/nativeRoute'
 import { isMatrix } from 'utils/theme/theme'

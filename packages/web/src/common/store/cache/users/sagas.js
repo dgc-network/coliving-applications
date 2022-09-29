@@ -19,12 +19,12 @@ import {
   getStatus
 } from 'components/serviceSelection/store/selectors'
 import { fetchServicesFailed } from 'components/serviceSelection/store/slice'
-import ColivingBackend from 'services/ColivingBackend'
+import ColivingBackend from 'services/colivingBackend'
 import {
   getColivingAccountUser,
   setColivingAccountUser
-} from 'services/LocalStorage'
-import apiClient from 'services/coliving-api-client/ColivingAPIClient'
+} from 'services/localStorage'
+import apiClient from 'services/colivingAPIClient/colivingAPIClient'
 import { getContentNodeIPFSGateways } from 'utils/gatewayUtil'
 import { waitForValue } from 'utils/sagaHelpers'
 

@@ -1,7 +1,7 @@
 import { ID, Agreement } from '@coliving/common'
 
 import { processAndCacheAgreements } from 'common/store/cache/agreements/utils'
-import apiClient from 'services/coliving-api-client/ColivingAPIClient'
+import apiClient from 'services/colivingAPIClient/colivingAPIClient'
 
 type RetrieveUserAgreementsArgs = {
   handle: string

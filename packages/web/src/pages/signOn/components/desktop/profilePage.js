@@ -3,9 +3,9 @@ import { Component } from 'react'
 import cn from 'classnames'
 
 import BackButton from 'components/backButton/backButton'
-import ProfileForm from 'pages/signOn/components/ProfileForm'
+import ProfileForm from 'pages/signOn/components/profileForm'
 import DesktopTwitterOverlay from 'pages/signOn/components/desktop/twitterOverlay'
-import MobileTwitterOverlay from 'pages/signOn/components/mobile/TwitterOverlay'
+import MobileTwitterOverlay from 'pages/signOn/components/mobile/twitterOverlay'
 import {
   formatInstagramProfile,
   formatTwitterProfile

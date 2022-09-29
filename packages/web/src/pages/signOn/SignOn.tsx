@@ -11,9 +11,9 @@ import { AppState } from 'store/types'
 import { isMobile } from 'utils/clientUtil'
 import { TRENDING_PAGE } from 'utils/route'
 
-import SignOnProvider from './SignOnProvider'
+import SignOnProvider from './signOnProvider'
 import SignOnDesktopPage from './components/desktop/signOnPage'
-import SignOnMobilePage from './components/mobile/SignOnPage'
+import SignOnMobilePage from './components/mobile/signOnPage'
 import * as signOnAction from './store/actions'
 import { getPage } from './store/selectors'
 

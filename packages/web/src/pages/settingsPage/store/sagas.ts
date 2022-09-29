@@ -4,7 +4,7 @@ import { select, call, put, takeEvery } from 'typed-redux-saga'
 import * as actions from 'common/store/pages/settings/actions'
 import { getBrowserNotificationSettings } from 'common/store/pages/settings/selectors'
 import { BrowserNotificationSetting } from 'common/store/pages/settings/types'
-import ColivingBackend from 'services/ColivingBackend'
+import ColivingBackend from 'services/colivingBackend'
 import { make } from 'store/analytics/actions'
 import { waitForBackendSetup } from 'store/backend/sagas'
 import {

@@ -1,5 +1,5 @@
-import { OpenNotificationsMessage } from 'services/native-mobile-interface/notifications'
-import { OpenSearchMessage } from 'services/native-mobile-interface/search'
+import { OpenNotificationsMessage } from 'services/nativeMobileInterface/notifications'
+import { OpenSearchMessage } from 'services/nativeMobileInterface/search'
 
 /**
  * On adding new native pages, add the ability to navigate back

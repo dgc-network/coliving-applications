@@ -1,7 +1,7 @@
 import { push as pushRoute, goBack } from 'connected-react-router'
 import { put, takeEvery } from 'redux-saga/effects'
 
-import { MessageType, Message } from 'services/native-mobile-interface/types'
+import { MessageType, Message } from 'services/nativeMobileInterface/types'
 
 function* watchPushRoute() {
   yield takeEvery(MessageType.PUSH_ROUTE, function* (action: Message) {

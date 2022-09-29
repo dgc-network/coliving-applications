@@ -5,7 +5,7 @@ import {
   IntKeys
 } from '@coliving/common'
 
-import { remoteConfigInstance } from 'services/remote-config/remote-config-instance'
+import { remoteConfigInstance } from 'services/remoteConfig/remoteConfigInstance'
 import { agreement } from 'store/analytics/providers'
 
 /**

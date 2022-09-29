@@ -20,7 +20,7 @@ const PrivacyPolicyPage = lazy(
 )
 const DownloadPage = lazy(() => import('pages/downloadPage/downloadPage'))
 const TermsOfUsePage = lazy(
-  () => import('pages/terms-of-use-page/TermsOfUsePage')
+  () => import('pages/termsOfUsePage/termsOfUsePage')
 )
 
 const ROOT_ID = 'root'

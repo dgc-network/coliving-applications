@@ -11,7 +11,7 @@ import {
 } from 'common/store/userList/following/selectors'
 import UserListSagaFactory from 'common/store/userList/sagas'
 import { createUserListProvider } from 'components/userList/utils'
-import apiClient from 'services/coliving-api-client/ColivingAPIClient'
+import apiClient from 'services/colivingAPIClient/colivingAPIClient'
 
 export const USER_LIST_TAG = 'FOLLOWING'
 

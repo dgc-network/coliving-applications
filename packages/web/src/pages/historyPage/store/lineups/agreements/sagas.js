@@ -8,7 +8,7 @@ import {
   PREFIX,
   agreementsActions
 } from 'common/store/pages/historyPage/lineups/agreements/actions'
-import apiClient from 'services/coliving-api-client/ColivingAPIClient'
+import apiClient from 'services/colivingAPIClient/colivingAPIClient'
 import { LineupSagas } from 'store/lineup/sagas'
 
 function* getHistoryAgreements() {

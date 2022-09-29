@@ -7,7 +7,7 @@ import { setNotificationSubscription } from 'common/store/pages/profile/actions'
 import { followUser, unfollowUser } from 'common/store/social/users/actions'
 import FollowButton from 'components/followButton/followButton'
 import Stats, { StatProps } from 'components/stats/stats'
-import { getFeatureEnabled } from 'services/remote-config/featureFlagHelpers'
+import { getFeatureEnabled } from 'services/remoteConfig/featureFlagHelpers'
 
 import styles from './LandlordCard.module.css'
 import { LandlordCardCover } from './landlordCardCover'

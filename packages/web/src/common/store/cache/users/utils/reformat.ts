@@ -5,7 +5,7 @@ import {
   UserMetadata
 } from '@coliving/common'
 
-import ColivingBackend from 'services/ColivingBackend'
+import ColivingBackend from 'services/colivingBackend'
 
 /**
  * Adds profile picture and cover art to a user object if it does not have one set

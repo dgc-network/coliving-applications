@@ -12,7 +12,7 @@ import {
 import { USER_LIST_TAG } from 'common/store/userList/mutuals/types'
 import UserListSagaFactory from 'common/store/userList/sagas'
 import { createUserListProvider } from 'components/userList/utils'
-import ColivingBackend from 'services/ColivingBackend'
+import ColivingBackend from 'services/colivingBackend'
 
 type FetchMutualsConfig = {
   limit: number

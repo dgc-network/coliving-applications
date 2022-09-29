@@ -37,7 +37,7 @@ import {
   MOST_LOVED,
   REMIXABLES,
   FEELING_LUCKY
-} from 'pages/smart-collection/smartCollections'
+} from 'pages/smartCollection/smartCollections'
 import { BASE_URL, EXPLORE_PAGE, stripBaseUrl } from 'utils/route'
 
 import styles from './ExplorePage.module.css'

@@ -5,8 +5,8 @@ import Tooltip from 'antd/lib/tooltip'
 import cn from 'classnames'
 import PropTypes from 'prop-types'
 
-import { Utils } from 'services/ColivingBackend'
-import { waitForLibsInit } from 'services/coliving-backend/eagerLoadUtils'
+import { Utils } from 'services/colivingBackend'
+import { waitForLibsInit } from 'services/colivingBackend/eagerLoadUtils'
 
 import styles from './MetaMaskModal.module.css'
 

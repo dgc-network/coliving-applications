@@ -6,8 +6,8 @@ import cn from 'classnames'
 import 'url-search-params-polyfill'
 
 import { InstagramProfile } from 'common/store/account/reducer'
-import { RequestInstagramAuthMessage } from 'services/native-mobile-interface/oauth'
-import { remoteConfigInstance } from 'services/remote-config/remote-config-instance'
+import { RequestInstagramAuthMessage } from 'services/nativeMobileInterface/oauth'
+import { remoteConfigInstance } from 'services/remoteConfig/remoteConfigInstance'
 
 const NATIVE_MOBILE = process.env.REACT_APP_NATIVE_MOBILE
 const HOSTNAME = process.env.REACT_APP_PUBLIC_HOSTNAME

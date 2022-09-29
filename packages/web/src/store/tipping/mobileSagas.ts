@@ -2,7 +2,7 @@ import { RecentTipsStorage, Nullable } from '@coliving/common'
 import { put, takeEvery } from 'redux-saga/effects'
 
 import { fetchRecentTips } from 'common/store/tipping/slice'
-import { MessageType } from 'services/native-mobile-interface/types'
+import { MessageType } from 'services/nativeMobileInterface/types'
 
 function* watchFetchRecentTips() {
   yield takeEvery(

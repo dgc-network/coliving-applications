@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import 'whatwg-fetch'
 import 'url-search-params-polyfill'
 
-import { RequestTwitterAuthMessage } from 'services/native-mobile-interface/oauth'
+import { RequestTwitterAuthMessage } from 'services/nativeMobileInterface/oauth'
 
 const NATIVE_MOBILE = process.env.REACT_APP_NATIVE_MOBILE
 

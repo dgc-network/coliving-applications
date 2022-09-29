@@ -3,8 +3,8 @@ import { Nullable, BooleanKeys } from '@coliving/common'
 import {
   SetAnalyticsUser,
   AgreementAnalyticsEvent
-} from 'services/native-mobile-interface/analytics'
-import { remoteConfigInstance } from 'services/remote-config/remote-config-instance'
+} from 'services/nativeMobileInterface/analytics'
+import { remoteConfigInstance } from 'services/remoteConfig/remoteConfigInstance'
 
 import packageInfo from '../../../../package.json'
 

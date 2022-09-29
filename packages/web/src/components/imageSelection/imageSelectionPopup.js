@@ -13,7 +13,7 @@ import { badgeTiers } from 'common/store/wallet/utils'
 import TabSlider from 'components/dataEntry/tabSlider'
 import Dropzone from 'components/upload/dropzone'
 import InvalidFileType from 'components/upload/invalidFileType'
-import { MainContentContext } from 'pages/MainContentContext'
+import { MainContentContext } from 'pages/mainContentContext'
 import { MIN_COLLECTIBLES_TIER } from 'pages/profilePage/profilePageProvider'
 import zIndex from 'utils/zIndex'
 

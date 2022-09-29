@@ -1,6 +1,6 @@
 import { pick } from 'lodash'
 
-import { createRemixOfMetadata } from 'pages/upload-page/store/utils/remixes'
+import { createRemixOfMetadata } from 'pages/uploadPage/store/utils/remixes'
 
 const agreementMetadataSchema = {
   owner_id: null,

@@ -14,8 +14,8 @@ import {
   SetUsersMessage,
   SetAccountAvailableMessage,
   FetchAllFollowLandlordsFailureMessage
-} from 'services/native-mobile-interface/signon'
-import { MessageType } from 'services/native-mobile-interface/types'
+} from 'services/nativeMobileInterface/signon'
+import { MessageType } from 'services/nativeMobileInterface/types'
 import { dataURLtoFile } from 'utils/fileUtils'
 import { resizeImage } from 'utils/imageProcessingUtil'
 import { FEED_PAGE } from 'utils/route'

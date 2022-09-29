@@ -1,8 +1,8 @@
 import { removeNullable } from '@coliving/common'
 import { call, takeEvery, all, put, select } from 'typed-redux-saga/macro'
 
-import apiClient from 'services/coliving-api-client/ColivingAPIClient'
-import { submitReaction } from 'services/coliving-backend/Reactions'
+import apiClient from 'services/colivingAPIClient/colivingAPIClient'
+import { submitReaction } from 'services/colivingBackend/reactions'
 
 import {
   fetchReactionValues,

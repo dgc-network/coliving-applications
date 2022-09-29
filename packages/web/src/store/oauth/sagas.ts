@@ -13,8 +13,8 @@ import {
   RequestTwitterAuthFailureMessage,
   RequestTwitterAuthMessage,
   RequestTwitterAuthSuccessMessage
-} from 'services/native-mobile-interface/oauth'
-import { remoteConfigInstance } from 'services/remote-config/remote-config-instance'
+} from 'services/nativeMobileInterface/oauth'
+import { remoteConfigInstance } from 'services/remoteConfig/remoteConfigInstance'
 import * as oauthActions from 'store/oauth/actions'
 
 import mobileSagas from './mobileSagas'

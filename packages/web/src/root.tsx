@@ -1,8 +1,8 @@
 import { Suspense, useState, useEffect, useCallback, lazy } from 'react'
 
-import { getCurrentUserExists } from 'services/LocalStorage'
-import { setupMobileLogging } from 'services/Logging'
-import { BackendDidSetup } from 'services/native-mobile-interface/lifecycle'
+import { getCurrentUserExists } from 'services/localStorage'
+import { setupMobileLogging } from 'services/logging'
+import { BackendDidSetup } from 'services/nativeMobileInterface/lifecycle'
 import { useIsMobile, isElectron } from 'utils/clientUtil'
 import { getPathname, HOME_PAGE, publicSiteRoutes } from 'utils/route'
 
@@ -14,7 +14,7 @@ const NoConnectivityPage = lazy(
   () => import('components/noConnectivityPage/noConnectivityPage')
 )
 
-const PublicSite = lazy(() => import('./pages/PublicSite'))
+const PublicSite = lazy(() => import('./pages/publicSite'))
 
 const isPublicSiteRoute = (location = window.location) => {
   const pathname = getPathname(location).toLowerCase()

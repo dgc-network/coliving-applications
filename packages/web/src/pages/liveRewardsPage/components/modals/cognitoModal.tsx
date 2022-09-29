@@ -16,7 +16,7 @@ import {
   setCognitoFlowStatus
 } from 'common/store/pages/live-rewards/slice'
 import { useScript } from 'hooks/useScript'
-import { getCognitoSignature } from 'services/coliving-backend/Cognito'
+import { getCognitoSignature } from 'services/colivingBackend/cognito'
 import { agreement } from 'store/analytics/providers'
 import { isElectron, isMobile } from 'utils/clientUtil'
 import { COGNITO_SCRIPT_URL } from 'utils/constants'

@@ -20,7 +20,7 @@ import { startStemUploads } from 'common/store/stemsUpload/slice'
 import DeleteConfirmationModal from 'components/deleteConfirmation/deleteConfirmationModal'
 import { dropdownRows } from 'components/sourceFilesModal/sourceFilesModal'
 import EditAgreementModalComponent from 'components/agreement/EditAgreementModal'
-import { processFiles } from 'pages/upload-page/store/utils/processFiles'
+import { processFiles } from 'pages/uploadPage/store/utils/processFiles'
 import * as editAgreementModalActions from 'store/application/ui/editAgreementModal/actions'
 import {
   getMetadata,

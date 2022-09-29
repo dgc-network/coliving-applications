@@ -1,6 +1,6 @@
 import { call, delay, put, race, select, takeEvery } from 'redux-saga/effects'
 
-import apiClient from 'services/coliving-api-client/ColivingAPIClient'
+import apiClient from 'services/colivingAPIClient/colivingAPIClient'
 import * as confirmerActions from 'store/confirmer/actions'
 import {
   getResult,

@@ -7,7 +7,7 @@ import { Provider } from 'react-redux'
 import { store } from 'store/configureStore'
 import history from 'utils/history'
 
-import App from './App'
+import App from './app'
 
 jest.mock('jimp/es', () => null)
 jest.mock('./visualizer/Visualizer', () => () => null)

@@ -69,16 +69,16 @@ import {
 import { getStatus as getSignOnStatus } from 'pages/signOn/store/selectors'
 import { Pages as SignOnPages } from 'pages/signOn/store/types'
 import AgreementPage from 'pages/agreement-page/AgreementPage'
-import TrendingPage from 'pages/trending-page/TrendingPage'
+import TrendingPage from 'pages/trendingPage/trendingPage'
 import TrendingContentListsPage from 'pages/trending-content-lists/TrendingContentListPage'
-import TrendingUndergroundPage from 'pages/trending-underground/TrendingUndergroundPage'
-import UploadType from 'pages/upload-page/components/uploadType'
-import Visualizer from 'pages/visualizer/Visualizer'
-import { ThemeChangeMessage } from 'services/native-mobile-interface/theme'
-import { remoteConfigInstance } from 'services/remote-config/remote-config-instance'
+import TrendingUndergroundPage from 'pages/trendingUnderground/trendingUndergroundPage'
+import UploadType from 'pages/uploadPage/components/uploadType'
+import Visualizer from 'pages/visualizer/visualizer'
+import { ThemeChangeMessage } from 'services/nativeMobileInterface/theme'
+import { remoteConfigInstance } from 'services/remoteConfig/remoteConfigInstance'
 import { initializeSentry } from 'services/sentry'
 import { make } from 'store/analytics/actions'
-import { setVisibility as setAppModalCTAVisibility } from 'store/application/ui/app-cta-modal/slice'
+import { setVisibility as setAppModalCTAVisibility } from 'store/application/ui/appCTAModal/slice'
 import { getShowCookieBanner } from 'store/application/ui/cookieBanner/selectors'
 import {
   incrementScrollCount as incrementScrollCountAction,
@@ -171,16 +171,16 @@ import FollowersPage from './followersPage/followersPage'
 import FollowingPage from './followingPage/followingPage'
 import SettingsPage from './settingsPage/settingsPage'
 import { SubPage } from './settingsPage/components/mobile/settingsPage'
-import SmartCollectionPage from './smart-collection/SmartCollectionPage'
+import SmartCollectionPage from './smartCollection/smartCollectionPage'
 import SupportingPage from './supporting-page/SupportingPage'
-import TopSupportersPage from './top-supporters-page/TopSupportersPage'
+import TopSupportersPage from './topSupportersPage/topSupportersPage'
 
 const MOBILE_BANNER_LOCAL_STORAGE_KEY = 'dismissMobileAppBanner'
 
-const SignOn = lazy(() => import('pages/signOn/SignOn'))
+const SignOn = lazy(() => import('pages/signOn/signOn'))
 
 const UploadPage = lazyWithPreload(
-  () => import('pages/upload-page/UploadPage'),
+  () => import('pages/uploadPage/uploadPage'),
   0
 )
 const Modals = lazyWithPreload(() => import('./modals/modals'), 0)

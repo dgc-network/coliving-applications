@@ -1,4 +1,4 @@
-import { LoggingMessage, LOG_LEVEL } from './native-mobile-interface/logging'
+import { LoggingMessage, LOG_LEVEL } from './nativeMobileInterface/logging'
 
 const processConsoleData = (data: any[]) => {
   return data.map((dataItem) => JSON.stringify(dataItem)).join(', ')

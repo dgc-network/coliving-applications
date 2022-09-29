@@ -35,7 +35,7 @@ import { USER_LIST_TAG as FOLLOWER_TAG } from 'pages/followersPage/sagas'
 import { USER_LIST_TAG as FOLLOWING_TAG } from 'pages/followingPage/sagas'
 import { USER_LIST_TAG as REPOST_TAG } from 'pages/repostsPage/sagas'
 import { USER_LIST_TAG as SUPPORTING_TAG } from 'pages/supporting-page/sagas'
-import { USER_LIST_TAG as SUPPORTER_TAG } from 'pages/top-supporters-page/sagas'
+import { USER_LIST_TAG as SUPPORTER_TAG } from 'pages/topSupportersPage/sagas'
 import { UserListType } from 'store/application/ui/userListModal/types'
 import { AppState } from 'store/types'
 

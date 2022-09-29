@@ -27,9 +27,9 @@ import {
   stringWeiToBN,
   weiToAudio
 } from 'common/utils/wallet'
-import { getFeatureEnabled } from 'services/remote-config/featureFlagHelpers'
-import { remoteConfigInstance } from 'services/remote-config/remote-config-instance'
-import { MIN_TRANSFERRABLE_WEI } from 'services/wallet-client/WalletClient'
+import { getFeatureEnabled } from 'services/remoteConfig/featureFlagHelpers'
+import { remoteConfigInstance } from 'services/remoteConfig/remoteConfigInstance'
+import { MIN_TRANSFERRABLE_WEI } from 'services/walletClient/walletClient'
 
 import { ModalBodyTitle, ModalBodyWrapper } from '../walletModal'
 

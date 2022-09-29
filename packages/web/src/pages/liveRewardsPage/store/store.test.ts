@@ -47,13 +47,13 @@ import { getFeePayer } from 'common/store/solana/selectors'
 import { setVisibility } from 'common/store/ui/modals/slice'
 import { getBalance, increaseBalance } from 'common/store/wallet/slice'
 import { stringAudioToStringWei } from 'common/utils/wallet'
-import ColivingBackend from 'services/ColivingBackend'
-import apiClient from 'services/coliving-api-client/ColivingAPIClient'
-import { getCognitoExists } from 'services/coliving-backend/Cognito'
+import ColivingBackend from 'services/colivingBackend'
+import apiClient from 'services/colivingAPIClient/colivingAPIClient'
+import { getCognitoExists } from 'services/colivingBackend/cognito'
 // Need the mock type to get the helper function that sets the config
 // eslint-disable-next-line jest/no-mocks-import
-import { MockRemoteConfigInstance } from 'services/remote-config/__mocks__/remote-config-instance'
-import { remoteConfigInstance } from 'services/remote-config/remote-config-instance'
+import { MockRemoteConfigInstance } from 'services/remoteConfig/__mocks__/remoteConfigInstance'
+import { remoteConfigInstance } from 'services/remoteConfig/remoteConfigInstance'
 import { waitForBackendSetup } from 'store/backend/sagas'
 
 import rewardsSagas from './sagas'

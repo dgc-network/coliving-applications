@@ -1,5 +1,5 @@
 import { Entity, EntityType } from 'common/store/notifications/types'
-import ColivingBackend from 'services/ColivingBackend'
+import ColivingBackend from 'services/colivingBackend'
 import { UserListEntityType } from 'store/application/ui/userListModal/types'
 import {
   albumPage,

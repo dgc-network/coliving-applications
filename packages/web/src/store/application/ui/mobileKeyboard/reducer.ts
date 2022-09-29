@@ -1,6 +1,6 @@
 import { createReducer } from 'typesafe-actions'
 
-import { MessageType } from 'services/native-mobile-interface/types'
+import { MessageType } from 'services/nativeMobileInterface/types'
 
 import { MobileKeyboardState } from './types'
 

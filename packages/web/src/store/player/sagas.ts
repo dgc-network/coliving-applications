@@ -15,8 +15,8 @@ import { getAgreement } from 'common/store/cache/agreements/selectors'
 import { getUser } from 'common/store/cache/users/selectors'
 import * as queueActions from 'common/store/queue/slice'
 import { recordListen } from 'common/store/social/agreements/actions'
-import apiClient from 'services/coliving-api-client/ColivingAPIClient'
-import { remoteConfigInstance } from 'services/remote-config/remote-config-instance'
+import apiClient from 'services/colivingAPIClient/colivingAPIClient'
+import { remoteConfigInstance } from 'services/remoteConfig/remoteConfigInstance'
 import {
   getAudio,
   getAgreementId,

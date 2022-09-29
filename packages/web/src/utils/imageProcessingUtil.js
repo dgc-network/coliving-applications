@@ -1,4 +1,4 @@
-import WebWorker from 'services/WebWorker'
+import WebWorker from 'services/webWorker'
 import averageRgbWorkerFile from 'workers/averageRgb.worker.js'
 import dominantColorWorkerFile from 'workers/dominantColor.worker.js'
 import gifPreviewWorkerFile from 'workers/gifPreview.worker.js'

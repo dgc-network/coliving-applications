@@ -1,6 +1,6 @@
 import { AgreementMetadata } from '@coliving/common'
 
-import { waitForWeb3 } from 'services/ColivingBackend'
+import { waitForWeb3 } from 'services/colivingBackend'
 
 declare global {
   interface Window {

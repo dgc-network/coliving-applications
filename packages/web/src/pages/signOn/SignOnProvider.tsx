@@ -39,7 +39,7 @@ import {
 import {
   SignOnProps as MobileSignOnProps,
   MobilePages
-} from './components/mobile/SignOnPage'
+} from './components/mobile/signOnPage'
 import * as signOnAction from './store/actions'
 import {
   getSignOn,

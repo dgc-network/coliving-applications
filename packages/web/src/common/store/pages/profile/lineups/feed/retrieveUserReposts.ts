@@ -3,7 +3,7 @@ import { all } from 'redux-saga/effects'
 
 import { processAndCacheCollections } from 'common/store/cache/collections/utils'
 import { processAndCacheAgreements } from 'common/store/cache/agreements/utils'
-import apiClient from 'services/coliving-api-client/ColivingAPIClient'
+import apiClient from 'services/colivingAPIClient/colivingAPIClient'
 
 const getAgreementsAndCollections = (
   feed: (UserAgreementMetadata | UserCollection)[]

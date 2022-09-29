@@ -5,7 +5,7 @@ import cn from 'classnames'
 
 import Input from 'components/dataEntry/input'
 import StatusMessage from 'components/statusMessage/statusMessage'
-import { OpenLinkMessage } from 'services/native-mobile-interface/linking'
+import { OpenLinkMessage } from 'services/nativeMobileInterface/linking'
 import { commonPasswordCheck } from 'utils/commonPasswordCheck'
 import { TERMS_OF_SERVICE, PRIVACY_POLICY, BASE_URL } from 'utils/route'
 

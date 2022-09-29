@@ -24,8 +24,8 @@ import {
   PersistQueueMessage,
   RepeatModeMessage,
   ShuffleMessage
-} from 'services/native-mobile-interface/queue'
-import { MessageType, Message } from 'services/native-mobile-interface/types'
+} from 'services/nativeMobileInterface/queue'
+import { MessageType, Message } from 'services/nativeMobileInterface/types'
 import * as playerActions from 'store/player/slice'
 import { getContentNodeIPFSGateways } from 'utils/gatewayUtil'
 import { generateM3U8Variants } from 'utils/hlsUtil'

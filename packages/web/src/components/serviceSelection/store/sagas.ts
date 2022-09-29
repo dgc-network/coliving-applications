@@ -3,7 +3,7 @@ import { all, fork, call, put, select, takeEvery } from 'typed-redux-saga/macro'
 
 import { getAccountUser } from 'common/store/account/selectors'
 import * as cacheActions from 'common/store/cache/actions'
-import ColivingBackend from 'services/ColivingBackend'
+import ColivingBackend from 'services/colivingBackend'
 import { waitForBackendSetup } from 'store/backend/sagas'
 import { waitForValue } from 'utils/sagaHelpers'
 

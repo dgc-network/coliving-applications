@@ -6,7 +6,7 @@ import {
 } from '@coliving/common'
 import { omit } from 'lodash'
 
-import ColivingBackend from 'services/ColivingBackend'
+import ColivingBackend from 'services/colivingBackend'
 
 /**
  * Adds cover_art_url to a collection object if it does not have one set

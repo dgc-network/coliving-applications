@@ -1,11 +1,11 @@
 import { BADGE_LOCAL_STORAGE_KEY } from 'pages/live-rewards-page/Tiers'
-import ColivingBackend from 'services/ColivingBackend'
+import ColivingBackend from 'services/colivingBackend'
 import {
   clearColivingAccount,
   clearColivingAccountUser
-} from 'services/LocalStorage'
-import { SignedOut } from 'services/native-mobile-interface/lifecycle'
-import { ReloadMessage } from 'services/native-mobile-interface/linking'
+} from 'services/localStorage'
+import { SignedOut } from 'services/nativeMobileInterface/lifecycle'
+import { ReloadMessage } from 'services/nativeMobileInterface/linking'
 import { IS_MOBILE_USER_KEY } from 'store/account/mobileSagas'
 import { removeHasRequestedBrowserPermission } from 'utils/browserNotifications'
 

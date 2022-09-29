@@ -4,8 +4,8 @@ import {
   OpenSearchMessage,
   FetchSearchSuccessMessage,
   FetchSearchFailureMessage
-} from 'services/native-mobile-interface/search'
-import { MessageType } from 'services/native-mobile-interface/types'
+} from 'services/nativeMobileInterface/search'
+import { MessageType } from 'services/nativeMobileInterface/types'
 
 import * as searchBarActions from './actions'
 
