@@ -5,7 +5,7 @@ import cn from 'classnames'
 import PropTypes from 'prop-types'
 
 import placeholderArt from 'assets/img/imageBlank2x.png'
-import DynamicImage from 'components/dynamic-image/DynamicImage'
+import DynamicImage from 'components/dynamicImage/dynamicImage'
 import UserBadges from 'components/user-badges/UserBadges'
 import ColivingBackend from 'services/ColivingBackend'
 import { getContentNodeIPFSGateways } from 'utils/gatewayUtil'

@@ -3,12 +3,12 @@ import { ChangeEvent, memo } from 'react'
 import { ID } from '@coliving/common'
 import { Button, ButtonType, IconPause, IconPlay } from '@coliving/stems'
 
-import FilterInput from 'components/filter-input/FilterInput'
-import Header from 'components/header/desktop/Header'
+import FilterInput from 'components/filterInput/filterInput'
+import Header from 'components/header/desktop/header'
 import LoadingSpinner from 'components/loading-spinner/LoadingSpinner'
 import Page from 'components/page/Page'
-import EmptyTable from 'components/agreements-table/EmptyTable'
-import AgreementsTable from 'components/agreements-table/AgreementsTable'
+import EmptyTable from 'components/agreementsTable/emptyTable'
+import AgreementsTable from 'components/agreementsTable/agreementsTable'
 
 import styles from './HistoryPage.module.css'
 

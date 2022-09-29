@@ -10,7 +10,7 @@ import {
 import PropTypes from 'prop-types'
 
 import { LandlordRecommendationsPopup } from 'components/landlord-recommendations/LandlordRecommendationsPopup'
-import FollowButton from 'components/follow-button/FollowButton'
+import FollowButton from 'components/followButton/followButton'
 import Stats from 'components/stats/Stats'
 import SubscribeButton from 'components/subscribe-button/SubscribeButton'
 

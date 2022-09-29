@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux'
 
 import { setNotificationSubscription } from 'common/store/pages/profile/actions'
 import { followUser, unfollowUser } from 'common/store/social/users/actions'
-import FollowButton from 'components/follow-button/FollowButton'
+import FollowButton from 'components/followButton/followButton'
 import Stats, { StatProps } from 'components/stats/Stats'
 import { getFeatureEnabled } from 'services/remote-config/featureFlagHelpers'
 

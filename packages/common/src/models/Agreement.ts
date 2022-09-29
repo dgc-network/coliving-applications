@@ -1,12 +1,12 @@
-import { Favorite } from 'models/Favorite'
-import { CID, ID, UID } from 'models/Identifiers'
-import { CoverArtSizes } from 'models/ImageSizes'
-import { Repost } from 'models/Repost'
-import { User, UserMetadata } from 'models/User'
+import { Favorite } from 'models/favorite'
+import { CID, ID, UID } from 'models/identifiers'
+import { CoverArtSizes } from 'models/imageSizes'
+import { Repost } from 'models/repost'
+import { User, UserMetadata } from 'models/user'
 import { Nullable } from 'utils/typeUtils'
 
-import { StemCategory } from './Stems'
-import { Timestamped } from './Timestamped'
+import { StemCategory } from './stems'
+import { Timestamped } from './timestamped'
 
 export interface AgreementSegment {
   duration: string

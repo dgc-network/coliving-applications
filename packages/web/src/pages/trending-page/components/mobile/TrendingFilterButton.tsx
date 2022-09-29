@@ -1,4 +1,4 @@
-import HeaderButton from 'components/header-button/HeaderButton'
+import HeaderButton from 'components/headerButton/headerButton'
 
 import styles from './TrendingFilterButton.module.css'
 

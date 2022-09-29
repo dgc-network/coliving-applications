@@ -1,7 +1,7 @@
-import { ID } from 'models/Identifiers'
+import { ID } from 'models/identifiers'
 import { Nullable } from 'utils/typeUtils'
 
-import { StringWei } from './Wallet'
+import { StringWei } from './wallet'
 
 export type Supporter = {
   sender_id: ID

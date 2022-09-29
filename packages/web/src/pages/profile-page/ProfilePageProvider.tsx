@@ -38,16 +38,16 @@ import {
 } from 'common/store/pages/profile/types'
 import { makeGetCurrent } from 'common/store/queue/selectors'
 import * as socialActions from 'common/store/social/users/actions'
-import { makeGetRelatedLandlords } from 'common/store/ui/landlord-recommendations/selectors'
+import { makeGetRelatedLandlords } from 'common/store/ui/landlordRecommendations/selectors'
 import * as createContentListModalActions from 'common/store/ui/createContentListModal/actions'
-import { open } from 'common/store/ui/mobile-overflow-menu/slice'
+import { open } from 'common/store/ui/mobileOverflowMenu/slice'
 import {
   OverflowSource,
   OverflowAction
-} from 'common/store/ui/mobile-overflow-menu/types'
-import { requestOpen as requestOpenShareModal } from 'common/store/ui/share-modal/slice'
-import { setFollowers } from 'common/store/user-list/followers/actions'
-import { setFollowing } from 'common/store/user-list/following/actions'
+} from 'common/store/ui/mobileOverflowMenu/types'
+import { requestOpen as requestOpenShareModal } from 'common/store/ui/shareModal/slice'
+import { setFollowers } from 'common/store/userList/followers/actions'
+import { setFollowing } from 'common/store/userList/following/actions'
 import { formatCount } from 'common/utils/formatUtil'
 import * as unfollowConfirmationActions from 'components/unfollow-confirmation-modal/store/actions'
 import { newUserMetadata } from 'schemas'

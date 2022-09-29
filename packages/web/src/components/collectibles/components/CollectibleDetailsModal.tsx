@@ -31,11 +31,11 @@ import { getAccountUser } from 'common/store/account/selectors'
 import {
   getCollectibleDetails,
   getCollectible
-} from 'common/store/ui/collectible-details/selectors'
-import { setCollectible } from 'common/store/ui/collectible-details/slice'
+} from 'common/store/ui/collectibleDetails/selectors'
+import { setCollectible } from 'common/store/ui/collectibleDetails/slice'
 import { badgeTiers } from 'common/store/wallet/utils'
 import { formatDateWithTimezoneOffset } from 'common/utils/timeUtil'
-import Drawer from 'components/drawer/Drawer'
+import Drawer from 'components/drawer/drawer'
 import Toast from 'components/toast/Toast'
 import { ToastContext } from 'components/toast/ToastContext'
 import Tooltip from 'components/tooltip/Tooltip'
@@ -47,7 +47,7 @@ import { copyToClipboard, getCopyableLink } from 'utils/clipboardUtil'
 import { getScrollParent } from 'utils/scrollParent'
 import zIndex from 'utils/zIndex'
 
-import { collectibleMessages } from './CollectiblesPage'
+import { collectibleMessages } from './collectiblesPage'
 import styles from './CollectiblesPage.module.css'
 
 const NATIVE_MOBILE = process.env.REACT_APP_NATIVE_MOBILE

@@ -11,7 +11,7 @@ import cn from 'classnames'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { useSetVisibility } from 'common/hooks/useModalState'
-import { getOptimisticUserChallenges } from 'common/store/challenges/selectors/optimistic-challenges'
+import { getOptimisticUserChallenges } from 'common/store/challenges/selectors/optimisticChallenges'
 import {
   getUserChallenges,
   getUserChallengesLoading

@@ -2,7 +2,7 @@ import { useCallback, useMemo } from 'react'
 
 import { FeedFilter } from '@coliving/common'
 
-import ActionDrawer from 'components/action-drawer/ActionDrawer'
+import ActionDrawer from 'components/actionDrawer/actionDrawer'
 
 import styles from './FeedFilterModal.module.css'
 

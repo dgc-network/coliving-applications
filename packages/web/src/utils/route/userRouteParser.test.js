@@ -1,7 +1,7 @@
 import { parseUserRoute } from './userRouteParser'
 
 // eslint-disable-next-line
-import { mockDecode } from '__mocks__/Hashids'
+import { mockDecode } from '__mocks__/hashids'
 
 describe('parseUserRoute', () => {
   it('can decode a user handle route', () => {

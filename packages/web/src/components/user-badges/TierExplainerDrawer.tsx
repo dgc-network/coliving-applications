@@ -2,7 +2,7 @@ import { useCallback } from 'react'
 
 import { useModalState } from 'common/hooks/useModalState'
 import { useProfileTier } from 'common/hooks/wallet'
-import Drawer from 'components/drawer/Drawer'
+import Drawer from 'components/drawer/drawer'
 import {
   liveTierMapPng,
   TierLevel,

@@ -7,7 +7,7 @@ import { useDrag } from 'react-use-gesture'
 
 import { ReactComponent as ColivingLogo } from 'assets/img/colivingLogoHorizontal.svg'
 import useInstanceVar from 'common/hooks/useInstanceVar'
-import { setIsOpen as _setIsNowPlayingOpen } from 'common/store/ui/now-playing/slice'
+import { setIsOpen as _setIsNowPlayingOpen } from 'common/store/ui/nowPlaying/slice'
 import ConnectedBottomBar from 'components/nav/mobile/ConnectedBottomBar'
 import MobilePlayBar from 'components/play-bar/mobile/PlayBar'
 import {

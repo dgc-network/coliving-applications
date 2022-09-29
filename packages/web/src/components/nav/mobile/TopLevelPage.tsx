@@ -4,8 +4,8 @@ import { Dispatch } from 'redux'
 
 import { getIsOpen as getIsCreateContentListModalOpen } from 'common/store/ui/createContentListModal/selectors'
 import { getModalVisibility } from 'common/store/ui/modals/slice'
-import AddToContentListPage from 'components/add-to-content-list/mobile/AddToContentList'
-import EditContentListPage from 'components/edit-content-list/mobile/EditContentListPage'
+import AddToContentListPage from 'components/addToContentList/mobile/addToContentList'
+import EditContentListPage from 'components/editContentList/mobile/editContentListPage'
 import useScrollLock from 'hooks/useScrollLock'
 import { AppState } from 'store/types'
 

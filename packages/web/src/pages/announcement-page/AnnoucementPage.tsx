@@ -8,7 +8,7 @@ import { Dispatch } from 'redux'
 
 import { getNotificationById } from 'common/store/notifications/selectors'
 import { Notification } from 'common/store/notifications/types'
-import Header from 'components/header/mobile/Header'
+import Header from 'components/header/mobile/header'
 import MobilePageContainer from 'components/mobile-page-container/MobilePageContainer'
 import NavContext, { LeftPreset } from 'components/nav/store/context'
 import { AppState } from 'store/types'

@@ -4,7 +4,7 @@ import { Button, ButtonType, IconArrow } from '@coliving/stems'
 import cn from 'classnames'
 import PropTypes from 'prop-types'
 
-import Input from 'components/data-entry/Input'
+import Input from 'components/dataEntry/input'
 import StatusMessage from 'components/status-message/StatusMessage'
 import { commonPasswordCheck } from 'utils/commonPasswordCheck'
 import { TERMS_OF_SERVICE, PRIVACY_POLICY } from 'utils/route'

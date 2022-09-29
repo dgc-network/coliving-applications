@@ -1,6 +1,6 @@
-import { ID, UID } from 'models/Identifiers'
-import { Kind } from 'models/Kind'
-import { Status } from 'models/Status'
+import { ID, UID } from 'models/identifiers'
+import { Kind } from 'models/kind'
+import { Status } from 'models/status'
 import { Nullable } from 'utils/typeUtils'
 
 export type Lineup<T, ExtraProps = {}> = {

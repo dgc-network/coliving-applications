@@ -3,7 +3,7 @@ import { memo } from 'react'
 import { SquareSizes } from '@coliving/common'
 import { Button, ButtonType, IconArrow } from '@coliving/stems'
 
-import DynamicImage from 'components/dynamic-image/DynamicImage'
+import DynamicImage from 'components/dynamicImage/dynamicImage'
 import UserBadges from 'components/user-badges/UserBadges'
 import { useUserProfilePicture } from 'hooks/useUserProfilePicture'
 

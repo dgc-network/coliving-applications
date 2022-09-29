@@ -6,9 +6,9 @@ import {
   IconTikTok
 } from '@coliving/stems'
 
-import EditableRow, { Format } from 'components/groupable-list/EditableRow'
-import GroupableList from 'components/groupable-list/GroupableList'
-import Grouping from 'components/groupable-list/Grouping'
+import EditableRow, { Format } from 'components/groupableList/editableRow'
+import GroupableList from 'components/groupableList/groupableList'
+import Grouping from 'components/groupableList/grouping'
 
 import styles from './EditProfile.module.css'
 

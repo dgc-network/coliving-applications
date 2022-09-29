@@ -31,7 +31,7 @@ import {
   getContentListsNotInLibrary,
   removeContentListLibraryDuplicates,
   replaceTempWithResolvedContentLists
-} from 'common/store/content-list-library/helpers'
+} from 'common/store/contentListLibrary/helpers'
 import { updateProfileAsync } from 'pages/profile-page/sagas'
 import { waitForBackendSetup } from 'store/backend/sagas'
 import { getResult } from 'store/confirmer/selectors'

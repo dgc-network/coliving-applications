@@ -1,4 +1,4 @@
-import { ID } from 'models/Identifiers'
+import { ID } from 'models/identifiers'
 
 export type Repost = {
   repost_item_id: number

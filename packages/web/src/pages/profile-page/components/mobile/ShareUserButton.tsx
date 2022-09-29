@@ -4,7 +4,7 @@ import { ID, ShareSource, Nullable } from '@coliving/common'
 import { IconShare, IconButton } from '@coliving/stems'
 import { useDispatch } from 'react-redux'
 
-import { requestOpen as requestOpenShareModal } from 'common/store/ui/share-modal/slice'
+import { requestOpen as requestOpenShareModal } from 'common/store/ui/shareModal/slice'
 
 import styles from './ShareUserButton.module.css'
 

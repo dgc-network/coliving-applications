@@ -4,12 +4,12 @@ import { getAgreements } from 'common/store/cache/agreements/selectors'
 import {
   PREFIX,
   agreementsActions
-} from 'common/store/pages/search-results/lineup/agreements/actions'
+} from 'common/store/pages/searchResults/lineup/agreements/actions'
 import {
   getSearchAgreementsLineup,
   getSearchResultsPageAgreements
-} from 'common/store/pages/search-results/selectors'
-import { SearchKind } from 'common/store/pages/search-results/types'
+} from 'common/store/pages/searchResults/selectors'
+import { SearchKind } from 'common/store/pages/searchResults/types'
 import {
   getCategory,
   getQuery,

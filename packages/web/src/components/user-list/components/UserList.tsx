@@ -5,7 +5,7 @@ import Lottie from 'react-lottie'
 
 import loadingSpinner from 'assets/animations/loadingSpinner.json'
 import LandlordChip from 'components/landlord/LandlordChip'
-import FollowButton from 'components/follow-button/FollowButton'
+import FollowButton from 'components/followButton/followButton'
 import { MountPlacement } from 'components/types'
 
 import styles from './UserList.module.css'

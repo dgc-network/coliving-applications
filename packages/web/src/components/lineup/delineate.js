@@ -1,6 +1,6 @@
 import moment from 'moment'
 
-import Delineator from 'components/delineator/Delineator'
+import Delineator from 'components/delineator/delineator'
 
 const NOW = moment()
 const START_OF_DAY = moment(NOW).startOf('day')

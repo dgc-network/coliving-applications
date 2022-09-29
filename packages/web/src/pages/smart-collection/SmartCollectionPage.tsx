@@ -5,9 +5,9 @@ import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 
 import { getContentListLibrary } from 'common/store/account/selectors'
-import { getCollection } from 'common/store/pages/smart-collection/selectors'
-import { fetchSmartCollection } from 'common/store/pages/smart-collection/slice'
-import { findInContentListLibrary } from 'common/store/content-list-library/helpers'
+import { getCollection } from 'common/store/pages/smartCollection/selectors'
+import { fetchSmartCollection } from 'common/store/pages/smartCollection/slice'
+import { findInContentListLibrary } from 'common/store/contentListLibrary/helpers'
 import CollectionPage from 'pages/collection-page/CollectionPage'
 import { AppState } from 'store/types'
 

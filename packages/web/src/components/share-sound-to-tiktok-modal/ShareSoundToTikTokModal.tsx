@@ -15,14 +15,14 @@ import { useModalState } from 'common/hooks/useModalState'
 import {
   getStatus,
   getAgreement
-} from 'common/store/ui/share-sound-to-tiktok-modal/selectors'
+} from 'common/store/ui/shareSoundToTiktokModal/selectors'
 import {
   authenticated,
   setStatus,
   share
-} from 'common/store/ui/share-sound-to-tiktok-modal/slice'
-import { Status } from 'common/store/ui/share-sound-to-tiktok-modal/types'
-import Drawer from 'components/drawer/Drawer'
+} from 'common/store/ui/shareSoundToTiktokModal/slice'
+import { Status } from 'common/store/ui/shareSoundToTiktokModal/types'
+import Drawer from 'components/drawer/drawer'
 import LoadingSpinner from 'components/loading-spinner/LoadingSpinner'
 import { useTikTokAuth } from 'hooks/useTikTokAuth'
 import { isMobile } from 'utils/clientUtil'

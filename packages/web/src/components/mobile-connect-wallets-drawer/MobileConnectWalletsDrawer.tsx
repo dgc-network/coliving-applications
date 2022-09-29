@@ -1,5 +1,5 @@
 import { useModalState } from 'common/hooks/useModalState'
-import Drawer from 'components/drawer/Drawer'
+import Drawer from 'components/drawer/drawer'
 import { getKeyboardVisibility } from 'store/application/ui/mobileKeyboard/selectors'
 import { useSelector } from 'utils/reducer'
 

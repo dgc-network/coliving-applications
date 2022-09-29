@@ -3,9 +3,9 @@ import { useCallback, useContext, useEffect } from 'react'
 import { Name } from '@coliving/common'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { getCurrentPage } from 'common/store/change-password/selectors'
-import { changePage, Page } from 'common/store/change-password/slice'
-import { ChangePassword } from 'components/change-password/ChangePassword'
+import { getCurrentPage } from 'common/store/changePassword/selectors'
+import { changePage, Page } from 'common/store/changePassword/slice'
+import { ChangePassword } from 'components/changePassword/changePassword'
 import NavContext, {
   CenterPreset,
   LeftPreset

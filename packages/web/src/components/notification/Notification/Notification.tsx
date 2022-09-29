@@ -11,7 +11,7 @@ import {
   Notification as Notifications,
   NotificationType
 } from 'common/store/notifications/types'
-import ErrorWrapper from 'components/error-wrapper/ErrorWrapper'
+import ErrorWrapper from 'components/errorWrapper/errorWrapper'
 
 import { AddAgreementToContentListNotification } from './AddAgreementToContentListNotification'
 import { AnnouncementNotification } from './AnnouncementNotification'

@@ -3,7 +3,7 @@ import { useState, useCallback } from 'react'
 import { Button, ButtonType, IconArrow } from '@coliving/stems'
 import cn from 'classnames'
 
-import Input from 'components/data-entry/Input'
+import Input from 'components/dataEntry/input'
 import StatusMessage from 'components/status-message/StatusMessage'
 import { OpenLinkMessage } from 'services/native-mobile-interface/linking'
 import { commonPasswordCheck } from 'utils/commonPasswordCheck'

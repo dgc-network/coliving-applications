@@ -11,8 +11,8 @@ import cn from 'classnames'
 import { ReactComponent as IconKebabHorizontal } from 'assets/img/iconKebabHorizontal.svg'
 import placeholderArt from 'assets/img/imageBlank2x.png'
 import { pluralize } from 'common/utils/formatUtil'
-import ActionsTab from 'components/actions-tab/ActionsTab'
-import DynamicImage from 'components/dynamic-image/DynamicImage'
+import ActionsTab from 'components/actionsTab/actionsTab'
+import DynamicImage from 'components/dynamicImage/dynamicImage'
 import Menu, { MenuOptionType } from 'components/menu/Menu'
 import RepostFavoritesStats, {
   Size

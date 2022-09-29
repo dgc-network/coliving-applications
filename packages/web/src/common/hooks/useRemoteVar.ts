@@ -10,8 +10,8 @@ import {
 } from '@coliving/common'
 import { useSelector } from 'react-redux'
 
-import { isRemoteConfigLoaded } from 'common/store/remote-config/selectors'
-import { StateWithRemoteConfig } from 'common/store/remote-config/slice'
+import { isRemoteConfigLoaded } from 'common/store/remoteConfig/selectors'
+import { StateWithRemoteConfig } from 'common/store/remoteConfig/slice'
 
 export const createUseRemoteVarHook = <State extends StateWithRemoteConfig>(
   remoteConfigInstance: RemoteConfigInstance

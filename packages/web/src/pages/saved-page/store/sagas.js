@@ -2,9 +2,9 @@ import { takeLatest, call, put, fork, select } from 'redux-saga/effects'
 
 import { getAccountUser } from 'common/store/account/selectors'
 import { processAndCacheAgreements } from 'common/store/cache/agreements/utils'
-import * as actions from 'common/store/pages/saved-page/actions'
-import { agreementsActions } from 'common/store/pages/saved-page/lineups/agreements/actions'
-import { getSaves } from 'common/store/pages/saved-page/selectors'
+import * as actions from 'common/store/pages/savedPage/actions'
+import { agreementsActions } from 'common/store/pages/savedPage/lineups/agreements/actions'
+import { getSaves } from 'common/store/pages/savedPage/selectors'
 import apiClient from 'services/coliving-api-client/ColivingAPIClient'
 import { waitForValue } from 'utils/sagaHelpers'
 

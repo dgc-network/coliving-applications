@@ -4,7 +4,7 @@ import { createSelector } from 'reselect'
 import { CommonState } from 'common/store'
 import { getCollection as getCachedCollection } from 'common/store/cache/collections/selectors'
 import { getUser as getCachedUser } from 'common/store/cache/users/selectors'
-import { getCollection as getSmartCollection } from 'common/store/pages/smart-collection/selectors'
+import { getCollection as getSmartCollection } from 'common/store/pages/smartCollection/selectors'
 
 export const getCollectionUid = (state: CommonState) =>
   state.pages.collection.collectionUid

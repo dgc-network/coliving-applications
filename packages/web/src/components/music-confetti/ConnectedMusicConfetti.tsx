@@ -2,7 +2,7 @@ import { useCallback } from 'react'
 
 import { useDispatch } from 'react-redux'
 
-import MusicConfetti from 'components/background-animations/MusicConfetti'
+import MusicConfetti from 'components/backgroundAnimations/musicConfetti'
 import { useIsMobile } from 'utils/clientUtil'
 import { useSelector } from 'utils/reducer'
 import { isMatrix } from 'utils/theme/theme'

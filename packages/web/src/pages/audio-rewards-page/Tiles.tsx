@@ -9,12 +9,12 @@ import { useDispatch } from 'react-redux'
 import { ReactComponent as IconReceive } from 'assets/img/iconReceive.svg'
 import { ReactComponent as IconSend } from 'assets/img/iconSend.svg'
 import { useModalState } from 'common/hooks/useModalState'
-import { getHasAssociatedWallets } from 'common/store/pages/token-dashboard/selectors'
+import { getHasAssociatedWallets } from 'common/store/pages/tokenDashboard/selectors'
 import {
   pressConnectWallets,
   pressReceive,
   pressSend
-} from 'common/store/pages/token-dashboard/slice'
+} from 'common/store/pages/tokenDashboard/slice'
 import {
   getAccountBalance,
   getAccountTotalBalance

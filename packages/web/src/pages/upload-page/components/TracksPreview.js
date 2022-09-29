@@ -2,7 +2,7 @@ import { Scrollbar } from '@coliving/stems'
 import cn from 'classnames'
 import PropTypes from 'prop-types'
 
-import TabSlider from 'components/data-entry/TabSlider'
+import TabSlider from 'components/dataEntry/tabSlider'
 import AgreementPreview from 'components/upload/AgreementPreview'
 
 import styles from './AgreementsPreview.module.css'

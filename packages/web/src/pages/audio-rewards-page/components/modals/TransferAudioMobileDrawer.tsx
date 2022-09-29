@@ -1,6 +1,6 @@
 import { ReactComponent as IconGold } from 'assets/img/IconGoldBadge.svg'
 import { useModalState } from 'common/hooks/useModalState'
-import Drawer from 'components/drawer/Drawer'
+import Drawer from 'components/drawer/drawer'
 
 import styles from './TransferAudioMobileDrawer.module.css'
 

@@ -4,11 +4,11 @@ import { Button, ButtonType } from '@coliving/stems'
 import cn from 'classnames'
 import { useDispatch } from 'react-redux'
 
-import { getRemoveWallet } from 'common/store/pages/token-dashboard/selectors'
+import { getRemoveWallet } from 'common/store/pages/tokenDashboard/selectors'
 import {
   confirmRemoveWallet,
   pressConnectWallets
-} from 'common/store/pages/token-dashboard/slice'
+} from 'common/store/pages/tokenDashboard/slice'
 import { useSelector } from 'utils/reducer'
 
 import styles from './RemoveWalletBody.module.css'

@@ -1,8 +1,8 @@
-import { FeedFilter } from 'models/FeedFilter'
-import { ID, PlayableType } from 'models/Identifiers'
-import { MonitorPayload, ServiceMonitorType } from 'models/Services'
-import { TimeRange } from 'models/TimeRange'
-import { SolanaWalletAddress, StringLive, WalletAddress } from 'models/Wallet'
+import { FeedFilter } from 'models/feedFilter'
+import { ID, PlayableType } from 'models/identifiers'
+import { MonitorPayload, ServiceMonitorType } from 'models/services'
+import { TimeRange } from 'models/timeRange'
+import { SolanaWalletAddress, StringLive, WalletAddress } from 'models/wallet'
 
 const ANALYTICS_AGREEMENT_EVENT = 'ANALYTICS/AGREEMENT_EVENT'
 

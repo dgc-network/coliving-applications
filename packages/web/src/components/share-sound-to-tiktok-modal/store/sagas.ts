@@ -8,7 +8,7 @@ import {
   getIsAuthenticated,
   getOpenId,
   getAgreement as getAgreementToShare
-} from 'common/store/ui/share-sound-to-tiktok-modal/selectors'
+} from 'common/store/ui/shareSoundToTiktokModal/selectors'
 import {
   authenticated,
   open,
@@ -17,8 +17,8 @@ import {
   setStatus,
   share,
   upload
-} from 'common/store/ui/share-sound-to-tiktok-modal/slice'
-import { Status } from 'common/store/ui/share-sound-to-tiktok-modal/types'
+} from 'common/store/ui/shareSoundToTiktokModal/slice'
+import { Status } from 'common/store/ui/shareSoundToTiktokModal/types'
 import { show as showConfetti } from 'components/music-confetti/store/slice'
 import apiClient from 'services/coliving-api-client/ColivingAPIClient'
 import { make } from 'store/analytics/actions'

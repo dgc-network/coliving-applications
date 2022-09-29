@@ -2,14 +2,14 @@ import { ID, User } from '@coliving/common'
 import { put, select } from 'typed-redux-saga/macro'
 
 import { getUser } from 'common/store/cache/users/selectors'
-import { getFollowingError } from 'common/store/user-list/following/actions'
-import { watchFollowingError } from 'common/store/user-list/following/errorSagas'
+import { getFollowingError } from 'common/store/userList/following/actions'
+import { watchFollowingError } from 'common/store/userList/following/errorSagas'
 import {
   getId,
   getUserList,
   getUserIds
-} from 'common/store/user-list/following/selectors'
-import UserListSagaFactory from 'common/store/user-list/sagas'
+} from 'common/store/userList/following/selectors'
+import UserListSagaFactory from 'common/store/userList/sagas'
 import { createUserListProvider } from 'components/user-list/utils'
 import apiClient from 'services/coliving-api-client/ColivingAPIClient'
 

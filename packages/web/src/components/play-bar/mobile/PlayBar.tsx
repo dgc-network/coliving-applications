@@ -18,8 +18,8 @@ import {
   saveAgreement,
   unsaveAgreement
 } from 'common/store/social/agreements/actions'
-import FavoriteButton from 'components/alt-button/FavoriteButton'
-import CoSign, { Size } from 'components/co-sign/CoSign'
+import FavoriteButton from 'components/altButton/favoriteButton'
+import CoSign, { Size } from 'components/coSign/coSign'
 import PlayButton from 'components/play-bar/PlayButton'
 import AgreementingBar from 'components/play-bar/AgreementingBar'
 import { PlayButtonStatus } from 'components/play-bar/types'

@@ -10,8 +10,8 @@ import {
 import { Button, ButtonType, IconUser } from '@coliving/stems'
 
 import { LandlordPopover } from 'components/landlord/LandlordPopover'
-import CoverPhoto from 'components/cover-photo/CoverPhoto'
-import DynamicImage from 'components/dynamic-image/DynamicImage'
+import CoverPhoto from 'components/coverPhoto/coverPhoto'
+import DynamicImage from 'components/dynamicImage/dynamicImage'
 import Lineup, { LineupWithoutTile } from 'components/lineup/Lineup'
 import NavBanner from 'components/nav-banner/NavBanner'
 import Page from 'components/page/Page'

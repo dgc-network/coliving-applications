@@ -3,9 +3,9 @@ import { ReactNode, useContext, useEffect } from 'react'
 import { FeatureFlags } from '@coliving/common'
 import { useDispatch } from 'react-redux'
 
-import { preloadWalletProviders } from 'common/store/pages/token-dashboard/slice'
+import { preloadWalletProviders } from 'common/store/pages/tokenDashboard/slice'
 import { getBalance } from 'common/store/wallet/slice'
-import Header from 'components/header/desktop/Header'
+import Header from 'components/header/desktop/header'
 import { useMobileHeader } from 'components/header/mobile/hooks'
 import MobilePageContainer from 'components/mobile-page-container/MobilePageContainer'
 import NavContext, {

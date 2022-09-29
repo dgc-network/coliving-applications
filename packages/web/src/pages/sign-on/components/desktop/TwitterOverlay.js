@@ -5,7 +5,7 @@ import { Transition } from 'react-spring/renderprops'
 
 import { ReactComponent as IconGradientSave } from 'assets/img/gradientSave.svg'
 import { ReactComponent as IconVerified } from 'assets/img/iconVerified.svg'
-import InstagramButton from 'components/instagram-button/InstagramButton'
+import InstagramButton from 'components/instagramButton/instagramButton'
 import LoadingSpinner from 'components/loading-spinner/LoadingSpinner'
 import TwitterAuthButton from 'components/twitter-auth/TwitterAuthButton'
 import { useRemoteVar } from 'hooks/useRemoteConfig'

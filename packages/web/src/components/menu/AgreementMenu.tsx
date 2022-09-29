@@ -26,8 +26,8 @@ import {
   undoRepostAgreement,
   shareAgreement
 } from 'common/store/social/agreements/actions'
-import { requestOpen as openAddToContentList } from 'common/store/ui/add-to-content-list/actions'
-import * as embedModalActions from 'components/embed-modal/store/actions'
+import { requestOpen as openAddToContentList } from 'common/store/ui/addToContentList/actions'
+import * as embedModalActions from 'components/embedModal/store/actions'
 import { ToastContext } from 'components/toast/ToastContext'
 import { newCollectionMetadata } from 'schemas'
 import * as editAgreementModalActions from 'store/application/ui/editAgreementModal/actions'

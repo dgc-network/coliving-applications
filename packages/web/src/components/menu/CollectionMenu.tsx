@@ -12,7 +12,7 @@ import { Dispatch } from 'redux'
 
 import { getUser } from 'common/store/cache/users/selectors'
 import * as socialActions from 'common/store/social/collections/actions'
-import * as embedModalActions from 'components/embed-modal/store/actions'
+import * as embedModalActions from 'components/embedModal/store/actions'
 import { open as openEditCollectionModal } from 'store/application/ui/editContentListModal/slice'
 import { AppState } from 'store/types'
 import { albumPage, contentListPage, profilePage } from 'utils/route'

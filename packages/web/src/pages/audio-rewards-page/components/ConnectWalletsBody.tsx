@@ -7,8 +7,8 @@ import { useDispatch } from 'react-redux'
 import {
   getAssociatedWallets,
   getRemoveWallet
-} from 'common/store/pages/token-dashboard/selectors'
-import { connectNewWallet } from 'common/store/pages/token-dashboard/slice'
+} from 'common/store/pages/tokenDashboard/selectors'
+import { connectNewWallet } from 'common/store/pages/tokenDashboard/slice'
 import { useSelector } from 'utils/reducer'
 
 import styles from './ConnectWalletsBody.module.css'

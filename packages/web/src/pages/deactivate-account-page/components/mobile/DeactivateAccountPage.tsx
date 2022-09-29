@@ -1,6 +1,6 @@
 import { useContext, useEffect } from 'react'
 
-import ActionDrawer from 'components/action-drawer/ActionDrawer'
+import ActionDrawer from 'components/actionDrawer/actionDrawer'
 import { useMobileHeader } from 'components/header/mobile/hooks'
 import MobilePageContainer from 'components/mobile-page-container/MobilePageContainer'
 import NavContext, {

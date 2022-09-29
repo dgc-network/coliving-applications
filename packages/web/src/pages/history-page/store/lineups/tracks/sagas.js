@@ -7,7 +7,7 @@ import { processAndCacheAgreements } from 'common/store/cache/agreements/utils'
 import {
   PREFIX,
   agreementsActions
-} from 'common/store/pages/history-page/lineups/agreements/actions'
+} from 'common/store/pages/historyPage/lineups/agreements/actions'
 import apiClient from 'services/coliving-api-client/ColivingAPIClient'
 import { LineupSagas } from 'store/lineup/sagas'
 

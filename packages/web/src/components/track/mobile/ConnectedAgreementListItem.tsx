@@ -13,11 +13,11 @@ import {
   repostAgreement,
   undoRepostAgreement
 } from 'common/store/social/agreements/actions'
-import { open } from 'common/store/ui/mobile-overflow-menu/slice'
+import { open } from 'common/store/ui/mobileOverflowMenu/slice'
 import {
   OverflowAction,
   OverflowSource
-} from 'common/store/ui/mobile-overflow-menu/types'
+} from 'common/store/ui/mobileOverflowMenu/types'
 import { AppState } from 'store/types'
 
 import AgreementListItem, { AgreementListItemProps } from './AgreementListItem'

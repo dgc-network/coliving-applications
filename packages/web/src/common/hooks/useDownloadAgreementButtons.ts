@@ -11,7 +11,7 @@ import { useSelector as reduxUseSelector, shallowEqual } from 'react-redux'
 import { CommonState } from 'common/store'
 import { getHasAccount } from 'common/store/account/selectors'
 import { getAgreement, getAgreements } from 'common/store/cache/agreements/selectors'
-import { getCurrentUploads } from 'common/store/stems-upload/selectors'
+import { getCurrentUploads } from 'common/store/stemsUpload/selectors'
 
 export type DownloadButtonConfig = {
   state: ButtonState

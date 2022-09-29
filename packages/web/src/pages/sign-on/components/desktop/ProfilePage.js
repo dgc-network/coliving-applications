@@ -2,7 +2,7 @@ import { Component } from 'react'
 
 import cn from 'classnames'
 
-import BackButton from 'components/back-button/BackButton'
+import BackButton from 'components/backButton/backButton'
 import ProfileForm from 'pages/sign-on/components/ProfileForm'
 import DesktopTwitterOverlay from 'pages/sign-on/components/desktop/TwitterOverlay'
 import MobileTwitterOverlay from 'pages/sign-on/components/mobile/TwitterOverlay'

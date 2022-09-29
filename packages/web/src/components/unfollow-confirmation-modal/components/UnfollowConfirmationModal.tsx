@@ -1,6 +1,6 @@
 import { ID } from '@coliving/common'
 
-import ActionSheetModal from 'components/action-drawer/ActionDrawer'
+import ActionSheetModal from 'components/actionDrawer/actionDrawer'
 
 type UnfollowConfirmationModalProps = {
   isOpen: boolean

@@ -13,7 +13,7 @@ import {
   replaceTempWithResolvedContentLists,
   removeContentListLibraryTempContentLists,
   getContentListsNotInLibrary
-} from 'common/store/content-list-library/helpers'
+} from 'common/store/contentListLibrary/helpers'
 
 describe('findInContentListLibrary', () => {
   it('finds an index in the library', () => {

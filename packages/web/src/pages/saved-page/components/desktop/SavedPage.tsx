@@ -8,15 +8,15 @@ import {
   AgreementRecord,
   SavedPageAgreement,
   SavedPageCollection
-} from 'common/store/pages/saved-page/types'
+} from 'common/store/pages/savedPage/types'
 import { QueueItem } from 'common/store/queue/types'
-import Card from 'components/card/desktop/Card'
-import FilterInput from 'components/filter-input/FilterInput'
-import Header from 'components/header/desktop/Header'
+import Card from 'components/card/desktop/card'
+import FilterInput from 'components/filterInput/filterInput'
+import Header from 'components/header/desktop/header'
 import CardLineup from 'components/lineup/CardLineup'
 import Page from 'components/page/Page'
-import EmptyTable from 'components/agreements-table/EmptyTable'
-import AgreementsTable from 'components/agreements-table/AgreementsTable'
+import EmptyTable from 'components/agreementsTable/emptyTable'
+import AgreementsTable from 'components/agreementsTable/agreementsTable'
 import { useOrderedLoad } from 'hooks/useOrderedLoad'
 import useTabs from 'hooks/useTabs/useTabs'
 import { albumPage } from 'utils/route'

@@ -1,4 +1,4 @@
-import { SmartCollectionVariant } from 'models/SmartCollectionVariant'
+import { SmartCollectionVariant } from 'models/smartCollectionVariant'
 
 export type ContentListIdentifier = {
   type: 'contentList'

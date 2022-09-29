@@ -18,7 +18,7 @@ import {
 import cn from 'classnames'
 
 import { InstagramProfile, TwitterProfile } from 'common/store/account/reducer'
-import DynamicImage from 'components/dynamic-image/DynamicImage'
+import DynamicImage from 'components/dynamicImage/dynamicImage'
 import LoadingSpinner from 'components/loading-spinner/LoadingSpinner'
 import Page from 'components/page/Page'
 import UserBadges from 'components/user-badges/UserBadges'

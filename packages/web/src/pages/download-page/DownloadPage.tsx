@@ -9,7 +9,7 @@ import { ParallaxProvider } from 'react-scroll-parallax'
 
 import { ReactComponent as IconDownloadDesktop } from 'assets/img/publicSite/downloadDesktop.svg'
 import { ReactComponent as IconDownloadMobile } from 'assets/img/publicSite/downloadMobile.svg'
-import { CookieBanner } from 'components/cookie-banner/CookieBanner'
+import { CookieBanner } from 'components/cookieBanner/cookieBanner'
 import Footer from 'components/public-site/Footer'
 import NavBanner from 'components/public-site/NavBanner'
 import CTASignUp from 'pages/landing-page/components/CTASignUp'

@@ -1,7 +1,7 @@
 // eslint-disable-next-line
-import '__mocks__/ColivingBackend'
+import '__mocks__/colivingBackend'
 // eslint-disable-next-line
-import '__mocks__/Hashids'
+import '__mocks__/hashids'
 // eslint-disable-next-line
 // import '__mocks__/Hls.js'
 

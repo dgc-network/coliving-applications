@@ -2,9 +2,9 @@ import { memo, useEffect } from 'react'
 
 import { CoverArtSizes, SquareSizes, Remix } from '@coliving/common'
 
-import CoSign from 'components/co-sign/CoSign'
-import { Size } from 'components/co-sign/types'
-import DynamicImage from 'components/dynamic-image/DynamicImage'
+import CoSign from 'components/coSign/coSign'
+import { Size } from 'components/coSign/types'
+import DynamicImage from 'components/dynamicImage/dynamicImage'
 import { useAgreementCoverArt } from 'hooks/useAgreementCoverArt'
 
 import styles from './GiantArtwork.module.css'

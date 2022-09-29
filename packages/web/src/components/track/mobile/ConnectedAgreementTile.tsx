@@ -20,16 +20,16 @@ import {
   repostAgreement,
   undoRepostAgreement
 } from 'common/store/social/agreements/actions'
-import { open } from 'common/store/ui/mobile-overflow-menu/slice'
+import { open } from 'common/store/ui/mobileOverflowMenu/slice'
 import {
   OverflowAction,
   OverflowSource
-} from 'common/store/ui/mobile-overflow-menu/types'
-import { requestOpen as requestOpenShareModal } from 'common/store/ui/share-modal/slice'
+} from 'common/store/ui/mobileOverflowMenu/types'
+import { requestOpen as requestOpenShareModal } from 'common/store/ui/shareModal/slice'
 import { getTheme } from 'common/store/ui/theme/selectors'
-import { setFavorite } from 'common/store/user-list/favorites/actions'
-import { setRepost } from 'common/store/user-list/reposts/actions'
-import { RepostType } from 'common/store/user-list/reposts/types'
+import { setFavorite } from 'common/store/userList/favorites/actions'
+import { setRepost } from 'common/store/userList/reposts/actions'
+import { RepostType } from 'common/store/userList/reposts/types'
 import { AgreementTileProps } from 'components/agreement/types'
 import { getUid, getPlaying, getBuffering } from 'store/player/selectors'
 import { AppState } from 'store/types'

@@ -2,10 +2,10 @@ import { matchPath } from 'react-router'
 
 import { getCollectionAgreementsLineup } from 'common/store/pages/collection/selectors'
 import { getDiscoverFeedLineup } from 'common/store/pages/feed/selectors'
-import { getHistoryAgreementsLineup } from 'common/store/pages/history-page/selectors'
+import { getHistoryAgreementsLineup } from 'common/store/pages/historyPage/selectors'
 import { getProfileAgreementsLineup } from 'common/store/pages/profile/selectors'
-import { getSavedAgreementsLineup } from 'common/store/pages/saved-page/selectors'
-import { getSearchAgreementsLineup } from 'common/store/pages/search-results/selectors'
+import { getSavedAgreementsLineup } from 'common/store/pages/savedPage/selectors'
+import { getSearchAgreementsLineup } from 'common/store/pages/searchResults/selectors'
 import { getLineup } from 'common/store/pages/agreement/selectors'
 import { getCurrentDiscoverTrendingLineup } from 'common/store/pages/trending/selectors'
 import {

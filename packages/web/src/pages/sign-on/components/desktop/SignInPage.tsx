@@ -12,7 +12,7 @@ import { Spring } from 'react-spring/renderprops'
 
 import colivingLogoColored from 'assets/img/colivingLogoColored.png'
 import useInstanceVar from 'common/hooks/useInstanceVar'
-import Input from 'components/data-entry/Input'
+import Input from 'components/dataEntry/input'
 import LoadingSpinner from 'components/loading-spinner/LoadingSpinner'
 import PreloadImage from 'components/preload-image/PreloadImage'
 import StatusMessage from 'components/status-message/StatusMessage'

@@ -19,10 +19,10 @@ import {
   BrowserNotificationSetting,
   EmailFrequency
 } from 'common/store/pages/settings/types'
-import { ChangePasswordModal } from 'components/change-password/ChangePasswordModal'
-import ConfirmationBox from 'components/confirmation-box/ConfirmationBox'
-import TabSlider from 'components/data-entry/TabSlider'
-import Header from 'components/header/desktop/Header'
+import { ChangePasswordModal } from 'components/changePassword/changePasswordModal'
+import ConfirmationBox from 'components/confirmationBox/confirmationBox'
+import TabSlider from 'components/dataEntry/tabSlider'
+import Header from 'components/header/desktop/header'
 import Page from 'components/page/Page'
 import { SelectedServices } from 'components/service-selection'
 import Toast from 'components/toast/Toast'

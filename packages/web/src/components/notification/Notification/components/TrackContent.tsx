@@ -1,8 +1,8 @@
 import { SquareSizes } from '@coliving/common'
 
 import { AgreementEntity } from 'common/store/notifications/types'
-import CoSign, { Size } from 'components/co-sign/CoSign'
-import DynamicImage from 'components/dynamic-image/DynamicImage'
+import CoSign, { Size } from 'components/coSign/coSign'
+import DynamicImage from 'components/dynamicImage/dynamicImage'
 import { useAgreementCoverArt } from 'hooks/useAgreementCoverArt'
 
 import styles from './AgreementContent.module.css'

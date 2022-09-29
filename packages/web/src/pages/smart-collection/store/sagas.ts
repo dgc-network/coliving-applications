@@ -14,7 +14,7 @@ import { setSmartCollection } from 'common/store/pages/collection/actions'
 import {
   fetchSmartCollection,
   fetchSmartCollectionSucceeded
-} from 'common/store/pages/smart-collection/slice'
+} from 'common/store/pages/smartCollection/slice'
 import Explore from 'services/coliving-backend/Explore'
 import { waitForBackendSetup } from 'store/backend/sagas'
 import { getLuckyAgreements } from 'store/recommendation/sagas'

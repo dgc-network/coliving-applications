@@ -33,15 +33,15 @@ import { ReactComponent as IconGradientCollectibles } from 'assets/img/iconGradi
 import useInstanceVar from 'common/hooks/useInstanceVar'
 import { useModalState } from 'common/hooks/useModalState'
 import { ProfileUser } from 'common/store/pages/profile/types'
-import { getCollectible } from 'common/store/ui/collectible-details/selectors'
-import { setCollectible } from 'common/store/ui/collectible-details/slice'
-import CollectibleDetails from 'components/collectibles/components/CollectibleDetails'
+import { getCollectible } from 'common/store/ui/collectibleDetails/selectors'
+import { setCollectible } from 'common/store/ui/collectibleDetails/slice'
+import CollectibleDetails from 'components/collectibles/components/collectibleDetails'
 import {
   HiddenCollectibleRow,
   VisibleCollectibleRow
-} from 'components/collectibles/components/CollectibleRow'
-import Drawer from 'components/drawer/Drawer'
-import EmbedFrame from 'components/embed-modal/components/EmbedFrame'
+} from 'components/collectibles/components/collectibleRow'
+import Drawer from 'components/drawer/drawer'
+import EmbedFrame from 'components/embedModal/components/embedFrame'
 import LoadingSpinner from 'components/loading-spinner/LoadingSpinner'
 import Toast from 'components/toast/Toast'
 import { ToastContext } from 'components/toast/ToastContext'

@@ -18,7 +18,7 @@ import { upgradeToCreator } from 'common/store/cache/users/sagas'
 import {
   getSendData,
   getAssociatedWallets
-} from 'common/store/pages/token-dashboard/selectors'
+} from 'common/store/pages/tokenDashboard/selectors'
 import {
   fetchAssociatedWallets,
   connectNewWallet,
@@ -34,11 +34,11 @@ import {
   confirmRemoveWallet,
   updateWalletError,
   preloadWalletProviders
-} from 'common/store/pages/token-dashboard/slice'
+} from 'common/store/pages/tokenDashboard/slice'
 import {
   ConfirmRemoveWalletAction,
   ModalState
-} from 'common/store/pages/token-dashboard/types'
+} from 'common/store/pages/tokenDashboard/types'
 import { setVisibility } from 'common/store/ui/modals/slice'
 import {
   send as walletSend,

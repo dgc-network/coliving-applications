@@ -12,7 +12,7 @@ import { getUserId } from 'common/store/account/selectors'
 import { getCollection } from 'common/store/cache/collections/selectors'
 import { getUserFromCollection } from 'common/store/cache/users/selectors'
 import { LandlordPopover } from 'components/landlord/LandlordPopover'
-import DynamicImage from 'components/dynamic-image/DynamicImage'
+import DynamicImage from 'components/dynamicImage/dynamicImage'
 import Menu, { MenuType } from 'components/menu/Menu'
 import PerspectiveCard from 'components/perspective-card/PerspectiveCard'
 import RepostFavoritesStats, {

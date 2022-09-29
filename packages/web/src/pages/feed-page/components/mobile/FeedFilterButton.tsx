@@ -1,6 +1,6 @@
 import { FeedFilter } from '@coliving/common'
 
-import HeaderButton from 'components/header-button/HeaderButton'
+import HeaderButton from 'components/headerButton/headerButton'
 
 const messages = {
   filterAll: 'All Posts',

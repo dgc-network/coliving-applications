@@ -10,7 +10,7 @@ import { formatDateWithTimezoneOffset } from 'common/utils/timeUtil'
 import {
   collectibleMessages,
   editTableContainerClass
-} from 'components/collectibles/components/CollectiblesPage'
+} from 'components/collectibles/components/collectiblesPage'
 import Tooltip from 'components/tooltip/Tooltip'
 import { findAncestor } from 'utils/domUtils'
 

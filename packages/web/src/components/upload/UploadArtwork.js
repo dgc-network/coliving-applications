@@ -4,7 +4,7 @@ import cn from 'classnames'
 import PropTypes from 'prop-types'
 
 import placeholderArt from 'assets/img/imageBlank2x.png'
-import ImageSelectionButton from 'components/image-selection/ImageSelectionButton'
+import ImageSelectionButton from 'components/imageSelection/imageSelectionButton'
 import LoadingSpinner from 'components/loading-spinner/LoadingSpinner'
 import Toast from 'components/toast/Toast'
 

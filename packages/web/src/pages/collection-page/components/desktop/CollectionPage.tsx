@@ -14,10 +14,10 @@ import {
   AgreementRecord,
   CollectionsPageType
 } from 'common/store/pages/collection/types'
-import CollectionHeader from 'components/collection/desktop/CollectionHeader'
+import CollectionHeader from 'components/collection/desktop/collectionHeader'
 import LoadingSpinner from 'components/loading-spinner/LoadingSpinner'
 import Page from 'components/page/Page'
-import AgreementsTable from 'components/agreements-table/AgreementsTable'
+import AgreementsTable from 'components/agreementsTable/agreementsTable'
 import { computeCollectionMetadataProps } from 'pages/collection-page/store/utils'
 
 import styles from './CollectionPage.module.css'

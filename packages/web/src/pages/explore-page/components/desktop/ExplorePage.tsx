@@ -10,9 +10,9 @@ import Lottie from 'react-lottie'
 
 import loadingSpinner from 'assets/animations/loadingSpinner.json'
 import { ExploreCollectionsVariant } from 'common/store/pages/explore/types'
-import CollectionArtCard from 'components/card/desktop/CollectionArtCard'
-import UserArtCard from 'components/card/desktop/UserArtCard'
-import Header from 'components/header/desktop/Header'
+import CollectionArtCard from 'components/card/desktop/collectionArtCard'
+import UserArtCard from 'components/card/desktop/userArtCard'
+import Header from 'components/header/desktop/header'
 import Page from 'components/page/Page'
 import PerspectiveCard, {
   TextInterior,

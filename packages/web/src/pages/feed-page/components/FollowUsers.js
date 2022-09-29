@@ -4,7 +4,7 @@ import { Button, ButtonType, ButtonSize, IconFollow } from '@coliving/stems'
 import cn from 'classnames'
 import PropTypes from 'prop-types'
 
-import UserCard from 'components/card/UserCard'
+import UserCard from 'components/card/userCard'
 
 import styles from './FollowUsers.module.css'
 

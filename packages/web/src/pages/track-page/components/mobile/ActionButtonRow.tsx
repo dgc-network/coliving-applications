@@ -5,7 +5,7 @@ import Lottie from 'react-lottie'
 import loadingSpinner from 'assets/animations/loadingSpinner.json'
 import AnimatedIconButton, {
   AnimatedIconType
-} from 'components/animated-button/AnimatedIconButton'
+} from 'components/animatedButton/animatedIconButton'
 
 import styles from './ActionButtonRow.module.css'
 

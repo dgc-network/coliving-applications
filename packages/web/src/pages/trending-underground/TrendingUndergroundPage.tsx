@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 
 import { useDispatch } from 'react-redux'
 
-import DesktopHeader from 'components/header/desktop/Header'
+import DesktopHeader from 'components/header/desktop/header'
 import { useMobileHeader } from 'components/header/mobile/hooks'
 import Lineup from 'components/lineup/Lineup'
 import { useLineupProps } from 'components/lineup/hooks'

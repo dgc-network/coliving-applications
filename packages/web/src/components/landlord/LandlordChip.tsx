@@ -4,7 +4,7 @@ import { ID, SquareSizes, User } from '@coliving/common'
 import cn from 'classnames'
 
 import { LandlordPopover } from 'components/landlord/LandlordPopover'
-import DynamicImage from 'components/dynamic-image/DynamicImage'
+import DynamicImage from 'components/dynamicImage/dynamicImage'
 import { MountPlacement } from 'components/types'
 import UserBadges from 'components/user-badges/UserBadges'
 import { useUserProfilePicture } from 'hooks/useUserProfilePicture'

@@ -11,7 +11,7 @@ import { ReactComponent as IconHeart } from 'assets/img/iconHeart.svg'
 import { ReactComponent as IconRemoveAgreement } from 'assets/img/iconRemoveAgreement.svg'
 import { ReactComponent as IconPause } from 'assets/img/pbIconPause.svg'
 import { ReactComponent as IconPlay } from 'assets/img/pbIconPlay.svg'
-import TablePlayButton from 'components/agreements-table/TablePlayButton'
+import TablePlayButton from 'components/agreementsTable/tablePlayButton'
 import UserBadges from 'components/user-badges/UserBadges'
 import { useAgreementCoverArt } from 'hooks/useAgreementCoverArt'
 

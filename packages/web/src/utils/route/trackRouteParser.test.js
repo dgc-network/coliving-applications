@@ -1,7 +1,7 @@
 import { parseAgreementRoute } from './agreementRouteParser'
 
 // eslint-disable-next-line
-import { mockDecode } from '__mocks__/Hashids'
+import { mockDecode } from '__mocks__/hashids'
 
 describe('parseAgreementRoute', () => {
   it('can parse a handle/slug route', () => {

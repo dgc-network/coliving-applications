@@ -7,7 +7,7 @@ import {
 } from '@coliving/common'
 
 import { ReactComponent as BadgeLandlord } from 'assets/img/badgeLandlord.svg'
-import DynamicImage from 'components/dynamic-image/DynamicImage'
+import DynamicImage from 'components/dynamicImage/dynamicImage'
 import FollowsYouBadge from 'components/user-badges/FollowsYouBadge'
 import UserBadges from 'components/user-badges/UserBadges'
 import { useUserCoverPhoto } from 'hooks/useUserCoverPhoto'

@@ -29,9 +29,9 @@ import {
   getContentListsNotInLibrary,
   isInsideFolder,
   reorderContentListLibrary
-} from 'common/store/content-list-library/helpers'
+} from 'common/store/contentListLibrary/helpers'
 import { saveSmartCollection } from 'common/store/social/collections/actions'
-import Droppable from 'components/dragndrop/Droppable'
+import Droppable from 'components/dragndrop/droppable'
 import { ToastContext } from 'components/toast/ToastContext'
 import { useFlag } from 'hooks/useRemoteConfig'
 import {

@@ -4,9 +4,9 @@ import { ID, CoverArtSizes, SquareSizes, Remix } from '@coliving/common'
 import cn from 'classnames'
 
 import { useLoadImageWithTimeout } from 'common/hooks/useImageSize'
-import CoSign from 'components/co-sign/CoSign'
-import { Size } from 'components/co-sign/types'
-import DynamicImage from 'components/dynamic-image/DynamicImage'
+import CoSign from 'components/coSign/coSign'
+import { Size } from 'components/coSign/types'
+import DynamicImage from 'components/dynamicImage/dynamicImage'
 import { useCollectionCoverArt } from 'hooks/useCollectionCoverArt'
 import { useAgreementCoverArt } from 'hooks/useAgreementCoverArt'
 

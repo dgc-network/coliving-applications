@@ -6,16 +6,16 @@ import { getAgreement } from 'common/store/cache/agreements/selectors'
 import {
   agreementRepostError,
   contentListRepostError
-} from 'common/store/user-list/reposts/actions'
-import { watchRepostsError } from 'common/store/user-list/reposts/errorSagas'
+} from 'common/store/userList/reposts/actions'
+import { watchRepostsError } from 'common/store/userList/reposts/errorSagas'
 import {
   getId,
   getRepostsType,
   getUserList,
   getUserIds
-} from 'common/store/user-list/reposts/selectors'
-import { RepostType } from 'common/store/user-list/reposts/types'
-import UserListSagaFactory from 'common/store/user-list/sagas'
+} from 'common/store/userList/reposts/selectors'
+import { RepostType } from 'common/store/userList/reposts/types'
+import UserListSagaFactory from 'common/store/userList/sagas'
 import { createUserListProvider } from 'components/user-list/utils'
 import apiClient from 'services/coliving-api-client/ColivingAPIClient'
 

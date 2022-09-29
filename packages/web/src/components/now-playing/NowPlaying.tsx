@@ -34,16 +34,16 @@ import {
   repostAgreement,
   undoRepostAgreement
 } from 'common/store/social/agreements/actions'
-import { open } from 'common/store/ui/mobile-overflow-menu/slice'
+import { open } from 'common/store/ui/mobileOverflowMenu/slice'
 import {
   OverflowAction,
   OverflowActionCallbacks,
   OverflowSource
-} from 'common/store/ui/mobile-overflow-menu/types'
-import { requestOpen as requestOpenShareModal } from 'common/store/ui/share-modal/slice'
+} from 'common/store/ui/mobileOverflowMenu/types'
+import { requestOpen as requestOpenShareModal } from 'common/store/ui/shareModal/slice'
 import { Genre } from 'common/utils/genres'
-import CoSign, { Size } from 'components/co-sign/CoSign'
-import DynamicImage from 'components/dynamic-image/DynamicImage'
+import CoSign, { Size } from 'components/coSign/coSign'
+import DynamicImage from 'components/dynamicImage/dynamicImage'
 import PlayButton from 'components/play-bar/PlayButton'
 import NextButtonProvider from 'components/play-bar/next-button/NextButtonProvider'
 import PreviousButtonProvider from 'components/play-bar/previous-button/PreviousButtonProvider'

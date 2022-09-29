@@ -5,7 +5,7 @@ import {
   getOrderedCompletionStages,
   getProfilePageMeterDismissed,
   getIsAccountLoaded
-} from 'common/store/challenges/selectors/profile-progress'
+} from 'common/store/challenges/selectors/profileProgress'
 import { profileMeterDismissed } from 'common/store/pages/profile/actions'
 import ProfileCompletionHeroCard from 'components/profile-progress/components/ProfileCompletionHeroCard'
 

@@ -3,7 +3,7 @@ import cn from 'classnames'
 
 import { ReactComponent as IconRemixes } from 'assets/img/iconRemix.svg'
 import { pluralize } from 'common/utils/formatUtil'
-import Header from 'components/header/desktop/Header'
+import Header from 'components/header/desktop/header'
 import Lineup, { LineupWithoutTile } from 'components/lineup/Lineup'
 import Page from 'components/page/Page'
 import UserBadges from 'components/user-badges/UserBadges'

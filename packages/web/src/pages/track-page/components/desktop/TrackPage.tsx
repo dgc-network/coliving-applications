@@ -3,7 +3,7 @@ import cn from 'classnames'
 
 import { agreementsActions } from 'common/store/pages/agreement/lineup/actions'
 import { QueueItem } from 'common/store/queue/types'
-import CoverPhoto from 'components/cover-photo/CoverPhoto'
+import CoverPhoto from 'components/coverPhoto/coverPhoto'
 import Lineup from 'components/lineup/Lineup'
 import { LineupVariant } from 'components/lineup/types'
 import NavBanner from 'components/nav-banner/NavBanner'

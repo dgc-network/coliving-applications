@@ -9,8 +9,8 @@ import {
 import { useSelector } from 'react-redux'
 
 import { getAccountUser } from 'common/store/account/selectors'
-import { isRemoteConfigLoaded } from 'common/store/remote-config/selectors'
-import { StateWithRemoteConfig } from 'common/store/remote-config/slice'
+import { isRemoteConfigLoaded } from 'common/store/remoteConfig/selectors'
+import { StateWithRemoteConfig } from 'common/store/remoteConfig/slice'
 
 export const FEATURE_FLAG_OVERRIDE_KEY = 'FeatureFlagOverride'
 

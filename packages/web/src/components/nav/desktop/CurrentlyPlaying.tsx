@@ -4,8 +4,8 @@ import { Color, CoverArtSizes, SquareSizes, Nullable } from '@coliving/common'
 import cn from 'classnames'
 
 import { ReactComponent as IconVisualizer } from 'assets/img/iconVisualizer.svg'
-import Draggable from 'components/dragndrop/Draggable'
-import DynamicImage from 'components/dynamic-image/DynamicImage'
+import Draggable from 'components/dragndrop/draggable'
+import DynamicImage from 'components/dynamicImage/dynamicImage'
 import { useAgreementCoverArt } from 'hooks/useAgreementCoverArt'
 
 import styles from './CurrentlyPlaying.module.css'

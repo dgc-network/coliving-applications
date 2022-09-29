@@ -1,4 +1,4 @@
-import Delineator from 'components/delineator/Delineator'
+import Delineator from 'components/delineator/delineator'
 import More from 'components/more/More'
 
 import styles from './CategoryHeader.module.css'

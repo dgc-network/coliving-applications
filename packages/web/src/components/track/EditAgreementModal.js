@@ -5,7 +5,7 @@ import { Modal, Button, ButtonSize, ButtonType } from '@coliving/stems'
 import { mapValues } from 'lodash'
 import PropTypes from 'prop-types'
 
-import FormTile from 'components/data-entry/FormTile'
+import FormTile from 'components/dataEntry/formTile'
 import { useAgreementCoverArt } from 'hooks/useAgreementCoverArt'
 import * as schemas from 'schemas'
 import zIndex from 'utils/zIndex'

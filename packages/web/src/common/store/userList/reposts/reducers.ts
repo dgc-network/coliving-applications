@@ -1,0 +1,39 @@
+import { combineReducers } from 'redux'
+import { createReducer, ActionType } from 'typesafe-actions'
+
+import { UserListReducerFactory } from 'common/store/userList/reducer'
+
+import { USER_LIST_TAG } from '../../../../pages/reposts-page/sagas'
+
+import * as actions from './actions'
+import { RepostsOwnState, RepostType } from './types'
+
+type AgreementRepostActions = ActionType<typeof actions>
+
+const userListReducer = UserListReducerFactory.createReducer({
+  tag: USER_LIST_TAG,
+  pageSize: 15
+})
+
+const initialState = {
+  id: null,
+  repostType: RepostType.AGREEMENT
+}
+
+const repostsPageReducer = createReducer<RepostsOwnState, AgreementRepostActions>(
+  initialState,
+  {
+    [actions.SET_REPOST](state, action) {
+      return {
+        ...state,
+        id: action.id,
+        repostType: action.repostType
+      }
+    }
+  }
+)
+
+export default combineReducers({
+  repostsPage: repostsPageReducer,
+  userList: userListReducer
+})

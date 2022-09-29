@@ -4,17 +4,17 @@ import { call, select, put, takeEvery } from 'redux-saga/effects'
 
 import { getAgreements as getCacheAgreements } from 'common/store/cache/agreements/selectors'
 import { retrieveAgreements } from 'common/store/cache/agreements/utils'
-import * as saveActions from 'common/store/pages/saved-page/actions'
+import * as saveActions from 'common/store/pages/savedPage/actions'
 import {
   PREFIX,
   agreementsActions as savedAgreementsActions
-} from 'common/store/pages/saved-page/lineups/agreements/actions'
+} from 'common/store/pages/savedPage/lineups/agreements/actions'
 import {
   getLocalSaves,
   getLocalSave,
   getSavedAgreementsLineupUid,
   getSaves
-} from 'common/store/pages/saved-page/selectors'
+} from 'common/store/pages/savedPage/selectors'
 import * as queueActions from 'common/store/queue/slice'
 import { SAVE_AGREEMENT, UNSAVE_AGREEMENT } from 'common/store/social/agreements/actions'
 import { LineupSagas } from 'store/lineup/sagas'

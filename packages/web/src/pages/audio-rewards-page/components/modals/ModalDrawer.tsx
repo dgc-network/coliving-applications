@@ -1,7 +1,7 @@
 import { Modal, ModalProps } from '@coliving/stems'
 import cn from 'classnames'
 
-import Drawer, { DrawerProps } from 'components/drawer/Drawer'
+import Drawer, { DrawerProps } from 'components/drawer/drawer'
 import { isMobile } from 'utils/clientUtil'
 
 import styles from './ModalDrawer.module.css'

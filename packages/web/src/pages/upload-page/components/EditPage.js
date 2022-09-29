@@ -4,8 +4,8 @@ import { Button, ButtonType, IconArrow } from '@coliving/stems'
 import { mapValues } from 'lodash'
 import PropTypes from 'prop-types'
 
-import FormTile from 'components/data-entry/FormTile'
-import InlineFormTile from 'components/data-entry/InlineFormTile'
+import FormTile from 'components/dataEntry/formTile'
+import InlineFormTile from 'components/dataEntry/inlineFormTile'
 
 import styles from './EditPage.module.css'
 import UploadType from './uploadType'

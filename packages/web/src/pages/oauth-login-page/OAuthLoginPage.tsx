@@ -17,7 +17,7 @@ import { useHistory, useLocation } from 'react-router-dom'
 
 import HorizontalLogo from 'assets/img/publicSite/Horizontal-Logo-Full-Color@2x.png'
 import { getAccountUser } from 'common/store/account/selectors'
-import Input from 'components/data-entry/Input'
+import Input from 'components/dataEntry/input'
 import LoadingSpinner from 'components/loading-spinner/LoadingSpinner'
 import { ProfileInfo } from 'components/profile-info/ProfileInfo'
 import ColivingBackend from 'services/ColivingBackend'

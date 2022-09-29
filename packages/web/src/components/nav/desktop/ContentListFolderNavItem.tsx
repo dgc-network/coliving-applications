@@ -23,8 +23,8 @@ import cn from 'classnames'
 import { useSpring, animated } from 'react-spring'
 import useMeasure from 'react-use-measure'
 
-import Draggable from 'components/dragndrop/Draggable'
-import Droppable from 'components/dragndrop/Droppable'
+import Draggable from 'components/dragndrop/draggable'
+import Droppable from 'components/dragndrop/droppable'
 import { useRecord, make } from 'store/analytics/actions'
 
 import navColumnStyles from './NavColumn.module.css'

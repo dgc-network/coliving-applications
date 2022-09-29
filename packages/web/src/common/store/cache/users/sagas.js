@@ -13,7 +13,7 @@ import {
   getUsers,
   getUserTimestamps
 } from 'common/store/cache/users/selectors'
-import { removeContentListLibraryTempContentLists } from 'common/store/content-list-library/helpers'
+import { removeContentListLibraryTempContentLists } from 'common/store/contentListLibrary/helpers'
 import {
   getSelectedServices,
   getStatus

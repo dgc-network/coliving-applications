@@ -9,7 +9,7 @@ import {
   BrowserNotificationSetting,
   EmailFrequency
 } from 'common/store/pages/settings/types'
-import TabSlider from 'components/data-entry/TabSlider'
+import TabSlider from 'components/dataEntry/tabSlider'
 import Switch from 'components/switch/Switch'
 import { Permission } from 'utils/browserNotifications'
 import { isElectron } from 'utils/clientUtil'

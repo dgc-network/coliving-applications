@@ -18,15 +18,15 @@ import { getAccountWithSavedContentListsAndAlbums } from 'common/store/account/s
 import { makeGetTableMetadatas } from 'common/store/lineup/selectors'
 import { updateContentListLastViewedAt } from 'common/store/notifications/actions'
 import { getContentListUpdates } from 'common/store/notifications/selectors'
-import * as saveActions from 'common/store/pages/saved-page/actions'
-import { agreementsActions } from 'common/store/pages/saved-page/lineups/agreements/actions'
-import { getSavedAgreementsLineup } from 'common/store/pages/saved-page/selectors'
+import * as saveActions from 'common/store/pages/savedPage/actions'
+import { agreementsActions } from 'common/store/pages/savedPage/lineups/agreements/actions'
+import { getSavedAgreementsLineup } from 'common/store/pages/savedPage/selectors'
 import {
   Tabs as ProfileTabs,
   SavedPageAgreement,
   AgreementRecord,
   SavedPageCollection
-} from 'common/store/pages/saved-page/types'
+} from 'common/store/pages/savedPage/types'
 import { makeGetCurrent } from 'common/store/queue/selectors'
 import * as socialActions from 'common/store/social/agreements/actions'
 import { formatCount } from 'common/utils/formatUtil'

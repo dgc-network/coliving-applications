@@ -1,13 +1,13 @@
 import type { ReactNode } from 'react'
 
-import { CID, ID, UID } from 'models/Identifiers'
-import { CoverArtSizes } from 'models/ImageSizes'
-import { Repost } from 'models/Repost'
+import { CID, ID, UID } from 'models/identifiers'
+import { CoverArtSizes } from 'models/imageSizes'
+import { Repost } from 'models/repost'
 import { Nullable } from 'utils/typeUtils'
 
-import { UserAgreementMetadata } from './Agreement'
-import { Favorite } from './Favorite'
-import { User, UserMetadata } from './User'
+import { UserAgreementMetadata } from './agreement'
+import { Favorite } from './favorite'
+import { User, UserMetadata } from './user'
 
 export enum Variant {
   USER_GENERATED = 'user-generated',

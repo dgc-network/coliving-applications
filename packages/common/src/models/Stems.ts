@@ -1,4 +1,4 @@
-import { Agreement } from 'models/Agreement'
+import { Agreement } from 'models/agreement'
 
 export enum StemCategory {
   INSTRUMENTAL = 'INSTRUMENTAL',

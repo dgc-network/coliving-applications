@@ -12,11 +12,11 @@ import {
   Tabs,
   SavedPageAgreement,
   SavedPageCollection
-} from 'common/store/pages/saved-page/types'
+} from 'common/store/pages/savedPage/types'
 import { QueueItem } from 'common/store/queue/types'
-import Card from 'components/card/mobile/Card'
-import Header from 'components/header/mobile/Header'
-import { HeaderContext } from 'components/header/mobile/HeaderContextProvider'
+import Card from 'components/card/mobile/card'
+import Header from 'components/header/mobile/header'
+import { HeaderContext } from 'components/header/mobile/headerContextProvider'
 import CardLineup from 'components/lineup/CardLineup'
 import LoadingSpinner from 'components/loading-spinner/LoadingSpinner'
 import MobilePageContainer from 'components/mobile-page-container/MobilePageContainer'

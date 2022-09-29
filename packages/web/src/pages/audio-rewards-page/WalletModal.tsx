@@ -23,13 +23,13 @@ import {
   getModalVisible,
   getRemoveWallet,
   getSendData
-} from 'common/store/pages/token-dashboard/selectors'
+} from 'common/store/pages/tokenDashboard/selectors'
 import {
   confirmSend,
   inputSendData,
   setModalVisibility
-} from 'common/store/pages/token-dashboard/slice'
-import { ModalState } from 'common/store/pages/token-dashboard/types'
+} from 'common/store/pages/tokenDashboard/slice'
+import { ModalState } from 'common/store/pages/tokenDashboard/types'
 import { getAccountBalance } from 'common/store/wallet/selectors'
 import { stringWeiToBN, weiToString } from 'common/utils/wallet'
 import SocialProof from 'components/social-proof/SocialProof'

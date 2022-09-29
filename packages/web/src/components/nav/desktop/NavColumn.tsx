@@ -45,7 +45,7 @@ import {
 import {
   addFolderToLibrary,
   constructContentListFolder
-} from 'common/store/content-list-library/helpers'
+} from 'common/store/contentListLibrary/helpers'
 import { makeGetCurrent } from 'common/store/queue/selectors'
 import { saveCollection } from 'common/store/social/collections/actions'
 import { saveAgreement } from 'common/store/social/agreements/actions'
@@ -55,9 +55,9 @@ import {
   getIsOpen
 } from 'common/store/ui/createContentListModal/selectors'
 import CreateContentListModal from 'components/create-content-list/CreateContentListModal'
-import { DragAutoscroller } from 'components/drag-autoscroller/DragAutoscroller'
-import Droppable from 'components/dragndrop/Droppable'
-import DynamicImage from 'components/dynamic-image/DynamicImage'
+import { DragAutoscroller } from 'components/dragAutoscroller/dragAutoscroller'
+import Droppable from 'components/dragndrop/droppable'
+import DynamicImage from 'components/dynamicImage/dynamicImage'
 import CurrentlyPlaying from 'components/nav/desktop/CurrentlyPlaying'
 import NavButton from 'components/nav/desktop/NavButton'
 import RouteNav from 'components/nav/desktop/RouteNav'

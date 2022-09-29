@@ -6,12 +6,12 @@ import { useDispatch } from 'react-redux'
 
 import { ReactComponent as IconReceive } from 'assets/img/iconReceive.svg'
 import { ReactComponent as IconSend } from 'assets/img/iconSend.svg'
-import { getHasAssociatedWallets } from 'common/store/pages/token-dashboard/selectors'
+import { getHasAssociatedWallets } from 'common/store/pages/tokenDashboard/selectors'
 import {
   pressReceive,
   pressSend,
   pressConnectWallets
-} from 'common/store/pages/token-dashboard/slice'
+} from 'common/store/pages/tokenDashboard/slice'
 import { getAccountBalance } from 'common/store/wallet/selectors'
 import { useSelector } from 'utils/reducer'
 

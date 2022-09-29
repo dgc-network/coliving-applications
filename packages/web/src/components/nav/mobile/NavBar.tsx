@@ -19,7 +19,7 @@ import { formatCount } from 'common/utils/formatUtil'
 import {
   RouterContext,
   SlideDirection
-} from 'components/animated-switch/RouterContextProvider'
+} from 'components/animatedSwitch/routerContextProvider'
 import NavContext, {
   LeftPreset,
   CenterPreset,

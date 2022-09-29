@@ -10,11 +10,11 @@ import { ReactComponent as IconRemove } from 'assets/img/iconRemoveAgreement.svg
 import {
   getAssociatedWallets,
   getRemoveWallet
-} from 'common/store/pages/token-dashboard/selectors'
+} from 'common/store/pages/tokenDashboard/selectors'
 import {
   requestRemoveWallet,
   resetStatus
-} from 'common/store/pages/token-dashboard/slice'
+} from 'common/store/pages/tokenDashboard/slice'
 import { shortenEthAddress, shortenSPLAddress } from 'common/utils/wallet'
 import LoadingSpinner from 'components/loading-spinner/LoadingSpinner'
 import Toast from 'components/toast/Toast'

@@ -4,14 +4,14 @@ import { put, select } from 'typed-redux-saga'
 import { getUser } from 'common/store/cache/users/selectors'
 import { setSupportingForUser } from 'common/store/tipping/slice'
 import { SupportingMapForUser } from 'common/store/tipping/types'
-import UserListSagaFactory from 'common/store/user-list/sagas'
-import { getSupportingError } from 'common/store/user-list/supporting/actions'
-import { watchSupportingError } from 'common/store/user-list/supporting/errorSagas'
+import UserListSagaFactory from 'common/store/userList/sagas'
+import { getSupportingError } from 'common/store/userList/supporting/actions'
+import { watchSupportingError } from 'common/store/userList/supporting/errorSagas'
 import {
   getId,
   getUserList,
   getUserIds
-} from 'common/store/user-list/supporting/selectors'
+} from 'common/store/userList/supporting/selectors'
 import { stringWeiToBN } from 'common/utils/wallet'
 import { createUserListProvider } from 'components/user-list/utils'
 import * as adapter from 'services/coliving-api-client/ResponseAdapter'

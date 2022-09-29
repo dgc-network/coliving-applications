@@ -7,7 +7,7 @@ import { getAccountUser } from 'common/store/account/selectors'
 import {
   fetchAssociatedWallets,
   transferEthAudioToSolWAudio
-} from 'common/store/pages/token-dashboard/slice'
+} from 'common/store/pages/tokenDashboard/slice'
 import {
   getAccountBalance,
   getFreezeUntilTime,

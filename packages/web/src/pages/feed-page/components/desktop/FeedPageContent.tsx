@@ -1,7 +1,7 @@
 import { Name, FeedFilter } from '@coliving/common'
 
 import { feedActions } from 'common/store/pages/feed/lineup/actions'
-import Header from 'components/header/desktop/Header'
+import Header from 'components/header/desktop/header'
 import EndOfLineup from 'components/lineup/EndOfLineup'
 import Lineup from 'components/lineup/Lineup'
 import {

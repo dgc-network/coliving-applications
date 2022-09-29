@@ -1,9 +1,9 @@
 import { ID, Remix } from '@coliving/common'
 
 import { LandlordPopover } from 'components/landlord/LandlordPopover'
-import CoSign from 'components/co-sign/CoSign'
-import { Size } from 'components/co-sign/types'
-import DynamicImage from 'components/dynamic-image/DynamicImage'
+import CoSign from 'components/coSign/coSign'
+import { Size } from 'components/coSign/types'
+import DynamicImage from 'components/dynamicImage/dynamicImage'
 import UserBadges from 'components/user-badges/UserBadges'
 
 import styles from './RemixCard.module.css'

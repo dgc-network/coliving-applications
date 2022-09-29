@@ -1,7 +1,7 @@
-import { PlayableType } from 'models/Identifiers'
+import { PlayableType } from 'models/identifiers'
 
-import { Agreement } from './Agreement'
-import { Collection } from './Collection'
+import { Agreement } from './agreement'
+import { Collection } from './collection'
 
 export type Playable =
   | {

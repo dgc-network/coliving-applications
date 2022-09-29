@@ -10,8 +10,8 @@ import {
   getOptimisticSupporters,
   getOptimisticSupporting
 } from 'common/store/tipping/selectors'
-import { getId as getSupportingId } from 'common/store/user-list/supporting/selectors'
-import { getId as getSupportersId } from 'common/store/user-list/top-supporters/selectors'
+import { getId as getSupportingId } from 'common/store/userList/supporting/selectors'
+import { getId as getSupportersId } from 'common/store/userList/top-supporters/selectors'
 import { formatWei, stringWeiToBN } from 'common/utils/wallet'
 import { USER_LIST_TAG as SUPPORTING_USER_LIST_TAG } from 'pages/supporting-page/sagas'
 import { USER_LIST_TAG as TOP_SUPPORTERS_USER_LIST_TAG } from 'pages/top-supporters-page/sagas'

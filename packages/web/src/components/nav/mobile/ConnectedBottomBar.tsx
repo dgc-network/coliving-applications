@@ -8,7 +8,7 @@ import { Dispatch } from 'redux'
 import { getUserHandle } from 'common/store/account/selectors'
 import { setTab } from 'common/store/pages/explore/slice'
 import { Tabs } from 'common/store/pages/explore/types'
-import BottomBar from 'components/bottom-bar/BottomBar'
+import BottomBar from 'components/bottomBar/bottomBar'
 import {
   openSignOn,
   showRequiresAccountModal

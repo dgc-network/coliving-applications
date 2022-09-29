@@ -9,7 +9,7 @@ import {
 } from '@coliving/stems'
 import cn from 'classnames'
 
-import Input from 'components/data-entry/Input'
+import Input from 'components/dataEntry/input'
 
 import { Type, handleTypes } from './SocialLink'
 import styles from './SocialLinkInput.module.css'

@@ -13,11 +13,11 @@ import {
   PushNotificationSetting,
   PushNotifications
 } from 'common/store/pages/settings/types'
-import TabSlider from 'components/data-entry/TabSlider'
-import DynamicImage from 'components/dynamic-image/DynamicImage'
-import GroupableList from 'components/groupable-list/GroupableList'
-import Grouping from 'components/groupable-list/Grouping'
-import Row from 'components/groupable-list/Row'
+import TabSlider from 'components/dataEntry/tabSlider'
+import DynamicImage from 'components/dynamicImage/dynamicImage'
+import GroupableList from 'components/groupableList/groupableList'
+import Grouping from 'components/groupableList/grouping'
+import Row from 'components/groupableList/row'
 import NavContext, { LeftPreset } from 'components/nav/store/context'
 import Page from 'components/page/Page'
 import useScrollToTop from 'hooks/useScrollToTop'

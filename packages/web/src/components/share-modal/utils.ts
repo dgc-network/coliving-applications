@@ -1,6 +1,6 @@
 import { ShareToTwitter } from '@coliving/common'
 
-import { ShareModalContent } from 'common/store/ui/share-modal/types'
+import { ShareModalContent } from 'common/store/ui/shareModal/types'
 import {
   fullAlbumPage,
   fullContentListPage,

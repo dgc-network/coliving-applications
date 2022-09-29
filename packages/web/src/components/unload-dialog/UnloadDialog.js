@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from 'react'
 import { Modal } from '@coliving/stems'
 import { connect } from 'react-redux'
 
-import ConfirmationBox from 'components/confirmation-box/ConfirmationBox'
+import ConfirmationBox from 'components/confirmationBox/confirmationBox'
 import { getIsConfirming } from 'store/confirmer/selectors'
 import { isElectron } from 'utils/clientUtil'
 import { setupHotkeys, removeHotkeys, ModifierKeys } from 'utils/hotkeyUtil'

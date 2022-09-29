@@ -1,4 +1,4 @@
-import { Chain } from 'models/Chain'
+import { Chain } from 'models/chain'
 import { Nullable } from 'utils/typeUtils'
 
 export type CollectiblesMetadata = {

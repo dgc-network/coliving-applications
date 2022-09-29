@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { toggleNotificationPanel } from 'common/store/notifications/actions'
 import { getNotificationPanelIsOpen } from 'common/store/notifications/selectors'
 import { LandlordPopover } from 'components/landlord/LandlordPopover'
-import DynamicImage from 'components/dynamic-image/DynamicImage'
+import DynamicImage from 'components/dynamicImage/dynamicImage'
 import { useUserProfilePicture } from 'hooks/useUserProfilePicture'
 
 import styles from './ProfilePicture.module.css'

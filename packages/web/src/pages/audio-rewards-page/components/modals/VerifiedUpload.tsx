@@ -9,7 +9,7 @@ import {
 } from '@coliving/stems'
 
 import { useModalState } from 'common/hooks/useModalState'
-import { InstagramButton } from 'components/instagram-button/InstagramButton'
+import { InstagramButton } from 'components/instagramButton/instagramButton'
 import TwitterButton from 'components/twitter-button/TwitterButton'
 import { useNavigateToPage } from 'hooks/useNavigateToPage'
 import { useWithMobileStyle } from 'hooks/useWithMobileStyle'

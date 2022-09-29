@@ -4,12 +4,12 @@ import { connect } from 'react-redux'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { Dispatch } from 'redux'
 
-import { loadMore } from 'common/store/user-list/actions'
+import { loadMore } from 'common/store/userList/actions'
 import {
   getPageTitle,
   getUserList
-} from 'common/store/user-list/notifications/selectors'
-import { USER_LIST_TAG } from 'common/store/user-list/notifications/types'
+} from 'common/store/userList/notifications/selectors'
+import { USER_LIST_TAG } from 'common/store/userList/notifications/types'
 import MobilePageContainer from 'components/mobile-page-container/MobilePageContainer'
 import NavContext, { LeftPreset } from 'components/nav/store/context'
 import UserList from 'components/user-list/UserList'

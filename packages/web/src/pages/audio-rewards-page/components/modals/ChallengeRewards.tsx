@@ -17,8 +17,8 @@ import { ReactComponent as IconValidationCheck } from 'assets/img/iconValidation
 import QRCode from 'assets/img/imageQR.png'
 import { useModalState } from 'common/hooks/useModalState'
 import { getUserHandle } from 'common/store/account/selectors'
-import { getOptimisticUserChallenges } from 'common/store/challenges/selectors/optimistic-challenges'
-import { getCompletionStages } from 'common/store/challenges/selectors/profile-progress'
+import { getOptimisticUserChallenges } from 'common/store/challenges/selectors/optimisticChallenges'
+import { getCompletionStages } from 'common/store/challenges/selectors/profileProgress'
 import {
   getChallengeRewardsModalType,
   getClaimStatus,

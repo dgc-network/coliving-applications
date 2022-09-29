@@ -14,7 +14,7 @@ import {
   getCollectionId,
   getCollectionAgreementsLineup
 } from 'common/store/pages/collection/selectors'
-import { getCollection as getSmartCollection } from 'common/store/pages/smart-collection/selectors'
+import { getCollection as getSmartCollection } from 'common/store/pages/smartCollection/selectors'
 import { getPositions } from 'common/store/queue/selectors'
 import { LineupSagas } from 'store/lineup/sagas'
 import { waitForValue } from 'utils/sagaHelpers'

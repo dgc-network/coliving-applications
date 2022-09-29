@@ -6,15 +6,15 @@ import { getAgreement } from 'common/store/cache/agreements/selectors'
 import {
   agreementFavoriteError,
   contentListFavoriteError
-} from 'common/store/user-list/favorites/actions'
-import { watchFavoriteError } from 'common/store/user-list/favorites/errorSagas'
+} from 'common/store/userList/favorites/actions'
+import { watchFavoriteError } from 'common/store/userList/favorites/errorSagas'
 import {
   getId,
   getUserList,
   getUserIds,
   getFavoriteType
-} from 'common/store/user-list/favorites/selectors'
-import UserListSagaFactory from 'common/store/user-list/sagas'
+} from 'common/store/userList/favorites/selectors'
+import UserListSagaFactory from 'common/store/userList/sagas'
 import { createUserListProvider } from 'components/user-list/utils'
 import apiClient from 'services/coliving-api-client/ColivingAPIClient'
 

@@ -37,9 +37,9 @@ import {
   repostCollection,
   undoRepostCollection
 } from 'common/store/social/collections/actions'
-import { requestOpen as requestOpenShareModal } from 'common/store/ui/share-modal/slice'
+import { requestOpen as requestOpenShareModal } from 'common/store/ui/shareModal/slice'
 import { LandlordPopover } from 'components/landlord/LandlordPopover'
-import Draggable from 'components/dragndrop/Draggable'
+import Draggable from 'components/dragndrop/draggable'
 import { OwnProps as CollectionkMenuProps } from 'components/menu/CollectionMenu'
 import Menu from 'components/menu/Menu'
 import { CollectionArtwork } from 'components/agreement/desktop/Artwork'

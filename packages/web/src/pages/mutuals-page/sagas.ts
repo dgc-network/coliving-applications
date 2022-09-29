@@ -2,15 +2,15 @@ import { ID, User } from '@coliving/common'
 import { put, select } from 'typed-redux-saga/macro'
 
 import { getUser } from 'common/store/cache/users/selectors'
-import { getMutualsError } from 'common/store/user-list/mutuals/actions'
-import { watchMutualsError } from 'common/store/user-list/mutuals/errorSagas'
+import { getMutualsError } from 'common/store/userList/mutuals/actions'
+import { watchMutualsError } from 'common/store/userList/mutuals/errorSagas'
 import {
   getId,
   getUserList,
   getUserIds
-} from 'common/store/user-list/mutuals/selectors'
-import { USER_LIST_TAG } from 'common/store/user-list/mutuals/types'
-import UserListSagaFactory from 'common/store/user-list/sagas'
+} from 'common/store/userList/mutuals/selectors'
+import { USER_LIST_TAG } from 'common/store/userList/mutuals/types'
+import UserListSagaFactory from 'common/store/userList/sagas'
 import { createUserListProvider } from 'components/user-list/utils'
 import ColivingBackend from 'services/ColivingBackend'
 

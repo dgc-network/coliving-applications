@@ -1,7 +1,7 @@
 // import optimizely from '@optimizely/optimizely-sdk'
 // const optimizely = require("@optimizely/optimizely-sdk");
 
-import { ID } from 'models/Identifiers'
+import { ID } from 'models/identifiers'
 import {
   remoteConfigIntDefaults,
   remoteConfigStringDefaults,

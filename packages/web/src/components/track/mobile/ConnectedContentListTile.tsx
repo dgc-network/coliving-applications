@@ -26,16 +26,16 @@ import {
   repostCollection,
   undoRepostCollection
 } from 'common/store/social/collections/actions'
-import { open } from 'common/store/ui/mobile-overflow-menu/slice'
+import { open } from 'common/store/ui/mobileOverflowMenu/slice'
 import {
   OverflowAction,
   OverflowSource
-} from 'common/store/ui/mobile-overflow-menu/types'
-import { requestOpen as requestOpenShareModal } from 'common/store/ui/share-modal/slice'
+} from 'common/store/ui/mobileOverflowMenu/types'
+import { requestOpen as requestOpenShareModal } from 'common/store/ui/shareModal/slice'
 import { getTheme } from 'common/store/ui/theme/selectors'
-import { setFavorite } from 'common/store/user-list/favorites/actions'
-import { setRepost } from 'common/store/user-list/reposts/actions'
-import { RepostType } from 'common/store/user-list/reposts/types'
+import { setFavorite } from 'common/store/userList/favorites/actions'
+import { setRepost } from 'common/store/userList/reposts/actions'
+import { RepostType } from 'common/store/userList/reposts/types'
 import { ContentListTileProps } from 'components/agreement/types'
 import { useRecord, make } from 'store/analytics/actions'
 import { getUid, getBuffering, getPlaying } from 'store/player/selectors'

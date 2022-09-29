@@ -8,7 +8,7 @@ import {
   StringKeys
 } from '@coliving/common'
 
-import { SearchKind } from 'common/store/pages/search-results/types'
+import { SearchKind } from 'common/store/pages/searchResults/types'
 import ColivingBackend, { AuthHeaders } from 'services/ColivingBackend'
 import { SupporterResponse } from 'services/coliving-backend/Tipping'
 import {

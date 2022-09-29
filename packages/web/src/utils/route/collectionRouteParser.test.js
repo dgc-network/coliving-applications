@@ -1,7 +1,7 @@
 import { parseCollectionRoute } from './collectionRouteParser'
 
 // eslint-disable-next-line
-import { mockDecode } from '__mocks__/Hashids'
+import { mockDecode } from '__mocks__/hashids'
 
 describe('parseCollectionRoute', () => {
   it('can decode a contentList id route', () => {

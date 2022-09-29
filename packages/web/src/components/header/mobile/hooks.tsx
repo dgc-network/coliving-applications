@@ -1,7 +1,7 @@
 import { useContext, useEffect } from 'react'
 
-import Header from 'components/header/mobile/Header'
-import { HeaderContext } from 'components/header/mobile/HeaderContextProvider'
+import Header from 'components/header/mobile/header'
+import { HeaderContext } from 'components/header/mobile/headerContextProvider'
 
 type UseHeaderProps = {
   title?: string

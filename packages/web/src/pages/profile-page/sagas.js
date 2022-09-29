@@ -29,7 +29,7 @@ import {
 import { FollowType } from 'common/store/pages/profile/types'
 import { getIsReachable } from 'common/store/reachability/selectors'
 import { refreshSupport } from 'common/store/tipping/slice'
-import * as landlordRecommendationsActions from 'common/store/ui/landlord-recommendations/slice'
+import * as landlordRecommendationsActions from 'common/store/ui/landlordRecommendations/slice'
 import { squashNewLines } from 'common/utils/formatUtil'
 import ColivingBackend, { fetchCID } from 'services/ColivingBackend'
 import { setColivingAccountUser } from 'services/LocalStorage'

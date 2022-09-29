@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { ReactComponent as IconPlay } from 'assets/img/pbIconPlay.svg'
 import { useModalState } from 'common/hooks/useModalState'
 import { getProfileUserHandle } from 'common/store/pages/profile/selectors'
-import { setCollectible } from 'common/store/ui/collectible-details/slice'
+import { setCollectible } from 'common/store/ui/collectibleDetails/slice'
 import LoadingSpinner from 'components/loading-spinner/LoadingSpinner'
 import PerspectiveCard from 'components/perspective-card/PerspectiveCard'
 import PreloadImage from 'components/preload-image/PreloadImage'
@@ -17,7 +17,7 @@ import { getHash } from 'utils/route'
 
 import { getFrameFromGif } from '../ethCollectibleHelpers'
 
-import { collectibleMessages } from './CollectiblesPage'
+import { collectibleMessages } from './collectiblesPage'
 import styles from './CollectiblesPage.module.css'
 
 type CollectibleDetailsProps = {

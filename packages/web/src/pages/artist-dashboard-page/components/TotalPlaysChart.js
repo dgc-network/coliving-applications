@@ -6,7 +6,7 @@ import PropTypes from 'prop-types'
 import { Line } from 'react-chartjs-2'
 
 import { formatCount } from 'common/utils/formatUtil'
-import DropdownInput from 'components/data-entry/DropdownInput'
+import DropdownInput from 'components/dataEntry/dropdownInput'
 import Dropdown from 'components/navigation/Dropdown'
 
 import { messages } from '../LandlordDashboardPage'

@@ -22,9 +22,9 @@ import {
   repostAgreement,
   undoRepostAgreement
 } from 'common/store/social/agreements/actions'
-import { requestOpen as requestOpenShareModal } from 'common/store/ui/share-modal/slice'
+import { requestOpen as requestOpenShareModal } from 'common/store/ui/shareModal/slice'
 import { LandlordPopover } from 'components/landlord/LandlordPopover'
-import Draggable from 'components/dragndrop/Draggable'
+import Draggable from 'components/dragndrop/draggable'
 import Menu from 'components/menu/Menu'
 import { OwnProps as AgreementMenuProps } from 'components/menu/AgreementMenu'
 import { AgreementArtwork } from 'components/agreement/desktop/Artwork'

@@ -3,7 +3,7 @@ import { useCallback } from 'react'
 import { IconLink, IconShare, IconTwitterBird } from '@coliving/stems'
 import cn from 'classnames'
 
-import ActionDrawer from 'components/action-drawer/ActionDrawer'
+import ActionDrawer from 'components/actionDrawer/actionDrawer'
 import { isDarkMode, isMatrix } from 'utils/theme/theme'
 
 import { messages } from '../messages'

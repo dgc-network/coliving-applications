@@ -10,7 +10,7 @@ import { LandlordPopover } from 'components/landlord/LandlordPopover'
 import Menu from 'components/menu/Menu'
 import { OwnProps as AgreementMenuProps } from 'components/menu/AgreementMenu'
 import Skeleton from 'components/skeleton/Skeleton'
-import TablePlayButton from 'components/agreements-table/TablePlayButton'
+import TablePlayButton from 'components/agreementsTable/tablePlayButton'
 import { profilePage } from 'utils/route'
 
 import { AgreementTileSize } from '../types'

@@ -37,15 +37,15 @@ import {
 import { makeGetCurrent } from 'common/store/queue/selectors'
 import * as socialAgreementsActions from 'common/store/social/agreements/actions'
 import * as socialUsersActions from 'common/store/social/users/actions'
-import { open } from 'common/store/ui/mobile-overflow-menu/slice'
+import { open } from 'common/store/ui/mobileOverflowMenu/slice'
 import {
   OverflowAction,
   OverflowSource
-} from 'common/store/ui/mobile-overflow-menu/types'
-import { requestOpen as requestOpenShareModal } from 'common/store/ui/share-modal/slice'
-import { setFavorite } from 'common/store/user-list/favorites/actions'
-import { setRepost } from 'common/store/user-list/reposts/actions'
-import { RepostType } from 'common/store/user-list/reposts/types'
+} from 'common/store/ui/mobileOverflowMenu/types'
+import { requestOpen as requestOpenShareModal } from 'common/store/ui/shareModal/slice'
+import { setFavorite } from 'common/store/userList/favorites/actions'
+import { setRepost } from 'common/store/userList/reposts/actions'
+import { RepostType } from 'common/store/userList/reposts/types'
 import { getCanonicalName } from 'common/utils/genres'
 import { formatSeconds, formatDate } from 'common/utils/timeUtil'
 import * as unfollowConfirmationActions from 'components/unfollow-confirmation-modal/store/actions'

@@ -7,7 +7,7 @@ import { getUser } from 'common/store/cache/users/selectors'
 import {
   startStemUploads,
   stemUploadsSucceeded
-} from 'common/store/stems-upload/slice'
+} from 'common/store/stemsUpload/slice'
 import { handleUploads } from 'pages/upload-page/store/sagas'
 import { createStemMetadata } from 'pages/upload-page/store/utils/stems'
 import { make } from 'store/analytics/actions'

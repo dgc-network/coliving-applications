@@ -14,9 +14,9 @@ import {
   CollectionsPageType,
   CollectionAgreement
 } from 'common/store/pages/collection/types'
-import { OverflowAction } from 'common/store/ui/mobile-overflow-menu/types'
-import CollectionHeader from 'components/collection/mobile/CollectionHeader'
-import { HeaderContext } from 'components/header/mobile/HeaderContextProvider'
+import { OverflowAction } from 'common/store/ui/mobileOverflowMenu/types'
+import CollectionHeader from 'components/collection/mobile/collectionHeader'
+import { HeaderContext } from 'components/header/mobile/headerContextProvider'
 import LoadingSpinner from 'components/loading-spinner/LoadingSpinner'
 import MobilePageContainer from 'components/mobile-page-container/MobilePageContainer'
 import NavContext, {

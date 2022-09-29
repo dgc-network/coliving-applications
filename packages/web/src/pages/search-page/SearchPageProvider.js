@@ -8,16 +8,16 @@ import { withRouter } from 'react-router-dom'
 
 import { getUserId } from 'common/store/account/selectors'
 import { makeGetLineupMetadatas } from 'common/store/lineup/selectors'
-import * as searchPageActions from 'common/store/pages/search-results/actions'
-import { agreementsActions } from 'common/store/pages/search-results/lineup/agreements/actions'
+import * as searchPageActions from 'common/store/pages/searchResults/actions'
+import { agreementsActions } from 'common/store/pages/searchResults/lineup/agreements/actions'
 import {
   makeGetSearchLandlords,
   makeGetSearchContentLists,
   makeGetSearchAlbums,
   getSearchAgreementsLineup,
   getBaseState as getSearchResultsState
-} from 'common/store/pages/search-results/selectors'
-import { SearchKind } from 'common/store/pages/search-results/types'
+} from 'common/store/pages/searchResults/selectors'
+import { SearchKind } from 'common/store/pages/searchResults/types'
 import { makeGetCurrent } from 'common/store/queue/selectors'
 import { make } from 'store/analytics/actions'
 import { getPlaying, getBuffering } from 'store/player/selectors'

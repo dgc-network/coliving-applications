@@ -17,7 +17,7 @@ import {
   TwitterProfile
 } from 'common/store/account/reducer'
 import { getAccountStatus } from 'common/store/account/selectors'
-import BackgroundWaves from 'components/background-animations/BackgroundWaves'
+import BackgroundWaves from 'components/backgroundAnimations/backgroundWaves'
 import Page from 'components/page/Page'
 import SignOnModal from 'components/sign-on/SignOnModal'
 import Toast from 'components/toast/Toast'

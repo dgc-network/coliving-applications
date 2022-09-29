@@ -3,7 +3,7 @@ import { useRef, useEffect } from 'react'
 import cn from 'classnames'
 import PropTypes from 'prop-types'
 
-import BackButton from 'components/back-button/BackButton'
+import BackButton from 'components/backButton/backButton'
 
 import styles from './Header.module.css'
 

@@ -10,7 +10,7 @@ import cn from 'classnames'
 
 import placeholderArt from 'assets/img/imageBlank2x.png'
 import { pluralize } from 'common/utils/formatUtil'
-import DynamicImage from 'components/dynamic-image/DynamicImage'
+import DynamicImage from 'components/dynamicImage/dynamicImage'
 import RepostFavoritesStats, {
   Size
 } from 'components/repost-favorites-stats/RepostFavoritesStats'

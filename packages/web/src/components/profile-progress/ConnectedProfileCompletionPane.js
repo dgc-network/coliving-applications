@@ -7,8 +7,8 @@ import { getAccountUser } from 'common/store/account/selectors'
 import {
   getOrderedCompletionStages,
   getIsAccountLoaded
-} from 'common/store/challenges/selectors/profile-progress'
-import MusicConfetti from 'components/background-animations/MusicConfetti'
+} from 'common/store/challenges/selectors/profileProgress'
+import MusicConfetti from 'components/backgroundAnimations/musicConfetti'
 import ProfileCompletionPanel from 'components/profile-progress/components/ProfileCompletionPanel'
 
 import ProfileCompletionTooltip from './components/ProfileCompletionTooltip'

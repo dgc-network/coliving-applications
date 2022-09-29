@@ -1,7 +1,7 @@
 import cn from 'classnames'
 import PropTypes from 'prop-types'
 
-import Banner from 'components/banner/Banner'
+import Banner from 'components/banner/banner'
 
 import styles from './FanburstBanner.module.css'
 

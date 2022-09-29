@@ -1,4 +1,4 @@
-import { ShareType } from 'common/store/ui/share-modal/types'
+import { ShareType } from 'common/store/ui/shareModal/types'
 
 const shareTypeMap: Record<ShareType, string> = {
   agreement: 'Agreement',

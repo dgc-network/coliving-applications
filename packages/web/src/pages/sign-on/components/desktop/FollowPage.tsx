@@ -5,7 +5,7 @@ import { Button, ButtonType, IconArrow, Scrollbar } from '@coliving/stems'
 import cn from 'classnames'
 
 import { ReactComponent as IconWand } from 'assets/img/iconWand.svg'
-import UserCard from 'components/card/UserCard'
+import UserCard from 'components/card/userCard'
 import SelectablePills from 'components/selectable-pill/SelectablePills'
 
 import { FollowLandlordsCategory, landlordCategories } from '../../store/types'

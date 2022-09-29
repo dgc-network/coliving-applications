@@ -1,4 +1,4 @@
-import { ShareType } from 'common/store/ui/share-modal/types'
+import { ShareType } from 'common/store/ui/shareModal/types'
 
 export type ShareProps = {
   onShareToTwitter: () => void

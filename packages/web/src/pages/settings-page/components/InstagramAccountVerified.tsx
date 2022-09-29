@@ -1,4 +1,4 @@
-import InstagramButton from 'components/instagram-button/InstagramButton'
+import InstagramButton from 'components/instagramButton/instagramButton'
 
 import styles from './InstagramAccountVerified.module.css'
 

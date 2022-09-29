@@ -8,7 +8,7 @@ import {
   trendingWeekActions
 } from 'common/store/pages/trending/lineup/actions'
 import { ELECTRONIC_PREFIX, TRENDING_GENRES } from 'common/utils/genres'
-import Header from 'components/header/desktop/Header'
+import Header from 'components/header/desktop/header'
 import EndOfLineup from 'components/lineup/EndOfLineup'
 import Lineup from 'components/lineup/Lineup'
 import { LineupVariant } from 'components/lineup/types'
