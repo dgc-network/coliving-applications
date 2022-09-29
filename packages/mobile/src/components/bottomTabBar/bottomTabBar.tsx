@@ -10,7 +10,7 @@ import { Tabs } from '@coliving/web/src/common/store/pages/explore/types'
 import {
   openSignOn as _openSignOn,
   showRequiresAccountModal
-} from '@coliving/web/src/pages/sign-on/store/actions'
+} from '@coliving/web/src/pages/signOn/store/actions'
 import {
   FEED_PAGE,
   TRENDING_PAGE,

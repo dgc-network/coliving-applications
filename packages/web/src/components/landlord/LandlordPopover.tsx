@@ -12,7 +12,7 @@ import { MountPlacement } from 'components/types'
 import { useUserCoverPhoto } from 'hooks/useUserCoverPhoto'
 import { useUserProfilePicture } from 'hooks/useUserProfilePicture'
 
-import { LandlordCard } from './LandlordCard'
+import { LandlordCard } from './landlordCard'
 import styles from './LandlordPopover.module.css'
 
 enum Placement {

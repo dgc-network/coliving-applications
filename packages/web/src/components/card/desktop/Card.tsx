@@ -13,11 +13,11 @@ import placeholderArt from 'assets/img/imageBlank2x.png'
 import { pluralize } from 'common/utils/formatUtil'
 import ActionsTab from 'components/actionsTab/actionsTab'
 import DynamicImage from 'components/dynamicImage/dynamicImage'
-import Menu, { MenuOptionType } from 'components/menu/Menu'
+import Menu, { MenuOptionType } from 'components/menu/menu'
 import RepostFavoritesStats, {
   Size
-} from 'components/repost-favorites-stats/RepostFavoritesStats'
-import UserBadges from 'components/user-badges/UserBadges'
+} from 'components/repostFavoritesStats/repostFavoritesStats'
+import UserBadges from 'components/userBadges/userBadges'
 import { useCollectionCoverArt } from 'hooks/useCollectionCoverArt'
 import { useUserProfilePicture } from 'hooks/useUserProfilePicture'
 

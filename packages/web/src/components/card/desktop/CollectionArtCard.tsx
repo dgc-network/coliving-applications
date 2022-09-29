@@ -11,13 +11,13 @@ import placeholderArt from 'assets/img/imageBlank2x.png'
 import { getUserId } from 'common/store/account/selectors'
 import { getCollection } from 'common/store/cache/collections/selectors'
 import { getUserFromCollection } from 'common/store/cache/users/selectors'
-import { LandlordPopover } from 'components/landlord/LandlordPopover'
+import { LandlordPopover } from 'components/landlord/landlordPopover'
 import DynamicImage from 'components/dynamicImage/dynamicImage'
-import Menu, { MenuType } from 'components/menu/Menu'
-import PerspectiveCard from 'components/perspective-card/PerspectiveCard'
+import Menu, { MenuType } from 'components/menu/menu'
+import PerspectiveCard from 'components/perspectiveCard/perspectiveCard'
 import RepostFavoritesStats, {
   Size
-} from 'components/repost-favorites-stats/RepostFavoritesStats'
+} from 'components/repostFavoritesStats/repostFavoritesStats'
 import { useCollectionCoverArt } from 'hooks/useCollectionCoverArt'
 import {
   setUsers,

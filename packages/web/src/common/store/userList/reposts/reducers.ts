@@ -3,7 +3,7 @@ import { createReducer, ActionType } from 'typesafe-actions'
 
 import { UserListReducerFactory } from 'common/store/userList/reducer'
 
-import { USER_LIST_TAG } from '../../../../pages/reposts-page/sagas'
+import { USER_LIST_TAG } from '../../../../pages/repostsPage/sagas'
 
 import * as actions from './actions'
 import { RepostsOwnState, RepostType } from './types'

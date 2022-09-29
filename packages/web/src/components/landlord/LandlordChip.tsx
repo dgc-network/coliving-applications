@@ -3,17 +3,17 @@ import { ComponentPropsWithoutRef } from 'react'
 import { ID, SquareSizes, User } from '@coliving/common'
 import cn from 'classnames'
 
-import { LandlordPopover } from 'components/landlord/LandlordPopover'
+import { LandlordPopover } from 'components/landlord/landlordPopover'
 import DynamicImage from 'components/dynamicImage/dynamicImage'
 import { MountPlacement } from 'components/types'
-import UserBadges from 'components/user-badges/UserBadges'
+import UserBadges from 'components/userBadges/userBadges'
 import { useUserProfilePicture } from 'hooks/useUserProfilePicture'
 import { USER_LIST_TAG as SUPPORTING_USER_LIST_TAG } from 'pages/supporting-page/sagas'
 import { USER_LIST_TAG as TOP_SUPPORTERS_USER_LIST_TAG } from 'pages/top-supporters-page/sagas'
 
 import styles from './LandlordChip.module.css'
-import { LandlordChipFollowers } from './LandlordChipFollowers'
-import { LandlordChipTips } from './LandlordChipTips'
+import { LandlordChipFollowers } from './landlordChipFollowers'
+import { LandlordChipTips } from './landlordChipTips'
 
 const TIP_SUPPORT_TAGS = new Set([
   SUPPORTING_USER_LIST_TAG,

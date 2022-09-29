@@ -1,7 +1,7 @@
 import cn from 'classnames'
 import * as React from 'react'
 
-import { Scrollbar } from 'components/Scrollbar'
+import { Scrollbar } from 'components/scrollbar'
 
 import styles from './ModalContent.module.css'
 import { ModalContentProps } from './types'

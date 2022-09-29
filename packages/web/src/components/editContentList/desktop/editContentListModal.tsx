@@ -21,7 +21,7 @@ import {
 import { getCollectionWithUser } from 'common/store/cache/collections/selectors'
 import ContentListForm from 'components/create-content-list/ContentListForm'
 import DeleteConfirmationModal from 'components/deleteConfirmation/deleteConfirmationModal'
-import LoadingSpinner from 'components/loading-spinner/LoadingSpinner'
+import LoadingSpinner from 'components/loadingSpinner/loadingSpinner'
 import {
   getCollectionId,
   getIsOpen

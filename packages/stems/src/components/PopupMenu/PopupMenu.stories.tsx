@@ -2,10 +2,10 @@ import * as React from 'react'
 
 import { Story } from '@storybook/react'
 
-import { Button } from 'components/Button'
-import { IconCamera, IconLock, IconMail, IconPencil } from 'components/Icons'
+import { Button } from 'components/button'
+import { IconCamera, IconLock, IconMail, IconPencil } from 'components/icons'
 
-import { PopupMenu } from './PopupMenu'
+import { PopupMenu } from './popupMenu'
 import { PopupMenuProps } from './types'
 
 export default {

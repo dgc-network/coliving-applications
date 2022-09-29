@@ -35,39 +35,39 @@ import { DevModeMananger } from 'components/devModeManager/devModeManager'
 import { BACKGROUND_ELEMENT_ID as HEADER_BACKGROUND_GUTTER_ID } from 'components/header/desktop/header'
 import { HeaderContextConsumer } from 'components/header/mobile/headerContextProvider'
 import Konami from 'components/konami/konami'
-import Navigator from 'components/nav/Navigator'
+import Navigator from 'components/nav/navigator'
 import { NotificationPage } from 'components/notification'
-import PinnedAgreementConfirmation from 'components/pin-agreement-confirmation/PinAgreementConfirmation'
-import PlayBarProvider from 'components/play-bar/PlayBarProvider'
-import ConnectedReachabilityBar from 'components/reachability-bar/ReachabilityBar'
-import { RewardClaimedToast } from 'components/reward-claimed-toast/RewardClaimedToast'
-import DesktopRoute from 'components/routes/DesktopRoute'
-import MobileRoute from 'components/routes/MobileRoute'
-import TrendingGenreSelectionPage from 'components/trending-genre-selection/TrendingGenreSelectionPage'
-import AnnouncementPage from 'pages/announcement-page/AnnoucementPage'
+import PinnedAgreementConfirmation from 'components/pinAgreementConfirmation/pinAgreementConfirmation'
+import PlayBarProvider from 'components/playBar/playBarProvider'
+import ConnectedReachabilityBar from 'components/reachabilityBar/reachabilityBar'
+import { RewardClaimedToast } from 'components/rewardClaimedToast/rewardClaimedToast'
+import DesktopRoute from 'components/routes/desktopRoute'
+import MobileRoute from 'components/routes/mobileRoute'
+import TrendingGenreSelectionPage from 'components/trendingGenreSelection/trendingGenreSelectionPage'
+import AnnouncementPage from 'pages/announcementPage/annoucementPage'
 import LandlordDashboardPage from 'pages/landlord-dashboard-page/LandlordDashboardPage'
 import LiveRewardsPage from 'pages/live-rewards-page/LiveRewardsPage'
-import CheckPage from 'pages/check-page/CheckPage'
-import CollectionPage from 'pages/collection-page/CollectionPage'
-import EmptyPage from 'pages/empty-page/EmptyPage'
-import ExplorePage from 'pages/explore-page/ExplorePage'
-import FavoritesPage from 'pages/favorites-page/FavoritesPage'
-import FeedPage from 'pages/feed-page/FeedPage'
-import HistoryPage from 'pages/history-page/HistoryPage'
-import NotFoundPage from 'pages/not-found-page/NotFoundPage'
-import NotificationUsersPage from 'pages/notification-users-page/NotificationUsersPage'
-import ProfilePage from 'pages/profile-page/ProfilePage'
-import RemixesPage from 'pages/remixes-page/RemixesPage'
-import RepostsPage from 'pages/reposts-page/RepostsPage'
-import RequiresUpdate from 'pages/requires-update/RequiresUpdate'
-import SavedPage from 'pages/saved-page/SavedPage'
-import SearchPage from 'pages/search-page/SearchPage'
+import CheckPage from 'pages/checkPage/checkPage'
+import CollectionPage from 'pages/collectionPage/collectionPage'
+import EmptyPage from 'pages/emptyPage/emptyPage'
+import ExplorePage from 'pages/explorePage/explorePage'
+import FavoritesPage from 'pages/favoritesPage/favoritesPage'
+import FeedPage from 'pages/feedPage/feedPage'
+import HistoryPage from 'pages/historyPage/historyPage'
+import NotFoundPage from 'pages/notFoundPage/notFoundPage'
+import NotificationUsersPage from 'pages/notificationUsersPage/notificationUsersPage'
+import ProfilePage from 'pages/profilePage/profilePage'
+import RemixesPage from 'pages/remixesPage/remixesPage'
+import RepostsPage from 'pages/repostsPage/repostsPage'
+import RequiresUpdate from 'pages/requiresUpdate/requiresUpdate'
+import SavedPage from 'pages/savedPage/savedPage'
+import SearchPage from 'pages/searchPage/searchPage'
 import {
   openSignOn,
   updateRouteOnCompletion as updateRouteOnSignUpCompletion
-} from 'pages/sign-on/store/actions'
-import { getStatus as getSignOnStatus } from 'pages/sign-on/store/selectors'
-import { Pages as SignOnPages } from 'pages/sign-on/store/types'
+} from 'pages/signOn/store/actions'
+import { getStatus as getSignOnStatus } from 'pages/signOn/store/selectors'
+import { Pages as SignOnPages } from 'pages/signOn/store/types'
 import AgreementPage from 'pages/agreement-page/AgreementPage'
 import TrendingPage from 'pages/trending-page/TrendingPage'
 import TrendingContentListsPage from 'pages/trending-content-lists/TrendingContentListPage'
@@ -160,32 +160,32 @@ import { getTheme as getSystemTheme } from 'utils/theme/theme'
 
 import AnimatedSwitch from '../components/animatedSwitch/animatedSwitch'
 import DiscoveryNodeSelection from '../components/discoveryNodeSelection/discoveryNodeSelection'
-import TopLevelPage from '../components/nav/mobile/TopLevelPage'
-import Notice from '../components/notice/Notice'
+import TopLevelPage from '../components/nav/mobile/topLevelPage'
+import Notice from '../components/notice/notice'
 
 import styles from './App.module.css'
 import { CollectiblesContentListPage } from './collectibles-content-list-page'
-import { DeactivateAccountPage } from './deactivate-account-page/DeactivateAccountPage'
-import ExploreCollectionsPage from './explore-page/ExploreCollectionsPage'
-import FollowersPage from './followers-page/FollowersPage'
-import FollowingPage from './following-page/FollowingPage'
-import SettingsPage from './settings-page/SettingsPage'
-import { SubPage } from './settings-page/components/mobile/SettingsPage'
+import { DeactivateAccountPage } from './deactivateAccountPage/deactivateAccountPage'
+import ExploreCollectionsPage from './explorePage/exploreCollectionsPage'
+import FollowersPage from './followersPage/followersPage'
+import FollowingPage from './followingPage/followingPage'
+import SettingsPage from './settingsPage/settingsPage'
+import { SubPage } from './settingsPage/components/mobile/settingsPage'
 import SmartCollectionPage from './smart-collection/SmartCollectionPage'
 import SupportingPage from './supporting-page/SupportingPage'
 import TopSupportersPage from './top-supporters-page/TopSupportersPage'
 
 const MOBILE_BANNER_LOCAL_STORAGE_KEY = 'dismissMobileAppBanner'
 
-const SignOn = lazy(() => import('pages/sign-on/SignOn'))
+const SignOn = lazy(() => import('pages/signOn/SignOn'))
 
 const UploadPage = lazyWithPreload(
   () => import('pages/upload-page/UploadPage'),
   0
 )
-const Modals = lazyWithPreload(() => import('./modals/Modals'), 0)
+const Modals = lazyWithPreload(() => import('./modals/modals'), 0)
 const ConnectedMusicConfetti = lazyWithPreload(
-  () => import('components/music-confetti/ConnectedMusicConfetti'),
+  () => import('components/musicConfetti/connectedMusicConfetti'),
   0
 )
 

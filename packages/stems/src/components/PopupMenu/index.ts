@@ -1,2 +1,2 @@
-export { PopupMenu } from './PopupMenu'
+export { PopupMenu } from './popupMenu'
 export { PopupMenuItem, PopupMenuProps } from './types'

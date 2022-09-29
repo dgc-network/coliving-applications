@@ -2,8 +2,8 @@ import { ID } from '@coliving/common'
 import cn from 'classnames'
 
 import { ReactComponent as IconRemix } from 'assets/img/iconRemix.svg'
-import ConnectedRemixCard from 'components/remix-card/ConnectedRemixCard'
-import SectionButton from 'components/section-button/SectionButton'
+import ConnectedRemixCard from 'components/remixCard/connectedRemixCard'
+import SectionButton from 'components/sectionButton/sectionButton'
 import { isMatrix } from 'utils/theme/theme'
 
 import styles from './Remixes.module.css'

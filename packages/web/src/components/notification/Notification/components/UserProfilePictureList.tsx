@@ -2,11 +2,11 @@ import { User } from '@coliving/common'
 import cn from 'classnames'
 
 import { formatCount } from 'common/utils/formatUtil'
-import Tooltip from 'components/tooltip/Tooltip'
+import Tooltip from 'components/tooltip/tooltip'
 
 import { USER_LENGTH_LIMIT } from '../utils'
 
-import { ProfilePicture } from './ProfilePicture'
+import { ProfilePicture } from './profilePicture'
 import styles from './UserProfilePictureList.module.css'
 
 const messages = {

@@ -4,7 +4,7 @@ import cn from 'classnames'
 import PropTypes from 'prop-types'
 
 import { ReactComponent as IconRepost } from 'assets/img/iconRepost.svg'
-import Toast from 'components/toast/Toast'
+import Toast from 'components/toast/toast'
 
 import styles from './TableRepostButton.module.css'
 

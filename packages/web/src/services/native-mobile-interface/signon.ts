@@ -1,6 +1,6 @@
 import { User } from '@coliving/common'
 
-import { FollowLandlordsCategory } from 'pages/sign-on/store/types'
+import { FollowLandlordsCategory } from 'pages/signOn/store/types'
 
 import { NativeMobileMessage } from './helpers'
 import { MessageType } from './types'

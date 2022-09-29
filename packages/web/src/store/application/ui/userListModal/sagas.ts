@@ -9,7 +9,7 @@ import * as notificationActions from 'common/store/userList/notifications/action
 import * as repostActions from 'common/store/userList/reposts/actions'
 import { RepostType } from 'common/store/userList/reposts/types'
 import * as supportingActions from 'common/store/userList/supporting/actions'
-import * as topSupporterActions from 'common/store/userList/top-supporters/actions'
+import * as topSupporterActions from 'common/store/userList/topSupporters/actions'
 
 import { setUsers } from './slice'
 import { UserListType, UserListEntityType } from './types'

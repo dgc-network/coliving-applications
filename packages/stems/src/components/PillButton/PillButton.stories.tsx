@@ -1,7 +1,7 @@
 import { Story } from '@storybook/react'
 import * as React from 'react'
 
-import { PillButton, PillButtonProps } from './'
+import { PillButton, PillButtonProps } from '.'
 
 export default {
   component: PillButton,

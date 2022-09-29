@@ -20,7 +20,7 @@ import { animated, useTransition, useSpring } from 'react-spring'
 import { useDrag } from 'react-use-gesture'
 
 import useInstanceVar from 'common/hooks/useInstanceVar'
-import Tooltip from 'components/tooltip/Tooltip'
+import Tooltip from 'components/tooltip/tooltip'
 
 import styles from './TabStyles.module.css'
 

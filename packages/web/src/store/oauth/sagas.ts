@@ -5,7 +5,7 @@ import { takeEvery } from 'redux-saga/effects'
 import {
   formatInstagramProfile,
   formatTwitterProfile
-} from 'pages/sign-on/utils/formatSocialProfile'
+} from 'pages/signOn/utils/formatSocialProfile'
 import {
   RequestInstagramAuthFailureMessage,
   RequestInstagramAuthMessage,

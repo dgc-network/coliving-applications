@@ -1,7 +1,7 @@
 import { Name } from '@coliving/common'
 import { takeLatest, put, call } from 'redux-saga/effects'
 
-import { disablePushNotifications } from 'pages/settings-page/store/mobileSagas'
+import { disablePushNotifications } from 'pages/settingsPage/store/mobileSagas'
 import { make } from 'store/analytics/actions'
 import { signOut } from 'utils/signOut'
 

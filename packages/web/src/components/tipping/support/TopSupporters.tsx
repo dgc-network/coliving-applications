@@ -7,8 +7,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getUsers } from 'common/store/cache/users/selectors'
 import { getProfileUser } from 'common/store/pages/profile/selectors'
 import { getOptimisticSupporters } from 'common/store/tipping/selectors'
-import { ProfilePageNavSectionTitle } from 'components/profile-page-nav-section-title/ProfilePageNavSectionTitle'
-import { ProfilePictureListTile } from 'components/profile-picture-list-tile/ProfilePictureListTile'
+import { ProfilePageNavSectionTitle } from 'components/profilePageNavSectionTitle/profilePageNavSectionTitle'
+import { ProfilePictureListTile } from 'components/profilePictureListTile/profilePictureListTile'
 import {
   setUsers,
   setVisibility

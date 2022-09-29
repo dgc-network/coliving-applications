@@ -4,7 +4,7 @@ import { Name } from '@coliving/common'
 import { Button, ButtonType } from '@coliving/stems'
 import cn from 'classnames'
 
-import { disablePushNotifications } from 'pages/settings-page/store/mobileSagas'
+import { disablePushNotifications } from 'pages/settingsPage/store/mobileSagas'
 import { make, useRecord } from 'store/analytics/actions'
 import { signOut } from 'utils/signOut'
 

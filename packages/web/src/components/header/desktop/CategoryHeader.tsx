@@ -1,5 +1,5 @@
 import Delineator from 'components/delineator/delineator'
-import More from 'components/more/More'
+import More from 'components/more/more'
 
 import styles from './CategoryHeader.module.css'
 

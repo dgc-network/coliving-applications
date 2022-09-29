@@ -12,14 +12,14 @@ import {
   useDownloadAgreementButtons
 } from 'common/hooks/useDownloadAgreementButtons'
 import { toast } from 'common/store/ui/toast/slice'
-import LoadingSpinner from 'components/loading-spinner/LoadingSpinner'
-import Tooltip from 'components/tooltip/Tooltip'
+import LoadingSpinner from 'components/loadingSpinner/loadingSpinner'
+import Tooltip from 'components/tooltip/tooltip'
 import {
   openSignOn,
   updateRouteOnExit,
   updateRouteOnCompletion,
   showRequiresAccountModal
-} from 'pages/sign-on/store/actions'
+} from 'pages/signOn/store/actions'
 import { useIsMobile } from 'utils/clientUtil'
 
 import styles from './DownloadButtons.module.css'

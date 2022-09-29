@@ -6,7 +6,7 @@ import PropTypes from 'prop-types'
 
 import placeholderArt from 'assets/img/imageBlank2x.png'
 import DynamicImage from 'components/dynamicImage/dynamicImage'
-import UserBadges from 'components/user-badges/UserBadges'
+import UserBadges from 'components/userBadges/userBadges'
 import ColivingBackend from 'services/ColivingBackend'
 import { getContentNodeIPFSGateways } from 'utils/gatewayUtil'
 

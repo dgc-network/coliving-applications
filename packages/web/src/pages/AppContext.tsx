@@ -1,8 +1,8 @@
 import { RouterContextProvider } from 'components/animatedSwitch/routerContextProvider'
 import { HeaderContextProvider } from 'components/header/mobile/headerContextProvider'
 import { NavProvider } from 'components/nav/store/context'
-import { ScrollProvider } from 'components/scroll-provider/ScrollProvider'
-import { ToastContextProvider } from 'components/toast/ToastContext'
+import { ScrollProvider } from 'components/scrollProvider/scrollProvider'
+import { ToastContextProvider } from 'components/toast/toastContext'
 import { MainContentContextProvider } from 'pages/MainContentContext'
 
 type AppContextProps = {

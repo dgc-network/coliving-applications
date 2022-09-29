@@ -48,8 +48,8 @@ import { setRepost } from 'common/store/userList/reposts/actions'
 import { RepostType } from 'common/store/userList/reposts/types'
 import { getCanonicalName } from 'common/utils/genres'
 import { formatSeconds, formatDate } from 'common/utils/timeUtil'
-import * as unfollowConfirmationActions from 'components/unfollow-confirmation-modal/store/actions'
-import DeletedPage from 'pages/deleted-page/DeletedPage'
+import * as unfollowConfirmationActions from 'components/unfollowConfirmationModal/store/actions'
+import DeletedPage from 'pages/deletedPage/deletedPage'
 import { AgreementEvent, make } from 'store/analytics/actions'
 import {
   setUsers,

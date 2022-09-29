@@ -3,10 +3,10 @@ import * as React from 'react'
 
 import cn from 'classnames'
 
-import { IconButton } from 'components/IconButton/IconButton'
-import { IconRemove } from 'components/Icons'
+import { IconButton } from 'components/iconButton/iconButton'
+import { IconRemove } from 'components/icons'
 
-import { ModalContext } from './ModalContext'
+import { ModalContext } from './modalContext'
 import styles from './ModalHeader.module.css'
 import { ModalHeaderProps, ModalTitleProps } from './types'
 

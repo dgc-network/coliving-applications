@@ -12,7 +12,7 @@ import BottomBar from 'components/bottomBar/bottomBar'
 import {
   openSignOn,
   showRequiresAccountModal
-} from 'pages/sign-on/store/actions'
+} from 'pages/signOn/store/actions'
 import { AppState } from 'store/types'
 import {
   FEED_PAGE,

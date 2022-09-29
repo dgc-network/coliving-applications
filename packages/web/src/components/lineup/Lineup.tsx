@@ -8,7 +8,7 @@ import MobileAgreementTile from 'components/agreement/mobile/ConnectedAgreementT
 import { AppState } from 'store/types'
 import { isMobile } from 'utils/clientUtil'
 
-import LineupProvider, { LineupProviderProps } from './LineupProvider'
+import LineupProvider, { LineupProviderProps } from './lineupProvider'
 import { LineupVariant } from './types'
 
 export type LineupWithoutTile = Omit<

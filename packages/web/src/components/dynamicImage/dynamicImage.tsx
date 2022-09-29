@@ -10,7 +10,7 @@ import cn from 'classnames'
 
 import transparentPlaceholderImg from 'assets/img/1x1-transparent.png'
 import useInstanceVar from 'common/hooks/useInstanceVar'
-import Skeleton from 'components/skeleton/Skeleton'
+import Skeleton from 'components/skeleton/skeleton'
 
 import styles from './DynamicImage.module.css'
 

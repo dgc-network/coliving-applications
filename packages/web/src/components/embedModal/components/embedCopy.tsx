@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 
-import Toast from 'components/toast/Toast'
+import Toast from 'components/toast/toast'
 import { MountPlacement, ComponentPlacement } from 'components/types'
 import { copyToClipboard } from 'utils/clipboardUtil'
 

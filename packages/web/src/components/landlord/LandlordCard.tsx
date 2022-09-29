@@ -6,12 +6,12 @@ import { useDispatch } from 'react-redux'
 import { setNotificationSubscription } from 'common/store/pages/profile/actions'
 import { followUser, unfollowUser } from 'common/store/social/users/actions'
 import FollowButton from 'components/followButton/followButton'
-import Stats, { StatProps } from 'components/stats/Stats'
+import Stats, { StatProps } from 'components/stats/stats'
 import { getFeatureEnabled } from 'services/remote-config/featureFlagHelpers'
 
 import styles from './LandlordCard.module.css'
-import { LandlordCardCover } from './LandlordCardCover'
-import { LandlordSupporting } from './LandlordSupporting'
+import { LandlordCardCover } from './landlordCardCover'
+import { LandlordSupporting } from './landlordSupporting'
 
 type LandlordCardProps = {
   landlord: User

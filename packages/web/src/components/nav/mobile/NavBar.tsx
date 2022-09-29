@@ -25,7 +25,7 @@ import NavContext, {
   CenterPreset,
   RightPreset
 } from 'components/nav/store/context'
-import SearchBar from 'components/search-bar/SearchBar'
+import SearchBar from 'components/searchBar/searchBar'
 import { OpenNotificationsMessage } from 'services/native-mobile-interface/notifications'
 import { getIsIOS } from 'utils/browser'
 import { onNativeBack } from 'utils/nativeRoute'

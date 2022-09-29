@@ -3,7 +3,7 @@ import * as React from 'react'
 
 import { Story } from '@storybook/react'
 
-import * as icons from './'
+import * as icons from '.'
 
 export default {
   component: icons.IconAlbum,

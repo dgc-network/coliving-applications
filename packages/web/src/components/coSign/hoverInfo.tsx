@@ -2,7 +2,7 @@ import { ID } from '@coliving/common'
 
 import { ReactComponent as IconHeart } from 'assets/img/iconHeart.svg'
 import { ReactComponent as IconRepost } from 'assets/img/iconRepost.svg'
-import UserBadges from 'components/user-badges/UserBadges'
+import UserBadges from 'components/userBadges/userBadges'
 
 import styles from './HoverInfo.module.css'
 

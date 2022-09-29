@@ -7,7 +7,7 @@ import PropTypes from 'prop-types'
 
 import { ReactComponent as IconArrow } from 'assets/img/iconArrow.svg'
 import placeholderArt from 'assets/img/imageBlank2x.png'
-import Toast from 'components/toast/Toast'
+import Toast from 'components/toast/toast'
 import {
   AgreementArtwork,
   CollectionArtwork
@@ -17,7 +17,7 @@ import AgreementListItem from 'components/agreement/desktop/AgreementListItem'
 import AgreementTile from 'components/agreement/desktop/AgreementTile'
 import { AgreementTileSize } from 'components/agreement/types'
 import { ComponentPlacement } from 'components/types'
-import UserBadges from 'components/user-badges/UserBadges'
+import UserBadges from 'components/userBadges/userBadges'
 
 import { ProgressStatus } from '../store/types'
 

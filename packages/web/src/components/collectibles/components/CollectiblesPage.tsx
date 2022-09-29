@@ -42,11 +42,11 @@ import {
 } from 'components/collectibles/components/collectibleRow'
 import Drawer from 'components/drawer/drawer'
 import EmbedFrame from 'components/embedModal/components/embedFrame'
-import LoadingSpinner from 'components/loading-spinner/LoadingSpinner'
-import Toast from 'components/toast/Toast'
-import { ToastContext } from 'components/toast/ToastContext'
+import LoadingSpinner from 'components/loadingSpinner/loadingSpinner'
+import Toast from 'components/toast/toast'
+import { ToastContext } from 'components/toast/toastContext'
 import { ComponentPlacement, MountPlacement } from 'components/types'
-import UserBadges from 'components/user-badges/UserBadges'
+import UserBadges from 'components/userBadges/userBadges'
 import { copyToClipboard, getCopyableLink } from 'utils/clipboardUtil'
 import {
   BASE_GA_URL,

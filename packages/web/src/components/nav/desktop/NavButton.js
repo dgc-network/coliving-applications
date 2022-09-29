@@ -10,7 +10,7 @@ import {
 import cn from 'classnames'
 import PropTypes from 'prop-types'
 
-import LoadingSpinner from 'components/loading-spinner/LoadingSpinner'
+import LoadingSpinner from 'components/loadingSpinner/loadingSpinner'
 
 import styles from './NavButton.module.css'
 

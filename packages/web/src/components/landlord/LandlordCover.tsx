@@ -8,8 +8,8 @@ import {
 
 import { ReactComponent as BadgeLandlord } from 'assets/img/badgeLandlord.svg'
 import DynamicImage from 'components/dynamicImage/dynamicImage'
-import FollowsYouBadge from 'components/user-badges/FollowsYouBadge'
-import UserBadges from 'components/user-badges/UserBadges'
+import FollowsYouBadge from 'components/userBadges/followsYouBadge'
+import UserBadges from 'components/userBadges/userBadges'
 import { useUserCoverPhoto } from 'hooks/useUserCoverPhoto'
 import { useUserProfilePicture } from 'hooks/useUserProfilePicture'
 

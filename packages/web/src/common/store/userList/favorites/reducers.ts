@@ -4,7 +4,7 @@ import { createReducer, ActionType } from 'typesafe-actions'
 
 import { UserListReducerFactory } from 'common/store/userList/reducer'
 
-import { USER_LIST_TAG } from '../../../../pages/favorites-page/sagas'
+import { USER_LIST_TAG } from '../../../../pages/favoritesPage/sagas'
 
 import * as actions from './actions'
 import { FavoritesOwnState } from './types'

@@ -9,7 +9,7 @@ import { useSelector } from 'common/hooks/useSelector'
 import { getProfileUser } from 'common/store/pages/profile/selectors'
 import { getOptimisticSupporting } from 'common/store/tipping/selectors'
 import { stringWeiToBN } from 'common/utils/wallet'
-import { ProfilePageNavSectionTitle } from 'components/profile-page-nav-section-title/ProfilePageNavSectionTitle'
+import { ProfilePageNavSectionTitle } from 'components/profilePageNavSectionTitle/profilePageNavSectionTitle'
 import {
   setUsers,
   setVisibility
@@ -21,7 +21,7 @@ import {
 import { MAX_PROFILE_SUPPORTING_TILES } from 'utils/constants'
 
 import styles from './SupportingList.module.css'
-import { SupportingTile } from './SupportingTile'
+import { SupportingTile } from './supportingTile'
 
 const messages = {
   supporting: 'Supporting',

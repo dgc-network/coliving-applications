@@ -2,7 +2,7 @@ import { useContext } from 'react'
 
 import { Link } from 'react-router-dom'
 
-import { ToastContext } from '../ToastContext'
+import { ToastContext } from '../toastContext'
 
 import styles from './ToastLinkContent.module.css'
 

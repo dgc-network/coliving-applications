@@ -10,7 +10,7 @@ import { getOptimisticSupporting } from 'common/store/tipping/selectors'
 import { fetchSupportingForUser } from 'common/store/tipping/slice'
 import { loadMore, reset } from 'common/store/userList/actions'
 import { stringWeiToBN } from 'common/utils/wallet'
-import { UserProfilePictureList } from 'components/notification/Notification/components/UserProfilePictureList'
+import { UserProfilePictureList } from 'components/notification/notification/components/userProfilePictureList'
 import { USER_LIST_TAG as SUPPORTING_TAG } from 'pages/supporting-page/sagas'
 import {
   setUsers,

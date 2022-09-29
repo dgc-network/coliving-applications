@@ -14,7 +14,7 @@ import {
   OverrideSetting
 } from 'common/hooks/useFeatureFlag'
 import { useModalState } from 'common/hooks/useModalState'
-import LoadingSpinner from 'components/loading-spinner/LoadingSpinner'
+import LoadingSpinner from 'components/loadingSpinner/loadingSpinner'
 import { useDevModeHotkey } from 'hooks/useHotkey'
 import { remoteConfigInstance } from 'services/remote-config/remote-config-instance'
 import zIndex from 'utils/zIndex'

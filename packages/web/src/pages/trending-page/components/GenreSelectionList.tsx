@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 import cn from 'classnames'
 
-import SearchBar from 'components/search-bar/SearchBar'
+import SearchBar from 'components/searchBar/searchBar'
 import useDelayHandler from 'hooks/useDelayHandler'
 
 import styles from './GenreSelectionList.module.css'

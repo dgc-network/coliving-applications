@@ -5,8 +5,8 @@ import PropTypes from 'prop-types'
 
 import placeholderArt from 'assets/img/imageBlank2x.png'
 import ImageSelectionButton from 'components/imageSelection/imageSelectionButton'
-import LoadingSpinner from 'components/loading-spinner/LoadingSpinner'
-import Toast from 'components/toast/Toast'
+import LoadingSpinner from 'components/loadingSpinner/loadingSpinner'
+import Toast from 'components/toast/toast'
 
 import styles from './UploadArtwork.module.css'
 

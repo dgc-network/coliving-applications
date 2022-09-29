@@ -11,9 +11,9 @@ import { MainContentContext } from 'pages/MainContentContext'
 
 import CollectionMenu, {
   OwnProps as CollectionMenuProps
-} from './CollectionMenu'
-import AgreementMenu, { OwnProps as AgreementMenuProps } from './AgreementMenu'
-import UserMenu, { OwnProps as UserMenuProps } from './UserMenu'
+} from './collectionMenu'
+import AgreementMenu, { OwnProps as AgreementMenuProps } from './agreementMenu'
+import UserMenu, { OwnProps as UserMenuProps } from './userMenu'
 
 export type MenuOptionType =
   | UserMenuProps

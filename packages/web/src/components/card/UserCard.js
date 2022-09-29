@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 
 import { formatCount } from 'common/utils/formatUtil'
 import DynamicImage from 'components/dynamicImage/dynamicImage'
-import UserBadges from 'components/user-badges/UserBadges'
+import UserBadges from 'components/userBadges/userBadges'
 import { useUserProfilePicture } from 'hooks/useUserProfilePicture'
 
 import styles from './UserCard.module.css'

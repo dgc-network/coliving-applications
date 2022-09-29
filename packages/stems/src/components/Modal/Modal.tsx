@@ -14,7 +14,7 @@ import ReactDOM from 'react-dom'
 import { animated, useTransition } from 'react-spring'
 import { useEffectOnce } from 'react-use'
 
-import { IconRemove } from 'components/Icons'
+import { IconRemove } from 'components/icons'
 import { useClickOutside } from 'hooks/useClickOutside'
 import { useHotkeys } from 'hooks/useHotKeys'
 import { useScrollLock } from 'hooks/useScrollLock'
@@ -22,7 +22,7 @@ import { findAncestor } from 'utils/findAncestor'
 import { standard } from 'utils/transitions'
 
 import styles from './Modal.module.css'
-import { ModalContext } from './ModalContext'
+import { ModalContext } from './modalContext'
 import { useModalScrollCount } from './hooks'
 import { ModalProps, Anchor } from './types'
 

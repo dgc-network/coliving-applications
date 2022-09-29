@@ -5,7 +5,7 @@ import cn from 'classnames'
 import moment from 'moment'
 
 import styles from './Scrubber.module.css'
-import { Slider } from './Slider'
+import { Slider } from './slider'
 import { ScrubberProps, defaultScrubberProps } from './types'
 
 const SECONDS_PER_MINUTE = 60

@@ -14,8 +14,8 @@ import {
   changePassword,
   Page
 } from 'common/store/changePassword/slice'
-import LoadingSpinnerFullPage from 'components/loading-spinner-full-page/LoadingSpinnerFullPage'
-import EnterPassword from 'components/sign-on/EnterPassword'
+import LoadingSpinnerFullPage from 'components/loadingSpinnerFullPage/loadingSpinnerFullPage'
+import EnterPassword from 'components/signOn/enterPassword'
 
 import styles from './ChangePassword.module.css'
 import { ConfirmCredentials } from './confirmCredentials'

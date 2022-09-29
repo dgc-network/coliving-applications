@@ -6,16 +6,16 @@ import { agreementsActions } from 'common/store/pages/agreement/lineup/actions'
 import { QueueItem } from 'common/store/queue/types'
 import { OverflowAction } from 'common/store/ui/mobileOverflowMenu/types'
 import { HeaderContext } from 'components/header/mobile/headerContextProvider'
-import Lineup from 'components/lineup/Lineup'
+import Lineup from 'components/lineup/lineup'
 import { LineupVariant } from 'components/lineup/types'
-import MobilePageContainer from 'components/mobile-page-container/MobilePageContainer'
+import MobilePageContainer from 'components/mobilePageContainer/mobilePageContainer'
 import NavContext, {
   LeftPreset,
   CenterPreset,
   RightPreset
 } from 'components/nav/store/context'
-import NetworkConnectivityMonitor from 'components/network-connectivity/NetworkConnectivityMonitor'
-import SectionButton from 'components/section-button/SectionButton'
+import NetworkConnectivityMonitor from 'components/networkConnectivity/networkConnectivityMonitor'
+import SectionButton from 'components/sectionButton/sectionButton'
 import { getAgreementDefaults, emptyStringGuard } from 'pages/agreement-page/utils'
 
 import Remixes from './Remixes'

@@ -13,7 +13,7 @@ import {
   getUserIds
 } from 'common/store/userList/supporting/selectors'
 import { stringWeiToBN } from 'common/utils/wallet'
-import { createUserListProvider } from 'components/user-list/utils'
+import { createUserListProvider } from 'components/userList/utils'
 import * as adapter from 'services/coliving-api-client/ResponseAdapter'
 import {
   fetchSupporting,

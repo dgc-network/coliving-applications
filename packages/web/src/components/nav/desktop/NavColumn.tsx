@@ -29,7 +29,7 @@ import {
   getAccountUser,
   getContentListLibrary
 } from 'common/store/account/selectors'
-import { getDominantColorsByAgreement } from 'common/store/average-color/slice'
+import { getDominantColorsByAgreement } from 'common/store/averageColor/slice'
 import {
   addAgreementToContentList,
   createContentList
@@ -58,16 +58,16 @@ import CreateContentListModal from 'components/create-content-list/CreateContent
 import { DragAutoscroller } from 'components/dragAutoscroller/dragAutoscroller'
 import Droppable from 'components/dragndrop/droppable'
 import DynamicImage from 'components/dynamicImage/dynamicImage'
-import CurrentlyPlaying from 'components/nav/desktop/CurrentlyPlaying'
-import NavButton from 'components/nav/desktop/NavButton'
-import RouteNav from 'components/nav/desktop/RouteNav'
-import Pill from 'components/pill/Pill'
-import ConnectedProfileCompletionPane from 'components/profile-progress/ConnectedProfileCompletionPane'
-import Tooltip from 'components/tooltip/Tooltip'
-import UserBadges from 'components/user-badges/UserBadges'
+import CurrentlyPlaying from 'components/nav/desktop/currentlyPlaying'
+import NavButton from 'components/nav/desktop/navButton'
+import RouteNav from 'components/nav/desktop/routeNav'
+import Pill from 'components/pill/pill'
+import ConnectedProfileCompletionPane from 'components/profileProgress/connectedProfileCompletionPane'
+import Tooltip from 'components/tooltip/tooltip'
+import UserBadges from 'components/userBadges/userBadges'
 import { useFlag } from 'hooks/useRemoteConfig'
 import { useUserProfilePicture } from 'hooks/useUserProfilePicture'
-import * as signOnActions from 'pages/sign-on/store/actions'
+import * as signOnActions from 'pages/signOn/store/actions'
 import { resetState as resetUploadState } from 'pages/upload-page/store/actions'
 import { NO_VISUALIZER_ROUTES } from 'pages/visualizer/Visualizer'
 import { openVisualizer } from 'pages/visualizer/store/slice'
@@ -89,10 +89,10 @@ import {
   UPLOAD_PAGE
 } from 'utils/route'
 
-import NavAudio from './NavAudio'
+import NavAudio from './navAudio'
 import styles from './NavColumn.module.css'
-import NavHeader from './NavHeader'
-import ContentListLibrary from './ContentListLibrary'
+import NavHeader from './navHeader'
+import ContentListLibrary from './contentListLibrary'
 
 const messages = {
   newContentListOrFolderTooltip: 'New ContentList or Folder',

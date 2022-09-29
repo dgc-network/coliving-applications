@@ -10,7 +10,7 @@ import {
 
 import Input from 'components/dataEntry/input'
 import TextArea from 'components/dataEntry/textArea'
-import UploadArtwork from 'components/upload/UploadArtwork'
+import UploadArtwork from 'components/upload/uploadArtwork'
 import { useCollectionCoverArt } from 'hooks/useCollectionCoverArt'
 import * as schemas from 'schemas'
 import { resizeImage } from 'utils/imageProcessingUtil'

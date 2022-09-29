@@ -18,9 +18,9 @@ import {
   undoRepostAgreement
 } from 'common/store/social/agreements/actions'
 import { requestOpen as requestOpenShareModal } from 'common/store/ui/shareModal/slice'
-import Menu from 'components/menu/Menu'
-import Toast from 'components/toast/Toast'
-import Tooltip from 'components/tooltip/Tooltip'
+import Menu from 'components/menu/menu'
+import Toast from 'components/toast/toast'
+import Tooltip from 'components/tooltip/tooltip'
 import { REPOST_TOAST_TIMEOUT_MILLIS } from 'utils/constants'
 
 import styles from './ActionsTab.module.css'

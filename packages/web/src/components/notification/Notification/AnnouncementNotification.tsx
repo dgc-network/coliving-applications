@@ -9,11 +9,11 @@ import { Announcement } from 'common/store/notifications/types'
 import { make, useRecord } from 'store/analytics/actions'
 
 import styles from './AnnouncementNotification.module.css'
-import { NotificationBody } from './components/NotificationBody'
-import { NotificationFooter } from './components/NotificationFooter'
-import { NotificationHeader } from './components/NotificationHeader'
-import { NotificationTile } from './components/NotificationTile'
-import { NotificationTitle } from './components/NotificationTitle'
+import { NotificationBody } from './components/notificationBody'
+import { NotificationFooter } from './components/notificationFooter'
+import { NotificationHeader } from './components/notificationHeader'
+import { NotificationTile } from './components/notificationTile'
+import { NotificationTitle } from './components/notificationTitle'
 import { IconAnnouncement } from './components/icons'
 
 const messages = {

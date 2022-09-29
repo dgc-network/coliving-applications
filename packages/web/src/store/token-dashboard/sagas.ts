@@ -49,11 +49,11 @@ import {
 } from 'common/store/wallet/slice'
 import { weiToString } from 'common/utils/wallet'
 import { CollectibleState } from 'components/collectibles/types'
-import { fetchServices } from 'components/service-selection/store/slice'
+import { fetchServices } from 'components/serviceSelection/store/slice'
 import {
   fetchOpenSeaAssetsForWallets,
   fetchSolanaCollectiblesForWallets
-} from 'pages/profile-page/sagas'
+} from 'pages/profilePage/sagas'
 import { newUserMetadata } from 'schemas'
 import ColivingBackend from 'services/ColivingBackend'
 import apiClient, {

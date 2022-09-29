@@ -4,9 +4,9 @@ import { Button, ButtonType, IconArrow } from '@coliving/stems'
 import cn from 'classnames'
 import PropTypes from 'prop-types'
 
-import { SelectedServices } from 'components/service-selection'
-import Dropzone from 'components/upload/Dropzone'
-import InvalidFileType from 'components/upload/InvalidFileType'
+import { SelectedServices } from 'components/serviceSelection'
+import Dropzone from 'components/upload/dropzone'
+import InvalidFileType from 'components/upload/invalidFileType'
 
 import styles from './SelectPage.module.css'
 import AgreementsPreview from './AgreementsPreview'

@@ -6,7 +6,7 @@ import { Helmet } from 'react-helmet'
 import { Spring } from 'react-spring/renderprops'
 import calcScrollbarWidth from 'scrollbar-width'
 
-import SearchBar from 'components/search-bar/ConnectedSearchBar'
+import SearchBar from 'components/searchBar/connectedSearchBar'
 
 import styles from './Page.module.css'
 

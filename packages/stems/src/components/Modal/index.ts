@@ -1,7 +1,7 @@
-export { Modal } from './Modal'
-export { ModalContent } from './ModalContent'
-export { ModalHeader, ModalTitle } from './ModalHeader'
-export { ModalFooter } from './ModalFooter'
+export { Modal } from './modal'
+export { ModalContent } from './modalContent'
+export { ModalHeader, ModalTitle } from './modalHeader'
+export { ModalFooter } from './modalFooter'
 export {
   ModalProps,
   Anchor,

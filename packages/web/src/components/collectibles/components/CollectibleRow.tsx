@@ -11,7 +11,7 @@ import {
   collectibleMessages,
   editTableContainerClass
 } from 'components/collectibles/components/collectiblesPage'
-import Tooltip from 'components/tooltip/Tooltip'
+import Tooltip from 'components/tooltip/tooltip'
 import { findAncestor } from 'utils/domUtils'
 
 import styles from './CollectiblesPage.module.css'

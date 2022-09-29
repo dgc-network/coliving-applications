@@ -1,7 +1,7 @@
 import { Story } from '@storybook/react'
 import * as React from 'react'
 
-import { ModalContent, ModalContentProps } from './'
+import { ModalContent, ModalContentProps } from '.'
 
 export default {
   component: ModalContent,

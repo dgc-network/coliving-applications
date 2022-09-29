@@ -3,7 +3,7 @@ import * as React from 'react'
 
 import cn from 'classnames'
 
-import { Popup } from 'components/Popup'
+import { Popup } from 'components/popup'
 
 import styles from './PopupMenu.module.css'
 import { PopupMenuItem, PopupMenuProps } from './types'

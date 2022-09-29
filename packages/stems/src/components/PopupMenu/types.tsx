@@ -1,4 +1,4 @@
-import { PopupProps } from '../Popup'
+import { PopupProps } from '../popup'
 
 type ApplicablePopupProps = Pick<
   PopupProps,

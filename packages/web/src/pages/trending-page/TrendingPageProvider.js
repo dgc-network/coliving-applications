@@ -27,7 +27,7 @@ import {
 } from 'common/store/pages/trending/selectors'
 import { makeGetCurrent } from 'common/store/queue/selectors'
 import { GENRES } from 'common/utils/genres'
-import { openSignOn } from 'pages/sign-on/store/actions'
+import { openSignOn } from 'pages/signOn/store/actions'
 import { make } from 'store/analytics/actions'
 import { getBuffering, getPlaying } from 'store/player/selectors'
 import { isMobile } from 'utils/clientUtil'

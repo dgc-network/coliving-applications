@@ -13,12 +13,12 @@ import {
   makeGetAllNotifications
 } from 'common/store/notifications/selectors'
 import { Notification as Notifications } from 'common/store/notifications/types'
-import MobilePageContainer from 'components/mobile-page-container/MobilePageContainer'
+import MobilePageContainer from 'components/mobilePageContainer/mobilePageContainer'
 import NavContext, { LeftPreset } from 'components/nav/store/context'
-import NetworkConnectivityMonitor from 'components/network-connectivity/NetworkConnectivityMonitor'
+import NetworkConnectivityMonitor from 'components/networkConnectivity/networkConnectivityMonitor'
 
-import { EmptyNotifications } from './EmptyNotifications'
-import { Notification } from './Notification'
+import { EmptyNotifications } from './emptyNotifications'
+import { Notification } from './notification'
 import styles from './NotificationPage.module.css'
 
 const getNotifications = makeGetAllNotifications()

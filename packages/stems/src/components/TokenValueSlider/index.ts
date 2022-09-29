@@ -1,2 +1,2 @@
-export { TokenValueSlider } from './TokenValueSlider'
+export { TokenValueSlider } from './tokenValueSlider'
 export { TokenValueSliderProps } from './types'

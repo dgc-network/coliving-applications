@@ -1,7 +1,7 @@
 import { Story } from '@storybook/react'
 import * as React from 'react'
 
-import { SegmentedControl } from './SegmentedControl'
+import { SegmentedControl } from './segmentedControl'
 import { SegmentedControlProps, Option } from './types'
 
 export default {

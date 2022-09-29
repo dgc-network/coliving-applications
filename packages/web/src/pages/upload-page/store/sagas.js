@@ -29,8 +29,8 @@ import { formatUrlName } from 'common/utils/formatUtil'
 import {
   getSelectedServices,
   getStatus
-} from 'components/service-selection/store/selectors'
-import { fetchServicesFailed } from 'components/service-selection/store/slice'
+} from 'components/serviceSelection/store/selectors'
+import { fetchServicesFailed } from 'components/serviceSelection/store/slice'
 import UploadType from 'pages/upload-page/components/uploadType'
 import { getStems } from 'pages/upload-page/store/selectors'
 import { updateAndFlattenStems } from 'pages/upload-page/store/utils/stems'

@@ -3,7 +3,7 @@ import { useMemo, ReactNode, RefObject } from 'react'
 import { ID } from '@coliving/common'
 import cn from 'classnames'
 
-import Tooltip from 'components/tooltip/Tooltip'
+import Tooltip from 'components/tooltip/tooltip'
 import { useIsMobile } from 'utils/clientUtil'
 import { getCurrentThemeColors } from 'utils/theme/theme'
 

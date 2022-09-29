@@ -8,7 +8,7 @@ import {
   getSupportingOverrides
 } from 'common/store//tipping/selectors'
 import { getId as getSupportingId } from 'common/store/userList/supporting/selectors'
-import { getId as getSupportersId } from 'common/store/userList/top-supporters/selectors'
+import { getId as getSupportersId } from 'common/store/userList/topSupporters/selectors'
 import { stringWeiToBN } from 'common/utils/wallet'
 
 export const makeGetOptimisticUserIdsIfNeeded = ({

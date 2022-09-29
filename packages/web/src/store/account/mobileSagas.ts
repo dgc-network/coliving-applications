@@ -4,7 +4,7 @@ import { takeEvery, put, call } from 'redux-saga/effects'
 
 import * as accountActions from 'common/store/account/reducer'
 import { setNeedsAccountRecovery } from 'common/store/account/reducer'
-import { updateProfileAsync } from 'pages/profile-page/sagas'
+import { updateProfileAsync } from 'pages/profilePage/sagas'
 import ColivingBackend from 'services/ColivingBackend'
 import { FetchAccountFailed } from 'services/native-mobile-interface/lifecycle'
 import { ReloadMessage } from 'services/native-mobile-interface/linking'

@@ -8,7 +8,7 @@ import { clearToasts, toast } from 'common/store/ui/toast/slice'
 import { getSafeArea, SafeAreaDirection } from 'utils/safeArea'
 
 import styles from './ToastContext.module.css'
-import Toast from './mobile/Toast'
+import Toast from './mobile/toast'
 
 const DEFAULT_TIMEOUT = 3000
 

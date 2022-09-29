@@ -28,7 +28,7 @@ import {
 } from 'common/store/social/agreements/actions'
 import { requestOpen as openAddToContentList } from 'common/store/ui/addToContentList/actions'
 import * as embedModalActions from 'components/embedModal/store/actions'
-import { ToastContext } from 'components/toast/ToastContext'
+import { ToastContext } from 'components/toast/toastContext'
 import { newCollectionMetadata } from 'schemas'
 import * as editAgreementModalActions from 'store/application/ui/editAgreementModal/actions'
 import { showSetAsLandlordPickConfirmation } from 'store/application/ui/setAsLandlordPickConfirmation/actions'

@@ -18,7 +18,7 @@ import { Dispatch } from 'redux'
 
 import { LineupActions } from 'common/store/lineup/actions'
 import { getShowTip } from 'common/store/tipping/selectors'
-import { FeedTipTile } from 'components/tipping/feed-tip-tile/FeedTipTile'
+import { FeedTipTile } from 'components/tipping/feedTipTile/feedTipTile'
 import {
   AgreementTileProps,
   ContentListTileProps,

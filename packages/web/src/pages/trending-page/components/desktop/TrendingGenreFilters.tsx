@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 import { ReactComponent as IconKebabHorizontal } from 'assets/img/iconKebabHorizontal.svg'
 import { getCanonicalName } from 'common/utils/genres'
-import SelectablePills from 'components/selectable-pill/SelectablePills'
+import SelectablePills from 'components/selectablePill/selectablePills'
 
 import styles from './TrendingGenreFilters.module.css'
 

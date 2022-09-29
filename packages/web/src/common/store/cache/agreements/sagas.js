@@ -21,14 +21,14 @@ import {
   getUserId,
   getUserHandle
 } from 'common/store/account/selectors'
-import { setDominantColors } from 'common/store/average-color/slice'
+import { setDominantColors } from 'common/store/averageColor/slice'
 import * as cacheActions from 'common/store/cache/actions'
 import * as agreementActions from 'common/store/cache/agreements/actions'
 import { getAgreement } from 'common/store/cache/agreements/selectors'
 import { fetchUsers } from 'common/store/cache/users/sagas'
 import { getUser } from 'common/store/cache/users/selectors'
 import { squashNewLines, formatUrlName } from 'common/utils/formatUtil'
-import * as signOnActions from 'pages/sign-on/store/actions'
+import * as signOnActions from 'pages/signOn/store/actions'
 import ColivingBackend, { fetchCID } from 'services/ColivingBackend'
 import apiClient from 'services/coliving-api-client/ColivingAPIClient'
 import AgreementDownload from 'services/coliving-backend/AgreementDownload'

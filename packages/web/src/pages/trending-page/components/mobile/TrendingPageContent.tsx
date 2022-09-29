@@ -13,16 +13,16 @@ import {
 } from 'common/store/pages/trending/lineup/actions'
 import Header from 'components/header/mobile/header'
 import { HeaderContext } from 'components/header/mobile/headerContextProvider'
-import { EndOfLineup } from 'components/lineup/EndOfLineup'
-import Lineup from 'components/lineup/Lineup'
+import { EndOfLineup } from 'components/lineup/endOfLineup'
+import Lineup from 'components/lineup/lineup'
 import { LineupVariant } from 'components/lineup/types'
-import MobilePageContainer from 'components/mobile-page-container/MobilePageContainer'
+import MobilePageContainer from 'components/mobilePageContainer/mobilePageContainer'
 import NavContext, {
   CenterPreset,
   LeftPreset,
   RightPreset
 } from 'components/nav/store/context'
-import PullToRefresh from 'components/pull-to-refresh/PullToRefresh'
+import PullToRefresh from 'components/pullToRefresh/pullToRefresh'
 import useAsyncPoll from 'hooks/useAsyncPoll'
 import useTabs from 'hooks/useTabs/useTabs'
 import { TrendingPageContentProps } from 'pages/trending-page/types'

@@ -3,13 +3,13 @@ import * as React from 'react'
 
 import { Story } from '@storybook/react'
 
-import { Button } from 'components/Button'
-import { IconContentLists } from 'components/Icons'
+import { Button } from 'components/button'
+import { IconContentLists } from 'components/icons'
 
-import { Modal } from './Modal'
-import { ModalContent } from './ModalContent'
-import { ModalFooter } from './ModalFooter'
-import { ModalHeader, ModalTitle } from './ModalHeader'
+import { Modal } from './modal'
+import { ModalContent } from './modalContent'
+import { ModalFooter } from './modalFooter'
+import { ModalHeader, ModalTitle } from './modalHeader'
 import { ModalProps } from './types'
 
 export default {

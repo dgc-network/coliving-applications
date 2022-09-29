@@ -1,6 +1,6 @@
 import { ReactComponent as IconArrow } from 'assets/img/iconArrowGrey.svg'
 import Banner from 'components/banner/banner'
-import Pill from 'components/pill/Pill'
+import Pill from 'components/pill/pill'
 
 import styles from './CTABanner.module.css'
 

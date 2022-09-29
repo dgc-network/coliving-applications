@@ -1,7 +1,7 @@
 import cn from 'classnames'
 import * as React from 'react'
 
-import { Button, Type as ButtonType } from 'components/Button'
+import { Button, Type as ButtonType } from 'components/button'
 
 import styles from './PillButton.module.css'
 import { PillButtonProps, Variant as PillButtonVariant } from './types'

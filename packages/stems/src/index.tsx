@@ -4,21 +4,21 @@ import './assets/styles/colors.css'
 import './assets/styles/animations.css'
 import './assets/styles/transforms.css'
 
-export * from './components/Icons'
+export * from './components/icons'
 
 export {
   Button,
   ButtonProps,
   Type as ButtonType,
   Size as ButtonSize
-} from './components/Button'
-export { IconButton, IconButtonProps } from './components/IconButton'
+} from './components/button'
+export { IconButton, IconButtonProps } from './components/iconButton'
 export {
   PillButton,
   PillButtonProps,
   Variant as PillButtonVariant
-} from './components/PillButton'
-export { Scrollbar, ScrollbarProps } from './components/Scrollbar'
+} from './components/pillButton'
+export { Scrollbar, ScrollbarProps } from './components/scrollbar'
 
 export {
   Modal,
@@ -32,36 +32,36 @@ export {
   Anchor,
   ModalFooter,
   ModalFooterProps
-} from './components/Modal'
+} from './components/modal'
 
 export {
   Popup,
   Position as PopupPosition,
   PopupProps
-} from './components/Popup'
+} from './components/popup'
 export {
   PopupMenu,
   PopupMenuItem,
   PopupMenuProps
-} from './components/PopupMenu'
-export { ProgressBar, ProgressBarProps } from './components/ProgressBar'
-export { Scrubber } from './components/Scrubber'
+} from './components/popupMenu'
+export { ProgressBar, ProgressBarProps } from './components/progressBar'
+export { Scrubber } from './components/scrubber'
 export {
   SegmentedControl,
   SegmentedControl as TabSlider,
   SegmentedControlProps,
   SegmentedControlProps as TabSliderProps,
   Option
-} from './components/SegmentedControl'
+} from './components/segmentedControl'
 export {
   TokenValueSlider,
   TokenValueSliderProps
-} from './components/TokenValueSlider'
+} from './components/tokenValueSlider'
 export {
   TokenValueInput,
   TokenValueInputProps,
   Format
-} from './components/TokenValueInput'
+} from './components/tokenValueInput'
 
 export { useHotkeys } from './hooks/useHotKeys'
 export { useClickOutside } from './hooks/useClickOutside'

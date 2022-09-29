@@ -6,8 +6,8 @@ import { processAndCacheAgreements } from 'common/store/cache/agreements/utils'
 import {
   PREFIX,
   trendingUndergroundLineupActions
-} from 'common/store/pages/trending-underground/lineup/actions'
-import { getLineup } from 'common/store/pages/trending-underground/lineup/selectors'
+} from 'common/store/pages/trendingUnderground/lineup/actions'
+import { getLineup } from 'common/store/pages/trendingUnderground/lineup/selectors'
 import apiClient from 'services/coliving-api-client/ColivingAPIClient'
 import { remoteConfigInstance } from 'services/remote-config/remote-config-instance'
 import { LineupSagas } from 'store/lineup/sagas'

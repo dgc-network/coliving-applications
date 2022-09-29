@@ -3,7 +3,7 @@ import * as React from 'react'
 
 import { ReactionTypes } from 'common/store/ui/reactions/slice'
 
-import { Reaction, ReactionProps as BaseReactionProps } from './Reaction'
+import { Reaction, ReactionProps as BaseReactionProps } from './reaction'
 import explode from './exploding_head.json'
 import fire from './fire.json'
 import party from './partying_face.json'

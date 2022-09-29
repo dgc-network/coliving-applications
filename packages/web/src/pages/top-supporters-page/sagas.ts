@@ -5,14 +5,14 @@ import { getUser } from 'common/store/cache/users/selectors'
 import { setSupportersForUser } from 'common/store/tipping/slice'
 import { SupportersMapForUser } from 'common/store/tipping/types'
 import UserListSagaFactory from 'common/store/userList/sagas'
-import { getTopSupportersError } from 'common/store/userList/top-supporters/actions'
-import { watchTopSupportersError } from 'common/store/userList/top-supporters/errorSagas'
+import { getTopSupportersError } from 'common/store/userList/topSupporters/actions'
+import { watchTopSupportersError } from 'common/store/userList/topSupporters/errorSagas'
 import {
   getId,
   getUserList,
   getUserIds
-} from 'common/store/userList/top-supporters/selectors'
-import { createUserListProvider } from 'components/user-list/utils'
+} from 'common/store/userList/topSupporters/selectors'
+import { createUserListProvider } from 'components/userList/utils'
 import * as adapter from 'services/coliving-api-client/ResponseAdapter'
 import {
   fetchSupporters,

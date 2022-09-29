@@ -2,7 +2,7 @@ import cn from 'classnames'
 
 import { ReactComponent as IconUser } from 'assets/img/iconUser.svg'
 import { formatCount } from 'common/utils/formatUtil'
-import FollowsYouBadge from 'components/user-badges/FollowsYouBadge'
+import FollowsYouBadge from 'components/userBadges/followsYouBadge'
 
 import styles from './LandlordChip.module.css'
 

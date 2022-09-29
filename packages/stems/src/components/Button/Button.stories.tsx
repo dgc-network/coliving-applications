@@ -1,9 +1,9 @@
 import { Story } from '@storybook/react'
 import * as React from 'react'
 
-import * as Icons from 'components/Icons'
+import * as Icons from 'components/icons'
 
-import { Button } from './Button'
+import { Button } from './button'
 import { ButtonProps, Type } from './types'
 
 export default {

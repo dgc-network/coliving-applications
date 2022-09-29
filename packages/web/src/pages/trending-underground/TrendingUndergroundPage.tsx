@@ -4,17 +4,17 @@ import { useDispatch } from 'react-redux'
 
 import DesktopHeader from 'components/header/desktop/header'
 import { useMobileHeader } from 'components/header/mobile/hooks'
-import Lineup from 'components/lineup/Lineup'
+import Lineup from 'components/lineup/lineup'
 import { useLineupProps } from 'components/lineup/hooks'
 import { LineupVariant } from 'components/lineup/types'
-import MobilePageContainer from 'components/mobile-page-container/MobilePageContainer'
-import Page from 'components/page/Page'
+import MobilePageContainer from 'components/mobilePageContainer/mobilePageContainer'
+import Page from 'components/page/page'
 import RewardsBanner from 'pages/trending-page/components/RewardsBanner'
 import { isMobile } from 'utils/clientUtil'
 import { BASE_URL, TRENDING_UNDERGROUND_PAGE } from 'utils/route'
 
-import { trendingUndergroundLineupActions } from '../../common/store/pages/trending-underground/lineup/actions'
-import { getLineup } from '../../common/store/pages/trending-underground/lineup/selectors'
+import { trendingUndergroundLineupActions } from '../../common/store/pages/trendingUnderground/lineup/actions'
+import { getLineup } from '../../common/store/pages/trendingUnderground/lineup/selectors'
 
 import styles from './TrendingUndergroundPage.module.css'
 

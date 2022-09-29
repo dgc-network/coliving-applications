@@ -3,9 +3,9 @@ import * as React from 'react'
 
 import { Story } from '@storybook/react'
 
-import { Button } from 'components/Button'
+import { Button } from 'components/button'
 
-import { Popup } from './Popup'
+import { Popup } from './popup'
 import { PopupProps } from './types'
 
 export default {

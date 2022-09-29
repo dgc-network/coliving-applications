@@ -28,9 +28,9 @@ import { Notification as Notifications } from 'common/store/notifications/types'
 import { getIsOpen as getIsUserListOpen } from 'store/application/ui/userListModal/selectors'
 import zIndex from 'utils/zIndex'
 
-import { EmptyNotifications } from './EmptyNotifications'
-import { Notification } from './Notification'
-import { NotificationModal } from './NotificationModal'
+import { EmptyNotifications } from './emptyNotifications'
+import { Notification } from './notification'
+import { NotificationModal } from './notificationModal'
 import styles from './NotificationPanel.module.css'
 
 const getNotifications = makeGetAllNotifications()

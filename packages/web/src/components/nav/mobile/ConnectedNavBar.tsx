@@ -16,7 +16,7 @@ import {
   RouterContext,
   SlideDirection
 } from 'components/animatedSwitch/routerContextProvider'
-import { openSignOn } from 'pages/sign-on/store/actions'
+import { openSignOn } from 'pages/signOn/store/actions'
 import { make, useRecord } from 'store/analytics/actions'
 import { AppState } from 'store/types'
 import { getIsIOS } from 'utils/browser'
@@ -27,7 +27,7 @@ import {
   LIVE_PAGE
 } from 'utils/route'
 
-import NavBar from './NavBar'
+import NavBar from './navBar'
 
 type ConnectedNavBarProps = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &

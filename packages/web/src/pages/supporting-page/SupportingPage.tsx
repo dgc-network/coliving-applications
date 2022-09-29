@@ -1,9 +1,9 @@
 import { useContext, useEffect } from 'react'
 
 import { getUserList } from 'common/store/userList/supporting/selectors'
-import MobilePageContainer from 'components/mobile-page-container/MobilePageContainer'
+import MobilePageContainer from 'components/mobilePageContainer/mobilePageContainer'
 import NavContext, { LeftPreset } from 'components/nav/store/context'
-import UserList from 'components/user-list/UserList'
+import UserList from 'components/userList/userList'
 import { USER_LIST_TAG } from 'pages/supporting-page/sagas'
 
 const messages = {

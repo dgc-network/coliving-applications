@@ -5,8 +5,8 @@ import { RouteComponentProps, withRouter } from 'react-router-dom'
 import { getClient } from 'utils/clientUtil'
 
 import styles from './Navigator.module.css'
-import NavColumn from './desktop/NavColumn'
-import ConnectedNavBar from './mobile/ConnectedNavBar'
+import NavColumn from './desktop/navColumn'
+import ConnectedNavBar from './mobile/connectedNavBar'
 
 interface OwnProps {
   className?: string

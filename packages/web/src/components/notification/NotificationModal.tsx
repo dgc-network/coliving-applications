@@ -4,7 +4,7 @@ import ReactMarkdown from 'react-markdown'
 import { ReactComponent as IconRemove } from 'assets/img/iconRemove.svg'
 import { Announcement } from 'common/store/notifications/types'
 
-import { IconAnnouncement } from './Notification/components/icons'
+import { IconAnnouncement } from './notification/components/icons'
 import styles from './NotificationModal.module.css'
 
 type NotificationModalProps = {

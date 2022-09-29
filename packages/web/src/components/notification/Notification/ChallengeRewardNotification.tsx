@@ -9,12 +9,12 @@ import { challengeRewardsConfig } from 'pages/live-rewards-page/config'
 import { make, useRecord } from 'store/analytics/actions'
 import { LIVE_PAGE } from 'utils/route'
 
-import { NotificationBody } from './components/NotificationBody'
-import { NotificationFooter } from './components/NotificationFooter'
-import { NotificationHeader } from './components/NotificationHeader'
-import { NotificationTile } from './components/NotificationTile'
-import { NotificationTitle } from './components/NotificationTitle'
-import { TwitterShareButton } from './components/TwitterShareButton'
+import { NotificationBody } from './components/notificationBody'
+import { NotificationFooter } from './components/notificationFooter'
+import { NotificationHeader } from './components/notificationHeader'
+import { NotificationTile } from './components/notificationTile'
+import { NotificationTitle } from './components/notificationTitle'
+import { TwitterShareButton } from './components/twitterShareButton'
 import { IconRewards } from './components/icons'
 
 const messages = {

@@ -2,9 +2,9 @@ import { lazy, Suspense, useState, useCallback, useEffect } from 'react'
 
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 
-import LoadingSpinnerFullPage from 'components/loading-spinner-full-page/LoadingSpinnerFullPage'
-import NavScreen from 'components/public-site/NavOverlay'
-import LandingPage from 'pages/landing-page/LandingPage'
+import LoadingSpinnerFullPage from 'components/loadingSpinnerFullPage/loadingSpinnerFullPage'
+import NavScreen from 'components/publicSite/navOverlay'
+import LandingPage from 'pages/landingPage/landingPage'
 import {
   TRENDING_PAGE,
   SIGN_UP_PAGE,
@@ -16,9 +16,9 @@ import {
 const BASENAME = process.env.PUBLIC_URL
 
 const PrivacyPolicyPage = lazy(
-  () => import('pages/privacy-policy-page/PrivacyPolicyPage')
+  () => import('pages/privacyPolicyPage/privacyPolicyPage')
 )
-const DownloadPage = lazy(() => import('pages/download-page/DownloadPage'))
+const DownloadPage = lazy(() => import('pages/downloadPage/downloadPage'))
 const TermsOfUsePage = lazy(
   () => import('pages/terms-of-use-page/TermsOfUsePage')
 )

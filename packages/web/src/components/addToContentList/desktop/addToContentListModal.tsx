@@ -18,9 +18,9 @@ import {
   getAgreementTitle
 } from 'common/store/ui/addToContentList/selectors'
 import DynamicImage from 'components/dynamicImage/dynamicImage'
-import SearchBar from 'components/search-bar/SearchBar'
-import { ToastContext } from 'components/toast/ToastContext'
-import ToastLinkContent from 'components/toast/mobile/ToastLinkContent'
+import SearchBar from 'components/searchBar/searchBar'
+import { ToastContext } from 'components/toast/toastContext'
+import ToastLinkContent from 'components/toast/mobile/toastLinkContent'
 import { useCollectionCoverArt } from 'hooks/useCollectionCoverArt'
 import { newCollectionMetadata } from 'schemas'
 import { AppState } from 'store/types'

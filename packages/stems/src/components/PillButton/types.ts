@@ -1,4 +1,4 @@
-import { ButtonProps } from 'components/Button'
+import { ButtonProps } from 'components/button'
 
 export enum Variant {
   PRIMARY = 'primary',

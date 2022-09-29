@@ -13,9 +13,9 @@ import { pluralize } from 'common/utils/formatUtil'
 import DynamicImage from 'components/dynamicImage/dynamicImage'
 import RepostFavoritesStats, {
   Size
-} from 'components/repost-favorites-stats/RepostFavoritesStats'
-import UpdateDot from 'components/update-dot/UpdateDot'
-import UserBadges from 'components/user-badges/UserBadges'
+} from 'components/repostFavoritesStats/repostFavoritesStats'
+import UpdateDot from 'components/updateDot/updateDot'
+import UserBadges from 'components/userBadges/userBadges'
 import { useCollectionCoverArt } from 'hooks/useCollectionCoverArt'
 import { useUserProfilePicture } from 'hooks/useUserProfilePicture'
 

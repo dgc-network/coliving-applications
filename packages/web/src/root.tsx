@@ -11,7 +11,7 @@ import Dapp from './app'
 const REACT_APP_NATIVE_MOBILE = process.env.REACT_APP_NATIVE_MOBILE
 
 const NoConnectivityPage = lazy(
-  () => import('components/no-connectivity-page/NoConnectivityPage')
+  () => import('components/noConnectivityPage/noConnectivityPage')
 )
 
 const PublicSite = lazy(() => import('./pages/PublicSite'))

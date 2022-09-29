@@ -17,8 +17,8 @@ import { removeContentListLibraryTempContentLists } from 'common/store/contentLi
 import {
   getSelectedServices,
   getStatus
-} from 'components/service-selection/store/selectors'
-import { fetchServicesFailed } from 'components/service-selection/store/slice'
+} from 'components/serviceSelection/store/selectors'
+import { fetchServicesFailed } from 'components/serviceSelection/store/slice'
 import ColivingBackend from 'services/ColivingBackend'
 import {
   getColivingAccountUser,

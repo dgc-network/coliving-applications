@@ -1,1 +1,1 @@
-export { Scrubber } from './Scrubber'
+export { Scrubber } from './scrubber'

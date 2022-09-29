@@ -32,7 +32,7 @@ import {
 } from 'common/store/contentListLibrary/helpers'
 import { saveSmartCollection } from 'common/store/social/collections/actions'
 import Droppable from 'components/dragndrop/droppable'
-import { ToastContext } from 'components/toast/ToastContext'
+import { ToastContext } from 'components/toast/toastContext'
 import { useFlag } from 'hooks/useRemoteConfig'
 import {
   LIVE_NFT_CONTENT_LIST,
@@ -47,9 +47,9 @@ import { useSelector } from 'utils/reducer'
 import { liveNftContentListPage, getPathname, contentListPage } from 'utils/route'
 
 import navColumnStyles from './NavColumn.module.css'
-import { ContentListFolderNavItem } from './ContentListFolderNavItem'
+import { ContentListFolderNavItem } from './contentListFolderNavItem'
 import styles from './ContentListLibrary.module.css'
-import { ContentListNavItem, ContentListNavLink } from './ContentListNavItem'
+import { ContentListNavItem, ContentListNavLink } from './contentListNavItem'
 
 type ContentListLibraryProps = {
   onClickNavLinkWithAccount: () => void
