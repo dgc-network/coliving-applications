@@ -13,7 +13,7 @@ import MobilePlayBar from 'components/playBar/mobile/playBar'
 import {
   EnablePullToRefreshMessage,
   DisablePullToRefreshMessage
-} from 'services/nativeMobileInterface/android/pulltorefresh'
+} from 'services/nativeMobileInterface/android/pullToRefresh'
 
 import NowPlaying from './nowPlaying'
 import styles from './NowPlayingDrawer.module.css'

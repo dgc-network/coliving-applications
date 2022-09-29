@@ -33,7 +33,7 @@ import HiddenAgreementHeader from '../hiddenAgreementHeader'
 
 import ActionButtonRow from './actionButtonRow'
 import StatsButtonRow from './statsButtonRow'
-import styles from './AgreementHeader.module.css'
+import styles from './agreementHeader.module.css'
 
 const messages = {
   agreement: 'AGREEMENT',

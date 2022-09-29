@@ -6,7 +6,7 @@ import useInstanceVar from 'common/hooks/useInstanceVar'
 import {
   EnablePullToRefreshMessage,
   DisablePullToRefreshMessage
-} from 'services/nativeMobileInterface/android/pulltorefresh'
+} from 'services/nativeMobileInterface/android/pullToRefresh'
 import { HapticFeedbackMessage } from 'services/nativeMobileInterface/haptics'
 
 type UseHasReachedTopPointProps = {

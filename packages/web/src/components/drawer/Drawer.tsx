@@ -11,7 +11,7 @@ import { usePortal } from 'hooks/usePortal'
 import {
   EnablePullToRefreshMessage,
   DisablePullToRefreshMessage
-} from 'services/nativeMobileInterface/android/pulltorefresh'
+} from 'services/nativeMobileInterface/android/pullToRefresh'
 
 import styles from './Drawer.module.css'
 
