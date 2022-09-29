@@ -1,3 +1,3 @@
-export * from './ProfilePicture'
-export * from './FollowButton'
-export * from './FollowsYouChip'
+export * from './profilePicture'
+export * from './followButton'
+export * from './followsYouChip'

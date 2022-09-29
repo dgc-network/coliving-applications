@@ -20,7 +20,7 @@ import type { StylesProp } from 'app/styles'
 import { flexRowCentered, makeStyles } from 'app/styles'
 import { useThemeColors } from 'app/utils/theme'
 
-import { Link } from './Link'
+import { Link } from './link'
 
 const useStyles = makeStyles(
   (

@@ -9,7 +9,7 @@ import type { StyleProp, ViewStyle } from 'react-native'
 import { Text, View } from 'react-native'
 
 import { DynamicImage, Tile } from 'app/components/core'
-import UserBadges from 'app/components/user-badges/UserBadges'
+import UserBadges from 'app/components/userBadges/userBadges'
 import { useCollectionCoverArt } from 'app/hooks/useCollectionCoverArt'
 import { useUserProfilePicture } from 'app/hooks/useUserProfilePicture'
 import { makeStyles } from 'app/styles'

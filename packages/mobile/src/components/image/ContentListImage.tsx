@@ -1,9 +1,9 @@
 import { useCallback, useState } from 'react'
 
-import type { CollectionImage } from 'app/models/Collection'
-import type { UserMultihash } from 'app/models/User'
+import type { CollectionImage } from 'app/models/collection'
+import type { UserMultihash } from 'app/models/user'
 
-import ImageLoader from './ImageLoader'
+import ImageLoader from './imageLoader'
 import { gateways, publicGateways } from './utils'
 
 const getContentListImageUrl = (contentList: CollectionImage, cNode: string) => {

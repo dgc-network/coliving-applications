@@ -1249,7 +1249,7 @@ type ColivingOauthError = {
 
 export type BaseAnalyticsEvent = { type: typeof ANALYTICS_AGREEMENT_EVENT }
 
-export type AllAgreementingEvents =
+export type AllTrackingEvents =
   | CreateAccountOpen
   | CreateAccountCompleteEmail
   | CreateAccountCompletePassword

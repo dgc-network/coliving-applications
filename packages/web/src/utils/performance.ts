@@ -55,7 +55,7 @@ export class Timer {
   config: TimerConfig
   record: (record: Recording) => void
 
-  // Agreementing
+  // Tracking
   private totalCount: number
   private rollingAverage: number
 

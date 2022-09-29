@@ -28,16 +28,16 @@ import {
   getIsOnFirstPage,
   getIsSignedIn
 } from 'app/store/lifecycle/selectors'
-import type { MessagePostingWebView } from 'app/types/MessagePostingWebView'
+import type { MessagePostingWebView } from 'app/types/messagePostingWebView'
 import {
   postMessage,
   postMessage as postMessageUtil
 } from 'app/utils/postMessage'
 
-import NotificationReminder from '../notification-reminder/NotificationReminder'
-import { ThemeContext } from '../theme/ThemeContext'
+import NotificationReminder from '../notificationReminder/notificationReminder'
+import { ThemeContext } from '../theme/themeContext'
 
-import { WebRefContext } from './WebRef'
+import { WebRefContext } from './webRef'
 
 const URL_OVERRIDE = Config.URL_OVERRIDE
 const STATIC_PORT = Config.STATIC_SERVER_PORT || 3100

@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 
-import { Name, AllAgreementingEvents } from '@coliving/common'
+import { Name, AllTrackingEvents } from '@coliving/common'
 import { useDispatch as useDispatchRedux } from 'react-redux'
 
 /** UI EVENTS */
@@ -25,7 +25,7 @@ export const make = <U extends Name, T>(
   ...m
 })
 
-export type AgreementEvent = AllAgreementingEvents & {
+export type AgreementEvent = AllTrackingEvents & {
   type: typeof AGREEMENT
   callback?: () => void
   options?: Record<string, any>

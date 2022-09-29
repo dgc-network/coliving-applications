@@ -12,15 +12,15 @@ import {
   CollectionTile,
   AgreementTile,
   LineupTileSkeleton
-} from 'app/components/lineup-tile'
+} from 'app/components/lineupTile'
 import { useDispatchWeb } from 'app/hooks/useDispatchWeb'
 import { useScrollToTop } from 'app/hooks/useScrollToTop'
 import { useSelectorWeb } from 'app/hooks/useSelectorWeb'
 import { make, agreement } from 'app/utils/analytics'
 
-import { FeedTipTile } from '../feed-tip-tile/FeedTipTile'
+import { FeedTipTile } from '../feedTipTile/feedTipTile'
 
-import { Delineator } from './Delineator'
+import { Delineator } from './delineator'
 import { delineateByTime } from './delineate'
 import type {
   FeedTipLineupItem,

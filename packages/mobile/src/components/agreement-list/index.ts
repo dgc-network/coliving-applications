@@ -1,1 +1,0 @@
-export { AgreementList } from './AgreementList'

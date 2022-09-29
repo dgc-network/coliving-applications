@@ -6,7 +6,7 @@ import { Animated, Pressable, View } from 'react-native'
 
 import IconUpload from 'app/assets/images/iconUpload.svg'
 import { DynamicImage } from 'app/components/core'
-import LoadingSpinner from 'app/components/loading-spinner'
+import LoadingSpinner from 'app/components/loadingSpinner'
 import { usePressScaleAnimation } from 'app/hooks/usePressScaleAnimation'
 import type { StylesProps } from 'app/styles'
 import { makeStyles } from 'app/styles'

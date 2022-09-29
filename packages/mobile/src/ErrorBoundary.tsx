@@ -3,7 +3,7 @@ import { PureComponent, useContext, useEffect } from 'react'
 import type { Nullable } from '@coliving/common'
 import * as Sentry from '@sentry/react-native'
 
-import { ToastContext } from './components/toast/ToastContext'
+import { ToastContext } from './components/toast/toastContext'
 
 const ErrorToast = ({ error }: { error: Nullable<string> }) => {
   // Do nothing other than trigger a toast when error changes

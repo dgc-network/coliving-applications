@@ -1,8 +1,8 @@
 import type { ReactNode } from 'react'
 import { createContext, memo, useCallback, useState } from 'react'
 
-import type { ToastType } from './ToastView'
-import ToastView from './ToastView'
+import type { ToastType } from './toastView'
+import ToastView from './toastView'
 
 const DEFAULT_TIMEOUT = 2000
 export const SHARE_TOAST_TIMEOUT = 1500

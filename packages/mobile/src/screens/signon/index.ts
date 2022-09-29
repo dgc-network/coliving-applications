@@ -1,1 +1,1 @@
-export * from './SignOnScreen'
+export * from './signOnScreen'

@@ -14,7 +14,7 @@ import type { StylesProp } from 'app/styles'
 import { shadow } from 'app/styles'
 import { makeStyles } from 'app/styles/makeStyles'
 
-import { Pressable } from '../Pressable'
+import { Pressable } from '../pressable'
 
 const borderRadius = 8
 const shadowStyles = shadow()

@@ -75,7 +75,7 @@ const GrowingCoverPhoto = ({
         config: {
           ...springConfig,
           // Base the tension back in off of the scroll Y offset, this heuristic
-          // feels ok and is more performant than agreementing the Y scroll back down.
+          // feels ok and is more performant than tracking the Y scroll back down.
           tension: (Math.max(Math.abs(window.scrollY) + 10), 60) * 2,
           clamp: true
         },

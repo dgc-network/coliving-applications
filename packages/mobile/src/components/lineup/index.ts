@@ -1,1 +1,1 @@
-export { Lineup } from './Lineup'
+export { Lineup } from './lineup'

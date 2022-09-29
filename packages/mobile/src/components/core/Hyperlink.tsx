@@ -9,7 +9,7 @@ import Autolink from 'react-native-autolink'
 import type { StylesProp } from 'app/styles'
 import { makeStyles } from 'app/styles'
 
-import { useOnOpenLink } from './Link'
+import { useOnOpenLink } from './link'
 
 const useStyles = makeStyles(({ palette, typography }) => ({
   root: {

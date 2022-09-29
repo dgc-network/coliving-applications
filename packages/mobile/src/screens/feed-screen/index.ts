@@ -1,1 +1,0 @@
-export { FeedScreen } from './FeedScreen'

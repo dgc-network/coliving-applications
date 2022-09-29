@@ -10,8 +10,8 @@ import type { SetOptional } from 'type-fest'
 import { useDispatchWeb } from 'app/hooks/useDispatchWeb'
 import { useSelectorWeb } from 'app/hooks/useSelectorWeb'
 
-import type { DrawerProps } from './Drawer'
-import { Drawer } from './Drawer'
+import type { DrawerProps } from './drawer'
+import { Drawer } from './drawer'
 
 export const useDrawerState = (modalName: Modals) => {
   const dispatchWeb = useDispatchWeb()

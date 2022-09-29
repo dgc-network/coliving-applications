@@ -1,4 +1,4 @@
-import { remindUserToTurnOnNotifications } from 'app/components/notification-reminder/NotificationReminder'
+import { remindUserToTurnOnNotifications } from 'app/components/notificationReminder/notificationReminder'
 import type { MessageHandlers } from 'app/message/types'
 import { MessageType } from 'app/message/types'
 import PushNotifications from 'app/notifications'

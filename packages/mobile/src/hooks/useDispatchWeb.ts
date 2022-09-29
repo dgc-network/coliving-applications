@@ -1,6 +1,6 @@
 import { useCallback, useContext } from 'react'
 
-import { WebRefContext } from '../components/web/WebRef'
+import { WebRefContext } from '../components/web/webRef'
 import { postMessage } from '../utils/postMessage'
 
 // When mobile-client is no longer dependent on the web client

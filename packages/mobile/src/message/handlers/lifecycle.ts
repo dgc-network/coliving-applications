@@ -1,4 +1,4 @@
-import { remoteConfigInstance } from 'app/services/remote-config/remote-config-instance'
+import { remoteConfigInstance } from 'app/services/remote-config/remoteConfigInstance'
 import * as lifecycleActions from 'app/store/lifecycle/actions'
 import * as oauthActions from 'app/store/oauth/actions'
 import * as signonActions from 'app/store/signon/actions'

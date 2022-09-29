@@ -2,7 +2,7 @@ import { useContext } from 'react'
 
 import { StatusBar } from 'react-native'
 
-import { ThemeContext } from 'app/components/theme/ThemeContext'
+import { ThemeContext } from 'app/components/theme/themeContext'
 
 export enum Theme {
   DEFAULT = 'default',

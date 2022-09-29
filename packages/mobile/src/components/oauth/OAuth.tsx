@@ -18,7 +18,7 @@ import {
   getMessageType
 } from 'app/store/oauth/selectors'
 import type { Credentials } from 'app/store/oauth/types'
-import type { MessagePostingWebView } from 'app/types/MessagePostingWebView'
+import type { MessagePostingWebView } from 'app/types/messagePostingWebView'
 import { postMessage } from 'app/utils/postMessage'
 
 const AUTH_RESPONSE = 'auth-response'

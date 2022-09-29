@@ -65,7 +65,7 @@ export const agreement = async (
         properties
       )
     }
-    // stop agreementing analytics after we reach session limit
+    // stop tracking analytics after we reach session limit
     if (agreementCounter++ >= AGREEMENT_LIMIT) return
 
     // Add generic agreement event context for every event

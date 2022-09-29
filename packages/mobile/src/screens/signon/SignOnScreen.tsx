@@ -3,7 +3,7 @@ import { useEffect } from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { remindUserToTurnOnNotifications } from 'app/components/notification-reminder/NotificationReminder'
+import { remindUserToTurnOnNotifications } from 'app/components/notificationReminder/notificationReminder'
 import { getOnSignUp } from 'app/store/lifecycle/selectors'
 import {
   getAccountAvailable,
@@ -13,12 +13,12 @@ import {
 import { EventNames } from 'app/types/analytics'
 import { agreement, make } from 'app/utils/analytics'
 
-import CreatePassword from './CreatePassword'
-import FirstFollows from './FirstFollows'
-import ProfileAuto from './ProfileAuto'
-import ProfileManual from './ProfileManual'
-import SignOn from './SignOn'
-import SignupLoadingPage from './SignupLoadingPage'
+import CreatePassword from './createPassword'
+import FirstFollows from './firstFollows'
+import ProfileAuto from './profileAuto'
+import ProfileManual from './profileManual'
+import SignOn from './signOn'
+import SignupLoadingPage from './signupLoadingPage'
 
 const Stack = createNativeStackNavigator()
 

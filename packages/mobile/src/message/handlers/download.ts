@@ -7,7 +7,7 @@ import type {
 } from 'rn-fetch-blob'
 import RNFetchBlob from 'rn-fetch-blob'
 
-import { dispatch } from 'app/App'
+import { dispatch } from 'app/app'
 import type { MessageHandlers } from 'app/message/types'
 import { MessageType } from 'app/message/types'
 import {

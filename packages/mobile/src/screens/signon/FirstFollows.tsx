@@ -33,10 +33,10 @@ import { landlordCategories } from 'app/store/signon/types'
 import { EventNames } from 'app/types/analytics'
 import { agreement, make } from 'app/utils/analytics'
 
-import UserImage from '../../components/image/UserImage'
-import UserBadges from '../../components/user-badges/UserBadges'
+import UserImage from '../../components/image/userImage'
+import UserBadges from '../../components/userBadges/userBadges'
 
-import SignupHeader from './SignupHeader'
+import SignupHeader from './signupHeader'
 import type { SignOnStackParamList } from './types'
 
 const styles = StyleSheet.create({

@@ -21,7 +21,7 @@ import {
 import FavoriteButton from 'components/altButton/favoriteButton'
 import CoSign, { Size } from 'components/coSign/coSign'
 import PlayButton from 'components/play-bar/PlayButton'
-import AgreementingBar from 'components/play-bar/AgreementingBar'
+import TrackingBar from 'components/play-bar/TrackingBar'
 import { PlayButtonStatus } from 'components/play-bar/types'
 import { useAgreementCoverArt } from 'hooks/useAgreementCoverArt'
 import { make, useRecord } from 'store/analytics/actions'
@@ -143,7 +143,7 @@ const PlayBar = ({
   return (
     <>
       <div className={styles.playBar}>
-        <AgreementingBar percentComplete={percentComplete} />
+        <TrackingBar percentComplete={percentComplete} />
         <div className={styles.controls}>
           <FavoriteButton
             onClick={toggleFavorite}

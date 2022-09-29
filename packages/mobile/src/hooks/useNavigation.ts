@@ -6,7 +6,7 @@ import type { ParamListBase } from '@react-navigation/native'
 import { useNavigation as useNavigationNative } from '@react-navigation/native'
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack'
 
-import type { AppTabScreenParamList } from 'app/screens/app-screen/AppTabScreen'
+import type { AppTabScreenParamList } from 'app/screens/appScreen/appTabScreen'
 
 import { usePushRouteWeb } from './usePushRouteWeb'
 

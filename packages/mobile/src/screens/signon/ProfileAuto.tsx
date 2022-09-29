@@ -17,7 +17,7 @@ import IconInstagram from 'app/assets/images/iconInstagram.svg'
 import IconTwitter from 'app/assets/images/iconTwitterBird.svg'
 import IconVerified from 'app/assets/images/iconVerified.svg'
 import Button from 'app/components/button'
-import LoadingSpinner from 'app/components/loading-spinner'
+import LoadingSpinner from 'app/components/loadingSpinner'
 import { useDispatchWeb } from 'app/hooks/useDispatchWeb'
 import { MessageType } from 'app/message/types'
 import * as oauthActions from 'app/store/oauth/actions'
@@ -32,7 +32,7 @@ import { EventNames } from 'app/types/analytics'
 import { agreement, make } from 'app/utils/analytics'
 import { useColor } from 'app/utils/theme'
 
-import SignupHeader from './SignupHeader'
+import SignupHeader from './signupHeader'
 import type { SignOnStackParamList } from './types'
 
 const styles = StyleSheet.create({

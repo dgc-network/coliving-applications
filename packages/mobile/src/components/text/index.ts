@@ -1,1 +1,1 @@
-export { default, AnimatedText } from './Text'
+export { default, AnimatedText } from './text'

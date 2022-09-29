@@ -1,8 +1,8 @@
 import { useCallback, useState } from 'react'
 
-import type { UserImage as UserImageType, UserMultihash } from 'app/models/User'
+import type { UserImage as UserImageType, UserMultihash } from 'app/models/user'
 
-import ImageLoader from './ImageLoader'
+import ImageLoader from './imageLoader'
 import { gateways, publicGateways } from './utils'
 
 const getUserImageUrl = (

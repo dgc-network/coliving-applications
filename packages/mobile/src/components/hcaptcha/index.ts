@@ -1,1 +1,1 @@
-export { default } from './HCaptcha'
+export { default } from './hcaptcha'

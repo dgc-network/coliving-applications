@@ -9,7 +9,7 @@ import { useThemedStyles } from 'app/hooks/useThemedStyles'
 import { SEEK, seek } from 'app/store/live/actions'
 import type { ThemeColors } from 'app/utils/theme'
 
-import { Slider } from './Slider'
+import { Slider } from './slider'
 
 const SEEK_INTERVAL = 200
 

@@ -24,10 +24,10 @@ import {
   getQueueAutoplay,
   getAgreementAndIndex
 } from 'app/store/live/selectors'
-import type { MessagePostingWebView } from 'app/types/MessagePostingWebView'
+import type { MessagePostingWebView } from 'app/types/messagePostingWebView'
 import { postMessage } from 'app/utils/postMessage'
 
-import { useChromecast } from './GoogleCast'
+import { useChromecast } from './googleCast'
 import { logListen } from './listens'
 
 declare global {
@@ -96,7 +96,7 @@ const Live = ({
   // stale values of live progress from propagating back to the UI.
   const progressInvalidator = useRef(false)
 
-  // Init progress agreementing
+  // Init progress tracking
   useEffect(() => {
     // TODO: Probably don't use global for this
     global.progress = {

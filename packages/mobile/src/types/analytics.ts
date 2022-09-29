@@ -1,4 +1,4 @@
-import type { AllAgreementingEvents as CommonAgreementingEvents } from '@coliving/common'
+import type { AllTrackingEvents as CommonTrackingEvents } from '@coliving/common'
 import { Name as CommonEventNames } from '@coliving/common'
 
 import type { Message } from 'app/message'
@@ -15,9 +15,9 @@ type NotificationsOpenPushNotification = {
   body?: string
 }
 
-type MobileAgreementingEvents = NotificationsOpenPushNotification
+type MobileTrackingEvents = NotificationsOpenPushNotification
 
-export type AllEvents = CommonAgreementingEvents | MobileAgreementingEvents
+export type AllEvents = CommonTrackingEvents | MobileTrackingEvents
 
 export type JsonMap = Record<string, unknown>
 

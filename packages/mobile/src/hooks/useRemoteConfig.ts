@@ -17,7 +17,7 @@ import { isRemoteConfigLoaded } from '@coliving/web/src/common/store/remote-conf
 import { useSelector } from 'react-redux'
 
 import { useSelectorWeb } from 'app/hooks/useSelectorWeb'
-import { remoteConfigInstance } from 'app/services/remote-config/remote-config-instance'
+import { remoteConfigInstance } from 'app/services/remote-config/remoteConfigInstance'
 
 // Duplicating these hooks here instead of using `createUseFeatureFlagHook` and `createUseRemoteVarHook`
 // because the react version mismatch between @coliving/mobile and -client is causing

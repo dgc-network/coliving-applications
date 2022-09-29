@@ -5,8 +5,8 @@ import type { SetOptional } from 'type-fest'
 import { useDrawer } from 'app/hooks/useDrawer'
 import type { Drawer as DrawerName } from 'app/store/drawers/slice'
 
-import type { DrawerProps } from './Drawer'
-import Drawer from './Drawer'
+import type { DrawerProps } from './drawer'
+import Drawer from './drawer'
 
 type NativeDrawerProps = SetOptional<DrawerProps, 'isOpen' | 'onClose'> & {
   drawerName: DrawerName

@@ -1,8 +1,8 @@
 import type { Repost, AgreementSegment, User } from '@coliving/common'
 
-import type { CollectionImage } from 'app/models/Collection'
-import type { AgreementImage } from 'app/models/Agreement'
-import type { UserImage, UserMultihash } from 'app/models/User'
+import type { CollectionImage } from 'app/models/collection'
+import type { AgreementImage } from 'app/models/agreement'
+import type { UserImage, UserMultihash } from 'app/models/user'
 
 type BaseUser = Pick<
   User,

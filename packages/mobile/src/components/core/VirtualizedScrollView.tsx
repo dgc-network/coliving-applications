@@ -6,7 +6,7 @@ import { FlatList } from 'react-native'
 
 import { useScrollToTop } from 'app/hooks/useScrollToTop'
 
-import { PlayBarChin } from './PlayBarChin'
+import { PlayBarChin } from './playBarChin'
 
 type BaseFlatListProps = Omit<
   FlatListProps<null>,

@@ -10,10 +10,10 @@ import { useCollapsibleScene } from 'react-native-collapsible-tab-view'
 
 import { useThemeColors } from 'app/utils/theme'
 
-import { CollapsibleTabNavigatorContext } from '../top-tab-bar'
+import { CollapsibleTabNavigatorContext } from '../topTabBar'
 
-import { PlayBarChin } from './PlayBarChin'
-import { PullToRefresh, useOverflowHandlers } from './PullToRefresh'
+import { PlayBarChin } from './playBarChin'
+import { PullToRefresh, useOverflowHandlers } from './pullToRefresh'
 
 type FlatListProps = RNFlatListProps<any>
 

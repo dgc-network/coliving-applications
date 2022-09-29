@@ -14,7 +14,7 @@ import { Text } from 'app/components/core'
 import type { StylesProp } from 'app/styles'
 import { makeStyles } from 'app/styles'
 
-import type { TextProps } from './Text'
+import type { TextProps } from './text'
 
 const useStyles = makeStyles(({ palette, spacing }, { variant }) => {
   const variantStyles = {

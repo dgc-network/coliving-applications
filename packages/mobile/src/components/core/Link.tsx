@@ -3,7 +3,7 @@ import { useCallback, useContext } from 'react'
 import type { GestureResponderEvent, PressableProps } from 'react-native'
 import { Linking, Pressable } from 'react-native'
 
-import { ToastContext } from 'app/components/toast/ToastContext'
+import { ToastContext } from 'app/components/toast/toastContext'
 import { EventNames } from 'app/types/analytics'
 import { make, agreement } from 'app/utils/analytics'
 

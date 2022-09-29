@@ -1,1 +1,0 @@
-export { AgreementScreen } from './AgreementScreen'

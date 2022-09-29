@@ -9,8 +9,8 @@ import { View } from 'react-native'
 
 import { useScrollToTop } from 'app/hooks/useScrollToTop'
 
-import { EmptyTile } from './EmptyTile'
-import { FlatList } from './FlatList'
+import { EmptyTile } from './emptyTile'
+import { FlatList } from './flatList'
 
 export type CardListProps<ItemT> = FlatListProps<ItemT> & {
   emptyListText?: string
