@@ -48,7 +48,7 @@ import {
 
 import { DeactivatedProfileTombstone } from '../deactivatedProfileTombstone'
 
-import styles from './ProfilePage.module.css'
+import styles from './profilePage.module.css'
 import ProfileWrapping from './profileWrapping'
 
 export type ProfilePageProps = {

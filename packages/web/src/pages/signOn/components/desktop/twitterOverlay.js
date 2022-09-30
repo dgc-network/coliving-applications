@@ -10,7 +10,7 @@ import LoadingSpinner from 'components/loadingSpinner/loadingSpinner'
 import TwitterAuthButton from 'components/twitterAuth/twitterAuthButton'
 import { useRemoteVar } from 'hooks/useRemoteConfig'
 
-import styles from './TwitterOverlay.module.css'
+import styles from './twitterOverlay.module.css'
 
 const messages = {
   instagramButton: 'Complete With Instagram',

@@ -17,7 +17,7 @@ import * as schemas from 'schemas'
 import { make } from 'store/analytics/actions'
 import { contentListPage, albumPage, profilePage } from 'utils/route'
 
-import styles from './UploadPage.module.css'
+import styles from './uploadPage.module.css'
 import EditPage from './components/editPage'
 import FinishPage from './components/finishPage'
 import SelectPage from './components/selectPage'

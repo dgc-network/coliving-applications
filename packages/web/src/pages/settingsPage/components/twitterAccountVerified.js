@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 
 import TwitterAuthButton from 'components/twitterAuth/twitterAuthButton'
 
-import styles from './TwitterAccountVerified.module.css'
+import styles from './twitterAccountVerified.module.css'
 
 const messages = {
   verify: 'Verify with Twitter'

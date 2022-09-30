@@ -55,7 +55,7 @@ import {
 import { justForYou } from '../desktop/explorePage'
 
 import ColorTile from './colorTile'
-import styles from './ExplorePage.module.css'
+import styles from './explorePage.module.css'
 
 const messages = {
   pageName: 'Explore',

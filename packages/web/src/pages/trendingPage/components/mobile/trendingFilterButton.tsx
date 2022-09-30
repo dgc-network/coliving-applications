@@ -1,6 +1,6 @@
 import HeaderButton from 'components/headerButton/headerButton'
 
-import styles from './TrendingFilterButton.module.css'
+import styles from './trendingFilterButton.module.css'
 
 type TrendingFilterButtonProps = {
   onClick: () => void

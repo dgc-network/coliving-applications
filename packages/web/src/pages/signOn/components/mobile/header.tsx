@@ -1,6 +1,6 @@
 import { ReactComponent as Logo } from 'assets/img/colivingLogoHorizontal.svg'
 
-import styles from './Header.module.css'
+import styles from './header.module.css'
 
 export const SignOnHeader = () => {
   return (

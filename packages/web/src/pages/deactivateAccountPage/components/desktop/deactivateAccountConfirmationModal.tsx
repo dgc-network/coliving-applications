@@ -5,7 +5,7 @@ import LoadingSpinnerFullPage from 'components/loadingSpinnerFullPage/loadingSpi
 
 import { messages } from '../../deactivateAccountPage'
 
-import styles from './DeactivateAccountConfirmationModal.module.css'
+import styles from './deactivateAccountConfirmationModal.module.css'
 
 type DeactivateAccountModalProps = {
   isLoading: boolean
@@ -44,15 +44,13 @@ export const DeactivateAccountConfirmationModal = ({
             onClick={onConfirm}
             textClassName={styles.deleteButtonText}
             text={messages.buttonDeactivate}
-            type={isLoading ? ButtonType.DISABLED : ButtonType.PRIMARY_ALT}
-          />
+            type={isLoading ? ButtonType.DISABLED : ButtonType.PRIMARY_ALT} css={undefined}          />
           <Button
             className={styles.button}
             isDisabled={isLoading}
             onClick={onClose}
             text={messages.buttonGoBack}
-            type={isLoading ? ButtonType.DISABLED : ButtonType.PRIMARY_ALT}
-          />
+            type={isLoading ? ButtonType.DISABLED : ButtonType.PRIMARY_ALT} css={undefined}          />
         </div>
       </div>
     </Modal>

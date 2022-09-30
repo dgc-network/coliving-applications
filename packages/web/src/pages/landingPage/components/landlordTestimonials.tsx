@@ -14,7 +14,7 @@ import landlordChainsmokers from 'assets/img/publicSite/ImgLandlordTheChainsmoke
 import dots2x from 'assets/img/publicSite/dots@2x.jpg'
 import useHasViewed from 'hooks/useHasViewed'
 
-import styles from './LandlordTestimonials.module.css'
+import styles from './landlordTestimonials.module.css'
 
 const messages = {
   title: 'Built With The Best',

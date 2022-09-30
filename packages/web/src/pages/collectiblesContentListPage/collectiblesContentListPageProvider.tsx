@@ -44,7 +44,7 @@ import { getHash, LIVE_NFT_CONTENT_LIST_PAGE, profilePage } from 'utils/route'
 import { CollectionPageProps as DesktopCollectionPageProps } from '../collectionPage/components/desktop/collectionPage'
 import { CollectionPageProps as MobileCollectionPageProps } from '../collectionPage/components/mobile/collectionPage'
 
-import styles from './CollectiblesContentListPage.module.css'
+import styles from './collectiblesContentListPage.module.css'
 
 declare global {
   interface HTMLMediaElement {

@@ -6,7 +6,7 @@ import PropTypes from 'prop-types'
 
 import backgroundPlaceholder from 'assets/img/1-Concert-3-1.jpg'
 
-import styles from './StartPlatformPage.module.css'
+import styles from './startPlatformPage.module.css'
 
 const messages = {
   title: "It's Time To Start Your Coliving Journey!",

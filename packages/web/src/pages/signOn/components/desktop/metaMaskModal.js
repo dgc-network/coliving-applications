@@ -8,7 +8,7 @@ import PropTypes from 'prop-types'
 import { Utils } from 'services/colivingBackend'
 import { waitForLibsInit } from 'services/colivingBackend/eagerLoadUtils'
 
-import styles from './MetaMaskModal.module.css'
+import styles from './metaMaskModal.module.css'
 
 const WEB3_NETWORK_ID = process.env.REACT_APP_WEB3_NETWORK_ID
 

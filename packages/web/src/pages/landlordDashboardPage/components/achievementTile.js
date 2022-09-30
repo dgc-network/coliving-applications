@@ -2,7 +2,7 @@ import { memo } from 'react'
 
 import { ReactComponent as IconTrophy } from 'assets/img/iconTrophy.svg'
 
-import styles from './AchievementTile.module.css'
+import styles from './achievementTile.module.css'
 
 const getAchievement = () => {
   // TODO: Use some information about the landlord to calculate the 'achievement'

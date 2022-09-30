@@ -3,7 +3,7 @@ import { memo } from 'react'
 import cn from 'classnames'
 import PropTypes from 'prop-types'
 
-import styles from './AddAgreementsNotification.module.css'
+import styles from './addAgreementsNotification.module.css'
 
 const messages = {
   notice: 'Add more agreements to create an album or a contentList!',

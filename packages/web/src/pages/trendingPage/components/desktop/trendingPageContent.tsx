@@ -21,7 +21,7 @@ import RewardsBanner from '../rewardsBanner'
 
 import GenreSelectionModal from './genreSelectionModal'
 import TrendingGenreFilters from './trendingGenreFilters'
-import styles from './TrendingPageContent.module.css'
+import styles from './trendingPageContent.module.css'
 
 const messages = {
   thisWeek: 'THIS WEEK',

@@ -20,7 +20,7 @@ import { useWithMobileStyle } from 'hooks/useWithMobileStyle'
 import { isMobile } from 'utils/clientUtil'
 import { useSelector } from 'utils/reducer'
 
-import styles from './Tiers.module.css'
+import styles from './tiers.module.css'
 
 const messages = {
   title: '$LIVE VIP TIERS',
@@ -185,8 +185,7 @@ export const Tier = ({
                   leftIcon={<IconDiscord className={styles.iconDiscord} />}
                   className={cn(styles.discordButton, styles.updateRole)}
                   textClassName={styles.discordButtonText}
-                  onClick={onClickDiscord}
-                />
+                  onClick={onClickDiscord} css={undefined}                />
               )}
               <span className={styles.sparkles}>
                 <i className='emoji large sparkles' />
@@ -248,16 +247,14 @@ const Tiers = () => {
           type={ButtonType.GLASS}
           className={styles.discordButton}
           textClassName={styles.discordButtonText}
-          onClick={onClickExplainMore}
-        />
+          onClick={onClickExplainMore} css={undefined}        />
         <Button
           text={messages.launchDiscord}
           type={ButtonType.GLASS}
           leftIcon={<IconDiscord className={styles.iconDiscord} />}
           className={styles.discordButton}
           textClassName={styles.discordButtonText}
-          onClick={onClickDiscord}
-        />
+          onClick={onClickDiscord} css={undefined}        />
       </div>
     </div>
   )

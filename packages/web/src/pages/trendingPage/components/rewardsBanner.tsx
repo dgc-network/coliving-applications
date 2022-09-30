@@ -8,10 +8,10 @@ import { useModalState } from 'common/hooks/useModalState'
 import {
   setTrendingRewardsModalType,
   TrendingRewardsModalType
-} from 'common/store/pages/live-rewards/slice'
+} from 'common/store/pages/liveRewards/slice'
 import { isMobile } from 'utils/clientUtil'
 
-import styles from './RewardsBanner.module.css'
+import styles from './rewardsBanner.module.css'
 
 const messages = {
   rewards: '$LIVE REWARDS',

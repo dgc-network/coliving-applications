@@ -12,7 +12,7 @@ import Linkify from 'linkifyjs/react'
 
 import Tooltip from 'components/tooltip/tooltip'
 
-import styles from './SocialLink.module.css'
+import styles from './socialLink.module.css'
 
 export enum Type {
   TWITTER,

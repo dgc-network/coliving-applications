@@ -14,7 +14,7 @@ import Switch from 'components/switch/switch'
 import { Permission } from 'utils/browserNotifications'
 import { isElectron } from 'utils/clientUtil'
 
-import styles from './NotificationSettings.module.css'
+import styles from './notificationSettings.module.css'
 
 const messages = {
   title: 'NOTIFICATIONS',

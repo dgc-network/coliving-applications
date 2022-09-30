@@ -11,7 +11,7 @@ import {
 } from 'common/store/pages/tokenDashboard/slice'
 import { useSelector } from 'utils/reducer'
 
-import styles from './RemoveWalletBody.module.css'
+import styles from './removeWalletBody.module.css'
 
 const messages = {
   warning: 'Are you sure you want to remove this wallet from your account?',
@@ -44,15 +44,13 @@ const RemoveWalletBody = ({ className }: RemoveWalletBodyProps) => {
           textClassName={cn(styles.btnText, styles.removeBtnText)}
           type={ButtonType.WHITE}
           text={messages.remove}
-          onClick={onRemove}
-        />
+          onClick={onRemove} css={undefined}        />
         <Button
           className={cn(styles.btn, styles.ignoreBtn)}
           textClassName={styles.btnText}
           type={ButtonType.COMMON_ALT}
           text={messages.ignore}
-          onClick={onIgnore}
-        />
+          onClick={onIgnore} css={undefined}        />
       </div>
     </div>
   )

@@ -7,7 +7,7 @@ import DynamicImage from 'components/dynamicImage/dynamicImage'
 import UserBadges from 'components/userBadges/userBadges'
 import { useUserProfilePicture } from 'hooks/useUserProfilePicture'
 
-import styles from './LandlordProfile.module.css'
+import styles from './landlordProfile.module.css'
 
 const LandlordProfile = (props) => {
   const profilePicture = useUserProfilePicture(

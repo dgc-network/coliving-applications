@@ -4,7 +4,7 @@ import { Button, ButtonType, ButtonSize } from '@coliving/stems'
 import cn from 'classnames'
 import PropTypes from 'prop-types'
 
-import styles from './EmptyFeed.module.css'
+import styles from './emptyFeed.module.css'
 import FollowLandlords from './followUsers'
 
 const messages = {

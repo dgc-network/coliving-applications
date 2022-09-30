@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 
 import { ReactComponent as LogoMetaMask } from 'assets/img/logoMetaMask.svg'
 
-import styles from './MetaMaskOption.module.css'
+import styles from './metaMaskOption.module.css'
 
 const MetaMaskSignupText = (props) => {
   return (

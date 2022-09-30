@@ -19,7 +19,7 @@ import {
   profilePage
 } from 'utils/route'
 
-import styles from './CollectionsPage.module.css'
+import styles from './collectionsPage.module.css'
 
 export type CollectionsPageProps = {
   title: string

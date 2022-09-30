@@ -20,7 +20,7 @@ export const makeGetDashboard = () => {
         contentLists: account ? account.content_list_count : 0,
         // albums: account ? account.album_count : 0,
         plays: agreements.reduce(
-          (totalPlays, agreement) => totalPlays + (agreement.play_count || 0),
+          (totalPlays: any, agreement: { play_count: any }) => totalPlays + (agreement.play_count || 0),
           0
         ),
         reposts: account ? account.repost_count : 0,

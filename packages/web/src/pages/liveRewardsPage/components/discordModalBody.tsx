@@ -3,7 +3,7 @@ import { Button, ButtonType, IconDiscord } from '@coliving/stems'
 import { ModalBodyWrapper } from '../walletModal'
 
 import ClickableAddress from './clickableAddress'
-import styles from './DiscordModalBody.module.css'
+import styles from './discordModalBody.module.css'
 
 type DiscordModalBodyProps = {
   discordCode: string
@@ -34,8 +34,7 @@ const DiscordModalBody = ({
         text={messages.launch}
         onClick={onClickLaunch}
         type={ButtonType.PRIMARY_ALT}
-        leftIcon={<IconDiscord />}
-      />
+        leftIcon={<IconDiscord />} css={undefined}      />
     </ModalBodyWrapper>
   )
 }

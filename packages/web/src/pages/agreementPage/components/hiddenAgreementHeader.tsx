@@ -1,6 +1,6 @@
 import { ReactComponent as IconHidden } from 'assets/img/iconHidden.svg'
 
-import styles from './HiddenAgreementHeader.module.css'
+import styles from './hiddenAgreementHeader.module.css'
 
 const messages = {
   hiddenAgreementTitle: 'HIDDEN AGREEMENT'

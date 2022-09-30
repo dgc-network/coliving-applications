@@ -19,7 +19,7 @@ import { getOS } from 'utils/clientUtil'
 import { dismissCookieBanner, shouldShowCookieBanner } from 'utils/gdpr'
 import { ANDROID_PLAY_STORE_LINK } from 'utils/route'
 
-import styles from './DownloadPage.module.css'
+import styles from './downloadPage.module.css'
 import DownloadStartingMessage from './components/downloadStartingMessage'
 
 const messages = {

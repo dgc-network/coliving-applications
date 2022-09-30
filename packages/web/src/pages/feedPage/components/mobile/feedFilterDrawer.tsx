@@ -4,7 +4,7 @@ import { FeedFilter } from '@coliving/common'
 
 import ActionDrawer from 'components/actionDrawer/actionDrawer'
 
-import styles from './FeedFilterModal.module.css'
+import styles from './feedFilterModal.module.css'
 
 interface FeedFilterDrawerProps {
   isOpen: boolean

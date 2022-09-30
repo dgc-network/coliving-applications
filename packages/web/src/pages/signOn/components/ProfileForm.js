@@ -21,7 +21,7 @@ import {
   MAX_HANDLE_LENGTH
 } from '../utils/formatSocialProfile'
 
-import styles from './ProfileForm.module.css'
+import styles from './profileForm.module.css'
 
 const messages = {
   uploadProfilePicture: 'Upload a profile picture',

@@ -12,9 +12,9 @@ import {
   AgreementArtwork,
   CollectionArtwork
 } from 'components/agreement/desktop/Artwork'
-import ContentListTile from 'components/agreement/desktop/ContentListTile'
-import AgreementListItem from 'components/agreement/desktop/AgreementListItem'
-import AgreementTile from 'components/agreement/desktop/AgreementTile'
+import ContentListTile from 'components/agreement/desktop/contentListTile'
+import AgreementListItem from 'components/agreement/desktop/agreementListItem'
+import AgreementTile from 'components/agreement/desktop/agreementTile'
 import { AgreementTileSize } from 'components/agreement/types'
 import { ComponentPlacement } from 'components/types'
 import UserBadges from 'components/userBadges/userBadges'

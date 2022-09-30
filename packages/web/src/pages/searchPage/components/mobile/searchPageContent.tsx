@@ -42,7 +42,7 @@ import {
   SEARCH_PAGE
 } from 'utils/route'
 
-import styles from './SearchPageContent.module.css'
+import styles from './searchPageContent.module.css'
 
 const NATIVE_MOBILE = process.env.REACT_APP_NATIVE_MOBILE
 
@@ -222,7 +222,7 @@ const CardSearchPage = ({
   })()
 
   const cards = entities.map((e) => {
-    const { id, userId, route, primaryText, secondaryText, imageSize } =
+    const { id, userId, route, primaryText, secondaryText, imageSize, isVerified } =
       (() => {
         switch (cardType) {
           case CardType.USER: {

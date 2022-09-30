@@ -8,7 +8,7 @@ import { SelectedServices } from 'components/serviceSelection'
 import Dropzone from 'components/upload/dropzone'
 import InvalidFileType from 'components/upload/invalidFileType'
 
-import styles from './SelectPage.module.css'
+import styles from './selectPage.module.css'
 import AgreementsPreview from './agreementsPreview'
 import UploadType from './uploadType'
 

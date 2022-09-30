@@ -17,7 +17,7 @@ import { isMobile } from 'utils/clientUtil'
 import { ACCOUNT_SETTINGS_PAGE, SETTINGS_PAGE, UPLOAD_PAGE } from 'utils/route'
 
 import ModalDrawer from './modalDrawer'
-import styles from './VerifiedUpload.module.css'
+import styles from './verifiedUpload.module.css'
 
 const messages = {
   title: 'Verified Upload',
@@ -94,8 +94,7 @@ const VerifiedUpload = ({ dismissModal }: { dismissModal: () => void }) => {
         rightIcon={<IconUpload />}
         type={ButtonType.PRIMARY_ALT}
         onClick={onClickUpload}
-        textClassName={styles.uploadText}
-      />
+        textClassName={styles.uploadText} css={undefined}      />
       <Divider />
       <span className={styles.title}>{messages.step3Title}</span>
       <span className={styles.subtitle}>{messages.step3Subtitle}</span>

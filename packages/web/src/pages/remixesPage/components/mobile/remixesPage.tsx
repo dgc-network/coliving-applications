@@ -15,7 +15,7 @@ import { fullAgreementRemixesPage } from 'utils/route'
 import { isMatrix } from 'utils/theme/theme'
 import { withNullGuard } from 'utils/withNullGuard'
 
-import styles from './RemixesPage.module.css'
+import styles from './remixesPage.module.css'
 
 const messages = {
   remixes: 'Remix',

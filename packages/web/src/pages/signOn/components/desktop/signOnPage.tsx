@@ -36,7 +36,7 @@ import { useSelector } from 'utils/reducer'
 import { BASE_URL, SIGN_UP_PAGE } from 'utils/route'
 
 import AppCTA from './appCTA'
-import styles from './SignOn.module.css'
+import styles from './signOn.module.css'
 
 const MetaMaskModal = lazyWithPreload(
   () => import('pages/signOn/components/desktop/metaMaskModal'),

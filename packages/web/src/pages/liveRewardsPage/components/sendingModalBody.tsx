@@ -5,9 +5,9 @@ import LoadingSpinner from 'components/loadingSpinner/loadingSpinner'
 
 import { ModalBodyTitle, ModalBodyWrapper } from '../walletModal'
 
-import DisplayLive from './DisplayLive'
+import DisplayLive from './displayLive'
 import { AddressWithArrow } from './sendInputConfirmation'
-import styles from './SendingModalBody.module.css'
+import styles from './sendingModalBody.module.css'
 
 type SendingModalBodyProps = {
   amountToTransfer: BNWei

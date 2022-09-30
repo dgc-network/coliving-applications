@@ -256,8 +256,7 @@ class SettingsPage extends Component<SettingsPageProps, SettingsPageState> {
               textClassName={styles.settingButtonText}
               type={ButtonType.COMMON_ALT}
               text='Review'
-              leftIcon={<IconNotification className={styles.reviewIcon} />}
-            />
+              leftIcon={<IconNotification className={styles.reviewIcon} />} css={undefined}            />
           </SettingsCard>
           <SettingsCard
             title='Account Recovery Email'
@@ -277,8 +276,7 @@ class SettingsPage extends Component<SettingsPageProps, SettingsPageState> {
                 iconClassName={styles.resetButtonIcon}
                 type={ButtonType.COMMON_ALT}
                 text='Resend'
-                leftIcon={<IconMail />}
-              />
+                leftIcon={<IconMail />} css={undefined}              />
             </Toast>
           </SettingsCard>
           {!isMobile() && !isElectron() && (
@@ -292,14 +290,10 @@ class SettingsPage extends Component<SettingsPageProps, SettingsPageState> {
                 textClassName={styles.settingButtonText}
                 type={ButtonType.COMMON_ALT}
                 text='Get App'
-                leftIcon={
-                  <img
-                    alt='Coliving Icon'
-                    src={colivingIcon}
-                    style={{ width: '24px', height: '24px' }}
-                  />
-                }
-              />
+                leftIcon={<img
+                  alt='Coliving Icon'
+                  src={colivingIcon}
+                  style={{ width: '24px', height: '24px' }} />} css={undefined}              />
             </SettingsCard>
           )}
           <SettingsCard
@@ -312,8 +306,7 @@ class SettingsPage extends Component<SettingsPageProps, SettingsPageState> {
               textClassName={styles.settingButtonText}
               type={ButtonType.COMMON_ALT}
               text='Change'
-              leftIcon={<IconLock className={styles.changePasswordIcon} />}
-            />
+              leftIcon={<IconLock className={styles.changePasswordIcon} />} css={undefined}            />
           </SettingsCard>
         </div>
         <div className={styles.version}>
@@ -325,8 +318,7 @@ class SettingsPage extends Component<SettingsPageProps, SettingsPageState> {
             text='Sign Out'
             name='sign-out'
             leftIcon={<IconSignOut />}
-            onClick={this.showModalSignOut}
-          />
+            onClick={this.showModalSignOut} css={undefined}          />
           <span>{`${messages.version} ${version}`}</span>
           <span>{messages.copyright}</span>
         </div>

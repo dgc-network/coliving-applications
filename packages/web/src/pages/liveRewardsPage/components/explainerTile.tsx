@@ -8,7 +8,7 @@ import { useWithMobileStyle } from 'hooks/useWithMobileStyle'
 import { isMobile } from 'utils/clientUtil'
 import { getTheme, isDarkMode as getIsDarkMode } from 'utils/theme/theme'
 
-import styles from './ExplainerTile.module.css'
+import styles from './explainerTile.module.css'
 
 const TOKEN_ANIMATION_URL =
   'https://d1ne8ucs302cxl.cloudfront.net/animations/spinnytoken.mp4'

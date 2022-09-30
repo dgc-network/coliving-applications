@@ -8,7 +8,7 @@ import * as createContentListActions from 'common/store/ui/createContentListModa
 import { useRecord, make } from 'store/analytics/actions'
 import { AppState } from 'store/types'
 
-import styles from './NewContentListButton.module.css'
+import styles from './newContentListButton.module.css'
 
 const messages = {
   createContentList: 'Create a New ContentList'

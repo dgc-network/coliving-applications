@@ -77,8 +77,8 @@ import { parseAgreementRoute, AgreementRouteParams } from 'utils/route/agreement
 import { getAgreementPageTitle, getAgreementPageDescription } from 'utils/seo'
 
 import StemsSEOHint from './components/stemsSEOHint'
-import { OwnProps as DesktopAgreementPageProps } from './components/desktop/AgreementPage'
-import { OwnProps as MobileAgreementPageProps } from './components/mobile/AgreementPage'
+import { OwnProps as DesktopAgreementPageProps } from './components/desktop/agreementPage'
+import { OwnProps as MobileAgreementPageProps } from './components/mobile/agreementPage'
 import { TRENDING_BADGE_LIMIT } from './store/sagas'
 
 const getRemixParentAgreementId = (agreement: Agreement | null) =>

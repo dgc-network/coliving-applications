@@ -21,7 +21,7 @@ import { useOrderedLoad } from 'hooks/useOrderedLoad'
 import useTabs from 'hooks/useTabs/useTabs'
 import { albumPage } from 'utils/route'
 
-import styles from './SavedPage.module.css'
+import styles from './savedPage.module.css'
 
 const messages = {
   filterPlaceholder: 'Filter Agreements'
@@ -117,8 +117,7 @@ const SavedPage = ({
         type={ButtonType.PRIMARY_ALT}
         text={queuedAndPlaying ? 'PAUSE' : 'PLAY'}
         leftIcon={queuedAndPlaying ? <IconPause /> : <IconPlay />}
-        onClick={onPlay}
-      />
+        onClick={onPlay} css={undefined}      />
     </div>
   )
 

@@ -10,7 +10,7 @@ import useCardWeight from 'hooks/useCardWeight'
 import useHasViewed from 'hooks/useHasViewed'
 import { COLIVING_MERCH_LINK, COLIVING_REMIX_CONTESTS_LINK } from 'utils/route'
 
-import styles from './JoinTheCommunity.module.css'
+import styles from './joinTheCommunity.module.css'
 
 const messages = {
   title: 'Join The Community',

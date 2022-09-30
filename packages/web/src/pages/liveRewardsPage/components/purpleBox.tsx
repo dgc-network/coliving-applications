@@ -4,7 +4,7 @@ import cn from 'classnames'
 
 import { useWithMobileStyle } from 'hooks/useWithMobileStyle'
 
-import styles from './PurpleBox.module.css'
+import styles from './purpleBox.module.css'
 
 type PurpleBoxProps = {
   label?: ReactNode

@@ -9,7 +9,7 @@ import { OpenLinkMessage } from 'services/nativeMobileInterface/linking'
 import { commonPasswordCheck } from 'utils/commonPasswordCheck'
 import { TERMS_OF_SERVICE, PRIVACY_POLICY, BASE_URL } from 'utils/route'
 
-import styles from './PasswordPage.module.css'
+import styles from './passwordPage.module.css'
 
 const NATIVE_MOBILE = process.env.REACT_APP_NATIVE_MOBILE
 
@@ -297,8 +297,7 @@ const PasswordPage = ({
         type={isValid ? ButtonType.PRIMARY_ALT : ButtonType.DISABLED}
         onClick={onClickContinue}
         className={styles.continueButton}
-        textClassName={styles.continueButtonText}
-      />
+        textClassName={styles.continueButtonText} css={undefined}      />
     </div>
   )
 }

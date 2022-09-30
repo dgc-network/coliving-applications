@@ -5,7 +5,7 @@ import cn from 'classnames'
 import SearchBar from 'components/searchBar/searchBar'
 import useDelayHandler from 'hooks/useDelayHandler'
 
-import styles from './GenreSelectionList.module.css'
+import styles from './genreSelectionList.module.css'
 
 const GenreButton = ({
   title,

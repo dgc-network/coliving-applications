@@ -1,7 +1,7 @@
 import Footer from 'components/publicSite/footer'
 import NavBanner from 'components/publicSite/navBanner'
 
-import styles from './TermsOfUsePage.module.css'
+import styles from './termsOfUsePage.module.css'
 
 const BASENAME = process.env.PUBLIC_URL
 

@@ -3,11 +3,11 @@ import { useCallback } from 'react'
 import { Name } from '@coliving/common'
 import { IconTrending } from '@coliving/stems'
 
-import Tag from 'components/agreement/Tag'
+import Tag from 'components/agreement/tag'
 import { make, useRecord } from 'store/analytics/actions'
 import { searchResultsPage } from 'utils/route'
 
-import styles from './ProfileTags.module.css'
+import styles from './profileTags.module.css'
 
 const messages = {
   topTags: 'Top Tags'

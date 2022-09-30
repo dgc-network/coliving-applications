@@ -11,7 +11,7 @@ import {
 import { connectNewWallet } from 'common/store/pages/tokenDashboard/slice'
 import { useSelector } from 'utils/reducer'
 
-import styles from './ConnectWalletsBody.module.css'
+import styles from './connectWalletsBody.module.css'
 import WalletsTable from './walletsTable'
 
 const WALLET_COUNT_LIMIT = 5
@@ -64,8 +64,7 @@ const ConnectWalletsBody = ({ className }: ConnectWalletsBodyProps) => {
         type={ButtonType.PRIMARY_ALT}
         text={messages.connectBtn}
         onClick={onConnectWallets}
-        isDisabled={isConnectDisabled}
-      />
+        isDisabled={isConnectDisabled} css={undefined}      />
       {hasReachedLimit && <p className={styles.limit}>{messages.limit}</p>}
       {(numConnectedWallets > 0 || Boolean(confirmingWallet.wallet)) && (
         <WalletsTable

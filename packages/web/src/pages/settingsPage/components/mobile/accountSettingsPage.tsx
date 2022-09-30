@@ -21,7 +21,7 @@ import {
   CHANGE_PASSWORD_SETTINGS_PAGE
 } from 'utils/route'
 
-import styles from './AccountSettingsPage.module.css'
+import styles from './accountSettingsPage.module.css'
 import { SettingsPageProps } from './settingsPage'
 import settingsPageStyles from './SettingsPage.module.css'
 
@@ -115,8 +115,7 @@ const AccountSettingsPage = ({
                 className={styles.resetButton}
                 type={ButtonType.COMMON_ALT}
                 text='Resend'
-                leftIcon={<IconMail />}
-              />
+                leftIcon={<IconMail />} css={undefined}              />
             </Row>
           </Grouping>
           <Grouping>
@@ -133,16 +132,14 @@ const AccountSettingsPage = ({
                   isDisabled={true}
                   className={cn(styles.verificationBtn, styles.isVerified)}
                   textClassName={styles.verifiedText}
-                  leftIcon={<IconVerified className={styles.verifiedIcon} />}
-                />
+                  leftIcon={<IconVerified className={styles.verifiedIcon} />} css={undefined}                />
               ) : (
                 <Button
-                  text={messages.verify}
-                  onClick={goToVerificationPage}
-                  type={ButtonType.COMMON_ALT}
-                  className={styles.verificationBtn}
-                  leftIcon={<IconVerified className={styles.verifiedIcon} />}
-                />
+                    text={messages.verify}
+                    onClick={goToVerificationPage}
+                    type={ButtonType.COMMON_ALT}
+                    className={styles.verificationBtn}
+                    leftIcon={<IconVerified className={styles.verifiedIcon} />} css={undefined}                />
               )}
             </Row>
           </Grouping>
@@ -157,8 +154,7 @@ const AccountSettingsPage = ({
                 onClick={goToChangePasswordSettingsPage}
                 type={ButtonType.COMMON_ALT}
                 className={styles.changePasswordButton}
-                leftIcon={<IconMail />}
-              />
+                leftIcon={<IconMail />} css={undefined}              />
             </Row>
           </Grouping>
           <Grouping>
@@ -172,8 +168,7 @@ const AccountSettingsPage = ({
                 type={ButtonType.COMMON_ALT}
                 text='Sign Out'
                 leftIcon={<IconSignOut />}
-                onClick={() => setShowModalSignOut(true)}
-              />
+                onClick={() => setShowModalSignOut(true)} css={undefined}              />
             </Row>
           </Grouping>
         </GroupableList>

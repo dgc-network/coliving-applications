@@ -8,7 +8,7 @@ import dots2x from 'assets/img/publicSite/dots@2x.jpg'
 import { handleClickRoute } from 'components/publicSite/handleClickRoute'
 import { COLIVING_SIGN_UP_LINK } from 'utils/route'
 
-import styles from './CTASignUp.module.css'
+import styles from './ctaSignUp.module.css'
 
 const messages = {
   title: 'Experience the Freedom',

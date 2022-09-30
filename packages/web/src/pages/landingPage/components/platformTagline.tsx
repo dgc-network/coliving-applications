@@ -5,7 +5,7 @@ import { useSpring, animated } from 'react-spring'
 import { ReactComponent as IconQuotePyramid } from 'assets/img/publicSite/quote-pyramid.svg'
 import useHasViewed from 'hooks/useHasViewed'
 
-import styles from './PlatformTagline.module.css'
+import styles from './platformTagline.module.css'
 
 const messages = {
   tagline: 'Finally, a modern streaming service designed with landlords in mind.'

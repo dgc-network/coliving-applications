@@ -35,7 +35,7 @@ import AboutSettingsPage from './aboutSettingsPage'
 import AccountSettingsPage from './accountSettingsPage'
 import { ChangePasswordPage } from './changePasswordPage'
 import NotificationsSettingsPage from './notificationsSettingsPage'
-import styles from './SettingsPage.module.css'
+import styles from './settingsPage.module.css'
 import VerificationPage from './verificationPage'
 
 const NATIVE_MOBILE = process.env.REACT_APP_NATIVE_MOBILE

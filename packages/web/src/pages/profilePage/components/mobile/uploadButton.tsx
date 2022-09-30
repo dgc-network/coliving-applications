@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux'
 import { setVisibility } from 'common/store/ui/modals/slice'
 import MobileUploadDrawer from 'components/mobileUploadDrawer/mobileUploadDrawer'
 
-import styles from './UploadButton.module.css'
+import styles from './uploadButton.module.css'
 
 const UploadButton = () => {
   const dispatch = useDispatch()
@@ -25,8 +25,7 @@ const UploadButton = () => {
           text='Upload Agreement'
           type={ButtonType.COMMON_ALT}
           leftIcon={<IconUpload />}
-          iconClassName={styles.icon}
-        />
+          iconClassName={styles.icon} css={undefined}        />
       </div>
       <MobileUploadDrawer />
     </>

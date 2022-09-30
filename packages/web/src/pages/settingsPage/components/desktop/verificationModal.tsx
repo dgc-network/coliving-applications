@@ -173,8 +173,7 @@ const SuccessBody = ({
         size={ButtonSize.MEDIUM}
         text={messages.backToMusic}
         onClick={onClick}
-        rightIcon={<IconNote className={styles.noteIcon} />}
-      />
+        rightIcon={<IconNote className={styles.noteIcon} />} css={undefined}      />
     </div>
   )
 }
@@ -295,18 +294,16 @@ const VerificationModal = (props: VerificationModalProps) => {
           className={styles.disabledBtn}
           textClassName={styles.disabledBtnText}
           type={ButtonType.COMMON_ALT}
-          leftIcon={<IconVerified className={styles.btnIcon} />}
-        />
+          leftIcon={<IconVerified className={styles.btnIcon} />} css={undefined}        />
       ) : (
         <Button
-          text={messages.buttonText}
-          onClick={onOpen}
-          className={styles.btn}
-          textClassName={styles.btnText}
-          size={ButtonSize.MEDIUM}
-          type={ButtonType.COMMON_ALT}
-          leftIcon={<IconVerified className={styles.btnIcon} />}
-        />
+            text={messages.buttonText}
+            onClick={onOpen}
+            className={styles.btn}
+            textClassName={styles.btnText}
+            size={ButtonSize.MEDIUM}
+            type={ButtonType.COMMON_ALT}
+            leftIcon={<IconVerified className={styles.btnIcon} />} css={undefined}        />
       )}
       <Modal
         isOpen={isOpen}

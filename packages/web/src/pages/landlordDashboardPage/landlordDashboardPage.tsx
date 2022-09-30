@@ -23,7 +23,7 @@ import { profilePage, TRENDING_PAGE } from 'utils/route'
 import { withClassNullGuard } from 'utils/withNullGuard'
 
 import styles from './LandlordDashboardPage.module.css'
-import LandlordProfile from './components/LandlordProfile'
+import LandlordProfile from './components/landlordProfile'
 import {
   fetchDashboard,
   fetchDashboardListenData,
@@ -296,7 +296,7 @@ export class LandlordDashboardPage extends Component<
       end = start.clone().add(1, 'year')
     }
     this.props.fetchDashboardListenData(
-      this.props.agreements.map((t) => t.agreement_id),
+      this.props.agreements.map((t: { agreement_id: any }) => t.agreement_id),
       start.toISOString(),
       end.toISOString()
     )

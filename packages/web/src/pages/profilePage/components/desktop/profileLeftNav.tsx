@@ -10,7 +10,7 @@ import Input from 'components/dataEntry/input'
 import TextArea from 'components/dataEntry/textArea'
 import { SupportingList } from 'components/tipping/support/supportingList'
 import { TopSupporters } from 'components/tipping/support/topSupporters'
-import { TipAudioButton } from 'components/tipping/tip-live/TipAudioButton'
+import { TipAudioButton } from 'components/tipping/tipLive/tipLiveButton'
 import { OpacityTransition } from 'components/transitionContainer/opacityTransition'
 import UploadChip from 'components/upload/uploadChip'
 import ProfilePageBadge from 'components/userBadges/profilePageBadge'
@@ -23,7 +23,7 @@ import { UPLOAD_PAGE } from 'utils/route'
 
 import { ProfileBio } from './profileBio'
 import { ProfileMutuals } from './profileMutuals'
-import styles from './ProfilePage.module.css'
+import styles from './profilePage.module.css'
 
 const messages = {
   aboutYou: 'About You',

@@ -10,7 +10,7 @@ import Page from 'components/page/page'
 import EmptyTable from 'components/agreementsTable/emptyTable'
 import AgreementsTable from 'components/agreementsTable/agreementsTable'
 
-import styles from './HistoryPage.module.css'
+import styles from './historyPage.module.css'
 
 export type HistoryPageProps = {
   title: string
@@ -65,8 +65,7 @@ const HistoryPage = ({
       type={ButtonType.PRIMARY_ALT}
       text={queuedAndPlaying ? 'PAUSE' : 'PLAY'}
       leftIcon={queuedAndPlaying ? <IconPause /> : <IconPlay />}
-      onClick={onPlay}
-    />
+      onClick={onPlay} css={undefined}    />
   ) : null
 
   const agreementTableActions = loading

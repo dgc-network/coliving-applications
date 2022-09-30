@@ -28,7 +28,7 @@ export const getUserChallenges = createSelector(
 )
 
 export const getUndisbursedUserChallenges = (state: CommonState) =>
-  state.pages.liveRewards.undisbursedChallenges.filter((challenge) => {
+  state.pages.liveRewards.undisbursedChallenges.filter((challenge: { challenge_id: string | number; specifier: any }) => {
     return !(
       state.pages.liveRewards.disbursedChallenges[challenge.challenge_id] ?? []
     ).includes(challenge.specifier)

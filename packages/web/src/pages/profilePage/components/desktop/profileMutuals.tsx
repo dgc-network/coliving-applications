@@ -23,7 +23,7 @@ import {
   UserListType
 } from 'store/application/ui/userListModal/types'
 
-import styles from './ProfileMutuals.module.css'
+import styles from './profileMutuals.module.css'
 
 const messages = {
   mutuals: 'Mutuals'

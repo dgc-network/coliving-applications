@@ -29,7 +29,7 @@ import { openTwitterLink } from 'utils/tweet'
 
 import { UploadPageState } from '../store/types'
 
-import styles from './ShareBanner.module.css'
+import styles from './shareBanner.module.css'
 
 type UploadType = 'Agreement' | 'Agreements' | 'Album' | 'ContentList' | 'Remix'
 type ContinuePage = 'Agreement' | 'Profile' | 'Album' | 'ContentList' | 'Remix'
@@ -205,21 +205,17 @@ const ShareBanner = ({ isHidden, type, upload, user }: ShareBannerProps) => {
           textClassName={styles.buttonText}
           type={ButtonType.WHITE}
           text={messages.share}
-          leftIcon={<IconTwitterBird />}
-        />
+          leftIcon={<IconTwitterBird />} css={undefined}        />
         {shouldShowShareToTikTok() && (
           <Button
             onClick={onClickTikTok}
             className={cn(styles.button, styles.buttonTikTok)}
             textClassName={styles.buttonText}
             type={ButtonType.WHITE}
-            text={
-              <div className={styles.buttonTextTikTok}>
-                <IconTikTok />
-                <span>{messages.shareToTikTok}</span>
-              </div>
-            }
-          />
+            text={<div className={styles.buttonTextTikTok}>
+              <IconTikTok />
+              <span>{messages.shareToTikTok}</span>
+            </div>} css={undefined}          />
         )}
       </div>
       <div className={styles.copyLinkWrapper} onClick={onCopy}>

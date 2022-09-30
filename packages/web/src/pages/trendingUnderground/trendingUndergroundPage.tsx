@@ -16,7 +16,7 @@ import { BASE_URL, TRENDING_UNDERGROUND_PAGE } from 'utils/route'
 import { trendingUndergroundLineupActions } from '../../common/store/pages/trendingUnderground/lineup/actions'
 import { getLineup } from '../../common/store/pages/trendingUnderground/lineup/selectors'
 
-import styles from './TrendingUndergroundPage.module.css'
+import styles from './trendingUndergroundPage.module.css'
 
 const useTrendingUndergroundLineup = (containerRef: HTMLElement) => {
   return useLineupProps({

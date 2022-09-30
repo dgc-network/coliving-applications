@@ -6,7 +6,7 @@ import ConnectedRemixCard from 'components/remixCard/connectedRemixCard'
 import SectionButton from 'components/sectionButton/sectionButton'
 import { isMatrix } from 'utils/theme/theme'
 
-import styles from './Remixes.module.css'
+import styles from './remixes.module.css'
 
 const messages = {
   title: 'Remixes',

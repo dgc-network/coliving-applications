@@ -2,7 +2,7 @@ import { Modal, Scrollbar } from '@coliving/stems'
 
 import GenreSelectionList from 'pages/trendingPage/components/genreSelectionList'
 
-import styles from './GenreSelectionModal.module.css'
+import styles from './genreSelectionModal.module.css'
 
 type GenreSelectionModalProps = {
   genres: string[]

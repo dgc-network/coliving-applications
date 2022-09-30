@@ -18,7 +18,7 @@ import { BASE_URL, FEED_PAGE } from 'utils/route'
 
 import Filters from './feedFilterButton'
 import FeedFilterDrawer from './feedFilterDrawer'
-import styles from './FeedPageContent.module.css'
+import styles from './feedPageContent.module.css'
 
 const IS_NATIVE_MOBILE = process.env.REACT_APP_NATIVE_MOBILE
 

@@ -12,7 +12,7 @@ import cn from 'classnames'
 import Input from 'components/dataEntry/input'
 
 import { Type, handleTypes } from './socialLink'
-import styles from './SocialLinkInput.module.css'
+import styles from './socialLinkInput.module.css'
 
 const sanitizeHandle = (handle: string) => {
   if (handle.startsWith('http')) {

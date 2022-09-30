@@ -11,7 +11,7 @@ import {
   formatTwitterProfile
 } from 'pages/signOn/utils/formatSocialProfile'
 
-import styles from './ProfilePage.module.css'
+import styles from './profilePage.module.css'
 
 const messages = {
   header: 'Tell Us About Yourself So Others Can Find You'

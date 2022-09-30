@@ -46,7 +46,7 @@ import { DeactivatedProfileTombstone } from '../deactivatedProfileTombstone'
 
 import EditProfile from './editProfile'
 import ProfileHeader from './profileHeader'
-import styles from './ProfilePage.module.css'
+import styles from './profilePage.module.css'
 import { ShareUserButton } from './shareUserButton'
 
 export type ProfilePageProps = {

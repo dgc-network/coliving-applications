@@ -50,17 +50,15 @@ const PlayButton = (props: { playing: boolean; onPlay: () => void }) => {
       type={ButtonType.PRIMARY_ALT}
       text={messages.pause}
       leftIcon={<IconPause />}
-      onClick={props.onPlay}
-    />
+      onClick={props.onPlay} css={undefined}    />
   ) : (
     <Button
-      className={cn(styles.playAllButton, styles.buttonFormatting)}
-      textClassName={styles.playAllButtonText}
-      type={ButtonType.PRIMARY_ALT}
-      text={messages.play}
-      leftIcon={<IconPlay />}
-      onClick={props.onPlay}
-    />
+        className={cn(styles.playAllButton, styles.buttonFormatting)}
+        textClassName={styles.playAllButtonText}
+        type={ButtonType.PRIMARY_ALT}
+        text={messages.play}
+        leftIcon={<IconPlay />}
+        onClick={props.onPlay} css={undefined}    />
   )
 }
 

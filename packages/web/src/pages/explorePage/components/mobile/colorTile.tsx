@@ -4,7 +4,7 @@ import cn from 'classnames'
 
 import { ReactComponent as IconLiveRewardsPill } from 'assets/img/iconLiveRewardsPill.svg'
 
-import styles from './ColorTile.module.css'
+import styles from './colorTile.module.css'
 
 type ColorTileProps = {
   title: string

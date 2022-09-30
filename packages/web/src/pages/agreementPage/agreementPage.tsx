@@ -3,9 +3,9 @@ import { connect } from 'react-redux'
 import { AppState } from 'store/types'
 import { isMobile } from 'utils/clientUtil'
 
-import AgreementPageProvider from './AgreementPageProvider'
-import AgreementPageDesktopContent from './components/desktop/AgreementPage'
-import AgreementPageMobileContent from './components/mobile/AgreementPage'
+import AgreementPageProvider from './agreementPageProvider'
+import AgreementPageDesktopContent from './components/desktop/agreementPage'
+import AgreementPageMobileContent from './components/mobile/agreementPage'
 
 interface OwnProps {}
 

@@ -1,1 +1,1 @@
-export { CollectiblesContentListPage } from './CollectiblesContentListPage'
+export { CollectiblesContentListPage } from './collectiblesContentListPage'

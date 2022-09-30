@@ -5,7 +5,7 @@ import tileBackground from 'assets/img/notFoundTiledBackround.png'
 import LoadingSpinner from 'components/loadingSpinner/loadingSpinner'
 import { isMatrix, shouldShowDark } from 'utils/theme/theme'
 
-import styles from './RequiresUpdate.module.css'
+import styles from './requiresUpdate.module.css'
 
 const messages = {
   title: 'Please Update ✨',
@@ -39,13 +39,10 @@ const SomethingWrong = ({
       <div className={styles.button}>
         <Button
           type={ButtonType.PRIMARY_ALT}
-          rightIcon={
-            isUpdating ? <LoadingSpinner className={styles.spinner} /> : null
-          }
+          rightIcon={isUpdating ? <LoadingSpinner className={styles.spinner} /> : null}
           text={isUpdating ? messages.buttonIsUpdating : messages.buttonUpdate}
           size={ButtonSize.MEDIUM}
-          onClick={onUpdate}
-        />
+          onClick={onUpdate} css={undefined}        />
       </div>
     </div>
   </div>

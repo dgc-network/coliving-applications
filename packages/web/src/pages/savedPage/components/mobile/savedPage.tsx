@@ -21,14 +21,14 @@ import CardLineup from 'components/lineup/cardLineup'
 import LoadingSpinner from 'components/loadingSpinner/loadingSpinner'
 import MobilePageContainer from 'components/mobilePageContainer/mobilePageContainer'
 import { useMainPageHeader } from 'components/nav/store/context'
-import AgreementList from 'components/agreement/mobile/AgreementList'
-import { AgreementItemAction } from 'components/agreement/mobile/AgreementListItem'
+import AgreementList from 'components/agreement/mobile/agreementList'
+import { AgreementItemAction } from 'components/agreement/mobile/agreementListItem'
 import useTabs from 'hooks/useTabs/useTabs'
 import { make, useRecord } from 'store/analytics/actions'
 import { albumPage, TRENDING_PAGE, contentListPage } from 'utils/route'
 
-import NewContentListButton from './NewContentListButton'
-import styles from './SavedPage.module.css'
+import NewContentListButton from './newContentListButton'
+import styles from './savedPage.module.css'
 
 const emptyTabMessages = {
   afterSaved: "Once you have, this is where you'll find them!",
@@ -50,8 +50,7 @@ export const EmptyTab = (props: EmptyTabProps) => {
         className={styles.emptyButton}
         textClassName={styles.emptyButtonText}
         text={emptyTabMessages.goToTrending}
-        onClick={props.onClick}
-      />
+        onClick={props.onClick} css={undefined}      />
     </div>
   )
 }

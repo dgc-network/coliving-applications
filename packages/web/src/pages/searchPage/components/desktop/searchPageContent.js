@@ -24,7 +24,7 @@ import {
   NOT_FOUND_PAGE
 } from 'utils/route'
 
-import styles from './SearchPageContent.module.css'
+import styles from './searchPageContent.module.css'
 
 const SEARCH_HEADER_MAX_WIDTH_PX = 720
 

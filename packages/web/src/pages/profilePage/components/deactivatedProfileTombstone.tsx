@@ -1,7 +1,7 @@
 import { ButtonSize, IconArrowWhite, Button, ButtonType } from '@coliving/stems'
 import cn from 'classnames'
 
-import styles from './DeactivatedProfileTombstone.module.css'
+import styles from './deactivatedProfileTombstone.module.css'
 
 const messages = {
   helpText: 'This Account No Longer Exists',
@@ -24,8 +24,7 @@ export const DeactivatedProfileTombstone = ({
         type={ButtonType.PRIMARY_ALT}
         size={ButtonSize.MEDIUM}
         text={messages.buttonText}
-        rightIcon={<IconArrowWhite />}
-      />
+        rightIcon={<IconArrowWhite />} css={undefined}      />
     </div>
   )
 }

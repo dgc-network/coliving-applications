@@ -9,7 +9,7 @@ import StatusMessage from 'components/statusMessage/statusMessage'
 import { commonPasswordCheck } from 'utils/commonPasswordCheck'
 import { TERMS_OF_SERVICE, PRIVACY_POLICY } from 'utils/route'
 
-import styles from './PasswordPage.module.css'
+import styles from './passwordPage.module.css'
 
 const messages = {
   header: 'Create A Password That Is Secure And Easy To Remember!',

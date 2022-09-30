@@ -7,7 +7,7 @@ import FollowsYouBadge from 'components/userBadges/followsYouBadge'
 import EditableName from 'pages/profilePage/components/editableName'
 
 import { ProfileLeftNav } from './profileLeftNav'
-import styles from './ProfilePage.module.css'
+import styles from './profilePage.module.css'
 
 type ProfileWrappingProps = {
   userId: Nullable<ID>

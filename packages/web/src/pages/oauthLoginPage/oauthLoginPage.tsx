@@ -27,7 +27,7 @@ import { ERROR_PAGE, SIGN_UP_PAGE } from 'utils/route'
 import { encodeHashId } from 'utils/route/hashIds'
 import { signOut } from 'utils/signOut'
 
-import styles from '../styles/OAuthLoginPage.module.css'
+import styles from '../styles/oauthLoginPage.module.css'
 
 const messages = {
   alreadyLoggedInAuthorizePrompt: (appName: string) =>
@@ -65,17 +65,14 @@ const CTAButton = ({
 }: { isSubmitting: boolean } & ButtonProps) => {
   return (
     <Button
-      isDisabled={isSubmitting}
-      rightIcon={
-        isSubmitting ? (
-          <LoadingSpinner className={styles.buttonLoadingSpinner} />
-        ) : (
-          <IconArrow />
-        )
-      }
+      css={undefined} isDisabled={isSubmitting}
+      rightIcon={isSubmitting ? (
+        <LoadingSpinner className={styles.buttonLoadingSpinner} />
+      ) : (
+        <IconArrow />
+      )}
       className={styles.ctaButton}
-      {...restProps}
-    />
+      {...restProps}    />
   )
 }
 

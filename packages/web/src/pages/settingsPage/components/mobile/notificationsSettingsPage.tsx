@@ -15,7 +15,7 @@ import Switch from 'components/switch/switch'
 import { HapticFeedbackMessage } from 'services/nativeMobileInterface/haptics'
 import { PromptPushNotificationPermissions } from 'services/nativeMobileInterface/notifications'
 
-import styles from './NotificationsSettingsPage.module.css'
+import styles from './notificationsSettingsPage.module.css'
 import { SettingsPageProps } from './settingsPage'
 import settingsPageStyles from './SettingsPage.module.css'
 

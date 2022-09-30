@@ -3,7 +3,7 @@ import { isMobile } from 'utils/clientUtil'
 import DesktopCollectionPage from '../collectionPage/components/desktop/collectionPage'
 import MobileCollectionPage from '../collectionPage/components/mobile/collectionPage'
 
-import { CollectiblesContentListPageProvider } from './CollectiblesContentListPageProvider'
+import { CollectiblesContentListPageProvider } from './collectiblesContentListPageProvider'
 
 const isMobileClient = isMobile()
 

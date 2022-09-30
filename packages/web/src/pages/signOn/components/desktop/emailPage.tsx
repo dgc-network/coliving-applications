@@ -11,7 +11,7 @@ import PreloadImage from 'components/preloadImage/preloadImage'
 import StatusMessage from 'components/statusMessage/statusMessage'
 import { useDelayedEffect } from 'hooks/useDelayedEffect'
 
-import styles from './EmailPage.module.css'
+import styles from './emailPage.module.css'
 import { ForgotPasswordHelper } from './forgotPasswordHelper'
 import { MetaMaskOption } from './metaMaskOption'
 
@@ -164,21 +164,16 @@ export const EmailPage = ({
           size={ButtonSize.MEDIUM}
           text='Continue'
           name='continue'
-          rightIcon={
-            shouldDisableInputs && shouldShowLoadingSpinner ? (
-              <LoadingSpinner className={styles.spinner} />
-            ) : (
-              <IconArrow />
-            )
-          }
-          type={
-            shouldDisableInputs ? ButtonType.DISABLED : ButtonType.PRIMARY_ALT
-          }
+          rightIcon={shouldDisableInputs && shouldShowLoadingSpinner ? (
+            <LoadingSpinner className={styles.spinner} />
+          ) : (
+            <IconArrow />
+          )}
+          type={shouldDisableInputs ? ButtonType.DISABLED : ButtonType.PRIMARY_ALT}
           onClick={onClickSubmit}
           textClassName={styles.signInButtonText}
           className={styles.signInButton}
-          isDisabled={shouldDisableInputs}
-        />
+          isDisabled={shouldDisableInputs} css={undefined}        />
         {hasMetaMask ? (
           <MetaMaskOption
             text='Sign Up With'
@@ -194,8 +189,7 @@ export const EmailPage = ({
             })}
             type={ButtonType.COMMON_ALT}
             text={'Have an Account? Sign In'}
-            onClick={onSignIn}
-          />
+            onClick={onSignIn} css={undefined}          />
         </div>
         <div className={styles.forgotPasswordTextContainer}>
           <span

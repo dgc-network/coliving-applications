@@ -13,7 +13,7 @@ import { shouldShowCookieBanner, dismissCookieBanner } from 'utils/gdpr'
 import { getPathname } from 'utils/route'
 
 import styles from './LandingPage.module.css'
-import LandlordTestimonials from './components/LandlordTestimonials'
+import LandlordTestimonials from './components/landlordTestimonials'
 import CTAListening from './components/ctaListening'
 import CTASignUp from './components/ctaSignUp'
 import Description from './components/description'

@@ -4,7 +4,7 @@ import { getUserList } from 'common/store/userList/supporting/selectors'
 import MobilePageContainer from 'components/mobilePageContainer/mobilePageContainer'
 import NavContext, { LeftPreset } from 'components/nav/store/context'
 import UserList from 'components/userList/userList'
-import { USER_LIST_TAG } from 'pages/supporting-page/sagas'
+import { USER_LIST_TAG } from 'pages/supportingPage/sagas'
 
 const messages = {
   title: 'Supporting'

@@ -4,10 +4,10 @@ import { formatWei } from 'common/utils/wallet'
 
 import { ModalBodyTitle, ModalBodyWrapper } from '../walletModal'
 
-import DisplayLive from './DisplayLive'
+import DisplayLive from './displayLive'
 import PurpleBox from './purpleBox'
 import { AddressWithArrow } from './sendInputConfirmation'
-import styles from './SendInputSuccess.module.css'
+import styles from './sendInputSuccess.module.css'
 import TokenHoverTooltip from './tokenHoverTooltip'
 
 type SendInputSuccessProps = {

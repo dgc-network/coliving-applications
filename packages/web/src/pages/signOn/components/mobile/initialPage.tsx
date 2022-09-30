@@ -21,7 +21,7 @@ import PreloadImage from 'components/preloadImage/preloadImage'
 import StatusMessage from 'components/statusMessage/statusMessage'
 import { useDelayedEffect } from 'hooks/useDelayedEffect'
 
-import styles from './InitialPage.module.css'
+import styles from './initialPage.module.css'
 
 const NATIVE_MOBILE = process.env.REACT_APP_NATIVE_MOBILE
 
@@ -188,19 +188,16 @@ const SignUpEmail = ({
       <Button
         text={messages.signUp}
         name='continue'
-        rightIcon={
-          isSubmitting && shouldShowLoadingSpinner ? (
-            <LoadingSpinner className={styles.spinner} />
-          ) : (
-            <IconArrow />
-          )
-        }
+        rightIcon={isSubmitting && shouldShowLoadingSpinner ? (
+          <LoadingSpinner className={styles.spinner} />
+        ) : (
+          <IconArrow />
+        )}
         type={isSubmitting ? ButtonType.DISABLED : ButtonType.PRIMARY_ALT}
         onClick={onSubmitEmail}
         className={styles.signUpButton}
         textClassName={styles.signUpButtonText}
-        isDisabled={isSubmitting}
-      />
+        isDisabled={isSubmitting} css={undefined}      />
     </div>
   )
 }
@@ -285,18 +282,15 @@ const SignIn = ({
       )}
       <Button
         text='Sign In'
-        rightIcon={
-          isLoading || (didSucceed && !hasAccount) ? (
-            <LoadingSpinner className={styles.spinner} />
-          ) : (
-            <IconArrow />
-          )
-        }
+        rightIcon={isLoading || (didSucceed && !hasAccount) ? (
+          <LoadingSpinner className={styles.spinner} />
+        ) : (
+          <IconArrow />
+        )}
         type={ButtonType.PRIMARY_ALT}
         onClick={onSignIn}
         className={styles.signInButton}
-        textClassName={styles.signInButtonText}
-      />
+        textClassName={styles.signInButtonText} css={undefined}      />
     </div>
   )
 }

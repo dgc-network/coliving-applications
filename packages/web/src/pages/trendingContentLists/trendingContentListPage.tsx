@@ -15,7 +15,7 @@ import RewardsBanner from 'pages/trendingPage/components/rewardsBanner'
 import { isMobile } from 'utils/clientUtil'
 import { BASE_URL, TRENDING_CONTENT_LISTS_PAGE } from 'utils/route'
 
-import styles from './TrendingContentListPage.module.css'
+import styles from './trendingContentListPage.module.css'
 
 const messages = {
   trendingContentListTile: 'Trending ContentLists',

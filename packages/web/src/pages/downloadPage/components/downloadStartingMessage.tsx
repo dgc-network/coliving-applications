@@ -1,4 +1,4 @@
-import styles from './DownloadStartingMessage.module.css'
+import styles from './downloadStartingMessage.module.css'
 
 const messages = {
   downloadStarting: 'Your download should begin automatically.',

@@ -20,7 +20,7 @@ import {
   DOWNLOAD_START_LINK
 } from 'utils/route'
 
-import styles from './Hero.module.css'
+import styles from './hero.module.css'
 
 const messages = {
   title: 'Discover New & Exclusive Music',

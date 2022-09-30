@@ -5,7 +5,7 @@ import cn from 'classnames'
 
 import QRCode from 'assets/img/imageQR.png'
 
-import styles from './AppCTA.module.css'
+import styles from './appCTA.module.css'
 
 const messages = {
   appCTA: 'Get The App',
@@ -59,8 +59,7 @@ const AppCTA = ({ onNextPage }: AppCTAProps) => {
         type={ButtonType.PRIMARY_ALT}
         onClick={onNextPage}
         textClassName={styles.continueButtonText}
-        className={styles.continueButton}
-      />
+        className={styles.continueButton} css={undefined}      />
     </div>
   )
 }

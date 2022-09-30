@@ -6,11 +6,11 @@ import { Button, ButtonType } from '@coliving/stems'
 import LoadingSpinner from 'components/loadingSpinner/loadingSpinner'
 import MobilePageContainer from 'components/mobilePageContainer/mobilePageContainer'
 import NavContext, { LeftPreset } from 'components/nav/store/context'
-import AgreementList from 'components/agreement/mobile/AgreementList'
-import { AgreementItemAction } from 'components/agreement/mobile/AgreementListItem'
+import AgreementList from 'components/agreement/mobile/agreementList'
+import { AgreementItemAction } from 'components/agreement/mobile/agreementListItem'
 import { TRENDING_PAGE } from 'utils/route'
 
-import styles from './HistoryPage.module.css'
+import styles from './historyPage.module.css'
 
 const messages = {
   header: 'LISTENING HISTORY',
@@ -91,8 +91,7 @@ const HistoryPage = ({
             className={styles.btn}
             textClassName={styles.btnText}
             onClick={onClickEmpty}
-            text={messages.empty.cta}
-          />
+            text={messages.empty.cta} css={undefined}          />
         </div>
       ) : (
         <div className={styles.agreementListContainer}>

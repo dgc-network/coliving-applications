@@ -19,7 +19,7 @@ import { useWithMobileStyle } from 'hooks/useWithMobileStyle'
 import { isMobile } from 'utils/clientUtil'
 import { LIVE_PAGE, BASE_URL, TRENDING_PAGE } from 'utils/route'
 
-import styles from './LiveRewardsPage.module.css'
+import styles from './liveRewardsPage.module.css'
 import ChallengeRewardsTile from './challengeRewardsTile'
 import Tiers from './tiers'
 import { BalanceTile, WalletTile } from './tiles'

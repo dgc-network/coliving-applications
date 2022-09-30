@@ -38,7 +38,7 @@ import { make, useRecord } from 'store/analytics/actions'
 import { FOLLOWING_USERS_ROUTE, FOLLOWERS_USERS_ROUTE } from 'utils/route'
 
 import GrowingCoverPhoto from './growingCoverPhoto'
-import styles from './ProfileHeader.module.css'
+import styles from './profileHeader.module.css'
 import UploadButton from './uploadButton'
 import UploadStub from './uploadStub'
 
@@ -370,8 +370,7 @@ const ProfileHeader = ({
                   size={ButtonSize.SMALL}
                   type={ButtonType.SECONDARY}
                   text={messages.editProfile}
-                  onClick={switchToEditMode}
-                />
+                  onClick={switchToEditMode} css={undefined}                />
               ) : (
                 <FollowButton
                   size='small'

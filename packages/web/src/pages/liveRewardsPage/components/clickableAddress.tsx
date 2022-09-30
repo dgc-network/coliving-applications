@@ -8,7 +8,7 @@ import Tooltip from 'components/tooltip/tooltip'
 import { ComponentPlacement, MountPlacement } from 'components/types'
 import { copyToClipboard } from 'utils/clipboardUtil'
 
-import styles from './ClickableAddress.module.css'
+import styles from './clickableAddress.module.css'
 import PurpleBox from './purpleBox'
 
 type DisplayAddressProps = {

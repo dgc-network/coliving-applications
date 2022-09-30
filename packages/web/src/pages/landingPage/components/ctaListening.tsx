@@ -11,7 +11,7 @@ import { useMatchesBreakpoint } from 'common/hooks/useMatchesBreakpoint'
 import { handleClickRoute } from 'components/publicSite/handleClickRoute'
 import { COLIVING_LISTENING_LINK } from 'utils/route'
 
-import styles from './CTAListening.module.css'
+import styles from './ctaListening.module.css'
 
 const MOBILE_WIDTH_MEDIA_QUERY = window.matchMedia('(max-width: 1150px)')
 

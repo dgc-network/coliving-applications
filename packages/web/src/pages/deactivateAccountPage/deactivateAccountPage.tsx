@@ -11,7 +11,7 @@ import LoadingSpinnerFullPage from 'components/loadingSpinnerFullPage/loadingSpi
 import { make, useRecord } from 'store/analytics/actions'
 import { isMobile } from 'utils/clientUtil'
 
-import styles from './DeactivateAccountPage.module.css'
+import styles from './deactivateAccountPage.module.css'
 import { DeactivateAccountPageDesktop } from './components/desktop/deactivateAccountPage'
 import { DeactivateAccountPageMobile } from './components/mobile/deactivateAccountPage'
 import { getDeactivateAccountStatus } from './store/selectors'
@@ -85,19 +85,13 @@ export const DeactivateAcccountPageContents = ({
             [styles.buttonDanger]: !(isLoading && isMobile)
           })}
           text={messages.buttonDeactivate}
-          type={
-            isLoading && isMobile ? ButtonType.DISABLED : ButtonType.PRIMARY_ALT
-          }
-          onClick={openConfirmation}
-        />
+          type={isLoading && isMobile ? ButtonType.DISABLED : ButtonType.PRIMARY_ALT}
+          onClick={openConfirmation} css={undefined}        />
         <Button
           className={styles.button}
           text={messages.buttonSafety}
-          type={
-            isLoading && isMobile ? ButtonType.DISABLED : ButtonType.PRIMARY_ALT
-          }
-          onClick={goToSafety}
-        />
+          type={isLoading && isMobile ? ButtonType.DISABLED : ButtonType.PRIMARY_ALT}
+          onClick={goToSafety} css={undefined}        />
       </div>
     </div>
   )

@@ -32,7 +32,7 @@ import TwitterAccountVerification from '../twitterAccountVerified'
 
 import { SettingsPageProps } from './settingsPage'
 import settingsPageStyles from './SettingsPage.module.css'
-import styles from './VerificationPage.module.css'
+import styles from './verificationPage.module.css'
 
 const messages = {
   title: 'VERIFICATION',
@@ -175,8 +175,7 @@ const SuccessBody = ({
         size={ButtonSize.MEDIUM}
         text={messages.backToMusic}
         onClick={onClick}
-        rightIcon={<IconNote className={styles.noteIcon} />}
-      />
+        rightIcon={<IconNote className={styles.noteIcon} />} css={undefined}      />
     </div>
   )
 }

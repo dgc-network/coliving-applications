@@ -10,7 +10,7 @@ import { ReactComponent as IconRemix } from 'assets/img/publicSite/iconRemix.svg
 import { useMatchesBreakpoint } from 'common/hooks/useMatchesBreakpoint'
 import useHasViewed from 'hooks/useHasViewed'
 
-import styles from './PlatformFeatures.module.css'
+import styles from './platformFeatures.module.css'
 
 const DESKTOP_NAV_BANNER_MIN_WIDTH = 1170
 const MOBILE_WIDTH_MEDIA_QUERY = window.matchMedia(

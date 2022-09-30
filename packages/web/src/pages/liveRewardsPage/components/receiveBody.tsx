@@ -12,7 +12,7 @@ import { getFeatureEnabled } from 'services/remoteConfig/featureFlagHelpers'
 import { ModalBodyWrapper } from '../walletModal'
 
 import ClickableAddress from './clickableAddress'
-import styles from './ReceiveBody.module.css'
+import styles from './receiveBody.module.css'
 
 type ReceiveBodyProps = {
   wallet: WalletAddress
@@ -97,11 +97,10 @@ const ReceiveBody = ({ wallet, solWallet }: ReceiveBodyProps) => {
           />
         ) : (
           <Button
-            text={messages.understand}
-            onClick={onClickUnderstand}
-            textClassName={styles.understandText}
-            type={ButtonType.PRIMARY_ALT}
-          />
+              text={messages.understand}
+              onClick={onClickUnderstand}
+              textClassName={styles.understandText}
+              type={ButtonType.PRIMARY_ALT} css={undefined}          />
         )}
       </>
     )

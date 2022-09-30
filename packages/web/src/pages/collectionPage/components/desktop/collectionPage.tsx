@@ -20,7 +20,7 @@ import Page from 'components/page/page'
 import AgreementsTable from 'components/agreementsTable/agreementsTable'
 import { computeCollectionMetadataProps } from 'pages/collectionPage/store/utils'
 
-import styles from './CollectionPage.module.css'
+import styles from './collectionPage.module.css'
 
 const messages = {
   emptyPage: {

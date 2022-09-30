@@ -1,7 +1,7 @@
 import { Button, ButtonType } from '@coliving/stems'
 import cn from 'classnames'
 
-import styles from './NotificationPermissionsPage.module.css'
+import styles from './notificationPermissionsPage.module.css'
 
 const messages = {
   title: 'Can we send you Notifications?',
@@ -32,8 +32,7 @@ const NotificationPermissionsPage = (
       <Button
         onClick={props.onAllowNotifications}
         text={messages.allow}
-        type={ButtonType.PRIMARY_ALT}
-      />
+        type={ButtonType.PRIMARY_ALT} css={undefined}      />
       <div className={cn(styles.skipText)} onClick={props.onSkip}>
         {messages.skip}
       </div>

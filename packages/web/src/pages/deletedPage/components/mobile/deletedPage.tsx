@@ -18,7 +18,7 @@ import { useCollectionCoverArt } from 'hooks/useCollectionCoverArt'
 import { useAgreementCoverArt } from 'hooks/useAgreementCoverArt'
 import { withNullGuard } from 'utils/withNullGuard'
 
-import styles from './DeletedPage.module.css'
+import styles from './deletedPage.module.css'
 
 const messages = {
   agreementDeleted: 'Agreement [Deleted]',
@@ -143,8 +143,7 @@ const DeletedPage = g(
             text={messages.checkOut(user.name)}
             type={ButtonType.COMMON}
             leftIcon={<IconUser />}
-            onClick={goToLandlordPage}
-          />
+            onClick={goToLandlordPage} css={undefined}          />
         </div>
       )
     }

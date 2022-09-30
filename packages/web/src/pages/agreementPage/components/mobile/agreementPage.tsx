@@ -20,7 +20,7 @@ import { getAgreementDefaults, emptyStringGuard } from 'pages/agreementPage/util
 
 import Remixes from './remixes'
 import AgreementPageHeader from './agreementHeader'
-import styles from './AgreementPage.module.css'
+import styles from './agreementPage.module.css'
 
 const messages = {
   moreBy: 'More By',

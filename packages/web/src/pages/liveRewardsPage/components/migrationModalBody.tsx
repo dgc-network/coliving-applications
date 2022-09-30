@@ -4,7 +4,7 @@ import LoadingSpinner from 'components/loadingSpinner/loadingSpinner'
 
 import { ModalBodyWrapper } from '../walletModal'
 
-import styles from './MigrationModalBody.module.css'
+import styles from './migrationModalBody.module.css'
 
 const messages = {
   description:

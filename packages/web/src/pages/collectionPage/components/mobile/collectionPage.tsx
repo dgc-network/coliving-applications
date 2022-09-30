@@ -25,10 +25,10 @@ import NavContext, {
   RightPreset
 } from 'components/nav/store/context'
 import NetworkConnectivityMonitor from 'components/networkConnectivity/networkConnectivityMonitor'
-import AgreementList from 'components/agreement/mobile/AgreementList'
+import AgreementList from 'components/agreement/mobile/agreementList'
 import { computeCollectionMetadataProps } from 'pages/collectionPage/store/utils'
 
-import styles from './CollectionPage.module.css'
+import styles from './collectionPage.module.css'
 
 const messages = {
   emptyContentList: 'This contentList is empty.'

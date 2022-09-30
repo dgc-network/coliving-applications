@@ -8,7 +8,7 @@ import { COLIVING_API_LINK } from 'utils/route'
 import ButtonWithArrow from '../buttonWithArrow'
 
 import ModalDrawer from './modalDrawer'
-import styles from './TopApi.module.css'
+import styles from './topApi.module.css'
 
 const messages = {
   modalTitle: 'Coliving API',

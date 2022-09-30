@@ -25,7 +25,7 @@ import { useWithMobileStyle } from 'hooks/useWithMobileStyle'
 import { isMobile } from 'utils/clientUtil'
 import { useSelector } from 'utils/reducer'
 
-import styles from './Tiles.module.css'
+import styles from './tiles.module.css'
 import TokenHoverTooltip from './components/tokenHoverTooltip'
 
 const messages = {
@@ -150,28 +150,23 @@ export const WalletTile = ({ className }: { className?: string }) => {
             textClassName={styles.textClassName}
             onClick={onClickSend}
             leftIcon={<IconSend className={styles.iconStyle} />}
-            type={ButtonType.GLASS}
-          />
+            type={ButtonType.GLASS} css={undefined}          />
           <Button
             className={cn(styles.balanceBtn, styles.receiveBtn)}
             text={messages.receiveLabel}
             textClassName={styles.textClassName}
             onClick={onClickReceive}
             leftIcon={<IconReceive className={styles.iconStyle} />}
-            type={ButtonType.GLASS}
-          />
+            type={ButtonType.GLASS} css={undefined}          />
           <Button
             className={cn(styles.balanceBtn, styles.connectWalletsBtn)}
-            text={
-              hasMultipleWallets
-                ? messages.manageWallets
-                : messages.connectWallets
-            }
+            text={hasMultipleWallets
+              ? messages.manageWallets
+              : messages.connectWallets}
             includeHoverAnimations
             textClassName={styles.textClassName}
             onClick={onClickConnectWallets}
-            type={ButtonType.GLASS}
-          />
+            type={ButtonType.GLASS} css={undefined}          />
           {mobile && !IS_NATIVE_MOBILE && (
             <MobileConnectWalletsDrawer onClose={onCloseConnectWalletsDrawer} />
           )}

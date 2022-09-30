@@ -11,7 +11,7 @@ import { MAIN_CONTENT_ID } from 'pages/app'
 
 import { FollowLandlordsCategory, landlordCategories } from '../../store/types'
 
-import styles from './FollowPage.module.css'
+import styles from './followPage.module.css'
 
 const messages = {
   title: 'Follow At Least 3 Landlords To Get Started',
@@ -158,15 +158,12 @@ export const BottomSection = (props: BottomSectionProps) => {
         text='Continue'
         name='continue'
         rightIcon={<IconArrow />}
-        type={
-          followedLandlords.length >= MINIMUM_FOLLOWER_COUNT
-            ? ButtonType.PRIMARY_ALT
-            : ButtonType.DISABLED
-        }
+        type={followedLandlords.length >= MINIMUM_FOLLOWER_COUNT
+          ? ButtonType.PRIMARY_ALT
+          : ButtonType.DISABLED}
         onClick={onClickNextPage}
         textClassName={styles.continueButtonText}
-        className={styles.continueButton}
-      />
+        className={styles.continueButton} css={undefined}      />
       <div className={styles.followCount}>
         {`${messages.following} ${
           followedLandlords.length > MINIMUM_FOLLOWER_COUNT

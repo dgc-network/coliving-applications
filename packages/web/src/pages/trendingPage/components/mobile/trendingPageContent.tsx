@@ -33,7 +33,7 @@ import { scrollWindowToTop } from 'utils/scroll'
 import RewardsBanner from '../rewardsBanner'
 
 import TrendingFilterButton from './trendingFilterButton'
-import styles from './TrendingPageContent.module.css'
+import styles from './trendingPageContent.module.css'
 
 const messages = {
   title: 'Trending',

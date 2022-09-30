@@ -27,8 +27,8 @@ import { copyToClipboard } from 'utils/clipboardUtil'
 import { NEW_WALLET_CONNECTED_TOAST_TIMEOUT_MILLIS } from 'utils/constants'
 import { useSelector } from 'utils/reducer'
 
-import DisplayLive from './DisplayLive'
-import styles from './WalletsTable.module.css'
+import DisplayLive from './displayLive'
+import styles from './walletsTable.module.css'
 
 const COPIED_TOAST_TIMEOUT = 2000
 

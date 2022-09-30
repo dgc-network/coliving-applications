@@ -15,7 +15,7 @@ import { COPYRIGHT_TEXT } from 'utils/copyright'
 
 import packageInfo from '../../../../../package.json'
 
-import styles from './AboutSettingsPage.module.css'
+import styles from './aboutSettingsPage.module.css'
 import { SettingsPageProps } from './settingsPage'
 import settingsPageStyles from './SettingsPage.module.css'
 

@@ -6,7 +6,7 @@ import { AppState } from 'store/types'
 import { getIsVisible } from './store/selectors'
 import { closeVisualizer, toggleVisibility } from './store/slice'
 
-import styles from './Visualizer.module.css'
+import styles from './visualizer.module.css'
 import lazyWithPreload from 'utils/lazyWithPreload'
 import { useHistory } from 'react-router-dom'
 import {

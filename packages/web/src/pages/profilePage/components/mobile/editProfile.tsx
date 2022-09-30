@@ -10,7 +10,7 @@ import EditableRow, { Format } from 'components/groupableList/editableRow'
 import GroupableList from 'components/groupableList/groupableList'
 import Grouping from 'components/groupableList/grouping'
 
-import styles from './EditProfile.module.css'
+import styles from './editProfile.module.css'
 
 type EditProfileProps = {
   name: string

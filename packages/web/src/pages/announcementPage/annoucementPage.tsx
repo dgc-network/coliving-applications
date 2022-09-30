@@ -14,7 +14,7 @@ import NavContext, { LeftPreset } from 'components/nav/store/context'
 import { AppState } from 'store/types'
 import { NOTIFICATION_PAGE } from 'utils/route'
 
-import styles from './AnnouncementPage.module.css'
+import styles from './announcementPage.module.css'
 
 const messages = {
   title: 'NOTIFICATIONS',
@@ -53,9 +53,8 @@ const AnnouncementPage = (props: AnnouncementPageProps) => {
       <Header className={styles.header} title={title} />
       <div className={styles.body}>
         <ReactMarkdown
-          source={(props.notification as any).longDescription}
-          escapeHtml={false}
-        />
+          sourcePos={(props.notification as any).longDescription}
+          skipHtml={false} children={''}        />
       </div>
     </MobilePageContainer>
   )

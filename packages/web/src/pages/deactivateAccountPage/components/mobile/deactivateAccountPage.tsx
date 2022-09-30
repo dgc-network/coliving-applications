@@ -14,7 +14,7 @@ import {
   DeactivateAccountPageProps
 } from '../../deactivateAccountPage'
 
-import styles from './DeactivateAccountPage.module.css'
+import styles from './deactivateAccountPage.module.css'
 
 const IS_NATIVE_MOBILE = process.env.REACT_APP_NATIVE_MOBILE
 

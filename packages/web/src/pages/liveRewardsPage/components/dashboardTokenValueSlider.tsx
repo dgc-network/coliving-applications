@@ -4,7 +4,7 @@ import BN from 'bn.js'
 
 import { formatNumberCommas } from 'common/utils/formatUtil'
 
-import styles from './DashboardTokenValueSlider.module.css'
+import styles from './dashboardTokenValueSlider.module.css'
 
 type DashboardTokenValueSliderProps = {
   min: BNAudio

@@ -3,7 +3,7 @@ import { ReactNode } from 'react'
 import { Button, ButtonType, Scrollbar } from '@coliving/stems'
 import cn from 'classnames'
 
-import styles from './ErrorBody.module.css'
+import styles from './errorBody.module.css'
 
 const messages = {
   okay: 'OKAY'
@@ -23,8 +23,7 @@ const ErrorBody = ({ error, className, onClose }: ErrorBodyProps) => {
         className={styles.btn}
         text={messages.okay}
         type={ButtonType.PRIMARY_ALT}
-        onClick={onClose}
-      />
+        onClick={onClose} css={undefined}      />
     </div>
   )
 }

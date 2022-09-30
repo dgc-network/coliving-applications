@@ -5,7 +5,7 @@ import Toast from 'components/toast/toast'
 import { MountPlacement, ComponentPlacement } from 'components/types'
 import { copyToClipboard } from 'utils/clipboardUtil'
 
-import styles from './ForgotPasswordHelper.module.css'
+import styles from './forgotPasswordHelper.module.css'
 
 const messages = {
   forgotPassword: 'Forgot Your Password',

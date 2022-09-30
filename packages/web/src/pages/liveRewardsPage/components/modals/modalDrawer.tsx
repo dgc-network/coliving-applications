@@ -4,7 +4,7 @@ import cn from 'classnames'
 import Drawer, { DrawerProps } from 'components/drawer/drawer'
 import { isMobile } from 'utils/clientUtil'
 
-import styles from './ModalDrawer.module.css'
+import styles from './modalDrawer.module.css'
 
 type ModalDrawerProps = ModalProps &
   DrawerProps & { useGradientTitle?: boolean }

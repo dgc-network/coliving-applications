@@ -7,7 +7,7 @@ import PropTypes from 'prop-types'
 import FormTile from 'components/dataEntry/formTile'
 import InlineFormTile from 'components/dataEntry/inlineFormTile'
 
-import styles from './EditPage.module.css'
+import styles from './editPage.module.css'
 import UploadType from './uploadType'
 
 class EditPage extends Component {

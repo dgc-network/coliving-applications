@@ -6,7 +6,7 @@ import PropTypes from 'prop-types'
 
 import UserCard from 'components/card/userCard'
 
-import styles from './FollowUsers.module.css'
+import styles from './followUsers.module.css'
 
 const messages = {
   cta: `Let’s fix that by following some of these landlords!`

@@ -3,7 +3,7 @@ import cn from 'classnames'
 
 import { formatWei } from 'common/utils/wallet'
 
-import styles from './DisplayLive.module.css'
+import styles from './displayLive.module.css'
 import TokenHoverTooltip from './tokenHoverTooltip'
 
 type DisplayLiveProps = {

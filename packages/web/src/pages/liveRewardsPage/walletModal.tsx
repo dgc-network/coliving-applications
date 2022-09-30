@@ -39,7 +39,7 @@ import { isMobile } from 'utils/clientUtil'
 import { useSelector } from 'utils/reducer'
 import { COLIVING_DISCORD_LINK } from 'utils/route'
 
-import styles from './WalletModal.module.css'
+import styles from './walletModal.module.css'
 import ConnectWalletsBody from './components/connectWalletsBody'
 import DiscordModalBody from './components/discordModalBody'
 import ErrorBody from './components/errorBody'

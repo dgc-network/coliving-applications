@@ -2,7 +2,7 @@ import { memo } from 'react'
 
 import PropTypes from 'prop-types'
 
-import styles from './EmptyTab.module.css'
+import styles from './emptyTab.module.css'
 
 const EmptyTab = (props) => {
   const text = props.isOwner

@@ -4,7 +4,7 @@ import { TrendingRewardID, StringKeys } from '@coliving/common'
 import { useDispatch } from 'react-redux'
 
 import { useSetVisibility } from 'common/hooks/useModalState'
-import { setTrendingRewardsModalType } from 'common/store/pages/live-rewards/slice'
+import { setTrendingRewardsModalType } from 'common/store/pages/liveRewards/slice'
 import { useRemoteVar } from 'hooks/useRemoteConfig'
 import { useWithMobileStyle } from 'hooks/useWithMobileStyle'
 

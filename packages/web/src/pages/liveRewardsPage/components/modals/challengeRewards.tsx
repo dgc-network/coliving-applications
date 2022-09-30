@@ -23,7 +23,7 @@ import {
   getChallengeRewardsModalType,
   getClaimStatus,
   getCognitoFlowStatus
-} from 'common/store/pages/live-rewards/selectors'
+} from 'common/store/pages/liveRewards/selectors'
 import {
   ChallengeRewardsModalType,
   setChallengeRewardsModalType,
@@ -31,7 +31,7 @@ import {
   resetAndCancelClaimReward,
   CognitoFlowStatus,
   claimChallengeReward
-} from 'common/store/pages/live-rewards/slice'
+} from 'common/store/pages/liveRewards/slice'
 import { fillString } from 'common/utils/fillString'
 import { formatNumberCommas } from 'common/utils/formatUtil'
 import LoadingSpinner from 'components/loadingSpinner/loadingSpinner'
@@ -41,7 +41,7 @@ import { ToastContext } from 'components/toast/toastContext'
 import Tooltip from 'components/tooltip/tooltip'
 import { ComponentPlacement, MountPlacement } from 'components/types'
 import { useWithMobileStyle } from 'hooks/useWithMobileStyle'
-import { challengeRewardsConfig } from 'pages/live-rewards-page/config'
+import { challengeRewardsConfig } from 'pages/liveRewardsPage/config'
 import { isMobile } from 'utils/clientUtil'
 import { copyToClipboard, getCopyableLink } from 'utils/clipboardUtil'
 import { CLAIM_REWARD_TOAST_TIMEOUT_MILLIS } from 'utils/constants'
@@ -49,7 +49,7 @@ import { openTwitterLink } from 'utils/tweet'
 
 import PurpleBox from '../purpleBox'
 
-import styles from './ChallengeRewards.module.css'
+import styles from './challengeRewards.module.css'
 import ModalDrawer from './modalDrawer'
 
 export const useRewardsModalType = (): [
@@ -151,8 +151,7 @@ const TwitterShareButton = ({
       onClick={() => openTwitterLink(inviteLink, messages.twitterCopy)}
       className={wm(styles.twitterButton)}
       textClassName={styles.twitterText}
-      iconClassName={styles.twitterIcon}
-    />
+      iconClassName={styles.twitterIcon} css={undefined}    />
   )
 }
 
@@ -398,16 +397,13 @@ const ChallengeRewardsBody = ({ dismissModal }: BodyProps) => {
       {buttonLink && (
         <Button
           className={wm(cn(styles.button, styles.buttonLink))}
-          type={
-            challenge?.state === 'completed'
-              ? ButtonType.COMMON
-              : ButtonType.PRIMARY_ALT
-          }
+          type={challenge?.state === 'completed'
+            ? ButtonType.COMMON
+            : ButtonType.PRIMARY_ALT}
           text={buttonInfo?.label}
           onClick={goToRoute}
           leftIcon={buttonInfo?.leftIcon}
-          rightIcon={buttonInfo?.rightIcon}
-        />
+          rightIcon={buttonInfo?.rightIcon} css={undefined}        />
       )}
       <div className={wm(styles.claimRewardWrapper)}>
         {liveToClaim > 0 ? (
@@ -418,19 +414,14 @@ const ChallengeRewardsBody = ({ dismissModal }: BodyProps) => {
             <Button
               text={messages.claimYourReward}
               className={wm(styles.button)}
-              type={
-                claimInProgress ? ButtonType.DISABLED : ButtonType.PRIMARY_ALT
-              }
+              type={claimInProgress ? ButtonType.DISABLED : ButtonType.PRIMARY_ALT}
               isDisabled={claimInProgress}
-              rightIcon={
-                claimInProgress ? (
-                  <LoadingSpinner className={styles.spinner} />
-                ) : (
-                  <IconCheck />
-                )
-              }
-              onClick={onClaimRewardClicked}
-            />
+              rightIcon={claimInProgress ? (
+                <LoadingSpinner className={styles.spinner} />
+              ) : (
+                <IconCheck />
+              )}
+              onClick={onClaimRewardClicked} css={undefined}            />
           </>
         ) : null}
         {liveClaimedSoFar > 0 && challenge?.state !== 'disbursed' ? (

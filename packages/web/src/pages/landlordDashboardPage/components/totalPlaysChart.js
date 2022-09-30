@@ -9,9 +9,9 @@ import { formatCount } from 'common/utils/formatUtil'
 import DropdownInput from 'components/dataEntry/dropdownInput'
 import Dropdown from 'components/navigation/dropdown'
 
-import { messages } from '../LandlordDashboardPage'
+import { messages } from '../landlordDashboardPage'
 
-import styles from './TotalPlaysChart.module.css'
+import styles from './totalPlaysChart.module.css'
 
 const MONTHS = {
   JAN: 'January',

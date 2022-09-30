@@ -7,7 +7,7 @@ import productShot from 'assets/img/publicSite/ColivingWeb@2x.png'
 import dotsLogo1x from 'assets/img/publicSite/dot-logo@1x.jpg'
 import dotsLogo2x from 'assets/img/publicSite/dot-logo@2x.jpg'
 
-import styles from './Description.module.css'
+import styles from './description.module.css'
 
 const messages = {
   title1: 'Next Generation',

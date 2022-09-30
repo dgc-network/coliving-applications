@@ -3,9 +3,9 @@ import cn from 'classnames'
 import PropTypes from 'prop-types'
 
 import TabSlider from 'components/dataEntry/tabSlider'
-import AgreementPreview from 'components/upload/AgreementPreview'
+import AgreementPreview from 'components/upload/agreementPreview'
 
-import styles from './AgreementsPreview.module.css'
+import styles from './agreementsPreview.module.css'
 import UploadType from './uploadType'
 
 const uploadDescriptions = {

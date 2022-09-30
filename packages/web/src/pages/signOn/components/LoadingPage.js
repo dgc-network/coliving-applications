@@ -4,7 +4,7 @@ import cn from 'classnames'
 
 import LoadingSpinner from 'components/loadingSpinner/loadingSpinner'
 
-import styles from './LoadingPage.module.css'
+import styles from './loadingPage.module.css'
 
 const messages = {
   title: 'Your Account is Almost Ready to Rock',

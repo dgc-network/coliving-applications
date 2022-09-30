@@ -19,7 +19,7 @@ import StatusMessage from 'components/statusMessage/statusMessage'
 
 import { ForgotPasswordHelper } from './forgotPasswordHelper'
 import { MetaMaskOption } from './metaMaskOption'
-import styles from './SignInPage.module.css'
+import styles from './signInPage.module.css'
 
 const messages = {
   title: 'Sign Into Your Coliving Account',
@@ -173,18 +173,15 @@ export const SignInPage = ({
         <Button
           name='sign-in'
           text='Continue'
-          rightIcon={
-            loading ? (
-              <LoadingSpinner className={styles.spinner} />
-            ) : (
-              <IconArrow />
-            )
-          }
+          rightIcon={loading ? (
+            <LoadingSpinner className={styles.spinner} />
+          ) : (
+            <IconArrow />
+          )}
           type={ButtonType.PRIMARY_ALT}
           onClick={() => onSignIn(email.value, password.value)}
           textClassName={styles.signInButtonText}
-          className={styles.signInButton}
-        />
+          className={styles.signInButton} css={undefined}        />
         {hasMetaMask ? (
           <MetaMaskOption text='Sign In With' onClick={onSignInWithMetaMask} />
         ) : null}
@@ -192,8 +189,7 @@ export const SignInPage = ({
           <Button
             text={'New to Coliving? Create an Account'}
             type={ButtonType.COMMON_ALT}
-            onClick={onSignUp}
-          />
+            onClick={onSignUp} css={undefined}          />
         </div>
         <div className={styles.forgotPasswordTextContainer}>
           <span

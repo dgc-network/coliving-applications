@@ -12,7 +12,7 @@ import NavContext, {
 } from 'components/nav/store/context'
 import { make, AgreementEvent } from 'store/analytics/actions'
 
-import styles from './ChangePasswordPage.module.css'
+import styles from './changePasswordPage.module.css'
 import { SettingsPageProps } from './settingsPage'
 
 export const ChangePasswordPage = ({ goBack }: SettingsPageProps) => {

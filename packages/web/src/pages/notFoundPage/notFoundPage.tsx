@@ -22,7 +22,7 @@ import { AppState } from 'store/types'
 import { isMobile } from 'utils/clientUtil'
 import { isMatrix, shouldShowDark } from 'utils/theme/theme'
 
-import styles from './NotFoundPage.module.css'
+import styles from './notFoundPage.module.css'
 
 const messages = {
   title: 'Not Found',
@@ -94,8 +94,7 @@ const NotFoundPage = ({ isMobile, goToHomePage, theme }: NotFoundPageProps) => {
               textClassName={styles.buttonFormattingText}
               type={ButtonType.PRIMARY_ALT}
               text={messages.cta}
-              onClick={goToHomePage}
-            />
+              onClick={goToHomePage} css={undefined}            />
           </div>
         </div>
       </div>

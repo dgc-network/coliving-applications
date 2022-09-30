@@ -1,6 +1,6 @@
 import InstagramButton from 'components/instagramButton/instagramButton'
 
-import styles from './InstagramAccountVerified.module.css'
+import styles from './instagramAccountVerified.module.css'
 
 const messages = {
   verify: 'Verify with Instagram'

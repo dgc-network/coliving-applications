@@ -34,7 +34,7 @@ import { MIN_TRANSFERRABLE_WEI } from 'services/walletClient/walletClient'
 import { ModalBodyTitle, ModalBodyWrapper } from '../walletModal'
 
 import DashboardTokenValueSlider from './dashboardTokenValueSlider'
-import styles from './SendInputBody.module.css'
+import styles from './sendInputBody.module.css'
 
 const { getRemoteVar } = remoteConfigInstance
 
@@ -308,8 +308,7 @@ const SendInputBody = ({
         text={messages.sendAudio}
         textClassName={styles.sendBtnText}
         onClick={onClickSend}
-        type={hasError ? ButtonType.DISABLED : ButtonType.PRIMARY_ALT}
-      />
+        type={hasError ? ButtonType.DISABLED : ButtonType.PRIMARY_ALT} css={undefined}      />
     </ModalBodyWrapper>
   )
 }

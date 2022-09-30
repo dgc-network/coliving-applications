@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux'
 
 import { requestOpen as requestOpenShareModal } from 'common/store/ui/shareModal/slice'
 
-import styles from './ShareUserButton.module.css'
+import styles from './shareUserButton.module.css'
 
 type ShareUserButtonProps = {
   userId: Nullable<ID>

@@ -24,7 +24,7 @@ import {
   getUserChallenges,
   getUserChallengesOverrides,
   getUserChallengeSpecifierMap
-} from 'common/store/pages/live-rewards/selectors'
+} from 'common/store/pages/liveRewards/selectors'
 import {
   Claim,
   claimChallengeReward,
@@ -42,7 +42,7 @@ import {
   setHCaptchaStatus,
   setUserChallengesDisbursed,
   showRewardClaimedToast
-} from 'common/store/pages/live-rewards/slice'
+} from 'common/store/pages/liveRewards/slice'
 import { getFeePayer } from 'common/store/solana/selectors'
 import { setVisibility } from 'common/store/ui/modals/slice'
 import { getBalance, increaseBalance } from 'common/store/wallet/slice'

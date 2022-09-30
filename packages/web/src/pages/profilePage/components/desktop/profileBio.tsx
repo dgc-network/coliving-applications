@@ -15,7 +15,7 @@ import { make, useRecord } from 'store/analytics/actions'
 
 import SocialLink, { Type } from '../socialLink'
 
-import styles from './ProfilePage.module.css'
+import styles from './profilePage.module.css'
 
 const messages = {
   seeMore: 'See More',

@@ -7,11 +7,11 @@ import { useDispatch } from 'react-redux'
 import { TwitterTweetEmbed } from 'react-twitter-embed'
 
 import { useModalState } from 'common/hooks/useModalState'
-import { getTrendingRewardsModalType } from 'common/store/pages/live-rewards/selectors'
+import { getTrendingRewardsModalType } from 'common/store/pages/liveRewards/selectors'
 import {
   TrendingRewardsModalType,
   setTrendingRewardsModalType
-} from 'common/store/pages/live-rewards/slice'
+} from 'common/store/pages/liveRewards/slice'
 import LoadingSpinner from 'components/loadingSpinner/loadingSpinner'
 import { useNavigateToPage } from 'hooks/useNavigateToPage'
 import { useRemoteVar } from 'hooks/useRemoteConfig'

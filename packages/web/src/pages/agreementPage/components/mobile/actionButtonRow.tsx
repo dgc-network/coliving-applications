@@ -7,7 +7,7 @@ import AnimatedIconButton, {
   AnimatedIconType
 } from 'components/animatedButton/animatedIconButton'
 
-import styles from './ActionButtonRow.module.css'
+import styles from './actionButtonRow.module.css'
 
 type ActionButtonRowProps = {
   isOwner: boolean

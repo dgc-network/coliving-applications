@@ -5,7 +5,7 @@ import cn from 'classnames'
 import { ReactComponent as IconPencil } from 'assets/img/iconPencil.svg'
 import UserBadges from 'components/userBadges/userBadges'
 
-import styles from './EditableName.module.css'
+import styles from './editableName.module.css'
 
 const EditableName = (props) => {
   const [editing, setEditing] = useState(false)

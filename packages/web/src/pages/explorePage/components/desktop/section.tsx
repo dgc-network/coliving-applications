@@ -60,8 +60,7 @@ const Section = ({
           textClassName={styles.expandButtonText}
           type={ButtonType.PRIMARY_ALT}
           text={expandText || messages.more}
-          onClick={expand}
-        />
+          onClick={expand} css={undefined}        />
       )}
     </div>
   )

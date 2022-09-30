@@ -4,7 +4,7 @@ import { ReactComponent as IconKebabHorizontal } from 'assets/img/iconKebabHoriz
 import { getCanonicalName } from 'common/utils/genres'
 import SelectablePills from 'components/selectablePill/selectablePills'
 
-import styles from './TrendingGenreFilters.module.css'
+import styles from './trendingGenreFilters.module.css'
 
 type TrendingGenreFiltersProps = {
   genre: string | null

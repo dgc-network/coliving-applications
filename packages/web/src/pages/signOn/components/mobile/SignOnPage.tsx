@@ -21,14 +21,14 @@ import FollowPage, {
 import Header from 'pages/signOn/components/mobile/header'
 import InitialPage from 'pages/signOn/components/mobile/initialPage'
 import NotificationPermissionsPage from 'pages/signOn/components/mobile/notificationPermissionsPage'
-import PasswordPage from 'pages/signOn/components/mobile/PasswordPage'
+import PasswordPage from 'pages/signOn/components/mobile/passwordPage'
 import ProfilePage from 'pages/signOn/components/mobile/profilePage'
 import { Pages, FollowLandlordsCategory } from 'pages/signOn/store/types'
 import { PromptPushNotificationPermissions } from 'services/nativeMobileInterface/notifications'
 import { BASE_URL, SIGN_UP_PAGE } from 'utils/route'
 
 import LoadingPage from './loadingPage'
-import styles from './SignOnPage.module.css'
+import styles from './signOnPage.module.css'
 
 const NATIVE_MOBILE = process.env.REACT_APP_NATIVE_MOBILE
 

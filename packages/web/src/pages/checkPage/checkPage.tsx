@@ -9,7 +9,7 @@ import { getCognitoSignature } from 'services/colivingBackend/cognito'
 import { COGNITO_SCRIPT_URL } from 'utils/constants'
 import { SIGN_IN_PAGE, TRENDING_PAGE } from 'utils/route'
 
-import './CheckPage.module.css'
+import './checkPage.module.css'
 
 declare global {
   interface Window {

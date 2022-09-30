@@ -4,7 +4,7 @@ import Lottie from 'react-lottie'
 
 import loadingSpinningGlyph from 'assets/animations/loadingSpinningGlyph.json'
 
-import styles from './LoadingPage.module.css'
+import styles from './loadingPage.module.css'
 
 const messages = {
   title: 'Your Account is Almost Ready to Rock ',

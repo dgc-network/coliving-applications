@@ -6,8 +6,8 @@ import { stringAudioToBN, weiToAudio } from 'common/utils/wallet'
 import { ModalBodyTitle, ModalBodyWrapper } from '../walletModal'
 
 import DashboardTokenValueSlider from './dashboardTokenValueSlider'
-import DisplayLive from './DisplayLive'
-import styles from './SendInputConfirmation.module.css'
+import DisplayLive from './displayLive'
+import styles from './sendInputConfirmation.module.css'
 
 const messages = {
   title: "YOU'RE ABOUT TO SEND",
@@ -52,8 +52,8 @@ const SendInputConfirmation = ({
         <Button
           text={messages.sendButton}
           onClick={onSend}
-          type={ButtonType.PRIMARY_ALT}
-        />
+          type={ButtonType.PRIMARY_ALT} 
+          css={undefined}        />
       </div>
     </ModalBodyWrapper>
   )

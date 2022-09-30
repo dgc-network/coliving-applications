@@ -11,7 +11,7 @@ import MobilePageContainer from 'components/mobilePageContainer/mobilePageContai
 import { useSubPageHeader } from 'components/nav/store/context'
 import { contentListPage, albumPage, BASE_URL, EXPLORE_PAGE } from 'utils/route'
 
-import styles from './CollectionsPage.module.css'
+import styles from './collectionsPage.module.css'
 
 export type CollectionsPageProps = {
   title: string

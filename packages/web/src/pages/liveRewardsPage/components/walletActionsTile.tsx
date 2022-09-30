@@ -15,7 +15,7 @@ import {
 import { getAccountBalance } from 'common/store/wallet/selectors'
 import { useSelector } from 'utils/reducer'
 
-import styles from './WalletActionsTile.module.css'
+import styles from './walletActionsTile.module.css'
 
 const messages = {
   receiveLabel: 'RECEIVE $LIVE',
@@ -46,26 +46,21 @@ export const WalletActions = ({ className }: { className?: string }) => {
         textClassName={styles.textClassName}
         onClick={onClickSend}
         leftIcon={<IconSend className={styles.iconStyle} />}
-        type={ButtonType.GLASS}
-      />
+        type={ButtonType.GLASS} css={undefined}      />
       <Button
         className={cn(styles.btn, styles.receiveBtn)}
         text={messages.receiveLabel}
         textClassName={styles.textClassName}
         onClick={onClickReceive}
         leftIcon={<IconReceive className={styles.iconStyle} />}
-        type={ButtonType.GLASS}
-      />
+        type={ButtonType.GLASS} css={undefined}      />
       <Button
         className={cn(styles.btn, styles.connectWalletsBtn)}
-        text={
-          hasMultipleWallets ? messages.manageWallets : messages.connectWallets
-        }
+        text={hasMultipleWallets ? messages.manageWallets : messages.connectWallets}
         includeHoverAnimations
         textClassName={styles.textClassName}
         onClick={onClickConnectWallets}
-        type={ButtonType.GLASS}
-      />
+        type={ButtonType.GLASS} css={undefined}      />
     </div>
   )
 }
