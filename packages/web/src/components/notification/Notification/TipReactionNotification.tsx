@@ -10,7 +10,7 @@ import { make } from 'store/analytics/actions'
 import { useSelector } from 'utils/reducer'
 
 import styles from './TipReactionNotification.module.css'
-import { AudioText } from './components/audioText'
+import { LiveText } from './components/liveText'
 import { NotificationBody } from './components/notificationBody'
 import { NotificationFooter } from './components/notificationFooter'
 import { NotificationHeader } from './components/notificationHeader'
@@ -92,7 +92,7 @@ export const TipReactionNotification = (
         <div className={styles.reactionTextRoot}>
           <div>
             {userLinkElement} {messages.react}
-            <AudioText value={uiAmount} />
+            <LiveText value={uiAmount} />
           </div>
         </div>
       </NotificationBody>

@@ -2,7 +2,7 @@ import { MouseEventHandler } from 'react'
 
 import { formatCount } from 'common/utils/formatUtil'
 
-import styles from './OthersLink.module.css'
+import styles from './othersLink.module.css'
 
 const messages = {
   and: 'and',

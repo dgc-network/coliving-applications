@@ -1,14 +1,14 @@
-import styles from './AudioText.module.css'
+import styles from './liveText.module.css'
 
 const messages = {
   liveLabel: 'live tokens'
 }
 
-type AudioTextProps = {
+type LiveTextProps = {
   value: number
 }
 
-export const AudioText = ({ value }: AudioTextProps) => {
+export const LiveText = ({ value }: LiveTextProps) => {
   return (
     <span className={styles.root}>
       {value} <span aria-label={messages.liveLabel}>$LIVE</span>

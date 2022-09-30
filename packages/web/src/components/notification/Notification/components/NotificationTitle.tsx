@@ -2,7 +2,7 @@ import { ReactNode } from 'react'
 
 import cn from 'classnames'
 
-import styles from './NotificationTitle.module.css'
+import styles from './notificationTitle.module.css'
 
 type NotificationTitleProps = {
   className?: string

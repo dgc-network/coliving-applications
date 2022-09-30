@@ -9,7 +9,7 @@ import { useRecord, make } from 'store/analytics/actions'
 
 import { getEntityLink } from '../utils'
 
-import styles from './EntityLink.module.css'
+import styles from './entityLink.module.css'
 
 type EntityType = (Collection | Agreement) & { user: Nullable<User> }
 

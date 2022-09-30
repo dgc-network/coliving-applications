@@ -5,7 +5,7 @@ import CoSign, { Size } from 'components/coSign/coSign'
 import DynamicImage from 'components/dynamicImage/dynamicImage'
 import { useAgreementCoverArt } from 'hooks/useAgreementCoverArt'
 
-import styles from './AgreementContent.module.css'
+import styles from './agreementContent.module.css'
 
 type AgreementContentProps = {
   agreement: AgreementEntity

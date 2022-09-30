@@ -11,7 +11,7 @@ import { getUser } from 'common/store/cache/users/selectors'
 import { make, useRecord } from 'store/analytics/actions'
 import { openTwitterLink } from 'utils/tweet'
 
-import styles from './TwitterShareButton.module.css'
+import styles from './twitterShareButton.module.css'
 
 const messages = {
   share: 'Share'

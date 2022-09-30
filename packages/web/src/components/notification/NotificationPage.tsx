@@ -19,7 +19,7 @@ import NetworkConnectivityMonitor from 'components/networkConnectivity/networkCo
 
 import { EmptyNotifications } from './emptyNotifications'
 import { Notification } from './notification'
-import styles from './NotificationPage.module.css'
+import styles from './notificationPage.module.css'
 
 const getNotifications = makeGetAllNotifications()
 

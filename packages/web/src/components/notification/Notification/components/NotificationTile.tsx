@@ -11,7 +11,7 @@ import { useDispatch } from 'react-redux'
 import { toggleNotificationPanel } from 'common/store/notifications/actions'
 import { Notification } from 'common/store/notifications/types'
 
-import styles from './NotificationTile.module.css'
+import styles from './notificationTile.module.css'
 
 type NotificationTileProps = {
   notification: Notification

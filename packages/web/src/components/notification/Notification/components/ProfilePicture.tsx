@@ -11,7 +11,7 @@ import { LandlordPopover } from 'components/landlord/landlordPopover'
 import DynamicImage from 'components/dynamicImage/dynamicImage'
 import { useUserProfilePicture } from 'hooks/useUserProfilePicture'
 
-import styles from './ProfilePicture.module.css'
+import styles from './profilePicture.module.css'
 
 const imageLoadDelay = 250
 

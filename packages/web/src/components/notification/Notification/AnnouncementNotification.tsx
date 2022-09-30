@@ -8,7 +8,7 @@ import { setNotificationModal } from 'common/store/notifications/actions'
 import { Announcement } from 'common/store/notifications/types'
 import { make, useRecord } from 'store/analytics/actions'
 
-import styles from './AnnouncementNotification.module.css'
+import styles from './announcementNotification.module.css'
 import { NotificationBody } from './components/notificationBody'
 import { NotificationFooter } from './components/notificationFooter'
 import { NotificationHeader } from './components/notificationHeader'

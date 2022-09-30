@@ -13,7 +13,7 @@ import {
 import { make } from 'store/analytics/actions'
 import { useSelector } from 'utils/reducer'
 
-import styles from './TipSentNotification.module.css'
+import styles from './tipSentNotification.module.css'
 import { EntityLink } from './components/entityLink'
 import { NotificationBody } from './components/notificationBody'
 import { NotificationFooter } from './components/notificationFooter'

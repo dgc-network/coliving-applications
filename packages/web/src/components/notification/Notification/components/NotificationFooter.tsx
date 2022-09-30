@@ -1,4 +1,4 @@
-import styles from './NotificationFooter.module.css'
+import styles from './notificationFooter.module.css'
 
 const messages = {
   unread: 'new'

@@ -15,7 +15,7 @@ import RepostButton from 'components/altButton/repostButton'
 import { AirplayMessage } from 'services/nativeMobileInterface/cast'
 import { ShowGoogleCastPickerMessage } from 'services/nativeMobileInterface/googleCast'
 
-import styles from './ActionsBar.module.css'
+import styles from './actionsBar.module.css'
 
 const NATIVE_MOBILE = process.env.REACT_APP_NATIVE_MOBILE
 

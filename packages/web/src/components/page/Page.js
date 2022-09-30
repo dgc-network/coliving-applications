@@ -8,7 +8,7 @@ import calcScrollbarWidth from 'scrollbar-width'
 
 import SearchBar from 'components/searchBar/connectedSearchBar'
 
-import styles from './Page.module.css'
+import styles from './page.module.css'
 
 const messages = {
   dotColiving: '• Coliving',

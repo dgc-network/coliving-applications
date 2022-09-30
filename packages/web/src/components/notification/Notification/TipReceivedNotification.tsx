@@ -16,7 +16,7 @@ import { make } from 'store/analytics/actions'
 import { useSelector } from 'utils/reducer'
 
 import styles from './TipReceivedNotification.module.css'
-import { AudioText } from './components/audioText'
+import { LiveText } from './components/liveText'
 import { NotificationBody } from './components/notificationBody'
 import { NotificationFooter } from './components/notificationFooter'
 import { NotificationHeader } from './components/notificationHeader'
@@ -107,7 +107,7 @@ export const TipReceivedNotification = (
           <ProfilePicture className={styles.profilePicture} user={user} />
           <span>
             <UserNameLink user={user} notification={notification} />{' '}
-            {messages.sent} <AudioText value={uiAmount} />
+            {messages.sent} <LiveText value={uiAmount} />
           </span>
         </div>
         <div className={styles.sayThanks}>

@@ -14,7 +14,7 @@ import { make, useRecord } from 'store/analytics/actions'
 import { isMobile } from 'utils/clientUtil'
 import { profilePage } from 'utils/route'
 
-import styles from './UserNameLink.module.css'
+import styles from './userNameLink.module.css'
 
 const messages = {
   deactivated: 'Deactivated'

@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 
-import styles from './NotificationHeader.module.css'
+import styles from './notificationHeader.module.css'
 
 type NotificationHeaderProps = {
   icon: ReactNode
