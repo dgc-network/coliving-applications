@@ -10,8 +10,8 @@
     "lint:fix": "lerna run lint:fix"
   },
   "devDependencies": {
-    "@coliving/common": "file: ./packages/common",
-    "@coliving/stems": "file: ./packages/stems",
+    "@coliving/common": "file:./packages/common",
+    "@coliving/stems": "file:./packages/stems",
     "lerna": "^5.1.8"
   },
   "dependencies": {
