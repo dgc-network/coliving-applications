@@ -62,7 +62,7 @@ type Props = OwnProps &
   ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>
 
-const Live = ({
+const Audio = ({
   webRef,
   agreementAndIndex: { agreement, index },
   queueLength,
@@ -145,10 +145,10 @@ const Live = ({
       MusicControl.handleAudioInterruptions(true)
     }
 
-    MusicControl.on(Command.nextAgreement, () => {
+    MusicControl.on(Command.nextTrack, () => {
       next()
     })
-    MusicControl.on(Command.previousAgreement, () => {
+    MusicControl.on(Command.previousTrack, () => {
       previous()
     })
     MusicControl.on(Command.skipForward, () => {

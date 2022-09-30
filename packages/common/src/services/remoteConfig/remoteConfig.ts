@@ -13,7 +13,7 @@ import {
   flagDefaults,
   flagCohortType,
   FeatureFlagCohortType
-} from 'services/remote-config/feature-flags'
+} from 'services/remoteConfig/featureFlags'
 import {
   IntKeys,
   StringKeys,
