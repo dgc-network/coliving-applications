@@ -1,0 +1,99 @@
+{
+  "name": "-protocol-dashboard",
+  "version": "0.1.0",
+  "private": true,
+  "homepage": "./",
+  "dependencies": {
+    "@apollo/client": "3.3.7",
+    "@coliving/sdk": "file:../libs",
+    "@coliving/stems": "file:../stems",
+    "@reduxjs/toolkit": "^1.8.5",
+    "@self.id/3box-legacy": "0.3.0",
+    "@self.id/core": "0.4.1",
+    "clsx": "1.1.1",
+    "connected-react-router": "6.8.0",
+    "dayjs": "1.8.36",
+    "graphql": "15.5.0",
+    "identicon.js": "2.3.3",
+    "numeral": "2.0.6",
+    "react": "16.13.1",
+    "react-chartjs-2": "2.10.0",
+    "react-country-flag": "3.0.2",
+    "react-custom-scrollbars": "4.2.1",
+    "react-dom": "16.13.1",
+    "react-markdown": "5.0.3",
+    "react-redux": "7.2.1",
+    "react-router-dom": "5.2.0",
+    "react-scripts": "^5.0.1",
+    "react-spring": "8.0.25",
+    "redux-thunk": "2.3.0",
+    "remark-gfm": "1.0.0",
+    "semver": "6.3.0",
+    "simplebar-react": "3.0.0-beta.5",
+    "webpack": "^5.74.0"
+  },
+  "scripts": {
+    "publish-scripts": "./scripts/publishScripts.sh",
+    "configure-local-env": "node ./configureLocalEnv.js",
+    "start": "craco start",
+    "start:dev:cloud": "npm run configure-local-env remote && ./node_modules/.bin/env-cmd -f .env.dev.local npm start",
+    "start:dev": "npm run configure-local-env && ./node_modules/.bin/env-cmd -f .env.dev.local npm start",
+    "start:stage": "./node_modules/.bin/env-cmd -f .env.stage npm start",
+    "start:prod": "./node_modules/.bin/env-cmd -f .env.prod npm start",
+    "build": "craco --max_old_space_size=8192 build",
+    "build:stage": "./node_modules/.bin/env-cmd -f .env.stage npm run build && node ./scripts/rerouteLegacy.js stage",
+    "build:prod": "./node_modules/.bin/env-cmd -f .env.prod npm run build && node ./scripts/rerouteLegacy.js",
+    "test": "craco test",
+    "eject": "craco eject",
+    "lint": "npm run prettier:check",
+    "lint:fix": "npm run prettier:write",
+    "prettier:base": "prettier --parser typescript --single-quote --no-semi",
+    "prettier:check": "npm run prettier:base -- --list-different \"src/**/*.{ts,tsx}\"",
+    "prettier:write": "npm run prettier:base -- --write \"src/**/*.{ts,tsx}\"",
+    "pull-dev-accounts": "node ./scripts/pullDevAccounts.js",
+    "advance-blocks": "node ./scripts/advanceBlocks.js",
+    "update-build:dev": "node ./scripts/updateBuild.js dev",
+    "update-build:stage": "node ./scripts/updateBuild.js stage",
+    "update-build:prod": "node ./scripts/updateBuild.js prod"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@openzeppelin/test-helpers": "^0.5.15",
+    "@pinata/sdk": "1.1.13",
+    "@types/node": "12.0.10",
+    "abort-controller": "3.0.0",
+    "assert": "2.0.0",
+    "browserify-zlib": "0.2.0",
+    "constants-browserify": "1.0.0",
+    "crypto-browserify": "3.12.0",
+    "env-cmd": "9.0.3",
+    "https-browserify": "1.0.0",
+    "node-fetch": "^3.2.10",
+    "os-browserify": "0.3.0",
+    "path-browserify": "1.0.1",
+    "prettier": "1.19.1",
+    "redux-devtools-extension": "2.13.8",
+    "stream-browserify": "3.0.0",
+    "stream-http": "3.2.0",
+    "tls": "0.0.1",
+    "url": "0.11.0",
+    "util": "0.12.4"
+  },
+  "resolutions": {
+    "bn.js": "5.0.0"
+  }
+}
