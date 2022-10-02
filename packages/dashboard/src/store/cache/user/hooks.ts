@@ -27,7 +27,7 @@ import {
   fetchContentNodes
 } from '../contentNode/hooks'
 import { useAccountUser } from 'store/account/hooks'
-import { GetPendingDecreaseStakeRequestResponse } from 'services/coliving/service-provider/types'
+import { GetPendingDecreaseStakeRequestResponse } from 'services/coliving/serviceProvider/types'
 import getActiveStake, { getTotalActiveDelegatedStake } from 'utils/activeStake'
 import {
   useUser as useGraphUser,

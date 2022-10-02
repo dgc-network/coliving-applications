@@ -4,7 +4,7 @@ import {
   GetRegisteredServiceProviderEventsResponse,
   GetDeregisteredServiceProviderEventsResponse,
   GetIncreasedStakeEventResponse
-} from '../services/coliving/service-provider/types'
+} from '../services/coliving/serviceProvider/types'
 import { GetIncreaseDelegateStakeEventsResponse } from 'services/coliving/delegate/types'
 import {
   GetClaimEventsResponse,

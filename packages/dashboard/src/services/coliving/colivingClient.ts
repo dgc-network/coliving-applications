@@ -1,4 +1,4 @@
-import ServiceProviderClient from './service-provider/serviceProviderClient'
+import ServiceProviderClient from './serviceProvider/serviceProviderClient'
 import Staking from './staking/staking'
 import ColivingToken from './token/colivingToken'
 import Delegate from './delegate/delegate'
