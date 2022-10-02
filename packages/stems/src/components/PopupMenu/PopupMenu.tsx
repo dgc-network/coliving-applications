@@ -5,7 +5,7 @@ import cn from 'classnames'
 
 import { Popup } from 'components/popup'
 
-import styles from './PopupMenu.module.css'
+import styles from './popupMenu.module.css'
 import { PopupMenuItem, PopupMenuProps } from './types'
 
 /**
