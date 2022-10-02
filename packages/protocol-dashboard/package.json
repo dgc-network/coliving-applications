@@ -5,8 +5,8 @@
   "homepage": "./",
   "dependencies": {
     "@apollo/client": "3.3.7",
-    "@coliving/sdk": "file:../libs",
-    "@coliving/stems": "file:../stems",
+    "@coliving/sdk": "file:./libs",
+    "@coliving/stems": "file:./stems",
     "@reduxjs/toolkit": "^1.8.5",
     "@self.id/3box-legacy": "0.3.0",
     "@self.id/core": "0.4.1",
