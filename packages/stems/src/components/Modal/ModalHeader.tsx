@@ -7,7 +7,7 @@ import { IconButton } from 'components/iconButton/iconButton'
 import { IconRemove } from 'components/icons'
 
 import { ModalContext } from './modalContext'
-import styles from './ModalHeader.module.css'
+import styles from './modalHeader.module.css'
 import { ModalHeaderProps, ModalTitleProps } from './types'
 
 /**
