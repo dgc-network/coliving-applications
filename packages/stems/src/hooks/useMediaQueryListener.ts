@@ -7,7 +7,7 @@ export const useMediaQueryListener = (mediaQuery: string) => {
   // Updates whether there is a match or not
   // when the media query status changes
   const listener = useCallback(
-    matcher => setIsMatch(matcher.matches),
+    (    matcher: { matches: boolean | ((prevState: boolean) => boolean) }) => setIsMatch(matcher.matches),
     [setIsMatch]
   )
 
