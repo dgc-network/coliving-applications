@@ -1,4 +1,4 @@
-import type { AppState } from '../'
+import type { AppState } from '..'
 
 import type { Drawer } from './slice'
 

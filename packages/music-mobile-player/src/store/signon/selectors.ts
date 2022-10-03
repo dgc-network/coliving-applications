@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect'
 
-import type { AppState } from '../'
+import type { AppState } from '..'
 
 export const getBaseState = (state: AppState) => state.signon
 
