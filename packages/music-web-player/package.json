@@ -9,6 +9,7 @@
     "@coinbase/cbpay-js": "1.0.2",
     "@coliving/common": "file:../common",
     "@coliving/stems": "file:../stems",
+    "@craco/craco": "^6.4.5",
     "@fingerprintjs/fingerprintjs-pro": "3.5.6",
     "@hcaptcha/react-hcaptcha": "0.3.6",
     "@juggle/resize-observer": "^3.3.1",
