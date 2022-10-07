@@ -1,6 +1,6 @@
-const COLIVING_CONFIG = '.coliving/data-config.json'
+const COLIVING_CONFIG = '.coliving/data-contract-config.json'
 const COLIVING_SOL_CONFIG = '.coliving/solana-program-config.json'
-const COLIVING_ETH_CONFIG = '.coliving/eth-config.json'
+const COLIVING_ETH_CONFIG = '.coliving/eth-contract-config.json'
 const AAO_CONFIG = '.coliving/aao-config.json'
 
 const fs = require('fs')
