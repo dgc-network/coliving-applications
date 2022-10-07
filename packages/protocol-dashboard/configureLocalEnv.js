@@ -1,4 +1,4 @@
-const COLIVING_CONFIG = './config.json'
+const COLIVING_CONFIG = './data-config.json'
 const COLIVING_ETH_CONFIG = './eth-config.json'
 const COLIVING_SOL_CONFIG = './solana-program-config.json'
 
