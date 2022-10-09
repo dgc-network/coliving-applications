@@ -115,7 +115,7 @@ export const getKindFromKindId = (kindId: string) => kindId.split('-')[0]
 
 export const uuid = () => {
   // https://stackoverflow.com/questions/105034/create-guid-uuid-in-javascript/873856#873856
-  const s = []
+  const s : any[]|null = []
   const hexDigits = '0123456789abcdef'
   // all the ts-ignores are needed so the mobile package types things correctly
   // remove when upgrading to latest typescript
