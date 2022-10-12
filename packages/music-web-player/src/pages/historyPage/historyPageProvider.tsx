@@ -135,7 +135,7 @@ const HistoryPage = g((props) => {
         pause()
         record(
           make(Name.PLAYBACK_PAUSE, {
-            id: `${agreementRecord.agreement_id}`,
+            id: `${agreementRecord.digital_content_id}`,
             source: PlaybackSource.HISTORY_PAGE
           })
         )
@@ -143,7 +143,7 @@ const HistoryPage = g((props) => {
         play(agreementRecord.uid)
         record(
           make(Name.PLAYBACK_PLAY, {
-            id: `${agreementRecord.agreement_id}`,
+            id: `${agreementRecord.digital_content_id}`,
             source: PlaybackSource.HISTORY_PAGE
           })
         )
@@ -155,9 +155,9 @@ const HistoryPage = g((props) => {
   const onClickSave = useCallback(
     (record) => {
       if (!record.has_current_user_saved) {
-        saveAgreement(record.agreement_id)
+        saveAgreement(record.digital_content_id)
       } else {
-        unsaveAgreement(record.agreement_id)
+        unsaveAgreement(record.digital_content_id)
       }
     },
     [saveAgreement, unsaveAgreement]
@@ -214,9 +214,9 @@ const HistoryPage = g((props) => {
   const onClickRepost = useCallback(
     (record) => {
       if (!record.has_current_user_reposted) {
-        repostAgreement(record.agreement_id)
+        repostAgreement(record.digital_content_id)
       } else {
-        undoRepostAgreement(record.agreement_id)
+        undoRepostAgreement(record.digital_content_id)
       }
     },
     [repostAgreement, undoRepostAgreement]

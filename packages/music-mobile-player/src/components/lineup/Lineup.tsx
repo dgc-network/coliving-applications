@@ -16,7 +16,7 @@ import {
 import { useDispatchWeb } from 'app/hooks/useDispatchWeb'
 import { useScrollToTop } from 'app/hooks/useScrollToTop'
 import { useSelectorWeb } from 'app/hooks/useSelectorWeb'
-import { make, agreement } from 'app/utils/analytics'
+import { make, digital_content } from 'app/utils/analytics'
 
 import { FeedTipTile } from '../feedTipTile/feedTipTile'
 
@@ -242,7 +242,7 @@ export const Lineup = ({
       setImmediate(() => {
         if (!isPlayingUid || !isPlaying) {
           dispatchWeb(actions.play(uid))
-          agreement(
+          digital_content(
             make({
               eventName: Name.PLAYBACK_PLAY,
               id: `${id}`,
@@ -251,7 +251,7 @@ export const Lineup = ({
           )
         } else {
           dispatchWeb(actions.pause())
-          agreement(
+          digital_content(
             make({
               eventName: Name.PLAYBACK_PAUSE,
               id: `${id}`,
@@ -265,7 +265,7 @@ export const Lineup = ({
   )
 
   const getLineupTileComponent = (item: LineupItem) => {
-    if (item.kind === Kind.AGREEMENTS || item.agreement_id) {
+    if (item.kind === Kind.AGREEMENTS || item.digital_content_id) {
       if (item._marked_deleted) {
         return null
       }

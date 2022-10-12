@@ -200,7 +200,7 @@ const TrendingPageContent = (props: TrendingPageContentProps) => {
   }
 
   const trendingLineups = [
-    <div key='weekly-trending-agreements' className={styles.lineupContainer}>
+    <div key='weekly-trending-digital-contents' className={styles.lineupContainer}>
       {trendingGenre === null ? (
         <div className={styles.bannerContainer}>
           <RewardsBanner bannerType='agreements' />
@@ -225,7 +225,7 @@ const TrendingPageContent = (props: TrendingPageContentProps) => {
         {...mainLineupProps}
       />
     </div>,
-    <div key='monthly-trending-agreements' className={styles.lineupContainer}>
+    <div key='monthly-trending-digital-contents' className={styles.lineupContainer}>
       <Lineup
         aria-label='monthly trending agreements'
         ordered
@@ -244,7 +244,7 @@ const TrendingPageContent = (props: TrendingPageContentProps) => {
         {...mainLineupProps}
       />
     </div>,
-    <div key='all-time-trending-agreements' className={styles.lineupContainer}>
+    <div key='all-time-trending-digital-contents' className={styles.lineupContainer}>
       <Lineup
         aria-label='all-time trending agreements'
         ordered

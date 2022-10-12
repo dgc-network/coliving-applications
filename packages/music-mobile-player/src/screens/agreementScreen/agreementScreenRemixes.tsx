@@ -53,7 +53,7 @@ const useStyles = makeStyles(({ palette, spacing, typography }) => ({
     flexWrap: 'wrap'
   },
 
-  agreement: {
+  digital_content: {
     marginHorizontal: spacing(3),
     marginBottom: spacing(5)
   },
@@ -78,7 +78,7 @@ export const AgreementScreenRemixes = ({
       </View>
       <View style={styles.agreements}>
         {agreementIds.map((id) => {
-          return <AgreementScreenRemix id={id} key={id} style={styles.agreement} />
+          return <AgreementScreenRemix id={id} key={id} style={styles.digital_content} />
         })}
       </View>
       <Button

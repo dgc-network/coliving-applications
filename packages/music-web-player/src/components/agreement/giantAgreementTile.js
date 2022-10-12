@@ -27,7 +27,7 @@ import Skeleton from 'components/skeleton/skeleton'
 import Toast from 'components/toast/toast'
 import Tooltip from 'components/tooltip/tooltip'
 import UserBadges from 'components/userBadges/userBadges'
-import HiddenAgreementHeader from 'pages/agreement-page/components/HiddenAgreementHeader'
+import HiddenAgreementHeader from 'pages/digital-content-page/components/HiddenAgreementHeader'
 import { moodMap } from 'utils/moods'
 
 import Badge from './badge'
@@ -262,7 +262,7 @@ class GiantAgreementTile extends PureComponent {
         <div className={styles.listens}>
           {listenCount === 0 ? (
             <span className={styles.firstListen}>
-              Be the first to listen to this agreement!
+              Be the first to listen to this digital_content!
             </span>
           ) : (
             <>
@@ -392,7 +392,7 @@ class GiantAgreementTile extends PureComponent {
 
     const overflowMenu = {
       menu: {
-        type: 'agreement',
+        type: 'digital_content',
         agreementId,
         agreementTitle,
         handle: landlordHandle,
@@ -470,7 +470,7 @@ class GiantAgreementTile extends PureComponent {
             <div
               className={cn(styles.commonButtonSection, fadeIn)}
               role='group'
-              aria-label='agreement actions'
+              aria-label='digital_content actions'
             >
               {this.renderShareButton()}
               {this.renderMakePublicButton()}

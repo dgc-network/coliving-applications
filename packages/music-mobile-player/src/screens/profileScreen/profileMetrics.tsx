@@ -46,10 +46,10 @@ const useStyles = makeStyles(({ typography, palette, spacing }) => ({
 
 export const ProfileMetrics = () => {
   const styles = useStyles()
-  const { user_id, agreement_count, follower_count, followee_count } =
+  const { user_id, digital_content_count, follower_count, followee_count } =
     useSelectProfile([
       'user_id',
-      'agreement_count',
+      'digital_content_count',
       'follower_count',
       'followee_count'
     ])
@@ -76,7 +76,7 @@ export const ProfileMetrics = () => {
   return (
     <View pointerEvents='box-none' style={styles.root}>
       <View style={styles.metric}>
-        <Text style={styles.value}>{formatCount(agreement_count)}</Text>
+        <Text style={styles.value}>{formatCount(digital_content_count)}</Text>
         <Text style={styles.label}>{messages.agreements}</Text>
       </View>
       <Pressable style={styles.metric} onPress={handlePressFollowers}>

@@ -55,7 +55,7 @@ export const makeGetSearchContentLists = () => {
           return {
             ...contentList,
             user: users[contentList.content_list_owner_id],
-            agreementCount: (contentList.content_list_contents.agreement_ids || []).length
+            agreementCount: (contentList.content_list_contents.digital_content_ids || []).length
           }
         })
         .filter((contentList) => !!contentList.user && !contentList.user.is_deactivated)

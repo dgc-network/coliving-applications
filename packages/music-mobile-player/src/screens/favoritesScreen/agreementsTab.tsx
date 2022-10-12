@@ -20,9 +20,9 @@ import type { AgreementMetadata } from 'app/components/agreementList/types'
 import { WithLoader } from 'app/components/withLoader/withLoader'
 import { useDispatchWeb } from 'app/hooks/useDispatchWeb'
 import { useSelectorWeb } from 'app/hooks/useSelectorWeb'
-import { getPlaying, getPlayingUid } from 'app/store/live/selectors'
+import { getPlaying, getPlayingUid } from 'app/store/digitalcoin/selectors'
 import { makeStyles } from 'app/styles'
-import { make, agreement } from 'app/utils/analytics'
+import { make, digital_content } from 'app/utils/analytics'
 
 import { EmptyTab } from './emptyTab'
 import { FilterInput } from './filterInput'
@@ -61,11 +61,11 @@ export const AgreementsTab = () => {
   const savedAgreementsStatus = useSelectorWeb(getSavedAgreementsStatus)
   const savedAgreements = useSelectorWeb(getAgreements, shallowEqual)
 
-  const filterAgreement = (agreement: AgreementMetadata) => {
+  const filterAgreement = (digital_content: AgreementMetadata) => {
     const matchValue = filterValue.toLowerCase()
     return (
-      agreement.title.toLowerCase().indexOf(matchValue) > -1 ||
-      agreement.user.name.toLowerCase().indexOf(matchValue) > -1
+      digital_content.title.toLowerCase().indexOf(matchValue) > -1 ||
+      digital_content.user.name.toLowerCase().indexOf(matchValue) > -1
     )
   }
 
@@ -82,7 +82,7 @@ export const AgreementsTab = () => {
     (uid: UID, id: ID) => {
       if (uid !== playingUid || (uid === playingUid && !isPlaying)) {
         dispatchWeb(agreementsActions.play(uid))
-        agreement(
+        digital_content(
           make({
             eventName: Name.PLAYBACK_PLAY,
             id: `${id}`,
@@ -91,7 +91,7 @@ export const AgreementsTab = () => {
         )
       } else if (uid === playingUid && isPlaying) {
         dispatchWeb(agreementsActions.pause())
-        agreement(
+        digital_content(
           make({
             eventName: Name.PLAYBACK_PAUSE,
             id: `${id}`,

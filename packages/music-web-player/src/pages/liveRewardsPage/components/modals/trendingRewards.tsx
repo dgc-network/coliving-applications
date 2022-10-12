@@ -82,7 +82,7 @@ const textMap = {
   }
 }
 
-const TOS_URL = 'https://blog.coliving.lol/posts/live-rewards'
+const TOS_URL = 'https://blog.coliving.lol/posts/digitalcoin-rewards'
 
 // Getters and setters for whether we're looking at
 // trending contentLists or trending agreements

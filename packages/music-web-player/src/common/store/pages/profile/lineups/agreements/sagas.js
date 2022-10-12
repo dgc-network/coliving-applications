@@ -30,7 +30,7 @@ function* getAgreements({ offset, limit, payload }) {
 
   // Wait for user to receive social handles
   // We need to know ahead of time whether we want to request
-  // the "landlord pick" agreement in addition to the landlord's agreements.
+  // the "landlord pick" digital_content in addition to the landlord's agreements.
   // TODO: Move landlord pick to chain/discprov to avoid this extra trip
   const user = yield call(
     waitForValue,
@@ -64,26 +64,26 @@ function* getAgreements({ offset, limit, payload }) {
     }
 
     const pinnedAgreementIndex = processed.findIndex(
-      (agreement) => agreement.agreement_id === user._landlord_pick
+      (digital_content) => digital_content.digital_content_id === user._landlord_pick
     )
     if (offset === 0) {
-      // If pinned agreement found in agreementsResponse,
+      // If pinned digital_content found in agreementsResponse,
       // put it to the front of the list, slicing it out of agreementsResponse.
       if (pinnedAgreementIndex !== -1) {
         return pinnedAgreement
           .concat(processed.slice(0, pinnedAgreementIndex))
           .concat(processed.slice(pinnedAgreementIndex + 1))
       }
-      // If pinned agreement not in agreementsResponse,
+      // If pinned digital_content not in agreementsResponse,
       // add it to the front of the list.
       return pinnedAgreement.concat(processed)
     } else {
       // If we're paginating w/ offset > 0
-      // set the pinned agreement as null.
+      // set the pinned digital_content as null.
       // This will be handled by `filterDeletes` via `nullCount`
       if (pinnedAgreementIndex !== -1) {
-        return processed.map((agreement, i) =>
-          i === pinnedAgreementIndex ? null : agreement
+        return processed.map((digital_content, i) =>
+          i === pinnedAgreementIndex ? null : digital_content
         )
       }
       return processed
@@ -122,8 +122,8 @@ function* watchSetLandlordPick() {
     const lineup = yield select(getProfileAgreementsLineup)
     const updatedOrderUid = []
     for (const [entryUid, order] of Object.entries(lineup.order)) {
-      const agreement = yield select(getAgreement, { uid: entryUid })
-      const isLandlordPick = agreement.agreement_id === action.agreementId
+      const digital_content = yield select(getAgreement, { uid: entryUid })
+      const isLandlordPick = digital_content.digital_content_id === action.agreementId
 
       if (isLandlordPick) updatedOrderUid.push({ uid: entryUid, order: 0 })
       else updatedOrderUid.push({ uid: entryUid, order: order + 1 })

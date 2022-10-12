@@ -16,7 +16,7 @@ const Droppable = (props) => {
   /**
    * Whether or not the currently dragged kind is accepted by this droppable.
    * Conditions include:
-   * 1.) Must be accepted kind agreement/album/plylist
+   * 1.) Must be accepted kind digital_content/album/plylist
    * 2.) Must not be disabled
    * 3.) Either accept owner or the dragging entity if not owned by user
    */
@@ -101,7 +101,7 @@ Droppable.propTypes = {
 
 Droppable.defaultProps = {
   onDrop: (id, kind) => {},
-  acceptedKinds: ['agreement', 'album', 'contentList', 'library-content-list'],
+  acceptedKinds: ['digital_content', 'album', 'contentList', 'library-content-list'],
   disabled: false,
   stopPropogationOnDrop: false,
   acceptOwner: true

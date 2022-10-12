@@ -159,7 +159,7 @@ const SavedPage = ({
             primaryText={album.content_list_name}
             secondaryText={formatCardSecondaryText(
               album.save_count,
-              album.content_list_contents.agreement_ids.length
+              album.content_list_contents.digital_content_ids.length
             )}
             isReposted={album.has_current_user_reposted}
             isSaved={album.has_current_user_saved}
@@ -211,7 +211,7 @@ const SavedPage = ({
             key='favorites'
             userId={account ? account.user_id : 0}
             loading={agreementsLoading}
-            loadingRowsCount={account ? account.agreement_save_count : 0}
+            loadingRowsCount={account ? account.digital_content_save_count : 0}
             playing={queuedAndPlaying}
             playingIndex={playingIndex}
             dataSource={dataSource}

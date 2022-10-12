@@ -4,7 +4,7 @@ import {
   ID,
   StemCategory,
   StemUploadWithFile,
-  Agreement,
+  DigitalContent,
   removeNullable,
   uuid
 } from '@coliving/common'
@@ -19,7 +19,7 @@ import { getCurrentUploads } from 'common/store/stemsUpload/selectors'
 import { startStemUploads } from 'common/store/stemsUpload/slice'
 import DeleteConfirmationModal from 'components/deleteConfirmation/deleteConfirmationModal'
 import { dropdownRows } from 'components/sourceFilesModal/sourceFilesModal'
-import EditAgreementModalComponent from 'components/agreement/EditAgreementModal'
+import EditAgreementModalComponent from 'components/digital_content/EditAgreementModal'
 import { processFiles } from 'pages/uploadPage/store/utils/processFiles'
 import * as editAgreementModalActions from 'store/application/ui/editAgreementModal/actions'
 import {
@@ -55,7 +55,7 @@ const EditAgreementModal = ({
 }: EditAgreementModalProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   useEffect(() => {
-    // Delay opening the modal until after we have agreement metadata as well
+    // Delay opening the modal until after we have digital_content metadata as well
     if (isOpen && metadata) {
       setIsModalOpen(true)
     }
@@ -68,11 +68,11 @@ const EditAgreementModal = ({
 
   const [pendingUploads, setPendingUploads] = useState<StemUploadWithFile[]>([])
   const [pendingDeletes, setPendingDeletes] = useState<ID[]>([])
-  const onSaveEdit = (formFields: Agreement) => {
+  const onSaveEdit = (formFields: DigitalContent) => {
     if (!metadata) return
-    onEdit(metadata.agreement_id, formFields)
+    onEdit(metadata.digital_content_id, formFields)
     if (pendingUploads.length) {
-      uploadStems(metadata.agreement_id, pendingUploads)
+      uploadStems(metadata.digital_content_id, pendingUploads)
       setPendingUploads([])
     }
     if (pendingDeletes.length) {
@@ -94,7 +94,7 @@ const EditAgreementModal = ({
 
   const onDeleteAgreement = () => {
     if (!metadata) return
-    onDelete(metadata.agreement_id)
+    onDelete(metadata.digital_content_id)
     setShowDeleteConfirmation(false)
     close()
     const match = matchPath<{ name: string; handle: string }>(
@@ -110,7 +110,7 @@ const EditAgreementModal = ({
   }
 
   const getStemsFilteringPendingDeletes = () =>
-    stems.filter((s) => !pendingDeletes.includes(s.agreement_id))
+    stems.filter((s) => !pendingDeletes.includes(s.digital_content_id))
 
   const onSelectStemCategory = (category: StemCategory, stemIndex: number) => {
     setPendingUploads((u) => {
@@ -169,7 +169,7 @@ const EditAgreementModal = ({
     const onDeleteStem = (index: number) => {
       if (index < existingStems.length) {
         // If it's an existing stem, set is as a pending delete
-        const id = existingStems[index].metadata.agreement_id
+        const id = existingStems[index].metadata.digital_content_id
         setPendingDeletes((s) => [...s, id])
       } else {
         // If it's a pending stem, delete it from local state
@@ -201,7 +201,7 @@ const EditAgreementModal = ({
       />
       <DeleteConfirmationModal
         title={messages.deleteAgreement}
-        entity='Agreement'
+        entity='DigitalContent'
         visible={showDeleteConfirmation}
         onDelete={onDeleteAgreement}
         onCancel={() => setShowDeleteConfirmation(false)}
@@ -216,8 +216,8 @@ function mapStateToProps(state: AppState, ownProps: OwnProps) {
     metadata,
     isOpen: getIsOpen(state),
     stems: getStems(state),
-    currentUploads: metadata?.agreement_id
-      ? getCurrentUploads(state, metadata.agreement_id)
+    currentUploads: metadata?.digital_content_id
+      ? getCurrentUploads(state, metadata.digital_content_id)
       : []
   }
 }

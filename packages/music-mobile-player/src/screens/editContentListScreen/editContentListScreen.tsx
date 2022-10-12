@@ -41,26 +41,26 @@ const EditContentListForm = (props: FormikProps<ContentListValues>) => {
 
   const handleReorder = useCallback(
     ({ data, from, to }) => {
-      const reorder = [...values.agreement_ids]
+      const reorder = [...values.digital_content_ids]
       const tmp = reorder[from]
       reorder.splice(from, 1)
       reorder.splice(to, 0, tmp)
 
-      setFieldValue('agreement_ids', reorder)
+      setFieldValue('digital_content_ids', reorder)
       setFieldValue('agreements', data)
     },
-    [setFieldValue, values.agreement_ids]
+    [setFieldValue, values.digital_content_ids]
   )
 
   const handleRemove = useCallback(
     (index: number) => {
-      if ((values.agreement_ids.length ?? 0) <= index) {
+      if ((values.digital_content_ids.length ?? 0) <= index) {
         return
       }
-      const { agreement: agreementId, time } = values.agreement_ids[index]
+      const { digital_content: agreementId, time } = values.digital_content_ids[index]
 
       const agreementMetadata = values.agreements?.find(
-        ({ agreement_id }) => agreement_id === agreementId
+        ({ digital_content_id }) => digital_content_id === agreementId
       )
 
       if (!agreementMetadata) return
@@ -75,7 +75,7 @@ const EditContentListForm = (props: FormikProps<ContentListValues>) => {
 
       setFieldValue('agreements', agreements)
     },
-    [values.agreement_ids, values.agreements, values.removedAgreements, setFieldValue]
+    [values.digital_content_ids, values.agreements, values.removedAgreements, setFieldValue]
   )
 
   const header = (
@@ -125,11 +125,11 @@ export const EditContentListScreen = () => {
             removeAgreementFromContentList(agreementId, contentList.content_list_id, timestamp)
           )
         })
-        if (!isEqual(contentList?.content_list_contents.agreement_ids, values.agreement_ids)) {
+        if (!isEqual(contentList?.content_list_contents.digital_content_ids, values.digital_content_ids)) {
           dispatchWeb(
             orderContentList(
               contentList?.content_list_id,
-              values.agreement_ids.map(({ agreement, time }) => ({ id: agreement, time }))
+              values.digital_content_ids.map(({ digital_content, time }) => ({ id: digital_content, time }))
             )
           )
         }
@@ -152,7 +152,7 @@ export const EditContentListScreen = () => {
     artwork: { url: coverArt ?? '' },
     removedAgreements: [],
     agreements,
-    agreement_ids: contentList.content_list_contents.agreement_ids
+    digital_content_ids: contentList.content_list_contents.digital_content_ids
   }
 
   return (

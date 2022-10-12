@@ -7,7 +7,7 @@ import {
   liveTierMapPng,
   TierLevel,
   TierNumber
-} from 'pages/live-rewards-page/Tiers'
+} from 'pages/digitalcoin-rewards-page/Tiers'
 import { getKeyboardVisibility } from 'store/application/ui/mobileKeyboard/selectors'
 import { useSelector } from 'utils/reducer'
 

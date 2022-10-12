@@ -6,7 +6,7 @@ import { RepeatMode, Queueable } from 'common/store/queue/types'
 type State = {
   order: Queueable[]
 
-  // Maps agreement UIDs to the index
+  // Maps digital_content UIDs to the index
   positions: { [uid: string]: number }
 
   // Active index
@@ -22,12 +22,12 @@ type State = {
   queueAutoplay: boolean
 
   // Whether or not a `next` was fired on the queue that overshoots
-  // the length of the queue (`next` from the last agreement).
+  // the length of the queue (`next` from the last digital_content).
   // Reset to false on the next play.
   overshot: boolean
 
   // Whether or not a `previous` was fired on the queue that undershoots
-  // the length of the queue (`previous` from the first agreement).
+  // the length of the queue (`previous` from the first digital_content).
   // Reset to false on the next play.
   undershot: boolean
 }
@@ -120,7 +120,7 @@ const slice = createSlice({
     persist: (state, action: PayloadAction<PersistPayload>) => {},
     // Pauses the queue
     pause: (state, action: PayloadAction<PausePayload>) => {},
-    // Skips the next agreement in the queue
+    // Skips the next digital_content in the queue
     next: (state, action: PayloadAction<NextPayload>) => {
       const { skip } = action.payload
 
@@ -146,7 +146,7 @@ const slice = createSlice({
           return
         }
         if (!state.queueAutoplay) {
-          // Reset to last agreement
+          // Reset to last digital_content
           state.overshot = true
           return
         }
@@ -154,7 +154,7 @@ const slice = createSlice({
 
       state.index = state.index + 1
     },
-    // Skips to the previous agreement in the queue
+    // Skips to the previous digital_content in the queue
     previous: (state, action: PayloadAction<PreviousPayload>) => {
       if (state.shuffle) {
         const newShuffleIndex =
@@ -211,7 +211,7 @@ const slice = createSlice({
       state.positions = newPositions
       state.index = newIndex
     },
-    // Adds a agreement to the queue either at the end or the given index.
+    // Adds a digital_content to the queue either at the end or the given index.
     add: (state, action: PayloadAction<AddPayload>) => {
       const { entries, index } = action.payload
 

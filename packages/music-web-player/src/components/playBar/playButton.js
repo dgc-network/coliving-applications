@@ -152,10 +152,10 @@ class PlayButton extends Component {
     )
 
     const ariaLabel = isLoading
-      ? 'agreement loading'
+      ? 'digital_content loading'
       : playState === PlayStates.PLAY
-      ? 'play agreement'
-      : 'pause agreement'
+      ? 'play digital_content'
+      : 'pause digital_content'
 
     return (
       <button

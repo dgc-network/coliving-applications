@@ -8,7 +8,7 @@ import { noopReducer } from 'store/testHelper'
 
 const initialAgreements = {
   entries: {
-    1: { metadata: { owner_id: 1, agreement_segments: {} } }
+    1: { metadata: { owner_id: 1, digital_content_segments: {} } }
   },
   uids: {
     123: 1
@@ -22,7 +22,7 @@ const initialUsers = {
 }
 
 const makeInitialPlayer = (playing) => ({
-  live: {
+  digitalcoin: {
     load: jest.fn(),
     play: jest.fn(),
     pause: jest.fn(),
@@ -53,8 +53,8 @@ describe('watchPlay', () => {
     expect(storeState.player).toMatchObject({
       playing: true
     })
-    expect(initialPlayer.live.load).toBeCalled()
-    expect(initialPlayer.live.play).toBeCalled()
+    expect(initialPlayer.digitalcoin.load).toBeCalled()
+    expect(initialPlayer.digitalcoin.play).toBeCalled()
   })
 
   it('plays by resuming', async () => {
@@ -77,7 +77,7 @@ describe('watchPlay', () => {
     expect(storeState.player).toMatchObject({
       playing: true
     })
-    expect(initialPlayer.live.play).toBeCalled()
+    expect(initialPlayer.digitalcoin.play).toBeCalled()
   })
 })
 
@@ -100,7 +100,7 @@ describe('watchPause', () => {
     expect(storeState.player).toMatchObject({
       playing: false
     })
-    expect(initialPlayer.live.pause).toBeCalled()
+    expect(initialPlayer.digitalcoin.pause).toBeCalled()
   })
 })
 
@@ -123,7 +123,7 @@ describe('watchStop', () => {
     expect(storeState.player).toMatchObject({
       playing: false
     })
-    expect(initialPlayer.live.stop).toBeCalled()
+    expect(initialPlayer.digitalcoin.stop).toBeCalled()
   })
 })
 
@@ -146,6 +146,6 @@ describe('watchSeek', () => {
     expect(storeState.player).toMatchObject({
       playing: true
     })
-    expect(initialPlayer.live.seek).toBeCalledWith(30)
+    expect(initialPlayer.digitalcoin.seek).toBeCalledWith(30)
   })
 })

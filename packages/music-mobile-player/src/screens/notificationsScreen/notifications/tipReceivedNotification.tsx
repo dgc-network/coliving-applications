@@ -37,7 +37,7 @@ import { useGoToProfile } from './useGoToProfile'
 const messages = {
   title: 'You Received a Tip!',
   sent: 'sent you a tip of',
-  live: '$LIVE',
+  digitalcoin: '$LIVE',
   sayThanks: 'Say Thanks With a Reaction',
   reactionSent: 'Reaction Sent!',
   twitterShare: (senderHandle: string, amount: number) =>

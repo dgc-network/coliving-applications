@@ -1,7 +1,7 @@
 export type ScrubberProps = {
   /**
    * A unique identifier for the media being scrubbed.
-   * Usually a "agreement id" suffices here. This property
+   * Usually a "digital_content id" suffices here. This property
    * is similar to a `key` in React and is used to
    * reset the scrubber animation for a new media item.
    */

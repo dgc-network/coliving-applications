@@ -119,7 +119,7 @@ const UserSearchResult = ({ isLast, item: user }: UserSearchResultProps) => {
 }
 
 type AgreementSearchResultProps = { isLast: boolean; item: SearchAgreement }
-const AgreementSearchResult = ({ isLast, item: agreement }: AgreementSearchResultProps) => {
+const AgreementSearchResult = ({ isLast, item: digital_content }: AgreementSearchResultProps) => {
   const nameStyle = useTheme(styles.name, { color: 'neutral' })
   const userNameStyle = useTheme(styles.name, { color: 'neutralLight4' })
   const squareImageStyles = useTheme(styles.squareImage, {
@@ -131,33 +131,33 @@ const AgreementSearchResult = ({ isLast, item: agreement }: AgreementSearchResul
   const { appendSearchItem } = useSearchHistory()
 
   const handlePress = useCallback(() => {
-    appendSearchItem(agreement.title)
-    const agreementRoute = getAgreementRoute(agreement)
+    appendSearchItem(digital_content.title)
+    const agreementRoute = getAgreementRoute(digital_content)
     dispatch(closeSearch())
     navigation.push({
       native: {
-        screen: 'Agreement',
-        params: { id: agreement.agreement_id, searchAgreement: agreement }
+        screen: 'DigitalContent',
+        params: { id: digital_content.digital_content_id, searchAgreement: digital_content }
       },
       web: { route: agreementRoute, fromPage: 'search' }
     })
-  }, [agreement, dispatch, navigation, appendSearchItem])
+  }, [digital_content, dispatch, navigation, appendSearchItem])
 
   return (
     <ItemContainer isLast={isLast} onPress={handlePress}>
       <AgreementImage
-        agreement={agreement}
-        user={agreement.user}
+        digital_content={digital_content}
+        user={digital_content.user}
         imageStyle={squareImageStyles}
       />
       <View style={styles.nameContainer}>
         <Text numberOfLines={1} style={nameStyle}>
-          {agreement.title}
+          {digital_content.title}
         </Text>
         <UserBadges
           style={styles.badgeContainer}
           nameStyle={userNameStyle}
-          user={agreement.user}
+          user={digital_content.user}
         />
       </View>
     </ItemContainer>

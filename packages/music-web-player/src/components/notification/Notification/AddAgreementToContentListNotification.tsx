@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 
-import { Name, Agreement } from '@coliving/common'
+import { Name, DigitalContent } from '@coliving/common'
 import { push } from 'connected-react-router'
 import { useDispatch } from 'react-redux'
 
@@ -27,13 +27,13 @@ import { IconAddAgreementToContentList } from './components/icons'
 import { getEntityLink } from './utils'
 
 const messages = {
-  title: 'Agreement Added to ContentList',
+  title: 'DigitalContent Added to ContentList',
   shareTwitterText: (
     handle: string,
-    agreement: Agreement,
+    digital_content: DigitalContent,
     contentList: CollectionEntity
   ) =>
-    `My agreement ${agreement.title} was added to the contentList ${contentList.content_list_name} by ${handle} on @colivingproject! #Coliving`
+    `My digital_content ${digital_content.title} was added to the contentList ${contentList.content_list_name} by ${handle} on @colivingproject! #Coliving`
 }
 
 type AddAgreementToContentListNotificationProps = {
@@ -45,7 +45,7 @@ export const AddAgreementToContentListNotification = (
 ) => {
   const { notification } = props
   const { timeLabel, isViewed } = notification
-  const { agreement, contentList } = useSelector((state) =>
+  const { digital_content, contentList } = useSelector((state) =>
     getNotificationEntities(state, notification)
   )
   const contentListOwner = contentList.user
@@ -54,10 +54,10 @@ export const AddAgreementToContentListNotification = (
 
   const handleTwitterShare = useCallback(
     (twitterHandle: string) => {
-      if (agreement && contentList && twitterHandle) {
+      if (digital_content && contentList && twitterHandle) {
         const shareText = messages.shareTwitterText(
           twitterHandle,
-          agreement,
+          digital_content,
           contentList
         )
         const analytics = make(
@@ -68,14 +68,14 @@ export const AddAgreementToContentListNotification = (
       }
       return null
     },
-    [agreement, contentList]
+    [digital_content, contentList]
   )
 
   const handleClick = useCallback(() => {
     dispatch(push(getEntityLink(contentList)))
   }, [contentList, dispatch])
 
-  if (!contentListOwner || !agreement) return null
+  if (!contentListOwner || !digital_content) return null
 
   return (
     <NotificationTile notification={notification} onClick={handleClick}>
@@ -89,8 +89,8 @@ export const AddAgreementToContentListNotification = (
         />
         <span>
           <UserNameLink user={contentListOwner} notification={notification} />
-          {' added your agreement '}
-          <EntityLink entity={agreement} entityType={Entity.Agreement} />
+          {' added your digital_content '}
+          <EntityLink entity={digital_content} entityType={Entity.DigitalContent} />
           {' to their contentList '}
           <EntityLink entity={contentList} entityType={Entity.ContentList} />
         </span>

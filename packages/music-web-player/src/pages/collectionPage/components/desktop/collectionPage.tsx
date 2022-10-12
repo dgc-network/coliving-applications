@@ -25,7 +25,7 @@ import styles from './collectionPage.module.css'
 const messages = {
   emptyPage: {
     owner:
-      'Find a agreement you want to add and click the ••• button to add it to your contentList',
+      'Find a digital_content you want to add and click the ••• button to add it to your contentList',
     visitor: 'This ContentList is Empty...'
   },
   type: {

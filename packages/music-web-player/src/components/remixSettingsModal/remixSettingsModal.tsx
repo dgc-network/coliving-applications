@@ -1,6 +1,6 @@
 import { useCallback, useState, useEffect, useRef } from 'react'
 
-import { ID, SquareSizes, Agreement, User } from '@coliving/common'
+import { ID, SquareSizes, DigitalContent, User } from '@coliving/common'
 import { Modal, Button, ButtonSize, ButtonType } from '@coliving/stems'
 import { debounce } from 'lodash'
 
@@ -18,32 +18,32 @@ const INPUT_DEBOUNCE_MS = 1000
 const messages = {
   done: 'DONE',
   title: 'REMIX SETTINGS',
-  subtitle: 'Specify what agreement you remixed here',
-  remixOf: 'This is a Remix of: (Paste Coliving Agreement URL)',
-  error: 'Please paste a valid Coliving agreement URL',
+  subtitle: 'Specify what digital_content you remixed here',
+  remixOf: 'This is a Remix of: (Paste Coliving DigitalContent URL)',
+  error: 'Please paste a valid Coliving digital_content URL',
   by: 'by'
 }
 
 type AgreementInfoProps = {
-  agreement: Agreement | null
+  digital_content: DigitalContent | null
   user: User | null
 }
 
 const g = withNullGuard(
-  ({ agreement, user, ...p }: AgreementInfoProps) =>
-    agreement && user && { ...p, agreement, user }
+  ({ digital_content, user, ...p }: AgreementInfoProps) =>
+    digital_content && user && { ...p, digital_content, user }
 )
 
-const AgreementInfo = g(({ agreement, user }) => {
+const AgreementInfo = g(({ digital_content, user }) => {
   const image = useAgreementCoverArt(
-    agreement.agreement_id,
-    agreement._cover_art_sizes,
+    digital_content.digital_content_id,
+    digital_content._cover_art_sizes,
     SquareSizes.SIZE_150_BY_150
   )
   return (
-    <div className={styles.agreement}>
+    <div className={styles.digital_content}>
       <DynamicImage wrapperClassName={styles.artwork} image={image} />
-      {agreement.title}
+      {digital_content.title}
       <div className={styles.by}>{messages.by}</div>
       <div className={styles.landlordName}>
         {user.name}
@@ -62,7 +62,7 @@ type RemixSettingsModalProps = {
   onClose: (agreementId: ID | null) => void
   onEditUrl: (url: string) => void
   isInvalidAgreement: boolean
-  agreement: Agreement | null
+  digital_content: DigitalContent | null
   user: User | null
 }
 
@@ -70,7 +70,7 @@ const RemixSettingsModal = ({
   isOpen,
   onClose,
   onEditUrl,
-  agreement,
+  digital_content,
   user,
   isInvalidAgreement
 }: RemixSettingsModalProps) => {
@@ -79,10 +79,10 @@ const RemixSettingsModal = ({
   const [url, setUrl] = useState<string | null>(null)
 
   useEffect(() => {
-    if (url === null && agreement && isOpen) {
-      setUrl(fullAgreementPage(agreement.permalink))
+    if (url === null && digital_content && isOpen) {
+      setUrl(fullAgreementPage(digital_content.permalink))
     }
-  }, [isOpen, agreement, url, setUrl])
+  }, [isOpen, digital_content, url, setUrl])
 
   useEffect(() => {
     if (!isOpen) setUrl(null)
@@ -110,9 +110,9 @@ const RemixSettingsModal = ({
   )
 
   const onCloseModal = useCallback(() => {
-    const agreementId = url && agreement && !isInvalidAgreement ? agreement.agreement_id : null
+    const agreementId = url && digital_content && !isInvalidAgreement ? digital_content.digital_content_id : null
     onClose(agreementId)
-  }, [onClose, agreement, isInvalidAgreement, url])
+  }, [onClose, digital_content, isInvalidAgreement, url])
 
   return (
     <Modal
@@ -123,7 +123,7 @@ const RemixSettingsModal = ({
       subtitle={messages.subtitle}
       dismissOnClickOutside
       showDismissButton
-      // Since this can be nested in the edit agreement modal
+      // Since this can be nested in the edit digital_content modal
       // Appear on top of it
       zIndex={1002}
       bodyClassName={styles.modalContainer}
@@ -145,7 +145,7 @@ const RemixSettingsModal = ({
             {isInvalidAgreement ? (
               <div className={styles.error}>{messages.error}</div>
             ) : (
-              <AgreementInfo user={user} agreement={agreement} />
+              <AgreementInfo user={user} digital_content={digital_content} />
             )}
           </div>
         )}

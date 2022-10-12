@@ -15,9 +15,9 @@ type StartUploadsPayload = {
   batchUID: string
 }
 
-// Keeps agreement of uploading stems from the
-// edit agreement modal. Not currently used for
-// the upload agreement flow.
+// Keeps digital_content of uploading stems from the
+// edit digital_content modal. Not currently used for
+// the upload digital_content flow.
 const slice = createSlice({
   name: 'application/ui/stemsUpload',
   initialState,

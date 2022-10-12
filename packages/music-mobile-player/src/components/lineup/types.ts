@@ -12,7 +12,7 @@ export enum LineupVariant {
 export type LineupItem = {
   id: ID
   kind: Kind
-  agreement_id?: ID
+  digital_content_id?: ID
   content_list_id?: ID
   uid: UID
   _marked_deleted?: boolean
@@ -62,7 +62,7 @@ export type LineupProps = {
   isFeed?: boolean
 
   /**
-   * Indicator if a agreement should be displayed differently (ie. landlord pick)
+   * Indicator if a digital_content should be displayed differently (ie. landlord pick)
    * The leadingElementId is displayed at the top of the lineup
    */
   leadingElementId?: ID

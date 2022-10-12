@@ -179,9 +179,9 @@ export const challengeRewardsConfig: Record<
     title: 'Listening Streak: 7 Days',
     icon: <i className='emoji large headphone' />,
     description: (challenge) =>
-      `Listen to one agreement a day for seven days to earn ${challenge?.amount} $LIVE`,
+      `Listen to one digital_content a day for seven days to earn ${challenge?.amount} $LIVE`,
     fullDescription: () =>
-      'Sign in and listen to at least one agreement every day for 7 days',
+      'Sign in and listen to at least one digital_content every day for 7 days',
     progressLabel: '%0/%1 Days',
     amount: amounts['listen-streak'],
     panelButtonText: 'Trending on Coliving',
@@ -224,14 +224,14 @@ export const challengeRewardsConfig: Record<
       complete: linkButtonMap.profile
     }
   },
-  'agreement-upload': {
-    id: 'agreement-upload' as ChallengeRewardID,
+  'digital-content-upload': {
+    id: 'digital-content-upload' as ChallengeRewardID,
     title: 'Upload 3 Agreements',
     icon: <i className='emoji large multiple-musical-notes' />,
     description: (challenge) => `Earn ${challenge?.amount} $LIVE`,
     fullDescription: () => 'Upload 3 agreements to your profile',
     progressLabel: '%0/%1 Uploaded',
-    amount: amounts['agreement-upload'],
+    amount: amounts['digital-content-upload'],
     panelButtonText: 'Upload Agreements',
     modalButtonInfo: {
       incomplete: linkButtonMap.agreementUpload,
@@ -260,7 +260,7 @@ export const challengeRewardsConfig: Record<
     title: 'Create Your First ContentList',
     icon: <i className='emoji large sparkles' />,
     description: (challenge) => `Earn ${challenge?.amount} $LIVE`,
-    fullDescription: () => 'Create your first contentList & add a agreement to it',
+    fullDescription: () => 'Create your first contentList & add a digital_content to it',
     progressLabel: 'Not Earned',
     amount: amounts['first-content-list'],
     panelButtonText: 'Create Your First ContentList',
@@ -291,12 +291,12 @@ export const trendingRewardsConfig: Record<
     buttonText: 'See More',
     id: 'trending-content-list'
   },
-  'trending-agreement': {
+  'trending-digital-content': {
     title: 'Top 5 Trending Agreements',
     icon: <i className='emoji large chart-increasing' />,
     description: 'Winners are selected every Friday at Noon PT!',
     buttonText: 'See More',
-    id: 'trending-agreement'
+    id: 'trending-digital-content'
   },
   'top-api': {
     title: 'Top 10 API Apps',
@@ -309,7 +309,7 @@ export const trendingRewardsConfig: Record<
     title: 'First Upload With Your Verified Account',
     icon: <i className='emoji large white-heavy-check-mark' />,
     description:
-      'Verified on Twitter/Instagram? Upload your first agreement, post it on social media, & tag us',
+      'Verified on Twitter/Instagram? Upload your first digital_content, post it on social media, & tag us',
     buttonText: 'More Info',
     id: 'verified-upload'
   },

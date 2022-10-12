@@ -19,7 +19,7 @@ import { useSelectorWeb } from 'app/hooks/useSelectorWeb'
 import { useToast } from 'app/hooks/useToast'
 import type { SearchUser } from 'app/store/search/types'
 import { makeStyles } from 'app/styles/makeStyles'
-import { make, agreement } from 'app/utils/analytics'
+import { make, digital_content } from 'app/utils/analytics'
 
 export type DownloadButtonProps = {
   state: ButtonState
@@ -105,12 +105,12 @@ export const AgreementScreenDownloadButtons = ({
         return
       }
       dispatchWeb(downloadAgreement(id, cid, content_node_endpoint, category))
-      agreement(
+      digital_content(
         make({
           eventName: Name.AGREEMENT_PAGE_DOWNLOAD,
           id,
           category,
-          parent_agreement_id: parentAgreementId
+          parent_digital_content_id: parentAgreementId
         })
       )
     },

@@ -112,12 +112,12 @@ class TrendingPageProvider extends PureComponent {
 
   getLineupProps = (lineup) => {
     const { currentQueueItem, playing, buffering } = this.props
-    const { uid: playingUid, agreement, source } = currentQueueItem
+    const { uid: playingUid, digital_content, source } = currentQueueItem
     return {
       lineup,
       playingUid,
       playingSource: source,
-      playingAgreementId: agreement ? agreement.agreement_id : null,
+      playingAgreementId: digital_content ? digital_content.digital_content_id : null,
       playing,
       buffering,
       scrollParent: this.props.containerRef,

@@ -1,4 +1,4 @@
-import { Agreement } from 'models/agreement'
+import { DigitalContent } from 'models/digital_content'
 
 export enum StemCategory {
   INSTRUMENTAL = 'INSTRUMENTAL',
@@ -31,7 +31,7 @@ export const stemCategoryFriendlyNames = {
 }
 
 export type StemUpload = {
-  metadata: Agreement
+  metadata: DigitalContent
   category: StemCategory
   allowDelete: boolean
   allowCategorySwitch: boolean

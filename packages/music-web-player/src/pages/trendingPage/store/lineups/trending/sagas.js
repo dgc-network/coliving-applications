@@ -11,7 +11,7 @@ import {
   trendingAllTimeActions
 } from 'common/store/pages/trending/lineup/actions'
 import { getTrendingGenre } from 'common/store/pages/trending/selectors'
-import { retrieveTrending } from 'pages/agreement-page/store/retrieveTrending'
+import { retrieveTrending } from 'pages/digital-content-page/store/retrieveTrending'
 import { LineupSagas } from 'store/lineup/sagas'
 
 function getAgreements(timeRange) {

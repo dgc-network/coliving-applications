@@ -29,7 +29,7 @@ import RepostFavoritesStats from 'components/repostFavoritesStats/repostFavorite
 import Skeleton from 'components/skeleton/skeleton'
 import Toast from 'components/toast/toast'
 import Tooltip from 'components/tooltip/tooltip'
-import InfoLabel from 'components/agreement/InfoLabel'
+import InfoLabel from 'components/digital_content/InfoLabel'
 import UserBadges from 'components/userBadges/userBadges'
 import { useCollectionCoverArt } from 'hooks/useCollectionCoverArt'
 

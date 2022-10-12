@@ -1,4 +1,4 @@
-import { ID, Lineup, TimeRange, Agreement, UID, User } from '@coliving/common'
+import { ID, Lineup, TimeRange, DigitalContent, UID, User } from '@coliving/common'
 
 type ExtraTrendingLineupProps = {}
 
@@ -53,7 +53,7 @@ export interface TrendingPageContentProps {
 
   getLineupForRange: (timeRange: TimeRange) => {
     playingUid: UID
-    lineup: Lineup<Agreement>
+    lineup: Lineup<DigitalContent>
     playingSource: any
     playingAgreementId: ID | null
     playing: boolean

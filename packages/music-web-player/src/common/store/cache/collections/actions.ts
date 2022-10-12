@@ -30,7 +30,7 @@ export const DELETE_CONTENT_LIST_FAILED = 'DELETE_CONTENT_LIST_FAILED'
 export const FETCH_COVER_ART = 'AGREEMENTS/FETCH_COVER_ART'
 
 /**
- * @param initAgreementId optional agreement id to pull artwork from.
+ * @param initAgreementId optional digital_content id to pull artwork from.
  */
 export function createContentList(
   tempId: number | string,

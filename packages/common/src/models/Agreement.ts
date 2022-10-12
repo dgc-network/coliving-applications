@@ -39,7 +39,7 @@ export type FieldVisibility = {
 }
 
 export type Remix = {
-  parent_agreement_id: ID
+  parent_digital_content_id: ID
   user: User | any
   has_remix_author_reposted: boolean
   has_remix_author_saved: boolean
@@ -53,7 +53,7 @@ export type AgreementMetadata = {
   blocknumber: number
   activity_timestamp?: string
   is_delete: boolean
-  agreement_id: number
+  digital_content_id: number
   created_at: string
   isrc: Nullable<string>
   iswc: Nullable<string>
@@ -74,7 +74,7 @@ export type AgreementMetadata = {
   save_count: number
   tags: Nullable<string>
   title: string
-  agreement_segments: AgreementSegment[]
+  digital_content_segments: AgreementSegment[]
   cover_art: Nullable<CID>
   cover_art_sizes: Nullable<CID>
   is_unlisted: boolean
@@ -86,7 +86,7 @@ export type AgreementMetadata = {
   // Optional Fields
   is_invalid?: boolean
   stem_of?: {
-    parent_agreement_id: ID
+    parent_digital_content_id: ID
     category: StemCategory
   }
   remix_of: Nullable<RemixOf>
@@ -97,7 +97,7 @@ export type AgreementMetadata = {
 } & Timestamped
 
 export type Stem = {
-  agreement_id: ID
+  digital_content_id: ID
   category: StemCategory
 }
 
@@ -110,22 +110,22 @@ export type ComputedAgreementProperties = {
   _is_publishing?: boolean
   _stems?: Stem[]
 
-  // Present iff remixes have been fetched for a agreement
-  _remixes?: Array<{ agreement_id: ID }>
+  // Present iff remixes have been fetched for a digital_content
+  _remixes?: Array<{ digital_content_id: ID }>
   _remixes_count?: number
-  // Present iff remix parents have been fetched for a agreement
-  _remix_parents?: Array<{ agreement_id: ID }>
-  // Present iff the agreement has been cosigned
+  // Present iff remix parents have been fetched for a digital_content
+  _remix_parents?: Array<{ digital_content_id: ID }>
+  // Present iff the digital_content has been cosigned
   _co_sign?: Nullable<Remix>
 
   _blocked?: boolean
 }
 
-export type Agreement = AgreementMetadata & ComputedAgreementProperties
+export type DigitalContent = AgreementMetadata & ComputedAgreementProperties
 
 export type UserAgreementMetadata = AgreementMetadata & { user: UserMetadata }
 
-export type UserAgreement = Agreement & {
+export type UserAgreement = DigitalContent & {
   user: User
 }
 
@@ -133,14 +133,14 @@ export type LineupAgreement = UserAgreement & {
   uid: UID
 }
 
-// Agreement with known non-optional stem
+// DigitalContent with known non-optional stem
 export type StemAgreementMetadata = AgreementMetadata &
-  Required<Pick<Agreement, 'stem_of'>>
-export type StemAgreement = Agreement & Required<Pick<Agreement, 'stem_of'>>
+  Required<Pick<DigitalContent, 'stem_of'>>
+export type StemAgreement = DigitalContent & Required<Pick<DigitalContent, 'stem_of'>>
 export type StemUserAgreement = UserAgreement &
-  Required<Pick<Agreement, 'stem_of'>>
+  Required<Pick<DigitalContent, 'stem_of'>>
 
-// Agreement with known non-optional remix parent
-export type RemixAgreement = Agreement & Required<Pick<Agreement, 'remix_of'>>
+// DigitalContent with known non-optional remix parent
+export type RemixAgreement = DigitalContent & Required<Pick<DigitalContent, 'remix_of'>>
 export type RemixUserAgreement = UserAgreement &
-  Required<Pick<Agreement, 'remix_of'>>
+  Required<Pick<DigitalContent, 'remix_of'>>

@@ -21,7 +21,7 @@ import Dropdown from 'components/navigation/dropdown'
 import ConnectedRemixSettingsModal from 'components/remixSettingsModal/connectedRemixSettingsModal'
 import SourceFilesModal from 'components/sourceFilesModal/sourceFilesModal'
 import Switch from 'components/switch/switch'
-import UnlistedAgreementModal from 'components/unlisted-agreement-modal/UnlistedAgreementModal'
+import UnlistedAgreementModal from 'components/unlisted-digital-content-modal/UnlistedAgreementModal'
 import PreviewButton from 'components/upload/previewButton'
 import UploadArtwork from 'components/upload/uploadArtwork'
 import { createRemixOfMetadata } from 'pages/uploadPage/store/utils/remixes'
@@ -46,7 +46,7 @@ const messages = {
   public: 'Public (default)',
   thisIsARemix: 'This is a Remix',
   editRemix: 'Edit',
-  hideRemixes: 'Hide Remixes on Agreement Page'
+  hideRemixes: 'Hide Remixes on DigitalContent Page'
 }
 
 const Divider = (props) => {
@@ -84,7 +84,7 @@ const BasicForm = (props) => {
           <div className={styles.agreementName}>
             <Input
               name='name'
-              id='agreement-name-input'
+              id='digital-content-name-input'
               placeholder={`${
                 props.type.charAt(0).toUpperCase() + props.type.slice(1)
               } Name`}
@@ -173,7 +173,7 @@ const BasicForm = (props) => {
     return (
       <ConnectedRemixSettingsModal
         initialAgreementId={
-          props.defaultFields.remix_of?.agreements?.[0]?.parent_agreement_id
+          props.defaultFields.remix_of?.agreements?.[0]?.parent_digital_content_id
         }
         isOpen={remixSettingsModalVisible}
         onClose={(agreementId) => {
@@ -202,7 +202,7 @@ const BasicForm = (props) => {
   }, [isRemix, setIsRemix, onChangeField])
 
   const renderRemixSwitch = () => {
-    const shouldRender = props.type === 'agreement'
+    const shouldRender = props.type === 'digital_content'
     return (
       shouldRender && (
         <div className={styles.remixSwitch}>
@@ -241,7 +241,7 @@ const BasicForm = (props) => {
   }
 
   const renderDownloadButton = () => {
-    const shouldRender = props.type === 'agreement'
+    const shouldRender = props.type === 'digital_content'
     return (
       shouldRender && (
         <Button
@@ -276,7 +276,7 @@ const BasicForm = (props) => {
   const renderBottomMenu = () => {
     return (
       <div className={styles.menu}>
-        {props.type === 'agreement' && props.showPreview ? (
+        {props.type === 'digital_content' && props.showPreview ? (
           <div>
             <PreviewButton playing={props.playing} onClick={onPreviewClick} />
           </div>
@@ -307,7 +307,7 @@ const BasicForm = (props) => {
 const AdvancedForm = (props) => {
   let unlistedState
   let unlistedButtonTitle
-  const showUnlisted = props.type === 'agreement' && props.showUnlistedToggle
+  const showUnlisted = props.type === 'digital_content' && props.showUnlistedToggle
   if (showUnlisted) {
     unlistedState = {
       unlisted: props.defaultFields.is_unlisted,
@@ -391,7 +391,7 @@ const AdvancedForm = (props) => {
               type={ButtonType.COMMON_ALT}
               name='setUnlisted'
               text={unlistedButtonTitle}
-              label='Agreement Visibility'
+              label='DigitalContent Visibility'
               className={styles.hiddenAgreementButton}
               textClassName={styles.hiddenAgreementButtonText}
               onClick={() => {
@@ -410,7 +410,7 @@ const AdvancedForm = (props) => {
               }
             />
           </div>
-          {props.type === 'agreement' ? (
+          {props.type === 'digital_content' ? (
             <div className={styles.hideRemixes}>
               <div className={styles.hideRemixesText}>
                 {messages.hideRemixes}
@@ -430,17 +430,17 @@ const AdvancedForm = (props) => {
             />
           )}
         </div>
-        {props.type === 'agreement' ? (
+        {props.type === 'digital_content' ? (
           <div className={styles.agreementId}>
             <LabeledInput
-              label='Agreement ISRC'
+              label='DigitalContent ISRC'
               placeholder='e.g. CC-XXX-YY-NNNNN'
               defaultValue={props.defaultFields.isrc || ''}
               onChange={(value) => props.onChangeField('isrc', value)}
               size='small'
             />
             <LabeledInput
-              label='Agreement ISWC'
+              label='DigitalContent ISWC'
               placeholder='e.g. T-345246800-1'
               defaultValue={props.defaultFields.iswc || ''}
               onChange={(value) => props.onChangeField('iswc', value)}
@@ -722,7 +722,7 @@ FormTile.propTypes = {
   showPreview: PropTypes.bool,
   /** Whether or not the preview is playing. */
   playing: PropTypes.bool,
-  type: PropTypes.oneOf(['agreement', 'album', 'contentList']),
+  type: PropTypes.oneOf(['digital_content', 'album', 'contentList']),
   /** Transform artwork function to apply. */
   transformArtworkFunction: PropTypes.func,
 
@@ -763,7 +763,7 @@ FormTile.propTypes = {
 
 FormTile.defaultProps = {
   showPreview: true,
-  type: 'agreement',
+  type: 'digital_content',
   isContentList: false,
   transformArtworkFunction: resizeImage,
   onChangeOrder: () => {},

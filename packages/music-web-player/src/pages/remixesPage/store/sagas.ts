@@ -17,12 +17,12 @@ function* watchFetch() {
       yield call(waitForBackendSetup)
       const { handle, slug } = action.payload
 
-      const agreement: AgreementMetadata = yield call(retrieveAgreementByHandleAndSlug, {
+      const digital_content: AgreementMetadata = yield call(retrieveAgreementByHandleAndSlug, {
         handle,
         slug
       })
 
-      yield put(fetchAgreementSucceeded({ agreementId: agreement.agreement_id }))
+      yield put(fetchAgreementSucceeded({ agreementId: digital_content.digital_content_id }))
     }
   )
 }

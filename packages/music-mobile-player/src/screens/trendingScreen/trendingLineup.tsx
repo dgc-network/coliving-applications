@@ -19,7 +19,7 @@ import { Lineup } from 'app/components/lineup'
 import type { LineupProps } from 'app/components/lineup/types'
 import { useDispatchWeb } from 'app/hooks/useDispatchWeb'
 import { isEqual, useSelectorWeb } from 'app/hooks/useSelectorWeb'
-import { make, agreement } from 'app/utils/analytics'
+import { make, digital_content } from 'app/utils/analytics'
 
 const getTrendingWeekLineup = makeGetLineupMetadatas(
   getDiscoverTrendingWeekLineup
@@ -84,7 +84,7 @@ export const TrendingLineup = (props: TrendingLineupProps) => {
       dispatchWeb(
         trendingActions.fetchLineupMetadatas(offset, limit, overwrite)
       )
-      agreement(make({ eventName: Name.FEED_PAGINATE, offset, limit }))
+      digital_content(make({ eventName: Name.FEED_PAGINATE, offset, limit }))
     },
     [dispatchWeb, trendingActions]
   )

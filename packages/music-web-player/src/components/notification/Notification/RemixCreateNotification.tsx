@@ -24,10 +24,10 @@ import { IconRemix } from './components/icons'
 import { getEntityLink } from './utils'
 
 const messages = {
-  title: 'New remix of your agreement',
+  title: 'New remix of your digital_content',
   by: 'by',
-  shareTwitterText: (agreement: AgreementEntity, handle: string) =>
-    `New remix of ${agreement.title} by ${handle} on @dgc-network #Coliving`
+  shareTwitterText: (digital_content: AgreementEntity, handle: string) =>
+    `New remix of ${digital_content.title} by ${handle} on @dgc-network #Coliving`
 }
 
 type RemixCreateNotificationProps = {
@@ -49,9 +49,9 @@ export const RemixCreateNotification = (
     getNotificationEntities(state, notification)
   ) as Nullable<AgreementEntity[]>
 
-  const childAgreement = agreements?.find((agreement) => agreement.agreement_id === childAgreementId)
+  const childAgreement = agreements?.find((digital_content) => digital_content.digital_content_id === childAgreementId)
 
-  const parentAgreement = agreements?.find((agreement) => agreement.agreement_id === parentAgreementId)
+  const parentAgreement = agreements?.find((digital_content) => digital_content.digital_content_id === parentAgreementId)
 
   const handleClick = useCallback(() => {
     if (childAgreement) {

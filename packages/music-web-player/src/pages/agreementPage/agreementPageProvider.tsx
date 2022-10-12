@@ -12,7 +12,7 @@ import {
   PlaybackSource,
   FavoriteType,
   Status,
-  Agreement,
+  DigitalContent,
   Uid
 } from '@coliving/common'
 import { push as pushRoute, replace } from 'connected-react-router'
@@ -22,8 +22,8 @@ import { Dispatch } from 'redux'
 import { getUserId } from 'common/store/account/selectors'
 import * as cacheAgreementActions from 'common/store/cache/agreements/actions'
 import { makeGetLineupMetadatas } from 'common/store/lineup/selectors'
-import * as agreementPageActions from 'common/store/pages/agreement/actions'
-import { agreementsActions } from 'common/store/pages/agreement/lineup/actions'
+import * as agreementPageActions from 'common/store/pages/digital_content/actions'
+import { agreementsActions } from 'common/store/pages/digital_content/lineup/actions'
 import {
   getUser,
   getLineup,
@@ -33,7 +33,7 @@ import {
   getStatus,
   getSourceSelector,
   getAgreementPermalink
-} from 'common/store/pages/agreement/selectors'
+} from 'common/store/pages/digital_content/selectors'
 import { makeGetCurrent } from 'common/store/queue/selectors'
 import * as socialAgreementsActions from 'common/store/social/agreements/actions'
 import * as socialUsersActions from 'common/store/social/users/actions'
@@ -81,8 +81,8 @@ import { OwnProps as DesktopAgreementPageProps } from './components/desktop/agre
 import { OwnProps as MobileAgreementPageProps } from './components/mobile/agreementPage'
 import { TRENDING_BADGE_LIMIT } from './store/sagas'
 
-const getRemixParentAgreementId = (agreement: Agreement | null) =>
-  agreement?.remix_of?.agreements?.[0]?.parent_agreement_id
+const getRemixParentAgreementId = (digital_content: DigitalContent | null) =>
+  digital_content?.remix_of?.agreements?.[0]?.parent_digital_content_id
 
 type OwnProps = {
   children:
@@ -117,7 +117,7 @@ class AgreementPageProvider extends Component<
 
   componentDidMount() {
     const params = parseAgreementRoute(this.props.pathname)
-    // Go to 404 if the agreement id isn't parsed correctly or if should redirect
+    // Go to 404 if the digital_content id isn't parsed correctly or if should redirect
     if (!params || (params.agreementId && shouldRedirectAgreement(params.agreementId))) {
       this.props.goToRoute(NOT_FOUND_PAGE)
       return
@@ -129,7 +129,7 @@ class AgreementPageProvider extends Component<
   componentDidUpdate(prevProps: AgreementPageProviderProps) {
     const {
       pathname,
-      agreement,
+      digital_content,
       status,
       refetchAgreementsLinup,
       user,
@@ -142,8 +142,8 @@ class AgreementPageProvider extends Component<
       this.goToProfilePage(user.handle)
     }
     if (!isMobile()) {
-      // On componentDidUpdate we try to reparse the URL because if you’re on a agreement page
-      // and go to another agreement page, the component doesn’t remount but we need to
+      // On componentDidUpdate we try to reparse the URL because if you’re on a digital_content page
+      // and go to another digital_content page, the component doesn’t remount but we need to
       // trigger a re-fetch based on the URL. On mobile, separate page provider components are
       // used so this is a non-issue.
       if (pathname !== this.state.pathname) {
@@ -158,43 +158,43 @@ class AgreementPageProvider extends Component<
     // Set the lineup source in state once it's set in redux
     if (
       !this.state.source &&
-      this.state.routeKey === this.props.agreement?.agreement_id
+      this.state.routeKey === this.props.digital_content?.digital_content_id
     ) {
       this.setState({ source: this.props.source })
     }
 
-    // If the remix of this agreement changed and we have
-    // already fetched the agreement, refetch the entire lineup
-    // because the remix parent agreement needs to be retrieved
+    // If the remix of this digital_content changed and we have
+    // already fetched the digital_content, refetch the entire lineup
+    // because the remix parent digital_content needs to be retrieved
     if (
-      prevProps.agreement &&
-      prevProps.agreement.agreement_id &&
-      agreement &&
-      agreement.agreement_id &&
-      getRemixParentAgreementId(prevProps.agreement) !== getRemixParentAgreementId(agreement)
+      prevProps.digital_content &&
+      prevProps.digital_content.digital_content_id &&
+      digital_content &&
+      digital_content.digital_content_id &&
+      getRemixParentAgreementId(prevProps.digital_content) !== getRemixParentAgreementId(digital_content)
     ) {
       refetchAgreementsLinup()
     }
 
-    if (agreement) {
+    if (digital_content) {
       const params = parseAgreementRoute(pathname)
       if (params) {
         // Check if we are coming from a non-canonical route and replace route if necessary.
         const { slug, handle } = params
         if (slug === null || handle === null) {
-          if (agreement.permalink) {
-            this.props.replaceRoute(agreement.permalink)
+          if (digital_content.permalink) {
+            this.props.replaceRoute(digital_content.permalink)
           }
         } else {
-          // Reroute to the most recent permalink if necessary in case user edits the agreement
+          // Reroute to the most recent permalink if necessary in case user edits the digital_content
           // name, which changes the permalink
           if (
             pathname === this.state.pathname &&
-            prevProps.agreement?.agreement_id === agreement?.agreement_id &&
+            prevProps.digital_content?.digital_content_id === digital_content?.digital_content_id &&
             agreementPermalink &&
             agreementPermalink !== pathname
           ) {
-            // The path is going to change but don't re-fetch as we already have the agreement
+            // The path is going to change but don't re-fetch as we already have the digital_content
             this.setState({ pathname: agreementPermalink })
             this.props.replaceRoute(agreementPermalink)
           }
@@ -206,18 +206,18 @@ class AgreementPageProvider extends Component<
   componentWillUnmount() {
     if (!isMobile()) {
       // Don't reset on mobile because there are two
-      // agreement pages mounted at a time due to animations.
+      // digital_content pages mounted at a time due to animations.
       this.props.resetAgreementPage()
     }
   }
 
   fetchAgreements = (params: NonNullable<AgreementRouteParams>) => {
-    const { agreement } = this.props
+    const { digital_content } = this.props
     const { slug, agreementId, handle } = params
 
-    // Go to feed if the agreement is deleted
-    if (agreement && agreement.agreement_id === agreementId) {
-      if (agreement._marked_deleted) {
+    // Go to feed if the digital_content is deleted
+    if (digital_content && digital_content.digital_content_id === agreementId) {
+      if (digital_content._marked_deleted) {
         this.props.goToRoute(FEED_PAGE)
         return
       }
@@ -244,33 +244,33 @@ class AgreementPageProvider extends Component<
       record
     } = this.props
     if (!entries || !entries[0]) return
-    const agreement = entries[0]
+    const digital_content = entries[0]
 
     if (heroPlaying) {
       pause()
       record(
         make(Name.PLAYBACK_PAUSE, {
-          id: `${agreement.id}`,
+          id: `${digital_content.id}`,
           source: PlaybackSource.AGREEMENT_PAGE
         })
       )
     } else if (
-      currentQueueItem.uid !== agreement.uid &&
-      currentQueueItem.agreement &&
-      currentQueueItem.agreement.agreement_id === agreement.id
+      currentQueueItem.uid !== digital_content.uid &&
+      currentQueueItem.digital_content &&
+      currentQueueItem.digital_content.digital_content_id === digital_content.id
     ) {
       play()
       record(
         make(Name.PLAYBACK_PLAY, {
-          id: `${agreement.id}`,
+          id: `${digital_content.id}`,
           source: PlaybackSource.AGREEMENT_PAGE
         })
       )
-    } else if (agreement) {
-      play(agreement.uid)
+    } else if (digital_content) {
+      play(digital_content.uid)
       record(
         make(Name.PLAYBACK_PLAY, {
-          id: `${agreement.id}`,
+          id: `${digital_content.id}`,
           source: PlaybackSource.AGREEMENT_PAGE
         })
       )
@@ -310,17 +310,17 @@ class AgreementPageProvider extends Component<
   }
 
   onFollow = () => {
-    const { onFollow, agreement } = this.props
-    if (agreement) onFollow(agreement.owner_id)
+    const { onFollow, digital_content } = this.props
+    if (digital_content) onFollow(digital_content.owner_id)
   }
 
   onUnfollow = () => {
-    const { onUnfollow, onConfirmUnfollow, agreement } = this.props
-    if (agreement) {
+    const { onUnfollow, onConfirmUnfollow, digital_content } = this.props
+    if (digital_content) {
       if (this.props.isMobile) {
-        onConfirmUnfollow(agreement.owner_id)
+        onConfirmUnfollow(digital_content.owner_id)
       } else {
-        onUnfollow(agreement.owner_id)
+        onUnfollow(digital_content.owner_id)
       }
     }
   }
@@ -335,17 +335,17 @@ class AgreementPageProvider extends Component<
   }
 
   goToParentRemixesPage = () => {
-    const { goToRemixesOfParentPage, agreement } = this.props
-    const parentAgreementId = getRemixParentAgreementId(agreement)
+    const { goToRemixesOfParentPage, digital_content } = this.props
+    const parentAgreementId = getRemixParentAgreementId(digital_content)
     if (parentAgreementId) {
       goToRemixesOfParentPage(parentAgreementId)
     }
   }
 
   goToAllRemixesPage = () => {
-    const { agreement } = this.props
-    if (agreement) {
-      this.props.goToRoute(agreementRemixesPage(agreement.permalink))
+    const { digital_content } = this.props
+    if (digital_content) {
+      this.props.goToRoute(agreementRemixesPage(digital_content.permalink))
     }
   }
 
@@ -360,18 +360,18 @@ class AgreementPageProvider extends Component<
   }
 
   onClickReposts = () => {
-    this.props.agreement && this.props.setRepostUsers(this.props.agreement.agreement_id)
+    this.props.digital_content && this.props.setRepostUsers(this.props.digital_content.digital_content_id)
     this.props.setModalVisibility()
   }
 
   onClickFavorites = () => {
-    this.props.agreement && this.props.setFavoriteUsers(this.props.agreement.agreement_id)
+    this.props.digital_content && this.props.setFavoriteUsers(this.props.digital_content.digital_content_id)
     this.props.setModalVisibility()
   }
 
   render() {
     const {
-      agreement,
+      digital_content,
       remixParentAgreement,
       user,
       agreementRank,
@@ -386,9 +386,9 @@ class AgreementPageProvider extends Component<
     } = this.props
     const heroPlaying =
       playing &&
-      !!agreement &&
-      !!currentQueueItem.agreement &&
-      currentQueueItem.agreement.agreement_id === agreement.agreement_id
+      !!digital_content &&
+      !!currentQueueItem.digital_content &&
+      currentQueueItem.digital_content.digital_content_id === digital_content.digital_content_id
     const badge =
       agreementRank.year && agreementRank.year <= TRENDING_BADGE_LIMIT
         ? `#${agreementRank.year} This Year`
@@ -408,39 +408,39 @@ class AgreementPageProvider extends Component<
     }
 
     const title = getAgreementPageTitle({
-      title: agreement ? agreement.title : '',
+      title: digital_content ? digital_content.title : '',
       handle: user ? user.handle : ''
     })
 
-    const releaseDate = agreement ? agreement.release_date || agreement.created_at : ''
+    const releaseDate = digital_content ? digital_content.release_date || digital_content.created_at : ''
     const description = getAgreementPageDescription({
       releaseDate: releaseDate ? formatDate(releaseDate) : '',
-      description: agreement?.description ?? '',
-      mood: agreement?.mood ?? '',
-      genre: agreement ? getCanonicalName(agreement.genre) : '',
-      duration: agreement ? formatSeconds(agreement.duration) : '',
-      tags: agreement ? (agreement.tags || '').split(',').filter(Boolean) : []
+      description: digital_content?.description ?? '',
+      mood: digital_content?.mood ?? '',
+      genre: digital_content ? getCanonicalName(digital_content.genre) : '',
+      duration: digital_content ? formatSeconds(digital_content.duration) : '',
+      tags: digital_content ? (digital_content.tags || '').split(',').filter(Boolean) : []
     })
-    const canonicalUrl = user && agreement ? fullAgreementPage(agreement.permalink) : ''
+    const canonicalUrl = user && digital_content ? fullAgreementPage(digital_content.permalink) : ''
 
-    // If the agreement has a remix parent and it's not deleted and the original's owner is not deactivated.
+    // If the digital_content has a remix parent and it's not deleted and the original's owner is not deactivated.
     const hasValidRemixParent =
-      !!getRemixParentAgreementId(agreement) &&
+      !!getRemixParentAgreementId(digital_content) &&
       !!remixParentAgreement &&
       remixParentAgreement.is_delete === false &&
       !remixParentAgreement.user?.is_deactivated
 
-    if ((agreement?.is_delete || agreement?._marked_deleted) && user) {
-      // Agreement has not been blocked and is content-available, meaning the owner
+    if ((digital_content?.is_delete || digital_content?._marked_deleted) && user) {
+      // DigitalContent has not been blocked and is content-available, meaning the owner
       // deleted themselves via transaction.
-      const deletedByLandlord = !agreement._blocked && agreement.is_available
+      const deletedByLandlord = !digital_content._blocked && digital_content.is_available
 
       return (
         <DeletedPage
           title={title}
           description={description}
           canonicalUrl={canonicalUrl}
-          playable={{ metadata: agreement, type: PlayableType.AGREEMENT }}
+          playable={{ metadata: digital_content, type: PlayableType.AGREEMENT }}
           user={user}
           deletedByLandlord={deletedByLandlord}
         />
@@ -451,7 +451,7 @@ class AgreementPageProvider extends Component<
       title,
       description,
       canonicalUrl,
-      heroAgreement: agreement,
+      heroAgreement: digital_content,
       hasValidRemixParent,
       user,
       heroPlaying,
@@ -483,7 +483,7 @@ class AgreementPageProvider extends Component<
 
     return (
       <>
-        {!!agreement?._stems?.[0] && <StemsSEOHint />}
+        {!!digital_content?._stems?.[0] && <StemsSEOHint />}
         <this.props.children
           key={this.state.routeKey}
           {...childProps}
@@ -505,7 +505,7 @@ function makeMapStateToProps() {
   const mapStateToProps = (state: AppState) => {
     return {
       source: getSourceSelector(state),
-      agreement: getAgreement(state),
+      digital_content: getAgreement(state),
       agreementPermalink: getAgreementPermalink(state),
       remixParentAgreement: getRemixParentAgreement(state),
       user: getUser(state),
@@ -557,7 +557,7 @@ function mapDispatchToProps(dispatch: Dispatch) {
     shareAgreement: (agreementId: ID) =>
       dispatch(
         requestOpenShareModal({
-          type: 'agreement',
+          type: 'digital_content',
           agreementId,
           source: ShareSource.PAGE
         })
@@ -608,7 +608,7 @@ function mapDispatchToProps(dispatch: Dispatch) {
       const agreementEvent: AgreementEvent = make(Name.AGREEMENT_PAGE_DOWNLOAD, {
         id: agreementId,
         category,
-        parent_agreement_id: parentAgreementId
+        parent_digital_content_id: parentAgreementId
       })
       dispatch(agreementEvent)
     },
@@ -623,14 +623,14 @@ function mapDispatchToProps(dispatch: Dispatch) {
     onExternalLinkClick: (event: any) => {
       const agreementEvent: AgreementEvent = make(Name.LINK_CLICKING, {
         url: event.target.href,
-        source: 'agreement page' as const
+        source: 'digital_content page' as const
       })
       dispatch(agreementEvent)
     },
     recordTagClick: (tag: string) => {
       const agreementEvent: AgreementEvent = make(Name.TAG_CLICKING, {
         tag,
-        source: 'agreement page' as const
+        source: 'digital_content page' as const
       })
       dispatch(agreementEvent)
     },

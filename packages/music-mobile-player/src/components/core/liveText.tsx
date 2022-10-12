@@ -2,14 +2,14 @@ import type { TextProps } from './text'
 import { Text } from './text'
 
 const messages = {
-  live: 'live tokens'
+  digitalcoin: 'digitalcoin tokens'
 }
 
 type LiveProps = TextProps
 
 export const LiveText = (props: LiveProps) => {
   return (
-    <Text accessibilityLabel={messages.live} {...props}>
+    <Text accessibilityLabel={messages.digitalcoin} {...props}>
       $LIVE
     </Text>
   )

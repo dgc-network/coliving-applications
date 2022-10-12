@@ -1,9 +1,9 @@
-import { Status, Collection, Agreement } from '@coliving/common'
+import { Status, Collection, DigitalContent } from '@coliving/common'
 
 export default interface LandlordDashboardState {
   status: Status
-  agreements: Agreement[]
-  unlistedAgreements: Agreement[]
+  agreements: DigitalContent[]
+  unlistedAgreements: DigitalContent[]
   collections: Collection
   listenData: {
     all: {

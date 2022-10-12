@@ -8,7 +8,7 @@ const messages = {
   title: `Are You Sure?`,
   description: (agreementName: string) =>
     `Do you want to remove ${agreementName} from this contentList?`,
-  submit: 'Remove Agreement',
+  submit: 'Remove DigitalContent',
   cancel: 'Nevermind'
 }
 

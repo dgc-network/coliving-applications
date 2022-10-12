@@ -1,10 +1,10 @@
-import { LineupState, Agreement } from '@coliving/common'
+import { LineupState, DigitalContent } from '@coliving/common'
 
 import { RESET_SUCCEEDED, stripPrefix } from 'common/store/lineup/actions'
 import { initialLineupState } from 'common/store/lineup/reducer'
 import { PREFIX } from 'pages/deletedPage/store/lineups/more-by/actions'
 
-export const initialState: LineupState<Agreement> = {
+export const initialState: LineupState<DigitalContent> = {
   ...initialLineupState,
   prefix: PREFIX
 }

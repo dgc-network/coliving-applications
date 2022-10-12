@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 
-import type { UID, Agreement, User } from '@coliving/common'
+import type { UID, DigitalContent, User } from '@coliving/common'
 import {
   FavoriteSource,
   RepostSource,
@@ -11,7 +11,7 @@ import {
   SquareSizes
 } from '@coliving/common'
 import { getUserId } from '@coliving/web/src/common/store/account/selectors'
-import { agreementsActions } from '@coliving/web/src/common/store/pages/agreement/lineup/actions'
+import { agreementsActions } from '@coliving/web/src/common/store/pages/digital_content/lineup/actions'
 import {
   repostAgreement,
   saveAgreement,
@@ -47,10 +47,10 @@ import { useDispatchWeb } from 'app/hooks/useDispatchWeb'
 import { useNavigation } from 'app/hooks/useNavigation'
 import { useSelectorWeb } from 'app/hooks/useSelectorWeb'
 import { useAgreementCoverArt } from 'app/hooks/useAgreementCoverArt'
-import { getPlaying, getPlayingUid } from 'app/store/live/selectors'
+import { getPlaying, getPlayingUid } from 'app/store/digitalcoin/selectors'
 import type { SearchAgreement, SearchUser } from 'app/store/search/types'
 import { flexRowCentered, makeStyles } from 'app/styles'
-import { make, agreement as record } from 'app/utils/analytics'
+import { make, digital_content as record } from 'app/utils/analytics'
 import { moodMap } from 'app/utils/moods'
 import { getTagSearchRoute } from 'app/utils/routes'
 import { useThemeColors } from 'app/utils/theme'
@@ -58,13 +58,13 @@ import { useThemeColors } from 'app/utils/theme'
 import { AgreementScreenDownloadButtons } from './agreementScreenDownloadButtons'
 
 const messages = {
-  agreement: 'agreement',
+  digital_content: 'digital_content',
   remix: 'remix',
-  hiddenAgreement: 'hidden agreement'
+  hiddenAgreement: 'hidden digital_content'
 }
 
 type AgreementScreenDetailsTileProps = {
-  agreement: Agreement | SearchAgreement
+  digital_content: DigitalContent | SearchAgreement
   user: User | SearchUser
   uid: UID
   isLineupLoading: boolean
@@ -129,7 +129,7 @@ const useStyles = makeStyles(({ palette, spacing, typography }) => ({
 }))
 
 export const AgreementScreenDetailsTile = ({
-  agreement,
+  digital_content,
   user,
   uid,
   isLineupLoading
@@ -165,18 +165,18 @@ export const AgreementScreenDetailsTile = ({
     save_count,
     tags,
     title,
-    agreement_id
-  } = agreement
+    digital_content_id
+  } = digital_content
 
   const imageUrl = useAgreementCoverArt({
-    id: agreement_id,
+    id: digital_content_id,
     sizes: _cover_art_sizes,
     size: SquareSizes.SIZE_480_BY_480
   })
 
   const isOwner = owner_id === currentUserId
 
-  const remixParentAgreementId = remix_of?.agreements?.[0]?.parent_agreement_id
+  const remixParentAgreementId = remix_of?.agreements?.[0]?.parent_digital_content_id
   const isRemix = !!remixParentAgreementId
 
   const filteredTags = (tags || '').split(',').filter(Boolean)
@@ -211,37 +211,37 @@ export const AgreementScreenDetailsTile = ({
 
     if (isPlaying && isPlayingUid) {
       dispatchWeb(agreementsActions.pause())
-      recordPlay(agreement_id, false)
+      recordPlay(digital_content_id, false)
     } else if (!isPlayingUid) {
       dispatchWeb(agreementsActions.play(uid))
-      recordPlay(agreement_id)
+      recordPlay(digital_content_id)
     } else {
       dispatchWeb(agreementsActions.play())
-      recordPlay(agreement_id)
+      recordPlay(digital_content_id)
     }
-  }, [agreement_id, uid, isPlayingUid, dispatchWeb, isPlaying, isLineupLoading])
+  }, [digital_content_id, uid, isPlayingUid, dispatchWeb, isPlaying, isLineupLoading])
 
   const handlePressFavorites = useCallback(() => {
-    dispatchWeb(setFavorite(agreement_id, FavoriteType.AGREEMENT))
+    dispatchWeb(setFavorite(digital_content_id, FavoriteType.AGREEMENT))
     navigation.push({
       native: {
         screen: 'Favorited',
-        params: { id: agreement_id, favoriteType: FavoriteType.AGREEMENT }
+        params: { id: digital_content_id, favoriteType: FavoriteType.AGREEMENT }
       },
       web: { route: FAVORITING_USERS_ROUTE }
     })
-  }, [dispatchWeb, agreement_id, navigation])
+  }, [dispatchWeb, digital_content_id, navigation])
 
   const handlePressReposts = useCallback(() => {
-    dispatchWeb(setRepost(agreement_id, RepostType.AGREEMENT))
+    dispatchWeb(setRepost(digital_content_id, RepostType.AGREEMENT))
     navigation.push({
       native: {
         screen: 'Reposts',
-        params: { id: agreement_id, repostType: RepostType.AGREEMENT }
+        params: { id: digital_content_id, repostType: RepostType.AGREEMENT }
       },
       web: { route: REPOSTING_USERS_ROUTE }
     })
-  }, [dispatchWeb, agreement_id, navigation])
+  }, [dispatchWeb, digital_content_id, navigation])
 
   const handlePressTag = useCallback(
     (tag: string) => {
@@ -260,9 +260,9 @@ export const AgreementScreenDetailsTile = ({
   const handlePressSave = () => {
     if (!isOwner) {
       if (has_current_user_saved) {
-        dispatchWeb(unsaveAgreement(agreement_id, FavoriteSource.AGREEMENT_PAGE))
+        dispatchWeb(unsaveAgreement(digital_content_id, FavoriteSource.AGREEMENT_PAGE))
       } else {
-        dispatchWeb(saveAgreement(agreement_id, FavoriteSource.AGREEMENT_PAGE))
+        dispatchWeb(saveAgreement(digital_content_id, FavoriteSource.AGREEMENT_PAGE))
       }
     }
   }
@@ -270,9 +270,9 @@ export const AgreementScreenDetailsTile = ({
   const handlePressRepost = () => {
     if (!isOwner) {
       if (has_current_user_reposted) {
-        dispatchWeb(undoRepostAgreement(agreement_id, RepostSource.AGREEMENT_PAGE))
+        dispatchWeb(undoRepostAgreement(digital_content_id, RepostSource.AGREEMENT_PAGE))
       } else {
-        dispatchWeb(repostAgreement(agreement_id, RepostSource.AGREEMENT_PAGE))
+        dispatchWeb(repostAgreement(digital_content_id, RepostSource.AGREEMENT_PAGE))
       }
     }
   }
@@ -280,8 +280,8 @@ export const AgreementScreenDetailsTile = ({
   const handlePressShare = () => {
     dispatchWeb(
       requestOpenShareModal({
-        type: 'agreement',
-        agreementId: agreement_id,
+        type: 'digital_content',
+        agreementId: digital_content_id,
         source: ShareSource.PAGE
       })
     )
@@ -308,7 +308,7 @@ export const AgreementScreenDetailsTile = ({
     dispatchWeb(
       openOverflowMenu({
         source: OverflowSource.AGREEMENTS,
-        id: agreement_id,
+        id: digital_content_id,
         overflowActions
       })
     )
@@ -346,7 +346,7 @@ export const AgreementScreenDetailsTile = ({
       <AgreementScreenDownloadButtons
         following={user.does_current_user_follow}
         isOwner={isOwner}
-        agreementId={agreement_id}
+        agreementId={digital_content_id}
         user={user}
       />
     )
@@ -363,7 +363,7 @@ export const AgreementScreenDetailsTile = ({
 
   return (
     <DetailsTile
-      descriptionLinkPressSource='agreement page'
+      descriptionLinkPressSource='digital_content page'
       coSign={_co_sign}
       description={description ?? undefined}
       details={details}
@@ -373,7 +373,7 @@ export const AgreementScreenDetailsTile = ({
       user={user}
       renderBottomContent={renderBottomContent}
       renderHeader={is_unlisted ? renderHiddenHeader : undefined}
-      headerText={isRemix ? messages.remix : messages.agreement}
+      headerText={isRemix ? messages.remix : messages.digital_content}
       hideFavorite={is_unlisted}
       hideRepost={is_unlisted}
       hideShare={is_unlisted && !field_visibility?.share}

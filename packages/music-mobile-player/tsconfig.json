@@ -12,7 +12,7 @@
     "paths": {
       "app/*": ["./src/*"],
       // Remove these when no longer dependent on -client
-      "live/*": ["./node_modules/@coliving/web/src/live/*"],
+      "digitalcoin/*": ["./node_modules/@coliving/web/src/digitalcoin/*"],
       "common/*": ["./node_modules/@coliving/web/src/common/*"],
       "components/*": ["./node_modules/@coliving/web/src/components/*"],
       "hooks/*": ["./node_modules/@coliving/web/src/hooks/*"],

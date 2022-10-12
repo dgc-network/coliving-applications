@@ -1,7 +1,7 @@
 //import React from 'react'
 import * as React from 'react'
 
-import type { Agreement } from '@coliving/common'
+import type { DigitalContent } from '@coliving/common'
 import { SquareSizes } from '@coliving/common'
 import { getDominantColorsByAgreement } from '@coliving/web/src/common/store/average-color/slice'
 import { Dimensions, StyleSheet, View } from 'react-native'
@@ -40,20 +40,20 @@ const createStyles = (themeColors: ThemeColors) =>
   })
 
 type ArtworkProps = {
-  agreement: Agreement
+  digital_content: DigitalContent
 }
 
-export const Artwork = ({ agreement }: ArtworkProps) => {
+export const Artwork = ({ digital_content }: ArtworkProps) => {
   const styles = useThemedStyles(createStyles)
   const image = useAgreementCoverArt({
-    id: agreement.agreement_id,
-    sizes: agreement._cover_art_sizes,
+    id: digital_content.digital_content_id,
+    sizes: digital_content._cover_art_sizes,
     size: SquareSizes.SIZE_1000_BY_1000
   })
 
   const dominantColors = useSelectorWeb((state) =>
     getDominantColorsByAgreement(state, {
-      agreement
+      digital_content
     })
   )
 

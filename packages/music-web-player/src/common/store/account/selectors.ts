@@ -45,7 +45,7 @@ export const getAccountVerified = createSelector(
 )
 export const getAccountHasAgreements = createSelector(
   [internalGetAccountUser],
-  (user) => (user ? user.agreement_count > 0 : false)
+  (user) => (user ? user.digital_content_count > 0 : false)
 )
 export const getAccountCollectibles = createSelector(
   [internalGetAccountUser],
@@ -125,12 +125,12 @@ export const getAccountCollections = createSelector(
   [internalGetAccountCollections, getCollections],
   (accountCollections, collections) => {
     return Object.keys(accountCollections).reduce((acc, cur) => {
-      const agreement = accountCollections[cur as unknown as number]
-      if (!collections[agreement.id] || collections[agreement.id]._marked_deleted)
+      const digital_content = accountCollections[cur as unknown as number]
+      if (!collections[digital_content.id] || collections[digital_content.id]._marked_deleted)
         return acc
       return {
         ...acc,
-        [agreement.id]: agreement
+        [digital_content.id]: digital_content
       }
     }, {} as { [id: number]: AccountCollection })
   }

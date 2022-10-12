@@ -97,7 +97,7 @@ export type AgreementListItemProps = {
   onRemove?: (index: number) => void
   onSave?: (isSaved: boolean, agreementId: ID) => void
   togglePlay?: (uid: string, agreementId: ID) => void
-  agreement: AgreementMetadata
+  digital_content: AgreementMetadata
   agreementItemAction?: AgreementItemAction
 }
 
@@ -114,7 +114,7 @@ export const AgreementListItem = ({
   onRemove,
   onSave,
   togglePlay,
-  agreement,
+  digital_content,
   agreementItemAction
 }: AgreementListItemProps) => {
   const {
@@ -124,10 +124,10 @@ export const AgreementListItem = ({
     is_delete,
     is_unlisted,
     title,
-    agreement_id,
+    digital_content_id,
     uid,
     user: { name, is_deactivated, user_id }
-  } = agreement
+  } = digital_content
   const isDeleted = is_delete || !!is_deactivated || is_unlisted
 
   const messages = getMessages({ isDeleted })
@@ -144,7 +144,7 @@ export const AgreementListItem = ({
 
   const onPressAgreement = () => {
     if (uid && !isDeleted && togglePlay) {
-      togglePlay(uid, agreement_id)
+      togglePlay(uid, digital_content_id)
     }
   }
 
@@ -170,7 +170,7 @@ export const AgreementListItem = ({
     dispatchWeb(
       openOverflowMenu({
         source: OverflowSource.AGREEMENTS,
-        id: agreement_id,
+        id: digital_content_id,
         overflowActions
       })
     )
@@ -180,14 +180,14 @@ export const AgreementListItem = ({
     has_current_user_reposted,
     has_current_user_saved,
     dispatchWeb,
-    agreement_id
+    digital_content_id
   ])
 
   const handlePressSave = (e: NativeSyntheticEvent<NativeTouchEvent>) => {
     e.stopPropagation()
     const isNotAvailable = isDeleted && !has_current_user_saved
     if (!isNotAvailable && onSave) {
-      onSave(has_current_user_saved, agreement_id)
+      onSave(has_current_user_saved, digital_content_id)
     }
   }
 
@@ -216,7 +216,7 @@ export const AgreementListItem = ({
       >
         {!hideArt ? (
           <AgreementArtwork
-            agreementId={agreement_id}
+            agreementId={digital_content_id}
             coverArtSizes={_cover_art_sizes}
             isActive={isActive}
             isLoading={isLoading}
@@ -258,7 +258,7 @@ export const AgreementListItem = ({
           </View>
           <Text numberOfLines={1} style={styles.landlordName}>
             {name}
-            <UserBadges user={agreement.user} badgeSize={12} hideName />
+            <UserBadges user={digital_content.user} badgeSize={12} hideName />
           </Text>
         </View>
         {agreementItemAction === 'save' ? (

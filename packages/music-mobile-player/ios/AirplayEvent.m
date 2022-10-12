@@ -25,7 +25,7 @@ RCT_EXPORT_MODULE();
 
 RCT_EXPORT_METHOD(startScan)
 {
-    // Add observer which will call "deviceChanged" method when live outpout changes
+    // Add observer which will call "deviceChanged" method when digitalcoin outpout changes
     // e.g. headphones connect / disconnect
     [[NSNotificationCenter defaultCenter]
     addObserver:self
@@ -47,7 +47,7 @@ RCT_EXPORT_METHOD(disconnect)
 
 
 - (void)deviceChanged:(NSNotification *)sender {
-    // Get current live output
+    // Get current digitalcoin output
     [self sendEventAboutConnectedDevice];
 }
 

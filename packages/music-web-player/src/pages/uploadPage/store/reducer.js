@@ -26,7 +26,7 @@ const initialState = {
   failedAgreementIndices: [],
 
   // Id to take the user to after completing upload.
-  // Can be either a agreement or contentList/album.
+  // Can be either a digital_content or contentList/album.
   completionId: null
 }
 

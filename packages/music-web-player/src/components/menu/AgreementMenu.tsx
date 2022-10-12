@@ -50,7 +50,7 @@ const messages = {
   unreposted: 'Un-Reposted!',
   unsetLandlordPick: 'Unset as Landlord Pick',
   visitLandlordPage: 'Visit Landlord Page',
-  visitAgreementPage: 'Visit Agreement Page'
+  visitAgreementPage: 'Visit DigitalContent Page'
 }
 
 export type OwnProps = {
@@ -74,7 +74,7 @@ export type OwnProps = {
   agreementId: ID
   agreementTitle: string
   agreementPermalink: string
-  type: 'agreement'
+  type: 'digital_content'
 }
 
 export type AgreementMenuProps = OwnProps &
@@ -178,7 +178,7 @@ const AgreementMenu = (props: AgreementMenuProps) => {
     }
 
     const editAgreementMenuItem = {
-      text: 'Edit Agreement',
+      text: 'Edit DigitalContent',
       onClick: () => openEditAgreementModal(agreementId)
     }
 

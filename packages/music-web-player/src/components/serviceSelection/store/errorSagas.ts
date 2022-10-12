@@ -6,7 +6,7 @@ import { fetchServicesFailed } from './slice'
 
 const errorsWithoutRedirect = new Set([fetchServicesFailed.type])
 
-// TODO: This definition should live in Service Selection Actions
+// TODO: This definition should digitalcoin in Service Selection Actions
 // once we've settled on a pattern for defining actions in TS
 type ServiceSelectionActions = {
   type: string

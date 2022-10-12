@@ -148,7 +148,7 @@ export class ActionsTab extends PureComponent {
       agreementId,
       contentListId
     } = this.props
-    if (variant === 'agreement') {
+    if (variant === 'digital_content') {
       currentUserReposted ? undoRepostAgreement(agreementId) : repostAgreement(agreementId)
     } else if (variant === 'contentList' || variant === 'album') {
       currentUserReposted
@@ -160,7 +160,7 @@ export class ActionsTab extends PureComponent {
   onShare = () => {
     const { agreementId, variant, contentListId, shareAgreement, shareCollection } =
       this.props
-    if (variant === 'agreement') {
+    if (variant === 'digital_content') {
       shareAgreement(agreementId)
     } else if (variant === 'contentList' || variant === 'album') {
       shareCollection(contentListId)
@@ -199,8 +199,8 @@ export class ActionsTab extends PureComponent {
         isLandlordPick
       }
     }
-    if (variant === 'agreement') {
-      overflowMenu.menu.type = 'agreement'
+    if (variant === 'digital_content') {
+      overflowMenu.menu.type = 'digital_content'
       overflowMenu.menu.agreementId = agreementId
       overflowMenu.menu.agreementTitle = agreementTitle
       overflowMenu.menu.isLandlordPick = isLandlordPick
@@ -248,7 +248,7 @@ ActionsTab.propTypes = {
   isDisabled: PropTypes.bool,
   includeEdit: PropTypes.bool,
   direction: PropTypes.oneOf(['vertical', 'horizontal']),
-  variant: PropTypes.oneOf(['agreement', 'contentList', 'album']),
+  variant: PropTypes.oneOf(['digital_content', 'contentList', 'album']),
   containerStyles: PropTypes.string,
   handle: PropTypes.string,
   agreementTitle: PropTypes.string,
@@ -263,7 +263,7 @@ ActionsTab.defaultProps = {
   standalone: false,
   isDisabled: false,
   direction: 'vertical',
-  variant: 'agreement',
+  variant: 'digital_content',
   handle: 'handle'
 }
 
@@ -275,7 +275,7 @@ const mapDispatchToProps = (dispatch) => ({
   shareAgreement: (agreementId) =>
     dispatch(
       requestOpenShareModal({
-        type: 'agreement',
+        type: 'digital_content',
         agreementId,
         source: ShareSource.TILE
       })

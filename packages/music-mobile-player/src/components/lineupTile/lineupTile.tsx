@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux'
 
 import type { LineupTileProps } from 'app/components/lineupTile/types'
 import { useSelectorWeb } from 'app/hooks/useSelectorWeb'
-import { getPlaying } from 'app/store/live/selectors'
+import { getPlaying } from 'app/store/digitalcoin/selectors'
 
 import { LineupTileActionButtons } from './lineupTileActionButtons'
 import {

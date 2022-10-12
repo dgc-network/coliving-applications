@@ -28,7 +28,7 @@ export type UserMetadata = {
   content_list_count: number
   profile_picture: Nullable<CID>
   repost_count: number
-  agreement_count: number
+  digital_content_count: number
   cover_photo_sizes: Nullable<CID>
   profile_picture_sizes: Nullable<CID>
   metadata_multihash: Nullable<CID>
@@ -42,7 +42,7 @@ export type UserMetadata = {
 
   // Only present on the "current" account
   does_follow_current_user?: boolean
-  agreement_save_count?: number
+  digital_content_save_count?: number
   user_id: number
   twitter_handle?: string
   instagram_handle?: string

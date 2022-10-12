@@ -1,4 +1,4 @@
-import { Collection, Agreement, Nullable } from '@coliving/common'
+import { Collection, DigitalContent, Nullable } from '@coliving/common'
 import { createSelector } from 'reselect'
 
 import { CommonState } from 'common/store'
@@ -122,7 +122,7 @@ export const getNotificationEntity = (
     notification.entityType !== Entity.User
   ) {
     const getEntity =
-      notification.entityType === Entity.Agreement ? getAgreement : getCollection
+      notification.entityType === Entity.DigitalContent ? getAgreement : getCollection
     const entity = getEntity(state, { id: notification.entityId })
     if (entity) {
       const userId =
@@ -139,7 +139,7 @@ export const getNotificationEntity = (
 
 type EntityTypes<T extends AddAgreementToContentList | Notification> =
   T extends AddAgreementToContentList
-    ? { agreement: AgreementEntity; contentList: CollectionEntity }
+    ? { digital_content: AgreementEntity; contentList: CollectionEntity }
     : Nullable<EntityType[]>
 
 export const getNotificationEntities = <
@@ -149,23 +149,23 @@ export const getNotificationEntities = <
   notification: T
 ): EntityTypes<T> => {
   if (notification.type === NotificationType.AddAgreementToContentList) {
-    const agreement = getAgreement(state, { id: notification.agreementId })
+    const digital_content = getAgreement(state, { id: notification.agreementId })
     const currentUser = getAccountUser(state)
     const contentList = getCollection(state, { id: notification.contentListId })
     const contentListOwner = getUser(state, { id: notification.contentListOwnerId })
     return {
-      agreement: { ...agreement, user: currentUser },
+      digital_content: { ...digital_content, user: currentUser },
       contentList: { ...contentList, user: contentListOwner }
     } as EntityTypes<T>
   }
 
   if ('entityIds' in notification && 'entityType' in notification) {
     const getEntities =
-      notification.entityType === Entity.Agreement ? getAgreements : getCollections
+      notification.entityType === Entity.DigitalContent ? getAgreements : getCollections
     const entityMap = getEntities(state, { ids: notification.entityIds })
     const entities = notification.entityIds
       .map((id: number) => (entityMap as any)[id])
-      .map((entity: Agreement | Collection | null) => {
+      .map((entity: DigitalContent | Collection | null) => {
         if (entity) {
           const userId =
             'owner_id' in entity ? entity.owner_id : entity.content_list_owner_id

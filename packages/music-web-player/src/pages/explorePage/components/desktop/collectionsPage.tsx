@@ -107,7 +107,7 @@ const CollectionsPage = ({
         }
         reposts={contentList.repost_count}
         favorites={contentList.save_count}
-        agreementCount={contentList.content_list_contents.agreement_ids.length}
+        agreementCount={contentList.content_list_contents.digital_content_ids.length}
         onClickReposts={() => onClickReposts(contentList.content_list_id)}
         onClickFavorites={() => onClickFavorites(contentList.content_list_id)}
         onClick={() =>

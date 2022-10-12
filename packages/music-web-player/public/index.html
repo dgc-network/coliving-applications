@@ -110,7 +110,7 @@
         (function (w, d, e, o, a) {
           w.__adroll_loaded = true;
           w.adroll = w.adroll || [];
-          w.adroll.f = ['setProperties', 'identify', 'agreement'];
+          w.adroll.f = ['setProperties', 'identify', 'digital_content'];
           var roundtripUrl = "https://s.adroll.com/j/" + adroll_adv_id
             + "/roundtrip.js";
           for (a = 0; a < w.adroll.f.length; a++) {
@@ -127,7 +127,7 @@
           e.src = roundtripUrl;
           o.parentNode.insertBefore(e, o);
         })(window, document);
-        adroll.agreement("pageView");
+        adroll.digital_content("pageView");
       }
     </script>
     <!-- end Adroll -->

@@ -72,7 +72,7 @@ type RewardsUIState = {
 
 const initialState: RewardsUIState = {
   trendingRewardsModalType: 'agreements',
-  challengeRewardsModalType: 'agreement-upload',
+  challengeRewardsModalType: 'digital-content-upload',
   userChallenges: {},
   undisbursedChallenges: [],
   userChallengesOverrides: {},
@@ -138,7 +138,7 @@ const slice = createSlice({
 
       if (!userChallenge) return
 
-      // Keep agreement of individual challenges for rolled up aggregates
+      // Keep digital_content of individual challenges for rolled up aggregates
       if (userChallenge.challenge_type === 'aggregate') {
         state.disbursedChallenges[challengeId] = ([] as string[]).concat(
           state.disbursedChallenges[challengeId] ?? [],

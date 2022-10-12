@@ -83,7 +83,7 @@ type TabBarProps = {
   // Offset the tab to the left or right.
   // offset of 1 offsets 1 tab to the right,
   // offset of -1 to the left.
-  // Used to agreement in progress gestures.
+  // Used to digital_content in progress gestures.
   fractionalOffset?: number
 }
 
@@ -495,8 +495,8 @@ const GestureSupportingBodyContainer = memo(
 
     // If the active index has changed, either because
     // we've clicked a new tab or finished a gesture,
-    // begin animations and agreement the index delta.
-    // We have to agreement the delta as opposed to the last seen
+    // begin animations and digital_content the index delta.
+    // We have to digital_content the delta as opposed to the last seen
     const newIndexDelta = activeIndex - internalIndex
     if (newIndexDelta !== getIndexDelta()) {
       // If newIndexDelta !== 0, that means we're starting a
@@ -624,7 +624,7 @@ const GestureSupportingBodyContainer = memo(
           setGestureInProgress(false)
           setMovementDirection(0)
         } else if (!first) {
-          // Agreement the gesture
+          // DigitalContent the gesture
           setScrollContainerX(mx, true)
           setScrollPos(mx)
 

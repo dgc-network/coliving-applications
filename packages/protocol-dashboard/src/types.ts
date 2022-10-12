@@ -238,7 +238,7 @@ export type PendingTransaction =
   | PendingClaimTransaction
   | DelayedPendingTransaction
 
-export type Agreement = {
+export type DigitalContent = {
   title: string
   handle: string
   artwork: string

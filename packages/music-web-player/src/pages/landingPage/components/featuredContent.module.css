@@ -81,7 +81,7 @@
   align-items: center;
 }
 
-.agreement {
+.digital_content {
   overflow: hidden;
   height: 292px;
   width: 292px;
@@ -91,11 +91,11 @@
   background-size: cover;
 }
 
-.agreement:hover {
+.digital_content:hover {
   transform: scale3d(1.1, 1.1, 1.1);
 }
 
-.agreement:active {
+.digital_content:active {
   transform: scale3d(0.99, 0.99, 0.99);
 }
 
@@ -133,7 +133,7 @@
   text-align: center;
 }
 
-.agreement .agreementLandlord {
+.digital_content .agreementLandlord {
   opacity: 0;
   color: rgba(255, 255, 255, 1);
   font-size: 18px;
@@ -144,21 +144,21 @@
   transition: all 0.07s ease-in-out;
 }
 
-.agreement .listenOnColiving {
+.digital_content .listenOnColiving {
   opacity: 0;
   width: 154px;
   transition: all 0.07s ease-in-out;
 }
 
-.agreement:hover .agreementTitle {
+.digital_content:hover .agreementTitle {
   opacity: 1;
 }
 
-.agreement:hover .agreementLandlord {
+.digital_content:hover .agreementLandlord {
   opacity: 1;
 }
 
-.agreement:hover .listenOnColiving {
+.digital_content:hover .listenOnColiving {
   opacity: 1;
 }
 

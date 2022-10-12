@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 
 import HCaptcha from '@hcaptcha/react-native-hcaptcha'
-import { getHCaptchaStatus } from '@coliving/web/src/common/store/pages/live-rewards/selectors'
-import { HCaptchaStatus } from '@coliving/web/src/common/store/pages/live-rewards/slice'
+import { getHCaptchaStatus } from '@coliving/web/src/common/store/pages/digitalcoin-rewards/selectors'
+import { HCaptchaStatus } from '@coliving/web/src/common/store/pages/digitalcoin-rewards/slice'
 import {
   getModalVisibility,
   setVisibility

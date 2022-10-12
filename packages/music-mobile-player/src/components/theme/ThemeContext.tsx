@@ -8,7 +8,7 @@ import { useDarkMode } from 'react-native-dark-mode'
 
 import { useDispatchWeb } from 'app/hooks/useDispatchWeb'
 import { useSelectorWeb } from 'app/hooks/useSelectorWeb'
-import { make, agreement } from 'app/utils/analytics'
+import { make, digital_content } from 'app/utils/analytics'
 import { Theme } from 'app/utils/theme'
 
 type ThemeContextProps = {
@@ -45,7 +45,7 @@ export const ThemeProvider = (props: ThemeProviderProps) => {
         mode: recordedTheme as 'dark' | 'light' | 'matrix' | 'auto'
       })
 
-      agreement(agreementEvent)
+      digital_content(agreementEvent)
     },
     [dispatchWeb]
   )

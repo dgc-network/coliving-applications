@@ -29,7 +29,7 @@ const waitForBItems = async () => {
   }
 }
 
-const setBlocked = async <T extends AgreementMetadata>(agreement: T) => {
+const setBlocked = async <T extends AgreementMetadata>(digital_content: T) => {
   // Initialize the set if not present
   if (!blockList) {
     await waitForBItems()
@@ -37,17 +37,17 @@ const setBlocked = async <T extends AgreementMetadata>(agreement: T) => {
   }
   if (IS_WEB_HOSTNAME) {
     await waitForWeb3()
-    const shaId = window.Web3.utils.sha3(agreement.agreement_id.toString())
+    const shaId = window.Web3.utils.sha3(digital_content.digital_content_id.toString())
     if (blockList.has(shaId)) {
       return {
-        ...agreement,
+        ...digital_content,
         is_delete: true,
         _blocked: true
       }
     }
   }
   // Most of the time this method is a no-op
-  return agreement
+  return digital_content
 }
 
 export const setAgreementsIsBlocked = async <T extends AgreementMetadata>(

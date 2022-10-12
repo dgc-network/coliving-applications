@@ -21,7 +21,7 @@ import { formatWei, stringWeiToBN, weiToString } from 'common/utils/wallet'
 import Tooltip from 'components/tooltip/tooltip'
 import { liveTierMapPng } from 'components/userBadges/userBadges'
 import { useGetFirstOrTopSupporter } from 'hooks/useGetFirstOrTopSupporter'
-import ButtonWithArrow from 'pages/live-rewards-page/components/ButtonWithArrow'
+import ButtonWithArrow from 'pages/digitalcoin-rewards-page/components/ButtonWithArrow'
 
 import { ProfileInfo } from '../../profileInfo/profileInfo'
 

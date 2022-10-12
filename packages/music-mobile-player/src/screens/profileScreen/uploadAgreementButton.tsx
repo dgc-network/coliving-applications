@@ -11,7 +11,7 @@ import { makeStyles } from 'app/styles'
 import { useThemeColors } from 'app/utils/theme'
 
 const messages = {
-  uploadAgreement: 'Upload Agreement'
+  uploadAgreement: 'Upload DigitalContent'
 }
 
 const useStyles = makeStyles(({ spacing, palette }) => ({

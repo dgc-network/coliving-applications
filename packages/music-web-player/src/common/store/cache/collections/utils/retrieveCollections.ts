@@ -4,7 +4,7 @@ import {
   CollectionMetadata,
   UserCollectionMetadata,
   Kind,
-  Agreement,
+  DigitalContent,
   makeUid
 } from '@coliving/common'
 import { call, select } from 'redux-saga/effects'
@@ -42,13 +42,13 @@ export function* retrieveAgreementsForCollections(
   excludedAgreementIdSet: Set<ID>
 ) {
   const allAgreementIds = collections.reduce((acc, cur) => {
-    const agreementIds = cur.content_list_contents.agreement_ids.map((t) => t.agreement)
+    const agreementIds = cur.content_list_contents.digital_content_ids.map((t) => t.digital_content)
     return [...acc, ...agreementIds]
   }, [] as ID[])
   const filteredAgreementIds = [
     ...new Set(allAgreementIds.filter((id) => !excludedAgreementIdSet.has(id)))
   ]
-  const agreements: Agreement[] = yield call(retrieveAgreements, {
+  const agreements: DigitalContent[] = yield call(retrieveAgreements, {
     agreementIds: filteredAgreementIds
   })
 
@@ -63,20 +63,20 @@ export function* retrieveAgreementsForCollections(
 
   return collections.map((c) => {
     // Filter out unfetched agreements
-    const filteredIds = c.content_list_contents.agreement_ids.filter(
-      (t) => !unfetchedIdSet.has(t.agreement)
+    const filteredIds = c.content_list_contents.digital_content_ids.filter(
+      (t) => !unfetchedIdSet.has(t.digital_content)
     )
     // Add UIDs
     const withUids = filteredIds.map((t) => ({
       ...t,
       // Make a new UID if one doesn't already exist
-      uid: t.uid || makeUid(Kind.AGREEMENTS, t.agreement, `collection:${c.content_list_id}`)
+      uid: t.uid || makeUid(Kind.AGREEMENTS, t.digital_content, `collection:${c.content_list_id}`)
     }))
 
     return {
       ...c,
       content_list_contents: {
-        agreement_ids: withUids
+        digital_content_ids: withUids
       }
     }
   })
@@ -120,7 +120,7 @@ export function* retrieveCollections(
       if (requiresAllAgreements) {
         const keys = Object.keys(res) as any
         keys.forEach((collectionId: number) => {
-          const fullAgreementCount = res[collectionId].agreement_count
+          const fullAgreementCount = res[collectionId].digital_content_count
           const currentAgreementCount = res[collectionId].agreements?.length ?? 0
           if (currentAgreementCount < fullAgreementCount) {
             // Remove the collection from the res so retrieve knows to get it from source

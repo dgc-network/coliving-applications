@@ -168,7 +168,7 @@ function mapStateToProps(state: AppState, props: OwnProps) {
     handle: props.handle ? props.handle.toLowerCase() : null
   })
   return {
-    isLandlord: user ? user.agreement_count > 0 : false
+    isLandlord: user ? user.digital_content_count > 0 : false
   }
 }
 

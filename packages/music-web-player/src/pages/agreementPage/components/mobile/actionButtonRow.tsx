@@ -27,7 +27,7 @@ type ActionButtonRowProps = {
   darkMode: boolean
 }
 
-// A row of action buttons, visible on agreement or contentList pages.
+// A row of action buttons, visible on digital_content or contentList pages.
 const ActionButtonRow = ({
   showRepost,
   isOwner,

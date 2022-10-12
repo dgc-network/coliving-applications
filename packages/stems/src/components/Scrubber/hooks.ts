@@ -3,7 +3,7 @@ import * as React from 'react'
 
 import { TimeData } from './types'
 
-/** Sets animation properties on the handle and agreement. */
+/** Sets animation properties on the handle and digital_content. */
 const animate = (
   agreementRef: React.MutableRefObject<HTMLDivElement | null>,
   handleRef: React.MutableRefObject<HTMLDivElement | null>,

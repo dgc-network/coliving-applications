@@ -91,8 +91,8 @@ const messages = {
   profileCheckProfilePicture: 'Profile Picture',
   profileCheckCoverPhoto: 'Cover Photo',
   profileCheckProfileDescription: 'Profile Description',
-  profileCheckFavorite: 'Favorite Agreement/ContentList',
-  profileCheckRepost: 'Repost Agreement/ContentList',
+  profileCheckFavorite: 'Favorite DigitalContent/ContentList',
+  profileCheckRepost: 'Repost DigitalContent/ContentList',
   profileCheckFollow: 'Follow Five People'
 }
 

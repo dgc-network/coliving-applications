@@ -1,4 +1,4 @@
-import { ID, Collection, Agreement } from '@coliving/common'
+import { ID, Collection, DigitalContent } from '@coliving/common'
 import { put, select } from 'typed-redux-saga'
 
 import { getCollection } from 'common/store/cache/collections/selectors'
@@ -45,10 +45,10 @@ const getContentListReposts = createUserListProvider<Collection>({
   includeCurrentUser: (p) => p.has_current_user_reposted
 })
 
-const getAgreementReposts = createUserListProvider<Agreement>({
+const getAgreementReposts = createUserListProvider<DigitalContent>({
   getExistingEntity: getAgreement,
-  extractUserIDSubsetFromEntity: (agreement: Agreement) =>
-    agreement.followee_reposts.map((r) => r.user_id),
+  extractUserIDSubsetFromEntity: (digital_content: DigitalContent) =>
+    digital_content.followee_reposts.map((r) => r.user_id),
   fetchAllUsersForEntity: async ({
     limit,
     offset,
@@ -69,8 +69,8 @@ const getAgreementReposts = createUserListProvider<Agreement>({
     return { users }
   },
   selectCurrentUserIDsInList: getUserIds,
-  canFetchMoreUsers: (agreement: Agreement, combinedUserIDs: ID[]) =>
-    combinedUserIDs.length < agreement.repost_count,
+  canFetchMoreUsers: (digital_content: DigitalContent, combinedUserIDs: ID[]) =>
+    combinedUserIDs.length < digital_content.repost_count,
   includeCurrentUser: (t) => t.has_current_user_reposted
 })
 

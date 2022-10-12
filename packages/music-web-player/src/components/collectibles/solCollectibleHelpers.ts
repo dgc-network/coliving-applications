@@ -156,7 +156,7 @@ const nftVideo = async (
       url = videoUrl
     } else if (files.length) {
       // if there is only one file, then that's the video
-      // otherwise, the second file is the video (the other files are image/live files)
+      // otherwise, the second file is the video (the other files are image/digitalcoin files)
       // https://github.com/metaplex-foundation/metaplex/blob/397ceff70b3524aa0543540584c7200c79b198a0/js/packages/web/src/components/ArtContent/index.tsx#L103
       if (files.length === 1) {
         url = typeof files[0] === 'object' ? files[0].uri : files[0]

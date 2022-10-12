@@ -105,7 +105,7 @@ Draggable.propTypes = {
   text: PropTypes.string,
   link: PropTypes.string,
   kind: PropTypes.oneOf([
-    'agreement',
+    'digital_content',
     'album',
     'contentList',
     'library-content-list',

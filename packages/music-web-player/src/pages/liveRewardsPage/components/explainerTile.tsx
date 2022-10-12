@@ -20,7 +20,7 @@ const messages = {
   learnMore: 'Learn More'
 }
 
-export const LEARN_MORE_URL = 'http://blog.coliving.lol/posts/community-meet-live'
+export const LEARN_MORE_URL = 'http://blog.coliving.lol/posts/community-meet-digitalcoin'
 
 type TileProps = {
   className?: string

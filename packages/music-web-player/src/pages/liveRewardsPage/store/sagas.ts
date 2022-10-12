@@ -29,7 +29,7 @@ import {
   getUserChallenge,
   getUserChallengesOverrides,
   getUserChallengeSpecifierMap
-} from 'common/store/pages/live-rewards/selectors'
+} from 'common/store/pages/digitalcoin-rewards/selectors'
 import {
   resetAndCancelClaimReward,
   claimChallengeReward,
@@ -53,13 +53,13 @@ import {
   updateOptimisticListenStreak,
   setUndisbursedChallenges,
   UndisbursedUserChallenge
-} from 'common/store/pages/live-rewards/slice'
+} from 'common/store/pages/digitalcoin-rewards/slice'
 import { getFeePayer } from 'common/store/solana/selectors'
 import { setVisibility } from 'common/store/ui/modals/slice'
 import { getBalance, increaseBalance } from 'common/store/wallet/slice'
 import { stringAudioToStringWei } from 'common/utils/wallet'
 import { show as showMusicConfetti } from 'components/musicConfetti/store/slice'
-import mobileSagas from 'pages/live-rewards-page/store/mobileSagas'
+import mobileSagas from 'pages/digitalcoin-rewards-page/store/mobileSagas'
 import ColivingBackend from 'services/colivingBackend'
 import apiClient from 'services/colivingAPIClient/colivingAPIClient'
 import { getCognitoExists } from 'services/colivingBackend/cognito'
@@ -518,7 +518,7 @@ function* handleOptimisticChallengesOnUpdate(
 }
 
 /**
- * Updates the listen streak optimistically if current_step_count is zero and a agreement is played
+ * Updates the listen streak optimistically if current_step_count is zero and a digital_content is played
  */
 function* watchUpdateOptimisticListenStreak() {
   yield* takeEvery(updateOptimisticListenStreak.type, function* () {

@@ -32,7 +32,7 @@ const useStyles = makeStyles(({ spacing, palette, typography }) => ({
     margin: spacing(4),
     marginTop: spacing(6)
   },
-  agreement: {
+  digital_content: {
     ...flexRowCentered()
   },
   text: {
@@ -49,18 +49,18 @@ export const AgreementRemixesScreen = () => {
   const navigation = useNavigation()
   const lineup = useSelectorWeb(getRemixesAgreementsLineup)
   const count = useSelectorWeb(getCount)
-  const agreement = useSelectorWeb(getAgreement)
+  const digital_content = useSelectorWeb(getAgreement)
   const user = useSelectorWeb(getUser)
 
   const styles = useStyles()
 
   const handlePressAgreement = () => {
-    if (!agreement) {
+    if (!digital_content) {
       return
     }
     navigation.push({
-      native: { screen: 'Agreement', params: { id: agreement.agreement_id } },
-      web: { route: agreement.permalink }
+      native: { screen: 'DigitalContent', params: { id: digital_content.digital_content_id } },
+      web: { route: digital_content.permalink }
     })
   }
 
@@ -83,14 +83,14 @@ export const AgreementRemixesScreen = () => {
       <Header text={messages.header} />
       <Lineup
         lineup={lineup}
-        fetchPayload={{ agreementId: agreement?.agreement_id }}
+        fetchPayload={{ agreementId: digital_content?.digital_content_id }}
         header={
-          agreement && user ? (
+          digital_content && user ? (
             <View style={styles.header}>
               <Text style={styles.text}>{remixesCountText}</Text>
               <Text style={styles.text}>
                 <Text style={styles.link} onPress={handlePressAgreement}>
-                  {agreement.title}
+                  {digital_content.title}
                 </Text>{' '}
                 <Text>{messages.by}</Text>{' '}
                 <Text onPress={handlePressLandlordName}>

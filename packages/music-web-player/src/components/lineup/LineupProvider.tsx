@@ -24,7 +24,7 @@ import {
   ContentListTileProps,
   AgreementTileSize,
   TileProps
-} from 'components/agreement/types'
+} from 'components/digital_content/types'
 import { AgreementEvent, make } from 'store/analytics/actions'
 import { AppState } from 'store/types'
 import { isMobile } from 'utils/clientUtil'
@@ -135,7 +135,7 @@ export interface LineupProviderProps {
   delineate?: boolean
 
   /**
-   * Indicator if a agreement should be displayed differently (ie. landlord pick)
+   * Indicator if a digital_content should be displayed differently (ie. landlord pick)
    * The leadingElementId is displayed at the top of the lineup
    */
   leadingElementId?: ID
@@ -146,7 +146,7 @@ export interface LineupProviderProps {
   leadingElementDelineator?: JSX.Element | null
 
   /**
-   * Agreement tile properties to optionally pass to the leading element agreement tile
+   * DigitalContent tile properties to optionally pass to the leading element digital_content tile
    */
   leadingElementTileProps?: Partial<TileProps>
 
@@ -223,7 +223,7 @@ type CombinedProps = LineupProviderProps &
 
 /** `LineupProvider` encapsulates the logic for displaying a Lineup (e.g. prefetching items)
  * displaying loading states, etc). This is decoupled from the rendering logic, which
- * is controlled by injecting tiles conforming to `Agreement/ContentList/SkeletonProps interfaces.
+ * is controlled by injecting tiles conforming to `DigitalContent/ContentList/SkeletonProps interfaces.
  */
 class LineupProvider extends PureComponent<CombinedProps, LineupProviderState> {
   scrollContainer = createRef<HTMLDivElement>()
@@ -404,23 +404,23 @@ class LineupProvider extends PureComponent<CombinedProps, LineupProviderState> {
     }
   }
 
-  // If the uid of the currently playing agreement is not in the lineup, check if the agreement and is playing
-  // then return the first uid of the first agreement that matches else the uid
+  // If the uid of the currently playing digital_content is not in the lineup, check if the digital_content and is playing
+  // then return the first uid of the first digital_content that matches else the uid
   getPlayingUid = () => {
     const { lineup, playingAgreementId, playingSource, playingUid } = this.props
 
     const isLineupPlaying = lineup.entries.some((entry) => {
-      if (entry.agreement_id) return playingUid === entry.uid
+      if (entry.digital_content_id) return playingUid === entry.uid
       else if (entry.content_list_id)
-        return entry.agreements.some((agreement: any) => agreement.uid === playingUid)
+        return entry.agreements.some((digital_content: any) => digital_content.uid === playingUid)
       return false
     })
     if (playingAgreementId && !isLineupPlaying && lineup.prefix === playingSource) {
       for (const entry of lineup.entries) {
-        if (entry.agreement_id === playingAgreementId) return entry.uid
+        if (entry.digital_content_id === playingAgreementId) return entry.uid
         if (entry.content_list_id) {
-          for (const agreement of entry.agreements) {
-            if (agreement.agreement_id === playingAgreementId) return agreement.uid
+          for (const digital_content of entry.agreements) {
+            if (digital_content.digital_content_id === playingAgreementId) return digital_content.uid
           }
         }
       }
@@ -512,8 +512,8 @@ class LineupProvider extends PureComponent<CombinedProps, LineupProviderState> {
     const lineupCount = count !== undefined ? count : lineup.entries.length
     let tiles = lineup.entries
       .map((entry, index) => {
-        if (entry.kind === Kind.AGREEMENTS || entry.agreement_id) {
-          // Render a agreement tile if the kind agreements or there's a agreement id present
+        if (entry.kind === Kind.AGREEMENTS || entry.digital_content_id) {
+          // Render a digital_content tile if the kind agreements or there's a digital_content id present
 
           if (entry._marked_deleted) return null
           let agreementProps = {
@@ -536,7 +536,7 @@ class LineupProvider extends PureComponent<CombinedProps, LineupProviderState> {
           }
           return <this.props.agreementTile key={index} {...agreementProps} />
         } else if (entry.kind === Kind.COLLECTIONS || entry.content_list_id) {
-          // Render a agreement tile if the kind agreements or there's a agreement id present
+          // Render a digital_content tile if the kind agreements or there's a digital_content id present
 
           const contentListProps = {
             ...entry,
@@ -558,7 +558,7 @@ class LineupProvider extends PureComponent<CombinedProps, LineupProviderState> {
 
           return <this.props.contentListTile key={index} {...contentListProps} />
         }
-        // Poorly formed agreement or contentList metatdata.
+        // Poorly formed digital_content or contentList metatdata.
         return null
       })
       // Remove nulls (invalid contentLists or agreements)
@@ -675,13 +675,13 @@ class LineupProvider extends PureComponent<CombinedProps, LineupProviderState> {
     const allTiles = featuredTiles.concat(tiles)
     const featuredAgreementUid =
       featuredTiles.length > 0 ? featuredTiles[0].props.uid : null
-    const allAgreements = allTiles.reduce((acc, agreement) => {
-      acc[agreement.props.uid] = agreement
+    const allAgreements = allTiles.reduce((acc, digital_content) => {
+      acc[digital_content.props.uid] = digital_content
       return acc
     }, {})
 
     // Can load more:
-    // If (the limit is not set OR the number of agreement in the lineup is not equal to the limit)
+    // If (the limit is not set OR the number of digital_content in the lineup is not equal to the limit)
     // AND (the lineup count is less than the count or less than the max tile count if not set)
     // AND (the number of agreements requested is less than the number of agreements in total (in the lineup + deleted))
     const canLoadMore =

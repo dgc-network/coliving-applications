@@ -34,7 +34,7 @@ import Grouping from 'components/groupableList/grouping'
 import TextElement, { Type } from 'components/nav/mobile/textElement'
 import { useTemporaryNavContext } from 'components/nav/store/context'
 import { ToastContext } from 'components/toast/toastContext'
-import AgreementList from 'components/agreement/mobile/AgreementList'
+import AgreementList from 'components/digital_content/mobile/AgreementList'
 import { useCollectionCoverArt } from 'hooks/useCollectionCoverArt'
 import useHasChangedRoute from 'hooks/useHasChangedRoute'
 import UploadStub from 'pages/profilePage/components/mobile/uploadStub'
@@ -104,13 +104,13 @@ const EditContentListPage = g(
       { timestamp: number; agreementId: ID }[]
     >([])
 
-    // Holds agreement to be removed if confirmed
+    // Holds digital_content to be removed if confirmed
     const [confirmRemoveAgreement, setConfirmRemoveAgreement] =
       useState<Nullable<{ title: string; agreementId: ID; timestamp: number }>>(
         null
       )
 
-    // State to keep agreement of reordering
+    // State to keep digital_content of reordering
     const [reorderedAgreements, setReorderedAgreements] = useState<number[]>([])
     const [hasReordered, setHasReordered] = useState(false)
     useEffect(() => {
@@ -192,13 +192,13 @@ const EditContentListPage = g(
     )
 
     const formatReorder = (
-      agreementIds: { agreement: ID; time: number }[],
+      agreementIds: { digital_content: ID; time: number }[],
       reorder: number[]
     ) => {
       return reorder.map((i) => {
-        const { agreement, time } = agreementIds[i]
+        const { digital_content, time } = agreementIds[i]
         return {
-          id: agreement,
+          id: digital_content,
           time
         }
       })
@@ -210,9 +210,9 @@ const EditContentListPage = g(
         formFields.description = null
       }
       // Copy the metadata contentList contents so that a reference is not changed between
-      // removing agreements, updating agreement order, and edit contentList
+      // removing agreements, updating digital_content order, and edit contentList
       const contentListAgreementIds = [
-        ...(metadata?.content_list_contents?.agreement_ids ?? [])
+        ...(metadata?.content_list_contents?.digital_content_ids ?? [])
       ]
 
       for (const removedAgreement of removedAgreements) {
@@ -229,9 +229,9 @@ const EditContentListPage = g(
             metadata.content_list_id,
             formatReorder(contentListAgreementIds, reorderedAgreements)
           )
-          // Update the contentList content agreement_ids so that the editContentList
+          // Update the contentList content digital_content_ids so that the editContentList
           // optimistically update the cached collection agreementIds
-          formFields.content_list_contents.agreement_ids = reorderedAgreements.map(
+          formFields.content_list_contents.digital_content_ids = reorderedAgreements.map(
             (idx) => contentListAgreementIds[idx]
           )
         }
@@ -267,19 +267,19 @@ const EditContentListPage = g(
     ])
 
     /**
-     * Stores the agreement to be removed if confirmed
-     * Opens the drawer to confirm removal of the agreement
+     * Stores the digital_content to be removed if confirmed
+     * Opens the drawer to confirm removal of the digital_content
      */
     const onRemoveAgreement = useCallback(
       (index: number) => {
-        if ((metadata?.content_list_contents?.agreement_ids.length ?? 0) <= index)
+        if ((metadata?.content_list_contents?.digital_content_ids.length ?? 0) <= index)
           return
         const reorderedIndex = reorderedAgreements[index]
         const { content_list_contents } = metadata!
-        const { agreement: agreementId, time } =
-          content_list_contents.agreement_ids[reorderedIndex]
+        const { digital_content: agreementId, time } =
+          content_list_contents.digital_content_ids[reorderedIndex]
         const agreementMetadata = agreements?.find(
-          (agreement) => agreement.agreement_id === agreementId
+          (digital_content) => digital_content.digital_content_id === agreementId
         )
         if (!agreementMetadata) return
         setConfirmRemoveAgreement({
@@ -299,14 +299,14 @@ const EditContentListPage = g(
     )
 
     /**
-     * Moves the agreement to be removed to the removedAgreements array
-     * Closes the drawer to confirm removal of the agreement
+     * Moves the digital_content to be removed to the removedAgreements array
+     * Closes the drawer to confirm removal of the digital_content
      */
     const onConfirmRemove = useCallback(() => {
       if (!confirmRemoveAgreement) return
-      const removeIdx = metadata?.content_list_contents.agreement_ids.findIndex(
+      const removeIdx = metadata?.content_list_contents.digital_content_ids.findIndex(
         (t) =>
-          t.agreement === confirmRemoveAgreement.agreementId &&
+          t.digital_content === confirmRemoveAgreement.agreementId &&
           t.time === confirmRemoveAgreement.timestamp
       )
       if (removeIdx === -1) return
@@ -344,15 +344,15 @@ const EditContentListPage = g(
 
     useTemporaryNavContext(setters)
 
-    // Put together agreement list if necessary
+    // Put together digital_content list if necessary
     let agreementList = null
     if (agreements && reorderedAgreements.length > 0) {
       agreementList = reorderedAgreements.map((i) => {
         const t = agreements[i]
-        const contentListAgreement = metadata?.content_list_contents.agreement_ids[i]
+        const contentListAgreement = metadata?.content_list_contents.digital_content_ids[i]
         const isRemoveActive =
           showRemoveAgreementDrawer &&
-          t.agreement_id === confirmRemoveAgreement?.agreementId &&
+          t.digital_content_id === confirmRemoveAgreement?.agreementId &&
           contentListAgreement?.time === confirmRemoveAgreement?.timestamp
 
         return {
@@ -360,7 +360,7 @@ const EditContentListPage = g(
           landlordName: t.user.name,
           landlordHandle: t.user.handle,
           agreementTitle: t.title,
-          agreementId: t.agreement_id,
+          agreementId: t.digital_content_id,
           time: contentListAgreement?.time,
           isDeleted: t.is_delete || !!t.user.is_deactivated,
           isRemoveActive

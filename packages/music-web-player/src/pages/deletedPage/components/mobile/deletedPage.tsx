@@ -21,8 +21,8 @@ import { withNullGuard } from 'utils/withNullGuard'
 import styles from './deletedPage.module.css'
 
 const messages = {
-  agreementDeleted: 'Agreement [Deleted]',
-  agreementDeletedByLandlord: 'Agreement [Deleted By Landlord]',
+  agreementDeleted: 'DigitalContent [Deleted]',
+  agreementDeletedByLandlord: 'DigitalContent [Deleted By Landlord]',
   contentListDeleted: 'ContentList [Deleted by Landlord]',
   albumDeleted: 'Album [Deleted By Landlord]',
   checkOut: (name: string) => `Check out more by ${name}`,
@@ -113,7 +113,7 @@ const DeletedPage = g(
             />
           ) : (
             <AgreementArt
-              agreementId={playable.metadata.agreement_id}
+              agreementId={playable.metadata.digital_content_id}
               coverArtSizes={playable.metadata._cover_art_sizes}
             />
           )}

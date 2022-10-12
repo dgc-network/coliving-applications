@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 
-import type { Agreement, User } from '@coliving/common'
+import type { DigitalContent, User } from '@coliving/common'
 import { FavoriteSource, SquareSizes } from '@coliving/common'
 import {
   saveAgreement,
@@ -81,23 +81,23 @@ const useStyles = makeStyles(({ palette, spacing }) => ({
 }))
 
 type PlayBarProps = {
-  agreement: Agreement
+  digital_content: DigitalContent
   user: User
   onPress: () => void
   translationAnim: Animated.Value
 }
 
-const PlayBarArtwork = ({ agreement }: { agreement: Agreement }) => {
+const PlayBarArtwork = ({ digital_content }: { digital_content: DigitalContent }) => {
   const image = useAgreementCoverArt({
-    id: agreement.agreement_id,
-    sizes: agreement._cover_art_sizes,
+    id: digital_content.digital_content_id,
+    sizes: digital_content._cover_art_sizes,
     size: SquareSizes.SIZE_150_BY_150
   })
   return <DynamicImage uri={image} />
 }
 
 export const PlayBar = ({
-  agreement,
+  digital_content,
   user,
   onPress,
   translationAnim
@@ -106,20 +106,20 @@ export const PlayBar = ({
   const dispatchWeb = useDispatchWeb()
 
   const onPressFavoriteButton = useCallback(() => {
-    if (agreement) {
-      if (agreement.has_current_user_saved) {
-        dispatchWeb(unsaveAgreement(agreement.agreement_id, FavoriteSource.PLAYBAR))
+    if (digital_content) {
+      if (digital_content.has_current_user_saved) {
+        dispatchWeb(unsaveAgreement(digital_content.digital_content_id, FavoriteSource.PLAYBAR))
       } else {
-        dispatchWeb(saveAgreement(agreement.agreement_id, FavoriteSource.PLAYBAR))
+        dispatchWeb(saveAgreement(digital_content.digital_content_id, FavoriteSource.PLAYBAR))
       }
     }
-  }, [dispatchWeb, agreement])
+  }, [dispatchWeb, digital_content])
 
   const renderFavoriteButton = () => {
     return (
       <FavoriteButton
         onPress={onPressFavoriteButton}
-        isActive={agreement?.has_current_user_saved ?? false}
+        isActive={digital_content?.has_current_user_saved ?? false}
         wrapperStyle={styles.icon}
       />
     )
@@ -153,18 +153,18 @@ export const PlayBar = ({
           onPress={onPress}
         >
           <View style={styles.artwork}>
-            {agreement && <PlayBarArtwork agreement={agreement} />}
+            {digital_content && <PlayBarArtwork digital_content={digital_content} />}
           </View>
           <View style={styles.agreementText}>
             <Text numberOfLines={1} weight='bold' style={styles.title}>
-              {agreement?.title ?? ''}
+              {digital_content?.title ?? ''}
             </Text>
             <Text
               weight='bold'
               style={styles.separator}
               accessibilityElementsHidden
             >
-              {agreement ? '•' : ''}
+              {digital_content ? '•' : ''}
             </Text>
             <Text numberOfLines={1} weight='medium' style={styles.landlord}>
               {user?.name ?? ''}

@@ -1,4 +1,4 @@
-import { ID, Collection, FavoriteType, Agreement } from '@coliving/common'
+import { ID, Collection, FavoriteType, DigitalContent } from '@coliving/common'
 import { select, put } from 'typed-redux-saga/macro'
 
 import { getCollection } from 'common/store/cache/collections/selectors'
@@ -44,10 +44,10 @@ const getContentListFavorites = createUserListProvider<Collection>({
   includeCurrentUser: (p) => p.has_current_user_saved
 })
 
-const getAgreementFavorites = createUserListProvider<Agreement>({
+const getAgreementFavorites = createUserListProvider<DigitalContent>({
   getExistingEntity: getAgreement,
-  extractUserIDSubsetFromEntity: (agreement: Agreement) =>
-    agreement.followee_saves.map((r) => r.user_id),
+  extractUserIDSubsetFromEntity: (digital_content: DigitalContent) =>
+    digital_content.followee_saves.map((r) => r.user_id),
   fetchAllUsersForEntity: async ({
     limit,
     offset,
@@ -63,8 +63,8 @@ const getAgreementFavorites = createUserListProvider<Agreement>({
     return { users }
   },
   selectCurrentUserIDsInList: getUserIds,
-  canFetchMoreUsers: (agreement: Agreement, combinedUserIDs: ID[]) =>
-    combinedUserIDs.length < agreement.save_count,
+  canFetchMoreUsers: (digital_content: DigitalContent, combinedUserIDs: ID[]) =>
+    combinedUserIDs.length < digital_content.save_count,
   includeCurrentUser: (t) => t.has_current_user_saved
 })
 

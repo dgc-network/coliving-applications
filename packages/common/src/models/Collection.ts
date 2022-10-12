@@ -5,7 +5,7 @@ import { CoverArtSizes } from 'models/imageSizes'
 import { Repost } from 'models/repost'
 import { Nullable } from 'utils/typeUtils'
 
-import { UserAgreementMetadata } from './agreement'
+import { UserAgreementMetadata } from './digital_content'
 import { Favorite } from './favorite'
 import { User, UserMetadata } from './user'
 
@@ -15,7 +15,7 @@ export enum Variant {
 }
 
 type ContentListContents = {
-  agreement_ids: Array<{ time: number; agreement: ID } | { agreement: string }>
+  digital_content_ids: Array<{ time: number; digital_content: ID } | { digital_content: string }>
 }
 
 export type CollectionMetadata = {
@@ -30,10 +30,10 @@ export type CollectionMetadata = {
   is_delete: boolean
   is_private: boolean
   content_list_contents: {
-    agreement_ids: Array<{ time: number; agreement: ID; uid?: UID }>
+    digital_content_ids: Array<{ time: number; digital_content: ID; uid?: UID }>
   }
   agreements?: UserAgreementMetadata[]
-  agreement_count: number
+  digital_content_count: number
   content_list_id: ID
   cover_art: CID | null
   cover_art_sizes: Nullable<CID>

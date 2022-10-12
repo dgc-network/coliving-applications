@@ -8,7 +8,7 @@ export const createRemixOfMetadata = ({
   return {
     agreements: [
       {
-        parent_agreement_id: parentAgreementId
+        parent_digital_content_id: parentAgreementId
       }
     ]
   }

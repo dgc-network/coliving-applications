@@ -1,4 +1,4 @@
-import { CID, Color, Agreement, Nullable } from '@coliving/common'
+import { CID, Color, DigitalContent, Nullable } from '@coliving/common'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import { CommonState } from 'common/store'
@@ -12,7 +12,7 @@ const initialState: {
 }
 
 /**
- * This slice agreements computed average colors and dominant colors for a given agreement art CID.
+ * This slice agreements computed average colors and dominant colors for a given digital_content art CID.
  * Colors is a map of art cid -> Color
  */
 const slice = createSlice({
@@ -46,18 +46,18 @@ export const getAverageColor = (
 
 export const getAverageColorByAgreement = (
   state: CommonState,
-  { agreement }: { agreement: Nullable<Agreement> }
+  { digital_content }: { digital_content: Nullable<DigitalContent> }
 ): Nullable<Color> => {
-  const multihash = agreement?.cover_art_sizes ?? agreement?.cover_art
+  const multihash = digital_content?.cover_art_sizes ?? digital_content?.cover_art
   if (!multihash) return null
   return state.ui.averageColor.averageColor[multihash] ?? null
 }
 
 export const getDominantColorsByAgreement = (
   state: CommonState,
-  { agreement }: { agreement: Nullable<Agreement> }
+  { digital_content }: { digital_content: Nullable<DigitalContent> }
 ): Nullable<Color[]> => {
-  const multihash = agreement?.cover_art_sizes ?? agreement?.cover_art
+  const multihash = digital_content?.cover_art_sizes ?? digital_content?.cover_art
   if (!multihash) return null
   return state.ui.averageColor.dominantColors[multihash] ?? null
 }

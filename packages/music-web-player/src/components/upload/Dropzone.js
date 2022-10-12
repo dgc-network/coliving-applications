@@ -8,9 +8,9 @@ import { ALLOWED_IMAGE_FILE_TYPES } from 'utils/imageProcessingUtil'
 import styles from './Dropzone.module.css'
 
 const messages = {
-  agreement: 'Drag-and-drop a agreement here, or ',
+  digital_content: 'Drag-and-drop a digital_content here, or ',
   image: 'Drag-and-drop an image here, or ',
-  stem: 'Drag-and-drop live files here, or ',
+  stem: 'Drag-and-drop digitalcoin files here, or ',
   browse: 'browse to upload'
 }
 
@@ -31,8 +31,8 @@ const Dropzone = ({
     if (subtitle) return subtitle
     let message
     switch (type) {
-      case 'agreement':
-        message = messages.agreement
+      case 'digital_content':
+        message = messages.digital_content
         break
       case 'image':
         message = messages.image
@@ -58,7 +58,7 @@ const Dropzone = ({
       disabled={disabled}
       disableClick={disabled || disableClick}
       accept={
-        type === 'image' ? ALLOWED_IMAGE_FILE_TYPES.join(', ') : 'live/*'
+        type === 'image' ? ALLOWED_IMAGE_FILE_TYPES.join(', ') : 'digitalcoin/*'
       }
       data-testid='upload-dropzone'
     >
@@ -84,7 +84,7 @@ Dropzone.propTypes = {
   messageClassName: PropTypes.string,
   titleTextClassName: PropTypes.string,
   iconClassName: PropTypes.string,
-  type: PropTypes.oneOf(['agreement', 'image', 'stem']).isRequired,
+  type: PropTypes.oneOf(['digital_content', 'image', 'stem']).isRequired,
   // Extra text content to be displayed inside the dropzone.
   textAboveIcon: PropTypes.string,
   subtitle: PropTypes.string,
@@ -94,7 +94,7 @@ Dropzone.propTypes = {
 }
 
 Dropzone.defaultProps = {
-  type: 'agreement',
+  type: 'digital_content',
   allowMultiple: true,
   disabled: false
 }

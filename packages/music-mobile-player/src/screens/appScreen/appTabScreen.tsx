@@ -38,7 +38,7 @@ import { AgreementRemixesScreen } from '../agreementScreen/agreementRemixesScree
 import { useAppScreenOptions } from './useAppScreenOptions'
 
 export type AppTabScreenParamList = {
-  Agreement: { id: ID; searchAgreement?: SearchAgreement }
+  DigitalContent: { id: ID; searchAgreement?: SearchAgreement }
   AgreementRemixes: { id: ID }
   Profile: { handle: string }
   Collection: { id: ID; searchCollection?: SearchContentList }
@@ -82,7 +82,7 @@ type AppTabScreenProps = {
 
 /**
  * This is the base tab screen that includes common screens
- * like agreement and profile
+ * like digital_content and profile
  */
 export const AppTabScreen = ({ baseScreen, Stack }: AppTabScreenProps) => {
   const dispatchWeb = useDispatchWeb()
@@ -141,7 +141,7 @@ export const AppTabScreen = ({ baseScreen, Stack }: AppTabScreenProps) => {
     >
       {baseScreen(Stack)}
       <Stack.Screen
-        name='Agreement'
+        name='DigitalContent'
         component={AgreementScreen}
         options={screenOptions}
       />

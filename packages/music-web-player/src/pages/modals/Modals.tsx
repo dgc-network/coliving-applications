@@ -58,7 +58,7 @@ const Modals = () => {
       <UnloadDialog />
       <RewardsModals />
       <ShareSoundToTikTokModal />
-      {/* Enable and use this live breakdown modal until we get
+      {/* Enable and use this digitalcoin breakdown modal until we get
       the feature flags to work for native mobile */}
       <AudioBreakdownModal />
       <CollectibleDetailsModal />

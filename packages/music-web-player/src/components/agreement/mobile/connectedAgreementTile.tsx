@@ -30,7 +30,7 @@ import { getTheme } from 'common/store/ui/theme/selectors'
 import { setFavorite } from 'common/store/userList/favorites/actions'
 import { setRepost } from 'common/store/userList/reposts/actions'
 import { RepostType } from 'common/store/userList/reposts/types'
-import { AgreementTileProps } from 'components/agreement/types'
+import { AgreementTileProps } from 'components/digital_content/types'
 import { getUid, getPlaying, getBuffering } from 'store/player/selectors'
 import { AppState } from 'store/types'
 import {
@@ -53,7 +53,7 @@ const ConnectedAgreementTile = memo(
     uid,
     index,
     size,
-    agreement,
+    digital_content,
     user,
     ordered,
     agreementTileStyles,
@@ -81,7 +81,7 @@ const ConnectedAgreementTile = memo(
     const {
       is_delete,
       is_unlisted,
-      agreement_id,
+      digital_content_id,
       title,
       permalink,
       repost_count,
@@ -96,7 +96,7 @@ const ConnectedAgreementTile = memo(
       play_count,
       _co_sign,
       duration
-    } = getAgreementWithFallback(agreement)
+    } = getAgreementWithFallback(digital_content)
 
     const { _landlord_pick, user_id, handle, name, is_verified } =
       getUserWithFallback(user)
@@ -172,7 +172,7 @@ const ConnectedAgreementTile = memo(
     return (
       <AgreementTile
         uid={uid}
-        id={agreement_id}
+        id={digital_content_id}
         userId={user_id}
         index={index}
         key={`${index}`}
@@ -196,7 +196,7 @@ const ConnectedAgreementTile = memo(
         coSign={_co_sign}
         // Landlord Pick
         showLandlordPick={showLandlordPick}
-        isLandlordPick={_landlord_pick === agreement_id}
+        isLandlordPick={_landlord_pick === digital_content_id}
         // Landlord
         landlordHandle={handle}
         landlordName={name}
@@ -228,7 +228,7 @@ const ConnectedAgreementTile = memo(
 
 function mapStateToProps(state: AppState, ownProps: AgreementTileProps) {
   return {
-    agreement: getAgreement(state, { uid: ownProps.uid }),
+    digital_content: getAgreement(state, { uid: ownProps.uid }),
     user: getUserFromAgreement(state, { uid: ownProps.uid }),
     playingUid: getUid(state),
     isBuffering: getBuffering(state),
@@ -244,7 +244,7 @@ function mapDispatchToProps(dispatch: Dispatch) {
     shareAgreement: (agreementId: ID) =>
       dispatch(
         requestOpenShareModal({
-          type: 'agreement',
+          type: 'digital_content',
           agreementId,
           source: ShareSource.TILE
         })

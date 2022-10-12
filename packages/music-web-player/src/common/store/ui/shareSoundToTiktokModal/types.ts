@@ -7,7 +7,7 @@ export enum Status {
   SHARE_UNINITIALIZED
 }
 
-export type Agreement = {
+export type DigitalContent = {
   id: ID
   title: string
   duration: number
@@ -15,7 +15,7 @@ export type Agreement = {
 
 export type ShareSoundToTikTokModalState = {
   isAuthenticated: boolean
-  agreement?: Agreement
+  digital_content?: DigitalContent
   status: Status
   openId?: string
   accessToken?: string
@@ -31,7 +31,7 @@ export type RequestOpenPayload = {
 }
 
 export type OpenPayload = {
-  agreement: Agreement
+  digital_content: DigitalContent
 }
 
 export type SetStatusPayload = {

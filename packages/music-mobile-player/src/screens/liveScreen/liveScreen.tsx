@@ -44,11 +44,11 @@ import { ChallengeRewards } from './challengeRewards'
 import { Tier } from './tier'
 import { TrendingRewards } from './trendingRewards'
 
-const LEARN_MORE_LINK = 'https://blog..co/article/community-meet-live'
+const LEARN_MORE_LINK = 'https://blog..co/article/community-meet-digitalcoin'
 
 const messages = {
   title: '$LIVE & Rewards',
-  live: '$LIVE',
+  digitalcoin: '$LIVE',
   totalAudio: 'Total $LIVE',
   send: 'Send $LIVE',
   receive: 'Receive $LIVE',
@@ -213,7 +213,7 @@ export const AudioScreen = () => {
               </TouchableOpacity>
             </>
           ) : (
-            <Text style={styles.liveText}>{messages.live}</Text>
+            <Text style={styles.liveText}>{messages.digitalcoin}</Text>
           )}
         </View>
       </Tile>

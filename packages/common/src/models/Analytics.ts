@@ -82,7 +82,7 @@ export enum Name {
   UNDO_REPOST = 'Undo Repost',
   FAVORITE = 'Favorite',
   UNFAVORITE = 'Unfavorite',
-  LANDLORD_PICK_SELECT_AGREEMENT = 'Landlord Pick: Select Agreement',
+  LANDLORD_PICK_SELECT_AGREEMENT = 'Landlord Pick: Select DigitalContent',
   FOLLOW = 'Follow',
   UNFOLLOW = 'Unfollow',
 
@@ -110,16 +110,16 @@ export enum Name {
   EMBED_COPY = 'Embed: Copy',
 
   // Upload
-  AGREEMENT_UPLOAD_OPEN = 'Agreement Upload: Open',
-  AGREEMENT_UPLOAD_START_UPLOADING = 'Agreement Upload: Start Upload',
-  AGREEMENT_UPLOAD_AGREEMENT_UPLOADING = 'Agreement Upload: Agreement Uploading',
-  AGREEMENT_UPLOAD_COMPLETE_UPLOAD = 'Agreement Upload: Complete Upload',
-  AGREEMENT_UPLOAD_COPY_LINK = 'Agreement Upload: Copy Link',
-  AGREEMENT_UPLOAD_SHARE_WITH_FANS = 'Agreement Upload: Share with your residents',
-  AGREEMENT_UPLOAD_SHARE_SOUND_TO_TIKTOK = 'Agreement Upload: Share sound to TikTok',
-  AGREEMENT_UPLOAD_VIEW_AGREEMENT_PAGE = 'Agreement Upload: View Agreement page',
-  AGREEMENT_UPLOAD_SUCCESS = 'Agreement Upload: Success',
-  AGREEMENT_UPLOAD_FAILURE = 'Agreement Upload: Failure',
+  AGREEMENT_UPLOAD_OPEN = 'DigitalContent Upload: Open',
+  AGREEMENT_UPLOAD_START_UPLOADING = 'DigitalContent Upload: Start Upload',
+  AGREEMENT_UPLOAD_AGREEMENT_UPLOADING = 'DigitalContent Upload: DigitalContent Uploading',
+  AGREEMENT_UPLOAD_COMPLETE_UPLOAD = 'DigitalContent Upload: Complete Upload',
+  AGREEMENT_UPLOAD_COPY_LINK = 'DigitalContent Upload: Copy Link',
+  AGREEMENT_UPLOAD_SHARE_WITH_FANS = 'DigitalContent Upload: Share with your residents',
+  AGREEMENT_UPLOAD_SHARE_SOUND_TO_TIKTOK = 'DigitalContent Upload: Share sound to TikTok',
+  AGREEMENT_UPLOAD_VIEW_AGREEMENT_PAGE = 'DigitalContent Upload: View DigitalContent page',
+  AGREEMENT_UPLOAD_SUCCESS = 'DigitalContent Upload: Success',
+  AGREEMENT_UPLOAD_FAILURE = 'DigitalContent Upload: Failure',
   TWEET_FIRST_UPLOAD = 'Tweet First Upload',
 
   // Trending
@@ -141,7 +141,7 @@ export enum Name {
   NOTIFICATIONS_CLICK_TIP_SENT_TWITTER_SHARE = 'Notifications: Clicked Tip Sent Twitter Share',
   NOTIFICATIONS_CLICK_SUPPORTER_RANK_UP_TWITTER_SHARE = 'Notifications: Clicked Supporter Rank Up Twitter Share',
   NOTIFICATIONS_CLICK_SUPPORTING_RANK_UP_TWITTER_SHARE = 'Notifications: Clicked Supporting Rank Up Twitter Share',
-  NOTIFICATIONS_CLICK_ADD_AGREEMENT_TO_CONTENT_LIST_TWITTER_SHARE = 'Notifications: Clicked Add Agreement to ContentList Twitter Share',
+  NOTIFICATIONS_CLICK_ADD_AGREEMENT_TO_CONTENT_LIST_TWITTER_SHARE = 'Notifications: Clicked Add DigitalContent to ContentList Twitter Share',
   NOTIFICATIONS_TOGGLE_SETTINGS = 'Notifications: Toggle Setting',
   BROWSER_NOTIFICATION_SETTINGS = 'Browser Push Notification',
 
@@ -155,9 +155,9 @@ export enum Name {
   PROFILE_PAGE_CLICK_DONATION = 'ProfilePage: Go To Donation',
   PROFILE_PAGE_SHOWN_LANDLORD_RECOMMENDATIONS = 'ProfilePage: Shown Landlord Recommendations',
 
-  // Agreement page
-  AGREEMENT_PAGE_DOWNLOAD = 'Agreement Page: Download',
-  AGREEMENT_PAGE_PLAY_MORE = 'Agreement Page: Play More By This Landlord',
+  // DigitalContent page
+  AGREEMENT_PAGE_DOWNLOAD = 'DigitalContent Page: Download',
+  AGREEMENT_PAGE_PLAY_MORE = 'DigitalContent Page: Play More By This Landlord',
 
   // Playback
   PLAYBACK_PLAY = 'Playback: Play',
@@ -462,7 +462,7 @@ export enum RepostSource {
   HISTORY_PAGE = 'history page',
   FAVORITES_PAGE = 'favorites page',
   OVERFLOW = 'overflow',
-  AGREEMENT_LIST = 'agreement list'
+  AGREEMENT_LIST = 'digital_content list'
 }
 export enum FavoriteSource {
   TILE = 'tile',
@@ -473,7 +473,7 @@ export enum FavoriteSource {
   HISTORY_PAGE = 'history page',
   FAVORITES_PAGE = 'favorites page',
   OVERFLOW = 'overflow',
-  AGREEMENT_LIST = 'agreement list',
+  AGREEMENT_LIST = 'digital_content list',
   SIGN_UP = 'sign up',
   // Favorite triggered by some implicit action, e.g.
   // you had a smart collection and it was favorited so it
@@ -483,7 +483,7 @@ export enum FavoriteSource {
 }
 export enum FollowSource {
   PROFILE_PAGE = 'profile page',
-  AGREEMENT_PAGE = 'agreement page',
+  AGREEMENT_PAGE = 'digital_content page',
   COLLECTION_PAGE = 'collection page',
   HOVER_TILE = 'hover tile',
   OVERFLOW = 'overflow',
@@ -494,7 +494,7 @@ export enum FollowSource {
 
 type Share = {
   eventName: Name.SHARE
-  kind: 'profile' | 'album' | 'contentList' | 'agreement'
+  kind: 'profile' | 'album' | 'contentList' | 'digital_content'
   source: ShareSource
   id: string
   url: string
@@ -502,7 +502,7 @@ type Share = {
 
 export type ShareToTwitter = {
   eventName: Name.SHARE_TO_TWITTER
-  kind: 'profile' | 'album' | 'contentList' | 'agreement' | 'liveNftContentList'
+  kind: 'profile' | 'album' | 'contentList' | 'digital_content' | 'liveNftContentList'
   source: ShareSource
   id: number
   url: string
@@ -555,7 +555,7 @@ type TweetFirstUpload = {
 export enum CreateContentListSource {
   NAV = 'nav',
   CREATE_PAGE = 'create page',
-  FROM_AGREEMENT = 'from agreement',
+  FROM_AGREEMENT = 'from digital_content',
   FAVORITES_PAGE = 'favorites page'
 }
 
@@ -636,7 +636,7 @@ type EmbedCopy = {
   size: 'card' | 'compact' | 'tiny'
 }
 
-// Agreement Upload
+// DigitalContent Upload
 type AgreementUploadOpen = {
   eventName: Name.AGREEMENT_UPLOAD_OPEN
   source: 'nav' | 'profile' | 'signup'
@@ -662,13 +662,13 @@ type AgreementUploadCompleteUpload = {
 type AgreementUploadSuccess = {
   eventName: Name.AGREEMENT_UPLOAD_SUCCESS
   endpoint: string
-  kind: 'single_agreement' | 'multi_agreement' | 'album' | 'contentList'
+  kind: 'single_digital_content' | 'multi_digital_content' | 'album' | 'contentList'
 }
 
 type AgreementUploadFailure = {
   eventName: Name.AGREEMENT_UPLOAD_FAILURE
   endpoint: string
-  kind: 'single_agreement' | 'multi_agreement' | 'album' | 'contentList'
+  kind: 'single_digital_content' | 'multi_digital_content' | 'album' | 'contentList'
   error?: string
 }
 
@@ -804,12 +804,12 @@ type ProfilePageShownLandlordRecommendations = {
   userId: number
 }
 
-// Agreement Page
+// DigitalContent Page
 type AgreementPageDownload = {
   eventName: Name.AGREEMENT_PAGE_DOWNLOAD
   id: ID
   category?: string
-  parent_agreement_id?: ID
+  parent_digital_content_id?: ID
 }
 type AgreementPagePlayMore = {
   eventName: Name.AGREEMENT_PAGE_PLAY_MORE
@@ -821,10 +821,10 @@ export enum PlaybackSource {
   PLAYBAR = 'playbar',
   NOW_PLAYING = 'now playing',
   CONTENT_LIST_PAGE = 'contentList page',
-  AGREEMENT_PAGE = 'agreement page',
-  AGREEMENT_TILE = 'agreement tile',
-  CONTENT_LIST_AGREEMENT = 'contentList page agreement list',
-  CONTENT_LIST_TILE_AGREEMENT = 'contentList agreement tile',
+  AGREEMENT_PAGE = 'digital_content page',
+  AGREEMENT_TILE = 'digital_content tile',
+  CONTENT_LIST_AGREEMENT = 'contentList page digital_content list',
+  CONTENT_LIST_TILE_AGREEMENT = 'contentList digital_content tile',
   HISTORY_PAGE = 'history page',
   FAVORITES_PAGE = 'favorites page',
   PASSIVE = 'passive',
@@ -846,12 +846,12 @@ type PlaybackPause = {
 type LinkClicking = {
   eventName: Name.LINK_CLICKING
   url: string
-  source: 'profile page' | 'agreement page' | 'collection page'
+  source: 'profile page' | 'digital_content page' | 'collection page'
 }
 type TagClicking = {
   eventName: Name.TAG_CLICKING
   tag: string
-  source: 'profile page' | 'agreement page' | 'collection page'
+  source: 'profile page' | 'digital_content page' | 'collection page'
 }
 
 // Search
@@ -878,7 +878,7 @@ type SearchResultSelect = {
   term: string
   source: 'autocomplete' | 'search results page' | 'more results page'
   id: ID
-  kind: 'agreement' | 'profile' | 'contentList' | 'album'
+  kind: 'digital_content' | 'profile' | 'contentList' | 'album'
 }
 
 type SearchTabClick = {
@@ -934,14 +934,14 @@ type ContentNodeSelection = {
 type StemCompleteUpload = {
   eventName: Name.STEM_COMPLETE_UPLOAD
   id: number
-  parent_agreement_id: number
+  parent_digital_content_id: number
   category: string
 }
 
 type StemDelete = {
   eventName: Name.STEM_DELETE
   id: number
-  parent_agreement_id: number
+  parent_digital_content_id: number
 }
 
 type RemixNewRemix = {
@@ -949,9 +949,9 @@ type RemixNewRemix = {
   id: number
   handle: string
   title: string
-  parent_agreement_id: number
-  parent_agreement_title: string
-  parent_agreement_user_handle: string
+  parent_digital_content_id: number
+  parent_digital_content_title: string
+  parent_digital_content_user_handle: string
 }
 
 type RemixCosign = {
@@ -959,8 +959,8 @@ type RemixCosign = {
   id: number
   handle: string
   action: 'reposted' | 'favorited'
-  original_agreement_id: number
-  original_agreement_title: string
+  original_digital_content_id: number
+  original_digital_content_title: string
 }
 
 type RemixCosignIndicator = {
@@ -968,8 +968,8 @@ type RemixCosignIndicator = {
   id: number
   handle: string
   action: 'reposted' | 'favorited'
-  original_agreement_id: number
-  original_agreement_title: string
+  original_digital_content_id: number
+  original_digital_content_title: string
 }
 
 type RemixHide = {

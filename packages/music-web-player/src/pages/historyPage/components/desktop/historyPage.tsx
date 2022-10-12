@@ -55,7 +55,7 @@ const HistoryPage = ({
   onFilterChange,
   filterText
 }: HistoryPageProps) => {
-  const tableLoading = !dataSource.every((agreement: any) => agreement.play_count > -1)
+  const tableLoading = !dataSource.every((digital_content: any) => digital_content.play_count > -1)
 
   const playAllButton = !loading ? (
     <Button

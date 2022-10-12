@@ -160,7 +160,7 @@ function* fetchSupportersAndSupporting(userId) {
    * get all its supporting data so that when the logged in
    * user is trying to tip an landlord, we'll know whether or
    * not that landlord is already being supported by the logged in
-   * user and thus correctly calculate how much more live to tip
+   * user and thus correctly calculate how much more digitalcoin to tip
    * to become the top supporter.
    */
   const account = yield select(getAccountUser)
@@ -239,8 +239,8 @@ function* fetchProfileAsync(action) {
 
     const isMobileClient = isMobile()
     if (!isMobileClient) {
-      if (user.agreement_count > 0) {
-        yield fork(fetchMostUsedTags, user.user_id, user.agreement_count)
+      if (user.digital_content_count > 0) {
+        yield fork(fetchMostUsedTags, user.user_id, user.digital_content_count)
       }
     }
 
@@ -283,7 +283,7 @@ const MOST_USED_TAGS_COUNT = 5
 
 // Get all the agreements & parse the agreements for the most used tags
 // NOTE: The number of user agreements is not known b/c some agreements are deleted,
-// so the number of user agreements plus a large agreement number are fetched
+// so the number of user agreements plus a large digital_content number are fetched
 const LARGE_AGREEMENTCOUNT_TAGS = 100
 function* fetchMostUsedTags(userId, agreementCount) {
   const agreementResponse = yield call(ColivingBackend.getLandlordAgreements, {
@@ -295,9 +295,9 @@ function* fetchMostUsedTags(userId, agreementCount) {
   const agreements = agreementResponse.filter((metadata) => !metadata.is_delete)
   // tagUsage: { [tag: string]: number }
   const tagUsage = {}
-  agreements.forEach((agreement) => {
-    if (agreement.tags) {
-      agreement.tags.split(',').forEach((tag) => {
+  agreements.forEach((digital_content) => {
+    if (digital_content.tags) {
+      digital_content.tags.split(',').forEach((tag) => {
         tag in tagUsage ? (tagUsage[tag] += 1) : (tagUsage[tag] = 1)
       })
     }

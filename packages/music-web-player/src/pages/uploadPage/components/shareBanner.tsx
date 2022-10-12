@@ -31,8 +31,8 @@ import { UploadPageState } from '../store/types'
 
 import styles from './shareBanner.module.css'
 
-type UploadType = 'Agreement' | 'Agreements' | 'Album' | 'ContentList' | 'Remix'
-type ContinuePage = 'Agreement' | 'Profile' | 'Album' | 'ContentList' | 'Remix'
+type UploadType = 'DigitalContent' | 'Agreements' | 'Album' | 'ContentList' | 'Remix'
+type ContinuePage = 'DigitalContent' | 'Profile' | 'Album' | 'ContentList' | 'Remix'
 
 type ShareBannerProps = {
   isHidden: boolean
@@ -43,7 +43,7 @@ type ShareBannerProps = {
 
 const messages = {
   title: (type: UploadType) =>
-    `Your ${type} ${type === 'Agreements' ? 'Are' : 'Is'} Live!`,
+    `Your ${type} ${type === 'Agreements' ? 'Are' : 'Is'} Digitalcoin!`,
   description: 'Now it’s time to spread the word and share it with your residents!',
   share: 'Share With Your Residents',
   shareToTikTok: 'Share Sound to TikTok',
@@ -70,22 +70,22 @@ const getShareTextUrl = async (
   fullUrl = true
 ) => {
   switch (uploadType) {
-    case 'Agreement': {
+    case 'DigitalContent': {
       const { title, permalink } = upload.agreements[0].metadata
       const url = fullUrl ? fullAgreementPage(permalink) : permalink
       return {
-        text: `Check out my new agreement, ${title} on @dgc-network #Coliving`,
+        text: `Check out my new digital_content, ${title} on @dgc-network #Coliving`,
         url
       }
     }
     case 'Remix': {
       const { permalink } = upload.agreements[0].metadata
-      const parent_agreement_id =
-        upload.agreements[0].metadata?.remix_of?.agreements[0].parent_agreement_id
-      if (!parent_agreement_id) return { text: '', url: '' }
+      const parent_digital_content_id =
+        upload.agreements[0].metadata?.remix_of?.agreements[0].parent_digital_content_id
+      if (!parent_digital_content_id) return { text: '', url: '' }
 
       const url = fullUrl ? fullAgreementPage(permalink) : permalink
-      const parentAgreement = await apiClient.getAgreement({ id: parent_agreement_id })
+      const parentAgreement = await apiClient.getAgreement({ id: parent_digital_content_id })
       if (!parentAgreement) return { text: '', url: '' }
 
       const parentAgreementUser = parentAgreement.user
@@ -151,15 +151,15 @@ const ShareBanner = ({ isHidden, type, upload, user }: ShareBannerProps) => {
   }, [type, user, upload, record])
 
   const onClickTikTok = useCallback(async () => {
-    // Sharing to TikTok is currently only enabled for single agreement uploads
-    const agreement = upload.agreements[0]
-    if (agreement.metadata) {
+    // Sharing to TikTok is currently only enabled for single digital_content uploads
+    const digital_content = upload.agreements[0]
+    if (digital_content.metadata) {
       dispatch(
         openTikTokModal({
-          agreement: {
-            id: agreement.metadata.agreement_id,
-            title: agreement.metadata.title,
-            duration: agreement.metadata.duration
+          digital_content: {
+            id: digital_content.metadata.digital_content_id,
+            title: digital_content.metadata.title,
+            duration: digital_content.metadata.duration
           }
         })
       )
@@ -181,7 +181,7 @@ const ShareBanner = ({ isHidden, type, upload, user }: ShareBannerProps) => {
 
   const shouldShowShareToTikTok = () => {
     return (
-      type === 'Agreement' &&
+      type === 'DigitalContent' &&
       isShareSoundToTikTokEnabled &&
       !upload.agreements[0]?.metadata.is_unlisted
     )

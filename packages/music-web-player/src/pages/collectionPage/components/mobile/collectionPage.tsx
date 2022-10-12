@@ -25,7 +25,7 @@ import NavContext, {
   RightPreset
 } from 'components/nav/store/context'
 import NetworkConnectivityMonitor from 'components/networkConnectivity/networkConnectivityMonitor'
-import AgreementList from 'components/agreement/mobile/agreementList'
+import AgreementList from 'components/digital_content/mobile/agreementList'
 import { computeCollectionMetadataProps } from 'pages/collectionPage/store/utils'
 
 import styles from './collectionPage.module.css'
@@ -182,24 +182,24 @@ const CollectionPage = ({
 
   const togglePlay = (uid: string, agreementId: ID) => {
     if (contentListId === SmartCollectionVariant.LIVE_NFT_CONTENT_LIST) {
-      const agreement = agreements.entries.find((agreement) => agreement.uid === uid)
+      const digital_content = agreements.entries.find((digital_content) => digital_content.uid === uid)
 
-      if (agreement?.collectible) {
-        const { collectible } = agreement
+      if (digital_content?.collectible) {
+        const { collectible } = digital_content
 
         onClickRow({
           ...collectible,
           uid: collectible.id,
-          agreement_id: collectible.id
+          digital_content_id: collectible.id
         })
       }
     } else {
-      onClickRow({ uid, agreement_id: agreementId })
+      onClickRow({ uid, digital_content_id: agreementId })
     }
   }
   const onSave = (isSaved: boolean, agreementId: number) => {
     if (!isOwner) {
-      onClickSave?.({ has_current_user_saved: isSaved, agreement_id: agreementId })
+      onClickSave?.({ has_current_user_saved: isSaved, digital_content_id: agreementId })
     }
   }
 
@@ -214,7 +214,7 @@ const CollectionPage = ({
     landlordName: entry?.user?.name,
     landlordHandle: entry?.user?.handle,
     agreementTitle: entry.title,
-    agreementId: entry.agreement_id,
+    agreementId: entry.digital_content_id,
     uid: entry.uid,
     isDeleted: entry.is_delete || !!entry?.user?.is_deactivated
   }))

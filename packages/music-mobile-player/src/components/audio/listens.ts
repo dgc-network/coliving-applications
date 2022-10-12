@@ -1,5 +1,5 @@
 import { EventNames } from 'app/types/analytics'
-import { agreement, make } from 'app/utils/analytics'
+import { digital_content, make } from 'app/utils/analytics'
 
 const IDENTITY_SERVICE_ENDPOINT = 'https://identityservice..co'
 
@@ -23,7 +23,7 @@ export const logListen = async (
       console.info(
         `Logged a listen for ${agreementId} for user ${userId}: ${resp.status}`
       )
-      agreement(make({ eventName: EventNames.LISTEN, agreementId: `${agreementId}` }))
+      digital_content(make({ eventName: EventNames.LISTEN, agreementId: `${agreementId}` }))
     })
     .catch((e) => {
       console.error(e)

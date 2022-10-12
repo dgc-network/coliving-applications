@@ -11,8 +11,8 @@ export type AgreementRouteParams =
   | null
 
 /**
- * Parses a agreement route into slug, agreement id, and handle
- * If the route is a hash id route, agreement title and handle are not returned, and vice versa
+ * Parses a digital_content route into slug, digital_content id, and handle
+ * If the route is a hash id route, digital_content title and handle are not returned, and vice versa
  * @param route
  */
 export const parseAgreementRoute = (route: string): AgreementRouteParams => {

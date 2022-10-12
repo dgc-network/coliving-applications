@@ -7,7 +7,7 @@ import * as cacheActions from 'common/store/cache/actions'
 import { reformat as reformatUser } from 'common/store/cache/users/utils'
 
 /**
- * Adds users from agreement metadata to cache.
+ * Adds users from digital_content metadata to cache.
  * Dedupes and removes self.
  * @param metadataArray
  */
@@ -21,11 +21,11 @@ export function* addUsersFromAgreements<T extends AgreementMetadata & { user?: U
   let users = metadataArray
     .filter((m) => m.user)
     .map((m) => {
-      const agreement = m as AgreementMetadata & { user: User }
+      const digital_content = m as AgreementMetadata & { user: User }
       return {
-        id: agreement.user.user_id,
-        uid: makeUid(Kind.USERS, agreement.user.user_id),
-        metadata: reformatUser(agreement.user)
+        id: digital_content.user.user_id,
+        uid: makeUid(Kind.USERS, digital_content.user.user_id),
+        metadata: reformatUser(digital_content.user)
       }
     })
 

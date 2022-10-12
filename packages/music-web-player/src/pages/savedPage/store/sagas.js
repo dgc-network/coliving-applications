@@ -18,7 +18,7 @@ function* watchFetchSaves() {
   yield takeLatest(actions.FETCH_SAVES, function* () {
     const account = yield call(waitForValue, getAccountUser)
     const userId = account.user_id
-    const limit = account.agreement_save_count
+    const limit = account.digital_content_save_count
     const saves = yield select(getSaves)
     // Don't refetch saves in the same session
     if (saves && saves.length) {
@@ -31,13 +31,13 @@ function* watchFetchSaves() {
           offset: 0,
           limit
         })
-        const agreements = savedAgreements.map((save) => save.agreement)
+        const agreements = savedAgreements.map((save) => save.digital_content)
 
         yield processAndCacheAgreements(agreements)
 
         const saves = savedAgreements.map((save) => ({
           created_at: save.timestamp,
-          save_item_id: save.agreement.agreement_id
+          save_item_id: save.digital_content.digital_content_id
         }))
         yield put(actions.fetchSavesSucceeded(saves))
 

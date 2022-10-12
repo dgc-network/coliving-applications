@@ -12,7 +12,7 @@ const messages = {
   title: "It's Time To Start Your Coliving Journey!",
   subTitle: 'Coliving is a platform for both landlords and listeners.',
   uploadMusic: {
-    button: 'Upload Agreement',
+    button: 'Upload DigitalContent',
     title: 'Why Upload My Music?',
     description:
       'Once you’ve uploaded your music, others can discover your agreements immediately!'

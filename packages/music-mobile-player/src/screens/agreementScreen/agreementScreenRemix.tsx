@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 
-import type { ID, Agreement, User } from '@coliving/common'
+import type { ID, DigitalContent, User } from '@coliving/common'
 import { SquareSizes } from '@coliving/common'
 import { getAgreement } from '@coliving/web/src/common/store/cache/agreements/selectors'
 import { getUserFromAgreement } from '@coliving/web/src/common/store/cache/users/selectors'
@@ -26,7 +26,7 @@ const messages = {
 
 type AgreementScreenRemixProps = {
   id: ID
-} & Omit<AgreementScreenRemixComponentProps, 'agreement' | 'user'>
+} & Omit<AgreementScreenRemixComponentProps, 'digital_content' | 'user'>
 
 const useStyles = makeStyles(({ palette, spacing, typography }) => ({
   root: {
@@ -81,20 +81,20 @@ const useStyles = makeStyles(({ palette, spacing, typography }) => ({
 }))
 
 export const AgreementScreenRemix = ({ id, ...props }: AgreementScreenRemixProps) => {
-  const agreement = useSelectorWeb((state) => getAgreement(state, { id }), isEqual)
+  const digital_content = useSelectorWeb((state) => getAgreement(state, { id }), isEqual)
   const user = useSelectorWeb(
     (state) => getUserFromAgreement(state, { id }),
     isEqual
   )
 
-  if (!agreement || !user) {
+  if (!digital_content || !user) {
     console.warn(
-      'Agreement or user missing for AgreementScreenRemix, preventing render'
+      'DigitalContent or user missing for AgreementScreenRemix, preventing render'
     )
     return null
   }
 
-  return <AgreementScreenRemixComponent {...props} agreement={agreement} user={user} />
+  return <AgreementScreenRemixComponent {...props} digital_content={digital_content} user={user} />
 }
 
 type AgreementScreenRemixComponentProps = {
@@ -102,19 +102,19 @@ type AgreementScreenRemixComponentProps = {
   styles?: StylesProp<{
     root: ViewStyle
   }>
-  agreement: Agreement
+  digital_content: DigitalContent
   user: User
 }
 
 const AgreementScreenRemixComponent = ({
   style,
   styles: stylesProp,
-  agreement,
+  digital_content,
   user
 }: AgreementScreenRemixComponentProps) => {
   const styles = useStyles()
 
-  const { _co_sign, permalink, agreement_id } = agreement
+  const { _co_sign, permalink, digital_content_id } = digital_content
   const { name, handle } = user
   const navigation = useNavigation()
 
@@ -125,17 +125,17 @@ const AgreementScreenRemixComponent = ({
   })
 
   const coverArtImage = useAgreementCoverArt({
-    id: agreement.agreement_id,
-    sizes: agreement._cover_art_sizes,
+    id: digital_content.digital_content_id,
+    sizes: digital_content._cover_art_sizes,
     size: SquareSizes.SIZE_480_BY_480
   })
 
   const handlePressAgreement = useCallback(() => {
     navigation.push({
-      native: { screen: 'Agreement', params: { id: agreement_id } },
+      native: { screen: 'DigitalContent', params: { id: digital_content_id } },
       web: { route: permalink }
     })
-  }, [navigation, permalink, agreement_id])
+  }, [navigation, permalink, digital_content_id])
 
   const handlePressLandlord = useCallback(() => {
     navigation.push({

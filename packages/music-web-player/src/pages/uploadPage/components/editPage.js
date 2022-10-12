@@ -12,8 +12,8 @@ import UploadType from './uploadType'
 
 class EditPage extends Component {
   state = {
-    invalidAgreementsFields: this.props.agreements.map((agreement) =>
-      mapValues(agreement.metadata, (v) => false)
+    invalidAgreementsFields: this.props.agreements.map((digital_content) =>
+      mapValues(digital_content.metadata, (v) => false)
     ),
     invalidCollectionFields: mapValues(this.props.metadata, (v) => false)
   }
@@ -23,8 +23,8 @@ class EditPage extends Component {
   }
 
   getRequiredAgreementsFields = (agreements) => {
-    return this.props.agreements.map((agreement) => {
-      const fields = mapValues(agreement.metadata, (v) => false)
+    return this.props.agreements.map((digital_content) => {
+      const fields = mapValues(digital_content.metadata, (v) => false)
       fields.title = true
       if (
         this.props.uploadType === UploadType.INDIVIDUAL_AGREEMENT ||
@@ -49,17 +49,17 @@ class EditPage extends Component {
     const { uploadType } = this.props
 
     const newInvalidAgreementsFields = [...this.state.invalidAgreementsFields]
-    const validAgreements = agreements.map((agreement, i) => {
+    const validAgreements = agreements.map((digital_content, i) => {
       newInvalidAgreementsFields[i] = {
         ...this.state.invalidAgreementsFields[i],
-        title: !agreement.metadata.title
+        title: !digital_content.metadata.title
       }
       if (
         uploadType === UploadType.INDIVIDUAL_AGREEMENT ||
         uploadType === UploadType.INDIVIDUAL_AGREEMENTS
       ) {
-        newInvalidAgreementsFields[i].genre = !agreement.metadata.genre
-        newInvalidAgreementsFields[i].artwork = !agreement.metadata.artwork.file
+        newInvalidAgreementsFields[i].genre = !digital_content.metadata.genre
+        newInvalidAgreementsFields[i].artwork = !digital_content.metadata.artwork.file
       }
       return Object.values(newInvalidAgreementsFields[i]).every((f) => !f)
     })
@@ -76,12 +76,12 @@ class EditPage extends Component {
       'play_count'
     ]
     for (let i = 0; i < agreements.length; i += 1) {
-      const agreement = agreements[i]
-      // If agreement is not unlisted (is public) and one of the unlisted visibility fields is false, set to true
+      const digital_content = agreements[i]
+      // If digital_content is not unlisted (is public) and one of the unlisted visibility fields is false, set to true
       if (
-        !agreement.metadata.is_unlisted &&
+        !digital_content.metadata.is_unlisted &&
         !unlistedVisibilityFields.every(
-          (field) => agreement.metadata.field_visibility[field]
+          (field) => digital_content.metadata.field_visibility[field]
         )
       ) {
         this.updateAgreement(
@@ -92,7 +92,7 @@ class EditPage extends Component {
             tags: true,
             share: true,
             play_count: true,
-            remixes: agreement.metadata.field_visibility.remixes
+            remixes: digital_content.metadata.field_visibility.remixes
           },
           false,
           i
@@ -177,10 +177,10 @@ class EditPage extends Component {
               onChangeOrder(source, destination)
             }
           >
-            {agreements.map((agreement, i) => (
+            {agreements.map((digital_content, i) => (
               <InlineFormTile
                 key={i}
-                defaultFields={agreement.metadata}
+                defaultFields={digital_content.metadata}
                 invalidFields={invalidAgreementsFields[i]}
                 requiredFields={requiredAgreementsFields[i]}
                 playing={i === previewIndex}
@@ -195,14 +195,14 @@ class EditPage extends Component {
         </div>
       )
     } else {
-      forms = agreements.map((agreement, i) => (
-        <div key={agreement.file.preview + i} className={styles.formTile}>
+      forms = agreements.map((digital_content, i) => (
+        <div key={digital_content.file.preview + i} className={styles.formTile}>
           <FormTile
-            defaultFields={agreement.metadata}
+            defaultFields={digital_content.metadata}
             invalidFields={invalidAgreementsFields[i]}
             requiredFields={requiredAgreementsFields[i]}
             playing={i === previewIndex}
-            type={'agreement'}
+            type={'digital_content'}
             onAddStems={(stems) => this.props.onAddStems(stems, i)}
             onSelectStemCategory={(category, stemIndex) =>
               this.props.onSelectStemCategory(category, i, stemIndex)

@@ -21,11 +21,11 @@ import { getRankSuffix, getEntityLink } from './utils'
 
 const messages = {
   title: 'Trending on Coliving!',
-  your: 'Your agreement',
+  your: 'Your digital_content',
   is: 'is',
   trending: 'on Trending right now!',
   twitterShareText: (entityTitle: string, rank: number) =>
-    `My agreement ${entityTitle} is trending ${rank}${getRankSuffix(
+    `My digital_content ${entityTitle} is trending ${rank}${getRankSuffix(
       rank
     )} on @dgc-network! #ColivingTrending #Coliving`
 }
@@ -41,19 +41,19 @@ export const TrendingAgreementNotification = (
   const { entityType, rank, timeLabel, isViewed } = notification
   const rankSuffix = getRankSuffix(rank)
   const dispatch = useDispatch()
-  const agreement = useSelector((state) =>
+  const digital_content = useSelector((state) =>
     getNotificationEntity(state, notification)
   ) as Nullable<AgreementEntity>
 
   const handleClick = useCallback(() => {
-    if (agreement) {
-      dispatch(push(getEntityLink(agreement)))
+    if (digital_content) {
+      dispatch(push(getEntityLink(digital_content)))
     }
-  }, [dispatch, agreement])
+  }, [dispatch, digital_content])
 
-  if (!agreement) return null
+  if (!digital_content) return null
 
-  const shareText = messages.twitterShareText(agreement.title, rank)
+  const shareText = messages.twitterShareText(digital_content.title, rank)
 
   return (
     <NotificationTile notification={notification} onClick={handleClick}>
@@ -61,13 +61,13 @@ export const TrendingAgreementNotification = (
         <NotificationTitle>{messages.title}</NotificationTitle>
       </NotificationHeader>
       <NotificationBody>
-        {messages.your} <EntityLink entity={agreement} entityType={entityType} />{' '}
+        {messages.your} <EntityLink entity={digital_content} entityType={entityType} />{' '}
         {messages.is} {rank}
         {rankSuffix} {messages.trending}
       </NotificationBody>
       <TwitterShareButton
         type='static'
-        url={getEntityLink(agreement, true)}
+        url={getEntityLink(digital_content, true)}
         shareText={shareText}
         analytics={make(Name.NOTIFICATIONS_CLICK_MILESTONE_TWITTER_SHARE, {
           milestone: shareText

@@ -6,9 +6,9 @@ import {
   getStatus as getCachedAgreementStatus
 } from 'common/store/cache/agreements/selectors'
 import { getUser as getCachedUser } from 'common/store/cache/users/selectors'
-import { PREFIX } from 'common/store/pages/agreement/lineup/actions'
+import { PREFIX } from 'common/store/pages/digital_content/lineup/actions'
 
-export const getBaseState = (state: CommonState) => state.pages.agreement
+export const getBaseState = (state: CommonState) => state.pages.digital_content
 
 export const getAgreementId = (state: CommonState) => getBaseState(state).agreementId
 export const getAgreementPermalink = (state: CommonState) =>
@@ -28,7 +28,7 @@ export const getAgreement = (state: CommonState, params?: { id?: ID }) => {
 
 export const getRemixParentAgreement = (state: CommonState) => {
   const cachedAgreement = getAgreement(state)
-  const parentAgreementId = cachedAgreement?.remix_of?.agreements?.[0].parent_agreement_id
+  const parentAgreementId = cachedAgreement?.remix_of?.agreements?.[0].parent_digital_content_id
   if (parentAgreementId) {
     const parentAgreement = getCachedAgreement(state, { id: parentAgreementId })
     // Get user for deactivated status

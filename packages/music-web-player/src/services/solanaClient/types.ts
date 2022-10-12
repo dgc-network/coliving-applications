@@ -22,7 +22,7 @@ type MetaplexNFTProperties = {
   creators: MetaplexNFTCreator[]
 }
 
-// may live outside arweave and still have this format
+// may digitalcoin outside arweave and still have this format
 // examples:
 // https://cdn.piggygang.com/meta/3ad355d46a9cb2ee57049db4df57088f.json
 // https://d1b6hed00dtfsr.cloudfront.net/9086.json

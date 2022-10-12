@@ -50,7 +50,7 @@ const ALLOWED_LIVE_FILE_EXTENSIONS = [
   'tsa'
 ]
 
-const ALLOWED_LIVE_FILE_MIME = /^live/
+const ALLOWED_LIVE_FILE_MIME = /^digitalcoin/
 
 const readMediaTags = (file: File): Promise<any> => {
   return new Promise(function (resolve, reject) {
@@ -97,8 +97,8 @@ export const processFiles = (
       handleInvalid(file.name, 'type')
       return null
     }
-    // If the mime type is somehow undefined or it doesn't begin with live/ reject.
-    // Backend will try to match on mime again and if it's not an live/ match, it'll error
+    // If the mime type is somehow undefined or it doesn't begin with digitalcoin/ reject.
+    // Backend will try to match on mime again and if it's not an digitalcoin/ match, it'll error
     if (file.type && !file.type.match(ALLOWED_LIVE_FILE_MIME)) {
       handleInvalid(file.type, 'type')
       return null
@@ -119,16 +119,16 @@ export const processFiles = (
     } catch (error) {
       // Unable to read tags, but continue on anyways
       console.warn(
-        `Unable to parse tags from uploaded agreement: ${title}\n NOTE: if a picture was attached to the agreement, it will not be added`,
+        `Unable to parse tags from uploaded digital_content: ${title}\n NOTE: if a picture was attached to the digital_content, it will not be added`,
         error
       )
     }
-    const live = new Audio()
+    const digitalcoin = new Audio()
     // @ts-ignore
-    live.src = file.preview
+    digitalcoin.src = file.preview
     return {
       file,
-      preview: live,
+      preview: digitalcoin,
       metadata: schemas.newAgreementMetadata({
         title,
         artwork

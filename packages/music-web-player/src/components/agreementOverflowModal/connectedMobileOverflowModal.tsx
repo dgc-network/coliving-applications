@@ -150,7 +150,7 @@ const ConnectedMobileOverflowModal = ({
           },
           onVisitAgreementPage: () =>
             permalink === undefined
-              ? console.error(`Permalink missing for agreement ${id}`)
+              ? console.error(`Permalink missing for digital_content ${id}`)
               : visitAgreementPage(permalink),
           onVisitLandlordPage: () => visitLandlordPage(handle),
           onFollow: () => follow(ownerId),
@@ -252,8 +252,8 @@ const getAdditionalInfo = ({
 
   switch (source) {
     case OverflowSource.AGREEMENTS: {
-      const agreement = getAgreement(state, { id: id as number })
-      if (!agreement) {
+      const digital_content = getAgreement(state, { id: id as number })
+      if (!digital_content) {
         const { collectible, user } = getCurrent(state)
         if (!collectible || !user) return {}
 
@@ -268,15 +268,15 @@ const getAdditionalInfo = ({
         }
       }
 
-      const user = getUser(state, { id: agreement.owner_id })
+      const user = getUser(state, { id: digital_content.owner_id })
       if (!user) return {}
       return {
         handle: user.handle,
         landlordName: user.name,
-        title: agreement.title,
-        permalink: agreement.permalink,
+        title: digital_content.title,
+        permalink: digital_content.permalink,
         isAlbum: false,
-        ownerId: agreement.owner_id
+        ownerId: digital_content.owner_id
       }
     }
     case OverflowSource.COLLECTIONS: {

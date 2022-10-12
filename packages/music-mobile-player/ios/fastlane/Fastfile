@@ -63,7 +63,7 @@ platform :ios do
     # Increment version
 
     # Version number (e.g. 1.0.100) will be incremented by a patch version
-    # from the currently live version in the app store. If a higher version number
+    # from the currently digitalcoin version in the app store. If a higher version number
     # is specified in Info.plist, that one will be used
 
     previousVersionNumberString = get_app_store_version_number(
@@ -108,7 +108,7 @@ platform :ios do
         app_identifier: options[:bundle_id],
         initial_build_number: 1,
         version: versionNumber.to_s,
-        live: false
+        digitalcoin: false
       ) + 2,
     )
 

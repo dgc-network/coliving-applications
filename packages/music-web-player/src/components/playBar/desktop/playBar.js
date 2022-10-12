@@ -79,7 +79,7 @@ class PlayBar extends Component {
       agreementPosition: 0,
       playCounter: null,
       agreementId: null,
-      // Capture intent to set initial volume before live is playing
+      // Capture intent to set initial volume before digitalcoin is playing
       initialVolume: null,
       mediaKey: 0
     }
@@ -98,7 +98,7 @@ class PlayBar extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { live, isPlaying, playCounter } = this.props
+    const { digitalcoin, isPlaying, playCounter } = this.props
     if (!isPlaying) {
       clearInterval(this.seekInterval)
       this.seekInterval = null
@@ -106,7 +106,7 @@ class PlayBar extends Component {
 
     if (isPlaying && !this.seekInterval) {
       this.seekInterval = setInterval(() => {
-        const agreementPosition = live.getPosition()
+        const agreementPosition = digitalcoin.getPosition()
         this.setState({ agreementPosition })
       }, SEEK_INTERVAL)
     }
@@ -120,10 +120,10 @@ class PlayBar extends Component {
       })
     }
 
-    // If there was an intent to set initial volume and live is defined
+    // If there was an intent to set initial volume and digitalcoin is defined
     // set the initial volume
-    if (this.state.initialVolume !== null && live) {
-      live.setVolume(this.state.initialVolume)
+    if (this.state.initialVolume !== null && digitalcoin) {
+      digitalcoin.setVolume(this.state.initialVolume)
       this.setState({
         initialVolume: null
       })
@@ -136,13 +136,13 @@ class PlayBar extends Component {
 
   goToAgreementPage = () => {
     const {
-      currentQueueItem: { agreement, user },
+      currentQueueItem: { digital_content, user },
       collectible,
       goToRoute
     } = this.props
 
-    if (agreement && user) {
-      goToRoute(agreement.permalink)
+    if (digital_content && user) {
+      goToRoute(digital_content.permalink)
     } else if (collectible && user) {
       goToRoute(collectibleDetailsPage(user.handle, collectible.id))
     }
@@ -161,19 +161,19 @@ class PlayBar extends Component {
 
   togglePlay = () => {
     const {
-      currentQueueItem: { agreement },
-      live,
+      currentQueueItem: { digital_content },
+      digitalcoin,
       isPlaying,
       play,
       pause,
       record
     } = this.props
 
-    if (live && isPlaying) {
+    if (digitalcoin && isPlaying) {
       pause()
       record(
         make(Name.PLAYBACK_PAUSE, {
-          id: agreement ? agreement.agreement_id : null,
+          id: digital_content ? digital_content.digital_content_id : null,
           source: PlaybackSource.PLAYBAR
         })
       )
@@ -181,7 +181,7 @@ class PlayBar extends Component {
       play()
       record(
         make(Name.PLAYBACK_PLAY, {
-          id: agreement ? agreement.agreement_id : null,
+          id: digital_content ? digital_content.digital_content_id : null,
           source: PlaybackSource.PLAYBAR
         })
       )
@@ -205,12 +205,12 @@ class PlayBar extends Component {
   }
 
   updateVolume = (volume) => {
-    const { live } = this.props
-    if (live) {
-      // If we already have an live object set the volume immediately!
-      live.setVolume(volume / VOLUME_GRANULARITY)
+    const { digitalcoin } = this.props
+    if (digitalcoin) {
+      // If we already have an digitalcoin object set the volume immediately!
+      digitalcoin.setVolume(volume / VOLUME_GRANULARITY)
     } else {
-      // Store volume in the state so that when live does mount we can set it
+      // Store volume in the state so that when digitalcoin does mount we can set it
       this.setState({
         initialVolume: volume / VOLUME_GRANULARITY
       })
@@ -239,14 +239,14 @@ class PlayBar extends Component {
 
   onPrevious = () => {
     const {
-      live,
+      digitalcoin,
       seek,
       previous,
       reset,
-      currentQueueItem: { agreement }
+      currentQueueItem: { digital_content }
     } = this.props
-    if (agreement?.genre === Genre.PODCASTS) {
-      const position = live.getPosition()
+    if (digital_content?.genre === Genre.PODCASTS) {
+      const position = digitalcoin.getPosition()
       const newPosition = position - SKIP_DURATION_SEC
       seek(Math.max(0, newPosition))
       this.setState({
@@ -265,14 +265,14 @@ class PlayBar extends Component {
 
   onNext = () => {
     const {
-      live,
+      digitalcoin,
       seek,
       next,
-      currentQueueItem: { agreement }
+      currentQueueItem: { digital_content }
     } = this.props
-    if (agreement?.genre === Genre.PODCASTS) {
-      const duration = live.getDuration()
-      const position = live.getPosition()
+    if (digital_content?.genre === Genre.PODCASTS) {
+      const duration = digitalcoin.getDuration()
+      const position = digitalcoin.getPosition()
       const newPosition = position + SKIP_DURATION_SEC
       seek(Math.min(newPosition, duration))
       this.setState({
@@ -290,8 +290,8 @@ class PlayBar extends Component {
 
   render() {
     const {
-      currentQueueItem: { uid, agreement, user },
-      live,
+      currentQueueItem: { uid, digital_content, user },
+      digitalcoin,
       collectible,
       isPlaying,
       isBuffering,
@@ -314,23 +314,23 @@ class PlayBar extends Component {
     let isAgreementUnlisted = false
     let agreementPermalink = ''
 
-    if (uid && agreement && user) {
-      agreementTitle = agreement.title
+    if (uid && digital_content && user) {
+      agreementTitle = digital_content.title
       landlordName = user.name
       landlordHandle = user.handle
       landlordUserId = user.user_id
       isVerified = user.is_verified
       profilePictureSizes = user._profile_picture_sizes
-      isOwner = agreement.owner_id === userId
-      agreementPermalink = agreement.permalink
+      isOwner = digital_content.owner_id === userId
+      agreementPermalink = digital_content.permalink
 
-      duration = live.getDuration()
-      agreementId = agreement.agreement_id
-      reposted = agreement.has_current_user_reposted
-      favorited = agreement.has_current_user_saved || false
-      isAgreementUnlisted = agreement.is_unlisted
+      duration = digitalcoin.getDuration()
+      agreementId = digital_content.digital_content_id
+      reposted = digital_content.has_current_user_reposted
+      favorited = digital_content.has_current_user_saved || false
+      isAgreementUnlisted = digital_content.is_unlisted
     } else if (collectible && user) {
-      // Special case for live nft contentList
+      // Special case for digitalcoin nft contentList
       agreementTitle = collectible.name
       landlordName = user.name
       landlordHandle = user.handle
@@ -338,7 +338,7 @@ class PlayBar extends Component {
       isVerified = user.is_verified
       profilePictureSizes = user._profile_picture_sizes
       isOwner = this.props.accountUser?.user_id === user.user_id
-      duration = live.getDuration()
+      duration = digitalcoin.getDuration()
 
       reposted = false
       favorited = false
@@ -386,11 +386,11 @@ class PlayBar extends Component {
                 isPlaying={isPlaying && !isBuffering}
                 isDisabled={!uid && !collectible}
                 includeTimestamps
-                elapsedSeconds={live?.getPosition()}
+                elapsedSeconds={digitalcoin?.getPosition()}
                 totalSeconds={duration}
                 style={{
-                  railListenedColor: 'var(--agreement-slider-rail)',
-                  handleColor: 'var(--agreement-slider-handle)'
+                  railListenedColor: 'var(--digital-content-slider-rail)',
+                  handleColor: 'var(--digital-content-slider-handle)'
                 }}
                 onScrubRelease={this.props.seek}
               />
@@ -488,7 +488,7 @@ const makeMapStateToProps = () => {
     accountUser: getAccountUser(state),
     currentQueueItem: getCurrentQueueItem(state),
     playCounter: getCounter(state),
-    live: getAudio(state),
+    digitalcoin: getAudio(state),
     collectible: getCollectible(state),
     isPlaying: getPlaying(state),
     isBuffering: getBuffering(state),

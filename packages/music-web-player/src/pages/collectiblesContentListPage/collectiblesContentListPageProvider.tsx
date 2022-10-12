@@ -255,7 +255,7 @@ export const CollectiblesContentListPageProvider = ({
   const entries = liveCollectibles
     .filter((c) => c)
     .map((collectible) => ({
-      agreement_id: collectible.id,
+      digital_content_id: collectible.id,
       id: collectible.id,
       uid: collectible.id,
       landlordId: user?.user_id,
@@ -377,7 +377,7 @@ export const CollectiblesContentListPageProvider = ({
       )
     },
     {
-      title: 'Agreement Name',
+      title: 'DigitalContent Name',
       dataIndex: 'name',
       key: 'name',
       className: 'colAgreementName',
@@ -433,8 +433,8 @@ export const CollectiblesContentListPageProvider = ({
     content_list_name: title,
     description: LIVE_NFT_CONTENT_LIST.makeDescription?.(user?.name) ?? '',
     content_list_contents: {
-      agreement_ids: entries.map((entry) => ({
-        agreement: entry.id
+      digital_content_ids: entries.map((entry) => ({
+        digital_content: entry.id
       }))
     },
     imageOverride: (firstLoadedCollectible.current?.imageUrl ??
@@ -442,7 +442,7 @@ export const CollectiblesContentListPageProvider = ({
       firstLoadedCollectible.current?.gifUrl) as string | undefined,
     typeTitle: 'Audio NFT ContentList',
     customEmptyText: user
-      ? `There are no playable live NFTs in any wallets connected to ${user.name}`
+      ? `There are no playable digitalcoin NFTs in any wallets connected to ${user.name}`
       : ''
   }
 

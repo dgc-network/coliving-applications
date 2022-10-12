@@ -29,22 +29,22 @@ import { encodeHashId } from 'utils/route/hashIds'
 const TIKTOK_SHARE_SOUND_ENDPOINT =
   'https://open-api.tiktok.com/share/sound/upload/'
 
-// Because the agreement blob cannot live in an action (not a POJO),
+// Because the digital_content blob cannot digitalcoin in an action (not a POJO),
 // we are creating a singleton here to store it
 let agreementBlob: Blob | null = null
 
 function* handleRequestOpen(action: ReturnType<typeof requestOpen>) {
-  const agreement = yield* select((state: AppState) =>
+  const digital_content = yield* select((state: AppState) =>
     getAgreement(state, { id: action.payload.id })
   )
-  if (!agreement) return
+  if (!digital_content) return
 
   yield* put(
     open({
-      agreement: {
-        id: agreement.agreement_id,
-        title: agreement.title,
-        duration: agreement.duration
+      digital_content: {
+        id: digital_content.digital_content_id,
+        title: digital_content.title,
+        duration: digital_content.duration
       }
     })
   )
@@ -56,12 +56,12 @@ async function* handleShare() {
 
   yield* put(setStatus({ status: Status.SHARE_STARTED }))
 
-  const agreement = yield* select(getAgreementToShare)
-  if (!agreement) return
-  const { id } = agreement
+  const digital_content = yield* select(getAgreementToShare)
+  if (!digital_content) return
+  const { id } = digital_content
 
   try {
-    // Fetch the agreement blob
+    // Fetch the digital_content blob
     const encodedAgreementId = encodeHashId(id)
 
     const response = yield* call(
@@ -91,14 +91,14 @@ async function* handleShare() {
 function* handleAuthenticated(action: ReturnType<typeof authenticated>) {
   yield* put(setIsAuthenticated())
 
-  // If agreement blob already downloaded, start the upload
+  // If digital_content blob already downloaded, start the upload
   if (agreementBlob) {
     yield* put(upload())
   }
 }
 
 function* handleUpload() {
-  // Upload the agreement blob to TikTok api
+  // Upload the digital_content blob to TikTok api
   const formData = new FormData()
   formData.append('sound_file', agreementBlob as Blob)
 

@@ -81,7 +81,7 @@ class SelectPage extends Component {
                 />
                 <div className={styles.count}>
                   {agreements.length === 1
-                    ? `${agreements.length} agreement uploaded`
+                    ? `${agreements.length} digital_content uploaded`
                     : `${agreements.length} agreements uploaded`}
                 </div>
                 <div className={styles.continue}>

@@ -4,7 +4,7 @@ import {
   BadgeTier,
   Collection,
   Status,
-  Agreement,
+  DigitalContent,
   User,
   StringWei,
   Nullable
@@ -31,13 +31,13 @@ export enum NotificationType {
 }
 
 export enum Entity {
-  Agreement = 'Agreement',
+  DigitalContent = 'DigitalContent',
   ContentList = 'ContentList',
   Album = 'Album',
   User = 'User'
 }
 
-export type AgreementEntity = Agreement & { user: Nullable<User> }
+export type AgreementEntity = DigitalContent & { user: Nullable<User> }
 
 export type CollectionEntity = Collection & { user: Nullable<User> }
 
@@ -63,7 +63,7 @@ export type UserSubscription = BaseNotification & {
   entityIds: ID[]
 } & (
     | {
-        entityType: Entity.Agreement
+        entityType: Entity.DigitalContent
       }
     | {
         entityType: Entity.ContentList | Entity.Album
@@ -79,14 +79,14 @@ export type Repost = BaseNotification & {
   type: NotificationType.Repost
   entityId: ID
   userIds: ID[]
-  entityType: Entity.ContentList | Entity.Album | Entity.Agreement
+  entityType: Entity.ContentList | Entity.Album | Entity.DigitalContent
 }
 
 export type Favorite = BaseNotification & {
   type: NotificationType.Favorite
   entityId: ID
   userIds: ID[]
-  entityType: Entity.ContentList | Entity.Album | Entity.Agreement
+  entityType: Entity.ContentList | Entity.Album | Entity.DigitalContent
 }
 
 export enum Achievement {
@@ -119,7 +119,7 @@ export type RemixCreate = BaseNotification & {
   userId: ID
   parentAgreementId: ID
   childAgreementId: ID
-  entityType: Entity.Agreement
+  entityType: Entity.DigitalContent
   entityIds: ID[]
 }
 
@@ -128,7 +128,7 @@ export type RemixCosign = BaseNotification & {
   userId: ID
   parentAgreementUserId: ID
   childAgreementId: ID
-  entityType: Entity.Agreement
+  entityType: Entity.DigitalContent
   entityIds: ID[]
 }
 
@@ -137,7 +137,7 @@ export type TrendingAgreement = BaseNotification & {
   rank: number
   genre: string
   time: 'week' | 'month' | 'year'
-  entityType: Entity.Agreement
+  entityType: Entity.DigitalContent
   entityId: ID
 }
 

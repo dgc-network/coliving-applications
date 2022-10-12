@@ -43,12 +43,12 @@ export const ProfileTabNavigator = ({
   refreshing,
   onRefresh
 }: ProfileTabNavigatorProps) => {
-  const { user_id, agreement_count } = useSelectProfile(['user_id', 'agreement_count'])
+  const { user_id, digital_content_count } = useSelectProfile(['user_id', 'digital_content_count'])
   const { params } = useRoute<'Profile'>()
 
   const initialParams = { id: user_id, handle: params.handle }
 
-  const isLandlord = agreement_count > 0
+  const isLandlord = digital_content_count > 0
 
   const showCollectiblesTab = useShouldShowCollectiblesTab()
 

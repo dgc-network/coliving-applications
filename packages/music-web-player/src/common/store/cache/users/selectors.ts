@@ -120,8 +120,8 @@ export const getUserFromAgreement = (
   state: CommonState,
   props: { id?: ID | null; uid?: UID | null }
 ) => {
-  const agreement = getAgreement(state, props)
-  if (agreement && agreement.owner_id) return getUser(state, { id: agreement.owner_id })
+  const digital_content = getAgreement(state, props)
+  if (digital_content && digital_content.owner_id) return getUser(state, { id: digital_content.owner_id })
   return null
 }
 

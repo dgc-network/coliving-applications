@@ -59,7 +59,7 @@ type SearchPageContentProps = {
   containerRef: HTMLElement | null
   currentQueueItem: {
     source: any
-    agreement: any
+    digital_content: any
     user: any
     uid: UID
   }
@@ -163,7 +163,7 @@ const AgreementsSearchPage = ({
             playingSource={currentQueueItem.source}
             playingUid={currentQueueItem.uid}
             playingAgreementId={
-              currentQueueItem.agreement && currentQueueItem.agreement.agreement_id
+              currentQueueItem.digital_content && currentQueueItem.digital_content.digital_content_id
             }
             playing={playing}
             buffering={buffering}

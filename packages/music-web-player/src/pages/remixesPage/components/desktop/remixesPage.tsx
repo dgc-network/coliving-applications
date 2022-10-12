@@ -1,4 +1,4 @@
-import { Agreement, User } from '@coliving/common'
+import { DigitalContent, User } from '@coliving/common'
 import cn from 'classnames'
 
 import { ReactComponent as IconRemixes } from 'assets/img/iconRemix.svg'
@@ -24,7 +24,7 @@ const messages = {
 export type RemixesPageProps = {
   title: string
   count: number | null
-  originalAgreement: Agreement | null
+  originalAgreement: DigitalContent | null
   user: User | null
   getLineupProps: () => LineupWithoutTile
   goToAgreementPage: () => void

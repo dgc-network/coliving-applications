@@ -6,7 +6,7 @@ import cn from 'classnames'
 import {
   AgreementTileSize,
   DesktopContentListTileProps as ContentListTileProps
-} from 'components/agreement/types'
+} from 'components/digital_content/types'
 
 import styles from './ContentListTile.module.css'
 import AgreementTile from './agreementTile'

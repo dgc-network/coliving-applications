@@ -38,13 +38,13 @@ enum FileRequirementError {
 
 const messages = {
   completeButton: 'Done',
-  confirmation: 'Are you sure you want to share "[Agreement Name]" to TikTok?',
+  confirmation: 'Are you sure you want to share "[DigitalContent Name]" to TikTok?',
   error: 'Something went wrong, please try again',
   errorMaxLength: 'Maximum Length for TikTok Sounds is 5 Minutes',
   errorMinLength: 'Minimum Length for TikTok Sounds is 10 Seconds',
-  inProgress: 'Sharing "[Agreement Name]" to TikTok',
+  inProgress: 'Sharing "[DigitalContent Name]" to TikTok',
   shareButton: 'Share Sound to TikTok',
-  success: '"[Agreement Name]" has been shared to TikTok!',
+  success: '"[DigitalContent Name]" has been shared to TikTok!',
   title: 'Share to TikTok'
 }
 
@@ -59,7 +59,7 @@ const ShareSoundToTikTokModal = () => {
   const [isOpen, setIsOpen] = useModalState('ShareSoundToTikTok')
   const dispatch = useDispatch()
 
-  const agreement = useSelector(getAgreement)
+  const digital_content = useSelector(getAgreement)
   const status = useSelector(getStatus)
 
   const withTikTokAuth = useTikTokAuth({
@@ -67,20 +67,20 @@ const ShareSoundToTikTokModal = () => {
   })
 
   const fileRequirementError: Nullable<FileRequirementError> = useMemo(() => {
-    if (agreement) {
-      if (agreement.duration > 300) {
+    if (digital_content) {
+      if (digital_content.duration > 300) {
         return FileRequirementError.MAX_LENGTH
       }
-      if (agreement.duration < 10) {
+      if (digital_content.duration < 10) {
         return FileRequirementError.MIN_LENGTH
       }
     }
     return null
-  }, [agreement])
+  }, [digital_content])
 
   const handleShareButtonClick = () => {
-    if (agreement) {
-      // Trigger the share process, which initially downloads the agreement to the client
+    if (digital_content) {
+      // Trigger the share process, which initially downloads the digital_content to the client
       dispatch(share())
 
       // Trigger the authentication process
@@ -117,7 +117,7 @@ const ShareSoundToTikTokModal = () => {
     } else {
       return (
         <div className={styles.message}>
-          {rawMessage.replace('[Agreement Name]', agreement?.title ?? '')}
+          {rawMessage.replace('[DigitalContent Name]', digital_content?.title ?? '')}
         </div>
       )
     }

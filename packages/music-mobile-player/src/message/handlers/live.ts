@@ -1,4 +1,4 @@
-import * as liveActions from 'app/store/live/actions'
+import * as liveActions from 'app/store/digitalcoin/actions'
 
 import type { MessageHandlers } from '../types'
 import { MessageType } from '../types'

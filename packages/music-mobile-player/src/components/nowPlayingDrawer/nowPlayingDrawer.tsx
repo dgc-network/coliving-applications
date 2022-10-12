@@ -24,11 +24,11 @@ import { useDispatchWeb } from 'app/hooks/useDispatchWeb'
 import { useDrawer } from 'app/hooks/useDrawer'
 import { useNavigation } from 'app/hooks/useNavigation'
 import { useSelectorWeb } from 'app/hooks/useSelectorWeb'
-import { SEEK, seek } from 'app/store/live/actions'
+import { SEEK, seek } from 'app/store/digitalcoin/actions'
 import {
   getPlaying,
   getAgreement as getNativeAgreement
-} from 'app/store/live/selectors'
+} from 'app/store/digitalcoin/selectors'
 import { makeStyles } from 'app/styles'
 
 import { ActionsBar } from './actionsBar'
@@ -95,7 +95,7 @@ const NowPlayingDrawer = ({ translationAnim }: NowPlayingDrawerProps) => {
   const isPlaying = useSelector(getPlaying)
   const [isPlayBarShowing, setIsPlayBarShowing] = useState(false)
 
-  // When live starts playing, open the playbar to the initial offset
+  // When digitalcoin starts playing, open the playbar to the initial offset
   useEffect(() => {
     if (isPlaying && !isPlayBarShowing) {
       setIsPlayBarShowing(true)
@@ -162,15 +162,15 @@ const NowPlayingDrawer = ({ translationAnim }: NowPlayingDrawerProps) => {
 
   const [isGestureEnabled, setIsGestureEnabled] = useState(true)
 
-  // TODO: As we move away from the live store slice in mobile-client
+  // TODO: As we move away from the digitalcoin store slice in mobile-client
   // in favor of player/queue selectors in common, getNativeAgreement calls
   // should be replaced
   const agreementInfo = useSelector(getNativeAgreement)
-  const agreement = useSelectorWeb((state) =>
+  const digital_content = useSelectorWeb((state) =>
     getAgreement(state, agreementInfo ? { id: agreementInfo.agreementId } : {})
   )
   const user = useSelectorWeb((state) =>
-    getUser(state, agreement ? { id: agreement.owner_id } : {})
+    getUser(state, digital_content ? { id: digital_content.owner_id } : {})
   )
 
   const agreementId = agreementInfo?.agreementId
@@ -180,22 +180,22 @@ const NowPlayingDrawer = ({ translationAnim }: NowPlayingDrawerProps) => {
   }, [agreementId])
 
   const onNext = useCallback(() => {
-    if (agreement?.genre === Genre.PODCASTS) {
+    if (digital_content?.genre === Genre.PODCASTS) {
       if (global.progress) {
         const { currentTime } = global.progress
         const newPosition = currentTime + SKIP_DURATION_SEC
         dispatch(
-          seek({ type: SEEK, seconds: Math.min(agreement.duration, newPosition) })
+          seek({ type: SEEK, seconds: Math.min(digital_content.duration, newPosition) })
         )
       }
     } else {
       dispatchWeb(next({ skip: true }))
       setMediaKey((mediaKey) => mediaKey + 1)
     }
-  }, [dispatch, dispatchWeb, setMediaKey, agreement])
+  }, [dispatch, dispatchWeb, setMediaKey, digital_content])
 
   const onPrevious = useCallback(() => {
-    if (agreement?.genre === Genre.PODCASTS) {
+    if (digital_content?.genre === Genre.PODCASTS) {
       if (global.progress) {
         const { currentTime } = global.progress
         const newPosition = currentTime - SKIP_DURATION_SEC
@@ -205,7 +205,7 @@ const NowPlayingDrawer = ({ translationAnim }: NowPlayingDrawerProps) => {
       dispatchWeb(previous({}))
       setMediaKey((mediaKey) => mediaKey + 1)
     }
-  }, [dispatch, dispatchWeb, setMediaKey, agreement])
+  }, [dispatch, dispatchWeb, setMediaKey, digital_content])
 
   const onPressScrubberIn = useCallback(() => {
     setIsGestureEnabled(false)
@@ -227,15 +227,15 @@ const NowPlayingDrawer = ({ translationAnim }: NowPlayingDrawerProps) => {
   }, [handleDrawerCloseFromSwipe, navigation, user])
 
   const handlePressTitle = useCallback(() => {
-    if (!agreement) {
+    if (!digital_content) {
       return
     }
     navigation.push({
-      native: { screen: 'Agreement', params: { id: agreement.agreement_id } },
-      web: { route: agreement.permalink }
+      native: { screen: 'DigitalContent', params: { id: digital_content.digital_content_id } },
+      web: { route: digital_content.permalink }
     })
     handleDrawerCloseFromSwipe()
-  }, [handleDrawerCloseFromSwipe, navigation, agreement])
+  }, [handleDrawerCloseFromSwipe, navigation, digital_content])
 
   return (
     <Drawer
@@ -265,11 +265,11 @@ const NowPlayingDrawer = ({ translationAnim }: NowPlayingDrawerProps) => {
           { paddingTop: staticTopInset.current, paddingBottom: insets.bottom }
         ]}
       >
-        {agreement && user && (
+        {digital_content && user && (
           <>
             <View style={styles.playBarContainer}>
               <PlayBar
-                agreement={agreement}
+                digital_content={digital_content}
                 user={user}
                 onPress={onDrawerOpen}
                 translationAnim={translationAnim}
@@ -283,13 +283,13 @@ const NowPlayingDrawer = ({ translationAnim }: NowPlayingDrawerProps) => {
               onPress={handlePressTitle}
               style={styles.artworkContainer}
             >
-              <Artwork agreement={agreement} />
+              <Artwork digital_content={digital_content} />
             </Pressable>
             <View style={styles.agreementInfoContainer}>
               <AgreementInfo
                 onPressLandlord={handlePressLandlord}
                 onPressTitle={handlePressTitle}
-                agreement={agreement}
+                digital_content={digital_content}
                 user={user}
               />
             </View>
@@ -299,16 +299,16 @@ const NowPlayingDrawer = ({ translationAnim }: NowPlayingDrawerProps) => {
                 isPlaying={isPlaying}
                 onPressIn={onPressScrubberIn}
                 onPressOut={onPressScrubberOut}
-                duration={agreement.duration}
+                duration={digital_content.duration}
               />
             </View>
             <View style={styles.controlsContainer}>
               <AudioControls
                 onNext={onNext}
                 onPrevious={onPrevious}
-                isPodcast={agreement.genre === Genre.PODCASTS}
+                isPodcast={digital_content.genre === Genre.PODCASTS}
               />
-              <ActionsBar agreement={agreement} />
+              <ActionsBar digital_content={digital_content} />
             </View>
           </>
         )}

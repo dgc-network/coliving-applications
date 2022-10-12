@@ -7,8 +7,8 @@ import { ReactComponent as IconUpload } from 'assets/img/iconUpload.svg'
 import styles from './UploadChip.module.css'
 
 const messages = {
-  agreement: 'Upload Agreement',
-  aAgreement: 'Upload A Agreement',
+  digital_content: 'Upload DigitalContent',
+  aAgreement: 'Upload A DigitalContent',
   album: 'Upload New Album',
   contentList: 'Create New ContentList',
   landlordContentList: 'Upload New ContentList',
@@ -19,7 +19,7 @@ const messages = {
 
 const UploadChip = ({ type, variant, isLandlord = false, isFirst, onClick }) => {
   const icon =
-    type === 'agreement' || type === 'album' ? (
+    type === 'digital_content' || type === 'album' ? (
       <IconUpload className={styles.iconUpload} />
     ) : (
       <IconPlus className={styles.iconPlus} />
@@ -27,8 +27,8 @@ const UploadChip = ({ type, variant, isLandlord = false, isFirst, onClick }) => 
 
   let text
   switch (type) {
-    case 'agreement':
-      text = variant === 'nav' ? messages.agreement : messages.aAgreement
+    case 'digital_content':
+      text = variant === 'nav' ? messages.digital_content : messages.aAgreement
       break
     case 'album':
       text = isFirst ? messages.firstAlbum : messages.album
@@ -60,7 +60,7 @@ const UploadChip = ({ type, variant, isLandlord = false, isFirst, onClick }) => 
 }
 
 UploadChip.propTypes = {
-  type: PropTypes.oneOf(['agreement', 'album', 'contentList']).isRequired,
+  type: PropTypes.oneOf(['digital_content', 'album', 'contentList']).isRequired,
   // nav: For display in a nav-like column
   // card: Looks like a 'Card'
   // tile: Looks like a 'AgreementTile'
@@ -71,7 +71,7 @@ UploadChip.propTypes = {
 }
 
 UploadChip.defaultProps = {
-  type: 'agreement',
+  type: 'digital_content',
   variant: 'tile',
   onClick: () => {}
 }

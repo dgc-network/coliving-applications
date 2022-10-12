@@ -29,7 +29,7 @@ class AgreementDownload {
   }
 
   /**
-   * Updates the download cid for a agreement
+   * Updates the download cid for a digital_content
    * @param {ID} agreementId
    * @param {AgreementMetadata} metadata
    * @param {string?} cid optional cid to update to, otherwise it is polled for
@@ -51,7 +51,7 @@ class AgreementDownload {
       )
     }
     cleanedMetadata.download.cid = cid
-    const update = await window.colivingLibs.Agreement.updateAgreement(cleanedMetadata)
+    const update = await window.colivingLibs.DigitalContent.updateAgreement(cleanedMetadata)
 
     updateAgreementDownloadCIDInProgress.delete(agreementId)
     return update
@@ -62,7 +62,7 @@ class AgreementDownload {
     let cid
     while (!cid) {
       try {
-        cid = await window.colivingLibs.Agreement.checkIfDownloadAvailable(
+        cid = await window.colivingLibs.DigitalContent.checkIfDownloadAvailable(
           contentNodeEndpoints,
           agreementId
         )

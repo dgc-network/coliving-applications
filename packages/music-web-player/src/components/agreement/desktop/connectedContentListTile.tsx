@@ -16,7 +16,7 @@ import {
   FavoriteSource,
   PlaybackSource,
   Name,
-  Agreement
+  DigitalContent
 } from '@coliving/common'
 import cn from 'classnames'
 import { push as pushRoute } from 'connected-react-router'
@@ -42,8 +42,8 @@ import { LandlordPopover } from 'components/landlord/landlordPopover'
 import Draggable from 'components/dragndrop/draggable'
 import { OwnProps as CollectionkMenuProps } from 'components/menu/collectionMenu'
 import Menu from 'components/menu/menu'
-import { CollectionArtwork } from 'components/agreement/desktop/Artwork'
-import { AgreementTileSize } from 'components/agreement/types'
+import { CollectionArtwork } from 'components/digital_content/desktop/Artwork'
+import { AgreementTileSize } from 'components/digital_content/types'
 import UserBadges from 'components/userBadges/userBadges'
 import { AgreementEvent, make } from 'store/analytics/actions'
 import {
@@ -142,7 +142,7 @@ const ConnectedContentListTile = memo(
       followee_saves: followeeSaves,
       has_current_user_reposted: isReposted,
       has_current_user_saved: isFavorited,
-      agreement_count: agreementCount
+      digital_content_count: agreementCount
     } = getCollectionWithFallback(collection)
 
     const {
@@ -153,7 +153,7 @@ const ConnectedContentListTile = memo(
     const isOwner = handle === userHandle
 
     const isActive = useMemo(() => {
-      return agreements.some((agreement: any) => agreement.uid === playingUid)
+      return agreements.some((digital_content: any) => digital_content.uid === playingUid)
     }, [agreements, playingUid])
 
     const onTogglePlay = useCallback(() => {
@@ -171,7 +171,7 @@ const ConnectedContentListTile = memo(
           }
         } else {
           const agreementUid = agreements[0] ? agreements[0].uid : null
-          const agreementId = agreements[0] ? agreements[0].agreement_id : null
+          const agreementId = agreements[0] ? agreements[0].digital_content_id : null
           if (!agreementUid || !agreementId) return
           playAgreement(agreementUid)
           if (record) {
@@ -323,7 +323,7 @@ const ConnectedContentListTile = memo(
     }, [setRepostUsers, id, setModalVisibility])
 
     const renderStats = () => {
-      const contentTitle = 'agreement' // undefined,  contentList or album -  undefined is agreement
+      const contentTitle = 'digital_content' // undefined,  contentList or album -  undefined is digital_content
       const sz = 'large'
       return (
         <div className={cn(styles.socialInfo)}>
@@ -414,24 +414,24 @@ const ConnectedContentListTile = memo(
           />
         ))
       }
-      return agreements.map((agreement, i) => (
+      return agreements.map((digital_content, i) => (
         <Draggable
-          key={`${agreement.title}+${i}`}
-          text={agreement.title}
-          kind='agreement'
-          id={agreement.agreement_id}
-          isOwner={agreement.user.handle === userHandle}
-          link={fullAgreementPage(agreement.permalink)}
+          key={`${digital_content.title}+${i}`}
+          text={digital_content.title}
+          kind='digital_content'
+          id={digital_content.digital_content_id}
+          isOwner={digital_content.user.handle === userHandle}
+          link={fullAgreementPage(digital_content.permalink)}
         >
           <AgreementListItem
             index={i}
-            key={`${agreement.title}+${i}`}
+            key={`${digital_content.title}+${i}`}
             isLoading={isLoading}
-            active={playingUid === agreement.uid}
+            active={playingUid === digital_content.uid}
             size={size}
             disableActions={disableActions}
             playing={isPlaying}
-            agreement={agreement}
+            digital_content={digital_content}
             togglePlay={togglePlay}
             goToRoute={goToRoute}
             landlordHandle={handle}
@@ -472,7 +472,7 @@ const ConnectedContentListTile = memo(
     }
     return (
       <ContentListTile
-        // Agreement Tile Props
+        // DigitalContent Tile Props
         size={size}
         order={order}
         isFavorited={isFavorited}
@@ -497,7 +497,7 @@ const ConnectedContentListTile = memo(
         key={`${index}-${title}`}
         TileAgreementContainer={TileAgreementContainer}
         duration={agreements.reduce(
-          (duration: number, agreement: Agreement) => duration + agreement.duration,
+          (duration: number, digital_content: DigitalContent) => duration + digital_content.duration,
           0
         )}
         containerClassName={cn(styles.container, {

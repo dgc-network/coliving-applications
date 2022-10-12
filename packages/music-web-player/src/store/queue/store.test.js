@@ -4,7 +4,7 @@ import { expectSaga } from 'redux-saga-test-plan'
 import * as matchers from 'redux-saga-test-plan/matchers'
 import { take } from 'redux-saga/effects'
 
-import AudioStream from 'live/AudioStream'
+import AudioStream from 'digitalcoin/AudioStream'
 import accountSlice from 'common/store/account/reducer'
 import * as cacheActions from 'common/store/cache/actions'
 import reducer, * as actions from 'common/store/queue/slice'
@@ -16,11 +16,11 @@ import { noopReducer } from 'store/testHelper'
 
 const initialAgreements = {
   entries: {
-    1: { metadata: { agreement_segments: {} } },
-    2: { metadata: { agreement_segments: {} } },
-    3: { metadata: { agreement_segments: {} } },
-    4: { metadata: { agreement_segments: {} } },
-    5: { metadata: { agreement_segments: {} } }
+    1: { metadata: { digital_content_segments: {} } },
+    2: { metadata: { digital_content_segments: {} } },
+    3: { metadata: { digital_content_segments: {} } },
+    4: { metadata: { digital_content_segments: {} } },
+    5: { metadata: { digital_content_segments: {} } }
   },
   uids: {
     'kind:AGREEMENTS-id:1-count:1': 1,
@@ -52,11 +52,11 @@ const makeInitialQueue = (config) => ({
 })
 
 const makeInitialPlayer = (config = {}) => ({
-  // Identifier for the live that's playing.
+  // Identifier for the digitalcoin that's playing.
   uid: null,
   agreementId: null,
-  live: new AudioStream(),
-  // Keep 'playing' in the store separately from the live
+  digitalcoin: new AudioStream(),
+  // Keep 'playing' in the store separately from the digitalcoin
   // object to allow components to subscribe to changes.
   playing: false,
   counter: 0,
@@ -171,7 +171,7 @@ describe('watchNext', () => {
       .put(
         actions.queueAutoplay({
           genre: initialAgreements.entries[1].genre,
-          exclusionList: [initialAgreements.entries[1].agreement_id],
+          exclusionList: [initialAgreements.entries[1].digital_content_id],
           currentUserId: 1
         })
       )
@@ -262,7 +262,7 @@ describe('watchNext', () => {
       .forEach((action) => expect(action.type).not.toEqual('queue/add'))
   })
 
-  it('plays the next agreement', async () => {
+  it('plays the next digital_content', async () => {
     const initialQueue = makeInitialQueue({ index: 0 })
     const playingEntry = initialQueue.order[initialQueue.index]
     const nextPlayingEntry = initialQueue.order[initialQueue.index + 1]
@@ -279,7 +279,7 @@ describe('watchNext', () => {
     expect(storeState.queue.index).toEqual(1)
   })
 
-  it('plays the next shuffle agreement', async () => {
+  it('plays the next shuffle digital_content', async () => {
     const initialQueue = makeInitialQueue({
       index: 0,
       shuffle: true,
@@ -303,7 +303,7 @@ describe('watchNext', () => {
     expect(storeState.queue.index).toEqual(1)
   })
 
-  it('repeats the same agreement if not skipped', async () => {
+  it('repeats the same digital_content if not skipped', async () => {
     const initialQueue = makeInitialQueue({
       index: 0,
       repeat: RepeatMode.SINGLE
@@ -322,7 +322,7 @@ describe('watchNext', () => {
     expect(storeState.queue.index).toEqual(0)
   })
 
-  it('does not repeat the same agreement if skipped', async () => {
+  it('does not repeat the same digital_content if skipped', async () => {
     const initialQueue = makeInitialQueue({
       index: 0,
       repeat: RepeatMode.SINGLE
@@ -399,7 +399,7 @@ describe('watchQueueAutoplay', () => {
   it('adds agreements to queue', async () => {
     const recommendedAgreements = [
       {
-        agreement_id: 1
+        digital_content_id: 1
       }
     ]
     const expectedRecommendedAgreements = [
@@ -418,7 +418,7 @@ describe('watchQueueAutoplay', () => {
 })
 
 describe('watchPrevious', () => {
-  it('plays the previous agreement', async () => {
+  it('plays the previous digital_content', async () => {
     const initialQueue = makeInitialQueue({ index: 2 })
     const playingEntry = initialQueue.order[initialQueue.index]
     const prevPlayingEntry =
@@ -453,7 +453,7 @@ describe('watchPrevious', () => {
     expect(storeState.queue.index).toEqual(1)
   })
 
-  it('plays the previous shuffle agreement', async () => {
+  it('plays the previous shuffle digital_content', async () => {
     const initialQueue = makeInitialQueue({
       index: 1,
       shuffle: true,
@@ -639,7 +639,7 @@ describe('watchAdd', () => {
 })
 
 describe('watchRemove', () => {
-  it('removes a agreement', async () => {
+  it('removes a digital_content', async () => {
     const initialQueue = makeInitialQueue()
     const { storeState } = await expectSaga(sagas.watchRemove, actions)
       .withReducer(

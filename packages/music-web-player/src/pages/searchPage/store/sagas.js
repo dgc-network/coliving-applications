@@ -31,9 +31,9 @@ export function* getTagSearchResults(tag, kind, limit, offset) {
 
   const { entries } = yield call(fetchUsers, creatorIds)
 
-  const agreementsWithUsers = agreements.map((agreement) => ({
-    ...agreement,
-    user: entries[agreement.owner_id]
+  const agreementsWithUsers = agreements.map((digital_content) => ({
+    ...digital_content,
+    user: entries[digital_content.owner_id]
   }))
   yield call(processAndCacheAgreements, agreementsWithUsers)
 
@@ -53,7 +53,7 @@ export function* fetchSearchPageTags(action) {
   )
   if (results) {
     results.users = results.users.map(({ user_id: id }) => id)
-    results.agreements = results.agreements.map(({ agreement_id: id }) => id)
+    results.agreements = results.agreements.map(({ digital_content_id: id }) => id)
     yield put(searchPageActions.fetchSearchPageTagsSucceeded(results, tag))
     yield put(agreementsLineupActions.fetchLineupMetadatas(0, 10))
   } else {
@@ -97,7 +97,7 @@ function* fetchSearchPageResults(action) {
   )
   if (results) {
     results.users = results.users.map(({ user_id: id }) => id)
-    results.agreements = results.agreements.map(({ agreement_id: id }) => id)
+    results.agreements = results.agreements.map(({ digital_content_id: id }) => id)
     results.albums = results.albums.map(({ content_list_id: id }) => id)
     results.contentLists = results.contentLists.map(({ content_list_id: id }) => id)
     yield put(

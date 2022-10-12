@@ -52,8 +52,8 @@ class InlineFormTile extends Component {
           </div>
           <div className={styles.agreementName}>
             <LabeledInput
-              placeholder='What should we call this agreement?'
-              label='Agreement Name'
+              placeholder='What should we call this digital_content?'
+              label='DigitalContent Name'
               size='small'
               layout='horizontal'
               defaultValue={defaultFields.title}
@@ -96,7 +96,7 @@ class InlineFormTile extends Component {
               }
             />
             <DropdownInput
-              placeholder='Describe the mood of your agreement, e.g. Upbeat'
+              placeholder='Describe the mood of your digital_content, e.g. Upbeat'
               menu={{ items: MOODS }}
               defaultValue={defaultFields.genre || ''}
               label='Mood'
@@ -109,7 +109,7 @@ class InlineFormTile extends Component {
           <div className={styles.row}>
             <LabeledInput
               placeholder='e.g. CC-XXX-YY-NNNNNN'
-              label='Agreement ISRC'
+              label='DigitalContent ISRC'
               size='small'
               labelStyle={styles.label}
               layout='horizontal'
@@ -117,7 +117,7 @@ class InlineFormTile extends Component {
             />
             <LabeledInput
               placeholder='e.g. T-345246800-1'
-              label='Agreement ISWC'
+              label='DigitalContent ISWC'
               size='small'
               labelStyle={styles.label}
               layout='horizontal'

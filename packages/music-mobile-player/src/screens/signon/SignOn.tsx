@@ -44,7 +44,7 @@ import {
   getIsSigninError
 } from 'app/store/signon/selectors'
 import { EventNames } from 'app/types/analytics'
-import { agreement, make } from 'app/utils/analytics'
+import { digital_content, make } from 'app/utils/analytics'
 import { useThemeColors } from 'app/utils/theme'
 
 import type { SignOnStackParamList } from './types'
@@ -536,7 +536,7 @@ const SignOn = ({ navigation }: SignOnProps) => {
     if (!isWorking) {
       if (isSignin) {
         setFormButtonMarginTop(28)
-        agreement(
+        digital_content(
           make({
             eventName: EventNames.CREATE_ACCOUNT_OPEN,
             source: 'sign in page'
@@ -544,7 +544,7 @@ const SignOn = ({ navigation }: SignOnProps) => {
         )
       } else {
         setFormButtonMarginTop(14)
-        agreement(
+        digital_content(
           make({
             eventName: EventNames.SIGN_IN_OPEN,
             source: 'sign up page'

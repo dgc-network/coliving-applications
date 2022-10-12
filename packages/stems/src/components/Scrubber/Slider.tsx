@@ -291,7 +291,7 @@ export const Slider = ({
         <div ref={agreementRef} className={styles.agreementWrapper}>
           <div
             ref={agreementRef}
-            className={styles.agreement}
+            className={styles.digital_content}
             style={getAgreementStyle()}
           />
         </div>

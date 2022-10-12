@@ -135,13 +135,13 @@ const optionsButtonCell = (val, record, index, props) => {
       onRemove={props.onClickRemove}
       removeText={props.removeText}
       handle={val.handle}
-      agreementId={val.agreement_id}
+      agreementId={val.digital_content_id}
       uid={val.uid}
       date={val.date}
       isFavorited={val.has_current_user_saved}
       isOwner={record.owner_id === props.userId}
       isOwnerDeactivated={!!record.user.is_deactivated}
-      isLandlordPick={val.user._landlord_pick === val.agreement_id}
+      isLandlordPick={val.user._landlord_pick === val.digital_content_id}
       index={index}
       agreementTitle={val.name}
       albumId={null}
@@ -187,7 +187,7 @@ const DraggableRow = (props) => {
     let record
     if (handleProps) {
       record = children[1].props.record
-      const loading = !record.agreement_id
+      const loading = !record.digital_content_id
       // Hack to make the first child the draggable handle.
       children[0] = (
         <TableDragHandle
@@ -205,8 +205,8 @@ const DraggableRow = (props) => {
         elementType='tr'
         key={dataRowKey}
         text={record.title}
-        kind='agreement'
-        id={record.agreement_id}
+        kind='digital_content'
+        id={record.digital_content_id}
         link={link}
         isOwner={record.isOwner}
         isDisabled={record.is_unlisted}
@@ -244,7 +244,7 @@ const ReorderableRow = (props) => {
 
 const ReorderableBody = (props) => {
   return (
-    <RbdDroppable droppableId='agreements-table-droppable' type='TABLE'>
+    <RbdDroppable droppableId='digital-contents-table-droppable' type='TABLE'>
       {(provided, snapshot) => (
         <tbody
           {...props}
@@ -426,7 +426,7 @@ class AgreementsTable extends Component {
             )
         },
         {
-          title: <Tooltip text='Agreement Name'>{'Agreement Name'}</Tooltip>,
+          title: <Tooltip text='DigitalContent Name'>{'DigitalContent Name'}</Tooltip>,
           dataIndex: 'name',
           key: 'name',
           className: 'colAgreementName',
@@ -457,7 +457,7 @@ class AgreementsTable extends Component {
           sorter: loading ? null : (a, b) => moment(a.date) - moment(b.date)
         },
         this.state.displayedColumns.colTime && {
-          title: <Tooltip text='Agreement Length'>{'Time'}</Tooltip>,
+          title: <Tooltip text='DigitalContent Length'>{'Time'}</Tooltip>,
           dataIndex: 'time',
           key: 'time',
           className: 'colTime',

@@ -12,7 +12,7 @@ describe('parseAgreementRoute', () => {
     expect(handle).toEqual('tartine')
   })
 
-  it('can decode a hashed agreement id route', () => {
+  it('can decode a hashed digital_content id route', () => {
     mockDecode.mockReturnValue([11845])
 
     const route = '/agreements/eP9k7'

@@ -29,7 +29,7 @@ import {
 import { getHandleError, getHandleIsValid } from 'app/store/signon/selectors'
 import { makeStyles } from 'app/styles'
 import { EventNames } from 'app/types/analytics'
-import { agreement, make } from 'app/utils/analytics'
+import { digital_content, make } from 'app/utils/analytics'
 import { getUserRoute } from 'app/utils/routes'
 
 const messages = {
@@ -160,7 +160,7 @@ export const AccountVerificationScreen = () => {
 
       if (type === 'twitter') {
         const { screen_name, verified: is_verified } = profile
-        agreement(
+        digital_content(
           make({
             eventName: EventNames.SETTINGS_COMPLETE_TWITTER_OAUTH,
             screen_name,
@@ -170,7 +170,7 @@ export const AccountVerificationScreen = () => {
         )
       } else {
         const { username, verified: is_verified } = profile
-        agreement(
+        digital_content(
           make({
             eventName: EventNames.SETTINGS_COMPLETE_INSTAGRAM_OAUTH,
             username,
@@ -243,7 +243,7 @@ export const AccountVerificationScreen = () => {
       type: MessageType.REQUEST_TWITTER_AUTH,
       isAction: true
     })
-    agreement(
+    digital_content(
       make({
         eventName: EventNames.SETTINGS_START_TWITTER_OAUTH,
         handle
@@ -259,7 +259,7 @@ export const AccountVerificationScreen = () => {
       type: MessageType.REQUEST_INSTAGRAM_AUTH,
       isAction: true
     })
-    agreement(
+    digital_content(
       make({
         eventName: EventNames.SETTINGS_START_INSTAGRAM_OAUTH,
         handle

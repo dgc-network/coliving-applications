@@ -1,4 +1,4 @@
-import { UID, LineupState, Agreement } from '@coliving/common'
+import { UID, LineupState, DigitalContent } from '@coliving/common'
 
 import { RESET_SUCCEEDED, stripPrefix } from 'common/store/lineup/actions'
 import { initialLineupState } from 'common/store/lineup/reducer'
@@ -10,7 +10,7 @@ import {
   TRENDING_ALL_TIME_PREFIX
 } from './actions'
 
-type TrendingLineupState = LineupState<Agreement>
+type TrendingLineupState = LineupState<DigitalContent>
 
 const initialState: TrendingLineupState = {
   ...initialLineupState,

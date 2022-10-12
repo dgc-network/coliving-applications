@@ -57,7 +57,7 @@ const Menu = forwardRef<HTMLDivElement, MenuProps>((props, ref) => {
         {renderMenu}
       </CollectionMenu>
     )
-  } else if (menu.type === 'agreement') {
+  } else if (menu.type === 'digital_content') {
     return <AgreementMenu {...(menu as AgreementMenuProps)}>{renderMenu}</AgreementMenu>
   } else if (menu.type === 'notification') {
   }
@@ -66,7 +66,7 @@ const Menu = forwardRef<HTMLDivElement, MenuProps>((props, ref) => {
 
 Menu.defaultProps = {
   menu: {
-    type: 'agreement',
+    type: 'digital_content',
     handle: ''
   }
 }

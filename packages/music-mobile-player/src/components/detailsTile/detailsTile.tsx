@@ -150,7 +150,7 @@ const useStyles = makeStyles(({ palette, spacing, typography }) => ({
 }))
 
 /**
- * The details shown at the top of the Agreement Screen and Collection Screen
+ * The details shown at the top of the DigitalContent Screen and Collection Screen
  */
 export const DetailsTile = ({
   coSign,

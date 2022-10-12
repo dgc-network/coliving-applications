@@ -42,7 +42,7 @@ class NavButton extends Component {
             iconClassName={styles.navButtonIcon}
             type={ButtonType.COMMON}
             size={ButtonSize.SMALL}
-            text='Upload Agreement'
+            text='Upload DigitalContent'
             leftIcon={<IconUpload />}
             onClick={onUpload}
           />

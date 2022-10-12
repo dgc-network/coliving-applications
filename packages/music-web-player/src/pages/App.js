@@ -46,7 +46,7 @@ import MobileRoute from 'components/routes/mobileRoute'
 import TrendingGenreSelectionPage from 'components/trendingGenreSelection/trendingGenreSelectionPage'
 import AnnouncementPage from 'pages/announcementPage/annoucementPage'
 import LandlordDashboardPage from 'pages/landlord-dashboard-page/LandlordDashboardPage'
-import LiveRewardsPage from 'pages/live-rewards-page/LiveRewardsPage'
+import LiveRewardsPage from 'pages/digitalcoin-rewards-page/LiveRewardsPage'
 import CheckPage from 'pages/checkPage/checkPage'
 import CollectionPage from 'pages/collectionPage/collectionPage'
 import EmptyPage from 'pages/emptyPage/emptyPage'
@@ -68,7 +68,7 @@ import {
 } from 'pages/signOn/store/actions'
 import { getStatus as getSignOnStatus } from 'pages/signOn/store/selectors'
 import { Pages as SignOnPages } from 'pages/signOn/store/types'
-import AgreementPage from 'pages/agreement-page/AgreementPage'
+import AgreementPage from 'pages/digital-content-page/AgreementPage'
 import TrendingPage from 'pages/trendingPage/trendingPage'
 import TrendingContentListsPage from 'pages/trending-content-lists/TrendingContentListPage'
 import TrendingUndergroundPage from 'pages/trendingUnderground/trendingUndergroundPage'
@@ -580,7 +580,7 @@ class App extends Component {
               {publicSiteRoutes.map((route) => (
                 // Redirect all public site routes to the corresponding pathname.
                 // This is necessary first because otherwise pathnames like
-                // legal/privacy-policy will match the agreement route.
+                // legal/privacy-policy will match the digital_content route.
                 <Redirect
                   key={route}
                   from={route}
@@ -881,7 +881,7 @@ class App extends Component {
               {/*
                 Define profile page sub-routes before profile page itself.
                 The rules for sub-routes would lose in a precedence fight with
-                the rule for agreement page if defined below.
+                the rule for digital_content page if defined below.
                */}
               <Route
                 exact

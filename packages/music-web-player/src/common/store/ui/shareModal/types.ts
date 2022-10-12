@@ -2,22 +2,22 @@ import {
   ID,
   ShareSource,
   Collection,
-  Agreement,
+  DigitalContent,
   User,
   Nullable
 } from '@coliving/common'
 import { PayloadAction } from '@reduxjs/toolkit'
 
 export type ShareType =
-  | 'agreement'
+  | 'digital_content'
   | 'profile'
   | 'album'
   | 'contentList'
   | 'liveNftContentList'
 
 type ShareAgreementContent = {
-  type: 'agreement'
-  agreement: Agreement
+  type: 'digital_content'
+  digital_content: DigitalContent
   landlord: User
 }
 
@@ -56,7 +56,7 @@ export type ShareModalState = {
 }
 
 type RequestOpenPayload = { source: ShareSource } & (
-  | { type: 'agreement'; agreementId: ID }
+  | { type: 'digital_content'; agreementId: ID }
   | { type: 'profile'; profileId: ID }
   | { type: 'collection'; collectionId: ID }
   | { type: 'liveNftContentList'; userId: ID }

@@ -1,4 +1,4 @@
-import { ID, Agreement } from '@coliving/common'
+import { ID, DigitalContent } from '@coliving/common'
 
 import { processAndCacheAgreements } from 'common/store/cache/agreements/utils'
 import apiClient from 'services/colivingAPIClient/colivingAPIClient'
@@ -23,7 +23,7 @@ export function* retrieveUserAgreements({
   offset,
   limit,
   getUnlisted = false
-}: RetrieveUserAgreementsArgs): Generator<any, Agreement[], any> {
+}: RetrieveUserAgreementsArgs): Generator<any, DigitalContent[], any> {
   const apiAgreements = yield apiClient.getUserAgreementsByHandle({
     handle,
     currentUserId,
@@ -33,6 +33,6 @@ export function* retrieveUserAgreements({
     getUnlisted
   })
 
-  const processed: Agreement[] = yield processAndCacheAgreements(apiAgreements)
+  const processed: DigitalContent[] = yield processAndCacheAgreements(apiAgreements)
   return processed
 }

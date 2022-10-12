@@ -24,13 +24,13 @@ const pinAgreementActionMessages = {
   [PinAgreementAction.ADD]: {
     title: 'SET YOUR LANDLORD PICK',
     description:
-      'This agreement will appear at the top of your profile, above your recent uploads, until you change or remove it.',
+      'This digital_content will appear at the top of your profile, above your recent uploads, until you change or remove it.',
     confirm: 'PICK AGREEMENT'
   },
   [PinAgreementAction.UPDATE]: {
     title: 'CHANGE YOUR LANDLORD PICK?',
     description:
-      'This agreement will appear at the top of your profile and replace your previously picked agreement.',
+      'This digital_content will appear at the top of your profile and replace your previously picked digital_content.',
     confirm: 'CHANGE AGREEMENT'
   },
   [PinAgreementAction.REMOVE]: {
@@ -38,7 +38,7 @@ const pinAgreementActionMessages = {
     description: (
       <div className={styles.multiline}>
         <p>{'Are you sure you want to remove your pick?'}</p>
-        <p>{'This agreement will be displayed based on its release date.'}</p>
+        <p>{'This digital_content will be displayed based on its release date.'}</p>
       </div>
     ),
     confirm: 'UNSET AGREEMENT'

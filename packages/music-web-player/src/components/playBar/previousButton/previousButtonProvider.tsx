@@ -11,8 +11,8 @@ import PreviousButton, { PreviousButtonProps } from './previousButton'
 type PreviousButtonProviderProps = PreviousButtonProps | BackwardSkipButtonProps
 
 const PreviousButtonProvider = (props: PreviousButtonProviderProps) => {
-  const { agreement } = useSelector(makeGetCurrent())
-  const isPodcast = agreement && agreement.genre === Genre.PODCASTS
+  const { digital_content } = useSelector(makeGetCurrent())
+  const isPodcast = digital_content && digital_content.genre === Genre.PODCASTS
   return isPodcast ? (
     <BackwardSkipButton {...props} />
   ) : (

@@ -91,7 +91,7 @@ const PlayingAgreementInfo = ({
           isDisabled={!agreementTitle || isAgreementUnlisted}
           text={agreementTitle}
           isOwner={isOwner}
-          kind='agreement'
+          kind='digital_content'
           id={agreementId}
           link={fullAgreementPage(agreementPermalink)}
         >

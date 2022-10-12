@@ -43,7 +43,7 @@ const ExplorePage = ({
 
   const formatContentListCardSecondaryText = (saves: number, agreements: number) => {
     const savesText = saves === 1 ? 'Favorite' : 'Favorites'
-    const agreementsText = agreements === 1 ? 'Agreement' : 'Agreements'
+    const agreementsText = agreements === 1 ? 'DigitalContent' : 'Agreements'
     return `${formatCount(saves)} ${savesText} • ${agreements} ${agreementsText}`
   }
 

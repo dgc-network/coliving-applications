@@ -52,10 +52,10 @@ export const RemixCosignNotification = (
 
   const dispatch = useDispatch()
 
-  const childAgreement = agreements?.find((agreement) => agreement.agreement_id === childAgreementId)
+  const childAgreement = agreements?.find((digital_content) => digital_content.digital_content_id === childAgreementId)
 
   const parentAgreement = agreements?.find(
-    (agreement) => agreement.owner_id === parentAgreementUserId
+    (digital_content) => digital_content.owner_id === parentAgreementUserId
   )
   const parentAgreementTitle = parentAgreement?.title
 
@@ -92,7 +92,7 @@ export const RemixCosignNotification = (
         <EntityLink entity={parentAgreement} entityType={entityType} />
       </NotificationBody>
       <div>
-        <AgreementContent agreement={childAgreement} />
+        <AgreementContent digital_content={childAgreement} />
       </div>
       <TwitterShareButton
         type='dynamic'

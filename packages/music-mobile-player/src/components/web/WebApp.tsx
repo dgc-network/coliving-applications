@@ -22,7 +22,7 @@ import useKeyboardListeners from 'app/hooks/useKeyboardListeners'
 import type { Message } from 'app/message'
 import { MessageType, handleMessage } from 'app/message'
 import type { AppState } from 'app/store'
-import { getAgreement, getIndex } from 'app/store/live/selectors'
+import { getAgreement, getIndex } from 'app/store/digitalcoin/selectors'
 import {
   getDappLoaded,
   getIsOnFirstPage,

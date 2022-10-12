@@ -6,12 +6,12 @@ import { getOptimisticUserChallenges } from '@coliving/web/src/common/store/chal
 import {
   getUserChallenges,
   getUserChallengesLoading
-} from '@coliving/web/src/common/store/pages/live-rewards/selectors'
-import type { ChallengeRewardsModalType } from '@coliving/web/src/common/store/pages/live-rewards/slice'
+} from '@coliving/web/src/common/store/pages/digitalcoin-rewards/selectors'
+import type { ChallengeRewardsModalType } from '@coliving/web/src/common/store/pages/digitalcoin-rewards/slice'
 import {
   fetchUserChallenges,
   setChallengeRewardsModalType
-} from '@coliving/web/src/common/store/pages/live-rewards/slice'
+} from '@coliving/web/src/common/store/pages/digitalcoin-rewards/slice'
 import { setVisibility } from '@coliving/web/src/common/store/ui/modals/slice'
 import { View } from 'react-native'
 
@@ -25,7 +25,7 @@ import { challengesConfig } from 'app/utils/challenges'
 import { Panel } from './panel'
 
 const validRewardIds: Set<ChallengeRewardID> = new Set([
-  'agreement-upload',
+  'digital-content-upload',
   'referrals',
   'ref-v',
   'mobile-install',

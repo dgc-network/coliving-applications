@@ -21,8 +21,8 @@ import CardLineup from 'components/lineup/cardLineup'
 import LoadingSpinner from 'components/loadingSpinner/loadingSpinner'
 import MobilePageContainer from 'components/mobilePageContainer/mobilePageContainer'
 import { useMainPageHeader } from 'components/nav/store/context'
-import AgreementList from 'components/agreement/mobile/agreementList'
-import { AgreementItemAction } from 'components/agreement/mobile/agreementListItem'
+import AgreementList from 'components/digital_content/mobile/agreementList'
+import { AgreementItemAction } from 'components/digital_content/mobile/agreementListItem'
 import useTabs from 'hooks/useTabs/useTabs'
 import { make, useRecord } from 'store/analytics/actions'
 import { albumPage, TRENDING_PAGE, contentListPage } from 'utils/route'
@@ -111,7 +111,7 @@ const AgreementsLineup = ({
     landlordName: entry.user.name,
     landlordHandle: entry.user.handle,
     agreementTitle: entry.title,
-    agreementId: entry.agreement_id,
+    agreementId: entry.digital_content_id,
     uid: entry.uid,
     isDeleted: entry.is_delete || !!entry.user.is_deactivated
   }))
@@ -188,7 +188,7 @@ const AlbumCardLineup = ({
         primaryText={album.content_list_name}
         secondaryText={formatCardSecondaryText(
           album.save_count,
-          album.content_list_contents.agreement_ids.length
+          album.content_list_contents.digital_content_ids.length
         )}
         onClick={() =>
           goToRoute(
@@ -276,7 +276,7 @@ const ContentListCardLineup = ({
         primaryText={contentList.content_list_name}
         secondaryText={formatCardSecondaryText(
           contentList.save_count,
-          contentList.content_list_contents.agreement_ids.length
+          contentList.content_list_contents.digital_content_ids.length
         )}
         onClick={() => {
           goToRoute(

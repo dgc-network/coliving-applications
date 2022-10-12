@@ -62,13 +62,13 @@ export const TRENDING_CONTENT_LISTS_PAGE = '/explore/contentLists'
 export const TRENDING_UNDERGROUND_PAGE = '/explore/underground'
 export const EXPLORE_REMIXABLES_PAGE = '/explore/remixables'
 
-export const LIVE_NFT_CONTENT_LIST_PAGE = '/:handle/live-nft-content-list'
+export const LIVE_NFT_CONTENT_LIST_PAGE = '/:handle/digitalcoin-nft-content-list'
 
 export const SAVED_PAGE = '/favorites'
 export const FAVORITES_PAGE = '/favorites'
 export const HISTORY_PAGE = '/history'
 export const DASHBOARD_PAGE = '/dashboard'
-export const LIVE_PAGE = '/live'
+export const LIVE_PAGE = '/digitalcoin'
 export const UPLOAD_PAGE = '/upload'
 export const UPLOAD_ALBUM_PAGE = '/upload/album'
 export const UPLOAD_CONTENT_LIST_PAGE = '/upload/contentList'
@@ -284,7 +284,7 @@ export const fullContentListPage = (handle: string, title: string, id: ID) => {
 }
 
 export const liveNftContentListPage = (handle: string) => {
-  return `/${encodeUrlName(handle)}/live-nft-content-list`
+  return `/${encodeUrlName(handle)}/digitalcoin-nft-content-list`
 }
 export const fullAudioNftContentListPage = (handle: string) => {
   return `${BASE_URL}${liveNftContentListPage(handle)}`
@@ -369,7 +369,7 @@ export const doesRenderPage = (pageRoute: string) => {
 
 export const recordGoToSignup = (callback: () => void) => {
   if ((window as any).analytics) {
-    ;(window as any).analytics.agreement(
+    ;(window as any).analytics.digital_content(
       'Create Account: Open',
       { source: 'landing page' },
       null,

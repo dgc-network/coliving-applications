@@ -5,7 +5,7 @@ export const computeCollectionMetadataProps = (
 ) => {
   const agreementCount =
     metadata && metadata.content_list_contents
-      ? metadata.content_list_contents.agreement_ids.length
+      ? metadata.content_list_contents.digital_content_ids.length
       : 0
   const isEmpty = metadata && agreementCount === 0
   const lastModified =

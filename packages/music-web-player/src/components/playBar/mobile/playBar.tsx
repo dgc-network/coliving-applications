@@ -40,7 +40,7 @@ import styles from './PlayBar.module.css'
 const SEEK_INTERVAL = 200
 
 type OwnProps = {
-  live: AudioState
+  digitalcoin: AudioState
   onClickInfo: () => void
 }
 
@@ -50,7 +50,7 @@ type PlayBarProps = OwnProps &
 
 const PlayBar = ({
   currentQueueItem,
-  live,
+  digitalcoin,
   isPlaying,
   isBuffering,
   play,
@@ -59,15 +59,15 @@ const PlayBar = ({
   unsave,
   onClickInfo
 }: PlayBarProps) => {
-  const { uid, agreement, user, collectible } = currentQueueItem
+  const { uid, digital_content, user, collectible } = currentQueueItem
 
   const [percentComplete, setPercentComplete] = useState(0)
   const record = useRecord()
 
   useEffect(() => {
     const seekInterval = setInterval(async () => {
-      const duration = await live?.getDuration()
-      const pos = await live?.getPosition()
+      const duration = await digitalcoin?.getDuration()
+      const pos = await digitalcoin?.getPosition()
       if (duration === undefined || pos === undefined) return
 
       const position = Math.min(pos, duration)
@@ -79,29 +79,29 @@ const PlayBar = ({
 
   const image =
     (useAgreementCoverArt(
-      agreement ? agreement.agreement_id : null,
-      agreement ? agreement._cover_art_sizes : null,
+      digital_content ? digital_content.digital_content_id : null,
+      digital_content ? digital_content._cover_art_sizes : null,
       SquareSizes.SIZE_150_BY_150
     ) ||
       collectible?.imageUrl) ??
     collectible?.frameUrl ??
     collectible?.gifUrl
 
-  if (!live || ((!uid || !agreement) && !collectible) || !user) return null
+  if (!digitalcoin || ((!uid || !digital_content) && !collectible) || !user) return null
 
   const getDisplayInfo = () => {
-    if (agreement && !collectible) {
-      return agreement
+    if (digital_content && !collectible) {
+      return digital_content
     }
     return {
       title: collectible?.name,
-      agreement_id: collectible?.id,
+      digital_content_id: collectible?.id,
       has_current_user_saved: false,
       _co_sign: null
     }
   }
 
-  const { title, agreement_id, has_current_user_saved, _co_sign } = getDisplayInfo()
+  const { title, digital_content_id, has_current_user_saved, _co_sign } = getDisplayInfo()
 
   const { name } = user
 
@@ -119,7 +119,7 @@ const PlayBar = ({
       pause()
       record(
         make(Name.PLAYBACK_PAUSE, {
-          id: `${agreement_id}`,
+          id: `${digital_content_id}`,
           source: PlaybackSource.PLAYBAR
         })
       )
@@ -127,7 +127,7 @@ const PlayBar = ({
       play()
       record(
         make(Name.PLAYBACK_PLAY, {
-          id: `${agreement_id}`,
+          id: `${digital_content_id}`,
           source: PlaybackSource.PLAYBAR
         })
       )
@@ -135,8 +135,8 @@ const PlayBar = ({
   }
 
   const toggleFavorite = () => {
-    if (agreement && agreement_id && typeof agreement_id === 'number') {
-      has_current_user_saved ? unsave(agreement_id) : save(agreement_id)
+    if (digital_content && digital_content_id && typeof digital_content_id === 'number') {
+      has_current_user_saved ? unsave(digital_content_id) : save(digital_content_id)
     }
   }
 
@@ -200,7 +200,7 @@ function makeMapStateToProps() {
   const mapStateToProps = (state: AppState) => ({
     currentQueueItem: getCurrentQueueItem(state),
     playCounter: getCounter(state),
-    live: getAudio(state),
+    digitalcoin: getAudio(state),
     isPlaying: getPlaying(state),
     isBuffering: getBuffering(state)
   })

@@ -35,9 +35,9 @@ export const challenges = {
   // Listen Streak
   listenStreakTitle: 'Listening Streak: 7 Days',
   listenStreakDescription:
-    'Sign in and listen to at least one agreement every day for 7 days',
+    'Sign in and listen to at least one digital_content every day for 7 days',
   listenStreakShortDescription:
-    'Listen to one agreement a day for seven days to earn 1 $LIVE',
+    'Listen to one digital_content a day for seven days to earn 1 $LIVE',
   listenStreakButton: 'Trending Agreements',
   listenStreakProgressLabel: '%0/%1 Days',
 
@@ -81,7 +81,7 @@ export const challenges = {
   referredShortDescription: 'You earned $LIVE for being invited',
   referredProgressLabel: '%0/%1 Invites',
 
-  // Agreement Upload
+  // DigitalContent Upload
   agreementUploadTitle: 'Upload 3 Agreements',
   agreementUploadDescription: 'Upload 3 agreements to your profile',
   agreementUploadShortDescription: 'Upload 3 agreements to your profile',
@@ -98,9 +98,9 @@ export const challenges = {
   sendFirstTipButton: 'Find Someone To Tip',
 
   firstContentListTitle: 'Create Your First ContentList',
-  firstContentListDescription: 'Create your first contentList & add a agreement to it',
+  firstContentListDescription: 'Create your first contentList & add a digital_content to it',
   firstContentListShortDescription:
-    'Create your first contentList & add a agreement to it',
+    'Create your first contentList & add a digital_content to it',
   firstContentListProgressLabel: 'Not Earned',
   firstContentListButton: 'Create Your First ContentList'
 }
@@ -215,7 +215,7 @@ export const challengesConfig: Record<ChallengeRewardID, ChallengeConfig> = {
     shortDescription: challenges.referredShortDescription,
     progressLabel: challenges.referredProgressLabel
   },
-  'agreement-upload': {
+  'digital-content-upload': {
     icon: MultipleMusicalNotes,
     title: challenges.agreementUploadTitle,
     description: challenges.agreementUploadDescription,
@@ -269,7 +269,7 @@ export const trendingRewardsConfig: Record<TrendingRewardID, ChallengeConfig> =
         iconPosition: 'right'
       }
     },
-    'trending-agreement': {
+    'trending-digital-content': {
       title: 'Top 5 Trending Agreements',
       icon: ChartIncreasing,
       description: 'Winners are selected every Friday at Noon PT!',
@@ -293,7 +293,7 @@ export const trendingRewardsConfig: Record<TrendingRewardID, ChallengeConfig> =
       title: 'First Upload With Your Verified Account',
       icon: ChartIncreasing,
       description:
-        'Verified on Twitter/Instagram? Upload your first agreement, post it on social media, & tag us',
+        'Verified on Twitter/Instagram? Upload your first digital_content, post it on social media, & tag us',
       buttonInfo: {
         label: 'See More',
         renderIcon: (color) => <IconCheck fill={color} />,

@@ -71,29 +71,29 @@ export function* getToQueue(prefix: string, entry: { kind: Kind; uid: UID }) {
     if (!collection) return
 
     const {
-      content_list_contents: { agreement_ids: agreementIds }
+      content_list_contents: { digital_content_ids: agreementIds }
     } = collection
-    // Replace the agreement uid source w/ the full source including collection source
-    // Replace the agreement count w/ it's index in the array
+    // Replace the digital_content uid source w/ the full source including collection source
+    // Replace the digital_content count w/ it's index in the array
     const collectionUid = Uid.fromString(entry.uid)
     const collectionSource = collectionUid.source
 
-    return agreementIds.map(({ agreement, uid }, idx: number) => {
+    return agreementIds.map(({ digital_content, uid }, idx: number) => {
       const agreementUid = Uid.fromString(uid ?? '')
       agreementUid.source = `${collectionSource}:${agreementUid.source}`
       agreementUid.count = idx
 
       return {
-        id: agreement,
+        id: digital_content,
         uid: agreementUid.toString(),
         source: prefix
       }
     })
   } else if (entry.kind === Kind.AGREEMENTS) {
-    const agreement = yield* select(getAgreement, { uid: entry.uid })
-    if (!agreement) return {}
+    const digital_content = yield* select(getAgreement, { uid: entry.uid })
+    if (!digital_content) return {}
     return {
-      id: agreement.agreement_id,
+      id: digital_content.digital_content_id,
       uid: entry.uid,
       source: prefix
     }
@@ -106,11 +106,11 @@ const flatten = (list: any[]): any[] =>
 function* handleQueueAutoplay({
   skip,
   ignoreSkip,
-  agreement
+  digital_content
 }: {
   skip: boolean
   ignoreSkip: boolean
-  agreement: any
+  digital_content: any
 }) {
   const isQueueAutoplayEnabled = yield* select(getQueueAutoplay)
   const index = yield* select(getIndex)
@@ -138,8 +138,8 @@ function* handleQueueAutoplay({
     const userId = yield* select(getUserId)
     yield* put(
       queueAutoplay({
-        genre: agreement?.genre,
-        exclusionList: agreement ? [agreement.agreement_id] : [],
+        genre: digital_content?.genre,
+        exclusionList: digital_content ? [digital_content.digital_content_id] : [],
         currentUserId: userId
       })
     )
@@ -174,7 +174,7 @@ export function* watchPlay() {
       yield* call(handleQueueAutoplay, {
         skip: false,
         ignoreSkip: true,
-        agreement: playActionAgreement
+        digital_content: playActionAgreement
       })
 
       const user: User | null = playActionAgreement
@@ -194,11 +194,11 @@ export function* watchPlay() {
       // Make sure that we should actually play
       const repeatMode = yield* select(getRepeat)
       const noAgreementPlaying = !playerAgreementId
-      const agreementIsDifferent = playerAgreementId !== playActionAgreement.agreement_id
+      const agreementIsDifferent = playerAgreementId !== playActionAgreement.digital_content_id
       const agreementIsSameButDifferentUid =
-        playerAgreementId === playActionAgreement.agreement_id && uid !== playerUid
+        playerAgreementId === playActionAgreement.digital_content_id && uid !== playerUid
       const agreementIsSameAndRepeatSingle =
-        playerAgreementId === playActionAgreement.agreement_id &&
+        playerAgreementId === playActionAgreement.digital_content_id &&
         repeatMode === RepeatMode.SINGLE
       if (
         noAgreementPlaying ||
@@ -210,7 +210,7 @@ export function* watchPlay() {
         yield* put(
           playerActions.play({
             uid,
-            agreementId: playActionAgreement.agreement_id,
+            agreementId: playActionAgreement.digital_content_id,
             onEnd: next
           })
         )
@@ -253,7 +253,7 @@ export function* watchPlay() {
           yield* put(
             play({
               uid: flattenedQueue[0].uid,
-              agreementId: playAgreement.agreement_id,
+              agreementId: playAgreement.digital_content_id,
               source: lineup.prefix
             })
           )
@@ -292,7 +292,7 @@ export function* watchNext() {
       return
     }
 
-    // For the live nft contentList flow
+    // For the digitalcoin nft contentList flow
     const collectible = yield* select(getCollectible)
     if (collectible) {
       const event = make(Name.PLAYBACK_PLAY, {
@@ -309,10 +309,10 @@ export function* watchNext() {
     }
 
     const id = (yield* select(getQueueAgreementId)) as ID
-    const agreement = yield* select(getAgreement, { id })
-    const user = yield* select(getUser, { id: agreement?.owner_id })
-    // Skip deleted or owner deactivated agreement
-    if (agreement && (agreement.is_delete || user?.is_deactivated)) {
+    const digital_content = yield* select(getAgreement, { id })
+    const user = yield* select(getUser, { id: digital_content?.owner_id })
+    // Skip deleted or owner deactivated digital_content
+    if (digital_content && (digital_content.is_delete || user?.is_deactivated)) {
       yield* put(next({ skip }))
     } else {
       const uid = yield* select(getUid)
@@ -321,10 +321,10 @@ export function* watchNext() {
       yield* call(handleQueueAutoplay, {
         skip: !!skip,
         ignoreSkip: false,
-        agreement
+        digital_content
       })
 
-      if (agreement) {
+      if (digital_content) {
         yield* put(play({ uid, agreementId: id, source }))
 
         const event = make(Name.PLAYBACK_PLAY, {
@@ -350,9 +350,9 @@ export function* watchQueueAutoplay() {
         exclusionList,
         currentUserId
       )
-      const recommendedAgreements = agreements.map(({ agreement_id }) => ({
-        id: agreement_id,
-        uid: makeUid(Kind.AGREEMENTS, agreement_id),
+      const recommendedAgreements = agreements.map(({ digital_content_id }) => ({
+        id: digital_content_id,
+        uid: makeUid(Kind.AGREEMENTS, digital_content_id),
         source: Source.RECOMMENDED_AGREEMENTS
       }))
       yield* put(add({ entries: recommendedAgreements }))
@@ -371,7 +371,7 @@ export function* watchPrevious() {
         return
       }
 
-      // For the live nft contentList flow
+      // For the digitalcoin nft contentList flow
       const collectible = yield* select(getCollectible)
       if (collectible) {
         const event = make(Name.PLAYBACK_PLAY, {
@@ -389,13 +389,13 @@ export function* watchPrevious() {
 
       const uid = yield* select(getUid)
       const id = (yield* select(getQueueAgreementId)) as Nullable<ID>
-      const agreement = yield* select(getAgreement, { id })
+      const digital_content = yield* select(getAgreement, { id })
       const source = yield* select(getSource)
-      const user = yield* select(getUser, { id: agreement?.owner_id })
+      const user = yield* select(getUser, { id: digital_content?.owner_id })
 
       // If we move to a previous song that's been
       // deleted, skip over it.
-      if (agreement && (agreement.is_delete || user?.is_deactivated)) {
+      if (digital_content && (digital_content.is_delete || user?.is_deactivated)) {
         yield* put(previous({}))
       } else {
         const index = yield* select(getIndex)

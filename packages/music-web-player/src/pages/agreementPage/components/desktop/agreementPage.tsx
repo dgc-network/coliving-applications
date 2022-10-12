@@ -1,7 +1,7 @@
-import { ID, CID, LineupState, Agreement, User } from '@coliving/common'
+import { ID, CID, LineupState, DigitalContent, User } from '@coliving/common'
 import cn from 'classnames'
 
-import { agreementsActions } from 'common/store/pages/agreement/lineup/actions'
+import { agreementsActions } from 'common/store/pages/digital_content/lineup/actions'
 import { QueueItem } from 'common/store/queue/types'
 import CoverPhoto from 'components/coverPhoto/coverPhoto'
 import Lineup from 'components/lineup/lineup'
@@ -10,8 +10,8 @@ import NavBanner from 'components/navBanner/navBanner'
 import Page from 'components/page/page'
 import SectionButton from 'components/sectionButton/sectionButton'
 import StatBanner from 'components/statBanner/statBanner'
-import GiantAgreementTile from 'components/agreement/giantAgreementTile'
-import { AgreementTileSize } from 'components/agreement/types'
+import GiantAgreementTile from 'components/digital_content/giantAgreementTile'
+import { AgreementTileSize } from 'components/digital_content/types'
 import { getAgreementDefaults, emptyStringGuard } from 'pages/agreementPage/utils'
 
 import Remixes from './remixes'
@@ -19,7 +19,7 @@ import styles from './AgreementPage.module.css'
 
 const messages = {
   moreBy: 'More By',
-  originalAgreement: 'Original Agreement',
+  originalAgreement: 'Original DigitalContent',
   viewOtherRemixes: 'View Other Remixes'
 }
 
@@ -27,8 +27,8 @@ export type OwnProps = {
   title: string
   description: string
   canonicalUrl: string
-  // Hero Agreement Props
-  heroAgreement: Agreement | null
+  // Hero DigitalContent Props
+  heroAgreement: DigitalContent | null
   hasValidRemixParent: boolean
   user: User | null
   heroPlaying: boolean
@@ -70,7 +70,7 @@ const AgreementPage = ({
   description,
   canonicalUrl,
   hasValidRemixParent,
-  // Hero Agreement Props
+  // Hero DigitalContent Props
   heroAgreement,
   user,
   heroPlaying,
@@ -110,12 +110,12 @@ const AgreementPage = ({
   const onPlay = () => onHeroPlay(heroPlaying)
   const onSave = isOwner
     ? () => {}
-    : () => heroAgreement && onSaveAgreement(isSaved, heroAgreement.agreement_id)
+    : () => heroAgreement && onSaveAgreement(isSaved, heroAgreement.digital_content_id)
   const onClickLandlordName = () =>
     goToProfilePage(emptyStringGuard(user?.handle))
-  const onShare = () => (heroAgreement ? onHeroShare(heroAgreement.agreement_id) : null)
+  const onShare = () => (heroAgreement ? onHeroShare(heroAgreement.digital_content_id) : null)
   const onRepost = () =>
-    heroAgreement ? onHeroRepost(isReposted, heroAgreement.agreement_id) : null
+    heroAgreement ? onHeroRepost(isReposted, heroAgreement.digital_content_id) : null
   const onClickTag = (tag: string) => goToSearchResultsPage(`#${tag}`)
   const onDownload = (
     agreementId: ID,
@@ -161,7 +161,7 @@ const AgreementPage = ({
       isOwner={isOwner}
       currentUserId={userId}
       isLandlordPick={
-        heroAgreement && user ? user._landlord_pick === heroAgreement.agreement_id : false
+        heroAgreement && user ? user._landlord_pick === heroAgreement.digital_content_id : false
       }
       isSaved={isSaved}
       badge={badge}
@@ -236,7 +236,7 @@ const AgreementPage = ({
         {hasValidRemixParent ? renderOriginalAgreementTitle() : renderMoreByTitle()}
         <Lineup
           lineup={agreements}
-          // Styles for leading element (original agreement if remix).
+          // Styles for leading element (original digital_content if remix).
           leadingElementId={defaults.remixParentAgreementId}
           leadingElementDelineator={
             <div className={styles.originalAgreementDelineator}>
@@ -253,7 +253,7 @@ const AgreementPage = ({
           showLeadingElementLandlordPick={false}
           applyLeadingElementStylesToSkeleton
           // Don't render the first tile in the lineup since it's actually the "giant"
-          // agreement tile this page is about.
+          // digital_content tile this page is about.
           start={1}
           // Show max 5 loading tiles
           count={6}
@@ -263,7 +263,7 @@ const AgreementPage = ({
           playingUid={currentQueueItem.uid}
           playingSource={currentQueueItem.source}
           playingAgreementId={
-            currentQueueItem.agreement && currentQueueItem.agreement.agreement_id
+            currentQueueItem.digital_content && currentQueueItem.digital_content.digital_content_id
           }
           playing={isPlaying}
           buffering={isBuffering}

@@ -1,4 +1,4 @@
-import { Kind, Agreement, AgreementMetadata, makeUid } from '@coliving/common'
+import { Kind, DigitalContent, AgreementMetadata, makeUid } from '@coliving/common'
 import { put, call } from 'redux-saga/effects'
 
 import * as cacheActions from 'common/store/cache/actions'
@@ -14,7 +14,7 @@ import { reformat } from './reformat'
  */
 export function* processAndCacheAgreements<T extends AgreementMetadata>(
   agreements: T[]
-): Generator<any, Agreement[], any> {
+): Generator<any, DigitalContent[], any> {
   // Add users
   yield addUsersFromAgreements(agreements)
 
@@ -28,8 +28,8 @@ export function* processAndCacheAgreements<T extends AgreementMetadata>(
     cacheActions.add(
       Kind.AGREEMENTS,
       reformattedAgreements.map((t) => ({
-        id: t.agreement_id,
-        uid: makeUid(Kind.AGREEMENTS, t.agreement_id),
+        id: t.digital_content_id,
+        uid: makeUid(Kind.AGREEMENTS, t.digital_content_id),
         metadata: t
       })),
       false,

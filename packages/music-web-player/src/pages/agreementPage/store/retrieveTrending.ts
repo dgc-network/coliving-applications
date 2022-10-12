@@ -1,7 +1,7 @@
 import {
   ID,
   TimeRange,
-  Agreement,
+  DigitalContent,
   UserAgreementMetadata,
   Nullable,
   StringKeys
@@ -35,7 +35,7 @@ export function* retrieveTrending({
   offset,
   limit,
   currentUserId
-}: RetrieveTrendingArgs): Generator<any, Agreement[], any> {
+}: RetrieveTrendingArgs): Generator<any, DigitalContent[], any> {
   yield call(remoteConfigInstance.waitForRemoteConfig)
   const TF = new Set(
     remoteConfigInstance.getRemoteVar(StringKeys.TF)?.split(',') ?? []
@@ -67,7 +67,7 @@ export function* retrieveTrending({
   })
   if (TF.size > 0) {
     apiAgreements = apiAgreements.filter((t) => {
-      const shaId = window.Web3.utils.sha3(t.agreement_id.toString())
+      const shaId = window.Web3.utils.sha3(t.digital_content_id.toString())
       return !TF.has(shaId)
     })
   }
@@ -77,6 +77,6 @@ export function* retrieveTrending({
   // If we changed genres, do nothing
   if (currentGenre !== genre) return []
 
-  const processed: Agreement[] = yield processAndCacheAgreements(apiAgreements)
+  const processed: DigitalContent[] = yield processAndCacheAgreements(apiAgreements)
   return processed
 }

@@ -31,7 +31,7 @@ import {
 import type { FollowLandlordsCategory } from 'app/store/signon/types'
 import { landlordCategories } from 'app/store/signon/types'
 import { EventNames } from 'app/types/analytics'
-import { agreement, make } from 'app/utils/analytics'
+import { digital_content, make } from 'app/utils/analytics'
 
 import UserImage from '../../components/image/userImage'
 import UserBadges from '../../components/userBadges/userBadges'
@@ -498,7 +498,7 @@ const FirstFollows = ({ navigation, route }: FirstFollowsProps) => {
       isAction: true
     })
 
-    agreement(
+    digital_content(
       make({
         eventName: EventNames.CREATE_ACCOUNT_COMPLETE_FOLLOW,
         emailAddress: email,

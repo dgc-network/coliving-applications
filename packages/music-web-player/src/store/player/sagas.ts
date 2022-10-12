@@ -54,18 +54,18 @@ const RECORD_LISTEN_INTERVAL = 1000
 function* setAudioStream() {
   if (!NATIVE_MOBILE) {
     const chan = eventChannel<TAudioStream>((emitter) => {
-      import('live/AudioStream').then((AudioStream) => {
+      import('digitalcoin/AudioStream').then((AudioStream) => {
         emitter(AudioStream.default)
         emitter(END)
       })
       return () => {}
     })
     const AudioStream = yield* take(chan)
-    yield* put(setAudioStreamAction({ live: new AudioStream() }))
+    yield* put(setAudioStreamAction({ digitalcoin: new AudioStream() }))
   }
 }
 
-// Set of agreement ids that should be forceably streamed as mp3 rather than hls because
+// Set of digital_content ids that should be forceably streamed as mp3 rather than hls because
 // their hls maybe corrupt.
 let FORCE_MP3_STREAM_AGREEMENT_IDS: Set<string> | null = null
 
@@ -83,15 +83,15 @@ export function* watchPlay() {
       )
     }
 
-    const live: NonNullable<AudioState> = yield* call(waitForValue, getAudio)
+    const digitalcoin: NonNullable<AudioState> = yield* call(waitForValue, getAudio)
 
     if (agreementId) {
       // Load and set end action.
-      const agreement = yield* select(getAgreement, { id: agreementId })
-      if (!agreement) return
+      const digital_content = yield* select(getAgreement, { id: agreementId })
+      if (!digital_content) return
 
       const owner = yield* select(getUser, {
-        id: agreement.owner_id
+        id: digital_content.owner_id
       })
 
       const gateways = owner
@@ -105,19 +105,19 @@ export function* watchPlay() {
         : null
 
       const endChannel = eventChannel((emitter) => {
-        live.load(
-          agreement.agreement_segments,
+        digitalcoin.load(
+          digital_content.digital_content_segments,
           () => {
             if (onEnd) {
               emitter(onEnd({}))
             }
           },
           // @ts-ignore a few issues with typing here...
-          [agreement._first_segment],
+          [digital_content._first_segment],
           gateways,
           {
             id: encodedAgreementId,
-            title: agreement.title,
+            title: digital_content.title,
             landlord: owner?.name
           },
           forceStreamMp3Url
@@ -132,7 +132,7 @@ export function* watchPlay() {
       )
     }
     // Play.
-    live.play()
+    digitalcoin.play()
     yield* put(playSucceeded({ uid, agreementId }))
   })
 }
@@ -142,9 +142,9 @@ export function* watchCollectiblePlay() {
     playCollectible.type,
     function* (action: ReturnType<typeof playCollectible>) {
       const { collectible, onEnd } = action.payload
-      const live: NonNullable<AudioState> = yield* call(waitForValue, getAudio)
+      const digitalcoin: NonNullable<AudioState> = yield* call(waitForValue, getAudio)
       const endChannel = eventChannel((emitter) => {
-        live.load(
+        digitalcoin.load(
           [],
           () => {
             if (onEnd) {
@@ -170,7 +170,7 @@ export function* watchCollectiblePlay() {
       })
       yield* spawn(actionChannelDispatcher, endChannel)
 
-      live.play()
+      digitalcoin.play()
       yield* put(playCollectibleSucceeded({ collectible }))
     }
   )
@@ -180,9 +180,9 @@ export function* watchPause() {
   yield* takeLatest(pause.type, function* (action: ReturnType<typeof pause>) {
     const { onlySetState } = action.payload
 
-    const live: NonNullable<AudioState> = yield* call(waitForValue, getAudio)
+    const digitalcoin: NonNullable<AudioState> = yield* call(waitForValue, getAudio)
     if (onlySetState) return
-    live.pause()
+    digitalcoin.pause()
   })
 }
 
@@ -190,11 +190,11 @@ export function* watchReset() {
   yield* takeLatest(reset.type, function* (action: ReturnType<typeof reset>) {
     const { shouldAutoplay } = action.payload
 
-    const live: NonNullable<AudioState> = yield* call(waitForValue, getAudio)
+    const digitalcoin: NonNullable<AudioState> = yield* call(waitForValue, getAudio)
 
-    live.seek(0)
+    digitalcoin.seek(0)
     if (!shouldAutoplay) {
-      live.pause()
+      digitalcoin.pause()
     } else {
       const playerUid = yield* select(getUid)
       const playerAgreementId = yield* select(getAgreementId)
@@ -220,8 +220,8 @@ export function* watchStop() {
         { uid: PLAYER_SUBSCRIBER_NAME, id }
       ])
     )
-    const live: NonNullable<AudioState> = yield* call(waitForValue, getAudio)
-    live.stop()
+    const digitalcoin: NonNullable<AudioState> = yield* call(waitForValue, getAudio)
+    digitalcoin.stop()
   })
 }
 
@@ -229,14 +229,14 @@ export function* watchSeek() {
   yield* takeLatest(seek.type, function* (action: ReturnType<typeof seek>) {
     const { seconds } = action.payload
 
-    const live: NonNullable<AudioState> = yield* call(waitForValue, getAudio)
-    live.seek(seconds)
+    const digitalcoin: NonNullable<AudioState> = yield* call(waitForValue, getAudio)
+    digitalcoin.seek(seconds)
   })
 }
 
-// NOTE: Event listeners are attached to the live object b/c the live can be manipulated
+// NOTE: Event listeners are attached to the digitalcoin object b/c the digitalcoin can be manipulated
 // directly by the browser & not via the ui or hot keys. If the event listener is triggered
-// and the playing field does not match live, then dispatch an action to update the store.
+// and the playing field does not match digitalcoin, then dispatch an action to update the store.
 const AudioEvents = Object.freeze({
   PLAY: 'play',
   PAUSE: 'pause'
@@ -244,7 +244,7 @@ const AudioEvents = Object.freeze({
 
 export function* setAudioListeners() {
   const liveStream = yield* call(waitForValue, getAudio)
-  const chan = yield* call(watchAudio, liveStream.live)
+  const chan = yield* call(watchAudio, liveStream.digitalcoin)
   while (true) {
     const liveEvent = yield* take(chan)
     const playing = yield* select(getPlaying)
@@ -268,7 +268,7 @@ export function* handleAudioBuffering() {
 }
 
 export function* handleAudioErrors() {
-  // Watch for live errors and emit an error saga dispatching action
+  // Watch for digitalcoin errors and emit an error saga dispatching action
   const liveStream = yield* call(waitForValue, getAudio)
 
   const chan = eventChannel<{ error: string; data: string }>((emitter) => {
@@ -287,42 +287,42 @@ export function* handleAudioErrors() {
   }
 }
 
-function watchAudio(live: HTMLAudioElement) {
+function watchAudio(digitalcoin: HTMLAudioElement) {
   return eventChannel((emitter) => {
     const emitPlay = () => emitter(AudioEvents.PLAY)
     const emitPause = () => {
-      if (!live.ended) {
+      if (!digitalcoin.ended) {
         emitter(AudioEvents.PAUSE)
       }
     }
 
-    if (live) {
-      live.addEventListener(AudioEvents.PLAY, emitPlay)
-      live.addEventListener(AudioEvents.PAUSE, emitPause)
+    if (digitalcoin) {
+      digitalcoin.addEventListener(AudioEvents.PLAY, emitPlay)
+      digitalcoin.addEventListener(AudioEvents.PAUSE, emitPause)
     }
 
     return () => {
-      if (live) {
-        live.removeEventListener(AudioEvents.PLAY, emitPlay)
-        live.removeEventListener(AudioEvents.PAUSE, emitPause)
+      if (digitalcoin) {
+        digitalcoin.removeEventListener(AudioEvents.PLAY, emitPlay)
+        digitalcoin.removeEventListener(AudioEvents.PAUSE, emitPause)
       }
     }
   })
 }
 
 /**
- * Poll for whether a agreement has been listened to.
+ * Poll for whether a digital_content has been listened to.
  */
 function* recordListenWorker() {
   // Store the last seen play counter to make sure we only record
-  // a listen for each "unique" agreement play. Using an id here wouldn't
+  // a listen for each "unique" digital_content play. Using an id here wouldn't
   // be enough because the user might have "repeat single" mode turned on.
   let lastSeenPlayCounter = null
   while (true) {
     const agreementId = yield* select(getAgreementId)
     const playCounter = yield* select(getCounter)
-    const live = yield* call(waitForValue, getAudio)
-    const position = live.getPosition()
+    const digitalcoin = yield* call(waitForValue, getAudio)
+    const position = digitalcoin.getPosition()
 
     const newPlay = lastSeenPlayCounter !== playCounter
 

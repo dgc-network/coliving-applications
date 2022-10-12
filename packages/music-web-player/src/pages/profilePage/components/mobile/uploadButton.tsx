@@ -22,7 +22,7 @@ const UploadButton = () => {
           className={styles.button}
           textClassName={styles.buttonText}
           onClick={onClick}
-          text='Upload Agreement'
+          text='Upload DigitalContent'
           type={ButtonType.COMMON_ALT}
           leftIcon={<IconUpload />}
           iconClassName={styles.icon} css={undefined}        />

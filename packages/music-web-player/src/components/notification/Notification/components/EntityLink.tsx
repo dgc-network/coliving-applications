@@ -1,6 +1,6 @@
 import { MouseEventHandler, useCallback } from 'react'
 
-import { Name, Collection, Agreement, User, Nullable } from '@coliving/common'
+import { Name, Collection, DigitalContent, User, Nullable } from '@coliving/common'
 import { push } from 'connected-react-router'
 import { useDispatch } from 'react-redux'
 
@@ -11,7 +11,7 @@ import { getEntityLink } from '../utils'
 
 import styles from './entityLink.module.css'
 
-type EntityType = (Collection | Agreement) & { user: Nullable<User> }
+type EntityType = (Collection | DigitalContent) & { user: Nullable<User> }
 
 type EntityLinkProps = {
   entity: EntityType

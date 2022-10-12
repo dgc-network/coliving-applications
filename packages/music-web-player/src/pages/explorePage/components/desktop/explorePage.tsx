@@ -50,7 +50,7 @@ const messages = {
   exploreMoreProfiles: 'Explore More Landlords',
   justForYou: 'Just For You',
   justForYouSubtitle: `Content curated for you based on your likes,
-reposts, and follows. Refreshes often so if you like a agreement, favorite it.`,
+reposts, and follows. Refreshes often so if you like a digital_content, favorite it.`,
   lifestyle: 'ContentLists to Fit Your Mood',
   lifestyleSubtitle: 'ContentLists made by Coliving users, sorted by mood and feel'
 }

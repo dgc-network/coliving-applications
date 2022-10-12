@@ -1,7 +1,7 @@
 import type { Genre } from '@coliving/web/src/common/utils/genres'
 
 import { EventNames, PlaybackSource } from 'app/types/analytics'
-import { agreement, make } from 'app/utils/analytics'
+import { digital_content, make } from 'app/utils/analytics'
 
 import type { AudioActions } from './actions'
 import {
@@ -110,7 +110,7 @@ const reducer = (
       if (playing) {
         const newAgreement = state.queue[newIndex]
         if (newAgreement) {
-          agreement(
+          digital_content(
             make({
               eventName: EventNames.PLAYBACK_PLAY,
               id: `${newAgreement.agreementId}`,
@@ -134,7 +134,7 @@ const reducer = (
       if (state.playing) {
         const newAgreement = state.queue[newIndex]
         if (newAgreement) {
-          agreement(
+          digital_content(
             make({
               eventName: EventNames.PLAYBACK_PLAY,
               id: `${newAgreement.agreementId}`,

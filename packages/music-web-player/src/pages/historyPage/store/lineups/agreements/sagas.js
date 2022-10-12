@@ -22,13 +22,13 @@ function* getHistoryAgreements() {
 
     const processedAgreements = yield call(
       processAndCacheAgreements,
-      activity.map((a) => a.agreement)
+      activity.map((a) => a.digital_content)
     )
-    const processedAgreementsMap = keyBy(processedAgreements, 'agreement_id')
+    const processedAgreementsMap = keyBy(processedAgreements, 'digital_content_id')
 
     const lineupAgreements = []
     activity.forEach((activity, i) => {
-      const agreementMetadata = processedAgreementsMap[activity.agreement.agreement_id]
+      const agreementMetadata = processedAgreementsMap[activity.digital_content.digital_content_id]
       // Prevent history for invalid agreements from getting into the lineup.
       if (agreementMetadata) {
         lineupAgreements.push({
@@ -46,8 +46,8 @@ function* getHistoryAgreements() {
 
 const keepAgreementIdAndDateListened = (entry) => ({
   uid: entry.uid,
-  kind: entry.agreement_id ? Kind.AGREEMENTS : Kind.COLLECTIONS,
-  id: entry.agreement_id || entry.content_list_id,
+  kind: entry.digital_content_id ? Kind.AGREEMENTS : Kind.COLLECTIONS,
+  id: entry.digital_content_id || entry.content_list_id,
   dateListened: entry.dateListened
 })
 

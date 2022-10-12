@@ -11,7 +11,7 @@ const NATIVE_MOBILE = process.env.REACT_APP_NATIVE_MOBILE
 
 function* agreementEventAsync(action: any) {
   const { eventName, callback, ...eventProps } = action
-  yield call(analyticsProvider.agreement, eventName, eventProps, callback)
+  yield call(analyticsProvider.digital_content, eventName, eventProps, callback)
 }
 
 function* identifyEventAsync(action: any) {
@@ -46,15 +46,15 @@ function* agreementLocation() {
         })
       }
       if ((window as any).adroll) {
-        ;(window as any).adroll.agreement('pageView')
+        ;(window as any).adroll.digital_content('pageView')
       }
 
       if (NATIVE_MOBILE) {
         const message = new ScreenAnalyticsEvent(pathname)
         message.send()
       } else {
-        // Dispatch a agreement event and then resolve page/screen events with segment
-        analyticsProvider.agreement(Name.PAGE_VIEW, { route: pathname })
+        // Dispatch a digital_content event and then resolve page/screen events with segment
+        analyticsProvider.digital_content(Name.PAGE_VIEW, { route: pathname })
       }
     }
   }

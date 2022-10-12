@@ -37,7 +37,7 @@ export const useHasReachedTopPoint = ({
     immediate: true
   }))
 
-  // Agreement last touch down Y
+  // DigitalContent last touch down Y
   useEffect(() => {
     if (!touchDown) {
       const scrollY = window.scrollY
@@ -45,7 +45,7 @@ export const useHasReachedTopPoint = ({
     }
   }, [touchDown, setLastTouchDownY])
 
-  // Handle scrolls. Either agreement the y value in spring or set overflow,
+  // Handle scrolls. Either digital_content the y value in spring or set overflow,
   // potentially sending haptic feedback.
   const handleScrollEvent = useCallback(() => {
     const scrollY = window.scrollY

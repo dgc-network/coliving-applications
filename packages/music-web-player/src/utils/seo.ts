@@ -30,7 +30,7 @@ export const getAgreementPageDescription = ({
   mood,
   description
 }: getAgreementPageDescriptionProps) => {
-  // Note, release date and duration will be defined if the agreement metadata is fetched.
+  // Note, release date and duration will be defined if the digital_content metadata is fetched.
   if (!releaseDate) return ''
   const tagText =
     Array.isArray(tags) && tags.length > 0 ? ` | Tags: ${tags.join(', ')}` : ''

@@ -40,7 +40,7 @@ export const ShareModal = () => {
   )
 
   const isOwner =
-    content?.type === 'agreement' && account?.user_id === content.landlord.user_id
+    content?.type === 'digital_content' && account?.user_id === content.landlord.user_id
 
   const handleShareToTwitter = useCallback(() => {
     if (!source || !content) return
@@ -57,19 +57,19 @@ export const ShareModal = () => {
   }, [source, content, account, record, onClose])
 
   const handleShareToTikTok = useCallback(() => {
-    if (content?.type === 'agreement') {
-      dispatch(requestOpenTikTokModal({ id: content.agreement.agreement_id }))
+    if (content?.type === 'digital_content') {
+      dispatch(requestOpenTikTokModal({ id: content.digital_content.digital_content_id }))
       onClose()
     } else {
-      console.error('Tried to share sound to TikTok but agreement was missing')
+      console.error('Tried to share sound to TikTok but digital_content was missing')
     }
   }, [content, dispatch, onClose])
 
   const handleCopyLink = useCallback(() => {
     if (!source || !content) return
     switch (content.type) {
-      case 'agreement':
-        dispatch(shareAgreement(content.agreement.agreement_id, source))
+      case 'digital_content':
+        dispatch(shareAgreement(content.digital_content.digital_content_id, source))
         break
       case 'profile':
         dispatch(shareUser(content.profile.user_id, source))
@@ -97,13 +97,13 @@ export const ShareModal = () => {
     onClose,
     onClosed,
     showTikTokShareAction: Boolean(
-      content?.type === 'agreement' &&
+      content?.type === 'digital_content' &&
         isShareSoundToTikTokEnabled &&
         isOwner &&
-        !content.agreement.is_unlisted &&
-        !content.agreement.is_delete
+        !content.digital_content.is_unlisted &&
+        !content.digital_content.is_delete
     ),
-    shareType: content?.type ?? 'agreement'
+    shareType: content?.type ?? 'digital_content'
   }
 
   if (isMobile()) return <ShareDrawer {...shareProps} />

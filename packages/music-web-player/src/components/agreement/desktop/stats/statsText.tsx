@@ -19,7 +19,7 @@ const formatEmptyState = (flavor: Flavor, contentTitle?: string) => {
     return '0 Favorites'
   }
   return `Be the first to repost this ${
-    contentTitle ? contentTitle.toLowerCase() : 'agreement'
+    contentTitle ? contentTitle.toLowerCase() : 'digital_content'
   }!`
 }
 

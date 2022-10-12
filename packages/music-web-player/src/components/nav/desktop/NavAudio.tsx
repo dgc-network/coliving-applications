@@ -28,7 +28,7 @@ const messages = {
 }
 
 const validRewardIds: Set<ChallengeRewardID> = new Set([
-  'agreement-upload',
+  'digital-content-upload',
   'referrals',
   'ref-v',
   'mobile-install',
@@ -60,7 +60,7 @@ const NavAudio = () => {
 
   const positiveTotalBalance =
     nonNullTotalBalance && totalBalance!.gt(new BN(0))
-  // we only show the live balance and respective badge when there is an account
+  // we only show the digitalcoin balance and respective badge when there is an account
   // so below null-coalescing is okay
   const { tier } = useSelectTierInfo(account?.user_id ?? 0)
   const liveBadge = liveTierMapPng[tier as BadgeTier]
@@ -99,13 +99,13 @@ const NavAudio = () => {
     return null
   }
   if (!nonNullTotalBalance) {
-    return <div className={styles.live} />
+    return <div className={styles.digitalcoin} />
   }
 
   return (
     <div
       className={cn(
-        styles.live,
+        styles.digitalcoin,
         { [styles.hasBalance]: positiveTotalBalance },
         { [styles.show]: true }
       )}

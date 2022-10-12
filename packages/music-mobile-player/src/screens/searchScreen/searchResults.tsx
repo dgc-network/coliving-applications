@@ -63,7 +63,7 @@ const SearchResults = () => {
         stickySectionHeadersEnabled={false}
         sections={sectionWithMore}
         keyExtractor={(item) => {
-          if ('agreement_id' in item) return `agreement-${item.agreement_id}`
+          if ('digital_content_id' in item) return `digital-content-${item.digital_content_id}`
           else if ('user_id' in item) return `user-${item.user_id}`
           return `content-list-${item.content_list_id}`
         }}

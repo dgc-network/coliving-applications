@@ -5,7 +5,7 @@ import { AppTabScreen } from './appTabScreen'
 
 /**
  * This function is used to create a stack containing common screens like
- * agreement and profile
+ * digital_content and profile
  * @param baseScreen The screen to use as the base of the stack
  */
 export const createAppTabScreenStack = <StackParamList extends ParamListBase>(

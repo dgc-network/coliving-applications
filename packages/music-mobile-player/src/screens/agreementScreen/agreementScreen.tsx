@@ -1,11 +1,11 @@
 import { makeGetLineupMetadatas } from '@coliving/web/src/common/store/lineup/selectors'
-import { agreementsActions } from '@coliving/web/src/common/store/pages/agreement/lineup/actions'
+import { agreementsActions } from '@coliving/web/src/common/store/pages/digital_content/lineup/actions'
 import {
   getLineup,
   getRemixParentAgreement,
   getAgreement,
   getUser
-} from '@coliving/web/src/common/store/pages/agreement/selectors'
+} from '@coliving/web/src/common/store/pages/digital_content/selectors'
 import { agreementRemixesPage } from '@coliving/web/src/utils/route'
 import { omit } from 'lodash'
 import { Text, View } from 'react-native'
@@ -24,7 +24,7 @@ const getMoreByLandlordLineup = makeGetLineupMetadatas(getLineup)
 
 const messages = {
   moreBy: 'More By',
-  originalAgreement: 'Original Agreement',
+  originalAgreement: 'Original DigitalContent',
   viewOtherRemixes: 'View Other Remixes'
 }
 
@@ -45,12 +45,12 @@ const useStyles = makeStyles(({ palette, spacing, typography }) => ({
 }))
 
 /**
- * `AgreementScreen` displays a single agreement and a Lineup of more agreements by the landlord
+ * `AgreementScreen` displays a single digital_content and a Lineup of more agreements by the landlord
  */
 export const AgreementScreen = () => {
   const styles = useStyles()
   const navigation = useNavigation()
-  const { params } = useRoute<'Agreement'>()
+  const { params } = useRoute<'DigitalContent'>()
 
   // params is incorrectly typed and can sometimes be undefined
   const { searchAgreement } = params ?? {}
@@ -58,7 +58,7 @@ export const AgreementScreen = () => {
   const cachedAgreement = useSelectorWeb(
     (state) => getAgreement(state, params),
     // Omitting uneeded fields from the equality check because they are
-    // causing extra renders when added to the `agreement` object
+    // causing extra renders when added to the `digital_content` object
     (a, b) => {
       const omitUneeded = <T extends object | null>(o: T) =>
         omit(o, ['_stems', '_remix_parents'])
@@ -66,10 +66,10 @@ export const AgreementScreen = () => {
     }
   )
 
-  const agreement = cachedAgreement ?? searchAgreement
+  const digital_content = cachedAgreement ?? searchAgreement
 
   const cachedUser = useSelectorWeb(
-    (state) => getUser(state, { id: agreement?.owner_id }),
+    (state) => getUser(state, { id: digital_content?.owner_id }),
     isEqual
   )
 
@@ -83,9 +83,9 @@ export const AgreementScreen = () => {
   )
   const remixParentAgreement = useSelectorWeb(getRemixParentAgreement)
 
-  if (!agreement || !user) {
+  if (!digital_content || !user) {
     console.warn(
-      'Agreement, user, or lineup missing for AgreementScreen, preventing render'
+      'DigitalContent, user, or lineup missing for AgreementScreen, preventing render'
     )
     return null
   }
@@ -97,13 +97,13 @@ export const AgreementScreen = () => {
     navigation.push({
       native: {
         screen: 'AgreementRemixes',
-        params: { id: remixParentAgreement.agreement_id }
+        params: { id: remixParentAgreement.digital_content_id }
       },
       web: { route: agreementRemixesPage(remixParentAgreement.permalink) }
     })
   }
 
-  const remixParentAgreementId = agreement.remix_of?.agreements?.[0]?.parent_agreement_id
+  const remixParentAgreementId = digital_content.remix_of?.agreements?.[0]?.parent_digital_content_id
   const showMoreByLandlordTitle =
     (remixParentAgreementId && lineup.entries.length > 2) ||
     (!remixParentAgreementId && lineup.entries.length > 1)
@@ -133,14 +133,14 @@ export const AgreementScreen = () => {
           <AgreementScreenMainContent
             lineup={lineup}
             remixParentAgreement={remixParentAgreement}
-            agreement={agreement}
+            digital_content={digital_content}
             user={user}
             lineupHeader={
               hasValidRemixParent ? originalAgreementTitle : moreByLandlordTitle
             }
           />
         }
-        leadingElementId={remixParentAgreement?.agreement_id}
+        leadingElementId={remixParentAgreement?.digital_content_id}
         leadingElementDelineator={
           <>
             <View style={styles.buttonContainer}>

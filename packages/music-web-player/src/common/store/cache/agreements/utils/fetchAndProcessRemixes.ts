@@ -13,11 +13,11 @@ import { processAndCacheAgreements } from './processAndCacheAgreements'
 const INITIAL_FETCH_LIMIT = 6
 
 /**
- * Fetches remixes for a parent agreement.
+ * Fetches remixes for a parent digital_content.
  * Caches the remixes as agreements, and updates the parent
- * agreement with a reference to the remixes.
+ * digital_content with a reference to the remixes.
  *
- * @param agreementId the parent agreement for which to fetch remixes
+ * @param agreementId the parent digital_content for which to fetch remixes
  */
 export function* fetchAndProcessRemixes(agreementId: ID) {
   const currentUserId = yield* select(getUserId)
@@ -41,13 +41,13 @@ export function* fetchAndProcessRemixes(agreementId: ID) {
   }
 
   // Create the update
-  // Note: This update is made eagerly (potentially before the parent agreement is cached).
+  // Note: This update is made eagerly (potentially before the parent digital_content is cached).
   // This is OK because the cache action will not overwrite this data, and it's important
-  // that we can recognize ASAP that the agreement has remixes.
-  // The agreement will still go through it's normal lifecycle of status (loading => success/error)
+  // that we can recognize ASAP that the digital_content has remixes.
+  // The digital_content will still go through it's normal lifecycle of status (loading => success/error)
   // and the availability of these fields give a hint to the skeleton layout.
   const remixesUpdate = remixes.map((r) => ({
-    agreement_id: r.agreement_id
+    digital_content_id: r.digital_content_id
   }))
 
   yield* put(
@@ -64,11 +64,11 @@ export function* fetchAndProcessRemixes(agreementId: ID) {
 }
 
 /**
- * Fetches parents for a remixed agreement.
- * Caches the parents as agreements, and updates the remixed agreement
+ * Fetches parents for a remixed digital_content.
+ * Caches the parents as agreements, and updates the remixed digital_content
  * with a reference to the parent.
  *
- * @param agreementId the agreement for which to fetch remix parents
+ * @param agreementId the digital_content for which to fetch remix parents
  */
 export function* fetchAndProcessRemixParents(agreementId: ID) {
   const currentUserId = yield* select(getUserId)
@@ -85,12 +85,12 @@ export function* fetchAndProcessRemixParents(agreementId: ID) {
     yield* call(processAndCacheAgreements, remixParents)
   }
 
-  // Don't update the original agreement with parents until it's in the cache
+  // Don't update the original digital_content with parents until it's in the cache
   yield* call(waitForValue, getAgreement, { id: agreementId })
 
   // Create the update
   const remixParentsUpdate = remixParents.map((s) => ({
-    agreement_id: s.agreement_id
+    digital_content_id: s.digital_content_id
   }))
 
   yield* put(

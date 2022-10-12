@@ -21,7 +21,7 @@ import styles from './NavPopupMenu.module.css'
 const messages = {
   settings: 'Settings',
   dashboard: 'Landlord Dashboard',
-  live: '$LIVE & Rewards'
+  digitalcoin: '$LIVE & Rewards'
 }
 
 const useAccountHasAgreements = () => {
@@ -48,7 +48,7 @@ const NavPopupMenu = () => {
         }
       : null,
     {
-      text: messages.live,
+      text: messages.digitalcoin,
       className: styles.rewardsMenuItem,
       onClick: () => navigate(LIVE_PAGE),
       icon: <IconCrown />,

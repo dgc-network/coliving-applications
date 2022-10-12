@@ -56,7 +56,7 @@ export const RemixCosignNotification = (
     isEqual
   ) as Nullable<AgreementEntity[]>
 
-  const childAgreement = agreements?.find(({ agreement_id }) => agreement_id === childAgreementId)
+  const childAgreement = agreements?.find(({ digital_content_id }) => digital_content_id === childAgreementId)
   const parentAgreement = agreements?.find(
     ({ owner_id }) => owner_id === parentAgreementUserId
   )
@@ -66,8 +66,8 @@ export const RemixCosignNotification = (
     if (childAgreement) {
       navigation.navigate({
         native: {
-          screen: 'Agreement',
-          params: { id: childAgreement.agreement_id, fromNotifications: true }
+          screen: 'DigitalContent',
+          params: { id: childAgreement.digital_content_id, fromNotifications: true }
         },
         web: {
           route: getAgreementRoute(childAgreement)

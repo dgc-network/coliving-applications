@@ -33,7 +33,7 @@ import { ClientRewardsReporter } from 'services/colivingBackend/rewards'
 import { getFeatureEnabled } from 'services/remoteConfig/featureFlagHelpers'
 import { remoteConfigInstance } from 'services/remoteConfig/remoteConfigInstance'
 import { IS_MOBILE_USER_KEY } from 'store/account/mobileSagas'
-import { agreement } from 'store/analytics/providers/amplitude'
+import { digital_content } from 'store/analytics/providers/amplitude'
 import { isElectron } from 'utils/clientUtil'
 import { getContentNodeIPFSGateways } from 'utils/gatewayUtil'
 import { Timer } from 'utils/performance'
@@ -304,16 +304,16 @@ class ColivingBackend {
     }
   }
 
-  static getAgreementImages(agreement) {
+  static getAgreementImages(digital_content) {
     const coverArtSizes = {}
-    if (!agreement.cover_art_sizes && !agreement.cover_art) {
+    if (!digital_content.cover_art_sizes && !digital_content.cover_art) {
       coverArtSizes[DefaultSizes.OVERRIDE] = placeholderCoverArt
     }
 
     return {
-      ...agreement,
+      ...digital_content,
       // TODO: This method should be renamed as it does more than images.
-      duration: agreement.agreement_segments.reduce(
+      duration: digital_content.digital_content_segments.reduce(
         (duration, segment) => duration + parseFloat(segment.duration),
         0
       ),
@@ -367,7 +367,7 @@ class ColivingBackend {
 
   // Record the endpoint and reason for selecting the endpoint
   static discoveryNodeSelectionCallback(endpoint, decisionTree) {
-    agreement(Name.DISCOVERY_PROVIDER_SELECTION, {
+    digital_content(Name.DISCOVERY_PROVIDER_SELECTION, {
       endpoint,
       reason: decisionTree.map((reason) => reason.stage).join(' -> ')
     })
@@ -377,13 +377,13 @@ class ColivingBackend {
   }
 
   static contentNodeSelectionCallback(primary, secondaries, reason) {
-    agreement(Name.CONTENT_NODE_SELECTION, {
+    digital_content(Name.CONTENT_NODE_SELECTION, {
       endpoint: primary,
       selectedAs: 'primary',
       reason
     })
     secondaries.forEach((secondary) => {
-      agreement(Name.CONTENT_NODE_SELECTION, {
+      digital_content(Name.CONTENT_NODE_SELECTION, {
         endpoint: secondary,
         selectedAs: 'secondary',
         reason
@@ -730,7 +730,7 @@ class ColivingBackend {
     try {
       const agreements = await withEagerOption(
         {
-          normal: (libs) => libs.Agreement.getAgreements,
+          normal: (libs) => libs.DigitalContent.getAgreements,
           eager: DiscoveryAPI.getAgreements
         },
         limit,
@@ -760,13 +760,13 @@ class ColivingBackend {
    * gets all agreements matching identifiers, including unlisted.
    *
    * @param {getAgreementsIdentifier[]} identifiers
-   * @returns {(Array)} agreement
+   * @returns {(Array)} digital_content
    */
   static async getAgreementsIncludingUnlisted(identifiers, withUsers = true) {
     try {
       const agreements = await withEagerOption(
         {
-          normal: (libs) => libs.Agreement.getAgreementsIncludingUnlisted,
+          normal: (libs) => libs.DigitalContent.getAgreementsIncludingUnlisted,
           eager: DiscoveryAPI.getAgreementsIncludingUnlisted
         },
         identifiers,
@@ -791,7 +791,7 @@ class ColivingBackend {
     try {
       const agreements = await withEagerOption(
         {
-          normal: (libs) => libs.Agreement.getAgreements,
+          normal: (libs) => libs.DigitalContent.getAgreements,
           eager: DiscoveryAPI.getAgreements
         },
         limit,
@@ -890,7 +890,7 @@ class ColivingBackend {
 
       const {
         agreements = [],
-        saved_agreements: savedAgreements = [],
+        saved_digital_contents: savedAgreements = [],
         followed_users: followedUsers = [],
         users = []
       } = searchTags
@@ -899,8 +899,8 @@ class ColivingBackend {
         combineLists(
           savedAgreements.filter(notDeleted),
           agreements.filter(notDeleted),
-          'agreement_id'
-        ).map(async (agreement) => ColivingBackend.getAgreementImages(agreement))
+          'digital_content_id'
+        ).map(async (digital_content) => ColivingBackend.getAgreementImages(digital_content))
       )
 
       const combinedUsers = await Promise.all(
@@ -927,7 +927,7 @@ class ColivingBackend {
     try {
       return withEagerOption(
         {
-          normal: (libs) => libs.Agreement.getAgreementListens,
+          normal: (libs) => libs.DigitalContent.getAgreementListens,
           eager: IdentityAPI.getAgreementListens,
           endpoint: IDENTITY_SERVICE
         },
@@ -945,7 +945,7 @@ class ColivingBackend {
 
   static async recordAgreementListen(agreementId) {
     try {
-      const listen = await colivingLibs.Agreement.logAgreementListen(
+      const listen = await colivingLibs.DigitalContent.logAgreementListen(
         agreementId,
         unauthenticatedUuid,
         getFeatureEnabled(FeatureFlags.SOLANA_LISTEN_ENABLED)
@@ -958,7 +958,7 @@ class ColivingBackend {
 
   static async repostAgreement(agreementId) {
     try {
-      return colivingLibs.Agreement.addAgreementRepost(agreementId)
+      return colivingLibs.DigitalContent.addAgreementRepost(agreementId)
     } catch (err) {
       console.error(err.message)
       throw err
@@ -967,7 +967,7 @@ class ColivingBackend {
 
   static async undoRepostAgreement(agreementId) {
     try {
-      return colivingLibs.Agreement.deleteAgreementRepost(agreementId)
+      return colivingLibs.DigitalContent.deleteAgreementRepost(agreementId)
     } catch (err) {
       console.error(err.message)
       throw err
@@ -1000,10 +1000,10 @@ class ColivingBackend {
     return colivingLibs.User.upgradeToCreator(USER_NODE, newContentNodeEndpoint)
   }
 
-  // Uploads a single agreement
+  // Uploads a single digital_content
   // Returns { agreementId, error, phase }
   static async uploadAgreement(agreementFile, coverArtFile, metadata, onProgress) {
-    return await colivingLibs.Agreement.uploadAgreement(
+    return await colivingLibs.DigitalContent.uploadAgreement(
       agreementFile,
       coverArtFile,
       metadata,
@@ -1019,7 +1019,7 @@ class ColivingBackend {
     metadata,
     onProgress
   ) {
-    return colivingLibs.Agreement.uploadAgreementContentToContentNode(
+    return colivingLibs.DigitalContent.uploadAgreementContentToContentNode(
       agreementFile,
       coverArtFile,
       metadata,
@@ -1039,7 +1039,7 @@ class ColivingBackend {
    * Associates agreements with user on contentNode
    */
   static async registerUploadedAgreements(uploadedAgreements) {
-    return colivingLibs.Agreement.addAgreementsToChainAndCnode(uploadedAgreements)
+    return colivingLibs.DigitalContent.addAgreementsToChainAndCnode(uploadedAgreements)
   }
 
   static async uploadImage(file) {
@@ -1053,7 +1053,7 @@ class ColivingBackend {
       const resp = await colivingLibs.File.uploadImage(metadata.artwork.file)
       cleanedMetadata.cover_art_sizes = resp.dirCID
     }
-    return await colivingLibs.Agreement.updateAgreement(cleanedMetadata)
+    return await colivingLibs.DigitalContent.updateAgreement(cleanedMetadata)
   }
 
   static async getCreators(ids) {
@@ -1518,7 +1518,7 @@ class ColivingBackend {
     }
   }
 
-  // NOTE: This is called to explicitly set a contentList agreement ids w/out running validation checks.
+  // NOTE: This is called to explicitly set a contentList digital_content ids w/out running validation checks.
   // This should NOT be used to set the contentList order
   // It's added for the purpose of manually fixing broken contentLists
   static async dangerouslySetContentListOrder(contentListId, agreementIds) {
@@ -1551,11 +1551,11 @@ class ColivingBackend {
     try {
       console.debug(
         `Deleting Album ${contentListId}, agreements: ${JSON.stringify(
-          agreementIds.map((t) => t.agreement)
+          agreementIds.map((t) => t.digital_content)
         )}`
       )
       const agreementDeletionPromises = agreementIds.map((t) =>
-        colivingLibs.Agreement.deleteAgreement(t.agreement)
+        colivingLibs.DigitalContent.deleteAgreement(t.digital_content)
       )
       const contentListDeletionPromise =
         colivingLibs.ContentList.deleteContentList(contentListId)
@@ -1613,7 +1613,7 @@ class ColivingBackend {
     try {
       return withEagerOption(
         {
-          normal: (libs) => libs.Agreement.getSavedAgreements,
+          normal: (libs) => libs.DigitalContent.getSavedAgreements,
           eager: DiscoveryAPI.getSavedAgreements
         },
         limit,
@@ -1625,10 +1625,10 @@ class ColivingBackend {
     }
   }
 
-  // Favoriting a agreement
+  // Favoriting a digital_content
   static async saveAgreement(agreementId) {
     try {
-      return await colivingLibs.Agreement.addAgreementSave(agreementId)
+      return await colivingLibs.DigitalContent.addAgreementSave(agreementId)
     } catch (err) {
       console.error(err.message)
       throw err
@@ -1637,7 +1637,7 @@ class ColivingBackend {
 
   static async deleteAgreement(agreementId) {
     try {
-      const { txReceipt } = await colivingLibs.Agreement.deleteAgreement(agreementId)
+      const { txReceipt } = await colivingLibs.DigitalContent.deleteAgreement(agreementId)
       return {
         blockHash: txReceipt.blockHash,
         blockNumber: txReceipt.blockNumber
@@ -1658,10 +1658,10 @@ class ColivingBackend {
     }
   }
 
-  // Unfavoriting a agreement
+  // Unfavoriting a digital_content
   static async unsaveAgreement(agreementId) {
     try {
-      return await colivingLibs.Agreement.deleteAgreementSave(agreementId)
+      return await colivingLibs.DigitalContent.deleteAgreementSave(agreementId)
     } catch (err) {
       console.error(err.message)
       throw err
@@ -1764,7 +1764,7 @@ class ColivingBackend {
       formFields.coverPhoto,
       hasWallet,
       ColivingBackend._getHostUrl(),
-      agreement,
+      digital_content,
       {
         Request: Name.CREATE_USER_BANK_REQUEST,
         Success: Name.CREATE_USER_BANK_SUCCESS,
@@ -2488,7 +2488,7 @@ class ColivingBackend {
   }
 
   /**
-   * Make a request to fetch the sol wrapped live balance of the the user
+   * Make a request to fetch the sol wrapped digitalcoin balance of the the user
    * @returns {Promise<BN>} balance
    */
   static async getWAudioBalance() {
@@ -2557,7 +2557,7 @@ class ColivingBackend {
   }
 
   /**
-   * Make a request to send solana wrapped live
+   * Make a request to send solana wrapped digitalcoin
    */
   static async sendWAudioTokens(address, amount) {
     await waitForLibsInit()

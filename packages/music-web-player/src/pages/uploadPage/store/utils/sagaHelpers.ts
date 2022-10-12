@@ -13,7 +13,7 @@ export function* reportSuccessAndFailureEvents({
 }: {
   numSuccess: number
   numFailure: number
-  uploadType: 'single_agreement' | 'multi_agreement' | 'album' | 'contentList'
+  uploadType: 'single_digital_content' | 'multi_digital_content' | 'album' | 'contentList'
   errors: string[]
 }) {
   const accountUser: ReturnType<typeof getAccountUser> = yield select(

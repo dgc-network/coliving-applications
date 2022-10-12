@@ -27,13 +27,13 @@ export const makeGetTableMetadatas = <T, State>(
       let deleted = lineup.deleted
       const entries = lineup.entries
         .map((entry) => {
-          const agreement = agreementUids[entry.uid]
-          if (agreement) {
+          const digital_content = agreementUids[entry.uid]
+          if (digital_content) {
             return {
               ...entry,
-              ...agreement,
+              ...digital_content,
               uid: entry.uid,
-              followeeReposts: agreement.followee_reposts
+              followeeReposts: digital_content.followee_reposts
                 .map((repost) => ({ ...repost, user: users[repost.user_id] }))
                 .filter((repost) => !!repost.user)
             }

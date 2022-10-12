@@ -37,7 +37,7 @@ const messages = {
   newWalletConnected: 'New Wallet Successfully Connected!',
   linkedWallets: 'LINKED WALLETS',
   collectibles: 'COLLECTIBLES',
-  live: '$LIVE'
+  digitalcoin: '$LIVE'
 }
 
 type WalletProps = {
@@ -214,7 +214,7 @@ const WalletsTable = ({
           </h6>
         )}
         <h6 className={cn(styles.walletsHeaderItem, styles.headerAudio)}>
-          {messages.live}
+          {messages.digitalcoin}
         </h6>
       </div>
       {ethWallets &&

@@ -204,7 +204,7 @@ const NavBar = ({
           onClick={goToSettingsPage}
         />
         <IconButton
-          aria-label='live rewards'
+          aria-label='digitalcoin rewards'
           icon={<IconCrown />}
           className={styles.crownButton}
           onClick={goToAudioPage}

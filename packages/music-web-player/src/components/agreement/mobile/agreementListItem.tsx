@@ -227,7 +227,7 @@ const AgreementListItem = ({
       {onRemove && (
         <div className={styles.iconContainer}>
           <IconButton
-            aria-label='remove agreement'
+            aria-label='remove digital_content'
             icon={<IconRemoveAgreement />}
             className={cn(styles.removeAgreementContainer, {
               [styles.isRemoveActive]: isRemoveActive

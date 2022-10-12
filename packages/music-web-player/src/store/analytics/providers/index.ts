@@ -48,7 +48,7 @@ let agreementCounter = 0
 
 const AGREEMENT_LIMIT = 10000
 
-export const agreement = async (
+export const digital_content = async (
   event: string,
   properties?: Record<string, any>,
   callback?: () => void
@@ -60,7 +60,7 @@ export const agreement = async (
 
     if (!IS_PRODUCTION_BUILD) {
       console.info(
-        `${useAmplitude ? 'Amplitude' : 'Segment'} | agreement`,
+        `${useAmplitude ? 'Amplitude' : 'Segment'} | digital_content`,
         event,
         properties
       )
@@ -68,7 +68,7 @@ export const agreement = async (
     // stop tracking analytics after we reach session limit
     if (agreementCounter++ >= AGREEMENT_LIMIT) return
 
-    // Add generic agreement event context for every event
+    // Add generic digital_content event context for every event
     const propertiesWithContext = {
       ...properties,
       clientVersion: version
@@ -80,8 +80,8 @@ export const agreement = async (
     } else {
       await didInit
       if (useAmplitude)
-        return amplitude.agreement(event, propertiesWithContext, callback)
-      return segment.agreement(event, propertiesWithContext, {}, callback)
+        return amplitude.digital_content(event, propertiesWithContext, callback)
+      return segment.digital_content(event, propertiesWithContext, {}, callback)
     }
   } catch (err) {
     console.error(err)

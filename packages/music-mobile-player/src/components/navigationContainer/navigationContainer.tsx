@@ -51,7 +51,7 @@ const NavigationContainer = ({ children }: Props) => {
                   screens: {
                     Feed: 'feed',
                     Collection: '*/contentList/*',
-                    Agreement: 'agreement',
+                    DigitalContent: 'digital_content',
                     // Unfortunately routes like username/contentLists
                     // don't load properly on web. So for now deep linking
                     // to profile tabs (other than for your own account) isn't
@@ -135,17 +135,17 @@ const NavigationContainer = ({ children }: Props) => {
       } else {
         // If the path has two parts
         if (path.match(/^\/[^/]+\/[^/]+$/)) {
-          // If the path is to live-nft-content-list, reroute to feed
-          if (path.match(/^\/[^/]+\/live-nft-content-list$/)) {
+          // If the path is to digitalcoin-nft-content-list, reroute to feed
+          if (path.match(/^\/[^/]+\/digitalcoin-nft-content-list$/)) {
             path = '/feed'
           }
-          // If the path doesn't match a profile tab, it's a agreement
+          // If the path doesn't match a profile tab, it's a digital_content
           else if (
             !path.match(
               /^\/[^/]+\/(agreements|albums|contentLists|reposts|collectibles)$/
             )
           ) {
-            path = '/agreement'
+            path = '/digital_content'
           }
         }
       }

@@ -60,8 +60,8 @@ function* fetchRepostInfo(entries) {
 function* fetchSegment(metadata) {
   const user = yield call(waitForValue, getUser, { id: metadata.owner_id })
   const gateways = getContentNodeIPFSGateways(user.content_node_endpoint)
-  if (!metadata.agreement_segments[0]) return
-  const cid = metadata.agreement_segments[0].multihash
+  if (!metadata.digital_content_segments[0]) return
+  const cid = metadata.digital_content_segments[0].multihash
   return yield call(fetchCID, cid, gateways, /* cache */ false)
 }
 
@@ -127,19 +127,19 @@ export function* agreementNewRemixEvent(remixAgreement) {
   const account = yield select(getAccountUser)
   const remixParentAgreement = remixAgreement.remix_of.agreements[0]
   const parentAgreement = yield select(getAgreement, {
-    id: remixParentAgreement.parent_agreement_id
+    id: remixParentAgreement.parent_digital_content_id
   })
   const parentAgreementUser = parentAgreement
     ? yield select(getUser, { id: parentAgreement.owner_id })
     : null
   yield put(
     make(Name.REMIX_NEW_REMIX, {
-      id: remixAgreement.agreement_id,
+      id: remixAgreement.digital_content_id,
       handle: account.handle,
       title: remixAgreement.title,
-      parent_agreement_id: remixParentAgreement.parent_agreement_id,
-      parent_agreement_title: parentAgreement ? parentAgreement.title : '',
-      parent_agreement_user_handle: parentAgreementUser ? parentAgreementUser.handle : ''
+      parent_digital_content_id: remixParentAgreement.parent_digital_content_id,
+      parent_digital_content_title: parentAgreement ? parentAgreement.title : '',
+      parent_digital_content_user_handle: parentAgreementUser ? parentAgreementUser.handle : ''
     })
   )
 }
@@ -180,28 +180,28 @@ function* editAgreementAsync(action) {
     currentAgreement
   )
 
-  const agreement = { ...action.formFields }
-  agreement.agreement_id = action.agreementId
-  if (agreement.artwork) {
-    agreement._cover_art_sizes = {
-      ...agreement._cover_art_sizes,
-      [DefaultSizes.OVERRIDE]: agreement.artwork.url
+  const digital_content = { ...action.formFields }
+  digital_content.digital_content_id = action.agreementId
+  if (digital_content.artwork) {
+    digital_content._cover_art_sizes = {
+      ...digital_content._cover_art_sizes,
+      [DefaultSizes.OVERRIDE]: digital_content.artwork.url
     }
   }
 
   yield put(
-    cacheActions.update(Kind.AGREEMENTS, [{ id: agreement.agreement_id, metadata: agreement }])
+    cacheActions.update(Kind.AGREEMENTS, [{ id: digital_content.digital_content_id, metadata: digital_content }])
   )
   yield put(agreementActions.editAgreementSucceeded())
 
   // This is a new remix
   if (
-    agreement?.remix_of?.agreements?.[0]?.parent_agreement_id &&
-    currentAgreement?.remix_of?.agreements?.[0]?.parent_agreement_id !==
-      agreement?.remix_of?.agreements?.[0]?.parent_agreement_id
+    digital_content?.remix_of?.agreements?.[0]?.parent_digital_content_id &&
+    currentAgreement?.remix_of?.agreements?.[0]?.parent_digital_content_id !==
+      digital_content?.remix_of?.agreements?.[0]?.parent_digital_content_id
   ) {
     // This is a new remix
-    yield call(agreementNewRemixEvent, agreement)
+    yield call(agreementNewRemixEvent, digital_content)
   }
 }
 
@@ -231,11 +231,11 @@ function* confirmEditAgreement(
         const confirmed = yield call(confirmTransaction, blockHash, blockNumber)
         if (!confirmed) {
           throw new Error(
-            `Could not confirm edit agreement for agreement id ${agreementId}`
+            `Could not confirm edit digital_content for digital_content id ${agreementId}`
           )
         }
 
-        // Need to poll with the new agreement name in case it changed
+        // Need to poll with the new digital_content name in case it changed
         const userId = yield select(getUserId)
         const handle = yield select(getUserHandle)
 
@@ -255,17 +255,17 @@ function* confirmEditAgreement(
         if (wasUnlisted && isNowListed) {
           confirmedAgreement._is_publishing = false
         }
-        // Update the cached agreement so it no longer contains image upload artifacts
+        // Update the cached digital_content so it no longer contains image upload artifacts
         yield put(
           cacheActions.update(Kind.AGREEMENTS, [
             {
-              id: confirmedAgreement.agreement_id,
+              id: confirmedAgreement.digital_content_id,
               metadata: { ...confirmedAgreement, artwork: {} }
             }
           ])
         )
 
-        // Record analytics on agreement edit
+        // Record analytics on digital_content edit
         // Note: if remixes is not defined in field_visibility, it defaults to true
         if (
           (currentAgreement?.field_visibility?.remixes ?? true) &&
@@ -275,7 +275,7 @@ function* confirmEditAgreement(
           // Record event if hide remixes was turned on
           yield put(
             make(Name.REMIX_HIDE, {
-              id: confirmedAgreement.agreement_id,
+              id: confirmedAgreement.digital_content_id,
               handle
             })
           )
@@ -285,7 +285,7 @@ function* confirmEditAgreement(
         yield put(agreementActions.editAgreementFailed())
         // Throw so the user can't capture a bad upload state (especially for downloads).
         // TODO: Consider better update revesion logic here coupled with a toast or similar.
-        throw new Error('Edit agreement failed')
+        throw new Error('Edit digital_content failed')
       }
     )
   )
@@ -304,7 +304,7 @@ function* deleteAgreementAsync(action) {
   }
   const handle = yield select(getUserHandle)
 
-  // Before deleting, check if the agreement is set as the landlord pick & delete if so
+  // Before deleting, check if the digital_content is set as the landlord pick & delete if so
   const socials = yield call(ColivingBackend.getCreatorSocialHandle, handle)
   if (socials.pinnedAgreementId === action.agreementId) {
     yield call(ColivingBackend.setLandlordPick)
@@ -318,14 +318,14 @@ function* deleteAgreementAsync(action) {
     )
   }
 
-  const agreement = yield select(getAgreement, { id: action.agreementId })
+  const digital_content = yield select(getAgreement, { id: action.agreementId })
   yield put(
     cacheActions.update(Kind.AGREEMENTS, [
-      { id: agreement.agreement_id, metadata: { _marked_deleted: true } }
+      { id: digital_content.digital_content_id, metadata: { _marked_deleted: true } }
     ])
   )
 
-  yield call(confirmDeleteAgreement, agreement.agreement_id)
+  yield call(confirmDeleteAgreement, digital_content.digital_content_id)
 }
 
 function* confirmDeleteAgreement(agreementId) {
@@ -341,11 +341,11 @@ function* confirmDeleteAgreement(agreementId) {
         const confirmed = yield call(confirmTransaction, blockHash, blockNumber)
         if (!confirmed) {
           throw new Error(
-            `Could not confirm delete agreement for agreement id ${agreementId}`
+            `Could not confirm delete digital_content for digital_content id ${agreementId}`
           )
         }
 
-        const agreement = yield select(getAgreement, { id: agreementId })
+        const digital_content = yield select(getAgreement, { id: agreementId })
         const handle = yield select(getUserHandle)
         const userId = yield select(getUserId)
 
@@ -354,7 +354,7 @@ function* confirmDeleteAgreement(agreementId) {
             id: agreementId,
             currentUserId: userId,
             unlistedArgs: {
-              urlTitle: formatUrlName(agreement.title),
+              urlTitle: formatUrlName(digital_content.title),
               handle
             }
           },
@@ -362,26 +362,26 @@ function* confirmDeleteAgreement(agreementId) {
         )
       },
       function* (deletedAgreement) {
-        // NOTE: we do not delete from the cache as the agreement may be playing
-        yield put(agreementActions.deleteAgreementSucceeded(deletedAgreement.agreement_id))
+        // NOTE: we do not delete from the cache as the digital_content may be playing
+        yield put(agreementActions.deleteAgreementSucceeded(deletedAgreement.digital_content_id))
 
         // Record Delete Event
         const event = make(Name.DELETE, {
-          kind: 'agreement',
+          kind: 'digital_content',
           id: deletedAgreement.agreementId
         })
         yield put(event)
         if (deletedAgreement.stem_of) {
           const stemDeleteEvent = make(Name.STEM_DELETE, {
-            id: deletedAgreement.agreement_id,
-            parent_agreement_id: deletedAgreement.stem_of.parent_agreement_id,
+            id: deletedAgreement.digital_content_id,
+            parent_digital_content_id: deletedAgreement.stem_of.parent_digital_content_id,
             category: deletedAgreement.stem_of.category
           })
           yield put(stemDeleteEvent)
         }
       },
       function* () {
-        // On failure, do not mark the agreement as deleted
+        // On failure, do not mark the digital_content as deleted
         yield put(
           cacheActions.update(Kind.AGREEMENTS, [
             { id: agreementId, metadata: { _marked_deleted: false } }
@@ -405,26 +405,26 @@ function* watchFetchCoverArt() {
     inProgress.add(key)
 
     try {
-      let agreement = yield call(waitForValue, getAgreement, { id: agreementId })
-      const user = yield call(waitForValue, getUser, { id: agreement.owner_id })
-      if (!agreement || !user || (!agreement.cover_art_sizes && !agreement.cover_art))
+      let digital_content = yield call(waitForValue, getAgreement, { id: agreementId })
+      const user = yield call(waitForValue, getUser, { id: digital_content.owner_id })
+      if (!digital_content || !user || (!digital_content.cover_art_sizes && !digital_content.cover_art))
         return
       const gateways = getContentNodeIPFSGateways(user.content_node_endpoint)
-      const multihash = agreement.cover_art_sizes || agreement.cover_art
-      const coverArtSize = multihash === agreement.cover_art_sizes ? size : null
+      const multihash = digital_content.cover_art_sizes || digital_content.cover_art
+      const coverArtSize = multihash === digital_content.cover_art_sizes ? size : null
       const url = yield call(
         ColivingBackend.getImageUrl,
         multihash,
         coverArtSize,
         gateways
       )
-      agreement = yield select(getAgreement, { id: agreementId })
-      agreement._cover_art_sizes = {
-        ...agreement._cover_art_sizes,
+      digital_content = yield select(getAgreement, { id: agreementId })
+      digital_content._cover_art_sizes = {
+        ...digital_content._cover_art_sizes,
         [coverArtSize || DefaultSizes.OVERRIDE]: url
       }
       yield put(
-        cacheActions.update(Kind.AGREEMENTS, [{ id: agreementId, metadata: agreement }])
+        cacheActions.update(Kind.AGREEMENTS, [{ id: agreementId, metadata: digital_content }])
       )
 
       let smallImageUrl = url
@@ -445,7 +445,7 @@ function* watchFetchCoverArt() {
         })
       )
     } catch (e) {
-      console.error(`Unable to fetch cover art for agreement ${agreementId}`)
+      console.error(`Unable to fetch cover art for digital_content ${agreementId}`)
     } finally {
       inProgress.delete(key)
     }
@@ -454,23 +454,23 @@ function* watchFetchCoverArt() {
 
 function* watchCheckIsDownloadable() {
   yield takeLatest(agreementActions.CHECK_IS_DOWNLOADABLE, function* (action) {
-    const agreement = yield select(getAgreement, { id: action.agreementId })
-    if (!agreement) return
+    const digital_content = yield select(getAgreement, { id: action.agreementId })
+    if (!digital_content) return
 
-    const user = yield select(getUser, { id: agreement.owner_id })
+    const user = yield select(getUser, { id: digital_content.owner_id })
     if (!user) return
     if (!user.content_node_endpoint) return
 
     const cid = yield call(
       AgreementDownload.checkIfDownloadAvailable,
-      agreement.agreement_id,
+      digital_content.digital_content_id,
       user.content_node_endpoint
     )
 
     const updatedMetadata = {
-      ...agreement,
+      ...digital_content,
       download: {
-        ...agreement.download,
+        ...digital_content.download,
         cid
       }
     }
@@ -478,7 +478,7 @@ function* watchCheckIsDownloadable() {
     yield put(
       cacheActions.update(Kind.AGREEMENTS, [
         {
-          id: agreement.agreement_id,
+          id: digital_content.digital_content_id,
           metadata: updatedMetadata
         }
       ])
@@ -488,8 +488,8 @@ function* watchCheckIsDownloadable() {
     if (currentUserId === user.user_id) {
       yield call(
         AgreementDownload.updateAgreementDownloadCID,
-        agreement.agreement_id,
-        agreement,
+        digital_content.digital_content_id,
+        digital_content,
         cid
       )
     }

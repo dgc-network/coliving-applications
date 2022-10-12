@@ -131,7 +131,7 @@ const ContentListLibrary = ({
     [accountCollectibles]
   )
 
-  // Set live nft contentList in library if it is not already set
+  // Set digitalcoin nft contentList in library if it is not already set
   useEffect(() => {
     if (library) {
       const isAudioNftContentListInLibrary = !!findInContentListLibrary(

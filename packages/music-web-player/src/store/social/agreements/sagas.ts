@@ -1,4 +1,4 @@
-import { Kind, ID, Name, Agreement, User, makeKindId } from '@coliving/common'
+import { Kind, ID, Name, DigitalContent, User, makeKindId } from '@coliving/common'
 import { call, select, takeEvery, put } from 'typed-redux-saga/macro'
 
 import * as accountActions from 'common/store/account/reducer'
@@ -7,7 +7,7 @@ import * as cacheActions from 'common/store/cache/actions'
 import { getAgreement, getAgreements } from 'common/store/cache/agreements/selectors'
 import { adjustUserField } from 'common/store/cache/users/sagas'
 import { getUser } from 'common/store/cache/users/selectors'
-import { updateOptimisticListenStreak } from 'common/store/pages/live-rewards/slice'
+import { updateOptimisticListenStreak } from 'common/store/pages/digitalcoin-rewards/slice'
 import * as socialActions from 'common/store/social/agreements/actions'
 import { formatShareText } from 'common/utils/formatUtil'
 import * as signOnActions from 'pages/signOn/store/actions'
@@ -59,7 +59,7 @@ export function* repostAgreementAsync(
   )
 
   const event = make(Name.REPOST, {
-    kind: 'agreement',
+    kind: 'digital_content',
     source: action.source,
     id: action.agreementId
   })
@@ -68,14 +68,14 @@ export function* repostAgreementAsync(
   yield* call(confirmRepostAgreement, action.agreementId, user)
 
   const agreements = yield* select(getAgreements, { ids: [action.agreementId] })
-  const agreement = agreements[action.agreementId]
+  const digital_content = agreements[action.agreementId]
 
-  const eagerlyUpdatedMetadata: Partial<Agreement> = {
+  const eagerlyUpdatedMetadata: Partial<DigitalContent> = {
     has_current_user_reposted: true,
-    repost_count: agreement.repost_count + 1
+    repost_count: digital_content.repost_count + 1
   }
 
-  const remixAgreement = agreement.remix_of?.agreements?.[0]
+  const remixAgreement = digital_content.remix_of?.agreements?.[0]
   const isCoSign = remixAgreement?.user?.user_id === userId
 
   if (remixAgreement && isCoSign) {
@@ -103,23 +103,23 @@ export function* repostAgreementAsync(
 
   if (remixAgreement && isCoSign) {
     const {
-      parent_agreement_id,
+      parent_digital_content_id,
       has_remix_author_reposted,
       has_remix_author_saved
     } = remixAgreement
 
-    // Agreement Cosign Event
+    // DigitalContent Cosign Event
     const hasAlreadyCoSigned =
       has_remix_author_reposted || has_remix_author_saved
 
-    const parentAgreement = yield* select(getAgreement, { id: parent_agreement_id })
+    const parentAgreement = yield* select(getAgreement, { id: parent_digital_content_id })
 
     if (parentAgreement) {
       const coSignIndicatorEvent = make(Name.REMIX_COSIGN_INDICATOR, {
         id: action.agreementId,
         handle: user.handle,
-        original_agreement_id: parentAgreement.agreement_id,
-        original_agreement_title: parentAgreement.title,
+        original_digital_content_id: parentAgreement.digital_content_id,
+        original_digital_content_title: parentAgreement.title,
         action: 'reposted'
       })
       yield* put(coSignIndicatorEvent)
@@ -128,8 +128,8 @@ export function* repostAgreementAsync(
         const coSignEvent = make(Name.REMIX_COSIGN, {
           id: action.agreementId,
           handle: user.handle,
-          original_agreement_id: parentAgreement.agreement_id,
-          original_agreement_title: parentAgreement.title,
+          original_digital_content_id: parentAgreement.digital_content_id,
+          original_digital_content_title: parentAgreement.title,
           action: 'reposted'
         })
         yield* put(coSignEvent)
@@ -154,7 +154,7 @@ export function* confirmRepostAgreement(agreementId: ID, user: User) {
         )
         if (!confirmed) {
           throw new Error(
-            `Could not confirm repost agreement for agreement id ${agreementId}`
+            `Could not confirm repost digital_content for digital_content id ${agreementId}`
           )
         }
         return agreementId
@@ -202,7 +202,7 @@ export function* undoRepostAgreementAsync(
   yield* call(adjustUserField, { user, fieldName: 'repost_count', delta: -1 })
 
   const event = make(Name.UNDO_REPOST, {
-    kind: 'agreement',
+    kind: 'digital_content',
     source: action.source,
     id: action.agreementId
   })
@@ -211,19 +211,19 @@ export function* undoRepostAgreementAsync(
   yield* call(confirmUndoRepostAgreement, action.agreementId, user)
 
   const agreements = yield* select(getAgreements, { ids: [action.agreementId] })
-  const agreement = agreements[action.agreementId]
+  const digital_content = agreements[action.agreementId]
 
-  const eagerlyUpdatedMetadata: Partial<Agreement> = {
+  const eagerlyUpdatedMetadata: Partial<DigitalContent> = {
     has_current_user_reposted: false,
-    repost_count: agreement.repost_count - 1
+    repost_count: digital_content.repost_count - 1
   }
 
-  if (agreement.remix_of?.agreements?.[0]?.user?.user_id === userId) {
+  if (digital_content.remix_of?.agreements?.[0]?.user?.user_id === userId) {
     // This repost is a co-sign
     const remixOf = {
       agreements: [
         {
-          ...agreement.remix_of.agreements[0],
+          ...digital_content.remix_of.agreements[0],
           has_remix_author_reposted: false
         }
       ]
@@ -265,7 +265,7 @@ export function* confirmUndoRepostAgreement(agreementId: ID, user: User) {
         )
         if (!confirmed) {
           throw new Error(
-            `Could not confirm undo repost agreement for agreement id ${agreementId}`
+            `Could not confirm undo repost digital_content for digital_content id ${agreementId}`
           )
         }
         return agreementId
@@ -308,13 +308,13 @@ export function* saveAgreementAsync(
   }
 
   const agreements = yield* select(getAgreements, { ids: [action.agreementId] })
-  const agreement = agreements[action.agreementId]
+  const digital_content = agreements[action.agreementId]
 
-  if (agreement.has_current_user_saved) return
+  if (digital_content.has_current_user_saved) return
   yield* put(accountActions.didFavoriteItem())
 
   const event = make(Name.FAVORITE, {
-    kind: 'agreement',
+    kind: 'digital_content',
     source: action.source,
     id: action.agreementId
   })
@@ -322,12 +322,12 @@ export function* saveAgreementAsync(
 
   yield* call(confirmSaveAgreement, action.agreementId)
 
-  const eagerlyUpdatedMetadata: Partial<Agreement> = {
+  const eagerlyUpdatedMetadata: Partial<DigitalContent> = {
     has_current_user_saved: true,
-    save_count: agreement.save_count + 1
+    save_count: digital_content.save_count + 1
   }
 
-  const remixAgreement = agreement.remix_of?.agreements?.[0]
+  const remixAgreement = digital_content.remix_of?.agreements?.[0]
   const isCoSign = remixAgreement?.user?.user_id === userId
   if (remixAgreement && isCoSign) {
     // This repost is a co-sign
@@ -353,8 +353,8 @@ export function* saveAgreementAsync(
   )
   yield* put(socialActions.saveAgreementSucceeded(action.agreementId))
   if (isCoSign) {
-    // Agreement Cosign Event
-    const parentAgreementId = remixAgreement.parent_agreement_id
+    // DigitalContent Cosign Event
+    const parentAgreementId = remixAgreement.parent_digital_content_id
     const hasAlreadyCoSigned =
       remixAgreement.has_remix_author_reposted || remixAgreement.has_remix_author_saved
 
@@ -363,8 +363,8 @@ export function* saveAgreementAsync(
     const coSignIndicatorEvent = make(Name.REMIX_COSIGN_INDICATOR, {
       id: action.agreementId,
       handle,
-      original_agreement_id: parentAgreement?.agreement_id,
-      original_agreement_title: parentAgreement?.title,
+      original_digital_content_id: parentAgreement?.digital_content_id,
+      original_digital_content_title: parentAgreement?.title,
       action: 'favorited'
     })
     yield* put(coSignIndicatorEvent)
@@ -373,8 +373,8 @@ export function* saveAgreementAsync(
       const coSignEvent = make(Name.REMIX_COSIGN, {
         id: action.agreementId,
         handle,
-        original_agreement_id: parentAgreement?.agreement_id,
-        original_agreement_title: parentAgreement?.title,
+        original_digital_content_id: parentAgreement?.digital_content_id,
+        original_digital_content_title: parentAgreement?.title,
         action: 'favorited'
       })
       yield* put(coSignEvent)
@@ -398,7 +398,7 @@ export function* confirmSaveAgreement(agreementId: ID) {
         )
         if (!confirmed) {
           throw new Error(
-            `Could not confirm save agreement for agreement id ${agreementId}`
+            `Could not confirm save digital_content for digital_content id ${agreementId}`
           )
         }
         return agreementId
@@ -431,7 +431,7 @@ export function* unsaveAgreementAsync(
   }
 
   const event = make(Name.UNFAVORITE, {
-    kind: 'agreement',
+    kind: 'digital_content',
     source: action.source,
     id: action.agreementId
   })
@@ -440,19 +440,19 @@ export function* unsaveAgreementAsync(
   yield* call(confirmUnsaveAgreement, action.agreementId)
 
   const agreements = yield* select(getAgreements, { ids: [action.agreementId] })
-  const agreement = agreements[action.agreementId]
-  if (agreement) {
-    const eagerlyUpdatedMetadata: Partial<Agreement> = {
+  const digital_content = agreements[action.agreementId]
+  if (digital_content) {
+    const eagerlyUpdatedMetadata: Partial<DigitalContent> = {
       has_current_user_saved: false,
-      save_count: agreement.save_count - 1
+      save_count: digital_content.save_count - 1
     }
 
-    if (agreement.remix_of?.agreements?.[0]?.user?.user_id === userId) {
+    if (digital_content.remix_of?.agreements?.[0]?.user?.user_id === userId) {
       // This repost is a co-sign
       const remixOf = {
         agreements: [
           {
-            ...agreement.remix_of.agreements[0],
+            ...digital_content.remix_of.agreements[0],
             has_remix_author_saved: false
           }
         ]
@@ -497,7 +497,7 @@ export function* confirmUnsaveAgreement(agreementId: ID) {
         )
         if (!confirmed) {
           throw new Error(
-            `Could not confirm unsave agreement for agreement id ${agreementId}`
+            `Could not confirm unsave digital_content for digital_content id ${agreementId}`
           )
         }
         return agreementId
@@ -562,17 +562,17 @@ export function* watchRecordListen() {
     socialActions.RECORD_LISTEN,
     function* (action: ReturnType<typeof socialActions.recordListen>) {
       if (NATIVE_MOBILE) return
-      console.debug('Listen recorded for agreement', action.agreementId)
+      console.debug('Listen recorded for digital_content', action.agreementId)
 
       const userId = yield* select(getUserId)
-      const agreement = yield* select(getAgreement, { id: action.agreementId })
-      if (!userId || !agreement) return
+      const digital_content = yield* select(getAgreement, { id: action.agreementId })
+      if (!userId || !digital_content) return
 
-      if (userId !== agreement.owner_id || agreement.play_count < 10) {
+      if (userId !== digital_content.owner_id || digital_content.play_count < 10) {
         yield* call(ColivingBackend.recordAgreementListen, action.agreementId)
       }
 
-      // Record agreement listen analytics event
+      // Record digital_content listen analytics event
       const event = make(Name.LISTEN, { agreementId: action.agreementId })
       yield* put(event)
 
@@ -598,21 +598,21 @@ function* watchDownloadAgreement() {
         yield* call(waitForValue, getUserId)
       }
 
-      const agreement = yield* select(getAgreement, { id: action.agreementId })
-      if (!agreement) return
+      const digital_content = yield* select(getAgreement, { id: action.agreementId })
+      if (!digital_content) return
 
-      const userId = agreement.owner_id
+      const userId = digital_content.owner_id
       const user = yield* select(getUser, { id: userId })
       if (!user) return
 
       let filename
-      // Determine if this agreement requires a follow to download.
-      // In the case of a stem, check the parent agreement
+      // Determine if this digital_content requires a follow to download.
+      // In the case of a stem, check the parent digital_content
       let requiresFollow =
-        agreement.download?.requires_follow && userId !== accountUserId
-      if (agreement.stem_of?.parent_agreement_id) {
+        digital_content.download?.requires_follow && userId !== accountUserId
+      if (digital_content.stem_of?.parent_digital_content_id) {
         const parentAgreement = yield* select(getAgreement, {
-          id: agreement.stem_of?.parent_agreement_id
+          id: digital_content.stem_of?.parent_digital_content_id
         })
         requiresFollow =
           requiresFollow ||
@@ -620,7 +620,7 @@ function* watchDownloadAgreement() {
 
         filename = `${parentAgreement?.title} - ${action.stemName} - ${user.name} (Coliving).mp3`
       } else {
-        filename = `${agreement.title} - ${user.name} (Coliving).mp3`
+        filename = `${digital_content.title} - ${user.name} (Coliving).mp3`
       }
 
       // If a follow is required and the current user is not following
@@ -660,17 +660,17 @@ function* watchShareAgreement() {
     function* (action: ReturnType<typeof socialActions.shareAgreement>) {
       const { agreementId } = action
 
-      const agreement = yield* select(getAgreement, { id: agreementId })
-      if (!agreement) return
+      const digital_content = yield* select(getAgreement, { id: agreementId })
+      if (!digital_content) return
 
-      const user = yield* select(getUser, { id: agreement.owner_id })
+      const user = yield* select(getUser, { id: digital_content.owner_id })
       if (!user) return
 
-      const link = agreement.permalink
-      share(link, formatShareText(agreement.title, user.name))
+      const link = digital_content.permalink
+      share(link, formatShareText(digital_content.title, user.name))
 
       const event = make(Name.SHARE, {
-        kind: 'agreement',
+        kind: 'digital_content',
         source: action.source,
         id: agreementId,
         url: link

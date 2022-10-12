@@ -348,7 +348,7 @@ export const removeContentListLibraryTempContentLists = (
 /**
  * Removes duplicates in a contentList library
  * @param library
- * @param ids ids to keep agreement of as we recurse
+ * @param ids ids to keep digital_content of as we recurse
  */
 export const removeContentListLibraryDuplicates = (
   library: ContentListLibrary | ContentListLibraryFolder,

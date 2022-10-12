@@ -78,7 +78,7 @@ const NATIVE_MOBILE = process.env.REACT_APP_NATIVE_MOBILE
 
 type OwnProps = {
   onClose: () => void
-  live: AudioState
+  digitalcoin: AudioState
 }
 
 type NowPlayingProps = OwnProps &
@@ -94,13 +94,13 @@ const messages = {
 }
 
 const g = withNullGuard((wide: NowPlayingProps) => {
-  const { uid, source, user, agreement, collectible } = wide.currentQueueItem
+  const { uid, source, user, digital_content, collectible } = wide.currentQueueItem
   if (
-    ((uid !== null && agreement !== null) || collectible !== null) &&
+    ((uid !== null && digital_content !== null) || collectible !== null) &&
     source !== null &&
     user !== null
   ) {
-    const currentQueueItem = { uid, source, user, agreement, collectible }
+    const currentQueueItem = { uid, source, user, digital_content, collectible }
     return {
       ...wide,
       currentQueueItem
@@ -114,7 +114,7 @@ const NowPlaying = g(
     currentQueueItem,
     currentUserId,
     playCounter,
-    live,
+    digitalcoin,
     isPlaying,
     isBuffering,
     play,
@@ -136,7 +136,7 @@ const NowPlaying = g(
     castMethod,
     dominantColors
   }) => {
-    const { uid, agreement, user, collectible } = currentQueueItem
+    const { uid, digital_content, user, collectible } = currentQueueItem
 
     // Keep a ref for the artwork and dynamically resize the width of the
     // image as the height changes (which is flexed).
@@ -161,12 +161,12 @@ const NowPlaying = g(
     const startSeeking = useCallback(() => {
       clearInterval(seekInterval.current)
       seekInterval.current = window.setInterval(async () => {
-        if (!live) return
-        const position = await live.getPosition()
-        const duration = await live.getDuration()
+        if (!digitalcoin) return
+        const position = await digitalcoin.getPosition()
+        const duration = await digitalcoin.getDuration()
         setTiming({ position, duration })
       }, SEEK_INTERVAL)
-    }, [live, setTiming])
+    }, [digitalcoin, setTiming])
 
     // Clean up
     useEffect(() => {
@@ -195,12 +195,12 @@ const NowPlaying = g(
     const record = useRecord()
 
     let displayInfo
-    if (agreement) {
-      displayInfo = agreement
+    if (digital_content) {
+      displayInfo = digital_content
     } else {
       displayInfo = {
         title: collectible?.name as string,
-        agreement_id: collectible?.id as string,
+        digital_content_id: collectible?.id as string,
         owner_id: user?.user_id,
         _cover_art_sizes: {
           [SquareSizes.SIZE_480_BY_480]:
@@ -216,7 +216,7 @@ const NowPlaying = g(
     }
     const {
       title,
-      agreement_id,
+      digital_content_id,
       owner_id,
       _cover_art_sizes,
       has_current_user_saved,
@@ -227,7 +227,7 @@ const NowPlaying = g(
     const { name, handle } = user
     const image =
       useAgreementCoverArt(
-        agreement_id,
+        digital_content_id,
         _cover_art_sizes,
         SquareSizes.SIZE_480_BY_480
       ) || _cover_art_sizes[SquareSizes.SIZE_480_BY_480]
@@ -248,7 +248,7 @@ const NowPlaying = g(
         pause()
         record(
           make(Name.PLAYBACK_PAUSE, {
-            id: `${agreement_id}`,
+            id: `${digital_content_id}`,
             source: PlaybackSource.NOW_PLAYING
           })
         )
@@ -256,7 +256,7 @@ const NowPlaying = g(
         play()
         record(
           make(Name.PLAYBACK_PLAY, {
-            id: `${agreement_id}`,
+            id: `${digital_content_id}`,
             source: PlaybackSource.NOW_PLAYING
           })
         )
@@ -264,25 +264,25 @@ const NowPlaying = g(
     }
 
     const toggleFavorite = useCallback(() => {
-      if (agreement && agreement_id && typeof agreement_id !== 'string') {
-        has_current_user_saved ? unsave(agreement_id) : save(agreement_id)
+      if (digital_content && digital_content_id && typeof digital_content_id !== 'string') {
+        has_current_user_saved ? unsave(digital_content_id) : save(digital_content_id)
       }
-    }, [agreement, agreement_id, has_current_user_saved, unsave, save])
+    }, [digital_content, digital_content_id, has_current_user_saved, unsave, save])
 
     const toggleRepost = useCallback(() => {
-      if (agreement && agreement_id && typeof agreement_id !== 'string') {
-        has_current_user_reposted ? undoRepost(agreement_id) : repost(agreement_id)
+      if (digital_content && digital_content_id && typeof digital_content_id !== 'string') {
+        has_current_user_reposted ? undoRepost(digital_content_id) : repost(digital_content_id)
       }
-    }, [agreement, agreement_id, has_current_user_reposted, undoRepost, repost])
+    }, [digital_content, digital_content_id, has_current_user_reposted, undoRepost, repost])
 
     const onShare = useCallback(() => {
-      if (agreement && agreement_id && typeof agreement_id !== 'string') share(agreement_id)
-    }, [share, agreement, agreement_id])
+      if (digital_content && digital_content_id && typeof digital_content_id !== 'string') share(digital_content_id)
+    }, [share, digital_content, digital_content_id])
 
     const goToAgreementPage = () => {
       onClose()
-      if (agreement) {
-        goToRoute(agreement.permalink)
+      if (digital_content) {
+        goToRoute(digital_content.permalink)
       } else {
         goToRoute(collectibleDetailsPage(user.handle, collectible?.id ?? ''))
       }
@@ -308,7 +308,7 @@ const NowPlaying = g(
             : OverflowAction.FAVORITE
           : null,
         !collectible ? OverflowAction.ADD_TO_CONTENT_LIST : null,
-        agreement && OverflowAction.VIEW_AGREEMENT_PAGE,
+        digital_content && OverflowAction.VIEW_AGREEMENT_PAGE,
         collectible && OverflowAction.VIEW_COLLECTIBLE_PAGE,
         OverflowAction.VIEW_LANDLORD_PAGE
       ].filter(Boolean) as OverflowAction[]
@@ -319,21 +319,21 @@ const NowPlaying = g(
         [OverflowAction.VIEW_LANDLORD_PAGE]: onClose
       }
 
-      clickOverflow(agreement_id, overflowActions, overflowCallbacks)
+      clickOverflow(digital_content_id, overflowActions, overflowCallbacks)
     }, [
       currentUserId,
       owner_id,
       collectible,
       has_current_user_reposted,
       has_current_user_saved,
-      agreement,
+      digital_content,
       onClose,
       clickOverflow,
-      agreement_id
+      digital_content_id
     ])
 
     const onPrevious = () => {
-      if (agreement?.genre === Genre.PODCASTS) {
+      if (digital_content?.genre === Genre.PODCASTS) {
         const position = timing.position
         const newPosition = position - SKIP_DURATION_SEC
         seek(Math.max(0, newPosition))
@@ -351,7 +351,7 @@ const NowPlaying = g(
     }
 
     const onNext = () => {
-      if (agreement?.genre === Genre.PODCASTS) {
+      if (digital_content?.genre === Genre.PODCASTS) {
         const newPosition = timing.position + SKIP_DURATION_SEC
         seek(Math.min(newPosition, timing.duration))
         // Update mediakey so scrubber updates
@@ -442,8 +442,8 @@ const NowPlaying = g(
             includeTimestamps
             onScrubRelease={seek}
             style={{
-              railListenedColor: 'var(--agreement-slider-rail)',
-              handleColor: 'var(--agreement-slider-handle)'
+              railListenedColor: 'var(--digital-content-slider-rail)',
+              handleColor: 'var(--digital-content-slider-handle)'
             }}
           />
         </div>
@@ -511,13 +511,13 @@ function makeMapStateToProps() {
       currentQueueItem,
       currentUserId: getUserId(state),
       playCounter: getCounter(state),
-      live: getAudio(state),
+      digitalcoin: getAudio(state),
       isPlaying: getPlaying(state),
       isBuffering: getBuffering(state),
       isCasting: getIsCasting(state),
       castMethod: getMethod(state),
       dominantColors: getDominantColorsByAgreement(state, {
-        agreement: currentQueueItem.agreement
+        digital_content: currentQueueItem.digital_content
       })
     }
   }
@@ -553,7 +553,7 @@ function mapDispatchToProps(dispatch: Dispatch) {
     share: (agreementId: ID) =>
       dispatch(
         requestOpenShareModal({
-          type: 'agreement',
+          type: 'digital_content',
           agreementId,
           source: ShareSource.NOW_PLAYING
         })

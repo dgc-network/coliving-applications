@@ -27,7 +27,7 @@ import { LandlordPopover } from 'components/landlord/landlordPopover'
 import Draggable from 'components/dragndrop/draggable'
 import Menu from 'components/menu/menu'
 import { OwnProps as AgreementMenuProps } from 'components/menu/agreementMenu'
-import { AgreementArtwork } from 'components/agreement/desktop/Artwork'
+import { AgreementArtwork } from 'components/digital_content/desktop/Artwork'
 import UserBadges from 'components/userBadges/userBadges'
 import {
   setUsers,
@@ -74,7 +74,7 @@ const ConnectedAgreementTile = memo(
     uid,
     index,
     size,
-    agreement,
+    digital_content,
     user,
     ordered,
     showLandlordPick,
@@ -101,7 +101,7 @@ const ConnectedAgreementTile = memo(
     const {
       is_delete,
       is_unlisted: isUnlisted,
-      agreement_id: agreementId,
+      digital_content_id: agreementId,
       title,
       permalink,
       repost_count,
@@ -115,7 +115,7 @@ const ConnectedAgreementTile = memo(
       _cover_art_sizes,
       play_count,
       duration
-    } = getAgreementWithFallback(agreement)
+    } = getAgreementWithFallback(digital_content)
 
     const {
       _landlord_pick,
@@ -183,7 +183,7 @@ const ConnectedAgreementTile = memo(
         agreementId,
         agreementTitle: title,
         agreementPermalink: permalink,
-        type: 'agreement'
+        type: 'digital_content'
       }
 
       return (
@@ -247,7 +247,7 @@ const ConnectedAgreementTile = memo(
     }
 
     const renderStats = () => {
-      const contentTitle = 'agreement' // undefined,  contentList or album -  undefined is agreement
+      const contentTitle = 'digital_content' // undefined,  contentList or album -  undefined is digital_content
       const statSize = 'large'
       return (
         <div className={cn(styles.socialInfo)}>
@@ -310,7 +310,7 @@ const ConnectedAgreementTile = memo(
     return (
       <Draggable
         text={title}
-        kind='agreement'
+        kind='digital_content'
         id={agreementId}
         isOwner={isOwner}
         isDisabled={disableActions || showSkeleton}
@@ -357,7 +357,7 @@ const ConnectedAgreementTile = memo(
 
 function mapStateToProps(state: AppState, ownProps: OwnProps) {
   return {
-    agreement: getAgreement(state, { uid: ownProps.uid }),
+    digital_content: getAgreement(state, { uid: ownProps.uid }),
     user: getUserFromAgreement(state, { uid: ownProps.uid }),
     playingUid: getUid(state),
     isBuffering: getBuffering(state),
@@ -372,7 +372,7 @@ function mapDispatchToProps(dispatch: Dispatch) {
     shareAgreement: (agreementId: ID) =>
       dispatch(
         requestOpenShareModal({
-          type: 'agreement',
+          type: 'digital_content',
           agreementId,
           source: ShareSource.TILE
         })

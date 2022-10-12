@@ -1,4 +1,4 @@
-import { Kind, ID, UID, Status, Agreement } from '@coliving/common'
+import { Kind, ID, UID, Status, DigitalContent } from '@coliving/common'
 
 import { CommonState } from 'common/store'
 import { getEntry, getAllEntries } from 'common/store/cache/selectors'
@@ -31,28 +31,28 @@ export const getAgreements = (
   }
 ) => {
   if (props && props.ids) {
-    const agreements: { [id: number]: Agreement } = {}
+    const agreements: { [id: number]: DigitalContent } = {}
     props.ids.forEach((id) => {
-      const agreement = getAgreement(state, { id })
-      if (agreement) {
-        agreements[id] = agreement
+      const digital_content = getAgreement(state, { id })
+      if (digital_content) {
+        agreements[id] = digital_content
       }
     })
     return agreements
   } else if (props && props.uids) {
-    const agreements: { [id: number]: Agreement } = {}
+    const agreements: { [id: number]: DigitalContent } = {}
     props.uids.forEach((uid) => {
-      const agreement = getAgreement(state, { uid })
-      if (agreement) {
-        agreements[agreement.agreement_id] = agreement
+      const digital_content = getAgreement(state, { uid })
+      if (digital_content) {
+        agreements[digital_content.digital_content_id] = digital_content
       }
     })
     return agreements
   } else if (props && props.permalinks) {
-    const agreements: { [permalink: string]: Agreement } = {}
+    const agreements: { [permalink: string]: DigitalContent } = {}
     props.permalinks.forEach((permalink) => {
-      const agreement = getAgreement(state, { permalink })
-      if (agreement) agreements[permalink] = agreement
+      const digital_content = getAgreement(state, { permalink })
+      if (digital_content) agreements[permalink] = digital_content
     })
     return agreements
   }
@@ -64,7 +64,7 @@ export const getAgreementsByUid = (state: CommonState) => {
   return Object.keys(state.agreements.uids).reduce((entries, uid) => {
     entries[uid] = getAgreement(state, { uid })
     return entries
-  }, {} as { [uid: string]: Agreement | null })
+  }, {} as { [uid: string]: DigitalContent | null })
 }
 
 export const getStatuses = (state: CommonState, props: { ids: ID[] }) => {

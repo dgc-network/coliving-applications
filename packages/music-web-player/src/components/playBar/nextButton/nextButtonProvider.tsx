@@ -9,8 +9,8 @@ import NextButton, { NextButtonProps } from './nextButton'
 type NextButtonProviderProps = NextButtonProps | ForwardSkipButtonProps
 
 const NextButtonProvider = (props: NextButtonProviderProps) => {
-  const { agreement } = useSelector(makeGetCurrent())
-  const isPodcast = agreement && agreement.genre === Genre.PODCASTS
+  const { digital_content } = useSelector(makeGetCurrent())
+  const isPodcast = digital_content && digital_content.genre === Genre.PODCASTS
   return isPodcast ? (
     <ForwardSkipButton {...props} />
   ) : (

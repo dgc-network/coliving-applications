@@ -360,7 +360,7 @@ describe('Rewards Page Sagas', () => {
       )
     })
 
-    it('should update the live balance and disbursement status on success', () => {
+    it('should update the digitalcoin balance and disbursement status on success', () => {
       return (
         expectSaga(saga)
           .dispatch(
@@ -542,7 +542,7 @@ describe('Rewards Page Sagas', () => {
         user_id: '1'
       },
       {
-        challenge_id: 'agreement-upload',
+        challenge_id: 'digital-content-upload',
         is_complete: true,
         is_disbursed: true,
         is_active: true,

@@ -3,12 +3,12 @@ import Texture from 'gl-texture2d'
 import ndarray from 'ndarray'
 
 export default class GLAudioAnalyser {
-  constructor (gl, live, ctx) {
+  constructor (gl, digitalcoin, ctx) {
     this.gl = gl
-    this.live = live
+    this.digitalcoin = digitalcoin
     this.ctx = ctx
 
-    this.waa = Analyser(this.live, this.ctx, { audible: false })
+    this.waa = Analyser(this.digitalcoin, this.ctx, { audible: false })
 
     var size = (this.waa.analyser[0] || this.waa.analyser).frequencyBinCount
 

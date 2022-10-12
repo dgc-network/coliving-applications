@@ -21,8 +21,8 @@ import { getEntityRoute, getEntityScreen } from '../Notification/utils'
 import { useDrawerNavigation } from '../useDrawerNavigation'
 
 const messages = {
-  title: 'Agreement Added to ContentList',
-  addedAgreement: ' added your agreement ',
+  title: 'DigitalContent Added to ContentList',
+  addedAgreement: ' added your digital_content ',
   toContentList: ' to their contentList '
 }
 type AddAgreementToContentListNotificationProps = {
@@ -37,7 +37,7 @@ export const AddAgreementToContentListNotification = (
     (state) => getNotificationEntities(state, notification),
     isEqual
   )
-  const { agreement, contentList } = entities
+  const { digital_content, contentList } = entities
   const contentListOwner = contentList.user
 
   const navigation = useDrawerNavigation()
@@ -62,7 +62,7 @@ export const AddAgreementToContentListNotification = (
           <NotificationText>
             <UserNameLink user={contentListOwner} />
             {messages.addedAgreement}
-            <EntityLink entity={agreement} />
+            <EntityLink entity={digital_content} />
             {messages.toContentList}
             <EntityLink entity={contentList} />
           </NotificationText>

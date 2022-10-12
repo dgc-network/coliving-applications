@@ -20,7 +20,7 @@ public class MainActivity extends ReactActivity {
   @Override
   public void invokeDefaultOnBackPressed() {
       // Not calling super. invokeDefaultOnBackPressed() b/c it will close the app.
-      // Instead, put the app in the backgroud to allow live to keep playing.
+      // Instead, put the app in the backgroud to allow digitalcoin to keep playing.
       moveTaskToBack(true);
   }
 

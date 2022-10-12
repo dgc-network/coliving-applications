@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from 'react'
 
-import type { Collection, Agreement, User } from '@coliving/common'
+import type { Collection, DigitalContent, User } from '@coliving/common'
 import {
   FavoriteSource,
   PlaybackSource,
@@ -37,7 +37,7 @@ import { useDispatchWeb } from 'app/hooks/useDispatchWeb'
 import { useNavigation } from 'app/hooks/useNavigation'
 import { isEqual, useSelectorWeb } from 'app/hooks/useSelectorWeb'
 import type { AppState } from 'app/store'
-import { getPlayingUid } from 'app/store/live/selectors'
+import { getPlayingUid } from 'app/store/digitalcoin/selectors'
 
 import { CollectionTileAgreementList } from './CollectionTileAgreementList'
 import { LineupTile } from './lineupTile'
@@ -100,11 +100,11 @@ const CollectionTileComponent = ({
   const currentUserId = useSelectorWeb(getUserId)
   const currentAgreement = useSelector((state: AppState) => {
     const uid = getPlayingUid(state)
-    return agreements.find((agreement) => agreement.uid === uid) ?? null
+    return agreements.find((digital_content) => digital_content.uid === uid) ?? null
   })
   const isPlayingUid = useSelector((state: AppState) => {
     const uid = getPlayingUid(state)
-    return agreements.some((agreement) => agreement.uid === uid)
+    return agreements.some((digital_content) => digital_content.uid === uid)
   })
 
   const {
@@ -141,7 +141,7 @@ const CollectionTileComponent = ({
 
       togglePlay({
         uid: currentAgreement?.uid ?? agreements[0]?.uid ?? null,
-        id: currentAgreement?.agreement_id ?? agreements[0]?.agreement_id ?? null,
+        id: currentAgreement?.digital_content_id ?? agreements[0]?.digital_content_id ?? null,
         source: PlaybackSource.CONTENT_LIST_TILE_AGREEMENT,
         isPlaying,
         isPlayingUid
@@ -159,7 +159,7 @@ const CollectionTileComponent = ({
 
   const duration = useMemo(() => {
     return agreements.reduce(
-      (duration: number, agreement: Agreement) => duration + agreement.duration,
+      (duration: number, digital_content: DigitalContent) => duration + digital_content.duration,
       0
     )
   }, [agreements])

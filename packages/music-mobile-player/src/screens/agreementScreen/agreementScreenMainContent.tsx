@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
 
-import type { ID, LineupState, Agreement, User, Nullable } from '@coliving/common'
+import type { ID, LineupState, DigitalContent, User, Nullable } from '@coliving/common'
 import { agreementRemixesPage } from '@coliving/web/src/utils/route'
 import { View } from 'react-native'
 
@@ -24,8 +24,8 @@ const useStyles = makeStyles(({ spacing }) => ({
 type AgreementScreenMainContentProps = {
   lineup: LineupState<{ id: ID }>
   lineupHeader: ReactNode
-  remixParentAgreement: Nullable<Agreement & { user: User }>
-  agreement: Agreement | SearchAgreement
+  remixParentAgreement: Nullable<DigitalContent & { user: User }>
+  digital_content: DigitalContent | SearchAgreement
   user: User | SearchUser
 }
 
@@ -35,18 +35,18 @@ type AgreementScreenMainContentProps = {
 export const AgreementScreenMainContent = ({
   lineup,
   lineupHeader,
-  agreement,
+  digital_content,
   user
 }: AgreementScreenMainContentProps) => {
   const navigation = useNavigation()
   const styles = useStyles()
 
-  const remixAgreementIds = agreement._remixes?.map(({ agreement_id }) => agreement_id) ?? null
+  const remixAgreementIds = digital_content._remixes?.map(({ digital_content_id }) => digital_content_id) ?? null
 
   const handlePressGoToRemixes = () => {
     navigation.push({
-      native: { screen: 'AgreementRemixes', params: { id: agreement.agreement_id } },
-      web: { route: agreementRemixesPage(agreement.permalink) }
+      native: { screen: 'AgreementRemixes', params: { id: digital_content.digital_content_id } },
+      web: { route: agreementRemixesPage(digital_content.permalink) }
     })
   }
 
@@ -54,20 +54,20 @@ export const AgreementScreenMainContent = ({
     <View style={styles.root}>
       <View style={styles.headerContainer}>
         <AgreementScreenDetailsTile
-          agreement={agreement}
+          digital_content={digital_content}
           user={user}
           uid={lineup?.entries?.[0]?.uid}
           isLineupLoading={!lineup?.entries?.[0]}
         />
       </View>
 
-      {agreement.field_visibility?.remixes &&
+      {digital_content.field_visibility?.remixes &&
         remixAgreementIds &&
         remixAgreementIds.length > 0 && (
           <AgreementScreenRemixes
             agreementIds={remixAgreementIds}
             onPressGoToRemixes={handlePressGoToRemixes}
-            count={agreement._remixes_count ?? null}
+            count={digital_content._remixes_count ?? null}
           />
         )}
       {lineupHeader}

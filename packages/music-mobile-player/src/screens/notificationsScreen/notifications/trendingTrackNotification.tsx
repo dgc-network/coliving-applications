@@ -29,7 +29,7 @@ const getRankSuffix = (rank: number) => {
 
 const messages = {
   title: 'Trending on Coliving!',
-  your: 'Your agreement',
+  your: 'Your digital_content',
   is: 'is',
   trending: 'on Trending right now!'
 }
@@ -44,22 +44,22 @@ export const TrendingAgreementNotification = (
   const { notification } = props
   const { rank } = notification
   const rankSuffix = getRankSuffix(rank)
-  const agreement = useSelectorWeb(
+  const digital_content = useSelectorWeb(
     (state) => getNotificationEntity(state, notification),
     isEqual
   ) as Nullable<AgreementEntity>
   const navigation = useDrawerNavigation()
 
   const handlePress = useCallback(() => {
-    if (agreement) {
+    if (digital_content) {
       navigation.navigate({
-        native: { screen: 'Agreement', params: { id: agreement.agreement_id } },
-        web: { route: getAgreementRoute(agreement) }
+        native: { screen: 'DigitalContent', params: { id: digital_content.digital_content_id } },
+        web: { route: getAgreementRoute(digital_content) }
       })
     }
-  }, [navigation, agreement])
+  }, [navigation, digital_content])
 
-  if (!agreement) return null
+  if (!digital_content) return null
 
   return (
     <NotificationTile notification={notification} onPress={handlePress}>
@@ -67,7 +67,7 @@ export const TrendingAgreementNotification = (
         <NotificationTitle>{messages.title}</NotificationTitle>
       </NotificationHeader>
       <NotificationText>
-        {messages.your} <EntityLink entity={agreement} /> {messages.is} {rank}
+        {messages.your} <EntityLink entity={digital_content} /> {messages.is} {rank}
         {rankSuffix} {messages.trending}
       </NotificationText>
     </NotificationTile>

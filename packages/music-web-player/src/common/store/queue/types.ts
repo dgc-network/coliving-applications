@@ -1,4 +1,4 @@
-import { ID, UID, Collectible, Agreement, User } from '@coliving/common'
+import { ID, UID, Collectible, DigitalContent, User } from '@coliving/common'
 
 export enum RepeatMode {
   OFF = 'OFF',
@@ -31,6 +31,6 @@ export type Queueable = {
 export type QueueItem = {
   uid: UID | null
   source: Source | null
-  agreement: Agreement | null
+  digital_content: DigitalContent | null
   user: User | null
 }

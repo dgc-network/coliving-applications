@@ -8,7 +8,7 @@ import {
   PlaybackSource,
   ShareSource,
   FavoriteType,
-  Agreement
+  DigitalContent
 } from '@coliving/common'
 import { push as pushRoute } from 'connected-react-router'
 import { connect } from 'react-redux'
@@ -36,7 +36,7 @@ import { getTheme } from 'common/store/ui/theme/selectors'
 import { setFavorite } from 'common/store/userList/favorites/actions'
 import { setRepost } from 'common/store/userList/reposts/actions'
 import { RepostType } from 'common/store/userList/reposts/types'
-import { ContentListTileProps } from 'components/agreement/types'
+import { ContentListTileProps } from 'components/digital_content/types'
 import { useRecord, make } from 'store/analytics/actions'
 import { getUid, getBuffering, getPlaying } from 'store/player/selectors'
 import { AppState } from 'store/types'
@@ -93,7 +93,7 @@ const ConnectedContentListTile = memo(
     const user = getUserWithFallback(nullableUser)
     const record = useRecord()
     const isActive = useMemo(() => {
-      return agreements.some((agreement) => agreement.uid === playingUid)
+      return agreements.some((digital_content) => digital_content.uid === playingUid)
     }, [agreements, playingUid])
 
     const isOwner = collection.content_list_owner_id === currentUserId
@@ -187,7 +187,7 @@ const ConnectedContentListTile = memo(
           )
         } else {
           const agreementUid = agreements[0] ? agreements[0].uid : null
-          const agreementId = agreements[0] ? agreements[0].agreement_id : null
+          const agreementId = agreements[0] ? agreements[0].digital_content_id : null
           if (!agreementUid || !agreementId) return
           playAgreement(agreementUid)
           record(
@@ -252,11 +252,11 @@ const ConnectedContentListTile = memo(
         ownerId={collection.content_list_owner_id}
         coverArtSizes={collection._cover_art_sizes}
         duration={agreements.reduce(
-          (duration: number, agreement: Agreement) => duration + agreement.duration,
+          (duration: number, digital_content: DigitalContent) => duration + digital_content.duration,
           0
         )}
         agreements={agreements}
-        agreementCount={collection.agreement_count}
+        agreementCount={collection.digital_content_count}
         size={size}
         repostCount={collection.repost_count}
         saveCount={collection.save_count}

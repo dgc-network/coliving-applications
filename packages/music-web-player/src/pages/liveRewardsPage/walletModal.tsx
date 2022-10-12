@@ -308,7 +308,7 @@ const shouldAllowDismiss = (modalState: Nullable<ModalState>) => {
   // Do not allow dismiss while
   // 1. In the process of sending tokens
   // 2. In the process of removing a connected wallet
-  // 3. In the process of transfering live from eth to sol
+  // 3. In the process of transfering digitalcoin from eth to sol
   if (!modalState) return true
   return (
     !(

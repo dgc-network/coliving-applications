@@ -6,8 +6,8 @@ const messages = {
   hiddenAgreementTitle: 'HIDDEN AGREEMENT'
 }
 
-// Presents the Hidden Agreement title. Extracted for use in mobile and desktop
-// agreement pages.
+// Presents the Hidden DigitalContent title. Extracted for use in mobile and desktop
+// digital_content pages.
 const HiddenAgreementHeader = () => {
   return (
     <div className={styles.hiddenHeaderContainer}>

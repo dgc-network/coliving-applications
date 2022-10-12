@@ -3,7 +3,7 @@ import { AccountInfo } from '@solana/spl-token'
 import { PublicKey } from '@solana/web3.js'
 
 import { waitForLibsInit } from 'services/colivingBackend/eagerLoadUtils'
-import { agreement } from 'store/analytics/providers'
+import { digital_content } from 'store/analytics/providers'
 
 // @ts-ignore
 const libs = () => window.colivingLibs
@@ -34,23 +34,23 @@ export const createUserBankIfNeeded = async (feePayerOverride = null) => {
     const userbankExists = await doesUserBankExist()
     if (userbankExists) return
     console.warn(`Userbank doesn't exist, attempting to create...`)
-    await agreement(Name.CREATE_USER_BANK_REQUEST, { userId })
+    await digital_content(Name.CREATE_USER_BANK_REQUEST, { userId })
     const { error, errorCode } = await createUserBank(feePayerOverride)
     if (error || errorCode) {
       console.error(
         `Failed to create userbank, with err: ${error}, ${errorCode}`
       )
-      await agreement(Name.CREATE_USER_BANK_FAILURE, {
+      await digital_content(Name.CREATE_USER_BANK_FAILURE, {
         userId,
         errorCode,
         error: (error as any).toString()
       })
     } else {
       console.log(`Successfully created userbank!`)
-      await agreement(Name.CREATE_USER_BANK_SUCCESS, { userId })
+      await digital_content(Name.CREATE_USER_BANK_SUCCESS, { userId })
     }
   } catch (err) {
-    await agreement(Name.CREATE_USER_BANK_FAILURE, {
+    await digital_content(Name.CREATE_USER_BANK_FAILURE, {
       userId,
       errorMessage: (err as any).toString()
     })

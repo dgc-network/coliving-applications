@@ -1,7 +1,7 @@
 import { ID } from 'models/identifiers'
 
 export enum FavoriteType {
-  AGREEMENT = 'agreement',
+  AGREEMENT = 'digital_content',
   CONTENT_LIST = 'content_list'
 }
 

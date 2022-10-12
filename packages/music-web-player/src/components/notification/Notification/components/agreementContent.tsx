@@ -8,15 +8,15 @@ import { useAgreementCoverArt } from 'hooks/useAgreementCoverArt'
 import styles from './agreementContent.module.css'
 
 type AgreementContentProps = {
-  agreement: AgreementEntity
+  digital_content: AgreementEntity
 }
 
 export const AgreementContent = (props: AgreementContentProps) => {
-  const { agreement } = props
+  const { digital_content } = props
 
   const image = useAgreementCoverArt(
-    agreement.agreement_id,
-    agreement._cover_art_sizes,
+    digital_content.digital_content_id,
+    digital_content._cover_art_sizes,
     SquareSizes.SIZE_150_BY_150
   )
 
@@ -28,7 +28,7 @@ export const AgreementContent = (props: AgreementContentProps) => {
           image={image}
         />
       </CoSign>
-      <span className={styles.agreementContentText}>{agreement.title}</span>
+      <span className={styles.agreementContentText}>{digital_content.title}</span>
     </div>
   )
 }

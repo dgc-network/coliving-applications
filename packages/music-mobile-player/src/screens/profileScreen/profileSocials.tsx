@@ -10,7 +10,7 @@ import { IconButton, useLink } from 'app/components/core'
 import Skeleton from 'app/components/skeleton'
 import { makeStyles } from 'app/styles/makeStyles'
 import { EventNames } from 'app/types/analytics'
-import { make, agreement } from 'app/utils/analytics'
+import { make, digital_content } from 'app/utils/analytics'
 
 import { ProfileBadge } from './profileBadge'
 import { useSelectProfile } from './selectors'
@@ -54,7 +54,7 @@ export const ProfileSocials = () => {
   )
 
   const handlePressTwitter = useCallback(() => {
-    agreement(
+    digital_content(
       make({
         eventName: EventNames.PROFILE_PAGE_CLICK_TWITTER,
         handle: sanitizedHandle,
@@ -65,7 +65,7 @@ export const ProfileSocials = () => {
   }, [onPressTwitter, sanitizedHandle, twitter_handle])
 
   const handlePressInstagram = useCallback(() => {
-    agreement(
+    digital_content(
       make({
         eventName: EventNames.PROFILE_PAGE_CLICK_INSTAGRAM,
         handle: sanitizedHandle,
@@ -76,7 +76,7 @@ export const ProfileSocials = () => {
   }, [onPressInstagram, sanitizedHandle, instagram_handle])
 
   const handlePressTikTok = useCallback(() => {
-    agreement(
+    digital_content(
       make({
         eventName: EventNames.PROFILE_PAGE_CLICK_TIKTOK,
         handle: sanitizedHandle,

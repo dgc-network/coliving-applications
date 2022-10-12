@@ -39,8 +39,8 @@ import {
 
 /** Counts instances of agreementId in a contentList. */
 const countAgreementIds = (contentListContents, agreementId) => {
-  return contentListContents.agreement_ids
-    .map((t) => t.agreement)
+  return contentListContents.digital_content_ids
+    .map((t) => t.digital_content)
     .reduce((acc, t) => {
       if (t === agreementId) acc += 1
       return acc
@@ -54,11 +54,11 @@ function* watchCreateContentList() {
 }
 
 function* createContentListAsync(action) {
-  // Potentially grab artwork from the initializing agreement.
+  // Potentially grab artwork from the initializing digital_content.
   if (action.initAgreementId) {
-    const agreement = yield select(getAgreement, { id: action.initAgreementId })
-    action.formFields._cover_art_sizes = agreement._cover_art_sizes
-    action.formFields.cover_art_sizes = agreement.cover_art_sizes
+    const digital_content = yield select(getAgreement, { id: action.initAgreementId })
+    action.formFields._cover_art_sizes = digital_content._cover_art_sizes
+    action.formFields.cover_art_sizes = digital_content.cover_art_sizes
   }
 
   yield call(waitForBackendSetup)
@@ -93,7 +93,7 @@ function* createContentListAsync(action) {
   contentList.content_list_id = uid
   contentList.content_list_owner_id = userId
   contentList.is_private = true
-  contentList.content_list_contents = { agreement_ids: [] }
+  contentList.content_list_contents = { digital_content_ids: [] }
   if (contentList.artwork) {
     contentList._cover_art_sizes = {
       ...contentList._cover_art_sizes,
@@ -396,8 +396,8 @@ function* addAgreementToContentListAsync(action) {
     `collection:${action.contentListId}`
   )
   contentList.content_list_contents = {
-    agreement_ids: contentList.content_list_contents.agreement_ids.concat({
-      agreement: action.agreementId,
+    digital_content_ids: contentList.content_list_contents.digital_content_ids.concat({
+      digital_content: action.agreementId,
       time: Math.round(Date.now() / 1000),
       uid: agreementUid
     })
@@ -447,7 +447,7 @@ function* confirmAddAgreementToContentList(userId, contentListId, agreementId, c
         const confirmed = yield call(confirmTransaction, blockHash, blockNumber)
         if (!confirmed) {
           throw new Error(
-            `Could not confirm add contentList agreement for contentList id ${contentListId} and agreement id ${agreementId}`
+            `Could not confirm add contentList digital_content for contentList id ${contentListId} and digital_content id ${agreementId}`
           )
         }
         return confirmedContentListId
@@ -460,22 +460,22 @@ function* confirmAddAgreementToContentList(userId, contentListId, agreementId, c
 
         const contentList = yield select(getCollection, { id: contentListId })
 
-        /** Since "add agreement" calls are parallelized, agreements may be added
+        /** Since "add digital_content" calls are parallelized, agreements may be added
          * out of order. Here we check if agreements made it in the intended order;
          * if not, we reorder them into the correct order.
          */
         const numberOfAgreementsMatch =
-          confirmedContentList.content_list_contents.agreement_ids.length ===
-          contentList.content_list_contents.agreement_ids.length
+          confirmedContentList.content_list_contents.digital_content_ids.length ===
+          contentList.content_list_contents.digital_content_ids.length
 
         const confirmedContentListHasAgreements =
-          confirmedContentList.content_list_contents.agreement_ids.length > 0
+          confirmedContentList.content_list_contents.digital_content_ids.length > 0
 
         if (numberOfAgreementsMatch && confirmedContentListHasAgreements) {
           const confirmedContentListAgreements =
-            confirmedContentList.content_list_contents.agreement_ids.map((t) => t.agreement)
-          const cachedContentListAgreements = contentList.content_list_contents.agreement_ids.map(
-            (t) => t.agreement
+            confirmedContentList.content_list_contents.digital_content_ids.map((t) => t.digital_content)
+          const cachedContentListAgreements = contentList.content_list_contents.digital_content_ids.map(
+            (t) => t.digital_content
           )
           if (!isEqual(confirmedContentListAgreements, cachedContentListAgreements)) {
             yield call(
@@ -536,17 +536,17 @@ function* removeAgreementFromContentListAsync(action) {
 
   const contentList = yield select(getCollection, { id: action.contentListId })
 
-  // Find the index of the agreement based on the agreement's id and timestamp
-  const index = contentList.content_list_contents.agreement_ids.findIndex(
-    (t) => t.time === action.timestamp && t.agreement === action.agreementId
+  // Find the index of the digital_content based on the digital_content's id and timestamp
+  const index = contentList.content_list_contents.digital_content_ids.findIndex(
+    (t) => t.time === action.timestamp && t.digital_content === action.agreementId
   )
   if (index === -1) {
-    console.error('Could not find the index of to-be-deleted agreement')
+    console.error('Could not find the index of to-be-deleted digital_content')
     return
   }
 
-  const agreement = contentList.content_list_contents.agreement_ids[index]
-  contentList.content_list_contents.agreement_ids.splice(index, 1)
+  const digital_content = contentList.content_list_contents.digital_content_ids[index]
+  contentList.content_list_contents.digital_content_ids.splice(index, 1)
   const count = countAgreementIds(contentList.content_list_contents, action.agreementId)
 
   yield call(
@@ -554,7 +554,7 @@ function* removeAgreementFromContentListAsync(action) {
     userId,
     action.contentListId,
     action.agreementId,
-    agreement.time,
+    digital_content.time,
     count
   )
   yield put(
@@ -569,15 +569,15 @@ function* removeAgreementFromContentListAsync(action) {
   )
 }
 
-// Removes the invalid agreement ids from the contentList by calling `dangerouslySetContentListOrder`
+// Removes the invalid digital_content ids from the contentList by calling `dangerouslySetContentListOrder`
 function* fixInvalidAgreementsInContentList(contentListId, userId, invalidAgreementIds) {
   yield call(waitForBackendSetup)
   const removedAgreementIds = new Set(invalidAgreementIds)
 
   const contentList = yield select(getCollection, { id: contentListId })
 
-  const agreementIds = contentList.content_list_contents.agreement_ids
-    .map(({ agreement }) => agreement)
+  const agreementIds = contentList.content_list_contents.digital_content_ids
+    .map(({ digital_content }) => digital_content)
     .filter((id) => !removedAgreementIds.has(id))
   const { error } = yield call(
     ColivingBackend.dangerouslySetContentListOrder,
@@ -605,8 +605,8 @@ function* confirmRemoveAgreementFromContentList(
     confirmerActions.requestConfirmation(
       makeKindId(Kind.COLLECTIONS, contentListId),
       function* (confirmedContentListId) {
-        // NOTE: In an attempt to fix contentLists in a corrupted state, only attempt the delete contentList agreement once,
-        // if it fails, check if the contentList is in a corrupted state and if so fix it before re-attempting to delete agreement from contentList
+        // NOTE: In an attempt to fix contentLists in a corrupted state, only attempt the delete contentList digital_content once,
+        // if it fails, check if the contentList is in a corrupted state and if so fix it before re-attempting to delete digital_content from contentList
         let { blockHash, blockNumber, error } = yield call(
           ColivingBackend.deleteContentListAgreement,
           confirmedContentListId,
@@ -650,7 +650,7 @@ function* confirmRemoveAgreementFromContentList(
         const confirmed = yield call(confirmTransaction, blockHash, blockNumber)
         if (!confirmed) {
           throw new Error(
-            `Could not confirm remove contentList agreement for contentList id ${contentListId} and agreement id ${agreementId}`
+            `Could not confirm remove contentList digital_content for contentList id ${contentListId} and digital_content id ${agreementId}`
           )
         }
         return confirmedContentListId
@@ -711,9 +711,9 @@ function* orderContentListAsync(action) {
     ...contentList,
     content_list_contents: {
       ...contentList.content_list_contents,
-      agreement_ids: action.agreementIdsAndTimes.map(({ id, time }) => {
+      digital_content_ids: action.agreementIdsAndTimes.map(({ id, time }) => {
         agreementIds.push(id)
-        return { agreement: id, time }
+        return { digital_content: id, time }
       })
     }
   }
@@ -913,7 +913,7 @@ function* deleteContentListAsync(action) {
 
   const isAlbum = collection.is_album
   if (isAlbum) {
-    const agreementIds = collection.content_list_contents.agreement_ids
+    const agreementIds = collection.content_list_contents.digital_content_ids
 
     const event = make(Name.DELETE, { kind: 'album', id: action.contentListId })
     yield put(event)
@@ -977,7 +977,7 @@ function* confirmDeleteAlbum(contentListId, agreementIds, userId) {
             cacheActions.update(
               Kind.AGREEMENTS,
               agreementIds.map((t) => ({
-                id: t.agreement,
+                id: t.digital_content,
                 metadata: { _marked_deleted: true }
               }))
             )
@@ -1024,7 +1024,7 @@ function* confirmDeleteAlbum(contentListId, agreementIds, userId) {
             cacheActions.update(
               Kind.AGREEMENTS,
               agreementIds.map((t) => ({
-                id: t.agreement,
+                id: t.digital_content,
                 metadata: { _marked_deleted: false }
               }))
             )
@@ -1079,7 +1079,7 @@ function* confirmDeleteContentList(userId, contentListId) {
         const confirmed = yield call(confirmTransaction, blockHash, blockNumber)
         if (!confirmed) {
           throw new Error(
-            `Could not confirm delete contentList agreement for contentList id ${contentListId}`
+            `Could not confirm delete contentList digital_content for contentList id ${contentListId}`
           )
         }
         return confirmedContentListId

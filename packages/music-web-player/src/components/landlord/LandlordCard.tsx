@@ -23,7 +23,7 @@ export const LandlordCard = (props: LandlordCardProps) => {
   const {
     user_id,
     bio,
-    agreement_count,
+    digital_content_count,
     content_list_count,
     follower_count,
     followee_count,
@@ -31,7 +31,7 @@ export const LandlordCard = (props: LandlordCardProps) => {
   } = landlord
 
   const dispatch = useDispatch()
-  const isLandlord = agreement_count > 0
+  const isLandlord = digital_content_count > 0
   const isTippingEnabled = getFeatureEnabled(FeatureFlags.TIPPING_ENABLED)
 
   const handleClick: MouseEventHandler = useCallback((event) => {
@@ -42,9 +42,9 @@ export const LandlordCard = (props: LandlordCardProps) => {
     if (isLandlord) {
       return [
         {
-          number: agreement_count,
-          title: agreement_count === 1 ? 'agreement' : 'agreements',
-          key: 'agreement'
+          number: digital_content_count,
+          title: digital_content_count === 1 ? 'digital_content' : 'agreements',
+          key: 'digital_content'
         },
         {
           number: follower_count,
@@ -67,7 +67,7 @@ export const LandlordCard = (props: LandlordCardProps) => {
       },
       { number: followee_count, title: 'following', key: 'following' }
     ]
-  }, [isLandlord, agreement_count, follower_count, followee_count, content_list_count])
+  }, [isLandlord, digital_content_count, follower_count, followee_count, content_list_count])
 
   const handleFollow = useCallback(() => {
     dispatch(followUser(user_id, FollowSource.HOVER_TILE))

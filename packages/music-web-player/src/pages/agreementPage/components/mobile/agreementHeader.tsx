@@ -36,7 +36,7 @@ import StatsButtonRow from './statsButtonRow'
 import styles from './agreementHeader.module.css'
 
 const messages = {
-  agreement: 'AGREEMENT',
+  digital_content: 'AGREEMENT',
   remix: 'REMIX',
   play: 'PLAY',
   pause: 'PAUSE'
@@ -183,7 +183,7 @@ const AgreementHeader = ({
       record(
         make(Name.LINK_CLICKING, {
           url: event.target.href,
-          source: 'agreement page' as const
+          source: 'digital_content page' as const
         })
       )
     },
@@ -290,7 +290,7 @@ const AgreementHeader = ({
         </div>
       ) : (
         <div className={styles.typeLabel}>
-          {isRemix ? messages.remix : messages.agreement}
+          {isRemix ? messages.remix : messages.digital_content}
         </div>
       )}
       {imageElement}

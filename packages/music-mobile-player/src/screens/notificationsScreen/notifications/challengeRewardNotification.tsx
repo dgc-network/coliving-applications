@@ -32,7 +32,7 @@ const challengeInfoMap: Record<
     title: '🎧 Listening Streak: 7 Days',
     amount: 1
   },
-  'agreement-upload': {
+  'digital-content-upload': {
     title: '🎶 Upload 3 Agreements',
     amount: 1
   },

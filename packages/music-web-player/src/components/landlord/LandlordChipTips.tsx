@@ -20,7 +20,7 @@ import { TIPPING_TOP_RANK_THRESHOLD } from 'utils/constants'
 import styles from './LandlordChip.module.css'
 
 const messages = {
-  live: '$LIVE',
+  digitalcoin: '$LIVE',
   supporter: 'Supporter'
 }
 
@@ -78,7 +78,7 @@ export const LandlordChipTips = ({ landlordId, tag }: LandlordChipTipsProps) => 
           <span className={styles.value}>
             {formatWei(stringWeiToBN(amount), true)}
           </span>
-          <span className={styles.label}>{messages.live}</span>
+          <span className={styles.label}>{messages.digitalcoin}</span>
         </div>
       )}
     </div>

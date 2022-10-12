@@ -39,7 +39,7 @@ const rowMessageMap = {
   [OverflowAction.EDIT_CONTENT_LIST]: 'Edit ContentList',
   [OverflowAction.DELETE_CONTENT_LIST]: 'Delete ContentList',
   [OverflowAction.PUBLISH_CONTENT_LIST]: 'Publish ContentList',
-  [OverflowAction.VIEW_AGREEMENT_PAGE]: 'View Agreement Page',
+  [OverflowAction.VIEW_AGREEMENT_PAGE]: 'View DigitalContent Page',
   [OverflowAction.VIEW_LANDLORD_PAGE]: 'View Landlord Page',
   [OverflowAction.VIEW_CONTENT_LIST_PAGE]: 'View ContentList Page',
   [OverflowAction.VIEW_COLLECTIBLE_PAGE]: 'View Collectible Page',

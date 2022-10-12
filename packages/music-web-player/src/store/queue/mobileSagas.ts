@@ -43,38 +43,38 @@ function* getAgreementInfo(id: ID, uid: UID) {
   const currentUserId = yield* select(getUserId)
   if (!currentUserId) return null
 
-  const agreement = yield* select(getAgreement, { id })
-  if (!agreement) return null
+  const digital_content = yield* select(getAgreement, { id })
+  if (!digital_content) return null
 
-  const owner = yield* select(getUser, { id: agreement.owner_id })
+  const owner = yield* select(getUser, { id: digital_content.owner_id })
   if (!owner) return null
 
   const gateways = owner
     ? getContentNodeIPFSGateways(owner.content_node_endpoint)
     : []
 
-  const imageHash = agreement.cover_art_sizes
-    ? `${agreement.cover_art_sizes}/150x150.jpg`
-    : agreement.cover_art
-  const largeImageHash = agreement.cover_art_sizes
-    ? `${agreement.cover_art_sizes}/1000x1000.jpg`
-    : agreement.cover_art
+  const imageHash = digital_content.cover_art_sizes
+    ? `${digital_content.cover_art_sizes}/150x150.jpg`
+    : digital_content.cover_art
+  const largeImageHash = digital_content.cover_art_sizes
+    ? `${digital_content.cover_art_sizes}/1000x1000.jpg`
+    : digital_content.cover_art
 
   const m3u8Gateways = gateways.concat(PUBLIC_IPFS_GATEWAY)
-  const m3u8 = generateM3U8Variants(agreement.agreement_segments, [], m3u8Gateways)
+  const m3u8 = generateM3U8Variants(digital_content.digital_content_segments, [], m3u8Gateways)
   return {
-    title: agreement.title,
+    title: digital_content.title,
     landlord: owner.name,
     artwork: getImageUrl(imageHash!, gateways[0]),
     largeArtwork: getImageUrl(largeImageHash!, gateways[0]),
     uid,
     currentUserId,
-    currentListenCount: agreement.play_count,
-    isDelete: agreement.is_delete || owner.is_deactivated,
-    ownerId: agreement.owner_id,
+    currentListenCount: digital_content.play_count,
+    isDelete: digital_content.is_delete || owner.is_deactivated,
+    ownerId: digital_content.owner_id,
     agreementId: id,
     id,
-    genre: agreement.genre,
+    genre: digital_content.genre,
     uri: m3u8
   }
 }
@@ -148,7 +148,7 @@ function* watchSyncQueue() {
         uid: ${info.uid},
         title: ${info.title}`)
       yield* put(updateIndex({ index }))
-      // Update currently playing agreement.
+      // Update currently playing digital_content.
       if (!info.isDelete) {
         yield* put(playerActions.set({ uid: info.uid, agreementId: info.agreementId }))
       } else {
@@ -168,14 +168,14 @@ function* watchSyncPlayer() {
     const id = yield* select(getQueueAgreementId)
     if (!id) return
 
-    const agreement = yield* select(getAgreement, { id: id as number })
-    if (!agreement) return
+    const digital_content = yield* select(getAgreement, { id: id as number })
+    if (!digital_content) return
 
-    const owner = yield* select(getUser, { id: agreement?.owner_id })
+    const owner = yield* select(getUser, { id: digital_content?.owner_id })
     if (!owner) return
 
     console.info(`Syncing player: isPlaying ${isPlaying}`)
-    if (agreement?.is_delete || owner?.is_deactivated) {
+    if (digital_content?.is_delete || owner?.is_deactivated) {
       yield* put(playerActions.stop({}))
     } else if (isPlaying) {
       yield* put(playerActions.playSucceeded({}))

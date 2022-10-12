@@ -11,7 +11,7 @@ import { formatSeconds } from 'common/utils/timeUtil'
 import FavoriteButton from 'components/altButton/favoriteButton'
 import RepostButton from 'components/altButton/repostButton'
 import Skeleton from 'components/skeleton/skeleton'
-import { AgreementTileProps } from 'components/agreement/types'
+import { AgreementTileProps } from 'components/digital_content/types'
 import UserBadges from 'components/userBadges/userBadges'
 
 import AgreementBannerIcon, { AgreementBannerIconType } from '../agreementBannerIcon'
@@ -25,7 +25,7 @@ const messages = {
   coSign: 'Co-Sign',
   reposted: 'Reposted',
   favorited: 'Favorited',
-  hiddenAgreement: 'Hidden Agreement',
+  hiddenAgreement: 'Hidden DigitalContent',
   repostedAndFavorited: 'Reposted & Favorited'
 }
 

@@ -15,7 +15,7 @@ import {
 import styles from './Stats.module.css'
 
 export type StatProps = {
-  key: 'follower' | 'following' | 'contentList' | 'agreement'
+  key: 'follower' | 'following' | 'contentList' | 'digital_content'
   number: number
   title: string
   onClick?: () => void

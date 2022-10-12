@@ -28,11 +28,11 @@ module.exports = (async () => {
         // Alias for 'src' to allow for absolute paths
         app: path.resolve(__dirname, 'src'),
         // This is used to resolve the absolute paths found in -client.
-        // Eventually all shared state logic will live in @/client-common
+        // Eventually all shared state logic will digitalcoin in @/client-common
         // and this can be removed
         ...[
           'assets',
-          'live',
+          'digitalcoin',
           'common',
           'pages',
           'models',

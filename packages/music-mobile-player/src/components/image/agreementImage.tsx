@@ -1,35 +1,35 @@
 import { useCallback, useState } from 'react'
 
-import type { AgreementImage as AgreementImageType } from 'app/models/agreement'
+import type { AgreementImage as AgreementImageType } from 'app/models/digital_content'
 import type { UserMultihash } from 'app/models/user'
 
 import ImageLoader from './imageLoader'
 import { gateways, publicGateways } from './utils'
 
-const getAgreementImageUrl = (agreement: AgreementImageType, cNode: string) => {
-  if (agreement.cover_art_sizes) {
-    return `${cNode}/ipfs/${agreement.cover_art_sizes}/150x150.jpg`
+const getAgreementImageUrl = (digital_content: AgreementImageType, cNode: string) => {
+  if (digital_content.cover_art_sizes) {
+    return `${cNode}/ipfs/${digital_content.cover_art_sizes}/150x150.jpg`
   }
-  if (agreement.cover_art) {
-    return `${cNode}/ipfs/${agreement.cover_art}`
+  if (digital_content.cover_art) {
+    return `${cNode}/ipfs/${digital_content.cover_art}`
   }
   return null
 }
 
-const getHasImage = (agreement: AgreementImageType) => {
-  return !!(agreement.cover_art_sizes || agreement.cover_art)
+const getHasImage = (digital_content: AgreementImageType) => {
+  return !!(digital_content.cover_art_sizes || digital_content.cover_art)
 }
 
-const useAgreementImage = (agreement: AgreementImageType, user: UserMultihash) => {
+const useAgreementImage = (digital_content: AgreementImageType, user: UserMultihash) => {
   const cNodes =
     user.content_node_endpoint !== null
       ? user.content_node_endpoint.split(',').filter(Boolean)
       : gateways
   const [didError, setDidError] = useState(
-    cNodes.length === 0 || !getHasImage(agreement)
+    cNodes.length === 0 || !getHasImage(digital_content)
   )
   const [source, setSource] = useState(
-    didError ? null : { uri: getAgreementImageUrl(agreement, cNodes[0]) }
+    didError ? null : { uri: getAgreementImageUrl(digital_content, cNodes[0]) }
   )
   const onError = useCallback(() => {
     if (didError) return
@@ -39,10 +39,10 @@ const useAgreementImage = (agreement: AgreementImageType, user: UserMultihash) =
         : gateways
     const numNodes = nodes.length
     const currInd = nodes.findIndex(
-      (cn: string) => (source?.uri ?? '') === getAgreementImageUrl(agreement, cn)
+      (cn: string) => (source?.uri ?? '') === getAgreementImageUrl(digital_content, cn)
     )
     if (currInd !== 1 && currInd < numNodes - 1) {
-      setSource({ uri: getAgreementImageUrl(agreement, nodes[currInd + 1]) })
+      setSource({ uri: getAgreementImageUrl(digital_content, nodes[currInd + 1]) })
     } else {
       // Legacy fallback for image formats (no dir cid)
       const legacyUrls = (user.content_node_endpoint ?? '')
@@ -50,12 +50,12 @@ const useAgreementImage = (agreement: AgreementImageType, user: UserMultihash) =
         .filter(Boolean)
         .concat(gateways)
         .concat(publicGateways)
-        .map((gateway) => `${gateway}/ipfs/${agreement.cover_art_sizes}`)
+        .map((gateway) => `${gateway}/ipfs/${digital_content.cover_art_sizes}`)
       const legacyIdx = legacyUrls.findIndex(
         (route: string) => (source?.uri ?? '') === route
       )
       if (
-        agreement.cover_art_sizes &&
+        digital_content.cover_art_sizes &&
         source?.uri?.endsWith('.jpg') &&
         legacyUrls.length > 0
       ) {
@@ -66,20 +66,20 @@ const useAgreementImage = (agreement: AgreementImageType, user: UserMultihash) =
         setDidError(true)
       }
     }
-  }, [user, agreement, source, didError])
+  }, [user, digital_content, source, didError])
   return { source, didError, onError }
 }
 
 const AgreementImage = ({
-  agreement,
+  digital_content,
   user,
   imageStyle
 }: {
-  agreement: AgreementImageType
+  digital_content: AgreementImageType
   user: UserMultihash
   imageStyle?: Record<string, any>
 }) => {
-  const { source, onError, didError } = useAgreementImage(agreement, user)
+  const { source, onError, didError } = useAgreementImage(digital_content, user)
   return (
     <ImageLoader
       style={imageStyle}

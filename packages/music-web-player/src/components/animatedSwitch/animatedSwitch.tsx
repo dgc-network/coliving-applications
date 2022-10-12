@@ -86,7 +86,7 @@ const AnimatedSwitch = ({
   const { location } = history
 
   const [getAnimation, setAnimation] = useInstanceVar(noTransition)
-  // Maintain an instance var to agreement whether the navigation stack is reset (no animations)
+  // Maintain an instance var to digital_content whether the navigation stack is reset (no animations)
   // so that `window.onpopstate` can know whether or not to set animations
   const [getIsStackResetting, setIsStackResetting] = useInstanceVar(false)
 

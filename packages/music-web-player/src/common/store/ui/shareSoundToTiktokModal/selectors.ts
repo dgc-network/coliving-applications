@@ -7,7 +7,7 @@ const shareSoundToTikTokModalState = (state: CommonState) =>
 
 export const getAgreement = createSelector(
   shareSoundToTikTokModalState,
-  (state) => state.agreement
+  (state) => state.digital_content
 )
 export const getIsAuthenticated = createSelector(
   shareSoundToTikTokModalState,

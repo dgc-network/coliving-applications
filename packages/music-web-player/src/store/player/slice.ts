@@ -1,31 +1,31 @@
 import { UID, ID, Collectible, Nullable } from '@coliving/common'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-import NativeMobileAudio from 'live/NativeMobileAudio'
+import NativeMobileAudio from 'digitalcoin/NativeMobileAudio'
 
 import { AudioState } from './types'
 
 const NATIVE_MOBILE = process.env.REACT_APP_NATIVE_MOBILE
 
 type State = {
-  // Identifiers for the live that's playing.
+  // Identifiers for the digitalcoin that's playing.
   uid: UID | null
   agreementId: ID | null
 
   collectible: Collectible | null
 
-  live: AudioState
+  digitalcoin: AudioState
 
-  // Keep 'playing' in the store separately from the live
+  // Keep 'playing' in the store separately from the digitalcoin
   // object to allow components to subscribe to changes.
   playing: boolean
 
-  // Keep 'buffering' in the store separately from the live
+  // Keep 'buffering' in the store separately from the digitalcoin
   // object to allow components to subscribe to changes.
   buffering: boolean
 
   // Unique integer that increments every time something is "played."
-  // E.g. replaying a agreement doesn't change uid or agreementId, but counter changes.
+  // E.g. replaying a digital_content doesn't change uid or agreementId, but counter changes.
   counter: number
 }
 
@@ -35,9 +35,9 @@ export const initialState: State = {
 
   collectible: null,
 
-  // In the case of native mobile, use the native mobile live
+  // In the case of native mobile, use the native mobile digitalcoin
   // player directly. Otherwise, it is set dynamically
-  live: NATIVE_MOBILE ? new NativeMobileAudio() : null,
+  digitalcoin: NATIVE_MOBILE ? new NativeMobileAudio() : null,
 
   playing: false,
   buffering: false,
@@ -45,7 +45,7 @@ export const initialState: State = {
 }
 
 type SetAudioStreamPayload = {
-  live: AudioState
+  digitalcoin: AudioState
 }
 
 type PlayPayload = {
@@ -70,8 +70,8 @@ type PlayCollectibleSucceededPayload = {
 
 type PausePayload = {
   // Optionally allow only setting state which doesn't actually
-  // invoke a .pause on the internal live object. This is used in
-  // native mobile live only.
+  // invoke a .pause on the internal digitalcoin object. This is used in
+  // native mobile digitalcoin only.
   onlySetState?: boolean
 }
 
@@ -109,9 +109,9 @@ const slice = createSlice({
   initialState,
   reducers: {
     setAudioStream: (state, action: PayloadAction<SetAudioStreamPayload>) => {
-      const { live } = action.payload
-      // Redux toolkit seems to do something to state.live's type (some destructured form?)
-      state.live = live as typeof state.live
+      const { digitalcoin } = action.payload
+      // Redux toolkit seems to do something to state.digitalcoin's type (some destructured form?)
+      state.digitalcoin = digitalcoin as typeof state.digitalcoin
     },
     play: (state, action: PayloadAction<PlayPayload>) => {},
     playSucceeded: (state, action: PayloadAction<PlaySucceededPayload>) => {

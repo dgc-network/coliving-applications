@@ -1,4 +1,4 @@
-import { Collection, FieldVisibility, Agreement, User } from '@coliving/common'
+import { Collection, FieldVisibility, DigitalContent, User } from '@coliving/common'
 
 const defaultFieldVisibility: FieldVisibility = {
   genre: true,
@@ -9,10 +9,10 @@ const defaultFieldVisibility: FieldVisibility = {
   remixes: true
 }
 
-export const getAgreementWithFallback = (agreement: Agreement | null) => {
+export const getAgreementWithFallback = (digital_content: DigitalContent | null) => {
   return (
-    agreement || {
-      agreement_id: -1,
+    digital_content || {
+      digital_content_id: -1,
       title: '',
       permalink: '',
       repost_count: 0,
@@ -45,8 +45,8 @@ export const getCollectionWithFallback = (collection: Collection | null) => {
       content_list_name: '',
       repost_count: 0,
       save_count: 0,
-      agreement_ids: [],
-      agreement_count: 0,
+      digital_content_ids: [],
+      digital_content_count: 0,
       followee_reposts: [],
       followee_saves: [],
       has_current_user_reposted: false,

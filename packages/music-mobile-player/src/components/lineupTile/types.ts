@@ -6,7 +6,7 @@ import type {
   PlaybackSource,
   Collection,
   FavoriteType,
-  Agreement,
+  DigitalContent,
   User
 } from '@coliving/common'
 import type { RepostType } from '@coliving/web/src/common/store/user-list/reposts/types'
@@ -32,7 +32,7 @@ export type LineupItemProps = {
   /** Whether to show an icon indicating rank in lineup */
   showRankIcon?: boolean
 
-  /** Function that will toggle play of a agreement */
+  /** Function that will toggle play of a digital_content */
   togglePlay: (args: {
     uid: UID
     id: ID
@@ -49,7 +49,7 @@ export type LineupTileProps = Omit<LineupItemProps, 'togglePlay'> & {
   children?: ReactNode
 
   /** Cosign information */
-  coSign?: Agreement['_co_sign']
+  coSign?: DigitalContent['_co_sign']
 
   /** Duration of the tile's agreements */
   duration?: number
@@ -72,8 +72,8 @@ export type LineupTileProps = Omit<LineupItemProps, 'togglePlay'> & {
   /** Does the tile uid match the playing uid */
   isPlayingUid: boolean
 
-  /** The item (agreement or collection) */
-  item: Agreement | Collection
+  /** The item (digital_content or collection) */
+  item: DigitalContent | Collection
 
   /** Function to call when tile is pressed */
   onPress?: (args: { isPlaying: boolean }) => void

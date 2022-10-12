@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 
-import { setTrendingRewardsModalType } from '@coliving/web/src/common/store/pages/live-rewards/slice'
+import { setTrendingRewardsModalType } from '@coliving/web/src/common/store/pages/digitalcoin-rewards/slice'
 import { setVisibility } from '@coliving/web/src/common/store/ui/modals/slice'
 import { Text, View } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
@@ -12,10 +12,10 @@ import { makeStyles } from 'app/styles'
 import { useThemeColors } from 'app/utils/theme'
 
 const messages = {
-  rewards: '$live rewards',
-  agreements: 'top 5 agreements each week win $live',
-  contentLists: 'top 5 contentLists each week win $live',
-  underground: 'top 5 agreements each week win $live',
+  rewards: '$digitalcoin rewards',
+  agreements: 'top 5 agreements each week win $digitalcoin',
+  contentLists: 'top 5 contentLists each week win $digitalcoin',
+  underground: 'top 5 agreements each week win $digitalcoin',
   learnMore: 'learn more'
 }
 

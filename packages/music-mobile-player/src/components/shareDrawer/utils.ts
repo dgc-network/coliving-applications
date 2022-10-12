@@ -12,9 +12,9 @@ import { messages } from './messages'
 
 export const getContentUrl = (content: ShareModalContent) => {
   switch (content.type) {
-    case 'agreement': {
-      const { agreement } = content
-      return getAgreementRoute(agreement, true)
+    case 'digital_content': {
+      const { digital_content } = content
+      return getAgreementRoute(digital_content, true)
     }
     case 'profile': {
       const { profile } = content
@@ -43,9 +43,9 @@ export const getContentUrl = (content: ShareModalContent) => {
 
 export const getTwitterShareText = (content: ShareModalContent) => {
   switch (content.type) {
-    case 'agreement': {
+    case 'digital_content': {
       const {
-        agreement: { title },
+        digital_content: { title },
         landlord: { handle }
       } = content
       return messages.agreementShareText(title, handle)

@@ -1,4 +1,4 @@
-import { Agreement } from '@coliving/common'
+import { DigitalContent } from '@coliving/common'
 
 // return the original string if it exists, or ''
 export const emptyStringGuard = (str: string | null | undefined) => str ?? ''
@@ -12,9 +12,9 @@ export const defaultFieldVisibility = {
   remixes: true
 }
 
-export const getAgreementDefaults = (heroAgreement: Agreement | null) => ({
+export const getAgreementDefaults = (heroAgreement: DigitalContent | null) => ({
   title: emptyStringGuard(heroAgreement?.title),
-  agreementId: heroAgreement?.agreement_id ?? 0,
+  agreementId: heroAgreement?.digital_content_id ?? 0,
   coverArtSizes: heroAgreement?._cover_art_sizes ?? null,
   tags: emptyStringGuard(heroAgreement?.tags),
   description: emptyStringGuard(heroAgreement?.description),
@@ -33,8 +33,8 @@ export const getAgreementDefaults = (heroAgreement: Agreement | null) => ({
     ...(heroAgreement?.field_visibility ?? {})
   },
   coSign: heroAgreement?._co_sign ?? null,
-  remixAgreementIds: heroAgreement?._remixes?.map(({ agreement_id }) => agreement_id) ?? null,
+  remixAgreementIds: heroAgreement?._remixes?.map(({ digital_content_id }) => digital_content_id) ?? null,
   remixesCount: heroAgreement?._remixes_count ?? null,
-  remixParentAgreementId: heroAgreement?.remix_of?.agreements?.[0]?.parent_agreement_id,
+  remixParentAgreementId: heroAgreement?.remix_of?.agreements?.[0]?.parent_digital_content_id,
   download: heroAgreement?.download ?? null
 })

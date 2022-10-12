@@ -11,7 +11,7 @@ import {
   getFinalHandle
 } from 'app/store/signon/selectors'
 import { EventNames } from 'app/types/analytics'
-import { agreement, make } from 'app/utils/analytics'
+import { digital_content, make } from 'app/utils/analytics'
 
 import CreatePassword from './createPassword'
 import FirstFollows from './firstFollows'
@@ -65,7 +65,7 @@ export const SignOnScreen = () => {
 
   useEffect(() => {
     if (onSignUp && isAccountAvailable) {
-      agreement(
+      digital_content(
         make({
           eventName: EventNames.CREATE_ACCOUNT_FINISH,
           emailAddress: finalEmail,

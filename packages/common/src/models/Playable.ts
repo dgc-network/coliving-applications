@@ -1,6 +1,6 @@
 import { PlayableType } from 'models/identifiers'
 
-import { Agreement } from './agreement'
+import { DigitalContent } from './digital_content'
 import { Collection } from './collection'
 
 export type Playable =
@@ -13,6 +13,6 @@ export type Playable =
       type: PlayableType.ALBUM
     }
   | {
-      metadata: Agreement | null
+      metadata: DigitalContent | null
       type: PlayableType.AGREEMENT
     }

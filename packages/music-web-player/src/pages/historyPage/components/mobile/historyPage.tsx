@@ -6,8 +6,8 @@ import { Button, ButtonType } from '@coliving/stems'
 import LoadingSpinner from 'components/loadingSpinner/loadingSpinner'
 import MobilePageContainer from 'components/mobilePageContainer/mobilePageContainer'
 import NavContext, { LeftPreset } from 'components/nav/store/context'
-import AgreementList from 'components/agreement/mobile/agreementList'
-import { AgreementItemAction } from 'components/agreement/mobile/agreementListItem'
+import AgreementList from 'components/digital_content/mobile/agreementList'
+import { AgreementItemAction } from 'components/digital_content/mobile/agreementListItem'
 import { TRENDING_PAGE } from 'utils/route'
 
 import styles from './historyPage.module.css'
@@ -55,21 +55,21 @@ const HistoryPage = ({
     setRight(null)
   }, [setLeft, setCenter, setRight])
 
-  const agreements = entries.map((agreement: LineupAgreement, index: number) => {
-    const isActive = agreement.uid === currentQueueItem.uid
+  const agreements = entries.map((digital_content: LineupAgreement, index: number) => {
+    const isActive = digital_content.uid === currentQueueItem.uid
     return {
       isLoading: loading,
-      isReposted: agreement.has_current_user_reposted,
-      isSaved: agreement.has_current_user_saved,
+      isReposted: digital_content.has_current_user_reposted,
+      isSaved: digital_content.has_current_user_saved,
       isActive,
       isPlaying: isActive && playing,
-      landlordName: agreement.user.name,
-      landlordHandle: agreement.user.handle,
-      agreementTitle: agreement.title,
-      agreementId: agreement.agreement_id,
-      uid: agreement.uid,
-      coverArtSizes: agreement._cover_art_sizes,
-      isDeleted: agreement.is_delete || !!agreement.user.is_deactivated
+      landlordName: digital_content.user.name,
+      landlordHandle: digital_content.user.handle,
+      agreementTitle: digital_content.title,
+      agreementId: digital_content.digital_content_id,
+      uid: digital_content.uid,
+      coverArtSizes: digital_content._cover_art_sizes,
+      isDeleted: digital_content.is_delete || !!digital_content.user.is_deactivated
     }
   })
 

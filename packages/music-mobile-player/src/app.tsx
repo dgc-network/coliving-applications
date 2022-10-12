@@ -35,7 +35,7 @@ const store = createStore()
 export const dispatch = store.dispatch
 
 const Airplay = Platform.select({
-  ios: () => require('./components/live/Airplay').default,
+  ios: () => require('./components/digitalcoin/Airplay').default,
   android: () => () => null
 })?.()
 
@@ -47,7 +47,7 @@ const Modals = () => {
 }
 
 const App = () => {
-  // Agreement the web view as a top-level ref so that any children can use it
+  // DigitalContent the web view as a top-level ref so that any children can use it
   // to send messages to the dapp
   const webRef = useRef<WebView>(null)
 

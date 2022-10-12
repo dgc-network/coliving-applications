@@ -6,13 +6,13 @@ import { ComponentType } from 'react'
  *  null if one of the required props is null.
  *
  *  This is useful when you have a component that should never see a certain value as null
- *  (e.g. null Agreement in Agreement Page), but you can't enforce that at constraint at compile time.
+ *  (e.g. null DigitalContent in DigitalContent Page), but you can't enforce that at constraint at compile time.
  *
  *  Usage:
  *  - Define the wide version of the props, W.
  *
  * ```
- *  type AgreementPageProps = { agreement?: Agreement }
+ *  type AgreementPageProps = { digital_content?: DigitalContent }
  * ```
  *
  *  - Call withNullGuard, passing in a mapper that only a narrowed version of props, or undefined.
@@ -20,7 +20,7 @@ import { ComponentType } from 'react'
  *
  * ```
  *  const g = withNullGuard((props: AgreementPageProps) => {
- *     if (props.agreement) { return props }
+ *     if (props.digital_content) { return props }
  *  })`
  * ```
  *
@@ -28,7 +28,7 @@ import { ComponentType } from 'react'
  *   This defined component can be safely connected to the store/mapStateToProps that returns the widened type, W.
  *
  * ```
- *  const AgreementPage = g(({ agreement }) => <div> {agreement.id} </div>)
+ *  const AgreementPage = g(({ digital_content }) => <div> {digital_content.id} </div>)
  * ```
  */
 export function withNullGuard<W, N>(

@@ -6,12 +6,12 @@ import { getOptimisticUserChallenges } from '@coliving/web/src/common/store/chal
 import {
   getChallengeRewardsModalType,
   getClaimStatus
-} from '@coliving/web/src/common/store/pages/live-rewards/selectors'
+} from '@coliving/web/src/common/store/pages/digitalcoin-rewards/selectors'
 import {
   claimChallengeReward,
   ClaimStatus,
   resetAndCancelClaimReward
-} from '@coliving/web/src/common/store/pages/live-rewards/slice'
+} from '@coliving/web/src/common/store/pages/digitalcoin-rewards/slice'
 import { setVisibility } from '@coliving/web/src/common/store/ui/modals/slice'
 
 import { useDispatchWeb } from 'app/hooks/useDispatchWeb'
@@ -126,7 +126,7 @@ export const ChallengeRewardsDrawerProvider = () => {
         <ReferralRewardContents isVerified={!!config.isVerifiedChallenge} />
       )
       break
-    case 'agreement-upload':
+    case 'digital-content-upload':
       contents = config?.buttonInfo && (
         <Button
           containerStyle={styles.button}

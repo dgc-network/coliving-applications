@@ -32,7 +32,7 @@ export type DownloadButtonProps = {
 }
 
 export const messages = {
-  downloadableAgreement: 'Download this Agreement',
+  downloadableAgreement: 'Download this DigitalContent',
   downloadableStem: 'Download this source file',
   followToDownload: 'Must follow landlord to download',
   processingAgreement: 'Processing',

@@ -17,9 +17,9 @@ export const getSavedAgreementsLineupUid = (
   state: CommonState,
   props: { id: ID }
 ) => {
-  const agreement = state.pages.savedPage.agreements.entries.find(
+  const digital_content = state.pages.savedPage.agreements.entries.find(
     // @ts-ignore
     (t) => t.id === props.id
   )
-  return agreement ? agreement.uid : null
+  return digital_content ? digital_content.uid : null
 }

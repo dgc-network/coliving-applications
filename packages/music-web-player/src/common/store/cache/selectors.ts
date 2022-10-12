@@ -4,7 +4,7 @@ import {
   UID,
   Cache,
   Collection,
-  Agreement,
+  DigitalContent,
   User,
   Uid
 } from '@coliving/common'
@@ -42,7 +42,7 @@ export function getEntry(
     id?: ID | null
     uid?: UID | null
   }
-): Agreement | null
+): DigitalContent | null
 export function getEntry(
   state: CommonState,
   props: {
@@ -50,7 +50,7 @@ export function getEntry(
     id?: ID | null
     uid?: UID | null
   }
-): Agreement | User | Collection | null
+): DigitalContent | User | Collection | null
 export function getEntry(
   state: CommonState,
   props: {
@@ -104,20 +104,20 @@ export function getAllEntries(
 export function getAllEntries(
   state: CommonState,
   props: { kind: Kind.AGREEMENTS }
-): { [id: string]: Agreement }
+): { [id: string]: DigitalContent }
 export function getAllEntries(
   state: CommonState,
   props: { kind: Kind.USERS }
 ):
   | { [id: string]: User }
-  | { [id: string]: Agreement }
+  | { [id: string]: DigitalContent }
   | { [id: string]: Collection }
 export function getAllEntries(state: CommonState, props: { kind: Kind }) {
   const entries = getCache(state, props).entries
   return Object.keys(entries).reduce((acc, id) => {
     acc[id] = entries[id as unknown as number].metadata
     return acc
-  }, {} as { [id: string]: Agreement | Collection | User })
+  }, {} as { [id: string]: DigitalContent | Collection | User })
 }
 
 export function getCache(

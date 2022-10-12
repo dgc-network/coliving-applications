@@ -124,7 +124,7 @@ export const ContentListNavItem = ({
       className={navColumnStyles.droppable}
       hoverClassName={navColumnStyles.droppableHover}
       onDrop={addAgreement}
-      acceptedKinds={['agreement']}
+      acceptedKinds={['digital_content']}
       disabled={!isOwner}
     >
       <ContentListNavLink
@@ -141,11 +141,11 @@ export const ContentListNavItem = ({
           [navColumnStyles.droppableLink]:
             isOwner &&
             dragging &&
-            (draggingKind === 'agreement' || draggingKind === 'contentList'),
+            (draggingKind === 'digital_content' || draggingKind === 'contentList'),
           [navColumnStyles.editable]: isOwner && onClickEdit != null,
           [navColumnStyles.disabledLink]:
             dragging &&
-            ((draggingKind !== 'agreement' &&
+            ((draggingKind !== 'digital_content' &&
               draggingKind !== 'contentList' &&
               draggingKind !== 'library-content-list') ||
               !isOwner)

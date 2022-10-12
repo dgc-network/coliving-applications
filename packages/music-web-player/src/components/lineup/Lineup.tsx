@@ -1,10 +1,10 @@
 import { Status } from '@coliving/common'
 import { connect } from 'react-redux'
 
-import DesktopContentListTile from 'components/agreement/desktop/ConnectedContentListTile'
-import DesktopAgreementTile from 'components/agreement/desktop/ConnectedAgreementTile'
-import MobileContentListTile from 'components/agreement/mobile/ConnectedContentListTile'
-import MobileAgreementTile from 'components/agreement/mobile/ConnectedAgreementTile'
+import DesktopContentListTile from 'components/digital_content/desktop/ConnectedContentListTile'
+import DesktopAgreementTile from 'components/digital_content/desktop/ConnectedAgreementTile'
+import MobileContentListTile from 'components/digital_content/mobile/ConnectedContentListTile'
+import MobileAgreementTile from 'components/digital_content/mobile/ConnectedAgreementTile'
 import { AppState } from 'store/types'
 import { isMobile } from 'utils/clientUtil'
 

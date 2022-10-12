@@ -16,11 +16,11 @@ export const makeGetDashboard = () => {
     [getAccountUser, getDashboardAgreements, getUnlistedDashboardAgreements],
     (account, agreements, unlistedAgreements) => {
       const stats = {
-        agreements: account ? account.agreement_count : 0,
+        agreements: account ? account.digital_content_count : 0,
         contentLists: account ? account.content_list_count : 0,
         // albums: account ? account.album_count : 0,
         plays: agreements.reduce(
-          (totalPlays: any, agreement: { play_count: any }) => totalPlays + (agreement.play_count || 0),
+          (totalPlays: any, digital_content: { play_count: any }) => totalPlays + (digital_content.play_count || 0),
           0
         ),
         reposts: account ? account.repost_count : 0,

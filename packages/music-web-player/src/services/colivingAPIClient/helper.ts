@@ -41,7 +41,7 @@ type ProcessSearchResultsArgs = {
   albums?: UserCollectionMetadata[]
   contentLists?: UserCollectionMetadata[]
   users?: UserMetadata[]
-  saved_agreements?: UserAgreementMetadata[]
+  saved_digital_contents?: UserAgreementMetadata[]
   saved_albums?: UserCollectionMetadata[]
   saved_content_lists?: UserCollectionMetadata[]
   followed_users?: UserMetadata[]
@@ -55,8 +55,8 @@ export const adaptSearchResponse = (searchResponse: APIResponse<APISearch>) => {
       searchResponse.data.agreements
         ?.map(adapter.makeAgreement)
         .filter(removeNullable) ?? undefined,
-    saved_agreements:
-      searchResponse.data.saved_agreements
+    saved_digital_contents:
+      searchResponse.data.saved_digital_contents
         ?.map(adapter.makeAgreement)
         .filter(removeNullable) ?? undefined,
     users:
@@ -89,7 +89,7 @@ export const processSearchResults = async ({
   albums = [],
   contentLists = [],
   users = [],
-  saved_agreements: savedAgreements = [],
+  saved_digital_contents: savedAgreements = [],
   saved_albums: savedAlbums = [],
   saved_content_lists: savedContentLists = [],
   followed_users: followedUsers = [],
@@ -104,7 +104,7 @@ export const processSearchResults = async ({
   const combinedAgreements = combineLists(
     savedAgreements,
     agreements,
-    'agreement_id',
+    'digital_content_id',
     maxSaved,
     maxTotal
   )

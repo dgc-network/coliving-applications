@@ -1,8 +1,8 @@
 import { useEffect, useContext } from 'react'
 
-import { CID, ID, LineupState, Agreement, User } from '@coliving/common'
+import { CID, ID, LineupState, DigitalContent, User } from '@coliving/common'
 
-import { agreementsActions } from 'common/store/pages/agreement/lineup/actions'
+import { agreementsActions } from 'common/store/pages/digital_content/lineup/actions'
 import { QueueItem } from 'common/store/queue/types'
 import { OverflowAction } from 'common/store/ui/mobileOverflowMenu/types'
 import { HeaderContext } from 'components/header/mobile/headerContextProvider'
@@ -24,7 +24,7 @@ import styles from './agreementPage.module.css'
 
 const messages = {
   moreBy: 'More By',
-  originalAgreement: 'Original Agreement',
+  originalAgreement: 'Original DigitalContent',
   viewOtherRemixes: 'View Other Remixes'
 }
 
@@ -33,8 +33,8 @@ export type OwnProps = {
   description: string
   canonicalUrl: string
   hasValidRemixParent: boolean
-  // Hero Agreement Props
-  heroAgreement: Agreement | null
+  // Hero DigitalContent Props
+  heroAgreement: DigitalContent | null
   user: User | null
   heroPlaying: boolean
   userId: ID | null
@@ -74,7 +74,7 @@ const AgreementPage = ({
   description,
   canonicalUrl,
   hasValidRemixParent,
-  // Hero Agreement Props
+  // Hero DigitalContent Props
   heroAgreement,
   user,
   heroPlaying,
@@ -123,13 +123,13 @@ const AgreementPage = ({
   const onPlay = () => onHeroPlay(heroPlaying)
   const onSave = isOwner
     ? () => {}
-    : () => heroAgreement && onSaveAgreement(isSaved, heroAgreement.agreement_id)
+    : () => heroAgreement && onSaveAgreement(isSaved, heroAgreement.digital_content_id)
   const onRepost = isOwner
     ? () => {}
-    : () => heroAgreement && onHeroRepost(isReposted, heroAgreement.agreement_id)
+    : () => heroAgreement && onHeroRepost(isReposted, heroAgreement.digital_content_id)
   const onClickLandlordName = () => goToProfilePage(user ? user.handle : '')
   const onShare = () => {
-    heroAgreement && onHeroShare(heroAgreement.agreement_id)
+    heroAgreement && onHeroShare(heroAgreement.digital_content_id)
   }
 
   const onClickTag = (tag: string) => goToSearchResultsPage(`#${tag}`)
@@ -229,7 +229,7 @@ const AgreementPage = ({
             {hasValidRemixParent && renderOriginalAgreementTitle()}
             <Lineup
               lineup={agreements}
-              // Styles for leading element (original agreement if remix).
+              // Styles for leading element (original digital_content if remix).
               leadingElementId={defaults.remixParentAgreementId}
               leadingElementDelineator={
                 <div className={styles.originalAgreementDelineator}>
@@ -253,7 +253,7 @@ const AgreementPage = ({
               playingUid={currentQueueItem.uid}
               playingSource={currentQueueItem.source}
               playingAgreementId={
-                currentQueueItem.agreement && currentQueueItem.agreement.agreement_id
+                currentQueueItem.digital_content && currentQueueItem.digital_content.digital_content_id
               }
               playing={isPlaying}
               buffering={isBuffering}

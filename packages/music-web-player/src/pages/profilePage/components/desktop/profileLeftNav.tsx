@@ -210,7 +210,7 @@ export const ProfileLeftNav = (props: ProfileLeftNavProps) => {
         {isLandlord ? <ProfileTags goToRoute={goToRoute} tags={tags} /> : null}
         <ProfileMutuals />
         {isOwner && !isLandlord && (
-          <UploadChip type='agreement' variant='nav' onClick={onClickUploadChip} />
+          <UploadChip type='digital_content' variant='nav' onClick={onClickUploadChip} />
         )}
       </div>
     )

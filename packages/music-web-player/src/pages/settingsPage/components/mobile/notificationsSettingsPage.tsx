@@ -71,7 +71,7 @@ const messages = {
 }
 
 const emailOptions = [
-  { key: EmailFrequency.Live, text: 'Live' },
+  { key: EmailFrequency.Digitalcoin, text: 'Digitalcoin' },
   { key: EmailFrequency.Daily, text: 'Daily' },
   { key: EmailFrequency.Weekly, text: 'Weekly' },
   { key: EmailFrequency.Off, text: 'Off' }

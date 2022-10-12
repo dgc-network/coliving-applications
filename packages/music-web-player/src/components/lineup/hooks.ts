@@ -68,7 +68,7 @@ export const useLineupProps = ({
     variant: variant ?? LineupVariant.MAIN,
     playingUid: currentQueueItem?.uid,
     playingSource: currentQueueItem?.source,
-    playingAgreementId: currentQueueItem?.agreement?.agreement_id ?? null,
+    playingAgreementId: currentQueueItem?.digital_content?.digital_content_id ?? null,
     playing: isPlaying,
     buffering: isBuffering,
     pauseAgreement,

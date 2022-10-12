@@ -1,4 +1,4 @@
-import { BADGE_LOCAL_STORAGE_KEY } from 'pages/live-rewards-page/Tiers'
+import { BADGE_LOCAL_STORAGE_KEY } from 'pages/digitalcoin-rewards-page/Tiers'
 import ColivingBackend from 'services/colivingBackend'
 import {
   clearColivingAccount,

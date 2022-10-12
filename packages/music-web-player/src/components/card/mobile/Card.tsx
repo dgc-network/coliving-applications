@@ -126,7 +126,7 @@ const Card = ({
             ) : null}
             {agreementCount !== undefined && (
               <div className={styles.agreementCount}>
-                {`${agreementCount} ${pluralize('Agreement', agreementCount)}`}
+                {`${agreementCount} ${pluralize('DigitalContent', agreementCount)}`}
               </div>
             )}
           </div>

@@ -4,11 +4,11 @@ import type { AppState } from 'app/store'
 
 import { RepeatMode } from './reducer'
 
-const getBaseState = (state: AppState) => state.live
+const getBaseState = (state: AppState) => state.digitalcoin
 
 export const getAgreement = (state: AppState) => {
   const baseState = getBaseState(state)
-  // An index of -1, signals no live is ready to be played back
+  // An index of -1, signals no digitalcoin is ready to be played back
   return baseState.index >= 0 ? baseState.queue[baseState.index] : null
 }
 export const getPlaying = (state: AppState) => getBaseState(state).playing
@@ -31,5 +31,5 @@ export const getQueueAutoplay = (state: AppState) =>
 
 export const getAgreementAndIndex = createSelector(
   [getAgreement, getIndex],
-  (agreement, index) => ({ agreement, index })
+  (digital_content, index) => ({ digital_content, index })
 )

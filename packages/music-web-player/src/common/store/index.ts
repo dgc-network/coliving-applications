@@ -20,7 +20,7 @@ import changePasswordReducer, {
   ChangePasswordState
 } from 'common/store/changePassword/slice'
 import notifications from 'common/store/notifications/reducer'
-import liveRewardsSlice from 'common/store/pages/live-rewards/slice'
+import liveRewardsSlice from 'common/store/pages/digitalcoin-rewards/slice'
 import collection from 'common/store/pages/collection/reducer'
 import { CollectionsPageState } from 'common/store/pages/collection/types'
 import exploreCollectionsReducer from 'common/store/pages/explore/exploreCollections/slice'
@@ -38,8 +38,8 @@ import settings from 'common/store/pages/settings/reducer'
 import { SettingsPageState } from 'common/store/pages/settings/types'
 import smartCollection from 'common/store/pages/smartCollection/slice'
 import tokenDashboardSlice from 'common/store/pages/tokenDashboard/slice'
-import agreement from 'common/store/pages/agreement/reducer'
-import AgreementPageState from 'common/store/pages/agreement/types'
+import digital_content from 'common/store/pages/digital_content/reducer'
+import AgreementPageState from 'common/store/pages/digital_content/types'
 import trendingContentLists from 'common/store/pages/trendingContentLists/slice'
 import trendingUnderground from 'common/store/pages/trendingUnderground/slice'
 import trending from 'common/store/pages/trending/reducer'
@@ -92,8 +92,8 @@ import supportingUserListReducer from 'common/store/userList/supporting/reducers
 import topSupportersUserListReducer from 'common/store/userList/topSupporters/reducers'
 import wallet from 'common/store/wallet/slice'
 
-// In the future, these state slices will live in packages/common.
-// For now they live in the web client. As features get migrated to RN
+// In the future, these state slices will digitalcoin in packages/common.
+// For now they digitalcoin in the web client. As features get migrated to RN
 // relevant state slices should be added here. Eventually they will be pulled into
 // packages/common and the mobile client will no longer be dependent on the web client
 
@@ -171,7 +171,7 @@ export const reducers = (ctx: CommonStoreContext) => ({
     savedPage: savedPageReducer,
     searchResults,
     tokenDashboard: tokenDashboardSlice.reducer,
-    agreement,
+    digital_content,
     trending,
     trendingContentLists,
     trendingUnderground,
@@ -216,15 +216,15 @@ export const sagas = (ctx: CommonStoreContext) => ({
   // store/social/agreements/sagas.ts
   // store/social/users/sagas.ts
   // store/social/collections/sagas.ts
-  // pages/live-rewards-page/store/sagas.ts
+  // pages/digitalcoin-rewards-page/store/sagas.ts
   // store/wallet/sagas.ts
   // store/lineup/sagas.js
   // pages/feed/store/lineups/feed/sagas.js
   // pages/feed/store/sagas.js
   // pages/collection/store/lineups/agreements/sagas.js
   // pages/collection/store/sagas.js
-  // pages/agreement/store/lineups/agreements/sagas.js
-  // pages/agreement/store/sagas.js
+  // pages/digital_content/store/lineups/agreements/sagas.js
+  // pages/digital_content/store/sagas.js
   // store/ui/stemsUpload/sagas.ts
   // pages/user-list/followers/sagas.ts
   // pages/user-list/following/sagas.ts
@@ -311,7 +311,7 @@ export type CommonState = {
     smartCollection: ReturnType<typeof smartCollection>
     tokenDashboard: ReturnType<typeof tokenDashboardSlice.reducer>
     historyPage: ReturnType<typeof historyPageReducer>
-    agreement: AgreementPageState
+    digital_content: AgreementPageState
     profile: ProfilePageState
     savedPage: ReturnType<typeof savedPageReducer>
     searchResults: SearchPageState

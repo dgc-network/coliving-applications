@@ -18,13 +18,13 @@ const getCollection = (id: ID) => (state: CommonState) =>
 
 function* handleRequestOpen(action: RequestOpenAction) {
   switch (action.payload.type) {
-    case 'agreement': {
+    case 'digital_content': {
       const { agreementId, source, type } = action.payload
-      const agreement = yield* select(getAgreement(agreementId))
-      if (!agreement) return
-      const landlord = yield* select(getUser(agreement.owner_id))
+      const digital_content = yield* select(getAgreement(agreementId))
+      if (!digital_content) return
+      const landlord = yield* select(getUser(digital_content.owner_id))
       if (!landlord) return
-      yield put(open({ type, agreement, source, landlord }))
+      yield put(open({ type, digital_content, source, landlord }))
       break
     }
     case 'profile': {

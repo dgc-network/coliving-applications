@@ -2,7 +2,7 @@
 import * as React from 'react'
 
 import type { UserChallengeState } from '@coliving/common'
-import { ClaimStatus } from '@coliving/web/src/common/store/pages/live-rewards/slice'
+import { ClaimStatus } from '@coliving/web/src/common/store/pages/digitalcoin-rewards/slice'
 import { fillString } from '@coliving/web/src/common/utils/fillString'
 import { formatNumberCommas } from '@coliving/web/src/common/utils/formatUtil'
 import type { ImageSourcePropType } from 'react-native'
@@ -25,7 +25,7 @@ const messages = {
   taskVerified: 'Verified Challenge',
   reward: 'Reward',
   progress: 'Progress',
-  live: '$LIVE',
+  digitalcoin: '$LIVE',
   incomplete: 'Incomplete',
   complete: 'Complete',
   claim: 'Claim Your Reward',
@@ -255,7 +255,7 @@ export const ChallengeRewardsDrawer = ({
                 {formatNumberCommas(amount)}
               </GradientText>
               <Text style={styles.liveLabel} weight='heavy'>
-                {messages.live}
+                {messages.digitalcoin}
               </Text>
             </View>
             {showProgressBar ? (

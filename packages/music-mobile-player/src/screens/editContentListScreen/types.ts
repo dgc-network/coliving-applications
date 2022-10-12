@@ -16,9 +16,9 @@ export type ContentListValues = {
   description: Nullable<string>
   artwork: Image
   agreements: ReturnType<typeof getAgreements>
-  agreement_ids: {
+  digital_content_ids: {
     time: number
-    agreement: ID
+    digital_content: ID
   }[]
   removedAgreements: { agreementId: ID; timestamp: number }[]
 }

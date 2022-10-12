@@ -1,7 +1,7 @@
 import { ShareType } from 'common/store/ui/shareModal/types'
 
 const shareTypeMap: Record<ShareType, string> = {
-  agreement: 'Agreement',
+  digital_content: 'DigitalContent',
   profile: 'Profile',
   album: 'Album',
   contentList: 'ContentList',

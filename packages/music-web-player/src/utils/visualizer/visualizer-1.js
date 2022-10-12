@@ -159,8 +159,8 @@ let Visualizer1 = (function () {
   }
 
   /** Binds the visualizer to an AudioStream element. */
-  function bind(live) {
-    analyser = new GLAudioAnalyser(gl, live.source, live.liveCtx)
+  function bind(digitalcoin) {
+    analyser = new GLAudioAnalyser(gl, digitalcoin.source, digitalcoin.liveCtx)
   }
 
   function hide() {

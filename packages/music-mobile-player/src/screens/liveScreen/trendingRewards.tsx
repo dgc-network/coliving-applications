@@ -1,7 +1,7 @@
 import { StringKeys } from '@coliving/common'
 import type { TrendingRewardID } from '@coliving/common'
-import type { TrendingRewardsModalType } from '@coliving/web/src/common/store/pages/live-rewards/slice'
-import { setTrendingRewardsModalType } from '@coliving/web/src/common/store/pages/live-rewards/slice'
+import type { TrendingRewardsModalType } from '@coliving/web/src/common/store/pages/digitalcoin-rewards/slice'
+import { setTrendingRewardsModalType } from '@coliving/web/src/common/store/pages/digitalcoin-rewards/slice'
 import type { Modals } from '@coliving/web/src/common/store/ui/modals/slice'
 import { setVisibility } from '@coliving/web/src/common/store/ui/modals/slice'
 import { View } from 'react-native'
@@ -14,7 +14,7 @@ import { trendingRewardsConfig } from 'app/utils/challenges'
 import { Panel } from './panel'
 
 const validRewardIds: Set<TrendingRewardID> = new Set([
-  'trending-agreement',
+  'trending-digital-content',
   'trending-content-list',
   'top-api',
   'verified-upload',
@@ -53,7 +53,7 @@ export const TrendingRewards = () => {
         modal = 'TrendingRewardsExplainer'
         modalType = 'contentLists'
         break
-      case 'trending-agreement':
+      case 'trending-digital-content':
         modal = 'TrendingRewardsExplainer'
         modalType = 'agreements'
         break

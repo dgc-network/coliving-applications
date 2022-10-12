@@ -47,15 +47,15 @@ function* getAgreements() {
 
   if (allSavedAgreementIds.length > 0) {
     const agreements = yield call(retrieveAgreements, { agreementIds: allSavedAgreementIds })
-    const agreementsMap = agreements.reduce((map, agreement) => {
-      // If the agreement hasn't confirmed save from the backend, pretend it is for the client.
-      if (!agreement.has_current_user_saved) {
-        agreement.has_current_user_saved = true
-        agreement.save_count += 1
+    const agreementsMap = agreements.reduce((map, digital_content) => {
+      // If the digital_content hasn't confirmed save from the backend, pretend it is for the client.
+      if (!digital_content.has_current_user_saved) {
+        digital_content.has_current_user_saved = true
+        digital_content.save_count += 1
       }
-      agreement.dateSaved = allSavedAgreementTimestamps[agreement.agreement_id]
+      digital_content.dateSaved = allSavedAgreementTimestamps[digital_content.digital_content_id]
 
-      map[agreement.agreement_id] = agreement
+      map[digital_content.digital_content_id] = digital_content
       return map
     }, {})
     return allSavedAgreementIds.map((id) => agreementsMap[id])
@@ -65,8 +65,8 @@ function* getAgreements() {
 
 const keepDateSaved = (entry) => ({
   uid: entry.uid,
-  kind: entry.agreement_id ? Kind.AGREEMENTS : Kind.COLLECTIONS,
-  id: entry.agreement_id || entry.content_list_id,
+  kind: entry.digital_content_id ? Kind.AGREEMENTS : Kind.COLLECTIONS,
+  id: entry.digital_content_id || entry.content_list_id,
   dateSaved: entry.dateSaved
 })
 
@@ -92,8 +92,8 @@ function* watchSave() {
     const { agreementId } = action
 
     const agreements = yield select(getCacheAgreements, { ids: [agreementId] })
-    const agreement = agreements[agreementId]
-    if (agreement.has_current_user_saved) return
+    const digital_content = agreements[agreementId]
+    if (digital_content.has_current_user_saved) return
 
     const localSaveUid = makeUid(
       Kind.AGREEMENTS,

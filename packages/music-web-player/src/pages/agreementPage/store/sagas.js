@@ -8,16 +8,16 @@ import { getAgreement as getCachedAgreement } from 'common/store/cache/agreement
 import { retrieveAgreements } from 'common/store/cache/agreements/utils'
 import { retrieveAgreementByHandleAndSlug } from 'common/store/cache/agreements/utils/retrieveAgreements'
 import { getUsers } from 'common/store/cache/users/selectors'
-import * as agreementPageActions from 'common/store/pages/agreement/actions'
-import { agreementsActions } from 'common/store/pages/agreement/lineup/actions'
+import * as agreementPageActions from 'common/store/pages/digital_content/actions'
+import { agreementsActions } from 'common/store/pages/digital_content/lineup/actions'
 import {
   getSourceSelector,
   getAgreement,
   getTrendingAgreementRanks,
   getUser
-} from 'common/store/pages/agreement/selectors'
+} from 'common/store/pages/digital_content/selectors'
 import { getIsReachable } from 'common/store/reachability/selectors'
-import agreementsSagas from 'pages/agreement-page/store/lineups/agreements/sagas'
+import agreementsSagas from 'pages/digital-content-page/store/lineups/agreements/sagas'
 import apiClient from 'services/colivingAPIClient/colivingAPIClient'
 import { remoteConfigInstance } from 'services/remoteConfig/remoteConfigInstance'
 import { waitForBackendSetup } from 'store/backend/sagas'
@@ -86,7 +86,7 @@ function* watchAgreementBadge() {
         )
       )
     } catch (error) {
-      console.error(`Unable to fetch agreement badge: ${error.message}`)
+      console.error(`Unable to fetch digital_content badge: ${error.message}`)
     }
   })
 }
@@ -95,15 +95,15 @@ function* getAgreementRanks(agreementId) {
   yield put(agreementPageActions.getAgreementRanks(agreementId))
 }
 
-function* addAgreementToLineup(agreement) {
+function* addAgreementToLineup(digital_content) {
   const source = yield select(getSourceSelector)
   const formattedAgreement = {
     kind: Kind.AGREEMENTS,
-    id: agreement.agreement_id,
-    uid: makeUid(Kind.AGREEMENTS, agreement.agreement_id, source)
+    id: digital_content.digital_content_id,
+    uid: makeUid(Kind.AGREEMENTS, digital_content.digital_content_id, source)
   }
 
-  yield put(agreementsActions.add(formattedAgreement, agreement.agreement_id))
+  yield put(agreementsActions.add(formattedAgreement, digital_content.digital_content_id))
 }
 
 /** Get "more by this landlord" and put into the lineup + queue */
@@ -121,9 +121,9 @@ function* watchFetchAgreement() {
     const { agreementId, handle, slug, canBeUnlisted } = action
     const permalink = `/${handle}/${slug}`
     try {
-      let agreement
+      let digital_content
       if (!agreementId) {
-        agreement = yield call(retrieveAgreementByHandleAndSlug, {
+        digital_content = yield call(retrieveAgreementByHandleAndSlug, {
           handle,
           slug,
           withStems: true,
@@ -141,22 +141,22 @@ function* watchFetchAgreement() {
           withRemixes: true,
           withRemixParents: true
         })
-        agreement = agreements && agreements.length === 1 ? agreements[0] : null
+        digital_content = agreements && agreements.length === 1 ? agreements[0] : null
       }
-      if (!agreement) {
+      if (!digital_content) {
         const isReachable = yield select(getIsReachable)
         if (isReachable) {
           yield put(pushRoute(NOT_FOUND_PAGE))
           return
         }
       } else {
-        yield put(agreementPageActions.setAgreementId(agreement.agreement_id))
-        // Add hero agreement to lineup early so that we can play it ASAP
+        yield put(agreementPageActions.setAgreementId(digital_content.digital_content_id))
+        // Add hero digital_content to lineup early so that we can play it ASAP
         // (instead of waiting for the entire lineup to load)
-        yield call(addAgreementToLineup, agreement)
+        yield call(addAgreementToLineup, digital_content)
         yield fork(getRestOfLineup, permalink, handle)
-        yield fork(getAgreementRanks, agreement.agreement_id)
-        yield put(agreementPageActions.fetchAgreementSucceeded(agreement.agreement_id))
+        yield fork(getAgreementRanks, digital_content.digital_content_id)
+        yield put(agreementPageActions.fetchAgreementSucceeded(digital_content.digital_content_id))
       }
     } catch (e) {
       console.error(e)
@@ -170,13 +170,13 @@ function* watchFetchAgreement() {
 function* watchFetchAgreementSucceeded() {
   yield takeEvery(agreementPageActions.FETCH_AGREEMENT_SUCCEEDED, function* (action) {
     const { agreementId } = action
-    const agreement = yield select(getCachedAgreement, { id: agreementId })
+    const digital_content = yield select(getCachedAgreement, { id: agreementId })
     if (
-      agreement.download &&
-      agreement.download.is_downloadable &&
-      !agreement.download.cid
+      digital_content.download &&
+      digital_content.download.is_downloadable &&
+      !digital_content.download.cid
     ) {
-      yield put(agreementCacheActions.checkIsDownloadable(agreement.agreement_id))
+      yield put(agreementCacheActions.checkIsDownloadable(digital_content.digital_content_id))
     }
   })
 }
@@ -198,10 +198,10 @@ function* watchRefetchLineup() {
 function* watchAgreementPageMakePublic() {
   yield takeEvery(agreementPageActions.MAKE_AGREEMENT_PUBLIC, function* (action) {
     const { agreementId } = action
-    let agreement = yield select(getCachedAgreement, { id: agreementId })
+    let digital_content = yield select(getCachedAgreement, { id: agreementId })
 
-    agreement = {
-      ...agreement,
+    digital_content = {
+      ...digital_content,
       is_unlisted: false,
       release_date: moment().toString(),
       field_visibility: {
@@ -210,11 +210,11 @@ function* watchAgreementPageMakePublic() {
         tags: true,
         share: true,
         play_count: true,
-        remixes: agreement.field_visibility?.remixes ?? true
+        remixes: digital_content.field_visibility?.remixes ?? true
       }
     }
 
-    yield put(agreementCacheActions.editAgreement(agreementId, agreement))
+    yield put(agreementCacheActions.editAgreement(agreementId, digital_content))
   })
 }
 

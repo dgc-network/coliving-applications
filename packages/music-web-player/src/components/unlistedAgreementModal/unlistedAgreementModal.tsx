@@ -9,7 +9,7 @@ const messages = {
   title: 'AGREEMENT VISIBILITY',
   subtitle:
     "Hidden agreements won't show up on your profile.\nAnyone who has the link will be able to listen.",
-  hideAgreement: 'Hide Agreement'
+  hideAgreement: 'Hide DigitalContent'
 }
 
 // All possible toggleable fields
@@ -33,7 +33,7 @@ const agreementMetadataOrder = [
 
 // Maps switch identifiers to section titles on the UI
 const metadataTitleMap = {
-  [AgreementMetadataField.UNLISTED]: 'Agreement',
+  [AgreementMetadataField.UNLISTED]: 'DigitalContent',
   [AgreementMetadataField.GENRE]: 'Genre',
   [AgreementMetadataField.MOOD]: 'Mood',
   [AgreementMetadataField.TAGS]: 'Tags',
@@ -74,7 +74,7 @@ const AgreementMetadataSection = ({
 }
 
 type UnlistedAgreementModalProps = {
-  // Whether or not to show the hide agreement switch or just metadata switches..
+  // Whether or not to show the hide digital_content switch or just metadata switches..
   showHideAgreementSwitch: boolean
   isOpen: boolean
   metadataState: AgreementMetadataState
@@ -91,7 +91,7 @@ type AgreementMetadataState = {
   plays: boolean
 }
 
-// A modal that allows you to toggle a agreement to unlisted, as
+// A modal that allows you to toggle a digital_content to unlisted, as
 // well as toggle individual metadata field visibility.
 const UnlistedAgreementModal = ({
   showHideAgreementSwitch,

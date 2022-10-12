@@ -30,11 +30,11 @@ function* getCollectionAgreements() {
     collection = yield call(waitForValue, getCollection)
   }
 
-  const agreement = collection.content_list_contents.agreement_ids
+  const digital_content = collection.content_list_contents.digital_content_ids
 
-  const agreementIds = agreement.map((t) => t.agreement)
+  const agreementIds = digital_content.map((t) => t.digital_content)
   // TODO: Conform all timestamps to be of the same format so we don't have to do any special work here.
-  const times = agreement.map((t) => t.time)
+  const times = digital_content.map((t) => t.time)
 
   // Reconcile fetching this contentList with the queue.
   // Search the queue for its currently playing uids. If any are sourced
@@ -62,16 +62,16 @@ function* getCollectionAgreements() {
 
   if (agreementIds.length > 0) {
     const agreementMetadatas = yield call(retrieveAgreements, { agreementIds })
-    const keyedMetadatas = keyBy(agreementMetadatas, (m) => m.agreement_id)
+    const keyedMetadatas = keyBy(agreementMetadatas, (m) => m.digital_content_id)
 
     return agreementIds
       .map((id, i) => {
         const metadata = { ...keyedMetadatas[id] }
 
-        // For whatever reason, the agreement id was retrieved and doesn't exist or is malformatted.
-        // This can happen if the collection references an unlisted agreement or one that
+        // For whatever reason, the digital_content id was retrieved and doesn't exist or is malformatted.
+        // This can happen if the collection references an unlisted digital_content or one that
         // doesn't (or never has) existed.
-        if (!metadata.agreement_id) return null
+        if (!metadata.digital_content_id) return null
 
         if (times[i]) {
           metadata.dateAdded =
@@ -81,8 +81,8 @@ function* getCollectionAgreements() {
         }
         if (uidForSource[id] && uidForSource[id].length > 0) {
           metadata.uid = uidForSource[id].shift()
-        } else if (agreement[i].uid) {
-          metadata.uid = agreement[i].uid
+        } else if (digital_content[i].uid) {
+          metadata.uid = digital_content[i].uid
         }
         return metadata
       })
@@ -91,10 +91,10 @@ function* getCollectionAgreements() {
   return []
 }
 
-const keepDateAdded = (agreement) => ({
-  uid: agreement.uid,
+const keepDateAdded = (digital_content) => ({
+  uid: digital_content.uid,
   kind: Kind.AGREEMENTS,
-  dateAdded: agreement.dateAdded
+  dateAdded: digital_content.dateAdded
 })
 
 const sourceSelector = (state) => `collection:${getCollectionId(state)}`

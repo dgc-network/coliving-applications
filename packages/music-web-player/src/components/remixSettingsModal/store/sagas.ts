@@ -36,17 +36,17 @@ function* watchFetchAgreement() {
       const params = getHandleAndSlug(url)
       if (params) {
         const { handle, slug, agreementId } = params
-        let agreement: AgreementMetadata | null = null
+        let digital_content: AgreementMetadata | null = null
         if (handle && slug) {
-          agreement = yield call(retrieveAgreementByHandleAndSlug, {
+          digital_content = yield call(retrieveAgreementByHandleAndSlug, {
             handle,
             slug
           })
         } else if (agreementId) {
-          agreement = yield call(retrieveAgreements, { agreementIds: [agreementId] })
+          digital_content = yield call(retrieveAgreements, { agreementIds: [agreementId] })
         }
-        if (agreement) {
-          yield put(fetchAgreementSucceeded({ agreementId: agreement.agreement_id }))
+        if (digital_content) {
+          yield put(fetchAgreementSucceeded({ agreementId: digital_content.digital_content_id }))
           return
         }
       }

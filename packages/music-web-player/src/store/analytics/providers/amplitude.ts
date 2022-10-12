@@ -48,9 +48,9 @@ export const identify = (
   if (callback) callback()
 }
 
-// Agreement Event
+// DigitalContent Event
 // Docs: https://developers.amplitude.com/docs/javascript#sending-events
-export const agreement = (
+export const digital_content = (
   event: string,
   properties?: Record<string, any>,
   callback?: () => void

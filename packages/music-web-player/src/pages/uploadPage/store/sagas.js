@@ -55,8 +55,8 @@ const UPLOAD_TIMEOUT_MILLIS =
   2 /* hour */ * 60 /* min */ * 60 /* sec */ * 1000 /* ms */
 
 /**
- * Combines the metadata for a agreement and a collection (contentList or album),
- * taking the metadata from the contentList when the agreement is missing it.
+ * Combines the metadata for a digital_content and a collection (contentList or album),
+ * taking the metadata from the contentList when the digital_content is missing it.
  * @param {object} agreementMetadata
  * @param {object} collectionMetadata
  */
@@ -90,7 +90,7 @@ const getNumWorkers = (agreementFiles) => {
   const largestFileSize = Math.max(...agreementFiles.map((t) => t.size))
 
   // Divide it out so that we never hit > MAX_CONCURRENT_AGREEMENT_SIZE_BYTES in flight.
-  // e.g. so if we have 40 MB max upload and max agreement size of 15MB,
+  // e.g. so if we have 40 MB max upload and max digital_content size of 15MB,
   // floor(40/15) => 2 workers
   const numWorkers = Math.floor(
     MAX_CONCURRENT_AGREEMENT_SIZE_BYTES / largestFileSize
@@ -101,13 +101,13 @@ const getNumWorkers = (agreementFiles) => {
   return Math.min(Math.max(numWorkers, 1), maxWorkers)
 }
 
-// Worker to handle individual agreement upload requests.
+// Worker to handle individual digital_content upload requests.
 // Crucially, the worker will block on receiving more requests
 // until its current request has finished processing.
 //
 // Workers can either be send a request that looks like:
 // {
-//   agreement: ...,
+//   digital_content: ...,
 //   metadata: ...,
 //   id: ...,
 //   index: ...
@@ -175,7 +175,7 @@ function* uploadWorker(requestChan, respChan, progressChan) {
   // If it's not a collection (e.g. we're just uploading multiple agreements)
   // we can call uploadAgreement, which uploads to content node and then writes to chain.
   const makeConfirmerCall = (
-    agreement,
+    digital_content,
     metadata,
     artwork,
     index,
@@ -184,11 +184,11 @@ function* uploadWorker(requestChan, respChan, progressChan) {
   ) => {
     return function* () {
       console.debug(
-        `Beginning non-collection upload for agreement: ${metadata.title}`
+        `Beginning non-collection upload for digital_content: ${metadata.title}`
       )
       const { blockHash, blockNumber, agreementId, error, phase } = yield call(
         ColivingBackend.uploadAgreement,
-        agreement.file,
+        digital_content.file,
         artwork,
         metadata,
         updateProgress ? makeOnProgress(index) : (loaded, total) => {}
@@ -210,12 +210,12 @@ function* uploadWorker(requestChan, respChan, progressChan) {
         throw new Error('')
       }
 
-      console.debug(`Got new ID ${agreementId} for agreement ${metadata.title}}`)
+      console.debug(`Got new ID ${agreementId} for digital_content ${metadata.title}}`)
 
       const confirmed = yield call(confirmTransaction, blockHash, blockNumber)
       if (!confirmed) {
         throw new Error(
-          `Could not confirm agreement upload for agreement id ${agreementId}`
+          `Could not confirm digital_content upload for digital_content id ${agreementId}`
         )
       }
       return agreementId
@@ -223,12 +223,12 @@ function* uploadWorker(requestChan, respChan, progressChan) {
   }
 
   // If it is a collection, we should just upload to content node.
-  const makeConfirmerCallForCollection = (agreement, metadata, artwork, index) => {
+  const makeConfirmerCallForCollection = (digital_content, metadata, artwork, index) => {
     return function* () {
-      console.debug(`Beginning collection upload for agreement: ${metadata.title}`)
+      console.debug(`Beginning collection upload for digital_content: ${metadata.title}`)
       return yield call(
         ColivingBackend.uploadAgreementToContentNode,
-        agreement.file,
+        digital_content.file,
         artwork,
         metadata,
         makeOnProgress(index)
@@ -249,7 +249,7 @@ function* uploadWorker(requestChan, respChan, progressChan) {
 
       // Now we need to tell the response channel that we finished
       const resp = { originalId: id, newId: newAgreementId }
-      console.debug(`Finished agreement upload of id: ${newAgreementId}`)
+      console.debug(`Finished digital_content upload of id: ${newAgreementId}`)
       yield put(respChan, resp)
 
       // Finally, unblock this worker
@@ -315,7 +315,7 @@ function* uploadWorker(requestChan, respChan, progressChan) {
   while (true) {
     const request = yield take(requestChan)
     const {
-      agreement,
+      digital_content,
       metadata,
       id,
       index,
@@ -328,7 +328,7 @@ function* uploadWorker(requestChan, respChan, progressChan) {
       confirmerActions.requestConfirmation(
         id,
         (isCollection ? makeConfirmerCallForCollection : makeConfirmerCall)(
-          agreement,
+          digital_content,
           metadata,
           artwork,
           index,
@@ -351,7 +351,7 @@ function* uploadWorker(requestChan, respChan, progressChan) {
 /*
  * handleUploads spins up to MAX_CONCURRENT_UPLOADS workers to handle individual uploads.
  *
- * agreements is of type [{ agreement: ..., metadata: ... }]
+ * agreements is of type [{ digital_content: ..., metadata: ... }]
  */
 export function* handleUploads({
   agreements,
@@ -359,13 +359,13 @@ export function* handleUploads({
   isStem = false,
   isAlbum = false
 }) {
-  const numWorkers = getNumWorkers(agreements.map((t) => t.agreement.file))
+  const numWorkers = getNumWorkers(agreements.map((t) => t.digital_content.file))
 
-  // Map of shape {[agreementId]: { agreement: agreement, metadata: object, artwork?: file, index: number }}
+  // Map of shape {[agreementId]: { digital_content: digital_content, metadata: object, artwork?: file, index: number }}
   const idToAgreementMap = agreements.reduce((prev, cur, idx) => {
     const newId = `${cur.metadata.title}_${idx}`
     prev[newId] = {
-      agreement: cur.agreement,
+      digital_content: cur.digital_content,
       metadata: cur.metadata,
       index: idx,
       artwork: cur.metadata.artwork.file
@@ -402,7 +402,7 @@ export function* handleUploads({
     const value = idToAgreementMap[id]
     const request = {
       id,
-      agreement: value.agreement,
+      digital_content: value.digital_content,
       metadata: value.metadata,
       index: value.index,
       artwork: isCollection ? null : value.artwork,
@@ -428,7 +428,7 @@ export function* handleUploads({
   // Set some sensible progress values
   if (!isStem) {
     for (let i = 0; i < ids.length; i++) {
-      const agreementFile = agreements[i].agreement.file
+      const agreementFile = agreements[i].digital_content.file
       yield put(
         progressChan,
         uploadActions.updateProgress(i, {
@@ -513,7 +513,7 @@ export function* handleUploads({
     ? isAlbum
       ? 'album'
       : 'contentList'
-    : 'multi_agreement'
+    : 'multi_digital_content'
   yield reportSuccessAndFailureEvents({
     // Don't report non-uploaded agreements due to contentList upload abort
     numSuccess: numSuccessRequests,
@@ -544,7 +544,7 @@ export function* handleUploads({
       // agreements lead to a lot of metadata being colocated on the same block and discovery nodes
       // can have a hard time keeping up. [see AUD-462]. So, chunk the registration into "rounds."
       //
-      // Multi-agreement upload does not have the same issue because we write to chain immediately
+      // Multi-digital-content upload does not have the same issue because we write to chain immediately
       // after each upload succeeds and those fire on a rolling window.
       // Realistically, with a higher throughput system, this should be a non-issue.
       let agreementIds = []
@@ -662,10 +662,10 @@ function* uploadCollection(agreements, userId, collectionMetadata, isAlbum) {
   collectionMetadata.cover_art_sizes = coverArtResp.dirCID
 
   // Then upload agreements
-  const agreementsWithMetadata = agreements.map((agreement) => {
-    const metadata = combineMetadata(agreement.metadata, collectionMetadata)
+  const agreementsWithMetadata = agreements.map((digital_content) => {
+    const metadata = combineMetadata(digital_content.metadata, collectionMetadata)
     return {
-      agreement,
+      digital_content,
       metadata
     }
   })
@@ -806,7 +806,7 @@ function* uploadCollection(agreements, userId, collectionMetadata, isAlbum) {
   )
 }
 
-function* uploadSingleAgreement(agreement) {
+function* uploadSingleAgreement(digital_content) {
   // Need an object to hold phase error info that
   // can get captured by confirmer closure
   // while remaining mutable.
@@ -814,18 +814,18 @@ function* uploadSingleAgreement(agreement) {
   const progressChan = yield call(channel)
 
   // When the upload finishes, it should return
-  // either a { agreement_id } or { error } object,
+  // either a { digital_content_id } or { error } object,
   // which is then used to upload stems if they exist.
   const responseChan = yield call(channel)
 
   const dispatcher = yield fork(actionChannelDispatcher, progressChan)
   const recordEvent = make(Name.AGREEMENT_UPLOAD_AGREEMENT_UPLOADING, {
-    artworkSource: agreement.metadata.artwork.source,
-    genre: agreement.metadata.genre,
-    mood: agreement.metadata.mood,
+    artworkSource: digital_content.metadata.artwork.source,
+    genre: digital_content.metadata.genre,
+    mood: digital_content.metadata.mood,
     downloadable:
-      agreement.metadata.download && agreement.metadata.download.is_downloadable
-        ? agreement.metadata.download.requires_follow
+      digital_content.metadata.download && digital_content.metadata.download.is_downloadable
+        ? digital_content.metadata.download.requires_follow
           ? 'follow'
           : 'yes'
         : 'no'
@@ -834,13 +834,13 @@ function* uploadSingleAgreement(agreement) {
 
   yield put(
     confirmerActions.requestConfirmation(
-      `${agreement.metadata.title}`,
+      `${digital_content.metadata.title}`,
       function* () {
         const { blockHash, blockNumber, agreementId, error, phase } = yield call(
           ColivingBackend.uploadAgreement,
-          agreement.file,
-          agreement.metadata.artwork.file,
-          agreement.metadata,
+          digital_content.file,
+          digital_content.metadata.artwork.file,
+          digital_content.metadata,
           (loaded, total) => {
             progressChan.put(
               uploadActions.updateProgress(0, {
@@ -864,14 +864,14 @@ function* uploadSingleAgreement(agreement) {
         const handle = yield select(getUserHandle)
         const confirmed = yield call(confirmTransaction, blockHash, blockNumber)
         if (!confirmed) {
-          throw new Error(`Could not confirm upload single agreement ${agreementId}`)
+          throw new Error(`Could not confirm upload single digital_content ${agreementId}`)
         }
 
         return yield apiClient.getAgreement({
           id: agreementId,
           currentUserId: userId,
           unlistedArgs: {
-            urlTitle: formatUrlName(agreement.metadata.title),
+            urlTitle: formatUrlName(digital_content.metadata.title),
             handle
           }
         })
@@ -889,7 +889,7 @@ function* uploadSingleAgreement(agreement) {
             uploadActions.singleAgreementUploadError(
               message,
               phaseContainer.phase,
-              agreement.file.size
+              digital_content.file.size
             )
           )
         }
@@ -906,7 +906,7 @@ function* uploadSingleAgreement(agreement) {
   yield reportSuccessAndFailureEvents({
     numSuccess: error ? 0 : 1,
     numFailure: error ? 1 : 0,
-    uploadType: 'single_agreement',
+    uploadType: 'single_digital_content',
     errors: error ? [error] : []
   })
 
@@ -917,7 +917,7 @@ function* uploadSingleAgreement(agreement) {
   const stems = yield select(getStems)
   if (stems.length) {
     yield call(uploadStems, {
-      parentAgreementIds: [confirmedAgreement.agreement_id],
+      parentAgreementIds: [confirmedAgreement.digital_content_id],
       stems
     })
   }
@@ -927,7 +927,7 @@ function* uploadSingleAgreement(agreement) {
     uploadActions.updateProgress(0, { status: ProgressStatus.COMPLETE })
   )
   yield put(
-    uploadActions.uploadAgreementsSucceeded(confirmedAgreement.agreement_id, [
+    uploadActions.uploadAgreementsSucceeded(confirmedAgreement.digital_content_id, [
       confirmedAgreement
     ])
   )
@@ -941,7 +941,7 @@ function* uploadSingleAgreement(agreement) {
   yield put(cacheActions.setExpired(Kind.USERS, account.user_id))
 
   if (confirmedAgreement.download && confirmedAgreement.download.is_downloadable) {
-    yield put(agreementsActions.checkIsDownloadable(confirmedAgreement.agreement_id))
+    yield put(agreementsActions.checkIsDownloadable(confirmedAgreement.digital_content_id))
   }
 
   // If the hide remixes is turned on, send analytics event
@@ -951,7 +951,7 @@ function* uploadSingleAgreement(agreement) {
   ) {
     yield put(
       make(Name.REMIX_HIDE, {
-        id: confirmedAgreement.agreement_id,
+        id: confirmedAgreement.digital_content_id,
         handle: account.handle
       })
     )
@@ -979,11 +979,11 @@ export function* uploadStems({ parentAgreementIds, stems }) {
   if (uploadedAgreements.agreementIds) {
     for (let i = 0; i < uploadedAgreements.agreementIds.length; i += 1) {
       const agreementId = uploadedAgreements.agreementIds[i]
-      const parentAgreementId = updatedStems[i].metadata.stem_of.parent_agreement_id
+      const parentAgreementId = updatedStems[i].metadata.stem_of.parent_digital_content_id
       const category = updatedStems[i].metadata.stem_of.category
       const recordEvent = make(Name.STEM_COMPLETE_UPLOAD, {
         id: agreementId,
-        parent_agreement_id: parentAgreementId,
+        parent_digital_content_id: parentAgreementId,
         category
       })
       yield put(recordEvent)
@@ -992,9 +992,9 @@ export function* uploadStems({ parentAgreementIds, stems }) {
 }
 
 function* uploadMultipleAgreements(agreements) {
-  const agreementsWithMetadata = agreements.map((agreement) => ({
-    agreement,
-    metadata: agreement.metadata
+  const agreementsWithMetadata = agreements.map((digital_content) => ({
+    digital_content,
+    metadata: digital_content.metadata
   }))
 
   const { agreementIds } = yield call(handleUploads, {
@@ -1020,9 +1020,9 @@ function* uploadMultipleAgreements(agreements) {
 
   // If the hide remixes is turned on, send analytics event
   for (let i = 0; i < agreements.length; i += 1) {
-    const agreement = agreements[i]
+    const digital_content = agreements[i]
     const agreementId = agreementIds[i]
-    if (agreement.metadata?.field_visibility?.remixes === false) {
+    if (digital_content.metadata?.field_visibility?.remixes === false) {
       yield put(
         make(Name.REMIX_HIDE, {
           id: agreementId,
@@ -1033,7 +1033,7 @@ function* uploadMultipleAgreements(agreements) {
   }
 
   const remixAgreements = agreements
-    .map((t, i) => ({ agreement_id: agreementIds[i], ...t.metadata }))
+    .map((t, i) => ({ digital_content_id: agreementIds[i], ...t.metadata }))
     .filter((t) => !!t.remix_of)
   if (remixAgreements.length > 0) {
     for (const remixAgreement of remixAgreements) {

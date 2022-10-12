@@ -21,14 +21,14 @@ export const getTwitterShareText = (
   let link = ''
   let analyticsEvent: ShareToTwitterEvent
   switch (content.type) {
-    case 'agreement': {
+    case 'digital_content': {
       const {
-        agreement: { title, permalink, agreement_id },
+        digital_content: { title, permalink, digital_content_id },
         landlord: { handle }
       } = content
       twitterText = messages.agreementShareText(title, handle)
       link = fullAgreementPage(permalink)
-      analyticsEvent = { kind: 'agreement', id: agreement_id, url: link }
+      analyticsEvent = { kind: 'digital_content', id: digital_content_id, url: link }
       break
     }
     case 'profile': {

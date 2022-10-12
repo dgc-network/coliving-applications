@@ -7,7 +7,7 @@ import { decodeHashId } from 'utils/route/hashIds'
 
 declare global {
   interface Window {
-    live: HTMLAudioElement
+    digitalcoin: HTMLAudioElement
     webkitAudioContext: typeof AudioContext
   }
 }
@@ -17,11 +17,11 @@ const FADE_OUT_EVENT = new Event('fade-out')
 const VOLUME_CHANGE_BASE = 10
 const BUFFERING_DELAY_MILLISECONDS = 500
 
-// In the case of live errors, try to resume playback
+// In the case of digitalcoin errors, try to resume playback
 // by nudging the playhead this many seconds ahead.
 const ON_ERROR_NUDGE_SECONDS = 0.2
 
-// This calculation comes from chrome's live SourceBuffer max of
+// This calculation comes from chrome's digitalcoin SourceBuffer max of
 // 12MB. Each segment is ~260KB, so we can only fit ~ 47 segments in memory.
 // Read more: https://github.com/w3c/media-source/issues/172
 const MAX_SEGMENTS = 47
@@ -74,7 +74,7 @@ const HlsConfig = {
 }
 
 class AudioStream {
-  live: HTMLAudioElement
+  digitalcoin: HTMLAudioElement
   liveCtx: AudioContext | null
   source: MediaElementAudioSourceNode | null
   gainNode: GainNode | null
@@ -95,9 +95,9 @@ class AudioStream {
   errorRateLimiter: Set<string>
 
   constructor() {
-    this.live = new Audio()
-    // Connect this.live to the window so that 3P's can interact with it.
-    window.live = this.live
+    this.digitalcoin = new Audio()
+    // Connect this.digitalcoin to the window so that 3P's can interact with it.
+    window.digitalcoin = this.digitalcoin
 
     this.liveCtx = null
     this.source = null
@@ -126,19 +126,19 @@ class AudioStream {
 
     // M3U8 file
     this.url = null
-    // HLS live object
+    // HLS digitalcoin object
     this.hls = null
 
     // Listen for errors
     this.onError = (e, data) => {}
-    // Per load / instantiation of HLS (once per agreement),
+    // Per load / instantiation of HLS (once per digital_content),
     // we limit rate limit logging to once per type
     // this is to prevent log spam, something HLS.js is *very* good at
     this.errorRateLimiter = new Set()
   }
 
   _initContext = (shouldSkipAudioContext = false) => {
-    this.live.addEventListener('canplay', () => {
+    this.digitalcoin.addEventListener('canplay', () => {
       if (!this.liveCtx && !shouldSkipAudioContext) {
         // Set up WebAudio API handles
         const AudioContext = window.AudioContext || window.webkitAudioContext
@@ -146,10 +146,10 @@ class AudioStream {
           this.liveCtx = new AudioContext()
           this.gainNode = this.liveCtx.createGain()
           this.gainNode.connect(this.liveCtx.destination)
-          this.source = this.liveCtx.createMediaElementSource(this.live)
+          this.source = this.liveCtx.createMediaElementSource(this.digitalcoin)
           this.source.connect(this.gainNode)
         } catch (e) {
-          console.log('error setting up live context')
+          console.log('error setting up digitalcoin context')
           console.log(e)
         }
       }
@@ -159,10 +159,10 @@ class AudioStream {
       this.onBufferingChange(this.buffering)
     })
 
-    this.live.onerror = (e) => {
+    this.digitalcoin.onerror = (e) => {
       this.onError(AudioError.LIVE, e)
 
-      // Handle live errors by trying to nudge the playhead and re attach media.
+      // Handle digitalcoin errors by trying to nudge the playhead and re attach media.
       // Simply nudging the media doesn't work.
       //
       // This kind of error only seems to manifest on chrome because, as they say
@@ -172,17 +172,17 @@ class AudioStream {
       if (IS_CHROME_LIKE) {
         // Likely there isn't a case where an error is thrown while we're in a paused
         // state, but just in case, we record what state we were in.
-        const wasPlaying = !this.live.paused
+        const wasPlaying = !this.digitalcoin.paused
         if (this.hls && this.url) {
-          const newTime = this.live.currentTime + ON_ERROR_NUDGE_SECONDS
+          const newTime = this.digitalcoin.currentTime + ON_ERROR_NUDGE_SECONDS
           this.hls.loadSource(this.url)
-          this.hls.attachMedia(this.live)
+          this.hls.attachMedia(this.digitalcoin)
           // Set the new time to the current plus the nudge. If this nudge
           // wasn't enough, this error will be thrown again and we will just continue
           // to nudge the playhead forward until the errors stop or the song ends.
-          this.live.currentTime = newTime
+          this.digitalcoin.currentTime = newTime
           if (wasPlaying) {
-            this.live.play()
+            this.digitalcoin.play()
           }
         }
       }
@@ -200,16 +200,16 @@ class AudioStream {
     if (forceStreamSrc) {
       // TODO: Test to make sure that this doesn't break anything
       this.stop()
-      const prevVolume = this.live.volume
-      this.live = new Audio()
+      const prevVolume = this.digitalcoin.volume
+      this.digitalcoin = new Audio()
       this.gainNode = null
       this.source = null
       this.liveCtx = null
       this._initContext(/* shouldSkipAudioContext */ true)
-      this.live.setAttribute('preload', 'none')
-      this.live.setAttribute('src', forceStreamSrc)
-      this.live.volume = prevVolume
-      this.live.onloadedmetadata = () => (this.duration = this.live.duration)
+      this.digitalcoin.setAttribute('preload', 'none')
+      this.digitalcoin.setAttribute('src', forceStreamSrc)
+      this.digitalcoin.volume = prevVolume
+      this.digitalcoin.onloadedmetadata = () => (this.duration = this.digitalcoin.duration)
     } else {
       this._initContext()
       if (Hls.isSupported()) {
@@ -234,8 +234,8 @@ class AudioStream {
           // Only emit on fatal because HLS is very noisy (e.g. pauses trigger errors)
           if (data.fatal) {
             // Buffer stall errors occur but are rarely fatal even if they claim to be.
-            // This occurs when you play a agreement, pause it, and then wait a few seconds.
-            // It appears as if we see this despite being able to play through the agreement.
+            // This occurs when you play a digital_content, pause it, and then wait a few seconds.
+            // It appears as if we see this despite being able to play through the digital_content.
             if (data.details === 'bufferStalledError') {
               return
             }
@@ -268,7 +268,7 @@ class AudioStream {
         const url = URL.createObjectURL(m3u8Blob)
         this.url = url
         this.hls.loadSource(this.url)
-        this.hls.attachMedia(this.live)
+        this.hls.attachMedia(this.digitalcoin)
       } else {
         // Native HLS (ios Safari)
         const m3u8Gateways =
@@ -279,8 +279,8 @@ class AudioStream {
           m3u8Gateways
         )
 
-        this.live.src = m3u8
-        this.live.title =
+        this.digitalcoin.src = m3u8
+        this.digitalcoin.title =
           info.title && info.landlord
             ? `${info.title} by ${info.landlord}`
             : 'Coliving'
@@ -292,17 +292,17 @@ class AudioStream {
       0
     )
 
-    // Set live listeners.
+    // Set digitalcoin listeners.
     if (this.endedListener) {
-      this.live.removeEventListener('ended', this.endedListener)
+      this.digitalcoin.removeEventListener('ended', this.endedListener)
     }
     this.endedListener = () => {
       onEnd()
     }
-    this.live.addEventListener('ended', this.endedListener)
+    this.digitalcoin.addEventListener('ended', this.endedListener)
 
     if (this.waitingListener) {
-      this.live.removeEventListener('waiting', this.waitingListener)
+      this.digitalcoin.removeEventListener('waiting', this.waitingListener)
     }
     this.waitingListener = () => {
       this.bufferingTimeout = setTimeout(() => {
@@ -310,42 +310,42 @@ class AudioStream {
         this.onBufferingChange(this.buffering)
       }, BUFFERING_DELAY_MILLISECONDS)
     }
-    this.live.addEventListener('waiting', this.waitingListener)
+    this.digitalcoin.addEventListener('waiting', this.waitingListener)
   }
 
   play = () => {
     // In case we haven't faded out the last pause, pause again and
     // clear our listener for the end of the pause fade.
-    this.live.removeEventListener('fade-out', this._pauseInternal)
-    if (this.live.currentTime !== 0) {
+    this.digitalcoin.removeEventListener('fade-out', this._pauseInternal)
+    if (this.digitalcoin.currentTime !== 0) {
       this._fadeIn()
     } else if (this.gainNode) {
       this.gainNode.gain.setValueAtTime(1, 0)
     }
 
     // This is a very nasty "hack" to fix a bug in chrome-like webkit browsers.
-    // Calling a traditional `live.pause()` / `play()` and switching tabs leaves the
+    // Calling a traditional `digitalcoin.pause()` / `play()` and switching tabs leaves the
     // AudioContext in a weird state where after the browser tab enters the background,
     // and then comes back into the foreground, the AudioContext gives misinformation.
-    // Weirdly, the live's playback rate is no longer maintained on resuming playback after a pause.
-    // Though the live itself claims live.playbackRate = 1.0, the actual resumed speed
+    // Weirdly, the digitalcoin's playback rate is no longer maintained on resuming playback after a pause.
+    // Though the digitalcoin itself claims digitalcoin.playbackRate = 1.0, the actual resumed speed
     // is nearish 0.9.
     //
     // In chrome like browsers (opera, edge), we disconnect and reconnect the source node
-    // instead of playing and pausing the live element itself, which seems to fix this issue
+    // instead of playing and pausing the digitalcoin element itself, which seems to fix this issue
     // without any side-effects (though this behavior could change?).
     //
     // Another solution to this problem is calling `this.liveCtx.suspend()` and `resume()`,
     // however, that doesn't play nicely with Analyser nodes (e.g. visualizer) because it
-    // freezes in place rather than naturally "disconnecting" it from live.
+    // freezes in place rather than naturally "disconnecting" it from digitalcoin.
     //
     // Web resources on this problem are limited (or none?), but this is a start:
-    // https://stackoverflow.com/questions/11506180/web-live-api-resume-from-pause
+    // https://stackoverflow.com/questions/11506180/web-digitalcoin-api-resume-from-pause
     if (this.liveCtx && IS_CHROME_LIKE) {
       this.source!.connect(this.gainNode!)
     }
 
-    const promise = this.live.play()
+    const promise = this.digitalcoin.play()
     if (promise) {
       promise.catch((_) => {
         // Let pauses interrupt plays (as the user could be rapidly skipping through agreements).
@@ -354,7 +354,7 @@ class AudioStream {
   }
 
   pause = () => {
-    this.live.addEventListener('fade-out', this._pauseInternal)
+    this.digitalcoin.addEventListener('fade-out', this._pauseInternal)
     this._fadeOut()
   }
 
@@ -363,26 +363,26 @@ class AudioStream {
       // See comment above in the `play()` method.
       this.source!.disconnect()
     } else {
-      this.live.pause()
+      this.digitalcoin.pause()
     }
   }
 
   stop = () => {
-    this.live.pause()
+    this.digitalcoin.pause()
     // Normally canplaythrough should be required to set currentTime, but in the case
     // of setting curtingTime to zero, pushing to the end of the event loop works.
     // This fixes issues in Firefox, in particular `the operation was aborted`
     setTimeout(() => {
-      this.live.currentTime = 0
+      this.digitalcoin.currentTime = 0
     }, 0)
   }
 
   isPlaying = () => {
-    return !this.live.paused
+    return !this.digitalcoin.paused
   }
 
   isPaused = () => {
-    return this.live.paused
+    return this.digitalcoin.paused
   }
 
   isBuffering = () => {
@@ -394,15 +394,15 @@ class AudioStream {
   }
 
   getPosition = () => {
-    return this.live.currentTime
+    return this.digitalcoin.currentTime
   }
 
   seek = (seconds: number) => {
-    this.live.currentTime = seconds
+    this.digitalcoin.currentTime = seconds
   }
 
   setVolume = (value: number) => {
-    this.live.volume =
+    this.digitalcoin.volume =
       (Math.pow(VOLUME_CHANGE_BASE, value) - 1) / (VOLUME_CHANGE_BASE - 1)
   }
 
@@ -410,14 +410,14 @@ class AudioStream {
     if (this.gainNode) {
       const fadeTime = 320
       setTimeout(() => {
-        this.live.dispatchEvent(FADE_IN_EVENT)
+        this.digitalcoin.dispatchEvent(FADE_IN_EVENT)
       }, fadeTime)
       this.gainNode.gain.exponentialRampToValueAtTime(
         1,
         this.liveCtx!.currentTime + fadeTime / 1000.0
       )
     } else {
-      this.live.dispatchEvent(FADE_IN_EVENT)
+      this.digitalcoin.dispatchEvent(FADE_IN_EVENT)
     }
   }
 
@@ -425,14 +425,14 @@ class AudioStream {
     if (this.gainNode) {
       const fadeTime = 200
       setTimeout(() => {
-        this.live.dispatchEvent(FADE_OUT_EVENT)
+        this.digitalcoin.dispatchEvent(FADE_OUT_EVENT)
       }, fadeTime)
       this.gainNode.gain.exponentialRampToValueAtTime(
         0.001,
         this.liveCtx!.currentTime + fadeTime / 1000.0
       )
     } else {
-      this.live.dispatchEvent(FADE_OUT_EVENT)
+      this.digitalcoin.dispatchEvent(FADE_OUT_EVENT)
     }
   }
 }

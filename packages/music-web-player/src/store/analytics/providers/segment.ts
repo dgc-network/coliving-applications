@@ -55,7 +55,7 @@ const getSegmentWriteKey = () => {
   return process.env.REACT_APP_SEGMENT_WEB
 }
 const SEGMENT_KEY = getSegmentWriteKey()
-const segmentScript = `!function(){var analytics=window.analytics=window.analytics||[];if(!analytics.initialize)if(analytics.invoked)window.console&&console.error&&console.error("Segment snippet included twice.");else{analytics.invoked=!0;analytics.methods=["agreementSubmit","agreementClick","agreementLink","agreementForm","pageview","identify","reset","group","agreement","ready","alias","debug","page","once","off","on"];analytics.factory=function(t){return function(){var e=Array.prototype.slice.call(arguments);e.unshift(t);analytics.push(e);return analytics}};for(var t=0;t<analytics.methods.length;t++){var e=analytics.methods[t];analytics[e]=analytics.factory(e)}analytics.load=function(t,e){var n=document.createElement("script");n.type="text/javascript";n.async=!0;n.src="https://analytics.coliving.lol/"+t;var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(n,a);analytics._loadOptions=e};analytics.SNIPPET_VERSION="4.1.0";}}();`
+const segmentScript = `!function(){var analytics=window.analytics=window.analytics||[];if(!analytics.initialize)if(analytics.invoked)window.console&&console.error&&console.error("Segment snippet included twice.");else{analytics.invoked=!0;analytics.methods=["agreementSubmit","agreementClick","agreementLink","agreementForm","pageview","identify","reset","group","digital_content","ready","alias","debug","page","once","off","on"];analytics.factory=function(t){return function(){var e=Array.prototype.slice.call(arguments);e.unshift(t);analytics.push(e);return analytics}};for(var t=0;t<analytics.methods.length;t++){var e=analytics.methods[t];analytics[e]=analytics.factory(e)}analytics.load=function(t,e){var n=document.createElement("script");n.type="text/javascript";n.async=!0;n.src="https://analytics.coliving.lol/"+t;var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(n,a);analytics._loadOptions=e};analytics.SNIPPET_VERSION="4.1.0";}}();`
 
 export const init = async () => {
   try {
@@ -64,7 +64,7 @@ export const init = async () => {
     document.head.appendChild(script)
     const source = getSource()
     ;(window as any).analytics.load(SEGMENT_KEY)
-    ;(window as any).analytics.agreement(Name.SESSION_START, { source })
+    ;(window as any).analytics.digital_content(Name.SESSION_START, { source })
   } catch (err) {
     console.error(err)
   }
@@ -93,9 +93,9 @@ export const identify = (
   ;(window as any).analytics.identify(handle, traits, options, callback)
 }
 
-// Agreement Event
-// Docs: https://segment.com/docs/connections/spec/agreement/
-export const agreement = (
+// DigitalContent Event
+// Docs: https://segment.com/docs/connections/spec/digital_content/
+export const digital_content = (
   event: string,
   properties?: Record<string, any>,
   options?: Record<string, any>,
@@ -105,5 +105,5 @@ export const agreement = (
     if (callback) callback()
     return
   }
-  ;(window as any).analytics.agreement(event, properties, options, callback)
+  ;(window as any).analytics.digital_content(event, properties, options, callback)
 }

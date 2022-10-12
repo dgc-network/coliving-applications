@@ -27,7 +27,7 @@ const MAX_ROWS = 5
 
 const messages = {
   title: 'DOWNLOADS & SOURCE FILES',
-  subtitle: 'Allow Users to download MP3 copies of your agreement',
+  subtitle: 'Allow Users to download MP3 copies of your digital_content',
   sourceFiles: 'SOURCE FILES',
   allowDownloads: 'Allow Downloads',
   requireFollowToDownload: 'Require Follow to Download',
@@ -273,7 +273,7 @@ const SourceFilesModal = ({
       subtitle={messages.subtitle}
       dismissOnClickOutside
       showDismissButton
-      // Since this can be nested in the edit agreement modal
+      // Since this can be nested in the edit digital_content modal
       // Appear on top of it
       zIndex={1002}
       bodyClassName={styles.modalContainer}

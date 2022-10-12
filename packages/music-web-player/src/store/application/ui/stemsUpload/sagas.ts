@@ -1,4 +1,4 @@
-import { Name, Agreement, User } from '@coliving/common'
+import { Name, DigitalContent, User } from '@coliving/common'
 import { takeEvery, put, call, select } from 'redux-saga/effects'
 
 import { getAgreement } from 'common/store/cache/agreements/selectors'
@@ -20,12 +20,12 @@ function* watchUploadStems() {
       const stemAgreements = uploads.map((u) => {
         const metadata = createStemMetadata({
           parentAgreementId: parentId,
-          agreement: u.metadata,
+          digital_content: u.metadata,
           stemCategory: u.category
         })
         return {
           metadata,
-          agreement: {
+          digital_content: {
             ...u,
             metadata
           }
@@ -45,19 +45,19 @@ function* watchUploadStems() {
           const category = stemAgreements[i].metadata.stem_of.category
           const recordEvent = make(Name.STEM_COMPLETE_UPLOAD, {
             id: agreementId,
-            parent_agreement_id: parentId,
+            parent_digital_content_id: parentId,
             category
           })
           yield put(recordEvent)
         }
       }
 
-      // Retrieve the parent agreement to refresh stems
-      const agreement: Agreement = yield select(getAgreement, { id: parentId })
-      const ownerUser: User = yield select(getUser, { id: agreement.owner_id })
+      // Retrieve the parent digital_content to refresh stems
+      const digital_content: DigitalContent = yield select(getAgreement, { id: parentId })
+      const ownerUser: User = yield select(getUser, { id: digital_content.owner_id })
       yield call(retrieveAgreements, {
         agreementIds: [
-          { id: parentId, handle: ownerUser.handle, url_title: agreement.title }
+          { id: parentId, handle: ownerUser.handle, url_title: digital_content.title }
         ],
         withStems: true,
         canBeUnlisted: true

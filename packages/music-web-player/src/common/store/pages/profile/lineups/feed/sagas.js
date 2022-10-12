@@ -37,7 +37,7 @@ function* getReposts({ offset, limit, payload }) {
     const confirming = yield select(getConfirmCalls)
     if (Object.keys(confirming).length > 0) {
       const repostAgreementIds = new Set(
-        reposts.map((r) => r.agreement_id).filter(Boolean)
+        reposts.map((r) => r.digital_content_id).filter(Boolean)
       )
       const repostCollectionIds = new Set(
         reposts.map((r) => r.content_list_id).filter(Boolean)
@@ -46,21 +46,21 @@ function* getReposts({ offset, limit, payload }) {
       const agreements = yield select(getAgreements)
       const collections = yield select(getCollections)
 
-      // For each confirming entry, check if it's a agreement or collection,
+      // For each confirming entry, check if it's a digital_content or collection,
       // then check if we have reposted/favorited it, and check to make
-      // sure we're not already getting back that same agreement or collection from the
+      // sure we're not already getting back that same digital_content or collection from the
       // backend.
       // If we aren't, this is an unconfirmed repost, prepend it to the lineup.
       Object.keys(confirming).forEach((kindId) => {
         const kind = getKindFromKindId(kindId)
         const id = getIdFromKindId(kindId)
         if (kind === Kind.AGREEMENTS) {
-          const agreement = agreements[id]
+          const digital_content = agreements[id]
           if (
-            agreement.has_current_user_reposted &&
-            !repostAgreementIds.has(agreement.agreement_id)
+            digital_content.has_current_user_reposted &&
+            !repostAgreementIds.has(digital_content.digital_content_id)
           ) {
-            reposts = [agreement, ...reposts]
+            reposts = [digital_content, ...reposts]
           }
         } else if (kind === Kind.COLLECTIONS) {
           const collection = collections[id]

@@ -18,8 +18,8 @@ const messages = {
   unlocked: 'tier unlocked',
   reached: "Congrats, you've reached ",
   having: 'Tier by having over',
-  live: '$LIVE!',
-  liveLabel: 'live tokens',
+  digitalcoin: '$LIVE!',
+  liveLabel: 'digitalcoin tokens',
   accessInfo:
     'You now have access to exclusive features & a shiny new badge by your name.',
   twitterShareText: (label: string, icon: string) =>
@@ -64,7 +64,7 @@ export const TierChangeNotification = (props: TierChangeNotificationProps) => {
       </NotificationHeader>
       <NotificationBody>
         {messages.reached} {tier} {messages.having} {humanReadableAmount}{' '}
-        {messages.live} {messages.accessInfo}
+        {messages.digitalcoin} {messages.accessInfo}
       </NotificationBody>
       <TwitterShareButton
         type='static'

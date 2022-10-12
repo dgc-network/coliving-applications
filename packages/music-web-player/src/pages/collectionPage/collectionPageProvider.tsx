@@ -123,7 +123,7 @@ type CollectionPageState = {
   updatingRoute: boolean
 }
 
-type ContentListAgreement = { time: number; agreement: ID; uid?: UID }
+type ContentListAgreement = { time: number; digital_content: ID; uid?: UID }
 
 class CollectionPage extends Component<
   CollectionPageProps,
@@ -197,7 +197,7 @@ class CollectionPage extends Component<
     // Reset the initial order if it is unset OR
     // if the uids of the agreements in the lineup are changing with this
     // update (initialOrder should contain ALL of the uids, so it suffices to check the first one).
-    const newInitialOrder = agreements.entries.map((agreement) => agreement.uid)
+    const newInitialOrder = agreements.entries.map((digital_content) => digital_content.uid)
     const noInitialOrder = !initialOrder && agreements.entries.length > 0
     const entryIds = new Set(newInitialOrder)
     const newUids =
@@ -297,8 +297,8 @@ class CollectionPage extends Component<
       metadata &&
       prevMetadata &&
       !this.playListContentsEqual(
-        metadata.content_list_contents.agreement_ids,
-        prevMetadata.content_list_contents.agreement_ids
+        metadata.content_list_contents.digital_content_ids,
+        prevMetadata.content_list_contents.digital_content_ids
       )
     ) {
       this.props.fetchAgreements()
@@ -323,7 +323,7 @@ class CollectionPage extends Component<
     return (
       prevContentListContents.length === curContentListContents.length &&
       prevContentListContents.reduce(
-        (acc, cur, idx) => acc && cur.agreement === curContentListContents[idx].agreement,
+        (acc, cur, idx) => acc && cur.digital_content === curContentListContents[idx].digital_content,
         true
       )
     )
@@ -379,7 +379,7 @@ class CollectionPage extends Component<
 
   getPlayingId = () => {
     const { currentQueueItem } = this.props
-    return currentQueueItem.agreement ? currentQueueItem.agreement.agreement_id : null
+    return currentQueueItem.digital_content ? currentQueueItem.digital_content.digital_content_id : null
   }
 
   formatMetadata = (agreementMetadatas: CollectionAgreement[]): AgreementRecord[] => {
@@ -424,7 +424,7 @@ class CollectionPage extends Component<
       pause()
       record(
         make(Name.PLAYBACK_PAUSE, {
-          id: `${agreementRecord.agreement_id}`,
+          id: `${agreementRecord.digital_content_id}`,
           source: PlaybackSource.CONTENT_LIST_AGREEMENT
         })
       )
@@ -432,7 +432,7 @@ class CollectionPage extends Component<
       play(agreementRecord.uid)
       record(
         make(Name.PLAYBACK_PLAY, {
-          id: `${agreementRecord.agreement_id}`,
+          id: `${agreementRecord.digital_content_id}`,
           source: PlaybackSource.CONTENT_LIST_AGREEMENT
         })
       )
@@ -440,7 +440,7 @@ class CollectionPage extends Component<
       play()
       record(
         make(Name.PLAYBACK_PLAY, {
-          id: `${agreementRecord.agreement_id}`,
+          id: `${agreementRecord.digital_content_id}`,
           source: PlaybackSource.CONTENT_LIST_AGREEMENT
         })
       )
@@ -459,9 +459,9 @@ class CollectionPage extends Component<
 
   onClickSave = (record: AgreementRecord) => {
     if (!record.has_current_user_saved) {
-      this.props.saveAgreement(record.agreement_id)
+      this.props.saveAgreement(record.digital_content_id)
     } else {
-      this.props.unsaveAgreement(record.agreement_id)
+      this.props.unsaveAgreement(record.digital_content_id)
     }
   }
 
@@ -475,9 +475,9 @@ class CollectionPage extends Component<
 
   onClickRepostAgreement = (record: AgreementRecord) => {
     if (!record.has_current_user_reposted) {
-      this.props.repostAgreement(record.agreement_id)
+      this.props.repostAgreement(record.digital_content_id)
     } else {
-      this.props.undoRepostAgreement(record.agreement_id)
+      this.props.undoRepostAgreement(record.digital_content_id)
     }
   }
 
@@ -495,7 +495,7 @@ class CollectionPage extends Component<
       timestamp
     )
 
-    // Remove the agreement from the initial order,
+    // Remove the digital_content from the initial order,
     // because reorder uses initial order as a starting point
     const initialOrder = this.state.initialOrder
       ? [
@@ -536,7 +536,7 @@ class CollectionPage extends Component<
       play(entries[0].uid)
       record(
         make(Name.PLAYBACK_PLAY, {
-          id: `${entries[0].agreement_id}`,
+          id: `${entries[0].digital_content_id}`,
           source: PlaybackSource.CONTENT_LIST_PAGE
         })
       )
@@ -572,7 +572,7 @@ class CollectionPage extends Component<
     newOrder.splice(destination, 0, this.state.initialOrder![source])
 
     const agreementIdAndTimes = newOrder.map((uid: any) => ({
-      id: agreements.entries[order[uid]].agreement_id,
+      id: agreements.entries[order[uid]].digital_content_id,
       time: agreements.entries[order[uid]].dateAdded.unix()
     }))
 

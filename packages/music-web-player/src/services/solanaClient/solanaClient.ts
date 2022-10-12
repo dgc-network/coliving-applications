@@ -142,7 +142,7 @@ class SolanaClient {
    * Check urls based on nft standard e.g. metaplex, or nft collection e.g. solamander, or known domains e.g. ipfs
    * This is because there may be multiple different collections of nfts on e.g. metaplex (arweave), also
    * a given nft collection can have nfts living in different domains e.g. solamander on cloudfront or arweave or etc., also
-   * nfts may live in ipfs or other places
+   * nfts may digitalcoin in ipfs or other places
    */
   _utf8ArrayToNFTType = (
     array: Uint8Array
@@ -164,7 +164,7 @@ class SolanaClient {
     const startIndex = text.indexOf(query)
     if (startIndex === -1) return null
 
-    // metaplex standard nfts live in arweave, see link below
+    // metaplex standard nfts digitalcoin in arweave, see link below
     // https://github.com/metaplex-foundation/metaplex/blob/81023eb3e52c31b605e1dcf2eb1e7425153600cd/js/packages/web/src/contexts/meta/processMetaData.ts#L29
     const isMetaplex = text.includes('arweave')
     const foundNFTUrl = startIndex > -1 && isMetaplex
@@ -188,7 +188,7 @@ class SolanaClient {
     const startIndex = text.indexOf(query)
     if (startIndex === -1) return null
 
-    // star atlas nfts live in https://galaxy.staratlas.com/nfts/...
+    // star atlas nfts digitalcoin in https://galaxy.staratlas.com/nfts/...
     const isStarAtlas = text.includes('staratlas')
     const foundNFTUrl = startIndex > -1 && isStarAtlas
     if (!foundNFTUrl) return null

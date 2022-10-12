@@ -79,10 +79,10 @@ export const ShareDrawer = () => {
   const account = useSelectorWeb(getAccountUser)
   const { toast } = useContext(ToastContext)
   const isOwner =
-    content?.type === 'agreement' &&
+    content?.type === 'digital_content' &&
     account &&
     account.user_id === content.landlord.user_id
-  const shareType = content?.type ?? 'agreement'
+  const shareType = content?.type ?? 'digital_content'
 
   const handleShareToTwitter = useCallback(async () => {
     if (!content) return
@@ -96,8 +96,8 @@ export const ShareDrawer = () => {
   }, [content])
 
   const handleShareToTikTok = useCallback(() => {
-    if (content?.type === 'agreement') {
-      dispatchWeb(requestOpenTikTokModal({ id: content.agreement.agreement_id }))
+    if (content?.type === 'digital_content') {
+      dispatchWeb(requestOpenTikTokModal({ id: content.digital_content.digital_content_id }))
     }
   }, [content, dispatchWeb])
 
@@ -111,8 +111,8 @@ export const ShareDrawer = () => {
   const handleOpenShareSheet = useCallback(() => {
     if (!source || !content) return
     switch (content.type) {
-      case 'agreement':
-        dispatchWeb(shareAgreement(content.agreement.agreement_id, source))
+      case 'digital_content':
+        dispatchWeb(shareAgreement(content.digital_content.digital_content_id, source))
         break
       case 'profile':
         dispatchWeb(shareUser(content.profile.user_id, source))
@@ -128,11 +128,11 @@ export const ShareDrawer = () => {
 
   const shouldIncludeTikTokAction = Boolean(
     isShareToTikTokEnabled &&
-      content?.type === 'agreement' &&
+      content?.type === 'digital_content' &&
       isOwner &&
-      !content.agreement.is_unlisted &&
-      !content.agreement.is_invalid &&
-      !content.agreement.is_delete
+      !content.digital_content.is_unlisted &&
+      !content.digital_content.is_invalid &&
+      !content.digital_content.is_delete
   )
 
   const getRows = useCallback(() => {

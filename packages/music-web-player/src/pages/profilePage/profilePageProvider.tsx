@@ -178,7 +178,7 @@ class ProfilePage extends PureComponent<ProfilePageProps, ProfilePageState> {
       profile.profile &&
       landlordAgreements.status === Status.SUCCESS
     ) {
-      if (profile.profile.agreement_count > 0) {
+      if (profile.profile.digital_content_count > 0) {
         this.setState({
           activeTab: Tabs.AGREEMENTS
         })
@@ -191,7 +191,7 @@ class ProfilePage extends PureComponent<ProfilePageProps, ProfilePageState> {
       !activeTab &&
       profile &&
       profile.profile &&
-      !(profile.profile.agreement_count > 0)
+      !(profile.profile.digital_content_count > 0)
     ) {
       this.setState({
         activeTab: Tabs.REPOSTS
@@ -218,15 +218,15 @@ class ProfilePage extends PureComponent<ProfilePageProps, ProfilePageState> {
     }
   }
 
-  // Check that the sorted order has the _landlord_pick agreement as the first
-  updateOrderLandlordPickCheck = (agreements: Array<{ agreement_id: ID }>) => {
+  // Check that the sorted order has the _landlord_pick digital_content as the first
+  updateOrderLandlordPickCheck = (agreements: Array<{ digital_content_id: ID }>) => {
     const {
       profile: { profile }
     } = this.props
     if (!profile) return []
     const landlordPick = profile._landlord_pick
     const landlordAgreementIndex = agreements.findIndex(
-      (agreement) => agreement.agreement_id === landlordPick
+      (digital_content) => digital_content.digital_content_id === landlordPick
     )
     if (landlordAgreementIndex > -1) {
       return [agreements[landlordAgreementIndex]]
@@ -404,12 +404,12 @@ class ProfilePage extends PureComponent<ProfilePageProps, ProfilePageState> {
 
   getLineupProps = (lineup: any) => {
     const { currentQueueItem, playing, buffering, containerRef } = this.props
-    const { uid: playingUid, agreement, source } = currentQueueItem
+    const { uid: playingUid, digital_content, source } = currentQueueItem
     return {
       lineup,
       variant: 'condensed',
       playingSource: source,
-      playingAgreementId: agreement ? agreement.agreement_id : null,
+      playingAgreementId: digital_content ? digital_content.digital_content_id : null,
       playingUid,
       playing,
       buffering,
@@ -525,7 +525,7 @@ class ProfilePage extends PureComponent<ProfilePageProps, ProfilePageState> {
     let followingCount = 0
 
     if (profile) {
-      agreementCount = profile.agreement_count
+      agreementCount = profile.digital_content_count
       contentListCount = profile.content_list_count
       followerCount = profile.follower_count
       followingCount = profile.followee_count
@@ -535,8 +535,8 @@ class ProfilePage extends PureComponent<ProfilePageProps, ProfilePageState> {
       ? [
           {
             number: agreementCount,
-            title: agreementCount === 1 ? 'agreement' : 'agreements',
-            key: 'agreement'
+            title: agreementCount === 1 ? 'digital_content' : 'agreements',
+            key: 'digital_content'
           },
           {
             number: followerCount,
@@ -618,7 +618,7 @@ class ProfilePage extends PureComponent<ProfilePageProps, ProfilePageState> {
     } = this.props
     if (profile) {
       let tab = `/${currLabel.toLowerCase()}`
-      if (profile.agreement_count > 0) {
+      if (profile.digital_content_count > 0) {
         // An landlord, default route is agreements
         if (currLabel === Tabs.AGREEMENTS) {
           tab = ''
@@ -653,7 +653,7 @@ class ProfilePage extends PureComponent<ProfilePageProps, ProfilePageState> {
     isPrivate = false
   ) => {
     const savesText = saves === 1 ? 'Favorite' : 'Favorites'
-    const agreementsText = agreements === 1 ? 'Agreement' : 'Agreements'
+    const agreementsText = agreements === 1 ? 'DigitalContent' : 'Agreements'
     if (isPrivate) return `Private • ${agreements} ${agreementsText}`
     return `${formatCount(saves)} ${savesText} • ${agreements} ${agreementsText}`
   }
@@ -690,7 +690,7 @@ class ProfilePage extends PureComponent<ProfilePageProps, ProfilePageState> {
 
   getIsLandlord = () => {
     const { profile } = this.props.profile
-    return !!profile && profile.agreement_count > 0
+    return !!profile && profile.digital_content_count > 0
   }
 
   getIsOwner = () => {

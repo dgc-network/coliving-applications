@@ -71,7 +71,7 @@ const DeletedPageProvider = ({
       count: 5,
       playingUid: currentQueueItem.uid,
       playingSource: currentQueueItem.source,
-      playingAgreementId: currentQueueItem.agreement && currentQueueItem.agreement.agreement_id,
+      playingAgreementId: currentQueueItem.digital_content && currentQueueItem.digital_content.digital_content_id,
       playing: isPlaying,
       buffering: isBuffering,
       pauseAgreement: pause,

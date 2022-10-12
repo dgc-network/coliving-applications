@@ -31,7 +31,7 @@ const messages = {
   viewAllProposals: 'View All Proposals',
   wtfIsColiving: 'WTF is Coliving?',
   wtf1: `Coliving is a digital streaming service that connects residents directly with landlords and exclusive new music`,
-  wtf2: `It does this by being fully decentralized: Coliving is owned and run by a vibrant, open-source community of landlords, residents, and developers all around the world. Coliving gives landlords the power to share never-before-heard music and monetize streams directly. Developers can build their own apps on top of Coliving, giving them access to one of the most unique live catalogs in existence.`,
+  wtf2: `It does this by being fully decentralized: Coliving is owned and run by a vibrant, open-source community of landlords, residents, and developers all around the world. Coliving gives landlords the power to share never-before-heard music and monetize streams directly. Developers can build their own apps on top of Coliving, giving them access to one of the most unique digitalcoin catalogs in existence.`,
   wtf3: `Backed by an all-star team of investors, Coliving was founded in 2018 and serves millions of users every month, making it the largest non-financial crypto application ever built.`
 }
 

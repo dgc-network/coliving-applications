@@ -43,16 +43,16 @@ const AgreementOverflowMenuDrawer = ({ render }: Props) => {
   const { id: modalId } = useSelectorWeb(getMobileOverflowModal)
   const id = modalId as ID
 
-  const agreement = useSelectorWeb((state: CommonState) => getAgreement(state, { id }))
+  const digital_content = useSelectorWeb((state: CommonState) => getAgreement(state, { id }))
 
   const user = useSelectorWeb((state: CommonState) =>
-    getUser(state, { id: agreement?.owner_id })
+    getUser(state, { id: digital_content?.owner_id })
   )
 
-  if (!agreement || !user) {
+  if (!digital_content || !user) {
     return null
   }
-  const { owner_id, title, permalink } = agreement
+  const { owner_id, title, permalink } = digital_content
   const { handle } = user
 
   if (!id || !owner_id || !handle || !title) {
@@ -75,7 +75,7 @@ const AgreementOverflowMenuDrawer = ({ render }: Props) => {
     [OverflowAction.VIEW_AGREEMENT_PAGE]: () => {
       closeNowPlayingDrawer()
       navigation.navigate({
-        native: { screen: 'Agreement', params: { id } },
+        native: { screen: 'DigitalContent', params: { id } },
         web: { route: permalink }
       })
     },

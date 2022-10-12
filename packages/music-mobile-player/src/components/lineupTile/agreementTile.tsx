@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 
-import type { Agreement, User } from '@coliving/common'
+import type { DigitalContent, User } from '@coliving/common'
 import {
   PlaybackSource,
   FavoriteSource,
@@ -33,7 +33,7 @@ import { useNavigation } from 'app/hooks/useNavigation'
 import { isEqual, useSelectorWeb } from 'app/hooks/useSelectorWeb'
 import { useAgreementCoverArt } from 'app/hooks/useAgreementCoverArt'
 import type { AppState } from 'app/store'
-import { getPlayingUid } from 'app/store/live/selectors'
+import { getPlayingUid } from 'app/store/digitalcoin/selectors'
 
 import { LineupTile } from './lineupTile'
 
@@ -43,33 +43,33 @@ export const AgreementTile = (props: LineupItemProps) => {
   // Using isEqual as the equality function to prevent rerenders due to object references
   // not being preserved when syncing redux state from client.
   // This can be removed when no longer dependent on web client
-  const agreement = useSelectorWeb((state) => getAgreement(state, { uid }), isEqual)
+  const digital_content = useSelectorWeb((state) => getAgreement(state, { uid }), isEqual)
 
   const user = useSelectorWeb(
     (state) => getUserFromAgreement(state, { uid }),
     isEqual
   )
 
-  if (!agreement || !user) {
-    console.warn('Agreement or user missing for AgreementTile, preventing render')
+  if (!digital_content || !user) {
+    console.warn('DigitalContent or user missing for AgreementTile, preventing render')
     return null
   }
 
-  if (agreement.is_delete || user?.is_deactivated) {
+  if (digital_content.is_delete || user?.is_deactivated) {
     return null
   }
 
-  return <AgreementTileComponent {...props} agreement={agreement} user={user} />
+  return <AgreementTileComponent {...props} digital_content={digital_content} user={user} />
 }
 
 type AgreementTileProps = LineupItemProps & {
-  agreement: Agreement
+  digital_content: DigitalContent
   user: User
 }
 
 const AgreementTileComponent = ({
   togglePlay,
-  agreement,
+  digital_content,
   user,
   ...lineupTileProps
 }: AgreementTileProps) => {
@@ -90,15 +90,15 @@ const AgreementTileComponent = ({
     permalink,
     play_count,
     title,
-    agreement_id
-  } = agreement
+    digital_content_id
+  } = digital_content
 
   const { user_id } = user
 
   const isOwner = user_id === currentUserId
 
   const imageUrl = useAgreementCoverArt({
-    id: agreement_id,
+    id: digital_content_id,
     sizes: _cover_art_sizes,
     size: SquareSizes.SIZE_150_BY_150
   })
@@ -107,24 +107,24 @@ const AgreementTileComponent = ({
     ({ isPlaying }) => {
       togglePlay({
         uid: lineupTileProps.uid,
-        id: agreement_id,
+        id: digital_content_id,
         source: PlaybackSource.AGREEMENT_TILE,
         isPlaying,
         isPlayingUid
       })
     },
-    [togglePlay, lineupTileProps.uid, agreement_id, isPlayingUid]
+    [togglePlay, lineupTileProps.uid, digital_content_id, isPlayingUid]
   )
 
   const handlePressTitle = useCallback(() => {
     navigation.push({
-      native: { screen: 'Agreement', params: { id: agreement_id } },
+      native: { screen: 'DigitalContent', params: { id: digital_content_id } },
       web: { route: permalink }
     })
-  }, [navigation, permalink, agreement_id])
+  }, [navigation, permalink, digital_content_id])
 
   const handlePressOverflow = useCallback(() => {
-    if (agreement_id === undefined) {
+    if (digital_content_id === undefined) {
       return
     }
     const overflowActions = [
@@ -147,12 +147,12 @@ const AgreementTileComponent = ({
     dispatchWeb(
       openOverflowMenu({
         source: OverflowSource.AGREEMENTS,
-        id: agreement_id,
+        id: digital_content_id,
         overflowActions
       })
     )
   }, [
-    agreement_id,
+    digital_content_id,
     dispatchWeb,
     has_current_user_reposted,
     has_current_user_saved,
@@ -160,39 +160,39 @@ const AgreementTileComponent = ({
   ])
 
   const handlePressShare = useCallback(() => {
-    if (agreement_id === undefined) {
+    if (digital_content_id === undefined) {
       return
     }
     dispatchWeb(
       requestOpenShareModal({
-        type: 'agreement',
-        agreementId: agreement_id,
+        type: 'digital_content',
+        agreementId: digital_content_id,
         source: ShareSource.TILE
       })
     )
-  }, [dispatchWeb, agreement_id])
+  }, [dispatchWeb, digital_content_id])
 
   const handlePressSave = useCallback(() => {
-    if (agreement_id === undefined) {
+    if (digital_content_id === undefined) {
       return
     }
     if (has_current_user_saved) {
-      dispatchWeb(unsaveAgreement(agreement_id, FavoriteSource.TILE))
+      dispatchWeb(unsaveAgreement(digital_content_id, FavoriteSource.TILE))
     } else {
-      dispatchWeb(saveAgreement(agreement_id, FavoriteSource.TILE))
+      dispatchWeb(saveAgreement(digital_content_id, FavoriteSource.TILE))
     }
-  }, [agreement_id, dispatchWeb, has_current_user_saved])
+  }, [digital_content_id, dispatchWeb, has_current_user_saved])
 
   const handlePressRepost = useCallback(() => {
-    if (agreement_id === undefined) {
+    if (digital_content_id === undefined) {
       return
     }
     if (has_current_user_reposted) {
-      dispatchWeb(undoRepostAgreement(agreement_id, RepostSource.TILE))
+      dispatchWeb(undoRepostAgreement(digital_content_id, RepostSource.TILE))
     } else {
-      dispatchWeb(repostAgreement(agreement_id, RepostSource.TILE))
+      dispatchWeb(repostAgreement(digital_content_id, RepostSource.TILE))
     }
-  }, [agreement_id, dispatchWeb, has_current_user_reposted])
+  }, [digital_content_id, dispatchWeb, has_current_user_reposted])
 
   const hideShare = field_visibility?.share === false
   const hidePlays = field_visibility?.play_count === false
@@ -206,7 +206,7 @@ const AgreementTileComponent = ({
       repostType={RepostType.AGREEMENT}
       hideShare={hideShare}
       hidePlays={hidePlays}
-      id={agreement_id}
+      id={digital_content_id}
       imageUrl={imageUrl}
       isUnlisted={is_unlisted}
       onPress={handlePress}
@@ -217,7 +217,7 @@ const AgreementTileComponent = ({
       onPressTitle={handlePressTitle}
       playCount={play_count}
       title={title}
-      item={agreement}
+      item={digital_content}
       user={user}
     />
   )

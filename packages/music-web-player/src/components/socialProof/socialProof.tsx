@@ -14,7 +14,7 @@ import {
 import { getUserHandle } from 'common/store/account/selectors'
 import LoadingSpinner from 'components/loadingSpinner/loadingSpinner'
 import { useRemoteVar } from 'hooks/useRemoteConfig'
-import ModalDrawer from 'pages/live-rewards-page/components/modals/ModalDrawer'
+import ModalDrawer from 'pages/digitalcoin-rewards-page/components/modals/ModalDrawer'
 import InstagramAccountVerification from 'pages/settingsPage/components/instagramAccountVerified'
 import TwitterAccountVerification from 'pages/settingsPage/components/twitterAccountVerified'
 import { make, AgreementEvent, useRecord } from 'store/analytics/actions'

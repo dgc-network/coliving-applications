@@ -10,7 +10,7 @@ import { getCollectionRoute } from 'app/utils/routes'
 
 const formatContentListCardSecondaryText = (saves: number, agreements: number) => {
   const savesText = saves === 1 ? 'Favorite' : 'Favorites'
-  const agreementsText = agreements === 1 ? 'Agreement' : 'Agreements'
+  const agreementsText = agreements === 1 ? 'DigitalContent' : 'Agreements'
   return `${formatCount(saves)} ${savesText} • ${agreements} ${agreementsText}`
 }
 
@@ -46,7 +46,7 @@ export const CollectionCard = ({
       primaryText={collection.content_list_name}
       secondaryText={formatContentListCardSecondaryText(
         collection.save_count,
-        collection.content_list_contents.agreement_ids.length
+        collection.content_list_contents.digital_content_ids.length
       )}
       onPress={handlePress}
       user={collection.user}

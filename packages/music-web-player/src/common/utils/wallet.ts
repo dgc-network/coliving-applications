@@ -53,14 +53,14 @@ export const stringAudioToStringWei = (stringAudio: StringLive): StringWei => {
   return weiToString(liveToWei(stringAudio))
 }
 
-export const parseAudioInputToWei = (live: StringLive): Nullable<BNWei> => {
-  if (!live.length) return null
-  // First try converting from float, in case live has decimal value
-  const floatWei = convertFloatToWei(live) as Nullable<BNWei>
+export const parseAudioInputToWei = (digitalcoin: StringLive): Nullable<BNWei> => {
+  if (!digitalcoin.length) return null
+  // First try converting from float, in case digitalcoin has decimal value
+  const floatWei = convertFloatToWei(digitalcoin) as Nullable<BNWei>
   if (floatWei) return floatWei
   // Safe to assume no decimals
   try {
-    return liveToWei(live)
+    return liveToWei(digitalcoin)
   } catch {
     return null
   }

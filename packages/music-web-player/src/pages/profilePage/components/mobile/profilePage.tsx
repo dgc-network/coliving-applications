@@ -377,7 +377,7 @@ const ProfilePage = g(
           primaryText={contentList.content_list_name}
           secondaryText={formatCardSecondaryText(
             contentList.save_count,
-            contentList.content_list_contents.agreement_ids.length,
+            contentList.content_list_contents.digital_content_ids.length,
             contentList.is_private
           )}
           onClick={() =>
@@ -401,7 +401,7 @@ const ProfilePage = g(
             primaryText={album.content_list_name}
             secondaryText={formatCardSecondaryText(
               album.save_count,
-              album.content_list_contents.agreement_ids.length
+              album.content_list_contents.digital_content_ids.length
             )}
             onClick={() =>
               goToRoute(
@@ -418,7 +418,7 @@ const ProfilePage = g(
         profileTabs = landlordTabs
         profileElements = [
           <div className={styles.agreementsLineupContainer} key='landlordAgreements'>
-            {profile.agreement_count === 0 ? (
+            {profile.digital_content_count === 0 ? (
               <EmptyTab
                 message={
                   <>
@@ -433,7 +433,7 @@ const ProfilePage = g(
               <Lineup
                 {...getLineupProps(landlordAgreements)}
                 leadingElementId={profile._landlord_pick}
-                limit={profile.agreement_count}
+                limit={profile.digital_content_count}
                 loadMore={loadMoreLandlordAgreements}
                 playAgreement={playLandlordAgreement}
                 pauseAgreement={pauseLandlordAgreement}
@@ -638,7 +638,7 @@ const ProfilePage = g(
                 profilePictureSizes={profilePictureSizes}
                 hasProfilePicture={hasProfilePicture}
                 contentListCount={profile.content_list_count}
-                agreementCount={profile.agreement_count}
+                agreementCount={profile.digital_content_count}
                 followerCount={profile.follower_count}
                 followingCount={profile.followee_count}
                 doesFollowCurrentUser={!!profile.does_follow_current_user}

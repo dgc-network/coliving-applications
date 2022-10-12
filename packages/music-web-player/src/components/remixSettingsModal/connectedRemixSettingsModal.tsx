@@ -13,9 +13,9 @@ import { fetchAgreement, fetchAgreementSucceeded, reset } from './store/slice'
 type OwnProps = {
   isOpen: boolean
   onClose: () => void
-  // When opening the modal from a agreement that already has remix_of set,
-  // the initial agreement id should be set to the first remix parent's agreement id.
-  // This is used in the "edit agreement" flow.
+  // When opening the modal from a digital_content that already has remix_of set,
+  // the initial digital_content id should be set to the first remix parent's digital_content id.
+  // This is used in the "edit digital_content" flow.
   initialAgreementId?: ID
 }
 
@@ -27,7 +27,7 @@ const ConnectedRemixSettingsModal = ({
   initialAgreementId,
   isOpen,
   onClose,
-  agreement,
+  digital_content,
   user,
   status,
   setInitialAgreementId,
@@ -51,7 +51,7 @@ const ConnectedRemixSettingsModal = ({
     <RemixSettingsModal
       isOpen={isOpen}
       onClose={onClose}
-      agreement={agreement}
+      digital_content={digital_content}
       user={user}
       isInvalidAgreement={status === Status.ERROR}
       onEditUrl={onEditUrl}
@@ -61,7 +61,7 @@ const ConnectedRemixSettingsModal = ({
 
 function mapStateToProps(state: AppState) {
   return {
-    agreement: getAgreement(state),
+    digital_content: getAgreement(state),
     user: getUser(state),
     status: getStatus(state)
   }

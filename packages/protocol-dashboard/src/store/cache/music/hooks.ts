@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { ThunkAction } from 'redux-thunk'
 import { Action } from 'redux'
 import AppState from 'store/types'
-import { ContentList, Agreement } from 'types'
+import { ContentList, DigitalContent } from 'types'
 import { useEffect, useState } from 'react'
 import imageBlank from 'assets/img/imageBlank2x.png'
 import {
@@ -38,7 +38,7 @@ export function fetchTopAgreements(): ThunkAction<
         endpoint: '/v1/agreements/trending',
         queryParams: { limit: 4 }
       })
-      const agreements: Agreement[] = data.slice(0, 4).map((d: any) => ({
+      const agreements: DigitalContent[] = data.slice(0, 4).map((d: any) => ({
         title: d.title,
         handle: d.user.handle,
         artwork: d.artwork?.['480x480'] ?? imageBlank,

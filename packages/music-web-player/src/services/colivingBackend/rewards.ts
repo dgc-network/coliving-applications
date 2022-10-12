@@ -2,7 +2,7 @@ import { Name } from '@coliving/common'
 
 import { Level } from 'common/store/errors/level'
 import { reportToSentry } from 'common/store/errors/reportToSentry'
-import { agreement } from 'store/analytics/providers'
+import { digital_content } from 'store/analytics/providers'
 import { isMobile, isElectron } from 'utils/clientUtil'
 
 /**
@@ -32,7 +32,7 @@ export class ClientRewardsReporter {
   }) {
     ;(async () => {
       try {
-        await agreement(Name.REWARDS_CLAIM_SUCCESS, {
+        await digital_content(Name.REWARDS_CLAIM_SUCCESS, {
           userId,
           challengeId,
           amount,
@@ -70,7 +70,7 @@ export class ClientRewardsReporter {
   }) {
     ;(async () => {
       try {
-        await agreement(Name.REWARDS_CLAIM_RETRY, {
+        await digital_content(Name.REWARDS_CLAIM_RETRY, {
           userId,
           challengeId,
           amount,
@@ -112,7 +112,7 @@ export class ClientRewardsReporter {
   }) {
     ;(async () => {
       try {
-        await agreement(Name.REWARDS_CLAIM_FAILURE, {
+        await digital_content(Name.REWARDS_CLAIM_FAILURE, {
           userId,
           challengeId,
           amount,
@@ -179,7 +179,7 @@ export class ClientRewardsReporter {
       const event = map[reason]
 
       try {
-        await agreement(event, {
+        await digital_content(event, {
           userId,
           challengeId,
           amount,

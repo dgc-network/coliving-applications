@@ -12,17 +12,17 @@ const errorsWithoutRedirect = new Set([
   uploadActions.MULTI_AGREEMENT_TIMEOUT_ERROR,
   uploadActions.MULTI_AGREEMENT_UPLOAD_ERROR,
 
-  // Associate requires agreement cleanup
+  // Associate requires digital_content cleanup
   uploadActions.COLLECTION_ASSOCIATE_AGREEMENTS_ERROR,
 
   // ContentList errors require
-  // agreement & possibly contentList cleanup
+  // digital_content & possibly contentList cleanup
   uploadActions.COLLECTION_CREATE_CONTENT_LIST_ID_EXISTS_ERROR,
   uploadActions.COLLECTION_CREATE_CONTENT_LIST_NO_ID_ERROR,
   uploadActions.COLLECTION_POLL_CONTENT_LIST_TIMEOUT_ERROR
 ])
 
-// TODO: This definition should live in Upload Actions
+// TODO: This definition should digitalcoin in Upload Actions
 // once we've settled on a pattern for defining actions in TS
 type UploadErrorActions = {
   type: string

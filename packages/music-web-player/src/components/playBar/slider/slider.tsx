@@ -184,7 +184,7 @@ export const Slider = ({
           className={styles.agreementWrapper}
           style={transformStyles}
         >
-          <div ref={agreementRef} className={styles.agreement} />
+          <div ref={agreementRef} className={styles.digital_content} />
         </div>
       </div>
       {showHandle !== false ? (

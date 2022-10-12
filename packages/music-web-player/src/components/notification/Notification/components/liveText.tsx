@@ -1,7 +1,7 @@
 import styles from './liveText.module.css'
 
 const messages = {
-  liveLabel: 'live tokens'
+  liveLabel: 'digitalcoin tokens'
 }
 
 type LiveTextProps = {

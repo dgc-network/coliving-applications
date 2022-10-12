@@ -1,11 +1,11 @@
-.live {
+.digitalcoin {
   opacity: 0;
   position: relative;
   min-height: 16px;
   flex-wrap: wrap;
 }
 
-.live:hover:before {
+.digitalcoin:hover:before {
   content: '';
   display: block;
   width: 20px;
@@ -16,7 +16,7 @@
   border-radius: 4px;
 }
 
-.live.show {
+.digitalcoin.show {
   display: flex;
   align-items: center;
   padding-left: 8px;
@@ -24,7 +24,7 @@
   opacity: 1;
 }
 
-.live.hasBalance {
+.digitalcoin.hasBalance {
   cursor: pointer;
 }
 

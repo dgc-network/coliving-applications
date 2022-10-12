@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux'
 
 import Text from 'app/components/text'
 import { useThemedStyles } from 'app/hooks/useThemedStyles'
-import { SEEK, seek } from 'app/store/live/actions'
+import { SEEK, seek } from 'app/store/digitalcoin/actions'
 import type { ThemeColors } from 'app/utils/theme'
 
 import { Slider } from './slider'
@@ -46,15 +46,15 @@ const createStyles = (themeColors: ThemeColors) =>
 type ScrubberProps = {
   /**
    * A unique key to represent this instances of playback.
-   * If the user replays the same agreement, mediaKey should change
+   * If the user replays the same digital_content, mediaKey should change
    */
   mediaKey: string
   /**
-   * Whether live is playing and the scrubber should animate
+   * Whether digitalcoin is playing and the scrubber should animate
    */
   isPlaying: boolean
   /**
-   * The duration of the currently playing agreement
+   * The duration of the currently playing digital_content
    */
   duration: number
   /**
@@ -68,7 +68,7 @@ type ScrubberProps = {
 }
 
 /**
- * Scrubber component to control agreement playback & seek.
+ * Scrubber component to control digital_content playback & seek.
  */
 export const Scrubber = ({
   mediaKey,

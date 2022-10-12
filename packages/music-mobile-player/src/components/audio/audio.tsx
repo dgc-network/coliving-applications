@@ -12,8 +12,8 @@ import type { Dispatch } from 'redux'
 
 import { MessageType } from 'app/message'
 import type { AppState } from 'app/store'
-import * as liveActions from 'app/store/live/actions'
-import { RepeatMode } from 'app/store/live/reducer'
+import * as liveActions from 'app/store/digitalcoin/actions'
+import { RepeatMode } from 'app/store/digitalcoin/reducer'
 import {
   getPlaying,
   getSeek,
@@ -23,7 +23,7 @@ import {
   getShuffleIndex,
   getQueueAutoplay,
   getAgreementAndIndex
-} from 'app/store/live/selectors'
+} from 'app/store/digitalcoin/selectors'
 import type { MessagePostingWebView } from 'app/types/messagePostingWebView'
 import { postMessage } from 'app/utils/postMessage'
 
@@ -64,7 +64,7 @@ type Props = OwnProps &
 
 const Audio = ({
   webRef,
-  agreementAndIndex: { agreement, index },
+  agreementAndIndex: { digital_content, index },
   queueLength,
   playing,
   seek,
@@ -79,7 +79,7 @@ const Audio = ({
   queueAutoplay
 }: Props) => {
   const videoRef = useRef<Video>(null)
-  // Keep agreement of whether we have ever started playback.
+  // Keep digital_content of whether we have ever started playback.
   // Only then is it safe to set OS music control stuff.
   const hasPlayedOnce = useRef<boolean>(false)
   const isPlaying = useRef<boolean>(false)
@@ -93,7 +93,7 @@ const Audio = ({
   const [listenLoggedForAgreement, setListenLoggedForAgreement] = useState(false)
 
   // A ref to invalidate the current progress counter and prevent
-  // stale values of live progress from propagating back to the UI.
+  // stale values of digitalcoin progress from propagating back to the UI.
   const progressInvalidator = useRef(false)
 
   // Init progress tracking
@@ -116,11 +116,11 @@ const Audio = ({
     if (!webRef.current) return
     postMessage(webRef.current, {
       type: MessageType.SYNC_QUEUE,
-      info: agreement,
+      info: digital_content,
       index,
       isAction: true
     })
-  }, [webRef, agreement, index])
+  }, [webRef, digital_content, index])
 
   useEffect(() => {
     isPlaying.current = playing
@@ -205,21 +205,21 @@ const Audio = ({
     }
   }, [hasPlayedOnce, playing, elapsedTime])
 
-  // Agreement Info handler
+  // DigitalContent Info handler
   useEffect(() => {
-    if (agreement && !agreement.isDelete && duration !== null) {
+    if (digital_content && !digital_content.isDelete && duration !== null) {
       // Set the background mode when a song starts
-      // playing to ensure live outside app
+      // playing to ensure digitalcoin outside app
       // continues when music isn't being played.
       MusicControl.enableBackgroundMode(true)
       MusicControl.setNowPlaying({
-        title: agreement.title,
-        artwork: Platform.OS === 'ios' ? agreement.artwork : agreement.largeArtwork,
-        landlord: agreement.landlord,
+        title: digital_content.title,
+        artwork: Platform.OS === 'ios' ? digital_content.artwork : digital_content.largeArtwork,
+        landlord: digital_content.landlord,
         duration
       })
       if (webRef.current) {
-        // Sync w/ isPlaying true in case it was previously false from a deleted agreement.
+        // Sync w/ isPlaying true in case it was previously false from a deleted digital_content.
         postMessage(webRef.current, {
           type: MessageType.SYNC_PLAYER,
           isPlaying: true,
@@ -227,7 +227,7 @@ const Audio = ({
           isAction: true
         })
       }
-    } else if (agreement && agreement.isDelete) {
+    } else if (digital_content && digital_content.isDelete) {
       if (webRef.current) {
         // Sync w/ isPlaying false to set player state in dapp and hide drawer
         postMessage(webRef.current, {
@@ -243,7 +243,7 @@ const Audio = ({
         MusicControl.handleAudioInterruptions(false)
       }
     }
-  }, [webRef, agreement, index, duration])
+  }, [webRef, digital_content, index, duration])
 
   // Next and Previous handler
   useEffect(() => {
@@ -260,7 +260,7 @@ const Audio = ({
         isPreviousEnabled = index > 0
         isNextEnabled = index < queueLength - 1
       }
-      if (agreement && agreement.genre === Genre.PODCASTS) {
+      if (digital_content && digital_content.genre === Genre.PODCASTS) {
         MusicControl.enableControl('previousAgreement', false)
         MusicControl.enableControl('nextAgreement', false)
         MusicControl.enableControl('skipBackward', true, { interval: 15 })
@@ -276,7 +276,7 @@ const Audio = ({
     playing,
     hasPlayedOnce,
     index,
-    agreement,
+    digital_content,
     queueLength,
     repeatMode,
     isShuffleOn,
@@ -306,7 +306,7 @@ const Audio = ({
 
   useEffect(() => {
     setListenLoggedForAgreement(false)
-  }, [agreement, setListenLoggedForAgreement])
+  }, [digital_content, setListenLoggedForAgreement])
 
   const handleError = (e: any) => {
     console.error('err ' + JSON.stringify(e))
@@ -325,7 +325,7 @@ const Audio = ({
     }
   }, [elapsedTime, isPlaying])
 
-  // handle triggering of autoplay when current agreement ends
+  // handle triggering of autoplay when current digital_content ends
   // (this is the flow when the next button is NOT clicked by the user)
   // (if the next button is clicked by the user, the dapp client will handle autoplay logic)
   const onNext = useCallback(() => {
@@ -342,8 +342,8 @@ const Audio = ({
     ) {
       postMessage(webRef.current, {
         type: MessageType.REQUEST_QUEUE_AUTOPLAY,
-        genre: (agreement && agreement.genre) || undefined,
-        agreementId: (agreement && agreement.agreementId) || undefined,
+        genre: (digital_content && digital_content.genre) || undefined,
+        agreementId: (digital_content && digital_content.agreementId) || undefined,
         isAction: true
       })
     }
@@ -370,12 +370,12 @@ const Audio = ({
     queueLength,
     isShuffleOn,
     repeatMode,
-    agreement
+    digital_content
   ])
 
   const onProgress = useCallback(
     (progress: OnProgressData) => {
-      if (!agreement) return
+      if (!digital_content) return
       if (progressInvalidator.current) {
         progressInvalidator.current = false
         return
@@ -386,27 +386,27 @@ const Audio = ({
       // TODO: REMOVE THIS ONCE BACKEND SUPPORTS THIS FEATURE
       if (
         progress.currentTime > RECORD_LISTEN_SECONDS &&
-        (agreement.ownerId !== agreement.currentUserId ||
-          agreement.currentListenCount < 10) &&
+        (digital_content.ownerId !== digital_content.currentUserId ||
+          digital_content.currentListenCount < 10) &&
         !listenLoggedForAgreement
       ) {
         // Debounce logging a listen, update the state variable appropriately onSuccess and onFailure
         setListenLoggedForAgreement(true)
-        logListen(agreement.agreementId, agreement.currentUserId, () =>
+        logListen(digital_content.agreementId, digital_content.currentUserId, () =>
           setListenLoggedForAgreement(false)
         )
       }
       global.progress = progress
     },
-    [agreement, listenLoggedForAgreement, setListenLoggedForAgreement, progressInvalidator]
+    [digital_content, listenLoggedForAgreement, setListenLoggedForAgreement, progressInvalidator]
   )
 
   return (
     <View style={styles.backgroundVideo}>
-      {agreement && !agreement.isDelete && agreement.uri && (
+      {digital_content && !digital_content.isDelete && digital_content.uri && (
         <Video
           source={{
-            uri: agreement.uri,
+            uri: digital_content.uri,
             // @ts-ignore: this is actually a valid prop override
             type: 'm3u8'
           }}

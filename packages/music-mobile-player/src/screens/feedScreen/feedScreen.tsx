@@ -18,7 +18,7 @@ import { useDispatchWeb } from 'app/hooks/useDispatchWeb'
 import { usePopToTopOnDrawerOpen } from 'app/hooks/usePopToTopOnDrawerOpen'
 import { useSelectorWeb, isEqual } from 'app/hooks/useSelectorWeb'
 import { getIsSignedIn } from 'app/store/lifecycle/selectors'
-import { make, agreement } from 'app/utils/analytics'
+import { make, digital_content } from 'app/utils/analytics'
 
 import { FeedFilterButton } from './feedFilterButton'
 
@@ -43,7 +43,7 @@ export const FeedScreen = () => {
   const loadMore = useCallback(
     (offset: number, limit: number, overwrite: boolean) => {
       dispatchWeb(feedActions.fetchLineupMetadatas(offset, limit, overwrite))
-      agreement(make({ eventName: Name.FEED_PAGINATE, offset, limit }))
+      digital_content(make({ eventName: Name.FEED_PAGINATE, offset, limit }))
     },
     [dispatchWeb]
   )

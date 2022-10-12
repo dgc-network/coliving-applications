@@ -67,12 +67,12 @@ class Upload extends Component {
 
     agreements: this.props.upload.uploading ? this.props.upload.agreements : [],
 
-    // Contains metadata related to the upload itself, e.g. contentList vs. agreement.
+    // Contains metadata related to the upload itself, e.g. contentList vs. digital_content.
     metadata: this.props.upload.metadata
       ? this.props.upload.metadata
       : schemas.newCollectionMetadata({ artwork: { file: null, url: '' } }),
 
-    // An array of array of agreements representing stems per agreement.
+    // An array of array of agreements representing stems per digital_content.
     stems: [],
 
     preview: null,
@@ -88,7 +88,7 @@ class Upload extends Component {
     // If the account is defined and has 0 agreements and we haven't set isFirstUpload yet
     if (
       this.props.account &&
-      !this.props.account.agreement_count &&
+      !this.props.account.digital_content_count &&
       !this.state.isFirstUpload
     ) {
       this.setState({ isFirstUpload: true })
@@ -218,9 +218,9 @@ class Upload extends Component {
     }
 
     if (this.state.preview) this.stopPreview()
-    const live = this.state.agreements[index].preview
-    live.play()
-    this.setState({ preview: live, previewIndex: index })
+    const digitalcoin = this.state.agreements[index].preview
+    digitalcoin.play()
+    this.setState({ preview: digitalcoin, previewIndex: index })
   }
 
   stopPreview = () => {
@@ -236,10 +236,10 @@ class Upload extends Component {
     if (i >= this.state.agreements.length) {
       return
     }
-    const agreement = { ...this.state.agreements[i] }
-    agreement.metadata[field] = value
+    const digital_content = { ...this.state.agreements[i] }
+    digital_content.metadata[field] = value
     const newAgreements = [...this.state.agreements]
-    newAgreements[i] = agreement
+    newAgreements[i] = digital_content
     this.setState({ agreements: newAgreements })
   }
 
@@ -306,7 +306,7 @@ class Upload extends Component {
       switch (this.state.uploadType) {
         case UploadType.INDIVIDUAL_AGREEMENT: {
           route = upload.agreements[0].metadata.permalink
-          uploadType = 'agreement'
+          uploadType = 'digital_content'
           break
         }
         case UploadType.CONTENT_LIST: {
@@ -368,7 +368,7 @@ class Upload extends Component {
     } else if (uploadType === UploadType.ALBUM) {
       headerText = 'Album'
     } else {
-      headerText = 'Agreement'
+      headerText = 'DigitalContent'
     }
 
     let currentPage
@@ -453,7 +453,7 @@ class Upload extends Component {
     return (
       <Page
         title='Upload'
-        description='Upload and publish live content to the Coliving platform'
+        description='Upload and publish digitalcoin content to the Coliving platform'
         contentClassName={styles.upload}
         header={header}
       >

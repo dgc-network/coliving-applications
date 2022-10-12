@@ -51,7 +51,7 @@ export const UserSubscriptionNotification = (
   const record = useRecord()
 
   const handleClick = useCallback(() => {
-    if (entityType === Entity.Agreement && !isSingleUpload) {
+    if (entityType === Entity.DigitalContent && !isSingleUpload) {
       if (user) {
         dispatch(push(profilePage(user.handle)))
       }

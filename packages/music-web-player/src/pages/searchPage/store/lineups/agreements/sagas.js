@@ -57,7 +57,7 @@ function* getSearchPageResultsAgreements({ offset, limit, payload }) {
     try {
       const agreementIds = yield select(getSearchResultsPageAgreements)
 
-      // getAgreements returns an unsorted map of ID to agreement metadata.
+      // getAgreements returns an unsorted map of ID to digital_content metadata.
       // We sort this object by agreementIds, which is returned sorted by discprov.
       const [agreements, sortedIds] = yield all([
         select(getAgreements, { ids: agreementIds }),

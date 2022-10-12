@@ -3,7 +3,7 @@
  */
 
 /**
- * Gets the agreement object for the current agreement in the queue.
+ * Gets the digital_content object for the current digital_content in the queue.
  * @param {Object} queue the queue redux store object.
  * @returns {?Object}
  */
@@ -11,11 +11,11 @@ export function getCurrentAgreement(queue) {
   if (queue.playingIndex === -1) {
     return null
   }
-  return queue.queue[queue.playingIndex].agreement
+  return queue.queue[queue.playingIndex].digital_content
 }
 
 /**
- * Gets the agreement object itself (i.e. metadata) for the current agreement in the queue.
+ * Gets the digital_content object itself (i.e. metadata) for the current digital_content in the queue.
  * @param {Object} queue the queue redux store object.
  * @returns {?Object}
  */
@@ -24,12 +24,12 @@ export function getCurrentAgreementMetadata(queue) {
     return null
   }
 
-  const agreement = queue.queue[queue.playingIndex].agreement
-  return agreement ? agreement.metadata : null
+  const digital_content = queue.queue[queue.playingIndex].digital_content
+  return digital_content ? digital_content.metadata : null
 }
 
 /**
- * Gets the Howler.js object for the current agreement in the queue.
+ * Gets the Howler.js object for the current digital_content in the queue.
  * @param {Object} queue the queue redux store object.
  * @returns {?Object}
  */
@@ -37,27 +37,27 @@ export function getCurrentAgreementHowl(queue) {
   if (queue.playingIndex === -1) {
     return null
   }
-  return queue.queue[queue.playingIndex].agreement.live.currentSegment()
+  return queue.queue[queue.playingIndex].digital_content.digitalcoin.currentSegment()
 }
 
 /**
- * Gets the HTML5 live element for the current agreement in the queue.
+ * Gets the HTML5 digitalcoin element for the current digital_content in the queue.
  * @param {Object} queue the queue redux store object.
  * @returns {?Object}
  */
 export function getCurrentAgreementAudioElement(queue) {
   if (
     queue.playingIndex === -1 ||
-    !queue.queue[queue.playingIndex].agreement ||
-    !queue.queue[queue.playingIndex].agreement.live
+    !queue.queue[queue.playingIndex].digital_content ||
+    !queue.queue[queue.playingIndex].digital_content.digitalcoin
   ) {
     return null
   }
-  return queue.queue[queue.playingIndex].agreement.live.currentAudioElement()
+  return queue.queue[queue.playingIndex].digital_content.digitalcoin.currentAudioElement()
 }
 
 /**
- * Gets the song duration (seconds) for the current agreement in the queue.
+ * Gets the song duration (seconds) for the current digital_content in the queue.
  * @param {Object} queue the queue redux store object.
  * @returns {?number}
  */
@@ -65,11 +65,11 @@ export function getCurrentAgreementDuration(queue) {
   if (queue.playingIndex === -1) {
     return null
   }
-  return queue.queue[queue.playingIndex].agreement.live.getDuration()
+  return queue.queue[queue.playingIndex].digital_content.digitalcoin.getDuration()
 }
 
 /**
- * Gets the current playback position (seconds) for the current agreement in the queue.
+ * Gets the current playback position (seconds) for the current digital_content in the queue.
  * @param {Object} queue the queue redux store object.
  * @returns {?number}
  */

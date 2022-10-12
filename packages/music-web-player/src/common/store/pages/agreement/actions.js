@@ -51,9 +51,9 @@ export const goToRemixesOfParentPage = (parentAgreementId) => ({
 })
 
 /**
- * Refreshes the lineup based on the agreement that's currently set.
+ * Refreshes the lineup based on the digital_content that's currently set.
  * Useful when the lineup's content depends on changes that may
- * happen to the agreement in view on the agreement page.
+ * happen to the digital_content in view on the digital_content page.
  */
 export const refetchLineup = () => ({
   type: REFETCH_LINEUP

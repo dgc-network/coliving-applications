@@ -89,8 +89,8 @@ export const messageHandlers: Partial<MessageHandlers> = {
         fileName,
         directory: RNFetchBlob.fs.dirs.DocumentDir,
         getFetchConfig: (filePath) => ({
-          // On iOS fetch & cache the agreement, let user choose where to download it
-          // with the share sheet, then delete the cached copy of the agreement.
+          // On iOS fetch & cache the digital_content, let user choose where to download it
+          // with the share sheet, then delete the cached copy of the digital_content.
           fileCache: true,
           path: filePath
         }),
@@ -111,7 +111,7 @@ export const messageHandlers: Partial<MessageHandlers> = {
           addAndroidDownloads: {
             description: agreementName,
             mediaScannable: true,
-            mime: 'live/mpeg',
+            mime: 'digitalcoin/mpeg',
             notification: true,
             path: filePath,
             title: agreementName,

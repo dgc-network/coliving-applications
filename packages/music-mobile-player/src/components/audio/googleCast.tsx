@@ -10,13 +10,13 @@ import {
 import { useSelector } from 'react-redux'
 
 import { useDispatchWeb } from 'app/hooks/useDispatchWeb'
-import { getAgreement, getPlaying, getSeek } from 'app/store/live/selectors'
+import { getAgreement, getPlaying, getSeek } from 'app/store/digitalcoin/selectors'
 
 export const useChromecast = () => {
   const dispatchWeb = useDispatchWeb()
 
   // Data hooks
-  const agreement = useSelector(getAgreement)
+  const digital_content = useSelector(getAgreement)
   const playing = useSelector(getPlaying)
   const seek = useSelector(getSeek)
 
@@ -26,21 +26,21 @@ export const useChromecast = () => {
   const streamPosition = useStreamPosition(0.5)
 
   const loadCast = useCallback(
-    (agreement, startTime) => {
-      if (client && agreement) {
+    (digital_content, startTime) => {
+      if (client && digital_content) {
         client.loadMedia({
           mediaInfo: {
-            contentUrl: agreement.uri,
+            contentUrl: digital_content.uri,
             contentType: 'application/vnd.apple.mpegurl',
             metadata: {
               type: 'musicAgreement',
               images: [
                 {
-                  url: agreement.largeArtwork
+                  url: digital_content.largeArtwork
                 }
               ],
-              title: agreement.title,
-              landlord: agreement.landlord
+              title: digital_content.title,
+              landlord: digital_content.landlord
             }
           },
           startTime
@@ -73,9 +73,9 @@ export const useChromecast = () => {
   // Load media when the cast connects
   useEffect(() => {
     if (castState === CastState.CONNECTED) {
-      loadCast(agreement, global.progress.currentTime ?? 0)
+      loadCast(digital_content, global.progress.currentTime ?? 0)
     }
-  }, [loadCast, agreement, castState])
+  }, [loadCast, digital_content, castState])
 
   // Play & pause the cast device
   useEffect(() => {

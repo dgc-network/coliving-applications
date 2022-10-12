@@ -2,7 +2,7 @@ import { Amplitude } from '@amplitude/react-native'
 import Config from 'react-native-config'
 import VersionNumber from 'react-native-version-number'
 
-import type { Identify, Agreement, Screen, AllEvents } from '../types/analytics'
+import type { Identify, DigitalContent, Screen, AllEvents } from '../types/analytics'
 import { EventNames } from '../types/analytics'
 
 let analyticsSetupStatus: 'ready' | 'pending' | 'error' = 'pending'
@@ -63,9 +63,9 @@ export const identify = async ({ handle, traits = {} }: Identify) => {
   ampInstance.setUserProperties(traits)
 }
 
-// Agreement Event
-// Docs: https://segment.com/docs/connections/spec/agreement/
-export const agreement = async ({ eventName, properties }: Agreement) => {
+// DigitalContent Event
+// Docs: https://segment.com/docs/connections/spec/digital_content/
+export const digital_content = async ({ eventName, properties }: DigitalContent) => {
   const isSetup = await isColivingSetup()
   if (!isSetup) return
   const version = VersionNumber.appVersion
@@ -73,7 +73,7 @@ export const agreement = async ({ eventName, properties }: Agreement) => {
     ...properties,
     mobileClientVersion: version
   }
-  console.info('Analytics agreement', eventName, propertiesWithContext)
+  console.info('Analytics digital_content', eventName, propertiesWithContext)
   ampInstance.logEvent(eventName, propertiesWithContext)
 }
 

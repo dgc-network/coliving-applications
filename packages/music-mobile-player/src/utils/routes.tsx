@@ -38,10 +38,10 @@ export const encodeUrlName = (name: string) => {
 const COLIVING_URL = Config.COLIVING_URL
 
 export const getAgreementRoute = (
-  agreement: { permalink: string },
+  digital_content: { permalink: string },
   fullUrl = false
 ) => {
-  const route = agreement.permalink
+  const route = digital_content.permalink
   return fullUrl ? `${COLIVING_URL}${route}` : route
 }
 
@@ -79,7 +79,7 @@ export const getEmptyPageRoute = (fullUrl = false) => {
 }
 
 export const getAudioPageRoute = () => {
-  return '/live'
+  return '/digitalcoin'
 }
 
 /**

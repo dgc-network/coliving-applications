@@ -404,7 +404,7 @@ const emptySearchResponse: APIResponse<APISearch> = {
     users: [],
     followed_users: [],
     agreements: [],
-    saved_agreements: [],
+    saved_digital_contents: [],
     contentLists: [],
     saved_content_lists: [],
     saved_albums: [],
@@ -962,7 +962,7 @@ class ColivingAPIClient {
 
     const adapted = response.data.map(({ item, ...props }) => ({
       timestamp: props.timestamp,
-      agreement: adapter.makeAgreement(item as APIAgreement)
+      digital_content: adapter.makeAgreement(item as APIAgreement)
     }))
     return adapted
   }
@@ -1325,7 +1325,7 @@ class ColivingAPIClient {
 
     const adapted = response.data.map(({ item, ...props }) => ({
       timestamp: props.timestamp,
-      agreement: adapter.makeAgreement(item as APIAgreement)
+      digital_content: adapter.makeAgreement(item as APIAgreement)
     }))
     return adapted
   }

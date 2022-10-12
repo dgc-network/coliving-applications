@@ -13,8 +13,8 @@ import {
 } from 'common/store/cache/actions'
 
 /**
- * The cache is implemented as primarily a map of ids to metadata (agreement, contentList, collection).
- * Each entry can have N number of uids that point to it, e.g. a agreement may appear
+ * The cache is implemented as primarily a map of ids to metadata (digital_content, contentList, collection).
+ * Each entry can have N number of uids that point to it, e.g. a digital_content may appear
  * on the page twice, only cached once, but referenced to by different uids.
  *
  * The cache adheres to a subscription model where each uid counts as a subscription to an entry.
@@ -85,10 +85,10 @@ export const mergeCustomizer = (objValue, srcValue, key) => {
   // new fetches won't have UIDs, so we need to preserve those.
   if (objValue && key === 'content_list_contents') {
     // Map out agreements keyed by id, but store as an array-value
-    // because a contentList can contain multiple of the same agreement id
+    // because a contentList can contain multiple of the same digital_content id
     const agreementMap = {}
-    objValue.agreement_ids.forEach((t) => {
-      const id = t.agreement
+    objValue.digital_content_ids.forEach((t) => {
+      const id = t.digital_content
       if (id in agreementMap) {
         agreementMap[id].push(t)
       } else {
@@ -96,8 +96,8 @@ export const mergeCustomizer = (objValue, srcValue, key) => {
       }
     })
 
-    const agreementIds = srcValue.agreement_ids.map((t) => {
-      const mappedList = agreementMap[t.agreement]
+    const agreementIds = srcValue.digital_content_ids.map((t) => {
+      const mappedList = agreementMap[t.digital_content]
       if (!mappedList) return t
 
       const mappedAgreement = mappedList.shift()
@@ -109,7 +109,7 @@ export const mergeCustomizer = (objValue, srcValue, key) => {
       }
     })
 
-    return { ...srcValue, agreement_ids: agreementIds }
+    return { ...srcValue, digital_content_ids: agreementIds }
   }
 }
 

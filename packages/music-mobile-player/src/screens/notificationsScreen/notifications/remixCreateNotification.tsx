@@ -28,7 +28,7 @@ import {
 import { useDrawerNavigation } from '../useDrawerNavigation'
 
 const messages = {
-  title: 'New Remix of Your Agreement',
+  title: 'New Remix of Your DigitalContent',
   by: 'by',
   shareTwitterText: (agreementTitle: string, handle: string) =>
     `New remix of ${agreementTitle} by ${handle} on @dgc-network #Coliving`
@@ -53,13 +53,13 @@ export const RemixCreateNotification = (
   ) as EntityType[]
 
   const childAgreement = agreements?.find(
-    (agreement): agreement is AgreementEntity =>
-      'agreement_id' in agreement && agreement.agreement_id === childAgreementId
+    (digital_content): digital_content is AgreementEntity =>
+      'digital_content_id' in digital_content && digital_content.digital_content_id === childAgreementId
   )
 
   const parentAgreement = agreements?.find(
-    (agreement): agreement is AgreementEntity =>
-      'agreement_id' in agreement && agreement.agreement_id === parentAgreementId
+    (digital_content): digital_content is AgreementEntity =>
+      'digital_content_id' in digital_content && digital_content.digital_content_id === parentAgreementId
   )
   const parentAgreementTitle = parentAgreement?.title
 
@@ -67,8 +67,8 @@ export const RemixCreateNotification = (
     if (childAgreement) {
       navigation.navigate({
         native: {
-          screen: 'Agreement',
-          params: { id: childAgreement.agreement_id, fromNotifications: true }
+          screen: 'DigitalContent',
+          params: { id: childAgreement.digital_content_id, fromNotifications: true }
         },
         web: {
           route: getAgreementRoute(childAgreement)

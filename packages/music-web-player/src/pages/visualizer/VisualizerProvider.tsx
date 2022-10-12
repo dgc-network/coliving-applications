@@ -17,7 +17,7 @@ import { shouldShowDark } from 'utils/theme/theme'
 import { profilePage } from 'utils/route'
 import { make, AgreementEvent } from 'store/analytics/actions'
 import { Name } from '@coliving/common'
-import { Agreement } from '@coliving/common'
+import { DigitalContent } from '@coliving/common'
 import { SquareSizes } from '@coliving/common'
 import DynamicImage from 'components/dynamicImage/dynamicImage'
 import PlayingAgreementInfo from 'components/playBar/desktop/components/playingAgreementInfo'
@@ -28,11 +28,11 @@ import { ReactComponent as IconRemove } from 'assets/img/iconRemove.svg'
 import { ReactComponent as ColivingLogoHorizontal } from 'assets/img/colivingLogoHorizontal.svg'
 import { useAgreementCoverArt } from 'hooks/useAgreementCoverArt'
 
-const Artwork = ({ agreement }: { agreement?: Agreement | null }) => {
-  const { agreement_id, _cover_art_sizes } = agreement || {}
+const Artwork = ({ digital_content }: { digital_content?: DigitalContent | null }) => {
+  const { digital_content_id, _cover_art_sizes } = digital_content || {}
 
   const image = useAgreementCoverArt(
-    agreement_id || -1,
+    digital_content_id || -1,
     _cover_art_sizes || null,
     SquareSizes.SIZE_480_BY_480
   )
@@ -53,7 +53,7 @@ const messages = (browser: string) => ({
 const Visualizer = ({
   isVisible,
   currentQueueItem,
-  live,
+  digitalcoin,
   playing,
   theme,
   dominantColors,
@@ -93,11 +93,11 @@ const Visualizer = ({
     }
   }, [isVisible, dominantColors, playing, currentQueueItem])
 
-  // Rebind live
+  // Rebind digitalcoin
   useEffect(() => {
-    if (live && (live as AudioStream).liveCtx && playing)
-      Visualizer1?.bind(live)
-  }, [isVisible, playing, live, currentQueueItem])
+    if (digitalcoin && (digitalcoin as AudioStream).liveCtx && playing)
+      Visualizer1?.bind(digitalcoin)
+  }, [isVisible, playing, digitalcoin, currentQueueItem])
 
   useEffect(() => {
     if (isVisible) {
@@ -128,9 +128,9 @@ const Visualizer = ({
   }, [fadeVisualizer])
 
   const goToAgreementPage = useCallback(() => {
-    const { agreement, user } = currentQueueItem
-    if (agreement && user) {
-      goToRoute(agreement.permalink)
+    const { digital_content, user } = currentQueueItem
+    if (digital_content && user) {
+      goToRoute(digital_content.permalink)
     }
   }, [currentQueueItem])
 
@@ -142,23 +142,23 @@ const Visualizer = ({
   }, [currentQueueItem])
 
   const renderAgreementInfo = () => {
-    const { uid, agreement, user } = currentQueueItem
+    const { uid, digital_content, user } = currentQueueItem
     const dominantColor = dominantColors
       ? dominantColors[0]
       : { r: 0, g: 0, b: 0 }
-    return agreement && user && uid ? (
+    return digital_content && user && uid ? (
       <div className={styles.agreementInfoWrapper}>
         <PlayingAgreementInfo
           profilePictureSizes={user._profile_picture_sizes}
-          agreementId={agreement.agreement_id}
-          isOwner={agreement.owner_id === user.user_id}
-          agreementTitle={agreement.title}
-          agreementPermalink={agreement.permalink}
+          agreementId={digital_content.digital_content_id}
+          isOwner={digital_content.owner_id === user.user_id}
+          agreementTitle={digital_content.title}
+          agreementPermalink={digital_content.permalink}
           landlordName={user.name}
           landlordHandle={user.handle}
           landlordUserId={user.user_id}
           isVerified={user.is_verified}
-          isAgreementUnlisted={agreement.is_unlisted}
+          isAgreementUnlisted={digital_content.is_unlisted}
           onClickAgreementTitle={() => {
             goToAgreementPage()
             onClose()
@@ -176,7 +176,7 @@ const Visualizer = ({
     )
   }
 
-  const { agreement } = currentQueueItem
+  const { digital_content } = currentQueueItem
   return (
     <div
       className={cn(styles.visualizer, {
@@ -192,13 +192,13 @@ const Visualizer = ({
       <div className={styles.infoOverlayTile}>
         <div
           className={cn(styles.artworkWrapper, {
-            [styles.playing]: agreement
+            [styles.playing]: digital_content
           })}
           onClick={() => {
             goToAgreementPage()
             onClose()
           }}>
-          <Artwork agreement={agreement} />
+          <Artwork digital_content={digital_content} />
         </div>
         {renderAgreementInfo()}
       </div>
@@ -220,11 +220,11 @@ const makeMapStateToProps = () => {
     const currentQueueItem = getCurrentQueueItem(state)
     return {
       currentQueueItem,
-      live: getAudio(state),
+      digitalcoin: getAudio(state),
       playing: getPlaying(state),
       theme: getTheme(state),
       dominantColors: getDominantColorsByAgreement(state, {
-        agreement: currentQueueItem.agreement
+        digital_content: currentQueueItem.digital_content
       })
     }
   }

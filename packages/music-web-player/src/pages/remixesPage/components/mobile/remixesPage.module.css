@@ -28,7 +28,7 @@
   flex-wrap: wrap;
 }
 
-.subHeader .agreement {
+.subHeader .digital_content {
   display: inline-flex;
   align-items: center;
   flex-wrap: wrap;
@@ -40,11 +40,11 @@
   line-height: 20px;
 }
 
-.subHeader .agreement .iconVerified {
+.subHeader .digital_content .iconVerified {
   margin-left: 4px;
 }
 
-.subHeader .agreement .link {
+.subHeader .digital_content .link {
   margin: 0px 4px;
   color: var(--secondary);
   display: flex;

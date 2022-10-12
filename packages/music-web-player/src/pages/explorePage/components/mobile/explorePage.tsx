@@ -68,7 +68,7 @@ const messages = {
   featuredLandlords: 'Featured Landlords',
   justForYou: 'Just For You',
   justForYouDescription: `Content curated for
-you based on your likes, reposts, and follows. Refreshes often so if you like a agreement, favorite it.`,
+you based on your likes, reposts, and follows. Refreshes often so if you like a digital_content, favorite it.`,
   moodContentLists: 'ContentLists to Fit Your Mood',
   moodContentListsDescription:
     'ContentLists made by Coliving users, sorted by mood and feel.'
@@ -205,7 +205,7 @@ const ExplorePage = ({
           primaryText={contentList.content_list_name}
           secondaryText={formatContentListCardSecondaryText(
             contentList.save_count,
-            contentList.content_list_contents.agreement_ids.length
+            contentList.content_list_contents.digital_content_ids.length
           )}
           onClick={() =>
             contentList.is_album

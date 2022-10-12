@@ -71,7 +71,7 @@ function* getAgreements({
   if (!feed.length) return []
   const filteredFeed = feed.filter((record) => !record.user.is_deactivated)
   const [agreements, collections] = getAgreementsAndCollections(filteredFeed)
-  const agreementIds = agreements.map((t) => t.agreement_id)
+  const agreementIds = agreements.map((t) => t.digital_content_id)
 
   // Process (e.g. cache and remove entries)
   const [processedAgreements, processedCollections]: [LineupAgreement[], Collection[]] =
@@ -80,15 +80,15 @@ function* getAgreements({
       processAndCacheCollections(collections, true, agreementIds)
     ])
   const processedAgreementsMap = processedAgreements.reduce<Record<ID, LineupAgreement>>(
-    (acc, cur) => ({ ...acc, [cur.agreement_id]: cur }),
+    (acc, cur) => ({ ...acc, [cur.digital_content_id]: cur }),
     {}
   )
   const processedCollectionsMap = processedCollections.reduce<
     Record<ID, Collection>
   >((acc, cur) => ({ ...acc, [cur.content_list_id]: cur }), {})
   const processedFeed: FeedItem[] = filteredFeed.map((m) =>
-    (m as LineupAgreement).agreement_id
-      ? processedAgreementsMap[(m as LineupAgreement).agreement_id]
+    (m as LineupAgreement).digital_content_id
+      ? processedAgreementsMap[(m as LineupAgreement).digital_content_id]
       : processedCollectionsMap[(m as UserCollectionMetadata).content_list_id]
   )
   return processedFeed
@@ -99,7 +99,7 @@ const getAgreementsAndCollections = (
 ) =>
   feed.reduce<[LineupAgreement[], UserCollectionMetadata[]]>(
     (acc, cur) =>
-      (cur as LineupAgreement).agreement_id
+      (cur as LineupAgreement).digital_content_id
         ? [[...acc[0], cur as LineupAgreement], acc[1]]
         : [acc[0], [...acc[1], cur as UserCollectionMetadata]],
     [[], []]
@@ -109,8 +109,8 @@ const keepActivityTimeStamp = (
   entry: (LineupAgreement | Collection) & { uid: string } // LineupSaga adds a UID to each entry
 ) => ({
   uid: entry.uid,
-  kind: (entry as LineupAgreement).agreement_id ? Kind.AGREEMENTS : Kind.COLLECTIONS,
-  id: (entry as LineupAgreement).agreement_id || (entry as Collection).content_list_id,
+  kind: (entry as LineupAgreement).digital_content_id ? Kind.AGREEMENTS : Kind.COLLECTIONS,
+  id: (entry as LineupAgreement).digital_content_id || (entry as Collection).content_list_id,
   activityTimestamp: entry.activity_timestamp
 })
 

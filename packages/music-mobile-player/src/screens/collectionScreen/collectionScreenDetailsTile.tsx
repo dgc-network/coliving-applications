@@ -17,9 +17,9 @@ import type {
 import { AgreementList } from 'app/components/agreementList'
 import { useDispatchWeb } from 'app/hooks/useDispatchWeb'
 import { useSelectorWeb } from 'app/hooks/useSelectorWeb'
-import { getPlaying, getPlayingUid, getAgreement } from 'app/store/live/selectors'
+import { getPlaying, getPlayingUid, getAgreement } from 'app/store/digitalcoin/selectors'
 import { makeStyles } from 'app/styles'
-import { make, agreement } from 'app/utils/analytics'
+import { make, digital_content } from 'app/utils/analytics'
 import { formatCount } from 'app/utils/format'
 
 const messages = {
@@ -58,7 +58,7 @@ type CollectionScreenDetailsTileProps = {
 const getAgreementsLineup = makeGetTableMetadatas(getCollectionAgreementsLineup)
 
 const recordPlay = (id, play = true) => {
-  agreement(
+  digital_content(
     make({
       eventName: play ? Name.PLAYBACK_PLAY : Name.PLAYBACK_PAUSE,
       id: String(id),
@@ -123,7 +123,7 @@ export const CollectionScreenDetailsTile = ({
       recordPlay(agreementId)
     } else if (agreementsLineup.entries.length > 0) {
       dispatchWeb(agreementsActions.play(agreementsLineup.entries[0].uid))
-      recordPlay(agreementsLineup.entries[0].agreement_id)
+      recordPlay(agreementsLineup.entries[0].digital_content_id)
     }
   }, [dispatchWeb, isPlaying, agreementId, agreementsLineup, isQueued])
 

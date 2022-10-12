@@ -90,7 +90,7 @@ class ConnectedSearchBar extends Component {
       const selectedAgreement = this.props.search.agreements.find(
         (t) => value === (t.user ? t.permalink : '')
       )
-      if (selectedAgreement) return { kind: 'agreement', id: selectedAgreement.agreement_id }
+      if (selectedAgreement) return { kind: 'digital_content', id: selectedAgreement.digital_content_id }
       const selectedContentList = this.props.search.contentLists.find(
         (p) =>
           value ===
@@ -146,21 +146,21 @@ class ConnectedSearchBar extends Component {
         },
         {
           title: 'Agreements',
-          children: this.props.search.agreements.map((agreement) => {
+          children: this.props.search.agreements.map((digital_content) => {
             return {
-              key: agreement.user ? agreement.permalink : '',
-              primary: agreement.title,
-              secondary: agreement.user ? agreement.user.name : '',
-              id: agreement.agreement_id,
-              userId: agreement.owner_id,
-              imageMultihash: agreement.cover_art_sizes || agreement.cover_art,
-              size: agreement.cover_art_sizes ? SquareSizes.SIZE_150_BY_150 : null,
-              contentNodeEndpoint: agreement.user
-                ? agreement.user.content_node_endpoint
+              key: digital_content.user ? digital_content.permalink : '',
+              primary: digital_content.title,
+              secondary: digital_content.user ? digital_content.user.name : '',
+              id: digital_content.digital_content_id,
+              userId: digital_content.owner_id,
+              imageMultihash: digital_content.cover_art_sizes || digital_content.cover_art,
+              size: digital_content.cover_art_sizes ? SquareSizes.SIZE_150_BY_150 : null,
+              contentNodeEndpoint: digital_content.user
+                ? digital_content.user.content_node_endpoint
                 : '',
               defaultImage: placeholderArt,
-              isVerifiedUser: agreement.user.is_verified,
-              tier: getTierForUser(agreement.user)
+              isVerifiedUser: digital_content.user.is_verified,
+              tier: getTierForUser(digital_content.user)
             }
           })
         },

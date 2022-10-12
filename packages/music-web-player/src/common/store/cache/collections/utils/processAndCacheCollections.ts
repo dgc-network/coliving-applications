@@ -13,7 +13,7 @@ import { retrieveAgreementsForCollections } from './retrieveCollections'
  * @param {Collection} collections collections to cache
  * @param {boolean} shouldRetrieveAgreements whether or not to retrieve the agreements inside the collection (we don't need
  *  to do this for displaying collection cards)
- * @param {Array<ID>} excludedAgreementIds optional agreement ids to exclude from retrieve
+ * @param {Array<ID>} excludedAgreementIds optional digital_content ids to exclude from retrieve
  */
 export function* processAndCacheCollections(
   collections: UserCollectionMetadata[],

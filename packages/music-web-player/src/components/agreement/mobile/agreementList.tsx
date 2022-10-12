@@ -79,14 +79,14 @@ const AgreementList = ({
     message.send()
   }
 
-  // The dividers above and belove the active agreement should be hidden
-  const activeIndex = agreements.findIndex((agreement) => agreement.isActive)
+  // The dividers above and belove the active digital_content should be hidden
+  const activeIndex = agreements.findIndex((digital_content) => digital_content.isActive)
   const hideDivider = (idx: number) =>
     activeIndex >= 0 && (activeIndex === idx || activeIndex === idx - 1)
 
-  const renderedAgreements = agreements.map((agreement, idx) => {
+  const renderedAgreements = agreements.map((digital_content, idx) => {
     const listItem = (isDragging?: boolean) => (
-      <div key={agreement.uid}>
+      <div key={digital_content.uid}>
         {showDivider && (showTopDivider || idx > 0) ? (
           <div
             className={cn(styles.divider, {
@@ -97,21 +97,21 @@ const AgreementList = ({
         ) : null}
         <AgreementListItem
           index={idx}
-          agreementId={agreement.agreementId}
+          agreementId={digital_content.agreementId}
           className={itemClassName}
-          isLoading={agreement.isLoading}
-          isSaved={agreement.isSaved}
-          isReposted={agreement.isReposted}
-          isActive={agreement.isActive}
-          isPlaying={agreement.isPlaying}
-          landlordHandle={agreement.landlordHandle}
-          landlordName={agreement.landlordName}
-          agreementTitle={agreement.agreementTitle}
-          coverArtSizes={agreement.coverArtSizes}
-          uid={agreement.uid}
-          isDeleted={agreement.isDeleted}
+          isLoading={digital_content.isLoading}
+          isSaved={digital_content.isSaved}
+          isReposted={digital_content.isReposted}
+          isActive={digital_content.isActive}
+          isPlaying={digital_content.isPlaying}
+          landlordHandle={digital_content.landlordHandle}
+          landlordName={digital_content.landlordName}
+          agreementTitle={digital_content.agreementTitle}
+          coverArtSizes={digital_content.coverArtSizes}
+          uid={digital_content.uid}
+          isDeleted={digital_content.isDeleted}
           onSave={onSave}
-          isRemoveActive={agreement.isRemoveActive}
+          isRemoveActive={digital_content.isRemoveActive}
           onRemove={onRemove}
           togglePlay={togglePlay}
           agreementItemAction={agreementItemAction}
@@ -120,9 +120,9 @@ const AgreementList = ({
         />
       </div>
     )
-    const key = agreement?.time
-      ? `${agreement.agreementId}:${agreement.time}`
-      : agreement.agreementId.toString()
+    const key = digital_content?.time
+      ? `${digital_content.agreementId}:${digital_content.time}`
+      : digital_content.agreementId.toString()
     return isReorderable ? (
       <Draggable key={key} draggableId={key} index={idx}>
         {(provided: any, snapshot: any) => {
@@ -167,7 +167,7 @@ const AgreementList = ({
           onDragStart={onDragStart}
           onDragUpdate={onDragUpdate}
         >
-          <Droppable droppableId='agreement-list-droppable' type='AGREEMENT'>
+          <Droppable droppableId='digital-content-list-droppable' type='AGREEMENT'>
             {(provided: any, snapshot: any) => (
               <div ref={provided.innerRef} {...provided.droppableProps}>
                 {renderedAgreements}

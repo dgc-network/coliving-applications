@@ -3,7 +3,7 @@ import type { EntityType } from '@coliving/web/src/common/store/notifications/ty
 import { getCollectionRoute, getAgreementRoute } from 'app/utils/routes'
 
 export const getEntityRoute = (entity: EntityType, fullUrl = false) => {
-  if ('agreement_id' in entity) {
+  if ('digital_content_id' in entity) {
     return getAgreementRoute(entity, fullUrl)
   } else if (entity.user) {
     const { user } = entity
@@ -13,10 +13,10 @@ export const getEntityRoute = (entity: EntityType, fullUrl = false) => {
 }
 
 export const getEntityScreen = (entity: EntityType) => {
-  if ('agreement_id' in entity) {
+  if ('digital_content_id' in entity) {
     return {
-      screen: 'Agreement' as const,
-      params: { id: entity.agreement_id, fromNotifications: true }
+      screen: 'DigitalContent' as const,
+      params: { id: entity.digital_content_id, fromNotifications: true }
     }
   }
   return {

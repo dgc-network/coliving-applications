@@ -84,7 +84,7 @@ const DesktopContentListTile = (props: ContentListTileProps) => {
         style={{ transform: mouseDown ? '' : transform }}
       >
         <div
-          className={styles.agreement}
+          className={styles.digital_content}
           style={{
             backgroundImage: `url(${props.imageUrl})`,
             boxShadow: `0px 10px 50px -2px rgba(56, 14, 13, 0.4)`

@@ -14,7 +14,7 @@ import { createStyles as createAgreementTileStyles } from './styles'
 
 const messages = {
   landlordPick: "Landlord's Pick",
-  hiddenAgreement: 'Hidden Agreement'
+  hiddenAgreement: 'Hidden DigitalContent'
 }
 
 const flexRowEnd = (): ViewStyle => ({
@@ -63,15 +63,15 @@ const LineupTileTopRightItem = ({ icon: Icon, label }: ItemProps) => {
 
 type Props = {
   /**
-   * The duration of the agreement or agreements
+   * The duration of the digital_content or agreements
    */
   duration?: number
   /**
-   * Whether or not the agreement is the landlord pick
+   * Whether or not the digital_content is the landlord pick
    */
   isLandlordPick?: boolean
   /**
-   * Whether or not the agreement is unlisted (hidden)
+   * Whether or not the digital_content is unlisted (hidden)
    */
   isUnlisted?: boolean
   /**

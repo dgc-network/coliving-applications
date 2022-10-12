@@ -27,7 +27,7 @@ const TopAgreements: React.FC<TopAgreementsProps> = () => {
     if (topAgreements === MusicError.ERROR) return <Error />
     return !!topAgreements ? (
       topAgreements.map((t, i) => (
-        <div key={i} className={styles.agreement}>
+        <div key={i} className={styles.digital_content}>
           <div
             className={styles.artwork}
             onClick={() => goToUrl(t.url)}

@@ -2,7 +2,7 @@ import {
   SmartCollection,
   SmartCollectionVariant,
   Status,
-  Agreement,
+  DigitalContent,
   UserAgreement
 } from '@coliving/common'
 import { takeEvery, put, call, select } from 'typed-redux-saga/macro'
@@ -41,18 +41,18 @@ function* fetchHeavyRotation() {
   )
   const agreementIds = topListens
     .filter(
-      (agreement) =>
-        users.entries[agreement.userId] &&
-        !users.entries[agreement.userId].is_deactivated
+      (digital_content) =>
+        users.entries[digital_content.userId] &&
+        !users.entries[digital_content.userId].is_deactivated
     )
     .map((listen) => ({
-      agreement: listen.agreementId
+      digital_content: listen.agreementId
     }))
 
   return {
     ...HEAVY_ROTATION,
     content_list_contents: {
-      agreement_ids: agreementIds
+      digital_content_ids: agreementIds
     }
   }
 }
@@ -61,10 +61,10 @@ function* fetchBestNewReleases() {
   const agreements = yield* call(Explore.getTopFolloweeAgreementsFromWindow, 'month')
 
   const agreementIds = agreements
-    .filter((agreement) => !agreement.user.is_deactivated)
-    .map((agreement: Agreement) => ({
-      time: agreement.created_at,
-      agreement: agreement.agreement_id
+    .filter((digital_content) => !digital_content.user.is_deactivated)
+    .map((digital_content: DigitalContent) => ({
+      time: digital_content.created_at,
+      digital_content: digital_content.digital_content_id
     }))
 
   yield* call(processAndCacheAgreements, agreements)
@@ -72,7 +72,7 @@ function* fetchBestNewReleases() {
   return {
     ...BEST_NEW_RELEASES,
     content_list_contents: {
-      agreement_ids: agreementIds
+      digital_content_ids: agreementIds
     }
   }
 }
@@ -81,10 +81,10 @@ function* fetchUnderTheRadar() {
   const agreements = yield* call(Explore.getFeedNotListenedTo)
 
   const agreementIds = agreements
-    .filter((agreement: UserAgreement) => !agreement.user.is_deactivated)
-    .map((agreement: Agreement) => ({
-      time: agreement.activity_timestamp,
-      agreement: agreement.agreement_id
+    .filter((digital_content: UserAgreement) => !digital_content.user.is_deactivated)
+    .map((digital_content: DigitalContent) => ({
+      time: digital_content.activity_timestamp,
+      digital_content: digital_content.digital_content_id
     }))
 
   yield* call(processAndCacheAgreements, agreements)
@@ -93,7 +93,7 @@ function* fetchUnderTheRadar() {
   return {
     ...UNDER_THE_RADAR,
     content_list_contents: {
-      agreement_ids: agreementIds
+      digital_content_ids: agreementIds
     }
   }
 }
@@ -102,10 +102,10 @@ function* fetchMostLoved() {
   const agreements = yield* call(Explore.getTopFolloweeSaves)
 
   const agreementIds = agreements
-    .filter((agreement) => !agreement.user.is_deactivated)
-    .map((agreement: Agreement) => ({
-      time: agreement.created_at,
-      agreement: agreement.agreement_id
+    .filter((digital_content) => !digital_content.user.is_deactivated)
+    .map((digital_content: DigitalContent) => ({
+      time: digital_content.created_at,
+      digital_content: digital_content.digital_content_id
     }))
 
   yield call(processAndCacheAgreements, agreements)
@@ -113,7 +113,7 @@ function* fetchMostLoved() {
   return {
     ...MOST_LOVED,
     content_list_contents: {
-      agreement_ids: agreementIds
+      digital_content_ids: agreementIds
     }
   }
 }
@@ -122,16 +122,16 @@ function* fetchFeelingLucky() {
   const agreements = yield* call(getLuckyAgreements, COLLECTIONS_LIMIT)
 
   const agreementIds = agreements
-    .filter((agreement) => !agreement.user.is_deactivated)
-    .map((agreement: Agreement) => ({
-      time: agreement.created_at,
-      agreement: agreement.agreement_id
+    .filter((digital_content) => !digital_content.user.is_deactivated)
+    .map((digital_content: DigitalContent) => ({
+      time: digital_content.created_at,
+      digital_content: digital_content.digital_content_id
     }))
 
   return {
     ...FEELING_LUCKY,
     content_list_contents: {
-      agreement_ids: agreementIds
+      digital_content_ids: agreementIds
     }
   }
 }
@@ -168,15 +168,15 @@ function* fetchRemixables() {
     filteredAgreements.slice(0, COLLECTIONS_LIMIT)
   )
 
-  const agreementIds = processedAgreements.map((agreement: Agreement) => ({
-    time: agreement.created_at,
-    agreement: agreement.agreement_id
+  const agreementIds = processedAgreements.map((digital_content: DigitalContent) => ({
+    time: digital_content.created_at,
+    digital_content: digital_content.digital_content_id
   }))
 
   return {
     ...REMIXABLES,
     content_list_contents: {
-      agreement_ids: agreementIds
+      digital_content_ids: agreementIds
     }
   }
 }

@@ -2,7 +2,7 @@ import {
   ID,
   Kind,
   Status,
-  Agreement,
+  DigitalContent,
   AgreementMetadata,
   UserAgreementMetadata
 } from '@coliving/common'
@@ -51,20 +51,20 @@ export function* retrieveAgreementByHandleAndSlug({
   withRemixParents
 }: RetrieveAgreementByHandleAndSlugArgs) {
   const permalink = `/${handle}/${slug}`
-  const agreements: { entries: { [permalink: string]: Agreement } } = yield* call(
+  const agreements: { entries: { [permalink: string]: DigitalContent } } = yield* call(
     // @ts-ignore retrieve should be refactored to ts first
     retrieve,
     {
       ids: [permalink],
       selectFromCache: function* (permalinks: string[]) {
-        const agreement = yield* select(getAgreementsSelector, {
+        const digital_content = yield* select(getAgreementsSelector, {
           permalinks
         })
-        return agreement
+        return digital_content
       },
       retrieveFromSource: function* (permalinks: string[]) {
         const userId = yield* select(getUserId)
-        const agreement = yield* call((args) => {
+        const digital_content = yield* call((args) => {
           const split = args[0].split('/')
           const handle = split[1]
           const slug = split.slice(2).join('')
@@ -74,10 +74,10 @@ export function* retrieveAgreementByHandleAndSlug({
             currentUserId: userId
           })
         }, permalinks)
-        return agreement
+        return digital_content
       },
       kind: Kind.AGREEMENTS,
-      idField: 'agreement_id',
+      idField: 'digital_content_id',
       forceRetrieveFromSource: false,
       shouldSetLoading: true,
       deleteExistingEntry: false,
@@ -98,7 +98,7 @@ export function* retrieveAgreementByHandleAndSlug({
           agreementActions.setPermalinkStatus([
             {
               permalink,
-              id: agreements[0].agreement_id,
+              id: agreements[0].digital_content_id,
               status: Status.SUCCESS
             }
           ])
@@ -108,9 +108,9 @@ export function* retrieveAgreementByHandleAndSlug({
       }
     }
   )
-  const agreement = agreements.entries[permalink]
-  if (!agreement || !agreement.agreement_id) return null
-  const agreementId = agreement.agreement_id
+  const digital_content = agreements.entries[permalink]
+  if (!digital_content || !digital_content.digital_content_id) return null
+  const agreementId = digital_content.digital_content_id
   if (withStems) {
     yield* spawn(function* () {
       yield* call(fetchAndProcessStems, agreementId)
@@ -128,16 +128,16 @@ export function* retrieveAgreementByHandleAndSlug({
       yield* call(fetchAndProcessRemixParents, agreementId)
     })
   }
-  return agreement
+  return digital_content
 }
 
 /**
  * Retrieves agreements either from cache or from source.
  * Optionally:
  * - retrieves hiddenAgreements.
- * - includes stems of a parent agreement.
- * - includes remixes of a parent agreement.
- * - includes the remix parents of a agreement.
+ * - includes stems of a parent digital_content.
+ * - includes remixes of a parent digital_content.
+ * - includes the remix parents of a digital_content.
  *
  * If retrieving unlisted agreements, request agreements as an array of `UnlistedAgreementRequests.`
  */
@@ -194,7 +194,7 @@ export function* retrieveAgreements({
   }
 
   // @ts-ignore retrieve should be refactored to ts first
-  const agreements: { entries: { [id: number]: Agreement } } = yield* call(retrieve, {
+  const agreements: { entries: { [id: number]: DigitalContent } } = yield* call(retrieve, {
     ids,
     selectFromCache: function* (ids: ID[]) {
       return yield* select(getAgreementsSelector, { ids })
@@ -216,7 +216,7 @@ export function* retrieveAgreements({
         const ids = agreementIds as UnlistedAgreementRequest[]
         // TODO: remove the ColivingBackend
         // branches here when we support
-        // bulk agreement fetches in the API.
+        // bulk digital_content fetches in the API.
         if (ids.length > 1) {
           fetched = yield* call(
             ColivingBackend.getAgreementsIncludingUnlisted,
@@ -250,7 +250,7 @@ export function* retrieveAgreements({
       return fetched
     },
     kind: Kind.AGREEMENTS,
-    idField: 'agreement_id',
+    idField: 'digital_content_id',
     forceRetrieveFromSource: false,
     shouldSetLoading: true,
     deleteExistingEntry: false,

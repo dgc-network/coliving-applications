@@ -1,5 +1,5 @@
 import { asLineup } from 'common/store/lineup/reducer'
-import agreementsReducer from 'common/store/pages/agreement/lineup/reducer'
+import agreementsReducer from 'common/store/pages/digital_content/lineup/reducer'
 
 import {
   SET_AGREEMENT_ID,

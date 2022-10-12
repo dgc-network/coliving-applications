@@ -57,7 +57,7 @@ export const liveTierMapPng: {
 
 export const BADGE_LOCAL_STORAGE_KEY = 'last_badge_tier'
 
-export const LEARN_MORE_URL = 'http://blog.coliving.lol/posts/community-meet-live'
+export const LEARN_MORE_URL = 'http://blog.coliving.lol/posts/community-meet-digitalcoin'
 
 const useShowConfetti = (tier: BadgeTier) => {
   // No tier or no local storage, never show confetti
@@ -91,7 +91,7 @@ export const TierNumber = ({ tier }: { tier: AudioTiers }) => {
   )
 }
 
-/** Renders out level of live required for a tier - e.g. '1000+ $LIVE */
+/** Renders out level of digitalcoin required for a tier - e.g. '1000+ $LIVE */
 export const TierLevel = ({ tier }: { tier: AudioTiers }) => {
   const minAudio = useMemo(
     () => badgeTiers.find((b) => b.tier === tier)?.minAudio.toString() ?? '',

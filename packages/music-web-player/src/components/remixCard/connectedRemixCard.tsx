@@ -23,24 +23,24 @@ type ConnectedRemixCardProps = OwnProps &
   ReturnType<typeof mapDispatchToProps>
 
 const g = withNullGuard(
-  ({ agreement, user, ...p }: ConnectedRemixCardProps) =>
-    agreement && user && { ...p, agreement, user }
+  ({ digital_content, user, ...p }: ConnectedRemixCardProps) =>
+    digital_content && user && { ...p, digital_content, user }
 )
 
-const ConnectedRemixCard = g(({ agreement, user, goToRoute }) => {
+const ConnectedRemixCard = g(({ digital_content, user, goToRoute }) => {
   const profilePictureImage = useUserProfilePicture(
     user.user_id,
     user._profile_picture_sizes,
     SquareSizes.SIZE_150_BY_150
   )
   const coverArtImage = useAgreementCoverArt(
-    agreement.agreement_id,
-    agreement._cover_art_sizes,
+    digital_content.digital_content_id,
+    digital_content._cover_art_sizes,
     SquareSizes.SIZE_480_BY_480
   )
   const goToAgreementPage = useCallback(() => {
-    goToRoute(agreement.permalink)
-  }, [goToRoute, agreement])
+    goToRoute(digital_content.permalink)
+  }, [goToRoute, digital_content])
   const goToLandlordPage = useCallback(() => {
     goToRoute(profilePage(user.handle))
   }, [goToRoute, user])
@@ -49,7 +49,7 @@ const ConnectedRemixCard = g(({ agreement, user, goToRoute }) => {
     <RemixCard
       profilePictureImage={profilePictureImage}
       coverArtImage={coverArtImage}
-      coSign={agreement._co_sign}
+      coSign={digital_content._co_sign}
       landlordName={user.name}
       landlordHandle={user.handle}
       onClick={goToAgreementPage}
@@ -61,7 +61,7 @@ const ConnectedRemixCard = g(({ agreement, user, goToRoute }) => {
 
 function mapStateToProps(state: AppState, ownProps: OwnProps) {
   return {
-    agreement: getAgreement(state, { id: ownProps.agreementId }),
+    digital_content: getAgreement(state, { id: ownProps.agreementId }),
     user: getUserFromAgreement(state, { id: ownProps.agreementId })
   }
 }

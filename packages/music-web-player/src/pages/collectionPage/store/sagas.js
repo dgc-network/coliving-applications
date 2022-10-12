@@ -37,7 +37,7 @@ function* watchFetchCollection() {
           collection.content_list_id,
           collectionUid,
           userUid,
-          collection.content_list_contents.agreement_ids.length
+          collection.content_list_contents.digital_content_ids.length
         )
       )
     } else {

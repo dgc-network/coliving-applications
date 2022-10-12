@@ -90,7 +90,7 @@ class SavedPage extends PureComponent<SavedPageProps, SavedPageState> {
     const { agreements } = this.props
 
     if (!this.state.initialOrder && agreements.entries.length > 0) {
-      const initialOrder = agreements.entries.map((agreement: any) => agreement.uid)
+      const initialOrder = agreements.entries.map((digital_content: any) => digital_content.uid)
       this.setState({
         initialOrder,
         reordering: initialOrder
@@ -129,7 +129,7 @@ class SavedPage extends PureComponent<SavedPageProps, SavedPageState> {
 
   getPlayingId = () => {
     const { currentQueueItem } = this.props
-    return currentQueueItem.agreement ? currentQueueItem.agreement.agreement_id : null
+    return currentQueueItem.digital_content ? currentQueueItem.digital_content.digital_content_id : null
   }
 
   getFilteredData = (
@@ -184,7 +184,7 @@ class SavedPage extends PureComponent<SavedPageProps, SavedPageState> {
       pause()
       record(
         make(Name.PLAYBACK_PAUSE, {
-          id: `${agreementRecord.agreement_id}`,
+          id: `${agreementRecord.digital_content_id}`,
           source: PlaybackSource.FAVORITES_PAGE
         })
       )
@@ -192,7 +192,7 @@ class SavedPage extends PureComponent<SavedPageProps, SavedPageState> {
       play(agreementRecord.uid)
       record(
         make(Name.PLAYBACK_PLAY, {
-          id: `${agreementRecord.agreement_id}`,
+          id: `${agreementRecord.digital_content_id}`,
           source: PlaybackSource.FAVORITES_PAGE
         })
       )
@@ -200,7 +200,7 @@ class SavedPage extends PureComponent<SavedPageProps, SavedPageState> {
       play()
       record(
         make(Name.PLAYBACK_PLAY, {
-          id: `${agreementRecord.agreement_id}`,
+          id: `${agreementRecord.digital_content_id}`,
           source: PlaybackSource.FAVORITES_PAGE
         })
       )
@@ -239,9 +239,9 @@ class SavedPage extends PureComponent<SavedPageProps, SavedPageState> {
 
   onClickSave = (record: AgreementRecord) => {
     if (!record.has_current_user_saved) {
-      this.props.saveAgreement(record.agreement_id)
+      this.props.saveAgreement(record.digital_content_id)
     } else {
-      this.props.unsaveAgreement(record.agreement_id)
+      this.props.unsaveAgreement(record.digital_content_id)
     }
   }
 
@@ -263,9 +263,9 @@ class SavedPage extends PureComponent<SavedPageProps, SavedPageState> {
 
   onClickRepost = (record: AgreementRecord) => {
     if (!record.has_current_user_reposted) {
-      this.props.repostAgreement(record.agreement_id)
+      this.props.repostAgreement(record.digital_content_id)
     } else {
-      this.props.undoRepostAgreement(record.agreement_id)
+      this.props.undoRepostAgreement(record.digital_content_id)
     }
   }
 
@@ -336,7 +336,7 @@ class SavedPage extends PureComponent<SavedPageProps, SavedPageState> {
 
   formatCardSecondaryText = (saves: number, agreements: number) => {
     const savesText = saves === 1 ? 'Favorite' : 'Favorites'
-    const agreementsText = agreements === 1 ? 'Agreement' : 'Agreements'
+    const agreementsText = agreements === 1 ? 'DigitalContent' : 'Agreements'
     return `${formatCount(saves)} ${savesText} • ${agreements} ${agreementsText}`
   }
 

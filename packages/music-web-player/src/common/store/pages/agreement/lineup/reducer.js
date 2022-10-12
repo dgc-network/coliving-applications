@@ -1,6 +1,6 @@
 import { RESET_SUCCEEDED, stripPrefix } from 'common/store/lineup/actions'
 import { initialLineupState } from 'common/store/lineup/reducer'
-import { PREFIX } from 'common/store/pages/agreement/lineup/actions'
+import { PREFIX } from 'common/store/pages/digital_content/lineup/actions'
 
 const initialState = {
   ...initialLineupState,

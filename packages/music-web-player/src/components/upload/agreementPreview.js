@@ -15,25 +15,25 @@ import PreviewButton from 'components/upload/previewButton'
 import styles from './AgreementPreview.module.css'
 
 const supportsPreview = new Set([
-  'live/mpeg',
-  'live/mp3',
-  'live/ogg',
-  'live/wav'
+  'digitalcoin/mpeg',
+  'digitalcoin/mp3',
+  'digitalcoin/ogg',
+  'digitalcoin/wav'
 ])
 
 class AgreementPreview extends Component {
   fileTypeIcon = (type) => {
     switch (type) {
-      case 'live/mpeg':
-      case 'live/mp3':
+      case 'digitalcoin/mpeg':
+      case 'digitalcoin/mp3':
         return iconFileMp3
-      case 'live/aiff':
+      case 'digitalcoin/aiff':
         return iconFileAiff
-      case 'live/flac':
+      case 'digitalcoin/flac':
         return iconFileFlac
-      case 'live/ogg':
+      case 'digitalcoin/ogg':
         return iconFileOgg
-      case 'live/wav':
+      case 'digitalcoin/wav':
         return iconFileWav
       default:
         return iconFileUnknown

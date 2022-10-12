@@ -11,11 +11,11 @@ import Toast from 'components/toast/toast'
 import {
   AgreementArtwork,
   CollectionArtwork
-} from 'components/agreement/desktop/Artwork'
-import ContentListTile from 'components/agreement/desktop/contentListTile'
-import AgreementListItem from 'components/agreement/desktop/agreementListItem'
-import AgreementTile from 'components/agreement/desktop/agreementTile'
-import { AgreementTileSize } from 'components/agreement/types'
+} from 'components/digital_content/desktop/Artwork'
+import ContentListTile from 'components/digital_content/desktop/contentListTile'
+import AgreementListItem from 'components/digital_content/desktop/agreementListItem'
+import AgreementTile from 'components/digital_content/desktop/agreementTile'
+import { AgreementTileSize } from 'components/digital_content/types'
 import { ComponentPlacement } from 'components/types'
 import UserBadges from 'components/userBadges/userBadges'
 
@@ -39,7 +39,7 @@ const getShareUploadType = (uploadType, agreements) => {
       if (agreements.length > 0 && agreements[0].metadata.remix_of) {
         return 'Remix'
       }
-      return 'Agreement'
+      return 'DigitalContent'
     }
     case UploadType.INDIVIDUAL_AGREEMENTS:
       return 'Agreements'
@@ -139,7 +139,7 @@ class FinishPage extends Component {
       uploadType === UploadType.INDIVIDUAL_AGREEMENT ||
       uploadType === UploadType.INDIVIDUAL_AGREEMENTS
     ) {
-      content = agreements.map((agreement, i) => {
+      content = agreements.map((digital_content, i) => {
         const hasErrored = erroredAgreementSet.has(i)
         const userName = (
           <div className={styles.userName}>
@@ -159,8 +159,8 @@ class FinishPage extends Component {
           <AgreementArtwork
             id={1} // Note the ID must be present to render the default overide image
             coverArtSizes={{
-              [DefaultSizes.OVERRIDE]: agreement.metadata.artwork.url
-                ? agreement.metadata.artwork.url
+              [DefaultSizes.OVERRIDE]: digital_content.metadata.artwork.url
+                ? digital_content.metadata.artwork.url
                 : placeholderArt
             }}
             size={'large'}
@@ -178,17 +178,17 @@ class FinishPage extends Component {
         })
 
         return (
-          <div key={agreement.metadata.title + i} className={styles.agreementTile}>
+          <div key={digital_content.metadata.title + i} className={styles.agreementTile}>
             <AgreementTile
               userName={userName}
-              title={agreement.metadata.title}
+              title={digital_content.metadata.title}
               standalone
               artwork={artwork}
               bottomBar={bottomBar}
               showIconButtons={false}
               coverArtSizes={{
-                [DefaultSizes.OVERRIDE]: agreement.metadata.artwork.url
-                  ? agreement.metadata.artwork.url
+                [DefaultSizes.OVERRIDE]: digital_content.metadata.artwork.url
+                  ? digital_content.metadata.artwork.url
                   : placeholderArt
               }}
               {...tileProps}
@@ -201,10 +201,10 @@ class FinishPage extends Component {
       if (uploadType === UploadType.CONTENT_LIST) {
         header = 'CONTENT_LIST'
       }
-      const t = agreements.map((agreement) => {
-        const { duration } = agreement.preview
+      const t = agreements.map((digital_content) => {
+        const { duration } = digital_content.preview
         return {
-          ...agreement.metadata,
+          ...digital_content.metadata,
           user: account,
           duration
         }
@@ -258,16 +258,16 @@ class FinishPage extends Component {
         />
       )
 
-      const agreementList = t.map((agreement, i) => (
+      const agreementList = t.map((digital_content, i) => (
         <AgreementListItem
           index={i}
-          key={`${agreement.title}+${i}`}
+          key={`${digital_content.title}+${i}`}
           isLoading={false}
           active={false}
           size={AgreementTileSize.LARGE}
           disableActions={true}
           playing={false}
-          agreement={agreement}
+          digital_content={digital_content}
           landlordHandle={account.handle}
         />
       ))
@@ -279,7 +279,7 @@ class FinishPage extends Component {
           agreementList={agreementList}
           title={metadata.content_list_name}
           artwork={artwork}
-          activeAgreementUid={false} // No agreement should show as active
+          activeAgreementUid={false} // No digital_content should show as active
           bottomBar={bottomBar}
           showIconButtons={false}
           containerClassName={styles.agreementListContainer}
@@ -291,7 +291,7 @@ class FinishPage extends Component {
     let continueText
     switch (uploadType) {
       case UploadType.INDIVIDUAL_AGREEMENT:
-        continueText = 'View Agreement Page'
+        continueText = 'View DigitalContent Page'
         break
       case UploadType.CONTENT_LIST:
         continueText = 'View ContentList'

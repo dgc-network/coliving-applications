@@ -19,11 +19,11 @@ export const EntityLink = (props: EntityLinkProps) => {
   const navigation = useDrawerNavigation()
 
   const onPress = useCallback(() => {
-    if ('agreement_id' in entity) {
+    if ('digital_content_id' in entity) {
       navigation.navigate({
         native: {
-          screen: 'Agreement',
-          params: { id: entity.agreement_id, fromNotifications: true }
+          screen: 'DigitalContent',
+          params: { id: entity.digital_content_id, fromNotifications: true }
         },
         web: { route: getAgreementRoute(entity) }
       })

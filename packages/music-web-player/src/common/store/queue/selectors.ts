@@ -44,10 +44,10 @@ export const getCollectible = (state: CommonState) => {
 const getCurrentAgreement = (state: AppState) =>
   getAgreement(state, { id: getPlayerAgreementId(state) })
 const getCurrentUser = (state: AppState) => {
-  const agreement = getCurrentAgreement(state)
+  const digital_content = getCurrentAgreement(state)
   const queueable = state.queue.order[state.queue.index]
-  if (agreement || queueable?.landlordId) {
-    return getUser(state, { id: agreement?.owner_id ?? queueable.landlordId })
+  if (digital_content || queueable?.landlordId) {
+    return getUser(state, { id: digital_content?.owner_id ?? queueable.landlordId })
   }
   return null
 }
@@ -55,10 +55,10 @@ const getCurrentUser = (state: AppState) => {
 export const makeGetCurrent = () => {
   return createSelector(
     [getPlayerUid, getSource, getCurrentAgreement, getCurrentUser, getCollectible],
-    (uid, source, agreement, user, collectible) => ({
+    (uid, source, digital_content, user, collectible) => ({
       uid,
       source,
-      agreement,
+      digital_content,
       user,
       collectible
     })

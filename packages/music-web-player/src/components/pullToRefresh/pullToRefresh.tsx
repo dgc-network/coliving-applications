@@ -24,7 +24,7 @@ const interpOpacity = (y: number) => {
 type PullToRefreshProps = {
   // Call to refresh the content being wrapped
   fetchContent: () => void
-  // Whether or not this should live on top of the content or inside it
+  // Whether or not this should digitalcoin on top of the content or inside it
   shouldPad?: boolean
   // Whether or not the refresh animation is on top of an image (white color if so)
   overImage?: boolean

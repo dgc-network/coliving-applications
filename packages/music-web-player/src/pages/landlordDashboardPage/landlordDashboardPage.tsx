@@ -1,6 +1,6 @@
 import { Suspense, Component, useMemo, ReactNode } from 'react'
 
-import { ID, Status, Theme, Agreement, User } from '@coliving/common'
+import { ID, Status, Theme, DigitalContent, User } from '@coliving/common'
 import cn from 'classnames'
 import { push as pushRoute } from 'connected-react-router'
 import { each } from 'lodash'
@@ -61,7 +61,7 @@ const getNumericColumn = (field: any, overrideTitle?: string) => {
   }
 }
 
-type DataSourceAgreement = Agreement & {
+type DataSourceAgreement = DigitalContent & {
   key: string
   name: string
   date: string
@@ -132,10 +132,10 @@ const makeColumns = (account: User, isUnlisted: boolean) => {
             includeEdit={false}
             handle={account.handle}
             onClick={(e: any) => e.stopPropagation()}
-            agreementId={val.agreement_id}
+            agreementId={val.digital_content_id}
             isFavorited={val.has_current_user_saved}
             isOwner
-            isLandlordPick={account._landlord_pick === val.agreement_id}
+            isLandlordPick={account._landlord_pick === val.digital_content_id}
             isUnlisted={record.is_unlisted}
             index={index}
             agreementTitle={val.name}
@@ -249,7 +249,7 @@ export class LandlordDashboardPage extends Component<
   }
 
   componentDidUpdate() {
-    const agreementCount = this.props.account?.agreement_count || 0
+    const agreementCount = this.props.account?.digital_content_count || 0
     if (!(agreementCount > 0)) {
       this.props.goToRoute(TRENDING_PAGE)
     }
@@ -259,7 +259,7 @@ export class LandlordDashboardPage extends Component<
     this.props.resetDashboard()
   }
 
-  formatMetadata(agreementMetadatas: Agreement[]): DataSourceAgreement[] {
+  formatMetadata(agreementMetadatas: DigitalContent[]): DataSourceAgreement[] {
     return agreementMetadatas
       .map((metadata, i) => ({
         ...metadata,
@@ -296,7 +296,7 @@ export class LandlordDashboardPage extends Component<
       end = start.clone().add(1, 'year')
     }
     this.props.fetchDashboardListenData(
-      this.props.agreements.map((t: { agreement_id: any }) => t.agreement_id),
+      this.props.agreements.map((t: { digital_content_id: any }) => t.digital_content_id),
       start.toISOString(),
       end.toISOString()
     )
@@ -305,7 +305,7 @@ export class LandlordDashboardPage extends Component<
   renderCreatorContent() {
     const { account, listenData, agreements, unlistedAgreements, stats, isMatrix } =
       this.props
-    const agreementCount = this.props.account?.agreement_count || 0
+    const agreementCount = this.props.account?.digital_content_count || 0
     if (!account || !(agreementCount > 0)) return null
 
     const { selectedAgreement } = this.state
@@ -318,9 +318,9 @@ export class LandlordDashboardPage extends Component<
     const chartData =
       selectedAgreement === -1 ? listenData.all : listenData[selectedAgreement]
 
-    const chartAgreements = agreements.map((agreement: any) => ({
-      id: agreement.agreement_id,
-      name: agreement.title
+    const chartAgreements = agreements.map((digital_content: any) => ({
+      id: digital_content.digital_content_id,
+      name: digital_content.title
     }))
 
     const listedDataSource = this.formatMetadata(agreements)

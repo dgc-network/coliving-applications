@@ -1,7 +1,7 @@
 import type { ShareType } from '@coliving/web/src/common/store/ui/share-modal/types'
 
 const shareTypeMap: Record<ShareType, string> = {
-  agreement: 'Agreement',
+  digital_content: 'DigitalContent',
   profile: 'Profile',
   album: 'Album',
   contentList: 'ContentList',

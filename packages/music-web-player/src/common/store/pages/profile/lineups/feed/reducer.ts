@@ -1,10 +1,10 @@
-import { LineupState, Agreement } from '@coliving/common'
+import { LineupState, DigitalContent } from '@coliving/common'
 
 import { RESET_SUCCEEDED, stripPrefix } from 'common/store/lineup/actions'
 import { initialLineupState } from 'common/store/lineup/reducer'
 import { PREFIX } from 'common/store/pages/profile/lineups/feed/actions'
 
-const initialState: LineupState<Agreement> = {
+const initialState: LineupState<DigitalContent> = {
   ...initialLineupState,
   prefix: PREFIX,
   containsDeleted: false
@@ -15,7 +15,7 @@ type ResetSucceededAction = {
 }
 
 const actionsMap = {
-  [RESET_SUCCEEDED](state: LineupState<Agreement>, action: ResetSucceededAction) {
+  [RESET_SUCCEEDED](state: LineupState<DigitalContent>, action: ResetSucceededAction) {
     const newState = initialState
     return newState
   }

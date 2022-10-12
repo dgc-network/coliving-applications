@@ -28,9 +28,9 @@ export const AgreementsTab = () => {
     profileHandle === params?.handle ||
     (params?.handle === 'accountUser' && isOwner)
 
-  const { user_id, agreement_count, _landlord_pick } = useSelectProfile([
+  const { user_id, digital_content_count, _landlord_pick } = useSelectProfile([
     'user_id',
-    'agreement_count',
+    'digital_content_count',
     '_landlord_pick'
   ])
 
@@ -53,10 +53,10 @@ export const AgreementsTab = () => {
   return (
     <Lineup
       leadingElementId={_landlord_pick}
-      listKey='profile-agreements'
+      listKey='profile-digital-contents'
       actions={agreementsActions}
       lineup={isProfileLoaded ? lineup : { ...lineup, entries: [] }}
-      limit={agreement_count}
+      limit={digital_content_count}
       loadMore={loadMore}
       disableTopTabScroll
       ListEmptyComponent={<EmptyProfileTile tab='agreements' />}

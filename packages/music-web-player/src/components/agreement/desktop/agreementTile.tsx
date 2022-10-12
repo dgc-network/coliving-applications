@@ -24,7 +24,7 @@ import styles from './AgreementTile.module.css'
 const messages = {
   getPlays: (listenCount: number) => ` ${pluralize('Play', listenCount)}`,
   landlordPick: 'Landlord Pick',
-  hiddenAgreement: 'Hidden Agreement',
+  hiddenAgreement: 'Hidden DigitalContent',
   repostLabel: 'Repost',
   unrepostLabel: 'Unrepost'
 }
@@ -135,7 +135,7 @@ const AgreementTile = memo(
       <div
         className={cn(styles.container, {
           [containerClassName!]: !!containerClassName,
-          // Active indicates that the agreement is the current queue item
+          // Active indicates that the digital_content is the current queue item
           [styles.isActive]: isActive,
           [styles.isDisabled]: isDisabled,
 
@@ -154,7 +154,7 @@ const AgreementTile = memo(
           isLoading={!!isLoading}
           index={order ?? 0}
         />
-        {/* Agreement tile image */}
+        {/* DigitalContent tile image */}
         <div
           className={cn(styles.imageContainer, {
             [styles.leftSpacing]: !hasOrdering
@@ -176,7 +176,7 @@ const AgreementTile = memo(
         )}
         <div
           className={cn(styles.body, {
-            // if agreement and not contentList/album
+            // if digital_content and not contentList/album
             [styles.withoutHeader]: true
           })}
         >

@@ -189,7 +189,7 @@ type VerificationModalProps = {
   onTwitterLogin: (uuid: string, profile: any) => void
 }
 
-// A modal that allows you to toggle a agreement to unlisted, as
+// A modal that allows you to toggle a digital_content to unlisted, as
 // well as toggle individual metadata field visibility.
 const VerificationModal = (props: VerificationModalProps) => {
   const { handle, onInstagramLogin, onTwitterLogin } = props

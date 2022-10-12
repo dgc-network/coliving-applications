@@ -41,7 +41,7 @@ function* filterDeletes(agreementsMetadata, removeDeleted) {
       }
       // If we said to remove deleted agreements and it is deleted, remove it
       if (removeDeleted && metadata.is_delete) return null
-      // If we said to remove deleted and the agreement/contentList owner is deactivated, remove it
+      // If we said to remove deleted and the digital_content/contentList owner is deactivated, remove it
       else if (removeDeleted && users[metadata.owner_id]?.is_deactivated)
         return null
       else if (
@@ -49,22 +49,22 @@ function* filterDeletes(agreementsMetadata, removeDeleted) {
         users[metadata.content_list_owner_id]?.is_deactivated
       )
         return null
-      // If the agreement was not cached, keep it
-      else if (!agreements[metadata.agreement_id]) return metadata
+      // If the digital_content was not cached, keep it
+      else if (!agreements[metadata.digital_content_id]) return metadata
       // If we said to remove deleted and it's marked deleted remove it
-      else if (removeDeleted && agreements[metadata.agreement_id]._marked_deleted)
+      else if (removeDeleted && agreements[metadata.digital_content_id]._marked_deleted)
         return null
       return {
         ...metadata,
         // Maintain the marked deleted
-        _marked_deleted: !!agreements[metadata.agreement_id]._marked_deleted
+        _marked_deleted: !!agreements[metadata.digital_content_id]._marked_deleted
       }
     })
     .filter(Boolean)
 }
 
 function getAgreementCacheables(metadata, uid, agreementSubscribers) {
-  agreementSubscribers.push({ uid: metadata.uid || uid, id: metadata.agreement_id })
+  agreementSubscribers.push({ uid: metadata.uid || uid, id: metadata.digital_content_id })
 }
 
 function getCollectionCacheables(
@@ -76,7 +76,7 @@ function getCollectionCacheables(
 ) {
   collectionsToCache.push({ id: metadata.content_list_id, uid, metadata })
 
-  const agreementIds = metadata.content_list_contents.agreement_ids.map((t) => t.agreement)
+  const agreementIds = metadata.content_list_contents.digital_content_ids.map((t) => t.digital_content)
   const agreementUids = agreementIds.map((id) =>
     makeUid(Kind.AGREEMENTS, id, `collection:${metadata.content_list_id}`)
   )
@@ -86,10 +86,10 @@ function getCollectionCacheables(
     kind: Kind.AGREEMENTS,
     uids: agreementUids
   })
-  metadata.content_list_contents.agreement_ids =
-    metadata.content_list_contents.agreement_ids.map((t, i) => {
+  metadata.content_list_contents.digital_content_ids =
+    metadata.content_list_contents.digital_content_ids.map((t, i) => {
       const agreementUid = t.uid || agreementUids[i]
-      agreementSubscribers.push({ uid: agreementUid, id: t.agreement })
+      agreementSubscribers.push({ uid: agreementUid, id: t.digital_content })
       return { uid: agreementUid, ...t }
     })
 }
@@ -167,7 +167,7 @@ function* fetchLineupMetadatasAsync(
       )
 
       const allMetadatas = responseFilteredDeletes.map((item) => {
-        const id = item.agreement_id
+        const id = item.digital_content_id
         if (id && uidForSource[id] && uidForSource[id].length > 0) {
           item.uid = uidForSource[id].shift()
         }
@@ -175,10 +175,10 @@ function* fetchLineupMetadatasAsync(
       })
 
       const kinds = allMetadatas.map((metadata) =>
-        metadata.agreement_id ? Kind.AGREEMENTS : Kind.COLLECTIONS
+        metadata.digital_content_id ? Kind.AGREEMENTS : Kind.COLLECTIONS
       )
       const ids = allMetadatas.map(
-        (metadata) => metadata.agreement_id || metadata.content_list_id
+        (metadata) => metadata.digital_content_id || metadata.content_list_id
       )
       const uids = makeUids(kinds, ids, source)
 
@@ -198,7 +198,7 @@ function* fetchLineupMetadatasAsync(
             agreementSubscriptions,
             agreementSubscribers
           )
-        } else if (metadata.agreement_id) {
+        } else if (metadata.digital_content_id) {
           getAgreementCacheables(metadata, uids[i], agreementSubscribers)
         }
       })
@@ -208,9 +208,9 @@ function* fetchLineupMetadatasAsync(
       )
 
       lineupCollections.forEach((metadata) => {
-        const agreementUids = metadata.content_list_contents.agreement_ids.map(
-          (agreement, idx) => {
-            const id = agreement.agreement
+        const agreementUids = metadata.content_list_contents.digital_content_ids.map(
+          (digital_content, idx) => {
+            const id = digital_content.digital_content
             const uid = new Uid(
               Kind.AGREEMENTS,
               id,
@@ -318,7 +318,7 @@ function* play(lineupActions, lineupSelector, prefix, action) {
   yield put(
     queueActions.play({
       uid: action.uid,
-      agreementId: requestedPlayAgreement && requestedPlayAgreement.agreement_id,
+      agreementId: requestedPlayAgreement && requestedPlayAgreement.digital_content_id,
       source: prefix
     })
   )
@@ -349,8 +349,8 @@ function* reset(
     }
     if (entry.kind === Kind.COLLECTIONS) {
       const collection = yield select(getCollection, { uid: entry.uid })
-      const removeAgreementIds = collection.content_list_contents.agreement_ids.map(
-        ({ agreement: agreementId }, idx) => {
+      const removeAgreementIds = collection.content_list_contents.digital_content_ids.map(
+        ({ digital_content: agreementId }, idx) => {
           const agreementUid = new Uid(
             Kind.AGREEMENTS,
             agreementId,
@@ -390,7 +390,7 @@ function* remove(action) {
 function* updateLineupOrder(lineupPrefix, sourceSelector, action) {
   // TODO: Investigate a better way to handle reordering of the lineup and transitively
   // reordering the queue. This implementation is slightly buggy in that the source may not
-  // be set on the queue item when reordering and the next agreement won't resume correctly.
+  // be set on the queue item when reordering and the next digital_content won't resume correctly.
   const queueSource = yield select(getSource)
   const source = yield select(sourceSelector)
   const uid = yield select(getUid)
@@ -419,8 +419,8 @@ function* refreshInView(lineupActions, lineupSelector, action) {
 
 const keepUidAndKind = (entry) => ({
   uid: entry.uid,
-  kind: entry.agreement_id ? Kind.AGREEMENTS : Kind.COLLECTIONS,
-  id: entry.agreement_id || entry.content_list_id
+  kind: entry.digital_content_id ? Kind.AGREEMENTS : Kind.COLLECTIONS,
+  id: entry.digital_content_id || entry.content_list_id
 })
 
 /**
@@ -448,7 +448,7 @@ export class LineupSagas {
    * @param {function * | async function} lineupMetadatasCall
    *   the backend call to make to fetch the agreements metadatas for the lineup
    * @param {?function} retainSelector a selector used to retain various metadata inside the lineup state
-   *   otherwise, the lineup will only retain the agreement id indexing into the cache
+   *   otherwise, the lineup will only retain the digital_content id indexing into the cache
    * @param {?boolean} removeDeleted whether or not to prune deleted agreements
    * @param {?function} sourceSelector optional selector that sets the UID source for entries
    */

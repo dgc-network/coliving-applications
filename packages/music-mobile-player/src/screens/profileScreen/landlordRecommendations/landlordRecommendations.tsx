@@ -20,7 +20,7 @@ import { useNavigation } from 'app/hooks/useNavigation'
 import { useSelectorWeb } from 'app/hooks/useSelectorWeb'
 import { makeStyles } from 'app/styles'
 import { EventNames } from 'app/types/analytics'
-import { agreement, make } from 'app/utils/analytics'
+import { digital_content, make } from 'app/utils/analytics'
 
 import { useSelectProfile } from '../selectors'
 
@@ -92,7 +92,7 @@ export const LandlordRecommendations = (props: LandlordRecommendationsProps) => 
   useEffectOnce(() => {
     dispatchWeb(fetchRelatedLandlords({ userId: user_id }))
 
-    agreement(
+    digital_content(
       make({
         eventName: EventNames.PROFILE_PAGE_SHOWN_LANDLORD_RECOMMENDATIONS,
         userId: user_id

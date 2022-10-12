@@ -8,7 +8,7 @@ import { Text } from 'react-native'
 import ActionDrawer from 'app/components/actionDrawer'
 import { useDispatchWeb } from 'app/hooks/useDispatchWeb'
 import { makeStyles } from 'app/styles'
-import { make, agreement } from 'app/utils/analytics'
+import { make, digital_content } from 'app/utils/analytics'
 
 const MODAL_NAME = 'FeedFilter'
 
@@ -43,7 +43,7 @@ export const FeedFilterDrawer = () => {
       dispatchWeb(feedActions.setInView(true))
       // Force a refresh for at least 10 tiles
       dispatchWeb(feedActions.refreshInView(true, 10))
-      agreement(make({ eventName: Name.FEED_CHANGE_VIEW, view: filter }))
+      digital_content(make({ eventName: Name.FEED_CHANGE_VIEW, view: filter }))
     },
     [dispatchWeb]
   )

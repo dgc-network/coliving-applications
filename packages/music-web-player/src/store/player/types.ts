@@ -1,5 +1,5 @@
-import type AudioStream from 'live/AudioStream'
-import NativeMobileAudio from 'live/NativeMobileAudio'
+import type AudioStream from 'digitalcoin/AudioStream'
+import NativeMobileAudio from 'digitalcoin/NativeMobileAudio'
 
 export type AudioState = AudioStream | NativeMobileAudio | null
 

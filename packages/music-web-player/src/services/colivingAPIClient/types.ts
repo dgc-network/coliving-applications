@@ -33,7 +33,7 @@ export type APIUser = {
   content_list_count: number
   profile_picture: ProfilePictureSizes
   repost_count: number
-  agreement_count: number
+  digital_content_count: number
   created_at: string
   content_node_endpoint: Nullable<string>
   current_user_followee_follow_count: number
@@ -59,7 +59,7 @@ export type APISearchUser = Omit<
   | 'follower_count'
   | 'content_list_count'
   | 'repost_count'
-  | 'agreement_count'
+  | 'digital_content_count'
   | 'current_user_followee_follow_count'
   | 'does_current_user_follow'
 >
@@ -77,7 +77,7 @@ export type APIFavorite = {
 }
 
 export type APIRemix = {
-  parent_agreement_id: OpaqueID
+  parent_digital_content_id: OpaqueID
   user: APIUser
   has_remix_author_reposted: boolean
   has_remix_author_saved: boolean
@@ -117,7 +117,7 @@ export type APIAgreement = {
   followee_favorites: APIFavorite[]
   route_id: string
   stem_of: any
-  agreement_segments: AgreementSegment[]
+  digital_content_segments: AgreementSegment[]
   updated_at: string
   user_id: OpaqueID
   is_delete: boolean
@@ -149,7 +149,7 @@ export type APIStem = {
 
 export type APIContentListAddedTimestamp = {
   timestamp: number
-  agreement_id: OpaqueID
+  digital_content_id: OpaqueID
 }
 
 export type APIContentList = {
@@ -174,7 +174,7 @@ export type APIContentList = {
   is_private: boolean
   added_timestamps: APIContentListAddedTimestamp[]
   agreements: APIAgreement[]
-  agreement_count: number
+  digital_content_count: number
   cover_art: Nullable<string>
   cover_art_sizes: Nullable<string>
 }
@@ -191,10 +191,10 @@ export type APISearchContentList = Omit<
   | 'agreements'
 >
 
-export type APIItemType = 'agreement' | 'contentList'
+export type APIItemType = 'digital_content' | 'contentList'
 
 export type APIActivity = { timestamp: string } & (
-  | { item_type: 'agreement'; item: APIAgreement }
+  | { item_type: 'digital_content'; item: APIAgreement }
   | { item_type: 'contentList'; item: APIContentList }
 )
 
@@ -202,7 +202,7 @@ export type APISearch = {
   users?: APIUser[]
   followed_users?: APIUser[]
   agreements?: APIAgreement[]
-  saved_agreements?: APIAgreement[]
+  saved_digital_contents?: APIAgreement[]
   contentLists?: APIContentList[]
   saved_content_lists?: APIContentList[]
   albums?: APIContentList[]
@@ -213,7 +213,7 @@ export type APISearchAutocomplete = {
   users?: APISearchUser[]
   followed_users?: APISearchUser[]
   agreements?: APISearchAgreement[]
-  saved_agreements?: APISearchAgreement[]
+  saved_digital_contents?: APISearchAgreement[]
   contentLists?: APISearchContentList[]
   saved_content_lists?: APISearchContentList[]
   albums?: APISearchContentList[]

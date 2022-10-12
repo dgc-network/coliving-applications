@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux'
 
 import { useModalState } from 'common/hooks/useModalState'
 import { useProfileTier } from 'common/hooks/wallet'
-import { Tier } from 'pages/live-rewards-page/Tiers'
+import { Tier } from 'pages/digitalcoin-rewards-page/Tiers'
 import { LIVE_PAGE } from 'utils/route'
 
 import styles from './TierExplainerModal.module.css'

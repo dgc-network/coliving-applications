@@ -4,7 +4,7 @@ import {
   Collection,
   Kind,
   Status,
-  Agreement,
+  DigitalContent,
   User,
   Uid
 } from '@coliving/common'
@@ -73,7 +73,7 @@ export const getStatuses = (state: CommonState, props: { ids: ID[] }) => {
   return statuses
 }
 
-export type EnhancedCollectionAgreement = Agreement & { user: User; uid: UID }
+export type EnhancedCollectionAgreement = DigitalContent & { user: User; uid: UID }
 const emptyList: EnhancedCollectionAgreement[] = []
 export const getAgreementsFromCollection = (
   state: CommonState,
@@ -84,22 +84,22 @@ export const getAgreementsFromCollection = (
   if (
     !collection ||
     !collection.content_list_contents ||
-    !collection.content_list_contents.agreement_ids
+    !collection.content_list_contents.digital_content_ids
   )
     return emptyList
 
   const collectionSource = Uid.fromString(props.uid).source
 
-  const ids = collection.content_list_contents.agreement_ids.map((t) => t.agreement)
+  const ids = collection.content_list_contents.digital_content_ids.map((t) => t.digital_content)
   const agreements = getAgreements(state, { ids })
 
   const userIds = Object.keys(agreements)
     .map((id) => {
-      const agreement = agreements[id as unknown as number]
-      if (agreement?.owner_id) {
-        return agreement.owner_id
+      const digital_content = agreements[id as unknown as number]
+      if (digital_content?.owner_id) {
+        return digital_content.owner_id
       }
-      console.error(`Found empty agreement ${id}, expected it to have an owner_id`)
+      console.error(`Found empty digital_content ${id}, expected it to have an owner_id`)
       return null
     })
     .filter((userId) => userId !== null) as number[]
@@ -107,21 +107,21 @@ export const getAgreementsFromCollection = (
 
   if (!users || Object.keys(users).length === 0) return emptyList
 
-  // Return agreements & rebuild UIDs for the agreement so they refer directly to this collection
-  return collection.content_list_contents.agreement_ids
+  // Return agreements & rebuild UIDs for the digital_content so they refer directly to this collection
+  return collection.content_list_contents.digital_content_ids
     .map((t, i) => {
       const agreementUid = Uid.fromString(t.uid ?? '')
       agreementUid.source = `${collectionSource}:${agreementUid.source}`
       agreementUid.count = i
 
-      if (!agreements[t.agreement]) {
-        console.error(`Found empty agreement ${t.agreement}`)
+      if (!agreements[t.digital_content]) {
+        console.error(`Found empty digital_content ${t.digital_content}`)
         return null
       }
       return {
-        ...agreements[t.agreement],
+        ...agreements[t.digital_content],
         uid: agreementUid.toString(),
-        user: users[agreements[t.agreement].owner_id]
+        user: users[agreements[t.digital_content].owner_id]
       }
     })
     .filter(Boolean) as EnhancedCollectionAgreement[]

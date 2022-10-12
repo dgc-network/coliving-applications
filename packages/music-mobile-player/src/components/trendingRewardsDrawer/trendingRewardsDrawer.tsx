@@ -1,9 +1,9 @@
 import { useCallback } from 'react'
 
 import { Theme, StringKeys } from '@coliving/common'
-import { getTrendingRewardsModalType } from '@coliving/web/src/common/store/pages/live-rewards/selectors'
-import type { TrendingRewardsModalType } from '@coliving/web/src/common/store/pages/live-rewards/slice'
-import { setTrendingRewardsModalType } from '@coliving/web/src/common/store/pages/live-rewards/slice'
+import { getTrendingRewardsModalType } from '@coliving/web/src/common/store/pages/digitalcoin-rewards/selectors'
+import type { TrendingRewardsModalType } from '@coliving/web/src/common/store/pages/digitalcoin-rewards/slice'
+import { setTrendingRewardsModalType } from '@coliving/web/src/common/store/pages/digitalcoin-rewards/slice'
 import {
   TRENDING_PAGE,
   TRENDING_CONTENT_LISTS_PAGE,
@@ -33,7 +33,7 @@ import { useThemeVariant } from 'app/utils/theme'
 import { AppDrawer, useDrawerState } from '../drawer/appDrawer'
 
 const TRENDING_REWARDS_DRAWER_NAME = 'TrendingRewardsExplainer'
-const TOS_URL = 'https://blog..co/article/live-rewards'
+const TOS_URL = 'https://blog..co/article/digitalcoin-rewards'
 
 const messages = {
   agreementsTitle: 'Top 5 Agreements Each Week Receive 100 $LIVE',

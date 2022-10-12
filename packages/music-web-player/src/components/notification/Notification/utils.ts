@@ -11,7 +11,7 @@ import {
 
 export const getEntityLink = (entity: EntityType, fullRoute = false) => {
   if (!entity.user) return ''
-  if ('agreement_id' in entity) {
+  if ('digital_content_id' in entity) {
     return fullRoute ? fullAgreementPage(entity.permalink) : entity.permalink
   } else if (entity.user && entity.content_list_id && entity.is_album) {
     const getRoute = fullRoute ? fullAlbumPage : albumPage
@@ -49,7 +49,7 @@ export const getTwitterHandleByUserHandle = async (userHandle: string) => {
 export const USER_LENGTH_LIMIT = 9
 
 export const entityToUserListEntity = {
-  [Entity.Agreement]: UserListEntityType.AGREEMENT,
+  [Entity.DigitalContent]: UserListEntityType.AGREEMENT,
   [Entity.User]: UserListEntityType.USER,
   [Entity.Album]: UserListEntityType.COLLECTION,
   [Entity.ContentList]: UserListEntityType.COLLECTION

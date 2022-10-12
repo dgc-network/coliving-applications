@@ -12,9 +12,9 @@ import { AgreementList } from 'app/components/agreementList'
 import { WithLoader } from 'app/components/withLoader/withLoader'
 import { useDispatchWeb } from 'app/hooks/useDispatchWeb'
 import { useSelectorWeb } from 'app/hooks/useSelectorWeb'
-import { getPlaying, getPlayingUid } from 'app/store/live/selectors'
+import { getPlaying, getPlayingUid } from 'app/store/digitalcoin/selectors'
 import { makeStyles } from 'app/styles'
-import { make, agreement } from 'app/utils/analytics'
+import { make, digital_content } from 'app/utils/analytics'
 
 const messages = {
   title: 'Listening History'
@@ -48,7 +48,7 @@ export const ListeningHistoryScreen = () => {
       const isAgreementPlaying = uid === playingUid && isPlaying
       if (!isAgreementPlaying) {
         dispatchWeb(agreementsActions.play(uid))
-        agreement(
+        digital_content(
           make({
             eventName: Name.PLAYBACK_PLAY,
             id: `${id}`,
@@ -57,7 +57,7 @@ export const ListeningHistoryScreen = () => {
         )
       } else {
         dispatchWeb(agreementsActions.pause())
-        agreement(
+        digital_content(
           make({
             eventName: Name.PLAYBACK_PAUSE,
             id: `${id}`,

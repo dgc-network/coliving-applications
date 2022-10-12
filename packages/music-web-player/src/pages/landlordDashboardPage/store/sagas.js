@@ -32,7 +32,7 @@ function* fetchDashboardAsync(action) {
   const listedAgreements = agreements.filter((t) => t.is_unlisted === false)
   const unlistedAgreements = agreements.filter((t) => t.is_unlisted === true)
 
-  const agreementIds = listedAgreements.map((t) => t.agreement_id)
+  const agreementIds = listedAgreements.map((t) => t.digital_content_id)
   const now = moment()
 
   yield call(fetchDashboardListenDataAsync, {

@@ -245,8 +245,8 @@ function* sendTipAsync() {
         source
       })
     )
-    // If transferring spl wrapped live and there are insufficent funds with only the
-    // user bank balance, transfer all eth LIVE to spl wrapped live
+    // If transferring spl wrapped digitalcoin and there are insufficent funds with only the
+    // user bank balance, transfer all eth LIVE to spl wrapped digitalcoin
     if (weiBNAmount.gt(wliveWeiAmount)) {
       // Wait for a second before showing the notice that this might take a while
       const showConvertingMessage = yield* fork(function* () {
@@ -426,7 +426,7 @@ function* fetchSupportingForUserAsync({
    * get all its supporting data so that when the logged in
    * user is trying to tip an landlord, we'll know whether or
    * not that landlord is already being supported by the logged in
-   * user and thus correctly calculate how much more live to tip
+   * user and thus correctly calculate how much more digitalcoin to tip
    * to become the top supporter.
    */
   const account = yield* select(getAccountUser)

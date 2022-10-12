@@ -1,6 +1,6 @@
 import { Name } from '@coliving/common'
 
-import { agreement } from 'store/analytics/providers'
+import { digital_content } from 'store/analytics/providers'
 
 const DEFAULT_BATCH_SIZE = 10
 
@@ -11,7 +11,7 @@ type Recording = {
 
 const sendToAnalytics = ({ name, duration }: Recording) => {
   console.info(`Recorded event ${name} with duration ${duration}`)
-  agreement(Name.PERFORMANCE, {
+  digital_content(Name.PERFORMANCE, {
     metric: name,
     value: duration
   })

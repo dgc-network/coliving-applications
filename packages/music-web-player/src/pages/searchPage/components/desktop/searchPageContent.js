@@ -210,7 +210,7 @@ class SearchPageContent extends Component {
             primaryText={contentList.content_list_name}
             secondaryText={`${contentList.user.name} • ${
               contentList.agreementCount
-            } Agreement${contentList.agreementCount > 1 ? 's' : ''}`}
+            } DigitalContent${contentList.agreementCount > 1 ? 's' : ''}`}
             onClick={onClick}
             menu={{
               type: 'contentList',
@@ -323,7 +323,7 @@ class SearchPageContent extends Component {
               playingSource={currentQueueItem.source}
               playingUid={currentQueueItem.uid}
               playingAgreementId={
-                currentQueueItem.agreement && currentQueueItem.agreement.agreement_id
+                currentQueueItem.digital_content && currentQueueItem.digital_content.digital_content_id
               }
               playing={playing}
               buffering={buffering}
@@ -401,7 +401,7 @@ class SearchPageContent extends Component {
                 playingSource={currentQueueItem.source}
                 playingUid={currentQueueItem.uid}
                 playingAgreementId={
-                  currentQueueItem.agreement && currentQueueItem.agreement.agreement_id
+                  currentQueueItem.digital_content && currentQueueItem.digital_content.digital_content_id
                 }
                 playing={playing}
                 buffering={buffering}

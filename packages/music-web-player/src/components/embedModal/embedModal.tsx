@@ -1,6 +1,6 @@
 import { useState, useMemo, useEffect, useCallback } from 'react'
 
-import { PlayableType, ID, Name, Agreement } from '@coliving/common'
+import { PlayableType, ID, Name, DigitalContent } from '@coliving/common'
 import { Modal, Button, ButtonType } from '@coliving/stems'
 import cn from 'classnames'
 import { connect } from 'react-redux'
@@ -28,7 +28,7 @@ const FlavorMap = {
 }
 
 const KindMap = {
-  [PlayableType.AGREEMENT]: 'agreement',
+  [PlayableType.AGREEMENT]: 'digital_content',
   [PlayableType.CONTENT_LIST]: 'contentList',
   [PlayableType.ALBUM]: 'album'
 }
@@ -57,7 +57,7 @@ const formatIFrame = (url: string, size: Size) => {
 
 const messages = {
   title: {
-    [PlayableType.AGREEMENT]: 'Embed Agreement',
+    [PlayableType.AGREEMENT]: 'Embed DigitalContent',
     [PlayableType.CONTENT_LIST]: 'Embed ContentList',
     [PlayableType.ALBUM]: 'Embed Album'
   },
@@ -184,7 +184,7 @@ const EmbedModal = ({ isOpen, kind, id, metadata, close }: EmbedModalProps) => {
           )}
         </div>
         <div className={styles.details}>
-          {metadata && (metadata as Agreement).agreement_id && (
+          {metadata && (metadata as DigitalContent).digital_content_id && (
             <div className={styles.panel}>
               <div className={styles.title}>{messages.playerSize}</div>
               <TabSlider

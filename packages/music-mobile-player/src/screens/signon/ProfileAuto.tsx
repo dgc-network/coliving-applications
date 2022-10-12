@@ -29,7 +29,7 @@ import {
 } from 'app/store/oauth/selectors'
 import { getHandleError, getHandleIsValid } from 'app/store/signon/selectors'
 import { EventNames } from 'app/types/analytics'
-import { agreement, make } from 'app/utils/analytics'
+import { digital_content, make } from 'app/utils/analytics'
 import { useColor } from 'app/utils/theme'
 
 import SignupHeader from './signupHeader'
@@ -320,7 +320,7 @@ const ProfileAuto = ({ navigation, route }: ProfileAutoProps) => {
           ? EventNames.CREATE_ACCOUNT_COMPLETE_TWITTER
           : EventNames.CREATE_ACCOUNT_COMPLETE_INSTAGRAM
 
-      agreement(
+      digital_content(
         make({
           eventName,
           isVerified,
@@ -443,7 +443,7 @@ const ProfileAuto = ({ navigation, route }: ProfileAutoProps) => {
       type: MessageType.REQUEST_TWITTER_AUTH,
       isAction: true
     })
-    agreement(
+    digital_content(
       make({
         eventName: EventNames.CREATE_ACCOUNT_START_TWITTER,
         emailAddress: email
@@ -458,7 +458,7 @@ const ProfileAuto = ({ navigation, route }: ProfileAutoProps) => {
       type: MessageType.REQUEST_INSTAGRAM_AUTH,
       isAction: true
     })
-    agreement(
+    digital_content(
       make({
         eventName: EventNames.CREATE_ACCOUNT_START_INSTAGRAM,
         emailAddress: email

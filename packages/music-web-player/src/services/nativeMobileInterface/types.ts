@@ -1,9 +1,9 @@
 export enum MessageType {
   LOADED = 'loaded',
-  PLAY_AGREEMENT = 'play-agreement',
-  PAUSE_AGREEMENT = 'pause-agreement',
+  PLAY_AGREEMENT = 'play-digital-content',
+  PAUSE_AGREEMENT = 'pause-digital-content',
   GET_POSITION = 'get-position',
-  SEEK_AGREEMENT = 'seek-agreement',
+  SEEK_AGREEMENT = 'seek-digital-content',
   SET_INFO = 'set-info',
   PERSIST_QUEUE = 'persist-queue',
   SET_REPEAT_MODE = 'set-repeat-mode',
@@ -107,7 +107,7 @@ export enum MessageType {
   SHARE_MESSAGE = 'share',
 
   // Download
-  DOWNLOAD_AGREEMENT = 'download-agreement',
+  DOWNLOAD_AGREEMENT = 'download-digital-content',
 
   // Navigation
   ON_FIRST_PAGE = 'nav-on-first-page',
@@ -117,7 +117,7 @@ export enum MessageType {
 
   // Analytics
   ANALYTICS_IDENTIFY = 'analytics-identify',
-  ANALYTICS_AGREEMENT = 'analytics-agreement',
+  ANALYTICS_AGREEMENT = 'analytics-digital-content',
   ANALYTICS_SCREEN = 'analytics-screen',
 
   // Logging

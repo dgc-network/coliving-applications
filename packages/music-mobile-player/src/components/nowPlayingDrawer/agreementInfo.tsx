@@ -1,4 +1,4 @@
-import type { Agreement, User } from '@coliving/common'
+import type { DigitalContent, User } from '@coliving/common'
 import { Pressable, View } from 'react-native'
 
 import { Text } from 'app/components/core'
@@ -25,7 +25,7 @@ const useStyles = makeStyles(({ typography, spacing }) => ({
 }))
 
 type AgreementInfoProps = {
-  agreement: Agreement
+  digital_content: DigitalContent
   user: User
   onPressLandlord: GestureResponderHandler
   onPressTitle: GestureResponderHandler
@@ -34,17 +34,17 @@ type AgreementInfoProps = {
 export const AgreementInfo = ({
   onPressLandlord,
   onPressTitle,
-  agreement,
+  digital_content,
   user
 }: AgreementInfoProps) => {
   const styles = useStyles()
   return (
     <View style={styles.root}>
-      {user && agreement ? (
+      {user && digital_content ? (
         <>
           <Pressable onPress={onPressTitle}>
             <Text numberOfLines={2} style={styles.agreementTitle} variant='h1'>
-              {agreement.title}
+              {digital_content.title}
             </Text>
           </Pressable>
           <Pressable onPress={onPressLandlord}>

@@ -18,7 +18,7 @@ const agreementMetadataSchema = {
   updated_at: null,
   release_date: null,
   file_type: null,
-  agreement_segments: [],
+  digital_content_segments: [],
   has_current_user_reposted: false,
   followee_reposts: null,
   followee_saves: null,
@@ -44,12 +44,12 @@ const agreementMetadataSchema = {
 
 export const newAgreementMetadata = (fields, validate = false) => {
   const validFields = validate
-    ? pick(fields, Object.keys(agreementMetadataSchema).concat(['agreement_id']))
+    ? pick(fields, Object.keys(agreementMetadataSchema).concat(['digital_content_id']))
     : fields
-  const remixParentAgreementId = fields?.remix_of?.agreements?.[0]?.parent_agreement_id
+  const remixParentAgreementId = fields?.remix_of?.agreements?.[0]?.parent_digital_content_id
   return {
     ...agreementMetadataSchema,
-    agreement_segments: [...agreementMetadataSchema.agreement_segments],
+    digital_content_segments: [...agreementMetadataSchema.digital_content_segments],
     followee_reposts: [...(agreementMetadataSchema.followee_reposts || [])],
     followee_saves: [...(agreementMetadataSchema.followee_saves || [])],
     ...validFields,

@@ -237,7 +237,7 @@ export const assetToCollectible = async (
         const res = await fetchWithTimeout(metadataUrl, { method: 'HEAD' })
         const isGif = res.headers.get('Content-Type')?.includes('gif')
         const isVideo = res.headers.get('Content-Type')?.includes('video')
-        const isAudio = res.headers.get('Content-Type')?.includes('live')
+        const isAudio = res.headers.get('Content-Type')?.includes('digitalcoin')
         if (isGif) {
           mediaType = CollectibleMediaType.GIF
           frameUrl = null

@@ -91,7 +91,7 @@ const RemixesPageProvider = ({
       lineup: agreements,
       playingUid: currentQueueItem.uid,
       playingSource: currentQueueItem.source,
-      playingAgreementId: currentQueueItem.agreement && currentQueueItem.agreement.agreement_id,
+      playingAgreementId: currentQueueItem.digital_content && currentQueueItem.digital_content.digital_content_id,
       playing: isPlaying,
       buffering: isBuffering,
       pauseAgreement: pause,
@@ -99,7 +99,7 @@ const RemixesPageProvider = ({
       actions: agreementsActions,
       scrollParent: containerRef as any,
       loadMore: (offset: number, limit: number) => {
-        loadMore(offset, limit, { agreementId: originalAgreement?.agreement_id ?? null })
+        loadMore(offset, limit, { agreementId: originalAgreement?.digital_content_id ?? null })
       }
     }
   }

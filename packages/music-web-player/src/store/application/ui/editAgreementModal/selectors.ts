@@ -18,10 +18,10 @@ export const getStems = (state: AppState) => {
   const agreementId = getAgreementId(state)
   if (!agreementId) return []
 
-  const agreement = getAgreement(state, { id: agreementId })
-  if (!agreement?._stems?.length) return []
+  const digital_content = getAgreement(state, { id: agreementId })
+  if (!digital_content?._stems?.length) return []
 
-  const stemIds = agreement._stems.map((s) => s.agreement_id)
+  const stemIds = digital_content._stems.map((s) => s.digital_content_id)
 
   const stemsMap = getAgreements(state, { ids: stemIds }) as {
     [id: number]: StemAgreement

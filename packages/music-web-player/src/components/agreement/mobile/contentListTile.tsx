@@ -10,7 +10,7 @@ import { formatSeconds } from 'common/utils/timeUtil'
 import FavoriteButton from 'components/altButton/favoriteButton'
 import RepostButton from 'components/altButton/repostButton'
 import Skeleton from 'components/skeleton/skeleton'
-import { ContentListTileProps } from 'components/agreement/types'
+import { ContentListTileProps } from 'components/digital_content/types'
 import UserBadges from 'components/userBadges/userBadges'
 
 import BottomButtons from './bottomButtons'
@@ -20,12 +20,12 @@ import AgreementTileArt from './agreementTileArt'
 
 type AgreementItemProps = {
   index: number
-  agreement?: LineupAgreement
+  digital_content?: LineupAgreement
   active: boolean
   forceSkeleton?: boolean
 }
 
-// Max number of agreement to display in a contentList
+// Max number of digital_content to display in a contentList
 const DISPLAY_AGREEMENT_COUNT = 5
 
 const AgreementItem = (props: AgreementItemProps) => {
@@ -39,13 +39,13 @@ const AgreementItem = (props: AgreementItemProps) => {
       >
         {props.forceSkeleton ? (
           <Skeleton width='100%' height='10px' />
-        ) : props.agreement ? (
+        ) : props.digital_content ? (
           <>
             <div className={styles.index}> {props.index + 1} </div>
-            <div className={styles.agreementTitle}> {props.agreement.title} </div>
+            <div className={styles.agreementTitle}> {props.digital_content.title} </div>
             <div className={styles.byLandlord}>
               {' '}
-              {`by ${props.agreement.user.name}`}{' '}
+              {`by ${props.digital_content.user.name}`}{' '}
             </div>
           </>
         ) : null}
@@ -83,12 +83,12 @@ const AgreementList = ({
 
   return (
     <div onClick={goToCollectionPage}>
-      {agreements.slice(0, DISPLAY_AGREEMENT_COUNT).map((agreement, index) => (
+      {agreements.slice(0, DISPLAY_AGREEMENT_COUNT).map((digital_content, index) => (
         <AgreementItem
-          key={agreement.uid}
-          active={activeAgreementUid === agreement.uid}
+          key={digital_content.uid}
+          active={activeAgreementUid === digital_content.uid}
           index={index}
-          agreement={agreement}
+          digital_content={digital_content}
         />
       ))}
       {agreementCount && agreementCount > 5 && (

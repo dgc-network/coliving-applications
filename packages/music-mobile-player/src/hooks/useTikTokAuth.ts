@@ -10,7 +10,7 @@ import { useDispatch } from 'react-redux'
 import * as oauthActions from 'app/store/oauth/actions'
 import { Provider } from 'app/store/oauth/reducer'
 import { EventNames } from 'app/types/analytics'
-import { agreement, make } from 'app/utils/analytics'
+import { digital_content, make } from 'app/utils/analytics'
 
 export const useTikTokAuth = (args: UseTikTokAuthArguments) => {
   const dispatch = useDispatch()
@@ -31,7 +31,7 @@ export const useTikTokAuth = (args: UseTikTokAuthArguments) => {
       })
     },
     handleError: (e: Error) => {
-      agreement(
+      digital_content(
         make({
           eventName: EventNames.TIKTOK_OAUTH_ERROR,
           error: e.message

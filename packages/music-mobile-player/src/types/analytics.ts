@@ -26,7 +26,7 @@ export type Identify = {
   traits?: JsonMap
 }
 
-export type Agreement = {
+export type DigitalContent = {
   eventName: string
   properties?: JsonMap
 }
@@ -36,7 +36,7 @@ export type Screen = {
   properties?: JsonMap
 }
 
-export type AnalyticsMessage = Message & (Identify | Agreement | Screen)
+export type AnalyticsMessage = Message & (Identify | DigitalContent | Screen)
 
 export {
   PlaybackSource,

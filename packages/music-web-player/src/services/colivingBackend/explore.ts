@@ -1,4 +1,4 @@
-import { ID, Collection, FeedFilter, Agreement, UserAgreement } from '@coliving/common'
+import { ID, Collection, FeedFilter, DigitalContent, UserAgreement } from '@coliving/common'
 
 import ColivingBackend, {
   IDENTITY_SERVICE,
@@ -66,7 +66,7 @@ class Explore {
   ): Promise<UserAgreement[]> {
     try {
       const agreements = await libs().discoveryNode.getTopFolloweeWindowed(
-        'agreement',
+        'digital_content',
         window,
         limit,
         true
@@ -88,12 +88,12 @@ class Explore {
         agreementsOnly: true
       })
       const agreementIds = agreements
-        .map((agreement: Agreement) => agreement.agreement_id)
+        .map((digital_content: DigitalContent) => digital_content.digital_content_id)
         .filter(Boolean)
       const listens: any = await Explore.getUserListens(agreementIds)
 
       const notListenedToAgreements = agreements.filter(
-        (agreement: Agreement) => !listens[agreement.agreement_id]
+        (digital_content: DigitalContent) => !listens[digital_content.digital_content_id]
       )
       return notListenedToAgreements.slice(0, limit)
     } catch (e) {
@@ -119,7 +119,7 @@ class Explore {
   static async getTopFolloweeSaves(limit = 25) {
     try {
       const agreements: UserAgreement[] =
-        await libs().discoveryNode.getTopFolloweeSaves('agreement', limit, true)
+        await libs().discoveryNode.getTopFolloweeSaves('digital_content', limit, true)
       return agreements
     } catch (e) {
       console.error(e)
@@ -129,7 +129,7 @@ class Explore {
 
   static async getLatestAgreementID(): Promise<number> {
     try {
-      const latestAgreementID = await libs().discoveryNode.getLatest('agreement')
+      const latestAgreementID = await libs().discoveryNode.getLatest('digital_content')
       return latestAgreementID
     } catch (e) {
       console.error(e)

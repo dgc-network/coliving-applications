@@ -77,8 +77,8 @@ function* sendAsync({
         recipient: recipientWallet
       })
     )
-    // If transferring spl wrapped live and there are insufficent funds with only the
-    // user bank balance, transfer all eth LIVE to spl wrapped live
+    // If transferring spl wrapped digitalcoin and there are insufficent funds with only the
+    // user bank balance, transfer all eth LIVE to spl wrapped digitalcoin
     if (chain === Chain.Sol && weiBNAmount.gt(wliveWeiAmount)) {
       yield* put(transferEthAudioToSolWAudio())
       yield* call(walletClient.transferTokensFromEthToSol)

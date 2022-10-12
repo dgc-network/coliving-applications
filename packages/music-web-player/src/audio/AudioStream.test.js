@@ -66,7 +66,7 @@ describe('load hls.js', () => {
     liveStream.load(segments, () => {})
 
     expect(liveStream.hls.loadSource).toBeCalled()
-    expect(liveStream.hls.attachMedia).toBeCalledWith(liveStream.live)
+    expect(liveStream.hls.attachMedia).toBeCalledWith(liveStream.digitalcoin)
     expect(liveStream.duration).toEqual(18)
   })
 })
@@ -97,7 +97,7 @@ describe('load native hls', () => {
   it('loads segments with native hls', () => {
     liveStream.load(segments, () => {})
 
-    expect(liveStream.live.src).toEqual(
+    expect(liveStream.digitalcoin.src).toEqual(
       expect.stringContaining('data:application/vnd.apple.mpegURL;')
     )
     expect(liveStream.duration).toEqual(18)
@@ -109,15 +109,15 @@ describe('load native hls', () => {
     const onBufferingChange = jest.fn()
     liveStream.onBufferingChange = onBufferingChange
 
-    liveStream.live.dispatchEvent(new Event('waiting'))
+    liveStream.digitalcoin.dispatchEvent(new Event('waiting'))
     expect(liveStream.buffering).toEqual(true)
     expect(onBufferingChange).toBeCalledWith(true)
 
-    liveStream.live.dispatchEvent(new Event('canplay'))
+    liveStream.digitalcoin.dispatchEvent(new Event('canplay'))
     expect(liveStream.buffering).toEqual(false)
     expect(onBufferingChange).toBeCalledWith(false)
 
-    liveStream.live.dispatchEvent(new Event('ended'))
+    liveStream.digitalcoin.dispatchEvent(new Event('ended'))
     expect(onEnd).toBeCalled()
   })
 })
@@ -173,7 +173,7 @@ describe('stop', () => {
 
     expect(pause).toBeCalled()
     setTimeout(() => {
-      expect(liveStream.live.currentTime).toEqual(0)
+      expect(liveStream.digitalcoin.currentTime).toEqual(0)
     }, 0)
   })
 })

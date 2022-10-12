@@ -2,7 +2,7 @@ import {
   ID,
   stemCategoryFriendlyNames,
   StemCategory,
-  Agreement,
+  DigitalContent,
   StemAgreement
 } from '@coliving/common'
 import moment from 'moment'
@@ -62,8 +62,8 @@ const messages = {
 const doesRequireFollow = (
   isOwner: boolean,
   following: boolean,
-  agreement: Agreement
-) => !isOwner && !following && agreement.download?.requires_follow
+  digital_content: DigitalContent
+) => !isOwner && !following && digital_content.download?.requires_follow
 
 const useCurrentStems = ({
   agreementId,
@@ -72,11 +72,11 @@ const useCurrentStems = ({
   agreementId: ID
   useSelector: typeof reduxUseSelector
 }) => {
-  const agreement: Agreement | null = useSelector(
+  const digital_content: DigitalContent | null = useSelector(
     (state: CommonState) => getAgreement(state, { id: agreementId }),
     shallowEqual
   )
-  const stemIds = (agreement?._stems ?? []).map((s) => s.agreement_id)
+  const stemIds = (digital_content?._stems ?? []).map((s) => s.digital_content_id)
   const stemAgreementsMap = useSelector(
     (state: CommonState) => getAgreements(state, { ids: stemIds }),
     shallowEqual
@@ -94,10 +94,10 @@ const useCurrentStems = ({
       downloadURL: t.download?.cid,
       category: t.stem_of.category,
       downloadable: true,
-      id: t.agreement_id
+      id: t.digital_content_id
     }))
     .filter((t) => t.downloadURL)
-  return { stemAgreements, agreement }
+  return { stemAgreements, digital_content }
 }
 
 const useUploadingStems = ({
@@ -159,18 +159,18 @@ const getStemButtons = ({
   onNotLoggedInClick,
   parentAgreementId,
   stems,
-  agreement
+  digital_content
 }: UseDownloadAgreementButtonsArgs & {
   isLoggedIn: boolean
   stems: LabeledStem[]
   parentAgreementId: ID
-  agreement: Agreement
+  digital_content: DigitalContent
 }) => {
   return stems.map((u) => {
     const state = (() => {
       if (!isLoggedIn) return ButtonState.LOG_IN_REQUIRED
 
-      const requiresFollow = doesRequireFollow(isOwner, following, agreement)
+      const requiresFollow = doesRequireFollow(isOwner, following, digital_content)
       if (requiresFollow) return ButtonState.REQUIRES_FOLLOW
 
       return u.downloadable ? ButtonState.DOWNLOADABLE : ButtonState.PROCESSING
@@ -204,13 +204,13 @@ const makeDownloadOriginalButton = ({
   onNotLoggedInClick,
   onDownload,
   stemButtonsLength,
-  agreement
+  digital_content
 }: UseDownloadAgreementButtonsArgs & {
   isLoggedIn: boolean
-  agreement: Agreement | null
+  digital_content: DigitalContent | null
   stemButtonsLength: number
 }) => {
-  if (!agreement?.download?.is_downloadable) {
+  if (!digital_content?.download?.is_downloadable) {
     return undefined
   }
 
@@ -221,7 +221,7 @@ const makeDownloadOriginalButton = ({
     type: ButtonType.AGREEMENT
   }
 
-  const requiresFollow = doesRequireFollow(isOwner, following, agreement)
+  const requiresFollow = doesRequireFollow(isOwner, following, digital_content)
   if (isLoggedIn && requiresFollow) {
     return {
       ...config,
@@ -229,7 +229,7 @@ const makeDownloadOriginalButton = ({
     }
   }
 
-  const { cid } = agreement.download
+  const { cid } = digital_content.download
   if (cid) {
     return {
       ...config,
@@ -240,7 +240,7 @@ const makeDownloadOriginalButton = ({
         if (!isLoggedIn) {
           onNotLoggedInClick?.()
         }
-        onDownload(agreement.agreement_id, cid)
+        onDownload(digital_content.digital_content_id, cid)
       }
     }
   }
@@ -261,12 +261,12 @@ export const useDownloadAgreementButtons = ({
 }) => {
   const isLoggedIn = useSelector(getHasAccount)
 
-  // Get already uploaded stems and parent agreement
-  const { stemAgreements, agreement } = useCurrentStems({ agreementId, useSelector })
+  // Get already uploaded stems and parent digital_content
+  const { stemAgreements, digital_content } = useCurrentStems({ agreementId, useSelector })
 
   // Get the currently uploading stems
   const { uploadingAgreements } = useUploadingStems({ agreementId, useSelector })
-  if (!agreement) return []
+  if (!digital_content) return []
 
   // Combine uploaded and uploading stems
   const combinedStems = [...stemAgreements, ...uploadingAgreements] as Stem[]
@@ -283,7 +283,7 @@ export const useDownloadAgreementButtons = ({
     onNotLoggedInClick,
     parentAgreementId: agreementId,
     stems: combinedFriendly,
-    agreement
+    digital_content
   })
 
   // Make download original button
@@ -294,7 +294,7 @@ export const useDownloadAgreementButtons = ({
     onDownload,
     onNotLoggedInClick,
     stemButtonsLength: stemButtons.length,
-    agreement
+    digital_content
   })
 
   return [...(originalAgreementButton ? [originalAgreementButton] : []), ...stemButtons]

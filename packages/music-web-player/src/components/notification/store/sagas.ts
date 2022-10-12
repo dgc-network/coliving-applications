@@ -2,7 +2,7 @@ import {
   ID,
   Name,
   Status,
-  Agreement,
+  DigitalContent,
   FeatureFlags,
   IntKeys,
   remoteConfigIntDefaults
@@ -184,7 +184,7 @@ export function* parseAndProcessNotifications(
   notifications: Notification[]
 ): Generator<any, Notification[], any> {
   /**
-   * Parse through the notifications & collect user /agreement / collection IDs
+   * Parse through the notifications & collect user /digital_content / collection IDs
    * that the notification references to fetch
    */
   const agreementIdsToFetch: ID[] = []
@@ -194,7 +194,7 @@ export function* parseAndProcessNotifications(
 
   notifications.forEach((notification) => {
     if (notification.type === NotificationType.UserSubscription) {
-      if (notification.entityType === Entity.Agreement) {
+      if (notification.entityType === Entity.DigitalContent) {
         // @ts-ignore
         notification.entityIds = [...new Set(notification.entityIds)]
         agreementIdsToFetch.push(...notification.entityIds)
@@ -214,7 +214,7 @@ export function* parseAndProcessNotifications(
       (notification.type === NotificationType.Milestone &&
         'entityType' in notification)
     ) {
-      if (notification.entityType === Entity.Agreement) {
+      if (notification.entityType === Entity.DigitalContent) {
         agreementIdsToFetch.push(notification.entityId)
       } else if (
         notification.entityType === Entity.ContentList ||
@@ -241,7 +241,7 @@ export function* parseAndProcessNotifications(
         notification.parentAgreementId,
         notification.childAgreementId
       )
-      notification.entityType = Entity.Agreement
+      notification.entityType = Entity.DigitalContent
       notification.entityIds = [
         notification.parentAgreementId,
         notification.childAgreementId
@@ -250,7 +250,7 @@ export function* parseAndProcessNotifications(
     if (notification.type === NotificationType.RemixCosign) {
       agreementIdsToFetch.push(notification.childAgreementId)
       userIdsToFetch.push(notification.parentAgreementUserId)
-      notification.entityType = Entity.Agreement
+      notification.entityType = Entity.DigitalContent
       notification.entityIds = [notification.childAgreementId]
       notification.userId = notification.parentAgreementUserId
     }
@@ -276,7 +276,7 @@ export function* parseAndProcessNotifications(
     }
   })
 
-  const [agreements]: Agreement[][] = yield* all([
+  const [agreements]: DigitalContent[][] = yield* all([
     call(retrieveAgreements, { agreementIds: agreementIdsToFetch }),
     call(
       retrieveCollections,
@@ -297,7 +297,7 @@ export function* parseAndProcessNotifications(
 
   /**
    * For Milestone and Followers, update the notification entityId as the userId
-   * For Remix Create, add the userId as the agreement owner id of the fetched child agreement
+   * For Remix Create, add the userId as the digital_content owner id of the fetched child digital_content
    * Attach a `timeLabel` to each notification as well to be displayed ie. 2 Hours Ago
    */
   const now = moment()
@@ -312,18 +312,18 @@ export function* parseAndProcessNotifications(
       notif.entityId = userId
     } else if (notif.type === NotificationType.RemixCreate) {
       const childAgreement = agreements.find(
-        (agreement) => agreement.agreement_id === notif.childAgreementId
+        (digital_content) => digital_content.digital_content_id === notif.childAgreementId
       )
       if (childAgreement) {
         notif.userId = childAgreement.owner_id
       }
     } else if (notif.type === NotificationType.RemixCosign) {
       const childAgreement = agreements.find(
-        (agreement) => agreement.agreement_id === notif.childAgreementId
+        (digital_content) => digital_content.digital_content_id === notif.childAgreementId
       )
       if (childAgreement && childAgreement.remix_of) {
         const parentAgreementIds = childAgreement.remix_of.agreements.map(
-          (t) => t.parent_agreement_id
+          (t) => t.parent_digital_content_id
         )
         remixAgreementParents.push(...parentAgreementIds)
         notif.entityIds.push(...parentAgreementIds)

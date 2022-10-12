@@ -265,7 +265,7 @@ const DraggableDrawer = ({
           }
         }
       } else if (!first) {
-        // Otherwise agreement the touch events with the drawer
+        // Otherwise digital_content the touch events with the drawer
         setDrawerSlideProps({
           to: {
             y: newY

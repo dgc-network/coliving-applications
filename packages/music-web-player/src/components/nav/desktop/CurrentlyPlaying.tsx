@@ -84,7 +84,7 @@ const CurrentlyPlaying = ({
     <Draggable
       isDisabled={!agreementId || isUnlisted}
       text={agreementTitle}
-      kind='agreement'
+      kind='digital_content'
       id={agreementId}
       isOwner={isOwner}
       link={draggableLink}

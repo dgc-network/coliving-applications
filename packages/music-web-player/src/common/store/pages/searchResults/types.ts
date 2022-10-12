@@ -1,4 +1,4 @@
-import { ID, LineupState, Status, Agreement } from '@coliving/common'
+import { ID, LineupState, Status, DigitalContent } from '@coliving/common'
 
 export type SearchPageState = {
   status: Status
@@ -7,7 +7,7 @@ export type SearchPageState = {
   albumIds: ID[]
   contentListIds: ID[]
   landlordIds: ID[]
-  agreements: LineupState<Agreement>
+  agreements: LineupState<DigitalContent>
 }
 
 export enum SearchKind {

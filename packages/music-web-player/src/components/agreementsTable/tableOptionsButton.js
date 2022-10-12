@@ -34,7 +34,7 @@ class TableOptionsButton extends Component {
 
     const overflowMenu = {
       menu: {
-        type: 'agreement',
+        type: 'digital_content',
         mount: 'page',
         includeShare: true,
         isOwner,

@@ -8,7 +8,7 @@ import DraggableFlatList from 'react-native-draggable-flatlist'
 import { useSelector } from 'react-redux'
 
 import * as haptics from 'app/haptics'
-import { getPlaying, getPlayingUid } from 'app/store/live/selectors'
+import { getPlaying, getPlayingUid } from 'app/store/digitalcoin/selectors'
 import { makeStyles } from 'app/styles'
 
 import type { AgreementItemAction } from './agreementListItem'
@@ -86,10 +86,10 @@ export const AgreementList = ({
   )
 
   const renderDraggableAgreement: DraggableFlatListProps<AgreementMetadata>['renderItem'] =
-    ({ item: agreement, index = -1, drag, isActive: isDragActive }) => {
-      const isActive = agreement.uid !== undefined && agreement.uid === playingUid
+    ({ item: digital_content, index = -1, drag, isActive: isDragActive }) => {
+      const isActive = digital_content.uid !== undefined && digital_content.uid === playingUid
 
-      // The dividers above and belove the active agreement should be hidden
+      // The dividers above and belove the active digital_content should be hidden
       const hideDivider = isActive || agreements[index - 1]?.uid === playingUid
 
       return (
@@ -111,8 +111,8 @@ export const AgreementList = ({
             isDragging={isDragActive}
             isPlaying={isPlaying}
             isReorderable={isReorderable}
-            agreement={agreement}
-            key={agreement.agreement_id}
+            digital_content={digital_content}
+            key={digital_content.digital_content_id}
             onSave={onSave}
             togglePlay={togglePlay}
             agreementItemAction={agreementItemAction}
@@ -147,7 +147,7 @@ export const AgreementList = ({
       {...otherProps}
       autoscrollThreshold={200}
       data={agreements}
-      keyExtractor={(agreement, index) => `${agreement.agreement_id} ${index}`}
+      keyExtractor={(digital_content, index) => `${digital_content.digital_content_id} ${index}`}
       onDragBegin={() => {
         haptics.light()
       }}

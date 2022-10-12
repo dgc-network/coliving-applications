@@ -1,4 +1,4 @@
-import { ID, UserCollection, Agreement, UserAgreementMetadata } from '@coliving/common'
+import { ID, UserCollection, DigitalContent, UserAgreementMetadata } from '@coliving/common'
 import { all } from 'redux-saga/effects'
 
 import { processAndCacheCollections } from 'common/store/cache/collections/utils'
@@ -13,7 +13,7 @@ const getAgreementsAndCollections = (
       acc: [UserAgreementMetadata[], UserCollection[]],
       cur: UserAgreementMetadata | UserCollection
     ) =>
-      ('agreement_id' in cur
+      ('digital_content_id' in cur
         ? [[...acc[0], cur], acc[1]]
         : [acc[0], [...acc[1], cur]]) as [
         UserAgreementMetadata[],
@@ -34,7 +34,7 @@ export function* retrieveUserReposts({
   currentUserId,
   offset,
   limit
-}: RetrieveUserRepostsArgs): Generator<any, Agreement[], any> {
+}: RetrieveUserRepostsArgs): Generator<any, DigitalContent[], any> {
   const reposts = yield apiClient.getUserRepostsByHandle({
     handle,
     currentUserId,
@@ -42,7 +42,7 @@ export function* retrieveUserReposts({
     offset
   })
   const [agreements, collections] = getAgreementsAndCollections(reposts)
-  const agreementIds = agreements.map((t) => t.agreement_id)
+  const agreementIds = agreements.map((t) => t.digital_content_id)
   const [processedAgreements, processedCollections] = yield all([
     processAndCacheAgreements(agreements),
     processAndCacheCollections(
@@ -52,7 +52,7 @@ export function* retrieveUserReposts({
     )
   ])
   const processedAgreementsMap = processedAgreements.reduce(
-    (acc: any, cur: any) => ({ ...acc, [cur.agreement_id]: cur }),
+    (acc: any, cur: any) => ({ ...acc, [cur.digital_content_id]: cur }),
     {}
   )
   const processedCollectionsMap = processedCollections.reduce(
@@ -60,8 +60,8 @@ export function* retrieveUserReposts({
     {}
   )
   const processed = reposts.map((m: any) =>
-    m.agreement_id
-      ? processedAgreementsMap[m.agreement_id]
+    m.digital_content_id
+      ? processedAgreementsMap[m.digital_content_id]
       : processedCollectionsMap[m.content_list_id]
   )
 

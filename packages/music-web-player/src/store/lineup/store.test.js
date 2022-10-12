@@ -26,22 +26,22 @@ const MOCK_TIMESTAMP = 1479427200000
 function* getAgreements() {
   const agreements = yield all([
     {
-      agreement_id: 1,
+      digital_content_id: 1,
       owner_id: 1,
       keep_in_lineup: 11
     },
     {
-      agreement_id: 2,
+      digital_content_id: 2,
       owner_id: 1,
       keep_in_lineup: 22
     },
     {
-      agreement_id: 3,
+      digital_content_id: 3,
       owner_id: 2,
       keep_in_lineup: 33
     },
     {
-      agreement_id: 4,
+      digital_content_id: 4,
       owner_id: 2,
       keep_in_lineup: 44
     }
@@ -66,9 +66,9 @@ class Sagas extends LineupSagas {
       // Query to fetch remote agreements (e.g. from BE).
       getAgreements,
       // Selector of what to keep in the lineup.
-      (agreement) => ({
-        id: agreement.agreement_id,
-        keepInLineup: agreement.keep_in_lineup
+      (digital_content) => ({
+        id: digital_content.digital_content_id,
+        keepInLineup: digital_content.keep_in_lineup
       }),
       /* removeDeleted */ false
     )
@@ -192,10 +192,10 @@ describe('play', () => {
           agreements: {
             ...initialCacheState,
             entries: {
-              1: { metadata: { agreement_id: 1, keep_in_lineup: 11 } },
-              2: { metadata: { agreement_id: 2, keep_in_lineup: 22 } },
-              3: { metadata: { agreement_id: 3, keep_in_lineup: 33 } },
-              4: { metadata: { agreement_id: 4, keep_in_lineup: 44 } }
+              1: { metadata: { digital_content_id: 1, keep_in_lineup: 11 } },
+              2: { metadata: { digital_content_id: 2, keep_in_lineup: 22 } },
+              3: { metadata: { digital_content_id: 3, keep_in_lineup: 33 } },
+              4: { metadata: { digital_content_id: 4, keep_in_lineup: 44 } }
             },
             uids: {
               'kind:AGREEMENTS-id:1-count:1': 1,

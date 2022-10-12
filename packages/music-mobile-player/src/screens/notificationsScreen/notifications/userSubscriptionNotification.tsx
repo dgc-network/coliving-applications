@@ -52,7 +52,7 @@ export const UserSubscriptionNotification = (
   const isSingleUpload = uploadCount === 1
 
   const handlePress = useCallback(() => {
-    if (entityType === Entity.Agreement && !isSingleUpload) {
+    if (entityType === Entity.DigitalContent && !isSingleUpload) {
       if (user) {
         navigation.navigate({
           native: {

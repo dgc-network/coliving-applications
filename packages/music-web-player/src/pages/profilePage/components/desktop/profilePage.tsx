@@ -277,7 +277,7 @@ const ProfilePage = ({
         // link={fullAlbumPage(profile.handle, album.content_list_name, album.content_list_id)}
         secondaryText={formatCardSecondaryText(
           album.save_count,
-          album.content_list_contents.agreement_ids.length
+          album.content_list_contents.digital_content_ids.length
         )}
         cardCoverImageSizes={album._cover_art_sizes}
         isReposted={album.has_current_user_reposted}
@@ -317,7 +317,7 @@ const ProfilePage = ({
         // link={fullContentListPage(profile.handle, contentList.content_list_name, contentList.content_list_id)}
         secondaryText={formatCardSecondaryText(
           contentList.save_count,
-          contentList.content_list_contents.agreement_ids.length,
+          contentList.content_list_contents.digital_content_ids.length,
           contentList.is_private
         )}
         cardCoverImageSizes={contentList._cover_art_sizes}
@@ -350,7 +350,7 @@ const ProfilePage = ({
     const agreementUploadChip = isOwner ? (
       <UploadChip
         key='upload-chip'
-        type='agreement'
+        type='digital_content'
         variant='tile'
         onClick={onClickUploadAgreement}
       />
@@ -496,7 +496,7 @@ const ProfilePage = ({
         primaryText={contentList.content_list_name}
         secondaryText={formatCardSecondaryText(
           contentList.save_count,
-          contentList.content_list_contents.agreement_ids.length,
+          contentList.content_list_contents.digital_content_ids.length,
           contentList.is_private
         )}
         // link={fullContentListPage(profile.handle, contentList.content_list_name, contentList.content_list_id)}

@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { Album, ContentList, Agreement } from 'types'
+import { Album, ContentList, DigitalContent } from 'types'
 
 export type State = {
-  topAgreements: Agreement[] | null | MusicError
+  topAgreements: DigitalContent[] | null | MusicError
   topContentLists: ContentList[] | null | MusicError
   topAlbums: Album[] | null | MusicError
 }
@@ -17,7 +17,7 @@ export enum MusicError {
   ERROR = 'error'
 }
 
-type SetTopAgreements = { agreements: Agreement[] | MusicError }
+type SetTopAgreements = { agreements: DigitalContent[] | MusicError }
 type SetTopContentLists = { contentLists: ContentList[] | MusicError }
 type SetTopAlbums = { albums: Album[] | MusicError }
 

@@ -67,15 +67,15 @@ const createStyles = (themeColors: ThemeColors) =>
 type SliderProps = {
   /**
    * A unique key to represent this instances of playback.
-   * If the user replays the same agreement, mediaKey should change
+   * If the user replays the same digital_content, mediaKey should change
    */
   mediaKey: string
   /**
-   * Whether live is playing and the scrubber should animate
+   * Whether digitalcoin is playing and the scrubber should animate
    */
   isPlaying: boolean
   /**
-   * The duration of the currently playing agreement
+   * The duration of the currently playing digital_content
    */
   duration: number
   /**

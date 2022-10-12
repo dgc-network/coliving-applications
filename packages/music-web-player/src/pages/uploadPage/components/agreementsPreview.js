@@ -14,9 +14,9 @@ const uploadDescriptions = {
   [UploadType.ALBUM]:
     'An album is a curated listening experience that is frozen in time and does not change. Albums can only contain agreements that you upload.',
   [UploadType.INDIVIDUAL_AGREEMENTS]:
-    'Every agreement you upload will be a separate post.',
+    'Every digital_content you upload will be a separate post.',
   [UploadType.INDIVIDUAL_AGREEMENT]:
-    'Every agreement you upload will be a separate post.'
+    'Every digital_content you upload will be a separate post.'
 }
 
 const AgreementsPreview = (props) => {
@@ -44,12 +44,12 @@ const AgreementsPreview = (props) => {
             props.uploadType !== UploadType.INDIVIDUAL_AGREEMENTS
         })}
       >
-        {props.agreements.map((agreement, i) => (
+        {props.agreements.map((digital_content, i) => (
           <AgreementPreview
-            key={agreement.metadata.title + i}
-            agreementTitle={agreement.metadata.title}
-            fileType={agreement.file.type}
-            fileSize={agreement.file.size}
+            key={digital_content.metadata.title + i}
+            agreementTitle={digital_content.metadata.title}
+            fileType={digital_content.file.type}
+            fileSize={digital_content.file.size}
             playing={props.previewIndex === i}
             onRemove={() => props.onRemove(i)}
             onPlayPreview={() => props.playPreview(i)}

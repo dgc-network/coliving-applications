@@ -23,13 +23,13 @@ import { getIsOpen } from './store/selectors'
 import { setVisibility } from './store/slice'
 
 const messages = {
-  first: 'You just uploaded your first agreement to Coliving!',
+  first: 'You just uploaded your first digital_content to Coliving!',
   deal: 'That’s a pretty big deal.',
   share: 'Share with your residents and let them know you’re here!',
   shareButton: 'Share With Your Residents',
   // Note: twitter auto appends the link to the text
   tweet:
-    'I just joined @dgc-network and uploaded my first agreement! Check out my profile here: '
+    'I just joined @dgc-network and uploaded my first digital_content! Check out my profile here: '
 }
 
 const Title = () => {

@@ -64,7 +64,7 @@ type UseImageSizeProps<
 
 /**
  * Custom hooks that allow a component to use an image size for a
- * agreement, collection, or user's image.
+ * digital_content, collection, or user's image.
  *
  * If the desired size is not yet cached, the next best size will be returned.
  * The desired size will be requested and returned when it becomes available

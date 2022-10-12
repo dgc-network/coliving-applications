@@ -245,10 +245,10 @@ const NavColumn = ({
   /** @param {bool} full whether or not to get the full page link */
   const getAgreementPageLink = useCallback(
     (full = false) => {
-      if (currentQueueItem && currentQueueItem.user && currentQueueItem.agreement) {
+      if (currentQueueItem && currentQueueItem.user && currentQueueItem.digital_content) {
         return full
-          ? fullAgreementPage(currentQueueItem.agreement.permalink)
-          : currentQueueItem.agreement.permalink
+          ? fullAgreementPage(currentQueueItem.digital_content.permalink)
+          : currentQueueItem.digital_content.permalink
       }
       return null
     },
@@ -416,7 +416,7 @@ const NavColumn = ({
                 <Droppable
                   className={styles.droppable}
                   hoverClassName={styles.droppableHover}
-                  acceptedKinds={['agreement', 'album']}
+                  acceptedKinds={['digital_content', 'album']}
                   acceptOwner={false}
                   onDrop={kind === 'album' ? saveCollection : saveAgreement}
                 >
@@ -431,7 +431,7 @@ const NavColumn = ({
                       [styles.droppableLink]:
                         dragging &&
                         !draggingIsOwner &&
-                        (kind === 'agreement' || kind === 'album')
+                        (kind === 'digital_content' || kind === 'album')
                     })}
                     onClick={onClickNavLinkWithAccount}
                   >
@@ -505,16 +505,16 @@ const NavColumn = ({
           onUpload={onClickUpload}
         />
         <CurrentlyPlaying
-          agreementId={currentQueueItem.agreement?.agreement_id ?? null}
-          agreementTitle={currentQueueItem.agreement?.title ?? null}
-          isUnlisted={currentQueueItem.agreement?.is_unlisted ?? false}
+          agreementId={currentQueueItem.digital_content?.digital_content_id ?? null}
+          agreementTitle={currentQueueItem.digital_content?.title ?? null}
+          isUnlisted={currentQueueItem.digital_content?.is_unlisted ?? false}
           isOwner={
             // Note: if neither are defined, it should eval to false, so setting default to different values
             (currentQueueItem?.user?.handle ?? null) ===
             (account?.handle ?? undefined)
           }
           coverArtColor={dominantColors ? dominantColors[0] : null}
-          coverArtSizes={currentQueueItem.agreement?._cover_art_sizes ?? null}
+          coverArtSizes={currentQueueItem.digital_content?._cover_art_sizes ?? null}
           artworkLink={
             currentPlayerItem.collectible?.imageUrl ||
             currentPlayerItem.collectible?.frameUrl ||
@@ -548,7 +548,7 @@ const mapStateToProps = (state: AppState) => {
     showCreateContentListModal: getIsOpen(state),
     hideCreateContentListModalFolderTab: getHideFolderTab(state),
     dominantColors: getDominantColorsByAgreement(state, {
-      agreement: currentQueueItem.agreement
+      digital_content: currentQueueItem.digital_content
     })
   }
 }

@@ -4,7 +4,7 @@ import { Pressable, Text, View } from 'react-native'
 import { useSelector } from 'react-redux'
 
 import Skeleton from 'app/components/skeleton'
-import { getPlayingUid } from 'app/store/live/selectors'
+import { getPlayingUid } from 'app/store/digitalcoin/selectors'
 import { flexRowCentered, makeStyles } from 'app/styles'
 import type { GestureResponderHandler } from 'app/types/gesture'
 
@@ -63,10 +63,10 @@ type AgreementItemProps = {
   active: boolean
   showSkeleton?: boolean
   index: number
-  agreement?: LineupAgreement
+  digital_content?: LineupAgreement
 }
 
-const AgreementItem = ({ agreement, active, index, showSkeleton }: AgreementItemProps) => {
+const AgreementItem = ({ digital_content, active, index, showSkeleton }: AgreementItemProps) => {
   const styles = useStyles()
   return (
     <>
@@ -74,7 +74,7 @@ const AgreementItem = ({ agreement, active, index, showSkeleton }: AgreementItem
       <View style={styles.item}>
         {showSkeleton ? (
           <Skeleton width='100%' height='10' />
-        ) : !agreement ? null : (
+        ) : !digital_content ? null : (
           <>
             <Text style={[styles.text, active && styles.active]}>
               {index + 1}
@@ -83,13 +83,13 @@ const AgreementItem = ({ agreement, active, index, showSkeleton }: AgreementItem
               style={[styles.text, styles.title, active && styles.active]}
               numberOfLines={1}
             >
-              {agreement.title}
+              {digital_content.title}
             </Text>
             <Text
               style={[styles.text, styles.landlord, active && styles.active]}
               numberOfLines={1}
             >
-              {`by ${agreement.user.name}`}
+              {`by ${digital_content.user.name}`}
             </Text>
           </>
         )}
@@ -119,12 +119,12 @@ export const CollectionTileAgreementList = ({
 
   return (
     <Pressable onPress={onPress}>
-      {agreements.slice(0, DISPLAY_AGREEMENT_COUNT).map((agreement, index) => (
+      {agreements.slice(0, DISPLAY_AGREEMENT_COUNT).map((digital_content, index) => (
         <AgreementItem
-          key={agreement.uid}
-          active={playingUid === agreement.uid}
+          key={digital_content.uid}
+          active={playingUid === digital_content.uid}
           index={index}
-          agreement={agreement}
+          digital_content={digital_content}
         />
       ))}
       {agreementCount && agreementCount > 5 ? (

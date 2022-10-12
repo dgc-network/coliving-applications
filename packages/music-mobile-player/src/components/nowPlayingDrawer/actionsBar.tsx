@@ -1,6 +1,6 @@
 import { useCallback, useLayoutEffect } from 'react'
 
-import type { Agreement } from '@coliving/common'
+import type { DigitalContent } from '@coliving/common'
 import { FavoriteSource, RepostSource, ShareSource } from '@coliving/common'
 import { updateMethod } from '@coliving/web/src/common/store/cast/slice'
 import {
@@ -61,10 +61,10 @@ const useStyles = makeStyles(({ palette, spacing }) => ({
 }))
 
 type ActionsBarProps = {
-  agreement: Agreement
+  digital_content: DigitalContent
 }
 
-export const ActionsBar = ({ agreement }: ActionsBarProps) => {
+export const ActionsBar = ({ digital_content }: ActionsBarProps) => {
   const styles = useStyles()
   const currentUserId = useSelectorWeb(getUserId)
   const castMethod = useSelectorWeb(getCastMethod)
@@ -79,48 +79,48 @@ export const ActionsBar = ({ agreement }: ActionsBarProps) => {
   }, [castMethod, dispatchWeb])
 
   const onToggleFavorite = useCallback(() => {
-    if (agreement) {
-      if (agreement.has_current_user_saved) {
-        dispatchWeb(unsaveAgreement(agreement.agreement_id, FavoriteSource.NOW_PLAYING))
+    if (digital_content) {
+      if (digital_content.has_current_user_saved) {
+        dispatchWeb(unsaveAgreement(digital_content.digital_content_id, FavoriteSource.NOW_PLAYING))
       } else {
-        dispatchWeb(saveAgreement(agreement.agreement_id, FavoriteSource.NOW_PLAYING))
+        dispatchWeb(saveAgreement(digital_content.digital_content_id, FavoriteSource.NOW_PLAYING))
       }
     }
-  }, [dispatchWeb, agreement])
+  }, [dispatchWeb, digital_content])
 
   const onToggleRepost = useCallback(() => {
-    if (agreement) {
-      if (agreement.has_current_user_reposted) {
-        dispatchWeb(undoRepostAgreement(agreement.agreement_id, RepostSource.NOW_PLAYING))
+    if (digital_content) {
+      if (digital_content.has_current_user_reposted) {
+        dispatchWeb(undoRepostAgreement(digital_content.digital_content_id, RepostSource.NOW_PLAYING))
       } else {
-        dispatchWeb(repostAgreement(agreement.agreement_id, RepostSource.NOW_PLAYING))
+        dispatchWeb(repostAgreement(digital_content.digital_content_id, RepostSource.NOW_PLAYING))
       }
     }
-  }, [dispatchWeb, agreement])
+  }, [dispatchWeb, digital_content])
 
   const onPressShare = useCallback(() => {
-    if (agreement) {
+    if (digital_content) {
       dispatchWeb(
         requestOpenShareModal({
-          type: 'agreement',
-          agreementId: agreement.agreement_id,
+          type: 'digital_content',
+          agreementId: digital_content.digital_content_id,
           source: ShareSource.NOW_PLAYING
         })
       )
     }
-  }, [dispatchWeb, agreement])
+  }, [dispatchWeb, digital_content])
 
   const onPressOverflow = useCallback(() => {
-    if (agreement) {
-      const isOwner = currentUserId === agreement.owner_id
+    if (digital_content) {
+      const isOwner = currentUserId === digital_content.owner_id
       const overflowActions = [
         !isOwner
-          ? agreement.has_current_user_reposted
+          ? digital_content.has_current_user_reposted
             ? OverflowAction.UNREPOST
             : OverflowAction.REPOST
           : null,
         !isOwner
-          ? agreement.has_current_user_saved
+          ? digital_content.has_current_user_saved
             ? OverflowAction.UNFAVORITE
             : OverflowAction.FAVORITE
           : null,
@@ -133,12 +133,12 @@ export const ActionsBar = ({ agreement }: ActionsBarProps) => {
       dispatchWeb(
         openOverflowMenu({
           source: OverflowSource.AGREEMENTS,
-          id: agreement.agreement_id,
+          id: digital_content.digital_content_id,
           overflowActions
         })
       )
     }
-  }, [agreement, currentUserId, dispatchWeb])
+  }, [digital_content, currentUserId, dispatchWeb])
 
   const { openAirplayDialog } = useAirplay()
 
@@ -167,7 +167,7 @@ export const ActionsBar = ({ agreement }: ActionsBarProps) => {
   const renderRepostButton = () => {
     return (
       <RepostButton
-        iconIndex={agreement.has_current_user_reposted ? 1 : 0}
+        iconIndex={digital_content.has_current_user_reposted ? 1 : 0}
         onPress={onToggleRepost}
         style={styles.button}
         wrapperStyle={styles.animatedIcon}
@@ -178,7 +178,7 @@ export const ActionsBar = ({ agreement }: ActionsBarProps) => {
   const renderFavoriteButton = () => {
     return (
       <FavoriteButton
-        iconIndex={agreement.has_current_user_saved ? 1 : 0}
+        iconIndex={digital_content.has_current_user_saved ? 1 : 0}
         onPress={onToggleFavorite}
         style={styles.button}
         wrapperStyle={styles.animatedIcon}

@@ -32,12 +32,12 @@ type AgreementListItemProps = {
   togglePlay: (uid: UID, id: ID) => void
   goToRoute: (route: string) => void
   landlordHandle: string
-  agreement?: EnhancedCollectionAgreement
+  digital_content?: EnhancedCollectionAgreement
   forceSkeleton?: boolean
 }
 
 const AgreementListItem = ({
-  agreement,
+  digital_content,
   active,
   disableActions,
   playing,
@@ -61,20 +61,20 @@ const AgreementListItem = ({
     )
   }
 
-  if (!agreement) return null
+  if (!digital_content) return null
 
-  const deleted = agreement.is_delete || !!agreement.user?.is_deactivated
+  const deleted = digital_content.is_delete || !!digital_content.user?.is_deactivated
   const strings = makeStrings({ deleted })
 
   const onClickLandlordName = (e: MouseEvent) => {
     e.stopPropagation()
-    if (goToRoute) goToRoute(profilePage(agreement.user.handle))
+    if (goToRoute) goToRoute(profilePage(digital_content.user.handle))
   }
 
   const onClickAgreementName = (e: MouseEvent) => {
     if (!disableActions && !deleted) {
       e.stopPropagation()
-      if (goToRoute) goToRoute(agreement.permalink)
+      if (goToRoute) goToRoute(digital_content.permalink)
     }
   }
 
@@ -84,7 +84,7 @@ const AgreementListItem = ({
   }
 
   const onPlayAgreement = () => {
-    if (!deleted && togglePlay) togglePlay(agreement.uid, agreement.agreement_id)
+    if (!deleted && togglePlay) togglePlay(digital_content.uid, digital_content.digital_content_id)
   }
 
   const hideShow = cn({
@@ -93,7 +93,7 @@ const AgreementListItem = ({
   })
 
   const menu: Omit<AgreementMenuProps, 'children'> = {
-    handle: agreement.user.handle,
+    handle: digital_content.user.handle,
     includeAddToContentList: true,
     includeLandlordPick: false,
     includeEdit: false,
@@ -101,16 +101,16 @@ const AgreementListItem = ({
     includeRepost: true,
     includeShare: false,
     includeAgreementPage: true,
-    isLandlordPick: agreement.user._landlord_pick === agreement.agreement_id,
+    isLandlordPick: digital_content.user._landlord_pick === digital_content.digital_content_id,
     isDeleted: deleted,
-    isFavorited: agreement.has_current_user_saved,
+    isFavorited: digital_content.has_current_user_saved,
     isOwner: false,
-    isOwnerDeactivated: !!agreement.user?.is_deactivated,
-    isReposted: agreement.has_current_user_reposted,
-    agreementId: agreement.agreement_id,
-    agreementTitle: agreement.title,
-    agreementPermalink: agreement.permalink,
-    type: 'agreement'
+    isOwnerDeactivated: !!digital_content.user?.is_deactivated,
+    isReposted: digital_content.has_current_user_reposted,
+    agreementId: digital_content.digital_content_id,
+    agreementTitle: digital_content.title,
+    agreementPermalink: digital_content.permalink,
+    type: 'digital_content'
   }
 
   return (
@@ -144,22 +144,22 @@ const AgreementListItem = ({
         <div className={styles.agreementNumber}>{index + 1}</div>
         <div className={styles.nameLandlordContainer}>
           <div className={styles.agreementTitle} onClick={onClickAgreementName}>
-            {agreement.title}
+            {digital_content.title}
             {strings.deleted}
           </div>
           <div className={styles.landlordName} onClick={onClickLandlordName}>
             <div className={styles.by}>{strings.by}</div>
-            {agreement.user.is_deactivated ? (
-              `${agreement.user.name} [Deactivated]`
+            {digital_content.user.is_deactivated ? (
+              `${digital_content.user.name} [Deactivated]`
             ) : (
-              <LandlordPopover handle={agreement.user.handle}>
-                {agreement.user.name}
+              <LandlordPopover handle={digital_content.user.handle}>
+                {digital_content.user.name}
               </LandlordPopover>
             )}
           </div>
         </div>
         <div className={styles.duration}>
-          {agreement.duration && formatSeconds(agreement.duration)}
+          {digital_content.duration && formatSeconds(digital_content.duration)}
         </div>
         {deleted ? <div className={styles.more} style={{ width: 16 }} /> : null}
         {!disableActions && !deleted ? (

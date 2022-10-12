@@ -35,7 +35,7 @@ const EditAgreementModal = ({
   requiredFields.title = true
 
   const coverArt = useAgreementCoverArt(
-    metadata ? metadata.agreement_id : null,
+    metadata ? metadata.digital_content_id : null,
     metadata ? metadata._cover_art_sizes : null,
     SquareSizes.SIZE_1000_BY_1000
   )
@@ -110,7 +110,7 @@ const EditAgreementModal = ({
         <FormTile
           // Key the form tile by id so each id gets a different instance
           // of input fields to preserve correct default values
-          key={formFields.agreement_id}
+          key={formFields.digital_content_id}
           showPreview={false}
           defaultFields={formFields}
           coverArt={coverArt}
