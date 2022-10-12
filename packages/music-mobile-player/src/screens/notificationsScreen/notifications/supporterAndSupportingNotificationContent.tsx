@@ -13,7 +13,7 @@ import {
   ProfilePicture,
   UserNameLink,
   NotificationText
-} from '../Notification'
+} from '../notification'
 
 const useStyles = makeStyles(() => ({
   trendingIcon: {

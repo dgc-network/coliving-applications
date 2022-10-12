@@ -2,7 +2,7 @@ import {
   ChallengeRewardID,
   FailureReason,
   UserChallenge,
-  StringLive,
+  StringDigitalcoin,
   IntKeys,
   StringKeys
 } from '@coliving/common'
@@ -24,7 +24,7 @@ import {
   getUserChallenges,
   getUserChallengesOverrides,
   getUserChallengeSpecifierMap
-} from 'common/store/pages/liveRewards/selectors'
+} from 'common/store/pages/digitalcoinRewards/selectors'
 import {
   Claim,
   claimChallengeReward,
@@ -42,7 +42,7 @@ import {
   setHCaptchaStatus,
   setUserChallengesDisbursed,
   showRewardClaimedToast
-} from 'common/store/pages/liveRewards/slice'
+} from 'common/store/pages/digitalcoinRewards/slice'
 import { getFeePayer } from 'common/store/solana/selectors'
 import { setVisibility } from 'common/store/ui/modals/slice'
 import { getBalance, increaseBalance } from 'common/store/wallet/slice'
@@ -126,7 +126,7 @@ beforeAll(() => {
     [StringKeys.ORACLE_ETH_ADDRESS]: 'oracle eth address',
     [StringKeys.ORACLE_ENDPOINT]: 'oracle endpoint',
     [StringKeys.REWARDS_ATTESTATION_ENDPOINTS]: 'rewards attestation endpoints',
-    [IntKeys.CHALLENGE_REFRESH_INTERVAL_LIVE_PAGE_MS]: 100000000000,
+    [IntKeys.CHALLENGE_REFRESH_INTERVAL_DGCO_PAGE_MS]: 100000000000,
     [IntKeys.CHALLENGE_REFRESH_INTERVAL_MS]: 1000000000000,
     [IntKeys.MAX_CLAIM_RETRIES]: MAX_CLAIM_RETRIES,
     [IntKeys.CLIENT_ATTESTATION_PARALLELIZATION]: 20
@@ -376,7 +376,7 @@ describe('Rewards Page Sagas', () => {
           // Assertions
           .put(
             increaseBalance({
-              amount: stringAudioToStringWei('10' as StringLive)
+              amount: stringAudioToStringWei('10' as StringDigitalcoin)
             })
           )
           .put(

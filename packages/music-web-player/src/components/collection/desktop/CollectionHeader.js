@@ -20,7 +20,7 @@ import PropTypes from 'prop-types'
 import { ReactComponent as IconFilter } from 'assets/img/iconFilter.svg'
 import { squashNewLines } from 'common/utils/formatUtil'
 import { formatSecondsAsText, formatDate } from 'common/utils/timeUtil'
-import { LandlordPopover } from 'components/landlord/landlordPopover'
+import { LandlordPopover } from 'components/author/landlordPopover'
 import DynamicImage from 'components/dynamicImage/dynamicImage'
 import { Input } from 'components/input'
 import LoadingSpinner from 'components/loadingSpinner/loadingSpinner'
@@ -60,7 +60,7 @@ const messages = {
   favorite: 'Favorite',
   unfavorite: 'Unfavorite',
   contentListViewable: 'Your contentList can now be viewed by others!',
-  filter: 'Filter Agreements'
+  filter: 'Filter DigitalContents'
 }
 
 const PlayButton = (props) => {
@@ -98,7 +98,7 @@ const repostButtonText = (isReposted) =>
 const favoriteButtonText = (isFavorited) =>
   isFavorited ? messages.favoriteButtonFavorited : messages.favoriteButton
 
-const ViewerHasAgreementsButtons = (props) => {
+const ViewerHasDigitalContentsButtons = (props) => {
   return (
     <>
       <PlayButton playing={props.playing} onPlay={props.onPlay} />
@@ -170,7 +170,7 @@ const ViewerHasAgreementsButtons = (props) => {
   )
 }
 
-const ViewerNoAgreementsButtons = (props) => {
+const ViewerNoDigitalContentsButtons = (props) => {
   return (
     <>
       <Button
@@ -259,7 +259,7 @@ const SmartCollectionButtons = (props) => {
   )
 }
 
-const OwnerNoAgreementsButtons = (props) => {
+const OwnerNoDigitalContentsButtons = (props) => {
   return (
     <>
       <Button
@@ -417,18 +417,18 @@ const Buttons = (props) => {
     buttons = <SmartCollectionButtons {...buttonProps} />
   } else {
     if (props.isOwner) {
-      if (props.hasAgreements && props.isPublished) {
+      if (props.hasDigitalContents && props.isPublished) {
         buttons = <OwnerPublishedButtons {...buttonProps} />
-      } else if (props.hasAgreements && !props.isPublished) {
+      } else if (props.hasDigitalContents && !props.isPublished) {
         buttons = <OwnerNotPublishedButtons {...buttonProps} />
       } else {
-        buttons = <OwnerNoAgreementsButtons {...buttonProps} />
+        buttons = <OwnerNoDigitalContentsButtons {...buttonProps} />
       }
     } else {
-      if (props.hasAgreements) {
-        buttons = <ViewerHasAgreementsButtons {...buttonProps} />
+      if (props.hasDigitalContents) {
+        buttons = <ViewerHasDigitalContentsButtons {...buttonProps} />
       } else {
-        buttons = <ViewerNoAgreementsButtons {...buttonProps} />
+        buttons = <ViewerNoDigitalContentsButtons {...buttonProps} />
       }
     }
   }
@@ -523,11 +523,11 @@ class CollectionHeader extends PureComponent {
       isOwner,
       isAlbum,
       modified,
-      numAgreements,
+      numDigitalContents,
       duration,
       isPublished,
       isPublishing,
-      agreementsLoading,
+      digitalContentsLoading,
       loading,
       playing,
       isReposted,
@@ -582,7 +582,7 @@ class CollectionHeader extends PureComponent {
                 <div className={cn(fadeIn)}>
                   <span>By</span>
                   <LandlordPopover handle={landlordHandle}>
-                    <h2 className={styles.landlord} onClick={onClickLandlordName}>
+                    <h2 className={styles.author} onClick={onClickLandlordName}>
                       {landlordName}
                       <UserBadges
                         userId={userId}
@@ -614,8 +614,8 @@ class CollectionHeader extends PureComponent {
               ) : null}
               <InfoLabel
                 className={styles.infoLabelPlacement}
-                labelName='agreements'
-                labelValue={numAgreements}
+                labelName='digitalContents'
+                labelValue={numDigitalContents}
               />
             </div>
             <div className={cn(styles.description, fadeIn)}>
@@ -632,11 +632,11 @@ class CollectionHeader extends PureComponent {
             </div>
             <div
               className={cn(styles.buttonSection, {
-                [styles.show]: !agreementsLoading,
-                [styles.hide]: agreementsLoading
+                [styles.show]: !digitalContentsLoading,
+                [styles.hide]: digitalContentsLoading
               })}
             >
-              {!agreementsLoading && (
+              {!digitalContentsLoading && (
                 <Buttons
                   variant={variant}
                   contentListId={collectionId}
@@ -645,7 +645,7 @@ class CollectionHeader extends PureComponent {
                   type={type}
                   ownerHandle={landlordHandle}
                   isAlbum={isAlbum}
-                  hasAgreements={numAgreements > 0}
+                  hasDigitalContents={numDigitalContents > 0}
                   isPublished={isPublished}
                   isPreviouslyUnpublished={this.state.previouslyUnpublished}
                   unsetPreviouslyPublished={this.unsetPreviouslyPublished}
@@ -691,7 +691,7 @@ CollectionHeader.propTypes = {
   collectionId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   index: PropTypes.number,
   loading: PropTypes.bool,
-  agreementsLoading: PropTypes.bool,
+  digitalContentsLoading: PropTypes.bool,
   playing: PropTypes.bool,
   active: PropTypes.bool,
   type: PropTypes.oneOf(['contentList', 'album']),
@@ -705,7 +705,7 @@ CollectionHeader.propTypes = {
 
   isOwner: PropTypes.bool,
   isAlbum: PropTypes.bool,
-  hasAgreements: PropTypes.bool,
+  hasDigitalContents: PropTypes.bool,
   isPublished: PropTypes.bool,
   isPublishing: PropTypes.bool,
   isSaved: PropTypes.bool,
@@ -737,7 +737,7 @@ CollectionHeader.defaultProps = {
 
   isOwner: false,
   isAlbum: false,
-  hasAgreements: false,
+  hasDigitalContents: false,
   isPublished: false,
   isPublishing: false,
   isSaved: false,

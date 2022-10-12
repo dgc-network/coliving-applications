@@ -57,7 +57,7 @@ type CardProps = {
   primaryText: ReactNode
   secondaryText: ReactNode
   isUser?: boolean
-  agreementCount?: number
+  digitalContentCount?: number
   isContentList?: boolean
   // Socials
   reposts?: number
@@ -76,7 +76,7 @@ const Card = ({
   isUser,
   primaryText,
   secondaryText,
-  agreementCount,
+  digitalContentCount,
   reposts,
   favorites,
   onClickReposts,
@@ -111,7 +111,7 @@ const Card = ({
             badgeSize={12}
           />
         </div>
-        {(showRepostFavoriteStats || agreementCount !== undefined) && (
+        {(showRepostFavoriteStats || digitalContentCount !== undefined) && (
           <div className={styles.menu}>
             {showRepostFavoriteStats ? (
               <RepostFavoritesStats
@@ -124,9 +124,9 @@ const Card = ({
                 className={styles.statsWrapper}
               />
             ) : null}
-            {agreementCount !== undefined && (
-              <div className={styles.agreementCount}>
-                {`${agreementCount} ${pluralize('DigitalContent', agreementCount)}`}
+            {digitalContentCount !== undefined && (
+              <div className={styles.digitalContentCount}>
+                {`${digitalContentCount} ${pluralize('DigitalContent', digitalContentCount)}`}
               </div>
             )}
           </div>

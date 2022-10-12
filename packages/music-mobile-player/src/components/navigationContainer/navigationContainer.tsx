@@ -59,7 +59,7 @@ const NavigationContainer = ({ children }: Props) => {
                     Profile: {
                       path: ':handle',
                       screens: {
-                        Agreements: 'agreements',
+                        DigitalContents: 'digitalContents',
                         Albums: 'albums',
                         ContentLists: 'contentLists',
                         Reposts: 'reposts',
@@ -105,7 +105,7 @@ const NavigationContainer = ({ children }: Props) => {
                     UserProfile: {
                       path: 'profile',
                       screens: {
-                        Agreements: 'agreements',
+                        DigitalContents: 'digitalContents',
                         Albums: 'albums',
                         ContentLists: 'contentLists',
                         Reposts: 'reposts',
@@ -142,7 +142,7 @@ const NavigationContainer = ({ children }: Props) => {
           // If the path doesn't match a profile tab, it's a digital_content
           else if (
             !path.match(
-              /^\/[^/]+\/(agreements|albums|contentLists|reposts|collectibles)$/
+              /^\/[^/]+\/(digitalContents|albums|contentLists|reposts|collectibles)$/
             )
           ) {
             path = '/digital_content'

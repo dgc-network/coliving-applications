@@ -57,6 +57,6 @@ export const IconAnnouncement = () => {
   return <IconColiving className={styles.iconAnnouncement} />
 }
 
-export const IconAddAgreementToContentList = () => {
-  return <IconContentList className={styles.iconAddAgreementToContentList} />
+export const IconAddDigitalContentToContentList = () => {
+  return <IconContentList className={styles.iconAddDigitalContentToContentList} />
 }

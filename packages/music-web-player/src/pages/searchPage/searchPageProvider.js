@@ -9,12 +9,12 @@ import { withRouter } from 'react-router-dom'
 import { getUserId } from 'common/store/account/selectors'
 import { makeGetLineupMetadatas } from 'common/store/lineup/selectors'
 import * as searchPageActions from 'common/store/pages/searchResults/actions'
-import { agreementsActions } from 'common/store/pages/searchResults/lineup/agreements/actions'
+import { digitalContentsActions } from 'common/store/pages/searchResults/lineup/digital_contents/actions'
 import {
   makeGetSearchLandlords,
   makeGetSearchContentLists,
   makeGetSearchAlbums,
-  getSearchAgreementsLineup,
+  getSearchDigitalContentsLineup,
   getBaseState as getSearchResultsState
 } from 'common/store/pages/searchResults/selectors'
 import { SearchKind } from 'common/store/pages/searchResults/types'
@@ -42,7 +42,7 @@ class SearchPageProvider extends Component {
 
   componentDidMount() {
     // Listen for history changes when the component is mounted and maybe
-    // reset/reload agreements.
+    // reset/reload digitalContents.
     this.unlisten = this.props.history.listen((location, action) => {
       // Make sure the serach bar shows on every search-navigation
       if (window.scrollTo) window.scrollTo(0, 0)
@@ -54,7 +54,7 @@ class SearchPageProvider extends Component {
 
       if (!!searchMatch || isTagSearch) {
         const query = isTagSearch ? helpers.getSearchTag() : searchMatch
-        this.props.dispatch(agreementsActions.reset())
+        this.props.dispatch(digitalContentsActions.reset())
         if (category !== SearchKind.AGREEMENTS) {
           const limit = helpers.getResultsLimit(this.props.isMobile, category)
           query && this.search(isTagSearch, query, category, limit)
@@ -74,7 +74,7 @@ class SearchPageProvider extends Component {
   }
 
   componentWillUnmount() {
-    this.props.dispatch(agreementsActions.reset())
+    this.props.dispatch(digitalContentsActions.reset())
     this.unlisten()
   }
 
@@ -140,10 +140,10 @@ const makeMapStateToProps = (initialState, ownProps) => {
   const getAlbums = makeGetSearchAlbums()
   const getSearchLandlords = makeGetSearchLandlords()
   const getCurrentQueueItem = makeGetCurrent()
-  const getAgreementsLineup = makeGetLineupMetadatas(getSearchAgreementsLineup)
+  const getDigitalContentsLineup = makeGetLineupMetadatas(getSearchDigitalContentsLineup)
   const mapStateToProps = (state, props) => ({
     search: getSearchResultsState(state),
-    agreements: getAgreementsLineup(state),
+    digitalContents: getDigitalContentsLineup(state),
     landlords: getSearchLandlords(state),
     contentLists: getContentLists(state),
     albums: getAlbums(state),

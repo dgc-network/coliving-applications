@@ -405,7 +405,7 @@ const GestureSupportingBodyContainer = memo(
 
     // State
 
-    // Agreements our last seen activeIndex.
+    // DigitalContents our last seen activeIndex.
     const [internalIndex, setInternalIndex] = useState(activeIndex)
 
     // Instance Vars

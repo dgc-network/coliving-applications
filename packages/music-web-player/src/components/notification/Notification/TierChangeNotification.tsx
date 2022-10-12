@@ -18,7 +18,7 @@ const messages = {
   unlocked: 'tier unlocked',
   reached: "Congrats, you've reached ",
   having: 'Tier by having over',
-  digitalcoin: '$LIVE!',
+  digitalcoin: '$DGCO!',
   liveLabel: 'digitalcoin tokens',
   accessInfo:
     'You now have access to exclusive features & a shiny new badge by your name.',

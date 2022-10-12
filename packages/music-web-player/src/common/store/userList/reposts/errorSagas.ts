@@ -5,12 +5,12 @@ import * as errorActions from 'common/store/errors/actions'
 import {
   GET_AGREEMENT_REPOST_ERROR,
   GET_CONTENT_LIST_REPOST_ERROR,
-  agreementRepostError,
+  digitalContentRepostError,
   contentListRepostError
 } from './actions'
 
 type ErrorActions =
-  | ReturnType<typeof agreementRepostError>
+  | ReturnType<typeof digitalContentRepostError>
   | ReturnType<typeof contentListRepostError>
 
 export function* handleRepostError(action: ErrorActions) {

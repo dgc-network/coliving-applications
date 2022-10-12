@@ -3,7 +3,7 @@ import { takeEvery, put, select } from 'typed-redux-saga/macro'
 
 import { CommonState } from 'common/store'
 import { getCollection as getCollectionBase } from 'common/store/cache/collections/selectors'
-import { getAgreement as getAgreementBase } from 'common/store/cache/agreements/selectors'
+import { getDigitalContent as getDigitalContentBase } from 'common/store/cache/digital_contents/selectors'
 import { getUser as getUserBase } from 'common/store/cache/users/selectors'
 
 import { setVisibility } from '../modals/slice'
@@ -11,7 +11,7 @@ import { setVisibility } from '../modals/slice'
 import { open, requestOpen } from './slice'
 import { RequestOpenAction } from './types'
 
-const getAgreement = (id: ID) => (state: CommonState) => getAgreementBase(state, { id })
+const getDigitalContent = (id: ID) => (state: CommonState) => getDigitalContentBase(state, { id })
 const getUser = (id: ID) => (state: CommonState) => getUserBase(state, { id })
 const getCollection = (id: ID) => (state: CommonState) =>
   getCollectionBase(state, { id })
@@ -19,12 +19,12 @@ const getCollection = (id: ID) => (state: CommonState) =>
 function* handleRequestOpen(action: RequestOpenAction) {
   switch (action.payload.type) {
     case 'digital_content': {
-      const { agreementId, source, type } = action.payload
-      const digital_content = yield* select(getAgreement(agreementId))
+      const { digitalContentId, source, type } = action.payload
+      const digital_content = yield* select(getDigitalContent(digitalContentId))
       if (!digital_content) return
-      const landlord = yield* select(getUser(digital_content.owner_id))
-      if (!landlord) return
-      yield put(open({ type, digital_content, source, landlord }))
+      const author = yield* select(getUser(digital_content.owner_id))
+      if (!author) return
+      yield put(open({ type, digital_content, source, author }))
       break
     }
     case 'profile': {
@@ -42,7 +42,7 @@ function* handleRequestOpen(action: RequestOpenAction) {
       if (!owner) return
       if (collection.is_album) {
         yield put(
-          open({ type: 'album', album: collection, landlord: owner, source })
+          open({ type: 'album', album: collection, author: owner, source })
         )
       } else {
         yield put(

@@ -22,7 +22,7 @@ import useKeyboardListeners from 'app/hooks/useKeyboardListeners'
 import type { Message } from 'app/message'
 import { MessageType, handleMessage } from 'app/message'
 import type { AppState } from 'app/store'
-import { getAgreement, getIndex } from 'app/store/digitalcoin/selectors'
+import { getDigitalContent, getIndex } from 'app/store/digitalcoin/selectors'
 import {
   getDappLoaded,
   getIsOnFirstPage,
@@ -148,8 +148,8 @@ type Props = OwnProps &
 const WebApp = ({
   onMessage,
   webRef,
-  agreementInfo,
-  agreementIndex,
+  digitalContentInfo,
+  digitalContentIndex,
   isOnFirstPage,
   isSignedIn,
   dappLoaded
@@ -363,8 +363,8 @@ const WebApp = ({
     if (webRef.current) {
       postMessage(webRef.current, {
         type: MessageType.SYNC_QUEUE,
-        info: agreementInfo,
-        index: agreementIndex,
+        info: digitalContentInfo,
+        index: digitalContentIndex,
         isAction: true
       })
       postMessage(webRef.current, {
@@ -377,8 +377,8 @@ const WebApp = ({
     setImmediate(checkAndRestartServer)
   }, [
     webRef,
-    agreementInfo,
-    agreementIndex,
+    digitalContentInfo,
+    digitalContentIndex,
     checkAndRestartServer,
     resetServerInterval
   ])
@@ -512,8 +512,8 @@ const WebApp = ({
 
 const mapStateToProps = (state: AppState) => ({
   dappLoaded: getDappLoaded(state),
-  agreementInfo: getAgreement(state),
-  agreementIndex: getIndex(state),
+  digitalContentInfo: getDigitalContent(state),
+  digitalContentIndex: getIndex(state),
   isOnFirstPage: getIsOnFirstPage(state),
   isSignedIn: getIsSignedIn(state)
 })

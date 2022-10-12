@@ -4,11 +4,11 @@ import { digital_content, make } from 'app/utils/analytics'
 const IDENTITY_SERVICE_ENDPOINT = 'https://identityservice..co'
 
 export const logListen = async (
-  agreementId: number,
+  digitalContentId: number,
   userId: number,
   onFailure: () => void
 ) => {
-  const url = `${IDENTITY_SERVICE_ENDPOINT}/agreements/${agreementId}/listen`
+  const url = `${IDENTITY_SERVICE_ENDPOINT}/digital_contents/${digitalContentId}/listen`
   const method = 'POST'
   const headers = {
     Accept: 'application/json',
@@ -21,9 +21,9 @@ export const logListen = async (
   fetch(url, { method, headers, body })
     .then((resp) => {
       console.info(
-        `Logged a listen for ${agreementId} for user ${userId}: ${resp.status}`
+        `Logged a listen for ${digitalContentId} for user ${userId}: ${resp.status}`
       )
-      digital_content(make({ eventName: EventNames.LISTEN, agreementId: `${agreementId}` }))
+      digital_content(make({ eventName: EventNames.LISTEN, digitalContentId: `${digitalContentId}` }))
     })
     .catch((e) => {
       console.error(e)

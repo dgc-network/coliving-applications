@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux'
 
 import IconArrow from 'app/assets/images/iconArrow.svg'
 import ContentListImage from 'app/components/image/contentListImage'
-import AgreementImage from 'app/components/image/AgreementImage'
+import DigitalContentImage from 'app/components/image/DigitalContentImage'
 import UserImage from 'app/components/image/userImage'
 import UserBadges from 'app/components/userBadges/userBadges'
 import { useNavigation } from 'app/hooks/useNavigation'
@@ -13,12 +13,12 @@ import { close as closeSearch } from 'app/store/search/actions'
 import useSearchHistory from 'app/store/search/hooks'
 import type {
   SearchContentList,
-  SearchAgreement,
+  SearchDigitalContent,
   SearchUser,
   SectionHeader
 } from 'app/store/search/types'
 import {
-  getAgreementRoute,
+  getDigitalContentRoute,
   getUserRoute,
   getCollectionRoute
 } from 'app/utils/routes'
@@ -118,8 +118,8 @@ const UserSearchResult = ({ isLast, item: user }: UserSearchResultProps) => {
   )
 }
 
-type AgreementSearchResultProps = { isLast: boolean; item: SearchAgreement }
-const AgreementSearchResult = ({ isLast, item: digital_content }: AgreementSearchResultProps) => {
+type DigitalContentSearchResultProps = { isLast: boolean; item: SearchDigitalContent }
+const DigitalContentSearchResult = ({ isLast, item: digital_content }: DigitalContentSearchResultProps) => {
   const nameStyle = useTheme(styles.name, { color: 'neutral' })
   const userNameStyle = useTheme(styles.name, { color: 'neutralLight4' })
   const squareImageStyles = useTheme(styles.squareImage, {
@@ -132,20 +132,20 @@ const AgreementSearchResult = ({ isLast, item: digital_content }: AgreementSearc
 
   const handlePress = useCallback(() => {
     appendSearchItem(digital_content.title)
-    const agreementRoute = getAgreementRoute(digital_content)
+    const digitalContentRoute = getDigitalContentRoute(digital_content)
     dispatch(closeSearch())
     navigation.push({
       native: {
         screen: 'DigitalContent',
-        params: { id: digital_content.digital_content_id, searchAgreement: digital_content }
+        params: { id: digital_content.digital_content_id, searchDigitalContent: digital_content }
       },
-      web: { route: agreementRoute, fromPage: 'search' }
+      web: { route: digitalContentRoute, fromPage: 'search' }
     })
   }, [digital_content, dispatch, navigation, appendSearchItem])
 
   return (
     <ItemContainer isLast={isLast} onPress={handlePress}>
-      <AgreementImage
+      <DigitalContentImage
         digital_content={digital_content}
         user={digital_content.user}
         imageStyle={squareImageStyles}
@@ -262,14 +262,14 @@ const AlbumSearchResult = ({ isLast, item: album }: AlbumSearchResultProps) => {
 type SearchItemProps = {
   isLast: boolean
   type: SectionHeader
-  item: SearchUser | SearchAgreement | SearchContentList
+  item: SearchUser | SearchDigitalContent | SearchContentList
 }
 const SearchItem = ({ isLast, type, item }: SearchItemProps) => {
   switch (type) {
     case 'users':
       return <UserSearchResult isLast={isLast} item={item as SearchUser} />
-    case 'agreements':
-      return <AgreementSearchResult isLast={isLast} item={item as SearchAgreement} />
+    case 'digitalContents':
+      return <DigitalContentSearchResult isLast={isLast} item={item as SearchDigitalContent} />
     case 'contentLists':
       return (
         <ContentListSearchResult isLast={isLast} item={item as SearchContentList} />

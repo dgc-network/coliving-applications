@@ -109,7 +109,7 @@ const CollectionMenu = (props: CollectionMenuProps) => {
     }
 
     const landlordPageMenuItem = {
-      text: `Visit ${isLandlord ? 'Landlord' : 'User'} Page`,
+      text: `Visit ${isLandlord ? 'Author' : 'User'} Page`,
       onClick: () => goToRoute(profilePage(handle))
     }
 

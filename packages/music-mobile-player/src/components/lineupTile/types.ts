@@ -26,7 +26,7 @@ export type LineupItemProps = {
   /** Function to call when item & art has loaded */
   onLoad?: (index: number) => void
 
-  /** Whether or not to show the landlord pick indicators */
+  /** Whether or not to show the author pick indicators */
   showLandlordPick?: boolean
 
   /** Whether to show an icon indicating rank in lineup */
@@ -51,7 +51,7 @@ export type LineupTileProps = Omit<LineupItemProps, 'togglePlay'> & {
   /** Cosign information */
   coSign?: DigitalContent['_co_sign']
 
-  /** Duration of the tile's agreements */
+  /** Duration of the tile's digitalContents */
   duration?: number
 
   /** Favorite type used for the favorited user list */

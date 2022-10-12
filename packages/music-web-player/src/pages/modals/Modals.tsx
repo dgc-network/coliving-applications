@@ -10,7 +10,7 @@ import CollectibleDetailsModal from 'components/collectibles/components/collecti
 import DeleteContentListConfirmationModal from 'components/deleteContentListConfirmation-modal/deleteContentListConfirmationModal'
 import EditFolderModal from 'components/editFolderModal/editFolderModal'
 import EditContentListModal from 'components/editContentList/desktop/editContentListModal'
-import EditAgreementModal from 'components/editAgreement/editAgreementModal'
+import EditDigitalContentModal from 'components/editDigitalContent/editDigitalContentModal'
 import EmbedModal from 'components/embedModal/embedModal'
 import { FeatureFlagOverrideModal } from 'components/featureFlagOverrideModal'
 import FirstUploadModal from 'components/firstUploadModal/firstUploadModal'
@@ -18,13 +18,13 @@ import PasswordResetModal from 'components/passwordReset/passwordResetModal'
 import ServiceSelectionModal from 'components/serviceSelection/serviceSelectionModal'
 import { ShareModal } from 'components/shareModal/shareModal'
 import ShareSoundToTikTokModal from 'components/shareSoundToTiktokModal/shareSoundToTikTokModal'
-import { TipAudioModal } from 'components/tipping/tipLive/tipLiveModal'
-import ConnectedMobileOverflowModal from 'components/agreementOverflowModal/connectedMobileOverflowModal'
+import { TipAudioModal } from 'components/tipping/tipDigitalcoin/tipDigitalcoinModal'
+import ConnectedMobileOverflowModal from 'components/digitalContentOverflowModal/connectedMobileOverflowModal'
 import UnfollowConfirmationModal from 'components/unfollowConfirmationModal/unfollowConfirmationModal'
 import UnloadDialog from 'components/unloadDialog/unloadDialog'
 import TierExplainerModal from 'components/userBadges/tierExplainerModal'
 import ConnectedUserListModal from 'components/userListModal/connectedUserListModal'
-import AudioBreakdownModal from 'pages/liveRewardsPage/components/modals/liveBreakdownModal'
+import DigitalcoinBreakdownModal from 'pages/liveRewardsPage/components/modals/digitalcoinBreakdownModal'
 import RewardsModals from 'pages/liveRewardsPage/components/modals/rewardsModals'
 import { getClient } from 'utils/clientUtil'
 
@@ -52,7 +52,7 @@ const Modals = () => {
         return <AppModal key={modalName} name={modalName} modal={Modal} />
       })}
       <ServiceSelectionModal />
-      <EditAgreementModal />
+      <EditDigitalContentModal />
       <PasswordResetModal />
       <FirstUploadModal />
       <UnloadDialog />
@@ -60,7 +60,7 @@ const Modals = () => {
       <ShareSoundToTikTokModal />
       {/* Enable and use this digitalcoin breakdown modal until we get
       the feature flags to work for native mobile */}
-      <AudioBreakdownModal />
+      <DigitalcoinBreakdownModal />
       <CollectibleDetailsModal />
 
       {!NATIVE_MOBILE && client !== Client.ELECTRON && (

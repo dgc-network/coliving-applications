@@ -61,7 +61,7 @@ export const initializeSentry = () => {
 
 type Traits = {
   isVerified: boolean
-  agreementCount: number
+  digitalContentCount: number
 }
 
 /**

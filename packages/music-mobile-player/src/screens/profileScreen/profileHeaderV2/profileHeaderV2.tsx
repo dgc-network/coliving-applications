@@ -9,13 +9,13 @@ import { Divider } from 'app/components/core'
 import { useSelectorWeb } from 'app/hooks/useSelectorWeb'
 import { makeStyles } from 'app/styles'
 
-import { LandlordRecommendations } from '../LandlordRecommendations'
+import { LandlordRecommendations } from '../authorRecommendations'
 import { CoverPhoto } from '../coverPhoto'
 import { ProfileInfo } from '../profileInfo'
 import { ProfileMetrics } from '../profileMetrics'
 import { ProfilePicture } from '../profilePicture'
 import { TipLandlordButton } from '../TipLandlordButton'
-import { UploadAgreementButton } from '../UploadAgreementButton'
+import { UploadDigitalContentButton } from '../UploadDigitalContentButton'
 import { useSelectProfileRoot } from '../selectors'
 
 import { CollapsedSection } from './collapsedSection'
@@ -85,7 +85,7 @@ export const ProfileHeaderV2 = (props: ProfileHeaderV2Props) => {
         {!hasUserFollowed ? null : (
           <LandlordRecommendations onClose={handleCloseLandlordRecs} />
         )}
-        {isOwner ? <UploadAgreementButton /> : <TipLandlordButton />}
+        {isOwner ? <UploadDigitalContentButton /> : <TipLandlordButton />}
         <TopSupporters />
         <Divider style={styles.bottomDivider} />
       </View>

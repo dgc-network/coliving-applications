@@ -46,7 +46,7 @@
   border-radius: 50%;
 }
 
-.landlord {
+.author {
   margin-top: 8px;
   cursor: pointer;
   font-size: var(--font-s);

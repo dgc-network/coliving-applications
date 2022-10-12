@@ -94,7 +94,7 @@ export type SignOnProps = {
   onRemoveFollows: (followIds: ID[]) => void
   onAutoSelect: () => void
   onNextPage: () => void
-  onUploadAgreement: () => void
+  onUploadDigitalContent: () => void
   onStartListening: () => void
   closeModal: () => void
   onClickReadMetaMaskConfig: () => void
@@ -159,7 +159,7 @@ const SignOnProvider = ({
   onRemoveFollows,
   onAutoSelect,
   onNextPage,
-  onUploadAgreement,
+  onUploadDigitalContent,
   onStartListening,
   closeModal,
   onClickReadMetaMaskConfig,
@@ -325,7 +325,7 @@ const SignOnProvider = ({
         }}
       >
         <StartPlatformPage
-          onUploadAgreement={onUploadAgreement}
+          onUploadDigitalContent={onUploadDigitalContent}
           onStartListening={onStartListening}
         />
       </animated.div>

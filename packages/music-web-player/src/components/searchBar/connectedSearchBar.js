@@ -87,10 +87,10 @@ class ConnectedSearchBar extends Component {
         (u) => value === profilePage(u.handle)
       )
       if (selectedUser) return { kind: 'profile', id: selectedUser.user_id }
-      const selectedAgreement = this.props.search.agreements.find(
+      const selectedDigitalContent = this.props.search.digitalContents.find(
         (t) => value === (t.user ? t.permalink : '')
       )
-      if (selectedAgreement) return { kind: 'digital_content', id: selectedAgreement.digital_content_id }
+      if (selectedDigitalContent) return { kind: 'digital_content', id: selectedDigitalContent.digital_content_id }
       const selectedContentList = this.props.search.contentLists.find(
         (p) =>
           value ===
@@ -119,8 +119,8 @@ class ConnectedSearchBar extends Component {
   }
 
   render() {
-    if (!this.props.search.agreements) {
-      this.props.search.agreements = []
+    if (!this.props.search.digitalContents) {
+      this.props.search.digitalContents = []
     }
     const dataSource = {
       sections: [
@@ -145,8 +145,8 @@ class ConnectedSearchBar extends Component {
           })
         },
         {
-          title: 'Agreements',
-          children: this.props.search.agreements.map((digital_content) => {
+          title: 'DigitalContents',
+          children: this.props.search.digitalContents.map((digital_content) => {
             return {
               key: digital_content.user ? digital_content.permalink : '',
               primary: digital_content.title,

@@ -48,7 +48,7 @@
   word-break: break-all;
 }
 
-.landlord {
+.author {
   color: var(--secondary);
   font-family: var(--font-family);
   font-size: var(--font-l);
@@ -60,7 +60,7 @@
   align-items: center;
 }
 
-.landlord h2 {
+.author h2 {
   display: inline;
   color: var(--secondary);
 }

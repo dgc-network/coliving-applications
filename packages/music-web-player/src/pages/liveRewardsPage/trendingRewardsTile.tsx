@@ -4,7 +4,7 @@ import { TrendingRewardID, StringKeys } from '@coliving/common'
 import { useDispatch } from 'react-redux'
 
 import { useSetVisibility } from 'common/hooks/useModalState'
-import { setTrendingRewardsModalType } from 'common/store/pages/liveRewards/slice'
+import { setTrendingRewardsModalType } from 'common/store/pages/digitalcoinRewards/slice'
 import { useRemoteVar } from 'hooks/useRemoteConfig'
 import { useWithMobileStyle } from 'hooks/useWithMobileStyle'
 
@@ -62,7 +62,7 @@ const validRewardIds: Set<TrendingRewardID> = new Set([
 
 const messages = {
   title: 'TRENDING COMPETITIONS',
-  description1: 'Win contests to earn $LIVE tokens!'
+  description1: 'Win contests to earn $DGCO tokens!'
 }
 
 /** Pulls rewards from remoteconfig */
@@ -81,7 +81,7 @@ const RewardsTile = ({ className }: RewardsTileProps) => {
   const dispatch = useDispatch()
   const callbacksMap = {
     'trending-digital-content': () => {
-      dispatch(setTrendingRewardsModalType({ modalType: 'agreements' }))
+      dispatch(setTrendingRewardsModalType({ modalType: 'digitalContents' }))
       setVisibility('TrendingRewardsExplainer')(true)
     },
     'trending-content-list': () => {

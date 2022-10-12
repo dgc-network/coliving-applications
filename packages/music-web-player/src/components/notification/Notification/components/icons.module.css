@@ -98,11 +98,11 @@
   fill: var(--secondary);
 }
 
-.iconAddAgreementToContentList {
+.iconAddDigitalContentToContentList {
   composes: icon;
   height: 24px;
 }
 
-.iconAddAgreementToContentList g path {
+.iconAddDigitalContentToContentList g path {
   fill: var(--secondary);
 }

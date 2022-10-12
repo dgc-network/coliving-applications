@@ -3,12 +3,12 @@ import { useContext, useState } from 'react'
 import { CreateContentListSource } from '@coliving/common'
 import { getAccountWithOwnContentLists } from '@coliving/web/src/common/store/account/selectors'
 import {
-  addAgreementToContentList,
+  addDigitalContentToContentList,
   createContentList
 } from '@coliving/web/src/common/store/cache/collections/actions'
 import {
-  getAgreementId,
-  getAgreementTitle
+  getDigitalContentId,
+  getDigitalContentTitle
 } from '@coliving/web/src/common/store/ui/add-to-content-list/selectors'
 import { newCollectionMetadata } from '@coliving/web/src/schemas'
 import { FEED_PAGE, contentListPage } from '@coliving/web/src/utils/route'
@@ -52,28 +52,28 @@ export const AddToContentListDrawer = () => {
   const dispatchWeb = useDispatchWeb()
   const pushRouteWeb = usePushRouteWeb()
   const { onClose } = useDrawerState('AddToContentList')
-  const agreementId = useSelectorWeb(getAgreementId)
-  const agreementTitle = useSelectorWeb(getAgreementTitle)
+  const digitalContentId = useSelectorWeb(getDigitalContentId)
+  const digitalContentTitle = useSelectorWeb(getDigitalContentTitle)
   const user = useSelectorWeb(getAccountWithOwnContentLists)
   const [isDrawerGestureSupported, setIsDrawerGestureSupported] = useState(true)
 
-  if (!user || !agreementId || !agreementTitle) {
+  if (!user || !digitalContentId || !digitalContentTitle) {
     return null
   }
   const userContentLists = user.contentLists ?? []
 
   const addToNewContentList = () => {
     const metadata = newCollectionMetadata({
-      content_list_name: agreementTitle,
+      content_list_name: digitalContentTitle,
       is_private: false
     })
     const tempId = `${Date.now()}`
     dispatchWeb(
-      createContentList(tempId, metadata, CreateContentListSource.FROM_AGREEMENT, agreementId)
+      createContentList(tempId, metadata, CreateContentListSource.FROM_AGREEMENT, digitalContentId)
     )
-    dispatchWeb(addAgreementToContentList(agreementId!, tempId))
+    dispatchWeb(addDigitalContentToContentList(digitalContentId!, tempId))
     toast({ content: messages.createdToast })
-    pushRouteWeb(contentListPage(user.handle, agreementTitle, tempId), FEED_PAGE)
+    pushRouteWeb(contentListPage(user.handle, digitalContentTitle, tempId), FEED_PAGE)
     onClose()
   }
 
@@ -117,7 +117,7 @@ export const AddToContentListDrawer = () => {
               secondaryText={user.name}
               onPress={() => {
                 toast({ content: messages.addedToast })
-                dispatchWeb(addAgreementToContentList(agreementId!, item.content_list_id))
+                dispatchWeb(addDigitalContentToContentList(digitalContentId!, item.content_list_id))
                 onClose()
               }}
               user={user}

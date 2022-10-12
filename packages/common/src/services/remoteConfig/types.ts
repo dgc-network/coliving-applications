@@ -56,7 +56,7 @@ export enum IntKeys {
   INSTAGRAM_HANDLE_CHECK_TIMEOUT = 'INSTAGRAM_HANDLE_CHECK_TIMEOUT',
 
   /**
-   * Number of random (recommended) agreements to fetch and add to the autoplay queue
+   * Number of random (recommended) digitalContents to fetch and add to the autoplay queue
    */
   AUTOPLAY_LIMIT = 'AUTOPLAY_LIMIT',
 
@@ -78,7 +78,7 @@ export enum IntKeys {
   /**
    * The minimum amount of LIVE needed to be sent
    */
-  MIN_LIVE_SEND_AMOUNT = 'MIN_LIVE_SEND_AMOUNT',
+  MIN_DGCO_SEND_AMOUNT = 'MIN_DGCO_SEND_AMOUNT',
 
   /**
    * The refresh interval in milliseconds for user challenges
@@ -86,13 +86,13 @@ export enum IntKeys {
   CHALLENGE_REFRESH_INTERVAL_MS = 'CHALLENGE_REFRESH_INTERVAL_MS',
 
   /**
-   * The refresh interval in milliseconds for user challenges when the user is on the $LIVE page
+   * The refresh interval in milliseconds for user challenges when the user is on the $DGCO page
    */
-  CHALLENGE_REFRESH_INTERVAL_LIVE_PAGE_MS = 'CHALLENGE_REFRESH_INTERVAL_LIVE_PAGE_MS',
+  CHALLENGE_REFRESH_INTERVAL_DGCO_PAGE_MS = 'CHALLENGE_REFRESH_INTERVAL_DGCO_PAGE_MS',
 
   /**
    * The time to wait after a challenge is marked completed before showing a claim reward prompt.
-   * Should be larger than both CHALLENGE_REFRESH_INTERVAL_MS and CHALLENGE_REFRESH_INTERVAL_LIVE_PAGE_MS
+   * Should be larger than both CHALLENGE_REFRESH_INTERVAL_MS and CHALLENGE_REFRESH_INTERVAL_DGCO_PAGE_MS
    * to allow additional polls to check for disbursement
    */
   MANUAL_CLAIM_PROMPT_DELAY_MS = 'MANUAL_CLAIM_PROMPT_DELAY_MS',
@@ -222,7 +222,7 @@ export enum StringKeys {
   TRENDING_REWARD_IDS = 'TRENDING_REWARD_IDS',
   CHALLENGE_REWARD_IDS = 'CHALLENGE_REWARD_IDS',
 
-  /** Embedded tweet for trending rewards UI agreements */
+  /** Embedded tweet for trending rewards UI digitalContents */
   REWARDS_TWEET_ID_AGREEMENTS = 'REWARDS_TWEET_ID_AGREEMENTS',
 
   /** Embedded tweet for trending rewards UI contentLists */

@@ -2,7 +2,7 @@ import { pick } from 'lodash'
 
 import { createRemixOfMetadata } from 'pages/uploadPage/store/utils/remixes'
 
-const agreementMetadataSchema = {
+const digitalContentMetadataSchema = {
   owner_id: null,
   title: null,
   length: null,
@@ -42,21 +42,21 @@ const agreementMetadataSchema = {
   download: null
 }
 
-export const newAgreementMetadata = (fields, validate = false) => {
+export const newDigitalContentMetadata = (fields, validate = false) => {
   const validFields = validate
-    ? pick(fields, Object.keys(agreementMetadataSchema).concat(['digital_content_id']))
+    ? pick(fields, Object.keys(digitalContentMetadataSchema).concat(['digital_content_id']))
     : fields
-  const remixParentAgreementId = fields?.remix_of?.agreements?.[0]?.parent_digital_content_id
+  const remixParentDigitalContentId = fields?.remix_of?.digitalContents?.[0]?.parent_digital_content_id
   return {
-    ...agreementMetadataSchema,
-    digital_content_segments: [...agreementMetadataSchema.digital_content_segments],
-    followee_reposts: [...(agreementMetadataSchema.followee_reposts || [])],
-    followee_saves: [...(agreementMetadataSchema.followee_saves || [])],
+    ...digitalContentMetadataSchema,
+    digital_content_segments: [...digitalContentMetadataSchema.digital_content_segments],
+    followee_reposts: [...(digitalContentMetadataSchema.followee_reposts || [])],
+    followee_saves: [...(digitalContentMetadataSchema.followee_saves || [])],
     ...validFields,
     // Reformat remixes last so we don't carry through any extra metadata that
     // was part of the remix_of response from backends
-    remix_of: remixParentAgreementId
-      ? createRemixOfMetadata({ parentAgreementId: remixParentAgreementId })
+    remix_of: remixParentDigitalContentId
+      ? createRemixOfMetadata({ parentDigitalContentId: remixParentDigitalContentId })
       : null
   }
 }

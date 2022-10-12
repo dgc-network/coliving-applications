@@ -10,7 +10,7 @@ import NavContext, {
   CenterPreset,
   LeftPreset
 } from 'components/nav/store/context'
-import { make, AgreementEvent } from 'store/analytics/actions'
+import { make, DigitalContentEvent } from 'store/analytics/actions'
 
 import styles from './changePasswordPage.module.css'
 import { SettingsPageProps } from './settingsPage'
@@ -39,8 +39,8 @@ export const ChangePasswordPage = ({ goBack }: SettingsPageProps) => {
   // On initial render, set the page to confirm credentials
   useEffect(() => {
     dispatch(changePage(Page.CONFIRM_CREDENTIALS))
-    const agreementEvent: AgreementEvent = make(Name.SETTINGS_START_CHANGE_PASSWORD, {})
-    dispatch(agreementEvent)
+    const digitalContentEvent: DigitalContentEvent = make(Name.SETTINGS_START_CHANGE_PASSWORD, {})
+    dispatch(digitalContentEvent)
   }, [dispatch])
 
   return (

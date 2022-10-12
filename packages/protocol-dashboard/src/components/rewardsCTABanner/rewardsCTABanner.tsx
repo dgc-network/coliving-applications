@@ -4,12 +4,12 @@ import clsx from 'clsx'
 import Paper from 'components/paper'
 import styles from './RewardsCTABanner.module.css'
 import { useIsMobile, useModalControls } from 'utils/hooks'
-import LiveRewardsModal from 'components/liveRewardsModal'
+import DigitalcoinRewardsModal from 'components/liveRewardsModal'
 import { IconArrow, IconCrown } from '@coliving/stems'
 
 const messages = {
-  rewards: '$LIVE REWARDS',
-  description: 'TOP 10 API APPS EACH MONTH WIN $LIVE',
+  rewards: '$DGCO REWARDS',
+  description: 'TOP 10 API APPS EACH MONTH WIN $DGCO',
   learnMore: 'LEARN MORE'
 }
 
@@ -25,7 +25,7 @@ const RewardsCTABanner: React.FC<RewardsCTABannerProps> = ({ className }) => {
 
   return (
     <>
-      <LiveRewardsModal isOpen={isOpen} onClose={onClose} />
+      <DigitalcoinRewardsModal isOpen={isOpen} onClose={onClose} />
       <Paper
         className={clsx(styles.container, {
           [className!]: className,

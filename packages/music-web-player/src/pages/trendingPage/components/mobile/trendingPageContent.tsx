@@ -60,9 +60,9 @@ const TrendingPageMobileContent = ({
   makeRefreshTrendingInView,
 
   getLineupProps,
-  makePauseAgreement,
+  makePauseDigitalContent,
   makeLoadMore,
-  makePlayAgreement,
+  makePlayDigitalContent,
   trendingWeek,
   trendingMonth,
   trendingAllTime,
@@ -142,7 +142,7 @@ const TrendingPageMobileContent = ({
       <>
         {trendingGenre === null ? (
           <div className={styles.rewardsContainer}>
-            <RewardsBanner bannerType='agreements' />
+            <RewardsBanner bannerType='digitalContents' />
           </div>
         ) : null}
         <Lineup
@@ -150,8 +150,8 @@ const TrendingPageMobileContent = ({
           {...weekProps}
           setInView={makeSetInView(TimeRange.WEEK)}
           loadMore={makeLoadMore(TimeRange.WEEK)}
-          playAgreement={makePlayAgreement(TimeRange.WEEK)}
-          pauseAgreement={makePauseAgreement(TimeRange.WEEK)}
+          playDigitalContent={makePlayDigitalContent(TimeRange.WEEK)}
+          pauseDigitalContent={makePauseDigitalContent(TimeRange.WEEK)}
           actions={trendingWeekActions}
           variant={LineupVariant.MAIN}
           isTrending
@@ -169,8 +169,8 @@ const TrendingPageMobileContent = ({
         {...monthProps}
         setInView={makeSetInView(TimeRange.MONTH)}
         loadMore={makeLoadMore(TimeRange.MONTH)}
-        playAgreement={makePlayAgreement(TimeRange.MONTH)}
-        pauseAgreement={makePauseAgreement(TimeRange.MONTH)}
+        playDigitalContent={makePlayDigitalContent(TimeRange.MONTH)}
+        pauseDigitalContent={makePauseDigitalContent(TimeRange.MONTH)}
         actions={trendingMonthActions}
         variant={LineupVariant.MAIN}
         isTrending
@@ -186,8 +186,8 @@ const TrendingPageMobileContent = ({
         {...allTimeProps}
         setInView={makeSetInView(TimeRange.ALL_TIME)}
         loadMore={makeLoadMore(TimeRange.ALL_TIME)}
-        playAgreement={makePlayAgreement(TimeRange.ALL_TIME)}
-        pauseAgreement={makePauseAgreement(TimeRange.ALL_TIME)}
+        playDigitalContent={makePlayDigitalContent(TimeRange.ALL_TIME)}
+        pauseDigitalContent={makePauseDigitalContent(TimeRange.ALL_TIME)}
         actions={trendingAllTimeActions}
         variant={LineupVariant.MAIN}
         isTrending
@@ -201,8 +201,8 @@ const TrendingPageMobileContent = ({
     ]
   }, [
     makeLoadMore,
-    makePauseAgreement,
-    makePlayAgreement,
+    makePauseDigitalContent,
+    makePlayDigitalContent,
     makeSetInView,
     monthProps,
     weekProps,

@@ -117,7 +117,7 @@ class TrendingPageProvider extends PureComponent {
       lineup,
       playingUid,
       playingSource: source,
-      playingAgreementId: digital_content ? digital_content.digital_content_id : null,
+      playingDigitalContentId: digital_content ? digital_content.digital_content_id : null,
       playing,
       buffering,
       scrollParent: this.props.containerRef,
@@ -173,8 +173,8 @@ class TrendingPageProvider extends PureComponent {
       trendingWeek: this.props.trendingWeek,
       trendingMonth: this.props.trendingMonth,
       trendingAllTime: this.props.trendingAllTime,
-      playTrendingAgreement: this.props.playTrendingAgreement,
-      pauseTrendingAgreement: this.props.pauseTrendingAgreement,
+      playTrendingDigitalContent: this.props.playTrendingDigitalContent,
+      pauseTrendingDigitalContent: this.props.pauseTrendingDigitalContent,
       refreshTrendingInView: this.props.refreshTrendingInView,
       hasAccount: this.props.hasAccount,
       goToTrending: this.goToTrending,
@@ -190,8 +190,8 @@ class TrendingPageProvider extends PureComponent {
       lastFetchedTrendingGenre: this.props.lastFetchedTrendingGenre,
 
       makeLoadMore: this.props.makeLoadMore,
-      makePlayAgreement: this.props.makePlayAgreement,
-      makePauseAgreement: this.props.makePauseAgreement,
+      makePlayDigitalContent: this.props.makePlayDigitalContent,
+      makePauseDigitalContent: this.props.makePauseDigitalContent,
       makeSetInView: this.props.makeSetInView,
       makeRefreshTrendingInView: this.props.makeRefreshTrendingInView,
       makeResetTrending: this.props.makeResetTrending,
@@ -240,8 +240,8 @@ const mapDispatchToProps = (dispatch) => ({
   // Trending Lineup Actions
   refreshTrendingInView: (overwrite) =>
     dispatch(trendingActions.refreshInView(overwrite)),
-  playTrendingAgreement: (uid) => dispatch(trendingActions.play(uid)),
-  pauseTrendingAgreement: () => dispatch(trendingActions.pause()),
+  playTrendingDigitalContent: (uid) => dispatch(trendingActions.play(uid)),
+  pauseTrendingDigitalContent: () => dispatch(trendingActions.pause()),
   setTrendingGenre: (genre) =>
     dispatch(trendingPageActions.setTrendingGenre(genre)),
   setTrendingTimeRange: (timeRange) =>
@@ -264,16 +264,16 @@ const mapDispatchToProps = (dispatch) => ({
           overwrite
         )
       )
-      const agreementEvent = make(Name.TRENDING_PAGINATE, { offset, limit })
-      dispatch(agreementEvent)
+      const digitalContentEvent = make(Name.TRENDING_PAGINATE, { offset, limit })
+      dispatch(digitalContentEvent)
     }
   },
-  makePlayAgreement: (timeRange) => {
+  makePlayDigitalContent: (timeRange) => {
     return (uid) => {
       dispatch(callLineupAction(timeRange, 'play', uid))
     }
   },
-  makePauseAgreement: (timeRange) => {
+  makePauseDigitalContent: (timeRange) => {
     return () => {
       dispatch(callLineupAction(timeRange, 'pause'))
     }

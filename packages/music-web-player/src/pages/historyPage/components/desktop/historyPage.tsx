@@ -7,8 +7,8 @@ import FilterInput from 'components/filterInput/filterInput'
 import Header from 'components/header/desktop/header'
 import LoadingSpinner from 'components/loadingSpinner/loadingSpinner'
 import Page from 'components/page/page'
-import EmptyTable from 'components/agreementsTable/emptyTable'
-import AgreementsTable from 'components/agreementsTable/agreementsTable'
+import EmptyTable from 'components/digitalContentsTable/emptyTable'
+import DigitalContentsTable from 'components/digitalContentsTable/digitalContentsTable'
 
 import styles from './historyPage.module.css'
 
@@ -24,10 +24,10 @@ export type HistoryPageProps = {
   queuedAndPlaying: boolean
   onClickRow: (record: any) => void
   onClickSave: (record: any) => void
-  onClickAgreementName: (record: any) => void
+  onClickDigitalContentName: (record: any) => void
   onClickLandlordName: (record: any) => void
   onClickRepost: (record: any) => void
-  onSortAgreements: (sorters: any) => void
+  onSortDigitalContents: (sorters: any) => void
   goToRoute: (route: string) => void
   onPlay: () => void
   onFilterChange: (e: ChangeEvent<HTMLInputElement>) => void
@@ -46,10 +46,10 @@ const HistoryPage = ({
   queuedAndPlaying,
   onClickRow,
   onClickSave,
-  onClickAgreementName,
+  onClickDigitalContentName,
   onClickLandlordName,
   onClickRepost,
-  onSortAgreements,
+  onSortDigitalContents,
   goToRoute,
   onPlay,
   onFilterChange,
@@ -68,20 +68,20 @@ const HistoryPage = ({
       onClick={onPlay} css={undefined}    />
   ) : null
 
-  const agreementTableActions = loading
+  const digitalContentTableActions = loading
     ? {}
     : {
         onClickFavorite: onClickSave,
         onClickRow,
-        onClickAgreementName,
+        onClickDigitalContentName,
         onClickLandlordName,
         onClickRepost,
-        onSortAgreements
+        onSortDigitalContents
       }
 
   const filter = (
     <FilterInput
-      placeholder='Filter Agreements'
+      placeholder='Filter DigitalContents'
       onChange={onFilterChange}
       value={filterText}
     />
@@ -108,21 +108,21 @@ const HistoryPage = ({
           <LoadingSpinner className={styles.spinner} />
         ) : isEmpty && !loading && !tableLoading ? (
           <EmptyTable
-            primaryText='You haven’t listened to any agreements yet.'
+            primaryText='You haven’t listened to any digitalContents yet.'
             secondaryText='Once you have, this is where you’ll find them!'
             buttonLabel='Start Listening'
             onClick={() => goToRoute('/trending')}
           />
         ) : (
           <div className={styles.tableWrapper}>
-            <AgreementsTable
+            <DigitalContentsTable
               userId={userId}
               loading={tableLoading}
               loadingRowsCount={entries.length}
               playing={queuedAndPlaying}
               playingIndex={playingIndex}
               dataSource={dataSource}
-              {...agreementTableActions}
+              {...digitalContentTableActions}
             />
           </div>
         )}

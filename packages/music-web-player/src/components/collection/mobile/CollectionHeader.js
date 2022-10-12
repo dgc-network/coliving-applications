@@ -80,7 +80,7 @@ const CollectionHeader = ({
   isReposted,
   isSaved,
   modified,
-  numAgreements,
+  numDigitalContents,
   duration,
   isPublished,
   isPublishing,
@@ -150,8 +150,8 @@ const CollectionHeader = ({
 
   const collectionLabels = [
     {
-      label: 'Agreements',
-      value: formatCount(numAgreements)
+      label: 'DigitalContents',
+      value: formatCount(numDigitalContents)
     },
     duration && {
       label: 'Duration',
@@ -192,7 +192,7 @@ const CollectionHeader = ({
           <div className={styles.title}>
             <Loading variant='title' />
           </div>
-          <div className={styles.landlord} onClick={onClickLandlordName}>
+          <div className={styles.author} onClick={onClickLandlordName}>
             <Loading variant='name' />
           </div>
 
@@ -218,7 +218,7 @@ const CollectionHeader = ({
           </DynamicImage>
           <h1 className={styles.title}>{title}</h1>
           {landlordName && (
-            <div className={styles.landlord} onClick={onClickLandlordName}>
+            <div className={styles.author} onClick={onClickLandlordName}>
               <h2>{landlordName}</h2>
               <UserBadges
                 userId={userId}
@@ -286,7 +286,7 @@ CollectionHeader.propTypes = {
   collectionId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   userId: PropTypes.number,
   loading: PropTypes.bool,
-  agreementsLoading: PropTypes.bool,
+  digitalContentsLoading: PropTypes.bool,
   playing: PropTypes.bool,
   active: PropTypes.bool,
   type: PropTypes.oneOf(['contentList', 'album']),
@@ -299,7 +299,7 @@ CollectionHeader.propTypes = {
   isOwner: PropTypes.bool,
   isAlbum: PropTypes.bool,
   isReposted: PropTypes.bool,
-  hasAgreements: PropTypes.bool,
+  hasDigitalContents: PropTypes.bool,
   isPublished: PropTypes.bool,
   isPublishing: PropTypes.bool,
   isSaved: PropTypes.bool,
@@ -328,7 +328,7 @@ CollectionHeader.defaultProps = {
 
   isOwner: false,
   isAlbum: false,
-  hasAgreements: false,
+  hasDigitalContents: false,
   isPublished: false,
   isSaved: false,
 

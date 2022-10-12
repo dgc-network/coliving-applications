@@ -47,7 +47,7 @@ const getTimeGenreCacheKey = (timeRange: TimeRange, genre: string | null) => {
   return `${timeRange}-${newGenre}`
 }
 
-// For a given timeRange with no agreements,
+// For a given timeRange with no digitalContents,
 // what other time ranges do we need to disable?
 const getRangesToDisable = (timeRange: TimeRange) => {
   switch (timeRange) {
@@ -76,8 +76,8 @@ const TrendingPageContent = (props: TrendingPageContentProps) => {
     trendingTimeRange,
     lastFetchedTrendingGenre,
     makeLoadMore,
-    makePlayAgreement,
-    makePauseAgreement,
+    makePlayDigitalContent,
+    makePauseDigitalContent,
     makeSetInView,
     makeResetTrending,
     getLineupForRange,
@@ -89,7 +89,7 @@ const TrendingPageContent = (props: TrendingPageContentProps) => {
   const allTimeProps = getLineupProps(trendingAllTime)
 
   // Maintain a set of combinations of time range & genre that
-  // have no agreements.
+  // have no digitalContents.
   const emptyTimeGenreSet = useRef(new Set())
 
   const getLimit = useCallback(
@@ -162,7 +162,7 @@ const TrendingPageContent = (props: TrendingPageContentProps) => {
   const currentLineup = getLineupForRange(trendingTimeRange)
 
   // We switch genres slightly before we fetch new lineup metadata, so if we're on a dead page
-  // (e.g. some obscure genre with no All Time agreements), and then switch to a more popular genre
+  // (e.g. some obscure genre with no All Time digitalContents), and then switch to a more popular genre
   // we will briefly be in a state with the New Genre set, but lineup status === Success and an empty
   // entries list. This would errantly cause us to think the lineup was empty and insert it into the cache.
   const unfetchedLineup = trendingGenre !== lastFetchedTrendingGenre
@@ -203,18 +203,18 @@ const TrendingPageContent = (props: TrendingPageContentProps) => {
     <div key='weekly-trending-digital-contents' className={styles.lineupContainer}>
       {trendingGenre === null ? (
         <div className={styles.bannerContainer}>
-          <RewardsBanner bannerType='agreements' />
+          <RewardsBanner bannerType='digitalContents' />
         </div>
       ) : null}
       <Lineup
-        aria-label='weekly trending agreements'
+        aria-label='weekly trending digitalContents'
         ordered
         rankIconCount={trendingGenre === null ? RANK_ICON_COUNT : undefined}
         {...weekProps}
         setInView={makeSetInView(TimeRange.WEEK)}
         loadMore={makeLoadMore(TimeRange.WEEK)}
-        playAgreement={makePlayAgreement(TimeRange.WEEK)}
-        pauseAgreement={makePauseAgreement(TimeRange.WEEK)}
+        playDigitalContent={makePlayDigitalContent(TimeRange.WEEK)}
+        pauseDigitalContent={makePauseDigitalContent(TimeRange.WEEK)}
         actions={trendingWeekActions}
         endOfLineup={
           <EndOfLineup
@@ -227,13 +227,13 @@ const TrendingPageContent = (props: TrendingPageContentProps) => {
     </div>,
     <div key='monthly-trending-digital-contents' className={styles.lineupContainer}>
       <Lineup
-        aria-label='monthly trending agreements'
+        aria-label='monthly trending digitalContents'
         ordered
         {...monthProps}
         setInView={makeSetInView(TimeRange.MONTH)}
         loadMore={makeLoadMore(TimeRange.MONTH)}
-        playAgreement={makePlayAgreement(TimeRange.MONTH)}
-        pauseAgreement={makePauseAgreement(TimeRange.MONTH)}
+        playDigitalContent={makePlayDigitalContent(TimeRange.MONTH)}
+        pauseDigitalContent={makePauseDigitalContent(TimeRange.MONTH)}
         endOfLineup={
           <EndOfLineup
             key='endOfLineup'
@@ -246,13 +246,13 @@ const TrendingPageContent = (props: TrendingPageContentProps) => {
     </div>,
     <div key='all-time-trending-digital-contents' className={styles.lineupContainer}>
       <Lineup
-        aria-label='all-time trending agreements'
+        aria-label='all-time trending digitalContents'
         ordered
         {...allTimeProps}
         setInView={makeSetInView(TimeRange.ALL_TIME)}
         loadMore={makeLoadMore(TimeRange.ALL_TIME)}
-        playAgreement={makePlayAgreement(TimeRange.ALL_TIME)}
-        pauseAgreement={makePauseAgreement(TimeRange.ALL_TIME)}
+        playDigitalContent={makePlayDigitalContent(TimeRange.ALL_TIME)}
+        pauseDigitalContent={makePauseDigitalContent(TimeRange.ALL_TIME)}
         actions={trendingAllTimeActions}
         endOfLineup={
           <EndOfLineup

@@ -2,7 +2,7 @@ import { makeGetLineupMetadatas } from '@coliving/web/src/common/store/lineup/se
 import { trendingUndergroundLineupActions } from '@coliving/web/src/common/store/pages/trending-underground/lineup/actions'
 import { getLineup } from '@coliving/web/src/common/store/pages/trendingUnderground/lineup/selectors'
 
-import { RewardsBanner } from 'app/components/liveRewards'
+import { RewardsBanner } from 'app/components/digitalcoinRewards'
 import { Header } from 'app/components/header'
 import { Lineup } from 'app/components/lineup'
 import { useSelectorWeb } from 'app/hooks/useSelectorWeb'

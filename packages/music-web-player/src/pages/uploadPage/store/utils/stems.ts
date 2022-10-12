@@ -1,15 +1,15 @@
-import { ID, StemCategory, StemUpload, DigitalContent, StemAgreement } from '@coliving/common'
+import { ID, StemCategory, StemUpload, DigitalContent, StemDigitalContent } from '@coliving/common'
 
 export const updateAndFlattenStems = (
   stems: StemUpload[][],
-  parentAgreementIds: ID[]
+  parentDigitalContentIds: ID[]
 ) => {
   return stems.flatMap((stemList, i) => {
-    const parentAgreementId = parentAgreementIds[i]
+    const parentDigitalContentId = parentDigitalContentIds[i]
 
     return stemList.map((stem) => {
       const metadata = createStemMetadata({
-        parentAgreementId,
+        parentDigitalContentId,
         digital_content: stem.metadata,
         stemCategory: stem.category
       })
@@ -25,14 +25,14 @@ export const updateAndFlattenStems = (
 }
 
 export const createStemMetadata = ({
-  parentAgreementId,
+  parentDigitalContentId,
   digital_content,
   stemCategory
 }: {
-  parentAgreementId: ID
+  parentDigitalContentId: ID
   digital_content: DigitalContent
   stemCategory: StemCategory
-}): StemAgreement => {
+}): StemDigitalContent => {
   return {
     ...digital_content,
     download: {
@@ -44,7 +44,7 @@ export const createStemMetadata = ({
       requires_follow: false
     },
     stem_of: {
-      parent_digital_content_id: parentAgreementId,
+      parent_digital_content_id: parentDigitalContentId,
       category: stemCategory
     }
   }

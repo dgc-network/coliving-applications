@@ -5,17 +5,17 @@ import { push as pushRoute } from 'connected-react-router'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 
-import { getAgreement } from 'common/store/cache/agreements/selectors'
-import { getUserFromAgreement } from 'common/store/cache/users/selectors'
+import { getDigitalContent } from 'common/store/cache/digital_contents/selectors'
+import { getUserFromDigitalContent } from 'common/store/cache/users/selectors'
 import RemixCard from 'components/remixCard/remixCard'
-import { useAgreementCoverArt } from 'hooks/useAgreementCoverArt'
+import { useDigitalContentCoverArt } from 'hooks/useDigitalContentCoverArt'
 import { useUserProfilePicture } from 'hooks/useUserProfilePicture'
 import { AppState } from 'store/types'
 import { profilePage } from 'utils/route'
 import { withNullGuard } from 'utils/withNullGuard'
 
 type OwnProps = {
-  agreementId: ID
+  digitalContentId: ID
 }
 
 type ConnectedRemixCardProps = OwnProps &
@@ -33,12 +33,12 @@ const ConnectedRemixCard = g(({ digital_content, user, goToRoute }) => {
     user._profile_picture_sizes,
     SquareSizes.SIZE_150_BY_150
   )
-  const coverArtImage = useAgreementCoverArt(
+  const coverArtImage = useDigitalContentCoverArt(
     digital_content.digital_content_id,
     digital_content._cover_art_sizes,
     SquareSizes.SIZE_480_BY_480
   )
-  const goToAgreementPage = useCallback(() => {
+  const goToDigitalContentPage = useCallback(() => {
     goToRoute(digital_content.permalink)
   }, [goToRoute, digital_content])
   const goToLandlordPage = useCallback(() => {
@@ -52,7 +52,7 @@ const ConnectedRemixCard = g(({ digital_content, user, goToRoute }) => {
       coSign={digital_content._co_sign}
       landlordName={user.name}
       landlordHandle={user.handle}
-      onClick={goToAgreementPage}
+      onClick={goToDigitalContentPage}
       onClickLandlordName={goToLandlordPage}
       userId={user.user_id}
     />
@@ -61,8 +61,8 @@ const ConnectedRemixCard = g(({ digital_content, user, goToRoute }) => {
 
 function mapStateToProps(state: AppState, ownProps: OwnProps) {
   return {
-    digital_content: getAgreement(state, { id: ownProps.agreementId }),
-    user: getUserFromAgreement(state, { id: ownProps.agreementId })
+    digital_content: getDigitalContent(state, { id: ownProps.digitalContentId }),
+    user: getUserFromDigitalContent(state, { id: ownProps.digitalContentId })
   }
 }
 

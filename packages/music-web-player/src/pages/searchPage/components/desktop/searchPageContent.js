@@ -4,7 +4,7 @@ import { Status } from '@coliving/common'
 import { Redirect } from 'react-router'
 
 import { ReactComponent as IconBigSearch } from 'assets/img/iconBigSearch.svg'
-import { agreementsActions } from 'common/store/pages/searchResults/lineup/agreements/actions'
+import { digitalContentsActions } from 'common/store/pages/searchResults/lineup/digital_contents/actions'
 import { formatCount } from 'common/utils/formatUtil'
 import Card from 'components/card/desktop/card'
 import CategoryHeader from 'components/header/desktop/categoryHeader'
@@ -106,7 +106,7 @@ class SearchPageContent extends Component {
   render() {
     const {
       userId,
-      agreements,
+      digitalContents,
       currentQueueItem,
       playing,
       buffering,
@@ -123,14 +123,14 @@ class SearchPageContent extends Component {
     } = this.props
     const { cardToast } = this.state
     const searchTitle = isTagSearch ? `Tag Search` : `Search`
-    const landlordCards = landlords.map((landlord, ind) => {
-      const toastId = `user-${landlord.user_id}`
+    const landlordCards = landlords.map((author, ind) => {
+      const toastId = `user-${author.user_id}`
       const onClick = () => {
-        goToRoute(profilePage(landlord.handle))
+        goToRoute(profilePage(author.handle))
         recordSearchResultClick({
           term: searchText,
           kind: 'profile',
-          id: landlord.user_id,
+          id: author.user_id,
           source:
             searchResultsCategory === 'all'
               ? 'search results page'
@@ -139,27 +139,27 @@ class SearchPageContent extends Component {
       }
       return (
         <Toast
-          key={landlord.user_id}
+          key={author.user_id}
           text={cardToast[toastId] && cardToast[toastId].message}
           open={cardToast[toastId] && cardToast[toastId].open}
           placement='bottom'
           fillParent={false}
         >
           <Card
-            id={landlord.user_id}
-            userId={landlord.user_id}
-            imageSize={landlord._profile_picture_sizes}
+            id={author.user_id}
+            userId={author.user_id}
+            imageSize={author._profile_picture_sizes}
             isUser
             size={'small'}
-            primaryText={landlord.name}
-            secondaryText={`${formatCount(landlord.follower_count)} Followers`}
+            primaryText={author.name}
+            secondaryText={`${formatCount(author.follower_count)} Followers`}
             onClick={onClick}
             menu={{
               type: 'user',
-              handle: landlord.handle,
-              userId: landlord.user_id,
-              currentUserFollows: landlord.does_current_user_follow,
-              onShare: this.onShare('user', landlord.user_id)
+              handle: author.handle,
+              userId: author.user_id,
+              currentUserFollows: author.does_current_user_follow,
+              onShare: this.onShare('user', author.user_id)
             }}
           />
         </Toast>
@@ -209,8 +209,8 @@ class SearchPageContent extends Component {
             imageSize={contentList._cover_art_sizes}
             primaryText={contentList.content_list_name}
             secondaryText={`${contentList.user.name} • ${
-              contentList.agreementCount
-            } DigitalContent${contentList.agreementCount > 1 ? 's' : ''}`}
+              contentList.digitalContentCount
+            } DigitalContent${contentList.digitalContentCount > 1 ? 's' : ''}`}
             onClick={onClick}
             menu={{
               type: 'contentList',
@@ -294,7 +294,7 @@ class SearchPageContent extends Component {
 
     const foundResults =
       landlordCards.length > 0 ||
-      agreements.entries.length > 0 ||
+      digitalContents.entries.length > 0 ||
       contentListCards.length > 0 ||
       albumCards.length > 0
     let content
@@ -309,20 +309,20 @@ class SearchPageContent extends Component {
         />
       )
       header = <SearchHeader searchText={searchText} title={searchTitle} />
-    } else if (searchResultsCategory === 'agreements') {
+    } else if (searchResultsCategory === 'digitalContents') {
       content = (
         <>
-          <div className={styles.agreementSearchResultsContainer}>
-            <CategoryHeader categoryName='Agreements' />
+          <div className={styles.digitalContentSearchResultsContainer}>
+            <CategoryHeader categoryName='DigitalContents' />
             <Lineup
               search
-              key='searchAgreements'
+              key='searchDigitalContents'
               selfLoad
               variant='section'
-              lineup={agreements}
+              lineup={digitalContents}
               playingSource={currentQueueItem.source}
               playingUid={currentQueueItem.uid}
-              playingAgreementId={
+              playingDigitalContentId={
                 currentQueueItem.digital_content && currentQueueItem.digital_content.digital_content_id
               }
               playing={playing}
@@ -330,12 +330,12 @@ class SearchPageContent extends Component {
               scrollParent={this.props.containerRef}
               loadMore={(offset, limit) =>
                 this.props.dispatch(
-                  agreementsActions.fetchLineupMetadatas(offset, limit)
+                  digitalContentsActions.fetchLineupMetadatas(offset, limit)
                 )
               }
-              playAgreement={(uid) => this.props.dispatch(agreementsActions.play(uid))}
-              pauseAgreement={() => this.props.dispatch(agreementsActions.pause())}
-              actions={agreementsActions}
+              playDigitalContent={(uid) => this.props.dispatch(digitalContentsActions.play(uid))}
+              pauseDigitalContent={() => this.props.dispatch(digitalContentsActions.pause())}
+              actions={digitalContentsActions}
             />
           </div>
         </>
@@ -386,41 +386,41 @@ class SearchPageContent extends Component {
               cardsClassName={styles.cardsContainer}
             />
           ) : null}
-          {agreements.entries.length > 0 ? (
-            <div className={styles.agreementSearchResultsContainer}>
+          {digitalContents.entries.length > 0 ? (
+            <div className={styles.digitalContentSearchResultsContainer}>
               <CategoryHeader
-                categoryName='Agreements'
-                onMore={handleViewMoreResults('agreements')}
+                categoryName='DigitalContents'
+                onMore={handleViewMoreResults('digitalContents')}
               />
               <Lineup
                 search
                 variant='section'
                 count={4}
                 selfLoad={false}
-                lineup={agreements}
+                lineup={digitalContents}
                 playingSource={currentQueueItem.source}
                 playingUid={currentQueueItem.uid}
-                playingAgreementId={
+                playingDigitalContentId={
                   currentQueueItem.digital_content && currentQueueItem.digital_content.digital_content_id
                 }
                 playing={playing}
                 buffering={buffering}
                 scrollParent={this.props.containerRef}
                 onMore={
-                  agreements.entries.length >= 4
-                    ? handleViewMoreResults('agreements')
+                  digitalContents.entries.length >= 4
+                    ? handleViewMoreResults('digitalContents')
                     : null
                 }
                 loadMore={(offset, limit) =>
                   this.props.dispatch(
-                    agreementsActions.fetchLineupMetadatas(offset, limit)
+                    digitalContentsActions.fetchLineupMetadatas(offset, limit)
                   )
                 }
-                playAgreement={(uid) =>
-                  this.props.dispatch(agreementsActions.play(uid))
+                playDigitalContent={(uid) =>
+                  this.props.dispatch(digitalContentsActions.play(uid))
                 }
-                pauseAgreement={(uid) => this.props.dispatch(agreementsActions.pause())}
-                actions={agreementsActions}
+                pauseDigitalContent={(uid) => this.props.dispatch(digitalContentsActions.pause())}
+                actions={digitalContentsActions}
               />
             </div>
           ) : null}

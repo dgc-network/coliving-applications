@@ -1,6 +1,6 @@
 import {
   UserCollectionMetadata,
-  UserAgreementMetadata,
+  UserDigitalContentMetadata,
   UserMetadata,
   removeNullable
 } from '@coliving/common'
@@ -37,11 +37,11 @@ const combineLists = (
 }
 
 type ProcessSearchResultsArgs = {
-  agreements?: UserAgreementMetadata[]
+  digitalContents?: UserDigitalContentMetadata[]
   albums?: UserCollectionMetadata[]
   contentLists?: UserCollectionMetadata[]
   users?: UserMetadata[]
-  saved_digital_contents?: UserAgreementMetadata[]
+  saved_digital_contents?: UserDigitalContentMetadata[]
   saved_albums?: UserCollectionMetadata[]
   saved_content_lists?: UserCollectionMetadata[]
   followed_users?: UserMetadata[]
@@ -51,13 +51,13 @@ type ProcessSearchResultsArgs = {
 
 export const adaptSearchResponse = (searchResponse: APIResponse<APISearch>) => {
   return {
-    agreements:
-      searchResponse.data.agreements
-        ?.map(adapter.makeAgreement)
+    digitalContents:
+      searchResponse.data.digitalContents
+        ?.map(adapter.makeDigitalContent)
         .filter(removeNullable) ?? undefined,
     saved_digital_contents:
       searchResponse.data.saved_digital_contents
-        ?.map(adapter.makeAgreement)
+        ?.map(adapter.makeDigitalContent)
         .filter(removeNullable) ?? undefined,
     users:
       searchResponse.data.users?.map(adapter.makeUser).filter(removeNullable) ??
@@ -85,11 +85,11 @@ export const adaptSearchResponse = (searchResponse: APIResponse<APISearch>) => {
   }
 }
 export const processSearchResults = async ({
-  agreements = [],
+  digitalContents = [],
   albums = [],
   contentLists = [],
   users = [],
-  saved_digital_contents: savedAgreements = [],
+  saved_digital_contents: savedDigitalContents = [],
   saved_albums: savedAlbums = [],
   saved_content_lists: savedContentLists = [],
   followed_users: followedUsers = [],
@@ -101,9 +101,9 @@ export const processSearchResults = async ({
   const maxTotal = isAutocomplete
     ? AUTOCOMPLETE_TOTAL_RESULTS
     : SEARCH_MAX_TOTAL_RESULTS
-  const combinedAgreements = combineLists(
-    savedAgreements,
-    agreements,
+  const combinedDigitalContents = combineLists(
+    savedDigitalContents,
+    digitalContents,
     'digital_content_id',
     maxSaved,
     maxTotal
@@ -131,7 +131,7 @@ export const processSearchResults = async ({
   )
 
   return {
-    agreements: combinedAgreements,
+    digitalContents: combinedDigitalContents,
     albums: combinedAlbums,
     contentLists: combinedContentLists,
     users: combinedUsers

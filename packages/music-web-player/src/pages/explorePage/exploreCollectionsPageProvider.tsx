@@ -170,20 +170,20 @@ function mapDispatchToProps(dispatch: Dispatch) {
       dispatch(setRepost(collectionId, RepostType.COLLECTION)),
     setFavoriteContentListId: (collectionId: ID) =>
       dispatch(setFavorite(collectionId, FavoriteType.CONTENT_LIST)),
-    setRepostUsers: (agreementID: ID) =>
+    setRepostUsers: (digitalContentID: ID) =>
       dispatch(
         setUsers({
           userListType: UserListType.REPOST,
           entityType: UserListEntityType.COLLECTION,
-          id: agreementID
+          id: digitalContentID
         })
       ),
-    setFavoriteUsers: (agreementID: ID) =>
+    setFavoriteUsers: (digitalContentID: ID) =>
       dispatch(
         setUsers({
           userListType: UserListType.FAVORITE,
           entityType: UserListEntityType.COLLECTION,
-          id: agreementID
+          id: digitalContentID
         })
       ),
     setModalVisibility: () => dispatch(setVisibility(true)),

@@ -1,32 +1,32 @@
-import { AgreementMetadata } from '@coliving/common'
+import { DigitalContentMetadata } from '@coliving/common'
 import { takeEvery, call, put } from 'redux-saga/effects'
 
-import { retrieveAgreementByHandleAndSlug } from 'common/store/cache/agreements/utils/retrieveAgreements'
+import { retrieveDigitalContentByHandleAndSlug } from 'common/store/cache/digital_contents/utils/retrieveDigitalContents'
 import {
-  fetchAgreement,
-  fetchAgreementSucceeded
+  fetchDigitalContent,
+  fetchDigitalContentSucceeded
 } from 'common/store/pages/remixes/slice'
 import { waitForBackendSetup } from 'store/backend/sagas'
 
-import agreementsSagas from './lineups/agreements/sagas'
+import digitalContentsSagas from './lineups/digital_contents/sagas'
 
 function* watchFetch() {
   yield takeEvery(
-    fetchAgreement.type,
-    function* (action: ReturnType<typeof fetchAgreement>) {
+    fetchDigitalContent.type,
+    function* (action: ReturnType<typeof fetchDigitalContent>) {
       yield call(waitForBackendSetup)
       const { handle, slug } = action.payload
 
-      const digital_content: AgreementMetadata = yield call(retrieveAgreementByHandleAndSlug, {
+      const digital_content: DigitalContentMetadata = yield call(retrieveDigitalContentByHandleAndSlug, {
         handle,
         slug
       })
 
-      yield put(fetchAgreementSucceeded({ agreementId: digital_content.digital_content_id }))
+      yield put(fetchDigitalContentSucceeded({ digitalContentId: digital_content.digital_content_id }))
     }
   )
 }
 
 export default function sagas() {
-  return [...agreementsSagas(), watchFetch]
+  return [...digitalContentsSagas(), watchFetch]
 }

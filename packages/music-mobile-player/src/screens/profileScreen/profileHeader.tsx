@@ -8,14 +8,14 @@ import { useToggle } from 'react-use'
 import { useSelectorWeb } from 'app/hooks/useSelectorWeb'
 import { makeStyles } from 'app/styles'
 
-import { LandlordRecommendations } from './landlordRecommendations'
+import { LandlordRecommendations } from './authorRecommendations'
 import { CoverPhoto } from './coverPhoto'
 import { ExpandableBio } from './expandableBio'
 import { ProfileInfo } from './profileInfo'
 import { ProfileMetrics } from './profileMetrics'
 import { ProfilePicture } from './profilePicture'
 import { ProfileSocials } from './profileSocials'
-import { UploadAgreementButton } from './uploadAgreementButton'
+import { UploadDigitalContentButton } from './uploadDigitalContentButton'
 import { useSelectProfileRoot } from './selectors'
 
 const useStyles = makeStyles(({ palette, spacing }) => ({
@@ -74,7 +74,7 @@ export const ProfileHeader = (props: ProfileHeaderProps) => {
         {!hasUserFollowed ? null : (
           <LandlordRecommendations onClose={handleCloseLandlordRecs} />
         )}
-        {isOwner ? <UploadAgreementButton /> : null}
+        {isOwner ? <UploadDigitalContentButton /> : null}
       </View>
     </>
   )

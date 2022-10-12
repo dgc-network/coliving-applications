@@ -64,7 +64,7 @@ function* watchFetch() {
     yield* call(
       processAndCacheCollections,
       collections,
-      /* shouldRetrieveAgreements= */ false
+      /* shouldRetrieveDigitalContents= */ false
     )
 
     const collectionIds = collections.map((c: Collection) => c.content_list_id)

@@ -67,7 +67,7 @@ type OwnProps = {
   title: string
   description: string
   isVerified: boolean
-  hasAgreements: boolean
+  hasDigitalContents: boolean
   userId: ID
   handle: string
   name: string
@@ -204,7 +204,7 @@ class SettingsPage extends Component<SettingsPageProps, SettingsPageState> {
       title,
       description,
       isVerified,
-      hasAgreements,
+      hasDigitalContents,
       userId,
       handle,
       name,
@@ -323,7 +323,7 @@ class SettingsPage extends Component<SettingsPageProps, SettingsPageState> {
           <span>{messages.copyright}</span>
         </div>
         <div className={styles.selectedServices}>
-          {hasAgreements && <SelectedServices variant='lighter' />}
+          {hasDigitalContents && <SelectedServices variant='lighter' />}
         </div>
         <Modal
           title={

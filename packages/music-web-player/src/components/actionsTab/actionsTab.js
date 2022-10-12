@@ -14,9 +14,9 @@ import {
   undoRepostCollection
 } from 'common/store/social/collections/actions'
 import {
-  repostAgreement,
-  undoRepostAgreement
-} from 'common/store/social/agreements/actions'
+  repostDigitalContent,
+  undoRepostDigitalContent
+} from 'common/store/social/digital_contents/actions'
 import { requestOpen as requestOpenShareModal } from 'common/store/ui/shareModal/slice'
 import Menu from 'components/menu/menu'
 import Toast from 'components/toast/toast'
@@ -139,17 +139,17 @@ const ExpandedActionsTab = (props) => {
 export class ActionsTab extends PureComponent {
   onToggleRepost = () => {
     const {
-      repostAgreement,
-      undoRepostAgreement,
+      repostDigitalContent,
+      undoRepostDigitalContent,
       repostCollection,
       undoRepostCollection,
       currentUserReposted,
       variant,
-      agreementId,
+      digitalContentId,
       contentListId
     } = this.props
     if (variant === 'digital_content') {
-      currentUserReposted ? undoRepostAgreement(agreementId) : repostAgreement(agreementId)
+      currentUserReposted ? undoRepostDigitalContent(digitalContentId) : repostDigitalContent(digitalContentId)
     } else if (variant === 'contentList' || variant === 'album') {
       currentUserReposted
         ? undoRepostCollection(contentListId)
@@ -158,10 +158,10 @@ export class ActionsTab extends PureComponent {
   }
 
   onShare = () => {
-    const { agreementId, variant, contentListId, shareAgreement, shareCollection } =
+    const { digitalContentId, variant, contentListId, shareDigitalContent, shareCollection } =
       this.props
     if (variant === 'digital_content') {
-      shareAgreement(agreementId)
+      shareDigitalContent(digitalContentId)
     } else if (variant === 'contentList' || variant === 'album') {
       shareCollection(contentListId)
     }
@@ -180,8 +180,8 @@ export class ActionsTab extends PureComponent {
       userHandle,
       contentListId,
       contentListName,
-      agreementId,
-      agreementTitle,
+      digitalContentId,
+      digitalContentTitle,
       currentUserSaved,
       currentUserReposted,
       isLandlordPick,
@@ -201,8 +201,8 @@ export class ActionsTab extends PureComponent {
     }
     if (variant === 'digital_content') {
       overflowMenu.menu.type = 'digital_content'
-      overflowMenu.menu.agreementId = agreementId
-      overflowMenu.menu.agreementTitle = agreementTitle
+      overflowMenu.menu.digitalContentId = digitalContentId
+      overflowMenu.menu.digitalContentTitle = digitalContentTitle
       overflowMenu.menu.isLandlordPick = isLandlordPick
     } else if (variant === 'contentList' || variant === 'album') {
       overflowMenu.menu.type = variant === 'contentList' ? 'contentList' : 'album'
@@ -251,8 +251,8 @@ ActionsTab.propTypes = {
   variant: PropTypes.oneOf(['digital_content', 'contentList', 'album']),
   containerStyles: PropTypes.string,
   handle: PropTypes.string,
-  agreementTitle: PropTypes.string,
-  agreementId: PropTypes.number,
+  digitalContentTitle: PropTypes.string,
+  digitalContentId: PropTypes.number,
   contentListName: PropTypes.string,
   contentListId: PropTypes.number
 }
@@ -272,11 +272,11 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  shareAgreement: (agreementId) =>
+  shareDigitalContent: (digitalContentId) =>
     dispatch(
       requestOpenShareModal({
         type: 'digital_content',
-        agreementId,
+        digitalContentId,
         source: ShareSource.TILE
       })
     ),
@@ -288,9 +288,9 @@ const mapDispatchToProps = (dispatch) => ({
         source: ShareSource.TILE
       })
     ),
-  repostAgreement: (agreementId) => dispatch(repostAgreement(agreementId, RepostSource.TILE)),
-  undoRepostAgreement: (agreementId) =>
-    dispatch(undoRepostAgreement(agreementId, RepostSource.TILE)),
+  repostDigitalContent: (digitalContentId) => dispatch(repostDigitalContent(digitalContentId, RepostSource.TILE)),
+  undoRepostDigitalContent: (digitalContentId) =>
+    dispatch(undoRepostDigitalContent(digitalContentId, RepostSource.TILE)),
   repostCollection: (contentListId) =>
     dispatch(repostCollection(contentListId, RepostSource.TILE)),
   undoRepostCollection: (contentListId) =>

@@ -21,19 +21,19 @@ type ReceiveBodyProps = {
 
 const messages = {
   warning: 'PROCEED WITH CAUTION',
-  warning2: 'If $LIVE is sent to the wrong address it will be lost.',
-  warning3: "Don't attempt to send tokens other than $LIVE to this address.",
+  warning2: 'If $DGCO is sent to the wrong address it will be lost.',
+  warning3: "Don't attempt to send tokens other than $DGCO to this address.",
   splWarning1: (
     <>
       {'You can only send Solana (SPL) '}
-      <b className={styles.digitalcoin}>{'$LIVE'}</b> {' tokens to this address.'}
+      <b className={styles.digitalcoin}>{'$DGCO'}</b> {' tokens to this address.'}
     </>
   ),
-  splWarning2: 'Be sure to send your $LIVE to the correct address!',
+  splWarning2: 'Be sure to send your $DGCO to the correct address!',
   splWarning3: 'Be careful, tokens are easy to lose and impossible to recover.',
   understand: 'I UNDERSTAND',
   yourAddress: 'YOUR ADDRESS',
-  clickableSPLAddressTitle: 'YOUR SPL $LIVE ADDRESS'
+  clickableSPLAddressTitle: 'YOUR SPL $DGCO ADDRESS'
 }
 
 const useLocalStorageClickedReceiveUnderstand = (): [boolean, () => void] => {
@@ -50,7 +50,7 @@ const useLocalStorageClickedReceiveUnderstand = (): [boolean, () => void] => {
 
 const ReceiveBody = ({ wallet, solWallet }: ReceiveBodyProps) => {
   const useSolSPLAudio = getFeatureEnabled(
-    FeatureFlags.ENABLE_SPL_LIVE
+    FeatureFlags.ENABLE_SPL_DGCO
   ) as boolean
   const [hasClickedUnderstand, onClickUnderstand] =
     useLocalStorageClickedReceiveUnderstand()

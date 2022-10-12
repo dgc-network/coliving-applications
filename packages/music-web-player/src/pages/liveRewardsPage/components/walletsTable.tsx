@@ -6,7 +6,7 @@ import cn from 'classnames'
 import { useDispatch } from 'react-redux'
 
 import { ReactComponent as IconCopy } from 'assets/img/iconCopy.svg'
-import { ReactComponent as IconRemove } from 'assets/img/iconRemoveAgreement.svg'
+import { ReactComponent as IconRemove } from 'assets/img/iconRemoveDigitalContent.svg'
 import {
   getAssociatedWallets,
   getRemoveWallet
@@ -37,7 +37,7 @@ const messages = {
   newWalletConnected: 'New Wallet Successfully Connected!',
   linkedWallets: 'LINKED WALLETS',
   collectibles: 'COLLECTIBLES',
-  digitalcoin: '$LIVE'
+  digitalcoin: '$DGCO'
 }
 
 type WalletProps = {
@@ -65,7 +65,7 @@ const Wallet = ({
   hideCollectibles
 }: WalletProps) => {
   const { isEnabled: solWalletAudioEnabled } = useFlag(
-    FeatureFlags.SOL_WALLET_LIVE_ENABLED
+    FeatureFlags.SOL_WALLET_DGCO_ENABLED
   )
 
   const isMobile = useIsMobile()

@@ -43,7 +43,7 @@ export type ExploreCollection = {
   shadowColor: string
   shadowOpacity: number
   icon?: ComponentType<SvgProps>
-  incentivized?: boolean // Whether we reward winners with $LIVE
+  incentivized?: boolean // Whether we reward winners with $DGCO
   link: string
   screen: CollectionScreen | MoodScreen
 }

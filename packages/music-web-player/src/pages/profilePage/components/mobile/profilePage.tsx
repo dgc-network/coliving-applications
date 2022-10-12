@@ -19,7 +19,7 @@ import { ReactComponent as IconContentLists } from 'assets/img/iconContentLists.
 import { ReactComponent as IconReposts } from 'assets/img/iconRepost.svg'
 import { useSelectTierInfo } from 'common/hooks/wallet'
 import { feedActions } from 'common/store/pages/profile/lineups/feed/actions'
-import { agreementsActions } from 'common/store/pages/profile/lineups/agreements/actions'
+import { digitalContentsActions } from 'common/store/pages/profile/lineups/digital_contents/actions'
 import { Tabs, ProfileUser } from 'common/store/pages/profile/types'
 import { badgeTiers } from 'common/store/wallet/utils'
 import Card from 'components/card/mobile/card'
@@ -85,7 +85,7 @@ export type ProfilePageProps = {
   onSave: () => void
   onCancel: () => void
   stats: Array<{ number: number; title: string; key: string }>
-  agreementIsActive: boolean
+  digitalContentIsActive: boolean
   isUserConfirming: boolean
 
   profile: ProfileUser | null
@@ -93,12 +93,12 @@ export type ProfilePageProps = {
   contentLists: Collection[] | null
   status: Status
   goToRoute: (route: string) => void
-  landlordAgreements: LineupState<{ id: ID }>
+  landlordDigitalContents: LineupState<{ id: ID }>
   userFeed: LineupState<{ id: ID }>
-  playLandlordAgreement: (uid: UID) => void
-  pauseLandlordAgreement: () => void
-  playUserFeedAgreement: (uid: UID) => void
-  pauseUserFeedAgreement: () => void
+  playLandlordDigitalContent: (uid: UID) => void
+  pauseLandlordDigitalContent: () => void
+  playUserFeedDigitalContent: (uid: UID) => void
+  pauseUserFeedDigitalContent: () => void
   refreshProfile: () => void
 
   // Updates
@@ -108,11 +108,11 @@ export type ProfilePageProps = {
   // Methods
   changeTab: (tab: Tabs) => void
   getLineupProps: (lineup: any) => any
-  loadMoreLandlordAgreements: (offset: number, limit: number) => void
+  loadMoreLandlordDigitalContents: (offset: number, limit: number) => void
   loadMoreUserFeed: (offset: number, limit: number) => void
   formatCardSecondaryText: (
     saves: number,
-    agreements: number,
+    digitalContents: number,
     isPrivate?: boolean
   ) => string
   fetchFollowers: () => void
@@ -149,7 +149,7 @@ export const EmptyTab = (props: EmptyTabProps) => {
 }
 
 const landlordTabs = [
-  { icon: <IconNote />, text: 'Agreements', label: Tabs.AGREEMENTS },
+  { icon: <IconNote />, text: 'DigitalContents', label: Tabs.AGREEMENTS },
   { icon: <IconAlbum />, text: 'Albums', label: Tabs.ALBUMS },
   { icon: <IconContentLists />, text: 'ContentLists', label: Tabs.CONTENT_LISTS },
   {
@@ -184,9 +184,9 @@ const getMessages = ({
   name: string
   isOwner: boolean
 }) => ({
-  emptyAgreements: isOwner
-    ? "You haven't created any agreements yet"
-    : `${name} hasn't created any agreements yet`,
+  emptyDigitalContents: isOwner
+    ? "You haven't created any digitalContents yet"
+    : `${name} hasn't created any digitalContents yet`,
   emptyAlbums: isOwner
     ? "You haven't created any albums yet"
     : `${name} hasn't created any albums yet`,
@@ -231,16 +231,16 @@ const ProfilePage = g(
     donation,
     albums,
     contentLists,
-    landlordAgreements,
+    landlordDigitalContents,
     userFeed,
     isUserConfirming,
     getLineupProps,
-    loadMoreLandlordAgreements,
+    loadMoreLandlordDigitalContents,
     loadMoreUserFeed,
-    playLandlordAgreement,
-    pauseLandlordAgreement,
-    playUserFeedAgreement,
-    pauseUserFeedAgreement,
+    playLandlordDigitalContent,
+    pauseLandlordDigitalContent,
+    playUserFeedDigitalContent,
+    pauseUserFeedDigitalContent,
     formatCardSecondaryText,
     setFollowingUserId,
     setFollowersUserId,
@@ -417,12 +417,12 @@ const ProfilePage = g(
 
         profileTabs = landlordTabs
         profileElements = [
-          <div className={styles.agreementsLineupContainer} key='landlordAgreements'>
+          <div className={styles.digitalContentsLineupContainer} key='landlordDigitalContents'>
             {profile.digital_content_count === 0 ? (
               <EmptyTab
                 message={
                   <>
-                    {messages.emptyAgreements}
+                    {messages.emptyDigitalContents}
                     <i
                       className={cn('emoji', 'face-with-monocle', styles.emoji)}
                     />
@@ -431,13 +431,13 @@ const ProfilePage = g(
               />
             ) : (
               <Lineup
-                {...getLineupProps(landlordAgreements)}
+                {...getLineupProps(landlordDigitalContents)}
                 leadingElementId={profile._landlord_pick}
                 limit={profile.digital_content_count}
-                loadMore={loadMoreLandlordAgreements}
-                playAgreement={playLandlordAgreement}
-                pauseAgreement={pauseLandlordAgreement}
-                actions={agreementsActions}
+                loadMore={loadMoreLandlordDigitalContents}
+                playDigitalContent={playLandlordDigitalContent}
+                pauseDigitalContent={pauseLandlordDigitalContent}
+                actions={digitalContentsActions}
               />
             )}
           </div>,
@@ -479,7 +479,7 @@ const ProfilePage = g(
               />
             )}
           </div>,
-          <div className={styles.agreementsLineupContainer} key='landlordUsers'>
+          <div className={styles.digitalContentsLineupContainer} key='landlordUsers'>
             {profile.repost_count === 0 ? (
               <EmptyTab
                 message={
@@ -496,8 +496,8 @@ const ProfilePage = g(
                 {...getLineupProps(userFeed)}
                 count={profile.repost_count}
                 loadMore={loadMoreUserFeed}
-                playAgreement={playUserFeedAgreement}
-                pauseAgreement={pauseUserFeedAgreement}
+                playDigitalContent={playUserFeedDigitalContent}
+                pauseDigitalContent={pauseUserFeedDigitalContent}
                 actions={feedActions}
               />
             )}
@@ -506,7 +506,7 @@ const ProfilePage = g(
       } else {
         profileTabs = userTabs
         profileElements = [
-          <div className={styles.agreementsLineupContainer} key='agreements'>
+          <div className={styles.digitalContentsLineupContainer} key='digitalContents'>
             {profile.repost_count === 0 ? (
               <EmptyTab
                 message={
@@ -523,8 +523,8 @@ const ProfilePage = g(
                 {...getLineupProps(userFeed)}
                 count={profile.repost_count}
                 loadMore={loadMoreUserFeed}
-                playAgreement={playUserFeedAgreement}
-                pauseAgreement={pauseUserFeedAgreement}
+                playDigitalContent={playUserFeedDigitalContent}
+                pauseDigitalContent={pauseUserFeedDigitalContent}
                 actions={feedActions}
               />
             )}
@@ -564,7 +564,7 @@ const ProfilePage = g(
           ? landlordTabsWithCollectibles
           : userTabsWithCollectibles
         profileElements.push(
-          <div key='collectibles' className={styles.agreementsLineupContainer}>
+          <div key='collectibles' className={styles.digitalContentsLineupContainer}>
             <CollectiblesPage
               userId={userId}
               name={name}
@@ -638,7 +638,7 @@ const ProfilePage = g(
                 profilePictureSizes={profilePictureSizes}
                 hasProfilePicture={hasProfilePicture}
                 contentListCount={profile.content_list_count}
-                agreementCount={profile.digital_content_count}
+                digitalContentCount={profile.digital_content_count}
                 followerCount={profile.follower_count}
                 followingCount={profile.followee_count}
                 doesFollowCurrentUser={!!profile.does_follow_current_user}

@@ -4,4 +4,4 @@ export const getDownloadedPercentage = (state: AppState) =>
   state.downloads.downloadedPercentage
 export const getFileName = (state: AppState) => state.downloads.fileName
 export const getFetchCancel = (state: AppState) => state.downloads.fetchCancel
-export const getAgreementName = (state: AppState) => state.downloads.agreementName
+export const getDigitalContentName = (state: AppState) => state.downloads.digitalContentName

@@ -1,17 +1,17 @@
 import { takeLatest, call, put, fork, select } from 'redux-saga/effects'
 
 import { getAccountUser } from 'common/store/account/selectors'
-import { processAndCacheAgreements } from 'common/store/cache/agreements/utils'
+import { processAndCacheDigitalContents } from 'common/store/cache/digital_contents/utils'
 import * as actions from 'common/store/pages/savedPage/actions'
-import { agreementsActions } from 'common/store/pages/savedPage/lineups/agreements/actions'
+import { digitalContentsActions } from 'common/store/pages/savedPage/lineups/digital_contents/actions'
 import { getSaves } from 'common/store/pages/savedPage/selectors'
 import apiClient from 'services/colivingAPIClient/colivingAPIClient'
 import { waitForValue } from 'utils/sagaHelpers'
 
-import agreementsSagas from './lineups/agreements/sagas'
+import digitalContentsSagas from './lineups/digital_contents/sagas'
 
-function* fetchAgreementsLineup() {
-  yield put(agreementsActions.fetchLineupMetadatas())
+function* fetchDigitalContentsLineup() {
+  yield put(digitalContentsActions.fetchLineupMetadatas())
 }
 
 function* watchFetchSaves() {
@@ -22,26 +22,26 @@ function* watchFetchSaves() {
     const saves = yield select(getSaves)
     // Don't refetch saves in the same session
     if (saves && saves.length) {
-      yield fork(fetchAgreementsLineup)
+      yield fork(fetchDigitalContentsLineup)
     } else {
       try {
-        const savedAgreements = yield apiClient.getFavoritedAgreements({
+        const savedDigitalContents = yield apiClient.getFavoritedDigitalContents({
           currentUserId: userId,
           profileUserId: userId,
           offset: 0,
           limit
         })
-        const agreements = savedAgreements.map((save) => save.digital_content)
+        const digitalContents = savedDigitalContents.map((save) => save.digital_content)
 
-        yield processAndCacheAgreements(agreements)
+        yield processAndCacheDigitalContents(digitalContents)
 
-        const saves = savedAgreements.map((save) => ({
+        const saves = savedDigitalContents.map((save) => ({
           created_at: save.timestamp,
           save_item_id: save.digital_content.digital_content_id
         }))
         yield put(actions.fetchSavesSucceeded(saves))
 
-        yield fork(fetchAgreementsLineup)
+        yield fork(fetchDigitalContentsLineup)
       } catch (e) {
         yield put(actions.fetchSavesFailed())
       }
@@ -50,5 +50,5 @@ function* watchFetchSaves() {
 }
 
 export default function sagas() {
-  return [...agreementsSagas(), watchFetchSaves]
+  return [...digitalContentsSagas(), watchFetchSaves]
 }

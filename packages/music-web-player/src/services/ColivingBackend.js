@@ -161,7 +161,7 @@ const notDeleted = (e) => !e.is_delete
  * @param {string[]} contentNodeGateways
  * @param {boolean} cache
  * @param {boolean} asUrl
- * @param {Nullable<number>} agreementId
+ * @param {Nullable<number>} digitalContentId
  * @returns {Promise<string>}
  */
 export const fetchCID = async (
@@ -169,7 +169,7 @@ export const fetchCID = async (
   contentNodeGateways = [],
   cache = true,
   asUrl = true,
-  agreementId = null
+  digitalContentId = null
 ) => {
   await waitForLibsInit()
   try {
@@ -180,7 +180,7 @@ export const fetchCID = async (
       // If requesting a url (we mean a blob url for the file),
       // otherwise, default to JSON
       asUrl ? 'blob' : 'json',
-      agreementId
+      digitalContentId
     )
     if (asUrl) {
       const url = URL.createObjectURL(res.data)
@@ -304,7 +304,7 @@ class ColivingBackend {
     }
   }
 
-  static getAgreementImages(digital_content) {
+  static getDigitalContentImages(digital_content) {
     const coverArtSizes = {}
     if (!digital_content.cover_art_sizes && !digital_content.cover_art) {
       coverArtSizes[DefaultSizes.OVERRIDE] = placeholderCoverArt
@@ -697,7 +697,7 @@ class ColivingBackend {
         account.tiktok_handle = body.tikTokHandle || null
         account.website = body.website || null
         account.donation = body.donation || null
-        account._landlord_pick = body.pinnedAgreementId || null
+        account._landlord_pick = body.pinnedDigitalContentId || null
         account.twitterVerified = body.twitterVerified || false
         account.instagramVerified = body.instagramVerified || false
       } catch (e) {
@@ -720,7 +720,7 @@ class ColivingBackend {
     }
   }
 
-  static async getAllAgreements({
+  static async getAllDigitalContents({
     offset,
     limit,
     idsArray,
@@ -728,10 +728,10 @@ class ColivingBackend {
     filterDeletes = false
   }) {
     try {
-      const agreements = await withEagerOption(
+      const digitalContents = await withEagerOption(
         {
-          normal: (libs) => libs.DigitalContent.getAgreements,
-          eager: DiscoveryAPI.getAgreements
+          normal: (libs) => libs.DigitalContent.getDigitalContents,
+          eager: DiscoveryAPI.getDigitalContents
         },
         limit,
         offset,
@@ -742,7 +742,7 @@ class ColivingBackend {
         filterDeletes, // filterDeleted
         withUsers // withUsers
       )
-      return agreements || []
+      return digitalContents || []
     } catch (e) {
       console.error(e)
       return []
@@ -750,37 +750,37 @@ class ColivingBackend {
   }
 
   /**
-   * @typedef {Object} getAgreementsIdentifier
+   * @typedef {Object} getDigitalContentsIdentifier
    * @property {string} handle
    * @property {number} id
    * @property {string} url_title
    */
 
   /**
-   * gets all agreements matching identifiers, including unlisted.
+   * gets all digitalContents matching identifiers, including unlisted.
    *
-   * @param {getAgreementsIdentifier[]} identifiers
+   * @param {getDigitalContentsIdentifier[]} identifiers
    * @returns {(Array)} digital_content
    */
-  static async getAgreementsIncludingUnlisted(identifiers, withUsers = true) {
+  static async getDigitalContentsIncludingUnlisted(identifiers, withUsers = true) {
     try {
-      const agreements = await withEagerOption(
+      const digitalContents = await withEagerOption(
         {
-          normal: (libs) => libs.DigitalContent.getAgreementsIncludingUnlisted,
-          eager: DiscoveryAPI.getAgreementsIncludingUnlisted
+          normal: (libs) => libs.DigitalContent.getDigitalContentsIncludingUnlisted,
+          eager: DiscoveryAPI.getDigitalContentsIncludingUnlisted
         },
         identifiers,
         withUsers
       )
 
-      return agreements
+      return digitalContents
     } catch (e) {
       console.error(e)
       return []
     }
   }
 
-  static async getLandlordAgreements({
+  static async getLandlordDigitalContents({
     offset,
     limit,
     userId,
@@ -789,10 +789,10 @@ class ColivingBackend {
     withUsers = true
   }) {
     try {
-      const agreements = await withEagerOption(
+      const digitalContents = await withEagerOption(
         {
-          normal: (libs) => libs.DigitalContent.getAgreements,
-          eager: DiscoveryAPI.getAgreements
+          normal: (libs) => libs.DigitalContent.getDigitalContents,
+          eager: DiscoveryAPI.getDigitalContents
         },
         limit,
         offset,
@@ -803,7 +803,7 @@ class ColivingBackend {
         filterDeleted,
         withUsers
       )
-      return agreements || []
+      return digitalContents || []
     } catch (e) {
       console.error(e)
       return []
@@ -815,7 +815,7 @@ class ColivingBackend {
     offset,
     limit,
     withUsers = true,
-    agreementsOnly = false
+    digitalContentsOnly = false
   }) {
     const filterMap = {
       [FeedFilter.ALL]: 'all',
@@ -835,7 +835,7 @@ class ColivingBackend {
         limit,
         offset,
         withUsers,
-        agreementsOnly
+        digitalContentsOnly
       )
       // It's possible all the requests timed out,
       // we need to not return a null object here.
@@ -851,7 +851,7 @@ class ColivingBackend {
 
   static async getUserFeed({ offset, limit, userId, withUsers = true }) {
     try {
-      const agreements = await withEagerOption(
+      const digitalContents = await withEagerOption(
         {
           normal: (libs) => libs.User.getUserRepostFeed,
           eager: DiscoveryAPI.getUserRepostFeed
@@ -861,7 +861,7 @@ class ColivingBackend {
         offset,
         withUsers
       )
-      return agreements
+      return digitalContents
     } catch (e) {
       console.error(e)
       return []
@@ -889,18 +889,18 @@ class ColivingBackend {
       )
 
       const {
-        agreements = [],
-        saved_digital_contents: savedAgreements = [],
+        digitalContents = [],
+        saved_digital_contents: savedDigitalContents = [],
         followed_users: followedUsers = [],
         users = []
       } = searchTags
 
-      const combinedAgreements = await Promise.all(
+      const combinedDigitalContents = await Promise.all(
         combineLists(
-          savedAgreements.filter(notDeleted),
-          agreements.filter(notDeleted),
+          savedDigitalContents.filter(notDeleted),
+          digitalContents.filter(notDeleted),
           'digital_content_id'
-        ).map(async (digital_content) => ColivingBackend.getAgreementImages(digital_content))
+        ).map(async (digital_content) => ColivingBackend.getDigitalContentImages(digital_content))
       )
 
       const combinedUsers = await Promise.all(
@@ -910,32 +910,32 @@ class ColivingBackend {
       )
 
       return {
-        agreements: combinedAgreements,
+        digitalContents: combinedDigitalContents,
         users: combinedUsers
       }
     } catch (e) {
       console.error(e)
       return {
-        agreements: [],
+        digitalContents: [],
         users: []
       }
     }
   }
 
-  static async getAgreementListens(agreementIds, start, end, period) {
-    if (agreementIds.length === 0) return []
+  static async getDigitalContentListens(digitalContentIds, start, end, period) {
+    if (digitalContentIds.length === 0) return []
     try {
       return withEagerOption(
         {
-          normal: (libs) => libs.DigitalContent.getAgreementListens,
-          eager: IdentityAPI.getAgreementListens,
+          normal: (libs) => libs.DigitalContent.getDigitalContentListens,
+          eager: IdentityAPI.getDigitalContentListens,
           endpoint: IDENTITY_SERVICE
         },
         period,
-        agreementIds,
+        digitalContentIds,
         start,
         end,
-        agreementIds.length
+        digitalContentIds.length
       )
     } catch (err) {
       console.error(err.message)
@@ -943,10 +943,10 @@ class ColivingBackend {
     }
   }
 
-  static async recordAgreementListen(agreementId) {
+  static async recordDigitalContentListen(digitalContentId) {
     try {
-      const listen = await colivingLibs.DigitalContent.logAgreementListen(
-        agreementId,
+      const listen = await colivingLibs.DigitalContent.logDigitalContentListen(
+        digitalContentId,
         unauthenticatedUuid,
         getFeatureEnabled(FeatureFlags.SOLANA_LISTEN_ENABLED)
       )
@@ -956,18 +956,18 @@ class ColivingBackend {
     }
   }
 
-  static async repostAgreement(agreementId) {
+  static async repostDigitalContent(digitalContentId) {
     try {
-      return colivingLibs.DigitalContent.addAgreementRepost(agreementId)
+      return colivingLibs.DigitalContent.addDigitalContentRepost(digitalContentId)
     } catch (err) {
       console.error(err.message)
       throw err
     }
   }
 
-  static async undoRepostAgreement(agreementId) {
+  static async undoRepostDigitalContent(digitalContentId) {
     try {
-      return colivingLibs.DigitalContent.deleteAgreementRepost(agreementId)
+      return colivingLibs.DigitalContent.deleteDigitalContentRepost(digitalContentId)
     } catch (err) {
       console.error(err.message)
       throw err
@@ -1001,26 +1001,26 @@ class ColivingBackend {
   }
 
   // Uploads a single digital_content
-  // Returns { agreementId, error, phase }
-  static async uploadAgreement(agreementFile, coverArtFile, metadata, onProgress) {
-    return await colivingLibs.DigitalContent.uploadAgreement(
-      agreementFile,
+  // Returns { digitalContentId, error, phase }
+  static async uploadDigitalContent(digitalContentFile, coverArtFile, metadata, onProgress) {
+    return await colivingLibs.DigitalContent.uploadDigitalContent(
+      digitalContentFile,
       coverArtFile,
       metadata,
       onProgress
     )
   }
 
-  // Used to upload multiple agreements as part of an album/contentList
-  // Returns { metadataMultihash, metadataFileUUID, transcodedAgreementCID, transcodedAgreementUUID }
-  static async uploadAgreementToContentNode(
-    agreementFile,
+  // Used to upload multiple digitalContents as part of an album/contentList
+  // Returns { metadataMultihash, metadataFileUUID, transcodedDigitalContentCID, transcodedDigitalContentUUID }
+  static async uploadDigitalContentToContentNode(
+    digitalContentFile,
     coverArtFile,
     metadata,
     onProgress
   ) {
-    return colivingLibs.DigitalContent.uploadAgreementContentToContentNode(
-      agreementFile,
+    return colivingLibs.DigitalContent.uploadDigitalContentToContentNode(
+      digitalContentFile,
       coverArtFile,
       metadata,
       onProgress
@@ -1035,25 +1035,25 @@ class ColivingBackend {
 
   /**
    * Takes an array of [{metadataMultihash, metadataFileUUID}, {}, ]
-   * Adds agreements to chain for this user
-   * Associates agreements with user on contentNode
+   * Adds digitalContents to chain for this user
+   * Associates digitalContents with user on contentNode
    */
-  static async registerUploadedAgreements(uploadedAgreements) {
-    return colivingLibs.DigitalContent.addAgreementsToChainAndCnode(uploadedAgreements)
+  static async registerUploadedDigitalContents(uploadedDigitalContents) {
+    return colivingLibs.DigitalContent.addDigitalContentsToChainAndCnode(uploadedDigitalContents)
   }
 
   static async uploadImage(file) {
     return colivingLibs.File.uploadImage(file)
   }
 
-  static async updateAgreement(agreementId, metadata) {
-    const cleanedMetadata = schemas.newAgreementMetadata(metadata, true)
+  static async updateDigitalContent(digitalContentId, metadata) {
+    const cleanedMetadata = schemas.newDigitalContentMetadata(metadata, true)
 
     if (metadata.artwork) {
       const resp = await colivingLibs.File.uploadImage(metadata.artwork.file)
       cleanedMetadata.cover_art_sizes = resp.dirCID
     }
-    return await colivingLibs.DigitalContent.updateAgreement(cleanedMetadata)
+    return await colivingLibs.DigitalContent.updateDigitalContent(cleanedMetadata)
   }
 
   static async getCreators(ids) {
@@ -1348,7 +1348,7 @@ class ColivingBackend {
     userId,
     metadata,
     isAlbum = false,
-    agreementIds = [],
+    digitalContentIds = [],
     isPrivate = true
   ) {
     const contentListName = metadata.content_list_name
@@ -1363,7 +1363,7 @@ class ColivingBackend {
         contentListName,
         isPrivate,
         isAlbum,
-        agreementIds
+        digitalContentIds
       )
       let { blockHash, blockNumber, contentListId, error } = response
 
@@ -1454,12 +1454,12 @@ class ColivingBackend {
     }
   }
 
-  static async orderContentList(contentListId, agreementIds, retries) {
+  static async orderContentList(contentListId, digitalContentIds, retries) {
     try {
       const { blockHash, blockNumber } =
-        await colivingLibs.ContentList.orderContentListAgreements(
+        await colivingLibs.ContentList.orderContentListDigitalContents(
           contentListId,
-          agreementIds,
+          digitalContentIds,
           retries
         )
       return { blockHash, blockNumber }
@@ -1480,10 +1480,10 @@ class ColivingBackend {
     }
   }
 
-  static async addContentListAgreement(contentListId, agreementId) {
+  static async addContentListDigitalContent(contentListId, digitalContentId) {
     try {
       const { blockHash, blockNumber } =
-        await colivingLibs.ContentList.addContentListAgreement(contentListId, agreementId)
+        await colivingLibs.ContentList.addContentListDigitalContent(contentListId, digitalContentId)
       return { blockHash, blockNumber }
     } catch (error) {
       console.error(error.message)
@@ -1491,12 +1491,12 @@ class ColivingBackend {
     }
   }
 
-  static async deleteContentListAgreement(contentListId, agreementId, timestamp, retries) {
+  static async deleteContentListDigitalContent(contentListId, digitalContentId, timestamp, retries) {
     try {
       const { blockHash, blockNumber } =
-        await colivingLibs.ContentList.deleteContentListAgreement(
+        await colivingLibs.ContentList.deleteContentListDigitalContent(
           contentListId,
-          agreementId,
+          digitalContentId,
           timestamp,
           retries
         )
@@ -1507,11 +1507,11 @@ class ColivingBackend {
     }
   }
 
-  static async validateAgreementsInContentList(contentListId) {
+  static async validateDigitalContentsInContentList(contentListId) {
     try {
-      const { isValid, invalidAgreementIds } =
-        await colivingLibs.ContentList.validateAgreementsInContentList(contentListId)
-      return { error: false, isValid, invalidAgreementIds }
+      const { isValid, invalidDigitalContentIds } =
+        await colivingLibs.ContentList.validateDigitalContentsInContentList(contentListId)
+      return { error: false, isValid, invalidDigitalContentIds }
     } catch (error) {
       console.error(error.message)
       return { error }
@@ -1521,11 +1521,11 @@ class ColivingBackend {
   // NOTE: This is called to explicitly set a contentList digital_content ids w/out running validation checks.
   // This should NOT be used to set the contentList order
   // It's added for the purpose of manually fixing broken contentLists
-  static async dangerouslySetContentListOrder(contentListId, agreementIds) {
+  static async dangerouslySetContentListOrder(contentListId, digitalContentIds) {
     try {
-      await colivingLibs.contracts.ContentListFactoryClient.orderContentListAgreements(
+      await colivingLibs.contracts.ContentListFactoryClient.orderContentListDigitalContents(
         contentListId,
-        agreementIds
+        digitalContentIds
       )
       return { error: false }
     } catch (error) {
@@ -1547,26 +1547,26 @@ class ColivingBackend {
     }
   }
 
-  static async deleteAlbum(contentListId, agreementIds) {
+  static async deleteAlbum(contentListId, digitalContentIds) {
     try {
       console.debug(
-        `Deleting Album ${contentListId}, agreements: ${JSON.stringify(
-          agreementIds.map((t) => t.digital_content)
+        `Deleting Album ${contentListId}, digitalContents: ${JSON.stringify(
+          digitalContentIds.map((t) => t.digital_content)
         )}`
       )
-      const agreementDeletionPromises = agreementIds.map((t) =>
-        colivingLibs.DigitalContent.deleteAgreement(t.digital_content)
+      const digitalContentDeletionPromises = digitalContentIds.map((t) =>
+        colivingLibs.DigitalContent.deleteDigitalContent(t.digital_content)
       )
       const contentListDeletionPromise =
         colivingLibs.ContentList.deleteContentList(contentListId)
       const results = await Promise.all(
-        agreementDeletionPromises.concat(contentListDeletionPromise)
+        digitalContentDeletionPromises.concat(contentListDeletionPromise)
       )
-      const deleteAgreementReceipts = results.slice(0, -1).map((r) => r.txReceipt)
+      const deleteDigitalContentReceipts = results.slice(0, -1).map((r) => r.txReceipt)
       const deleteContentListReceipt = results.slice(-1)[0].txReceipt
 
       const { blockHash, blockNumber } = ColivingBackend.getLatestTxReceipt(
-        deleteAgreementReceipts.concat(deleteContentListReceipt)
+        deleteDigitalContentReceipts.concat(deleteContentListReceipt)
       )
       return { blockHash, blockNumber }
     } catch (error) {
@@ -1609,12 +1609,12 @@ class ColivingBackend {
     }
   }
 
-  static async getSavedAgreements(limit = 100, offset = 0) {
+  static async getSavedDigitalContents(limit = 100, offset = 0) {
     try {
       return withEagerOption(
         {
-          normal: (libs) => libs.DigitalContent.getSavedAgreements,
-          eager: DiscoveryAPI.getSavedAgreements
+          normal: (libs) => libs.DigitalContent.getSavedDigitalContents,
+          eager: DiscoveryAPI.getSavedDigitalContents
         },
         limit,
         offset
@@ -1626,18 +1626,18 @@ class ColivingBackend {
   }
 
   // Favoriting a digital_content
-  static async saveAgreement(agreementId) {
+  static async saveDigitalContent(digitalContentId) {
     try {
-      return await colivingLibs.DigitalContent.addAgreementSave(agreementId)
+      return await colivingLibs.DigitalContent.addDigitalContentSave(digitalContentId)
     } catch (err) {
       console.error(err.message)
       throw err
     }
   }
 
-  static async deleteAgreement(agreementId) {
+  static async deleteDigitalContent(digitalContentId) {
     try {
-      const { txReceipt } = await colivingLibs.DigitalContent.deleteAgreement(agreementId)
+      const { txReceipt } = await colivingLibs.DigitalContent.deleteDigitalContent(digitalContentId)
       return {
         blockHash: txReceipt.blockHash,
         blockNumber: txReceipt.blockNumber
@@ -1659,9 +1659,9 @@ class ColivingBackend {
   }
 
   // Unfavoriting a digital_content
-  static async unsaveAgreement(agreementId) {
+  static async unsaveDigitalContent(digitalContentId) {
     try {
-      return await colivingLibs.DigitalContent.deleteAgreementSave(agreementId)
+      return await colivingLibs.DigitalContent.deleteDigitalContentSave(digitalContentId)
     } catch (err) {
       console.error(err.message)
       throw err
@@ -1679,10 +1679,10 @@ class ColivingBackend {
   }
 
   /**
-   * Sets the landlord pick for a user
-   * @param {number?} agreementId if null, unsets the landlord pick
+   * Sets the author pick for a user
+   * @param {number?} digitalContentId if null, unsets the author pick
    */
-  static async setLandlordPick(agreementId = null) {
+  static async setLandlordPick(digitalContentId = null) {
     await waitForLibsInit()
     try {
       const { data, signature } = await ColivingBackend.signData()
@@ -1694,7 +1694,7 @@ class ColivingBackend {
           [AuthHeaders.Signature]: signature
         },
         body: JSON.stringify({
-          agreementId
+          digitalContentId
         })
       })
     } catch (err) {
@@ -1884,7 +1884,7 @@ class ColivingBackend {
       const withTipsQuery = withTips ? `&withTips=true` : ''
       // TODO: withRemix, withTrending, withRewards are always true and should be removed in a future release
       const notifications = await fetch(
-        `${IDENTITY_SERVICE}/notifications?${limitQuery}${timeOffsetQuery}${handleQuery}${withTipsQuery}&withRewards=true&withRemix=true&withTrendingAgreement=true`,
+        `${IDENTITY_SERVICE}/notifications?${limitQuery}${timeOffsetQuery}${handleQuery}${withTipsQuery}&withRewards=true&withRemix=true&withTrendingDigitalContent=true`,
         {
           headers: {
             'Content-Type': 'application/json',
@@ -2499,7 +2499,7 @@ class ColivingBackend {
       const ownerWAudioBalance =
         await colivingLibs.solanaWeb3Manager.getWAudioBalance(userBank)
       if (!ownerWAudioBalance) {
-        console.error('Failed to fetch account wlive balance')
+        console.error('Failed to fetch account wei_digitalcoin balance')
         return new BN('0')
       }
       return ownerWAudioBalance
@@ -2562,7 +2562,7 @@ class ColivingBackend {
   static async sendWAudioTokens(address, amount) {
     await waitForLibsInit()
 
-    // Check when sending wlive if the user has a user bank acccount
+    // Check when sending wei_digitalcoin if the user has a user bank acccount
     let tokenAccountInfo =
       await colivingLibs.solanaWeb3Manager.getAssociatedTokenAccountInfo(address)
     if (!tokenAccountInfo) {
@@ -2583,7 +2583,7 @@ class ColivingBackend {
         if (!window.phantom) {
           return {
             error:
-              'Recipient has no $LIVE token account. Please install Phantom-Wallet to create one.'
+              'Recipient has no $DGCO token account. Please install Phantom-Wallet to create one.'
           }
         }
         if (!window.solana.isConnected) {
@@ -2650,14 +2650,14 @@ class ColivingBackend {
    */
   static async getAddressWAudioBalance(address) {
     await waitForLibsInit()
-    const wliveBalance = await colivingLibs.solanaWeb3Manager.getWAudioBalance(
+    const wei_digitalcoinBalance = await colivingLibs.solanaWeb3Manager.getWAudioBalance(
       address
     )
-    if (!wliveBalance) {
-      console.error(`Failed to get wlive balance for address: ${address}`)
+    if (!wei_digitalcoinBalance) {
+      console.error(`Failed to get wei_digitalcoin balance for address: ${address}`)
       return new BN('0')
     }
-    return wliveBalance
+    return wei_digitalcoinBalance
   }
 
   /**

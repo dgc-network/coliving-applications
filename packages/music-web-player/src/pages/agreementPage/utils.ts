@@ -12,29 +12,29 @@ export const defaultFieldVisibility = {
   remixes: true
 }
 
-export const getAgreementDefaults = (heroAgreement: DigitalContent | null) => ({
-  title: emptyStringGuard(heroAgreement?.title),
-  agreementId: heroAgreement?.digital_content_id ?? 0,
-  coverArtSizes: heroAgreement?._cover_art_sizes ?? null,
-  tags: emptyStringGuard(heroAgreement?.tags),
-  description: emptyStringGuard(heroAgreement?.description),
-  playCount: heroAgreement?.play_count ?? 0,
-  duration: heroAgreement?.duration ?? 0,
-  released: emptyStringGuard(heroAgreement?.release_date || heroAgreement?.created_at),
-  credits: emptyStringGuard(heroAgreement?.credits_splits),
-  genre: emptyStringGuard(heroAgreement?.genre),
-  mood: emptyStringGuard(heroAgreement?.mood),
-  repostCount: heroAgreement?.repost_count ?? 0,
-  saveCount: heroAgreement?.save_count ?? 0,
-  isUnlisted: heroAgreement?.is_unlisted ?? false,
-  isPublishing: heroAgreement?._is_publishing ?? false,
+export const getDigitalContentDefaults = (heroDigitalContent: DigitalContent | null) => ({
+  title: emptyStringGuard(heroDigitalContent?.title),
+  digitalContentId: heroDigitalContent?.digital_content_id ?? 0,
+  coverArtSizes: heroDigitalContent?._cover_art_sizes ?? null,
+  tags: emptyStringGuard(heroDigitalContent?.tags),
+  description: emptyStringGuard(heroDigitalContent?.description),
+  playCount: heroDigitalContent?.play_count ?? 0,
+  duration: heroDigitalContent?.duration ?? 0,
+  released: emptyStringGuard(heroDigitalContent?.release_date || heroDigitalContent?.created_at),
+  credits: emptyStringGuard(heroDigitalContent?.credits_splits),
+  genre: emptyStringGuard(heroDigitalContent?.genre),
+  mood: emptyStringGuard(heroDigitalContent?.mood),
+  repostCount: heroDigitalContent?.repost_count ?? 0,
+  saveCount: heroDigitalContent?.save_count ?? 0,
+  isUnlisted: heroDigitalContent?.is_unlisted ?? false,
+  isPublishing: heroDigitalContent?._is_publishing ?? false,
   fieldVisibility: {
     ...defaultFieldVisibility,
-    ...(heroAgreement?.field_visibility ?? {})
+    ...(heroDigitalContent?.field_visibility ?? {})
   },
-  coSign: heroAgreement?._co_sign ?? null,
-  remixAgreementIds: heroAgreement?._remixes?.map(({ digital_content_id }) => digital_content_id) ?? null,
-  remixesCount: heroAgreement?._remixes_count ?? null,
-  remixParentAgreementId: heroAgreement?.remix_of?.agreements?.[0]?.parent_digital_content_id,
-  download: heroAgreement?.download ?? null
+  coSign: heroDigitalContent?._co_sign ?? null,
+  remixDigitalContentIds: heroDigitalContent?._remixes?.map(({ digital_content_id }) => digital_content_id) ?? null,
+  remixesCount: heroDigitalContent?._remixes_count ?? null,
+  remixParentDigitalContentId: heroDigitalContent?.remix_of?.digitalContents?.[0]?.parent_digital_content_id,
+  download: heroDigitalContent?.download ?? null
 })

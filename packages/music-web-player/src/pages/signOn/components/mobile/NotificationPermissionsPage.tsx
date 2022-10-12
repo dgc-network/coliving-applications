@@ -6,7 +6,7 @@ import styles from './notificationPermissionsPage.module.css'
 const messages = {
   title: 'Can we send you Notifications?',
   description:
-    'We’ll notify you when people follow you, repost your agreements, and more!',
+    'We’ll notify you when people follow you, repost your digitalContents, and more!',
   notice: 'You can customize this later in settings.',
   allow: 'Allow Notifications',
   skip: 'Skip for now'

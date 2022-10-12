@@ -1,1 +1,1 @@
-export { default } from './topAgreements'
+export { default } from './topDigitalContents'

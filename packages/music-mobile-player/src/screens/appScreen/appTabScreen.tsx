@@ -17,7 +17,7 @@ import {
   TagSearchScreen
 } from 'app/screens/searchResultsScreen'
 import { SearchScreen } from 'app/screens/searchScreen'
-import { AgreementScreen } from 'app/screens/agreementScreen'
+import { DigitalContentScreen } from 'app/screens/digitalContentScreen'
 import {
   FavoritedScreen,
   FollowersScreen,
@@ -28,18 +28,18 @@ import {
   TopSupportersScreen,
   SupportingUsersScreen
 } from 'app/screens/userListScreen'
-import type { SearchContentList, SearchAgreement } from 'app/store/search/types'
+import type { SearchContentList, SearchDigitalContent } from 'app/store/search/types'
 
 import { EditContentListScreen } from '../edit-content-list-screen/EditContentListScreen'
 import { NotificationsDrawerNavigationContext } from '../notificationsScreen/notificationsDrawerNavigationContext'
-import { TipLandlordModal } from '../tipLandlordScreen'
-import { AgreementRemixesScreen } from '../agreementScreen/agreementRemixesScreen'
+import { TipLandlordModal } from '../tipAuthorScreen'
+import { DigitalContentRemixesScreen } from '../digitalContentScreen/digitalContentRemixesScreen'
 
 import { useAppScreenOptions } from './useAppScreenOptions'
 
 export type AppTabScreenParamList = {
-  DigitalContent: { id: ID; searchAgreement?: SearchAgreement }
-  AgreementRemixes: { id: ID }
+  DigitalContent: { id: ID; searchDigitalContent?: SearchDigitalContent }
+  DigitalContentRemixes: { id: ID }
   Profile: { handle: string }
   Collection: { id: ID; searchCollection?: SearchContentList }
   EditContentList: { id: ID }
@@ -142,12 +142,12 @@ export const AppTabScreen = ({ baseScreen, Stack }: AppTabScreenProps) => {
       {baseScreen(Stack)}
       <Stack.Screen
         name='DigitalContent'
-        component={AgreementScreen}
+        component={DigitalContentScreen}
         options={screenOptions}
       />
       <Stack.Screen
-        name='AgreementRemixes'
-        component={AgreementRemixesScreen}
+        name='DigitalContentRemixes'
+        component={DigitalContentRemixesScreen}
         options={screenOptions}
       />
       <Stack.Screen

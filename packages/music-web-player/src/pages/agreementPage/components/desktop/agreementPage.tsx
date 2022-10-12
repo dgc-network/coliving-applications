@@ -1,7 +1,7 @@
 import { ID, CID, LineupState, DigitalContent, User } from '@coliving/common'
 import cn from 'classnames'
 
-import { agreementsActions } from 'common/store/pages/digital_content/lineup/actions'
+import { digitalContentsActions } from 'common/store/pages/digital_content/lineup/actions'
 import { QueueItem } from 'common/store/queue/types'
 import CoverPhoto from 'components/coverPhoto/coverPhoto'
 import Lineup from 'components/lineup/lineup'
@@ -10,16 +10,16 @@ import NavBanner from 'components/navBanner/navBanner'
 import Page from 'components/page/page'
 import SectionButton from 'components/sectionButton/sectionButton'
 import StatBanner from 'components/statBanner/statBanner'
-import GiantAgreementTile from 'components/digital_content/giantAgreementTile'
-import { AgreementTileSize } from 'components/digital_content/types'
-import { getAgreementDefaults, emptyStringGuard } from 'pages/agreementPage/utils'
+import GiantDigitalContentTile from 'components/digital_content/giantDigitalContentTile'
+import { DigitalContentTileSize } from 'components/digital_content/types'
+import { getDigitalContentDefaults, emptyStringGuard } from 'pages/digitalContentPage/utils'
 
 import Remixes from './remixes'
-import styles from './AgreementPage.module.css'
+import styles from './DigitalContentPage.module.css'
 
 const messages = {
   moreBy: 'More By',
-  originalAgreement: 'Original DigitalContent',
+  originalDigitalContent: 'Original DigitalContent',
   viewOtherRemixes: 'View Other Remixes'
 }
 
@@ -28,7 +28,7 @@ export type OwnProps = {
   description: string
   canonicalUrl: string
   // Hero DigitalContent Props
-  heroAgreement: DigitalContent | null
+  heroDigitalContent: DigitalContent | null
   hasValidRemixParent: boolean
   user: User | null
   heroPlaying: boolean
@@ -39,24 +39,24 @@ export type OwnProps = {
   goToSearchResultsPage: (tag: string) => void
   goToAllRemixesPage: () => void
   goToParentRemixesPage: () => void
-  onHeroShare: (agreementId: ID) => void
-  onHeroRepost: (isReposted: boolean, agreementId: ID) => void
+  onHeroShare: (digitalContentId: ID) => void
+  onHeroRepost: (isReposted: boolean, digitalContentId: ID) => void
   onFollow: () => void
   onUnfollow: () => void
   onClickReposts: () => void
   onClickFavorites: () => void
 
-  onSaveAgreement: (isSaved: boolean, agreementId: ID) => void
-  onDownloadAgreement: (
-    agreementId: ID,
+  onSaveDigitalContent: (isSaved: boolean, digitalContentId: ID) => void
+  onDownloadDigitalContent: (
+    digitalContentId: ID,
     cid: CID,
     contentNodeEndpoints: string,
     category?: string,
-    parentAgreementId?: ID
+    parentDigitalContentId?: ID
   ) => void
-  makePublic: (agreementId: ID) => void
-  // Agreements Lineup Props
-  agreements: LineupState<{ id: ID }>
+  makePublic: (digitalContentId: ID) => void
+  // DigitalContents Lineup Props
+  digitalContents: LineupState<{ id: ID }>
   currentQueueItem: QueueItem
   isPlaying: boolean
   isBuffering: boolean
@@ -65,13 +65,13 @@ export type OwnProps = {
   onExternalLinkClick: (url: string) => void
 }
 
-const AgreementPage = ({
+const DigitalContentPage = ({
   title,
   description,
   canonicalUrl,
   hasValidRemixParent,
   // Hero DigitalContent Props
-  heroAgreement,
+  heroDigitalContent,
   user,
   heroPlaying,
   userId,
@@ -83,66 +83,66 @@ const AgreementPage = ({
   goToParentRemixesPage,
   onHeroShare,
   onHeroRepost,
-  onSaveAgreement,
+  onSaveDigitalContent,
   onFollow,
   onUnfollow,
-  onDownloadAgreement,
+  onDownloadDigitalContent,
   makePublic,
   onExternalLinkClick,
   onClickReposts,
   onClickFavorites,
 
-  // Agreements Lineup Props
-  agreements,
+  // DigitalContents Lineup Props
+  digitalContents,
   currentQueueItem,
   isPlaying,
   isBuffering,
   play,
   pause
 }: OwnProps) => {
-  const { entries } = agreements
-  const isOwner = heroAgreement?.owner_id === userId ?? false
+  const { entries } = digitalContents
+  const isOwner = heroDigitalContent?.owner_id === userId ?? false
   const following = user?.does_current_user_follow ?? false
-  const isSaved = heroAgreement?.has_current_user_saved ?? false
-  const isReposted = heroAgreement?.has_current_user_reposted ?? false
-  const loading = !heroAgreement
+  const isSaved = heroDigitalContent?.has_current_user_saved ?? false
+  const isReposted = heroDigitalContent?.has_current_user_reposted ?? false
+  const loading = !heroDigitalContent
 
   const onPlay = () => onHeroPlay(heroPlaying)
   const onSave = isOwner
     ? () => {}
-    : () => heroAgreement && onSaveAgreement(isSaved, heroAgreement.digital_content_id)
+    : () => heroDigitalContent && onSaveDigitalContent(isSaved, heroDigitalContent.digital_content_id)
   const onClickLandlordName = () =>
     goToProfilePage(emptyStringGuard(user?.handle))
-  const onShare = () => (heroAgreement ? onHeroShare(heroAgreement.digital_content_id) : null)
+  const onShare = () => (heroDigitalContent ? onHeroShare(heroDigitalContent.digital_content_id) : null)
   const onRepost = () =>
-    heroAgreement ? onHeroRepost(isReposted, heroAgreement.digital_content_id) : null
+    heroDigitalContent ? onHeroRepost(isReposted, heroDigitalContent.digital_content_id) : null
   const onClickTag = (tag: string) => goToSearchResultsPage(`#${tag}`)
   const onDownload = (
-    agreementId: ID,
+    digitalContentId: ID,
     cid: CID,
     category?: string,
-    parentAgreementId?: ID
+    parentDigitalContentId?: ID
   ) => {
     if (!user) return
     const { content_node_endpoint } = user
     if (!content_node_endpoint) return
-    onDownloadAgreement(
-      agreementId,
+    onDownloadDigitalContent(
+      digitalContentId,
       cid,
       content_node_endpoint,
       category,
-      parentAgreementId
+      parentDigitalContentId
     )
   }
 
-  const defaults = getAgreementDefaults(heroAgreement)
+  const defaults = getDigitalContentDefaults(heroDigitalContent)
 
-  const renderGiantAgreementTile = () => (
-    <GiantAgreementTile
+  const renderGiantDigitalContentTile = () => (
+    <GiantDigitalContentTile
       loading={loading}
       playing={heroPlaying}
-      agreementTitle={defaults.title}
-      agreementId={defaults.agreementId}
+      digitalContentTitle={defaults.title}
+      digitalContentId={defaults.digitalContentId}
       userId={user?.user_id ?? 0}
       landlordName={emptyStringGuard(user?.name)}
       landlordHandle={emptyStringGuard(user?.handle)}
@@ -161,13 +161,13 @@ const AgreementPage = ({
       isOwner={isOwner}
       currentUserId={userId}
       isLandlordPick={
-        heroAgreement && user ? user._landlord_pick === heroAgreement.digital_content_id : false
+        heroDigitalContent && user ? user._landlord_pick === heroDigitalContent.digital_content_id : false
       }
       isSaved={isSaved}
       badge={badge}
       onExternalLinkClick={onExternalLinkClick}
       isUnlisted={defaults.isUnlisted}
-      isRemix={!!defaults.remixParentAgreementId}
+      isRemix={!!defaults.remixParentDigitalContentId}
       isPublishing={defaults.isPublishing}
       fieldVisibility={defaults.fieldVisibility}
       coSign={defaults.coSign}
@@ -189,15 +189,15 @@ const AgreementPage = ({
     />
   )
 
-  const renderOriginalAgreementTitle = () => (
+  const renderOriginalDigitalContentTitle = () => (
     <div className={cn(styles.lineupHeader, styles.large)}>
-      {messages.originalAgreement}
+      {messages.originalDigitalContent}
     </div>
   )
 
   const renderMoreByTitle = () =>
-    (defaults.remixParentAgreementId && entries.length > 2) ||
-    (!defaults.remixParentAgreementId && entries.length > 1) ? (
+    (defaults.remixParentDigitalContentId && entries.length > 2) ||
+    (!defaults.remixParentDigitalContentId && entries.length > 1) ? (
       <div
         className={styles.lineupHeader}
       >{`${messages.moreBy} ${user?.name}`}</div>
@@ -220,26 +220,26 @@ const AgreementPage = ({
         <StatBanner empty />
         <NavBanner empty />
       </div>
-      <div className={styles.contentWrapper}>{renderGiantAgreementTile()}</div>
+      <div className={styles.contentWrapper}>{renderGiantDigitalContentTile()}</div>
       {defaults.fieldVisibility.remixes &&
-        defaults.remixAgreementIds &&
-        defaults.remixAgreementIds.length > 0 && (
+        defaults.remixDigitalContentIds &&
+        defaults.remixDigitalContentIds.length > 0 && (
           <div className={styles.remixes}>
             <Remixes
-              agreementIds={defaults.remixAgreementIds}
+              digitalContentIds={defaults.remixDigitalContentIds}
               goToAllRemixes={goToAllRemixesPage}
               count={defaults.remixesCount}
             />
           </div>
         )}
       <div className={styles.moreByLandlordLineupWrapper}>
-        {hasValidRemixParent ? renderOriginalAgreementTitle() : renderMoreByTitle()}
+        {hasValidRemixParent ? renderOriginalDigitalContentTitle() : renderMoreByTitle()}
         <Lineup
-          lineup={agreements}
+          lineup={digitalContents}
           // Styles for leading element (original digital_content if remix).
-          leadingElementId={defaults.remixParentAgreementId}
+          leadingElementId={defaults.remixParentDigitalContentId}
           leadingElementDelineator={
-            <div className={styles.originalAgreementDelineator}>
+            <div className={styles.originalDigitalContentDelineator}>
               <SectionButton
                 text={messages.viewOtherRemixes}
                 onClick={goToParentRemixesPage}
@@ -247,9 +247,9 @@ const AgreementPage = ({
               {renderMoreByTitle()}
             </div>
           }
-          leadingElementTileProps={{ size: AgreementTileSize.LARGE }}
+          leadingElementTileProps={{ size: DigitalContentTileSize.LARGE }}
           laggingContainerClassName={styles.moreByLandlordContainer}
-          leadingElementClassName={styles.originalAgreement}
+          leadingElementClassName={styles.originalDigitalContent}
           showLeadingElementLandlordPick={false}
           applyLeadingElementStylesToSkeleton
           // Don't render the first tile in the lineup since it's actually the "giant"
@@ -262,18 +262,18 @@ const AgreementPage = ({
           variant={LineupVariant.CONDENSED}
           playingUid={currentQueueItem.uid}
           playingSource={currentQueueItem.source}
-          playingAgreementId={
+          playingDigitalContentId={
             currentQueueItem.digital_content && currentQueueItem.digital_content.digital_content_id
           }
           playing={isPlaying}
           buffering={isBuffering}
-          playAgreement={play}
-          pauseAgreement={pause}
-          actions={agreementsActions}
+          playDigitalContent={play}
+          pauseDigitalContent={pause}
+          actions={digitalContentsActions}
         />
       </div>
     </Page>
   )
 }
 
-export default AgreementPage
+export default DigitalContentPage

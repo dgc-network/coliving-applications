@@ -3,7 +3,7 @@ import {
   BadgeTier,
   User,
   BNAudio,
-  StringLive,
+  StringDigitalcoin,
   StringWei
 } from '@coliving/common'
 import { createSelector } from 'reselect'
@@ -22,27 +22,27 @@ export type BadgeTierInfo = {
 export const badgeTiers: BadgeTierInfo[] = [
   {
     tier: 'platinum',
-    minAudio: stringAudioToBN('100000' as StringLive),
+    minAudio: stringAudioToBN('100000' as StringDigitalcoin),
     humanReadableAmount: 100000
   },
   {
     tier: 'gold',
-    minAudio: stringAudioToBN('10000' as StringLive),
+    minAudio: stringAudioToBN('10000' as StringDigitalcoin),
     humanReadableAmount: 10000
   },
   {
     tier: 'silver',
-    minAudio: stringAudioToBN('100' as StringLive),
+    minAudio: stringAudioToBN('100' as StringDigitalcoin),
     humanReadableAmount: 100
   },
   {
     tier: 'bronze',
-    minAudio: stringAudioToBN('10' as StringLive),
+    minAudio: stringAudioToBN('10' as StringDigitalcoin),
     humanReadableAmount: 10
   },
   {
     tier: 'none',
-    minAudio: stringAudioToBN('0' as StringLive),
+    minAudio: stringAudioToBN('0' as StringDigitalcoin),
     humanReadableAmount: 0
   }
 ]

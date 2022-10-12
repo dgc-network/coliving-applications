@@ -1,12 +1,12 @@
 import { createSelector } from 'reselect'
 
-import { getAgreement } from 'common/store/cache/agreements/selectors'
+import { getDigitalContent } from 'common/store/cache/digital_contents/selectors'
 import { getUser } from 'common/store/cache/users/selectors'
 import { AppState } from 'store/types'
 
-export const getHasAgreement = (state: AppState) => !!state.player.agreementId
+export const getHasDigitalContent = (state: AppState) => !!state.player.digitalContentId
 export const getUid = (state: AppState) => state.player.uid
-export const getAgreementId = (state: AppState) => state.player.agreementId
+export const getDigitalContentId = (state: AppState) => state.player.digitalContentId
 export const getCollectible = (state: AppState) => state.player.collectible
 export const getAudio = (state: AppState) => state.player.digitalcoin
 
@@ -15,10 +15,10 @@ export const getPaused = (state: AppState) => !state.player.playing
 export const getCounter = (state: AppState) => state.player.counter
 export const getBuffering = (state: AppState) => state.player.buffering
 
-export const getCurrentAgreement = (state: AppState) =>
-  getAgreement(state, { id: getAgreementId(state) })
+export const getCurrentDigitalContent = (state: AppState) =>
+  getDigitalContent(state, { id: getDigitalContentId(state) })
 const getCurrentUser = (state: AppState) => {
-  const digital_content = getCurrentAgreement(state)
+  const digital_content = getCurrentDigitalContent(state)
   if (digital_content) {
     return getUser(state, { id: digital_content.owner_id })
   }
@@ -27,7 +27,7 @@ const getCurrentUser = (state: AppState) => {
 
 export const makeGetCurrent = () => {
   return createSelector(
-    [getUid, getCurrentAgreement, getCurrentUser, getCollectible],
+    [getUid, getCurrentDigitalContent, getCurrentUser, getCollectible],
     (uid, digital_content, user, collectible) => ({
       uid,
       digital_content,

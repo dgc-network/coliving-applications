@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 
-import { getAgreement } from '@coliving/web/src/common/store/cache/agreements/selectors'
+import { getDigitalContent } from '@coliving/web/src/common/store/cache/digital_contents/selectors'
 import { getUser } from '@coliving/web/src/common/store/cache/users/selectors'
 import { next, previous } from '@coliving/web/src/common/store/queue/slice'
 import { Genre } from '@coliving/web/src/common/utils/genres'
@@ -27,7 +27,7 @@ import { useSelectorWeb } from 'app/hooks/useSelectorWeb'
 import { SEEK, seek } from 'app/store/digitalcoin/actions'
 import {
   getPlaying,
-  getAgreement as getNativeAgreement
+  getDigitalContent as getNativeDigitalContent
 } from 'app/store/digitalcoin/selectors'
 import { makeStyles } from 'app/styles'
 
@@ -37,7 +37,7 @@ import { AudioControls } from './audioControls'
 import { Logo } from './logo'
 import { PlayBar } from './playBar'
 import { TitleBar } from './titleBar'
-import { AgreementInfo } from './AgreementInfo'
+import { DigitalContentInfo } from './DigitalContentInfo'
 import { PLAY_BAR_HEIGHT } from './constants'
 
 const STATUS_BAR_FADE_CUTOFF = 0.6
@@ -68,7 +68,7 @@ const useStyles = makeStyles(({ spacing }) => ({
     flexShrink: 1,
     marginBottom: spacing(5)
   },
-  agreementInfoContainer: {
+  digitalContentInfoContainer: {
     marginHorizontal: spacing(6),
     marginBottom: spacing(3)
   },
@@ -163,21 +163,21 @@ const NowPlayingDrawer = ({ translationAnim }: NowPlayingDrawerProps) => {
   const [isGestureEnabled, setIsGestureEnabled] = useState(true)
 
   // TODO: As we move away from the digitalcoin store slice in mobile-client
-  // in favor of player/queue selectors in common, getNativeAgreement calls
+  // in favor of player/queue selectors in common, getNativeDigitalContent calls
   // should be replaced
-  const agreementInfo = useSelector(getNativeAgreement)
+  const digitalContentInfo = useSelector(getNativeDigitalContent)
   const digital_content = useSelectorWeb((state) =>
-    getAgreement(state, agreementInfo ? { id: agreementInfo.agreementId } : {})
+    getDigitalContent(state, digitalContentInfo ? { id: digitalContentInfo.digitalContentId } : {})
   )
   const user = useSelectorWeb((state) =>
     getUser(state, digital_content ? { id: digital_content.owner_id } : {})
   )
 
-  const agreementId = agreementInfo?.agreementId
+  const digitalContentId = digitalContentInfo?.digitalContentId
   const [mediaKey, setMediaKey] = useState(0)
   useEffect(() => {
     setMediaKey((mediaKey) => mediaKey + 1)
-  }, [agreementId])
+  }, [digitalContentId])
 
   const onNext = useCallback(() => {
     if (digital_content?.genre === Genre.PODCASTS) {
@@ -285,8 +285,8 @@ const NowPlayingDrawer = ({ translationAnim }: NowPlayingDrawerProps) => {
             >
               <Artwork digital_content={digital_content} />
             </Pressable>
-            <View style={styles.agreementInfoContainer}>
-              <AgreementInfo
+            <View style={styles.digitalContentInfoContainer}>
+              <DigitalContentInfo
                 onPressLandlord={handlePressLandlord}
                 onPressTitle={handlePressTitle}
                 digital_content={digital_content}

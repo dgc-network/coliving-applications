@@ -27,7 +27,7 @@ const messages = {
 
 type ContentListTileProps = {
   title: string
-  landlord: string
+  author: string
   imageUrl: string | null
   onClick: () => void
 }
@@ -35,25 +35,25 @@ type ContentListTileProps = {
 const FALLBACK_CONTENT_LISTS = [
   {
     title: 'Coliving Exclusives',
-    landlord: 'Coliving',
+    author: 'Coliving',
     imageUrl: colivingExclusivesContentListImg,
     link: '/coliving/contentList/official-coliving-exclusives-1428'
   },
   {
     title: 'MOOMBAHTON COMES TO COLIVING',
-    landlord: 'Moombahton',
+    author: 'Moombahton',
     imageUrl: moombahtonContentListImg,
     link: '/moombahton/contentList/moombahton-comes-to-coliving-9601'
   },
   {
     title: 'Hot & New On Coliving 🔥',
-    landlord: 'Coliving',
+    author: 'Coliving',
     imageUrl: hotAndNewContentListImg,
     link: '/coliving/contentList/hot-new-on-coliving-%F0%9F%94%A5-4281'
   },
   {
     title: 'Coliving Weekly',
-    landlord: 'Coliving',
+    author: 'Coliving',
     imageUrl: colivingWeeklyContentListImg,
     link: '/3lau/is-it-love-feat.-yeah-boy-1151'
   }
@@ -66,7 +66,7 @@ const DesktopContentListTile = (props: ContentListTileProps) => {
   const [mouseDown, setMouseDown] = useState(false)
   return (
     <div
-      className={styles.agreementMoveContainer}
+      className={styles.digitalContentMoveContainer}
       ref={cardRef}
       // @ts-ignore
       onClick={props.onClick}
@@ -79,7 +79,7 @@ const DesktopContentListTile = (props: ContentListTileProps) => {
       onMouseDown={() => setMouseDown(true)}
     >
       <animated.div
-        className={styles.agreementContainer}
+        className={styles.digitalContentContainer}
         // @ts-ignore
         style={{ transform: mouseDown ? '' : transform }}
       >
@@ -90,14 +90,14 @@ const DesktopContentListTile = (props: ContentListTileProps) => {
             boxShadow: `0px 10px 50px -2px rgba(56, 14, 13, 0.4)`
           }}
         >
-          <div className={styles.agreementContent}>
-            <div className={styles.agreementLandlord}>{`By ${props.landlord}`}</div>
+          <div className={styles.digitalContent}>
+            <div className={styles.digitalContentLandlord}>{`By ${props.author}`}</div>
             <IconListenOnColiving className={styles.listenOnColiving} />
           </div>
         </div>
       </animated.div>
-      <div className={styles.agreementTitleContainer}>
-        <span className={styles.agreementTitle}>{props.title}</span>
+      <div className={styles.digitalContentTitleContainer}>
+        <span className={styles.digitalContentTitle}>{props.title}</span>
       </div>
     </div>
   )
@@ -106,11 +106,11 @@ const DesktopContentListTile = (props: ContentListTileProps) => {
 const MobileContentListTile = (props: ContentListTileProps) => (
   <div
     key={props.title}
-    className={styles.agreementContainer}
+    className={styles.digitalContentContainer}
     onClick={props.onClick}
   >
     <div
-      className={styles.agreementImage}
+      className={styles.digitalContentImage}
       style={{
         backgroundImage: `url(${
           props.imageUrl || colivingExclusivesContentListImg
@@ -118,7 +118,7 @@ const MobileContentListTile = (props: ContentListTileProps) => (
         boxShadow: `0px 10px 50px -2px rgba(56, 14, 13, 0.4)`
       }}
     ></div>
-    <div className={styles.agreementTitle}>{props.title}</div>
+    <div className={styles.digitalContentTitle}>{props.title}</div>
   </div>
 )
 
@@ -174,7 +174,7 @@ const FeaturedContent = (props: FeaturedContentProps) => {
       <div className={styles.mobileContainer}>
         <h3 className={styles.title}>{messages.title}</h3>
         <h4 className={styles.subTitle}>{messages.subTitle}</h4>
-        <div className={styles.agreementsContainer}>
+        <div className={styles.digitalContentsContainer}>
           {trendingContentListsResponse.value == null ||
           trendingContentListsResponse.value.length < 4
             ? FALLBACK_CONTENT_LISTS.map((p) => (
@@ -190,7 +190,7 @@ const FeaturedContent = (props: FeaturedContentProps) => {
                   <MobileContentListTile
                     key={p.content_list_id}
                     title={p.content_list_name}
-                    landlord={p.user.name}
+                    author={p.user.name}
                     imageUrl={getImageUrl(
                       'small',
                       p,
@@ -228,7 +228,7 @@ const FeaturedContent = (props: FeaturedContentProps) => {
             </div>
           </animated.div>
         </div>
-        <div className={styles.agreementsContainer}>
+        <div className={styles.digitalContentsContainer}>
           {trendingContentListsResponse.value == null ||
           trendingContentListsResponse.value.length < 4
             ? FALLBACK_CONTENT_LISTS.map((p) => (
@@ -244,7 +244,7 @@ const FeaturedContent = (props: FeaturedContentProps) => {
                   <DesktopContentListTile
                     key={p.content_list_id}
                     title={p.content_list_name}
-                    landlord={p.user.name}
+                    author={p.user.name}
                     imageUrl={getImageUrl(
                       'large',
                       p,

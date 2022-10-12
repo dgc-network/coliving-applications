@@ -58,7 +58,7 @@ const download = async ({
     const fetchRes = await fetchTask
 
     // Do this after download is done
-    dispatch(setVisibility({ drawer: 'DownloadAgreementProgress', visible: false }))
+    dispatch(setVisibility({ drawer: 'DownloadDigitalContentProgress', visible: false }))
 
     await onFetchComplete?.(fetchRes)
   } catch (err) {
@@ -77,10 +77,10 @@ export const messageHandlers: Partial<MessageHandlers> = {
       (url) => url !== null && url !== undefined
     )
     const fileName = message.filename
-    const agreementName = fileName.split('.').slice(0, -1).join('')
+    const digitalContentName = fileName.split('.').slice(0, -1).join('')
 
-    dispatch(setVisibility({ drawer: 'DownloadAgreementProgress', visible: true }))
-    dispatch(setFileInfo({ agreementName, fileName }))
+    dispatch(setVisibility({ drawer: 'DownloadDigitalContentProgress', visible: true }))
+    dispatch(setFileInfo({ digitalContentName, fileName }))
     dispatch(setFetchCancel(cancelDownloadTask))
 
     if (Platform.OS === 'ios') {
@@ -109,12 +109,12 @@ export const messageHandlers: Partial<MessageHandlers> = {
         getFetchConfig: (filePath) => ({
           // On android save to FS and trigger notification that it is saved
           addAndroidDownloads: {
-            description: agreementName,
+            description: digitalContentName,
             mediaScannable: true,
             mime: 'digitalcoin/mpeg',
             notification: true,
             path: filePath,
-            title: agreementName,
+            title: digitalContentName,
             useDownloadManager: true
           }
         })

@@ -7,10 +7,10 @@ export const CLOSE = 'ADD_TO_CONTENT_LIST/CLOSE'
 
 export const requestOpen = createCustomAction(
   REQUEST_OPEN,
-  (agreementId: ID, agreementTitle: string) => ({ agreementId, agreementTitle })
+  (digitalContentId: ID, digitalContentTitle: string) => ({ digitalContentId, digitalContentTitle })
 )
 export const open = createCustomAction(
   OPEN,
-  (agreementId: ID, agreementTitle: string) => ({ agreementId, agreementTitle })
+  (digitalContentId: ID, digitalContentTitle: string) => ({ digitalContentId, digitalContentTitle })
 )
 export const close = createCustomAction(CLOSE, () => {})

@@ -1,8 +1,8 @@
-import { DigitalContent, UserAgreementMetadata, StringKeys } from '@coliving/common'
+import { DigitalContent, UserDigitalContentMetadata, StringKeys } from '@coliving/common'
 import { call, select } from 'redux-saga/effects'
 
 import { getUserId } from 'common/store/account/selectors'
-import { processAndCacheAgreements } from 'common/store/cache/agreements/utils'
+import { processAndCacheDigitalContents } from 'common/store/cache/digital_contents/utils'
 import {
   PREFIX,
   trendingUndergroundLineupActions
@@ -25,7 +25,7 @@ function* getTrendingUnderground({
   )
 
   const currentUserId: ReturnType<typeof getUserId> = yield select(getUserId)
-  let agreements: UserAgreementMetadata[] = yield call(
+  let digitalContents: UserDigitalContentMetadata[] = yield call(
     (args) => apiClient.getTrendingUnderground(args),
     {
       currentUserId,
@@ -34,13 +34,13 @@ function* getTrendingUnderground({
     }
   )
   if (TF.size > 0) {
-    agreements = agreements.filter((t) => {
+    digitalContents = digitalContents.filter((t) => {
       const shaId = window.Web3.utils.sha3(t.digital_content_id.toString())
       return !TF.has(shaId)
     })
   }
 
-  const processed: DigitalContent[] = yield processAndCacheAgreements(agreements)
+  const processed: DigitalContent[] = yield processAndCacheDigitalContents(digitalContents)
   return processed
 }
 

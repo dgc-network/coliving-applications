@@ -9,7 +9,7 @@ const errorSagas = createErrorSagas<PlayerErrors>({
   getShouldReport: () => true,
   getAdditionalInfo: (action: any) => ({
     error: action.error,
-    agreementId: action.agreementId,
+    digitalContentId: action.digitalContentId,
     info: action.info
   })
 })

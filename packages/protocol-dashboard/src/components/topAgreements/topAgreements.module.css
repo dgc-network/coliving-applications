@@ -16,7 +16,7 @@
   user-select: none;
 }
 
-.agreements {
+.digitalContents {
   display: flex;
   align-items: center;
   justify-content: space-evenly;
@@ -53,7 +53,7 @@
   transform: scale3d(0.99, 0.99, 0.99);
 }
 
-.agreementTitle {
+.digitalContentTitle {
   letter-spacing: 0.4px;
   font-weight: bold;
   font-size: 16px;

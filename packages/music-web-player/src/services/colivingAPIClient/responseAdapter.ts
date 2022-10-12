@@ -5,9 +5,9 @@ import {
   Favorite,
   Repost,
   Remix,
-  StemAgreementMetadata,
-  AgreementMetadata,
-  UserAgreementMetadata,
+  StemDigitalContentMetadata,
+  DigitalContentMetadata,
+  UserDigitalContentMetadata,
   UserMetadata,
   StringWei,
   removeNullable
@@ -20,14 +20,14 @@ import {
   APIFavorite,
   APIRemix,
   APIRepost,
-  APIAgreement,
+  APIDigitalContent,
   APIContentList,
   APISearchUser,
   APIUser,
   APIStem,
   APIResponse,
   APISearch,
-  APISearchAgreement,
+  APISearchDigitalContent,
   APISearchAutocomplete,
   APISearchContentList
 } from './types'
@@ -112,25 +112,25 @@ const makeRepost = (repost: APIRepost): Repost | undefined => {
 }
 
 const makeRemix = (remix: APIRemix): Remix | undefined => {
-  const decodedAgreementId = decodeHashId(remix.parent_digital_content_id)
+  const decodedDigitalContentId = decodeHashId(remix.parent_digital_content_id)
   const user = makeUser(remix.user)
-  if (!decodedAgreementId || !user) {
+  if (!decodedDigitalContentId || !user) {
     return undefined
   }
 
   return {
     ...remix,
-    parent_digital_content_id: decodedAgreementId,
+    parent_digital_content_id: decodedDigitalContentId,
     user
   }
 }
 
-export const makeUserlessAgreement = (
-  digital_content: APIAgreement | APISearchAgreement
-): AgreementMetadata | undefined => {
-  const decodedAgreementId = decodeHashId(digital_content.id)
+export const makeUserlessDigitalContent = (
+  digital_content: APIDigitalContent | APISearchDigitalContent
+): DigitalContentMetadata | undefined => {
+  const decodedDigitalContentId = decodeHashId(digital_content.id)
   const decodedOwnerId = decodeHashId(digital_content.user_id)
-  if (!decodedAgreementId || !decodedOwnerId) return undefined
+  if (!decodedDigitalContentId || !decodedOwnerId) return undefined
 
   const saves =
     'followee_favorites' in digital_content
@@ -143,7 +143,7 @@ export const makeUserlessAgreement = (
       : []
 
   const remixes =
-    digital_content.remix_of.agreements?.map(makeRemix).filter(removeNullable) ?? []
+    digital_content.remix_of.digitalContents?.map(makeRemix).filter(removeNullable) ?? []
   const play_count = 'play_count' in digital_content ? digital_content.play_count : 0
   const save_count = 'favorite_count' in digital_content ? digital_content.favorite_count : 0
   const repost_count = 'repost_count' in digital_content ? digital_content.repost_count : 0
@@ -155,7 +155,7 @@ export const makeUserlessAgreement = (
     'has_current_user_saved' in digital_content ? digital_content.has_current_user_saved : false
   const marshalled = {
     ...digital_content,
-    digital_content_id: decodedAgreementId,
+    digital_content_id: decodedDigitalContentId,
     owner_id: decodedOwnerId,
     followee_saves: saves,
     followee_reposts: reposts,
@@ -167,7 +167,7 @@ export const makeUserlessAgreement = (
     remix_of:
       remixes.length > 0
         ? {
-            agreements: remixes
+            digitalContents: remixes
           }
         : null,
 
@@ -192,13 +192,13 @@ export const makeUserlessAgreement = (
   return marshalled
 }
 
-export const makeAgreement = (
-  digital_content: APIAgreement | APISearchAgreement
-): UserAgreementMetadata | undefined => {
-  const decodedAgreementId = decodeHashId(digital_content.id)
+export const makeDigitalContent = (
+  digital_content: APIDigitalContent | APISearchDigitalContent
+): UserDigitalContentMetadata | undefined => {
+  const decodedDigitalContentId = decodeHashId(digital_content.id)
   const decodedOwnerId = decodeHashId(digital_content.user_id)
   const user = makeUser(digital_content.user)
-  if (!decodedAgreementId || !decodedOwnerId || !user) {
+  if (!decodedDigitalContentId || !decodedOwnerId || !user) {
     return undefined
   }
 
@@ -213,7 +213,7 @@ export const makeAgreement = (
       : []
 
   const remixes =
-    digital_content.remix_of.agreements?.map(makeRemix).filter(removeNullable) ?? []
+    digital_content.remix_of.digitalContents?.map(makeRemix).filter(removeNullable) ?? []
   const play_count = 'play_count' in digital_content ? digital_content.play_count : 0
   const save_count = 'favorite_count' in digital_content ? digital_content.favorite_count : 0
   const repost_count = 'repost_count' in digital_content ? digital_content.repost_count : 0
@@ -226,7 +226,7 @@ export const makeAgreement = (
   const marshalled = {
     ...digital_content,
     user,
-    digital_content_id: decodedAgreementId,
+    digital_content_id: decodedDigitalContentId,
     owner_id: decodedOwnerId,
     followee_saves: saves,
     followee_reposts: reposts,
@@ -238,7 +238,7 @@ export const makeAgreement = (
     remix_of:
       remixes.length > 0
         ? {
-            agreements: remixes
+            digitalContents: remixes
           }
         : null,
 
@@ -263,12 +263,12 @@ export const makeAgreement = (
   return marshalled
 }
 
-export const makeAgreementId = (digital_content: { id: string }): ID | undefined => {
-  const decodedAgreementId = decodeHashId(digital_content.id)
-  if (!decodedAgreementId) {
+export const makeDigitalContentId = (digital_content: { id: string }): ID | undefined => {
+  const decodedDigitalContentId = decodeHashId(digital_content.id)
+  if (!decodedDigitalContentId) {
     return undefined
   }
-  return decodedAgreementId
+  return decodedDigitalContentId
 }
 
 export const makeContentList = (
@@ -320,10 +320,10 @@ export const makeContentList = (
       .filter(removeNullable)
   }
 
-  const agreements =
-    'agreements' in contentList
-      ? contentList.agreements
-          ?.map((digital_content) => makeAgreement(digital_content))
+  const digitalContents =
+    'digitalContents' in contentList
+      ? contentList.digitalContents
+          ?.map((digital_content) => makeDigitalContent(digital_content))
           .filter(removeNullable) ?? []
       : []
 
@@ -331,7 +331,7 @@ export const makeContentList = (
     ...contentList,
     variant: Variant.USER_GENERATED,
     user,
-    agreements,
+    digitalContents,
     content_list_id: decodedContentListId,
     content_list_owner_id: decodedOwnerId,
     followee_saves: saves,
@@ -365,16 +365,16 @@ export const makeContentList = (
 
 export const makeActivity = (
   activity: APIActivity
-): UserAgreementMetadata | UserCollectionMetadata | undefined => {
+): UserDigitalContentMetadata | UserCollectionMetadata | undefined => {
   switch (activity.item_type) {
     case 'digital_content':
-      return makeAgreement(activity.item)
+      return makeDigitalContent(activity.item)
     case 'contentList':
       return makeContentList(activity.item)
   }
 }
 
-export const makeStemAgreement = (stem: APIStem): StemAgreementMetadata | undefined => {
+export const makeStemDigitalContent = (stem: APIStem): StemDigitalContentMetadata | undefined => {
   const [id, parentId, ownerId] = [stem.id, stem.parent_id, stem.user_id].map(
     decodeHashId
   )
@@ -426,11 +426,11 @@ export const makeStemAgreement = (stem: APIStem): StemAgreementMetadata | undefi
 
 export const adaptSearchResponse = (searchResponse: APIResponse<APISearch>) => {
   return {
-    agreements:
-      searchResponse.data.agreements?.map(makeAgreement).filter(removeNullable) ??
+    digitalContents:
+      searchResponse.data.digitalContents?.map(makeDigitalContent).filter(removeNullable) ??
       undefined,
     saved_digital_contents:
-      searchResponse.data.saved_digital_contents?.map(makeAgreement).filter(removeNullable) ??
+      searchResponse.data.saved_digital_contents?.map(makeDigitalContent).filter(removeNullable) ??
       undefined,
     users:
       searchResponse.data.users?.map(makeUser).filter(removeNullable) ??
@@ -460,11 +460,11 @@ export const adaptSearchAutocompleteResponse = (
   searchResponse: APIResponse<APISearchAutocomplete>
 ) => {
   return {
-    agreements:
-      searchResponse.data.agreements?.map(makeAgreement).filter(removeNullable) ??
+    digitalContents:
+      searchResponse.data.digitalContents?.map(makeDigitalContent).filter(removeNullable) ??
       undefined,
     saved_digital_contents:
-      searchResponse.data.saved_digital_contents?.map(makeAgreement).filter(removeNullable) ??
+      searchResponse.data.saved_digital_contents?.map(makeDigitalContent).filter(removeNullable) ??
       undefined,
     users:
       searchResponse.data.users?.map(makeUser).filter(removeNullable) ??

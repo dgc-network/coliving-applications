@@ -1,9 +1,9 @@
-.agreementContent {
+.digitalContent {
   padding: 14px 12px 0px;
   width: 100%;
 }
 
-.agreementsContainer {
+.digitalContentsContainer {
   padding-top: 41px;
 }
 
@@ -22,6 +22,6 @@
   text-transform: uppercase;
 }
 
-.originalAgreement {
+.originalDigitalContent {
   margin-bottom: 16px !important;
 }

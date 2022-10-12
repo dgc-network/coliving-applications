@@ -2,63 +2,63 @@ import { Kind, makeUid } from '@coliving/common'
 import moment from 'moment'
 import { call, select, put, takeEvery } from 'redux-saga/effects'
 
-import { getAgreements as getCacheAgreements } from 'common/store/cache/agreements/selectors'
-import { retrieveAgreements } from 'common/store/cache/agreements/utils'
+import { getDigitalContents as getCacheDigitalContents } from 'common/store/cache/digital_contents/selectors'
+import { retrieveDigitalContents } from 'common/store/cache/digital_contents/utils'
 import * as saveActions from 'common/store/pages/savedPage/actions'
 import {
   PREFIX,
-  agreementsActions as savedAgreementsActions
-} from 'common/store/pages/savedPage/lineups/agreements/actions'
+  digitalContentsActions as savedDigitalContentsActions
+} from 'common/store/pages/savedPage/lineups/digital_contents/actions'
 import {
   getLocalSaves,
   getLocalSave,
-  getSavedAgreementsLineupUid,
+  getSavedDigitalContentsLineupUid,
   getSaves
 } from 'common/store/pages/savedPage/selectors'
 import * as queueActions from 'common/store/queue/slice'
-import { SAVE_AGREEMENT, UNSAVE_AGREEMENT } from 'common/store/social/agreements/actions'
+import { SAVE_AGREEMENT, UNSAVE_AGREEMENT } from 'common/store/social/digital_contents/actions'
 import { LineupSagas } from 'store/lineup/sagas'
 import { getUid as getPlayerUid } from 'store/player/selectors'
 
-const getSavedAgreements = (state) => state.pages.savedPage.agreements
+const getSavedDigitalContents = (state) => state.pages.savedPage.digitalContents
 
-function* getAgreements() {
-  const savedAgreements = yield select(getSaves)
-  const savedAgreementIds = savedAgreements.map((save) => save.save_item_id)
-  const savedAgreementTimestamps = savedAgreements.reduce((map, save) => {
+function* getDigitalContents() {
+  const savedDigitalContents = yield select(getSaves)
+  const savedDigitalContentIds = savedDigitalContents.map((save) => save.save_item_id)
+  const savedDigitalContentTimestamps = savedDigitalContents.reduce((map, save) => {
     map[save.save_item_id] = save.created_at
     return map
   }, {})
 
   const localSaves = yield select(getLocalSaves)
-  const localSavedAgreementIds = Object.keys(localSaves).filter(
-    (savedAgreementId) => !savedAgreementTimestamps[savedAgreementId]
+  const localSavedDigitalContentIds = Object.keys(localSaves).filter(
+    (savedDigitalContentId) => !savedDigitalContentTimestamps[savedDigitalContentId]
   )
-  const localSavedAgreementTimestamps = localSavedAgreementIds.reduce((map, saveId) => {
+  const localSavedDigitalContentTimestamps = localSavedDigitalContentIds.reduce((map, saveId) => {
     map[saveId] = Date.now()
     return map
   }, {})
 
-  const allSavedAgreementIds = [...localSavedAgreementIds, ...savedAgreementIds]
-  const allSavedAgreementTimestamps = {
-    ...localSavedAgreementTimestamps,
-    ...savedAgreementTimestamps
+  const allSavedDigitalContentIds = [...localSavedDigitalContentIds, ...savedDigitalContentIds]
+  const allSavedDigitalContentTimestamps = {
+    ...localSavedDigitalContentTimestamps,
+    ...savedDigitalContentTimestamps
   }
 
-  if (allSavedAgreementIds.length > 0) {
-    const agreements = yield call(retrieveAgreements, { agreementIds: allSavedAgreementIds })
-    const agreementsMap = agreements.reduce((map, digital_content) => {
+  if (allSavedDigitalContentIds.length > 0) {
+    const digitalContents = yield call(retrieveDigitalContents, { digitalContentIds: allSavedDigitalContentIds })
+    const digitalContentsMap = digitalContents.reduce((map, digital_content) => {
       // If the digital_content hasn't confirmed save from the backend, pretend it is for the client.
       if (!digital_content.has_current_user_saved) {
         digital_content.has_current_user_saved = true
         digital_content.save_count += 1
       }
-      digital_content.dateSaved = allSavedAgreementTimestamps[digital_content.digital_content_id]
+      digital_content.dateSaved = allSavedDigitalContentTimestamps[digital_content.digital_content_id]
 
       map[digital_content.digital_content_id] = digital_content
       return map
     }, {})
-    return allSavedAgreementIds.map((id) => agreementsMap[id])
+    return allSavedDigitalContentIds.map((id) => digitalContentsMap[id])
   }
   return []
 }
@@ -72,13 +72,13 @@ const keepDateSaved = (entry) => ({
 
 const sourceSelector = () => PREFIX
 
-class SavedAgreementsSagas extends LineupSagas {
+class SavedDigitalContentsSagas extends LineupSagas {
   constructor() {
     super(
       PREFIX,
-      savedAgreementsActions,
-      getSavedAgreements,
-      getAgreements,
+      savedDigitalContentsActions,
+      getSavedDigitalContents,
+      getDigitalContents,
       keepDateSaved,
       /* removeDeleted */ false,
       sourceSelector
@@ -89,33 +89,33 @@ class SavedAgreementsSagas extends LineupSagas {
 // If a local save is being done and the user is on the saved page route, make sure to update the lineup.
 function* watchSave() {
   yield takeEvery(SAVE_AGREEMENT, function* (action) {
-    const { agreementId } = action
+    const { digitalContentId } = action
 
-    const agreements = yield select(getCacheAgreements, { ids: [agreementId] })
-    const digital_content = agreements[agreementId]
+    const digitalContents = yield select(getCacheDigitalContents, { ids: [digitalContentId] })
+    const digital_content = digitalContents[digitalContentId]
     if (digital_content.has_current_user_saved) return
 
     const localSaveUid = makeUid(
       Kind.AGREEMENTS,
-      agreementId,
-      savedAgreementsActions.PREFIX
+      digitalContentId,
+      savedDigitalContentsActions.PREFIX
     )
 
     const newEntry = {
       uid: localSaveUid,
       kind: Kind.AGREEMENTS,
-      id: agreementId,
+      id: digitalContentId,
       dateSaved: moment().format()
     }
-    yield put(saveActions.addLocalSave(agreementId, localSaveUid))
-    yield put(savedAgreementsActions.add(newEntry, agreementId))
+    yield put(saveActions.addLocalSave(digitalContentId, localSaveUid))
+    yield put(savedDigitalContentsActions.add(newEntry, digitalContentId))
     yield put(
       queueActions.add({
         entries: [
           {
-            id: agreementId,
+            id: digitalContentId,
             uid: localSaveUid,
-            souce: savedAgreementsActions.PREFIX
+            souce: savedDigitalContentsActions.PREFIX
           }
         ]
       })
@@ -125,19 +125,19 @@ function* watchSave() {
 
 function* watchUnsave() {
   yield takeEvery(UNSAVE_AGREEMENT, function* (action) {
-    const { agreementId } = action
-    const localSaveUid = yield select(getLocalSave, { id: agreementId })
+    const { digitalContentId } = action
+    const localSaveUid = yield select(getLocalSave, { id: digitalContentId })
     const playerUid = yield select(getPlayerUid)
-    yield put(saveActions.removeLocalSave(action.agreementId))
+    yield put(saveActions.removeLocalSave(action.digitalContentId))
     if (localSaveUid) {
-      yield put(savedAgreementsActions.remove(Kind.AGREEMENTS, localSaveUid))
+      yield put(savedDigitalContentsActions.remove(Kind.AGREEMENTS, localSaveUid))
       if (localSaveUid !== playerUid) {
         yield put(queueActions.remove({ uid: localSaveUid }))
       }
     }
-    const lineupSaveUid = yield select(getSavedAgreementsLineupUid, { id: agreementId })
+    const lineupSaveUid = yield select(getSavedDigitalContentsLineupUid, { id: digitalContentId })
     if (lineupSaveUid) {
-      yield put(savedAgreementsActions.remove(Kind.AGREEMENTS, lineupSaveUid))
+      yield put(savedDigitalContentsActions.remove(Kind.AGREEMENTS, lineupSaveUid))
       if (lineupSaveUid !== playerUid) {
         yield put(queueActions.remove({ uid: lineupSaveUid }))
       }
@@ -146,5 +146,5 @@ function* watchUnsave() {
 }
 
 export default function sagas() {
-  return new SavedAgreementsSagas().getSagas().concat(watchSave, watchUnsave)
+  return new SavedDigitalContentsSagas().getSagas().concat(watchSave, watchUnsave)
 }

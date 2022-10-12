@@ -1,4 +1,4 @@
-import * as pinAgreementActions from 'store/application/ui/setAsLandlordPickConfirmation/actions'
+import * as pinDigitalContentActions from 'store/application/ui/setAsLandlordPickConfirmation/actions'
 import { makeReducer } from 'utils/reducer'
 
 import { SetAsLandlordPickConfirmationState } from './types'
@@ -8,18 +8,18 @@ const initialState: SetAsLandlordPickConfirmationState = {
 }
 
 const actionMap = {
-  [pinAgreementActions.SHOW_SET_AS_LANDLORD_PICK_CONFIRMATION](
+  [pinDigitalContentActions.SHOW_SET_AS_LANDLORD_PICK_CONFIRMATION](
     state: SetAsLandlordPickConfirmationState,
-    action: pinAgreementActions.ShowSetAsLandlordPickConfirmation
+    action: pinDigitalContentActions.ShowSetAsLandlordPickConfirmation
   ): SetAsLandlordPickConfirmationState {
     return {
       isVisible: true,
-      agreementId: action.agreementId
+      digitalContentId: action.digitalContentId
     }
   },
-  [pinAgreementActions.HIDE_SET_AS_LANDLORD_PICK_CONFIRMATION](
+  [pinDigitalContentActions.HIDE_SET_AS_LANDLORD_PICK_CONFIRMATION](
     state: SetAsLandlordPickConfirmationState,
-    action: pinAgreementActions.CancelSetAsLandlordPick
+    action: pinDigitalContentActions.CancelSetAsLandlordPick
   ): SetAsLandlordPickConfirmationState {
     return { isVisible: false }
   }

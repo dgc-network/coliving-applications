@@ -10,13 +10,13 @@ import {
 import { useSelector } from 'react-redux'
 
 import { useDispatchWeb } from 'app/hooks/useDispatchWeb'
-import { getAgreement, getPlaying, getSeek } from 'app/store/digitalcoin/selectors'
+import { getDigitalContent, getPlaying, getSeek } from 'app/store/digitalcoin/selectors'
 
 export const useChromecast = () => {
   const dispatchWeb = useDispatchWeb()
 
   // Data hooks
-  const digital_content = useSelector(getAgreement)
+  const digital_content = useSelector(getDigitalContent)
   const playing = useSelector(getPlaying)
   const seek = useSelector(getSeek)
 
@@ -33,14 +33,14 @@ export const useChromecast = () => {
             contentUrl: digital_content.uri,
             contentType: 'application/vnd.apple.mpegurl',
             metadata: {
-              type: 'musicAgreement',
+              type: 'musicDigitalContent',
               images: [
                 {
                   url: digital_content.largeArtwork
                 }
               ],
               title: digital_content.title,
-              landlord: digital_content.landlord
+              author: digital_content.author
             }
           },
           startTime

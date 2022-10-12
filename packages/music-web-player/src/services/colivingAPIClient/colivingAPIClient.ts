@@ -1,7 +1,7 @@
 import {
   ID,
   TimeRange,
-  StemAgreementMetadata,
+  StemDigitalContentMetadata,
   Nullable,
   removeNullable,
   IntKeys,
@@ -28,7 +28,7 @@ import {
   APISearch,
   APISearchAutocomplete,
   APIStem,
-  APIAgreement,
+  APIDigitalContent,
   APIUser,
   OpaqueID
 } from './types'
@@ -53,43 +53,43 @@ const ROOT_ENDPOINT_MAP = {
 
 const FULL_ENDPOINT_MAP = {
   trending: (experiment: string | null) =>
-    experiment ? `/agreements/trending/${experiment}` : '/agreements/trending',
+    experiment ? `/digital_contents/trending/${experiment}` : '/digital_contents/trending',
   trendingIds: (experiment: string | null) =>
-    experiment ? `/agreements/trending/ids/${experiment}` : '/agreements/trending/ids',
+    experiment ? `/digital_contents/trending/ids/${experiment}` : '/digital_contents/trending/ids',
   trendingUnderground: (experiment: string | null) =>
     experiment
-      ? `/agreements/trending/underground/${experiment}`
-      : '/agreements/trending/underground',
+      ? `/digital_contents/trending/underground/${experiment}`
+      : '/digital_contents/trending/underground',
   trendingContentLists: (experiment: string | null) =>
     experiment ? `/contentLists/trending/${experiment}` : '/contentLists/trending',
-  recommended: '/agreements/recommended',
-  remixables: '/agreements/remixables',
+  recommended: '/digital_contents/recommended',
+  remixables: '/digital_contents/remixables',
   following: (userId: OpaqueID) => `/users/${userId}/following`,
   followers: (userId: OpaqueID) => `/users/${userId}/followers`,
-  agreementRepostUsers: (agreementId: OpaqueID) => `/agreements/${agreementId}/reposts`,
-  agreementFavoriteUsers: (agreementId: OpaqueID) => `/agreements/${agreementId}/favorites`,
+  digitalContentRepostUsers: (digitalContentId: OpaqueID) => `/digital_contents/${digitalContentId}/reposts`,
+  digitalContentFavoriteUsers: (digitalContentId: OpaqueID) => `/digital_contents/${digitalContentId}/favorites`,
   contentListRepostUsers: (contentListId: OpaqueID) =>
     `/contentLists/${contentListId}/reposts`,
   contentListFavoriteUsers: (contentListId: OpaqueID) =>
     `/contentLists/${contentListId}/favorites`,
   getUser: (userId: OpaqueID) => `/users/${userId}`,
   userByHandle: (handle: OpaqueID) => `/users/handle/${handle}`,
-  userAgreementsByHandle: (handle: OpaqueID) => `/users/handle/${handle}/agreements`,
-  userFavoritedAgreements: (userId: OpaqueID) =>
-    `/users/${userId}/favorites/agreements`,
+  userDigitalContentsByHandle: (handle: OpaqueID) => `/users/handle/${handle}/digitalContents`,
+  userFavoritedDigitalContents: (userId: OpaqueID) =>
+    `/users/${userId}/favorites/digitalContents`,
   userRepostsByHandle: (handle: OpaqueID) => `/users/handle/${handle}/reposts`,
   getRelatedLandlords: (userId: OpaqueID) => `/users/${userId}/related`,
   getContentList: (contentListId: OpaqueID) => `/contentLists/${contentListId}`,
   topGenreUsers: '/users/genre/top',
   topLandlords: '/users/top',
-  getAgreement: (agreementId: OpaqueID) => `/agreements/${agreementId}`,
-  getAgreementByHandleAndSlug: `/agreements`,
-  getStems: (agreementId: OpaqueID) => `/agreements/${agreementId}/stems`,
-  getRemixes: (agreementId: OpaqueID) => `/agreements/${agreementId}/remixes`,
-  getRemixing: (agreementId: OpaqueID) => `/agreements/${agreementId}/remixing`,
+  getDigitalContent: (digitalContentId: OpaqueID) => `/digital_contents/${digitalContentId}`,
+  getDigitalContentByHandleAndSlug: `/digitalContents`,
+  getStems: (digitalContentId: OpaqueID) => `/digital_contents/${digitalContentId}/stems`,
+  getRemixes: (digitalContentId: OpaqueID) => `/digital_contents/${digitalContentId}/remixes`,
+  getRemixing: (digitalContentId: OpaqueID) => `/digital_contents/${digitalContentId}/remixing`,
   searchFull: `/search/full`,
   searchAutocomplete: `/search/autocomplete`,
-  getUserAgreementHistory: (userId: OpaqueID) => `/users/${userId}/history/agreements`,
+  getUserDigitalContentHistory: (userId: OpaqueID) => `/users/${userId}/history/digitalContents`,
   getUserSupporter: (userId: OpaqueID, supporterUserId: OpaqueID) =>
     `/users/${userId}/supporters/${supporterUserId}`,
   getUserSupporting: (userId: OpaqueID, supporterUserId: OpaqueID) =>
@@ -110,7 +110,7 @@ type QueryParams = {
   [key: string]: string | number | undefined | boolean | string[] | null
 }
 
-export type GetAgreementArgs = {
+export type GetDigitalContentArgs = {
   id: ID
   currentUserId?: Nullable<ID>
   unlistedArgs?: {
@@ -119,7 +119,7 @@ export type GetAgreementArgs = {
   }
 }
 
-type GetAgreementByHandleAndSlugArgs = {
+type GetDigitalContentByHandleAndSlugArgs = {
   handle: string
   slug: string
   currentUserId: Nullable<ID>
@@ -178,15 +178,15 @@ type GetFollowersArgs = {
   limit?: number
 }
 
-type GetAgreementRepostUsersArgs = {
-  agreementId: ID
+type GetDigitalContentRepostUsersArgs = {
+  digitalContentId: ID
   currentUserId: Nullable<ID>
   limit?: number
   offset?: number
 }
 
-type GetAgreementFavoriteUsersArgs = {
-  agreementId: ID
+type GetDigitalContentFavoriteUsersArgs = {
+  digitalContentId: ID
   currentUserId: Nullable<ID>
   limit?: number
   offset?: number
@@ -216,7 +216,7 @@ type GetUserByHandleArgs = {
   currentUserId: Nullable<ID>
 }
 
-type GetUserAgreementsByHandleArgs = {
+type GetUserDigitalContentsByHandleArgs = {
   handle: string
   currentUserId: Nullable<ID>
   sort?: 'date' | 'plays'
@@ -256,23 +256,23 @@ type GetContentListArgs = {
 }
 
 type GetStemsArgs = {
-  agreementId: ID
+  digitalContentId: ID
 }
 
 type GetRemixesArgs = {
-  agreementId: ID
+  digitalContentId: ID
   currentUserId: Nullable<ID>
   limit: number
   offset: number
 }
 
 type RemixesResponse = {
-  agreements: APIAgreement[]
+  digitalContents: APIDigitalContent[]
   count: number
 }
 
 type GetRemixingArgs = {
-  agreementId: ID
+  digitalContentId: ID
   currentUserId: Nullable<ID>
   limit: number
   offset: number
@@ -357,14 +357,14 @@ type UndisbursedUserChallengesResponse = [
 export type GetSocialFeedArgs = QueryParams & {
   filter: string
   with_users?: boolean
-  agreements_only?: boolean
+  digitalContents_only?: boolean
   followee_user_ids?: ID[]
   current_user_id?: ID
 }
 
 type GetSocialFeedResponse = {}
 
-type GetUserAgreementHistoryArgs = {
+type GetUserDigitalContentHistoryArgs = {
   userId: ID
   currentUserId: Nullable<ID>
   limit?: number
@@ -403,7 +403,7 @@ const emptySearchResponse: APIResponse<APISearch> = {
   data: {
     users: [],
     followed_users: [],
-    agreements: [],
+    digitalContents: [],
     saved_digital_contents: [],
     contentLists: [],
     saved_content_lists: [],
@@ -448,13 +448,13 @@ class ColivingAPIClient {
     const experiment = remoteConfigInstance.getRemoteVar(
       StringKeys.TRENDING_EXPERIMENT
     )
-    const trendingResponse: Nullable<APIResponse<APIAgreement[]>> =
+    const trendingResponse: Nullable<APIResponse<APIDigitalContent[]>> =
       await this._getResponse(FULL_ENDPOINT_MAP.trending(experiment), params)
 
     if (!trendingResponse) return []
 
     const adapted = trendingResponse.data
-      .map(adapter.makeAgreement)
+      .map(adapter.makeDigitalContent)
       .filter(removeNullable)
     return adapted
   }
@@ -474,7 +474,7 @@ class ColivingAPIClient {
     const experiment = remoteConfigInstance.getRemoteVar(
       StringKeys.UNDERGROUND_TRENDING_EXPERIMENT
     )
-    const trendingResponse: Nullable<APIResponse<APIAgreement[]>> =
+    const trendingResponse: Nullable<APIResponse<APIDigitalContent[]>> =
       await this._getResponse(
         FULL_ENDPOINT_MAP.trendingUnderground(experiment),
         params
@@ -483,7 +483,7 @@ class ColivingAPIClient {
     if (!trendingResponse) return []
 
     const adapted = trendingResponse.data
-      .map(adapter.makeAgreement)
+      .map(adapter.makeDigitalContent)
       .filter(removeNullable)
     return adapted
   }
@@ -511,7 +511,7 @@ class ColivingAPIClient {
     const res = timeRanges.reduce(
       (acc: TrendingIds, timeRange: TimeRange) => {
         acc[timeRange] = trendingIdsResponse.data[timeRange]
-          .map(adapter.makeAgreementId)
+          .map(adapter.makeDigitalContentId)
           .filter(Boolean) as ID[]
         return acc
       },
@@ -538,13 +538,13 @@ class ColivingAPIClient {
         exclusionList.length > 0 ? exclusionList.map(String) : undefined,
       user_id: encodedCurrentUserId || undefined
     }
-    const recommendedResponse: Nullable<APIResponse<APIAgreement[]>> =
+    const recommendedResponse: Nullable<APIResponse<APIDigitalContent[]>> =
       await this._getResponse(FULL_ENDPOINT_MAP.recommended, params)
 
     if (!recommendedResponse) return []
 
     const adapted = recommendedResponse.data
-      .map(adapter.makeAgreement)
+      .map(adapter.makeDigitalContent)
       .filter(removeNullable)
     return adapted
   }
@@ -557,13 +557,13 @@ class ColivingAPIClient {
       user_id: encodedCurrentUserId || undefined,
       with_users: true
     }
-    const remixablesResponse: Nullable<APIResponse<APIAgreement[]>> =
+    const remixablesResponse: Nullable<APIResponse<APIDigitalContent[]>> =
       await this._getResponse(FULL_ENDPOINT_MAP.remixables, params)
 
     if (!remixablesResponse) return []
 
     const adapted = remixablesResponse.data
-      .map(adapter.makeAgreement)
+      .map(adapter.makeDigitalContent)
       .filter(removeNullable)
 
     return adapted
@@ -625,15 +625,15 @@ class ColivingAPIClient {
     return adapted
   }
 
-  async getAgreementRepostUsers({
+  async getDigitalContentRepostUsers({
     currentUserId,
-    agreementId,
+    digitalContentId,
     limit,
     offset
-  }: GetAgreementRepostUsersArgs) {
+  }: GetDigitalContentRepostUsersArgs) {
     this._assertInitialized()
     const encodedCurrentUserId = encodeHashId(currentUserId)
-    const encodedAgreementId = this._encodeOrThrow(agreementId)
+    const encodedDigitalContentId = this._encodeOrThrow(digitalContentId)
     const params = {
       user_id: encodedCurrentUserId || undefined,
       limit,
@@ -642,7 +642,7 @@ class ColivingAPIClient {
 
     const repostUsers: Nullable<APIResponse<APIUser[]>> =
       await this._getResponse(
-        FULL_ENDPOINT_MAP.agreementRepostUsers(encodedAgreementId),
+        FULL_ENDPOINT_MAP.digitalContentRepostUsers(encodedDigitalContentId),
         params
       )
 
@@ -654,15 +654,15 @@ class ColivingAPIClient {
     return adapted
   }
 
-  async getAgreementFavoriteUsers({
+  async getDigitalContentFavoriteUsers({
     currentUserId,
-    agreementId,
+    digitalContentId,
     limit,
     offset
-  }: GetAgreementFavoriteUsersArgs) {
+  }: GetDigitalContentFavoriteUsersArgs) {
     this._assertInitialized()
     const encodedCurrentUserId = encodeHashId(currentUserId)
-    const encodedAgreementId = this._encodeOrThrow(agreementId)
+    const encodedDigitalContentId = this._encodeOrThrow(digitalContentId)
     const params = {
       user_id: encodedCurrentUserId || undefined,
       limit,
@@ -671,7 +671,7 @@ class ColivingAPIClient {
 
     const followingResponse: Nullable<APIResponse<APIUser[]>> =
       await this._getResponse(
-        FULL_ENDPOINT_MAP.agreementFavoriteUsers(encodedAgreementId),
+        FULL_ENDPOINT_MAP.digitalContentFavoriteUsers(encodedDigitalContentId),
         params
       )
 
@@ -741,11 +741,11 @@ class ColivingAPIClient {
     return adapted
   }
 
-  async getAgreement(
-    { id, currentUserId, unlistedArgs }: GetAgreementArgs,
+  async getDigitalContent(
+    { id, currentUserId, unlistedArgs }: GetDigitalContentArgs,
     retry = true
   ) {
-    const encodedAgreementId = this._encodeOrThrow(id)
+    const encodedDigitalContentId = this._encodeOrThrow(id)
     const encodedCurrentUserId = encodeHashId(currentUserId)
 
     this._assertInitialized()
@@ -757,23 +757,23 @@ class ColivingAPIClient {
       show_unlisted: !!unlistedArgs
     }
 
-    const agreementResponse: Nullable<APIResponse<APIAgreement>> =
+    const digitalContentResponse: Nullable<APIResponse<APIDigitalContent>> =
       await this._getResponse(
-        FULL_ENDPOINT_MAP.getAgreement(encodedAgreementId),
+        FULL_ENDPOINT_MAP.getDigitalContent(encodedDigitalContentId),
         args,
         retry
       )
 
-    if (!agreementResponse) return null
-    const adapted = adapter.makeAgreement(agreementResponse.data)
+    if (!digitalContentResponse) return null
+    const adapted = adapter.makeDigitalContent(digitalContentResponse.data)
     return adapted
   }
 
-  async getAgreementByHandleAndSlug({
+  async getDigitalContentByHandleAndSlug({
     handle,
     slug,
     currentUserId
-  }: GetAgreementByHandleAndSlugArgs) {
+  }: GetDigitalContentByHandleAndSlugArgs) {
     this._assertInitialized()
     const encodedCurrentUserId = encodeHashId(currentUserId)
     const params = {
@@ -782,36 +782,36 @@ class ColivingAPIClient {
       user_id: encodedCurrentUserId || undefined
     }
 
-    const agreementResponse: Nullable<APIResponse<APIAgreement>> =
+    const digitalContentResponse: Nullable<APIResponse<APIDigitalContent>> =
       await this._getResponse(
-        FULL_ENDPOINT_MAP.getAgreementByHandleAndSlug,
+        FULL_ENDPOINT_MAP.getDigitalContentByHandleAndSlug,
         params,
         true
       )
-    if (!agreementResponse) {
+    if (!digitalContentResponse) {
       return null
     }
-    return adapter.makeAgreement(agreementResponse.data)
+    return adapter.makeDigitalContent(digitalContentResponse.data)
   }
 
-  async getStems({ agreementId }: GetStemsArgs): Promise<StemAgreementMetadata[]> {
+  async getStems({ digitalContentId }: GetStemsArgs): Promise<StemDigitalContentMetadata[]> {
     this._assertInitialized()
-    const encodedAgreementId = this._encodeOrThrow(agreementId)
+    const encodedDigitalContentId = this._encodeOrThrow(digitalContentId)
     const response: Nullable<APIResponse<APIStem[]>> = await this._getResponse(
-      FULL_ENDPOINT_MAP.getStems(encodedAgreementId)
+      FULL_ENDPOINT_MAP.getStems(encodedDigitalContentId)
     )
 
     if (!response) return []
 
     const adapted = response.data
-      .map(adapter.makeStemAgreement)
+      .map(adapter.makeStemDigitalContent)
       .filter(removeNullable)
     return adapted
   }
 
-  async getRemixes({ agreementId, limit, offset, currentUserId }: GetRemixesArgs) {
+  async getRemixes({ digitalContentId, limit, offset, currentUserId }: GetRemixesArgs) {
     this._assertInitialized()
-    const encodedAgreementId = this._encodeOrThrow(agreementId)
+    const encodedDigitalContentId = this._encodeOrThrow(digitalContentId)
     const encodedUserId = encodeHashId(currentUserId)
     const params = {
       userId: encodedUserId ?? undefined,
@@ -821,26 +821,26 @@ class ColivingAPIClient {
 
     const remixesResponse: Nullable<APIResponse<RemixesResponse>> =
       await this._getResponse(
-        FULL_ENDPOINT_MAP.getRemixes(encodedAgreementId),
+        FULL_ENDPOINT_MAP.getRemixes(encodedDigitalContentId),
         params
       )
 
-    if (!remixesResponse) return { count: 0, agreements: [] }
+    if (!remixesResponse) return { count: 0, digitalContents: [] }
 
-    const agreements = remixesResponse.data.agreements
-      .map(adapter.makeAgreement)
+    const digitalContents = remixesResponse.data.digitalContents
+      .map(adapter.makeDigitalContent)
       .filter(removeNullable)
-    return { count: remixesResponse.data.count, agreements }
+    return { count: remixesResponse.data.count, digitalContents }
   }
 
   async getRemixing({
-    agreementId,
+    digitalContentId,
     limit,
     offset,
     currentUserId
   }: GetRemixingArgs) {
     this._assertInitialized()
-    const encodedAgreementId = this._encodeOrThrow(agreementId)
+    const encodedDigitalContentId = this._encodeOrThrow(digitalContentId)
     const encodedUserId = encodeHashId(currentUserId)
     const params = {
       userId: encodedUserId ?? undefined,
@@ -848,16 +848,16 @@ class ColivingAPIClient {
       offset
     }
 
-    const remixingResponse: Nullable<APIResponse<APIAgreement[]>> =
+    const remixingResponse: Nullable<APIResponse<APIDigitalContent[]>> =
       await this._getResponse(
-        FULL_ENDPOINT_MAP.getRemixing(encodedAgreementId),
+        FULL_ENDPOINT_MAP.getRemixing(encodedDigitalContentId),
         params
       )
 
     if (!remixingResponse) return []
 
-    const agreements = remixingResponse.data.map(adapter.makeAgreement)
-    return agreements
+    const digitalContents = remixingResponse.data.map(adapter.makeDigitalContent)
+    return digitalContents
   }
 
   async getUser({ userId, currentUserId }: GetUserArgs) {
@@ -897,14 +897,14 @@ class ColivingAPIClient {
     return adapted
   }
 
-  async getUserAgreementsByHandle({
+  async getUserDigitalContentsByHandle({
     handle,
     currentUserId,
     sort = 'date',
     limit,
     offset,
     getUnlisted
-  }: GetUserAgreementsByHandleArgs) {
+  }: GetUserDigitalContentsByHandleArgs) {
     this._assertInitialized()
     const encodedCurrentUserId = encodeHashId(currentUserId)
     const params = {
@@ -923,8 +923,8 @@ class ColivingAPIClient {
       }
     }
 
-    const response: Nullable<APIResponse<APIAgreement[]>> = await this._getResponse(
-      FULL_ENDPOINT_MAP.userAgreementsByHandle(handle),
+    const response: Nullable<APIResponse<APIDigitalContent[]>> = await this._getResponse(
+      FULL_ENDPOINT_MAP.userDigitalContentsByHandle(handle),
       params,
       true,
       PathType.VersionFullPath,
@@ -933,11 +933,11 @@ class ColivingAPIClient {
 
     if (!response) return []
 
-    const adapted = response.data.map(adapter.makeAgreement).filter(removeNullable)
+    const adapted = response.data.map(adapter.makeDigitalContent).filter(removeNullable)
     return adapted
   }
 
-  async getFavoritedAgreements({
+  async getFavoritedDigitalContents({
     profileUserId,
     currentUserId,
     limit,
@@ -954,7 +954,7 @@ class ColivingAPIClient {
 
     const response: Nullable<APIResponse<APIActivity[]>> =
       await this._getResponse(
-        FULL_ENDPOINT_MAP.userFavoritedAgreements(encodedProfileUserId),
+        FULL_ENDPOINT_MAP.userFavoritedDigitalContents(encodedProfileUserId),
         params
       )
 
@@ -962,7 +962,7 @@ class ColivingAPIClient {
 
     const adapted = response.data.map(({ item, ...props }) => ({
       timestamp: props.timestamp,
-      digital_content: adapter.makeAgreement(item as APIAgreement)
+      digital_content: adapter.makeDigitalContent(item as APIDigitalContent)
     }))
     return adapted
   }
@@ -1022,12 +1022,12 @@ class ColivingAPIClient {
       offset
     }
 
-    const favoritedAgreementResponse: Nullable<APIResponse<APIUser[]>> =
+    const favoritedDigitalContentResponse: Nullable<APIResponse<APIUser[]>> =
       await this._getResponse(FULL_ENDPOINT_MAP.topGenreUsers, params)
 
-    if (!favoritedAgreementResponse) return []
+    if (!favoritedDigitalContentResponse) return []
 
-    const adapted = favoritedAgreementResponse.data
+    const adapted = favoritedDigitalContentResponse.data
       .map(adapter.makeUser)
       .filter(removeNullable)
     return adapted
@@ -1270,7 +1270,7 @@ class ColivingAPIClient {
     limit,
     with_users,
     filter,
-    agreements_only,
+    digitalContents_only,
     followee_user_ids,
     current_user_id
   }: GetSocialFeedArgs) {
@@ -1288,7 +1288,7 @@ class ColivingAPIClient {
           limit,
           with_users,
           filter,
-          agreements_only,
+          digitalContents_only,
           followee_user_id: followee_user_ids
             ? followee_user_ids.map((id) => id.toString())
             : undefined
@@ -1301,12 +1301,12 @@ class ColivingAPIClient {
     return response.data
   }
 
-  async getUserAgreementHistory({
+  async getUserDigitalContentHistory({
     currentUserId,
     userId,
     offset,
     limit
-  }: GetUserAgreementHistoryArgs) {
+  }: GetUserDigitalContentHistoryArgs) {
     const encodedUserId = this._encodeOrThrow(userId)
     const encodedCurrentUserId = encodeHashId(currentUserId)
     limit = limit || 100
@@ -1317,7 +1317,7 @@ class ColivingAPIClient {
 
     const response: Nullable<APIResponse<APIActivity[]>> =
       await this._getResponse(
-        FULL_ENDPOINT_MAP.getUserAgreementHistory(encodedUserId),
+        FULL_ENDPOINT_MAP.getUserDigitalContentHistory(encodedUserId),
         params
       )
 
@@ -1325,7 +1325,7 @@ class ColivingAPIClient {
 
     const adapted = response.data.map(({ item, ...props }) => ({
       timestamp: props.timestamp,
-      digital_content: adapter.makeAgreement(item as APIAgreement)
+      digital_content: adapter.makeDigitalContent(item as APIDigitalContent)
     }))
     return adapted
   }

@@ -2,7 +2,7 @@ import { useCallback, MouseEvent } from 'react'
 
 import { ID, UserCollection, Status } from '@coliving/common'
 
-import { LandlordPopover } from 'components/landlord/landlordPopover'
+import { LandlordPopover } from 'components/author/landlordPopover'
 import Card from 'components/card/desktop/card'
 import Header from 'components/header/desktop/header'
 import CardLineup from 'components/lineup/cardLineup'
@@ -107,7 +107,7 @@ const CollectionsPage = ({
         }
         reposts={contentList.repost_count}
         favorites={contentList.save_count}
-        agreementCount={contentList.content_list_contents.digital_content_ids.length}
+        digitalContentCount={contentList.content_list_contents.digital_content_ids.length}
         onClickReposts={() => onClickReposts(contentList.content_list_id)}
         onClickFavorites={() => onClickFavorites(contentList.content_list_id)}
         onClick={() =>

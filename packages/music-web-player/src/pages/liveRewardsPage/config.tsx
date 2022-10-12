@@ -21,10 +21,10 @@ import {
 } from 'utils/route'
 
 type LinkButtonType =
-  | 'agreementUpload'
+  | 'digitalContentUpload'
   | 'profile'
   | 'verifyAccount'
-  | 'trendingAgreements'
+  | 'trendingDigitalContents'
   | 'sendFirstTip'
   | 'firstContentList'
 type LinkButtonInfo = {
@@ -45,8 +45,8 @@ const GoldBadgeIconImage = () => (
 )
 
 const linkButtonMap: Record<LinkButtonType, LinkButtonInfo> = {
-  agreementUpload: {
-    label: 'Upload Agreements',
+  digitalContentUpload: {
+    label: 'Upload DigitalContents',
     leftIcon: null,
     rightIcon: <IconUpload />,
     link: () => UPLOAD_PAGE
@@ -63,8 +63,8 @@ const linkButtonMap: Record<LinkButtonType, LinkButtonInfo> = {
     rightIcon: <IconCheck />,
     link: () => SETTINGS_PAGE
   },
-  trendingAgreements: {
-    label: 'Trending Agreements',
+  trendingDigitalContents: {
+    label: 'Trending DigitalContents',
     leftIcon: null,
     rightIcon: <IconArrow />,
     link: () => TRENDING_PAGE
@@ -110,9 +110,9 @@ export const challengeRewardsConfig: Record<
     title: 'Invite your Friends',
     icon: <i className='emoji large incoming-envelope' />,
     description: (challenge) =>
-      `Earn ${challenge?.amount} $LIVE, for you and your friend`,
+      `Earn ${challenge?.amount} $DGCO, for you and your friend`,
     fullDescription: (challenge) =>
-      `Invite your Friends! You’ll earn ${challenge?.amount} $LIVE for each friend who joins with your link (and they’ll get an $LIVE too)`,
+      `Invite your Friends! You’ll earn ${challenge?.amount} $DGCO for each friend who joins with your link (and they’ll get an $DGCO too)`,
     progressLabel: '%0/%1 Invites Accepted',
     remainingLabel: '%0/%1 Invites Remain',
     amount: amounts.referrals,
@@ -128,9 +128,9 @@ export const challengeRewardsConfig: Record<
     title: 'Invite your Residents',
     icon: <i className='emoji large incoming-envelope' />,
     description: (challenge) =>
-      `Earn up to ${formatNumberCommas(challenge?.totalAmount ?? '')} $LIVE`,
+      `Earn up to ${formatNumberCommas(challenge?.totalAmount ?? '')} $DGCO`,
     fullDescription: (challenge) =>
-      `Invite your residents! You’ll earn ${challenge?.amount} $LIVE for each resident who joins with your link (and they’ll get an $LIVE too)`,
+      `Invite your residents! You’ll earn ${challenge?.amount} $DGCO for each resident who joins with your link (and they’ll get an $DGCO too)`,
     progressLabel: '%0/%1 Invites Accepted',
     remainingLabel: '%0/%1 Invites Remain',
     amount: amounts.referrals,
@@ -146,8 +146,8 @@ export const challengeRewardsConfig: Record<
     id: 'referred',
     title: 'You Accepted An Invite',
     icon: <i className='emoji large love-letter' />,
-    description: () => `You earned $LIVE for being invited`,
-    fullDescription: () => `You earned $LIVE for being invited`,
+    description: () => `You earned $DGCO for being invited`,
+    fullDescription: () => `You earned $DGCO for being invited`,
     progressLabel: '%0/%1 Invites',
     amount: amounts.referrals,
     panelButtonText: 'More Info',
@@ -162,7 +162,7 @@ export const challengeRewardsConfig: Record<
     title: 'Link Verified Accounts',
     icon: <i className='emoji large white-heavy-check-mark' />,
     description: (challenge) =>
-      `Link your verified social media accounts to earn ${challenge?.amount} $LIVE`,
+      `Link your verified social media accounts to earn ${challenge?.amount} $DGCO`,
     fullDescription: () =>
       'Get verified on Coliving by linking your verified Twitter or Instagram account!',
     progressLabel: 'Not Linked',
@@ -179,23 +179,23 @@ export const challengeRewardsConfig: Record<
     title: 'Listening Streak: 7 Days',
     icon: <i className='emoji large headphone' />,
     description: (challenge) =>
-      `Listen to one digital_content a day for seven days to earn ${challenge?.amount} $LIVE`,
+      `Listen to one digital_content a day for seven days to earn ${challenge?.amount} $DGCO`,
     fullDescription: () =>
       'Sign in and listen to at least one digital_content every day for 7 days',
     progressLabel: '%0/%1 Days',
     amount: amounts['listen-streak'],
     panelButtonText: 'Trending on Coliving',
     modalButtonInfo: {
-      incomplete: linkButtonMap.trendingAgreements,
-      inProgress: linkButtonMap.trendingAgreements,
-      complete: linkButtonMap.trendingAgreements
+      incomplete: linkButtonMap.trendingDigitalContents,
+      inProgress: linkButtonMap.trendingDigitalContents,
+      complete: linkButtonMap.trendingDigitalContents
     }
   },
   'mobile-install': {
     id: 'mobile-install' as ChallengeRewardID,
     title: 'Get the Coliving Mobile App',
     icon: <i className='emoji large mobile-phone-with-arrow' />,
-    description: (challenge) => `Earn ${challenge?.amount} $LIVE`,
+    description: (challenge) => `Earn ${challenge?.amount} $DGCO`,
     fullDescription: () =>
       'Install the Coliving app for iPhone and Android and Sign in to your account!',
     progressLabel: 'Not Installed',
@@ -212,9 +212,9 @@ export const challengeRewardsConfig: Record<
     title: 'Complete Your Profile',
     icon: <i className='emoji large white-heavy-check-mark' />,
     description: (challenge) =>
-      `Complete your Coliving profile to earn ${challenge?.amount} $LIVE`,
+      `Complete your Coliving profile to earn ${challenge?.amount} $DGCO`,
     fullDescription: () =>
-      'Fill out the missing details on your Coliving profile and start interacting with agreements and landlords!',
+      'Fill out the missing details on your Coliving profile and start interacting with digitalContents and landlords!',
     progressLabel: '%0/%1 Complete',
     amount: amounts['profile-completion'],
     panelButtonText: 'More Info',
@@ -226,26 +226,26 @@ export const challengeRewardsConfig: Record<
   },
   'digital-content-upload': {
     id: 'digital-content-upload' as ChallengeRewardID,
-    title: 'Upload 3 Agreements',
+    title: 'Upload 3 DigitalContents',
     icon: <i className='emoji large multiple-musical-notes' />,
-    description: (challenge) => `Earn ${challenge?.amount} $LIVE`,
-    fullDescription: () => 'Upload 3 agreements to your profile',
+    description: (challenge) => `Earn ${challenge?.amount} $DGCO`,
+    fullDescription: () => 'Upload 3 digitalContents to your profile',
     progressLabel: '%0/%1 Uploaded',
     amount: amounts['digital-content-upload'],
-    panelButtonText: 'Upload Agreements',
+    panelButtonText: 'Upload DigitalContents',
     modalButtonInfo: {
-      incomplete: linkButtonMap.agreementUpload,
-      inProgress: linkButtonMap.agreementUpload,
-      complete: linkButtonMap.agreementUpload
+      incomplete: linkButtonMap.digitalContentUpload,
+      inProgress: linkButtonMap.digitalContentUpload,
+      complete: linkButtonMap.digitalContentUpload
     }
   },
   'send-first-tip': {
     id: 'send-first-tip' as ChallengeRewardID,
     title: 'Send Your First Tip',
     icon: <i className='emoji large money-mouth-face' />,
-    description: (challenge) => `Earn ${challenge?.amount} $LIVE`,
+    description: (challenge) => `Earn ${challenge?.amount} $DGCO`,
     fullDescription: () =>
-      'Show some love to your favorite landlord and send them a tip',
+      'Show some love to your favorite author and send them a tip',
     progressLabel: 'Not Earned',
     amount: amounts['send-first-tip'],
     panelButtonText: 'Find Someone To Tip',
@@ -259,7 +259,7 @@ export const challengeRewardsConfig: Record<
     id: 'first-content-list' as ChallengeRewardID,
     title: 'Create Your First ContentList',
     icon: <i className='emoji large sparkles' />,
-    description: (challenge) => `Earn ${challenge?.amount} $LIVE`,
+    description: (challenge) => `Earn ${challenge?.amount} $DGCO`,
     fullDescription: () => 'Create your first contentList & add a digital_content to it',
     progressLabel: 'Not Earned',
     amount: amounts['first-content-list'],
@@ -292,7 +292,7 @@ export const trendingRewardsConfig: Record<
     id: 'trending-content-list'
   },
   'trending-digital-content': {
-    title: 'Top 5 Trending Agreements',
+    title: 'Top 5 Trending DigitalContents',
     icon: <i className='emoji large chart-increasing' />,
     description: 'Winners are selected every Friday at Noon PT!',
     buttonText: 'See More',

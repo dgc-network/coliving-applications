@@ -13,7 +13,7 @@ import SearchBarState from './types'
 
 const initialState = {
   searchText: '',
-  agreements: [],
+  digitalContents: [],
   users: [],
   contentLists: [],
   albums: [],
@@ -39,7 +39,7 @@ const actionsMap: ActionsMap<SearchBarState> = {
 
     if (action.results) {
       newState.searchText = action.searchText
-      newState.agreements = action.results.agreements ? action.results.agreements : []
+      newState.digitalContents = action.results.digitalContents ? action.results.digitalContents : []
       newState.albums = action.results.albums ? action.results.albums : []
       newState.contentLists = action.results.contentLists
         ? action.results.contentLists

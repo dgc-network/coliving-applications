@@ -18,14 +18,14 @@ import { TwitterShareButton } from './components/twitterShareButton'
 import { IconRewards } from './components/icons'
 
 const messages = {
-  amountEarned: (amount: number) => `You've earned ${amount} $LIVE`,
+  amountEarned: (amount: number) => `You've earned ${amount} $DGCO`,
   referredText:
     ' for being referred! Invite your friends to join to earn more!',
   challengeCompleteText: ' for completing this challenge!',
   body: (amount: number) =>
-    `You've earned ${amount} $LIVE for completing this challenge!`,
+    `You've earned ${amount} $DGCO for completing this challenge!`,
   twitterShareText:
-    'I earned $LIVE for completing challenges on @dgc-network #LiveRewards'
+    'I earned $DGCO for completing challenges on @dgc-network #DigitalcoinRewards'
 }
 
 type ChallengeRewardNotificationProps = {

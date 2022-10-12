@@ -3,7 +3,7 @@ import type BN from 'bn.js'
 import { Brand } from 'utils/typeUtils'
 
 export type StringWei = Brand<string, 'stringWEI'>
-export type StringLive = string
+export type StringDigitalcoin = string
 export type BNWei = Brand<BN, 'BNWei'>
 export type BNAudio = Brand<BN, 'BNAudio'>
 

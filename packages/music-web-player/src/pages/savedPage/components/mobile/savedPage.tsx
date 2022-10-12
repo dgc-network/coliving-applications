@@ -10,7 +10,7 @@ import { ReactComponent as IconNote } from 'assets/img/iconNote.svg'
 import { ReactComponent as IconContentLists } from 'assets/img/iconContentLists.svg'
 import {
   Tabs,
-  SavedPageAgreement,
+  SavedPageDigitalContent,
   SavedPageCollection
 } from 'common/store/pages/savedPage/types'
 import { QueueItem } from 'common/store/queue/types'
@@ -21,8 +21,8 @@ import CardLineup from 'components/lineup/cardLineup'
 import LoadingSpinner from 'components/loadingSpinner/loadingSpinner'
 import MobilePageContainer from 'components/mobilePageContainer/mobilePageContainer'
 import { useMainPageHeader } from 'components/nav/store/context'
-import AgreementList from 'components/digital_content/mobile/agreementList'
-import { AgreementItemAction } from 'components/digital_content/mobile/agreementListItem'
+import DigitalContentList from 'components/digital_content/mobile/digitalContentList'
+import { DigitalContentItemAction } from 'components/digital_content/mobile/digitalContentListItem'
 import useTabs from 'hooks/useTabs/useTabs'
 import { make, useRecord } from 'store/analytics/actions'
 import { albumPage, TRENDING_PAGE, contentListPage } from 'utils/route'
@@ -80,8 +80,8 @@ const useOffsetScroll = () => {
   return contentRefCallback
 }
 
-const AgreementsLineup = ({
-  agreements,
+const DigitalContentsLineup = ({
+  digitalContents,
   goToTrending,
   onFilterChange,
   filterText,
@@ -91,18 +91,18 @@ const AgreementsLineup = ({
   onSave,
   onTogglePlay
 }: {
-  agreements: Lineup<SavedPageAgreement>
+  digitalContents: Lineup<SavedPageDigitalContent>
   goToTrending: () => void
   onFilterChange: (e: any) => void
   filterText: string
-  getFilteredData: (agreementMetadatas: any) => [SavedPageAgreement[], number]
+  getFilteredData: (digitalContentMetadatas: any) => [SavedPageDigitalContent[], number]
   playingUid: UID | null
   queuedAndPlaying: boolean
-  onSave: (isSaved: boolean, agreementId: ID) => void
-  onTogglePlay: (uid: UID, agreementId: ID) => void
+  onSave: (isSaved: boolean, digitalContentId: ID) => void
+  onTogglePlay: (uid: UID, digitalContentId: ID) => void
 }) => {
-  const [agreementEntries] = getFilteredData(agreements.entries)
-  const agreementList = agreementEntries.map((entry) => ({
+  const [digitalContentEntries] = getFilteredData(digitalContents.entries)
+  const digitalContentList = digitalContentEntries.map((entry) => ({
     isLoading: false,
     isSaved: entry.has_current_user_saved,
     isReposted: entry.has_current_user_reposted,
@@ -110,20 +110,20 @@ const AgreementsLineup = ({
     isPlaying: queuedAndPlaying && playingUid === entry.uid,
     landlordName: entry.user.name,
     landlordHandle: entry.user.handle,
-    agreementTitle: entry.title,
-    agreementId: entry.digital_content_id,
+    digitalContentTitle: entry.title,
+    digitalContentId: entry.digital_content_id,
     uid: entry.uid,
     isDeleted: entry.is_delete || !!entry.user.is_deactivated
   }))
   const contentRefCallback = useOffsetScroll()
   return (
-    <div className={styles.agreementsLineupContainer}>
-      {agreements.status !== Status.LOADING ? (
-        agreements.entries.length === 0 ? (
+    <div className={styles.digitalContentsLineupContainer}>
+      {digitalContents.status !== Status.LOADING ? (
+        digitalContents.entries.length === 0 ? (
           <EmptyTab
             message={
               <>
-                {messages.emptyAgreements}
+                {messages.emptyDigitalContents}
                 <i className={cn('emoji', 'face-with-monocle', styles.emoji)} />
               </>
             }
@@ -134,22 +134,22 @@ const AgreementsLineup = ({
             <div className={styles.searchContainer}>
               <div className={styles.searchInnerContainer}>
                 <input
-                  placeholder={messages.filterAgreements}
+                  placeholder={messages.filterDigitalContents}
                   onChange={onFilterChange}
                   value={filterText}
                 />
                 <IconFilter className={styles.iconFilter} />
               </div>
             </div>
-            {agreementList.length > 0 && (
-              <div className={styles.agreementListContainer}>
-                <AgreementList
-                  agreements={agreementList}
+            {digitalContentList.length > 0 && (
+              <div className={styles.digitalContentListContainer}>
+                <DigitalContentList
+                  digitalContents={digitalContentList}
                   showDivider
                   showBorder
                   onSave={onSave}
                   togglePlay={onTogglePlay}
-                  agreementItemAction={AgreementItemAction.Save}
+                  digitalContentItemAction={DigitalContentItemAction.Save}
                 />
               </div>
             )}
@@ -173,7 +173,7 @@ const AlbumCardLineup = ({
   goToTrending: () => void
   onFilterChange: (e: any) => void
   filterText: string
-  formatCardSecondaryText: (saves: number, agreements: number) => string
+  formatCardSecondaryText: (saves: number, digitalContents: number) => string
   getFilteredAlbums: (albums: SavedPageCollection[]) => SavedPageCollection[]
   goToRoute: (route: string) => void
 }) => {
@@ -254,7 +254,7 @@ const ContentListCardLineup = ({
   goToTrending: () => void
   onFilterChange: (e: any) => void
   filterText: string
-  formatCardSecondaryText: (saves: number, agreements: number) => string
+  formatCardSecondaryText: (saves: number, digitalContents: number) => string
   getFilteredContentLists: (
     contentLists: SavedPageCollection[]
   ) => SavedPageCollection[]
@@ -344,19 +344,19 @@ const ContentListCardLineup = ({
 }
 
 const messages = {
-  emptyAgreements: "You haven't favorited any agreements yet.",
+  emptyDigitalContents: "You haven't favorited any digitalContents yet.",
   emptyAlbums: "You haven't favorited any albums yet.",
   emptyContentLists: "You haven't favorited any contentLists yet.",
-  filterAgreements: 'Filter Agreements',
+  filterDigitalContents: 'Filter DigitalContents',
   filterAlbums: 'Filter Albums',
   filterContentLists: 'Filter ContentLists',
-  agreements: 'Agreements',
+  digitalContents: 'DigitalContents',
   albums: 'Albums',
   contentLists: 'ContentLists'
 }
 
 const tabHeaders = [
-  { icon: <IconNote />, text: messages.agreements, label: Tabs.AGREEMENTS },
+  { icon: <IconNote />, text: messages.digitalContents, label: Tabs.AGREEMENTS },
   { icon: <IconAlbum />, text: messages.albums, label: Tabs.ALBUMS },
   { icon: <IconContentLists />, text: messages.contentLists, label: Tabs.CONTENT_LISTS }
 ]
@@ -367,13 +367,13 @@ export type SavedPageProps = {
   onFilterChange: (e: any) => void
   isQueued: boolean
   playingUid: UID | null
-  getFilteredData: (agreementMetadatas: any) => [SavedPageAgreement[], number]
-  onTogglePlay: (uid: UID, agreementId: ID) => void
+  getFilteredData: (digitalContentMetadatas: any) => [SavedPageDigitalContent[], number]
+  onTogglePlay: (uid: UID, digitalContentId: ID) => void
 
-  onSave: (isSaved: boolean, agreementId: ID) => void
+  onSave: (isSaved: boolean, digitalContentId: ID) => void
   onPlay: () => void
-  onSortAgreements: (sorters: any) => void
-  formatCardSecondaryText: (saves: number, agreements: number) => string
+  onSortDigitalContents: (sorters: any) => void
+  formatCardSecondaryText: (saves: number, digitalContents: number) => string
   filterText: string
   initialOrder: UID[] | null
   account:
@@ -382,12 +382,12 @@ export type SavedPageProps = {
         contentLists: SavedPageCollection[]
       })
     | undefined
-  agreements: Lineup<SavedPageAgreement>
+  digitalContents: Lineup<SavedPageDigitalContent>
   currentQueueItem: QueueItem
   playing: boolean
   buffering: boolean
-  fetchSavedAgreements: () => void
-  resetSavedAgreements: () => void
+  fetchSavedDigitalContents: () => void
+  resetSavedDigitalContents: () => void
   updateLineupOrder: (updatedOrderIndices: UID[]) => void
   getFilteredAlbums: (albums: SavedPageCollection[]) => SavedPageCollection[]
   getFilteredContentLists: (
@@ -396,12 +396,12 @@ export type SavedPageProps = {
 
   fetchSavedAlbums: () => void
   goToRoute: (route: string) => void
-  repostAgreement: (agreementId: ID) => void
-  undoRepostAgreement: (agreementId: ID) => void
-  saveAgreement: (agreementId: ID) => void
-  unsaveAgreement: (agreementId: ID) => void
+  repostDigitalContent: (digitalContentId: ID) => void
+  undoRepostDigitalContent: (digitalContentId: ID) => void
+  saveDigitalContent: (digitalContentId: ID) => void
+  unsaveDigitalContent: (digitalContentId: ID) => void
   onClickRemove: any
-  onReorderAgreements: any
+  onReorderDigitalContents: any
   contentListUpdates: number[]
   updateContentListLastViewedAt: (contentListId: number) => void
 }
@@ -411,7 +411,7 @@ const SavedPage = ({
   description,
   account,
   playingUid,
-  agreements,
+  digitalContents,
   goToRoute,
   playing,
   isQueued,
@@ -432,9 +432,9 @@ const SavedPage = ({
 
   const goToTrending = () => goToRoute(TRENDING_PAGE)
   const elements = [
-    <AgreementsLineup
-      key='agreementsLineup'
-      agreements={agreements}
+    <DigitalContentsLineup
+      key='digitalContentsLineup'
+      digitalContents={digitalContents}
       goToTrending={goToTrending}
       onFilterChange={onFilterChange}
       filterText={filterText}
@@ -489,7 +489,7 @@ const SavedPage = ({
       description={description}
       containerClassName={styles.mobilePageContainer}
     >
-      {agreements.status === Status.LOADING ? (
+      {digitalContents.status === Status.LOADING ? (
         <LoadingSpinner className={styles.spinner} />
       ) : (
         <div className={styles.tabContainer}>

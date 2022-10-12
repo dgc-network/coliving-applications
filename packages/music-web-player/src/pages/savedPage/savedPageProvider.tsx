@@ -19,18 +19,18 @@ import { makeGetTableMetadatas } from 'common/store/lineup/selectors'
 import { updateContentListLastViewedAt } from 'common/store/notifications/actions'
 import { getContentListUpdates } from 'common/store/notifications/selectors'
 import * as saveActions from 'common/store/pages/savedPage/actions'
-import { agreementsActions } from 'common/store/pages/savedPage/lineups/agreements/actions'
-import { getSavedAgreementsLineup } from 'common/store/pages/savedPage/selectors'
+import { digitalContentsActions } from 'common/store/pages/savedPage/lineups/digital_contents/actions'
+import { getSavedDigitalContentsLineup } from 'common/store/pages/savedPage/selectors'
 import {
   Tabs as ProfileTabs,
-  SavedPageAgreement,
-  AgreementRecord,
+  SavedPageDigitalContent,
+  DigitalContentRecord,
   SavedPageCollection
 } from 'common/store/pages/savedPage/types'
 import { makeGetCurrent } from 'common/store/queue/selectors'
-import * as socialActions from 'common/store/social/agreements/actions'
+import * as socialActions from 'common/store/social/digital_contents/actions'
 import { formatCount } from 'common/utils/formatUtil'
-import { AgreementEvent, make } from 'store/analytics/actions'
+import { DigitalContentEvent, make } from 'store/analytics/actions'
 import { getPlaying, getBuffering } from 'store/player/selectors'
 import { AppState } from 'store/types'
 import { isMobile } from 'utils/clientUtil'
@@ -43,7 +43,7 @@ const IS_NATIVE_MOBILE = process.env.REACT_APP_NATIVE_MOBILE
 
 const messages = {
   title: 'Favorites',
-  description: "View agreements that you've favorited"
+  description: "View digitalContents that you've favorited"
 }
 
 type OwnProps = {
@@ -73,7 +73,7 @@ class SavedPage extends PureComponent<SavedPageProps, SavedPageState> {
   }
 
   componentDidMount() {
-    this.props.fetchSavedAgreements()
+    this.props.fetchSavedDigitalContents()
     this.props.fetchSavedAlbums()
     if (isMobile()) {
       this.props.fetchSavedContentLists()
@@ -82,15 +82,15 @@ class SavedPage extends PureComponent<SavedPageProps, SavedPageState> {
 
   componentWillUnmount() {
     if (!IS_NATIVE_MOBILE) {
-      this.props.resetSavedAgreements()
+      this.props.resetSavedDigitalContents()
     }
   }
 
   componentDidUpdate() {
-    const { agreements } = this.props
+    const { digitalContents } = this.props
 
-    if (!this.state.initialOrder && agreements.entries.length > 0) {
-      const initialOrder = agreements.entries.map((digital_content: any) => digital_content.uid)
+    if (!this.state.initialOrder && digitalContents.entries.length > 0) {
+      const initialOrder = digitalContents.entries.map((digital_content: any) => digital_content.uid)
       this.setState({
         initialOrder,
         reordering: initialOrder
@@ -102,12 +102,12 @@ class SavedPage extends PureComponent<SavedPageProps, SavedPageState> {
     this.setState({ filterText: e.target.value })
   }
 
-  formatMetadata = (agreementMetadatas: SavedPageAgreement[]) => {
-    return agreementMetadatas.map((entry, i) => ({
+  formatMetadata = (digitalContentMetadatas: SavedPageDigitalContent[]) => {
+    return digitalContentMetadatas.map((entry, i) => ({
       ...entry,
       key: `${entry.title}_${entry.uid}_${i}`,
       name: entry.title,
-      landlord: entry.user.name,
+      author: entry.user.name,
       handle: entry.user.handle,
       date: entry.dateSaved,
       time: entry.duration,
@@ -116,8 +116,8 @@ class SavedPage extends PureComponent<SavedPageProps, SavedPageState> {
   }
 
   isQueued = () => {
-    const { agreements, currentQueueItem } = this.props
-    return agreements.entries.some(
+    const { digitalContents, currentQueueItem } = this.props
+    return digitalContents.entries.some(
       (entry: any) => currentQueueItem.uid === entry.uid
     )
   }
@@ -133,15 +133,15 @@ class SavedPage extends PureComponent<SavedPageProps, SavedPageState> {
   }
 
   getFilteredData = (
-    agreementMetadatas: SavedPageAgreement[]
-  ): [SavedPageAgreement[], number] => {
+    digitalContentMetadatas: SavedPageDigitalContent[]
+  ): [SavedPageDigitalContent[], number] => {
     const filterText = this.state.filterText
-    const { agreements } = this.props
+    const { digitalContents } = this.props
     const playingUid = this.getPlayingUid()
-    const playingIndex = agreements.entries.findIndex(
+    const playingIndex = digitalContents.entries.findIndex(
       ({ uid }: any) => uid === playingUid
     )
-    const filteredMetadata = this.formatMetadata(agreementMetadatas).filter(
+    const filteredMetadata = this.formatMetadata(digitalContentMetadatas).filter(
       (item) =>
         item.title.toLowerCase().indexOf(filterText.toLowerCase()) > -1 ||
         item.user.name.toLowerCase().indexOf(filterText.toLowerCase()) > -1
@@ -177,22 +177,22 @@ class SavedPage extends PureComponent<SavedPageProps, SavedPageState> {
     )
   }
 
-  onClickRow = (agreementRecord: AgreementRecord) => {
+  onClickRow = (digitalContentRecord: DigitalContentRecord) => {
     const { playing, play, pause, record } = this.props
     const playingUid = this.getPlayingUid()
-    if (playing && playingUid === agreementRecord.uid) {
+    if (playing && playingUid === digitalContentRecord.uid) {
       pause()
       record(
         make(Name.PLAYBACK_PAUSE, {
-          id: `${agreementRecord.digital_content_id}`,
+          id: `${digitalContentRecord.digital_content_id}`,
           source: PlaybackSource.FAVORITES_PAGE
         })
       )
-    } else if (playingUid !== agreementRecord.uid) {
-      play(agreementRecord.uid)
+    } else if (playingUid !== digitalContentRecord.uid) {
+      play(digitalContentRecord.uid)
       record(
         make(Name.PLAYBACK_PLAY, {
-          id: `${agreementRecord.digital_content_id}`,
+          id: `${digitalContentRecord.digital_content_id}`,
           source: PlaybackSource.FAVORITES_PAGE
         })
       )
@@ -200,21 +200,21 @@ class SavedPage extends PureComponent<SavedPageProps, SavedPageState> {
       play()
       record(
         make(Name.PLAYBACK_PLAY, {
-          id: `${agreementRecord.digital_content_id}`,
+          id: `${digitalContentRecord.digital_content_id}`,
           source: PlaybackSource.FAVORITES_PAGE
         })
       )
     }
   }
 
-  onTogglePlay = (uid: string, agreementId: ID) => {
+  onTogglePlay = (uid: string, digitalContentId: ID) => {
     const { playing, play, pause, record } = this.props
     const playingUid = this.getPlayingUid()
     if (playing && playingUid === uid) {
       pause()
       record(
         make(Name.PLAYBACK_PAUSE, {
-          id: `${agreementId}`,
+          id: `${digitalContentId}`,
           source: PlaybackSource.FAVORITES_PAGE
         })
       )
@@ -222,7 +222,7 @@ class SavedPage extends PureComponent<SavedPageProps, SavedPageState> {
       play(uid)
       record(
         make(Name.PLAYBACK_PLAY, {
-          id: `${agreementId}`,
+          id: `${digitalContentId}`,
           source: PlaybackSource.FAVORITES_PAGE
         })
       )
@@ -230,42 +230,42 @@ class SavedPage extends PureComponent<SavedPageProps, SavedPageState> {
       play()
       record(
         make(Name.PLAYBACK_PLAY, {
-          id: `${agreementId}`,
+          id: `${digitalContentId}`,
           source: PlaybackSource.FAVORITES_PAGE
         })
       )
     }
   }
 
-  onClickSave = (record: AgreementRecord) => {
+  onClickSave = (record: DigitalContentRecord) => {
     if (!record.has_current_user_saved) {
-      this.props.saveAgreement(record.digital_content_id)
+      this.props.saveDigitalContent(record.digital_content_id)
     } else {
-      this.props.unsaveAgreement(record.digital_content_id)
+      this.props.unsaveDigitalContent(record.digital_content_id)
     }
   }
 
-  onSave = (isSaved: boolean, agreementId: ID) => {
+  onSave = (isSaved: boolean, digitalContentId: ID) => {
     if (!isSaved) {
-      this.props.saveAgreement(agreementId)
+      this.props.saveDigitalContent(digitalContentId)
     } else {
-      this.props.unsaveAgreement(agreementId)
+      this.props.unsaveDigitalContent(digitalContentId)
     }
   }
 
-  onClickAgreementName = (record: AgreementRecord) => {
+  onClickDigitalContentName = (record: DigitalContentRecord) => {
     this.props.goToRoute(record.permalink)
   }
 
-  onClickLandlordName = (record: AgreementRecord) => {
+  onClickLandlordName = (record: DigitalContentRecord) => {
     this.props.goToRoute(profilePage(record.handle))
   }
 
-  onClickRepost = (record: AgreementRecord) => {
+  onClickRepost = (record: DigitalContentRecord) => {
     if (!record.has_current_user_reposted) {
-      this.props.repostAgreement(record.digital_content_id)
+      this.props.repostDigitalContent(record.digital_content_id)
     } else {
-      this.props.undoRepostAgreement(record.digital_content_id)
+      this.props.undoRepostDigitalContent(record.digital_content_id)
     }
   }
 
@@ -274,7 +274,7 @@ class SavedPage extends PureComponent<SavedPageProps, SavedPageState> {
       playing,
       play,
       pause,
-      agreements: { entries },
+      digitalContents: { entries },
       record
     } = this.props
     const isQueued = this.isQueued()
@@ -306,10 +306,10 @@ class SavedPage extends PureComponent<SavedPageProps, SavedPageState> {
     }
   }
 
-  onSortAgreements = (sorters: any) => {
+  onSortDigitalContents = (sorters: any) => {
     const { column, order } = sorters
     const {
-      agreements: { entries }
+      digitalContents: { entries }
     } = this.props
     // @ts-ignore
     const dataSource = this.formatMetadata(entries)
@@ -334,10 +334,10 @@ class SavedPage extends PureComponent<SavedPageProps, SavedPageState> {
     })
   }
 
-  formatCardSecondaryText = (saves: number, agreements: number) => {
+  formatCardSecondaryText = (saves: number, digitalContents: number) => {
     const savesText = saves === 1 ? 'Favorite' : 'Favorites'
-    const agreementsText = agreements === 1 ? 'DigitalContent' : 'Agreements'
-    return `${formatCount(saves)} ${savesText} • ${agreements} ${agreementsText}`
+    const digitalContentsText = digitalContents === 1 ? 'DigitalContent' : 'DigitalContents'
+    return `${formatCount(saves)} ${savesText} • ${digitalContents} ${digitalContentsText}`
   }
 
   render() {
@@ -357,23 +357,23 @@ class SavedPage extends PureComponent<SavedPageProps, SavedPageState> {
 
       // Props from AppState
       account: this.props.account,
-      agreements: this.props.agreements,
+      digitalContents: this.props.digitalContents,
       currentQueueItem: this.props.currentQueueItem,
       playing: this.props.playing,
       buffering: this.props.buffering,
 
       // Props from dispatch
-      fetchSavedAgreements: this.props.fetchSavedAgreements,
-      resetSavedAgreements: this.props.resetSavedAgreements,
+      fetchSavedDigitalContents: this.props.fetchSavedDigitalContents,
+      resetSavedDigitalContents: this.props.resetSavedDigitalContents,
       updateLineupOrder: this.props.updateLineupOrder,
       fetchSavedAlbums: this.props.fetchSavedAlbums,
       goToRoute: this.props.goToRoute,
       play: this.props.play,
       pause: this.props.pause,
-      repostAgreement: this.props.repostAgreement,
-      undoRepostAgreement: this.props.undoRepostAgreement,
-      saveAgreement: this.props.saveAgreement,
-      unsaveAgreement: this.props.unsaveAgreement,
+      repostDigitalContent: this.props.repostDigitalContent,
+      undoRepostDigitalContent: this.props.undoRepostDigitalContent,
+      saveDigitalContent: this.props.saveDigitalContent,
+      unsaveDigitalContent: this.props.unsaveDigitalContent,
 
       // Calculated Props
       isQueued,
@@ -384,10 +384,10 @@ class SavedPage extends PureComponent<SavedPageProps, SavedPageState> {
       formatMetadata: this.formatMetadata,
       getFilteredData: this.getFilteredData,
       onPlay: this.onPlay,
-      onSortAgreements: this.onSortAgreements,
+      onSortDigitalContents: this.onSortDigitalContents,
       onChangeTab: this.onChangeTab,
       formatCardSecondaryText: this.formatCardSecondaryText,
-      onReorderAgreements: () => {},
+      onReorderDigitalContents: () => {},
       onClickRemove: null
     }
 
@@ -404,7 +404,7 @@ class SavedPage extends PureComponent<SavedPageProps, SavedPageState> {
     const desktopProps = {
       onClickRow: this.onClickRow,
       onClickSave: this.onClickSave,
-      onClickAgreementName: this.onClickAgreementName,
+      onClickDigitalContentName: this.onClickDigitalContentName,
       onClickLandlordName: this.onClickLandlordName,
       onClickRepost: this.onClickRepost
     }
@@ -417,12 +417,12 @@ class SavedPage extends PureComponent<SavedPageProps, SavedPageState> {
 }
 
 function makeMapStateToProps() {
-  const getLineupMetadatas = makeGetTableMetadatas(getSavedAgreementsLineup)
+  const getLineupMetadatas = makeGetTableMetadatas(getSavedDigitalContentsLineup)
   const getCurrentQueueItem = makeGetCurrent()
   const mapStateToProps = (state: AppState) => {
     return {
       account: getAccountWithSavedContentListsAndAlbums(state),
-      agreements: getLineupMetadatas(state),
+      digitalContents: getLineupMetadatas(state),
       currentQueueItem: getCurrentQueueItem(state),
       playing: getPlaying(state),
       buffering: getBuffering(state),
@@ -434,30 +434,30 @@ function makeMapStateToProps() {
 
 function mapDispatchToProps(dispatch: Dispatch) {
   return {
-    fetchSavedAgreements: () => dispatch(saveActions.fetchSaves()),
-    resetSavedAgreements: () => dispatch(agreementsActions.reset()),
+    fetchSavedDigitalContents: () => dispatch(saveActions.fetchSaves()),
+    resetSavedDigitalContents: () => dispatch(digitalContentsActions.reset()),
     updateLineupOrder: (updatedOrderIndices: UID[]) =>
-      dispatch(agreementsActions.updateLineupOrder(updatedOrderIndices)),
+      dispatch(digitalContentsActions.updateLineupOrder(updatedOrderIndices)),
     fetchSavedAlbums: () => dispatch(accountActions.fetchSavedAlbums()),
     fetchSavedContentLists: () => dispatch(accountActions.fetchSavedContentLists()),
     updateContentListLastViewedAt: (contentListId: number) =>
       dispatch(updateContentListLastViewedAt(contentListId)),
     goToRoute: (route: string) => dispatch(pushRoute(route)),
-    play: (uid?: UID) => dispatch(agreementsActions.play(uid)),
-    pause: () => dispatch(agreementsActions.pause()),
-    repostAgreement: (agreementId: ID) =>
-      dispatch(socialActions.repostAgreement(agreementId, RepostSource.FAVORITES_PAGE)),
-    undoRepostAgreement: (agreementId: ID) =>
+    play: (uid?: UID) => dispatch(digitalContentsActions.play(uid)),
+    pause: () => dispatch(digitalContentsActions.pause()),
+    repostDigitalContent: (digitalContentId: ID) =>
+      dispatch(socialActions.repostDigitalContent(digitalContentId, RepostSource.FAVORITES_PAGE)),
+    undoRepostDigitalContent: (digitalContentId: ID) =>
       dispatch(
-        socialActions.undoRepostAgreement(agreementId, RepostSource.FAVORITES_PAGE)
+        socialActions.undoRepostDigitalContent(digitalContentId, RepostSource.FAVORITES_PAGE)
       ),
-    saveAgreement: (agreementId: ID) =>
-      dispatch(socialActions.saveAgreement(agreementId, FavoriteSource.FAVORITES_PAGE)),
-    unsaveAgreement: (agreementId: ID) =>
+    saveDigitalContent: (digitalContentId: ID) =>
+      dispatch(socialActions.saveDigitalContent(digitalContentId, FavoriteSource.FAVORITES_PAGE)),
+    unsaveDigitalContent: (digitalContentId: ID) =>
       dispatch(
-        socialActions.unsaveAgreement(agreementId, FavoriteSource.FAVORITES_PAGE)
+        socialActions.unsaveDigitalContent(digitalContentId, FavoriteSource.FAVORITES_PAGE)
       ),
-    record: (event: AgreementEvent) => dispatch(event)
+    record: (event: DigitalContentEvent) => dispatch(event)
   }
 }
 

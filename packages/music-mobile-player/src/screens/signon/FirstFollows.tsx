@@ -262,7 +262,7 @@ const styles = StyleSheet.create({
 const messages = {
   title: 'Follow At Least 3 Landlords To Get Started',
   subTitle:
-    'Agreements uploaded or reposted by people you follow will appear in your feed.',
+    'DigitalContents uploaded or reposted by people you follow will appear in your feed.',
   pickForMe: 'Pick Some For Me',
   following: 'Following',
   continue: 'Continue'
@@ -433,7 +433,7 @@ const FirstFollows = ({ navigation, route }: FirstFollowsProps) => {
 
   // The autoselect or 'pick for me'
   // Selects the first three aritsts in the current category along with 2 additinal
-  // random landlord from the top 10
+  // random author from the top 10
   const onPickForMe = () => {
     const selectedIds = new Set(followedLandlordIds)
 

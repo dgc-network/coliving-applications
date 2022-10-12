@@ -2,7 +2,7 @@ import { Name } from '@coliving/common'
 import { call, cancel, fork, put, race, select, take } from 'redux-saga/effects'
 
 import { getUserId } from 'common/store/account/selectors'
-import { setAgreementsIsBlocked } from 'common/store/cache/agreements/utils/blocklist'
+import { setDigitalContentsIsBlocked } from 'common/store/cache/digital_contents/utils/blocklist'
 import * as searchActions from 'components/searchBar/store/actions'
 import apiClient from 'services/colivingAPIClient/colivingAPIClient'
 import { make } from 'store/analytics/actions'
@@ -21,16 +21,16 @@ export function* getSearchResults(searchText) {
     offset: 0
   })
 
-  const { agreements, albums, contentLists, users } = results
+  const { digitalContents, albums, contentLists, users } = results
   const checkedUsers = users.filter((t) => !t.is_deactivated)
-  const checkedAgreements = (yield call(setAgreementsIsBlocked, agreements)).filter(
+  const checkedDigitalContents = (yield call(setDigitalContentsIsBlocked, digitalContents)).filter(
     (t) => !t.is_delete && !t._blocked && !t.user.is_deactivated
   )
   const checkedContentLists = contentLists.filter((t) => !t.user?.is_deactivated)
   const checkedAlbums = albums.filter((t) => !t.user?.is_deactivated)
   return {
     users: checkedUsers,
-    agreements: checkedAgreements,
+    digitalContents: checkedDigitalContents,
     albums: checkedAlbums,
     contentLists: checkedContentLists
   }
@@ -42,7 +42,7 @@ function* fetchSearchAsync(action) {
   const search = yield select(getSearch)
   if (action.searchText === search.searchText) {
     const previousResults = {
-      agreements: search.agreements,
+      digitalContents: search.digitalContents,
       albums: search.albums,
       contentLists: search.contentLists,
       users: search.users

@@ -11,7 +11,7 @@ import { push as pushRoute } from 'connected-react-router'
 import { connect } from 'react-redux'
 
 import { getAccountUser, getUserId } from 'common/store/account/selectors'
-import { getLineupHasAgreements } from 'common/store/lineup/selectors'
+import { getLineupHasDigitalContents } from 'common/store/lineup/selectors'
 import { makeGetCurrent } from 'common/store/queue/selectors'
 import {
   play,
@@ -23,11 +23,11 @@ import {
 } from 'common/store/queue/slice'
 import { RepeatMode } from 'common/store/queue/types'
 import {
-  repostAgreement,
-  undoRepostAgreement,
-  saveAgreement,
-  unsaveAgreement
-} from 'common/store/social/agreements/actions'
+  repostDigitalContent,
+  undoRepostDigitalContent,
+  saveDigitalContent,
+  unsaveDigitalContent
+} from 'common/store/social/digital_contents/actions'
 import { getTheme } from 'common/store/ui/theme/selectors'
 import { Genre } from 'common/utils/genres'
 import FavoriteButton from 'components/altButton/favoriteButton'
@@ -55,7 +55,7 @@ import { collectibleDetailsPage, profilePage } from 'utils/route'
 import { isMatrix, shouldShowDark } from 'utils/theme/theme'
 
 import styles from './PlayBar.module.css'
-import PlayingAgreementInfo from './components/PlayingAgreementInfo'
+import PlayingDigitalContentInfo from './components/PlayingDigitalContentInfo'
 
 const VOLUME_GRANULARITY = 100.0
 const SEEK_INTERVAL = 200
@@ -76,9 +76,9 @@ class PlayBar extends Component {
     // State used to manage time on left of playbar.
     this.state = {
       seeking: false,
-      agreementPosition: 0,
+      digitalContentPosition: 0,
       playCounter: null,
-      agreementId: null,
+      digitalContentId: null,
       // Capture intent to set initial volume before digitalcoin is playing
       initialVolume: null,
       mediaKey: 0
@@ -106,8 +106,8 @@ class PlayBar extends Component {
 
     if (isPlaying && !this.seekInterval) {
       this.seekInterval = setInterval(() => {
-        const agreementPosition = digitalcoin.getPosition()
-        this.setState({ agreementPosition })
+        const digitalContentPosition = digitalcoin.getPosition()
+        this.setState({ digitalContentPosition })
       }, SEEK_INTERVAL)
     }
 
@@ -115,7 +115,7 @@ class PlayBar extends Component {
       this.setState({
         mediaKey: this.state.mediaKey + 1,
         playCounter,
-        agreementPosition: 0,
+        digitalContentPosition: 0,
         listenRecorded: false
       })
     }
@@ -134,7 +134,7 @@ class PlayBar extends Component {
     clearInterval(this.seekInterval)
   }
 
-  goToAgreementPage = () => {
+  goToDigitalContentPage = () => {
     const {
       currentQueueItem: { digital_content, user },
       collectible,
@@ -188,19 +188,19 @@ class PlayBar extends Component {
     }
   }
 
-  onToggleFavorite = (favorited, agreementId) => {
-    if (agreementId) {
+  onToggleFavorite = (favorited, digitalContentId) => {
+    if (digitalContentId) {
       favorited
-        ? this.props.unsaveAgreement(agreementId)
-        : this.props.saveAgreement(agreementId)
+        ? this.props.unsaveDigitalContent(digitalContentId)
+        : this.props.saveDigitalContent(digitalContentId)
     }
   }
 
-  onToggleRepost = (reposted, agreementId) => {
-    if (agreementId) {
+  onToggleRepost = (reposted, digitalContentId) => {
+    if (digitalContentId) {
       reposted
-        ? this.props.undoRepostAgreement(agreementId)
-        : this.props.repostAgreement(agreementId)
+        ? this.props.undoRepostDigitalContent(digitalContentId)
+        : this.props.repostDigitalContent(digitalContentId)
     }
   }
 
@@ -254,7 +254,7 @@ class PlayBar extends Component {
       })
     } else {
       const shouldGoToPrevious =
-        this.state.agreementPosition < RESTART_THRESHOLD_SEC
+        this.state.digitalContentPosition < RESTART_THRESHOLD_SEC
       if (shouldGoToPrevious) {
         previous()
       } else {
@@ -285,7 +285,7 @@ class PlayBar extends Component {
 
   playable = () =>
     !!this.props.currentQueueItem.uid ||
-    this.props.lineupHasAgreements ||
+    this.props.lineupHasDigitalContents ||
     this.props.collectible
 
   render() {
@@ -300,38 +300,38 @@ class PlayBar extends Component {
     } = this.props
     const { mediaKey } = this.state
 
-    let agreementTitle = ''
+    let digitalContentTitle = ''
     let landlordName = ''
     let landlordHandle = ''
     let landlordUserId = null
     let isVerified = false
     let profilePictureSizes = null
-    let agreementId = null
+    let digitalContentId = null
     let duration = null
     let reposted = false
     let favorited = false
     let isOwner = false
-    let isAgreementUnlisted = false
-    let agreementPermalink = ''
+    let isDigitalContentUnlisted = false
+    let digitalContentPermalink = ''
 
     if (uid && digital_content && user) {
-      agreementTitle = digital_content.title
+      digitalContentTitle = digital_content.title
       landlordName = user.name
       landlordHandle = user.handle
       landlordUserId = user.user_id
       isVerified = user.is_verified
       profilePictureSizes = user._profile_picture_sizes
       isOwner = digital_content.owner_id === userId
-      agreementPermalink = digital_content.permalink
+      digitalContentPermalink = digital_content.permalink
 
       duration = digitalcoin.getDuration()
-      agreementId = digital_content.digital_content_id
+      digitalContentId = digital_content.digital_content_id
       reposted = digital_content.has_current_user_reposted
       favorited = digital_content.has_current_user_saved || false
-      isAgreementUnlisted = digital_content.is_unlisted
+      isDigitalContentUnlisted = digital_content.is_unlisted
     } else if (collectible && user) {
       // Special case for digitalcoin nft contentList
-      agreementTitle = collectible.name
+      digitalContentTitle = collectible.name
       landlordName = user.name
       landlordHandle = user.handle
       landlordUserId = user.user_id
@@ -362,18 +362,18 @@ class PlayBar extends Component {
       <div className={styles.playBar}>
         <div className={styles.playBarContentWrapper}>
           <div className={styles.playBarPlayingInfo}>
-            <PlayingAgreementInfo
+            <PlayingDigitalContentInfo
               profilePictureSizes={profilePictureSizes}
-              agreementId={agreementId}
+              digitalContentId={digitalContentId}
               isOwner={isOwner}
-              agreementTitle={agreementTitle}
-              agreementPermalink={agreementPermalink}
+              digitalContentTitle={digitalContentTitle}
+              digitalContentPermalink={digitalContentPermalink}
               landlordName={landlordName}
               landlordHandle={landlordHandle}
               landlordUserId={landlordUserId}
               isVerified={isVerified}
-              isAgreementUnlisted={isAgreementUnlisted}
-              onClickAgreementTitle={this.goToAgreementPage}
+              isDigitalContentUnlisted={isDigitalContentUnlisted}
+              onClickDigitalContentTitle={this.goToDigitalContentPage}
               onClickLandlordName={this.goToLandlordPage}
               hasShadow={false}
             />
@@ -446,7 +446,7 @@ class PlayBar extends Component {
                 <span>
                   <RepostButton
                     aria-label={repostText}
-                    onClick={() => this.onToggleRepost(reposted, agreementId)}
+                    onClick={() => this.onToggleRepost(reposted, digitalContentId)}
                     isActive={reposted}
                     isDisabled={isFavoriteAndRepostDisabled}
                     isDarkMode={shouldShowDark(theme)}
@@ -469,7 +469,7 @@ class PlayBar extends Component {
                     isMatrixMode={matrix}
                     isActive={favorited}
                     isDarkMode={shouldShowDark(theme)}
-                    onClick={() => this.onToggleFavorite(favorited, agreementId)}
+                    onClick={() => this.onToggleFavorite(favorited, digitalContentId)}
                   />
                 </span>
               </Tooltip>
@@ -493,7 +493,7 @@ const makeMapStateToProps = () => {
     isPlaying: getPlaying(state),
     isBuffering: getBuffering(state),
     playingUid: getPlayingUid(state),
-    lineupHasAgreements: getLineupHasAgreements(
+    lineupHasDigitalContents: getLineupHasDigitalContents(
       getLineupSelectorForRoute(state),
       state
     ),
@@ -528,13 +528,13 @@ const mapDispatchToProps = (dispatch) => ({
   shuffle: (enable) => {
     dispatch(shuffle({ enable }))
   },
-  repostAgreement: (agreementId) =>
-    dispatch(repostAgreement(agreementId, RepostSource.PLAYBAR)),
-  undoRepostAgreement: (agreementId) =>
-    dispatch(undoRepostAgreement(agreementId, RepostSource.PLAYBAR)),
-  saveAgreement: (agreementId) => dispatch(saveAgreement(agreementId, FavoriteSource.PLAYBAR)),
-  unsaveAgreement: (agreementId) =>
-    dispatch(unsaveAgreement(agreementId, FavoriteSource.PLAYBAR)),
+  repostDigitalContent: (digitalContentId) =>
+    dispatch(repostDigitalContent(digitalContentId, RepostSource.PLAYBAR)),
+  undoRepostDigitalContent: (digitalContentId) =>
+    dispatch(undoRepostDigitalContent(digitalContentId, RepostSource.PLAYBAR)),
+  saveDigitalContent: (digitalContentId) => dispatch(saveDigitalContent(digitalContentId, FavoriteSource.PLAYBAR)),
+  unsaveDigitalContent: (digitalContentId) =>
+    dispatch(unsaveDigitalContent(digitalContentId, FavoriteSource.PLAYBAR)),
   goToRoute: (route) => dispatch(pushRoute(route)),
   record: (event) => dispatch(event)
 })

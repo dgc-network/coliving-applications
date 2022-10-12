@@ -23,19 +23,19 @@ const styles = StyleSheet.create({
 })
 
 export const LineupTileSkeleton = () => {
-  const agreementTileStyles = useThemedStyles(createStyles)
+  const digitalContentTileStyles = useThemedStyles(createStyles)
   return (
     <LineupTileRoot>
       <View style={styles.metadata}>
-        <View style={[agreementTileStyles.imageContainer, agreementTileStyles.image]}>
-          <Skeleton style={agreementTileStyles.image} />
+        <View style={[digitalContentTileStyles.imageContainer, digitalContentTileStyles.image]}>
+          <Skeleton style={digitalContentTileStyles.image} />
         </View>
 
-        <View style={[agreementTileStyles.titles]}>
-          <View style={agreementTileStyles.title}>
+        <View style={[digitalContentTileStyles.titles]}>
+          <View style={digitalContentTileStyles.title}>
             <Skeleton style={styles.skeleton} width='80%' height='80%' />
           </View>
-          <View style={[agreementTileStyles.landlord, { width: '100%' }]}>
+          <View style={[digitalContentTileStyles.author, { width: '100%' }]}>
             <Skeleton style={styles.skeleton} width='60%' height='80%' />
           </View>
         </View>

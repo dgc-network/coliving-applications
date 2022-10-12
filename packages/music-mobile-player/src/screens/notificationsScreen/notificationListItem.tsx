@@ -13,13 +13,13 @@ import {
   MilestoneNotification,
   AnnouncementNotification,
   TierChangeNotification,
-  TrendingAgreementNotification,
+  TrendingDigitalContentNotification,
   TopSupporterNotification,
   TopSupportingNotification,
   TipReactionNotification,
   TipSentNotification,
   TipReceivedNotification,
-  AddAgreementToContentListNotification
+  AddDigitalContentToContentListNotification
 } from './notifications'
 
 type NotificationListItemProps = {
@@ -69,12 +69,12 @@ export const NotificationListItem = (props: NotificationListItemProps) => {
         return <TopSupporterNotification notification={notification} />
       case NotificationType.SupportingRankUp:
         return <TopSupportingNotification notification={notification} />
-      case NotificationType.TrendingAgreement:
-        return <TrendingAgreementNotification notification={notification} />
+      case NotificationType.TrendingDigitalContent:
+        return <TrendingDigitalContentNotification notification={notification} />
       case NotificationType.UserSubscription:
         return <UserSubscriptionNotification notification={notification} />
-      case NotificationType.AddAgreementToContentList:
-        return <AddAgreementToContentListNotification notification={notification} />
+      case NotificationType.AddDigitalContentToContentList:
+        return <AddDigitalContentToContentListNotification notification={notification} />
       default:
         return null
     }

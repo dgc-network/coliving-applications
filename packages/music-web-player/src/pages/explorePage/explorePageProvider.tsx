@@ -41,10 +41,10 @@ const ExplorePage = ({
     fetchExplore()
   }, [fetchExplore])
 
-  const formatContentListCardSecondaryText = (saves: number, agreements: number) => {
+  const formatContentListCardSecondaryText = (saves: number, digitalContents: number) => {
     const savesText = saves === 1 ? 'Favorite' : 'Favorites'
-    const agreementsText = agreements === 1 ? 'DigitalContent' : 'Agreements'
-    return `${formatCount(saves)} ${savesText} • ${agreements} ${agreementsText}`
+    const digitalContentsText = digitalContents === 1 ? 'DigitalContent' : 'DigitalContents'
+    return `${formatCount(saves)} ${savesText} • ${digitalContents} ${digitalContentsText}`
   }
 
   const formatProfileCardSecondaryText = (followers: number) => {

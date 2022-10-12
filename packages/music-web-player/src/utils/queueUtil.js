@@ -7,7 +7,7 @@
  * @param {Object} queue the queue redux store object.
  * @returns {?Object}
  */
-export function getCurrentAgreement(queue) {
+export function getCurrentDigitalContent(queue) {
   if (queue.playingIndex === -1) {
     return null
   }
@@ -19,7 +19,7 @@ export function getCurrentAgreement(queue) {
  * @param {Object} queue the queue redux store object.
  * @returns {?Object}
  */
-export function getCurrentAgreementMetadata(queue) {
+export function getCurrentDigitalContentMetadata(queue) {
   if (queue.playingIndex === -1) {
     return null
   }
@@ -33,7 +33,7 @@ export function getCurrentAgreementMetadata(queue) {
  * @param {Object} queue the queue redux store object.
  * @returns {?Object}
  */
-export function getCurrentAgreementHowl(queue) {
+export function getCurrentDigitalContentHowl(queue) {
   if (queue.playingIndex === -1) {
     return null
   }
@@ -45,7 +45,7 @@ export function getCurrentAgreementHowl(queue) {
  * @param {Object} queue the queue redux store object.
  * @returns {?Object}
  */
-export function getCurrentAgreementAudioElement(queue) {
+export function getCurrentDigitalContentAudioElement(queue) {
   if (
     queue.playingIndex === -1 ||
     !queue.queue[queue.playingIndex].digital_content ||
@@ -61,7 +61,7 @@ export function getCurrentAgreementAudioElement(queue) {
  * @param {Object} queue the queue redux store object.
  * @returns {?number}
  */
-export function getCurrentAgreementDuration(queue) {
+export function getCurrentDigitalContentDuration(queue) {
   if (queue.playingIndex === -1) {
     return null
   }
@@ -73,7 +73,7 @@ export function getCurrentAgreementDuration(queue) {
  * @param {Object} queue the queue redux store object.
  * @returns {?number}
  */
-export function getCurrentAgreementPosition(queue) {
+export function getCurrentDigitalContentPosition(queue) {
   if (queue.playingIndex === -1) {
     return null
   }

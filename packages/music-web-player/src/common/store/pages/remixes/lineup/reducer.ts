@@ -15,11 +15,11 @@ const actionsMap: { [key in string]: any } = {
   }
 }
 
-const agreements = (state = initialState, action: { type: string }) => {
+const digitalContents = (state = initialState, action: { type: string }) => {
   const baseActionType = stripPrefix(PREFIX, action.type)
   const matchingReduceFunction = actionsMap[baseActionType]
   if (!matchingReduceFunction) return state
   return matchingReduceFunction(state, action)
 }
 
-export default agreements
+export default digitalContents

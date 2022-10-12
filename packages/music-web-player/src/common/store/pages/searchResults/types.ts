@@ -3,15 +3,15 @@ import { ID, LineupState, Status, DigitalContent } from '@coliving/common'
 export type SearchPageState = {
   status: Status
   searchText: string
-  agreementIds: ID[]
+  digitalContentIds: ID[]
   albumIds: ID[]
   contentListIds: ID[]
   landlordIds: ID[]
-  agreements: LineupState<DigitalContent>
+  digitalContents: LineupState<DigitalContent>
 }
 
 export enum SearchKind {
-  AGREEMENTS = 'agreements',
+  AGREEMENTS = 'digitalContents',
   USERS = 'users',
   CONTENT_LISTS = 'contentLists',
   ALBUMS = 'albums',

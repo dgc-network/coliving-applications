@@ -9,7 +9,7 @@ import {
 } from '@coliving/stems'
 import PropTypes from 'prop-types'
 
-import { LandlordRecommendationsPopup } from 'components/landlordRecommendations/landlordRecommendationsPopup'
+import { LandlordRecommendationsPopup } from 'components/authorRecommendations/authorRecommendationsPopup'
 import FollowButton from 'components/followButton/followButton'
 import Stats from 'components/stats/stats'
 import SubscribeButton from 'components/subscribeButton/subscribeButton'
@@ -158,7 +158,7 @@ StatBanner.propTypes = {
 
 StatBanner.defaultProps = {
   stats: [
-    { number: 0, title: 'agreements' },
+    { number: 0, title: 'digitalContents' },
     { number: 0, title: 'followers' },
     { number: 0, title: 'reposts' }
   ],

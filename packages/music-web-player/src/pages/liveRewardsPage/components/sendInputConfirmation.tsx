@@ -1,4 +1,4 @@
-import { BNWei, StringLive, WalletAddress } from '@coliving/common'
+import { BNWei, StringDigitalcoin, WalletAddress } from '@coliving/common'
 import { Button, ButtonType, IconArrow } from '@coliving/stems'
 
 import { stringAudioToBN, weiToAudio } from 'common/utils/wallet'
@@ -11,7 +11,7 @@ import styles from './sendInputConfirmation.module.css'
 
 const messages = {
   title: "YOU'RE ABOUT TO SEND",
-  sendButton: 'SEND $LIVE'
+  sendButton: 'SEND $DGCO'
 }
 
 type SendInputConfirmationProps = {
@@ -42,7 +42,7 @@ const SendInputConfirmation = ({
         <ModalBodyTitle text={messages.title} />
       </div>
       <DashboardTokenValueSlider
-        min={stringAudioToBN('0' as StringLive)}
+        min={stringAudioToBN('0' as StringDigitalcoin)}
         max={weiToAudio(balance)}
         value={weiToAudio(amountToTransfer)}
       />

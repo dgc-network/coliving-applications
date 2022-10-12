@@ -15,19 +15,19 @@ import {
   FetchSearchPageTagsSucceededAction,
   FetchSearchPageTagsFailedAction
 } from 'common/store/pages/searchResults/actions'
-import { PREFIX } from 'common/store/pages/searchResults/lineup/agreements/actions'
-import agreementsReducer from 'common/store/pages/searchResults/lineup/agreements/reducer'
+import { PREFIX } from 'common/store/pages/searchResults/lineup/digital_contents/actions'
+import digitalContentsReducer from 'common/store/pages/searchResults/lineup/digital_contents/reducer'
 
 import { SearchPageState } from './types'
 
 const initialState: SearchPageState = {
   status: Status.SUCCESS,
   searchText: '',
-  agreementIds: [],
+  digitalContentIds: [],
   albumIds: [],
   contentListIds: [],
   landlordIds: [],
-  agreements: {
+  digitalContents: {
     entries: [],
     order: {},
     total: 0,
@@ -62,7 +62,7 @@ const actionsMap = {
 
     if (action.results) {
       newState.searchText = action.searchText
-      newState.agreementIds = action.results.agreements || []
+      newState.digitalContentIds = action.results.digitalContents || []
       newState.albumIds = action.results.albums || []
       newState.contentListIds = action.results.contentLists || []
       newState.landlordIds = action.results.users || []
@@ -98,7 +98,7 @@ const actionsMap = {
 
     if (action.results) {
       newState.searchText = action.tag
-      newState.agreementIds = action.results.agreements || []
+      newState.digitalContentIds = action.results.digitalContents || []
       newState.landlordIds = action.results.users || []
       newState.albumIds = []
       newState.contentListIds = []
@@ -117,15 +117,15 @@ const actionsMap = {
   }
 }
 
-const agreementsLineupReducer = asLineup(PREFIX, agreementsReducer)
+const digitalContentsLineupReducer = asLineup(PREFIX, digitalContentsReducer)
 
 function reducer(
   state: SearchPageState = initialState,
   action: SearchPageActions
 ) {
   // @ts-ignore this technically will never hit with actions typed the way they are
-  const agreements = agreementsLineupReducer(state.agreements, action)
-  if (agreements !== state.agreements) return { ...state, agreements }
+  const digitalContents = digitalContentsLineupReducer(state.digitalContents, action)
+  if (digitalContents !== state.digitalContents) return { ...state, digitalContents }
 
   const matchingReduceFunction = actionsMap[action.type]
   if (!matchingReduceFunction) return state

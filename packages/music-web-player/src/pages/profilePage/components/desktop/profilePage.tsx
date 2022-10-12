@@ -18,7 +18,7 @@ import { ReactComponent as IconContentLists } from 'assets/img/iconContentLists.
 import { ReactComponent as IconReposts } from 'assets/img/iconRepost.svg'
 import { useSelectTierInfo } from 'common/hooks/wallet'
 import { feedActions } from 'common/store/pages/profile/lineups/feed/actions'
-import { agreementsActions } from 'common/store/pages/profile/lineups/agreements/actions'
+import { digitalContentsActions } from 'common/store/pages/profile/lineups/digital_contents/actions'
 import { ProfileUser, Tabs } from 'common/store/pages/profile/types'
 import { badgeTiers } from 'common/store/wallet/utils'
 import Card from 'components/card/desktop/card'
@@ -93,13 +93,13 @@ export type ProfilePageProps = {
   contentLists: Collection[] | null
   status: Status
   goToRoute: (route: string) => void
-  landlordAgreements: LineupState<{ id: ID }>
-  playLandlordAgreement: (uid: UID) => void
-  pauseLandlordAgreement: () => void
+  landlordDigitalContents: LineupState<{ id: ID }>
+  playLandlordDigitalContent: (uid: UID) => void
+  pauseLandlordDigitalContent: () => void
   // Feed
   userFeed: LineupState<{ id: ID }>
-  playUserFeedAgreement: (uid: UID) => void
-  pauseUserFeedAgreement: () => void
+  playUserFeedDigitalContent: (uid: UID) => void
+  pauseUserFeedDigitalContent: () => void
 
   // Methods
   onFollow: () => void
@@ -120,11 +120,11 @@ export type ProfilePageProps = {
   onCancel: () => void
   onSortByRecent: () => void
   onSortByPopular: () => void
-  loadMoreLandlordAgreements: (offset: number, limit: number) => void
+  loadMoreLandlordDigitalContents: (offset: number, limit: number) => void
   loadMoreUserFeed: (offset: number, limit: number) => void
   formatCardSecondaryText: (
     saves: number,
-    agreements: number,
+    digitalContents: number,
     isPrivate?: boolean
   ) => string
   openCreateContentListModal: () => void
@@ -149,18 +149,18 @@ const ProfilePage = ({
   contentLists,
   status,
   goToRoute,
-  // Agreements
-  landlordAgreements,
-  playLandlordAgreement,
-  pauseLandlordAgreement,
+  // DigitalContents
+  landlordDigitalContents,
+  playLandlordDigitalContent,
+  pauseLandlordDigitalContent,
   getLineupProps,
   // Feed
   userFeed,
-  playUserFeedAgreement,
-  pauseUserFeedAgreement,
+  playUserFeedDigitalContent,
+  pauseUserFeedDigitalContent,
   formatCardSecondaryText,
   loadMoreUserFeed,
-  loadMoreLandlordAgreements,
+  loadMoreLandlordDigitalContents,
   openCreateContentListModal,
   updateProfile,
 
@@ -232,7 +232,7 @@ const ProfilePage = ({
     goToRoute(UPLOAD_CONTENT_LIST_PAGE)
     record(make(Name.AGREEMENT_UPLOAD_OPEN, { source: 'profile' }))
   }, [goToRoute, record])
-  const onClickUploadAgreement = useCallback(() => {
+  const onClickUploadDigitalContent = useCallback(() => {
     goToRoute(UPLOAD_PAGE)
     record(make(Name.AGREEMENT_UPLOAD_OPEN, { source: 'profile' }))
   }, [goToRoute, record])
@@ -347,12 +347,12 @@ const ProfilePage = ({
       )
     }
 
-    const agreementUploadChip = isOwner ? (
+    const digitalContentUploadChip = isOwner ? (
       <UploadChip
         key='upload-chip'
         type='digital_content'
         variant='tile'
-        onClick={onClickUploadAgreement}
+        onClick={onClickUploadDigitalContent}
       />
     ) : null
 
@@ -370,23 +370,23 @@ const ProfilePage = ({
       <div key={Tabs.AGREEMENTS} className={styles.tiles}>
         {renderProfileCompletionCard()}
         {status !== Status.LOADING ? (
-          landlordAgreements.status !== Status.LOADING &&
-          landlordAgreements.entries.length === 0 ? (
+          landlordDigitalContents.status !== Status.LOADING &&
+          landlordDigitalContents.entries.length === 0 ? (
             <EmptyTab
               isOwner={isOwner}
               name={profile.name}
-              text={'uploaded any agreements'}
+              text={'uploaded any digitalContents'}
             />
           ) : (
             <Lineup
-              {...getLineupProps(landlordAgreements)}
-              extraPrecedingElement={agreementUploadChip}
+              {...getLineupProps(landlordDigitalContents)}
+              extraPrecedingElement={digitalContentUploadChip}
               animateLeadingElement
               leadingElementId={profile._landlord_pick}
-              loadMore={loadMoreLandlordAgreements}
-              playAgreement={playLandlordAgreement}
-              pauseAgreement={pauseLandlordAgreement}
-              actions={agreementsActions}
+              loadMore={loadMoreLandlordDigitalContents}
+              playDigitalContent={playLandlordDigitalContent}
+              pauseDigitalContent={pauseLandlordDigitalContent}
+              actions={digitalContentsActions}
             />
           )
         ) : null}
@@ -430,8 +430,8 @@ const ProfilePage = ({
             <Lineup
               {...getLineupProps(userFeed)}
               loadMore={loadMoreUserFeed}
-              playAgreement={playUserFeedAgreement}
-              pauseAgreement={pauseUserFeedAgreement}
+              playDigitalContent={playUserFeedDigitalContent}
+              pauseDigitalContent={pauseUserFeedDigitalContent}
               actions={feedActions}
             />
           )
@@ -543,8 +543,8 @@ const ProfilePage = ({
             {...getLineupProps(userFeed)}
             count={profile.repost_count}
             loadMore={loadMoreUserFeed}
-            playAgreement={playUserFeedAgreement}
-            pauseAgreement={pauseUserFeedAgreement}
+            playDigitalContent={playUserFeedDigitalContent}
+            pauseDigitalContent={pauseUserFeedDigitalContent}
             actions={feedActions}
           />
         )}

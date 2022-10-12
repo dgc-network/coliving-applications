@@ -2,7 +2,7 @@ import { Status } from '@coliving/common'
 
 import { asLineup } from 'common/store/lineup/reducer'
 import feedReducer from 'common/store/pages/profile/lineups/feed/reducer'
-import agreementsReducer from 'common/store/pages/profile/lineups/agreements/reducer'
+import digitalContentsReducer from 'common/store/pages/profile/lineups/digital_contents/reducer'
 import {
   FollowType,
   CollectionSortMode
@@ -30,7 +30,7 @@ import {
   SET_NOTIFICATION_SUBSCRIPTION
 } from './actions'
 import { PREFIX as feedPrefix } from './lineups/feed/actions'
-import { PREFIX as agreementsPrefix } from './lineups/agreements/actions'
+import { PREFIX as digitalContentsPrefix } from './lineups/digital_contents/actions'
 
 const initialState = {
   handle: null,
@@ -154,7 +154,7 @@ const actionsMap = {
       ...initialState,
       profileMeterDismissed: state.profileMeterDismissed,
       feed: feedLineupReducer(undefined, action),
-      agreements: agreementsLineupReducer(undefined, action)
+      digitalContents: digitalContentsLineupReducer(undefined, action)
     }
   },
   [UPDATE_COLLECTION_SORT_MODE](state, action) {
@@ -198,14 +198,14 @@ const actionsMap = {
 }
 
 const feedLineupReducer = asLineup(feedPrefix, feedReducer)
-const agreementsLineupReducer = asLineup(agreementsPrefix, agreementsReducer)
+const digitalContentsLineupReducer = asLineup(digitalContentsPrefix, digitalContentsReducer)
 
 const reducer = (state = initialState, action) => {
   const feed = feedLineupReducer(state.feed, action)
   if (feed !== state.feed) return { ...state, feed }
 
-  const agreements = agreementsLineupReducer(state.agreements, action)
-  if (agreements !== state.agreements) return { ...state, agreements }
+  const digitalContents = digitalContentsLineupReducer(state.digitalContents, action)
+  if (digitalContents !== state.digitalContents) return { ...state, digitalContents }
 
   const matchingReduceFunction = actionsMap[action.type]
   if (!matchingReduceFunction) return state

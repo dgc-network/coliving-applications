@@ -1,14 +1,14 @@
 import { ID } from '@coliving/common'
 
 export const createRemixOfMetadata = ({
-  parentAgreementId
+  parentDigitalContentId
 }: {
-  parentAgreementId: ID
+  parentDigitalContentId: ID
 }) => {
   return {
-    agreements: [
+    digitalContents: [
       {
-        parent_digital_content_id: parentAgreementId
+        parent_digital_content_id: parentDigitalContentId
       }
     ]
   }

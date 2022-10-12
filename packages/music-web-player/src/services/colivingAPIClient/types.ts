@@ -7,7 +7,7 @@ import {
   StemCategory,
   Download,
   FieldVisibility,
-  AgreementSegment,
+  DigitalContentSegment,
   SolanaWalletAddress,
   WalletAddress,
   Nullable
@@ -83,7 +83,7 @@ export type APIRemix = {
   has_remix_author_saved: boolean
 }
 
-export type APIAgreement = {
+export type APIDigitalContent = {
   blocknumber: number
   artwork: CoverArtSizes
   description: Nullable<string>
@@ -92,7 +92,7 @@ export type APIAgreement = {
   mood: Nullable<string>
   release_date: Nullable<string>
   remix_of: {
-    agreements: null | APIRemix[]
+    digitalContents: null | APIRemix[]
   }
   repost_count: number
   favorite_count: number
@@ -117,7 +117,7 @@ export type APIAgreement = {
   followee_favorites: APIFavorite[]
   route_id: string
   stem_of: any
-  digital_content_segments: AgreementSegment[]
+  digital_content_segments: DigitalContentSegment[]
   updated_at: string
   user_id: OpaqueID
   is_delete: boolean
@@ -127,8 +127,8 @@ export type APIAgreement = {
   is_available: boolean
 }
 
-export type APISearchAgreement = Omit<
-  APIAgreement,
+export type APISearchDigitalContent = Omit<
+  APIDigitalContent,
   | 'repost_count'
   | 'favorite_count'
   | 'has_current_user_reposted'
@@ -173,7 +173,7 @@ export type APIContentList = {
   is_delete: boolean
   is_private: boolean
   added_timestamps: APIContentListAddedTimestamp[]
-  agreements: APIAgreement[]
+  digitalContents: APIDigitalContent[]
   digital_content_count: number
   cover_art: Nullable<string>
   cover_art_sizes: Nullable<string>
@@ -188,21 +188,21 @@ export type APISearchContentList = Omit<
   | 'followee_favorites'
   | 'has_current_user_reposted'
   | 'has_current_user_saved'
-  | 'agreements'
+  | 'digitalContents'
 >
 
 export type APIItemType = 'digital_content' | 'contentList'
 
 export type APIActivity = { timestamp: string } & (
-  | { item_type: 'digital_content'; item: APIAgreement }
+  | { item_type: 'digital_content'; item: APIDigitalContent }
   | { item_type: 'contentList'; item: APIContentList }
 )
 
 export type APISearch = {
   users?: APIUser[]
   followed_users?: APIUser[]
-  agreements?: APIAgreement[]
-  saved_digital_contents?: APIAgreement[]
+  digitalContents?: APIDigitalContent[]
+  saved_digital_contents?: APIDigitalContent[]
   contentLists?: APIContentList[]
   saved_content_lists?: APIContentList[]
   albums?: APIContentList[]
@@ -212,8 +212,8 @@ export type APISearch = {
 export type APISearchAutocomplete = {
   users?: APISearchUser[]
   followed_users?: APISearchUser[]
-  agreements?: APISearchAgreement[]
-  saved_digital_contents?: APISearchAgreement[]
+  digitalContents?: APISearchDigitalContent[]
+  saved_digital_contents?: APISearchDigitalContent[]
   contentLists?: APISearchContentList[]
   saved_content_lists?: APISearchContentList[]
   albums?: APISearchContentList[]

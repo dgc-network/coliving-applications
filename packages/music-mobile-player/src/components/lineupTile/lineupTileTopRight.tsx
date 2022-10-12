@@ -10,11 +10,11 @@ import { useThemedStyles } from 'app/hooks/useThemedStyles'
 import { flexRowCentered } from 'app/styles'
 import { useThemeColors } from 'app/utils/theme'
 
-import { createStyles as createAgreementTileStyles } from './styles'
+import { createStyles as createDigitalContentTileStyles } from './styles'
 
 const messages = {
-  landlordPick: "Landlord's Pick",
-  hiddenAgreement: 'Hidden DigitalContent'
+  landlordPick: "Author's Pick",
+  hiddenDigitalContent: 'Hidden DigitalContent'
 }
 
 const flexRowEnd = (): ViewStyle => ({
@@ -52,22 +52,22 @@ type ItemProps = {
 
 const LineupTileTopRightItem = ({ icon: Icon, label }: ItemProps) => {
   const { neutralLight4 } = useThemeColors()
-  const agreementTileStyles = useThemedStyles(createAgreementTileStyles)
+  const digitalContentTileStyles = useThemedStyles(createDigitalContentTileStyles)
   return (
     <View style={styles.item}>
       <Icon height={16} width={16} fill={neutralLight4} style={styles.icon} />
-      <Text style={agreementTileStyles.statText}>{label}</Text>
+      <Text style={digitalContentTileStyles.statText}>{label}</Text>
     </View>
   )
 }
 
 type Props = {
   /**
-   * The duration of the digital_content or agreements
+   * The duration of the digital_content or digitalContents
    */
   duration?: number
   /**
-   * Whether or not the digital_content is the landlord pick
+   * Whether or not the digital_content is the author pick
    */
   isLandlordPick?: boolean
   /**
@@ -75,7 +75,7 @@ type Props = {
    */
   isUnlisted?: boolean
   /**
-   * Whether or not to show the landlord pick icon
+   * Whether or not to show the author pick icon
    */
   showLandlordPick?: boolean
 }
@@ -86,7 +86,7 @@ export const LineupTileTopRight = ({
   isUnlisted,
   showLandlordPick
 }: Props) => {
-  const agreementTileStyles = useThemedStyles(createAgreementTileStyles)
+  const digitalContentTileStyles = useThemedStyles(createDigitalContentTileStyles)
 
   return (
     <View style={styles.topRight}>
@@ -96,10 +96,10 @@ export const LineupTileTopRight = ({
       {isUnlisted && (
         <LineupTileTopRightItem
           icon={IconHidden}
-          label={messages.hiddenAgreement}
+          label={messages.hiddenDigitalContent}
         />
       )}
-      <Text style={agreementTileStyles.statText}>
+      <Text style={digitalContentTileStyles.statText}>
         {duration && formatSeconds(duration)}
       </Text>
     </View>

@@ -3,48 +3,48 @@ import { keyBy } from 'lodash'
 import { call, select } from 'redux-saga/effects'
 
 import { getUserId } from 'common/store/account/selectors'
-import { processAndCacheAgreements } from 'common/store/cache/agreements/utils'
+import { processAndCacheDigitalContents } from 'common/store/cache/digital_contents/utils'
 import {
   PREFIX,
-  agreementsActions
-} from 'common/store/pages/historyPage/lineups/agreements/actions'
+  digitalContentsActions
+} from 'common/store/pages/historyPage/lineups/digital_contents/actions'
 import apiClient from 'services/colivingAPIClient/colivingAPIClient'
 import { LineupSagas } from 'store/lineup/sagas'
 
-function* getHistoryAgreements() {
+function* getHistoryDigitalContents() {
   try {
     const currentUserId = yield select(getUserId)
-    const activity = yield apiClient.getUserAgreementHistory({
+    const activity = yield apiClient.getUserDigitalContentHistory({
       currentUserId,
       userId: currentUserId,
       limit: 100
     })
 
-    const processedAgreements = yield call(
-      processAndCacheAgreements,
+    const processedDigitalContents = yield call(
+      processAndCacheDigitalContents,
       activity.map((a) => a.digital_content)
     )
-    const processedAgreementsMap = keyBy(processedAgreements, 'digital_content_id')
+    const processedDigitalContentsMap = keyBy(processedDigitalContents, 'digital_content_id')
 
-    const lineupAgreements = []
+    const lineupDigitalContents = []
     activity.forEach((activity, i) => {
-      const agreementMetadata = processedAgreementsMap[activity.digital_content.digital_content_id]
-      // Prevent history for invalid agreements from getting into the lineup.
-      if (agreementMetadata) {
-        lineupAgreements.push({
-          ...agreementMetadata,
+      const digitalContentMetadata = processedDigitalContentsMap[activity.digital_content.digital_content_id]
+      // Prevent history for invalid digitalContents from getting into the lineup.
+      if (digitalContentMetadata) {
+        lineupDigitalContents.push({
+          ...digitalContentMetadata,
           dateListened: activity.timestamp
         })
       }
     })
-    return lineupAgreements
+    return lineupDigitalContents
   } catch (e) {
     console.error(e)
     return []
   }
 }
 
-const keepAgreementIdAndDateListened = (entry) => ({
+const keepDigitalContentIdAndDateListened = (entry) => ({
   uid: entry.uid,
   kind: entry.digital_content_id ? Kind.AGREEMENTS : Kind.COLLECTIONS,
   id: entry.digital_content_id || entry.content_list_id,
@@ -53,15 +53,15 @@ const keepAgreementIdAndDateListened = (entry) => ({
 
 const sourceSelector = () => PREFIX
 
-class AgreementsSagas extends LineupSagas {
+class DigitalContentsSagas extends LineupSagas {
   constructor() {
     super(
       PREFIX,
-      agreementsActions,
-      // store => store.history.agreements,
-      (store) => store.pages.historyPage.agreements,
-      getHistoryAgreements,
-      keepAgreementIdAndDateListened,
+      digitalContentsActions,
+      // store => store.history.digitalContents,
+      (store) => store.pages.historyPage.digitalContents,
+      getHistoryDigitalContents,
+      keepDigitalContentIdAndDateListened,
       /* removeDeleted */ false,
       sourceSelector
     )
@@ -69,5 +69,5 @@ class AgreementsSagas extends LineupSagas {
 }
 
 export default function sagas() {
-  return new AgreementsSagas().getSagas()
+  return new DigitalContentsSagas().getSagas()
 }

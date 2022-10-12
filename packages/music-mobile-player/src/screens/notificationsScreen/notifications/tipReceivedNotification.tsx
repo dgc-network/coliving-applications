@@ -29,7 +29,7 @@ import {
   TipText,
   UserNameLink,
   NotificationTwitterButton
-} from '../Notification'
+} from '../notification'
 import { ReactionList } from '../reaction'
 
 import { useGoToProfile } from './useGoToProfile'
@@ -37,13 +37,13 @@ import { useGoToProfile } from './useGoToProfile'
 const messages = {
   title: 'You Received a Tip!',
   sent: 'sent you a tip of',
-  digitalcoin: '$LIVE',
+  digitalcoin: '$DGCO',
   sayThanks: 'Say Thanks With a Reaction',
   reactionSent: 'Reaction Sent!',
   twitterShare: (senderHandle: string, amount: number) =>
     `Thanks ${senderHandle} for the ${formatNumberCommas(
       amount
-    )} $LIVE tip on @dgc-network! #Coliving #LIVETip`
+    )} $DGCO tip on @dgc-network! #Coliving #LIVETip`
 }
 
 const useSetReaction = (tipTxSignature: string) => {

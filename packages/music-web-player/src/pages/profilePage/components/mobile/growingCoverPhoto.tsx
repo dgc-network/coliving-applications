@@ -37,7 +37,7 @@ const GrowingCoverPhoto = ({
   wrapperClassName,
   children
 }: DynamicImageProps) => {
-  const [getShouldAgreementScroll, setShouldAgreementScroll] = useInstanceVar(false)
+  const [getShouldDigitalContentScroll, setShouldDigitalContentScroll] = useInstanceVar(false)
   const [springProps, setSpringProps] = useSpring(() => ({
     to: {
       y: 0
@@ -48,7 +48,7 @@ const GrowingCoverPhoto = ({
   }))
 
   const handleScrollEvent = useCallback(() => {
-    if (getShouldAgreementScroll()) {
+    if (getShouldDigitalContentScroll()) {
       const scrollY = window.scrollY
       if (scrollY <= 0) {
         setSpringProps({
@@ -61,9 +61,9 @@ const GrowingCoverPhoto = ({
         })
       }
     }
-  }, [setSpringProps, getShouldAgreementScroll])
+  }, [setSpringProps, getShouldDigitalContentScroll])
 
-  // The cover photo agreements the users scrolling most of the time, except
+  // The cover photo digitalContents the users scrolling most of the time, except
   // when they release their finger, we just rely on the spring to reset
   // the grown photo.
   const handleReset = useCallback(() => {
@@ -81,16 +81,16 @@ const GrowingCoverPhoto = ({
         },
         immediate: false,
         onRest: () => {
-          setShouldAgreementScroll(true)
+          setShouldDigitalContentScroll(true)
         }
       })
-      setImmediate(() => setShouldAgreementScroll(false))
+      setImmediate(() => setShouldDigitalContentScroll(false))
     }
-  }, [setSpringProps, setShouldAgreementScroll])
+  }, [setSpringProps, setShouldDigitalContentScroll])
 
   const handleTouch = useCallback(() => {
-    setShouldAgreementScroll(true)
-  }, [setShouldAgreementScroll])
+    setShouldDigitalContentScroll(true)
+  }, [setShouldDigitalContentScroll])
 
   useEffect(() => {
     window.addEventListener('scroll', handleScrollEvent)

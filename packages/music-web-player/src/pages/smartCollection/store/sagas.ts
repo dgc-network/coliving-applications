@@ -3,12 +3,12 @@ import {
   SmartCollectionVariant,
   Status,
   DigitalContent,
-  UserAgreement
+  UserDigitalContent
 } from '@coliving/common'
 import { takeEvery, put, call, select } from 'typed-redux-saga/macro'
 
 import { getAccountStatus, getUserId } from 'common/store/account/selectors'
-import { processAndCacheAgreements } from 'common/store/cache/agreements/utils'
+import { processAndCacheDigitalContents } from 'common/store/cache/digital_contents/utils'
 import { fetchUsers as retrieveUsers } from 'common/store/cache/users/sagas'
 import { setSmartCollection } from 'common/store/pages/collection/actions'
 import {
@@ -17,7 +17,7 @@ import {
 } from 'common/store/pages/smartCollection/slice'
 import Explore from 'services/colivingBackend/explore'
 import { waitForBackendSetup } from 'store/backend/sagas'
-import { getLuckyAgreements } from 'store/recommendation/sagas'
+import { getLuckyDigitalContents } from 'store/recommendation/sagas'
 import { EXPLORE_PAGE } from 'utils/route'
 import { requiresAccount, waitForValue } from 'utils/sagaHelpers'
 
@@ -39,89 +39,89 @@ function* fetchHeavyRotation() {
     retrieveUsers,
     topListens.map((t) => t.userId)
   )
-  const agreementIds = topListens
+  const digitalContentIds = topListens
     .filter(
       (digital_content) =>
         users.entries[digital_content.userId] &&
         !users.entries[digital_content.userId].is_deactivated
     )
     .map((listen) => ({
-      digital_content: listen.agreementId
+      digital_content: listen.digitalContentId
     }))
 
   return {
     ...HEAVY_ROTATION,
     content_list_contents: {
-      digital_content_ids: agreementIds
+      digital_content_ids: digitalContentIds
     }
   }
 }
 
 function* fetchBestNewReleases() {
-  const agreements = yield* call(Explore.getTopFolloweeAgreementsFromWindow, 'month')
+  const digitalContents = yield* call(Explore.getTopFolloweeDigitalContentsFromWindow, 'month')
 
-  const agreementIds = agreements
+  const digitalContentIds = digitalContents
     .filter((digital_content) => !digital_content.user.is_deactivated)
     .map((digital_content: DigitalContent) => ({
       time: digital_content.created_at,
       digital_content: digital_content.digital_content_id
     }))
 
-  yield* call(processAndCacheAgreements, agreements)
+  yield* call(processAndCacheDigitalContents, digitalContents)
 
   return {
     ...BEST_NEW_RELEASES,
     content_list_contents: {
-      digital_content_ids: agreementIds
+      digital_content_ids: digitalContentIds
     }
   }
 }
 
 function* fetchUnderTheRadar() {
-  const agreements = yield* call(Explore.getFeedNotListenedTo)
+  const digitalContents = yield* call(Explore.getFeedNotListenedTo)
 
-  const agreementIds = agreements
-    .filter((digital_content: UserAgreement) => !digital_content.user.is_deactivated)
+  const digitalContentIds = digitalContents
+    .filter((digital_content: UserDigitalContent) => !digital_content.user.is_deactivated)
     .map((digital_content: DigitalContent) => ({
       time: digital_content.activity_timestamp,
       digital_content: digital_content.digital_content_id
     }))
 
-  yield* call(processAndCacheAgreements, agreements)
+  yield* call(processAndCacheDigitalContents, digitalContents)
 
   // feed minus listened
   return {
     ...UNDER_THE_RADAR,
     content_list_contents: {
-      digital_content_ids: agreementIds
+      digital_content_ids: digitalContentIds
     }
   }
 }
 
 function* fetchMostLoved() {
-  const agreements = yield* call(Explore.getTopFolloweeSaves)
+  const digitalContents = yield* call(Explore.getTopFolloweeSaves)
 
-  const agreementIds = agreements
+  const digitalContentIds = digitalContents
     .filter((digital_content) => !digital_content.user.is_deactivated)
     .map((digital_content: DigitalContent) => ({
       time: digital_content.created_at,
       digital_content: digital_content.digital_content_id
     }))
 
-  yield call(processAndCacheAgreements, agreements)
+  yield call(processAndCacheDigitalContents, digitalContents)
 
   return {
     ...MOST_LOVED,
     content_list_contents: {
-      digital_content_ids: agreementIds
+      digital_content_ids: digitalContentIds
     }
   }
 }
 
 function* fetchFeelingLucky() {
-  const agreements = yield* call(getLuckyAgreements, COLLECTIONS_LIMIT)
+  const digitalContents = yield* call(getLuckyDigitalContents, COLLECTIONS_LIMIT)
 
-  const agreementIds = agreements
+  const digitalContentIds = digitalContents
     .filter((digital_content) => !digital_content.user.is_deactivated)
     .map((digital_content: DigitalContent) => ({
       time: digital_content.created_at,
@@ -131,7 +131,7 @@ function* fetchFeelingLucky() {
   return {
     ...FEELING_LUCKY,
     content_list_contents: {
-      digital_content_ids: agreementIds
+      digital_content_ids: digitalContentIds
     }
   }
 }
@@ -141,21 +141,21 @@ function* fetchRemixables() {
   if (currentUserId == null) {
     return
   }
-  const agreements = yield* call(
+  const digitalContents = yield* call(
     Explore.getRemixables,
     currentUserId,
     75 // limit
   )
 
-  // Limit the number of times an landlord can appear
+  // Limit the number of times an author can appear
   const landlordLimit = 3
   const landlordCount: Record<number, number> = {}
 
-  const filteredAgreements = agreements.filter((agreementMetadata) => {
-    if (agreementMetadata.user?.is_deactivated) {
+  const filteredDigitalContents = digitalContents.filter((digitalContentMetadata) => {
+    if (digitalContentMetadata.user?.is_deactivated) {
       return false
     }
-    const id = agreementMetadata.owner_id
+    const id = digitalContentMetadata.owner_id
     if (!landlordCount[id]) {
       landlordCount[id] = 0
     }
@@ -163,12 +163,12 @@ function* fetchRemixables() {
     return landlordCount[id] <= landlordLimit
   })
 
-  const processedAgreements = yield* call(
-    processAndCacheAgreements,
-    filteredAgreements.slice(0, COLLECTIONS_LIMIT)
+  const processedDigitalContents = yield* call(
+    processAndCacheDigitalContents,
+    filteredDigitalContents.slice(0, COLLECTIONS_LIMIT)
   )
 
-  const agreementIds = processedAgreements.map((digital_content: DigitalContent) => ({
+  const digitalContentIds = processedDigitalContents.map((digital_content: DigitalContent) => ({
     time: digital_content.created_at,
     digital_content: digital_content.digital_content_id
   }))
@@ -176,7 +176,7 @@ function* fetchRemixables() {
   return {
     ...REMIXABLES,
     content_list_contents: {
-      digital_content_ids: agreementIds
+      digital_content_ids: digitalContentIds
     }
   }
 }

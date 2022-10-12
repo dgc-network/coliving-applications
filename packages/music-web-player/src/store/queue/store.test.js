@@ -11,10 +11,10 @@ import reducer, * as actions from 'common/store/queue/slice'
 import { RepeatMode, Source } from 'common/store/queue/types'
 import playerReducer, * as playerActions from 'store/player/slice'
 import * as sagas from 'store/queue/sagas'
-import { getRecommendedAgreements } from 'store/recommendation/sagas'
+import { getRecommendedDigitalContents } from 'store/recommendation/sagas'
 import { noopReducer } from 'store/testHelper'
 
-const initialAgreements = {
+const initialDigitalContents = {
   entries: {
     1: { metadata: { digital_content_segments: {} } },
     2: { metadata: { digital_content_segments: {} } },
@@ -54,7 +54,7 @@ const makeInitialQueue = (config) => ({
 const makeInitialPlayer = (config = {}) => ({
   // Identifier for the digitalcoin that's playing.
   uid: null,
-  agreementId: null,
+  digitalContentId: null,
   digitalcoin: new AudioStream(),
   // Keep 'playing' in the store separately from the digitalcoin
   // object to allow components to subscribe to changes.
@@ -76,11 +76,11 @@ describe('watchPlay', () => {
         combineReducers({
           queue: reducer,
           player: playerReducer,
-          agreements: noopReducer(initialAgreements)
+          digitalContents: noopReducer(initialDigitalContents)
         }),
         {
           queue: initialQueue,
-          agreements: initialAgreements
+          digitalContents: initialDigitalContents
         }
       )
       .dispatch(actions.play({ uid: 'kind:AGREEMENTS-id:1-count:1' }))
@@ -89,7 +89,7 @@ describe('watchPlay', () => {
       .put(
         playerActions.play({
           uid: 'kind:AGREEMENTS-id:1-count:1',
-          agreementId: undefined,
+          digitalContentId: undefined,
           onEnd: actions.next
         })
       )
@@ -104,11 +104,11 @@ describe('watchPlay', () => {
         combineReducers({
           queue: reducer,
           player: playerReducer,
-          agreements: noopReducer(initialAgreements)
+          digitalContents: noopReducer(initialDigitalContents)
         }),
         {
           queue: initialQueue,
-          agreements: initialAgreements
+          digitalContents: initialDigitalContents
         }
       )
       .dispatch(actions.play({}))
@@ -127,11 +127,11 @@ describe('watchPause', () => {
         combineReducers({
           queue: reducer,
           player: playerReducer,
-          agreements: noopReducer(initialAgreements)
+          digitalContents: noopReducer(initialDigitalContents)
         }),
         {
           queue: initialQueue,
-          agreements: initialAgreements
+          digitalContents: initialDigitalContents
         }
       )
       .dispatch(actions.pause({}))
@@ -148,21 +148,21 @@ describe('watchNext', () => {
     const nextPlayingEntry = initialQueue.order[initialQueue.index + 1]
     const initialPlayer = makeInitialPlayer({
       uid: playingEntry.uid,
-      agreementId: playingEntry.id,
+      digitalContentId: playingEntry.id,
       playing: true
     })
     const initialAccount = makeInitialAccount({ userId: 1 })
     const { storeState } = await expectSaga(sagas.watchNext, actions)
       .withReducer(
         combineReducers({
-          agreements: noopReducer(initialAgreements),
+          digitalContents: noopReducer(initialDigitalContents),
           queue: reducer,
           player: playerReducer,
           account: accountSlice.reducer
         }),
         {
           player: initialPlayer,
-          agreements: initialAgreements,
+          digitalContents: initialDigitalContents,
           queue: initialQueue,
           account: initialAccount
         }
@@ -170,15 +170,15 @@ describe('watchNext', () => {
       .dispatch(actions.next({}))
       .put(
         actions.queueAutoplay({
-          genre: initialAgreements.entries[1].genre,
-          exclusionList: [initialAgreements.entries[1].digital_content_id],
+          genre: initialDigitalContents.entries[1].genre,
+          exclusionList: [initialDigitalContents.entries[1].digital_content_id],
           currentUserId: 1
         })
       )
       .put(
         actions.play({
           uid: nextPlayingEntry.uid,
-          agreementId: nextPlayingEntry.id,
+          digitalContentId: nextPlayingEntry.id,
           source: undefined
         })
       )
@@ -200,7 +200,7 @@ describe('watchNext', () => {
       ]
     const initialPlayer = makeInitialPlayer({
       uid: playingEntry.uid,
-      agreementId: playingEntry.id,
+      digitalContentId: playingEntry.id,
       playing: true
     })
     const { storeState, effects } = await expectNextSagaAndGetStoreState(
@@ -223,7 +223,7 @@ describe('watchNext', () => {
     nextPlayingEntry = initialQueue.order[initialQueue.index + 1]
     initialPlayer = makeInitialPlayer({
       uid: playingEntry.uid,
-      agreementId: playingEntry.id,
+      digitalContentId: playingEntry.id,
       playing: true
     })
     const { storeState: repeatAllStoreState, effects: repeatAllEffects } =
@@ -242,7 +242,7 @@ describe('watchNext', () => {
     nextPlayingEntry = initialQueue.order[initialQueue.index]
     initialPlayer = makeInitialPlayer({
       uid: playingEntry.uid,
-      agreementId: playingEntry.id,
+      digitalContentId: playingEntry.id,
       playing: true
     })
     const {
@@ -268,7 +268,7 @@ describe('watchNext', () => {
     const nextPlayingEntry = initialQueue.order[initialQueue.index + 1]
     const initialPlayer = makeInitialPlayer({
       uid: playingEntry.uid,
-      agreementId: playingEntry.id,
+      digitalContentId: playingEntry.id,
       playing: true
     })
     const { storeState } = await expectNextSagaAndGetStoreState(
@@ -292,7 +292,7 @@ describe('watchNext', () => {
       ]
     const initialPlayer = makeInitialPlayer({
       uid: playingEntry.uid,
-      agreementId: playingEntry.id,
+      digitalContentId: playingEntry.id,
       playing: true
     })
     const { storeState } = await expectNextSagaAndGetStoreState(
@@ -311,7 +311,7 @@ describe('watchNext', () => {
     const playingEntry = initialQueue.order[initialQueue.index]
     const initialPlayer = makeInitialPlayer({
       uid: playingEntry.uid,
-      agreementId: playingEntry.id,
+      digitalContentId: playingEntry.id,
       playing: true
     })
     const { storeState } = await expectNextSagaAndGetStoreState(
@@ -331,7 +331,7 @@ describe('watchNext', () => {
     const nextPlayingEntry = initialQueue.order[initialQueue.index + 1]
     const initialPlayer = makeInitialPlayer({
       uid: playingEntry.uid,
-      agreementId: playingEntry.id,
+      digitalContentId: playingEntry.id,
       playing: true
     })
     const { storeState } = await expectNextSagaAndGetStoreState(
@@ -350,7 +350,7 @@ describe('watchNext', () => {
       initialQueue.order[(initialQueue.index + 1) % initialQueue.order.length]
     const initialPlayer = makeInitialPlayer({
       uid: playingEntry.uid,
-      agreementId: playingEntry.id,
+      digitalContentId: playingEntry.id,
       playing: true
     })
     const { storeState } = await expectNextSagaAndGetStoreState(
@@ -371,14 +371,14 @@ describe('watchNext', () => {
     return await expectSaga(sagas.watchNext, actions)
       .withReducer(
         combineReducers({
-          agreements: noopReducer(initialAgreements),
+          digitalContents: noopReducer(initialDigitalContents),
           queue: reducer,
           player: playerReducer,
           account: accountSlice.reducer
         }),
         {
           player: initialPlayer,
-          agreements: initialAgreements,
+          digitalContents: initialDigitalContents,
           queue: initialQueue,
           account: initialAccount
         }
@@ -387,7 +387,7 @@ describe('watchNext', () => {
       .put(
         actions.play({
           uid: nextPlayingEntry.uid,
-          agreementId: nextPlayingEntry.id,
+          digitalContentId: nextPlayingEntry.id,
           source: undefined
         })
       )
@@ -396,13 +396,13 @@ describe('watchNext', () => {
 })
 
 describe('watchQueueAutoplay', () => {
-  it('adds agreements to queue', async () => {
-    const recommendedAgreements = [
+  it('adds digitalContents to queue', async () => {
+    const recommendedDigitalContents = [
       {
         digital_content_id: 1
       }
     ]
-    const expectedRecommendedAgreements = [
+    const expectedRecommendedDigitalContents = [
       {
         id: 1,
         uid: 'kind:AGREEMENTS-id:1-count:1',
@@ -410,9 +410,9 @@ describe('watchQueueAutoplay', () => {
       }
     ]
     await expectSaga(sagas.watchQueueAutoplay, actions)
-      .provide([[matchers.call.fn(getRecommendedAgreements), recommendedAgreements]])
+      .provide([[matchers.call.fn(getRecommendedDigitalContents), recommendedDigitalContents]])
       .dispatch(actions.queueAutoplay({}))
-      .put(actions.add({ entries: expectedRecommendedAgreements }))
+      .put(actions.add({ entries: expectedRecommendedDigitalContents }))
       .silentRun()
   })
 })
@@ -425,19 +425,19 @@ describe('watchPrevious', () => {
       initialQueue.order[(initialQueue.index - 1) % initialQueue.order.length]
     const initialPlayer = makeInitialPlayer({
       uid: playingEntry.uid,
-      agreementId: playingEntry.id,
+      digitalContentId: playingEntry.id,
       playing: true
     })
     const { storeState } = await expectSaga(sagas.watchPrevious, actions)
       .withReducer(
         combineReducers({
-          agreements: noopReducer(initialAgreements),
+          digitalContents: noopReducer(initialDigitalContents),
           queue: reducer,
           player: playerReducer
         }),
         {
           player: initialPlayer,
-          agreements: initialAgreements,
+          digitalContents: initialDigitalContents,
           queue: initialQueue
         }
       )
@@ -445,7 +445,7 @@ describe('watchPrevious', () => {
       .put(
         actions.play({
           uid: prevPlayingEntry.uid,
-          agreementId: prevPlayingEntry.id,
+          digitalContentId: prevPlayingEntry.id,
           source: undefined
         })
       )
@@ -466,19 +466,19 @@ describe('watchPrevious', () => {
       ]
     const initialPlayer = makeInitialPlayer({
       uid: playingEntry.uid,
-      agreementId: playingEntry.id,
+      digitalContentId: playingEntry.id,
       playing: true
     })
     const { storeState } = await expectSaga(sagas.watchPrevious, actions)
       .withReducer(
         combineReducers({
-          agreements: noopReducer(initialAgreements),
+          digitalContents: noopReducer(initialDigitalContents),
           queue: reducer,
           player: playerReducer
         }),
         {
           player: initialPlayer,
-          agreements: initialAgreements,
+          digitalContents: initialDigitalContents,
           queue: initialQueue
         }
       )
@@ -486,7 +486,7 @@ describe('watchPrevious', () => {
       .put(
         actions.play({
           uid: previousPlayingEntry.uid,
-          agreementId: previousPlayingEntry.id,
+          digitalContentId: previousPlayingEntry.id,
           source: undefined
         })
       )
@@ -538,17 +538,17 @@ describe('watchShuffle', () => {
 })
 
 describe('watchAdd', () => {
-  it('adds agreements', async () => {
+  it('adds digitalContents', async () => {
     const initialQueue = makeInitialQueue()
     const { storeState } = await expectSaga(sagas.watchAdd, actions)
       .withReducer(
         combineReducers({
-          agreements: noopReducer(initialAgreements),
+          digitalContents: noopReducer(initialDigitalContents),
           queue: reducer,
           player: playerReducer
         }),
         {
-          agreements: initialAgreements,
+          digitalContents: initialDigitalContents,
           queue: initialQueue
         }
       )
@@ -587,17 +587,17 @@ describe('watchAdd', () => {
     expect(storeState.queue.shuffleOrder).toHaveLength(5)
   })
 
-  it('adds agreements at position', async () => {
+  it('adds digitalContents at position', async () => {
     const initialQueue = makeInitialQueue()
     const { storeState } = await expectSaga(sagas.watchAdd, actions)
       .withReducer(
         combineReducers({
-          agreements: noopReducer(initialAgreements),
+          digitalContents: noopReducer(initialDigitalContents),
           queue: reducer,
           player: playerReducer
         }),
         {
-          agreements: initialAgreements,
+          digitalContents: initialDigitalContents,
           queue: initialQueue
         }
       )
@@ -644,12 +644,12 @@ describe('watchRemove', () => {
     const { storeState } = await expectSaga(sagas.watchRemove, actions)
       .withReducer(
         combineReducers({
-          agreements: noopReducer(initialAgreements),
+          digitalContents: noopReducer(initialDigitalContents),
           queue: reducer,
           player: playerReducer
         }),
         {
-          agreements: initialAgreements,
+          digitalContents: initialDigitalContents,
           queue: initialQueue
         }
       )
@@ -705,12 +705,12 @@ describe('watchReorder', () => {
     }, actions)
       .withReducer(
         combineReducers({
-          agreements: noopReducer(initialAgreements),
+          digitalContents: noopReducer(initialDigitalContents),
           queue: reducer,
           player: playerReducer
         }),
         {
-          agreements: initialAgreements,
+          digitalContents: initialDigitalContents,
           queue: initialQueue
         }
       )

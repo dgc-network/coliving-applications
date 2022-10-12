@@ -23,7 +23,7 @@ export const messages = {
   header: 'Are You Sure You Want To Deactivate Your Account?',
   listItems: [
     "There's no going back.",
-    'This will remove all of your agreements, albums and contentLists.',
+    'This will remove all of your digitalContents, albums and contentLists.',
     'You will not be able to re-register with the same email or handle'
   ],
   confirmTitle: 'Deactivate Account',

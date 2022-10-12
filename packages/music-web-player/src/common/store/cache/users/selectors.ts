@@ -8,7 +8,7 @@ import {
 } from 'common/store/cache/selectors'
 
 import { getCollection } from '../collections/selectors'
-import { getAgreement } from '../agreements/selectors'
+import { getDigitalContent } from '../digital_contents/selectors'
 
 export const getUser = (
   state: CommonState,
@@ -116,11 +116,11 @@ export const getStatuses = (state: CommonState, props: { ids: ID[] }) => {
   return statuses
 }
 
-export const getUserFromAgreement = (
+export const getUserFromDigitalContent = (
   state: CommonState,
   props: { id?: ID | null; uid?: UID | null }
 ) => {
-  const digital_content = getAgreement(state, props)
+  const digital_content = getDigitalContent(state, props)
   if (digital_content && digital_content.owner_id) return getUser(state, { id: digital_content.owner_id })
   return null
 }

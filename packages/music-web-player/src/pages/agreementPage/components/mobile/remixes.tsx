@@ -15,12 +15,12 @@ const messages = {
 }
 
 type RemixesProps = {
-  agreementIds: ID[]
+  digitalContentIds: ID[]
   goToAllRemixes: () => void
   count: number | null
 }
 
-const Remixes = ({ agreementIds, goToAllRemixes, count }: RemixesProps) => {
+const Remixes = ({ digitalContentIds, goToAllRemixes, count }: RemixesProps) => {
   return (
     <div className={styles.remixes}>
       <div className={styles.header}>
@@ -29,9 +29,9 @@ const Remixes = ({ agreementIds, goToAllRemixes, count }: RemixesProps) => {
         />
         <span>{messages.title}</span>
       </div>
-      <div className={styles.agreements}>
-        {agreementIds.map((id) => {
-          return <ConnectedRemixCard key={id} agreementId={id} />
+      <div className={styles.digitalContents}>
+        {digitalContentIds.map((id) => {
+          return <ConnectedRemixCard key={id} digitalContentId={id} />
         })}
       </div>
       <div className={styles.button}>

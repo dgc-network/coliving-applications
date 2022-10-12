@@ -11,7 +11,7 @@ import {
 
 import { CommonState } from 'common/store'
 import { getAllEntries, getEntry } from 'common/store/cache/selectors'
-import { getAgreements } from 'common/store/cache/agreements/selectors'
+import { getDigitalContents } from 'common/store/cache/digital_contents/selectors'
 import {
   getUser as getUserById,
   getUsers
@@ -73,9 +73,9 @@ export const getStatuses = (state: CommonState, props: { ids: ID[] }) => {
   return statuses
 }
 
-export type EnhancedCollectionAgreement = DigitalContent & { user: User; uid: UID }
-const emptyList: EnhancedCollectionAgreement[] = []
-export const getAgreementsFromCollection = (
+export type EnhancedCollectionDigitalContent = DigitalContent & { user: User; uid: UID }
+const emptyList: EnhancedCollectionDigitalContent[] = []
+export const getDigitalContentsFromCollection = (
   state: CommonState,
   props: { uid: UID }
 ) => {
@@ -91,11 +91,11 @@ export const getAgreementsFromCollection = (
   const collectionSource = Uid.fromString(props.uid).source
 
   const ids = collection.content_list_contents.digital_content_ids.map((t) => t.digital_content)
-  const agreements = getAgreements(state, { ids })
+  const digitalContents = getDigitalContents(state, { ids })
 
-  const userIds = Object.keys(agreements)
+  const userIds = Object.keys(digitalContents)
     .map((id) => {
-      const digital_content = agreements[id as unknown as number]
+      const digital_content = digitalContents[id as unknown as number]
       if (digital_content?.owner_id) {
         return digital_content.owner_id
       }
@@ -107,24 +107,24 @@ export const getAgreementsFromCollection = (
 
   if (!users || Object.keys(users).length === 0) return emptyList
 
-  // Return agreements & rebuild UIDs for the digital_content so they refer directly to this collection
+  // Return digitalContents & rebuild UIDs for the digital_content so they refer directly to this collection
   return collection.content_list_contents.digital_content_ids
     .map((t, i) => {
-      const agreementUid = Uid.fromString(t.uid ?? '')
-      agreementUid.source = `${collectionSource}:${agreementUid.source}`
-      agreementUid.count = i
+      const digitalContentUid = Uid.fromString(t.uid ?? '')
+      digitalContentUid.source = `${collectionSource}:${digitalContentUid.source}`
+      digitalContentUid.count = i
 
-      if (!agreements[t.digital_content]) {
+      if (!digitalContents[t.digital_content]) {
         console.error(`Found empty digital_content ${t.digital_content}`)
         return null
       }
       return {
-        ...agreements[t.digital_content],
-        uid: agreementUid.toString(),
-        user: users[agreements[t.digital_content].owner_id]
+        ...digitalContents[t.digital_content],
+        uid: digitalContentUid.toString(),
+        user: users[digitalContents[t.digital_content].owner_id]
       }
     })
-    .filter(Boolean) as EnhancedCollectionAgreement[]
+    .filter(Boolean) as EnhancedCollectionDigitalContent[]
 }
 
 type EnhancedCollection = Collection & { user: User }

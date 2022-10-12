@@ -4,7 +4,7 @@ import { FeatureFlags } from '@coliving/common'
 import Clipboard from '@react-native-clipboard/clipboard'
 import { getAccountUser } from '@coliving/web/src/common/store/account/selectors'
 import { shareCollection } from '@coliving/web/src/common/store/social/collections/actions'
-import { shareAgreement } from '@coliving/web/src/common/store/social/agreements/actions'
+import { shareDigitalContent } from '@coliving/web/src/common/store/social/digital_contents/actions'
 import { shareUser } from '@coliving/web/src/common/store/social/users/actions'
 import { getShareState } from '@coliving/web/src/common/store/ui/share-modal/selectors'
 import { requestOpen as requestOpenTikTokModal } from '@coliving/web/src/common/store/ui/share-sound-to-tiktok-modal/slice'
@@ -81,7 +81,7 @@ export const ShareDrawer = () => {
   const isOwner =
     content?.type === 'digital_content' &&
     account &&
-    account.user_id === content.landlord.user_id
+    account.user_id === content.author.user_id
   const shareType = content?.type ?? 'digital_content'
 
   const handleShareToTwitter = useCallback(async () => {
@@ -112,7 +112,7 @@ export const ShareDrawer = () => {
     if (!source || !content) return
     switch (content.type) {
       case 'digital_content':
-        dispatchWeb(shareAgreement(content.digital_content.digital_content_id, source))
+        dispatchWeb(shareDigitalContent(content.digital_content.digital_content_id, source))
         break
       case 'profile':
         dispatchWeb(shareUser(content.profile.user_id, source))

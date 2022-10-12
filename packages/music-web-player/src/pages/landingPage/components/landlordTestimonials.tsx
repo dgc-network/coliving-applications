@@ -26,7 +26,7 @@ type AristProps = {
   name: string
 }
 
-const Landlord = (props: AristProps) => {
+const Author = (props: AristProps) => {
   return (
     <div className={styles.cardMoveContainer}>
       <div className={styles.landlordContainer}>
@@ -50,7 +50,7 @@ const MobileLandlord = (props: MobileLandlordProps) => {
         <img
           src={props.imageUrl}
           className={styles.landlordImage}
-          alt='Coliving Landlord'
+          alt='Coliving Author'
         />
       </div>
       <div className={styles.landlordName}>{props.name}</div>
@@ -64,7 +64,7 @@ const MobileOverflowLandlord = (props: MobileLandlordProps) => {
       <img
         src={props.imageUrl}
         className={styles.landlordImage}
-        alt='Coliving Landlord'
+        alt='Coliving Author'
       />
     </div>
   )
@@ -133,13 +133,13 @@ const LandlordTestimonials = (props: LandlordTestimonialsProps) => {
         <h3 className={styles.title}>{messages.title}</h3>
         <h3 className={styles.subTitle}>{messages.subtitle}</h3>
         <div className={styles.landlordsContainer}>
-          {landlords.slice(0, -4).map((landlord, i) => (
-            <MobileLandlord key={landlord.name} {...landlord} />
+          {landlords.slice(0, -4).map((author, i) => (
+            <MobileLandlord key={author.name} {...author} />
           ))}
         </div>
         <div className={styles.overflowLandlordsContainer}>
-          {landlords.slice(-4).map((landlord) => (
-            <MobileOverflowLandlord key={landlord.name} {...landlord} />
+          {landlords.slice(-4).map((author) => (
+            <MobileOverflowLandlord key={author.name} {...author} />
           ))}
         </div>
         <div className={styles.overflowLandlordsText}>&amp; so many more</div>
@@ -167,8 +167,8 @@ const LandlordTestimonials = (props: LandlordTestimonialsProps) => {
             </animated.div>
           </div>
           <div className={styles.landlordsContainer}>
-            {landlords.map((landlord) => (
-              <Landlord key={landlord.name} {...landlord} />
+            {landlords.map((author) => (
+              <Author key={author.name} {...author} />
             ))}
           </div>
         </div>

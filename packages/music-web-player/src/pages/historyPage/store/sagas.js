@@ -1,5 +1,5 @@
-import agreementsSagas from 'pages/history-page/store/lineups/agreements/sagas.js'
+import digitalContentsSagas from 'pages/history-page/store/lineups/digital_contents/sagas.js'
 
 export default function sagas() {
-  return [...agreementsSagas()]
+  return [...digitalContentsSagas()]
 }

@@ -23,10 +23,10 @@ import FinishPage from './components/finishPage'
 import SelectPage from './components/selectPage'
 import UploadType from './components/uploadType'
 import {
-  uploadAgreements,
+  uploadDigitalContents,
   reset,
   undoResetState,
-  toggleMultiAgreementNotification
+  toggleMultiDigitalContentNotification
 } from './store/actions'
 
 const Pages = Object.freeze({
@@ -65,19 +65,19 @@ class Upload extends Component {
       this.props.upload.uploadType ||
       UploadType.INDIVIDUAL_AGREEMENT,
 
-    agreements: this.props.upload.uploading ? this.props.upload.agreements : [],
+    digitalContents: this.props.upload.uploading ? this.props.upload.digitalContents : [],
 
     // Contains metadata related to the upload itself, e.g. contentList vs. digital_content.
     metadata: this.props.upload.metadata
       ? this.props.upload.metadata
       : schemas.newCollectionMetadata({ artwork: { file: null, url: '' } }),
 
-    // An array of array of agreements representing stems per digital_content.
+    // An array of array of digitalContents representing stems per digital_content.
     stems: [],
 
     preview: null,
     previewIndex: -1,
-    uploadAgreementError: null,
+    uploadDigitalContentError: null,
     isFirstUpload: false
   }
 
@@ -85,7 +85,7 @@ class Upload extends Component {
     if (this.state.preview !== null && this.props.playing) {
       this.stopPreview()
     }
-    // If the account is defined and has 0 agreements and we haven't set isFirstUpload yet
+    // If the account is defined and has 0 digitalContents and we haven't set isFirstUpload yet
     if (
       this.props.account &&
       !this.props.account.digital_content_count &&
@@ -118,15 +118,15 @@ class Upload extends Component {
   }
 
   invalidAudioFile = (name, reason) => {
-    this.setState({ uploadAgreementError: { reason } })
+    this.setState({ uploadDigitalContentError: { reason } })
   }
 
-  onSelectAgreements = async (selectedFiles) => {
-    // Disallow duplicate agreements:
-    // Filter out any agreements that already exist in `state.agreements`
+  onSelectDigitalContents = async (selectedFiles) => {
+    // Disallow duplicate digitalContents:
+    // Filter out any digitalContents that already exist in `state.digitalContents`
     // and any that exist multiple times in `selectedFiles`
     const existing = new Set(
-      this.state.agreements.map(({ file }) => `${file.name}-${file.lastModified}`)
+      this.state.digitalContents.map(({ file }) => `${file.name}-${file.lastModified}`)
     )
     selectedFiles = selectedFiles.filter(({ name, lastModified }) => {
       const id = `${name}-${lastModified}`
@@ -140,26 +140,26 @@ class Upload extends Component {
       false,
       this.invalidAudioFile
     )
-    const agreements = (await Promise.all(processedFiles)).filter(Boolean)
-    if (agreements.length === processedFiles.length) {
-      this.setState({ uploadAgreementError: null })
+    const digitalContents = (await Promise.all(processedFiles)).filter(Boolean)
+    if (digitalContents.length === processedFiles.length) {
+      this.setState({ uploadDigitalContentError: null })
     }
 
     let uploadType = this.state.uploadType
     if (
       this.state.uploadType === UploadType.INDIVIDUAL_AGREEMENT &&
-      this.state.agreements.length + agreements.length > 1
+      this.state.digitalContents.length + digitalContents.length > 1
     ) {
       uploadType = UploadType.INDIVIDUAL_AGREEMENTS
     }
 
     this.setState({
-      agreements: [...this.state.agreements, ...agreements],
+      digitalContents: [...this.state.digitalContents, ...digitalContents],
       uploadType
     })
   }
 
-  onAddStemsToAgreement = async (selectedStems, agreementIndex) => {
+  onAddStemsToDigitalContent = async (selectedStems, digitalContentIndex) => {
     const processedFiles = processFiles(
       selectedStems,
       true,
@@ -175,37 +175,37 @@ class Upload extends Component {
       }))
     this.setState((s) => {
       const newState = { ...s }
-      newState.stems[agreementIndex] = [
-        ...(newState.stems[agreementIndex] ?? []),
+      newState.stems[digitalContentIndex] = [
+        ...(newState.stems[digitalContentIndex] ?? []),
         ...stems
       ]
       return newState
     })
   }
 
-  onDeleteStem = (agreementIndex, stemIndex) => {
+  onDeleteStem = (digitalContentIndex, stemIndex) => {
     this.setState((s) => {
       const newState = { ...s }
-      const newStems = [...newState.stems[agreementIndex]]
+      const newStems = [...newState.stems[digitalContentIndex]]
       newStems.splice(stemIndex, 1)
-      newState.stems[agreementIndex] = newStems
+      newState.stems[digitalContentIndex] = newStems
       return newState
     })
   }
 
-  onSelectStemCategory = (category, agreementIndex, stemIndex) => {
+  onSelectStemCategory = (category, digitalContentIndex, stemIndex) => {
     this.setState((s) => {
       const newState = { ...s }
-      newState.stems[agreementIndex][stemIndex].category = category
+      newState.stems[digitalContentIndex][stemIndex].category = category
       return newState
     })
   }
 
-  removeAgreement = (index) => {
+  removeDigitalContent = (index) => {
     this.setState({
-      agreements: this.state.agreements.filter((_, i) => i !== index),
+      digitalContents: this.state.digitalContents.filter((_, i) => i !== index),
       uploadType:
-        this.state.agreements.length === 2
+        this.state.digitalContents.length === 2
           ? UploadType.INDIVIDUAL_AGREEMENT
           : this.state.uploadType
     })
@@ -218,7 +218,7 @@ class Upload extends Component {
     }
 
     if (this.state.preview) this.stopPreview()
-    const digitalcoin = this.state.agreements[index].preview
+    const digitalcoin = this.state.digitalContents[index].preview
     digitalcoin.play()
     this.setState({ preview: digitalcoin, previewIndex: index })
   }
@@ -232,15 +232,15 @@ class Upload extends Component {
     this.setState({ preview: null, previewIndex: -1 })
   }
 
-  updateAgreement = (field, value, i) => {
-    if (i >= this.state.agreements.length) {
+  updateDigitalContent = (field, value, i) => {
+    if (i >= this.state.digitalContents.length) {
       return
     }
-    const digital_content = { ...this.state.agreements[i] }
+    const digital_content = { ...this.state.digitalContents[i] }
     digital_content.metadata[field] = value
-    const newAgreements = [...this.state.agreements]
-    newAgreements[i] = digital_content
-    this.setState({ agreements: newAgreements })
+    const newDigitalContents = [...this.state.digitalContents]
+    newDigitalContents[i] = digital_content
+    this.setState({ digitalContents: newDigitalContents })
   }
 
   updateMetadata = (field, value) => {
@@ -250,8 +250,8 @@ class Upload extends Component {
   }
 
   publish = () => {
-    this.props.uploadAgreements(
-      this.state.agreements,
+    this.props.uploadDigitalContents(
+      this.state.digitalContents,
       this.state.metadata,
       this.state.uploadType,
       this.state.stems
@@ -262,14 +262,14 @@ class Upload extends Component {
   reset = () => {
     this.setState({
       page: Pages.SELECT,
-      agreements: [],
+      digitalContents: [],
       preview: null,
       previewIndex: -1,
       uploadType: UploadType.INDIVIDUAL_AGREEMENT,
       metadata: schemas.newCollectionMetadata({
         artwork: { file: null, url: '' }
       }),
-      uploadAgreementError: null
+      uploadDigitalContentError: null
     })
     this.props.resetUpload()
   }
@@ -279,16 +279,16 @@ class Upload extends Component {
   }
 
   onChangeOrder = (source, destination) => {
-    const movedElement = this.state.agreements[source]
-    const newAgreements = [...this.state.agreements]
+    const movedElement = this.state.digitalContents[source]
+    const newDigitalContents = [...this.state.digitalContents]
 
     // Remove the element from it's source location
-    newAgreements.splice(source, 1)
+    newDigitalContents.splice(source, 1)
 
     // Put the moved guy back in
-    newAgreements.splice(destination, 0, movedElement)
+    newDigitalContents.splice(destination, 0, movedElement)
 
-    this.setState({ agreements: newAgreements })
+    this.setState({ digitalContents: newDigitalContents })
   }
 
   onVisitCompletionPage = () => {
@@ -305,7 +305,7 @@ class Upload extends Component {
     if (upload.completionId) {
       switch (this.state.uploadType) {
         case UploadType.INDIVIDUAL_AGREEMENT: {
-          route = upload.agreements[0].metadata.permalink
+          route = upload.digitalContents[0].metadata.permalink
           uploadType = 'digital_content'
           break
         }
@@ -329,10 +329,10 @@ class Upload extends Component {
           break
       }
     } else {
-      uploadType = 'agreements'
+      uploadType = 'digitalContents'
       route = profilePage(account.handle)
     }
-    const areAnyPublic = upload.agreements.some((t) => !t.metadata.is_unlisted)
+    const areAnyPublic = upload.digitalContents.some((t) => !t.metadata.is_unlisted)
     if (isFirstUpload && areAnyPublic) {
       openFirstUploadModal(SHOW_FIRST_UPLOAD_MODAL_DELAY)
     }
@@ -343,26 +343,26 @@ class Upload extends Component {
   render() {
     const {
       account,
-      onCloseMultiAgreementNotification,
-      upload: { uploadProgress, openMultiAgreementNotification, failedAgreementIndices }
+      onCloseMultiDigitalContentNotification,
+      upload: { uploadProgress, openMultiDigitalContentNotification, failedDigitalContentIndices }
     } = this.props
     const {
       page,
-      agreements,
+      digitalContents,
       metadata,
       uploadType,
-      uploadAgreementError,
+      uploadDigitalContentError,
       isFirstUpload
     } = this.state
 
-    // Only show errored agreements if we're not uploading
+    // Only show errored digitalContents if we're not uploading
     // a collection
-    const erroredAgreements =
-      uploadType === UploadType.INDIVIDUAL_AGREEMENTS ? failedAgreementIndices : []
+    const erroredDigitalContents =
+      uploadType === UploadType.INDIVIDUAL_AGREEMENTS ? failedDigitalContentIndices : []
 
     let headerText
     if (uploadType === UploadType.INDIVIDUAL_AGREEMENTS) {
-      headerText = 'Agreements'
+      headerText = 'DigitalContents'
     } else if (uploadType === UploadType.CONTENT_LIST) {
       headerText = 'ContentList'
     } else if (uploadType === UploadType.ALBUM) {
@@ -375,19 +375,19 @@ class Upload extends Component {
     let header
     switch (page) {
       case Pages.SELECT:
-        header = <Header primary={'Upload Agreements'} />
+        header = <Header primary={'Upload DigitalContents'} />
         currentPage = (
           <SelectPage
             account={account}
-            agreements={agreements}
-            error={uploadAgreementError}
+            digitalContents={digitalContents}
+            error={uploadDigitalContentError}
             uploadType={uploadType}
             setUploadType={this.setUploadType}
-            openMultiAgreementNotification={openMultiAgreementNotification}
-            onCloseMultiAgreementNotification={onCloseMultiAgreementNotification}
+            openMultiDigitalContentNotification={openMultiDigitalContentNotification}
+            onCloseMultiDigitalContentNotification={onCloseMultiDigitalContentNotification}
             previewIndex={this.state.previewIndex}
-            onSelect={this.onSelectAgreements}
-            onRemove={this.removeAgreement}
+            onSelect={this.onSelectDigitalContents}
+            onRemove={this.removeDigitalContent}
             playPreview={this.playPreview}
             stopPreview={this.stopPreview}
             onContinue={() => this.changePage(Pages.EDIT)}
@@ -405,16 +405,16 @@ class Upload extends Component {
         currentPage = (
           <EditPage
             metadata={metadata}
-            agreements={agreements}
+            digitalContents={digitalContents}
             uploadType={uploadType}
             previewIndex={this.state.previewIndex}
             onPlayPreview={this.playPreview}
             onStopPreview={this.stopPreview}
-            updateAgreement={this.updateAgreement}
+            updateDigitalContent={this.updateDigitalContent}
             updateMetadata={this.updateMetadata}
             onChangeOrder={this.onChangeOrder}
             onContinue={this.publish}
-            onAddStems={this.onAddStemsToAgreement}
+            onAddStems={this.onAddStemsToDigitalContent}
             onSelectStemCategory={this.onSelectStemCategory}
             stems={this.state.stems}
             onDeleteStem={this.onDeleteStem}
@@ -432,14 +432,14 @@ class Upload extends Component {
         currentPage = (
           <FinishPage
             account={this.props.account ? this.props.account : {}}
-            agreements={agreements}
+            digitalContents={digitalContents}
             uploadProgress={uploadProgress}
             metadata={metadata}
             uploadType={uploadType}
             inProgress={inProgress}
             upload={this.props.upload}
             onContinue={this.onVisitCompletionPage}
-            erroredAgreements={erroredAgreements}
+            erroredDigitalContents={erroredDigitalContents}
             isFirstUpload={isFirstUpload}
           />
         )
@@ -475,11 +475,11 @@ const mapDispatchToProps = (dispatch) => ({
   goToRoute: (route) => dispatch(pushRoute(route)),
   undoResetState: () => dispatch(undoResetState()),
   pauseQueue: () => dispatch(pauseQueue({})),
-  onCloseMultiAgreementNotification: () =>
-    dispatch(toggleMultiAgreementNotification(false)),
+  onCloseMultiDigitalContentNotification: () =>
+    dispatch(toggleMultiDigitalContentNotification(false)),
   resetUpload: () => dispatch(reset()),
-  uploadAgreements: (agreements, metadata, uploadType, stems) =>
-    dispatch(uploadAgreements(agreements, metadata, uploadType, stems)),
+  uploadDigitalContents: (digitalContents, metadata, uploadType, stems) =>
+    dispatch(uploadDigitalContents(digitalContents, metadata, uploadType, stems)),
   openFirstUploadModal: (delay) => dispatch(openWithDelay({ delay }))
 })
 

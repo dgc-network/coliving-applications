@@ -12,7 +12,7 @@ import { formatCount } from 'app/utils/format'
 import { useSelectProfile } from './selectors'
 
 const messages = {
-  agreements: 'agreements',
+  digitalContents: 'digitalContents',
   followers: 'followers',
   following: 'following'
 }
@@ -77,7 +77,7 @@ export const ProfileMetrics = () => {
     <View pointerEvents='box-none' style={styles.root}>
       <View style={styles.metric}>
         <Text style={styles.value}>{formatCount(digital_content_count)}</Text>
-        <Text style={styles.label}>{messages.agreements}</Text>
+        <Text style={styles.label}>{messages.digitalContents}</Text>
       </View>
       <Pressable style={styles.metric} onPress={handlePressFollowers}>
         <Text style={styles.value}>{formatCount(follower_count)}</Text>

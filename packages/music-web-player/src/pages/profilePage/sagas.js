@@ -20,7 +20,7 @@ import {
 import { processAndCacheUsers } from 'common/store/cache/users/utils'
 import * as profileActions from 'common/store/pages/profile/actions'
 import feedSagas from 'common/store/pages/profile/lineups/feed/sagas.js'
-import agreementsSagas from 'common/store/pages/profile/lineups/agreements/sagas.js'
+import digitalContentsSagas from 'common/store/pages/profile/lineups/digital_contents/sagas.js'
 import {
   getProfileUserId,
   getProfileFollowers,
@@ -29,7 +29,7 @@ import {
 import { FollowType } from 'common/store/pages/profile/types'
 import { getIsReachable } from 'common/store/reachability/selectors'
 import { refreshSupport } from 'common/store/tipping/slice'
-import * as landlordRecommendationsActions from 'common/store/ui/landlordRecommendations/slice'
+import * as landlordRecommendationsActions from 'common/store/ui/authorRecommendations/slice'
 import { squashNewLines } from 'common/utils/formatUtil'
 import ColivingBackend, { fetchCID } from 'services/colivingBackend'
 import { setColivingAccountUser } from 'services/localStorage'
@@ -158,8 +158,8 @@ function* fetchSupportersAndSupporting(userId) {
   /**
    * If the profile is that of the logged in user, then
    * get all its supporting data so that when the logged in
-   * user is trying to tip an landlord, we'll know whether or
-   * not that landlord is already being supported by the logged in
+   * user is trying to tip an author, we'll know whether or
+   * not that author is already being supported by the logged in
    * user and thus correctly calculate how much more digitalcoin to tip
    * to become the top supporter.
    */
@@ -281,21 +281,21 @@ function* watchFetchFollowUsers(action) {
 
 const MOST_USED_TAGS_COUNT = 5
 
-// Get all the agreements & parse the agreements for the most used tags
-// NOTE: The number of user agreements is not known b/c some agreements are deleted,
-// so the number of user agreements plus a large digital_content number are fetched
+// Get all the digitalContents & parse the digitalContents for the most used tags
+// NOTE: The number of user digitalContents is not known b/c some digitalContents are deleted,
+// so the number of user digitalContents plus a large digital_content number are fetched
 const LARGE_AGREEMENTCOUNT_TAGS = 100
-function* fetchMostUsedTags(userId, agreementCount) {
-  const agreementResponse = yield call(ColivingBackend.getLandlordAgreements, {
+function* fetchMostUsedTags(userId, digitalContentCount) {
+  const digitalContentResponse = yield call(ColivingBackend.getLandlordDigitalContents, {
     offset: 0,
-    limit: agreementCount + LARGE_AGREEMENTCOUNT_TAGS,
+    limit: digitalContentCount + LARGE_AGREEMENTCOUNT_TAGS,
     userId,
     filterDeleted: true
   })
-  const agreements = agreementResponse.filter((metadata) => !metadata.is_delete)
+  const digitalContents = digitalContentResponse.filter((metadata) => !metadata.is_delete)
   // tagUsage: { [tag: string]: number }
   const tagUsage = {}
-  agreements.forEach((digital_content) => {
+  digitalContents.forEach((digital_content) => {
     if (digital_content.tags) {
       digital_content.tags.split(',').forEach((tag) => {
         tag in tagUsage ? (tagUsage[tag] += 1) : (tagUsage[tag] = 1)
@@ -528,7 +528,7 @@ function* watchSetNotificationSubscription() {
 export default function sagas() {
   return [
     ...feedSagas(),
-    ...agreementsSagas(),
+    ...digitalContentsSagas(),
     watchFetchFollowUsers,
     watchFetchProfile,
     watchUpdateProfile,

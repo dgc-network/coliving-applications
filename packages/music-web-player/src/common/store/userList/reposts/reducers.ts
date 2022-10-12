@@ -8,7 +8,7 @@ import { USER_LIST_TAG } from '../../../../pages/repostsPage/sagas'
 import * as actions from './actions'
 import { RepostsOwnState, RepostType } from './types'
 
-type AgreementRepostActions = ActionType<typeof actions>
+type DigitalContentRepostActions = ActionType<typeof actions>
 
 const userListReducer = UserListReducerFactory.createReducer({
   tag: USER_LIST_TAG,
@@ -20,7 +20,7 @@ const initialState = {
   repostType: RepostType.AGREEMENT
 }
 
-const repostsPageReducer = createReducer<RepostsOwnState, AgreementRepostActions>(
+const repostsPageReducer = createReducer<RepostsOwnState, DigitalContentRepostActions>(
   initialState,
   {
     [actions.SET_REPOST](state, action) {

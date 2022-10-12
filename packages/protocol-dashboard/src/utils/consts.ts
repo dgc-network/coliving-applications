@@ -1,1 +1,1 @@
-export const TICKER = '$LIVE'
+export const TICKER = '$DGCO'

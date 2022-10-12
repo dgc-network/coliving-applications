@@ -5,12 +5,12 @@ import * as errorActions from 'common/store/errors/actions'
 import {
   GET_AGREEMENT_FAVORITE_ERROR,
   GET_CONTENT_LIST_FAVORITE_ERROR,
-  agreementFavoriteError,
+  digitalContentFavoriteError,
   contentListFavoriteError
 } from './actions'
 
 type ErrorActions =
-  | ReturnType<typeof agreementFavoriteError>
+  | ReturnType<typeof digitalContentFavoriteError>
   | ReturnType<typeof contentListFavoriteError>
 
 export function* handleFavoriteError(action: ErrorActions) {

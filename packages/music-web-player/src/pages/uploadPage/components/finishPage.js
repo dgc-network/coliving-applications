@@ -9,13 +9,13 @@ import { ReactComponent as IconArrow } from 'assets/img/iconArrow.svg'
 import placeholderArt from 'assets/img/imageBlank2x.png'
 import Toast from 'components/toast/toast'
 import {
-  AgreementArtwork,
+  DigitalContentArtwork,
   CollectionArtwork
 } from 'components/digital_content/desktop/Artwork'
 import ContentListTile from 'components/digital_content/desktop/contentListTile'
-import AgreementListItem from 'components/digital_content/desktop/agreementListItem'
-import AgreementTile from 'components/digital_content/desktop/agreementTile'
-import { AgreementTileSize } from 'components/digital_content/types'
+import DigitalContentListItem from 'components/digital_content/desktop/digitalContentListItem'
+import DigitalContentTile from 'components/digital_content/desktop/digitalContentTile'
+import { DigitalContentTileSize } from 'components/digital_content/types'
 import { ComponentPlacement } from 'components/types'
 import UserBadges from 'components/userBadges/userBadges'
 
@@ -33,16 +33,16 @@ const messages = {
   error: 'Error uploading one or more files, please try again'
 }
 
-const getShareUploadType = (uploadType, agreements) => {
+const getShareUploadType = (uploadType, digitalContents) => {
   switch (uploadType) {
     case UploadType.INDIVIDUAL_AGREEMENT: {
-      if (agreements.length > 0 && agreements[0].metadata.remix_of) {
+      if (digitalContents.length > 0 && digitalContents[0].metadata.remix_of) {
         return 'Remix'
       }
       return 'DigitalContent'
     }
     case UploadType.INDIVIDUAL_AGREEMENTS:
-      return 'Agreements'
+      return 'DigitalContents'
     case UploadType.CONTENT_LIST:
       return 'ContentList'
     case UploadType.ALBUM:
@@ -70,7 +70,7 @@ class FinishPage extends Component {
 
   componentDidUpdate() {
     if (
-      this.props.erroredAgreements.length > 0 &&
+      this.props.erroredDigitalContents.length > 0 &&
       this.props.uploadType === UploadType.INDIVIDUAL_AGREEMENTS &&
       !this.state.didShowToast
     ) {
@@ -111,19 +111,19 @@ class FinishPage extends Component {
   render() {
     const {
       account,
-      agreements,
+      digitalContents,
       uploadProgress,
       upload,
       metadata,
       uploadType,
       inProgress,
       onContinue,
-      erroredAgreements,
+      erroredDigitalContents,
       isFirstUpload
     } = this.props
 
     const tileProps = {
-      size: AgreementTileSize.LARGE,
+      size: DigitalContentTileSize.LARGE,
       isActive: false,
       isDisabled: true,
       showArtworkIcon: false,
@@ -132,15 +132,15 @@ class FinishPage extends Component {
       showSkeleton: false
     }
 
-    const erroredAgreementSet = new Set(erroredAgreements)
+    const erroredDigitalContentSet = new Set(erroredDigitalContents)
 
     let content
     if (
       uploadType === UploadType.INDIVIDUAL_AGREEMENT ||
       uploadType === UploadType.INDIVIDUAL_AGREEMENTS
     ) {
-      content = agreements.map((digital_content, i) => {
-        const hasErrored = erroredAgreementSet.has(i)
+      content = digitalContents.map((digital_content, i) => {
+        const hasErrored = erroredDigitalContentSet.has(i)
         const userName = (
           <div className={styles.userName}>
             <span className={styles.createdBy}>{account.name}</span>
@@ -156,7 +156,7 @@ class FinishPage extends Component {
           (uploadProgress[i].loaded / uploadProgress[i].total) * 100
 
         const artwork = (
-          <AgreementArtwork
+          <DigitalContentArtwork
             id={1} // Note the ID must be present to render the default overide image
             coverArtSizes={{
               [DefaultSizes.OVERRIDE]: digital_content.metadata.artwork.url
@@ -178,8 +178,8 @@ class FinishPage extends Component {
         })
 
         return (
-          <div key={digital_content.metadata.title + i} className={styles.agreementTile}>
-            <AgreementTile
+          <div key={digital_content.metadata.title + i} className={styles.digitalContentTile}>
+            <DigitalContentTile
               userName={userName}
               title={digital_content.metadata.title}
               standalone
@@ -201,7 +201,7 @@ class FinishPage extends Component {
       if (uploadType === UploadType.CONTENT_LIST) {
         header = 'CONTENT_LIST'
       }
-      const t = agreements.map((digital_content) => {
+      const t = digitalContents.map((digital_content) => {
         const { duration } = digital_content.preview
         return {
           ...digital_content.metadata,
@@ -214,7 +214,7 @@ class FinishPage extends Component {
 
       const status =
         // Don't show complete until inProgress = false, to allow
-        // the saga to perform final processing steps (e.g. create a contentList after uploading agreements)
+        // the saga to perform final processing steps (e.g. create a contentList after uploading digitalContents)
         uploadProgress
           .map((u) => u.status)
           .every((s) => s === ProgressStatus.COMPLETE) && !inProgress
@@ -258,13 +258,13 @@ class FinishPage extends Component {
         />
       )
 
-      const agreementList = t.map((digital_content, i) => (
-        <AgreementListItem
+      const digitalContentList = t.map((digital_content, i) => (
+        <DigitalContentListItem
           index={i}
           key={`${digital_content.title}+${i}`}
           isLoading={false}
           active={false}
-          size={AgreementTileSize.LARGE}
+          size={DigitalContentTileSize.LARGE}
           disableActions={true}
           playing={false}
           digital_content={digital_content}
@@ -276,13 +276,13 @@ class FinishPage extends Component {
         <ContentListTile
           header={header}
           userName={userName}
-          agreementList={agreementList}
+          digitalContentList={digitalContentList}
           title={metadata.content_list_name}
           artwork={artwork}
-          activeAgreementUid={false} // No digital_content should show as active
+          activeDigitalContentUid={false} // No digital_content should show as active
           bottomBar={bottomBar}
           showIconButtons={false}
-          containerClassName={styles.agreementListContainer}
+          containerClassName={styles.digitalContentListContainer}
           {...tileProps}
         />
       )
@@ -300,9 +300,9 @@ class FinishPage extends Component {
         continueText = 'View Album'
         break
       default:
-        continueText = 'View Agreements'
+        continueText = 'View DigitalContents'
     }
-    const shareUploadType = getShareUploadType(uploadType, agreements)
+    const shareUploadType = getShareUploadType(uploadType, digitalContents)
     return (
       <Toast
         firesOnClick={false}
@@ -315,7 +315,7 @@ class FinishPage extends Component {
             <ShareBanner
               type={shareUploadType}
               isHidden={inProgress}
-              agreements={agreements}
+              digitalContents={digitalContents}
               upload={upload}
               metadata={metadata}
               user={account}
@@ -342,7 +342,7 @@ class FinishPage extends Component {
 
 FinishPage.propTypes = {
   account: PropTypes.object,
-  agreements: PropTypes.array,
+  digitalContents: PropTypes.array,
   uploadType: PropTypes.oneOf(Object.values(UploadType)),
   uploadProgress: PropTypes.array,
   /** Whether an upload is in progress. Only shows actions after upload is 'done.' */

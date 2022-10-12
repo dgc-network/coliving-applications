@@ -23,7 +23,7 @@ import { usePushSearchRoute } from './utils'
 
 const messages = {
   clear: 'Clear Recent Searches',
-  empty: 'Search for Landlords, Agreements, ContentLists, & Albums'
+  empty: 'Search for Landlords, DigitalContents, ContentLists, & Albums'
 }
 
 const styles = StyleSheet.create({

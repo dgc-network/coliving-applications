@@ -7,7 +7,7 @@ import { Header } from 'app/components/header'
 import { TopTabNavigator } from 'app/components/topTabBar'
 import { usePopToTopOnDrawerOpen } from 'app/hooks/usePopToTopOnDrawerOpen'
 
-import { LandlordsTab } from './tabs/LandlordsTab'
+import { LandlordsTab } from './tabs/authorsTab'
 import { ForYouTab } from './tabs/forYouTab'
 import { MoodsTab } from './tabs/moodsTab'
 import { ContentListsTab } from './tabs/ContentListsTab'

@@ -2,8 +2,8 @@ import { Status, Collection, DigitalContent } from '@coliving/common'
 
 export default interface LandlordDashboardState {
   status: Status
-  agreements: DigitalContent[]
-  unlistedAgreements: DigitalContent[]
+  digitalContents: DigitalContent[]
+  unlistedDigitalContents: DigitalContent[]
   collections: Collection
   listenData: {
     all: {

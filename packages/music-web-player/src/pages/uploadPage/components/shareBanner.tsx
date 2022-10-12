@@ -20,7 +20,7 @@ import {
   fullAlbumPage,
   fullContentListPage,
   fullProfilePage,
-  fullAgreementPage,
+  fullDigitalContentPage,
   profilePage,
   albumPage,
   contentListPage
@@ -31,7 +31,7 @@ import { UploadPageState } from '../store/types'
 
 import styles from './shareBanner.module.css'
 
-type UploadType = 'DigitalContent' | 'Agreements' | 'Album' | 'ContentList' | 'Remix'
+type UploadType = 'DigitalContent' | 'DigitalContents' | 'Album' | 'ContentList' | 'Remix'
 type ContinuePage = 'DigitalContent' | 'Profile' | 'Album' | 'ContentList' | 'Remix'
 
 type ShareBannerProps = {
@@ -43,7 +43,7 @@ type ShareBannerProps = {
 
 const messages = {
   title: (type: UploadType) =>
-    `Your ${type} ${type === 'Agreements' ? 'Are' : 'Is'} Digitalcoin!`,
+    `Your ${type} ${type === 'DigitalContents' ? 'Are' : 'Is'} Digitalcoin!`,
   description: 'Now it’s time to spread the word and share it with your residents!',
   share: 'Share With Your Residents',
   shareToTikTok: 'Share Sound to TikTok',
@@ -52,7 +52,7 @@ const messages = {
 }
 
 const getContinuePage = (uploadType: UploadType) => {
-  if (uploadType === 'Agreements') return 'Profile'
+  if (uploadType === 'DigitalContents') return 'Profile'
   return uploadType
 }
 
@@ -71,40 +71,40 @@ const getShareTextUrl = async (
 ) => {
   switch (uploadType) {
     case 'DigitalContent': {
-      const { title, permalink } = upload.agreements[0].metadata
-      const url = fullUrl ? fullAgreementPage(permalink) : permalink
+      const { title, permalink } = upload.digitalContents[0].metadata
+      const url = fullUrl ? fullDigitalContentPage(permalink) : permalink
       return {
         text: `Check out my new digital_content, ${title} on @dgc-network #Coliving`,
         url
       }
     }
     case 'Remix': {
-      const { permalink } = upload.agreements[0].metadata
+      const { permalink } = upload.digitalContents[0].metadata
       const parent_digital_content_id =
-        upload.agreements[0].metadata?.remix_of?.agreements[0].parent_digital_content_id
+        upload.digitalContents[0].metadata?.remix_of?.digitalContents[0].parent_digital_content_id
       if (!parent_digital_content_id) return { text: '', url: '' }
 
-      const url = fullUrl ? fullAgreementPage(permalink) : permalink
-      const parentAgreement = await apiClient.getAgreement({ id: parent_digital_content_id })
-      if (!parentAgreement) return { text: '', url: '' }
+      const url = fullUrl ? fullDigitalContentPage(permalink) : permalink
+      const parentDigitalContent = await apiClient.getDigitalContent({ id: parent_digital_content_id })
+      if (!parentDigitalContent) return { text: '', url: '' }
 
-      const parentAgreementUser = parentAgreement.user
+      const parentDigitalContentUser = parentDigitalContent.user
 
       let twitterHandle = await getTwitterHandleByUserHandle(
-        parentAgreementUser.handle
+        parentDigitalContentUser.handle
       )
-      if (!twitterHandle) twitterHandle = parentAgreementUser.name
+      if (!twitterHandle) twitterHandle = parentDigitalContentUser.name
       else twitterHandle = `@${twitterHandle}`
 
       return {
-        text: `Check out my new remix of ${parentAgreement.title} by ${twitterHandle} on @dgc-network #Coliving`,
+        text: `Check out my new remix of ${parentDigitalContent.title} by ${twitterHandle} on @dgc-network #Coliving`,
         url
       }
     }
-    case 'Agreements': {
+    case 'DigitalContents': {
       const getPage = fullUrl ? fullProfilePage : profilePage
       const url = getPage(user.handle)
-      return { text: `Check out my new agreements on @dgc-network #Coliving`, url }
+      return { text: `Check out my new digitalContents on @dgc-network #Coliving`, url }
     }
     case 'Album': {
       // @ts-ignore
@@ -152,7 +152,7 @@ const ShareBanner = ({ isHidden, type, upload, user }: ShareBannerProps) => {
 
   const onClickTikTok = useCallback(async () => {
     // Sharing to TikTok is currently only enabled for single digital_content uploads
-    const digital_content = upload.agreements[0]
+    const digital_content = upload.digitalContents[0]
     if (digital_content.metadata) {
       dispatch(
         openTikTokModal({
@@ -183,7 +183,7 @@ const ShareBanner = ({ isHidden, type, upload, user }: ShareBannerProps) => {
     return (
       type === 'DigitalContent' &&
       isShareSoundToTikTokEnabled &&
-      !upload.agreements[0]?.metadata.is_unlisted
+      !upload.digitalContents[0]?.metadata.is_unlisted
     )
   }
 

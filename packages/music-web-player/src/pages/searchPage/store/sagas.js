@@ -2,13 +2,13 @@ import { select, call, takeLatest, put } from 'redux-saga/effects'
 
 import { getUserId } from 'common/store/account/selectors'
 import { processAndCacheCollections } from 'common/store/cache/collections/utils'
-import { processAndCacheAgreements } from 'common/store/cache/agreements/utils'
+import { processAndCacheDigitalContents } from 'common/store/cache/digital_contents/utils'
 import { fetchUsers } from 'common/store/cache/users/sagas'
 import { processAndCacheUsers } from 'common/store/cache/users/utils'
 import * as searchPageActions from 'common/store/pages/searchResults/actions'
-import { agreementsActions as agreementsLineupActions } from 'common/store/pages/searchResults/lineup/agreements/actions'
+import { digitalContentsActions as digitalContentsLineupActions } from 'common/store/pages/searchResults/lineup/digital_contents/actions'
 import { trimToAlphaNumeric } from 'common/utils/formatUtil'
-import agreementsSagas from 'pages/search-page/store/lineups/agreements/sagas'
+import digitalContentsSagas from 'pages/search-page/store/lineups/digital_contents/sagas'
 import ColivingBackend from 'services/colivingBackend'
 import apiClient from 'services/colivingAPIClient/colivingAPIClient'
 import { waitForBackendSetup } from 'store/backend/sagas'
@@ -21,9 +21,9 @@ export function* getTagSearchResults(tag, kind, limit, offset) {
     limit,
     offset
   })
-  const { users, agreements } = results
+  const { users, digitalContents } = results
 
-  const creatorIds = agreements
+  const creatorIds = digitalContents
     .map((t) => t.owner_id)
     .concat(users.map((u) => u.user_id))
 
@@ -31,13 +31,13 @@ export function* getTagSearchResults(tag, kind, limit, offset) {
 
   const { entries } = yield call(fetchUsers, creatorIds)
 
-  const agreementsWithUsers = agreements.map((digital_content) => ({
+  const digitalContentsWithUsers = digitalContents.map((digital_content) => ({
     ...digital_content,
     user: entries[digital_content.owner_id]
   }))
-  yield call(processAndCacheAgreements, agreementsWithUsers)
+  yield call(processAndCacheDigitalContents, digitalContentsWithUsers)
 
-  return { users, agreements }
+  return { users, digitalContents }
 }
 
 export function* fetchSearchPageTags(action) {
@@ -53,9 +53,9 @@ export function* fetchSearchPageTags(action) {
   )
   if (results) {
     results.users = results.users.map(({ user_id: id }) => id)
-    results.agreements = results.agreements.map(({ digital_content_id: id }) => id)
+    results.digitalContents = results.digitalContents.map(({ digital_content_id: id }) => id)
     yield put(searchPageActions.fetchSearchPageTagsSucceeded(results, tag))
-    yield put(agreementsLineupActions.fetchLineupMetadatas(0, 10))
+    yield put(digitalContentsLineupActions.fetchLineupMetadatas(0, 10))
   } else {
     yield put(searchPageActions.fetchSearchPageTagsFailed())
   }
@@ -70,19 +70,19 @@ export function* getSearchResults(searchText, kind, limit, offset) {
     limit,
     offset
   })
-  const { agreements, albums, contentLists, users } = results
+  const { digitalContents, albums, contentLists, users } = results
 
   yield call(processAndCacheUsers, users)
-  yield call(processAndCacheAgreements, agreements)
+  yield call(processAndCacheDigitalContents, digitalContents)
 
   const collections = albums.concat(contentLists)
   yield call(
     processAndCacheCollections,
     collections,
-    /* shouldRetrieveAgreements */ false
+    /* shouldRetrieveDigitalContents */ false
   )
 
-  return { users, agreements, albums, contentLists }
+  return { users, digitalContents, albums, contentLists }
 }
 
 function* fetchSearchPageResults(action) {
@@ -97,7 +97,7 @@ function* fetchSearchPageResults(action) {
   )
   if (results) {
     results.users = results.users.map(({ user_id: id }) => id)
-    results.agreements = results.agreements.map(({ digital_content_id: id }) => id)
+    results.digitalContents = results.digitalContents.map(({ digital_content_id: id }) => id)
     results.albums = results.albums.map(({ content_list_id: id }) => id)
     results.contentLists = results.contentLists.map(({ content_list_id: id }) => id)
     yield put(
@@ -106,7 +106,7 @@ function* fetchSearchPageResults(action) {
         action.searchText
       )
     )
-    yield put(agreementsLineupActions.fetchLineupMetadatas(0, 10))
+    yield put(digitalContentsLineupActions.fetchLineupMetadatas(0, 10))
   } else {
     yield put(searchPageActions.fetchSearchPageResultsFailed())
   }
@@ -128,7 +128,7 @@ function* watchFetchSearchPageResults() {
 
 export default function sagas() {
   return [
-    ...agreementsSagas(),
+    ...digitalContentsSagas(),
     watchFetchSearchPageResults,
     watchFetchSearchPageTags
   ]

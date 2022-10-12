@@ -47,39 +47,39 @@ function* getIsBalanceFrozen() {
  * @param action.playload.chain 'eth' or 'sol'
  */
 function* sendAsync({
-  payload: { recipientWallet, amount: weiLiveAmount, chain }
+  payload: { recipientWallet, amount: weiDigitalcoinAmount, chain }
 }: ReturnType<typeof send>) {
   const account = yield* select(getAccountUser)
-  const weiBNAmount = stringWeiToBN(weiLiveAmount)
+  const weiBNAmount = stringWeiToBN(weiDigitalcoinAmount)
   const accountBalance = yield* select(getAccountBalance)
   const weiBNBalance = accountBalance ?? (new BN('0') as BNWei)
 
-  const wliveWeiAmount: BNWei = yield* call(
+  const wei_digitalcoinWeiAmount: BNWei = yield* call(
     walletClient.getCurrentWAudioBalance
   )
   if (
     chain === Chain.Eth &&
     (!weiBNBalance || !weiBNBalance.gte(weiBNAmount))
   ) {
-    yield* put(sendFailed({ error: 'Not enough $LIVE' }))
+    yield* put(sendFailed({ error: 'Not enough $DGCO' }))
     return
   } else if (chain === Chain.Sol) {
     if (weiBNAmount.gt(weiBNBalance)) {
-      yield* put(sendFailed({ error: 'Not enough $LIVE' }))
+      yield* put(sendFailed({ error: 'Not enough $DGCO' }))
       return
     }
   }
 
   try {
     yield* put(
-      make(Name.SEND_LIVE_REQUEST, {
+      make(Name.SEND_DGCO_REQUEST, {
         from: account?.wallet,
         recipient: recipientWallet
       })
     )
     // If transferring spl wrapped digitalcoin and there are insufficent funds with only the
     // user bank balance, transfer all eth LIVE to spl wrapped digitalcoin
-    if (chain === Chain.Sol && weiBNAmount.gt(wliveWeiAmount)) {
+    if (chain === Chain.Sol && weiBNAmount.gt(wei_digitalcoinWeiAmount)) {
       yield* put(transferEthAudioToSolWAudio())
       yield* call(walletClient.transferTokensFromEthToSol)
     }
@@ -99,7 +99,7 @@ function* sendAsync({
         }
         if (
           errorMessage ===
-          'Recipient has no $LIVE token account. Please install Phantom-Wallet to create one.'
+          'Recipient has no $DGCO token account. Please install Phantom-Wallet to create one.'
         ) {
           yield* put(sendFailed({ error: errorMessage }))
           return
@@ -112,12 +112,12 @@ function* sendAsync({
       getAccountBalance
     )
     if (newBalance?.eq(weiBNBalance)) {
-      yield* put(decreaseBalance({ amount: weiLiveAmount }))
+      yield* put(decreaseBalance({ amount: weiDigitalcoinAmount }))
     }
 
     yield* put(sendSucceeded())
     yield* put(
-      make(Name.SEND_LIVE_SUCCESS, {
+      make(Name.SEND_DGCO_SUCCESS, {
         from: account?.wallet,
         recipient: recipientWallet
       })
@@ -128,11 +128,11 @@ function* sendAsync({
     let errorText = errorMessage
     if (isRateLimit) {
       errorText =
-        'If you’ve already sent $LIVE today, please wait a day before trying again'
+        'If you’ve already sent $DGCO today, please wait a day before trying again'
     }
     yield* put(sendFailed({ error: errorText }))
     yield* put(
-      make(Name.SEND_LIVE_FAILURE, {
+      make(Name.SEND_DGCO_FAILURE, {
         from: account?.wallet,
         recipient: recipientWallet,
         error: errorText
@@ -175,7 +175,7 @@ function* fetchBalanceAsync() {
     currentSolAudioWeiBalance
   ) as BNWei
 
-  const useSolAudio = getFeatureEnabled(FeatureFlags.ENABLE_SPL_LIVE)
+  const useSolAudio = getFeatureEnabled(FeatureFlags.ENABLE_SPL_DGCO)
   if (useSolAudio) {
     const totalBalance = liveWeiBalance.add(associatedWalletBalance) as BNWei
     yield* put(

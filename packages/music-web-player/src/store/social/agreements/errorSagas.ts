@@ -1,22 +1,22 @@
-import * as socialAgreementActions from 'common/store/social/agreements/actions'
+import * as socialDigitalContentActions from 'common/store/social/digital_contents/actions'
 import createErrorSagas from 'common/utils/errorSagas'
 
-type AgreementRepostErrors =
-  | ReturnType<typeof socialAgreementActions.agreementRepostFailed>
-  | ReturnType<typeof socialAgreementActions.saveAgreementFailed>
-  | ReturnType<typeof socialAgreementActions.unsaveAgreementFailed>
+type DigitalContentRepostErrors =
+  | ReturnType<typeof socialDigitalContentActions.digitalContentRepostFailed>
+  | ReturnType<typeof socialDigitalContentActions.saveDigitalContentFailed>
+  | ReturnType<typeof socialDigitalContentActions.unsaveDigitalContentFailed>
 
-const errorSagas = createErrorSagas<AgreementRepostErrors>({
+const errorSagas = createErrorSagas<DigitalContentRepostErrors>({
   errorTypes: [
-    socialAgreementActions.REPOST_FAILED,
-    socialAgreementActions.UNSAVE_AGREEMENT_FAILED,
-    socialAgreementActions.SAVE_AGREEMENT_FAILED
+    socialDigitalContentActions.REPOST_FAILED,
+    socialDigitalContentActions.UNSAVE_AGREEMENT_FAILED,
+    socialDigitalContentActions.SAVE_AGREEMENT_FAILED
   ],
   getShouldRedirect: () => false,
   getShouldReport: () => true,
-  getAdditionalInfo: (action: AgreementRepostErrors) => ({
+  getAdditionalInfo: (action: DigitalContentRepostErrors) => ({
     error: action.error,
-    agreementId: action.agreementId
+    digitalContentId: action.digitalContentId
   })
 })
 

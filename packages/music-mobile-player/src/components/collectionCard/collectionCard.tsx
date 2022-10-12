@@ -8,10 +8,10 @@ import { useNavigation } from 'app/hooks/useNavigation'
 import { formatCount } from 'app/utils/format'
 import { getCollectionRoute } from 'app/utils/routes'
 
-const formatContentListCardSecondaryText = (saves: number, agreements: number) => {
+const formatContentListCardSecondaryText = (saves: number, digitalContents: number) => {
   const savesText = saves === 1 ? 'Favorite' : 'Favorites'
-  const agreementsText = agreements === 1 ? 'DigitalContent' : 'Agreements'
-  return `${formatCount(saves)} ${savesText} • ${agreements} ${agreementsText}`
+  const digitalContentsText = digitalContents === 1 ? 'DigitalContent' : 'DigitalContents'
+  return `${formatCount(saves)} ${savesText} • ${digitalContents} ${digitalContentsText}`
 }
 
 type CollectionCardProps = {

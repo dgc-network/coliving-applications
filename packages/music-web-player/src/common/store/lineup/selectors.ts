@@ -1,14 +1,14 @@
 import { LineupState, removeNullable } from '@coliving/common'
 import { createSelector } from 'reselect'
 
-import { getAgreementsByUid } from 'common/store/cache/agreements/selectors'
+import { getDigitalContentsByUid } from 'common/store/cache/digital_contents/selectors'
 import { getUsers } from 'common/store/cache/users/selectors'
 
 // Some lineups can have additional properties (T)
 // e.g. collections have dateAdded in entries
 type LineupSelector<T, State> = (state: State) => LineupState<T>
 
-export const getLineupHasAgreements = <T, State>(
+export const getLineupHasDigitalContents = <T, State>(
   selector: LineupSelector<T, State>,
   state: State
 ) => {
@@ -21,13 +21,13 @@ export const makeGetTableMetadatas = <T, State>(
 ) => {
   return createSelector(
     lineupSelector,
-    getAgreementsByUid,
+    getDigitalContentsByUid,
     getUsers,
-    (lineup, agreementUids, users) => {
+    (lineup, digitalContentUids, users) => {
       let deleted = lineup.deleted
       const entries = lineup.entries
         .map((entry) => {
-          const digital_content = agreementUids[entry.uid]
+          const digital_content = digitalContentUids[entry.uid]
           if (digital_content) {
             return {
               ...entry,

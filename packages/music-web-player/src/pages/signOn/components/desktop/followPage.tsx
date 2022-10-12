@@ -15,7 +15,7 @@ import styles from './followPage.module.css'
 const messages = {
   title: 'Follow At Least 3 Landlords To Get Started',
   subTitle:
-    'Agreements uploaded or reposted by people you follow will appear in your feed.',
+    'DigitalContents uploaded or reposted by people you follow will appear in your feed.',
   pickForMe: 'Pick Some For Me',
   following: 'Following'
 }

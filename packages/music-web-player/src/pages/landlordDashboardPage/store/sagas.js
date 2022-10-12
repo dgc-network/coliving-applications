@@ -4,7 +4,7 @@ import moment from 'moment'
 import { all, call, put, take, takeEvery } from 'redux-saga/effects'
 
 import { getAccountUser } from 'common/store/account/selectors'
-import { retrieveUserAgreements } from 'common/store/pages/profile/lineups/agreements/retrieveUserAgreements'
+import { retrieveUserDigitalContents } from 'common/store/pages/profile/lineups/digital_contents/retrieveUserDigitalContents'
 import { getBalance } from 'common/store/wallet/slice'
 import ColivingBackend from 'services/colivingBackend'
 import { remoteConfigInstance } from 'services/remoteConfig/remoteConfigInstance'
@@ -19,8 +19,8 @@ function* fetchDashboardAsync(action) {
 
   const account = yield call(waitForValue, getAccountUser)
 
-  const [agreements, contentLists] = yield all([
-    call(retrieveUserAgreements, {
+  const [digitalContents, contentLists] = yield all([
+    call(retrieveUserDigitalContents, {
       handle: account.handle,
       currentUserId: account.user_id,
       // TODO: This only supports up to 500, we need to redesign / paginate
@@ -29,29 +29,29 @@ function* fetchDashboardAsync(action) {
     }),
     call(ColivingBackend.getContentLists, account.user_id, [])
   ])
-  const listedAgreements = agreements.filter((t) => t.is_unlisted === false)
-  const unlistedAgreements = agreements.filter((t) => t.is_unlisted === true)
+  const listedDigitalContents = digitalContents.filter((t) => t.is_unlisted === false)
+  const unlistedDigitalContents = digitalContents.filter((t) => t.is_unlisted === true)
 
-  const agreementIds = listedAgreements.map((t) => t.digital_content_id)
+  const digitalContentIds = listedDigitalContents.map((t) => t.digital_content_id)
   const now = moment()
 
   yield call(fetchDashboardListenDataAsync, {
-    agreementIds,
+    digitalContentIds,
     start: now.clone().subtract(1, 'years').toISOString(),
     end: now.toISOString(),
     period: 'month'
   })
 
   if (
-    listedAgreements.length > 0 ||
+    listedDigitalContents.length > 0 ||
     contentLists.length > 0 ||
-    unlistedAgreements.length > 0
+    unlistedDigitalContents.length > 0
   ) {
     yield put(
       dashboardActions.fetchDashboardSucceeded(
-        listedAgreements,
+        listedDigitalContents,
         contentLists,
-        unlistedAgreements
+        unlistedDigitalContents
       )
     )
     yield call(pollForBalance)
@@ -64,8 +64,8 @@ const formatMonth = (date) => moment.utc(date).format('MMM').toUpperCase()
 
 function* fetchDashboardListenDataAsync(action) {
   const listenData = yield call(
-    ColivingBackend.getAgreementListens,
-    action.agreementIds,
+    ColivingBackend.getDigitalContentListens,
+    action.digitalContentIds,
     action.start,
     action.end,
     action.period
@@ -92,13 +92,13 @@ function* fetchDashboardListenDataAsync(action) {
     formattedListenData.all.values[labelIndexMap[formatMonth(date)]] =
       data.totalListens
     data.listenCounts.forEach((count) => {
-      if (!(count.agreementId in formattedListenData)) {
-        formattedListenData[count.agreementId] = {
+      if (!(count.digitalContentId in formattedListenData)) {
+        formattedListenData[count.digitalContentId] = {
           labels: [...labels],
           values: new Array(labels.length).fill(0)
         }
       }
-      formattedListenData[count.agreementId].values[
+      formattedListenData[count.digitalContentId].values[
         labelIndexMap[formatMonth(date)]
       ] = count.listens
     })

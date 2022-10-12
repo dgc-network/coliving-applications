@@ -2,7 +2,7 @@ import { useEffect, useContext } from 'react'
 
 import { CID, ID, LineupState, DigitalContent, User } from '@coliving/common'
 
-import { agreementsActions } from 'common/store/pages/digital_content/lineup/actions'
+import { digitalContentsActions } from 'common/store/pages/digital_content/lineup/actions'
 import { QueueItem } from 'common/store/queue/types'
 import { OverflowAction } from 'common/store/ui/mobileOverflowMenu/types'
 import { HeaderContext } from 'components/header/mobile/headerContextProvider'
@@ -16,15 +16,15 @@ import NavContext, {
 } from 'components/nav/store/context'
 import NetworkConnectivityMonitor from 'components/networkConnectivity/networkConnectivityMonitor'
 import SectionButton from 'components/sectionButton/sectionButton'
-import { getAgreementDefaults, emptyStringGuard } from 'pages/agreementPage/utils'
+import { getDigitalContentDefaults, emptyStringGuard } from 'pages/digitalContentPage/utils'
 
 import Remixes from './remixes'
-import AgreementPageHeader from './agreementHeader'
-import styles from './agreementPage.module.css'
+import DigitalContentPageHeader from './digitalContentHeader'
+import styles from './digitalContentPage.module.css'
 
 const messages = {
   moreBy: 'More By',
-  originalAgreement: 'Original DigitalContent',
+  originalDigitalContent: 'Original DigitalContent',
   viewOtherRemixes: 'View Other Remixes'
 }
 
@@ -34,48 +34,48 @@ export type OwnProps = {
   canonicalUrl: string
   hasValidRemixParent: boolean
   // Hero DigitalContent Props
-  heroAgreement: DigitalContent | null
+  heroDigitalContent: DigitalContent | null
   user: User | null
   heroPlaying: boolean
   userId: ID | null
   onHeroPlay: (isPlaying: boolean) => void
-  onHeroShare: (agreementId: ID) => void
+  onHeroShare: (digitalContentId: ID) => void
   goToProfilePage: (handle: string) => void
   goToSearchResultsPage: (tag: string) => void
   goToAllRemixesPage: () => void
   goToParentRemixesPage: () => void
-  onHeroRepost: (isReposted: boolean, agreementId: number) => void
+  onHeroRepost: (isReposted: boolean, digitalContentId: number) => void
   onClickMobileOverflow: (
-    agreementId: ID,
+    digitalContentId: ID,
     overflowActions: OverflowAction[]
   ) => void
 
-  onSaveAgreement: (isSaved: boolean, agreementId: ID) => void
-  onDownloadAgreement: (
-    agreementId: ID,
+  onSaveDigitalContent: (isSaved: boolean, digitalContentId: ID) => void
+  onDownloadDigitalContent: (
+    digitalContentId: ID,
     cid: CID,
     contentNodeEndpoints: string,
     category?: string,
-    parentAgreementId?: ID
+    parentDigitalContentId?: ID
   ) => void
-  // Agreements Lineup Props
-  agreements: LineupState<{ id: ID }>
+  // DigitalContents Lineup Props
+  digitalContents: LineupState<{ id: ID }>
   currentQueueItem: QueueItem
   isPlaying: boolean
   isBuffering: boolean
   play: (uid?: string) => void
   pause: () => void
-  goToFavoritesPage: (agreementId: ID) => void
-  goToRepostsPage: (agreementId: ID) => void
+  goToFavoritesPage: (digitalContentId: ID) => void
+  goToRepostsPage: (digitalContentId: ID) => void
 }
 
-const AgreementPage = ({
+const DigitalContentPage = ({
   title,
   description,
   canonicalUrl,
   hasValidRemixParent,
   // Hero DigitalContent Props
-  heroAgreement,
+  heroDigitalContent,
   user,
   heroPlaying,
   userId,
@@ -85,13 +85,13 @@ const AgreementPage = ({
   goToSearchResultsPage,
   goToAllRemixesPage,
   goToParentRemixesPage,
-  onSaveAgreement,
-  onDownloadAgreement,
+  onSaveDigitalContent,
+  onDownloadDigitalContent,
   onHeroRepost,
   onClickMobileOverflow,
 
-  // Agreements Lineup Props
-  agreements,
+  // DigitalContents Lineup Props
+  digitalContents,
   currentQueueItem,
   isPlaying,
   isBuffering,
@@ -112,55 +112,55 @@ const AgreementPage = ({
     setHeader(null)
   }, [setHeader])
 
-  const { entries } = agreements
-  const isOwner = heroAgreement ? heroAgreement.owner_id === userId : false
-  const isSaved = heroAgreement ? heroAgreement.has_current_user_saved : false
-  const isReposted = heroAgreement ? heroAgreement.has_current_user_reposted : false
+  const { entries } = digitalContents
+  const isOwner = heroDigitalContent ? heroDigitalContent.owner_id === userId : false
+  const isSaved = heroDigitalContent ? heroDigitalContent.has_current_user_saved : false
+  const isReposted = heroDigitalContent ? heroDigitalContent.has_current_user_reposted : false
   const isFollowing = user ? user.does_current_user_follow : false
 
-  const loading = !heroAgreement
+  const loading = !heroDigitalContent
 
   const onPlay = () => onHeroPlay(heroPlaying)
   const onSave = isOwner
     ? () => {}
-    : () => heroAgreement && onSaveAgreement(isSaved, heroAgreement.digital_content_id)
+    : () => heroDigitalContent && onSaveDigitalContent(isSaved, heroDigitalContent.digital_content_id)
   const onRepost = isOwner
     ? () => {}
-    : () => heroAgreement && onHeroRepost(isReposted, heroAgreement.digital_content_id)
+    : () => heroDigitalContent && onHeroRepost(isReposted, heroDigitalContent.digital_content_id)
   const onClickLandlordName = () => goToProfilePage(user ? user.handle : '')
   const onShare = () => {
-    heroAgreement && onHeroShare(heroAgreement.digital_content_id)
+    heroDigitalContent && onHeroShare(heroDigitalContent.digital_content_id)
   }
 
   const onClickTag = (tag: string) => goToSearchResultsPage(`#${tag}`)
 
-  const defaults = getAgreementDefaults(heroAgreement)
+  const defaults = getDigitalContentDefaults(heroDigitalContent)
 
-  const renderOriginalAgreementTitle = () => (
-    <div className={styles.lineupHeader}>{messages.originalAgreement}</div>
+  const renderOriginalDigitalContentTitle = () => (
+    <div className={styles.lineupHeader}>{messages.originalDigitalContent}</div>
   )
 
   const onDownload = (
-    agreementId: ID,
+    digitalContentId: ID,
     cid: CID,
     category?: string,
-    parentAgreementId?: ID
+    parentDigitalContentId?: ID
   ) => {
     if (!user) return
     const { content_node_endpoint } = user
     if (!content_node_endpoint) return
-    onDownloadAgreement(
-      agreementId,
+    onDownloadDigitalContent(
+      digitalContentId,
       cid,
       content_node_endpoint,
       category,
-      parentAgreementId
+      parentDigitalContentId
     )
   }
 
   const renderMoreByTitle = () =>
-    (defaults.remixParentAgreementId && entries.length > 2) ||
-    (!defaults.remixParentAgreementId && entries.length > 1) ? (
+    (defaults.remixParentDigitalContentId && entries.length > 2) ||
+    (!defaults.remixParentDigitalContentId && entries.length > 1) ? (
       <div
         className={styles.lineupHeader}
       >{`${messages.moreBy} ${user?.name}`}</div>
@@ -173,15 +173,15 @@ const AgreementPage = ({
         description={description}
         canonicalUrl={canonicalUrl}
       >
-        <div className={styles.agreementContent}>
-          <AgreementPageHeader
+        <div className={styles.digitalContent}>
+          <DigitalContentPageHeader
             isLoading={loading}
             isPlaying={heroPlaying}
             isReposted={isReposted}
             isFollowing={isFollowing}
             title={defaults.title}
-            agreementId={defaults.agreementId}
-            userId={heroAgreement?.owner_id ?? 0}
+            digitalContentId={defaults.digitalContentId}
+            userId={heroDigitalContent?.owner_id ?? 0}
             landlordName={emptyStringGuard(user?.name)}
             landlordVerified={user?.is_verified ?? false}
             coverArtSizes={defaults.coverArtSizes}
@@ -208,31 +208,31 @@ const AgreementPage = ({
             onRepost={onRepost}
             onDownload={onDownload}
             isUnlisted={defaults.isUnlisted}
-            isRemix={!!defaults.remixParentAgreementId}
+            isRemix={!!defaults.remixParentDigitalContentId}
             fieldVisibility={defaults.fieldVisibility}
             goToFavoritesPage={goToFavoritesPage}
             goToRepostsPage={goToRepostsPage}
           />
           {defaults.fieldVisibility.remixes &&
-            defaults.remixAgreementIds &&
-            defaults.remixAgreementIds.length > 0 && (
+            defaults.remixDigitalContentIds &&
+            defaults.remixDigitalContentIds.length > 0 && (
               <div className={styles.remixes}>
                 <Remixes
-                  agreementIds={defaults.remixAgreementIds}
+                  digitalContentIds={defaults.remixDigitalContentIds}
                   goToAllRemixes={goToAllRemixesPage}
                   count={defaults.remixesCount}
                 />
               </div>
             )}
-          <div className={styles.agreementsContainer}>
+          <div className={styles.digitalContentsContainer}>
             {!hasValidRemixParent && renderMoreByTitle()}
-            {hasValidRemixParent && renderOriginalAgreementTitle()}
+            {hasValidRemixParent && renderOriginalDigitalContentTitle()}
             <Lineup
-              lineup={agreements}
+              lineup={digitalContents}
               // Styles for leading element (original digital_content if remix).
-              leadingElementId={defaults.remixParentAgreementId}
+              leadingElementId={defaults.remixParentDigitalContentId}
               leadingElementDelineator={
-                <div className={styles.originalAgreementDelineator}>
+                <div className={styles.originalDigitalContentDelineator}>
                   <SectionButton
                     isMobile
                     text={messages.viewOtherRemixes}
@@ -241,7 +241,7 @@ const AgreementPage = ({
                   {renderMoreByTitle()}
                 </div>
               }
-              leadingElementClassName={styles.originalAgreement}
+              leadingElementClassName={styles.originalDigitalContent}
               showLeadingElementLandlordPick={false}
               // Don't render the first tile in the lineup.
               start={1}
@@ -252,14 +252,14 @@ const AgreementPage = ({
               variant={LineupVariant.CONDENSED}
               playingUid={currentQueueItem.uid}
               playingSource={currentQueueItem.source}
-              playingAgreementId={
+              playingDigitalContentId={
                 currentQueueItem.digital_content && currentQueueItem.digital_content.digital_content_id
               }
               playing={isPlaying}
               buffering={isBuffering}
-              playAgreement={play}
-              pauseAgreement={pause}
-              actions={agreementsActions}
+              playDigitalContent={play}
+              pauseDigitalContent={pause}
+              actions={digitalContentsActions}
             />
           </div>
         </div>
@@ -268,4 +268,4 @@ const AgreementPage = ({
   )
 }
 
-export default AgreementPage
+export default DigitalContentPage

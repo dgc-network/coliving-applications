@@ -3,7 +3,7 @@ import { useMemo } from 'react'
 import type { Nullable } from '@coliving/common'
 import {
   getStatus,
-  getAgreement
+  getDigitalContent
 } from '@coliving/web/src/common/store/ui/share-sound-to-tiktok-modal/selectors'
 import {
   authenticated,
@@ -94,7 +94,7 @@ export const ShareToTikTokDrawer = () => {
 
   const dispatchWeb = useDispatchWeb()
 
-  const digital_content = useSelectorWeb(getAgreement)
+  const digital_content = useSelectorWeb(getDigitalContent)
   const status = useSelectorWeb(getStatus)
 
   const withTikTokAuth = useTikTokAuth({

@@ -22,7 +22,7 @@ import type { ThemeColors } from 'app/utils/theme'
 import { useThemeColors } from 'app/utils/theme'
 
 import { LineupTileRankIcon } from './lineupTileRankIcon'
-import { createStyles as createAgreementTileStyles } from './styles'
+import { createStyles as createDigitalContentTileStyles } from './styles'
 
 const formatPlayCount = (playCount?: number) => {
   if (!playCount) {
@@ -94,7 +94,7 @@ export const LineupTileStats = ({
   showRankIcon
 }: Props) => {
   const styles = useThemedStyles(createStyles)
-  const agreementTileStyles = useThemedStyles(createAgreementTileStyles)
+  const digitalContentTileStyles = useThemedStyles(createDigitalContentTileStyles)
   const { neutralLight4 } = useThemeColors()
   const dispatchWeb = useDispatchWeb()
   const navigation = useNavigation()
@@ -129,13 +129,13 @@ export const LineupTileStats = ({
         <View style={styles.leftStats}>
           <Pressable
             style={[
-              agreementTileStyles.statItem,
+              digitalContentTileStyles.statItem,
               !repostCount ? styles.disabledStatItem : {}
             ]}
             disabled={!repostCount}
             onPress={handlePressReposts}
           >
-            <Text style={agreementTileStyles.statText}>
+            <Text style={digitalContentTileStyles.statText}>
               {formatCount(repostCount)}
             </Text>
             <IconRepost
@@ -147,13 +147,13 @@ export const LineupTileStats = ({
           </Pressable>
           <Pressable
             style={[
-              agreementTileStyles.statItem,
+              digitalContentTileStyles.statItem,
               !saveCount ? styles.disabledStatItem : {}
             ]}
             disabled={!saveCount}
             onPress={handlePressFavorites}
           >
-            <Text style={agreementTileStyles.statText}>
+            <Text style={digitalContentTileStyles.statText}>
               {formatCount(saveCount)}
             </Text>
             <IconHeart
@@ -166,7 +166,7 @@ export const LineupTileStats = ({
         </View>
       )}
       {!hidePlays && (
-        <Text style={[agreementTileStyles.statText, styles.listenCount]}>
+        <Text style={[digitalContentTileStyles.statText, styles.listenCount]}>
           {formatPlayCount(playCount)}
         </Text>
       )}

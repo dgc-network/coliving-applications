@@ -67,7 +67,7 @@ class FeedPageProvider extends PureComponent {
       lineup,
       playingUid,
       playingSource: source,
-      playingAgreementId: digital_content ? digital_content.digital_content_id : null,
+      playingDigitalContentId: digital_content ? digital_content.digital_content_id : null,
       playing,
       buffering,
       scrollParent: this.props.containerRef,
@@ -91,8 +91,8 @@ class FeedPageProvider extends PureComponent {
       goToGenreSelection: this.goToGenreSelection,
       setFeedInView: this.props.setFeedInView,
       loadMoreFeed: this.props.loadMoreFeed,
-      playFeedAgreement: this.props.playFeedAgreement,
-      pauseFeedAgreement: this.props.pauseFeedAgreement,
+      playFeedDigitalContent: this.props.playFeedDigitalContent,
+      pauseFeedDigitalContent: this.props.pauseFeedDigitalContent,
       switchView: this.switchView,
       getLineupProps: this.getLineupProps,
       setFeedFilter: this.props.setFeedFilter,
@@ -100,8 +100,8 @@ class FeedPageProvider extends PureComponent {
       resetFeedLineup: this.props.resetFeedLineup,
 
       makeLoadMore: this.props.makeLoadMore,
-      makePlayAgreement: this.props.makePlayAgreement,
-      makePauseAgreement: this.props.makePauseAgreement,
+      makePlayDigitalContent: this.props.makePlayDigitalContent,
+      makePauseDigitalContent: this.props.makePauseDigitalContent,
       makeSetInView: this.props.makeSetInView
     }
 
@@ -142,13 +142,13 @@ const mapDispatchToProps = (dispatch) => ({
   setFeedInView: (inView) => dispatch(feedActions.setInView(inView)),
   loadMoreFeed: (offset, limit, overwrite) => {
     dispatch(feedActions.fetchLineupMetadatas(offset, limit, overwrite))
-    const agreementEvent = make(Name.FEED_PAGINATE, { offset, limit })
-    dispatch(agreementEvent)
+    const digitalContentEvent = make(Name.FEED_PAGINATE, { offset, limit })
+    dispatch(digitalContentEvent)
   },
   refreshFeedInView: (overwrite, limit) =>
     dispatch(feedActions.refreshInView(overwrite, null, limit)),
-  playFeedAgreement: (uid) => dispatch(feedActions.play(uid)),
-  pauseFeedAgreement: () => dispatch(feedActions.pause())
+  playFeedDigitalContent: (uid) => dispatch(feedActions.play(uid)),
+  pauseFeedDigitalContent: () => dispatch(feedActions.pause())
 })
 
 export default withRouter(

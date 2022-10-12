@@ -15,10 +15,10 @@ export type ShareType =
   | 'contentList'
   | 'liveNftContentList'
 
-type ShareAgreementContent = {
+type ShareDigitalContent = {
   type: 'digital_content'
   digital_content: DigitalContent
-  landlord: User
+  author: User
 }
 
 type ShareProfileContent = {
@@ -29,7 +29,7 @@ type ShareProfileContent = {
 type ShareAlbumContent = {
   type: 'album'
   album: Collection
-  landlord: User
+  author: User
 }
 
 type ShareContentListContent = {
@@ -44,7 +44,7 @@ type ShareAudioNftContentListContent = {
 }
 
 export type ShareModalContent =
-  | ShareAgreementContent
+  | ShareDigitalContent
   | ShareProfileContent
   | ShareAlbumContent
   | ShareContentListContent
@@ -56,7 +56,7 @@ export type ShareModalState = {
 }
 
 type RequestOpenPayload = { source: ShareSource } & (
-  | { type: 'digital_content'; agreementId: ID }
+  | { type: 'digital_content'; digitalContentId: ID }
   | { type: 'profile'; profileId: ID }
   | { type: 'collection'; collectionId: ID }
   | { type: 'liveNftContentList'; userId: ID }
@@ -65,7 +65,7 @@ type RequestOpenPayload = { source: ShareSource } & (
 export type RequestOpenAction = PayloadAction<RequestOpenPayload>
 
 type OpenPayload = { source: ShareSource } & (
-  | ShareAgreementContent
+  | ShareDigitalContent
   | ShareProfileContent
   | ShareAlbumContent
   | ShareContentListContent

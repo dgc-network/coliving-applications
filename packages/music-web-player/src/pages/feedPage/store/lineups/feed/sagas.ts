@@ -4,16 +4,16 @@ import {
   UserCollectionMetadata,
   FeedFilter,
   Kind,
-  LineupAgreement,
-  AgreementMetadata,
-  UserAgreementMetadata
+  LineupDigitalContent,
+  DigitalContentMetadata,
+  UserDigitalContentMetadata
 } from '@coliving/common'
 import { select, all } from 'redux-saga/effects'
 
 import { CommonState } from 'common/store'
 import { getAccountUser } from 'common/store/account/selectors'
 import { processAndCacheCollections } from 'common/store/cache/collections/utils'
-import { processAndCacheAgreements } from 'common/store/cache/agreements/utils'
+import { processAndCacheDigitalContents } from 'common/store/cache/digital_contents/utils'
 import { PREFIX, feedActions } from 'common/store/pages/feed/lineup/actions'
 import { getFeedFilter } from 'common/store/pages/feed/selectors'
 import {
@@ -26,7 +26,7 @@ import apiClient, {
 } from 'services/colivingAPIClient/colivingAPIClient'
 import { LineupSagas } from 'store/lineup/sagas'
 
-type FeedItem = LineupAgreement | Collection
+type FeedItem = LineupDigitalContent | Collection
 
 const filterMap = {
   [FeedFilter.ALL]: 'all',
@@ -34,7 +34,7 @@ const filterMap = {
   [FeedFilter.REPOST]: 'repost'
 }
 
-function* getAgreements({
+function* getDigitalContents({
   offset,
   limit
 }: {
@@ -66,20 +66,20 @@ function* getAgreements({
     }
   }
 
-  const feed: (UserAgreementMetadata | UserCollectionMetadata)[] =
+  const feed: (UserDigitalContentMetadata | UserCollectionMetadata)[] =
     yield apiClient.getSocialFeed(params)
   if (!feed.length) return []
   const filteredFeed = feed.filter((record) => !record.user.is_deactivated)
-  const [agreements, collections] = getAgreementsAndCollections(filteredFeed)
-  const agreementIds = agreements.map((t) => t.digital_content_id)
+  const [digitalContents, collections] = getDigitalContentsAndCollections(filteredFeed)
+  const digitalContentIds = digitalContents.map((t) => t.digital_content_id)
 
   // Process (e.g. cache and remove entries)
-  const [processedAgreements, processedCollections]: [LineupAgreement[], Collection[]] =
+  const [processedDigitalContents, processedCollections]: [LineupDigitalContent[], Collection[]] =
     yield all([
-      processAndCacheAgreements(agreements),
-      processAndCacheCollections(collections, true, agreementIds)
+      processAndCacheDigitalContents(digitalContents),
+      processAndCacheCollections(collections, true, digitalContentIds)
     ])
-  const processedAgreementsMap = processedAgreements.reduce<Record<ID, LineupAgreement>>(
+  const processedDigitalContentsMap = processedDigitalContents.reduce<Record<ID, LineupDigitalContent>>(
     (acc, cur) => ({ ...acc, [cur.digital_content_id]: cur }),
     {}
   )
@@ -87,30 +87,30 @@ function* getAgreements({
     Record<ID, Collection>
   >((acc, cur) => ({ ...acc, [cur.content_list_id]: cur }), {})
   const processedFeed: FeedItem[] = filteredFeed.map((m) =>
-    (m as LineupAgreement).digital_content_id
-      ? processedAgreementsMap[(m as LineupAgreement).digital_content_id]
+    (m as LineupDigitalContent).digital_content_id
+      ? processedDigitalContentsMap[(m as LineupDigitalContent).digital_content_id]
       : processedCollectionsMap[(m as UserCollectionMetadata).content_list_id]
   )
   return processedFeed
 }
 
-const getAgreementsAndCollections = (
-  feed: Array<AgreementMetadata | UserCollectionMetadata>
+const getDigitalContentsAndCollections = (
+  feed: Array<DigitalContentMetadata | UserCollectionMetadata>
 ) =>
-  feed.reduce<[LineupAgreement[], UserCollectionMetadata[]]>(
+  feed.reduce<[LineupDigitalContent[], UserCollectionMetadata[]]>(
     (acc, cur) =>
-      (cur as LineupAgreement).digital_content_id
-        ? [[...acc[0], cur as LineupAgreement], acc[1]]
+      (cur as LineupDigitalContent).digital_content_id
+        ? [[...acc[0], cur as LineupDigitalContent], acc[1]]
         : [acc[0], [...acc[1], cur as UserCollectionMetadata]],
     [[], []]
   )
 
 const keepActivityTimeStamp = (
-  entry: (LineupAgreement | Collection) & { uid: string } // LineupSaga adds a UID to each entry
+  entry: (LineupDigitalContent | Collection) & { uid: string } // LineupSaga adds a UID to each entry
 ) => ({
   uid: entry.uid,
-  kind: (entry as LineupAgreement).digital_content_id ? Kind.AGREEMENTS : Kind.COLLECTIONS,
-  id: (entry as LineupAgreement).digital_content_id || (entry as Collection).content_list_id,
+  kind: (entry as LineupDigitalContent).digital_content_id ? Kind.AGREEMENTS : Kind.COLLECTIONS,
+  id: (entry as LineupDigitalContent).digital_content_id || (entry as Collection).content_list_id,
   activityTimestamp: entry.activity_timestamp
 })
 
@@ -120,7 +120,7 @@ class FeedSagas extends LineupSagas {
       PREFIX,
       feedActions,
       (store: CommonState) => store.pages.feed.feed,
-      getAgreements,
+      getDigitalContents,
       keepActivityTimeStamp
     )
   }

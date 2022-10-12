@@ -8,9 +8,9 @@ import collectionsReducer from 'common/store/cache/collections/reducer'
 import collectionsSagas from 'common/store/cache/collections/sagas'
 import { asCache } from 'common/store/cache/reducer'
 import cacheSagas from 'common/store/cache/sagas'
-import agreementsReducer from 'common/store/cache/agreements/reducer'
-import agreementsSagas from 'common/store/cache/agreements/sagas'
-import { AgreementsCacheState } from 'common/store/cache/agreements/types'
+import digitalContentsReducer from 'common/store/cache/digital_contents/reducer'
+import digitalContentsSagas from 'common/store/cache/digital_contents/sagas'
+import { DigitalContentsCacheState } from 'common/store/cache/digital_contents/types'
 import usersReducer from 'common/store/cache/users/reducer'
 import usersSagas from 'common/store/cache/users/sagas'
 import { UsersCacheState } from 'common/store/cache/users/types'
@@ -39,7 +39,7 @@ import { SettingsPageState } from 'common/store/pages/settings/types'
 import smartCollection from 'common/store/pages/smartCollection/slice'
 import tokenDashboardSlice from 'common/store/pages/tokenDashboard/slice'
 import digital_content from 'common/store/pages/digital_content/reducer'
-import AgreementPageState from 'common/store/pages/digital_content/types'
+import DigitalContentPageState from 'common/store/pages/digital_content/types'
 import trendingContentLists from 'common/store/pages/trendingContentLists/slice'
 import trendingUnderground from 'common/store/pages/trendingUnderground/slice'
 import trending from 'common/store/pages/trending/reducer'
@@ -58,7 +58,7 @@ import addToContentListReducer, {
 } from 'common/store/ui/addToContentList/reducer'
 import landlordRecommendationsReducer, {
   LandlordRecommendationsState
-} from 'common/store/ui/landlordRecommendations/slice'
+} from 'common/store/ui/authorRecommendations/slice'
 import collectibleDetailsReducer, {
   CollectibleDetailsState
 } from 'common/store/ui/collectibleDetails/slice'
@@ -117,7 +117,7 @@ export const reducers = (ctx: CommonStoreContext) => ({
 
   // Cache
   collections: asCache(collectionsReducer, Kind.COLLECTIONS),
-  agreements: asCache(agreementsReducer, Kind.AGREEMENTS),
+  digitalContents: asCache(digitalContentsReducer, Kind.AGREEMENTS),
   users: asCache(usersReducer, Kind.USERS),
 
   // Playback
@@ -200,7 +200,7 @@ export const sagas = (ctx: CommonStoreContext) => ({
   cache: cacheSagas,
   collectionsError: collectionsErrorSagas,
   collections: collectionsSagas,
-  agreements: agreementsSagas,
+  digitalContents: digitalContentsSagas,
   users: usersSagas,
   remoteConfig: remoteConfigSagas,
   cast: castSagas(ctx),
@@ -213,7 +213,7 @@ export const sagas = (ctx: CommonStoreContext) => ({
   // common/store/pages/explore/sagas.ts
   // components/add-to-content-list/store/sagas.ts
   // components/share-sound-to-tiktok-modal/store/sagas.ts
-  // store/social/agreements/sagas.ts
+  // store/social/digital_contents/sagas.ts
   // store/social/users/sagas.ts
   // store/social/collections/sagas.ts
   // pages/digitalcoin-rewards-page/store/sagas.ts
@@ -221,9 +221,9 @@ export const sagas = (ctx: CommonStoreContext) => ({
   // store/lineup/sagas.js
   // pages/feed/store/lineups/feed/sagas.js
   // pages/feed/store/sagas.js
-  // pages/collection/store/lineups/agreements/sagas.js
+  // pages/collection/store/lineups/digital_contents/sagas.js
   // pages/collection/store/sagas.js
-  // pages/digital_content/store/lineups/agreements/sagas.js
+  // pages/digital_content/store/lineups/digital_contents/sagas.js
   // pages/digital_content/store/sagas.js
   // store/ui/stemsUpload/sagas.ts
   // pages/user-list/followers/sagas.ts
@@ -238,16 +238,16 @@ export const sagas = (ctx: CommonStoreContext) => ({
   // store/solana/sagas.ts
   // pages/trending-page/store/sagas.ts
   // pages/trending-page/store/lineups/trending/sagas.ts
-  // pages/trending-underground-page/store/lineups/agreements/sagas.ts
+  // pages/trending-underground-page/store/lineups/digital_contents/sagas.ts
   // pages/trending-underground-page/store/sagas.ts
   // pages/smart-collection/store/sagas.ts
   // store/application/ui/theme/sagas.ts
   // pages/search-page/store/sagas.ts
-  // pages/search-page/store/lineups/agreements/sagas.ts
+  // pages/search-page/store/lineups/digital_contents/sagas.ts
   // notifications/store/sagas.ts
   // notifications/store/mobileSagas.ts
   // pages/remixes-page/store/sagas.ts
-  // pages/remixes-page/store/lineups/agreements/sagas.ts
+  // pages/remixes-page/store/lineups/digital_contents/sagas.ts
   //
   // pull in the following from web
   // once the player and dependencies are migrated
@@ -262,7 +262,7 @@ export type CommonState = {
 
   // Cache
   collections: Cache<Collection>
-  agreements: AgreementsCacheState
+  digitalContents: DigitalContentsCacheState
   users: UsersCacheState
 
   // Playback
@@ -311,7 +311,7 @@ export type CommonState = {
     smartCollection: ReturnType<typeof smartCollection>
     tokenDashboard: ReturnType<typeof tokenDashboardSlice.reducer>
     historyPage: ReturnType<typeof historyPageReducer>
-    digital_content: AgreementPageState
+    digital_content: DigitalContentPageState
     profile: ProfilePageState
     savedPage: ReturnType<typeof savedPageReducer>
     searchResults: SearchPageState

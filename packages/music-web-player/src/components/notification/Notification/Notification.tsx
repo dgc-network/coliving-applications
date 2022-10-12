@@ -13,7 +13,7 @@ import {
 } from 'common/store/notifications/types'
 import ErrorWrapper from 'components/errorWrapper/errorWrapper'
 
-import { AddAgreementToContentListNotification } from './addAgreementToContentListNotification'
+import { AddDigitalContentToContentListNotification } from './addDigitalContentToContentListNotification'
 import { AnnouncementNotification } from './announcementNotification'
 import { ChallengeRewardNotification } from './challengeRewardNotification'
 import { FavoriteNotification } from './favoriteNotification'
@@ -28,7 +28,7 @@ import { TipReceivedNotification } from './tipReceivedNotification'
 import { TipSentNotification } from './tipSentNotification'
 import { TopSupporterNotification } from './topSupporterNotification'
 import { TopSupportingNotification } from './topSupportingNotification'
-import { TrendingAgreementNotification } from './trendingAgreementNotification'
+import { TrendingDigitalContentNotification } from './trendingDigitalContentNotification'
 import { UserSubscriptionNotification } from './userSubscriptionNotification'
 import { USER_LENGTH_LIMIT } from './utils'
 
@@ -108,14 +108,14 @@ export const Notification = (props: NotificationProps) => {
       case NotificationType.SupportingRankUp: {
         return <TopSupportingNotification notification={notification} />
       }
-      case NotificationType.TrendingAgreement: {
-        return <TrendingAgreementNotification notification={notification} />
+      case NotificationType.TrendingDigitalContent: {
+        return <TrendingDigitalContentNotification notification={notification} />
       }
       case NotificationType.UserSubscription: {
         return <UserSubscriptionNotification notification={notification} />
       }
-      case NotificationType.AddAgreementToContentList: {
-        return <AddAgreementToContentListNotification notification={notification} />
+      case NotificationType.AddDigitalContentToContentList: {
+        return <AddDigitalContentToContentListNotification notification={notification} />
       }
       default: {
         return null

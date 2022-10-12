@@ -41,7 +41,7 @@ export const Slider = ({
 
   // Div refs
   const railRef = useRef<HTMLDivElement>(null)
-  const agreementRef = useRef<HTMLDivElement>(null)
+  const digitalContentRef = useRef<HTMLDivElement>(null)
   const handleRef = useRef<HTMLDivElement>(null)
 
   /**
@@ -180,11 +180,11 @@ export const Slider = ({
     >
       <div ref={railRef} className={styles.rail}>
         <div
-          ref={agreementRef}
-          className={styles.agreementWrapper}
+          ref={digitalContentRef}
+          className={styles.digitalContentWrapper}
           style={transformStyles}
         >
-          <div ref={agreementRef} className={styles.digital_content} />
+          <div ref={digitalContentRef} className={styles.digital_content} />
         </div>
       </div>
       {showHandle !== false ? (

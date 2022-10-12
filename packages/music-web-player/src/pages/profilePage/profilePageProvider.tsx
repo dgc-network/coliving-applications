@@ -22,23 +22,23 @@ import { getAccountUser } from 'common/store/account/selectors'
 import { makeGetLineupMetadatas } from 'common/store/lineup/selectors'
 import * as profileActions from 'common/store/pages/profile/actions'
 import { feedActions } from 'common/store/pages/profile/lineups/feed/actions'
-import { agreementsActions } from 'common/store/pages/profile/lineups/agreements/actions'
+import { digitalContentsActions } from 'common/store/pages/profile/lineups/digital_contents/actions'
 import {
   makeGetProfile,
   getProfileFeedLineup,
-  getProfileAgreementsLineup,
+  getProfileDigitalContentsLineup,
   getProfileUserId
 } from 'common/store/pages/profile/selectors'
 import {
   CollectionSortMode,
   Tabs,
   FollowType,
-  AgreementsSortMode,
+  DigitalContentsSortMode,
   getTabForRoute
 } from 'common/store/pages/profile/types'
 import { makeGetCurrent } from 'common/store/queue/selectors'
 import * as socialActions from 'common/store/social/users/actions'
-import { makeGetRelatedLandlords } from 'common/store/ui/landlordRecommendations/selectors'
+import { makeGetRelatedLandlords } from 'common/store/ui/authorRecommendations/selectors'
 import * as createContentListModalActions from 'common/store/ui/createContentListModal/actions'
 import { open } from 'common/store/ui/mobileOverflowMenu/slice'
 import {
@@ -51,7 +51,7 @@ import { setFollowing } from 'common/store/userList/following/actions'
 import { formatCount } from 'common/utils/formatUtil'
 import * as unfollowConfirmationActions from 'components/unfollowConfirmationModal/store/actions'
 import { newUserMetadata } from 'schemas'
-import { make, AgreementEvent } from 'store/analytics/actions'
+import { make, DigitalContentEvent } from 'store/analytics/actions'
 import { getIsDone } from 'store/confirmer/selectors'
 import { getPlaying, getBuffering } from 'store/player/selectors'
 import { getLocationPathname } from 'store/routing/selectors'
@@ -104,7 +104,7 @@ type ProfilePageState = {
   updatedTikTokHandle: string | null
   updatedWebsite: string | null
   updatedDonation: string | null
-  agreementsLineupOrder: AgreementsSortMode
+  digitalContentsLineupOrder: DigitalContentsSortMode
   areLandlordRecommendationsVisible: boolean
 }
 
@@ -117,7 +117,7 @@ class ProfilePage extends PureComponent<ProfilePageProps, ProfilePageState> {
     activeTab: null,
     editMode: false,
     shouldMaskContent: false,
-    agreementsLineupOrder: AgreementsSortMode.RECENT,
+    digitalContentsLineupOrder: DigitalContentsSortMode.RECENT,
     areLandlordRecommendationsVisible: false,
     ...INITIAL_UPDATE_FIELDS
   }
@@ -128,8 +128,8 @@ class ProfilePage extends PureComponent<ProfilePageProps, ProfilePageState> {
     // If routing from a previous profile page
     // the lineups must be reset to refetch & update for new user
     this.props.resetProfile()
-    this.props.resetLandlordAgreements()
-    this.props.resetUserFeedAgreements()
+    this.props.resetLandlordDigitalContents()
+    this.props.resetUserFeedDigitalContents()
     this.fetchProfile(getPathname(this.props.location))
 
     // Switching from profile page => profile page
@@ -140,8 +140,8 @@ class ProfilePage extends PureComponent<ProfilePageProps, ProfilePageState> {
         action === 'POP'
       ) {
         this.props.resetProfile()
-        this.props.resetLandlordAgreements()
-        this.props.resetUserFeedAgreements()
+        this.props.resetLandlordDigitalContents()
+        this.props.resetUserFeedDigitalContents()
         const params = parseUserRoute(getPathname(location))
         if (params) {
           // Fetch profile if this is a new profile page
@@ -165,7 +165,7 @@ class ProfilePage extends PureComponent<ProfilePageProps, ProfilePageState> {
   }
 
   componentDidUpdate(prevProps: ProfilePageProps, prevState: ProfilePageState) {
-    const { pathname, profile, landlordAgreements, goToRoute } = this.props
+    const { pathname, profile, landlordDigitalContents, goToRoute } = this.props
     const { editMode, activeTab } = this.state
 
     if (profile && profile.status === Status.ERROR) {
@@ -176,7 +176,7 @@ class ProfilePage extends PureComponent<ProfilePageProps, ProfilePageState> {
       !activeTab &&
       profile &&
       profile.profile &&
-      landlordAgreements.status === Status.SUCCESS
+      landlordDigitalContents.status === Status.SUCCESS
     ) {
       if (profile.profile.digital_content_count > 0) {
         this.setState({
@@ -213,27 +213,27 @@ class ProfilePage extends PureComponent<ProfilePageProps, ProfilePageState> {
     if (prevProps.profile?.profile?.handle !== profile?.profile?.handle) {
       // If editing profile and route to another user profile, exit edit mode
       if (editMode) this.setState({ editMode: false })
-      // Close landlord recommendations when the profile changes
+      // Close author recommendations when the profile changes
       this.setState({ areLandlordRecommendationsVisible: false })
     }
   }
 
   // Check that the sorted order has the _landlord_pick digital_content as the first
-  updateOrderLandlordPickCheck = (agreements: Array<{ digital_content_id: ID }>) => {
+  updateOrderLandlordPickCheck = (digitalContents: Array<{ digital_content_id: ID }>) => {
     const {
       profile: { profile }
     } = this.props
     if (!profile) return []
     const landlordPick = profile._landlord_pick
-    const landlordAgreementIndex = agreements.findIndex(
+    const landlordDigitalContentIndex = digitalContents.findIndex(
       (digital_content) => digital_content.digital_content_id === landlordPick
     )
-    if (landlordAgreementIndex > -1) {
-      return [agreements[landlordAgreementIndex]]
-        .concat(agreements.slice(0, landlordAgreementIndex))
-        .concat(agreements.slice(landlordAgreementIndex + 1))
+    if (landlordDigitalContentIndex > -1) {
+      return [digitalContents[landlordDigitalContentIndex]]
+        .concat(digitalContents.slice(0, landlordDigitalContentIndex))
+        .concat(digitalContents.slice(landlordDigitalContentIndex + 1))
     }
-    return agreements
+    return digitalContents
   }
 
   onFollow = () => {
@@ -409,7 +409,7 @@ class ProfilePage extends PureComponent<ProfilePageProps, ProfilePageState> {
       lineup,
       variant: 'condensed',
       playingSource: source,
-      playingAgreementId: digital_content ? digital_content.digital_content_id : null,
+      playingDigitalContentId: digital_content ? digital_content.digital_content_id : null,
       playingUid,
       playing,
       buffering,
@@ -519,13 +519,13 @@ class ProfilePage extends PureComponent<ProfilePageProps, ProfilePageState> {
       profile: { profile }
     } = this.props
 
-    let agreementCount = 0
+    let digitalContentCount = 0
     let contentListCount = 0
     let followerCount = 0
     let followingCount = 0
 
     if (profile) {
-      agreementCount = profile.digital_content_count
+      digitalContentCount = profile.digital_content_count
       contentListCount = profile.content_list_count
       followerCount = profile.follower_count
       followingCount = profile.followee_count
@@ -534,8 +534,8 @@ class ProfilePage extends PureComponent<ProfilePageProps, ProfilePageState> {
     return isLandlord
       ? [
           {
-            number: agreementCount,
-            title: agreementCount === 1 ? 'digital_content' : 'agreements',
+            number: digitalContentCount,
+            title: digitalContentCount === 1 ? 'digital_content' : 'digitalContents',
             key: 'digital_content'
           },
           {
@@ -562,52 +562,52 @@ class ProfilePage extends PureComponent<ProfilePageProps, ProfilePageState> {
 
   onSortByRecent = () => {
     const {
-      landlordAgreements,
+      landlordDigitalContents,
       updateCollectionOrder,
       profile: { profile },
-      agreementUpdateSort
+      digitalContentUpdateSort
     } = this.props
     if (!profile) return
-    this.setState({ agreementsLineupOrder: AgreementsSortMode.RECENT })
+    this.setState({ digitalContentsLineupOrder: DigitalContentsSortMode.RECENT })
     updateCollectionOrder(CollectionSortMode.TIMESTAMP)
-    agreementUpdateSort('recent')
-    this.props.loadMoreLandlordAgreements(
+    digitalContentUpdateSort('recent')
+    this.props.loadMoreLandlordDigitalContents(
       0,
-      landlordAgreements.entries.length,
+      landlordDigitalContents.entries.length,
       profile.user_id,
-      AgreementsSortMode.RECENT
+      DigitalContentsSortMode.RECENT
     )
   }
 
   onSortByPopular = () => {
     const {
-      landlordAgreements,
+      landlordDigitalContents,
       updateCollectionOrder,
       profile: { profile },
-      agreementUpdateSort
+      digitalContentUpdateSort
     } = this.props
     if (!profile) return
-    this.setState({ agreementsLineupOrder: AgreementsSortMode.POPULAR })
-    this.props.loadMoreLandlordAgreements(
+    this.setState({ digitalContentsLineupOrder: DigitalContentsSortMode.POPULAR })
+    this.props.loadMoreLandlordDigitalContents(
       0,
-      landlordAgreements.entries.length,
+      landlordDigitalContents.entries.length,
       profile.user_id,
-      AgreementsSortMode.POPULAR
+      DigitalContentsSortMode.POPULAR
     )
     updateCollectionOrder(CollectionSortMode.SAVE_COUNT)
-    agreementUpdateSort('popular')
+    digitalContentUpdateSort('popular')
   }
 
-  loadMoreLandlordAgreements = (offset: number, limit: number) => {
+  loadMoreLandlordDigitalContents = (offset: number, limit: number) => {
     const {
       profile: { profile }
     } = this.props
     if (!profile) return
-    this.props.loadMoreLandlordAgreements(
+    this.props.loadMoreLandlordDigitalContents(
       offset,
       limit,
       profile.user_id,
-      this.state.agreementsLineupOrder
+      this.state.digitalContentsLineupOrder
     )
   }
 
@@ -619,7 +619,7 @@ class ProfilePage extends PureComponent<ProfilePageProps, ProfilePageState> {
     if (profile) {
       let tab = `/${currLabel.toLowerCase()}`
       if (profile.digital_content_count > 0) {
-        // An landlord, default route is agreements
+        // An author, default route is digitalContents
         if (currLabel === Tabs.AGREEMENTS) {
           tab = ''
         }
@@ -649,13 +649,13 @@ class ProfilePage extends PureComponent<ProfilePageProps, ProfilePageState> {
 
   formatCardSecondaryText = (
     saves: number,
-    agreements: number,
+    digitalContents: number,
     isPrivate = false
   ) => {
     const savesText = saves === 1 ? 'Favorite' : 'Favorites'
-    const agreementsText = agreements === 1 ? 'DigitalContent' : 'Agreements'
-    if (isPrivate) return `Private • ${agreements} ${agreementsText}`
-    return `${formatCount(saves)} ${savesText} • ${agreements} ${agreementsText}`
+    const digitalContentsText = digitalContents === 1 ? 'DigitalContent' : 'DigitalContents'
+    if (isPrivate) return `Private • ${digitalContents} ${digitalContentsText}`
+    return `${formatCount(saves)} ${savesText} • ${digitalContents} ${digitalContentsText}`
   }
 
   fetchFollowers = () => {
@@ -711,14 +711,14 @@ class ProfilePage extends PureComponent<ProfilePageProps, ProfilePageState> {
         mostUsedTags,
         isSubscribed
       },
-      // Agreements
-      landlordAgreements,
-      playLandlordAgreement,
-      pauseLandlordAgreement,
+      // DigitalContents
+      landlordDigitalContents,
+      playLandlordDigitalContent,
+      pauseLandlordDigitalContent,
       // Feed
       userFeed,
-      playUserFeedAgreement,
-      pauseUserFeedAgreement,
+      playUserFeedDigitalContent,
+      pauseUserFeedDigitalContent,
       account,
       goToRoute,
       openCreateContentListModal,
@@ -851,9 +851,9 @@ class ProfilePage extends PureComponent<ProfilePageProps, ProfilePageState> {
       status: profileLoadingStatus,
       albums,
       contentLists,
-      landlordAgreements,
-      playLandlordAgreement,
-      pauseLandlordAgreement,
+      landlordDigitalContents,
+      playLandlordDigitalContent,
+      pauseLandlordDigitalContent,
       goToRoute,
 
       // Methods
@@ -861,7 +861,7 @@ class ProfilePage extends PureComponent<ProfilePageProps, ProfilePageState> {
       getLineupProps: this.getLineupProps,
       onSortByRecent: this.onSortByRecent,
       onSortByPopular: this.onSortByPopular,
-      loadMoreLandlordAgreements: this.loadMoreLandlordAgreements,
+      loadMoreLandlordDigitalContents: this.loadMoreLandlordDigitalContents,
       loadMoreUserFeed: this.loadMoreUserFeed,
       formatCardSecondaryText: this.formatCardSecondaryText,
       refreshProfile: this.refreshProfile,
@@ -889,7 +889,7 @@ class ProfilePage extends PureComponent<ProfilePageProps, ProfilePageState> {
     }
 
     const mobileProps = {
-      agreementIsActive: !!currentQueueItem,
+      digitalContentIsActive: !!currentQueueItem,
       onConfirmUnfollow: this.props.onConfirmUnfollow,
       isUserConfirming: this.props.isUserConfirming,
       hasMadeEdit:
@@ -916,8 +916,8 @@ class ProfilePage extends PureComponent<ProfilePageProps, ProfilePageState> {
       isSubscribed: !!isSubscribed,
 
       userFeed,
-      playUserFeedAgreement,
-      pauseUserFeedAgreement,
+      playUserFeedDigitalContent,
+      pauseUserFeedDigitalContent,
 
       followees,
       dropdownDisabled,
@@ -941,8 +941,8 @@ class ProfilePage extends PureComponent<ProfilePageProps, ProfilePageState> {
 }
 
 function makeMapStateToProps() {
-  const getLandlordAgreementsMetadatas = makeGetLineupMetadatas(
-    getProfileAgreementsLineup
+  const getLandlordDigitalContentsMetadatas = makeGetLineupMetadatas(
+    getProfileDigitalContentsLineup
   )
   const getUserFeedMetadatas = makeGetLineupMetadatas(getProfileFeedLineup)
   const getProfile = makeGetProfile()
@@ -951,7 +951,7 @@ function makeMapStateToProps() {
   const mapStateToProps = (state: AppState) => ({
     account: getAccountUser(state),
     profile: getProfile(state),
-    landlordAgreements: getLandlordAgreementsMetadatas(state),
+    landlordDigitalContents: getLandlordDigitalContentsMetadatas(state),
     userFeed: getUserFeedMetadatas(state),
     currentQueueItem: getCurrentQueueItem(state),
     playing: getPlaying(state),
@@ -1007,31 +1007,31 @@ function mapDispatchToProps(dispatch: Dispatch) {
     updateCurrentUserFollows: (follow: any) =>
       dispatch(profileActions.updateCurrentUserFollows(follow)),
 
-    // Landlord Agreements
-    loadMoreLandlordAgreements: (
+    // Author DigitalContents
+    loadMoreLandlordDigitalContents: (
       offset: number,
       limit: number,
       id: ID,
-      sort: AgreementsSortMode
+      sort: DigitalContentsSortMode
     ) => {
       dispatch(
-        agreementsActions.fetchLineupMetadatas(offset, limit, false, {
+        digitalContentsActions.fetchLineupMetadatas(offset, limit, false, {
           userId: id,
           sort
         })
       )
     },
-    resetLandlordAgreements: () => dispatch(agreementsActions.reset()),
-    playLandlordAgreement: (uid: string) => dispatch(agreementsActions.play(uid)),
-    pauseLandlordAgreement: () => dispatch(agreementsActions.pause()),
+    resetLandlordDigitalContents: () => dispatch(digitalContentsActions.reset()),
+    playLandlordDigitalContent: (uid: string) => dispatch(digitalContentsActions.play(uid)),
+    pauseLandlordDigitalContent: () => dispatch(digitalContentsActions.pause()),
     // User Feed
     loadMoreUserFeed: (offset: number, limit: number, id: ID) =>
       dispatch(
         feedActions.fetchLineupMetadatas(offset, limit, false, { userId: id })
       ),
-    resetUserFeedAgreements: () => dispatch(feedActions.reset()),
-    playUserFeedAgreement: (uid: UID) => dispatch(feedActions.play(uid)),
-    pauseUserFeedAgreement: () => dispatch(feedActions.pause()),
+    resetUserFeedDigitalContents: () => dispatch(feedActions.reset()),
+    playUserFeedDigitalContent: (uid: UID) => dispatch(feedActions.play(uid)),
+    pauseUserFeedDigitalContent: () => dispatch(feedActions.pause()),
     // Followes
     fetchFollowUsers: (followGroup: any, limit: number, offset: number) =>
       dispatch(profileActions.fetchFollowUsers(followGroup, limit, offset)),
@@ -1053,34 +1053,34 @@ function mapDispatchToProps(dispatch: Dispatch) {
 
     didChangeTabsFrom: (prevLabel: string, currLabel: string) => {
       if (prevLabel !== currLabel) {
-        const agreementEvent: AgreementEvent = make(Name.PROFILE_PAGE_TAB_CLICK, {
+        const digitalContentEvent: DigitalContentEvent = make(Name.PROFILE_PAGE_TAB_CLICK, {
           tab: currLabel.toLowerCase() as
-            | 'agreements'
+            | 'digitalContents'
             | 'albums'
             | 'reposts'
             | 'contentLists'
             | 'collectibles'
         })
-        dispatch(agreementEvent)
+        dispatch(digitalContentEvent)
       }
     },
-    agreementUpdateSort: (sort: 'recent' | 'popular') => {
-      const agreementEvent: AgreementEvent = make(Name.PROFILE_PAGE_SORT, { sort })
-      dispatch(agreementEvent)
+    digitalContentUpdateSort: (sort: 'recent' | 'popular') => {
+      const digitalContentEvent: DigitalContentEvent = make(Name.PROFILE_PAGE_SORT, { sort })
+      dispatch(digitalContentEvent)
     },
     recordUpdateProfilePicture: (source: 'original' | 'unsplash' | 'url') => {
-      const agreementEvent: AgreementEvent = make(
+      const digitalContentEvent: DigitalContentEvent = make(
         Name.ACCOUNT_HEALTH_UPLOAD_PROFILE_PICTURE,
         { source }
       )
-      dispatch(agreementEvent)
+      dispatch(digitalContentEvent)
     },
     recordUpdateCoverPhoto: (source: 'original' | 'unsplash' | 'url') => {
-      const agreementEvent: AgreementEvent = make(
+      const digitalContentEvent: DigitalContentEvent = make(
         Name.ACCOUNT_HEALTH_UPLOAD_COVER_PHOTO,
         { source }
       )
-      dispatch(agreementEvent)
+      dispatch(digitalContentEvent)
     }
   }
 }

@@ -31,7 +31,7 @@ export type LineupProps = {
   /** Object containing lineup actions such as setPage */
   actions: LineupActions
 
-  /** The maximum number of total agreements to fetch */
+  /** The maximum number of total digitalContents to fetch */
   count?: number
 
   /**
@@ -62,7 +62,7 @@ export type LineupProps = {
   isFeed?: boolean
 
   /**
-   * Indicator if a digital_content should be displayed differently (ie. landlord pick)
+   * Indicator if a digital_content should be displayed differently (ie. author pick)
    * The leadingElementId is displayed at the top of the lineup
    */
   leadingElementId?: ID
@@ -72,7 +72,7 @@ export type LineupProps = {
    */
   leadingElementDelineator?: ReactElement
 
-  /** The number of agreements to fetch in each request */
+  /** The number of digitalContents to fetch in each request */
   limit?: number
 
   /**
@@ -107,7 +107,7 @@ export type LineupProps = {
   selfLoad?: boolean
 
   /**
-   * Whether to show the landlord pick on the leading element.
+   * Whether to show the author pick on the leading element.
    * Defaults to true.
    */
   showLeadingElementLandlordPick?: boolean

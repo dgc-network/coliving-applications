@@ -11,7 +11,7 @@ import IconCaretRight from 'app/assets/images/iconCaretRight.svg'
 import IconTrophy from 'app/assets/images/iconTrophy.svg'
 import { useNavigation } from 'app/hooks/useNavigation'
 import { useSelectorWeb } from 'app/hooks/useSelectorWeb'
-import { ProfilePictureList } from 'app/screens/notificationsScreen/Notification'
+import { ProfilePictureList } from 'app/screens/notificationsScreen/notification'
 import { makeStyles } from 'app/styles'
 import { useThemeColors } from 'app/utils/theme'
 

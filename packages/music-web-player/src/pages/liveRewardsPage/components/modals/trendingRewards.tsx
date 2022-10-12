@@ -7,11 +7,11 @@ import { useDispatch } from 'react-redux'
 import { TwitterTweetEmbed } from 'react-twitter-embed'
 
 import { useModalState } from 'common/hooks/useModalState'
-import { getTrendingRewardsModalType } from 'common/store/pages/liveRewards/selectors'
+import { getTrendingRewardsModalType } from 'common/store/pages/digitalcoinRewards/selectors'
 import {
   TrendingRewardsModalType,
   setTrendingRewardsModalType
-} from 'common/store/pages/liveRewards/slice'
+} from 'common/store/pages/digitalcoinRewards/slice'
 import LoadingSpinner from 'components/loadingSpinner/loadingSpinner'
 import { useNavigateToPage } from 'hooks/useNavigateToPage'
 import { useRemoteVar } from 'hooks/useRemoteConfig'
@@ -33,30 +33,30 @@ import styles from './TrendingRewards.module.css'
 const IS_NATIVE_MOBILE = process.env.REACT_APP_NATIVE_MOBILE
 
 const messages = {
-  agreementsTitle: 'Top 5 Agreements Each Week Receive 100 $LIVE',
-  contentListTitle: 'Top 5 ContentLists Each Week Receive 100 $LIVE',
-  undergroundTitle: 'Top 5 Agreements Each Week Receive 100 $LIVE',
+  digitalContentsTitle: 'Top 5 DigitalContents Each Week Receive 100 $DGCO',
+  contentListTitle: 'Top 5 ContentLists Each Week Receive 100 $DGCO',
+  undergroundTitle: 'Top 5 DigitalContents Each Week Receive 100 $DGCO',
   winners: 'Winners are selected every Friday at Noon PT!',
   lastWeek: "LAST WEEK'S WINNERS",
-  agreements: 'AGREEMENTS',
-  topAgreements: 'TOP AGREEMENTS',
+  digitalContents: 'AGREEMENTS',
+  topDigitalContents: 'TOP AGREEMENTS',
   contentLists: 'CONTENT_LISTS',
   topContentLists: 'TOP CONTENT_LISTS',
   underground: 'UNDERGROUND',
   terms: 'Terms and Conditions Apply',
-  agreementsModalTitle: 'Top 5 Trending Agreements',
+  digitalContentsModalTitle: 'Top 5 Trending DigitalContents',
   contentListsModalTitle: 'Top 5 Trending ContentLists',
-  undergroundModalTitle: 'Top 5 Underground Trending Agreements',
-  buttonTextAgreements: 'Current Trending Agreements',
+  undergroundModalTitle: 'Top 5 Underground Trending DigitalContents',
+  buttonTextDigitalContents: 'Current Trending DigitalContents',
   buttonTextContentLists: 'Current Trending ContentLists',
-  buttonTextUnderground: 'Current Underground Trending Agreements',
-  mobileButtonTextAgreements: 'Trending Agreements',
+  buttonTextUnderground: 'Current Underground Trending DigitalContents',
+  mobileButtonTextDigitalContents: 'Trending DigitalContents',
   mobileButtonTextContentLists: 'Trending ContentLists',
-  mobileButtonTextUnderground: 'Underground Trending Agreements'
+  mobileButtonTextUnderground: 'Underground Trending DigitalContents'
 }
 
 const TRENDING_PAGES = {
-  agreements: TRENDING_PAGE,
+  digitalContents: TRENDING_PAGE,
   contentLists: TRENDING_CONTENT_LISTS_PAGE,
   underground: TRENDING_UNDERGROUND_PAGE
 }
@@ -68,11 +68,11 @@ const textMap = {
     button: messages.buttonTextContentLists,
     buttonMobile: messages.mobileButtonTextContentLists
   },
-  agreements: {
-    modalTitle: messages.agreementsModalTitle,
-    title: messages.agreementsTitle,
-    button: messages.buttonTextAgreements,
-    buttonMobile: messages.mobileButtonTextAgreements
+  digitalContents: {
+    modalTitle: messages.digitalContentsModalTitle,
+    title: messages.digitalContentsTitle,
+    button: messages.buttonTextDigitalContents,
+    buttonMobile: messages.mobileButtonTextDigitalContents
   },
   underground: {
     modalTitle: messages.undergroundModalTitle,
@@ -85,7 +85,7 @@ const textMap = {
 const TOS_URL = 'https://blog.coliving.lol/posts/digitalcoin-rewards'
 
 // Getters and setters for whether we're looking at
-// trending contentLists or trending agreements
+// trending contentLists or trending digitalContents
 const useRewardsType = (): [
   TrendingRewardsModalType,
   (type: TrendingRewardsModalType) => void
@@ -102,11 +102,11 @@ const useRewardsType = (): [
 }
 
 const useTweetId = (type: TrendingRewardsModalType) => {
-  const agreementsId = useRemoteVar(StringKeys.REWARDS_TWEET_ID_AGREEMENTS)
+  const digitalContentsId = useRemoteVar(StringKeys.REWARDS_TWEET_ID_AGREEMENTS)
   const contentListsId = useRemoteVar(StringKeys.REWARDS_TWEET_ID_CONTENT_LISTS)
   const undergroundId = useRemoteVar(StringKeys.REWARDS_TWEET_ID_UNDERGROUND)
   return {
-    agreements: agreementsId,
+    digitalContents: digitalContentsId,
     contentLists: contentListsId,
     underground: undergroundId
   }[type]
@@ -130,8 +130,8 @@ const TrendingRewardsBody = ({
   const mobile = isMobile()
   const tabOptions = [
     {
-      key: 'agreements',
-      text: mobile ? messages.agreements : messages.topAgreements
+      key: 'digitalContents',
+      text: mobile ? messages.digitalContents : messages.topDigitalContents
     },
     {
       key: 'contentLists',

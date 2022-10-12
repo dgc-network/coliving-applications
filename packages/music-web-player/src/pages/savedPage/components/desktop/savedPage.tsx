@@ -5,8 +5,8 @@ import { ReactComponent as IconAlbum } from 'assets/img/iconAlbum.svg'
 import { ReactComponent as IconNote } from 'assets/img/iconNote.svg'
 import {
   Tabs as ProfileTabs,
-  AgreementRecord,
-  SavedPageAgreement,
+  DigitalContentRecord,
+  SavedPageDigitalContent,
   SavedPageCollection
 } from 'common/store/pages/savedPage/types'
 import { QueueItem } from 'common/store/queue/types'
@@ -15,8 +15,8 @@ import FilterInput from 'components/filterInput/filterInput'
 import Header from 'components/header/desktop/header'
 import CardLineup from 'components/lineup/cardLineup'
 import Page from 'components/page/page'
-import EmptyTable from 'components/agreementsTable/emptyTable'
-import AgreementsTable from 'components/agreementsTable/agreementsTable'
+import EmptyTable from 'components/digitalContentsTable/emptyTable'
+import DigitalContentsTable from 'components/digitalContentsTable/digitalContentsTable'
 import { useOrderedLoad } from 'hooks/useOrderedLoad'
 import useTabs from 'hooks/useTabs/useTabs'
 import { albumPage } from 'utils/route'
@@ -24,7 +24,7 @@ import { albumPage } from 'utils/route'
 import styles from './savedPage.module.css'
 
 const messages = {
-  filterPlaceholder: 'Filter Agreements'
+  filterPlaceholder: 'Filter DigitalContents'
 }
 
 export type SavedPageProps = {
@@ -34,45 +34,45 @@ export type SavedPageProps = {
   isQueued: boolean
   playingUid: UID | null
   getFilteredData: (
-    agreementMetadatas: SavedPageAgreement[]
-  ) => [SavedPageAgreement[], number]
-  onClickRow: (record: AgreementRecord) => void
-  onClickSave: (record: AgreementRecord) => void
-  onClickAgreementName: (record: AgreementRecord) => void
-  onClickLandlordName: (record: AgreementRecord) => void
-  onClickRepost: (record: AgreementRecord) => void
+    digitalContentMetadatas: SavedPageDigitalContent[]
+  ) => [SavedPageDigitalContent[], number]
+  onClickRow: (record: DigitalContentRecord) => void
+  onClickSave: (record: DigitalContentRecord) => void
+  onClickDigitalContentName: (record: DigitalContentRecord) => void
+  onClickLandlordName: (record: DigitalContentRecord) => void
+  onClickRepost: (record: DigitalContentRecord) => void
   onPlay: () => void
-  onSortAgreements: (sorters: any) => void
+  onSortDigitalContents: (sorters: any) => void
   onChangeTab: (tab: ProfileTabs) => void
-  formatCardSecondaryText: (saves: number, agreements: number) => string
+  formatCardSecondaryText: (saves: number, digitalContents: number) => string
   filterText: string
   initialOrder: UID[] | null
   currentTab: ProfileTabs
   account: (User & { albums: SavedPageCollection[] }) | undefined
-  agreements: Lineup<SavedPageAgreement>
+  digitalContents: Lineup<SavedPageDigitalContent>
   currentQueueItem: QueueItem
   playing: boolean
   buffering: boolean
-  fetchSavedAgreements: () => void
-  resetSavedAgreements: () => void
+  fetchSavedDigitalContents: () => void
+  resetSavedDigitalContents: () => void
   updateLineupOrder: (updatedOrderIndices: UID[]) => void
   fetchSavedAlbums: () => void
   goToRoute: (route: string) => void
   play: (uid?: UID) => void
   pause: () => void
-  repostAgreement: (agreementId: ID) => void
-  undoRepostAgreement: (agreementId: ID) => void
-  saveAgreement: (agreementId: ID) => void
-  unsaveAgreement: (agreementId: ID) => void
+  repostDigitalContent: (digitalContentId: ID) => void
+  undoRepostDigitalContent: (digitalContentId: ID) => void
+  saveDigitalContent: (digitalContentId: ID) => void
+  unsaveDigitalContent: (digitalContentId: ID) => void
   onClickRemove: any
-  onReorderAgreements: any
+  onReorderDigitalContents: any
 }
 
 const SavedPage = ({
   title,
   description,
   account,
-  agreements: { status, entries },
+  digitalContents: { status, entries },
   goToRoute,
   playing,
   currentTab,
@@ -85,23 +85,23 @@ const SavedPage = ({
   onChangeTab,
   onClickRow,
   onClickSave,
-  onClickAgreementName,
+  onClickDigitalContentName,
   onClickLandlordName,
   onClickRepost,
   onClickRemove,
-  onSortAgreements,
-  onReorderAgreements
+  onSortDigitalContents,
+  onReorderDigitalContents
 }: SavedPageProps) => {
   const [dataSource, playingIndex] =
     status === Status.SUCCESS ? getFilteredData(entries) : [[], -1]
   const { isLoading: isLoadingAlbums, setDidLoad: setDidLoadAlbums } =
     useOrderedLoad(account ? account.albums.length : 0)
   const isEmpty = entries.length === 0
-  const agreementsLoading = status === Status.LOADING
+  const digitalContentsLoading = status === Status.LOADING
   const queuedAndPlaying = playing && isQueued
 
   // Setup play button
-  const playButtonActive = currentTab === ProfileTabs.AGREEMENTS && !agreementsLoading
+  const playButtonActive = currentTab === ProfileTabs.AGREEMENTS && !digitalContentsLoading
   const playAllButton = (
     <div
       className={styles.playButtonContainer}
@@ -198,31 +198,31 @@ const SavedPage = ({
       }
     ],
     elements: [
-      isEmpty && !agreementsLoading ? (
+      isEmpty && !digitalContentsLoading ? (
         <EmptyTable
-          primaryText='You haven’t favorited any agreements yet.'
+          primaryText='You haven’t favorited any digitalContents yet.'
           secondaryText='Once you have, this is where you’ll find them!'
           buttonLabel='Go to Trending'
           onClick={() => goToRoute('/trending')}
         />
       ) : (
         <div className={styles.tableWrapper}>
-          <AgreementsTable
+          <DigitalContentsTable
             key='favorites'
             userId={account ? account.user_id : 0}
-            loading={agreementsLoading}
+            loading={digitalContentsLoading}
             loadingRowsCount={account ? account.digital_content_save_count : 0}
             playing={queuedAndPlaying}
             playingIndex={playingIndex}
             dataSource={dataSource}
             onClickRow={onClickRow}
             onClickFavorite={onClickSave}
-            onClickAgreementName={onClickAgreementName}
+            onClickDigitalContentName={onClickDigitalContentName}
             onClickLandlordName={onClickLandlordName}
             onClickRepost={onClickRepost}
             onClickRemove={onClickRemove}
-            onSortAgreements={onSortAgreements}
-            onReorderAgreements={onReorderAgreements}
+            onSortDigitalContents={onSortDigitalContents}
+            onReorderDigitalContents={onReorderDigitalContents}
           />
         </div>
       ),

@@ -9,7 +9,7 @@ import {
 } from '@coliving/common'
 import { Button, ButtonType, IconUser } from '@coliving/stems'
 
-import { LandlordPopover } from 'components/landlord/landlordPopover'
+import { LandlordPopover } from 'components/author/landlordPopover'
 import CoverPhoto from 'components/coverPhoto/coverPhoto'
 import DynamicImage from 'components/dynamicImage/dynamicImage'
 import Lineup, { LineupWithoutTile } from 'components/lineup/lineup'
@@ -18,29 +18,29 @@ import Page from 'components/page/page'
 import StatBanner from 'components/statBanner/statBanner'
 import UserBadges from 'components/userBadges/userBadges'
 import { useCollectionCoverArt } from 'hooks/useCollectionCoverArt'
-import { useAgreementCoverArt } from 'hooks/useAgreementCoverArt'
+import { useDigitalContentCoverArt } from 'hooks/useDigitalContentCoverArt'
 import { withNullGuard } from 'utils/withNullGuard'
 
 import styles from './deletedPage.module.css'
 
 const messages = {
-  agreementDeleted: 'DigitalContent [Deleted]',
-  agreementDeletedByLandlord: 'DigitalContent [Deleted By Landlord]',
-  contentListDeleted: 'ContentList [Deleted by Landlord]',
-  albumDeleted: 'Album [Deleted By Landlord]',
+  digitalContentDeleted: 'DigitalContent [Deleted]',
+  digitalContentDeletedByLandlord: 'DigitalContent [Deleted By Author]',
+  contentListDeleted: 'ContentList [Deleted by Author]',
+  albumDeleted: 'Album [Deleted By Author]',
   checkOut: (name: string) => `Check out more by ${name}`,
   moreBy: (name: string) => `More by ${name}`
 }
 
-const AgreementArt = ({
-  agreementId,
+const DigitalContentArt = ({
+  digitalContentId,
   coverArtSizes
 }: {
-  agreementId: ID
+  digitalContentId: ID
   coverArtSizes: CoverArtSizes
 }) => {
-  const image = useAgreementCoverArt(
-    agreementId,
+  const image = useDigitalContentCoverArt(
+    digitalContentId,
     coverArtSizes,
     SquareSizes.SIZE_480_BY_480
   )
@@ -101,8 +101,8 @@ const DeletedPage = g(
         ? messages.albumDeleted
         : messages.contentListDeleted
       : deletedByLandlord
-      ? messages.agreementDeletedByLandlord
-      : messages.agreementDeleted
+      ? messages.digitalContentDeletedByLandlord
+      : messages.digitalContentDeleted
 
     const renderTile = () => {
       return (
@@ -114,8 +114,8 @@ const DeletedPage = g(
               coverArtSizes={playable.metadata._cover_art_sizes}
             />
           ) : (
-            <AgreementArt
-              agreementId={playable.metadata.digital_content_id}
+            <DigitalContentArt
+              digitalContentId={playable.metadata.digital_content_id}
               coverArtSizes={playable.metadata._cover_art_sizes}
             />
           )}
@@ -132,7 +132,7 @@ const DeletedPage = g(
             <div className={styles.landlordWrapper}>
               <span>By</span>
               <LandlordPopover handle={user.handle}>
-                <h2 className={styles.landlord} onClick={goToLandlordPage}>
+                <h2 className={styles.author} onClick={goToLandlordPage}>
                   {user.name}
                   <UserBadges
                     userId={user?.user_id}

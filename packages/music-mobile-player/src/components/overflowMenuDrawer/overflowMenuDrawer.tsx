@@ -9,7 +9,7 @@ import { useSelectorWeb } from 'app/hooks/useSelectorWeb'
 
 import CollectionOverflowMenuDrawer from './collectionOverflowMenuDrawer'
 import ProfileOverflowMenuDrawer from './profileOverflowMenuDrawer'
-import AgreementOverflowMenuDrawer from './AgreementOverflowMenuDrawer'
+import DigitalContentOverflowMenuDrawer from './DigitalContentOverflowMenuDrawer'
 
 const rowMessageMap = {
   [OverflowAction.REPOST]: 'Repost',
@@ -22,12 +22,12 @@ const rowMessageMap = {
   [OverflowAction.DELETE_CONTENT_LIST]: 'Delete ContentList',
   [OverflowAction.PUBLISH_CONTENT_LIST]: 'Publish ContentList',
   [OverflowAction.VIEW_AGREEMENT_PAGE]: 'View DigitalContent Page',
-  [OverflowAction.VIEW_LANDLORD_PAGE]: 'View Landlord Page',
+  [OverflowAction.VIEW_LANDLORD_PAGE]: 'View Author Page',
   [OverflowAction.VIEW_CONTENT_LIST_PAGE]: 'View ContentList Page',
   [OverflowAction.VIEW_ALBUM_PAGE]: 'View Album Page',
   [OverflowAction.UNSUBSCRIBER_USER]: 'Unsubscribe',
-  [OverflowAction.FOLLOW_LANDLORD]: 'Follow Landlord',
-  [OverflowAction.UNFOLLOW_LANDLORD]: 'Unfollow Landlord',
+  [OverflowAction.FOLLOW_LANDLORD]: 'Follow Author',
+  [OverflowAction.UNFOLLOW_LANDLORD]: 'Unfollow Author',
   [OverflowAction.FOLLOW]: 'Follow',
   [OverflowAction.UNFOLLOW]: 'Unfollow'
 }
@@ -43,11 +43,11 @@ export const OverflowMenuDrawer = () => {
 
   const OverflowDrawerComponent =
     {
-      [OverflowSource.AGREEMENTS]: AgreementOverflowMenuDrawer,
+      [OverflowSource.AGREEMENTS]: DigitalContentOverflowMenuDrawer,
       [OverflowSource.COLLECTIONS]: CollectionOverflowMenuDrawer,
       // No case for NOTIFICATIONS because there currently isn't an overflow menu on notifications
       [OverflowSource.PROFILE]: ProfileOverflowMenuDrawer
-    }[source] ?? AgreementOverflowMenuDrawer
+    }[source] ?? DigitalContentOverflowMenuDrawer
 
   return (
     <OverflowDrawerComponent

@@ -1,6 +1,6 @@
 import { ID, Remix } from '@coliving/common'
 
-import { LandlordPopover } from 'components/landlord/landlordPopover'
+import { LandlordPopover } from 'components/author/landlordPopover'
 import CoSign from 'components/coSign/coSign'
 import { Size } from 'components/coSign/types'
 import DynamicImage from 'components/dynamicImage/dynamicImage'
@@ -60,7 +60,7 @@ const RemixCard = ({
           images
         )}
       </div>
-      <div className={styles.landlord} onClick={onClickLandlordName}>
+      <div className={styles.author} onClick={onClickLandlordName}>
         <LandlordPopover handle={landlordHandle}>
           <div className={styles.name}>
             <div className={styles.by}>{messages.by}</div>

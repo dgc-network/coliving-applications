@@ -3,13 +3,13 @@ import { ButtonType } from '@coliving/stems'
 
 import Modal from 'components/modal'
 import Button from 'components/button'
-import styles from './LiveRewardsModal.module.css'
+import styles from './DigitalcoinRewardsModal.module.css'
 import apiLogo from 'assets/img/apiLogo.png'
 import useOpenLink from 'hooks/useOpenLink'
 import { COLIVING_API_URL } from 'utils/routes'
 
 const messages = {
-  title: '$LIVE REWARDS',
+  title: '$DGCO REWARDS',
   apiLogo: 'Coliving API Logo',
   header: 'It’s easy to build your own app on Coliving',
   description1: 'The top 10 Coliving API apps each month win.',
@@ -22,12 +22,12 @@ type OwnProps = {
   onClose: () => void
 }
 
-type LiveRewardsModalProps = OwnProps
+type DigitalcoinRewardsModalProps = OwnProps
 
-const LiveRewardsModal: React.FC<LiveRewardsModalProps> = ({
+const DigitalcoinRewardsModal: React.FC<DigitalcoinRewardsModalProps> = ({
   isOpen,
   onClose
-}: LiveRewardsModalProps) => {
+}: DigitalcoinRewardsModalProps) => {
   const openLink = useOpenLink(COLIVING_API_URL)
   const onClickBtn = useCallback(
     (e: React.MouseEvent) => {
@@ -58,4 +58,4 @@ const LiveRewardsModal: React.FC<LiveRewardsModalProps> = ({
   )
 }
 
-export default LiveRewardsModal
+export default DigitalcoinRewardsModal

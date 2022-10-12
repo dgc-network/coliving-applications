@@ -3,23 +3,23 @@ import { keyBy } from 'lodash'
 import moment from 'moment'
 import { select, call } from 'redux-saga/effects'
 
-import { retrieveAgreements } from 'common/store/cache/agreements/utils'
+import { retrieveDigitalContents } from 'common/store/cache/digital_contents/utils'
 import {
   PREFIX,
-  agreementsActions
+  digitalContentsActions
 } from 'common/store/pages/collection/lineup/actions'
 import {
   getCollection,
   getSmartCollectionVariant,
   getCollectionId,
-  getCollectionAgreementsLineup
+  getCollectionDigitalContentsLineup
 } from 'common/store/pages/collection/selectors'
 import { getCollection as getSmartCollection } from 'common/store/pages/smartCollection/selectors'
 import { getPositions } from 'common/store/queue/selectors'
 import { LineupSagas } from 'store/lineup/sagas'
 import { waitForValue } from 'utils/sagaHelpers'
 
-function* getCollectionAgreements() {
+function* getCollectionDigitalContents() {
   const smartCollectionVariant = yield select(getSmartCollectionVariant)
   let collection
   if (smartCollectionVariant) {
@@ -32,7 +32,7 @@ function* getCollectionAgreements() {
 
   const digital_content = collection.content_list_contents.digital_content_ids
 
-  const agreementIds = digital_content.map((t) => t.digital_content)
+  const digitalContentIds = digital_content.map((t) => t.digital_content)
   // TODO: Conform all timestamps to be of the same format so we don't have to do any special work here.
   const times = digital_content.map((t) => t.time)
 
@@ -60,11 +60,11 @@ function* getCollectionAgreements() {
       return mapping
     }, {})
 
-  if (agreementIds.length > 0) {
-    const agreementMetadatas = yield call(retrieveAgreements, { agreementIds })
-    const keyedMetadatas = keyBy(agreementMetadatas, (m) => m.digital_content_id)
+  if (digitalContentIds.length > 0) {
+    const digitalContentMetadatas = yield call(retrieveDigitalContents, { digitalContentIds })
+    const keyedMetadatas = keyBy(digitalContentMetadatas, (m) => m.digital_content_id)
 
-    return agreementIds
+    return digitalContentIds
       .map((id, i) => {
         const metadata = { ...keyedMetadatas[id] }
 
@@ -99,13 +99,13 @@ const keepDateAdded = (digital_content) => ({
 
 const sourceSelector = (state) => `collection:${getCollectionId(state)}`
 
-class AgreementsSagas extends LineupSagas {
+class DigitalContentsSagas extends LineupSagas {
   constructor() {
     super(
       PREFIX,
-      agreementsActions,
-      getCollectionAgreementsLineup,
-      getCollectionAgreements,
+      digitalContentsActions,
+      getCollectionDigitalContentsLineup,
+      getCollectionDigitalContents,
       keepDateAdded,
       /* removeDeleted */ false,
       sourceSelector
@@ -114,5 +114,5 @@ class AgreementsSagas extends LineupSagas {
 }
 
 export default function sagas() {
-  return new AgreementsSagas().getSagas()
+  return new DigitalContentsSagas().getSagas()
 }

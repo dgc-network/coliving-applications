@@ -4,11 +4,11 @@ import type { DigitalContent } from '@coliving/common'
 import { FavoriteSource, RepostSource, ShareSource } from '@coliving/common'
 import { updateMethod } from '@coliving/web/src/common/store/cast/slice'
 import {
-  repostAgreement,
-  saveAgreement,
-  undoRepostAgreement,
-  unsaveAgreement
-} from '@coliving/web/src/common/store/social/agreements/actions'
+  repostDigitalContent,
+  saveDigitalContent,
+  undoRepostDigitalContent,
+  unsaveDigitalContent
+} from '@coliving/web/src/common/store/social/digital_contents/actions'
 import { getUserId } from 'common/store/account/selectors'
 import {
   getMethod as getCastMethod,
@@ -81,9 +81,9 @@ export const ActionsBar = ({ digital_content }: ActionsBarProps) => {
   const onToggleFavorite = useCallback(() => {
     if (digital_content) {
       if (digital_content.has_current_user_saved) {
-        dispatchWeb(unsaveAgreement(digital_content.digital_content_id, FavoriteSource.NOW_PLAYING))
+        dispatchWeb(unsaveDigitalContent(digital_content.digital_content_id, FavoriteSource.NOW_PLAYING))
       } else {
-        dispatchWeb(saveAgreement(digital_content.digital_content_id, FavoriteSource.NOW_PLAYING))
+        dispatchWeb(saveDigitalContent(digital_content.digital_content_id, FavoriteSource.NOW_PLAYING))
       }
     }
   }, [dispatchWeb, digital_content])
@@ -91,9 +91,9 @@ export const ActionsBar = ({ digital_content }: ActionsBarProps) => {
   const onToggleRepost = useCallback(() => {
     if (digital_content) {
       if (digital_content.has_current_user_reposted) {
-        dispatchWeb(undoRepostAgreement(digital_content.digital_content_id, RepostSource.NOW_PLAYING))
+        dispatchWeb(undoRepostDigitalContent(digital_content.digital_content_id, RepostSource.NOW_PLAYING))
       } else {
-        dispatchWeb(repostAgreement(digital_content.digital_content_id, RepostSource.NOW_PLAYING))
+        dispatchWeb(repostDigitalContent(digital_content.digital_content_id, RepostSource.NOW_PLAYING))
       }
     }
   }, [dispatchWeb, digital_content])
@@ -103,7 +103,7 @@ export const ActionsBar = ({ digital_content }: ActionsBarProps) => {
       dispatchWeb(
         requestOpenShareModal({
           type: 'digital_content',
-          agreementId: digital_content.digital_content_id,
+          digitalContentId: digital_content.digital_content_id,
           source: ShareSource.NOW_PLAYING
         })
       )

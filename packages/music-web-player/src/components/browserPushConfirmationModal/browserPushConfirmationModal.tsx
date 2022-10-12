@@ -35,7 +35,7 @@ const messages = {
   description:
     'Turn on browser notifications to be notified when your favorite landlords release new content!',
   reason:
-    'You’ll also be notified whenever someone follows, reposts, or favorites your agreements!',
+    'You’ll also be notified whenever someone follows, reposts, or favorites your digitalContents!',
   close: 'Maybe Later',
   confirm: 'Enable Browser Notifications!'
 }

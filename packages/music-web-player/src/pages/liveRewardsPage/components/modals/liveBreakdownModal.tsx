@@ -16,10 +16,10 @@ import styles from './audioBreakdownModal.module.css'
 import ModalDrawer from './modalDrawer'
 
 const messages = {
-  modalTitle: '$LIVE BREAKDOWN',
-  total: 'TOTAL $LIVE',
+  modalTitle: '$DGCO BREAKDOWN',
+  total: 'TOTAL $DGCO',
   colivingWallet: 'COLIVING WALLET',
-  colivingWalletDescription: 'You can use this $LIVE throughout the app',
+  colivingWalletDescription: 'You can use this $DGCO throughout the app',
   linkedWallets: 'LINKED WALLETS',
   linkedWalletsDescription:
     'Linked wallets are more secure but not all features are supported',
@@ -27,7 +27,7 @@ const messages = {
     'Linked wallets affect VIP status and NFTs. Upcoming features may require different behavior to support linked wallets. '
 }
 
-const AudioBreakdownBody = () => {
+const DigitalcoinBreakdownBody = () => {
   const wm = useWithMobileStyle(styles.mobile)
   const accountBalance = (useSelector(getAccountBalance) ??
     new BN('0')) as BNWei
@@ -93,8 +93,8 @@ const AudioBreakdownBody = () => {
   )
 }
 
-const AudioBreakdownModal = () => {
-  const [isOpen, setOpen] = useModalState('AudioBreakdown')
+const DigitalcoinBreakdownModal = () => {
+  const [isOpen, setOpen] = useModalState('DigitalcoinBreakdown')
   return (
     <ModalDrawer
       isOpen={isOpen}
@@ -105,9 +105,9 @@ const AudioBreakdownModal = () => {
       showDismissButton
       useGradientTitle={false}
     >
-      <AudioBreakdownBody />
+      <DigitalcoinBreakdownBody />
     </ModalDrawer>
   )
 }
 
-export default AudioBreakdownModal
+export default DigitalcoinBreakdownModal

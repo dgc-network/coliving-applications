@@ -1,8 +1,8 @@
-import { AgreementSegment } from '@coliving/common'
+import { DigitalContentSegment } from '@coliving/common'
 
 import {
-  PlayAgreementMessage,
-  PauseAgreementMessage,
+  PlayDigitalContentMessage,
+  PauseDigitalContentMessage,
   GetPositionMessage,
   SeekMessage
 } from 'services/nativeMobileInterface/player'
@@ -27,7 +27,7 @@ class NativeMobileAudio {
   }
 
   load = (
-    segments: AgreementSegment[],
+    segments: DigitalContentSegment[],
     onEnd: () => void,
     prefetchedSegments: string[],
     gateways: string[],
@@ -38,12 +38,12 @@ class NativeMobileAudio {
   }
 
   play = () => {
-    const message = new PlayAgreementMessage(this.m3u8)
+    const message = new PlayDigitalContentMessage(this.m3u8)
     message.send()
   }
 
   pause = () => {
-    const message = new PauseAgreementMessage()
+    const message = new PauseDigitalContentMessage()
     message.send()
   }
 

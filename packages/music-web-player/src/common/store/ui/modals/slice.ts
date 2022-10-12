@@ -15,7 +15,7 @@ export type Modals =
   | 'ShareSoundToTikTok'
   | 'HCaptcha'
   | 'BrowserPushPermissionConfirmation'
-  | 'AudioBreakdown'
+  | 'DigitalcoinBreakdown'
   | 'CollectibleDetails'
   | 'DeactivateAccountConfirmation'
   | 'Cognito'
@@ -45,7 +45,7 @@ const initialState: ModalsState = {
   ShareSoundToTikTok: false,
   HCaptcha: false,
   BrowserPushPermissionConfirmation: false,
-  AudioBreakdown: false,
+  DigitalcoinBreakdown: false,
   CollectibleDetails: false,
   DeactivateAccountConfirmation: false,
   Cognito: false,

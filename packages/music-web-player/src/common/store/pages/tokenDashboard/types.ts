@@ -17,7 +17,7 @@ type SendingState =
       chain: Chain
     }
   | {
-      stage: 'AWAITING_CONVERTING_ETH_LIVE_TO_SOL'
+      stage: 'AWAITING_CONVERTING_ETH_DGCO_TO_SOL'
       amount: StringWei
       recipientWallet: string
       chain: Chain

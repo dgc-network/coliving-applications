@@ -116,7 +116,7 @@ const toOptimisticChallenge = (
 
 /**
  * Returns all user challenges using an optimistic state and current_step_count
- * based on what the client agreements. Prevents UI oddness while waiting for discovery to index
+ * based on what the client digitalContents. Prevents UI oddness while waiting for discovery to index
  * @param challenge The user challenge to get the optimistic state for
  * @returns the same challenge with state and current_step_count overridden as necessary
  */

@@ -47,7 +47,7 @@ export const initialState: State = {
 
 type PlayPayload = {
   uid?: Nullable<UID>
-  agreementId?: Nullable<ID>
+  digitalContentId?: Nullable<ID>
   collectible?: Collectible
   source?: Nullable<string>
 }

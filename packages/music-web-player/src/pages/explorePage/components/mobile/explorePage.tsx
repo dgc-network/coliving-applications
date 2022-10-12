@@ -119,7 +119,7 @@ export type ExplorePageProps = {
   contentLists: UserCollection[]
   profiles: User[]
   status: Status
-  formatContentListCardSecondaryText: (saves: number, agreements: number) => string
+  formatContentListCardSecondaryText: (saves: number, digitalContents: number) => string
   formatProfileCardSecondaryText: (followerCount: number) => string
   goToRoute: (route: string) => void
 }

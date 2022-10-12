@@ -9,7 +9,7 @@ import {
   NotificationText,
   NotificationTile,
   NotificationTitle
-} from '../Notification'
+} from '../notification'
 
 const useStyles = makeStyles(({ typography, palette }) => ({
   title: {

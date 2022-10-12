@@ -2,7 +2,7 @@ import { FeedFilter } from 'models/feedFilter'
 import { ID, PlayableType } from 'models/identifiers'
 import { MonitorPayload, ServiceMonitorType } from 'models/services'
 import { TimeRange } from 'models/timeRange'
-import { SolanaWalletAddress, StringLive, WalletAddress } from 'models/wallet'
+import { SolanaWalletAddress, StringDigitalcoin, WalletAddress } from 'models/wallet'
 
 const ANALYTICS_AGREEMENT_EVENT = 'ANALYTICS/AGREEMENT_EVENT'
 
@@ -82,7 +82,7 @@ export enum Name {
   UNDO_REPOST = 'Undo Repost',
   FAVORITE = 'Favorite',
   UNFAVORITE = 'Unfavorite',
-  LANDLORD_PICK_SELECT_AGREEMENT = 'Landlord Pick: Select DigitalContent',
+  LANDLORD_PICK_SELECT_AGREEMENT = 'Author Pick: Select DigitalContent',
   FOLLOW = 'Follow',
   UNFOLLOW = 'Unfollow',
 
@@ -153,11 +153,11 @@ export enum Name {
   PROFILE_PAGE_CLICK_TIKTOK = 'Profile Page: Go To TikTok',
   PROFILE_PAGE_CLICK_WEBSITE = 'ProfilePage: Go To Website',
   PROFILE_PAGE_CLICK_DONATION = 'ProfilePage: Go To Donation',
-  PROFILE_PAGE_SHOWN_LANDLORD_RECOMMENDATIONS = 'ProfilePage: Shown Landlord Recommendations',
+  PROFILE_PAGE_SHOWN_LANDLORD_RECOMMENDATIONS = 'ProfilePage: Shown Author Recommendations',
 
   // DigitalContent page
   AGREEMENT_PAGE_DOWNLOAD = 'DigitalContent Page: Download',
-  AGREEMENT_PAGE_PLAY_MORE = 'DigitalContent Page: Play More By This Landlord',
+  AGREEMENT_PAGE_PLAY_MORE = 'DigitalContent Page: Play More By This Author',
 
   // Playback
   PLAYBACK_PLAY = 'Playback: Play',
@@ -197,15 +197,15 @@ export enum Name {
   REMIX_COSIGN_INDICATOR = 'Remix: CoSign Indicator',
   REMIX_HIDE = 'Remix: Hide',
 
-  // $LIVE
-  SEND_LIVE_REQUEST = 'Send $LIVE: Request',
-  SEND_LIVE_SUCCESS = 'Send $LIVE: Success',
-  SEND_LIVE_FAILURE = 'Send $LIVE: Failure',
+  // $DGCO
+  SEND_DGCO_REQUEST = 'Send $DGCO: Request',
+  SEND_DGCO_SUCCESS = 'Send $DGCO: Success',
+  SEND_DGCO_FAILURE = 'Send $DGCO: Failure',
 
   // LIVE Manager
-  TRANSFER_LIVE_TO_WLIVE_REQUEST = 'TRANSFER_LIVE_TO_WLIVE_REQUEST',
-  TRANSFER_LIVE_TO_WLIVE_SUCCESS = 'TRANSFER_LIVE_TO_WLIVE_SUCCESS',
-  TRANSFER_LIVE_TO_WLIVE_FAILURE = 'TRANSFER_LIVE_TO_WLIVE_FAILURE',
+  TRANSFER_DGCO_TO_WLIVE_REQUEST = 'TRANSFER_DGCO_TO_WLIVE_REQUEST',
+  TRANSFER_DGCO_TO_WLIVE_SUCCESS = 'TRANSFER_DGCO_TO_WLIVE_SUCCESS',
+  TRANSFER_DGCO_TO_WLIVE_FAILURE = 'TRANSFER_DGCO_TO_WLIVE_FAILURE',
 
   // Service monitoring
   SERVICE_MONITOR_REQUEST = 'Service Monitor: Request',
@@ -247,10 +247,10 @@ export enum Name {
   REWARDS_CLAIM_FINISH_COGNITO_FLOW = 'Rewards Claim: Finish Cognito Flow',
 
   // Tipping
-  TIP_LIVE_REQUEST = 'Tip Audio: Request',
-  TIP_LIVE_SUCCESS = 'Tip Audio: Success',
-  TIP_LIVE_FAILURE = 'Tip Audio: Failure',
-  TIP_LIVE_TWITTER_SHARE = 'Tip Audio: Twitter Share',
+  TIP_DGCO_REQUEST = 'Tip Audio: Request',
+  TIP_DGCO_SUCCESS = 'Tip Audio: Success',
+  TIP_DGCO_FAILURE = 'Tip Audio: Failure',
+  TIP_DGCO_TWITTER_SHARE = 'Tip Audio: Twitter Share',
   TIP_FEED_TILE_DISMISS = 'Tip Feed Tile: Dismiss',
 
   // Social Proof
@@ -488,7 +488,7 @@ export enum FollowSource {
   HOVER_TILE = 'hover tile',
   OVERFLOW = 'overflow',
   USER_LIST = 'user list',
-  LANDLORD_RECOMMENDATIONS_POPUP = 'landlord recommendations popup',
+  LANDLORD_RECOMMENDATIONS_POPUP = 'author recommendations popup',
   EMPTY_FEED = 'empty feed'
 }
 
@@ -532,7 +532,7 @@ type Unfavorite = {
   source: FavoriteSource
   id: string
 }
-type LandlordPickSelectAgreement = {
+type LandlordPickSelectDigitalContent = {
   eventName: Name.LANDLORD_PICK_SELECT_AGREEMENT
   id: string
 }
@@ -561,7 +561,7 @@ export enum CreateContentListSource {
 
 type ContentListAdd = {
   eventName: Name.CONTENT_LIST_ADD
-  agreementId: string
+  digitalContentId: string
   contentListId: string
 }
 type ContentListOpenCreate = {
@@ -637,55 +637,55 @@ type EmbedCopy = {
 }
 
 // DigitalContent Upload
-type AgreementUploadOpen = {
+type DigitalContentUploadOpen = {
   eventName: Name.AGREEMENT_UPLOAD_OPEN
   source: 'nav' | 'profile' | 'signup'
 }
-type AgreementUploadStartUploading = {
+type DigitalContentUploadStartUploading = {
   eventName: Name.AGREEMENT_UPLOAD_START_UPLOADING
   count: number
-  kind: 'agreements' | 'album' | 'contentList'
+  kind: 'digitalContents' | 'album' | 'contentList'
 }
-type AgreementUploadAgreementUploading = {
+type DigitalContentUploadDigitalContentUploading = {
   eventName: Name.AGREEMENT_UPLOAD_AGREEMENT_UPLOADING
   artworkSource: 'unsplash' | 'original'
   genre: string
   mood: string
   downloadable: 'yes' | 'no' | 'follow'
 }
-type AgreementUploadCompleteUpload = {
+type DigitalContentUploadCompleteUpload = {
   eventName: Name.AGREEMENT_UPLOAD_COMPLETE_UPLOAD
   count: number
-  kind: 'agreements' | 'album' | 'contentList'
+  kind: 'digitalContents' | 'album' | 'contentList'
 }
 
-type AgreementUploadSuccess = {
+type DigitalContentUploadSuccess = {
   eventName: Name.AGREEMENT_UPLOAD_SUCCESS
   endpoint: string
   kind: 'single_digital_content' | 'multi_digital_content' | 'album' | 'contentList'
 }
 
-type AgreementUploadFailure = {
+type DigitalContentUploadFailure = {
   eventName: Name.AGREEMENT_UPLOAD_FAILURE
   endpoint: string
   kind: 'single_digital_content' | 'multi_digital_content' | 'album' | 'contentList'
   error?: string
 }
 
-type AgreementUploadCopyLink = {
+type DigitalContentUploadCopyLink = {
   eventName: Name.AGREEMENT_UPLOAD_COPY_LINK
   uploadType: string
   url: string
 }
-type AgreementUploadShareWithFans = {
+type DigitalContentUploadShareWithFans = {
   eventName: Name.AGREEMENT_UPLOAD_SHARE_WITH_FANS
   uploadType: string
   text: string
 }
-type AgreementUploadShareSoundToTikTok = {
+type DigitalContentUploadShareSoundToTikTok = {
   eventName: Name.AGREEMENT_UPLOAD_SHARE_SOUND_TO_TIKTOK
 }
-type AgreementUploadViewAgreementPage = {
+type DigitalContentUploadViewDigitalContentPage = {
   eventName: Name.AGREEMENT_UPLOAD_VIEW_AGREEMENT_PAGE
   uploadType: string
 }
@@ -755,7 +755,7 @@ type NotificationsClickSupportingRankUp = {
   eventName: Name.NOTIFICATIONS_CLICK_SUPPORTING_RANK_UP_TWITTER_SHARE
   text: string
 }
-type NotificationsClickAddAgreementToContentList = {
+type NotificationsClickAddDigitalContentToContentList = {
   eventName: Name.NOTIFICATIONS_CLICK_ADD_AGREEMENT_TO_CONTENT_LIST_TWITTER_SHARE
   text: string
 }
@@ -768,7 +768,7 @@ type NotificationsToggleSettings = {
 // Profile
 type ProfilePageTabClick = {
   eventName: Name.PROFILE_PAGE_TAB_CLICK
-  tab: 'agreements' | 'albums' | 'reposts' | 'contentLists' | 'collectibles'
+  tab: 'digitalContents' | 'albums' | 'reposts' | 'contentLists' | 'collectibles'
 }
 type ProfilePageSort = {
   eventName: Name.PROFILE_PAGE_SORT
@@ -805,13 +805,13 @@ type ProfilePageShownLandlordRecommendations = {
 }
 
 // DigitalContent Page
-type AgreementPageDownload = {
+type DigitalContentPageDownload = {
   eventName: Name.AGREEMENT_PAGE_DOWNLOAD
   id: ID
   category?: string
   parent_digital_content_id?: ID
 }
-type AgreementPagePlayMore = {
+type DigitalContentPagePlayMore = {
   eventName: Name.AGREEMENT_PAGE_PLAY_MORE
   id: ID
 }
@@ -884,11 +884,11 @@ type SearchResultSelect = {
 type SearchTabClick = {
   eventName: Name.SEARCH_TAB_CLICK
   term: string
-  tab: 'people' | 'agreements' | 'albums' | 'contentLists'
+  tab: 'people' | 'digitalContents' | 'albums' | 'contentLists'
 }
 type Listen = {
   eventName: Name.LISTEN
-  agreementId: string
+  digitalContentId: string
 }
 
 type OnFirstPage = {
@@ -979,38 +979,38 @@ type RemixHide = {
 }
 
 type SendAudioRequest = {
-  eventName: Name.SEND_LIVE_REQUEST
+  eventName: Name.SEND_DGCO_REQUEST
   from: WalletAddress
   recipient: WalletAddress
 }
 
 type SendAudioSuccess = {
-  eventName: Name.SEND_LIVE_SUCCESS
+  eventName: Name.SEND_DGCO_SUCCESS
   from: WalletAddress
   recipient: WalletAddress
 }
 
 type SendAudioFailure = {
-  eventName: Name.SEND_LIVE_FAILURE
+  eventName: Name.SEND_DGCO_FAILURE
   from: WalletAddress
   recipient: WalletAddress
   error: string
 }
 
 type TransferAudioToWAudioRequest = {
-  eventName: Name.TRANSFER_LIVE_TO_WLIVE_REQUEST
+  eventName: Name.TRANSFER_DGCO_TO_WLIVE_REQUEST
   from: WalletAddress
 }
 
 type TransferAudioToWAudioSuccess = {
-  eventName: Name.TRANSFER_LIVE_TO_WLIVE_SUCCESS
+  eventName: Name.TRANSFER_DGCO_TO_WLIVE_SUCCESS
   from: WalletAddress
   txSignature: string
   logs: string
 }
 
 type TransferAudioToWAudioFailure = {
-  eventName: Name.TRANSFER_LIVE_TO_WLIVE_FAILURE
+  eventName: Name.TRANSFER_DGCO_TO_WLIVE_FAILURE
   from: WalletAddress
 }
 
@@ -1153,8 +1153,8 @@ type RewardsClaimUnknown = {
 }
 
 type TipAudioRequest = {
-  eventName: Name.TIP_LIVE_REQUEST
-  amount: StringLive
+  eventName: Name.TIP_DGCO_REQUEST
+  amount: StringDigitalcoin
   senderWallet: SolanaWalletAddress
   recipientWallet: SolanaWalletAddress
   senderHandle: string
@@ -1164,8 +1164,8 @@ type TipAudioRequest = {
 }
 
 type TipAudioSuccess = {
-  eventName: Name.TIP_LIVE_SUCCESS
-  amount: StringLive
+  eventName: Name.TIP_DGCO_SUCCESS
+  amount: StringDigitalcoin
   senderWallet: SolanaWalletAddress
   recipientWallet: SolanaWalletAddress
   senderHandle: string
@@ -1175,8 +1175,8 @@ type TipAudioSuccess = {
 }
 
 type TipAudioFailure = {
-  eventName: Name.TIP_LIVE_FAILURE
-  amount: StringLive
+  eventName: Name.TIP_DGCO_FAILURE
+  amount: StringDigitalcoin
   senderWallet: SolanaWalletAddress
   recipientWallet: SolanaWalletAddress
   senderHandle: string
@@ -1187,8 +1187,8 @@ type TipAudioFailure = {
 }
 
 type TipAudioTwitterShare = {
-  eventName: Name.TIP_LIVE_TWITTER_SHARE
-  amount: StringLive
+  eventName: Name.TIP_DGCO_TWITTER_SHARE
+  amount: StringDigitalcoin
   senderWallet: SolanaWalletAddress
   recipientWallet: SolanaWalletAddress
   senderHandle: string
@@ -1292,7 +1292,7 @@ export type AllTrackingEvents =
   | UndoRepost
   | Favorite
   | Unfavorite
-  | LandlordPickSelectAgreement
+  | LandlordPickSelectDigitalContent
   | ContentListAdd
   | ContentListOpenCreate
   | ContentListStartCreate
@@ -1302,16 +1302,16 @@ export type AllTrackingEvents =
   | Delete
   | EmbedOpen
   | EmbedCopy
-  | AgreementUploadOpen
-  | AgreementUploadStartUploading
-  | AgreementUploadAgreementUploading
-  | AgreementUploadCompleteUpload
-  | AgreementUploadSuccess
-  | AgreementUploadFailure
-  | AgreementUploadCopyLink
-  | AgreementUploadShareWithFans
-  | AgreementUploadShareSoundToTikTok
-  | AgreementUploadViewAgreementPage
+  | DigitalContentUploadOpen
+  | DigitalContentUploadStartUploading
+  | DigitalContentUploadDigitalContentUploading
+  | DigitalContentUploadCompleteUpload
+  | DigitalContentUploadSuccess
+  | DigitalContentUploadFailure
+  | DigitalContentUploadCopyLink
+  | DigitalContentUploadShareWithFans
+  | DigitalContentUploadShareSoundToTikTok
+  | DigitalContentUploadViewDigitalContentPage
   | TrendingChangeView
   | TrendingPaginate
   | FeedChangeView
@@ -1326,7 +1326,7 @@ export type AllTrackingEvents =
   | NotificationsClickTipSent
   | NotificationsClickSupporterRankUp
   | NotificationsClickSupportingRankUp
-  | NotificationsClickAddAgreementToContentList
+  | NotificationsClickAddDigitalContentToContentList
   | NotificationsToggleSettings
   | ProfilePageTabClick
   | ProfilePageSort
@@ -1336,8 +1336,8 @@ export type AllTrackingEvents =
   | ProfilePageClickWebsite
   | ProfilePageClickDonation
   | ProfilePageShownLandlordRecommendations
-  | AgreementPageDownload
-  | AgreementPagePlayMore
+  | DigitalContentPageDownload
+  | DigitalContentPagePlayMore
   | PlaybackPlay
   | PlaybackPause
   | Follow

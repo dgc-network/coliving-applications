@@ -304,7 +304,7 @@ const ProfileAuto = ({ navigation, route }: ProfileAutoProps) => {
     [dispatchWeb, twitterInfo, instagramInfo]
   )
 
-  const agreementOAuthComplete = useCallback(
+  const digitalContentOAuthComplete = useCallback(
     (type: 'twitter' | 'instagram') => {
       const info = type === 'twitter' ? twitterInfo : instagramInfo
       if (!info) {
@@ -370,12 +370,12 @@ const ProfileAuto = ({ navigation, route }: ProfileAutoProps) => {
         validateHandle('twitter')
         setDidValidateHandle(true)
       } else if (handleError || twitterInfo.requiresUserReview) {
-        agreementOAuthComplete('twitter')
+        digitalContentOAuthComplete('twitter')
         goTo('ProfileManual')
         setHasNavigatedAway(true)
         setIsLoading(false)
       } else if (handleIsValid) {
-        agreementOAuthComplete('twitter')
+        digitalContentOAuthComplete('twitter')
         signUp()
         goTo('FirstFollows')
         setHasNavigatedAway(true)
@@ -391,7 +391,7 @@ const ProfileAuto = ({ navigation, route }: ProfileAutoProps) => {
     validateHandle,
     signUp,
     goTo,
-    agreementOAuthComplete
+    digitalContentOAuthComplete
   ])
 
   useEffect(() => {
@@ -406,12 +406,12 @@ const ProfileAuto = ({ navigation, route }: ProfileAutoProps) => {
         validateHandle('instagram')
         setDidValidateHandle(true)
       } else if (handleError || instagramInfo.requiresUserReview) {
-        agreementOAuthComplete('instagram')
+        digitalContentOAuthComplete('instagram')
         goTo('ProfileManual')
         setHasNavigatedAway(true)
         setIsLoading(false)
       } else if (handleIsValid) {
-        agreementOAuthComplete('instagram')
+        digitalContentOAuthComplete('instagram')
         signUp()
         goTo('FirstFollows')
         setHasNavigatedAway(true)
@@ -427,7 +427,7 @@ const ProfileAuto = ({ navigation, route }: ProfileAutoProps) => {
     validateHandle,
     signUp,
     goTo,
-    agreementOAuthComplete
+    digitalContentOAuthComplete
   ])
 
   useEffect(() => {

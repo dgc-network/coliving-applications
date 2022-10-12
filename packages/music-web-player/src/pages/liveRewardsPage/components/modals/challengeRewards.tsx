@@ -23,7 +23,7 @@ import {
   getChallengeRewardsModalType,
   getClaimStatus,
   getCognitoFlowStatus
-} from 'common/store/pages/liveRewards/selectors'
+} from 'common/store/pages/digitalcoinRewards/selectors'
 import {
   ChallengeRewardsModalType,
   setChallengeRewardsModalType,
@@ -31,7 +31,7 @@ import {
   resetAndCancelClaimReward,
   CognitoFlowStatus,
   claimChallengeReward
-} from 'common/store/pages/liveRewards/slice'
+} from 'common/store/pages/digitalcoinRewards/slice'
 import { fillString } from 'common/utils/fillString'
 import { formatNumberCommas } from 'common/utils/formatUtil'
 import LoadingSpinner from 'components/loadingSpinner/loadingSpinner'
@@ -81,10 +81,10 @@ const messages = {
   claimYourReward: 'Claim Your Reward',
   twitterShare: (modalType: 'referrals' | 'ref-v') =>
     `Share Invite With Your ${modalType === 'referrals' ? 'Friends' : 'Residents'}`,
-  twitterCopy: `Come support me on @colivingproject! Use my link and we both earn $LIVE when you sign up.\n\n #coliving #liverewards\n\n`,
+  twitterCopy: `Come support me on @colivingproject! Use my link and we both earn $DGCO when you sign up.\n\n #coliving #liverewards\n\n`,
   verifiedChallenge: 'VERIFIED CHALLENGE',
-  claimAmountLabel: '$LIVE available to claim',
-  claimedSoFar: '$LIVE claimed so far',
+  claimAmountLabel: '$DGCO available to claim',
+  claimedSoFar: '$DGCO claimed so far',
 
   // Profile checks
   profileCheckNameAndHandle: 'Name & Handle',
@@ -242,7 +242,7 @@ const ChallengeRewardsBody = ({ dismissModal }: BodyProps) => {
     <div className={wm(styles.progressReward)}>
       <h3>Reward</h3>
       <h2>{formatNumberCommas(challenge?.totalAmount ?? '')}</h2>
-      <h4>$LIVE</h4>
+      <h4>$DGCO</h4>
     </div>
   )
 

@@ -6,7 +6,7 @@ import reducer from 'store/player/slice'
 import * as actions from 'store/player/slice'
 import { noopReducer } from 'store/testHelper'
 
-const initialAgreements = {
+const initialDigitalContents = {
   entries: {
     1: { metadata: { owner_id: 1, digital_content_segments: {} } }
   },
@@ -38,17 +38,17 @@ describe('watchPlay', () => {
     const { storeState } = await expectSaga(sagas.watchPlay, actions)
       .withReducer(
         combineReducers({
-          agreements: noopReducer(initialAgreements),
+          digitalContents: noopReducer(initialDigitalContents),
           users: noopReducer(initialUsers),
           player: reducer
         }),
         {
-          agreements: initialAgreements,
+          digitalContents: initialDigitalContents,
           users: initialUsers,
           player: initialPlayer
         }
       )
-      .dispatch(actions.play({ uid: '123', agreementId: 1, onEnd: () => {} }))
+      .dispatch(actions.play({ uid: '123', digitalContentId: 1, onEnd: () => {} }))
       .silentRun()
     expect(storeState.player).toMatchObject({
       playing: true
@@ -62,12 +62,12 @@ describe('watchPlay', () => {
     const { storeState } = await expectSaga(sagas.watchPlay, actions)
       .withReducer(
         combineReducers({
-          agreements: noopReducer(initialAgreements),
+          digitalContents: noopReducer(initialDigitalContents),
           users: noopReducer(initialUsers),
           player: reducer
         }),
         {
-          agreements: initialAgreements,
+          digitalContents: initialDigitalContents,
           users: initialUsers,
           player: initialPlayer
         }
@@ -87,11 +87,11 @@ describe('watchPause', () => {
     const { storeState } = await expectSaga(sagas.watchPause, actions)
       .withReducer(
         combineReducers({
-          agreements: noopReducer(initialAgreements),
+          digitalContents: noopReducer(initialDigitalContents),
           player: reducer
         }),
         {
-          agreements: initialAgreements,
+          digitalContents: initialDigitalContents,
           player: initialPlayer
         }
       )
@@ -110,11 +110,11 @@ describe('watchStop', () => {
     const { storeState } = await expectSaga(sagas.watchStop, actions)
       .withReducer(
         combineReducers({
-          agreements: noopReducer(initialAgreements),
+          digitalContents: noopReducer(initialDigitalContents),
           player: reducer
         }),
         {
-          agreements: initialAgreements,
+          digitalContents: initialDigitalContents,
           player: initialPlayer
         }
       )
@@ -133,11 +133,11 @@ describe('watchSeek', () => {
     const { storeState } = await expectSaga(sagas.watchSeek, actions)
       .withReducer(
         combineReducers({
-          agreements: noopReducer(initialAgreements),
+          digitalContents: noopReducer(initialDigitalContents),
           player: reducer
         }),
         {
-          agreements: initialAgreements,
+          digitalContents: initialDigitalContents,
           player: initialPlayer
         }
       )

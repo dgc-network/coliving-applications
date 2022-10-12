@@ -5,8 +5,8 @@ import * as collectionActions from './actions'
 type CollectionErrors =
   | ReturnType<typeof collectionActions.createContentListFailed>
   | ReturnType<typeof collectionActions.editContentListFailed>
-  | ReturnType<typeof collectionActions.addAgreementToContentListFailed>
-  | ReturnType<typeof collectionActions.removeAgreementFromContentListFailed>
+  | ReturnType<typeof collectionActions.addDigitalContentToContentListFailed>
+  | ReturnType<typeof collectionActions.removeDigitalContentFromContentListFailed>
   | ReturnType<typeof collectionActions.orderContentListFailed>
   | ReturnType<typeof collectionActions.deleteContentListFailed>
   | ReturnType<typeof collectionActions.publishContentListFailed>

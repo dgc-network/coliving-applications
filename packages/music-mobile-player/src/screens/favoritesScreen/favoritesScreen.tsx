@@ -8,13 +8,13 @@ import { usePopToTopOnDrawerOpen } from 'app/hooks/usePopToTopOnDrawerOpen'
 
 import { AlbumsTab } from './albumsTab'
 import { ContentListsTab } from './ContentListsTab'
-import { AgreementsTab } from './AgreementsTab'
+import { DigitalContentsTab } from './DigitalContentsTab'
 
 const favoritesScreens = [
   {
-    name: 'agreements',
+    name: 'digitalContents',
     Icon: IconNote,
-    component: AgreementsTab
+    component: DigitalContentsTab
   },
   {
     name: 'albums',

@@ -229,14 +229,14 @@ export class TotalPlaysChart extends Component {
   }
 
   render() {
-    const { data, agreements, onSetAgreementOption, onSetYearOption, isMatrix } =
+    const { data, digitalContents, onSetDigitalContentOption, onSetYearOption, isMatrix } =
       this.props
     const { chartSize, yearOptions } = this.state
 
-    const agreementOptions = [{ name: 'All Agreements', id: -1 }].concat(agreements)
+    const digitalContentOptions = [{ name: 'All DigitalContents', id: -1 }].concat(digitalContents)
 
-    const agreementsMenu = {
-      items: agreementOptions.map((t) => ({ id: t.id, text: t.name }))
+    const digitalContentsMenu = {
+      items: digitalContentOptions.map((t) => ({ id: t.id, text: t.name }))
     }
     const yearsMenu = { items: yearOptions }
 
@@ -247,13 +247,13 @@ export class TotalPlaysChart extends Component {
       <div className={styles.playsTileContainer}>
         <div className={styles.playsTileHeading}>
           <div className={styles.playsTileHeader}>Total Plays</div>
-          <div className={styles.playsAgreementDropdown}>
+          <div className={styles.playsDigitalContentDropdown}>
             <DropdownInput
               size='small'
               variant='alternative'
-              onSelect={onSetAgreementOption}
-              placeholder='All Agreements'
-              menu={agreementsMenu}
+              onSelect={onSetDigitalContentOption}
+              placeholder='All DigitalContents'
+              menu={digitalContentsMenu}
             />
           </div>
           <div className={styles.playsYearDropdown}>
@@ -284,7 +284,7 @@ export class TotalPlaysChart extends Component {
 }
 
 TotalPlaysChart.propTypes = {
-  agreements: PropTypes.arrayOf(
+  digitalContents: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string
     })
@@ -293,9 +293,9 @@ TotalPlaysChart.propTypes = {
     values: PropTypes.arrayOf(PropTypes.number),
     labels: PropTypes.arrayOf(PropTypes.string)
   }),
-  selectedAgreement: PropTypes.number,
+  selectedDigitalContent: PropTypes.number,
   selectedYear: PropTypes.string,
-  onSetAgreementOption: PropTypes.func,
+  onSetDigitalContentOption: PropTypes.func,
   onSetYearOption: PropTypes.func,
   accountCreatedAt: PropTypes.string
 }
@@ -318,10 +318,10 @@ TotalPlaysChart.defaultProps = {
     ],
     values: Array(12).fill(0)
   },
-  agreements: [],
-  selectedAgreement: -1,
+  digitalContents: [],
+  selectedDigitalContent: -1,
   selectedYear: 'All Years',
-  onSetAgreementOption: () => {},
+  onSetDigitalContentOption: () => {},
   onSetYearOption: () => {}
 }
 

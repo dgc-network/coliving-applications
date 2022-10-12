@@ -20,7 +20,7 @@ import {
 } from 'common/store/account/reducer'
 import { getHasAccount } from 'common/store/account/selectors'
 import { Pages, FollowLandlordsCategory } from 'pages/signOn/store/types'
-import { make, AgreementEvent } from 'store/analytics/actions'
+import { make, DigitalContentEvent } from 'store/analytics/actions'
 import { AppState } from 'store/types'
 import { isElectron } from 'utils/clientUtil'
 import { setupHotkeys, removeHotkeys } from 'utils/hotkeyUtil'
@@ -266,7 +266,7 @@ export class SignOnProvider extends Component<SignOnProps, SignOnState> {
     }
   }
 
-  onUploadAgreement = () => {
+  onUploadDigitalContent = () => {
     const { email, handle } = this.props.fields
     this.finishSignup()
     this.props.goToRoute(UPLOAD_PAGE)
@@ -297,7 +297,7 @@ export class SignOnProvider extends Component<SignOnProps, SignOnState> {
 
   // The autoselect or 'pick for me'
   // Selects the first three aritsts in the current category along with 2 additinal
-  // random landlord from the top 10
+  // random author from the top 10
   onAutoSelect = () => {
     const {
       suggestedFollows,
@@ -438,7 +438,7 @@ export class SignOnProvider extends Component<SignOnProps, SignOnState> {
       onSetProfileImage: this.onSetProfileImage,
       onHandleChange: this.onHandleChange,
       finishSignup: this.finishSignup,
-      onUploadAgreement: this.onUploadAgreement,
+      onUploadDigitalContent: this.onUploadDigitalContent,
       onStartListening: this.onStartListening,
       onViewSignIn: this.onViewSignIn,
       onViewSignUp: this.onViewSignUp,
@@ -539,70 +539,70 @@ function mapDispatchToProps(dispatch: Dispatch) {
     goBack: () => dispatch(goBack()),
     replaceRoute: (route: string) => dispatch(replaceRoute(route)),
     recordSignInClick: () => {
-      const agreementEvent: AgreementEvent = make(Name.SIGN_IN_OPEN, {
+      const digitalContentEvent: DigitalContentEvent = make(Name.SIGN_IN_OPEN, {
         source: 'sign up page' as const
       })
-      dispatch(agreementEvent)
+      dispatch(digitalContentEvent)
     },
     recordSignUpClick: () => {
-      const agreementEvent: AgreementEvent = make(Name.CREATE_ACCOUNT_OPEN, {
+      const digitalContentEvent: DigitalContentEvent = make(Name.CREATE_ACCOUNT_OPEN, {
         source: 'sign in page' as const
       })
-      dispatch(agreementEvent)
+      dispatch(digitalContentEvent)
     },
     recordGoToUpload: () => {
-      const agreementEvent: AgreementEvent = make(Name.AGREEMENT_UPLOAD_OPEN, {
+      const digitalContentEvent: DigitalContentEvent = make(Name.AGREEMENT_UPLOAD_OPEN, {
         source: 'signup' as const
       })
-      dispatch(agreementEvent)
+      dispatch(digitalContentEvent)
     },
     recordCompletePassword: (emailAddress: string) => {
-      const agreementEvent: AgreementEvent = make(
+      const digitalContentEvent: DigitalContentEvent = make(
         Name.CREATE_ACCOUNT_COMPLETE_PASSWORD,
         { emailAddress }
       )
-      dispatch(agreementEvent)
+      dispatch(digitalContentEvent)
     },
     recordCompleteProfile: (emailAddress: string, handle: string) => {
-      const agreementEvent: AgreementEvent = make(
+      const digitalContentEvent: DigitalContentEvent = make(
         Name.CREATE_ACCOUNT_COMPLETE_PROFILE,
         { emailAddress, handle }
       )
-      dispatch(agreementEvent)
+      dispatch(digitalContentEvent)
     },
     recordTwitterStart: (emailAddress: string) => {
-      const agreementEvent: AgreementEvent = make(Name.CREATE_ACCOUNT_START_TWITTER, {
+      const digitalContentEvent: DigitalContentEvent = make(Name.CREATE_ACCOUNT_START_TWITTER, {
         emailAddress
       })
-      dispatch(agreementEvent)
+      dispatch(digitalContentEvent)
     },
     recordTwitterComplete: (
       isVerified: boolean,
       emailAddress: string,
       handle: string
     ) => {
-      const agreementEvent: AgreementEvent = make(
+      const digitalContentEvent: DigitalContentEvent = make(
         Name.CREATE_ACCOUNT_COMPLETE_TWITTER,
         { isVerified, emailAddress, handle }
       )
-      dispatch(agreementEvent)
+      dispatch(digitalContentEvent)
     },
     recordInstagramStart: (emailAddress: string) => {
-      const agreementEvent: AgreementEvent = make(Name.CREATE_ACCOUNT_START_INSTAGRAM, {
+      const digitalContentEvent: DigitalContentEvent = make(Name.CREATE_ACCOUNT_START_INSTAGRAM, {
         emailAddress
       })
-      dispatch(agreementEvent)
+      dispatch(digitalContentEvent)
     },
     recordInstagramComplete: (
       isVerified: boolean,
       emailAddress: string,
       handle: string
     ) => {
-      const agreementEvent: AgreementEvent = make(
+      const digitalContentEvent: DigitalContentEvent = make(
         Name.CREATE_ACCOUNT_COMPLETE_INSTAGRAM,
         { isVerified, emailAddress, handle }
       )
-      dispatch(agreementEvent)
+      dispatch(digitalContentEvent)
     },
     recordCompleteFollow: (
       users: string,
@@ -610,32 +610,32 @@ function mapDispatchToProps(dispatch: Dispatch) {
       emailAddress: string,
       handle: string
     ) => {
-      const agreementEvent: AgreementEvent = make(Name.CREATE_ACCOUNT_COMPLETE_FOLLOW, {
+      const digitalContentEvent: DigitalContentEvent = make(Name.CREATE_ACCOUNT_COMPLETE_FOLLOW, {
         users,
         count,
         emailAddress,
         handle
       })
-      dispatch(agreementEvent)
+      dispatch(digitalContentEvent)
     },
     recordCompleteCreating: (emailAddress: string, handle: string) => {
-      const agreementEvent: AgreementEvent = make(
+      const digitalContentEvent: DigitalContentEvent = make(
         Name.CREATE_ACCOUNT_COMPLETE_CREATING,
         { emailAddress, handle }
       )
-      dispatch(agreementEvent)
+      dispatch(digitalContentEvent)
     },
     recordFinish: (
       enterMode: 'upload' | 'listen',
       emailAddress: string,
       handle: string
     ) => {
-      const agreementEvent: AgreementEvent = make(Name.CREATE_ACCOUNT_FINISH, {
+      const digitalContentEvent: DigitalContentEvent = make(Name.CREATE_ACCOUNT_FINISH, {
         enterMode,
         emailAddress,
         handle
       })
-      dispatch(agreementEvent)
+      dispatch(digitalContentEvent)
     }
   }
 }

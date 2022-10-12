@@ -21,7 +21,7 @@ import Dropdown from 'components/navigation/dropdown'
 import ConnectedRemixSettingsModal from 'components/remixSettingsModal/connectedRemixSettingsModal'
 import SourceFilesModal from 'components/sourceFilesModal/sourceFilesModal'
 import Switch from 'components/switch/switch'
-import UnlistedAgreementModal from 'components/unlisted-digital-content-modal/UnlistedAgreementModal'
+import UnlistedDigitalContentModal from 'components/unlisted-digital-content-modal/UnlistedDigitalContentModal'
 import PreviewButton from 'components/upload/previewButton'
 import UploadArtwork from 'components/upload/uploadArtwork'
 import { createRemixOfMetadata } from 'pages/uploadPage/store/utils/remixes'
@@ -81,7 +81,7 @@ const BasicForm = (props) => {
           />
         </div>
         <div className={styles.form}>
-          <div className={styles.agreementName}>
+          <div className={styles.digitalContentName}>
             <Input
               name='name'
               id='digital-content-name-input'
@@ -172,18 +172,18 @@ const BasicForm = (props) => {
   const renderRemixSettingsModal = () => {
     return (
       <ConnectedRemixSettingsModal
-        initialAgreementId={
-          props.defaultFields.remix_of?.agreements?.[0]?.parent_digital_content_id
+        initialDigitalContentId={
+          props.defaultFields.remix_of?.digitalContents?.[0]?.parent_digital_content_id
         }
         isOpen={remixSettingsModalVisible}
-        onClose={(agreementId) => {
-          if (!agreementId) {
+        onClose={(digitalContentId) => {
+          if (!digitalContentId) {
             setIsRemix(false)
             props.onChangeField('remix_of', null)
           } else {
             props.onChangeField(
               'remix_of',
-              createRemixOfMetadata({ parentAgreementId: agreementId })
+              createRemixOfMetadata({ parentDigitalContentId: digitalContentId })
             )
           }
           setRemixSettingsModalVisible(false)
@@ -370,8 +370,8 @@ const AdvancedForm = (props) => {
   return (
     <>
       {showUnlisted && (
-        <UnlistedAgreementModal
-          showHideAgreementSwitch={props.showHideAgreementSectionInModal}
+        <UnlistedDigitalContentModal
+          showHideDigitalContentSwitch={props.showHideDigitalContentSectionInModal}
           isOpen={isUnlistedModalOpen}
           onClose={() => setIsUnlistedModalOpen(false)}
           didUpdateState={didUpdateUnlistedState}
@@ -392,8 +392,8 @@ const AdvancedForm = (props) => {
               name='setUnlisted'
               text={unlistedButtonTitle}
               label='DigitalContent Visibility'
-              className={styles.hiddenAgreementButton}
-              textClassName={styles.hiddenAgreementButtonText}
+              className={styles.hiddenDigitalContentButton}
+              textClassName={styles.hiddenDigitalContentButtonText}
               onClick={() => {
                 setIsUnlistedModalOpen(true)
               }}
@@ -431,7 +431,7 @@ const AdvancedForm = (props) => {
           )}
         </div>
         {props.type === 'digital_content' ? (
-          <div className={styles.agreementId}>
+          <div className={styles.digitalContentId}>
             <LabeledInput
               label='DigitalContent ISRC'
               placeholder='e.g. CC-XXX-YY-NNNNN'
@@ -711,7 +711,7 @@ FormTile.propTypes = {
   defaultFields: PropTypes.object,
   invalidFields: PropTypes.object,
   requiredFields: PropTypes.object,
-  /** The image returned from useAgreementCoverArt */
+  /** The image returned from useDigitalContentCoverArt */
   coverArt: PropTypes.string,
   /** If image processing resulted in an error. */
   imageProcessingError: PropTypes.bool,
@@ -731,7 +731,7 @@ FormTile.propTypes = {
   /** In the unlisted visibility modal, do we let the user toggle
    * unlisted/public, or just set field visibility?
    */
-  showHideAgreementSectionInModal: PropTypes.bool,
+  showHideDigitalContentSectionInModal: PropTypes.bool,
 
   /**
    * Handle stem selection.
@@ -769,7 +769,7 @@ FormTile.defaultProps = {
   onChangeOrder: () => {},
   onChangeField: () => {},
   showUnlistedToggle: true,
-  showHideAgreementSectionInModal: true,
+  showHideDigitalContentSectionInModal: true,
   children: [],
   stems: [],
   onSelectStemCategory: () => {}

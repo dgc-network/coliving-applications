@@ -85,7 +85,7 @@ const FirstUploadModal = g(({ account, isOpen, close }) => {
         title={<Title />}
       >
         <div className={styles.content}>
-          <div className={styles.landlord}>
+          <div className={styles.author}>
             <DynamicImage
               image={image}
               wrapperClassName={styles.imageWrapper}

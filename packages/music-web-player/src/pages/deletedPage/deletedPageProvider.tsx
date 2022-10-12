@@ -50,14 +50,14 @@ const DeletedPageProvider = ({
   play,
   loadMore,
   goToRoute,
-  resetAgreements,
+  resetDigitalContents,
   moreBy
 }: DeletedPageProviderProps) => {
   useEffect(() => {
     return function cleanup() {
-      resetAgreements()
+      resetDigitalContents()
     }
-  }, [resetAgreements])
+  }, [resetDigitalContents])
 
   const goToLandlordPage = useCallback(() => {
     goToRoute(profilePage(user?.handle))
@@ -71,11 +71,11 @@ const DeletedPageProvider = ({
       count: 5,
       playingUid: currentQueueItem.uid,
       playingSource: currentQueueItem.source,
-      playingAgreementId: currentQueueItem.digital_content && currentQueueItem.digital_content.digital_content_id,
+      playingDigitalContentId: currentQueueItem.digital_content && currentQueueItem.digital_content.digital_content_id,
       playing: isPlaying,
       buffering: isBuffering,
-      pauseAgreement: pause,
-      playAgreement: play,
+      pauseDigitalContent: pause,
+      playDigitalContent: play,
       actions: moreByActions,
       loadMore: (offset: number, limit: number) => {
         loadMore(offset, limit, { handle: user?.handle })
@@ -121,7 +121,7 @@ function mapDispatchToProps(dispatch: Dispatch) {
       ),
     pause: () => dispatch(moreByActions.pause()),
     play: (uid?: string) => dispatch(moreByActions.play(uid)),
-    resetAgreements: () => dispatch(moreByActions.reset())
+    resetDigitalContents: () => dispatch(moreByActions.reset())
   }
 }
 

@@ -2,7 +2,7 @@ import { Nullable, BooleanKeys } from '@coliving/common'
 
 import {
   SetAnalyticsUser,
-  AgreementAnalyticsEvent
+  DigitalContentAnalyticsEvent
 } from 'services/nativeMobileInterface/analytics'
 import { remoteConfigInstance } from 'services/remoteConfig/remoteConfigInstance'
 
@@ -44,7 +44,7 @@ export const init = async () => {
   }
 }
 
-let agreementCounter = 0
+let digitalContentCounter = 0
 
 const AGREEMENT_LIMIT = 10000
 
@@ -66,7 +66,7 @@ export const digital_content = async (
       )
     }
     // stop tracking analytics after we reach session limit
-    if (agreementCounter++ >= AGREEMENT_LIMIT) return
+    if (digitalContentCounter++ >= AGREEMENT_LIMIT) return
 
     // Add generic digital_content event context for every event
     const propertiesWithContext = {
@@ -75,7 +75,7 @@ export const digital_content = async (
     }
 
     if (NATIVE_MOBILE) {
-      const message = new AgreementAnalyticsEvent(event, propertiesWithContext)
+      const message = new DigitalContentAnalyticsEvent(event, propertiesWithContext)
       message.send()
     } else {
       await didInit

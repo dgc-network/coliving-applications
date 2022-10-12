@@ -5,7 +5,7 @@ import { SectionList } from 'app/components/core'
 import { getSearchResults } from 'app/store/search/selectors'
 import type {
   SearchUser,
-  SearchAgreement,
+  SearchDigitalContent,
   SearchContentList,
   SectionHeader
 } from 'app/store/search/types'
@@ -16,7 +16,7 @@ import { SeeMoreResultsButton } from './content/seeMoreResultsButton'
 
 const messages = {
   profile: 'PROFILES',
-  agreements: 'AGREEMENTS',
+  digitalContents: 'AGREEMENTS',
   contentLists: 'CONTENT_LISTS',
   albums: 'ALBUMS'
 }
@@ -29,13 +29,13 @@ const styles = StyleSheet.create({
 
 const sectionHeaders: SectionHeader[] = [
   'users',
-  'agreements',
+  'digitalContents',
   'contentLists',
   'albums'
 ]
 const headerMapping: { [key in SectionHeader]: string } = {
   users: messages.profile,
-  agreements: messages.agreements,
+  digitalContents: messages.digitalContents,
   contentLists: messages.contentLists,
   albums: messages.albums
 }
@@ -53,7 +53,7 @@ const SearchResults = () => {
 
   const sectionWithMore: {
     title: SectionHeader | 'more'
-    data: (SearchUser | SearchAgreement | SearchContentList)[]
+    data: (SearchUser | SearchDigitalContent | SearchContentList)[]
   }[] = [...sections, { title: 'more', data: [] }]
 
   return (

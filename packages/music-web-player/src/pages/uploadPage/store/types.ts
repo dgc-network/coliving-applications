@@ -1,14 +1,14 @@
-import { AgreementMetadata } from '@coliving/common'
+import { DigitalContentMetadata } from '@coliving/common'
 
 import UploadType from 'pages/uploadPage/components/uploadType'
 
-interface UploadAgreement {
+interface UploadDigitalContent {
   file: File
   preview: any // Basically the Howler.js API, but with underscores.
-  metadata: AgreementMetadata
+  metadata: DigitalContentMetadata
 }
 
-interface ExtendedAgreementMetadata extends AgreementMetadata {
+interface ExtendedDigitalContentMetadata extends DigitalContentMetadata {
   artwork: {
     file: Blob
     url: string
@@ -28,15 +28,15 @@ export type Progress = {
 }
 
 export interface UploadPageState {
-  openMultiAgreementNotification: boolean
-  agreements: UploadAgreement[]
-  metadata: ExtendedAgreementMetadata
+  openMultiDigitalContentNotification: boolean
+  digitalContents: UploadDigitalContent[]
+  metadata: ExtendedDigitalContentMetadata
   uploadType: UploadType
   uploading: boolean
   uploadProgress: Progress[]
   success: boolean
   error: boolean
   completionId: number
-  stems: AgreementMetadata[]
-  failedAgreementIndices: number[]
+  stems: DigitalContentMetadata[]
+  failedDigitalContentIndices: number[]
 }

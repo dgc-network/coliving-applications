@@ -21,7 +21,7 @@ import { show as showMusicConfetti } from 'components/musicConfetti/store/slice'
 import UserBadges from 'components/userBadges/userBadges'
 import { useRemoteVar } from 'hooks/useRemoteConfig'
 import { useUserProfilePicture } from 'hooks/useUserProfilePicture'
-import { useRecord, make, AgreementEvent } from 'store/analytics/actions'
+import { useRecord, make, DigitalContentEvent } from 'store/analytics/actions'
 import { profilePage } from 'utils/route'
 
 import InstagramAccountVerification from '../instagramAccountVerified'
@@ -66,18 +66,18 @@ const VerifyBody = (props: VerifyBodyProps) => {
   const { handle, onClick } = props
   const onTwitterClick = useCallback(() => {
     onClick()
-    const agreementEvent: AgreementEvent = make(Name.SETTINGS_START_TWITTER_OAUTH, {
+    const digitalContentEvent: DigitalContentEvent = make(Name.SETTINGS_START_TWITTER_OAUTH, {
       handle
     })
-    record(agreementEvent)
+    record(digitalContentEvent)
   }, [record, onClick, handle])
 
   const onInstagramClick = useCallback(() => {
     onClick()
-    const agreementEvent: AgreementEvent = make(Name.SETTINGS_START_INSTAGRAM_OAUTH, {
+    const digitalContentEvent: DigitalContentEvent = make(Name.SETTINGS_START_INSTAGRAM_OAUTH, {
       handle
     })
-    record(agreementEvent)
+    record(digitalContentEvent)
   }, [record, onClick, handle])
 
   return (
@@ -218,11 +218,11 @@ const VerificationModal = (props: VerificationModalProps) => {
         onInstagramLogin(uuid, profile)
         setStatus(Status.SUCCESS)
       }
-      const agreementEvent: AgreementEvent = make(
+      const digitalContentEvent: DigitalContentEvent = make(
         Name.SETTINGS_COMPLETE_INSTAGRAM_OAUTH,
         { is_verified: profile.is_verified, handle, username: profile.username }
       )
-      record(agreementEvent)
+      record(digitalContentEvent)
     },
     [dispatch, handle, onInstagramLogin, setError, record]
   )
@@ -240,7 +240,7 @@ const VerificationModal = (props: VerificationModalProps) => {
         onTwitterLogin(uuid, profile)
         setStatus(Status.SUCCESS)
       }
-      const agreementEvent: AgreementEvent = make(
+      const digitalContentEvent: DigitalContentEvent = make(
         Name.SETTINGS_COMPLETE_TWITTER_OAUTH,
         {
           is_verified: profile.verified,
@@ -248,7 +248,7 @@ const VerificationModal = (props: VerificationModalProps) => {
           screen_name: profile.screen_name
         }
       )
-      record(agreementEvent)
+      record(digitalContentEvent)
     },
     [dispatch, handle, onTwitterLogin, setError, record]
   )

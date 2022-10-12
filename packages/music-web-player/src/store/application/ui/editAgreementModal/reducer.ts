@@ -1,33 +1,33 @@
 import { ActionsMap } from 'utils/reducer'
 
-import { OPEN, CLOSE, EditAgreementModalActions } from './actions'
-import EditAgreementModalState from './types'
+import { OPEN, CLOSE, EditDigitalContentModalActions } from './actions'
+import EditDigitalContentModalState from './types'
 
 const initialState = {
   isOpen: false,
-  agreementId: null
+  digitalContentId: null
 }
 
-const actionsMap: ActionsMap<EditAgreementModalState> = {
+const actionsMap: ActionsMap<EditDigitalContentModalState> = {
   [OPEN](state, action) {
     return {
       ...state,
       isOpen: true,
-      agreementId: action.agreementId
+      digitalContentId: action.digitalContentId
     }
   },
   [CLOSE](state, action) {
     return {
       ...state,
       isOpen: false,
-      agreementId: null
+      digitalContentId: null
     }
   }
 }
 
 export default function search(
   state = initialState,
-  action: EditAgreementModalActions
+  action: EditDigitalContentModalActions
 ) {
   const matchingReduceFunction = actionsMap[action.type]
   if (!matchingReduceFunction) return state

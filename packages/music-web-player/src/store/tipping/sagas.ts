@@ -226,16 +226,16 @@ function* sendTipAsync() {
   const recipientWallet = recipient.spl_wallet
   const weiBNBalance: BNWei = yield select(getAccountBalance) ??
     (new BN('0') as BNWei)
-  const wliveWeiAmount = yield* call(walletClient.getCurrentWAudioBalance)
+  const wei_digitalcoinWeiAmount = yield* call(walletClient.getCurrentWAudioBalance)
 
   if (weiBNAmount.gt(weiBNBalance)) {
-    const errorMessage = 'Not enough $LIVE'
+    const errorMessage = 'Not enough $DGCO'
     throw new Error(errorMessage)
   }
 
   try {
     yield put(
-      make(Name.TIP_LIVE_REQUEST, {
+      make(Name.TIP_DGCO_REQUEST, {
         senderWallet: sender.spl_wallet,
         recipientWallet,
         senderHandle: sender.handle,
@@ -247,7 +247,7 @@ function* sendTipAsync() {
     )
     // If transferring spl wrapped digitalcoin and there are insufficent funds with only the
     // user bank balance, transfer all eth LIVE to spl wrapped digitalcoin
-    if (weiBNAmount.gt(wliveWeiAmount)) {
+    if (weiBNAmount.gt(wei_digitalcoinWeiAmount)) {
       // Wait for a second before showing the notice that this might take a while
       const showConvertingMessage = yield* fork(function* () {
         yield delay(1000)
@@ -272,7 +272,7 @@ function* sendTipAsync() {
 
     yield put(sendTipSucceeded())
     yield put(
-      make(Name.TIP_LIVE_SUCCESS, {
+      make(Name.TIP_DGCO_SUCCESS, {
         senderWallet: sender.spl_wallet,
         recipientWallet,
         senderHandle: sender.handle,
@@ -308,7 +308,7 @@ function* sendTipAsync() {
     console.error(`Send tip failed: ${error}`)
     yield put(sendTipFailed({ error }))
     yield put(
-      make(Name.TIP_LIVE_FAILURE, {
+      make(Name.TIP_DGCO_FAILURE, {
         senderWallet: sender.spl_wallet,
         recipientWallet,
         senderHandle: sender.handle,
@@ -424,8 +424,8 @@ function* fetchSupportingForUserAsync({
   /**
    * If the user id is that of the logged in user, then
    * get all its supporting data so that when the logged in
-   * user is trying to tip an landlord, we'll know whether or
-   * not that landlord is already being supported by the logged in
+   * user is trying to tip an author, we'll know whether or
+   * not that author is already being supported by the logged in
    * user and thus correctly calculate how much more digitalcoin to tip
    * to become the top supporter.
    */

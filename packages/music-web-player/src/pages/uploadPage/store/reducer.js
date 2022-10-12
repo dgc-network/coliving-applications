@@ -11,8 +11,8 @@ import {
 } from './actions'
 
 const initialState = {
-  openMultiAgreementNotification: true,
-  agreements: null,
+  openMultiDigitalContentNotification: true,
+  digitalContents: null,
   metadata: null,
   uploadType: null,
   stems: [],
@@ -21,9 +21,9 @@ const initialState = {
   success: false,
   shouldReset: false,
 
-  // For multiagreement upload, we allow some agreements to
+  // For multidigitalContent upload, we allow some digitalContents to
   // fail without aborting the whole thing
-  failedAgreementIndices: [],
+  failedDigitalContentIndices: [],
 
   // Id to take the user to after completing upload.
   // Can be either a digital_content or contentList/album.
@@ -34,14 +34,14 @@ const actionsMap = {
   [TOGGLE_MULTI_AGREEMENT_NOTIFICATION](state, action) {
     return {
       ...state,
-      openMultiAgreementNotification: action.open
+      openMultiDigitalContentNotification: action.open
     }
   },
   [UPLOAD_AGREEMENTS_REQUESTED](state, action) {
     const newState = { ...state }
     newState.uploading = true
-    newState.agreements = action.agreements
-    newState.uploadProgress = action.agreements.map((t) => ({}))
+    newState.digitalContents = action.digitalContents
+    newState.uploadProgress = action.digitalContents.map((t) => ({}))
     newState.metadata = action.metadata
     newState.uploadType = action.uploadType
     newState.stems = action.stems
@@ -55,11 +55,11 @@ const actionsMap = {
     newState.uploadType = null
     newState.stems = []
 
-    // Update the upload agreements with resulting metadata. This is used for TikTok sharing
-    if (action.agreementMetadatas) {
-      newState.agreements = state.agreements.map((t, i) => ({
+    // Update the upload digitalContents with resulting metadata. This is used for TikTok sharing
+    if (action.digitalContentMetadatas) {
+      newState.digitalContents = state.digitalContents.map((t, i) => ({
         ...t,
-        metadata: action.agreementMetadatas[i]
+        metadata: action.digitalContentMetadatas[i]
       }))
     }
     return newState
@@ -68,7 +68,7 @@ const actionsMap = {
     const newState = { ...state }
     newState.uploading = false
     newState.uploadType = null
-    newState.agreements = null
+    newState.digitalContents = null
     newState.metadata = null
     newState.stems = []
     return newState
@@ -85,7 +85,7 @@ const actionsMap = {
   [RESET](state, action) {
     return {
       ...initialState,
-      openMultiAgreementNotification: state.openMultiAgreementNotification
+      openMultiDigitalContentNotification: state.openMultiDigitalContentNotification
     }
   },
   [RESET_STATE](state) {
@@ -103,7 +103,7 @@ const actionsMap = {
   [UPLOAD_SINGLE_AGREEMENT_FAILED](state, action) {
     return {
       ...state,
-      failedAgreementIndices: [...state.failedAgreementIndices, action.index]
+      failedDigitalContentIndices: [...state.failedDigitalContentIndices, action.index]
     }
   }
 }

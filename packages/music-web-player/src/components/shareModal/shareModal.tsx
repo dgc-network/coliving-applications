@@ -8,7 +8,7 @@ import {
   shareAudioNftContentList,
   shareCollection
 } from 'common/store/social/collections/actions'
-import { shareAgreement } from 'common/store/social/agreements/actions'
+import { shareDigitalContent } from 'common/store/social/digital_contents/actions'
 import { shareUser } from 'common/store/social/users/actions'
 import { getShareState } from 'common/store/ui/shareModal/selectors'
 import { requestOpen as requestOpenTikTokModal } from 'common/store/ui/shareSoundToTiktokModal/slice'
@@ -40,7 +40,7 @@ export const ShareModal = () => {
   )
 
   const isOwner =
-    content?.type === 'digital_content' && account?.user_id === content.landlord.user_id
+    content?.type === 'digital_content' && account?.user_id === content.author.user_id
 
   const handleShareToTwitter = useCallback(() => {
     if (!source || !content) return
@@ -69,7 +69,7 @@ export const ShareModal = () => {
     if (!source || !content) return
     switch (content.type) {
       case 'digital_content':
-        dispatch(shareAgreement(content.digital_content.digital_content_id, source))
+        dispatch(shareDigitalContent(content.digital_content.digital_content_id, source))
         break
       case 'profile':
         dispatch(shareUser(content.profile.user_id, source))

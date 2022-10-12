@@ -7,7 +7,7 @@ import {
   getCollection,
   getCollections
 } from 'common/store/cache/collections/selectors'
-import { getAgreement, getAgreements } from 'common/store/cache/agreements/selectors'
+import { getDigitalContent, getDigitalContents } from 'common/store/cache/digital_contents/selectors'
 import { getUser, getUsers } from 'common/store/cache/users/selectors'
 
 import {
@@ -17,9 +17,9 @@ import {
   Achievement,
   Announcement,
   EntityType,
-  AddAgreementToContentList,
+  AddDigitalContentToContentList,
   CollectionEntity,
-  AgreementEntity
+  DigitalContentEntity
 } from './types'
 
 const getBaseState = (state: CommonState) => state.pages.notifications
@@ -122,7 +122,7 @@ export const getNotificationEntity = (
     notification.entityType !== Entity.User
   ) {
     const getEntity =
-      notification.entityType === Entity.DigitalContent ? getAgreement : getCollection
+      notification.entityType === Entity.DigitalContent ? getDigitalContent : getCollection
     const entity = getEntity(state, { id: notification.entityId })
     if (entity) {
       const userId =
@@ -137,19 +137,19 @@ export const getNotificationEntity = (
   return null
 }
 
-type EntityTypes<T extends AddAgreementToContentList | Notification> =
-  T extends AddAgreementToContentList
-    ? { digital_content: AgreementEntity; contentList: CollectionEntity }
+type EntityTypes<T extends AddDigitalContentToContentList | Notification> =
+  T extends AddDigitalContentToContentList
+    ? { digital_content: DigitalContentEntity; contentList: CollectionEntity }
     : Nullable<EntityType[]>
 
 export const getNotificationEntities = <
-  T extends AddAgreementToContentList | Notification
+  T extends AddDigitalContentToContentList | Notification
 >(
   state: CommonState,
   notification: T
 ): EntityTypes<T> => {
-  if (notification.type === NotificationType.AddAgreementToContentList) {
-    const digital_content = getAgreement(state, { id: notification.agreementId })
+  if (notification.type === NotificationType.AddDigitalContentToContentList) {
+    const digital_content = getDigitalContent(state, { id: notification.digitalContentId })
     const currentUser = getAccountUser(state)
     const contentList = getCollection(state, { id: notification.contentListId })
     const contentListOwner = getUser(state, { id: notification.contentListOwnerId })
@@ -161,7 +161,7 @@ export const getNotificationEntities = <
 
   if ('entityIds' in notification && 'entityType' in notification) {
     const getEntities =
-      notification.entityType === Entity.DigitalContent ? getAgreements : getCollections
+      notification.entityType === Entity.DigitalContent ? getDigitalContents : getCollections
     const entityMap = getEntities(state, { ids: notification.entityIds })
     const entities = notification.entityIds
       .map((id: number) => (entityMap as any)[id])

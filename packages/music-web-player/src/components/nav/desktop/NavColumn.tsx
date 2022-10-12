@@ -29,9 +29,9 @@ import {
   getAccountUser,
   getContentListLibrary
 } from 'common/store/account/selectors'
-import { getDominantColorsByAgreement } from 'common/store/averageColor/slice'
+import { getDominantColorsByDigitalContent } from 'common/store/averageColor/slice'
 import {
-  addAgreementToContentList,
+  addDigitalContentToContentList,
   createContentList
 } from 'common/store/cache/collections/actions'
 import {
@@ -48,7 +48,7 @@ import {
 } from 'common/store/contentListLibrary/helpers'
 import { makeGetCurrent } from 'common/store/queue/selectors'
 import { saveCollection } from 'common/store/social/collections/actions'
-import { saveAgreement } from 'common/store/social/agreements/actions'
+import { saveDigitalContent } from 'common/store/social/digital_contents/actions'
 import * as createContentListModalActions from 'common/store/ui/createContentListModal/actions'
 import {
   getHideFolderTab,
@@ -80,7 +80,7 @@ import {
   DASHBOARD_PAGE,
   EXPLORE_PAGE,
   FEED_PAGE,
-  fullAgreementPage,
+  fullDigitalContentPage,
   HISTORY_PAGE,
   contentListPage,
   profilePage,
@@ -125,7 +125,7 @@ const NavColumn = ({
   currentQueueItem,
   currentPlayerItem,
   dragging: { dragging, kind, isOwner: draggingIsOwner },
-  saveAgreement,
+  saveDigitalContent,
   saveCollection,
   upload,
   accountStatus,
@@ -243,11 +243,11 @@ const NavColumn = ({
   }, [])
 
   /** @param {bool} full whether or not to get the full page link */
-  const getAgreementPageLink = useCallback(
+  const getDigitalContentPageLink = useCallback(
     (full = false) => {
       if (currentQueueItem && currentQueueItem.user && currentQueueItem.digital_content) {
         return full
-          ? fullAgreementPage(currentQueueItem.digital_content.permalink)
+          ? fullDigitalContentPage(currentQueueItem.digital_content.permalink)
           : currentQueueItem.digital_content.permalink
       }
       return null
@@ -256,9 +256,9 @@ const NavColumn = ({
   )
 
   const onClickArtwork = useCallback(() => {
-    const route = getAgreementPageLink()
+    const route = getDigitalContentPageLink()
     if (route) goToRoute(route)
-  }, [goToRoute, getAgreementPageLink])
+  }, [goToRoute, getDigitalContentPageLink])
 
   const onShowVisualizer = useCallback(
     (e) => {
@@ -418,7 +418,7 @@ const NavColumn = ({
                   hoverClassName={styles.droppableHover}
                   acceptedKinds={['digital_content', 'album']}
                   acceptOwner={false}
-                  onDrop={kind === 'album' ? saveCollection : saveAgreement}
+                  onDrop={kind === 'album' ? saveCollection : saveDigitalContent}
                 >
                   <NavLink
                     to={SAVED_PAGE}
@@ -505,8 +505,8 @@ const NavColumn = ({
           onUpload={onClickUpload}
         />
         <CurrentlyPlaying
-          agreementId={currentQueueItem.digital_content?.digital_content_id ?? null}
-          agreementTitle={currentQueueItem.digital_content?.title ?? null}
+          digitalContentId={currentQueueItem.digital_content?.digital_content_id ?? null}
+          digitalContentTitle={currentQueueItem.digital_content?.title ?? null}
           isUnlisted={currentQueueItem.digital_content?.is_unlisted ?? false}
           isOwner={
             // Note: if neither are defined, it should eval to false, so setting default to different values
@@ -520,7 +520,7 @@ const NavColumn = ({
             currentPlayerItem.collectible?.frameUrl ||
             currentPlayerItem.collectible?.gifUrl
           }
-          draggableLink={getAgreementPageLink()}
+          draggableLink={getDigitalContentPageLink()}
           onClick={onClickArtwork}
           onShowVisualizer={onShowVisualizer}
         />
@@ -547,7 +547,7 @@ const mapStateToProps = (state: AppState) => {
     library: getContentListLibrary(state),
     showCreateContentListModal: getIsOpen(state),
     hideCreateContentListModalFolderTab: getHideFolderTab(state),
-    dominantColors: getDominantColorsByAgreement(state, {
+    dominantColors: getDominantColorsByDigitalContent(state, {
       digital_content: currentQueueItem.digital_content
     })
   }
@@ -558,12 +558,12 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   createContentList: (tempId: string, metadata: Record<string, unknown>) =>
     dispatch(createContentList(tempId, metadata, CreateContentListSource.NAV)),
   goToRoute: (route: string) => dispatch(pushRoute(route)),
-  saveAgreement: (agreementId: number) =>
-    dispatch(saveAgreement(agreementId, FavoriteSource.NAVIGATOR)),
+  saveDigitalContent: (digitalContentId: number) =>
+    dispatch(saveDigitalContent(digitalContentId, FavoriteSource.NAVIGATOR)),
   saveCollection: (collectionId: number) =>
     dispatch(saveCollection(collectionId, FavoriteSource.NAVIGATOR)),
-  addAgreementToContentList: (agreementId: number, contentListId: number) =>
-    dispatch(addAgreementToContentList(agreementId, contentListId)),
+  addDigitalContentToContentList: (digitalContentId: number, contentListId: number) =>
+    dispatch(addDigitalContentToContentList(digitalContentId, contentListId)),
   showActionRequiresAccount: () =>
     dispatch(signOnActions.showRequiresAccountModal()),
   toggleNotificationPanel: () => dispatch(toggleNotificationPanel()),

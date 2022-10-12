@@ -10,10 +10,10 @@ import {
   SquareSizes
 } from '@coliving/common'
 import { getUserId } from '@coliving/web/src/common/store/account/selectors'
-import type { EnhancedCollectionAgreement } from '@coliving/web/src/common/store/cache/collections/selectors'
+import type { EnhancedCollectionDigitalContent } from '@coliving/web/src/common/store/cache/collections/selectors'
 import {
   getCollection,
-  getAgreementsFromCollection
+  getDigitalContentsFromCollection
 } from '@coliving/web/src/common/store/cache/collections/selectors'
 import { getUserFromCollection } from '@coliving/web/src/common/store/cache/users/selectors'
 import {
@@ -39,7 +39,7 @@ import { isEqual, useSelectorWeb } from 'app/hooks/useSelectorWeb'
 import type { AppState } from 'app/store'
 import { getPlayingUid } from 'app/store/digitalcoin/selectors'
 
-import { CollectionTileAgreementList } from './CollectionTileAgreementList'
+import { CollectionTileDigitalContentList } from './CollectionTileDigitalContentList'
 import { LineupTile } from './lineupTile'
 import type { LineupItemProps } from './types'
 
@@ -51,8 +51,8 @@ export const CollectionTile = (props: LineupItemProps) => {
     isEqual
   )
 
-  const agreements = useSelectorWeb(
-    (state) => getAgreementsFromCollection(state, { uid }),
+  const digitalContents = useSelectorWeb(
+    (state) => getDigitalContentsFromCollection(state, { uid }),
     isEqual
   )
 
@@ -61,9 +61,9 @@ export const CollectionTile = (props: LineupItemProps) => {
     isEqual
   )
 
-  if (!collection || !agreements || !user) {
+  if (!collection || !digitalContents || !user) {
     console.warn(
-      'Collection, agreements, or user missing for CollectionTile, preventing render'
+      'Collection, digitalContents, or user missing for CollectionTile, preventing render'
     )
     return null
   }
@@ -76,7 +76,7 @@ export const CollectionTile = (props: LineupItemProps) => {
     <CollectionTileComponent
       {...props}
       collection={collection}
-      agreements={agreements}
+      digitalContents={digitalContents}
       user={user}
     />
   )
@@ -84,27 +84,27 @@ export const CollectionTile = (props: LineupItemProps) => {
 
 type CollectionTileProps = LineupItemProps & {
   collection: Collection
-  agreements: EnhancedCollectionAgreement[]
+  digitalContents: EnhancedCollectionDigitalContent[]
   user: User
 }
 
 const CollectionTileComponent = ({
   collection,
   togglePlay,
-  agreements,
+  digitalContents,
   user,
   ...lineupTileProps
 }: CollectionTileProps) => {
   const dispatchWeb = useDispatchWeb()
   const navigation = useNavigation()
   const currentUserId = useSelectorWeb(getUserId)
-  const currentAgreement = useSelector((state: AppState) => {
+  const currentDigitalContent = useSelector((state: AppState) => {
     const uid = getPlayingUid(state)
-    return agreements.find((digital_content) => digital_content.uid === uid) ?? null
+    return digitalContents.find((digital_content) => digital_content.uid === uid) ?? null
   })
   const isPlayingUid = useSelector((state: AppState) => {
     const uid = getPlayingUid(state)
-    return agreements.some((digital_content) => digital_content.uid === uid)
+    return digitalContents.some((digital_content) => digital_content.uid === uid)
   })
 
   const {
@@ -137,17 +137,17 @@ const CollectionTileComponent = ({
 
   const handlePress = useCallback(
     ({ isPlaying }) => {
-      if (!agreements.length) return
+      if (!digitalContents.length) return
 
       togglePlay({
-        uid: currentAgreement?.uid ?? agreements[0]?.uid ?? null,
-        id: currentAgreement?.digital_content_id ?? agreements[0]?.digital_content_id ?? null,
+        uid: currentDigitalContent?.uid ?? digitalContents[0]?.uid ?? null,
+        id: currentDigitalContent?.digital_content_id ?? digitalContents[0]?.digital_content_id ?? null,
         source: PlaybackSource.CONTENT_LIST_TILE_AGREEMENT,
         isPlaying,
         isPlayingUid
       })
     },
-    [isPlayingUid, currentAgreement, togglePlay, agreements]
+    [isPlayingUid, currentDigitalContent, togglePlay, digitalContents]
   )
 
   const handlePressTitle = useCallback(() => {
@@ -158,11 +158,11 @@ const CollectionTileComponent = ({
   }, [content_list_id, routeWeb, navigation])
 
   const duration = useMemo(() => {
-    return agreements.reduce(
+    return digitalContents.reduce(
       (duration: number, digital_content: DigitalContent) => duration + digital_content.duration,
       0
     )
-  }, [agreements])
+  }, [digitalContents])
 
   const handlePressOverflow = useCallback(() => {
     if (content_list_id === undefined) {
@@ -253,7 +253,7 @@ const CollectionTileComponent = ({
       item={collection}
       user={user}
     >
-      <CollectionTileAgreementList agreements={agreements} onPress={handlePressTitle} />
+      <CollectionTileDigitalContentList digitalContents={digitalContents} onPress={handlePressTitle} />
     </LineupTile>
   )
 }

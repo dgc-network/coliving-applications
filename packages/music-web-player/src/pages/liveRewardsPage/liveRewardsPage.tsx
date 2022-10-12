@@ -28,8 +28,8 @@ import WalletModal from './walletModal'
 import ExplainerTile from './components/explainerTile'
 
 export const messages = {
-  title: '$LIVE & Rewards',
-  description: 'Complete tasks to earn $LIVE tokens!'
+  title: '$DGCO & Rewards',
+  description: 'Complete tasks to earn $DGCO tokens!'
 }
 
 export const RewardsContent = () => {
@@ -97,7 +97,7 @@ export const MobilePage = ({ children }: { children: ReactNode }) => {
   )
 }
 
-export const LiveRewardsPage = () => {
+export const DigitalcoinRewardsPage = () => {
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(getBalance())
@@ -110,4 +110,4 @@ export const LiveRewardsPage = () => {
   )
 }
 
-export default LiveRewardsPage
+export default DigitalcoinRewardsPage

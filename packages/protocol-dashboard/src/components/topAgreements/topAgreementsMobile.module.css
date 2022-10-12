@@ -3,7 +3,7 @@
   user-select: none;
 }
 
-.agreements {
+.digitalContents {
   display: flex;
   flex-wrap: wrap;
   width: 100%;
@@ -37,7 +37,7 @@
   transform: scale3d(0.90, 0.90, 0.90);
 }
 
-.agreementTitle {
+.digitalContentTitle {
   text-align: center;
   font-size: 12px;
   line-height: 20px;

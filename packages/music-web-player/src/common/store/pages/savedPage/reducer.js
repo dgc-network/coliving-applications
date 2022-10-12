@@ -5,9 +5,9 @@ import {
   ADD_LOCAL_SAVE,
   REMOVE_LOCAL_SAVE
 } from 'common/store/pages/savedPage/actions'
-import agreementsReducer from 'common/store/pages/savedPage/lineups/agreements/reducer'
+import digitalContentsReducer from 'common/store/pages/savedPage/lineups/digital_contents/reducer'
 
-import { PREFIX as agreementsPrefix } from './lineups/agreements/actions'
+import { PREFIX as digitalContentsPrefix } from './lineups/digital_contents/actions'
 
 const initialState = {
   // id => uid
@@ -33,25 +33,25 @@ const actionsMap = {
       ...state,
       localSaves: {
         ...state.localSaves,
-        [action.agreementId]: action.uid
+        [action.digitalContentId]: action.uid
       }
     }
   },
   [REMOVE_LOCAL_SAVE](state, action) {
     const newState = { ...state }
-    delete newState.localSaves[action.agreementId]
+    delete newState.localSaves[action.digitalContentId]
     newState.saves = newState.saves.filter(
-      ({ save_item_id: id }) => id !== action.agreementId
+      ({ save_item_id: id }) => id !== action.digitalContentId
     )
     return newState
   }
 }
 
-const agreementsLineupReducer = asLineup(agreementsPrefix, agreementsReducer)
+const digitalContentsLineupReducer = asLineup(digitalContentsPrefix, digitalContentsReducer)
 
 const reducer = (state = initialState, action) => {
-  const agreements = agreementsLineupReducer(state.agreements, action)
-  if (agreements !== state.agreements) return { ...state, agreements }
+  const digitalContents = digitalContentsLineupReducer(state.digitalContents, action)
+  if (digitalContents !== state.digitalContents) return { ...state, digitalContents }
 
   const matchingReduceFunction = actionsMap[action.type]
   if (!matchingReduceFunction) return state

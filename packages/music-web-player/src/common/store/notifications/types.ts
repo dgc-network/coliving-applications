@@ -19,7 +19,7 @@ export enum NotificationType {
   Milestone = 'Milestone',
   RemixCreate = 'RemixCreate',
   RemixCosign = 'RemixCosign',
-  TrendingAgreement = 'TrendingAgreement',
+  TrendingDigitalContent = 'TrendingDigitalContent',
   ChallengeReward = 'ChallengeReward',
   TierChange = 'TierChange',
   Reaction = 'Reaction',
@@ -27,7 +27,7 @@ export enum NotificationType {
   TipSend = 'TipSend',
   SupporterRankUp = 'SupporterRankUp',
   SupportingRankUp = 'SupportingRankUp',
-  AddAgreementToContentList = 'AddAgreementToContentList'
+  AddDigitalContentToContentList = 'AddDigitalContentToContentList'
 }
 
 export enum Entity {
@@ -37,11 +37,11 @@ export enum Entity {
   User = 'User'
 }
 
-export type AgreementEntity = DigitalContent & { user: Nullable<User> }
+export type DigitalContentEntity = DigitalContent & { user: Nullable<User> }
 
 export type CollectionEntity = Collection & { user: Nullable<User> }
 
-export type EntityType = AgreementEntity | CollectionEntity
+export type EntityType = DigitalContentEntity | CollectionEntity
 
 export type BaseNotification = {
   id: string
@@ -117,8 +117,8 @@ export type Milestone = BaseNotification &
 export type RemixCreate = BaseNotification & {
   type: NotificationType.RemixCreate
   userId: ID
-  parentAgreementId: ID
-  childAgreementId: ID
+  parentDigitalContentId: ID
+  childDigitalContentId: ID
   entityType: Entity.DigitalContent
   entityIds: ID[]
 }
@@ -126,14 +126,14 @@ export type RemixCreate = BaseNotification & {
 export type RemixCosign = BaseNotification & {
   type: NotificationType.RemixCosign
   userId: ID
-  parentAgreementUserId: ID
-  childAgreementId: ID
+  parentDigitalContentUserId: ID
+  childDigitalContentId: ID
   entityType: Entity.DigitalContent
   entityIds: ID[]
 }
 
-export type TrendingAgreement = BaseNotification & {
-  type: NotificationType.TrendingAgreement
+export type TrendingDigitalContent = BaseNotification & {
+  type: NotificationType.TrendingDigitalContent
   rank: number
   genre: string
   time: 'week' | 'month' | 'year'
@@ -197,9 +197,9 @@ export type SupportingRankUp = BaseNotification & {
   entityType: Entity.User
 }
 
-export type AddAgreementToContentList = BaseNotification & {
-  type: NotificationType.AddAgreementToContentList
-  agreementId: ID
+export type AddDigitalContentToContentList = BaseNotification & {
+  type: NotificationType.AddDigitalContentToContentList
+  digitalContentId: ID
   contentListId: ID
   contentListOwnerId: ID
 }
@@ -213,7 +213,7 @@ export type Notification =
   | Milestone
   | RemixCreate
   | RemixCosign
-  | TrendingAgreement
+  | TrendingDigitalContent
   | ChallengeReward
   | TierChange
   | Reaction
@@ -221,7 +221,7 @@ export type Notification =
   | TipSend
   | SupporterRankUp
   | SupportingRankUp
-  | AddAgreementToContentList
+  | AddDigitalContentToContentList
 
 export default interface NotificationState {
   notifications: {

@@ -12,7 +12,7 @@ import UploadType from './uploadType'
 
 class EditPage extends Component {
   state = {
-    invalidAgreementsFields: this.props.agreements.map((digital_content) =>
+    invalidDigitalContentsFields: this.props.digitalContents.map((digital_content) =>
       mapValues(digital_content.metadata, (v) => false)
     ),
     invalidCollectionFields: mapValues(this.props.metadata, (v) => false)
@@ -22,8 +22,8 @@ class EditPage extends Component {
     this.props.onStopPreview()
   }
 
-  getRequiredAgreementsFields = (agreements) => {
-    return this.props.agreements.map((digital_content) => {
+  getRequiredDigitalContentsFields = (digitalContents) => {
+    return this.props.digitalContents.map((digital_content) => {
       const fields = mapValues(digital_content.metadata, (v) => false)
       fields.title = true
       if (
@@ -45,27 +45,27 @@ class EditPage extends Component {
     return fields
   }
 
-  validateAgreementsFields = (agreements) => {
+  validateDigitalContentsFields = (digitalContents) => {
     const { uploadType } = this.props
 
-    const newInvalidAgreementsFields = [...this.state.invalidAgreementsFields]
-    const validAgreements = agreements.map((digital_content, i) => {
-      newInvalidAgreementsFields[i] = {
-        ...this.state.invalidAgreementsFields[i],
+    const newInvalidDigitalContentsFields = [...this.state.invalidDigitalContentsFields]
+    const validDigitalContents = digitalContents.map((digital_content, i) => {
+      newInvalidDigitalContentsFields[i] = {
+        ...this.state.invalidDigitalContentsFields[i],
         title: !digital_content.metadata.title
       }
       if (
         uploadType === UploadType.INDIVIDUAL_AGREEMENT ||
         uploadType === UploadType.INDIVIDUAL_AGREEMENTS
       ) {
-        newInvalidAgreementsFields[i].genre = !digital_content.metadata.genre
-        newInvalidAgreementsFields[i].artwork = !digital_content.metadata.artwork.file
+        newInvalidDigitalContentsFields[i].genre = !digital_content.metadata.genre
+        newInvalidDigitalContentsFields[i].artwork = !digital_content.metadata.artwork.file
       }
-      return Object.values(newInvalidAgreementsFields[i]).every((f) => !f)
+      return Object.values(newInvalidDigitalContentsFields[i]).every((f) => !f)
     })
 
     this.setState({
-      invalidAgreementsFields: newInvalidAgreementsFields
+      invalidDigitalContentsFields: newInvalidDigitalContentsFields
     })
 
     const unlistedVisibilityFields = [
@@ -75,8 +75,8 @@ class EditPage extends Component {
       'share',
       'play_count'
     ]
-    for (let i = 0; i < agreements.length; i += 1) {
-      const digital_content = agreements[i]
+    for (let i = 0; i < digitalContents.length; i += 1) {
+      const digital_content = digitalContents[i]
       // If digital_content is not unlisted (is public) and one of the unlisted visibility fields is false, set to true
       if (
         !digital_content.metadata.is_unlisted &&
@@ -84,7 +84,7 @@ class EditPage extends Component {
           (field) => digital_content.metadata.field_visibility[field]
         )
       ) {
-        this.updateAgreement(
+        this.updateDigitalContent(
           'field_visibility',
           {
             genre: true,
@@ -99,7 +99,7 @@ class EditPage extends Component {
         )
       }
     }
-    return validAgreements.every((f) => f)
+    return validDigitalContents.every((f) => f)
   }
 
   validateCollectionFields = (formFields) => {
@@ -122,8 +122,8 @@ class EditPage extends Component {
     if (uploadType === UploadType.CONTENT_LIST || uploadType === UploadType.ALBUM) {
       validCollectionFields = this.validateCollectionFields(this.props.metadata)
     }
-    const validAgreementsFields = this.validateAgreementsFields(this.props.agreements)
-    if (validAgreementsFields && validCollectionFields) {
+    const validDigitalContentsFields = this.validateDigitalContentsFields(this.props.digitalContents)
+    if (validDigitalContentsFields && validCollectionFields) {
       this.props.onContinue()
     }
   }
@@ -135,17 +135,17 @@ class EditPage extends Component {
     this.props.updateMetadata(field, value)
   }
 
-  updateAgreement = (field, value, invalid, i) => {
-    const { invalidAgreementsFields } = this.state
-    invalidAgreementsFields[i][field] = !!invalid
-    this.setState({ invalidAgreementsFields })
-    this.props.updateAgreement(field, value, i)
+  updateDigitalContent = (field, value, invalid, i) => {
+    const { invalidDigitalContentsFields } = this.state
+    invalidDigitalContentsFields[i][field] = !!invalid
+    this.setState({ invalidDigitalContentsFields })
+    this.props.updateDigitalContent(field, value, i)
   }
 
   render() {
     const {
       metadata,
-      agreements,
+      digitalContents,
       uploadType,
       previewIndex,
       onPlayPreview,
@@ -153,9 +153,9 @@ class EditPage extends Component {
       onChangeOrder
     } = this.props
 
-    const { invalidAgreementsFields, invalidCollectionFields } = this.state
+    const { invalidDigitalContentsFields, invalidCollectionFields } = this.state
 
-    const requiredAgreementsFields = this.getRequiredAgreementsFields(this.props.agreements)
+    const requiredDigitalContentsFields = this.getRequiredDigitalContentsFields(this.props.digitalContents)
     const requiredCollectionFields = this.getRequiredCollectionFields(
       this.props.metadata
     )
@@ -177,17 +177,17 @@ class EditPage extends Component {
               onChangeOrder(source, destination)
             }
           >
-            {agreements.map((digital_content, i) => (
+            {digitalContents.map((digital_content, i) => (
               <InlineFormTile
                 key={i}
                 defaultFields={digital_content.metadata}
-                invalidFields={invalidAgreementsFields[i]}
-                requiredFields={requiredAgreementsFields[i]}
+                invalidFields={invalidDigitalContentsFields[i]}
+                requiredFields={requiredDigitalContentsFields[i]}
                 playing={i === previewIndex}
                 onPlayPreview={() => onPlayPreview(i)}
                 onStopPreview={() => onStopPreview()}
                 onChangeField={(field, value, invalid = false) =>
-                  this.updateAgreement(field, value, invalid, i)
+                  this.updateDigitalContent(field, value, invalid, i)
                 }
               />
             ))}
@@ -195,12 +195,12 @@ class EditPage extends Component {
         </div>
       )
     } else {
-      forms = agreements.map((digital_content, i) => (
+      forms = digitalContents.map((digital_content, i) => (
         <div key={digital_content.file.preview + i} className={styles.formTile}>
           <FormTile
             defaultFields={digital_content.metadata}
-            invalidFields={invalidAgreementsFields[i]}
-            requiredFields={requiredAgreementsFields[i]}
+            invalidFields={invalidDigitalContentsFields[i]}
+            requiredFields={requiredDigitalContentsFields[i]}
             playing={i === previewIndex}
             type={'digital_content'}
             onAddStems={(stems) => this.props.onAddStems(stems, i)}
@@ -212,7 +212,7 @@ class EditPage extends Component {
             onPlayPreview={() => onPlayPreview(i)}
             onStopPreview={() => onStopPreview()}
             onChangeField={(field, value, invalid) =>
-              this.updateAgreement(field, value, invalid, i)
+              this.updateDigitalContent(field, value, invalid, i)
             }
           />
         </div>
@@ -239,18 +239,18 @@ class EditPage extends Component {
 }
 
 EditPage.propTypes = {
-  agreements: PropTypes.array,
+  digitalContents: PropTypes.array,
   uploadType: PropTypes.oneOf(Object.values(UploadType)),
   previewIndex: PropTypes.number,
   onPlayPreview: PropTypes.func,
   onStopPreview: PropTypes.func,
-  updateAgreement: PropTypes.func,
+  updateDigitalContent: PropTypes.func,
   updateMetadata: PropTypes.func,
   onContinue: PropTypes.func,
   onAddStems: PropTypes.func,
   stems: PropTypes.array,
 
-  /** Function of type (agreementIndex, stemIndex) => void */
+  /** Function of type (digitalContentIndex, stemIndex) => void */
   onDeleteStem: PropTypes.func
 }
 

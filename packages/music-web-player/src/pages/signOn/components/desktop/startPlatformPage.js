@@ -15,19 +15,19 @@ const messages = {
     button: 'Upload DigitalContent',
     title: 'Why Upload My Music?',
     description:
-      'Once you’ve uploaded your music, others can discover your agreements immediately!'
+      'Once you’ve uploaded your music, others can discover your digitalContents immediately!'
   },
   startListening: {
     button: 'Start Listening',
     title: 'Nothing To Upload Yet?',
     description:
-      'Support landlords you like by listening and sharing their agreements with your friends.'
+      'Support landlords you like by listening and sharing their digitalContents with your friends.'
   }
 }
 
 export class StartPlatformPage extends Component {
   render() {
-    const { onUploadAgreement, onStartListening } = this.props
+    const { onUploadDigitalContent, onStartListening } = this.props
     return (
       <div className={styles.container}>
         <div className={styles.contentContainer}>
@@ -46,7 +46,7 @@ export class StartPlatformPage extends Component {
                 type={ButtonType.PRIMARY_ALT}
                 leftIcon={<IconUpload />}
                 name='uploadMedia'
-                onClick={onUploadAgreement}
+                onClick={onUploadDigitalContent}
               />
               <div className={styles.optionTextContainer}>
                 <div className={styles.optionTitle}>
@@ -86,7 +86,7 @@ export class StartPlatformPage extends Component {
 
 StartPlatformPage.propTypes = {
   onPrevPage: PropTypes.func,
-  onUploadAgreement: PropTypes.func,
+  onUploadDigitalContent: PropTypes.func,
   onStartListening: PropTypes.func
 }
 

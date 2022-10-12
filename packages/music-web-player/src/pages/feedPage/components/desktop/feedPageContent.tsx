@@ -5,7 +5,7 @@ import Header from 'components/header/desktop/header'
 import EndOfLineup from 'components/lineup/endOfLineup'
 import Lineup from 'components/lineup/lineup'
 import {
-  getLoadMoreAgreementCount,
+  getLoadMoreDigitalContentCount,
   INITIAL_LOAD_AGREEMENTS_MULTIPLIER
 } from 'components/lineup/lineupProvider'
 import { LineupVariant } from 'components/lineup/types'
@@ -35,8 +35,8 @@ const FeedPageContent = ({
   goToSignUp,
   setFeedInView,
   loadMoreFeed,
-  playFeedAgreement,
-  pauseFeedAgreement,
+  playFeedDigitalContent,
+  pauseFeedDigitalContent,
   getLineupProps,
   feedFilter,
   setFeedFilter,
@@ -50,8 +50,8 @@ const FeedPageContent = ({
     ...getLineupProps(feed),
     setInView: setFeedInView,
     loadMore: loadMoreFeed,
-    playAgreement: playFeedAgreement,
-    pauseAgreement: pauseFeedAgreement,
+    playDigitalContent: playFeedDigitalContent,
+    pauseDigitalContent: pauseFeedDigitalContent,
     delineate: feedIsMain,
     actions: feedActions
   }
@@ -63,7 +63,7 @@ const FeedPageContent = ({
     }
     setFeedFilter(filter)
     resetFeedLineup()
-    const fetchLimit = getLoadMoreAgreementCount(
+    const fetchLimit = getLoadMoreDigitalContentCount(
       mainLineupProps.variant,
       INITIAL_LOAD_AGREEMENTS_MULTIPLIER
     )

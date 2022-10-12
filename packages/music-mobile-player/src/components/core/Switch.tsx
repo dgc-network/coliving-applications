@@ -35,7 +35,7 @@ export const Switch = (props: SwitchProps) => {
   return (
     <RNSwitch
       style={{ transform: [{ scaleX: 0.8 }, { scaleY: 0.8 }] }}
-      agreementColor={{ false: neutralLight6, true: secondary }}
+      digitalContentColor={{ false: neutralLight6, true: secondary }}
       thumbColor={neutralLight9}
       value={isEnabled}
       onValueChange={handleValueChange}

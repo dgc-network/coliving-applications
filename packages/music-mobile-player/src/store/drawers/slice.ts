@@ -4,7 +4,7 @@ import { createSlice } from '@reduxjs/toolkit'
 export type Drawer =
   | 'EnablePushNotifications'
   | 'DeactivateAccountConfirmation'
-  | 'DownloadAgreementProgress'
+  | 'DownloadDigitalContentProgress'
   | 'ForgotPassword'
   | 'NowPlaying'
 
@@ -13,7 +13,7 @@ export type DrawersState = { [drawer in Drawer]: boolean | 'closing' }
 const initialState: DrawersState = {
   EnablePushNotifications: false,
   DeactivateAccountConfirmation: false,
-  DownloadAgreementProgress: false,
+  DownloadDigitalContentProgress: false,
   ForgotPassword: false,
   NowPlaying: false
 }

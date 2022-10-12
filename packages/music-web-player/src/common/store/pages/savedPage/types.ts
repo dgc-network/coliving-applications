@@ -4,13 +4,13 @@ import {
   Collection,
   Favorite,
   LineupState,
-  LineupAgreement
+  LineupDigitalContent
 } from '@coliving/common'
 import { Moment } from 'moment'
 
 export default interface SavesPageState {
   localSaves: { [id: number]: UID }
-  agreements: LineupState<{ id: ID; dateSaved: string }>
+  digitalContents: LineupState<{ id: ID; dateSaved: string }>
   saves: Favorite[]
 }
 
@@ -20,12 +20,12 @@ export enum Tabs {
   CONTENT_LISTS = 'CONTENT_LISTS'
 }
 
-export type SavedPageAgreement = LineupAgreement & { dateSaved: string }
+export type SavedPageDigitalContent = LineupDigitalContent & { dateSaved: string }
 
-export type AgreementRecord = SavedPageAgreement & {
+export type DigitalContentRecord = SavedPageDigitalContent & {
   key: string
   name: string
-  landlord: string
+  author: string
   handle: string
   date: Moment
   time: number

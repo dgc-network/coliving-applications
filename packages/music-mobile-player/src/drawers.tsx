@@ -4,15 +4,15 @@ import type { Modals } from '@coliving/web/src/common/store/ui/modals/slice'
 
 import { AddToContentListDrawer } from 'app/components/addToContentListDrawer'
 import { ApiRewardsDrawer } from 'app/components/apiRewardsDrawer/apiRewardsDrawer'
-import { AudioBreakdownDrawer } from 'app/components/liveBreakdownDrawer'
-import { TiersExplainerDrawer } from 'app/components/liveRewards'
+import { DigitalcoinBreakdownDrawer } from 'app/components/digitalcoinBreakdownDrawer'
+import { TiersExplainerDrawer } from 'app/components/digitalcoinRewards'
 import { ChallengeRewardsDrawer } from 'app/components/challengeRewardsDrawer'
 import { CognitoDrawer } from 'app/components/cognitoDrawer/cognitoDrawer'
 import { CollectibleDetailsDrawer } from 'app/components/collectibleDetailsDrawer'
 import { ConnectWalletsDrawer } from 'app/components/connectWalletsDrawer'
 import { DeactivateAccountConfirmationDrawer } from 'app/components/deactivateAccountConfirmationDrawer'
 import { DeleteContentListConfirmationDrawer } from 'app/components/deleteContentListConfirmation-drawer'
-import { DownloadAgreementProgressDrawer } from 'app/components/downloadAgreementProgressDrawer'
+import { DownloadDigitalContentProgressDrawer } from 'app/components/downloadDigitalContentProgressDrawer'
 import { EditCollectiblesDrawer } from 'app/components/editCollectiblesDrawer'
 import { EnablePushNotificationsDrawer } from 'app/components/enablePushNotificationsDrawer'
 import { FeedFilterDrawer } from 'app/components/feedFilterDrawer'
@@ -22,7 +22,7 @@ import { OverflowMenuDrawer } from 'app/components/overflowMenuDrawer'
 import { ShareDrawer } from 'app/components/shareDrawer'
 import { ShareToTikTokDrawer } from 'app/components/shareToTiktokDrawer'
 import { SignOutConfirmationDrawer } from 'app/components/signOutConfirmationDrawer'
-import { TransferAudioMobileDrawer } from 'app/components/transferLiveMobileDrawer'
+import { TransferAudioMobileDrawer } from 'app/components/transferDigitalcoinMobileDrawer'
 import { TrendingRewardsDrawer } from 'app/components/trendingRewardsDrawer'
 import { TrendingFilterDrawer } from 'app/screens/trendingScreen'
 
@@ -82,13 +82,13 @@ const commonDrawersMap: { [Modal in Modals]?: ComponentType } = {
   Overflow: OverflowMenuDrawer,
   SignOutConfirmation: SignOutConfirmationDrawer,
   AddToContentList: AddToContentListDrawer,
-  AudioBreakdown: AudioBreakdownDrawer,
+  DigitalcoinBreakdown: DigitalcoinBreakdownDrawer,
   DeleteContentListConfirmation: DeleteContentListConfirmationDrawer
 }
 
 const nativeDrawersMap: { [DrawerName in Drawer]?: ComponentType } = {
   EnablePushNotifications: EnablePushNotificationsDrawer,
-  DownloadAgreementProgress: DownloadAgreementProgressDrawer,
+  DownloadDigitalContentProgress: DownloadDigitalContentProgressDrawer,
   ForgotPassword: ForgotPasswordDrawer
 }
 

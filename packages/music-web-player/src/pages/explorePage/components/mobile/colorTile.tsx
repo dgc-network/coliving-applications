@@ -2,7 +2,7 @@ import { ReactNode } from 'react'
 
 import cn from 'classnames'
 
-import { ReactComponent as IconLiveRewardsPill } from 'assets/img/iconLiveRewardsPill.svg'
+import { ReactComponent as IconDigitalcoinRewardsPill } from 'assets/img/iconDigitalcoinRewardsPill.svg'
 
 import styles from './colorTile.module.css'
 
@@ -48,7 +48,7 @@ const ColorTile = ({
       {icon && <div className={styles.icon}>{icon}</div>}
       {isIncentivized ? (
         <div className={styles.rewardsPill}>
-          <IconLiveRewardsPill />
+          <IconDigitalcoinRewardsPill />
         </div>
       ) : null}
     </div>

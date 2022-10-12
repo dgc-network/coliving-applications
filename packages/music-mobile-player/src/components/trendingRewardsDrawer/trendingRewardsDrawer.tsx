@@ -36,25 +36,25 @@ const TRENDING_REWARDS_DRAWER_NAME = 'TrendingRewardsExplainer'
 const TOS_URL = 'https://blog..co/article/digitalcoin-rewards'
 
 const messages = {
-  agreementsTitle: 'Top 5 Agreements Each Week Receive 100 $LIVE',
-  contentListTitle: 'Top 5 ContentLists Each Week Receive 100 $LIVE',
-  undergroundTitle: 'Top 5 Agreements Each Week Receive 100 $LIVE',
+  digitalContentsTitle: 'Top 5 DigitalContents Each Week Receive 100 $DGCO',
+  contentListTitle: 'Top 5 ContentLists Each Week Receive 100 $DGCO',
+  undergroundTitle: 'Top 5 DigitalContents Each Week Receive 100 $DGCO',
   winners: 'Winners are selected every Friday at Noon PT!',
   lastWeek: "LAST WEEK'S WINNERS",
-  agreements: 'AGREEMENTS',
+  digitalContents: 'AGREEMENTS',
   contentLists: 'CONTENT_LISTS',
   underground: 'UNDERGROUND',
   terms: 'Terms and Conditions Apply',
-  agreementsModalTitle: 'Top 5 Trending Agreements',
+  digitalContentsModalTitle: 'Top 5 Trending DigitalContents',
   contentListsModalTitle: 'Top 5 Trending ContentLists',
-  undergroundModalTitle: 'Top 5 Underground Trending Agreements',
-  buttonTextAgreements: 'Trending Agreements',
+  undergroundModalTitle: 'Top 5 Underground Trending DigitalContents',
+  buttonTextDigitalContents: 'Trending DigitalContents',
   buttonTextContentLists: 'Trending ContentLists',
-  buttonTextUnderground: 'Underground Trending Agreements'
+  buttonTextUnderground: 'Underground Trending DigitalContents'
 }
 
 const TRENDING_PAGES = {
-  agreements: {
+  digitalContents: {
     native: { screen: 'trending' as const },
     web: { route: TRENDING_PAGE }
   },
@@ -80,10 +80,10 @@ const textMap = {
     title: messages.contentListTitle,
     button: messages.buttonTextContentLists
   },
-  agreements: {
-    modalTitle: messages.agreementsModalTitle,
-    title: messages.agreementsTitle,
-    button: messages.buttonTextAgreements
+  digitalContents: {
+    modalTitle: messages.digitalContentsModalTitle,
+    title: messages.digitalContentsTitle,
+    button: messages.buttonTextDigitalContents
   },
   underground: {
     modalTitle: messages.undergroundModalTitle,
@@ -149,7 +149,7 @@ const useStyles = makeStyles(({ palette, spacing, typography }) => ({
 }))
 
 // Getters and setters for whether we're looking at
-// trending contentLists or trending agreements
+// trending contentLists or trending digitalContents
 const useRewardsType = (): [
   TrendingRewardsModalType,
   (type: TrendingRewardsModalType) => void
@@ -162,15 +162,15 @@ const useRewardsType = (): [
     },
     [dispatch]
   )
-  return [rewardsType ?? 'agreements', setTrendingRewardsType]
+  return [rewardsType ?? 'digitalContents', setTrendingRewardsType]
 }
 
 const useTweetId = (type: TrendingRewardsModalType) => {
-  const agreementsId = useRemoteVar(StringKeys.REWARDS_TWEET_ID_AGREEMENTS)
+  const digitalContentsId = useRemoteVar(StringKeys.REWARDS_TWEET_ID_AGREEMENTS)
   const contentListsId = useRemoteVar(StringKeys.REWARDS_TWEET_ID_CONTENT_LISTS)
   const undergroundId = useRemoteVar(StringKeys.REWARDS_TWEET_ID_UNDERGROUND)
   return {
-    agreements: agreementsId,
+    digitalContents: digitalContentsId,
     contentLists: contentListsId,
     underground: undergroundId
   }[type]
@@ -192,8 +192,8 @@ export const TrendingRewardsDrawer = () => {
 
   const tabOptions = [
     {
-      key: 'agreements',
-      text: messages.agreements
+      key: 'digitalContents',
+      text: messages.digitalContents
     },
     {
       key: 'contentLists',

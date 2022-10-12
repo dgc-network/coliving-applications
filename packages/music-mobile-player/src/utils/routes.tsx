@@ -37,7 +37,7 @@ export const encodeUrlName = (name: string) => {
 
 const COLIVING_URL = Config.COLIVING_URL
 
-export const getAgreementRoute = (
+export const getDigitalContentRoute = (
   digital_content: { permalink: string },
   fullUrl = false
 ) => {

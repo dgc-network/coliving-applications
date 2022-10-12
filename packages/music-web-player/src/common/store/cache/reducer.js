@@ -81,35 +81,35 @@ export const mergeCustomizer = (objValue, srcValue, key) => {
 
   // For content_list_contents, this is trickier.
   // We want to never merge because contentLists can have
-  // agreements be deleted since last time, but
+  // digitalContents be deleted since last time, but
   // new fetches won't have UIDs, so we need to preserve those.
   if (objValue && key === 'content_list_contents') {
-    // Map out agreements keyed by id, but store as an array-value
+    // Map out digitalContents keyed by id, but store as an array-value
     // because a contentList can contain multiple of the same digital_content id
-    const agreementMap = {}
+    const digitalContentMap = {}
     objValue.digital_content_ids.forEach((t) => {
       const id = t.digital_content
-      if (id in agreementMap) {
-        agreementMap[id].push(t)
+      if (id in digitalContentMap) {
+        digitalContentMap[id].push(t)
       } else {
-        agreementMap[id] = [t]
+        digitalContentMap[id] = [t]
       }
     })
 
-    const agreementIds = srcValue.digital_content_ids.map((t) => {
-      const mappedList = agreementMap[t.digital_content]
+    const digitalContentIds = srcValue.digital_content_ids.map((t) => {
+      const mappedList = digitalContentMap[t.digital_content]
       if (!mappedList) return t
 
-      const mappedAgreement = mappedList.shift()
-      if (!mappedAgreement?.uid) return t
+      const mappedDigitalContent = mappedList.shift()
+      if (!mappedDigitalContent?.uid) return t
 
       return {
         ...t,
-        uid: mappedAgreement.uid
+        uid: mappedDigitalContent.uid
       }
     })
 
-    return { ...srcValue, digital_content_ids: agreementIds }
+    return { ...srcValue, digital_content_ids: digitalContentIds }
   }
 }
 

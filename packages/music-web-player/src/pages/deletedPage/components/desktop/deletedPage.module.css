@@ -82,7 +82,7 @@
   display: inline;
 }
 
-.landlordWrapper .landlord {
+.landlordWrapper .author {
   display: inline-flex;
   align-items: center;
   color: var(--secondary);
@@ -91,7 +91,7 @@
   padding-left: 4px;
 }
 
-.landlordWrapper .landlord:hover {
+.landlordWrapper .author:hover {
   color: var(--primary);
   cursor: pointer;
   text-decoration: underline;

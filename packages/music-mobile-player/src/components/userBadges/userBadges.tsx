@@ -3,7 +3,7 @@ import type { ViewStyle, StyleProp, TextStyle } from 'react-native'
 import { StyleSheet, View, Text } from 'react-native'
 
 import IconVerified from 'app/assets/images/iconVerified.svg'
-import { IconAudioBadge } from 'app/components/liveRewards'
+import { IconAudioBadge } from 'app/components/digitalcoinRewards'
 import { useSelectTierInfo } from 'app/hooks/useSelectTierInfo'
 
 type UserBadgesProps = {

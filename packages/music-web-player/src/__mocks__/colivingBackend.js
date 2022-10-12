@@ -1,6 +1,6 @@
 jest.mock('services/colivingBackend', () => ({
   fetchCID: jest.fn().mockImplementation((cid) => cid),
-  recordAgreementListen: jest.fn(),
+  recordDigitalContentListen: jest.fn(),
   getSelectableContentNodes: jest.fn(),
   submitAndEvaluateAttestations: jest.fn()
 }))

@@ -4,8 +4,8 @@ import { call, put, takeLatest, takeEvery } from 'redux-saga/effects'
 import * as cacheActions from 'common/store/cache/actions'
 import { retrieveCollections } from 'common/store/cache/collections/utils'
 import * as collectionActions from 'common/store/pages/collection/actions'
-import { agreementsActions } from 'common/store/pages/collection/lineup/actions.js'
-import agreementsSagas from 'pages/collection-page/store/lineups/agreements/sagas'
+import { digitalContentsActions } from 'common/store/pages/collection/lineup/actions.js'
+import digitalContentsSagas from 'pages/collection-page/store/lineups/digital_contents/sagas'
 
 function* watchFetchCollection() {
   yield takeLatest(collectionActions.FETCH_COLLECTION, function* (action) {
@@ -15,8 +15,8 @@ function* watchFetchCollection() {
       retrieveCollections,
       null,
       [collectionId],
-      /* fetchAgreements */ false,
-      /* requiresAllAgreements */ true
+      /* fetchDigitalContents */ false,
+      /* requiresAllDigitalContents */ true
     )
 
     if (Object.values(collections).length === 0) {
@@ -48,7 +48,7 @@ function* watchFetchCollection() {
 
 function* watchResetCollection() {
   yield takeEvery(collectionActions.RESET_COLLECTION, function* (action) {
-    yield put(agreementsActions.reset())
+    yield put(digitalContentsActions.reset())
     yield put(
       cacheActions.unsubscribe(Kind.COLLECTIONS, [
         { uid: action.collectionUid }
@@ -59,5 +59,5 @@ function* watchResetCollection() {
 }
 
 export default function sagas() {
-  return [...agreementsSagas(), watchFetchCollection, watchResetCollection]
+  return [...digitalContentsSagas(), watchFetchCollection, watchResetCollection]
 }

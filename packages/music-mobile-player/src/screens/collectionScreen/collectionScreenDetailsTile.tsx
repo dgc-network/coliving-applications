@@ -3,8 +3,8 @@ import { useCallback, useMemo } from 'react'
 import type { ID, UID } from '@coliving/common'
 import { Status, Name, PlaybackSource } from '@coliving/common'
 import { makeGetTableMetadatas } from '@coliving/web/src/common/store/lineup/selectors'
-import { agreementsActions } from '@coliving/web/src/common/store/pages/collection/lineup/actions'
-import { getCollectionAgreementsLineup } from '@coliving/web/src/common/store/pages/collection/selectors'
+import { digitalContentsActions } from '@coliving/web/src/common/store/pages/collection/lineup/actions'
+import { getCollectionDigitalContentsLineup } from '@coliving/web/src/common/store/pages/collection/selectors'
 import { formatSecondsAsText } from '@coliving/web/src/common/utils/timeUtil'
 import { Text, View } from 'react-native'
 import { useSelector } from 'react-redux'
@@ -14,10 +14,10 @@ import type {
   DetailsTileDetail,
   DetailsTileProps
 } from 'app/components/detailsTile/types'
-import { AgreementList } from 'app/components/agreementList'
+import { DigitalContentList } from 'app/components/digitalContentList'
 import { useDispatchWeb } from 'app/hooks/useDispatchWeb'
 import { useSelectorWeb } from 'app/hooks/useSelectorWeb'
-import { getPlaying, getPlayingUid, getAgreement } from 'app/store/digitalcoin/selectors'
+import { getPlaying, getPlayingUid, getDigitalContent } from 'app/store/digitalcoin/selectors'
 import { makeStyles } from 'app/styles'
 import { make, digital_content } from 'app/utils/analytics'
 import { formatCount } from 'app/utils/format'
@@ -32,7 +32,7 @@ const messages = {
 }
 
 const useStyles = makeStyles(({ palette, spacing, typography }) => ({
-  agreementListDivider: {
+  digitalContentListDivider: {
     marginHorizontal: spacing(6),
     borderTopWidth: 1,
     borderTopColor: palette.neutralLight7
@@ -55,7 +55,7 @@ type CollectionScreenDetailsTileProps = {
   'descriptionLinkPressSource' | 'details' | 'headerText' | 'onPressPlay'
 >
 
-const getAgreementsLineup = makeGetTableMetadatas(getCollectionAgreementsLineup)
+const getDigitalContentsLineup = makeGetTableMetadatas(getCollectionDigitalContentsLineup)
 
 const recordPlay = (id, play = true) => {
   digital_content(
@@ -77,66 +77,66 @@ export const CollectionScreenDetailsTile = ({
 }: CollectionScreenDetailsTileProps) => {
   const styles = useStyles()
   const dispatchWeb = useDispatchWeb()
-  const agreementsLineup = useSelectorWeb(getAgreementsLineup)
-  const agreementsLoading = agreementsLineup.status === Status.LOADING
-  const numAgreements = agreementsLineup.entries.length
+  const digitalContentsLineup = useSelectorWeb(getDigitalContentsLineup)
+  const digitalContentsLoading = digitalContentsLineup.status === Status.LOADING
+  const numDigitalContents = digitalContentsLineup.entries.length
 
-  const duration = agreementsLineup.entries?.reduce(
+  const duration = digitalContentsLineup.entries?.reduce(
     (duration, entry) => duration + entry.duration,
     0
   )
 
   const details = useMemo(() => {
-    if (!agreementsLoading && numAgreements === 0) return []
+    if (!digitalContentsLoading && numDigitalContents === 0) return []
     return [
       {
-        label: 'Agreements',
-        value: agreementsLoading
+        label: 'DigitalContents',
+        value: digitalContentsLoading
           ? messages.detailsPlaceholder
-          : formatCount(numAgreements)
+          : formatCount(numDigitalContents)
       },
       {
         label: 'Duration',
-        value: agreementsLoading
+        value: digitalContentsLoading
           ? messages.detailsPlaceholder
           : formatSecondsAsText(duration)
       },
       ...extraDetails
     ].filter(({ isHidden, value }) => !isHidden && !!value)
-  }, [agreementsLoading, numAgreements, duration, extraDetails])
+  }, [digitalContentsLoading, numDigitalContents, duration, extraDetails])
 
   const isPlaying = useSelector(getPlaying)
   const playingUid = useSelector(getPlayingUid)
-  const playingAgreement = useSelector(getAgreement)
-  const agreementId = playingAgreement?.agreementId
+  const playingDigitalContent = useSelector(getDigitalContent)
+  const digitalContentId = playingDigitalContent?.digitalContentId
 
-  const isQueued = agreementsLineup.entries.some(
+  const isQueued = digitalContentsLineup.entries.some(
     (entry) => playingUid === entry.uid
   )
 
   const handlePressPlay = useCallback(() => {
     if (isPlaying && isQueued) {
-      dispatchWeb(agreementsActions.pause())
-      recordPlay(agreementId, false)
+      dispatchWeb(digitalContentsActions.pause())
+      recordPlay(digitalContentId, false)
     } else if (!isPlaying && isQueued) {
-      dispatchWeb(agreementsActions.play())
-      recordPlay(agreementId)
-    } else if (agreementsLineup.entries.length > 0) {
-      dispatchWeb(agreementsActions.play(agreementsLineup.entries[0].uid))
-      recordPlay(agreementsLineup.entries[0].digital_content_id)
+      dispatchWeb(digitalContentsActions.play())
+      recordPlay(digitalContentId)
+    } else if (digitalContentsLineup.entries.length > 0) {
+      dispatchWeb(digitalContentsActions.play(digitalContentsLineup.entries[0].uid))
+      recordPlay(digitalContentsLineup.entries[0].digital_content_id)
     }
-  }, [dispatchWeb, isPlaying, agreementId, agreementsLineup, isQueued])
+  }, [dispatchWeb, isPlaying, digitalContentId, digitalContentsLineup, isQueued])
 
-  const handlePressAgreementListItemPlay = useCallback(
+  const handlePressDigitalContentListItemPlay = useCallback(
     (uid: UID, id: ID) => {
       if (isPlaying && playingUid === uid) {
-        dispatchWeb(agreementsActions.pause())
+        dispatchWeb(digitalContentsActions.pause())
         recordPlay(id, false)
       } else if (playingUid !== uid) {
-        dispatchWeb(agreementsActions.play(uid))
+        dispatchWeb(digitalContentsActions.play(uid))
         recordPlay(id)
       } else {
-        dispatchWeb(agreementsActions.play())
+        dispatchWeb(digitalContentsActions.play())
         recordPlay(id)
       }
     },
@@ -159,25 +159,25 @@ export const CollectionScreenDetailsTile = ({
     return messages.contentList
   }, [isAlbum, isPrivate, isPublishing])
 
-  const renderAgreementList = () => {
-    if (agreementsLoading)
+  const renderDigitalContentList = () => {
+    if (digitalContentsLoading)
       return (
         <>
-          <View style={styles.agreementListDivider} />
-          <AgreementList hideArt showDivider showSkeleton agreements={Array(20)} />
+          <View style={styles.digitalContentListDivider} />
+          <DigitalContentList hideArt showDivider showSkeleton digitalContents={Array(20)} />
         </>
       )
 
-    return agreementsLineup.entries.length === 0 ? (
+    return digitalContentsLineup.entries.length === 0 ? (
       <Text style={styles.empty}>{messages.empty}</Text>
     ) : (
       <>
-        <View style={styles.agreementListDivider} />
-        <AgreementList
+        <View style={styles.digitalContentListDivider} />
+        <DigitalContentList
           hideArt
           showDivider
-          togglePlay={handlePressAgreementListItemPlay}
-          agreements={agreementsLineup.entries}
+          togglePlay={handlePressDigitalContentListItemPlay}
+          digitalContents={digitalContentsLineup.entries}
         />
       </>
     )
@@ -192,7 +192,7 @@ export const CollectionScreenDetailsTile = ({
       headerText={headerText}
       hideListenCount={true}
       isPlaying={isPlaying && isQueued}
-      renderBottomContent={renderAgreementList}
+      renderBottomContent={renderDigitalContentList}
       onPressPlay={handlePressPlay}
     />
   )

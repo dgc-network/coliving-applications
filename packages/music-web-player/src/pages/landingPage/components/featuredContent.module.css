@@ -50,7 +50,7 @@
   text-align: center;
 }
 
-.agreementsContainer {
+.digitalContentsContainer {
   flex: 1;
   display: inline-flex;
   justify-content: space-between;
@@ -59,18 +59,18 @@
 }
 
 @media (max-width: 1380px) {
-  .agreementsContainer {
+  .digitalContentsContainer {
     max-width: 700px;
     margin: 0 auto;
   }
 }
 
-.agreementMoveContainer {
+.digitalContentMoveContainer {
   user-select: none;
   flex: 1 0;
 }
 
-.agreementContainer {
+.digitalContentContainer {
   margin-top: 24px;
   user-select: none;
   cursor: pointer;
@@ -99,7 +99,7 @@
   transform: scale3d(0.99, 0.99, 0.99);
 }
 
-.agreementContent {
+.digitalContent {
   width: 100%;
   height: 100%;
   display: inline-flex;
@@ -111,8 +111,8 @@
   background: rgba(0, 0, 0, 0);
 }
 
-.agreementContent:hover,
-.agreementContent:active {
+.digitalContent:hover,
+.digitalContent:active {
   background: linear-gradient(
     180deg,
     rgba(0, 0, 0, 0) 0%,
@@ -120,12 +120,12 @@
   );
 }
 
-.agreementTitleContainer {
+.digitalContentTitleContainer {
   margin-top: 24px;
   text-align: center;
 }
 
-.agreementTitle {
+.digitalContentTitle {
   color: #858199;
   font-size: 21px;
   line-height: 26px;
@@ -133,7 +133,7 @@
   text-align: center;
 }
 
-.digital_content .agreementLandlord {
+.digital_content .digitalContentLandlord {
   opacity: 0;
   color: rgba(255, 255, 255, 1);
   font-size: 18px;
@@ -150,11 +150,11 @@
   transition: all 0.07s ease-in-out;
 }
 
-.digital_content:hover .agreementTitle {
+.digital_content:hover .digitalContentTitle {
   opacity: 1;
 }
 
-.digital_content:hover .agreementLandlord {
+.digital_content:hover .digitalContentLandlord {
   opacity: 1;
 }
 
@@ -197,7 +197,7 @@
   text-align: center;
 }
 
-.mobileContainer .agreementsContainer {
+.mobileContainer .digitalContentsContainer {
   width: 100%;
   position: relative;
   display: inline-flex;
@@ -207,7 +207,7 @@
   margin-top: 24px;
 }
 
-.mobileContainer .agreementContainer {
+.mobileContainer .digitalContentContainer {
   max-width: 165px;
   height: auto;
   display: inline-flex;
@@ -219,7 +219,7 @@
   margin-top: 0;
 }
 
-.mobileContainer .agreementImage {
+.mobileContainer .digitalContentImage {
   height: 164px;
   width: 164px;
   border-radius: 8px;
@@ -228,7 +228,7 @@
   background-position: center;
 }
 
-.mobileContainer .agreementTitle {
+.mobileContainer .digitalContentTitle {
   position: relative;
   font-size: 14px;
   font-weight: 500;
@@ -251,7 +251,7 @@
   fill: #858199;
 }
 
-.mobileContainer .agreementLandlord {
+.mobileContainer .digitalContentLandlord {
   color: #858199;
   font-size: 14px;
   font-weight: 500;

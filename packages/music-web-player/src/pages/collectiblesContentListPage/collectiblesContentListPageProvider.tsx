@@ -25,8 +25,8 @@ import { matchPath } from 'react-router-dom'
 import { useModalState } from 'common/hooks/useModalState'
 import { getUser } from 'common/store/cache/users/selectors'
 import {
-  CollectionAgreement,
-  AgreementRecord
+  CollectionDigitalContent,
+  DigitalContentRecord
 } from 'common/store/pages/collection/types'
 import { fetchProfile } from 'common/store/pages/profile/actions'
 import { add, clear, pause, play } from 'common/store/queue/slice'
@@ -34,7 +34,7 @@ import { Source } from 'common/store/queue/types'
 import { setCollectible } from 'common/store/ui/collectibleDetails/slice'
 import { requestOpen as requestOpenShareModal } from 'common/store/ui/shareModal/slice'
 import { formatSeconds } from 'common/utils/timeUtil'
-import TablePlayButton from 'components/agreementsTable/tablePlayButton'
+import TablePlayButton from 'components/digitalContentsTable/tablePlayButton'
 import { LIVE_NFT_CONTENT_LIST } from 'pages/smartCollection/smartCollections'
 import { getPlaying, makeGetCurrent } from 'store/player/selectors'
 import { getLocationPathname } from 'store/routing/selectors'
@@ -50,7 +50,7 @@ declare global {
   interface HTMLMediaElement {
     webkitAudioDecodedByteCount: number
     mozHasAudio: boolean
-    liveAgreements: unknown[]
+    liveDigitalContents: unknown[]
   }
 }
 
@@ -70,7 +70,7 @@ const hasAudio = (video: HTMLMediaElement) => {
     if (
       video.webkitAudioDecodedByteCount > 0 ||
       video.mozHasAudio ||
-      video.liveAgreements?.length
+      video.liveDigitalContents?.length
     ) {
       return true
     }
@@ -236,7 +236,7 @@ export const CollectiblesContentListPageProvider = ({
     }
   }, [dispatch, routeMatch])
 
-  const agreementsLoading = !hasFetchedAllCollectibles
+  const digitalContentsLoading = !hasFetchedAllCollectibles
 
   const isPlayingACollectible = useMemo(
     () =>
@@ -280,7 +280,7 @@ export const CollectiblesContentListPageProvider = ({
 
   const [, setIsDetailsModalOpen] = useModalState('CollectibleDetails')
 
-  const onClickAgreementName = (collectible: Collectible) => {
+  const onClickDigitalContentName = (collectible: Collectible) => {
     dispatch(
       setCollectible({
         collectible,
@@ -292,7 +292,7 @@ export const CollectiblesContentListPageProvider = ({
     setIsDetailsModalOpen(true)
   }
 
-  const onHeroAgreementClickLandlordName = () => {
+  const onHeroDigitalContentClickLandlordName = () => {
     if (user) dispatch(push(profilePage(user?.handle)))
   }
 
@@ -322,13 +322,13 @@ export const CollectiblesContentListPageProvider = ({
   }, [currentPlayerItem])
 
   const formatMetadata = useCallback(
-    (agreementMetadatas: CollectionAgreement[]): AgreementRecord[] => {
-      return agreementMetadatas.map((metadata, i) => ({
+    (digitalContentMetadatas: CollectionDigitalContent[]): DigitalContentRecord[] => {
+      return digitalContentMetadatas.map((metadata, i) => ({
         ...metadata,
         ...metadata.collectible,
         key: `${metadata.collectible?.name}_${metadata.uid}_${i}`,
         name: metadata.collectible?.name as string,
-        landlord: '',
+        author: '',
         handle: '',
         date: metadata.dateAdded || metadata.created_at,
         time: 0,
@@ -339,10 +339,10 @@ export const CollectiblesContentListPageProvider = ({
   )
 
   const getFilteredData = useCallback(
-    (agreementMetadatas: CollectionAgreement[]) => {
+    (digitalContentMetadatas: CollectionDigitalContent[]) => {
       const playingUid = getPlayingUid()
       const playingIndex = entries.findIndex(({ uid }) => uid === playingUid)
-      const formattedMetadata = formatMetadata(agreementMetadatas)
+      const formattedMetadata = formatMetadata(digitalContentMetadatas)
       const filteredIndex =
         playingIndex > -1
           ? formattedMetadata.findIndex(
@@ -380,7 +380,7 @@ export const CollectiblesContentListPageProvider = ({
       title: 'DigitalContent Name',
       dataIndex: 'name',
       key: 'name',
-      className: 'colAgreementName',
+      className: 'colDigitalContentName',
       width: '70%',
       render: (val: string, record: Collectible) => (
         <div
@@ -389,7 +389,7 @@ export const CollectiblesContentListPageProvider = ({
           })}
           onClick={(e) => {
             e.stopPropagation()
-            onClickAgreementName(record)
+            onClickDigitalContentName(record)
           }}
         >
           {val}
@@ -416,7 +416,7 @@ export const CollectiblesContentListPageProvider = ({
     }
   ]
 
-  const onHeroAgreementShare = () => {
+  const onHeroDigitalContentShare = () => {
     if (user) {
       dispatch(
         requestOpenShareModal({
@@ -454,11 +454,11 @@ export const CollectiblesContentListPageProvider = ({
     playing,
     type: 'contentList' as const,
     collection: {
-      status: agreementsLoading ? Status.LOADING : Status.SUCCESS,
+      status: digitalContentsLoading ? Status.LOADING : Status.SUCCESS,
       metadata,
       user
     },
-    agreements: {
+    digitalContents: {
       status: !firstLoadedCollectible.current ? Status.LOADING : Status.SUCCESS,
       entries
     },
@@ -468,10 +468,10 @@ export const CollectiblesContentListPageProvider = ({
     isQueued,
 
     onPlay: handlePlayAllClick,
-    onHeroAgreementShare,
+    onHeroDigitalContentShare,
     onClickRow,
-    onClickAgreementName,
-    onHeroAgreementClickLandlordName
+    onClickDigitalContentName,
+    onHeroDigitalContentClickLandlordName
   }
 
   // @ts-ignore TODO: remove provider pattern

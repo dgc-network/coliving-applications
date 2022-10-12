@@ -20,7 +20,7 @@ import {
   getAccountUser,
   getContentListLibrary
 } from 'common/store/account/selectors'
-import { addAgreementToContentList } from 'common/store/cache/collections/actions'
+import { addDigitalContentToContentList } from 'common/store/cache/collections/actions'
 import { getContentListUpdates } from 'common/store/notifications/selectors'
 import {
   addContentListToFolder,
@@ -286,7 +286,7 @@ const ContentListLibrary = ({
     if (!account || !contentList) return null
     const { id, name } = contentList
     const url = contentListPage(contentList.user.handle, name, id)
-    const addAgreement = (agreementId: ID) => dispatch(addAgreementToContentList(agreementId, id))
+    const addDigitalContent = (digitalContentId: ID) => dispatch(addDigitalContentToContentList(digitalContentId, id))
     const isOwner = contentList.user.handle === account.handle
     const hasUpdate = updatesSet.has(id)
     return (
@@ -296,7 +296,7 @@ const ContentListLibrary = ({
         contentList={contentList}
         hasUpdate={hasUpdate}
         url={url}
-        addAgreement={addAgreement}
+        addDigitalContent={addDigitalContent}
         isOwner={isOwner}
         onReorder={onReorder}
         dragging={dragging}

@@ -1,6 +1,6 @@
 import { ID } from '@coliving/common'
 
-export enum PinAgreementAction {
+export enum PinDigitalContentAction {
   ADD = 'ADD',
   REMOVE = 'REMOVE',
   UPDATE = 'UPDATE'
@@ -8,5 +8,5 @@ export enum PinAgreementAction {
 
 export interface SetAsLandlordPickConfirmationState {
   isVisible: boolean
-  agreementId?: ID
+  digitalContentId?: ID
 }

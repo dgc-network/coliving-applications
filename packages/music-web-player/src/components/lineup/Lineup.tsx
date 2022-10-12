@@ -2,9 +2,9 @@ import { Status } from '@coliving/common'
 import { connect } from 'react-redux'
 
 import DesktopContentListTile from 'components/digital_content/desktop/ConnectedContentListTile'
-import DesktopAgreementTile from 'components/digital_content/desktop/ConnectedAgreementTile'
+import DesktopDigitalContentTile from 'components/digital_content/desktop/ConnectedDigitalContentTile'
 import MobileContentListTile from 'components/digital_content/mobile/ConnectedContentListTile'
-import MobileAgreementTile from 'components/digital_content/mobile/ConnectedAgreementTile'
+import MobileDigitalContentTile from 'components/digital_content/mobile/ConnectedDigitalContentTile'
 import { AppState } from 'store/types'
 import { isMobile } from 'utils/clientUtil'
 
@@ -13,7 +13,7 @@ import { LineupVariant } from './types'
 
 export type LineupWithoutTile = Omit<
   LineupProviderProps,
-  'agreementTile' | 'skeletonTile' | 'contentListTile'
+  'digitalContentTile' | 'skeletonTile' | 'contentListTile'
 >
 type LineupProps = LineupWithoutTile & ReturnType<typeof mapStateToProps>
 
@@ -22,13 +22,13 @@ type LineupProps = LineupWithoutTile & ReturnType<typeof mapStateToProps>
  */
 const Lineup = (props: LineupProps) => {
   const mobile = props.isMobile
-  const agreementTile = mobile ? MobileAgreementTile : DesktopAgreementTile
+  const digitalContentTile = mobile ? MobileDigitalContentTile : DesktopDigitalContentTile
   const contentListTile = mobile ? MobileContentListTile : DesktopContentListTile
 
   return (
     <LineupProvider
       {...props}
-      agreementTile={agreementTile}
+      digitalContentTile={digitalContentTile}
       contentListTile={contentListTile}
     />
   )

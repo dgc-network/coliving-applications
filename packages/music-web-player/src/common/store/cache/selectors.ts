@@ -11,7 +11,7 @@ import {
 
 import { CommonState } from 'common/store'
 
-import { AgreementsCacheState } from './agreements/types'
+import { DigitalContentsCacheState } from './digital_contents/types'
 import { UsersCacheState } from './users/types'
 
 /**
@@ -131,15 +131,15 @@ export function getCache(
 export function getCache(
   state: CommonState,
   props: { kind: Kind.AGREEMENTS }
-): AgreementsCacheState
+): DigitalContentsCacheState
 export function getCache(
   state: CommonState,
   props: { kind: Kind }
-): AgreementsCacheState | Cache<Collection> | UsersCacheState
+): DigitalContentsCacheState | Cache<Collection> | UsersCacheState
 export function getCache(state: CommonState, props: { kind: Kind }) {
   switch (props.kind) {
     case Kind.AGREEMENTS:
-      return state.agreements
+      return state.digitalContents
     case Kind.COLLECTIONS:
       return state.collections
     case Kind.USERS:
@@ -151,7 +151,7 @@ export function getCache(state: CommonState, props: { kind: Kind }) {
 export function getId(state: CommonState, props: { kind: Kind; uid: UID }) {
   switch (props.kind) {
     case Kind.AGREEMENTS: {
-      return state.agreements.uids[props.uid]
+      return state.digitalContents.uids[props.uid]
     }
     case Kind.COLLECTIONS: {
       return state.collections.uids[props.uid]

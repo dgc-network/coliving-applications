@@ -12,7 +12,7 @@ import {
 
 import {
   CollectionsPageType,
-  CollectionAgreement
+  CollectionDigitalContent
 } from 'common/store/pages/collection/types'
 import { OverflowAction } from 'common/store/ui/mobileOverflowMenu/types'
 import CollectionHeader from 'components/collection/mobile/collectionHeader'
@@ -25,7 +25,7 @@ import NavContext, {
   RightPreset
 } from 'components/nav/store/context'
 import NetworkConnectivityMonitor from 'components/networkConnectivity/networkConnectivityMonitor'
-import AgreementList from 'components/digital_content/mobile/agreementList'
+import DigitalContentList from 'components/digital_content/mobile/digitalContentList'
 import { computeCollectionMetadataProps } from 'pages/collectionPage/store/utils'
 
 import styles from './collectionPage.module.css'
@@ -34,7 +34,7 @@ const messages = {
   emptyContentList: 'This contentList is empty.'
 }
 
-const EmptyAgreementList = ({
+const EmptyDigitalContentList = ({
   customEmptyText
 }: {
   customEmptyText?: string | null
@@ -59,18 +59,18 @@ export type CollectionPageProps = {
     metadata: Collection | SmartCollection | null
     user: User | null
   }
-  agreements: {
+  digitalContents: {
     status: string
-    entries: CollectionAgreement[]
+    entries: CollectionDigitalContent[]
   }
   userId?: ID | null
   userContentLists?: any
   isQueued: () => boolean
-  onHeroAgreementClickLandlordName: () => void
+  onHeroDigitalContentClickLandlordName: () => void
   onPlay: (record: any) => void
-  onHeroAgreementShare: () => void
-  onHeroAgreementSave?: () => void
-  onHeroAgreementRepost?: () => void
+  onHeroDigitalContentShare: () => void
+  onHeroDigitalContentSave?: () => void
+  onHeroDigitalContentRepost?: () => void
   onClickRow: (record: any) => void
   onClickSave?: (record: any) => void
   onClickMobileOverflow?: (
@@ -91,17 +91,17 @@ const CollectionPage = ({
   playing,
   type,
   collection: { status, metadata, user },
-  agreements,
+  digitalContents,
   userId,
   userContentLists,
   isQueued,
-  onHeroAgreementClickLandlordName,
+  onHeroDigitalContentClickLandlordName,
   onPlay,
-  onHeroAgreementShare,
-  onHeroAgreementSave,
+  onHeroDigitalContentShare,
+  onHeroDigitalContentSave,
   onClickRow,
   onClickSave,
-  onHeroAgreementRepost,
+  onHeroDigitalContentRepost,
   onClickMobileOverflow,
   onClickFavorites,
   onClickReposts,
@@ -131,15 +131,15 @@ const CollectionPage = ({
   // TODO: Consider dynamic lineups, esp. for caching improvement.
   const collectionLoading = status === Status.LOADING
   const queuedAndPlaying = playing && isQueued()
-  const agreementsLoading = agreements.status === Status.LOADING
+  const digitalContentsLoading = digitalContents.status === Status.LOADING
 
   const coverArtSizes =
     metadata && metadata?.variant !== Variant.SMART
       ? metadata._cover_art_sizes
       : null
   const duration =
-    agreements.entries?.reduce(
-      (duration: number, entry: CollectionAgreement) =>
+    digitalContents.entries?.reduce(
+      (duration: number, entry: CollectionDigitalContent) =>
         duration + entry.duration || 0,
       0
     ) ?? 0
@@ -180,9 +180,9 @@ const CollectionPage = ({
     isReposted
   } = computeCollectionMetadataProps(metadata)
 
-  const togglePlay = (uid: string, agreementId: ID) => {
+  const togglePlay = (uid: string, digitalContentId: ID) => {
     if (contentListId === SmartCollectionVariant.LIVE_NFT_CONTENT_LIST) {
-      const digital_content = agreements.entries.find((digital_content) => digital_content.uid === uid)
+      const digital_content = digitalContents.entries.find((digital_content) => digital_content.uid === uid)
 
       if (digital_content?.collectible) {
         const { collectible } = digital_content
@@ -194,18 +194,18 @@ const CollectionPage = ({
         })
       }
     } else {
-      onClickRow({ uid, digital_content_id: agreementId })
+      onClickRow({ uid, digital_content_id: digitalContentId })
     }
   }
-  const onSave = (isSaved: boolean, agreementId: number) => {
+  const onSave = (isSaved: boolean, digitalContentId: number) => {
     if (!isOwner) {
-      onClickSave?.({ has_current_user_saved: isSaved, digital_content_id: agreementId })
+      onClickSave?.({ has_current_user_saved: isSaved, digital_content_id: digitalContentId })
     }
   }
 
   const playingUid = getPlayingUid()
 
-  const agreementList = agreements.entries.map((entry) => ({
+  const digitalContentList = digitalContents.entries.map((entry) => ({
     isLoading: false,
     isSaved: entry.has_current_user_saved,
     isReposted: entry.has_current_user_reposted,
@@ -213,15 +213,15 @@ const CollectionPage = ({
     isPlaying: queuedAndPlaying && playingUid === entry.uid,
     landlordName: entry?.user?.name,
     landlordHandle: entry?.user?.handle,
-    agreementTitle: entry.title,
-    agreementId: entry.digital_content_id,
+    digitalContentTitle: entry.title,
+    digitalContentId: entry.digital_content_id,
     uid: entry.uid,
     isDeleted: entry.is_delete || !!entry?.user?.is_deactivated
   }))
 
   return (
     <NetworkConnectivityMonitor
-      pageDidLoad={agreementsLoading}
+      pageDidLoad={digitalContentsLoading}
       onDidRegainConnectivity={refresh}
     >
       <MobilePageContainer
@@ -236,10 +236,10 @@ const CollectionPage = ({
               userId={user?.user_id ?? 0}
               loading={
                 typeTitle === 'Audio NFT ContentList'
-                  ? agreementsLoading
+                  ? digitalContentsLoading
                   : collectionLoading
               }
-              agreementsLoading={agreementsLoading}
+              digitalContentsLoading={digitalContentsLoading}
               type={typeTitle}
               title={contentListName}
               landlordName={contentListOwnerName}
@@ -248,7 +248,7 @@ const CollectionPage = ({
               description={description}
               isOwner={isOwner}
               isAlbum={isAlbum}
-              numAgreements={agreementList.length}
+              numDigitalContents={digitalContentList.length}
               modified={lastModified || Date.now()}
               duration={duration}
               isPublished={!isPrivate}
@@ -259,11 +259,11 @@ const CollectionPage = ({
               repostCount={contentListRepostCount}
               isReposted={isReposted}
               // Actions
-              onClickLandlordName={onHeroAgreementClickLandlordName}
+              onClickLandlordName={onHeroDigitalContentClickLandlordName}
               onPlay={onPlay}
-              onShare={onHeroAgreementShare}
-              onSave={onHeroAgreementSave}
-              onRepost={onHeroAgreementRepost}
+              onShare={onHeroDigitalContentShare}
+              onSave={onHeroDigitalContentSave}
+              onRepost={onHeroDigitalContentRepost}
               onClickFavorites={onClickFavorites}
               onClickReposts={onClickReposts}
               onClickMobileOverflow={onClickMobileOverflow}
@@ -274,18 +274,18 @@ const CollectionPage = ({
               icon={icon}
             />
           </div>
-          <div className={styles.collectionAgreementsContainer}>
-            {!agreementsLoading ? (
+          <div className={styles.collectionDigitalContentsContainer}>
+            {!digitalContentsLoading ? (
               isEmpty ? (
                 <>
                   <div className={styles.divider}></div>
-                  <EmptyAgreementList customEmptyText={customEmptyText} />
+                  <EmptyDigitalContentList customEmptyText={customEmptyText} />
                 </>
               ) : (
-                <AgreementList
+                <DigitalContentList
                   containerClassName={''}
                   itemClassName={''}
-                  agreements={agreementList}
+                  digitalContents={digitalContentList}
                   showTopDivider
                   showDivider
                   onSave={onSave}

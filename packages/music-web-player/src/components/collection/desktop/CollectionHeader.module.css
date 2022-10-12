@@ -70,7 +70,7 @@
   display: inline;
 }
 
-.landlordWrapper .landlord {
+.landlordWrapper .author {
   display: inline;
   color: var(--neutral);
   font-size: var(--font-m);
@@ -80,7 +80,7 @@
   padding-left: 4px;
 }
 
-.landlordWrapper .landlord:hover {
+.landlordWrapper .author:hover {
   color: var(--primary);
   cursor: pointer;
   text-decoration: underline;

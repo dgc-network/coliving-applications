@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux'
 
 import { Text } from 'app/components/core'
 import { close } from 'app/store/notifications/actions'
-import { getCollectionRoute, getAgreementRoute } from 'app/utils/routes'
+import { getCollectionRoute, getDigitalContentRoute } from 'app/utils/routes'
 
 import { useDrawerNavigation } from '../useDrawerNavigation'
 
@@ -25,7 +25,7 @@ export const EntityLink = (props: EntityLinkProps) => {
           screen: 'DigitalContent',
           params: { id: entity.digital_content_id, fromNotifications: true }
         },
-        web: { route: getAgreementRoute(entity) }
+        web: { route: getDigitalContentRoute(entity) }
       })
     } else if (entity.user) {
       const { user } = entity

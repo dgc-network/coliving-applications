@@ -20,22 +20,22 @@ import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 
 import { getUserId } from 'common/store/account/selectors'
-import * as cacheAgreementActions from 'common/store/cache/agreements/actions'
+import * as cacheDigitalContentActions from 'common/store/cache/digital_contents/actions'
 import { makeGetLineupMetadatas } from 'common/store/lineup/selectors'
-import * as agreementPageActions from 'common/store/pages/digital_content/actions'
-import { agreementsActions } from 'common/store/pages/digital_content/lineup/actions'
+import * as digitalContentPageActions from 'common/store/pages/digital_content/actions'
+import { digitalContentsActions } from 'common/store/pages/digital_content/lineup/actions'
 import {
   getUser,
   getLineup,
-  getAgreementRank,
-  getAgreement,
-  getRemixParentAgreement,
+  getDigitalContentRank,
+  getDigitalContent,
+  getRemixParentDigitalContent,
   getStatus,
   getSourceSelector,
-  getAgreementPermalink
+  getDigitalContentPermalink
 } from 'common/store/pages/digital_content/selectors'
 import { makeGetCurrent } from 'common/store/queue/selectors'
-import * as socialAgreementsActions from 'common/store/social/agreements/actions'
+import * as socialDigitalContentsActions from 'common/store/social/digital_contents/actions'
 import * as socialUsersActions from 'common/store/social/users/actions'
 import { open } from 'common/store/ui/mobileOverflowMenu/slice'
 import {
@@ -50,7 +50,7 @@ import { getCanonicalName } from 'common/utils/genres'
 import { formatSeconds, formatDate } from 'common/utils/timeUtil'
 import * as unfollowConfirmationActions from 'components/unfollowConfirmationModal/store/actions'
 import DeletedPage from 'pages/deletedPage/deletedPage'
-import { AgreementEvent, make } from 'store/analytics/actions'
+import { DigitalContentEvent, make } from 'store/analytics/actions'
 import {
   setUsers,
   setVisibility
@@ -70,32 +70,32 @@ import {
   FEED_PAGE,
   FAVORITING_USERS_ROUTE,
   REPOSTING_USERS_ROUTE,
-  fullAgreementPage,
-  agreementRemixesPage
+  fullDigitalContentPage,
+  digitalContentRemixesPage
 } from 'utils/route'
-import { parseAgreementRoute, AgreementRouteParams } from 'utils/route/agreementRouteParser'
-import { getAgreementPageTitle, getAgreementPageDescription } from 'utils/seo'
+import { parseDigitalContentRoute, DigitalContentRouteParams } from 'utils/route/digitalContentRouteParser'
+import { getDigitalContentPageTitle, getDigitalContentPageDescription } from 'utils/seo'
 
 import StemsSEOHint from './components/stemsSEOHint'
-import { OwnProps as DesktopAgreementPageProps } from './components/desktop/agreementPage'
-import { OwnProps as MobileAgreementPageProps } from './components/mobile/agreementPage'
+import { OwnProps as DesktopDigitalContentPageProps } from './components/desktop/digitalContentPage'
+import { OwnProps as MobileDigitalContentPageProps } from './components/mobile/digitalContentPage'
 import { TRENDING_BADGE_LIMIT } from './store/sagas'
 
-const getRemixParentAgreementId = (digital_content: DigitalContent | null) =>
-  digital_content?.remix_of?.agreements?.[0]?.parent_digital_content_id
+const getRemixParentDigitalContentId = (digital_content: DigitalContent | null) =>
+  digital_content?.remix_of?.digitalContents?.[0]?.parent_digital_content_id
 
 type OwnProps = {
   children:
-    | ComponentType<MobileAgreementPageProps>
-    | ComponentType<DesktopAgreementPageProps>
+    | ComponentType<MobileDigitalContentPageProps>
+    | ComponentType<DesktopDigitalContentPageProps>
 }
 
 type mapStateProps = ReturnType<typeof makeMapStateToProps>
-type AgreementPageProviderProps = OwnProps &
+type DigitalContentPageProviderProps = OwnProps &
   ReturnType<mapStateProps> &
   ReturnType<typeof mapDispatchToProps>
 
-type AgreementPageProviderState = {
+type DigitalContentPageProviderState = {
   pathname: string
   ownerHandle: string | null
   showDeleteConfirmation: boolean
@@ -103,37 +103,37 @@ type AgreementPageProviderState = {
   source: string | undefined
 }
 
-class AgreementPageProvider extends Component<
-  AgreementPageProviderProps,
-  AgreementPageProviderState
+class DigitalContentPageProvider extends Component<
+  DigitalContentPageProviderProps,
+  DigitalContentPageProviderState
 > {
-  state: AgreementPageProviderState = {
+  state: DigitalContentPageProviderState = {
     pathname: this.props.pathname,
     ownerHandle: null,
     showDeleteConfirmation: false,
-    routeKey: parseAgreementRoute(this.props.pathname)?.agreementId ?? 0,
+    routeKey: parseDigitalContentRoute(this.props.pathname)?.digitalContentId ?? 0,
     source: undefined
   }
 
   componentDidMount() {
-    const params = parseAgreementRoute(this.props.pathname)
+    const params = parseDigitalContentRoute(this.props.pathname)
     // Go to 404 if the digital_content id isn't parsed correctly or if should redirect
-    if (!params || (params.agreementId && shouldRedirectAgreement(params.agreementId))) {
+    if (!params || (params.digitalContentId && shouldRedirectDigitalContent(params.digitalContentId))) {
       this.props.goToRoute(NOT_FOUND_PAGE)
       return
     }
 
-    this.fetchAgreements(params)
+    this.fetchDigitalContents(params)
   }
 
-  componentDidUpdate(prevProps: AgreementPageProviderProps) {
+  componentDidUpdate(prevProps: DigitalContentPageProviderProps) {
     const {
       pathname,
       digital_content,
       status,
-      refetchAgreementsLinup,
+      refetchDigitalContentsLinup,
       user,
-      agreementPermalink
+      digitalContentPermalink
     } = this.props
     if (status === Status.ERROR) {
       this.props.goToRoute(NOT_FOUND_PAGE)
@@ -147,10 +147,10 @@ class AgreementPageProvider extends Component<
       // trigger a re-fetch based on the URL. On mobile, separate page provider components are
       // used so this is a non-issue.
       if (pathname !== this.state.pathname) {
-        const params = parseAgreementRoute(pathname)
+        const params = parseDigitalContentRoute(pathname)
         if (params) {
           this.setState({ pathname })
-          this.fetchAgreements(params)
+          this.fetchDigitalContents(params)
         }
       }
     }
@@ -171,13 +171,13 @@ class AgreementPageProvider extends Component<
       prevProps.digital_content.digital_content_id &&
       digital_content &&
       digital_content.digital_content_id &&
-      getRemixParentAgreementId(prevProps.digital_content) !== getRemixParentAgreementId(digital_content)
+      getRemixParentDigitalContentId(prevProps.digital_content) !== getRemixParentDigitalContentId(digital_content)
     ) {
-      refetchAgreementsLinup()
+      refetchDigitalContentsLinup()
     }
 
     if (digital_content) {
-      const params = parseAgreementRoute(pathname)
+      const params = parseDigitalContentRoute(pathname)
       if (params) {
         // Check if we are coming from a non-canonical route and replace route if necessary.
         const { slug, handle } = params
@@ -191,12 +191,12 @@ class AgreementPageProvider extends Component<
           if (
             pathname === this.state.pathname &&
             prevProps.digital_content?.digital_content_id === digital_content?.digital_content_id &&
-            agreementPermalink &&
-            agreementPermalink !== pathname
+            digitalContentPermalink &&
+            digitalContentPermalink !== pathname
           ) {
             // The path is going to change but don't re-fetch as we already have the digital_content
-            this.setState({ pathname: agreementPermalink })
-            this.props.replaceRoute(agreementPermalink)
+            this.setState({ pathname: digitalContentPermalink })
+            this.props.replaceRoute(digitalContentPermalink)
           }
         }
       }
@@ -207,29 +207,29 @@ class AgreementPageProvider extends Component<
     if (!isMobile()) {
       // Don't reset on mobile because there are two
       // digital_content pages mounted at a time due to animations.
-      this.props.resetAgreementPage()
+      this.props.resetDigitalContentPage()
     }
   }
 
-  fetchAgreements = (params: NonNullable<AgreementRouteParams>) => {
+  fetchDigitalContents = (params: NonNullable<DigitalContentRouteParams>) => {
     const { digital_content } = this.props
-    const { slug, agreementId, handle } = params
+    const { slug, digitalContentId, handle } = params
 
     // Go to feed if the digital_content is deleted
-    if (digital_content && digital_content.digital_content_id === agreementId) {
+    if (digital_content && digital_content.digital_content_id === digitalContentId) {
       if (digital_content._marked_deleted) {
         this.props.goToRoute(FEED_PAGE)
         return
       }
     }
     this.props.reset()
-    if (agreementId) {
-      this.props.setAgreementId(agreementId)
+    if (digitalContentId) {
+      this.props.setDigitalContentId(digitalContentId)
     }
     if (slug && handle) {
-      this.props.setAgreementPermalink(`/${handle}/${slug}`)
+      this.props.setDigitalContentPermalink(`/${handle}/${slug}`)
     }
-    this.props.fetchAgreement(agreementId, slug || '', handle || '', !!(slug && handle))
+    this.props.fetchDigitalContent(digitalContentId, slug || '', handle || '', !!(slug && handle))
     if (handle) {
       this.setState({ ownerHandle: handle })
     }
@@ -277,35 +277,35 @@ class AgreementPageProvider extends Component<
     }
   }
 
-  onMoreByLandlordAgreementsPlay = (uid?: string) => {
+  onMoreByLandlordDigitalContentsPlay = (uid?: string) => {
     const { play, recordPlayMoreByLandlord } = this.props
     play(uid)
     if (uid) {
-      const agreementId = Uid.fromString(uid).id
-      recordPlayMoreByLandlord(agreementId)
+      const digitalContentId = Uid.fromString(uid).id
+      recordPlayMoreByLandlord(digitalContentId)
     }
   }
 
-  onHeroRepost = (isReposted: boolean, agreementId: ID) => {
-    const { repostAgreement, undoRepostAgreement } = this.props
+  onHeroRepost = (isReposted: boolean, digitalContentId: ID) => {
+    const { repostDigitalContent, undoRepostDigitalContent } = this.props
     if (!isReposted) {
-      repostAgreement(agreementId)
+      repostDigitalContent(digitalContentId)
     } else {
-      undoRepostAgreement(agreementId)
+      undoRepostDigitalContent(digitalContentId)
     }
   }
 
-  onHeroShare = (agreementId: ID) => {
-    const { shareAgreement } = this.props
-    shareAgreement(agreementId)
+  onHeroShare = (digitalContentId: ID) => {
+    const { shareDigitalContent } = this.props
+    shareDigitalContent(digitalContentId)
   }
 
-  onSaveAgreement = (isSaved: boolean, agreementId: ID) => {
-    const { saveAgreement, unsaveAgreement } = this.props
+  onSaveDigitalContent = (isSaved: boolean, digitalContentId: ID) => {
+    const { saveDigitalContent, unsaveDigitalContent } = this.props
     if (isSaved) {
-      unsaveAgreement(agreementId)
+      unsaveDigitalContent(digitalContentId)
     } else {
-      saveAgreement(agreementId)
+      saveDigitalContent(digitalContentId)
     }
   }
 
@@ -336,26 +336,26 @@ class AgreementPageProvider extends Component<
 
   goToParentRemixesPage = () => {
     const { goToRemixesOfParentPage, digital_content } = this.props
-    const parentAgreementId = getRemixParentAgreementId(digital_content)
-    if (parentAgreementId) {
-      goToRemixesOfParentPage(parentAgreementId)
+    const parentDigitalContentId = getRemixParentDigitalContentId(digital_content)
+    if (parentDigitalContentId) {
+      goToRemixesOfParentPage(parentDigitalContentId)
     }
   }
 
   goToAllRemixesPage = () => {
     const { digital_content } = this.props
     if (digital_content) {
-      this.props.goToRoute(agreementRemixesPage(digital_content.permalink))
+      this.props.goToRoute(digitalContentRemixesPage(digital_content.permalink))
     }
   }
 
-  goToFavoritesPage = (agreementId: ID) => {
-    this.props.setFavoriteAgreementId(agreementId)
+  goToFavoritesPage = (digitalContentId: ID) => {
+    this.props.setFavoriteDigitalContentId(digitalContentId)
     this.props.goToRoute(FAVORITING_USERS_ROUTE)
   }
 
-  goToRepostsPage = (agreementId: ID) => {
-    this.props.setRepostAgreementId(agreementId)
+  goToRepostsPage = (digitalContentId: ID) => {
+    this.props.setRepostDigitalContentId(digitalContentId)
     this.props.goToRoute(REPOSTING_USERS_ROUTE)
   }
 
@@ -372,16 +372,16 @@ class AgreementPageProvider extends Component<
   render() {
     const {
       digital_content,
-      remixParentAgreement,
+      remixParentDigitalContent,
       user,
-      agreementRank,
+      digitalContentRank,
       moreByLandlord,
       currentQueueItem,
       playing,
       buffering,
       userId,
       pause,
-      downloadAgreement,
+      downloadDigitalContent,
       onExternalLinkClick
     } = this.props
     const heroPlaying =
@@ -390,30 +390,30 @@ class AgreementPageProvider extends Component<
       !!currentQueueItem.digital_content &&
       currentQueueItem.digital_content.digital_content_id === digital_content.digital_content_id
     const badge =
-      agreementRank.year && agreementRank.year <= TRENDING_BADGE_LIMIT
-        ? `#${agreementRank.year} This Year`
-        : agreementRank.month && agreementRank.month <= TRENDING_BADGE_LIMIT
-        ? `#${agreementRank.month} This Month`
-        : agreementRank.week && agreementRank.week <= TRENDING_BADGE_LIMIT
-        ? `#${agreementRank.week} This Week`
+      digitalContentRank.year && digitalContentRank.year <= TRENDING_BADGE_LIMIT
+        ? `#${digitalContentRank.year} This Year`
+        : digitalContentRank.month && digitalContentRank.month <= TRENDING_BADGE_LIMIT
+        ? `#${digitalContentRank.month} This Month`
+        : digitalContentRank.week && digitalContentRank.week <= TRENDING_BADGE_LIMIT
+        ? `#${digitalContentRank.week} This Week`
         : null
 
     const desktopProps = {
       // Follow Props
       onFollow: this.onFollow,
       onUnfollow: this.onUnfollow,
-      makePublic: this.props.makeAgreementPublic,
+      makePublic: this.props.makeDigitalContentPublic,
       onClickReposts: this.onClickReposts,
       onClickFavorites: this.onClickFavorites
     }
 
-    const title = getAgreementPageTitle({
+    const title = getDigitalContentPageTitle({
       title: digital_content ? digital_content.title : '',
       handle: user ? user.handle : ''
     })
 
     const releaseDate = digital_content ? digital_content.release_date || digital_content.created_at : ''
-    const description = getAgreementPageDescription({
+    const description = getDigitalContentPageDescription({
       releaseDate: releaseDate ? formatDate(releaseDate) : '',
       description: digital_content?.description ?? '',
       mood: digital_content?.mood ?? '',
@@ -421,14 +421,14 @@ class AgreementPageProvider extends Component<
       duration: digital_content ? formatSeconds(digital_content.duration) : '',
       tags: digital_content ? (digital_content.tags || '').split(',').filter(Boolean) : []
     })
-    const canonicalUrl = user && digital_content ? fullAgreementPage(digital_content.permalink) : ''
+    const canonicalUrl = user && digital_content ? fullDigitalContentPage(digital_content.permalink) : ''
 
     // If the digital_content has a remix parent and it's not deleted and the original's owner is not deactivated.
     const hasValidRemixParent =
-      !!getRemixParentAgreementId(digital_content) &&
-      !!remixParentAgreement &&
-      remixParentAgreement.is_delete === false &&
-      !remixParentAgreement.user?.is_deactivated
+      !!getRemixParentDigitalContentId(digital_content) &&
+      !!remixParentDigitalContent &&
+      remixParentDigitalContent.is_delete === false &&
+      !remixParentDigitalContent.user?.is_deactivated
 
     if ((digital_content?.is_delete || digital_content?._marked_deleted) && user) {
       // DigitalContent has not been blocked and is content-available, meaning the owner
@@ -451,7 +451,7 @@ class AgreementPageProvider extends Component<
       title,
       description,
       canonicalUrl,
-      heroAgreement: digital_content,
+      heroDigitalContent: digital_content,
       hasValidRemixParent,
       user,
       heroPlaying,
@@ -464,19 +464,19 @@ class AgreementPageProvider extends Component<
       goToParentRemixesPage: this.goToParentRemixesPage,
       onHeroRepost: this.onHeroRepost,
       onHeroShare: this.onHeroShare,
-      onSaveAgreement: this.onSaveAgreement,
-      onDownloadAgreement: downloadAgreement,
+      onSaveDigitalContent: this.onSaveDigitalContent,
+      onDownloadDigitalContent: downloadDigitalContent,
       onClickMobileOverflow: this.props.clickOverflow,
       onConfirmUnfollow: this.props.onConfirmUnfollow,
       goToFavoritesPage: this.goToFavoritesPage,
       goToRepostsPage: this.goToRepostsPage,
 
-      // Agreements Lineup Props
-      agreements: moreByLandlord,
+      // DigitalContents Lineup Props
+      digitalContents: moreByLandlord,
       currentQueueItem,
       isPlaying: playing,
       isBuffering: buffering,
-      play: this.onMoreByLandlordAgreementsPlay,
+      play: this.onMoreByLandlordDigitalContentsPlay,
       pause,
       onExternalLinkClick
     }
@@ -495,8 +495,8 @@ class AgreementPageProvider extends Component<
 }
 
 const REDIRECT_AGREEMENT_ID_RANGE = [416972, 418372]
-const shouldRedirectAgreement = (agreementId: ID) =>
-  agreementId >= REDIRECT_AGREEMENT_ID_RANGE[0] && agreementId <= REDIRECT_AGREEMENT_ID_RANGE[1]
+const shouldRedirectDigitalContent = (digitalContentId: ID) =>
+  digitalContentId >= REDIRECT_AGREEMENT_ID_RANGE[0] && digitalContentId <= REDIRECT_AGREEMENT_ID_RANGE[1]
 
 function makeMapStateToProps() {
   const getMoreByLandlordLineup = makeGetLineupMetadatas(getLineup)
@@ -505,9 +505,9 @@ function makeMapStateToProps() {
   const mapStateToProps = (state: AppState) => {
     return {
       source: getSourceSelector(state),
-      digital_content: getAgreement(state),
-      agreementPermalink: getAgreementPermalink(state),
-      remixParentAgreement: getRemixParentAgreement(state),
+      digital_content: getDigitalContent(state),
+      digitalContentPermalink: getDigitalContentPermalink(state),
+      remixParentDigitalContent: getRemixParentDigitalContent(state),
       user: getUser(state),
       status: getStatus(state),
       moreByLandlord: getMoreByLandlordLineup(state),
@@ -516,7 +516,7 @@ function makeMapStateToProps() {
       currentQueueItem: getCurrentQueueItem(state),
       playing: getPlaying(state),
       buffering: getBuffering(state),
-      agreementRank: getAgreementRank(state),
+      digitalContentRank: getDigitalContentRank(state),
       isMobile: isMobile(),
       pathname: getLocationPathname(state)
     }
@@ -526,62 +526,62 @@ function makeMapStateToProps() {
 
 function mapDispatchToProps(dispatch: Dispatch) {
   return {
-    fetchAgreement: (
-      agreementId: number | null,
+    fetchDigitalContent: (
+      digitalContentId: number | null,
       slug: string,
       ownerHandle: string,
       canBeUnlisted: boolean
     ) =>
       dispatch(
-        agreementPageActions.fetchAgreement(agreementId, slug, ownerHandle, canBeUnlisted)
+        digitalContentPageActions.fetchDigitalContent(digitalContentId, slug, ownerHandle, canBeUnlisted)
       ),
-    setAgreementId: (agreementId: number) =>
-      dispatch(agreementPageActions.setAgreementId(agreementId)),
-    setAgreementPermalink: (permalink: string) =>
-      dispatch(agreementPageActions.setAgreementPermalink(permalink)),
-    resetAgreementPage: () => dispatch(agreementPageActions.resetAgreementPage()),
-    makeAgreementPublic: (agreementId: ID) =>
-      dispatch(agreementPageActions.makeAgreementPublic(agreementId)),
+    setDigitalContentId: (digitalContentId: number) =>
+      dispatch(digitalContentPageActions.setDigitalContentId(digitalContentId)),
+    setDigitalContentPermalink: (permalink: string) =>
+      dispatch(digitalContentPageActions.setDigitalContentPermalink(permalink)),
+    resetDigitalContentPage: () => dispatch(digitalContentPageActions.resetDigitalContentPage()),
+    makeDigitalContentPublic: (digitalContentId: ID) =>
+      dispatch(digitalContentPageActions.makeDigitalContentPublic(digitalContentId)),
 
     goToRoute: (route: string) => dispatch(pushRoute(route)),
     replaceRoute: (route: string) => dispatch(replace(route)),
-    reset: (source?: string) => dispatch(agreementsActions.reset(source)),
-    play: (uid?: string) => dispatch(agreementsActions.play(uid)),
-    recordPlayMoreByLandlord: (agreementId: ID) => {
-      const agreementEvent: AgreementEvent = make(Name.AGREEMENT_PAGE_PLAY_MORE, {
-        id: agreementId
+    reset: (source?: string) => dispatch(digitalContentsActions.reset(source)),
+    play: (uid?: string) => dispatch(digitalContentsActions.play(uid)),
+    recordPlayMoreByLandlord: (digitalContentId: ID) => {
+      const digitalContentEvent: DigitalContentEvent = make(Name.AGREEMENT_PAGE_PLAY_MORE, {
+        id: digitalContentId
       })
-      dispatch(agreementEvent)
+      dispatch(digitalContentEvent)
     },
-    pause: () => dispatch(agreementsActions.pause()),
-    shareAgreement: (agreementId: ID) =>
+    pause: () => dispatch(digitalContentsActions.pause()),
+    shareDigitalContent: (digitalContentId: ID) =>
       dispatch(
         requestOpenShareModal({
           type: 'digital_content',
-          agreementId,
+          digitalContentId,
           source: ShareSource.PAGE
         })
       ),
-    saveAgreement: (agreementId: ID) =>
+    saveDigitalContent: (digitalContentId: ID) =>
       dispatch(
-        socialAgreementsActions.saveAgreement(agreementId, FavoriteSource.AGREEMENT_PAGE)
+        socialDigitalContentsActions.saveDigitalContent(digitalContentId, FavoriteSource.AGREEMENT_PAGE)
       ),
-    unsaveAgreement: (agreementId: ID) =>
+    unsaveDigitalContent: (digitalContentId: ID) =>
       dispatch(
-        socialAgreementsActions.unsaveAgreement(agreementId, FavoriteSource.AGREEMENT_PAGE)
+        socialDigitalContentsActions.unsaveDigitalContent(digitalContentId, FavoriteSource.AGREEMENT_PAGE)
       ),
-    deleteAgreement: (agreementId: ID) =>
-      dispatch(cacheAgreementActions.deleteAgreement(agreementId)),
-    repostAgreement: (agreementId: ID) =>
+    deleteDigitalContent: (digitalContentId: ID) =>
+      dispatch(cacheDigitalContentActions.deleteDigitalContent(digitalContentId)),
+    repostDigitalContent: (digitalContentId: ID) =>
       dispatch(
-        socialAgreementsActions.repostAgreement(agreementId, RepostSource.AGREEMENT_PAGE)
+        socialDigitalContentsActions.repostDigitalContent(digitalContentId, RepostSource.AGREEMENT_PAGE)
       ),
-    undoRepostAgreement: (agreementId: ID) =>
+    undoRepostDigitalContent: (digitalContentId: ID) =>
       dispatch(
-        socialAgreementsActions.undoRepostAgreement(agreementId, RepostSource.AGREEMENT_PAGE)
+        socialDigitalContentsActions.undoRepostDigitalContent(digitalContentId, RepostSource.AGREEMENT_PAGE)
       ),
-    editAgreement: (agreementId: ID, formFields: any) =>
-      dispatch(cacheAgreementActions.editAgreement(agreementId, formFields)),
+    editDigitalContent: (digitalContentId: ID, formFields: any) =>
+      dispatch(cacheDigitalContentActions.editDigitalContent(digitalContentId, formFields)),
     onFollow: (userId: ID) =>
       dispatch(socialUsersActions.followUser(userId, FollowSource.AGREEMENT_PAGE)),
     onUnfollow: (userId: ID) =>
@@ -590,75 +590,75 @@ function mapDispatchToProps(dispatch: Dispatch) {
       ),
     onConfirmUnfollow: (userId: ID) =>
       dispatch(unfollowConfirmationActions.setOpen(userId)),
-    downloadAgreement: (
-      agreementId: ID,
+    downloadDigitalContent: (
+      digitalContentId: ID,
       cid: CID,
       contentNodeEndpoints: string,
       category?: string,
-      parentAgreementId?: ID
+      parentDigitalContentId?: ID
     ) => {
       dispatch(
-        socialAgreementsActions.downloadAgreement(
-          agreementId,
+        socialDigitalContentsActions.downloadDigitalContent(
+          digitalContentId,
           cid,
           contentNodeEndpoints,
           category
         )
       )
-      const agreementEvent: AgreementEvent = make(Name.AGREEMENT_PAGE_DOWNLOAD, {
-        id: agreementId,
+      const digitalContentEvent: DigitalContentEvent = make(Name.AGREEMENT_PAGE_DOWNLOAD, {
+        id: digitalContentId,
         category,
-        parent_digital_content_id: parentAgreementId
+        parent_digital_content_id: parentDigitalContentId
       })
-      dispatch(agreementEvent)
+      dispatch(digitalContentEvent)
     },
-    clickOverflow: (agreementId: ID, overflowActions: OverflowAction[]) =>
+    clickOverflow: (digitalContentId: ID, overflowActions: OverflowAction[]) =>
       dispatch(
-        open({ source: OverflowSource.AGREEMENTS, id: agreementId, overflowActions })
+        open({ source: OverflowSource.AGREEMENTS, id: digitalContentId, overflowActions })
       ),
-    setRepostAgreementId: (agreementId: ID) =>
-      dispatch(setRepost(agreementId, RepostType.AGREEMENT)),
-    setFavoriteAgreementId: (agreementId: ID) =>
-      dispatch(setFavorite(agreementId, FavoriteType.AGREEMENT)),
+    setRepostDigitalContentId: (digitalContentId: ID) =>
+      dispatch(setRepost(digitalContentId, RepostType.AGREEMENT)),
+    setFavoriteDigitalContentId: (digitalContentId: ID) =>
+      dispatch(setFavorite(digitalContentId, FavoriteType.AGREEMENT)),
     onExternalLinkClick: (event: any) => {
-      const agreementEvent: AgreementEvent = make(Name.LINK_CLICKING, {
+      const digitalContentEvent: DigitalContentEvent = make(Name.LINK_CLICKING, {
         url: event.target.href,
         source: 'digital_content page' as const
       })
-      dispatch(agreementEvent)
+      dispatch(digitalContentEvent)
     },
     recordTagClick: (tag: string) => {
-      const agreementEvent: AgreementEvent = make(Name.TAG_CLICKING, {
+      const digitalContentEvent: DigitalContentEvent = make(Name.TAG_CLICKING, {
         tag,
         source: 'digital_content page' as const
       })
-      dispatch(agreementEvent)
+      dispatch(digitalContentEvent)
     },
-    record: (event: AgreementEvent) => dispatch(event),
-    setRepostUsers: (agreementID: ID) =>
+    record: (event: DigitalContentEvent) => dispatch(event),
+    setRepostUsers: (digitalContentID: ID) =>
       dispatch(
         setUsers({
           userListType: UserListType.REPOST,
           entityType: UserListEntityType.AGREEMENT,
-          id: agreementID
+          id: digitalContentID
         })
       ),
-    setFavoriteUsers: (agreementID: ID) =>
+    setFavoriteUsers: (digitalContentID: ID) =>
       dispatch(
         setUsers({
           userListType: UserListType.FAVORITE,
           entityType: UserListEntityType.AGREEMENT,
-          id: agreementID
+          id: digitalContentID
         })
       ),
     setModalVisibility: () => dispatch(setVisibility(true)),
-    goToRemixesOfParentPage: (parentAgreementId: ID) =>
-      dispatch(agreementPageActions.goToRemixesOfParentPage(parentAgreementId)),
-    refetchAgreementsLinup: () => dispatch(agreementPageActions.refetchLineup())
+    goToRemixesOfParentPage: (parentDigitalContentId: ID) =>
+      dispatch(digitalContentPageActions.goToRemixesOfParentPage(parentDigitalContentId)),
+    refetchDigitalContentsLinup: () => dispatch(digitalContentPageActions.refetchLineup())
   }
 }
 
 export default connect(
   makeMapStateToProps,
   mapDispatchToProps
-)(AgreementPageProvider)
+)(DigitalContentPageProvider)

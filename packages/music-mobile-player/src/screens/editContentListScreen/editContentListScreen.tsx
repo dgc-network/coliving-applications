@@ -5,12 +5,12 @@ import { SquareSizes } from '@coliving/common'
 import {
   editContentList,
   orderContentList,
-  removeAgreementFromContentList
+  removeDigitalContentFromContentList
 } from 'common/store/cache/collections/actions'
-import { agreementsActions } from 'common/store/pages/collection/lineup/actions'
+import { digitalContentsActions } from 'common/store/pages/collection/lineup/actions'
 import {
   getMetadata,
-  getAgreements
+  getDigitalContents
 } from 'common/store/ui/createContentListModal/selectors'
 import type { FormikProps } from 'formik'
 import { Formik } from 'formik'
@@ -18,7 +18,7 @@ import { isEqual } from 'lodash'
 import { View } from 'react-native'
 
 import { FormScreen } from 'app/components/formScreen'
-import { AgreementList } from 'app/components/agreementList'
+import { DigitalContentList } from 'app/components/digitalContentList'
 import { useCollectionCoverArt } from 'app/hooks/useCollectionCoverArt'
 import { useDispatchWeb } from 'app/hooks/useDispatchWeb'
 import { useSelectorWeb } from 'app/hooks/useSelectorWeb'
@@ -47,7 +47,7 @@ const EditContentListForm = (props: FormikProps<ContentListValues>) => {
       reorder.splice(to, 0, tmp)
 
       setFieldValue('digital_content_ids', reorder)
-      setFieldValue('agreements', data)
+      setFieldValue('digitalContents', data)
     },
     [setFieldValue, values.digital_content_ids]
   )
@@ -57,25 +57,25 @@ const EditContentListForm = (props: FormikProps<ContentListValues>) => {
       if ((values.digital_content_ids.length ?? 0) <= index) {
         return
       }
-      const { digital_content: agreementId, time } = values.digital_content_ids[index]
+      const { digital_content: digitalContentId, time } = values.digital_content_ids[index]
 
-      const agreementMetadata = values.agreements?.find(
-        ({ digital_content_id }) => digital_content_id === agreementId
+      const digitalContentMetadata = values.digitalContents?.find(
+        ({ digital_content_id }) => digital_content_id === digitalContentId
       )
 
-      if (!agreementMetadata) return
+      if (!digitalContentMetadata) return
 
-      setFieldValue('removedAgreements', [
-        ...values.removedAgreements,
-        { agreementId, timestamp: time }
+      setFieldValue('removedDigitalContents', [
+        ...values.removedDigitalContents,
+        { digitalContentId, timestamp: time }
       ])
 
-      const agreements = [...(values.agreements ?? [])]
-      agreements.splice(index, 1)
+      const digitalContents = [...(values.digitalContents ?? [])]
+      digitalContents.splice(index, 1)
 
-      setFieldValue('agreements', agreements)
+      setFieldValue('digitalContents', digitalContents)
     },
-    [values.digital_content_ids, values.agreements, values.removedAgreements, setFieldValue]
+    [values.digital_content_ids, values.digitalContents, values.removedDigitalContents, setFieldValue]
   )
 
   const header = (
@@ -88,14 +88,14 @@ const EditContentListForm = (props: FormikProps<ContentListValues>) => {
 
   return (
     <FormScreen onSubmit={handleSubmit} onReset={handleReset} goBackOnSubmit>
-      {values.agreements ? (
-        <AgreementList
+      {values.digitalContents ? (
+        <DigitalContentList
           hideArt
           isReorderable
           onReorder={handleReorder}
           onRemove={handleRemove}
-          agreements={values.agreements}
-          agreementItemAction='remove'
+          digitalContents={values.digitalContents}
+          digitalContentItemAction='remove'
           ListHeaderComponent={header}
           ListFooterComponent={<View style={styles.footer} />}
         />
@@ -109,7 +109,7 @@ const EditContentListForm = (props: FormikProps<ContentListValues>) => {
 export const EditContentListScreen = () => {
   const contentList = useSelectorWeb(getMetadata)
   const dispatchWeb = useDispatchWeb()
-  const agreements = useSelectorWeb(getAgreements)
+  const digitalContents = useSelectorWeb(getDigitalContents)
 
   const coverArt = useCollectionCoverArt({
     id: contentList?.content_list_id,
@@ -120,9 +120,9 @@ export const EditContentListScreen = () => {
   const handleSubmit = useCallback(
     (values: ContentListValues) => {
       if (contentList) {
-        values.removedAgreements.forEach(({ agreementId, timestamp }) => {
+        values.removedDigitalContents.forEach(({ digitalContentId, timestamp }) => {
           dispatchWeb(
-            removeAgreementFromContentList(agreementId, contentList.content_list_id, timestamp)
+            removeDigitalContentFromContentList(digitalContentId, contentList.content_list_id, timestamp)
           )
         })
         if (!isEqual(contentList?.content_list_contents.digital_content_ids, values.digital_content_ids)) {
@@ -136,7 +136,7 @@ export const EditContentListScreen = () => {
         dispatchWeb(
           editContentList(contentList.content_list_id, values as unknown as Collection)
         )
-        dispatchWeb(agreementsActions.fetchLineupMetadatas())
+        dispatchWeb(digitalContentsActions.fetchLineupMetadatas())
       }
     },
     [dispatchWeb, contentList]
@@ -150,8 +150,8 @@ export const EditContentListScreen = () => {
     content_list_name,
     description,
     artwork: { url: coverArt ?? '' },
-    removedAgreements: [],
-    agreements,
+    removedDigitalContents: [],
+    digitalContents,
     digital_content_ids: contentList.content_list_contents.digital_content_ids
   }
 

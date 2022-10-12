@@ -1,4 +1,4 @@
-import { ID, Collection, FeedFilter, DigitalContent, UserAgreement } from '@coliving/common'
+import { ID, Collection, FeedFilter, DigitalContent, UserDigitalContent } from '@coliving/common'
 
 import ColivingBackend, {
   IDENTITY_SERVICE,
@@ -16,7 +16,7 @@ const scoreComparator = <T extends { score: number }>(a: T, b: T) =>
 
 type TopUserListen = {
   userId: number
-  agreementId: number
+  digitalContentId: number
 }
 
 type UserListens = {
@@ -42,10 +42,10 @@ class Explore {
     }
   }
 
-  static async getUserListens(agreementIds: ID[]): Promise<UserListens> {
+  static async getUserListens(digitalContentIds: ID[]): Promise<UserListens> {
     try {
       const { data, signature } = await ColivingBackend.signData()
-      const idQuery = agreementIds.map((id) => `&agreementIdList=${id}`).join('')
+      const idQuery = digitalContentIds.map((id) => `&digitalContentIdList=${id}`).join('')
       return fetch(`${IDENTITY_SERVICE}/users/listens?${idQuery}`, {
         headers: {
           [AuthHeaders.Message]: data,
@@ -60,18 +60,18 @@ class Explore {
     }
   }
 
-  static async getTopFolloweeAgreementsFromWindow(
+  static async getTopFolloweeDigitalContentsFromWindow(
     window: string,
     limit = 25
-  ): Promise<UserAgreement[]> {
+  ): Promise<UserDigitalContent[]> {
     try {
-      const agreements = await libs().discoveryNode.getTopFolloweeWindowed(
+      const digitalContents = await libs().discoveryNode.getTopFolloweeWindowed(
         'digital_content',
         window,
         limit,
         true
       )
-      return agreements
+      return digitalContents
     } catch (e) {
       console.error(e)
       return []
@@ -80,22 +80,22 @@ class Explore {
 
   static async getFeedNotListenedTo(limit = 25) {
     try {
-      const agreements: UserAgreement[] = await ColivingBackend.getSocialFeed({
+      const digitalContents: UserDigitalContent[] = await ColivingBackend.getSocialFeed({
         filter: FeedFilter.ORIGINAL,
         offset: 0,
         limit: 100,
         withUsers: true,
-        agreementsOnly: true
+        digitalContentsOnly: true
       })
-      const agreementIds = agreements
+      const digitalContentIds = digitalContents
         .map((digital_content: DigitalContent) => digital_content.digital_content_id)
         .filter(Boolean)
-      const listens: any = await Explore.getUserListens(agreementIds)
+      const listens: any = await Explore.getUserListens(digitalContentIds)
 
-      const notListenedToAgreements = agreements.filter(
+      const notListenedToDigitalContents = digitalContents.filter(
         (digital_content: DigitalContent) => !listens[digital_content.digital_content_id]
       )
-      return notListenedToAgreements.slice(0, limit)
+      return notListenedToDigitalContents.slice(0, limit)
     } catch (e) {
       console.error(e)
       return []
@@ -104,12 +104,12 @@ class Explore {
 
   static async getRemixables(currentUserId: ID, limit = 25) {
     try {
-      const agreements = await apiClient.getRemixables({
+      const digitalContents = await apiClient.getRemixables({
         limit,
         currentUserId
       })
 
-      return agreements
+      return digitalContents
     } catch (e) {
       console.error(e)
       return []
@@ -118,19 +118,19 @@ class Explore {
 
   static async getTopFolloweeSaves(limit = 25) {
     try {
-      const agreements: UserAgreement[] =
+      const digitalContents: UserDigitalContent[] =
         await libs().discoveryNode.getTopFolloweeSaves('digital_content', limit, true)
-      return agreements
+      return digitalContents
     } catch (e) {
       console.error(e)
       return []
     }
   }
 
-  static async getLatestAgreementID(): Promise<number> {
+  static async getLatestDigitalContentID(): Promise<number> {
     try {
-      const latestAgreementID = await libs().discoveryNode.getLatest('digital_content')
-      return latestAgreementID
+      const latestDigitalContentID = await libs().discoveryNode.getLatest('digital_content')
+      return latestDigitalContentID
     } catch (e) {
       console.error(e)
       return 0

@@ -26,7 +26,7 @@ import RemixSettingsModalReducer from 'components/remixSettingsModal/store/slice
 import SearchBarState from 'components/searchBar/store/types'
 import ServiceSelectionReducer from 'components/serviceSelection/store/slice'
 import { UnfollowConfirmationModalState } from 'components/unfollowConfirmationModal/store/types'
-import LandlordDashboardState from 'pages/landlord-dashboard-page/store/types'
+import LandlordDashboardState from 'pages/author-dashboard-page/store/types'
 import { DeactivateAccountState } from 'pages/deactivateAccountPage/store/slice'
 import DeletedPageReducer from 'pages/deletedPage/store/slice'
 import SignOnPageState from 'pages/signOn/store/types'
@@ -39,7 +39,7 @@ import ContentListLibraryReducer from 'store/contentListLibrary/slice'
 import { CookieBannerState } from './application/ui/cookieBanner/types'
 import { EditFolderModalState } from './application/ui/editFolderModal/slice'
 import { EditContentListModalState } from './application/ui/editContentListModal/slice'
-import EditAgreementModalState from './application/ui/editAgreementModal/types'
+import EditDigitalContentModalState from './application/ui/editDigitalContentModal/types'
 import { MobileKeyboardState } from './application/ui/mobileKeyboard/types'
 import { ScrollLockState } from './application/ui/scrollLock/types'
 import { SetAsLandlordPickConfirmationState } from './application/ui/setAsLandlordPickConfirmation/types'
@@ -72,7 +72,7 @@ export type AppState = CommonState & {
       createContentListModal: CreateContentListModalState
       editContentListModal: EditContentListModalState
       editFolderModal: EditFolderModalState
-      editAgreementModal: EditAgreementModalState
+      editDigitalContentModal: EditDigitalContentModalState
       embedModal: EmbedModalState
       deactivateAccount: DeactivateAccountState
       firstUploadModal: FirstUploadModalState

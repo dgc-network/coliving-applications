@@ -14,11 +14,11 @@ import { getUserId } from 'common/store/account/selectors'
 import { getCollections } from 'common/store/cache/collections/selectors'
 import { retrieve } from 'common/store/cache/sagas'
 import { getEntryTimestamp } from 'common/store/cache/selectors'
-import { retrieveAgreements } from 'common/store/cache/agreements/utils'
+import { retrieveDigitalContents } from 'common/store/cache/digital_contents/utils'
 import ColivingBackend from 'services/colivingBackend'
 import apiClient from 'services/colivingAPIClient/colivingAPIClient'
 
-import { addAgreementsFromCollections } from './addAgreementsFromCollections'
+import { addDigitalContentsFromCollections } from './addDigitalContentsFromCollections'
 import { addUsersFromCollections } from './addUsersFromCollections'
 import { reformat } from './reformat'
 
@@ -37,32 +37,32 @@ function* markCollectionDeleted(
   })
 }
 
-export function* retrieveAgreementsForCollections(
+export function* retrieveDigitalContentsForCollections(
   collections: CollectionMetadata[],
-  excludedAgreementIdSet: Set<ID>
+  excludedDigitalContentIdSet: Set<ID>
 ) {
-  const allAgreementIds = collections.reduce((acc, cur) => {
-    const agreementIds = cur.content_list_contents.digital_content_ids.map((t) => t.digital_content)
-    return [...acc, ...agreementIds]
+  const allDigitalContentIds = collections.reduce((acc, cur) => {
+    const digitalContentIds = cur.content_list_contents.digital_content_ids.map((t) => t.digital_content)
+    return [...acc, ...digitalContentIds]
   }, [] as ID[])
-  const filteredAgreementIds = [
-    ...new Set(allAgreementIds.filter((id) => !excludedAgreementIdSet.has(id)))
+  const filteredDigitalContentIds = [
+    ...new Set(allDigitalContentIds.filter((id) => !excludedDigitalContentIdSet.has(id)))
   ]
-  const agreements: DigitalContent[] = yield call(retrieveAgreements, {
-    agreementIds: filteredAgreementIds
+  const digitalContents: DigitalContent[] = yield call(retrieveDigitalContents, {
+    digitalContentIds: filteredDigitalContentIds
   })
 
-  // If any agreements failed to be retrieved for some reason,
+  // If any digitalContents failed to be retrieved for some reason,
   // remove them from their collection.
   const unfetchedIdSet = new Set()
-  for (let i = 0; i < agreements.length; i++) {
-    if (!agreements[i]) {
-      unfetchedIdSet.add(filteredAgreementIds[i])
+  for (let i = 0; i < digitalContents.length; i++) {
+    if (!digitalContents[i]) {
+      unfetchedIdSet.add(filteredDigitalContentIds[i])
     }
   }
 
   return collections.map((c) => {
-    // Filter out unfetched agreements
+    // Filter out unfetched digitalContents
     const filteredIds = c.content_list_contents.digital_content_ids.filter(
       (t) => !unfetchedIdSet.has(t.digital_content)
     )
@@ -99,16 +99,16 @@ export function* retrieveCollection(contentListId: ID) {
  * Retrieves collections from the cache or from source
  * @param userId optional owner of collections to fetch (TODO: to be removed)
  * @param collectionIds ids to retrieve
- * @param fetchAgreements whether or not to fetch the agreements inside the contentList
- * @param requiresAllAgreements whether or not fetching this collection requires it to have all its agreements.
- * In the case where a collection is already cached with partial agreements, use this flag to refetch from source.
+ * @param fetchDigitalContents whether or not to fetch the digitalContents inside the contentList
+ * @param requiresAllDigitalContents whether or not fetching this collection requires it to have all its digitalContents.
+ * In the case where a collection is already cached with partial digitalContents, use this flag to refetch from source.
  * @returns
  */
 export function* retrieveCollections(
   userId: ID | null,
   collectionIds: ID[],
-  fetchAgreements = false,
-  requiresAllAgreements = false
+  fetchDigitalContents = false,
+  requiresAllDigitalContents = false
 ) {
   // @ts-ignore retrieve should be refactored to ts first
   const { entries, uids } = yield call(retrieve, {
@@ -117,12 +117,12 @@ export function* retrieveCollections(
       const res: {
         [id: number]: Collection
       } = yield select(getCollections, { ids })
-      if (requiresAllAgreements) {
+      if (requiresAllDigitalContents) {
         const keys = Object.keys(res) as any
         keys.forEach((collectionId: number) => {
-          const fullAgreementCount = res[collectionId].digital_content_count
-          const currentAgreementCount = res[collectionId].agreements?.length ?? 0
-          if (currentAgreementCount < fullAgreementCount) {
+          const fullDigitalContentCount = res[collectionId].digital_content_count
+          const currentDigitalContentCount = res[collectionId].digitalContents?.length ?? 0
+          if (currentDigitalContentCount < fullDigitalContentCount) {
             // Remove the collection from the res so retrieve knows to get it from source
             delete res[collectionId]
           }
@@ -159,10 +159,10 @@ export function* retrieveCollections(
     },
     onBeforeAddToCache: function* (metadatas: UserCollectionMetadata[]) {
       yield addUsersFromCollections(metadatas)
-      yield addAgreementsFromCollections(metadatas)
+      yield addDigitalContentsFromCollections(metadatas)
 
-      if (fetchAgreements) {
-        yield call(retrieveAgreementsForCollections, metadatas, new Set())
+      if (fetchDigitalContents) {
+        yield call(retrieveDigitalContentsForCollections, metadatas, new Set())
       }
 
       const reformattedCollections = metadatas.map((c) => reformat(c))

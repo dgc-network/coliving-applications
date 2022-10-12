@@ -131,13 +131,13 @@
   flex: 1 auto;
 }
 
-.agreementId {
+.digitalContentId {
   display: flex;
 }
-.agreementId > div {
+.digitalContentId > div {
   flex: 1 auto;
 }
-.agreementId > div:first-child {
+.digitalContentId > div:first-child {
   margin-right: 38px;
 }
 
@@ -175,11 +175,11 @@
   margin-top: 16px;
 }
 
-.hiddenAgreementButton {
+.hiddenDigitalContentButton {
   height: 35px !important;
 }
 
-.hiddenAgreementButton .hiddenAgreementButtonText {
+.hiddenDigitalContentButton .hiddenDigitalContentButtonText {
   font-size: var(--font-xs);
   font-weight: var(--font-demi-bold);
 }

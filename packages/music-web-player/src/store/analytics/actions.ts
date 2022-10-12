@@ -25,7 +25,7 @@ export const make = <U extends Name, T>(
   ...m
 })
 
-export type AgreementEvent = AllTrackingEvents & {
+export type DigitalContentEvent = AllTrackingEvents & {
   type: typeof AGREEMENT
   callback?: () => void
   options?: Record<string, any>
@@ -33,6 +33,6 @@ export type AgreementEvent = AllTrackingEvents & {
 
 export const useRecord = () => {
   const dispatch = useDispatchRedux()
-  const record = useCallback((event: AgreementEvent) => dispatch(event), [dispatch])
+  const record = useCallback((event: DigitalContentEvent) => dispatch(event), [dispatch])
   return record
 }

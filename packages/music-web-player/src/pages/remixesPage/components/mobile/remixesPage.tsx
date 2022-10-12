@@ -11,7 +11,7 @@ import Lineup, { LineupWithoutTile } from 'components/lineup/lineup'
 import MobilePageContainer from 'components/mobilePageContainer/mobilePageContainer'
 import { useSubPageHeader } from 'components/nav/store/context'
 import UserBadges from 'components/userBadges/userBadges'
-import { fullAgreementRemixesPage } from 'utils/route'
+import { fullDigitalContentRemixesPage } from 'utils/route'
 import { isMatrix } from 'utils/theme/theme'
 import { withNullGuard } from 'utils/withNullGuard'
 
@@ -21,33 +21,33 @@ const messages = {
   remixes: 'Remix',
   by: 'by',
   of: 'of',
-  getDescription: (agreementName: string, landlordName: string) =>
-    `${messages.remixes} ${messages.of} ${agreementName} ${messages.by} ${landlordName}`
+  getDescription: (digitalContentName: string, landlordName: string) =>
+    `${messages.remixes} ${messages.of} ${digitalContentName} ${messages.by} ${landlordName}`
 }
 
 export type RemixesPageProps = {
   title: string
   count: number | null
-  originalAgreement: DigitalContent | null
+  originalDigitalContent: DigitalContent | null
   user: User | null
   getLineupProps: () => LineupWithoutTile
-  goToAgreementPage: () => void
+  goToDigitalContentPage: () => void
   goToLandlordPage: () => void
 }
 
 const g = withNullGuard(
-  ({ originalAgreement, user, ...p }: RemixesPageProps) =>
-    originalAgreement && user && { ...p, originalAgreement, user }
+  ({ originalDigitalContent, user, ...p }: RemixesPageProps) =>
+    originalDigitalContent && user && { ...p, originalDigitalContent, user }
 )
 
 const RemixesPage = g(
   ({
     title,
     count,
-    originalAgreement,
+    originalDigitalContent,
     user,
     getLineupProps,
-    goToAgreementPage,
+    goToDigitalContentPage,
     goToLandlordPage
   }) => {
     useSubPageHeader()
@@ -71,16 +71,16 @@ const RemixesPage = g(
           />
         </>
       )
-    }, [setHeader, title, originalAgreement, user, goToLandlordPage, goToAgreementPage])
+    }, [setHeader, title, originalDigitalContent, user, goToLandlordPage, goToDigitalContentPage])
 
     return (
       <MobilePageContainer
         title={title}
-        description={messages.getDescription(originalAgreement.title, user.name)}
-        canonicalUrl={fullAgreementRemixesPage(originalAgreement.permalink)}
+        description={messages.getDescription(originalDigitalContent.title, user.name)}
+        canonicalUrl={fullDigitalContentRemixesPage(originalDigitalContent.permalink)}
         containerClassName={styles.container}
       >
-        <div className={styles.agreementsContainer}>
+        <div className={styles.digitalContentsContainer}>
           <div className={styles.subHeader}>
             {`${count || ''} ${pluralize(
               messages.remixes,
@@ -89,8 +89,8 @@ const RemixesPage = g(
               !count
             )} ${messages.of}`}
             <div className={styles.digital_content}>
-              <div className={styles.link} onClick={goToAgreementPage}>
-                {originalAgreement.title}
+              <div className={styles.link} onClick={goToDigitalContentPage}>
+                {originalDigitalContent.title}
               </div>
               {messages.by}
               <div className={styles.link} onClick={goToLandlordPage}>

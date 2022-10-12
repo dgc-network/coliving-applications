@@ -22,7 +22,7 @@ import {
   getIsShuffleOn,
   getShuffleIndex,
   getQueueAutoplay,
-  getAgreementAndIndex
+  getDigitalContentAndIndex
 } from 'app/store/digitalcoin/selectors'
 import type { MessagePostingWebView } from 'app/types/messagePostingWebView'
 import { postMessage } from 'app/utils/postMessage'
@@ -64,7 +64,7 @@ type Props = OwnProps &
 
 const Audio = ({
   webRef,
-  agreementAndIndex: { digital_content, index },
+  digitalContentAndIndex: { digital_content, index },
   queueLength,
   playing,
   seek,
@@ -90,7 +90,7 @@ const Audio = ({
   // to the correct value or else MusicControl gets confused.
   const [duration, setDuration] = useState<number | null>(null)
 
-  const [listenLoggedForAgreement, setListenLoggedForAgreement] = useState(false)
+  const [listenLoggedForDigitalContent, setListenLoggedForDigitalContent] = useState(false)
 
   // A ref to invalidate the current progress counter and prevent
   // stale values of digitalcoin progress from propagating back to the UI.
@@ -215,7 +215,7 @@ const Audio = ({
       MusicControl.setNowPlaying({
         title: digital_content.title,
         artwork: Platform.OS === 'ios' ? digital_content.artwork : digital_content.largeArtwork,
-        landlord: digital_content.landlord,
+        author: digital_content.author,
         duration
       })
       if (webRef.current) {
@@ -261,15 +261,15 @@ const Audio = ({
         isNextEnabled = index < queueLength - 1
       }
       if (digital_content && digital_content.genre === Genre.PODCASTS) {
-        MusicControl.enableControl('previousAgreement', false)
-        MusicControl.enableControl('nextAgreement', false)
+        MusicControl.enableControl('previousDigitalContent', false)
+        MusicControl.enableControl('nextDigitalContent', false)
         MusicControl.enableControl('skipBackward', true, { interval: 15 })
         MusicControl.enableControl('skipForward', true, { interval: 15 })
       } else {
         MusicControl.enableControl('skipBackward', false, { interval: 15 })
         MusicControl.enableControl('skipForward', false, { interval: 15 })
-        MusicControl.enableControl('previousAgreement', isPreviousEnabled)
-        MusicControl.enableControl('nextAgreement', isNextEnabled)
+        MusicControl.enableControl('previousDigitalContent', isPreviousEnabled)
+        MusicControl.enableControl('nextDigitalContent', isNextEnabled)
       }
     }
   }, [
@@ -305,8 +305,8 @@ const Audio = ({
   }, [seek, webRef, progressInvalidator, elapsedTime, isCasting])
 
   useEffect(() => {
-    setListenLoggedForAgreement(false)
-  }, [digital_content, setListenLoggedForAgreement])
+    setListenLoggedForDigitalContent(false)
+  }, [digital_content, setListenLoggedForDigitalContent])
 
   const handleError = (e: any) => {
     console.error('err ' + JSON.stringify(e))
@@ -330,7 +330,7 @@ const Audio = ({
   // (if the next button is clicked by the user, the dapp client will handle autoplay logic)
   const onNext = useCallback(() => {
     // if autoplay is enabled and current song is close to end of queue,
-    // then trigger queueing of recommended agreements for autoplay
+    // then trigger queueing of recommended digitalContents for autoplay
     const isCloseToEndOfQueue = index + 2 >= queueLength
     const isNotRepeating = repeatMode === RepeatMode.OFF
     if (
@@ -343,7 +343,7 @@ const Audio = ({
       postMessage(webRef.current, {
         type: MessageType.REQUEST_QUEUE_AUTOPLAY,
         genre: (digital_content && digital_content.genre) || undefined,
-        agreementId: (digital_content && digital_content.agreementId) || undefined,
+        digitalContentId: (digital_content && digital_content.digitalContentId) || undefined,
         isAction: true
       })
     }
@@ -388,17 +388,17 @@ const Audio = ({
         progress.currentTime > RECORD_LISTEN_SECONDS &&
         (digital_content.ownerId !== digital_content.currentUserId ||
           digital_content.currentListenCount < 10) &&
-        !listenLoggedForAgreement
+        !listenLoggedForDigitalContent
       ) {
         // Debounce logging a listen, update the state variable appropriately onSuccess and onFailure
-        setListenLoggedForAgreement(true)
-        logListen(digital_content.agreementId, digital_content.currentUserId, () =>
-          setListenLoggedForAgreement(false)
+        setListenLoggedForDigitalContent(true)
+        logListen(digital_content.digitalContentId, digital_content.currentUserId, () =>
+          setListenLoggedForDigitalContent(false)
         )
       }
       global.progress = progress
     },
-    [digital_content, listenLoggedForAgreement, setListenLoggedForAgreement, progressInvalidator]
+    [digital_content, listenLoggedForDigitalContent, setListenLoggedForDigitalContent, progressInvalidator]
   )
 
   return (
@@ -438,7 +438,7 @@ const Audio = ({
 }
 
 const mapStateToProps = (state: AppState) => ({
-  agreementAndIndex: getAgreementAndIndex(state),
+  digitalContentAndIndex: getDigitalContentAndIndex(state),
   queueLength: getQueueLength(state),
   playing: getPlaying(state),
   seek: getSeek(state),

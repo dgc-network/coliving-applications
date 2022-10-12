@@ -2,9 +2,9 @@ import { ID, Collection, DigitalContent } from '@coliving/common'
 import { put, select } from 'typed-redux-saga'
 
 import { getCollection } from 'common/store/cache/collections/selectors'
-import { getAgreement } from 'common/store/cache/agreements/selectors'
+import { getDigitalContent } from 'common/store/cache/digital_contents/selectors'
 import {
-  agreementRepostError,
+  digitalContentRepostError,
   contentListRepostError
 } from 'common/store/userList/reposts/actions'
 import { watchRepostsError } from 'common/store/userList/reposts/errorSagas'
@@ -45,8 +45,8 @@ const getContentListReposts = createUserListProvider<Collection>({
   includeCurrentUser: (p) => p.has_current_user_reposted
 })
 
-const getAgreementReposts = createUserListProvider<DigitalContent>({
-  getExistingEntity: getAgreement,
+const getDigitalContentReposts = createUserListProvider<DigitalContent>({
+  getExistingEntity: getDigitalContent,
   extractUserIDSubsetFromEntity: (digital_content: DigitalContent) =>
     digital_content.followee_reposts.map((r) => r.user_id),
   fetchAllUsersForEntity: async ({
@@ -60,10 +60,10 @@ const getAgreementReposts = createUserListProvider<DigitalContent>({
     entityId: ID
     currentUserId: ID | null
   }) => {
-    const users = await apiClient.getAgreementRepostUsers({
+    const users = await apiClient.getDigitalContentRepostUsers({
       limit,
       offset,
-      agreementId: entityId,
+      digitalContentId: entityId,
       currentUserId
     })
     return { users }
@@ -80,7 +80,7 @@ function* errorDispatcher(error: Error) {
   if (!id) return
 
   if (repostType === RepostType.AGREEMENT) {
-    yield* put(agreementRepostError(id, error.message))
+    yield* put(digitalContentRepostError(id, error.message))
   } else {
     yield* put(contentListRepostError(id, error.message))
   }
@@ -91,7 +91,7 @@ function* getReposts(currentPage: number, pageSize: number) {
   if (!id) return { userIds: [], hasMore: false }
   const repostType = yield* select(getRepostsType)
   return yield* (
-    repostType === RepostType.AGREEMENT ? getAgreementReposts : getContentListReposts
+    repostType === RepostType.AGREEMENT ? getDigitalContentReposts : getContentListReposts
   )({ id, currentPage, pageSize })
 }
 

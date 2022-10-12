@@ -1,7 +1,7 @@
-import type { Repost, AgreementSegment, User } from '@coliving/common'
+import type { Repost, DigitalContentSegment, User } from '@coliving/common'
 
 import type { CollectionImage } from 'app/models/collection'
-import type { AgreementImage } from 'app/models/digital_content'
+import type { DigitalContentImage } from 'app/models/digital_content'
 import type { UserImage, UserMultihash } from 'app/models/user'
 
 type BaseUser = Pick<
@@ -34,7 +34,7 @@ export type SearchUser = UserMultihash &
     user_id: number
   }
 
-export type SearchAgreement = AgreementImage & {
+export type SearchDigitalContent = DigitalContentImage & {
   _co_sign: undefined
   _cover_art_sizes: null
   description: string | null
@@ -79,7 +79,7 @@ export type SearchAgreement = AgreementImage & {
   owner_id: number
   followee_saves: []
   save_count: undefined
-  digital_content_segments: AgreementSegment[]
+  digital_content_segments: DigitalContentSegment[]
   followee_favorites: null
   user_id: number
   permalink: string
@@ -104,7 +104,7 @@ export type SearchContentList = CollectionImage & {
   is_delete: boolean
   is_private: boolean
   updated_at: string
-  agreements: []
+  digitalContents: []
   digital_content_count: number
   variant: string
   content_list_id: number
@@ -121,7 +121,7 @@ export type SearchContentList = CollectionImage & {
 
 export type SearchResults = {
   users: SearchUser[]
-  agreements: SearchAgreement[]
+  digitalContents: SearchDigitalContent[]
   contentLists: SearchContentList[]
   albums: SearchContentList[]
 }

@@ -5,14 +5,14 @@ import {
   albumPage,
   fullAlbumPage,
   fullContentListPage,
-  fullAgreementPage,
+  fullDigitalContentPage,
   contentListPage
 } from 'utils/route'
 
 export const getEntityLink = (entity: EntityType, fullRoute = false) => {
   if (!entity.user) return ''
   if ('digital_content_id' in entity) {
-    return fullRoute ? fullAgreementPage(entity.permalink) : entity.permalink
+    return fullRoute ? fullDigitalContentPage(entity.permalink) : entity.permalink
   } else if (entity.user && entity.content_list_id && entity.is_album) {
     const getRoute = fullRoute ? fullAlbumPage : albumPage
     return getRoute(

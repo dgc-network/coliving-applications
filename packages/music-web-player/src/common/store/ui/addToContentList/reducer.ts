@@ -6,14 +6,14 @@ import * as actions from './actions'
 type AddToContentListActions = ActionType<typeof actions>
 
 export type AddToContentListState = {
-  agreementId: ID | null
-  agreementTitle: string | null
+  digitalContentId: ID | null
+  digitalContentTitle: string | null
 }
 
 const initialState = {
   isOpen: false,
-  agreementId: null,
-  agreementTitle: null
+  digitalContentId: null,
+  digitalContentTitle: null
 }
 
 const reducer = createReducer<AddToContentListState, AddToContentListActions>(
@@ -22,15 +22,15 @@ const reducer = createReducer<AddToContentListState, AddToContentListActions>(
     [actions.OPEN](state, action) {
       return {
         ...state,
-        agreementId: action.agreementId,
-        agreementTitle: action.agreementTitle
+        digitalContentId: action.digitalContentId,
+        digitalContentTitle: action.digitalContentTitle
       }
     },
     [actions.CLOSE](state, action) {
       return {
         ...state,
-        agreementId: null,
-        agreementTitle: null
+        digitalContentId: null,
+        digitalContentTitle: null
       }
     }
   }

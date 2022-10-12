@@ -2,7 +2,7 @@ import { Collection, Status, DigitalContent, User } from '@coliving/common'
 
 export default interface SearchBarState {
   searchText: string
-  agreements: DigitalContent[]
+  digitalContents: DigitalContent[]
   users: User[]
   contentLists: Collection[]
   albums: Collection[]

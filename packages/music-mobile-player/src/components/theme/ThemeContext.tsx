@@ -40,12 +40,12 @@ export const ThemeProvider = (props: ThemeProviderProps) => {
       const recordedTheme =
         theme === Theme.DEFAULT ? 'light' : theme.toLocaleLowerCase()
 
-      const agreementEvent = make({
+      const digitalContentEvent = make({
         eventName: Name.SETTINGS_CHANGE_THEME,
         mode: recordedTheme as 'dark' | 'light' | 'matrix' | 'auto'
       })
 
-      digital_content(agreementEvent)
+      digital_content(digitalContentEvent)
     },
     [dispatchWeb]
   )

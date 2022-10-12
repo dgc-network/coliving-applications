@@ -12,7 +12,7 @@ const initialState: {
 }
 
 /**
- * This slice agreements computed average colors and dominant colors for a given digital_content art CID.
+ * This slice digitalContents computed average colors and dominant colors for a given digital_content art CID.
  * Colors is a map of art cid -> Color
  */
 const slice = createSlice({
@@ -44,7 +44,7 @@ export const getAverageColor = (
 ): Nullable<Color> =>
   (multihash && state.ui.averageColor.averageColor[multihash]) || null
 
-export const getAverageColorByAgreement = (
+export const getAverageColorByDigitalContent = (
   state: CommonState,
   { digital_content }: { digital_content: Nullable<DigitalContent> }
 ): Nullable<Color> => {
@@ -53,7 +53,7 @@ export const getAverageColorByAgreement = (
   return state.ui.averageColor.averageColor[multihash] ?? null
 }
 
-export const getDominantColorsByAgreement = (
+export const getDominantColorsByDigitalContent = (
   state: CommonState,
   { digital_content }: { digital_content: Nullable<DigitalContent> }
 ): Nullable<Color[]> => {

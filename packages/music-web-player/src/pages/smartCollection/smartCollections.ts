@@ -23,7 +23,7 @@ import {
 export const HEAVY_ROTATION: SmartCollection = {
   variant: Variant.SMART,
   content_list_name: SmartCollectionVariant.HEAVY_ROTATION,
-  description: 'Your top agreements, in one place',
+  description: 'Your top digitalContents, in one place',
   gradient: 'linear-gradient(316deg, #C751C0 0%, #4158D0 100%)',
   shadow: 'rgba(196,81,193,0.35)',
   icon: IconExploreRotation,
@@ -43,7 +43,7 @@ export const BEST_NEW_RELEASES: SmartCollection = {
 export const UNDER_THE_RADAR: SmartCollection = {
   variant: Variant.SMART,
   content_list_name: SmartCollectionVariant.UNDER_THE_RADAR,
-  description: 'Agreements you might have missed from the landlords you follow',
+  description: 'DigitalContents you might have missed from the landlords you follow',
   gradient: 'linear-gradient(135deg, #FFA63B 0%, #FF2525 100%)',
   shadow: 'rgba(255,47,39,0.35)',
   icon: IconExploreUnderRadar,
@@ -53,7 +53,7 @@ export const UNDER_THE_RADAR: SmartCollection = {
 export const MOST_LOVED: SmartCollection = {
   variant: Variant.SMART,
   content_list_name: SmartCollectionVariant.MOST_LOVED,
-  description: 'Agreements favorited by the people you follow',
+  description: 'DigitalContents favorited by the people you follow',
   gradient: 'linear-gradient(135deg, #896BFF 0%, #0060FF 100%)',
   shadow: 'rgba(3,96,255,0.35)',
   icon: IconExploreMostLoved,
@@ -64,7 +64,7 @@ export const REMIXABLES: SmartCollection = {
   variant: Variant.SMART,
   content_list_name: SmartCollectionVariant.REMIXABLES,
   description:
-    'Popular agreements with remixes & stems you can use in your own agreements.',
+    'Popular digitalContents with remixes & stems you can use in your own digitalContents.',
   gradient: 'linear-gradient(137.65deg, #FF00F5 -5.01%, #00D1FF 110.47%)',
   shadow: 'rgba(87,170,255,0.35)',
   icon: IconExploreRemixables,
@@ -74,7 +74,7 @@ export const REMIXABLES: SmartCollection = {
 export const FEELING_LUCKY: SmartCollection = {
   variant: Variant.SMART,
   content_list_name: SmartCollectionVariant.FEELING_LUCKY,
-  description: 'A purely random collection of agreements from Coliving',
+  description: 'A purely random collection of digitalContents from Coliving',
   gradient: 'linear-gradient(135deg, #19CCA2 0%, #61FA66 100%)',
   shadow: 'rgba(95,249,103,0.35)',
   icon: IconExploreFeelingLucky,

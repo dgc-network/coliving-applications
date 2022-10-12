@@ -7,7 +7,7 @@ import { isEqual, useSelectorWeb } from 'app/hooks/useSelectorWeb'
 import { EventNames } from 'app/types/analytics'
 import { make } from 'app/utils/analytics'
 
-import { NotificationTile, NotificationTwitterButton } from '../Notification'
+import { NotificationTile, NotificationTwitterButton } from '../notification'
 
 import { SupporterAndSupportingNotificationContent } from './supporterAndSupportingNotificationContent'
 import { useGoToProfile } from './useGoToProfile'
@@ -17,7 +17,7 @@ const messages = {
   supporterChange: "You're now their",
   supporter: 'Top Supporter',
   twitterShare: (handle: string, rank: number) =>
-    `I'm now ${handle}'s #${rank} Top Supporter on @dgc-network #Coliving $LIVE #LIVETip`
+    `I'm now ${handle}'s #${rank} Top Supporter on @dgc-network #Coliving $DGCO #LIVETip`
 }
 
 type TopSupportingNotificationProps = {

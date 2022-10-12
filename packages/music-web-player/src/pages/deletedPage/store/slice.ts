@@ -4,7 +4,7 @@ import { combineReducers } from 'redux'
 import { asLineup } from 'common/store/lineup/reducer'
 
 import { PREFIX as moreByPrefix } from './lineups/more-by/actions'
-import moreByAgreementsReducer from './lineups/more-by/reducer'
+import moreByDigitalContentsReducer from './lineups/more-by/reducer'
 
 type State = {}
 
@@ -16,7 +16,7 @@ const slice = createSlice({
   reducers: {}
 })
 
-const moreByLineupReducer = asLineup(moreByPrefix, moreByAgreementsReducer)
+const moreByLineupReducer = asLineup(moreByPrefix, moreByDigitalContentsReducer)
 
 export default combineReducers({
   page: slice.reducer,

@@ -2,7 +2,7 @@ import { all, fork } from 'redux-saga/effects'
 
 import collectionsSagas from 'common/store/cache/collections/sagas'
 import coreCacheSagas from 'common/store/cache/sagas'
-import agreementsSagas from 'common/store/cache/agreements/sagas'
+import digitalContentsSagas from 'common/store/cache/digital_contents/sagas'
 import usersSagas from 'common/store/cache/users/sagas'
 import { sagas as castSagas } from 'common/store/cast/sagas'
 import errorSagas from 'common/store/errors/sagas'
@@ -12,7 +12,7 @@ import reachabilitySagas from 'common/store/reachability/sagas'
 import recoveryEmailSagas from 'common/store/recoveryEmail/sagas'
 import remoteConfigSagas from 'common/store/remoteConfig/sagas'
 import signOutSagas from 'common/store/signOut/sagas'
-import landlordRecommendationsSagas from 'common/store/ui/landlordRecommendations/sagas'
+import landlordRecommendationsSagas from 'common/store/ui/authorRecommendations/sagas'
 import deleteContentListConfirmationModalSagas from 'common/store/ui/deleteContentListConfirmationModal/sagas'
 import overflowMenuSagas from 'common/store/ui/mobileOverflowMenu/sagas'
 import reactionSagas from 'common/store/ui/reactions/sagas'
@@ -49,7 +49,7 @@ import signOnSaga from 'pages/signOn/store/sagas'
 import smartCollectionPageSagas from 'pages/smartCollection/store/sagas'
 import supportingPageSagas from 'pages/supportingPage/sagas'
 import topSupportersPageSagas from 'pages/topSupportersPage/sagas'
-import agreementSagas from 'pages/agreementPage/store/sagas'
+import digitalContentSagas from 'pages/digitalContentPage/store/sagas'
 import trendingPageSagas from 'pages/trendingPage/store/sagas'
 import trendingContentListSagas from 'pages/trendingContentLists/store/sagas'
 import trendingUndergroundSagas from 'pages/trendingUnderground/store/sagas'
@@ -116,7 +116,7 @@ export default function* rootSaga() {
     settingsSagas(),
     signOnSaga(),
     socialSagas(),
-    agreementSagas(),
+    digitalContentSagas(),
     trendingPageSagas(),
     trendingContentListSagas(),
     trendingUndergroundSagas(),
@@ -125,7 +125,7 @@ export default function* rootSaga() {
     // Cache
     coreCacheSagas(),
     collectionsSagas(),
-    agreementsSagas(),
+    digitalContentsSagas(),
     usersSagas(),
 
     // Playback

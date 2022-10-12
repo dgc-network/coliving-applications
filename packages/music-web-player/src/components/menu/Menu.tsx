@@ -12,13 +12,13 @@ import { MainContentContext } from 'pages/mainContentContext'
 import CollectionMenu, {
   OwnProps as CollectionMenuProps
 } from './collectionMenu'
-import AgreementMenu, { OwnProps as AgreementMenuProps } from './agreementMenu'
+import DigitalContentMenu, { OwnProps as DigitalContentMenuProps } from './digitalContentMenu'
 import UserMenu, { OwnProps as UserMenuProps } from './userMenu'
 
 export type MenuOptionType =
   | UserMenuProps
   | CollectionMenuProps
-  | AgreementMenuProps
+  | DigitalContentMenuProps
 
 export type MenuType = MenuOptionType['type']
 
@@ -58,7 +58,7 @@ const Menu = forwardRef<HTMLDivElement, MenuProps>((props, ref) => {
       </CollectionMenu>
     )
   } else if (menu.type === 'digital_content') {
-    return <AgreementMenu {...(menu as AgreementMenuProps)}>{renderMenu}</AgreementMenu>
+    return <DigitalContentMenu {...(menu as DigitalContentMenuProps)}>{renderMenu}</DigitalContentMenu>
   } else if (menu.type === 'notification') {
   }
   return null

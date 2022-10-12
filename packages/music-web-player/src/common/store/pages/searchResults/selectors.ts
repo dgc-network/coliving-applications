@@ -7,13 +7,13 @@ import { createShallowSelector } from 'common/utils/selectorHelpers'
 
 // Search Results selectors
 export const getBaseState = (state: CommonState) => state.pages.searchResults
-export const getSearchAgreementsLineup = (state: CommonState) =>
-  getBaseState(state).agreements
+export const getSearchDigitalContentsLineup = (state: CommonState) =>
+  getBaseState(state).digitalContents
 export const getSearchResults = (state: CommonState) => getBaseState(state)
 export const getSearchStatus = (state: CommonState) =>
   getBaseState(state).status
-export const getSearchResultsPageAgreements = (state: CommonState) =>
-  getBaseState(state).agreementIds || []
+export const getSearchResultsPageDigitalContents = (state: CommonState) =>
+  getBaseState(state).digitalContentIds || []
 
 const getSearchLandlordsIds = (state: CommonState) =>
   getBaseState(state).landlordIds || []
@@ -55,7 +55,7 @@ export const makeGetSearchContentLists = () => {
           return {
             ...contentList,
             user: users[contentList.content_list_owner_id],
-            agreementCount: (contentList.content_list_contents.digital_content_ids || []).length
+            digitalContentCount: (contentList.content_list_contents.digital_content_ids || []).length
           }
         })
         .filter((contentList) => !!contentList.user && !contentList.user.is_deactivated)

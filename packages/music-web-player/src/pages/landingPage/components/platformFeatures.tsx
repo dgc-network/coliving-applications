@@ -47,7 +47,7 @@ const features: Array<Omit<FeatureProps, 'iconPosition'>> = [
     title: 'EXCLUSIVE CONTENT',
     description: (
       <>
-        {`Your residents can download stems and find remixes of your agreements right from
+        {`Your residents can download stems and find remixes of your digitalContents right from
         the digital_content page. `}
         <a
           href='https://twitter.com/dgc-network/status/1272614652623519744?s=20'

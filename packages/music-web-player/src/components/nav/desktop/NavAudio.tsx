@@ -23,7 +23,7 @@ import styles from './NavAudio.module.css'
 type BubbleType = 'none' | 'claim' | 'earn'
 
 const messages = {
-  earnAudio: 'EARN $LIVE',
+  earnAudio: 'EARN $DGCO',
   claimRewards: 'Claim Rewards'
 }
 

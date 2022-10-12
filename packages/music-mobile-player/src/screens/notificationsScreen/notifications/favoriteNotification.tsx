@@ -16,7 +16,7 @@ import {
   USER_LENGTH_LIMIT,
   NotificationText,
   EntityLink
-} from '../Notification'
+} from '../notification'
 
 import { useSocialActionHandler } from './useSocialActionHandler'
 

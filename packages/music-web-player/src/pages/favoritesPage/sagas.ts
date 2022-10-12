@@ -2,9 +2,9 @@ import { ID, Collection, FavoriteType, DigitalContent } from '@coliving/common'
 import { select, put } from 'typed-redux-saga/macro'
 
 import { getCollection } from 'common/store/cache/collections/selectors'
-import { getAgreement } from 'common/store/cache/agreements/selectors'
+import { getDigitalContent } from 'common/store/cache/digital_contents/selectors'
 import {
-  agreementFavoriteError,
+  digitalContentFavoriteError,
   contentListFavoriteError
 } from 'common/store/userList/favorites/actions'
 import { watchFavoriteError } from 'common/store/userList/favorites/errorSagas'
@@ -44,8 +44,8 @@ const getContentListFavorites = createUserListProvider<Collection>({
   includeCurrentUser: (p) => p.has_current_user_saved
 })
 
-const getAgreementFavorites = createUserListProvider<DigitalContent>({
-  getExistingEntity: getAgreement,
+const getDigitalContentFavorites = createUserListProvider<DigitalContent>({
+  getExistingEntity: getDigitalContent,
   extractUserIDSubsetFromEntity: (digital_content: DigitalContent) =>
     digital_content.followee_saves.map((r) => r.user_id),
   fetchAllUsersForEntity: async ({
@@ -54,10 +54,10 @@ const getAgreementFavorites = createUserListProvider<DigitalContent>({
     entityId,
     currentUserId
   }) => {
-    const users = await apiClient.getAgreementFavoriteUsers({
+    const users = await apiClient.getDigitalContentFavoriteUsers({
       limit,
       offset,
-      agreementId: entityId,
+      digitalContentId: entityId,
       currentUserId
     })
     return { users }
@@ -74,7 +74,7 @@ function* errorDispatcher(error: Error) {
   if (!id) return
 
   if (favoriteType === FavoriteType.AGREEMENT) {
-    yield* put(agreementFavoriteError(id, error.message))
+    yield* put(digitalContentFavoriteError(id, error.message))
   } else {
     yield* put(contentListFavoriteError(id, error.message))
   }
@@ -86,7 +86,7 @@ function* getFavorites(currentPage: number, pageSize: number) {
   const favoriteType = yield* select(getFavoriteType)
   return yield* (
     favoriteType === FavoriteType.AGREEMENT
-      ? getAgreementFavorites
+      ? getDigitalContentFavorites
       : getContentListFavorites
   )({ id, currentPage, pageSize })
 }

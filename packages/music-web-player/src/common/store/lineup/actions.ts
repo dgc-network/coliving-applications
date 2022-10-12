@@ -1,4 +1,4 @@
-import { ID, UID, AgreementMetadata } from '@coliving/common'
+import { ID, UID, DigitalContentMetadata } from '@coliving/common'
 
 export const FETCH_LINEUP_METADATAS = 'FETCH_LINEUP_METADATAS'
 export const FETCH_LINEUP_METADATAS_REQUESTED =
@@ -14,9 +14,9 @@ export const FETCH_AGREEMENTS_METADATAS_SUCCEEDED =
   'FETCH_AGREEMENTS_METADATAS_SUCCEEDED'
 export const FETCH_AGREEMENTS_METADATAS_FAILED = 'FETCH_AGREEMENTS_METADATAS_FAILED'
 
-export const FETCH_AGREEMENT_LIVE = 'FETCH_AGREEMENT_LIVE'
-export const FETCH_AGREEMENT_LIVE_REQUESTED = 'FETCH_AGREEMENT_LIVE_REQUESTED'
-export const FETCH_AGREEMENT_LIVE_SUCCEEDED = 'FETCH_AGREEMENT_LIVE_SUCCEEDED'
+export const FETCH_AGREEMENT_DGCO = 'FETCH_AGREEMENT_DGCO'
+export const FETCH_AGREEMENT_DGCO_REQUESTED = 'FETCH_AGREEMENT_DGCO_REQUESTED'
+export const FETCH_AGREEMENT_DGCO_SUCCEEDED = 'FETCH_AGREEMENT_DGCO_SUCCEEDED'
 export const UPDATE_LINEUP_ORDER = 'UPDATE_LINEUP_ORDER'
 
 export const PLAY = 'PLAY'
@@ -72,11 +72,11 @@ export class LineupActions {
 
   /**
    * Fetches entity metadatas for the lineup.
-   * Side-effect: Fetches relevant creators and caches loaded agreements.
-   * @param {number} [offset] the offset into the "get agreements" query
-   * @param {number} [limit] the limit for the "get agreements" query
+   * Side-effect: Fetches relevant creators and caches loaded digitalContents.
+   * @param {number} [offset] the offset into the "get digitalContents" query
+   * @param {number} [limit] the limit for the "get digitalContents" query
    * @param {boolean} [overwrite] a boolean indicating whether to overwrite cached entries the fetch may be refetching
-   * @param {*} [payload] keyword args payload to send to the "get agreements" query
+   * @param {*} [payload] keyword args payload to send to the "get digitalContents" query
    */
   fetchLineupMetadatas(
     offset = 0,
@@ -131,26 +131,26 @@ export class LineupActions {
     }
   }
 
-  fetchAgreementAudio(agreementMetadata: AgreementMetadata) {
+  fetchDigitalContentAudio(digitalContentMetadata: DigitalContentMetadata) {
     return {
-      type: addPrefix(this.prefix, FETCH_AGREEMENT_LIVE),
-      agreementMetadata
+      type: addPrefix(this.prefix, FETCH_AGREEMENT_DGCO),
+      digitalContentMetadata
     }
   }
 
-  fetchAgreementAudioRequested(index: number, agreementId: ID) {
+  fetchDigitalContentAudioRequested(index: number, digitalContentId: ID) {
     return {
-      type: addPrefix(this.prefix, FETCH_AGREEMENT_LIVE_REQUESTED),
+      type: addPrefix(this.prefix, FETCH_AGREEMENT_DGCO_REQUESTED),
       index,
-      agreementId
+      digitalContentId
     }
   }
 
-  fetchAgreementAudioSucceeded(index: number, agreementId: ID) {
+  fetchDigitalContentAudioSucceeded(index: number, digitalContentId: ID) {
     return {
-      type: addPrefix(this.prefix, FETCH_AGREEMENT_LIVE_SUCCEEDED),
+      type: addPrefix(this.prefix, FETCH_AGREEMENT_DGCO_SUCCEEDED),
       index,
-      agreementId
+      digitalContentId
     }
   }
 
@@ -167,10 +167,10 @@ export class LineupActions {
     }
   }
 
-  updateAgreementMetadata(agreementId: ID, metadata: AgreementMetadata) {
+  updateDigitalContentMetadata(digitalContentId: ID, metadata: DigitalContentMetadata) {
     return {
       type: addPrefix(this.prefix, UPDATE_AGREEMENT_METADATA),
-      agreementId,
+      digitalContentId,
       metadata
     }
   }

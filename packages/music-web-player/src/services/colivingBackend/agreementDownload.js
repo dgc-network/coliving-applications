@@ -1,14 +1,14 @@
 import * as schemas from 'schemas'
-import { DownloadAgreementMessage } from 'services/native-mobile-interface/downloadAgreement'
+import { DownloadDigitalContentMessage } from 'services/native-mobile-interface/downloadDigitalContent'
 
 import { waitForLibsInit } from './eagerLoadUtils'
 
 const CHECK_DOWNLOAD_AVAILIBILITY_POLLING_INTERVAL = 3000
 
-const updateAgreementDownloadCIDInProgress = new Set([])
+const updateDigitalContentDownloadCIDInProgress = new Set([])
 
-class AgreementDownload {
-  static async downloadAgreement(cid, contentNodeEndpoints, filename) {
+class DigitalContentDownload {
+  static async downloadDigitalContent(cid, contentNodeEndpoints, filename) {
     return window.colivingLibs.File.downloadCID(
       cid,
       contentNodeEndpoints,
@@ -16,12 +16,12 @@ class AgreementDownload {
     )
   }
 
-  static async downloadAgreementMobile(cid, contentNodeGateways, filename) {
+  static async downloadDigitalContentMobile(cid, contentNodeGateways, filename) {
     const urls = contentNodeGateways.map(
       (gateway) => new URL(`${gateway}${cid}?filename=${filename}`)
     )
 
-    const message = new DownloadAgreementMessage({
+    const message = new DownloadDigitalContentMessage({
       filename,
       urls
     })
@@ -30,41 +30,41 @@ class AgreementDownload {
 
   /**
    * Updates the download cid for a digital_content
-   * @param {ID} agreementId
-   * @param {AgreementMetadata} metadata
+   * @param {ID} digitalContentId
+   * @param {DigitalContentMetadata} metadata
    * @param {string?} cid optional cid to update to, otherwise it is polled for
    */
-  static async updateAgreementDownloadCID(agreementId, metadata, cid) {
+  static async updateDigitalContentDownloadCID(digitalContentId, metadata, cid) {
     await waitForLibsInit()
-    if (updateAgreementDownloadCIDInProgress.has(agreementId)) return
+    if (updateDigitalContentDownloadCIDInProgress.has(digitalContentId)) return
     if (metadata.download && metadata.download.cid) return
 
-    updateAgreementDownloadCIDInProgress.add(agreementId)
+    updateDigitalContentDownloadCIDInProgress.add(digitalContentId)
 
-    const cleanedMetadata = schemas.newAgreementMetadata(metadata, true)
+    const cleanedMetadata = schemas.newDigitalContentMetadata(metadata, true)
     const account = window.colivingLibs.Account.getCurrentUser()
 
     if (!cid) {
-      cid = await AgreementDownload.checkIfDownloadAvailable(
-        agreementId,
+      cid = await DigitalContentDownload.checkIfDownloadAvailable(
+        digitalContentId,
         account.content_node_endpoint
       )
     }
     cleanedMetadata.download.cid = cid
-    const update = await window.colivingLibs.DigitalContent.updateAgreement(cleanedMetadata)
+    const update = await window.colivingLibs.DigitalContent.updateDigitalContent(cleanedMetadata)
 
-    updateAgreementDownloadCIDInProgress.delete(agreementId)
+    updateDigitalContentDownloadCIDInProgress.delete(digitalContentId)
     return update
   }
 
-  static async checkIfDownloadAvailable(agreementId, contentNodeEndpoints) {
+  static async checkIfDownloadAvailable(digitalContentId, contentNodeEndpoints) {
     await waitForLibsInit()
     let cid
     while (!cid) {
       try {
         cid = await window.colivingLibs.DigitalContent.checkIfDownloadAvailable(
           contentNodeEndpoints,
-          agreementId
+          digitalContentId
         )
       } catch (e) {
         console.error(e)
@@ -78,4 +78,4 @@ class AgreementDownload {
   }
 }
 
-export default AgreementDownload
+export default DigitalContentDownload

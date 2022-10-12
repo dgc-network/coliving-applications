@@ -1,7 +1,7 @@
 import {
   FailureReason,
   UserChallenge,
-  StringLive,
+  StringDigitalcoin,
   IntKeys,
   StringKeys
 } from '@coliving/common'
@@ -312,7 +312,7 @@ function* claimChallengeRewardAsync(
     } else {
       yield put(
         increaseBalance({
-          amount: stringAudioToStringWei(amount.toString() as StringLive)
+          amount: stringAudioToStringWei(amount.toString() as StringDigitalcoin)
         })
       )
       yield put(setUserChallengesDisbursed({ challengeId, specifiers }))
@@ -565,7 +565,7 @@ function* userChallengePollingDaemon() {
   )!
   const liveRewardsPageChallengePollingTimeout =
     remoteConfigInstance.getRemoteVar(
-      IntKeys.CHALLENGE_REFRESH_INTERVAL_LIVE_PAGE_MS
+      IntKeys.CHALLENGE_REFRESH_INTERVAL_DGCO_PAGE_MS
     )!
 
   yield take(fetchAccountSucceeded.type)

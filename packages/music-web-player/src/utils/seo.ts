@@ -2,7 +2,7 @@
  * SEO Utlity functions to generate titles and descriptions
  */
 
-export const getAgreementPageTitle = ({
+export const getDigitalContentPageTitle = ({
   title,
   handle
 }: {
@@ -14,7 +14,7 @@ export const getAgreementPageTitle = ({
   return `${title} by ${handle}`
 }
 
-type getAgreementPageDescriptionProps = {
+type getDigitalContentPageDescriptionProps = {
   releaseDate: string
   duration: string
   tags: string[]
@@ -22,14 +22,14 @@ type getAgreementPageDescriptionProps = {
   mood: string
   description: string
 }
-export const getAgreementPageDescription = ({
+export const getDigitalContentPageDescription = ({
   releaseDate,
   tags,
   duration,
   genre,
   mood,
   description
-}: getAgreementPageDescriptionProps) => {
+}: getDigitalContentPageDescriptionProps) => {
   // Note, release date and duration will be defined if the digital_content metadata is fetched.
   if (!releaseDate) return ''
   const tagText =

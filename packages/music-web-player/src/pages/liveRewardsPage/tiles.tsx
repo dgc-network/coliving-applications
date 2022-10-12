@@ -29,15 +29,15 @@ import styles from './tiles.module.css'
 import TokenHoverTooltip from './components/tokenHoverTooltip'
 
 const messages = {
-  noClaim1: 'You earn $LIVE by using Coliving.',
-  noClaim2: 'The more you use Coliving, the more $LIVE you earn.',
-  balance: '$LIVE BALANCE',
-  receiveLabel: 'RECEIVE $LIVE',
-  sendLabel: 'SEND $LIVE',
-  digitalcoin: '$LIVE',
+  noClaim1: 'You earn $DGCO by using Coliving.',
+  noClaim2: 'The more you use Coliving, the more $DGCO you earn.',
+  balance: '$DGCO BALANCE',
+  receiveLabel: 'RECEIVE $DGCO',
+  sendLabel: 'SEND $DGCO',
+  digitalcoin: '$DGCO',
   manageWallets: 'Manage Wallets',
   connectWallets: 'Connect Other Wallets',
-  totalAudio: 'Total $LIVE'
+  totalAudio: 'Total $DGCO'
 }
 
 export const LEARN_MORE_URL = 'http://blog.coliving.lol/posts/community-meet-digitalcoin'
@@ -60,7 +60,7 @@ export const BalanceTile = ({ className }: { className?: string }) => {
     useSelector(getAccountTotalBalance) ?? null
   const hasMultipleWallets = useSelector(getHasAssociatedWallets)
 
-  const [, setOpen] = useModalState('AudioBreakdown')
+  const [, setOpen] = useModalState('DigitalcoinBreakdown')
   const onClickOpen = useCallback(() => {
     setOpen(true)
   }, [setOpen])

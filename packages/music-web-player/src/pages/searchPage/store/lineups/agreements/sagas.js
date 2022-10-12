@@ -1,13 +1,13 @@
 import { select, all, call } from 'redux-saga/effects'
 
-import { getAgreements } from 'common/store/cache/agreements/selectors'
+import { getDigitalContents } from 'common/store/cache/digital_contents/selectors'
 import {
   PREFIX,
-  agreementsActions
-} from 'common/store/pages/searchResults/lineup/agreements/actions'
+  digitalContentsActions
+} from 'common/store/pages/searchResults/lineup/digital_contents/actions'
 import {
-  getSearchAgreementsLineup,
-  getSearchResultsPageAgreements
+  getSearchDigitalContentsLineup,
+  getSearchResultsPageDigitalContents
 } from 'common/store/pages/searchResults/selectors'
 import { SearchKind } from 'common/store/pages/searchResults/types'
 import {
@@ -23,48 +23,48 @@ import {
 import { LineupSagas } from 'store/lineup/sagas'
 import { isMobile } from 'utils/clientUtil'
 
-function* getSearchPageResultsAgreements({ offset, limit, payload }) {
+function* getSearchPageResultsDigitalContents({ offset, limit, payload }) {
   const category = getCategory()
 
   if (category === SearchKind.AGREEMENTS || isMobile()) {
-    // If we are on the agreements sub-page of search or mobile, which we should paginate on
+    // If we are on the digitalContents sub-page of search or mobile, which we should paginate on
     let results
     if (isTagSearch()) {
       const tag = getSearchTag()
-      const { agreements } = yield call(
+      const { digitalContents } = yield call(
         getTagSearchResults,
         tag,
         category,
         limit,
         offset
       )
-      results = agreements
+      results = digitalContents
     } else {
       const query = getQuery()
-      const { agreements } = yield call(
+      const { digitalContents } = yield call(
         getSearchResults,
         query,
         category,
         limit,
         offset
       )
-      results = agreements
+      results = digitalContents
     }
     if (results) return results
     return []
   } else {
     // If we are part of the all results search page
     try {
-      const agreementIds = yield select(getSearchResultsPageAgreements)
+      const digitalContentIds = yield select(getSearchResultsPageDigitalContents)
 
-      // getAgreements returns an unsorted map of ID to digital_content metadata.
-      // We sort this object by agreementIds, which is returned sorted by discprov.
-      const [agreements, sortedIds] = yield all([
-        select(getAgreements, { ids: agreementIds }),
-        select(getSearchResultsPageAgreements)
+      // getDigitalContents returns an unsorted map of ID to digital_content metadata.
+      // We sort this object by digitalContentIds, which is returned sorted by discprov.
+      const [digitalContents, sortedIds] = yield all([
+        select(getDigitalContents, { ids: digitalContentIds }),
+        select(getSearchResultsPageDigitalContents)
       ])
-      const sortedAgreements = sortedIds.map((id) => agreements[id])
-      return sortedAgreements
+      const sortedDigitalContents = sortedIds.map((id) => digitalContents[id])
+      return sortedDigitalContents
     } catch (e) {
       console.error(e)
       return []
@@ -76,9 +76,9 @@ class SearchPageResultsSagas extends LineupSagas {
   constructor() {
     super(
       PREFIX,
-      agreementsActions,
-      getSearchAgreementsLineup,
-      getSearchPageResultsAgreements
+      digitalContentsActions,
+      getSearchDigitalContentsLineup,
+      getSearchPageResultsDigitalContents
     )
   }
 }

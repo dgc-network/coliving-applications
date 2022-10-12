@@ -3,7 +3,7 @@ import { select, call } from 'redux-saga/effects'
 
 import { getUserId } from 'common/store/account/selectors'
 import { getCollections } from 'common/store/cache/collections/selectors'
-import { getAgreements } from 'common/store/cache/agreements/selectors'
+import { getDigitalContents } from 'common/store/cache/digital_contents/selectors'
 import {
   PREFIX,
   feedActions
@@ -30,20 +30,20 @@ function* getReposts({ offset, limit, payload }) {
   })
 
   // If we're on our own profile, add any
-  // agreements or collections that haven't confirmed yet.
+  // digitalContents or collections that haven't confirmed yet.
   // Only do this on page 1 of the reposts tab
   if (profileId === currentUserId && offset === 0) {
     // Get everything that is confirming
     const confirming = yield select(getConfirmCalls)
     if (Object.keys(confirming).length > 0) {
-      const repostAgreementIds = new Set(
+      const repostDigitalContentIds = new Set(
         reposts.map((r) => r.digital_content_id).filter(Boolean)
       )
       const repostCollectionIds = new Set(
         reposts.map((r) => r.content_list_id).filter(Boolean)
       )
 
-      const agreements = yield select(getAgreements)
+      const digitalContents = yield select(getDigitalContents)
       const collections = yield select(getCollections)
 
       // For each confirming entry, check if it's a digital_content or collection,
@@ -55,10 +55,10 @@ function* getReposts({ offset, limit, payload }) {
         const kind = getKindFromKindId(kindId)
         const id = getIdFromKindId(kindId)
         if (kind === Kind.AGREEMENTS) {
-          const digital_content = agreements[id]
+          const digital_content = digitalContents[id]
           if (
             digital_content.has_current_user_reposted &&
-            !repostAgreementIds.has(digital_content.digital_content_id)
+            !repostDigitalContentIds.has(digital_content.digital_content_id)
           ) {
             reposts = [digital_content, ...reposts]
           }

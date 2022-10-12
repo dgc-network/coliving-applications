@@ -3,7 +3,7 @@ import type { ShareModalContent } from '@coliving/web/src/common/store/ui/share-
 
 import {
   getCollectionRoute,
-  getAgreementRoute,
+  getDigitalContentRoute,
   getUserRoute
 } from 'app/utils/routes'
 import { getTwitterLink } from 'app/utils/twitter'
@@ -14,16 +14,16 @@ export const getContentUrl = (content: ShareModalContent) => {
   switch (content.type) {
     case 'digital_content': {
       const { digital_content } = content
-      return getAgreementRoute(digital_content, true)
+      return getDigitalContentRoute(digital_content, true)
     }
     case 'profile': {
       const { profile } = content
       return getUserRoute(profile, true)
     }
     case 'album': {
-      const { album, landlord } = content
+      const { album, author } = content
       return getCollectionRoute(
-        { ...album, user: landlord } as unknown as UserCollection,
+        { ...album, user: author } as unknown as UserCollection,
         true
       )
     }
@@ -46,9 +46,9 @@ export const getTwitterShareText = (content: ShareModalContent) => {
     case 'digital_content': {
       const {
         digital_content: { title },
-        landlord: { handle }
+        author: { handle }
       } = content
-      return messages.agreementShareText(title, handle)
+      return messages.digitalContentShareText(title, handle)
     }
     case 'profile': {
       const {
@@ -59,7 +59,7 @@ export const getTwitterShareText = (content: ShareModalContent) => {
     case 'album': {
       const {
         album: { content_list_name },
-        landlord: { handle }
+        author: { handle }
       } = content
       return messages.albumShareText(content_list_name, handle)
     }

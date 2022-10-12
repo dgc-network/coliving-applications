@@ -8,7 +8,7 @@ import { Dispatch } from 'redux'
 import * as accountActions from 'common/store/account/reducer'
 import {
   getAccountVerified,
-  getAccountHasAgreements,
+  getAccountHasDigitalContents,
   getAccountProfilePictureSizes,
   getUserId,
   getUserHandle,
@@ -32,7 +32,7 @@ import { setTheme } from 'common/store/ui/theme/actions'
 import { getTheme } from 'common/store/ui/theme/selectors'
 import { makeGetTierAndVerifiedForUser } from 'common/store/wallet/utils'
 import { show } from 'components/musicConfetti/store/slice'
-import { make, AgreementEvent } from 'store/analytics/actions'
+import { make, DigitalContentEvent } from 'store/analytics/actions'
 import { AppState } from 'store/types'
 import {
   isPushManagerAvailable,
@@ -140,7 +140,7 @@ class SettingsPage extends PureComponent<
     const {
       subPage,
       isVerified,
-      hasAgreements,
+      hasDigitalContents,
       userId,
       handle,
       name,
@@ -172,7 +172,7 @@ class SettingsPage extends PureComponent<
       title: messages.title,
       description: messages.description,
       isVerified,
-      hasAgreements,
+      hasDigitalContents,
       userId,
       handle,
       name,
@@ -218,7 +218,7 @@ function makeMapStateToProps() {
       handle: getUserHandle(state),
       name: getUserName(state),
       isVerified: getAccountVerified(state),
-      hasAgreements: getAccountHasAgreements(state),
+      hasDigitalContents: getAccountHasDigitalContents(state),
       userId,
       profilePictureSizes: getAccountProfilePictureSizes(state),
       theme: getTheme(state),
@@ -287,21 +287,21 @@ function mapDispatchToProps(dispatch: Dispatch) {
         themeSettings === Theme.DEFAULT
           ? 'light'
           : themeSettings.toLocaleLowerCase()
-      const agreementEvent: AgreementEvent = make(Name.SETTINGS_CHANGE_THEME, {
+      const digitalContentEvent: DigitalContentEvent = make(Name.SETTINGS_CHANGE_THEME, {
         mode: theme as 'dark' | 'light' | 'matrix' | 'auto'
       })
-      dispatch(agreementEvent)
+      dispatch(digitalContentEvent)
     },
     recordSignOut: (callback?: () => void) => {
-      const agreementEvent: AgreementEvent = make(Name.SETTINGS_LOG_OUT, { callback })
-      dispatch(agreementEvent)
+      const digitalContentEvent: DigitalContentEvent = make(Name.SETTINGS_LOG_OUT, { callback })
+      dispatch(digitalContentEvent)
     },
     recordAccountRecovery: () => {
-      const agreementEvent: AgreementEvent = make(
+      const digitalContentEvent: DigitalContentEvent = make(
         Name.SETTINGS_RESEND_ACCOUNT_RECOVERY,
         {}
       )
-      dispatch(agreementEvent)
+      dispatch(digitalContentEvent)
     },
     recordDownloadDesktopApp: () => {
       dispatch(

@@ -7,8 +7,8 @@ import { Dispatch } from 'redux'
 import RemixSettingsModal from 'components/remixSettingsModal/remixSettingsModal'
 import { AppState } from 'store/types'
 
-import { getAgreement, getUser, getStatus } from './store/selectors'
-import { fetchAgreement, fetchAgreementSucceeded, reset } from './store/slice'
+import { getDigitalContent, getUser, getStatus } from './store/selectors'
+import { fetchDigitalContent, fetchDigitalContentSucceeded, reset } from './store/slice'
 
 type OwnProps = {
   isOpen: boolean
@@ -16,7 +16,7 @@ type OwnProps = {
   // When opening the modal from a digital_content that already has remix_of set,
   // the initial digital_content id should be set to the first remix parent's digital_content id.
   // This is used in the "edit digital_content" flow.
-  initialAgreementId?: ID
+  initialDigitalContentId?: ID
 }
 
 type ConnectedRemixSettingsModalProps = OwnProps &
@@ -24,21 +24,21 @@ type ConnectedRemixSettingsModalProps = OwnProps &
   ReturnType<typeof mapDispatchToProps>
 
 const ConnectedRemixSettingsModal = ({
-  initialAgreementId,
+  initialDigitalContentId,
   isOpen,
   onClose,
   digital_content,
   user,
   status,
-  setInitialAgreementId,
+  setInitialDigitalContentId,
   reset,
   onEditUrl
 }: ConnectedRemixSettingsModalProps) => {
   useEffect(() => {
-    if (isOpen && initialAgreementId) {
-      setInitialAgreementId(initialAgreementId)
+    if (isOpen && initialDigitalContentId) {
+      setInitialDigitalContentId(initialDigitalContentId)
     }
-  }, [isOpen, initialAgreementId, setInitialAgreementId])
+  }, [isOpen, initialDigitalContentId, setInitialDigitalContentId])
 
   // Reset the connected modal state as soon as it closes
   useEffect(() => {
@@ -53,7 +53,7 @@ const ConnectedRemixSettingsModal = ({
       onClose={onClose}
       digital_content={digital_content}
       user={user}
-      isInvalidAgreement={status === Status.ERROR}
+      isInvalidDigitalContent={status === Status.ERROR}
       onEditUrl={onEditUrl}
     />
   )
@@ -61,7 +61,7 @@ const ConnectedRemixSettingsModal = ({
 
 function mapStateToProps(state: AppState) {
   return {
-    digital_content: getAgreement(state),
+    digital_content: getDigitalContent(state),
     user: getUser(state),
     status: getStatus(state)
   }
@@ -69,9 +69,9 @@ function mapStateToProps(state: AppState) {
 
 function mapDispatchToProps(dispatch: Dispatch) {
   return {
-    onEditUrl: (url: string) => dispatch(fetchAgreement({ url })),
-    setInitialAgreementId: (agreementId: ID) =>
-      dispatch(fetchAgreementSucceeded({ agreementId })),
+    onEditUrl: (url: string) => dispatch(fetchDigitalContent({ url })),
+    setInitialDigitalContentId: (digitalContentId: ID) =>
+      dispatch(fetchDigitalContentSucceeded({ digitalContentId })),
     reset: () => dispatch(reset())
   }
 }

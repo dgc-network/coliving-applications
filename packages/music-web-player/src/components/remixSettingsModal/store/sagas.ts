@@ -1,60 +1,60 @@
-import { AgreementMetadata } from '@coliving/common'
+import { DigitalContentMetadata } from '@coliving/common'
 import { takeLatest, call, put } from 'redux-saga/effects'
 
 import {
-  retrieveAgreementByHandleAndSlug,
-  retrieveAgreements
-} from 'common/store/cache/agreements/utils/retrieveAgreements'
-import { parseAgreementRoute } from 'utils/route/agreementRouteParser'
+  retrieveDigitalContentByHandleAndSlug,
+  retrieveDigitalContents
+} from 'common/store/cache/digital_contents/utils/retrieveDigitalContents'
+import { parseDigitalContentRoute } from 'utils/route/digitalContentRouteParser'
 
-import { fetchAgreement, fetchAgreementSucceeded, fetchAgreementFailed } from './slice'
+import { fetchDigitalContent, fetchDigitalContentSucceeded, fetchDigitalContentFailed } from './slice'
 
 const getHandleAndSlug = (url: string) => {
   // Get just the pathname part from the url
   try {
-    const agreementUrl = new URL(url)
+    const digitalContentUrl = new URL(url)
     // Decode the extracted pathname so we don't end up
     // double encoding it later on
-    const pathname = decodeURIComponent(agreementUrl.pathname)
+    const pathname = decodeURIComponent(digitalContentUrl.pathname)
     if (
-      agreementUrl.hostname !== process.env.REACT_APP_PUBLIC_HOSTNAME &&
-      agreementUrl.hostname !== window.location.hostname
+      digitalContentUrl.hostname !== process.env.REACT_APP_PUBLIC_HOSTNAME &&
+      digitalContentUrl.hostname !== window.location.hostname
     ) {
       return null
     }
-    return parseAgreementRoute(pathname)
+    return parseDigitalContentRoute(pathname)
   } catch (err) {
     return null
   }
 }
 
-function* watchFetchAgreement() {
+function* watchFetchDigitalContent() {
   yield takeLatest(
-    fetchAgreement.type,
-    function* (action: ReturnType<typeof fetchAgreement>) {
+    fetchDigitalContent.type,
+    function* (action: ReturnType<typeof fetchDigitalContent>) {
       const { url } = action.payload
       const params = getHandleAndSlug(url)
       if (params) {
-        const { handle, slug, agreementId } = params
-        let digital_content: AgreementMetadata | null = null
+        const { handle, slug, digitalContentId } = params
+        let digital_content: DigitalContentMetadata | null = null
         if (handle && slug) {
-          digital_content = yield call(retrieveAgreementByHandleAndSlug, {
+          digital_content = yield call(retrieveDigitalContentByHandleAndSlug, {
             handle,
             slug
           })
-        } else if (agreementId) {
-          digital_content = yield call(retrieveAgreements, { agreementIds: [agreementId] })
+        } else if (digitalContentId) {
+          digital_content = yield call(retrieveDigitalContents, { digitalContentIds: [digitalContentId] })
         }
         if (digital_content) {
-          yield put(fetchAgreementSucceeded({ agreementId: digital_content.digital_content_id }))
+          yield put(fetchDigitalContentSucceeded({ digitalContentId: digital_content.digital_content_id }))
           return
         }
       }
-      yield put(fetchAgreementFailed())
+      yield put(fetchDigitalContentFailed())
     }
   )
 }
 
 export default function sagas() {
-  return [watchFetchAgreement]
+  return [watchFetchDigitalContent]
 }

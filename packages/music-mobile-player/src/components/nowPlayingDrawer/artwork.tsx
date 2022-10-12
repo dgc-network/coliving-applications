@@ -3,14 +3,14 @@ import * as React from 'react'
 
 import type { DigitalContent } from '@coliving/common'
 import { SquareSizes } from '@coliving/common'
-import { getDominantColorsByAgreement } from '@coliving/web/src/common/store/average-color/slice'
+import { getDominantColorsByDigitalContent } from '@coliving/web/src/common/store/average-color/slice'
 import { Dimensions, StyleSheet, View } from 'react-native'
 import { Shadow } from 'react-native-shadow-2'
 
 import { DynamicImage } from 'app/components/core'
 import { useSelectorWeb } from 'app/hooks/useSelectorWeb'
 import { useThemedStyles } from 'app/hooks/useThemedStyles'
-import { useAgreementCoverArt } from 'app/hooks/useAgreementCoverArt'
+import { useDigitalContentCoverArt } from 'app/hooks/useDigitalContentCoverArt'
 import type { ThemeColors } from 'app/utils/theme'
 
 const dimensions = Dimensions.get('window')
@@ -45,14 +45,14 @@ type ArtworkProps = {
 
 export const Artwork = ({ digital_content }: ArtworkProps) => {
   const styles = useThemedStyles(createStyles)
-  const image = useAgreementCoverArt({
+  const image = useDigitalContentCoverArt({
     id: digital_content.digital_content_id,
     sizes: digital_content._cover_art_sizes,
     size: SquareSizes.SIZE_1000_BY_1000
   })
 
   const dominantColors = useSelectorWeb((state) =>
-    getDominantColorsByAgreement(state, {
+    getDominantColorsByDigitalContent(state, {
       digital_content
     })
   )

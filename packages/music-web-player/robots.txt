@@ -3,6 +3,6 @@ User-agent: *
 Allow: /
 
 Sitemap: https://coliving.lol/sitemaps/defaults.xml
-Sitemap: https://coliving.lol/sitemaps/agreements/index.xml
+Sitemap: https://coliving.lol/sitemaps/digital_contents/index.xml
 Sitemap: https://coliving.lol/sitemaps/collections/index.xml
 Sitemap: https://coliving.lol/sitemaps/users/index.xml

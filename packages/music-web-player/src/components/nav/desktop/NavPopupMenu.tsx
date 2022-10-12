@@ -10,7 +10,7 @@ import {
 import cn from 'classnames'
 
 import { ReactComponent as IconKebabHorizontal } from 'assets/img/iconKebabHorizontalAlt.svg'
-import { getAccountHasAgreements } from 'common/store/account/selectors'
+import { getAccountHasDigitalContents } from 'common/store/account/selectors'
 import { useNavigateToPage } from 'hooks/useNavigateToPage'
 import { useSelector } from 'utils/reducer'
 import { LIVE_PAGE, DASHBOARD_PAGE, SETTINGS_PAGE } from 'utils/route'
@@ -20,17 +20,17 @@ import styles from './NavPopupMenu.module.css'
 
 const messages = {
   settings: 'Settings',
-  dashboard: 'Landlord Dashboard',
-  digitalcoin: '$LIVE & Rewards'
+  dashboard: 'Author Dashboard',
+  digitalcoin: '$DGCO & Rewards'
 }
 
-const useAccountHasAgreements = () => {
-  return useSelector(getAccountHasAgreements)
+const useAccountHasDigitalContents = () => {
+  return useSelector(getAccountHasDigitalContents)
 }
 
 const NavPopupMenu = () => {
   const navigate = useNavigateToPage()
-  const hasAgreements = useAccountHasAgreements()
+  const hasDigitalContents = useAccountHasDigitalContents()
 
   const menuItems: PopupMenuItem[] = [
     {
@@ -39,7 +39,7 @@ const NavPopupMenu = () => {
       icon: <IconSettings />,
       iconClassName: styles.menuItemIcon
     },
-    hasAgreements
+    hasDigitalContents
       ? {
           text: messages.dashboard,
           onClick: () => navigate(DASHBOARD_PAGE),

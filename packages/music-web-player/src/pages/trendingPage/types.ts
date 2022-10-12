@@ -13,8 +13,8 @@ export interface TrendingPageContentProps {
   fetchSuggestedFollowUsers: () => void
   followUsers: (userIDs: ID[]) => void
   suggestedFollows: User[]
-  playTrendingAgreement: (uid: UID) => void
-  pauseTrendingAgreement: () => void
+  playTrendingDigitalContent: (uid: UID) => void
+  pauseTrendingDigitalContent: () => void
   refreshTrendingInView: (overwrite: boolean) => void
   hasAccount: boolean
   goToTrending: () => void
@@ -26,7 +26,7 @@ export interface TrendingPageContentProps {
     lineup: Lineup<any>
     playingUid: UID
     playingSource: string
-    playingAgreementId: ID | null
+    playingDigitalContentId: ID | null
     playing: boolean
     buffering: boolean
     scrollParent: HTMLElement | null
@@ -43,8 +43,8 @@ export interface TrendingPageContentProps {
   makeLoadMore: (
     timeRange: TimeRange
   ) => (offset: number, limit: number, overwrite: boolean) => void
-  makePlayAgreement: (timeRange: TimeRange) => (uid: string) => void
-  makePauseAgreement: (timeRange: TimeRange) => () => void
+  makePlayDigitalContent: (timeRange: TimeRange) => (uid: string) => void
+  makePauseDigitalContent: (timeRange: TimeRange) => () => void
   makeSetInView: (timeRange: TimeRange) => (inView: boolean) => void
   makeRefreshTrendingInView: (
     timeRange: TimeRange
@@ -55,7 +55,7 @@ export interface TrendingPageContentProps {
     playingUid: UID
     lineup: Lineup<DigitalContent>
     playingSource: any
-    playingAgreementId: ID | null
+    playingDigitalContentId: ID | null
     playing: boolean
     buffering: boolean
     scrollParent: HTMLElement | null

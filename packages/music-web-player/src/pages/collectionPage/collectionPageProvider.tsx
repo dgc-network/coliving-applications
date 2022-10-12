@@ -29,7 +29,7 @@ import {
 } from 'common/store/account/selectors'
 import {
   editContentList,
-  removeAgreementFromContentList,
+  removeDigitalContentFromContentList,
   orderContentList,
   publishContentList,
   deleteContentList
@@ -41,23 +41,23 @@ import {
 import { updateContentListLastViewedAt } from 'common/store/notifications/actions'
 import { getContentListUpdates } from 'common/store/notifications/selectors'
 import * as collectionActions from 'common/store/pages/collection/actions'
-import { agreementsActions } from 'common/store/pages/collection/lineup/actions'
+import { digitalContentsActions } from 'common/store/pages/collection/lineup/actions'
 import {
   getCollection,
   getCollectionStatus,
-  getCollectionAgreementsLineup,
+  getCollectionDigitalContentsLineup,
   getCollectionUid,
   getUser,
   getUserUid
 } from 'common/store/pages/collection/selectors'
 import {
-  AgreementRecord,
-  CollectionAgreement,
+  DigitalContentRecord,
+  CollectionDigitalContent,
   CollectionsPageType
 } from 'common/store/pages/collection/types'
 import { makeGetCurrent } from 'common/store/queue/selectors'
 import * as socialCollectionsActions from 'common/store/social/collections/actions'
-import * as socialAgreementsActions from 'common/store/social/agreements/actions'
+import * as socialDigitalContentsActions from 'common/store/social/digital_contents/actions'
 import * as socialUsersActions from 'common/store/social/users/actions'
 import { open } from 'common/store/ui/mobileOverflowMenu/slice'
 import {
@@ -70,7 +70,7 @@ import { setRepost } from 'common/store/userList/reposts/actions'
 import { RepostType } from 'common/store/userList/reposts/types'
 import { formatUrlName } from 'common/utils/formatUtil'
 import DeletedPage from 'pages/deletedPage/deletedPage'
-import { AgreementEvent, make } from 'store/analytics/actions'
+import { DigitalContentEvent, make } from 'store/analytics/actions'
 import { open as openEditCollectionModal } from 'store/application/ui/editContentListModal/slice'
 import {
   setUsers,
@@ -123,7 +123,7 @@ type CollectionPageState = {
   updatingRoute: boolean
 }
 
-type ContentListAgreement = { time: number; digital_content: ID; uid?: UID }
+type ContentListDigitalContent = { time: number; digital_content: ID; uid?: UID }
 
 class CollectionPage extends Component<
   CollectionPageProps,
@@ -172,7 +172,7 @@ class CollectionPage extends Component<
       status,
       user,
       smartCollection,
-      agreements,
+      digitalContents,
       pathname,
       fetchCollectionSucceeded,
       type,
@@ -195,10 +195,10 @@ class CollectionPage extends Component<
     const { updatingRoute, initialOrder } = this.state
 
     // Reset the initial order if it is unset OR
-    // if the uids of the agreements in the lineup are changing with this
+    // if the uids of the digitalContents in the lineup are changing with this
     // update (initialOrder should contain ALL of the uids, so it suffices to check the first one).
-    const newInitialOrder = agreements.entries.map((digital_content) => digital_content.uid)
-    const noInitialOrder = !initialOrder && agreements.entries.length > 0
+    const newInitialOrder = digitalContents.entries.map((digital_content) => digital_content.uid)
+    const noInitialOrder = !initialOrder && digitalContents.entries.length > 0
     const entryIds = new Set(newInitialOrder)
     const newUids =
       Array.isArray(initialOrder) &&
@@ -301,7 +301,7 @@ class CollectionPage extends Component<
         prevMetadata.content_list_contents.digital_content_ids
       )
     ) {
-      this.props.fetchAgreements()
+      this.props.fetchDigitalContents()
     }
   }
 
@@ -317,8 +317,8 @@ class CollectionPage extends Component<
   }
 
   playListContentsEqual(
-    prevContentListContents: ContentListAgreement[],
-    curContentListContents: ContentListAgreement[]
+    prevContentListContents: ContentListDigitalContent[],
+    curContentListContents: ContentListDigitalContent[]
   ) {
     return (
       prevContentListContents.length === curContentListContents.length &&
@@ -342,7 +342,7 @@ class CollectionPage extends Component<
       if (forceFetch || collectionId !== this.state.contentListId) {
         this.setState({ contentListId: collectionId as number })
         this.props.fetchCollection(handle, collectionId as number)
-        this.props.fetchAgreements()
+        this.props.fetchDigitalContents()
       }
     }
 
@@ -350,7 +350,7 @@ class CollectionPage extends Component<
       this.props.smartCollection &&
       this.props.smartCollection.content_list_contents
     ) {
-      this.props.fetchAgreements()
+      this.props.fetchDigitalContents()
     }
   }
 
@@ -368,8 +368,8 @@ class CollectionPage extends Component<
   }
 
   isQueued = () => {
-    const { agreements, currentQueueItem } = this.props
-    return agreements.entries.some((entry) => currentQueueItem.uid === entry.uid)
+    const { digitalContents, currentQueueItem } = this.props
+    return digitalContents.entries.some((entry) => currentQueueItem.uid === entry.uid)
   }
 
   getPlayingUid = () => {
@@ -382,12 +382,12 @@ class CollectionPage extends Component<
     return currentQueueItem.digital_content ? currentQueueItem.digital_content.digital_content_id : null
   }
 
-  formatMetadata = (agreementMetadatas: CollectionAgreement[]): AgreementRecord[] => {
-    return agreementMetadatas.map((metadata, i) => ({
+  formatMetadata = (digitalContentMetadatas: CollectionDigitalContent[]): DigitalContentRecord[] => {
+    return digitalContentMetadatas.map((metadata, i) => ({
       ...metadata,
       key: `${metadata.title}_${metadata.uid}_${i}`,
       name: metadata.title,
-      landlord: metadata.user.name,
+      author: metadata.user.name,
       handle: metadata.user.handle,
       date: metadata.dateAdded || metadata.created_at,
       time: metadata.duration,
@@ -395,14 +395,14 @@ class CollectionPage extends Component<
     }))
   }
 
-  getFilteredData = (agreementMetadatas: CollectionAgreement[]) => {
+  getFilteredData = (digitalContentMetadatas: CollectionDigitalContent[]) => {
     const filterText = this.state.filterText
-    const { agreements } = this.props
+    const { digitalContents } = this.props
     const playingUid = this.getPlayingUid()
-    const playingIndex = agreements.entries.findIndex(
+    const playingIndex = digitalContents.entries.findIndex(
       ({ uid }) => uid === playingUid
     )
-    const filteredMetadata = this.formatMetadata(agreementMetadatas).filter(
+    const filteredMetadata = this.formatMetadata(digitalContentMetadatas).filter(
       (item) =>
         item.title.toLowerCase().indexOf(filterText.toLowerCase()) > -1 ||
         item.user.name.toLowerCase().indexOf(filterText.toLowerCase()) > -1
@@ -417,22 +417,22 @@ class CollectionPage extends Component<
     ]
   }
 
-  onClickRow = (agreementRecord: AgreementRecord) => {
+  onClickRow = (digitalContentRecord: DigitalContentRecord) => {
     const { playing, play, pause, record } = this.props
     const playingUid = this.getPlayingUid()
-    if (playing && playingUid === agreementRecord.uid) {
+    if (playing && playingUid === digitalContentRecord.uid) {
       pause()
       record(
         make(Name.PLAYBACK_PAUSE, {
-          id: `${agreementRecord.digital_content_id}`,
+          id: `${digitalContentRecord.digital_content_id}`,
           source: PlaybackSource.CONTENT_LIST_AGREEMENT
         })
       )
-    } else if (playingUid !== agreementRecord.uid) {
-      play(agreementRecord.uid)
+    } else if (playingUid !== digitalContentRecord.uid) {
+      play(digitalContentRecord.uid)
       record(
         make(Name.PLAYBACK_PLAY, {
-          id: `${agreementRecord.digital_content_id}`,
+          id: `${digitalContentRecord.digital_content_id}`,
           source: PlaybackSource.CONTENT_LIST_AGREEMENT
         })
       )
@@ -440,7 +440,7 @@ class CollectionPage extends Component<
       play()
       record(
         make(Name.PLAYBACK_PLAY, {
-          id: `${agreementRecord.digital_content_id}`,
+          id: `${digitalContentRecord.digital_content_id}`,
           source: PlaybackSource.CONTENT_LIST_AGREEMENT
         })
       )
@@ -457,39 +457,39 @@ class CollectionPage extends Component<
     )
   }
 
-  onClickSave = (record: AgreementRecord) => {
+  onClickSave = (record: DigitalContentRecord) => {
     if (!record.has_current_user_saved) {
-      this.props.saveAgreement(record.digital_content_id)
+      this.props.saveDigitalContent(record.digital_content_id)
     } else {
-      this.props.unsaveAgreement(record.digital_content_id)
+      this.props.unsaveDigitalContent(record.digital_content_id)
     }
   }
 
-  onClickAgreementName = (record: AgreementRecord) => {
+  onClickDigitalContentName = (record: DigitalContentRecord) => {
     this.props.goToRoute(record.permalink)
   }
 
-  onClickLandlordName = (record: AgreementRecord) => {
+  onClickLandlordName = (record: DigitalContentRecord) => {
     this.props.goToRoute(profilePage(record.handle))
   }
 
-  onClickRepostAgreement = (record: AgreementRecord) => {
+  onClickRepostDigitalContent = (record: DigitalContentRecord) => {
     if (!record.has_current_user_reposted) {
-      this.props.repostAgreement(record.digital_content_id)
+      this.props.repostDigitalContent(record.digital_content_id)
     } else {
-      this.props.undoRepostAgreement(record.digital_content_id)
+      this.props.undoRepostDigitalContent(record.digital_content_id)
     }
   }
 
   onClickRemove = (
-    agreementId: number,
+    digitalContentId: number,
     index: number,
     uid: string,
     timestamp: number
   ) => {
     const { contentListId } = this.state
-    this.props.removeAgreementFromContentList(
-      agreementId,
+    this.props.removeDigitalContentFromContentList(
+      digitalContentId,
       contentListId as number,
       uid,
       timestamp
@@ -511,7 +511,7 @@ class CollectionPage extends Component<
       playing,
       play,
       pause,
-      agreements: { entries },
+      digitalContents: { entries },
       record
     } = this.props
     const isQueued = this.isQueued()
@@ -543,10 +543,10 @@ class CollectionPage extends Component<
     }
   }
 
-  onSortAgreements = (sorters: any) => {
+  onSortDigitalContents = (sorters: any) => {
     const { column, order } = sorters
     const {
-      agreements: { entries }
+      digitalContents: { entries }
     } = this.props
     const dataSource = this.formatMetadata(entries)
     let updatedOrder
@@ -564,21 +564,21 @@ class CollectionPage extends Component<
     this.props.updateLineupOrder(updatedOrder)
   }
 
-  onReorderAgreements = (source: number, destination: number) => {
-    const { agreements, order } = this.props
+  onReorderDigitalContents = (source: number, destination: number) => {
+    const { digitalContents, order } = this.props
 
     const newOrder = Array.from(this.state.initialOrder!)
     newOrder.splice(source, 1)
     newOrder.splice(destination, 0, this.state.initialOrder![source])
 
-    const agreementIdAndTimes = newOrder.map((uid: any) => ({
-      id: agreements.entries[order[uid]].digital_content_id,
-      time: agreements.entries[order[uid]].dateAdded.unix()
+    const digitalContentIdAndTimes = newOrder.map((uid: any) => ({
+      id: digitalContents.entries[order[uid]].digital_content_id,
+      time: digitalContents.entries[order[uid]].dateAdded.unix()
     }))
 
     this.props.updateLineupOrder(newOrder)
     this.setState({ initialOrder: newOrder })
-    this.props.orderContentList(this.state.contentListId!, agreementIdAndTimes, newOrder)
+    this.props.orderContentList(this.state.contentListId!, digitalContentIdAndTimes, newOrder)
   }
 
   onPublish = () => {
@@ -613,23 +613,23 @@ class CollectionPage extends Component<
     this.props.shareCollection(contentListId)
   }
 
-  onHeroAgreementClickLandlordName = () => {
+  onHeroDigitalContentClickLandlordName = () => {
     const { goToRoute, user } = this.props
     const contentListOwnerHandle = user ? user.handle : ''
     goToRoute(profilePage(contentListOwnerHandle))
   }
 
-  onHeroAgreementEdit = () => {
+  onHeroDigitalContentEdit = () => {
     if (this.state.contentListId)
       this.props.onEditCollection(this.state.contentListId)
   }
 
-  onHeroAgreementShare = () => {
+  onHeroDigitalContentShare = () => {
     const { contentListId } = this.state
     this.onShareContentList(contentListId!)
   }
 
-  onHeroAgreementSave = () => {
+  onHeroDigitalContentSave = () => {
     const { userContentLists, collection: metadata, smartCollection } = this.props
     const { contentListId } = this.state
     const isSaved =
@@ -645,7 +645,7 @@ class CollectionPage extends Component<
     }
   }
 
-  onHeroAgreementRepost = () => {
+  onHeroDigitalContentRepost = () => {
     const { collection: metadata } = this.props
     const { contentListId } = this.state
     const isReposted = metadata ? metadata.has_current_user_reposted : false
@@ -707,7 +707,7 @@ class CollectionPage extends Component<
       status,
       collection: metadata,
       user,
-      agreements,
+      digitalContents,
       userId,
       userContentLists,
       smartCollection
@@ -737,28 +737,28 @@ class CollectionPage extends Component<
       collection: smartCollection
         ? { status: Status.SUCCESS, metadata: smartCollection, user: null }
         : { status, metadata, user },
-      agreements,
+      digitalContents,
       userId,
       userContentLists,
       getPlayingUid: this.getPlayingUid,
       getFilteredData: this.getFilteredData,
       isQueued: this.isQueued,
-      onHeroAgreementClickLandlordName: this.onHeroAgreementClickLandlordName,
+      onHeroDigitalContentClickLandlordName: this.onHeroDigitalContentClickLandlordName,
       onFilterChange: this.onFilterChange,
       onPlay: this.onPlay,
-      onHeroAgreementEdit: this.onHeroAgreementEdit,
+      onHeroDigitalContentEdit: this.onHeroDigitalContentEdit,
       onPublish: this.onPublish,
-      onHeroAgreementShare: this.onHeroAgreementShare,
-      onHeroAgreementSave: this.onHeroAgreementSave,
-      onHeroAgreementRepost: this.onHeroAgreementRepost,
+      onHeroDigitalContentShare: this.onHeroDigitalContentShare,
+      onHeroDigitalContentSave: this.onHeroDigitalContentSave,
+      onHeroDigitalContentRepost: this.onHeroDigitalContentRepost,
       onClickRow: this.onClickRow,
       onClickSave: this.onClickSave,
-      onClickAgreementName: this.onClickAgreementName,
+      onClickDigitalContentName: this.onClickDigitalContentName,
       onClickLandlordName: this.onClickLandlordName,
-      onClickRepostAgreement: this.onClickRepostAgreement,
+      onClickRepostDigitalContent: this.onClickRepostDigitalContent,
       onClickDescriptionExternalLink: this.onClickDescriptionExternalLink,
-      onSortAgreements: this.onSortAgreements,
-      onReorderAgreements: this.onReorderAgreements,
+      onSortDigitalContents: this.onSortDigitalContents,
+      onReorderDigitalContents: this.onReorderDigitalContents,
       onClickRemove: this.onClickRemove,
       onClickMobileOverflow: this.props.clickOverflow,
       onClickFavorites: this.onClickFavorites,
@@ -797,13 +797,13 @@ class CollectionPage extends Component<
 }
 
 function makeMapStateToProps() {
-  const getAgreementsLineup = makeGetTableMetadatas(getCollectionAgreementsLineup)
-  const getLineupOrder = makeGetLineupOrder(getCollectionAgreementsLineup)
+  const getDigitalContentsLineup = makeGetTableMetadatas(getCollectionDigitalContentsLineup)
+  const getLineupOrder = makeGetLineupOrder(getCollectionDigitalContentsLineup)
   const getCurrentQueueItem = makeGetCurrent()
 
   const mapStateToProps = (state: AppState) => {
     return {
-      agreements: getAgreementsLineup(state),
+      digitalContents: getDigitalContentsLineup(state),
       collectionUid: getCollectionUid(state) || '',
       collection: getCollection(state) as Collection,
       user: getUser(state),
@@ -826,29 +826,29 @@ function mapDispatchToProps(dispatch: Dispatch) {
   return {
     fetchCollection: (handle: string | null, id: number) =>
       dispatch(collectionActions.fetchCollection(handle, id)),
-    fetchAgreements: () =>
-      dispatch(agreementsActions.fetchLineupMetadatas(0, 200, false, undefined)),
+    fetchDigitalContents: () =>
+      dispatch(digitalContentsActions.fetchLineupMetadatas(0, 200, false, undefined)),
     resetCollection: (collectionUid: string, userUid: string) =>
       dispatch(collectionActions.resetCollection(collectionUid, userUid)),
     goToRoute: (route: string) => dispatch(pushRoute(route)),
     replaceRoute: (route: string) => dispatch(replace(route)),
-    play: (uid?: string) => dispatch(agreementsActions.play(uid)),
-    pause: () => dispatch(agreementsActions.pause()),
+    play: (uid?: string) => dispatch(digitalContentsActions.play(uid)),
+    pause: () => dispatch(digitalContentsActions.pause()),
     updateLineupOrder: (updatedOrderIndices: any) =>
-      dispatch(agreementsActions.updateLineupOrder(updatedOrderIndices)),
+      dispatch(digitalContentsActions.updateLineupOrder(updatedOrderIndices)),
     editContentList: (contentListId: number, formFields: any) =>
       dispatch(editContentList(contentListId, formFields)),
-    removeAgreementFromContentList: (
-      agreementId: number,
+    removeDigitalContentFromContentList: (
+      digitalContentId: number,
       contentListId: number,
       uid: string,
       timestamp: number
     ) => {
-      dispatch(removeAgreementFromContentList(agreementId, contentListId, timestamp))
-      dispatch(agreementsActions.remove(Kind.AGREEMENTS, uid))
+      dispatch(removeDigitalContentFromContentList(digitalContentId, contentListId, timestamp))
+      dispatch(digitalContentsActions.remove(Kind.AGREEMENTS, uid))
     },
-    orderContentList: (contentListId: number, agreementIds: any, agreementUids: string[]) =>
-      dispatch(orderContentList(contentListId, agreementIds, agreementUids)),
+    orderContentList: (contentListId: number, digitalContentIds: any, digitalContentUids: string[]) =>
+      dispatch(orderContentList(contentListId, digitalContentIds, digitalContentUids)),
     publishContentList: (contentListId: number) =>
       dispatch(publishContentList(contentListId)),
     deleteContentList: (contentListId: number) =>
@@ -906,24 +906,24 @@ function mapDispatchToProps(dispatch: Dispatch) {
           source: ShareSource.TILE
         })
       ),
-    repostAgreement: (agreementId: number) =>
+    repostDigitalContent: (digitalContentId: number) =>
       dispatch(
-        socialAgreementsActions.repostAgreement(agreementId, RepostSource.COLLECTION_PAGE)
+        socialDigitalContentsActions.repostDigitalContent(digitalContentId, RepostSource.COLLECTION_PAGE)
       ),
-    undoRepostAgreement: (agreementId: number) =>
+    undoRepostDigitalContent: (digitalContentId: number) =>
       dispatch(
-        socialAgreementsActions.undoRepostAgreement(
-          agreementId,
+        socialDigitalContentsActions.undoRepostDigitalContent(
+          digitalContentId,
           RepostSource.COLLECTION_PAGE
         )
       ),
-    saveAgreement: (agreementId: number) =>
+    saveDigitalContent: (digitalContentId: number) =>
       dispatch(
-        socialAgreementsActions.saveAgreement(agreementId, FavoriteSource.COLLECTION_PAGE)
+        socialDigitalContentsActions.saveDigitalContent(digitalContentId, FavoriteSource.COLLECTION_PAGE)
       ),
-    unsaveAgreement: (agreementId: number) =>
+    unsaveDigitalContent: (digitalContentId: number) =>
       dispatch(
-        socialAgreementsActions.unsaveAgreement(agreementId, FavoriteSource.COLLECTION_PAGE)
+        socialDigitalContentsActions.unsaveDigitalContent(digitalContentId, FavoriteSource.COLLECTION_PAGE)
       ),
     fetchCollectionSucceeded: (
       collectionId: ID,
@@ -957,21 +957,21 @@ function mapDispatchToProps(dispatch: Dispatch) {
       dispatch(setRepost(collectionId, RepostType.COLLECTION)),
     setFavoriteContentListId: (collectionId: ID) =>
       dispatch(setFavorite(collectionId, FavoriteType.CONTENT_LIST)),
-    record: (event: AgreementEvent) => dispatch(event),
-    setRepostUsers: (agreementID: ID) =>
+    record: (event: DigitalContentEvent) => dispatch(event),
+    setRepostUsers: (digitalContentID: ID) =>
       dispatch(
         setUsers({
           userListType: UserListType.REPOST,
           entityType: UserListEntityType.COLLECTION,
-          id: agreementID
+          id: digitalContentID
         })
       ),
-    setFavoriteUsers: (agreementID: ID) =>
+    setFavoriteUsers: (digitalContentID: ID) =>
       dispatch(
         setUsers({
           userListType: UserListType.FAVORITE,
           entityType: UserListEntityType.COLLECTION,
-          id: agreementID
+          id: digitalContentID
         })
       ),
     setModalVisibility: () => dispatch(setVisibility(true)),

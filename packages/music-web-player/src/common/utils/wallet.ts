@@ -1,7 +1,7 @@
 import {
   BNAudio,
   BNWei,
-  StringLive,
+  StringDigitalcoin,
   StringWei,
   Nullable
 } from '@coliving/common'
@@ -16,17 +16,17 @@ import {
   convertFloatToWei
 } from 'common/utils/formatUtil'
 
-export const weiToAudioString = (bnWei: BNWei): StringLive => {
-  const stringAudio = formatWeiToAudioString(bnWei) as StringLive
+export const weiToAudioString = (bnWei: BNWei): StringDigitalcoin => {
+  const stringAudio = formatWeiToAudioString(bnWei) as StringDigitalcoin
   return stringAudio
 }
 
 export const weiToAudio = (bnWei: BNWei): BNAudio => {
-  const stringAudio = formatWeiToAudioString(bnWei) as StringLive
+  const stringAudio = formatWeiToAudioString(bnWei) as StringDigitalcoin
   return stringAudioToBN(stringAudio)
 }
 
-export const liveToWei = (stringAudio: StringLive): BNWei => {
+export const liveToWei = (stringAudio: StringDigitalcoin): BNWei => {
   const wei = parseWeiNumber(stringAudio) as BNWei
   return wei
 }
@@ -35,7 +35,7 @@ export const stringWeiToBN = (stringWei: StringWei): BNWei => {
   return new BN(stringWei) as BNWei
 }
 
-export const stringAudioToBN = (stringAudio: StringLive): BNAudio => {
+export const stringAudioToBN = (stringAudio: StringDigitalcoin): BNAudio => {
   return new BN(stringAudio) as BNAudio
 }
 
@@ -49,11 +49,11 @@ export const weiToString = (wei: BNWei): StringWei => {
   return wei.toString() as StringWei
 }
 
-export const stringAudioToStringWei = (stringAudio: StringLive): StringWei => {
+export const stringAudioToStringWei = (stringAudio: StringDigitalcoin): StringWei => {
   return weiToString(liveToWei(stringAudio))
 }
 
-export const parseAudioInputToWei = (digitalcoin: StringLive): Nullable<BNWei> => {
+export const parseAudioInputToWei = (digitalcoin: StringDigitalcoin): Nullable<BNWei> => {
   if (!digitalcoin.length) return null
   // First try converting from float, in case digitalcoin has decimal value
   const floatWei = convertFloatToWei(digitalcoin) as Nullable<BNWei>
@@ -67,21 +67,21 @@ export const parseAudioInputToWei = (digitalcoin: StringLive): Nullable<BNWei> =
 }
 
 /**
- * Format wei BN to the full $LIVE currency with decimals
+ * Format wei BN to the full $DGCO currency with decimals
  * @param amount The wei amount
  * @param shouldTruncate truncate decimals at truncation length
  * @param significantDigits if truncation set to true, how many significant digits to include
- * @returns $LIVE The $LIVE amount with decimals
+ * @returns $DGCO The $DGCO amount with decimals
  */
 export const formatWei = (
   amount: BNWei,
   shouldTruncate = false,
   significantDigits = 4
-): StringLive => {
+): StringDigitalcoin => {
   const aud = amount.div(WEI)
   const wei = amount.sub(aud.mul(WEI))
   if (wei.isZero()) {
-    return formatNumberCommas(aud.toString()) as StringLive
+    return formatNumberCommas(aud.toString()) as StringDigitalcoin
   }
   const decimals = wei.toString().padStart(18, '0')
 
@@ -98,7 +98,7 @@ export const formatWei = (
       trimmed = `${before}.${after}`
     }
   }
-  return formatNumberCommas(trimmed) as StringLive
+  return formatNumberCommas(trimmed) as StringDigitalcoin
 }
 
 export const shortenSPLAddress = (addr: string) => {

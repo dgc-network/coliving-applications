@@ -3,18 +3,18 @@ import { connect } from 'react-redux'
 import { AppState } from 'store/types'
 import { isMobile } from 'utils/clientUtil'
 
-import AgreementPageProvider from './agreementPageProvider'
-import AgreementPageDesktopContent from './components/desktop/agreementPage'
-import AgreementPageMobileContent from './components/mobile/agreementPage'
+import DigitalContentPageProvider from './digitalContentPageProvider'
+import DigitalContentPageDesktopContent from './components/desktop/digitalContentPage'
+import DigitalContentPageMobileContent from './components/mobile/digitalContentPage'
 
 interface OwnProps {}
 
-type AgreementPageContentProps = ReturnType<typeof mapStateToProps> & OwnProps
+type DigitalContentPageContentProps = ReturnType<typeof mapStateToProps> & OwnProps
 
-const AgreementPage = ({ isMobile }: AgreementPageContentProps) => {
-  const content = isMobile ? AgreementPageMobileContent : AgreementPageDesktopContent
+const DigitalContentPage = ({ isMobile }: DigitalContentPageContentProps) => {
+  const content = isMobile ? DigitalContentPageMobileContent : DigitalContentPageDesktopContent
 
-  return <AgreementPageProvider>{content}</AgreementPageProvider>
+  return <DigitalContentPageProvider>{content}</DigitalContentPageProvider>
 }
 
 function mapStateToProps(state: AppState) {
@@ -23,4 +23,4 @@ function mapStateToProps(state: AppState) {
   }
 }
 
-export default connect(mapStateToProps)(AgreementPage)
+export default connect(mapStateToProps)(DigitalContentPage)

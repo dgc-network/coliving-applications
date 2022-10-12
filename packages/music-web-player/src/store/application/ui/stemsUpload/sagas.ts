@@ -1,8 +1,8 @@
 import { Name, DigitalContent, User } from '@coliving/common'
 import { takeEvery, put, call, select } from 'redux-saga/effects'
 
-import { getAgreement } from 'common/store/cache/agreements/selectors'
-import { retrieveAgreements } from 'common/store/cache/agreements/utils'
+import { getDigitalContent } from 'common/store/cache/digital_contents/selectors'
+import { retrieveDigitalContents } from 'common/store/cache/digital_contents/utils'
 import { getUser } from 'common/store/cache/users/selectors'
 import {
   startStemUploads,
@@ -17,9 +17,9 @@ function* watchUploadStems() {
     startStemUploads.type,
     function* (action: ReturnType<typeof startStemUploads>) {
       const { uploads, parentId, batchUID } = action.payload
-      const stemAgreements = uploads.map((u) => {
+      const stemDigitalContents = uploads.map((u) => {
         const metadata = createStemMetadata({
-          parentAgreementId: parentId,
+          parentDigitalContentId: parentId,
           digital_content: u.metadata,
           stemCategory: u.category
         })
@@ -31,20 +31,20 @@ function* watchUploadStems() {
           }
         }
       })
-      const { agreementIds } = yield call(handleUploads, {
-        agreements: stemAgreements,
+      const { digitalContentIds } = yield call(handleUploads, {
+        digitalContents: stemDigitalContents,
         isCollection: false,
         isStem: true
       })
 
       yield put(stemUploadsSucceeded({ parentId, batchUID }))
 
-      if (agreementIds) {
-        for (let i = 0; i < agreementIds.length; i += 1) {
-          const agreementId = agreementIds[i]
-          const category = stemAgreements[i].metadata.stem_of.category
+      if (digitalContentIds) {
+        for (let i = 0; i < digitalContentIds.length; i += 1) {
+          const digitalContentId = digitalContentIds[i]
+          const category = stemDigitalContents[i].metadata.stem_of.category
           const recordEvent = make(Name.STEM_COMPLETE_UPLOAD, {
-            id: agreementId,
+            id: digitalContentId,
             parent_digital_content_id: parentId,
             category
           })
@@ -53,10 +53,10 @@ function* watchUploadStems() {
       }
 
       // Retrieve the parent digital_content to refresh stems
-      const digital_content: DigitalContent = yield select(getAgreement, { id: parentId })
+      const digital_content: DigitalContent = yield select(getDigitalContent, { id: parentId })
       const ownerUser: User = yield select(getUser, { id: digital_content.owner_id })
-      yield call(retrieveAgreements, {
-        agreementIds: [
+      yield call(retrieveDigitalContents, {
+        digitalContentIds: [
           { id: parentId, handle: ownerUser.handle, url_title: digital_content.title }
         ],
         withStems: true,

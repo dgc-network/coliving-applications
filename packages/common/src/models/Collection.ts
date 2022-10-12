@@ -5,7 +5,7 @@ import { CoverArtSizes } from 'models/imageSizes'
 import { Repost } from 'models/repost'
 import { Nullable } from 'utils/typeUtils'
 
-import { UserAgreementMetadata } from './digital_content'
+import { UserDigitalContentMetadata } from './digital_content'
 import { Favorite } from './favorite'
 import { User, UserMetadata } from './user'
 
@@ -32,7 +32,7 @@ export type CollectionMetadata = {
   content_list_contents: {
     digital_content_ids: Array<{ time: number; digital_content: ID; uid?: UID }>
   }
-  agreements?: UserAgreementMetadata[]
+  digitalContents?: UserDigitalContentMetadata[]
   digital_content_count: number
   content_list_id: ID
   cover_art: CID | null

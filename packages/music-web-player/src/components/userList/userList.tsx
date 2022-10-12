@@ -72,7 +72,7 @@ const ConnectedUserList = (props: ConnectedUserListProps) => {
        * more users as we scroll down the modal.
        * The reason why we reset on initial load rather than on
        * exiting the modal is because it's possible that one modal
-       * opens another (e.g. clicking landlord hover tile supporting section),
+       * opens another (e.g. clicking author hover tile supporting section),
        * and resetting on modal exit in that case may reset the data for the
        * incoming modal after it loads and end up showing an empty modal.
        */

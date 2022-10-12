@@ -10,7 +10,7 @@ import {
   MusicError,
   setTopAlbums,
   setTopContentLists,
-  setTopAgreements
+  setTopDigitalContents
 } from './slice'
 import { fetchWithLibs } from '../../../utils/fetch'
 
@@ -18,14 +18,14 @@ const COLIVING_URL = process.env.REACT_APP_COLIVING_URL
 
 // -------------------------------- Selectors  ---------------------------------
 
-export const getTopAgreements = (state: AppState) => state.cache.music.topAgreements
+export const getTopDigitalContents = (state: AppState) => state.cache.music.topDigitalContents
 export const getTopContentLists = (state: AppState) =>
   state.cache.music.topContentLists
 export const getTopAlbums = (state: AppState) => state.cache.music.topAlbums
 
 // -------------------------------- Thunk Actions  ---------------------------------
 
-export function fetchTopAgreements(): ThunkAction<
+export function fetchTopDigitalContents(): ThunkAction<
   void,
   AppState,
   Coliving,
@@ -35,19 +35,19 @@ export function fetchTopAgreements(): ThunkAction<
     try {
       await aud.awaitSetup()
       const data = await fetchWithLibs({
-        endpoint: '/v1/agreements/trending',
+        endpoint: '/v1/digital_contents/trending',
         queryParams: { limit: 4 }
       })
-      const agreements: DigitalContent[] = data.slice(0, 4).map((d: any) => ({
+      const digitalContents: DigitalContent[] = data.slice(0, 4).map((d: any) => ({
         title: d.title,
         handle: d.user.handle,
         artwork: d.artwork?.['480x480'] ?? imageBlank,
-        url: `${COLIVING_URL}/agreements/${d.id}`,
+        url: `${COLIVING_URL}/digital_contents/${d.id}`,
         userUrl: `${COLIVING_URL}/users/${d.user.id}`
       }))
-      dispatch(setTopAgreements({ agreements }))
+      dispatch(setTopDigitalContents({ digitalContents }))
     } catch (e) {
-      dispatch(setTopAgreements({ agreements: MusicError.ERROR }))
+      dispatch(setTopDigitalContents({ digitalContents: MusicError.ERROR }))
       console.error(e)
     }
   }
@@ -111,25 +111,25 @@ export function fetchTopAlbums(): ThunkAction<
 
 // -------------------------------- Hooks  --------------------------------
 
-export const useTopAgreements = () => {
+export const useTopDigitalContents = () => {
   const [doOnce, setDoOnce] = useState(false)
-  const topAgreements = useSelector(getTopAgreements)
+  const topDigitalContents = useSelector(getTopDigitalContents)
   const dispatch = useDispatch()
 
   useEffect(() => {
-    if (!doOnce && !topAgreements) {
+    if (!doOnce && !topDigitalContents) {
       setDoOnce(true)
-      dispatch(fetchTopAgreements())
+      dispatch(fetchTopDigitalContents())
     }
-  }, [doOnce, topAgreements, dispatch])
+  }, [doOnce, topDigitalContents, dispatch])
 
   useEffect(() => {
-    if (topAgreements) {
+    if (topDigitalContents) {
       setDoOnce(false)
     }
-  }, [topAgreements, setDoOnce])
+  }, [topDigitalContents, setDoOnce])
 
-  return { topAgreements }
+  return { topDigitalContents }
 }
 
 export const useTopContentLists = () => {

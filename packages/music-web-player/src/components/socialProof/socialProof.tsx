@@ -17,7 +17,7 @@ import { useRemoteVar } from 'hooks/useRemoteConfig'
 import ModalDrawer from 'pages/digitalcoin-rewards-page/components/modals/ModalDrawer'
 import InstagramAccountVerification from 'pages/settingsPage/components/instagramAccountVerified'
 import TwitterAccountVerification from 'pages/settingsPage/components/twitterAccountVerified'
-import { make, AgreementEvent, useRecord } from 'store/analytics/actions'
+import { make, DigitalContentEvent, useRecord } from 'store/analytics/actions'
 
 import styles from './SocialProof.module.css'
 
@@ -53,20 +53,20 @@ const VerifyBody = ({
   const record = useRecord()
   const onTwitterClick = useCallback(() => {
     onClick()
-    const agreementEvent: AgreementEvent = make(Name.SOCIAL_PROOF_OPEN, {
+    const digitalContentEvent: DigitalContentEvent = make(Name.SOCIAL_PROOF_OPEN, {
       handle,
       kind: 'twitter'
     })
-    record(agreementEvent)
+    record(digitalContentEvent)
   }, [record, handle, onClick])
 
   const onInstagramClick = useCallback(() => {
     onClick()
-    const agreementEvent: AgreementEvent = make(Name.SOCIAL_PROOF_OPEN, {
+    const digitalContentEvent: DigitalContentEvent = make(Name.SOCIAL_PROOF_OPEN, {
       handle,
       kind: 'instagram'
     })
-    record(agreementEvent)
+    record(digitalContentEvent)
   }, [record, handle, onClick])
 
   return (
@@ -145,12 +145,12 @@ const SocialProof = ({ onSuccess }: SocialProofProps) => {
       setError(messages.failure)
       setStatus(Status.ERROR)
 
-      const agreementEvent: AgreementEvent = make(Name.SOCIAL_PROOF_ERROR, {
+      const digitalContentEvent: DigitalContentEvent = make(Name.SOCIAL_PROOF_ERROR, {
         handle,
         kind,
         error: error.message
       })
-      record(agreementEvent)
+      record(digitalContentEvent)
     },
     [record, setError, setStatus, handle]
   )
@@ -164,12 +164,12 @@ const SocialProof = ({ onSuccess }: SocialProofProps) => {
       onInstagramLogin(uuid, profile)
       setIsOpen(false)
 
-      const agreementEvent: AgreementEvent = make(Name.SOCIAL_PROOF_SUCCESS, {
+      const digitalContentEvent: DigitalContentEvent = make(Name.SOCIAL_PROOF_SUCCESS, {
         handle,
         kind: 'instagram',
         screenName: profile.username
       })
-      record(agreementEvent)
+      record(digitalContentEvent)
     },
     [record, handle, onInstagramLogin, setIsOpen]
   )
@@ -183,12 +183,12 @@ const SocialProof = ({ onSuccess }: SocialProofProps) => {
       onTwitterLogin(uuid, profile)
       setIsOpen(false)
 
-      const agreementEvent: AgreementEvent = make(Name.SOCIAL_PROOF_SUCCESS, {
+      const digitalContentEvent: DigitalContentEvent = make(Name.SOCIAL_PROOF_SUCCESS, {
         handle,
         kind: 'twitter',
         screenName: profile.screen_name
       })
-      record(agreementEvent)
+      record(digitalContentEvent)
     },
     [record, handle, onTwitterLogin, setIsOpen]
   )

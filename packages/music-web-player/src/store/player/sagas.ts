@@ -11,15 +11,15 @@ import {
 } from 'typed-redux-saga/macro'
 
 import * as cacheActions from 'common/store/cache/actions'
-import { getAgreement } from 'common/store/cache/agreements/selectors'
+import { getDigitalContent } from 'common/store/cache/digital_contents/selectors'
 import { getUser } from 'common/store/cache/users/selectors'
 import * as queueActions from 'common/store/queue/slice'
-import { recordListen } from 'common/store/social/agreements/actions'
+import { recordListen } from 'common/store/social/digital_contents/actions'
 import apiClient from 'services/colivingAPIClient/colivingAPIClient'
 import { remoteConfigInstance } from 'services/remoteConfig/remoteConfigInstance'
 import {
   getAudio,
-  getAgreementId,
+  getDigitalContentId,
   getUid,
   getCounter,
   getPlaying
@@ -71,7 +71,7 @@ let FORCE_MP3_STREAM_AGREEMENT_IDS: Set<string> | null = null
 
 export function* watchPlay() {
   yield* takeLatest(play.type, function* (action: ReturnType<typeof play>) {
-    const { uid, agreementId, onEnd } = action.payload
+    const { uid, digitalContentId, onEnd } = action.payload
 
     if (!FORCE_MP3_STREAM_AGREEMENT_IDS) {
       FORCE_MP3_STREAM_AGREEMENT_IDS = new Set(
@@ -85,9 +85,9 @@ export function* watchPlay() {
 
     const digitalcoin: NonNullable<AudioState> = yield* call(waitForValue, getAudio)
 
-    if (agreementId) {
+    if (digitalContentId) {
       // Load and set end action.
-      const digital_content = yield* select(getAgreement, { id: agreementId })
+      const digital_content = yield* select(getDigitalContent, { id: digitalContentId })
       if (!digital_content) return
 
       const owner = yield* select(getUser, {
@@ -97,11 +97,11 @@ export function* watchPlay() {
       const gateways = owner
         ? getContentNodeIPFSGateways(owner.content_node_endpoint)
         : []
-      const encodedAgreementId = encodeHashId(agreementId)
+      const encodedDigitalContentId = encodeHashId(digitalContentId)
       const forceStreamMp3 =
-        encodedAgreementId && FORCE_MP3_STREAM_AGREEMENT_IDS.has(encodedAgreementId)
+        encodedDigitalContentId && FORCE_MP3_STREAM_AGREEMENT_IDS.has(encodedDigitalContentId)
       const forceStreamMp3Url = forceStreamMp3
-        ? apiClient.makeUrl(`/agreements/${encodedAgreementId}/stream`)
+        ? apiClient.makeUrl(`/digital_contents/${encodedDigitalContentId}/stream`)
         : null
 
       const endChannel = eventChannel((emitter) => {
@@ -116,9 +116,9 @@ export function* watchPlay() {
           [digital_content._first_segment],
           gateways,
           {
-            id: encodedAgreementId,
+            id: encodedDigitalContentId,
             title: digital_content.title,
-            landlord: owner?.name
+            author: owner?.name
           },
           forceStreamMp3Url
         )
@@ -127,13 +127,13 @@ export function* watchPlay() {
       yield* spawn(actionChannelDispatcher, endChannel)
       yield* put(
         cacheActions.subscribe(Kind.AGREEMENTS, [
-          { uid: PLAYER_SUBSCRIBER_NAME, id: agreementId }
+          { uid: PLAYER_SUBSCRIBER_NAME, id: digitalContentId }
         ])
       )
     }
     // Play.
     digitalcoin.play()
-    yield* put(playSucceeded({ uid, agreementId }))
+    yield* put(playSucceeded({ uid, digitalContentId }))
   })
 }
 
@@ -157,7 +157,7 @@ export function* watchCollectiblePlay() {
             id: collectible.id,
             title: collectible.name ?? 'Collectible',
             // TODO: Add account user name here
-            landlord: 'YOUR NAME HERE',
+            author: 'YOUR NAME HERE',
             artwork:
               collectible.imageUrl ??
               collectible.frameUrl ??
@@ -197,12 +197,12 @@ export function* watchReset() {
       digitalcoin.pause()
     } else {
       const playerUid = yield* select(getUid)
-      const playerAgreementId = yield* select(getAgreementId)
-      if (playerUid && playerAgreementId) {
+      const playerDigitalContentId = yield* select(getDigitalContentId)
+      if (playerUid && playerDigitalContentId) {
         yield* put(
           play({
             uid: playerUid,
-            agreementId: playerAgreementId,
+            digitalContentId: playerDigitalContentId,
             onEnd: queueActions.next
           })
         )
@@ -214,7 +214,7 @@ export function* watchReset() {
 
 export function* watchStop() {
   yield* takeLatest(stop.type, function* (action: ReturnType<typeof stop>) {
-    const id = yield* select(getAgreementId)
+    const id = yield* select(getDigitalContentId)
     yield* put(
       cacheActions.unsubscribe(Kind.AGREEMENTS, [
         { uid: PLAYER_SUBSCRIBER_NAME, id }
@@ -280,9 +280,9 @@ export function* handleAudioErrors() {
 
   while (true) {
     const { error, data } = yield* take(chan)
-    const agreementId = yield* select(getAgreementId)
-    if (agreementId) {
-      yield* put(errorAction({ error, agreementId, info: data }))
+    const digitalContentId = yield* select(getDigitalContentId)
+    if (digitalContentId) {
+      yield* put(errorAction({ error, digitalContentId, info: data }))
     }
   }
 }
@@ -319,7 +319,7 @@ function* recordListenWorker() {
   // be enough because the user might have "repeat single" mode turned on.
   let lastSeenPlayCounter = null
   while (true) {
-    const agreementId = yield* select(getAgreementId)
+    const digitalContentId = yield* select(getDigitalContentId)
     const playCounter = yield* select(getCounter)
     const digitalcoin = yield* call(waitForValue, getAudio)
     const position = digitalcoin.getPosition()
@@ -327,7 +327,7 @@ function* recordListenWorker() {
     const newPlay = lastSeenPlayCounter !== playCounter
 
     if (newPlay && position > RECORD_LISTEN_SECONDS) {
-      if (agreementId) yield* put(recordListen(agreementId))
+      if (digitalContentId) yield* put(recordListen(digitalContentId))
       lastSeenPlayCounter = playCounter
     }
     yield* delay(RECORD_LISTEN_INTERVAL)

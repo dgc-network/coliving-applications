@@ -152,7 +152,7 @@ export const AccountVerificationScreen = () => {
     [dispatchWeb, twitterInfo, instagramInfo]
   )
 
-  const agreementOAuthComplete = useCallback(
+  const digitalContentOAuthComplete = useCallback(
     (type: 'twitter' | 'instagram') => {
       const info = type === 'twitter' ? twitterInfo : instagramInfo
       if (!info || !handle) return
@@ -189,10 +189,10 @@ export const AccountVerificationScreen = () => {
         validateHandle('twitter')
         setDidValidateHandle(true)
       } else if (handleError || twitterInfo.requiresUserReview) {
-        agreementOAuthComplete('twitter')
+        digitalContentOAuthComplete('twitter')
         setStatus('')
       } else if (handleIsValid) {
-        agreementOAuthComplete('twitter')
+        digitalContentOAuthComplete('twitter')
         setStatus(Status.SUCCESS)
       }
     }
@@ -202,7 +202,7 @@ export const AccountVerificationScreen = () => {
     handleError,
     didValidateHandle,
     validateHandle,
-    agreementOAuthComplete
+    digitalContentOAuthComplete
   ])
 
   useEffect(() => {
@@ -215,10 +215,10 @@ export const AccountVerificationScreen = () => {
         validateHandle('instagram')
         setDidValidateHandle(true)
       } else if (handleError || instagramInfo.requiresUserReview) {
-        agreementOAuthComplete('instagram')
+        digitalContentOAuthComplete('instagram')
         setStatus('')
       } else if (handleIsValid) {
-        agreementOAuthComplete('instagram')
+        digitalContentOAuthComplete('instagram')
         setStatus(Status.SUCCESS)
       }
     }
@@ -228,7 +228,7 @@ export const AccountVerificationScreen = () => {
     handleError,
     didValidateHandle,
     validateHandle,
-    agreementOAuthComplete
+    digitalContentOAuthComplete
   ])
 
   useEffect(() => {

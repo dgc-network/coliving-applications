@@ -5,9 +5,9 @@ export const SHOW_SET_AS_LANDLORD_PICK_CONFIRMATION = 'SET_AS_LANDLORD_PICK/SHOW
 export const HIDE_SET_AS_LANDLORD_PICK_CONFIRMATION = 'SET_AS_LANDLORD_PICK/HIDE'
 
 // action creators
-export const showSetAsLandlordPickConfirmation = (agreementId?: ID) => ({
+export const showSetAsLandlordPickConfirmation = (digitalContentId?: ID) => ({
   type: SHOW_SET_AS_LANDLORD_PICK_CONFIRMATION,
-  agreementId
+  digitalContentId
 })
 
 export const cancelSetAsLandlordPick = () => ({

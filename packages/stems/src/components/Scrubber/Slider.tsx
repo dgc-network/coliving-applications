@@ -47,11 +47,11 @@ export const Slider = ({
 
   // Div refs
   const railRef = useRef<HTMLDivElement>(null)
-  const agreementRef = useRef<HTMLDivElement>(null)
+  const digitalContentRef = useRef<HTMLDivElement>(null)
   const handleRef = useRef<HTMLDivElement>(null)
 
   const { play, pause, setPercent } = useAnimations(
-    agreementRef,
+    digitalContentRef,
     handleRef,
     elapsedSeconds,
     totalSeconds
@@ -249,7 +249,7 @@ export const Slider = ({
     return s
   }
 
-  const getAgreementStyle = () => {
+  const getDigitalContentStyle = () => {
     const s: CSSProperties = {}
     if (style && style.railListenedColor) {
       s.background = style.railListenedColor
@@ -288,11 +288,11 @@ export const Slider = ({
       style={getSliderStyle()}
     >
       <div ref={railRef} className={styles.rail} style={getRailStyle()}>
-        <div ref={agreementRef} className={styles.agreementWrapper}>
+        <div ref={digitalContentRef} className={styles.digitalContentWrapper}>
           <div
-            ref={agreementRef}
+            ref={digitalContentRef}
             className={styles.digital_content}
-            style={getAgreementStyle()}
+            style={getDigitalContentStyle()}
           />
         </div>
       </div>

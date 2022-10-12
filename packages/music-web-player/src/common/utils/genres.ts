@@ -10,7 +10,7 @@ export enum Genre {
   FOLK = 'Folk',
   POP = 'Pop',
   AMBIENT = 'Ambient',
-  SOUNDAGREEMENT = 'Soundagreement',
+  SOUNDAGREEMENT = 'SounddigitalContent',
   WORLD = 'World',
   JAZZ = 'Jazz',
   ACOUSTIC = 'Acoustic',

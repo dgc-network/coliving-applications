@@ -22,7 +22,7 @@ import {
   NotificationText,
   ProfilePicture,
   NotificationTwitterButton
-} from '../Notification'
+} from '../notification'
 import { reactionMap } from '../reaction'
 
 import { useGoToProfile } from './useGoToProfile'
@@ -31,7 +31,7 @@ const messages = {
   reacted: 'reacted',
   react: 'reacted to your tip of ',
   twitterShare: (handle: string) =>
-    `I got a thanks from ${handle} for tipping them $LIVE on @colivingproject! #Coliving #LIVETip`
+    `I got a thanks from ${handle} for tipping them $DGCO on @colivingproject! #Coliving #LIVETip`
 }
 
 const useStyles = makeStyles(() => ({

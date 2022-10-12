@@ -11,7 +11,7 @@ export const setFavorite = createCustomAction(
   SET_FAVORITE,
   (id: ID, favoriteType: FavoriteType) => ({ id, favoriteType })
 )
-export const agreementFavoriteError = createCustomAction(
+export const digitalContentFavoriteError = createCustomAction(
   GET_AGREEMENT_FAVORITE_ERROR,
   (id: ID, error: string) => ({ id, error })
 )

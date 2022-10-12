@@ -14,7 +14,7 @@ import type { ThemeColors } from 'app/utils/theme'
 import { useThemeColors } from 'app/utils/theme'
 
 import { LineupTileArt } from './lineupTileArt'
-import { createStyles as createAgreementTileStyles } from './styles'
+import { createStyles as createDigitalContentTileStyles } from './styles'
 
 const createStyles = (themeColors: ThemeColors) =>
   StyleSheet.create({
@@ -75,7 +75,7 @@ export const LineupTileMetadata = ({
 }: Props) => {
   const navigation = useNavigation()
   const styles = useThemedStyles(createStyles)
-  const agreementTileStyles = useThemedStyles(createAgreementTileStyles)
+  const digitalContentTileStyles = useThemedStyles(createDigitalContentTileStyles)
   const { primary } = useThemeColors()
 
   const handleLandlordPress = useCallback(() => {
@@ -91,10 +91,10 @@ export const LineupTileMetadata = ({
         imageUrl={imageUrl}
         onLoad={() => setArtworkLoaded(true)}
         coSign={coSign}
-        style={agreementTileStyles.imageContainer}
+        style={digitalContentTileStyles.imageContainer}
       />
-      <View style={agreementTileStyles.titles}>
-        <Pressable style={agreementTileStyles.title} onPress={onPressTitle}>
+      <View style={digitalContentTileStyles.titles}>
+        <Pressable style={digitalContentTileStyles.title} onPress={onPressTitle}>
           {({ pressed }) => (
             <>
               <Text
@@ -114,7 +114,7 @@ export const LineupTileMetadata = ({
             </>
           )}
         </Pressable>
-        <Pressable style={agreementTileStyles.landlord} onPress={handleLandlordPress}>
+        <Pressable style={digitalContentTileStyles.author} onPress={handleLandlordPress}>
           {({ pressed }) => (
             <>
               <Text

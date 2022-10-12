@@ -3,38 +3,38 @@ import { push as pushRoute } from 'connected-react-router'
 import moment from 'moment'
 import { call, fork, put, select, takeEvery } from 'redux-saga/effects'
 
-import * as agreementCacheActions from 'common/store/cache/agreements/actions'
-import { getAgreement as getCachedAgreement } from 'common/store/cache/agreements/selectors'
-import { retrieveAgreements } from 'common/store/cache/agreements/utils'
-import { retrieveAgreementByHandleAndSlug } from 'common/store/cache/agreements/utils/retrieveAgreements'
+import * as digitalContentCacheActions from 'common/store/cache/digital_contents/actions'
+import { getDigitalContent as getCachedDigitalContent } from 'common/store/cache/digital_contents/selectors'
+import { retrieveDigitalContents } from 'common/store/cache/digital_contents/utils'
+import { retrieveDigitalContentByHandleAndSlug } from 'common/store/cache/digital_contents/utils/retrieveDigitalContents'
 import { getUsers } from 'common/store/cache/users/selectors'
-import * as agreementPageActions from 'common/store/pages/digital_content/actions'
-import { agreementsActions } from 'common/store/pages/digital_content/lineup/actions'
+import * as digitalContentPageActions from 'common/store/pages/digital_content/actions'
+import { digitalContentsActions } from 'common/store/pages/digital_content/lineup/actions'
 import {
   getSourceSelector,
-  getAgreement,
-  getTrendingAgreementRanks,
+  getDigitalContent,
+  getTrendingDigitalContentRanks,
   getUser
 } from 'common/store/pages/digital_content/selectors'
 import { getIsReachable } from 'common/store/reachability/selectors'
-import agreementsSagas from 'pages/digital-content-page/store/lineups/agreements/sagas'
+import digitalContentsSagas from 'pages/digital-content-page/store/lineups/digital_contents/sagas'
 import apiClient from 'services/colivingAPIClient/colivingAPIClient'
 import { remoteConfigInstance } from 'services/remoteConfig/remoteConfigInstance'
 import { waitForBackendSetup } from 'store/backend/sagas'
-import { NOT_FOUND_PAGE, agreementRemixesPage } from 'utils/route'
+import { NOT_FOUND_PAGE, digitalContentRemixesPage } from 'utils/route'
 
 export const TRENDING_BADGE_LIMIT = 10
 
-function* watchAgreementBadge() {
-  yield takeEvery(agreementPageActions.GET_AGREEMENT_RANKS, function* (action) {
+function* watchDigitalContentBadge() {
+  yield takeEvery(digitalContentPageActions.GET_AGREEMENT_RANKS, function* (action) {
     try {
       yield call(waitForBackendSetup)
       yield call(remoteConfigInstance.waitForRemoteConfig)
       const TF = new Set(
         remoteConfigInstance.getRemoteVar(StringKeys.TF)?.split(',') ?? []
       )
-      let trendingAgreementRanks = yield select(getTrendingAgreementRanks)
-      if (!trendingAgreementRanks) {
+      let trendingDigitalContentRanks = yield select(getTrendingDigitalContentRanks)
+      if (!trendingDigitalContentRanks) {
         const trendingRanks = yield apiClient.getTrendingIds({
           limit: TRENDING_BADGE_LIMIT
         })
@@ -53,36 +53,36 @@ function* watchAgreementBadge() {
           })
         }
 
-        yield put(agreementPageActions.setAgreementTrendingRanks(trendingRanks))
-        trendingAgreementRanks = yield select(getTrendingAgreementRanks)
+        yield put(digitalContentPageActions.setDigitalContentTrendingRanks(trendingRanks))
+        trendingDigitalContentRanks = yield select(getTrendingDigitalContentRanks)
       }
 
-      const weeklyAgreementIndex = trendingAgreementRanks.week.findIndex(
-        (agreementId) => agreementId === action.agreementId
+      const weeklyDigitalContentIndex = trendingDigitalContentRanks.week.findIndex(
+        (digitalContentId) => digitalContentId === action.digitalContentId
       )
-      const monthlyAgreementIndex = trendingAgreementRanks.month.findIndex(
-        (agreementId) => agreementId === action.agreementId
+      const monthlyDigitalContentIndex = trendingDigitalContentRanks.month.findIndex(
+        (digitalContentId) => digitalContentId === action.digitalContentId
       )
-      const yearlyAgreementIndex = trendingAgreementRanks.year.findIndex(
-        (agreementId) => agreementId === action.agreementId
+      const yearlyDigitalContentIndex = trendingDigitalContentRanks.year.findIndex(
+        (digitalContentId) => digitalContentId === action.digitalContentId
       )
 
       yield put(
-        agreementPageActions.setAgreementRank(
+        digitalContentPageActions.setDigitalContentRank(
           'week',
-          weeklyAgreementIndex !== -1 ? weeklyAgreementIndex + 1 : null
+          weeklyDigitalContentIndex !== -1 ? weeklyDigitalContentIndex + 1 : null
         )
       )
       yield put(
-        agreementPageActions.setAgreementRank(
+        digitalContentPageActions.setDigitalContentRank(
           'month',
-          monthlyAgreementIndex !== -1 ? monthlyAgreementIndex + 1 : null
+          monthlyDigitalContentIndex !== -1 ? monthlyDigitalContentIndex + 1 : null
         )
       )
       yield put(
-        agreementPageActions.setAgreementRank(
+        digitalContentPageActions.setDigitalContentRank(
           'year',
-          yearlyAgreementIndex !== -1 ? yearlyAgreementIndex + 1 : null
+          yearlyDigitalContentIndex !== -1 ? yearlyDigitalContentIndex + 1 : null
         )
       )
     } catch (error) {
@@ -91,39 +91,39 @@ function* watchAgreementBadge() {
   })
 }
 
-function* getAgreementRanks(agreementId) {
-  yield put(agreementPageActions.getAgreementRanks(agreementId))
+function* getDigitalContentRanks(digitalContentId) {
+  yield put(digitalContentPageActions.getDigitalContentRanks(digitalContentId))
 }
 
-function* addAgreementToLineup(digital_content) {
+function* addDigitalContentToLineup(digital_content) {
   const source = yield select(getSourceSelector)
-  const formattedAgreement = {
+  const formattedDigitalContent = {
     kind: Kind.AGREEMENTS,
     id: digital_content.digital_content_id,
     uid: makeUid(Kind.AGREEMENTS, digital_content.digital_content_id, source)
   }
 
-  yield put(agreementsActions.add(formattedAgreement, digital_content.digital_content_id))
+  yield put(digitalContentsActions.add(formattedDigitalContent, digital_content.digital_content_id))
 }
 
-/** Get "more by this landlord" and put into the lineup + queue */
+/** Get "more by this author" and put into the lineup + queue */
 function* getRestOfLineup(permalink, ownerHandle) {
   yield put(
-    agreementsActions.fetchLineupMetadatas(1, 5, false, {
+    digitalContentsActions.fetchLineupMetadatas(1, 5, false, {
       ownerHandle,
-      heroAgreementPermalink: permalink
+      heroDigitalContentPermalink: permalink
     })
   )
 }
 
-function* watchFetchAgreement() {
-  yield takeEvery(agreementPageActions.FETCH_AGREEMENT, function* (action) {
-    const { agreementId, handle, slug, canBeUnlisted } = action
+function* watchFetchDigitalContent() {
+  yield takeEvery(digitalContentPageActions.FETCH_AGREEMENT, function* (action) {
+    const { digitalContentId, handle, slug, canBeUnlisted } = action
     const permalink = `/${handle}/${slug}`
     try {
       let digital_content
-      if (!agreementId) {
-        digital_content = yield call(retrieveAgreementByHandleAndSlug, {
+      if (!digitalContentId) {
+        digital_content = yield call(retrieveDigitalContentByHandleAndSlug, {
           handle,
           slug,
           withStems: true,
@@ -132,16 +132,16 @@ function* watchFetchAgreement() {
         })
       } else {
         const ids = canBeUnlisted
-          ? [{ id: agreementId, url_title: slug, handle }]
-          : [agreementId]
-        const agreements = yield call(retrieveAgreements, {
-          agreementIds: ids,
+          ? [{ id: digitalContentId, url_title: slug, handle }]
+          : [digitalContentId]
+        const digitalContents = yield call(retrieveDigitalContents, {
+          digitalContentIds: ids,
           canBeUnlisted,
           withStems: true,
           withRemixes: true,
           withRemixParents: true
         })
-        digital_content = agreements && agreements.length === 1 ? agreements[0] : null
+        digital_content = digitalContents && digitalContents.length === 1 ? digitalContents[0] : null
       }
       if (!digital_content) {
         const isReachable = yield select(getIsReachable)
@@ -150,55 +150,55 @@ function* watchFetchAgreement() {
           return
         }
       } else {
-        yield put(agreementPageActions.setAgreementId(digital_content.digital_content_id))
+        yield put(digitalContentPageActions.setDigitalContentId(digital_content.digital_content_id))
         // Add hero digital_content to lineup early so that we can play it ASAP
         // (instead of waiting for the entire lineup to load)
-        yield call(addAgreementToLineup, digital_content)
+        yield call(addDigitalContentToLineup, digital_content)
         yield fork(getRestOfLineup, permalink, handle)
-        yield fork(getAgreementRanks, digital_content.digital_content_id)
-        yield put(agreementPageActions.fetchAgreementSucceeded(digital_content.digital_content_id))
+        yield fork(getDigitalContentRanks, digital_content.digital_content_id)
+        yield put(digitalContentPageActions.fetchDigitalContentSucceeded(digital_content.digital_content_id))
       }
     } catch (e) {
       console.error(e)
       yield put(
-        agreementPageActions.fetchAgreementFailed(agreementId ?? `/${handle}/${slug}`)
+        digitalContentPageActions.fetchDigitalContentFailed(digitalContentId ?? `/${handle}/${slug}`)
       )
     }
   })
 }
 
-function* watchFetchAgreementSucceeded() {
-  yield takeEvery(agreementPageActions.FETCH_AGREEMENT_SUCCEEDED, function* (action) {
-    const { agreementId } = action
-    const digital_content = yield select(getCachedAgreement, { id: agreementId })
+function* watchFetchDigitalContentSucceeded() {
+  yield takeEvery(digitalContentPageActions.FETCH_AGREEMENT_SUCCEEDED, function* (action) {
+    const { digitalContentId } = action
+    const digital_content = yield select(getCachedDigitalContent, { id: digitalContentId })
     if (
       digital_content.download &&
       digital_content.download.is_downloadable &&
       !digital_content.download.cid
     ) {
-      yield put(agreementCacheActions.checkIsDownloadable(digital_content.digital_content_id))
+      yield put(digitalContentCacheActions.checkIsDownloadable(digital_content.digital_content_id))
     }
   })
 }
 
 function* watchRefetchLineup() {
-  yield takeEvery(agreementPageActions.REFETCH_LINEUP, function* (action) {
-    const { permalink } = yield select(getAgreement)
+  yield takeEvery(digitalContentPageActions.REFETCH_LINEUP, function* (action) {
+    const { permalink } = yield select(getDigitalContent)
     const { handle } = yield select(getUser)
-    yield put(agreementsActions.reset())
+    yield put(digitalContentsActions.reset())
     yield put(
-      agreementsActions.fetchLineupMetadatas(0, 6, false, {
+      digitalContentsActions.fetchLineupMetadatas(0, 6, false, {
         ownerHandle: handle,
-        heroAgreementPermalink: permalink
+        heroDigitalContentPermalink: permalink
       })
     )
   })
 }
 
-function* watchAgreementPageMakePublic() {
-  yield takeEvery(agreementPageActions.MAKE_AGREEMENT_PUBLIC, function* (action) {
-    const { agreementId } = action
-    let digital_content = yield select(getCachedAgreement, { id: agreementId })
+function* watchDigitalContentPageMakePublic() {
+  yield takeEvery(digitalContentPageActions.MAKE_AGREEMENT_PUBLIC, function* (action) {
+    const { digitalContentId } = action
+    let digital_content = yield select(getCachedDigitalContent, { id: digitalContentId })
 
     digital_content = {
       ...digital_content,
@@ -214,25 +214,25 @@ function* watchAgreementPageMakePublic() {
       }
     }
 
-    yield put(agreementCacheActions.editAgreement(agreementId, digital_content))
+    yield put(digitalContentCacheActions.editDigitalContent(digitalContentId, digital_content))
   })
 }
 
 function* watchGoToRemixesOfParentPage() {
   yield takeEvery(
-    agreementPageActions.GO_TO_REMIXES_OF_PARENT_PAGE,
+    digitalContentPageActions.GO_TO_REMIXES_OF_PARENT_PAGE,
     function* (action) {
-      const { parentAgreementId } = action
-      if (parentAgreementId) {
-        const parentAgreement = (yield call(retrieveAgreements, {
-          agreementIds: [parentAgreementId]
+      const { parentDigitalContentId } = action
+      if (parentDigitalContentId) {
+        const parentDigitalContent = (yield call(retrieveDigitalContents, {
+          digitalContentIds: [parentDigitalContentId]
         }))[0]
-        if (parentAgreement) {
-          const parentAgreementUser = (yield select(getUsers, {
-            ids: [parentAgreement.owner_id]
-          }))[parentAgreement.owner_id]
-          if (parentAgreementUser) {
-            const route = agreementRemixesPage(parentAgreement.permalink)
+        if (parentDigitalContent) {
+          const parentDigitalContentUser = (yield select(getUsers, {
+            ids: [parentDigitalContent.owner_id]
+          }))[parentDigitalContent.owner_id]
+          if (parentDigitalContentUser) {
+            const route = digitalContentRemixesPage(parentDigitalContent.permalink)
             yield put(pushRoute(route))
           }
         }
@@ -243,12 +243,12 @@ function* watchGoToRemixesOfParentPage() {
 
 export default function sagas() {
   return [
-    ...agreementsSagas(),
-    watchFetchAgreement,
-    watchFetchAgreementSucceeded,
+    ...digitalContentsSagas(),
+    watchFetchDigitalContent,
+    watchFetchDigitalContentSucceeded,
     watchRefetchLineup,
-    watchAgreementBadge,
-    watchAgreementPageMakePublic,
+    watchDigitalContentBadge,
+    watchDigitalContentPageMakePublic,
     watchGoToRemixesOfParentPage
   ]
 }

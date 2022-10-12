@@ -1,32 +1,32 @@
 import { call, put, select } from 'typed-redux-saga'
 
 import { getUserId } from 'common/store/account/selectors'
-import { processAndCacheAgreements } from 'common/store/cache/agreements/utils'
+import { processAndCacheDigitalContents } from 'common/store/cache/digital_contents/utils'
 import {
   PREFIX,
-  agreementsActions
+  digitalContentsActions
 } from 'common/store/pages/remixes/lineup/actions'
-import { getAgreementId, getLineup } from 'common/store/pages/remixes/selectors'
+import { getDigitalContentId, getLineup } from 'common/store/pages/remixes/selectors'
 import { setCount } from 'common/store/pages/remixes/slice'
 import apiClient from 'services/colivingAPIClient/colivingAPIClient'
 import { LineupSagas } from 'store/lineup/sagas'
 import { AppState } from 'store/types'
 
-function* getAgreements({
+function* getDigitalContents({
   offset,
   limit,
   payload
 }: {
   offset: number
   limit: number
-  payload: { agreementId: number | null }
+  payload: { digitalContentId: number | null }
 }) {
-  const { agreementId } = payload
-  if (!agreementId) return []
+  const { digitalContentId } = payload
+  if (!digitalContentId) return []
 
   const currentUserId = yield* select(getUserId)
-  const { agreements, count } = yield* call([apiClient, 'getRemixes'], {
-    agreementId,
+  const { digitalContents, count } = yield* call([apiClient, 'getRemixes'], {
+    digitalContentId,
     offset,
     limit,
     currentUserId
@@ -34,20 +34,20 @@ function* getAgreements({
 
   yield* put(setCount({ count }))
 
-  const processedAgreements = yield* call(processAndCacheAgreements, agreements)
+  const processedDigitalContents = yield* call(processAndCacheDigitalContents, digitalContents)
 
-  return processedAgreements
+  return processedDigitalContents
 }
 
-const sourceSelector = (state: AppState) => `${PREFIX}:${getAgreementId(state)}`
+const sourceSelector = (state: AppState) => `${PREFIX}:${getDigitalContentId(state)}`
 
-class AgreementsSagas extends LineupSagas {
+class DigitalContentsSagas extends LineupSagas {
   constructor() {
     super(
       PREFIX,
-      agreementsActions,
+      digitalContentsActions,
       getLineup,
-      getAgreements,
+      getDigitalContents,
       undefined,
       undefined,
       sourceSelector
@@ -56,5 +56,5 @@ class AgreementsSagas extends LineupSagas {
 }
 
 export default function sagas() {
-  return new AgreementsSagas().getSagas()
+  return new DigitalContentsSagas().getSagas()
 }

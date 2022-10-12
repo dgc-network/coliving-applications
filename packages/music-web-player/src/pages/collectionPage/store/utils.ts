@@ -3,11 +3,11 @@ import { Collection, SmartCollection, Variant } from '@coliving/common'
 export const computeCollectionMetadataProps = (
   metadata: Collection | SmartCollection | null
 ) => {
-  const agreementCount =
+  const digitalContentCount =
     metadata && metadata.content_list_contents
       ? metadata.content_list_contents.digital_content_ids.length
       : 0
-  const isEmpty = metadata && agreementCount === 0
+  const isEmpty = metadata && digitalContentCount === 0
   const lastModified =
     metadata && metadata.variant !== Variant.SMART
       ? metadata.updated_at || Date.now()
@@ -37,7 +37,7 @@ export const computeCollectionMetadataProps = (
       : false
 
   return {
-    agreementCount,
+    digitalContentCount,
     isEmpty,
     lastModified,
     contentListName,

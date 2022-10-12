@@ -94,7 +94,7 @@ export const ALBUM_PAGE = '/:handle/album/:albumName'
 export const AGREEMENT_PAGE = '/:handle/:slug'
 export const AGREEMENT_REMIXES_PAGE = '/:handle/:slug/remixes'
 export const PROFILE_PAGE = '/:handle'
-export const PROFILE_PAGE_AGREEMENTS = '/:handle/agreements'
+export const PROFILE_PAGE_AGREEMENTS = '/:handle/digitalContents'
 export const PROFILE_PAGE_ALBUMS = '/:handle/albums'
 export const PROFILE_PAGE_CONTENT_LISTS = '/:handle/contentLists'
 export const PROFILE_PAGE_REPOSTS = '/:handle/reposts'
@@ -102,7 +102,7 @@ export const PROFILE_PAGE_COLLECTIBLES = '/:handle/collectibles'
 export const PROFILE_PAGE_COLLECTIBLE_DETAILS =
   '/:handle/collectibles/:collectibleId'
 // Opaque id routes
-export const AGREEMENT_ID_PAGE = '/agreements/:id'
+export const AGREEMENT_ID_PAGE = '/digital_contents/:id'
 export const USER_ID_PAGE = '/users/:id'
 export const CONTENT_LIST_ID_PAGE = '/contentLists/:id'
 
@@ -254,15 +254,15 @@ export const findRoute = (pathname: string) => {
 }
 
 // Create full formed urls for routes.
-export const fullAgreementPage = (permalink: string) => {
+export const fullDigitalContentPage = (permalink: string) => {
   return `${BASE_URL}${permalink}`
 }
 
-export const agreementRemixesPage = (permalink: string) => {
+export const digitalContentRemixesPage = (permalink: string) => {
   return `${permalink}/remixes`
 }
-export const fullAgreementRemixesPage = (permalink: string) => {
-  return `${fullAgreementPage(permalink)}/remixes`
+export const fullDigitalContentRemixesPage = (permalink: string) => {
+  return `${fullDigitalContentPage(permalink)}/remixes`
 }
 
 export const albumPage = (handle: string, title: string, id: ID) => {

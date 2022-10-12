@@ -35,29 +35,29 @@ export const COLLECTION_CREATE_CONTENT_LIST_ID_EXISTS_ERROR =
 export const COLLECTION_POLL_CONTENT_LIST_TIMEOUT_ERROR =
   'UPLOAD/ERROR/COLLECTION_POLL_CONTENT_LIST_TIMEOUT'
 
-export const uploadAgreements = (agreements, metadata, uploadType, stems) => {
-  return { type: UPLOAD_AGREEMENTS, agreements, metadata, uploadType, stems }
+export const uploadDigitalContents = (digitalContents, metadata, uploadType, stems) => {
+  return { type: UPLOAD_AGREEMENTS, digitalContents, metadata, uploadType, stems }
 }
 
-export const uploadSingleAgreementFailed = (index) => {
+export const uploadSingleDigitalContentFailed = (index) => {
   return { type: UPLOAD_SINGLE_AGREEMENT_FAILED, index }
 }
 
-export const uploadAgreementsRequested = (agreements, metadata, uploadType, stems) => {
+export const uploadDigitalContentsRequested = (digitalContents, metadata, uploadType, stems) => {
   return {
     type: UPLOAD_AGREEMENTS_REQUESTED,
-    agreements,
+    digitalContents,
     metadata,
     uploadType,
     stems
   }
 }
 
-export const uploadAgreementsSucceeded = (id, agreementMetadatas) => {
-  return { type: UPLOAD_AGREEMENTS_SUCCEEDED, id, agreementMetadatas }
+export const uploadDigitalContentsSucceeded = (id, digitalContentMetadatas) => {
+  return { type: UPLOAD_AGREEMENTS_SUCCEEDED, id, digitalContentMetadatas }
 }
 
-export const uploadAgreementFailed = () => {
+export const uploadDigitalContentFailed = () => {
   return { type: UPLOAD_AGREEMENTS_FAILED }
 }
 
@@ -77,7 +77,7 @@ export const undoResetState = () => {
   return { type: UNDO_RESET_STATE }
 }
 
-export const toggleMultiAgreementNotification = (open = false) => {
+export const toggleMultiDigitalContentNotification = (open = false) => {
   return { type: TOGGLE_MULTI_AGREEMENT_NOTIFICATION, open }
 }
 
@@ -86,26 +86,26 @@ export const upgradeToCreatorError = (error) => ({
   error
 })
 
-export const singleAgreementUploadError = (error, phase, agreementSizeBytes) => ({
+export const singleDigitalContentUploadError = (error, phase, digitalContentSizeBytes) => ({
   type: SINGLE_AGREEMENT_UPLOAD_ERROR,
-  agreementSizeBytes,
+  digitalContentSizeBytes,
   error,
   phase
 })
 
-export const singleAgreementTimeoutError = () => ({
+export const singleDigitalContentTimeoutError = () => ({
   type: SINGLE_AGREEMENT_UPLOAD_TIMEOUT_ERROR
 })
 
-export const multiAgreementUploadError = (error, phase, numAgreements, isStem) => ({
+export const multiDigitalContentUploadError = (error, phase, numDigitalContents, isStem) => ({
   type: MULTI_AGREEMENT_UPLOAD_ERROR,
   error,
   phase,
-  numAgreements,
+  numDigitalContents,
   isStem
 })
 
-export const multiAgreementTimeoutError = () => ({
+export const multiDigitalContentTimeoutError = () => ({
   type: MULTI_AGREEMENT_TIMEOUT_ERROR
 })
 
@@ -118,12 +118,12 @@ export const contentNodeTimeoutError = () => ({
   type: COLLECTION_CONTENT_NODE_TIMEOUT_ERROR
 })
 
-export const addAgreementToChainError = (error) => ({
+export const addDigitalContentToChainError = (error) => ({
   type: COLLECTION_ADD_AGREEMENT_TO_CHAIN_ERROR,
   error
 })
 
-export const associateAgreementsError = (error) => ({
+export const associateDigitalContentsError = (error) => ({
   type: COLLECTION_ASSOCIATE_AGREEMENTS_ERROR,
   error
 })

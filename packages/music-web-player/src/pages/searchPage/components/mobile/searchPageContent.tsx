@@ -17,7 +17,7 @@ import { ReactComponent as IconBigSearch } from 'assets/img/iconBigSearch.svg'
 import { ReactComponent as IconNote } from 'assets/img/iconNote.svg'
 import { ReactComponent as IconContentLists } from 'assets/img/iconContentLists.svg'
 import { ReactComponent as IconUser } from 'assets/img/iconUser.svg'
-import { agreementsActions } from 'common/store/pages/searchResults/lineup/agreements/actions'
+import { digitalContentsActions } from 'common/store/pages/searchResults/lineup/digital_contents/actions'
 import Card from 'components/card/mobile/card'
 import Header from 'components/header/mobile/header'
 import { HeaderContext } from 'components/header/mobile/headerContextProvider'
@@ -47,7 +47,7 @@ import styles from './searchPageContent.module.css'
 const NATIVE_MOBILE = process.env.REACT_APP_NATIVE_MOBILE
 
 type SearchPageContentProps = {
-  agreements: LineupState<{}>
+  digitalContents: LineupState<{}>
   contentLists: UserCollection[]
   albums: UserCollection[]
   landlords: User[]
@@ -67,16 +67,16 @@ type SearchPageContentProps = {
     albumUids: UID[]
     landlordUids: UID[]
     contentListUids: UID[]
-    agreementUids: UID[]
+    digitalContentUids: UID[]
     searchText: string
     status: Status
-    agreements: any
+    digitalContents: any
   }
   isTagSearch: boolean
   goToRoute: (route: string) => void
 }
 
-const AgreementSearchPageMessages = {
+const DigitalContentSearchPageMessages = {
   title1: "Sorry, we couldn't find anything matching",
   title1Tag: "Sorry, we couldn't find any tags matching",
   title2: 'Please check your spelling or try broadening your search.'
@@ -94,11 +94,11 @@ const NoResults = ({
       <IconBigSearch />
       <div>
         {isTagSearch
-          ? AgreementSearchPageMessages.title1Tag
-          : AgreementSearchPageMessages.title1}
+          ? DigitalContentSearchPageMessages.title1Tag
+          : DigitalContentSearchPageMessages.title1}
       </div>
       <span>{`"${searchText}"`}</span>
-      <div>{AgreementSearchPageMessages.title2}</div>
+      <div>{DigitalContentSearchPageMessages.title2}</div>
     </div>
   </div>
 )
@@ -121,10 +121,10 @@ const SearchStatusWrapper = memo(
   }
 )
 
-const AgreementsSearchPage = ({
+const DigitalContentsSearchPage = ({
   search,
   searchText,
-  agreements,
+  digitalContents,
   dispatch,
   buffering,
   playing,
@@ -132,19 +132,19 @@ const AgreementsSearchPage = ({
   containerRef,
   isTagSearch
 }: SearchPageContentProps) => {
-  const numAgreements = Object.keys(agreements.entries).length
+  const numDigitalContents = Object.keys(digitalContents.entries).length
   const loadingStatus = (() => {
     // We need to account for the odd case where search.status === success but
-    // the agreements are still loading in (agreements.status === loading && agreements.entries === 0),
+    // the digitalContents are still loading in (digitalContents.status === loading && digitalContents.entries === 0),
     // and in this case still show a loading screen.
-    const searchAndAgreementsSuccess =
-      search.status === Status.SUCCESS && agreements.status === Status.SUCCESS
-    const searchSuccessAgreementsLoadingMore =
+    const searchAndDigitalContentsSuccess =
+      search.status === Status.SUCCESS && digitalContents.status === Status.SUCCESS
+    const searchSuccessDigitalContentsLoadingMore =
       search.status === Status.SUCCESS &&
-      agreements.status === Status.LOADING &&
-      numAgreements > 0
+      digitalContents.status === Status.LOADING &&
+      numDigitalContents > 0
 
-    if (searchAndAgreementsSuccess || searchSuccessAgreementsLoadingMore) {
+    if (searchAndDigitalContentsSuccess || searchSuccessDigitalContentsLoadingMore) {
       return Status.SUCCESS
     } else if (search.status === Status.ERROR) {
       return Status.ERROR
@@ -155,25 +155,25 @@ const AgreementsSearchPage = ({
 
   return (
     <SearchStatusWrapper status={loadingStatus}>
-      {numAgreements ? (
+      {numDigitalContents ? (
         <div className={styles.lineupContainer}>
           <Lineup
             selfLoad
-            lineup={agreements}
+            lineup={digitalContents}
             playingSource={currentQueueItem.source}
             playingUid={currentQueueItem.uid}
-            playingAgreementId={
+            playingDigitalContentId={
               currentQueueItem.digital_content && currentQueueItem.digital_content.digital_content_id
             }
             playing={playing}
             buffering={buffering}
             scrollParent={containerRef}
             loadMore={(offset: number, limit: number) =>
-              dispatch(agreementsActions.fetchLineupMetadatas(offset, limit))
+              dispatch(digitalContentsActions.fetchLineupMetadatas(offset, limit))
             }
-            playAgreement={(uid: UID) => dispatch(agreementsActions.play(uid))}
-            pauseAgreement={() => dispatch(agreementsActions.pause())}
-            actions={agreementsActions}
+            playDigitalContent={(uid: UID) => dispatch(digitalContentsActions.play(uid))}
+            pauseDigitalContent={() => dispatch(digitalContentsActions.pause())}
+            actions={digitalContentsActions}
           />
         </div>
       ) : (
@@ -291,7 +291,7 @@ const CardSearchPage = ({
 const messages = {
   title: 'More Results',
   tagSearchTitle: 'Tag Search',
-  agreementsTitle: 'Agreements',
+  digitalContentsTitle: 'DigitalContents',
   albumsTitle: 'Albums',
   contentListsTitle: 'ContentLists',
   peopleTitle: 'Profiles'
@@ -333,7 +333,7 @@ const SearchPageContent = (props: SearchPageContentProps) => {
             term: searchText,
             tab: to.toLowerCase() as
               | 'people'
-              | 'agreements'
+              | 'digitalContents'
               | 'albums'
               | 'contentLists'
           })
@@ -350,7 +350,7 @@ const SearchPageContent = (props: SearchPageContentProps) => {
           tabs: [
             {
               icon: <IconNote />,
-              text: messages.agreementsTitle,
+              text: messages.digitalContentsTitle,
               label: Tabs.AGREEMENTS
             },
             {
@@ -360,7 +360,7 @@ const SearchPageContent = (props: SearchPageContentProps) => {
             }
           ],
           elements: [
-            <AgreementsSearchPage key='tagAgreementSearch' {...props} />,
+            <DigitalContentsSearchPage key='tagDigitalContentSearch' {...props} />,
             <CardSearchPage
               key='tagUserSearch'
               {...props}
@@ -378,7 +378,7 @@ const SearchPageContent = (props: SearchPageContentProps) => {
             },
             {
               icon: <IconNote />,
-              text: messages.agreementsTitle,
+              text: messages.digitalContentsTitle,
               label: Tabs.AGREEMENTS
             },
             {
@@ -398,7 +398,7 @@ const SearchPageContent = (props: SearchPageContentProps) => {
               {...props}
               cardType={CardType.USER}
             />,
-            <AgreementsSearchPage key='agreementSearch' {...props} />,
+            <DigitalContentsSearchPage key='digitalContentSearch' {...props} />,
             <CardSearchPage
               key='albumSearch'
               {...props}

@@ -7,7 +7,7 @@ import {
 } from '@coliving/web/src/common/store/notifications/selectors'
 import type {
   RemixCosign,
-  AgreementEntity
+  DigitalContentEntity
 } from '@coliving/web/src/common/store/notifications/types'
 import { View } from 'react-native'
 
@@ -15,7 +15,7 @@ import IconRemix from 'app/assets/images/iconRemix.svg'
 import { isEqual, useSelectorWeb } from 'app/hooks/useSelectorWeb'
 import { EventNames } from 'app/types/analytics'
 import { make } from 'app/utils/analytics'
-import { getAgreementRoute } from 'app/utils/routes'
+import { getDigitalContentRoute } from 'app/utils/routes'
 
 import {
   NotificationHeader,
@@ -26,14 +26,14 @@ import {
   UserNameLink,
   ProfilePicture,
   NotificationTwitterButton
-} from '../Notification'
+} from '../notification'
 import { useDrawerNavigation } from '../useDrawerNavigation'
 
 const messages = {
   title: 'Remix Co-sign',
   cosign: 'Co-signed your Remix of',
-  shareTwitterText: (agreementTitle: string, handle: string) =>
-    `My remix of ${agreementTitle} was Co-Signed by ${handle} on @dgc-network #Coliving`
+  shareTwitterText: (digitalContentTitle: string, handle: string) =>
+    `My remix of ${digitalContentTitle} was Co-Signed by ${handle} on @dgc-network #Coliving`
 }
 
 type RemixCosignNotificationProps = {
@@ -45,41 +45,41 @@ export const RemixCosignNotification = (
 ) => {
   const { notification } = props
   const navigation = useDrawerNavigation()
-  const { childAgreementId, parentAgreementUserId } = notification
+  const { childDigitalContentId, parentDigitalContentUserId } = notification
   const user = useSelectorWeb((state) =>
     getNotificationUser(state, notification)
   )
-  // TODO: casting from EntityType to AgreementEntity here, but
+  // TODO: casting from EntityType to DigitalContentEntity here, but
   // getNotificationEntities should be smart enough based on notif type
-  const agreements = useSelectorWeb(
+  const digitalContents = useSelectorWeb(
     (state) => getNotificationEntities(state, notification),
     isEqual
-  ) as Nullable<AgreementEntity[]>
+  ) as Nullable<DigitalContentEntity[]>
 
-  const childAgreement = agreements?.find(({ digital_content_id }) => digital_content_id === childAgreementId)
-  const parentAgreement = agreements?.find(
-    ({ owner_id }) => owner_id === parentAgreementUserId
+  const childDigitalContent = digitalContents?.find(({ digital_content_id }) => digital_content_id === childDigitalContentId)
+  const parentDigitalContent = digitalContents?.find(
+    ({ owner_id }) => owner_id === parentDigitalContentUserId
   )
-  const parentAgreementTitle = parentAgreement?.title
+  const parentDigitalContentTitle = parentDigitalContent?.title
 
   const handlePress = useCallback(() => {
-    if (childAgreement) {
+    if (childDigitalContent) {
       navigation.navigate({
         native: {
           screen: 'DigitalContent',
-          params: { id: childAgreement.digital_content_id, fromNotifications: true }
+          params: { id: childDigitalContent.digital_content_id, fromNotifications: true }
         },
         web: {
-          route: getAgreementRoute(childAgreement)
+          route: getDigitalContentRoute(childDigitalContent)
         }
       })
     }
-  }, [childAgreement, navigation])
+  }, [childDigitalContent, navigation])
 
   const handleTwitterShareData = useCallback(
     (handle: string | undefined) => {
-      if (parentAgreementTitle && handle) {
-        const shareText = messages.shareTwitterText(parentAgreementTitle, handle)
+      if (parentDigitalContentTitle && handle) {
+        const shareText = messages.shareTwitterText(parentDigitalContentTitle, handle)
         const analytics = make({
           eventName: EventNames.NOTIFICATIONS_CLICK_REMIX_COSIGN_TWITTER_SHARE,
           text: shareText
@@ -88,12 +88,12 @@ export const RemixCosignNotification = (
       }
       return null
     },
-    [parentAgreementTitle]
+    [parentDigitalContentTitle]
   )
 
-  if (!user || !childAgreement || !parentAgreement) return null
+  if (!user || !childDigitalContent || !parentDigitalContent) return null
 
-  const twitterUrl = getAgreementRoute(childAgreement, true)
+  const twitterUrl = getDigitalContentRoute(childDigitalContent, true)
 
   return (
     <NotificationTile notification={notification} onPress={handlePress}>
@@ -105,7 +105,7 @@ export const RemixCosignNotification = (
         <View style={{ flex: 1 }}>
           <NotificationText>
             <UserNameLink user={user} /> {messages.cosign}{' '}
-            <EntityLink entity={parentAgreement} />
+            <EntityLink entity={parentDigitalContent} />
           </NotificationText>
         </View>
       </View>

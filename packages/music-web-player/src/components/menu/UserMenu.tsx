@@ -43,7 +43,7 @@ const Menu = (props: UserMenuProps) => {
     }
 
     const landlordPageMenuItem = {
-      text: 'Visit Landlord Page',
+      text: 'Visit Author Page',
       onClick: () => goToRoute(profilePage(handle))
     }
 

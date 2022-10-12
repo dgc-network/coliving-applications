@@ -32,7 +32,7 @@ import {
   clearColivingAccountUser
 } from 'services/localStorage'
 import { recordIP } from 'services/colivingBackend/recordIP'
-import { createUserBankIfNeeded } from 'services/colivingBackend/wlive'
+import { createUserBankIfNeeded } from 'services/colivingBackend/wei_digitalcoin'
 import fingerprintClient from 'services/fingerprint/fingerprintClient'
 import { SignedIn } from 'services/nativeMobileInterface/lifecycle'
 import { remoteConfigInstance } from 'services/remoteConfig/remoteConfigInstance'
@@ -86,7 +86,7 @@ function* onFetchAccount(account) {
     // Set analytics user context
     const traits = {
       isVerified: account.is_verified,
-      agreementCount: account.digital_content_count
+      digitalContentCount: account.digital_content_count
     }
     yield put(identify(account.handle, traits))
     setSentryUser(account, traits)

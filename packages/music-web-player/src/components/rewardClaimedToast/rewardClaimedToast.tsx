@@ -14,7 +14,7 @@ import { LIVE_PAGE } from 'utils/route'
 import styles from './RewardClaimedToast.module.css'
 
 const messages = {
-  challengeCompleted: 'You’ve Completed an $LIVE Rewards Challenge!',
+  challengeCompleted: 'You’ve Completed an $DGCO Rewards Challenge!',
   seeMore: 'See more'
 }
 

@@ -111,7 +111,7 @@ Draggable.propTypes = {
     'library-content-list',
     'content-list-folder'
   ]),
-  id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]), // One of agreementId, collectionId, userId
+  id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]), // One of digitalContentId, collectionId, userId
   children: PropTypes.element,
   onDrag: PropTypes.func,
   onDrop: PropTypes.func

@@ -48,7 +48,7 @@ export const parseUserRoute = (route: string): UserRouteParams => {
   if (profilePageTabMatch) {
     const { handle, tab } = profilePageTabMatch.params
     if (
-      tab === 'agreements' ||
+      tab === 'digitalContents' ||
       tab === 'albums' ||
       tab === 'contentLists' ||
       tab === 'reposts' ||

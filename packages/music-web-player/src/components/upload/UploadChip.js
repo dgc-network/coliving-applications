@@ -8,7 +8,7 @@ import styles from './UploadChip.module.css'
 
 const messages = {
   digital_content: 'Upload DigitalContent',
-  aAgreement: 'Upload A DigitalContent',
+  aDigitalContent: 'Upload A DigitalContent',
   album: 'Upload New Album',
   contentList: 'Create New ContentList',
   landlordContentList: 'Upload New ContentList',
@@ -28,7 +28,7 @@ const UploadChip = ({ type, variant, isLandlord = false, isFirst, onClick }) => 
   let text
   switch (type) {
     case 'digital_content':
-      text = variant === 'nav' ? messages.digital_content : messages.aAgreement
+      text = variant === 'nav' ? messages.digital_content : messages.aDigitalContent
       break
     case 'album':
       text = isFirst ? messages.firstAlbum : messages.album
@@ -63,7 +63,7 @@ UploadChip.propTypes = {
   type: PropTypes.oneOf(['digital_content', 'album', 'contentList']).isRequired,
   // nav: For display in a nav-like column
   // card: Looks like a 'Card'
-  // tile: Looks like a 'AgreementTile'
+  // tile: Looks like a 'DigitalContentTile'
   variant: PropTypes.oneOf(['nav', 'card', 'tile']).isRequired,
   // Is this upload the user's first of this type
   isFirst: PropTypes.bool,

@@ -7,8 +7,8 @@ import { debounce } from 'lodash'
 import Input from 'components/dataEntry/input'
 import DynamicImage from 'components/dynamicImage/dynamicImage'
 import UserBadges from 'components/userBadges/userBadges'
-import { useAgreementCoverArt } from 'hooks/useAgreementCoverArt'
-import { fullAgreementPage } from 'utils/route'
+import { useDigitalContentCoverArt } from 'hooks/useDigitalContentCoverArt'
+import { fullDigitalContentPage } from 'utils/route'
 import { withNullGuard } from 'utils/withNullGuard'
 
 import styles from './RemixSettingsModal.module.css'
@@ -24,18 +24,18 @@ const messages = {
   by: 'by'
 }
 
-type AgreementInfoProps = {
+type DigitalContentInfoProps = {
   digital_content: DigitalContent | null
   user: User | null
 }
 
 const g = withNullGuard(
-  ({ digital_content, user, ...p }: AgreementInfoProps) =>
+  ({ digital_content, user, ...p }: DigitalContentInfoProps) =>
     digital_content && user && { ...p, digital_content, user }
 )
 
-const AgreementInfo = g(({ digital_content, user }) => {
-  const image = useAgreementCoverArt(
+const DigitalContentInfo = g(({ digital_content, user }) => {
+  const image = useDigitalContentCoverArt(
     digital_content.digital_content_id,
     digital_content._cover_art_sizes,
     SquareSizes.SIZE_150_BY_150
@@ -59,9 +59,9 @@ const AgreementInfo = g(({ digital_content, user }) => {
 
 type RemixSettingsModalProps = {
   isOpen: boolean
-  onClose: (agreementId: ID | null) => void
+  onClose: (digitalContentId: ID | null) => void
   onEditUrl: (url: string) => void
-  isInvalidAgreement: boolean
+  isInvalidDigitalContent: boolean
   digital_content: DigitalContent | null
   user: User | null
 }
@@ -72,7 +72,7 @@ const RemixSettingsModal = ({
   onEditUrl,
   digital_content,
   user,
-  isInvalidAgreement
+  isInvalidDigitalContent
 }: RemixSettingsModalProps) => {
   const inputRef = useRef<HTMLInputElement>(null)
 
@@ -80,7 +80,7 @@ const RemixSettingsModal = ({
 
   useEffect(() => {
     if (url === null && digital_content && isOpen) {
-      setUrl(fullAgreementPage(digital_content.permalink))
+      setUrl(fullDigitalContentPage(digital_content.permalink))
     }
   }, [isOpen, digital_content, url, setUrl])
 
@@ -110,9 +110,9 @@ const RemixSettingsModal = ({
   )
 
   const onCloseModal = useCallback(() => {
-    const agreementId = url && digital_content && !isInvalidAgreement ? digital_content.digital_content_id : null
-    onClose(agreementId)
-  }, [onClose, digital_content, isInvalidAgreement, url])
+    const digitalContentId = url && digital_content && !isInvalidDigitalContent ? digital_content.digital_content_id : null
+    onClose(digitalContentId)
+  }, [onClose, digital_content, isInvalidDigitalContent, url])
 
   return (
     <Modal
@@ -142,10 +142,10 @@ const RemixSettingsModal = ({
         />
         {url && (
           <div className={styles.bottom}>
-            {isInvalidAgreement ? (
+            {isInvalidDigitalContent ? (
               <div className={styles.error}>{messages.error}</div>
             ) : (
-              <AgreementInfo user={user} digital_content={digital_content} />
+              <DigitalContentInfo user={user} digital_content={digital_content} />
             )}
           </div>
         )}

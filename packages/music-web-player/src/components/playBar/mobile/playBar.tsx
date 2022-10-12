@@ -15,15 +15,15 @@ import { makeGetCurrent } from 'common/store/queue/selectors'
 import { pause, play } from 'common/store/queue/slice'
 import {
   recordListen,
-  saveAgreement,
-  unsaveAgreement
-} from 'common/store/social/agreements/actions'
+  saveDigitalContent,
+  unsaveDigitalContent
+} from 'common/store/social/digital_contents/actions'
 import FavoriteButton from 'components/altButton/favoriteButton'
 import CoSign, { Size } from 'components/coSign/coSign'
 import PlayButton from 'components/playBar/playButton'
 import TrackingBar from 'components/playBar/trackingBar'
 import { PlayButtonStatus } from 'components/playBar/types'
-import { useAgreementCoverArt } from 'hooks/useAgreementCoverArt'
+import { useDigitalContentCoverArt } from 'hooks/useDigitalContentCoverArt'
 import { make, useRecord } from 'store/analytics/actions'
 import {
   getAudio,
@@ -78,7 +78,7 @@ const PlayBar = ({
   })
 
   const image =
-    (useAgreementCoverArt(
+    (useDigitalContentCoverArt(
       digital_content ? digital_content.digital_content_id : null,
       digital_content ? digital_content._cover_art_sizes : null,
       SquareSizes.SIZE_150_BY_150
@@ -179,7 +179,7 @@ const PlayBar = ({
             )}
             <div className={styles.title}>{title}</div>
             <div className={styles.separator}>•</div>
-            <div className={styles.landlord}>{name}</div>
+            <div className={styles.author}>{name}</div>
           </div>
           <div className={styles.play}>
             <PlayButton
@@ -215,10 +215,10 @@ function mapDispatchToProps(dispatch: Dispatch) {
     pause: () => {
       dispatch(pause({}))
     },
-    save: (agreementId: ID) => dispatch(saveAgreement(agreementId, FavoriteSource.PLAYBAR)),
-    unsave: (agreementId: ID) =>
-      dispatch(unsaveAgreement(agreementId, FavoriteSource.PLAYBAR)),
-    recordListen: (agreementId: ID) => dispatch(recordListen(agreementId))
+    save: (digitalContentId: ID) => dispatch(saveDigitalContent(digitalContentId, FavoriteSource.PLAYBAR)),
+    unsave: (digitalContentId: ID) =>
+      dispatch(unsaveDigitalContent(digitalContentId, FavoriteSource.PLAYBAR)),
+    recordListen: (digitalContentId: ID) => dispatch(recordListen(digitalContentId))
   }
 }
 

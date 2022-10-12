@@ -10,7 +10,7 @@ type FilterInputProps = {
 }
 
 // Input component used for filtering content,
-// e.g. filtering agreements on the favorites page.
+// e.g. filtering digitalContents on the favorites page.
 const FilterInput = ({ placeholder, onChange, value }: FilterInputProps) => {
   return (
     <div className={styles.filterContainer}>

@@ -9,8 +9,8 @@ import { useHistory } from 'react-router-dom'
 import {
   ButtonState,
   ButtonType,
-  useDownloadAgreementButtons
-} from 'common/hooks/useDownloadAgreementButtons'
+  useDownloadDigitalContentButtons
+} from 'common/hooks/useDownloadDigitalContentButtons'
 import { toast } from 'common/store/ui/toast/slice'
 import LoadingSpinner from 'components/loadingSpinner/loadingSpinner'
 import Tooltip from 'components/tooltip/tooltip'
@@ -32,10 +32,10 @@ export type DownloadButtonProps = {
 }
 
 export const messages = {
-  downloadableAgreement: 'Download this DigitalContent',
+  downloadableDigitalContent: 'Download this DigitalContent',
   downloadableStem: 'Download this source file',
-  followToDownload: 'Must follow landlord to download',
-  processingAgreement: 'Processing',
+  followToDownload: 'Must follow author to download',
+  processingDigitalContent: 'Processing',
   processingStem: 'Uploading',
   addDownloadPrefix: (label: string) => `Download ${label}`
 }
@@ -56,7 +56,7 @@ const DownloadButton = ({
       case ButtonState.PROCESSING:
         return type === ButtonType.STEM
           ? messages.processingStem
-          : messages.processingAgreement
+          : messages.processingDigitalContent
       case ButtonState.REQUIRES_FOLLOW:
         return messages.followToDownload
       case ButtonState.LOG_IN_REQUIRED:
@@ -65,7 +65,7 @@ const DownloadButton = ({
           case ButtonType.STEM:
             return messages.downloadableStem
           case ButtonType.AGREEMENT:
-            return messages.downloadableAgreement
+            return messages.downloadableDigitalContent
         }
     }
   }, [state, type])
@@ -125,12 +125,12 @@ const DownloadButton = ({
 }
 
 type DownloadButtonsProps = {
-  agreementId: ID
+  digitalContentId: ID
   onDownload: (
-    agreementId: ID,
+    digitalContentId: ID,
     cid: string,
     category?: string,
-    parentAgreementId?: ID
+    parentDigitalContentId?: ID
   ) => void
   isOwner: boolean
   following: boolean
@@ -139,7 +139,7 @@ type DownloadButtonsProps = {
 }
 
 const DownloadButtons = ({
-  agreementId,
+  digitalContentId,
   isOwner,
   following,
   onDownload,
@@ -156,12 +156,12 @@ const DownloadButtons = ({
     dispatch(showRequiresAccountModal())
   }, [dispatch, pathname])
 
-  const buttons = useDownloadAgreementButtons({
+  const buttons = useDownloadDigitalContentButtons({
     following,
     isOwner,
     onDownload,
     onNotLoggedInClick,
-    agreementId,
+    digitalContentId,
     useSelector
   })
   const shouldHide = buttons.length === 0

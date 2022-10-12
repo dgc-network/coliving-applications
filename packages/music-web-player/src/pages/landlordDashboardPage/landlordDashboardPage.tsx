@@ -14,8 +14,8 @@ import { formatCount } from 'common/utils/formatUtil'
 import Header from 'components/header/desktop/header'
 import LoadingSpinner from 'components/loadingSpinner/loadingSpinner'
 import Page from 'components/page/page'
-import TableOptionsButton from 'components/agreementsTable/tableOptionsButton'
-import AgreementsTable, { alphaSortFn } from 'components/agreementsTable/agreementsTable'
+import TableOptionsButton from 'components/digitalContentsTable/tableOptionsButton'
+import DigitalContentsTable, { alphaSortFn } from 'components/digitalContentsTable/digitalContentsTable'
 import useTabs, { useTabRecalculator } from 'hooks/useTabs/useTabs'
 import { AppState } from 'store/types'
 import lazyWithPreload from 'utils/lazyWithPreload'
@@ -61,7 +61,7 @@ const getNumericColumn = (field: any, overrideTitle?: string) => {
   }
 }
 
-type DataSourceAgreement = DigitalContent & {
+type DataSourceDigitalContent = DigitalContent & {
   key: string
   name: string
   date: string
@@ -71,16 +71,16 @@ type DataSourceAgreement = DigitalContent & {
   plays: number
 }
 
-type AgreementsTableProps = {
+type DigitalContentsTableProps = {
   onClickRow: (record: any) => void
-  unlistedDataSource: DataSourceAgreement[]
-  listedDataSource: DataSourceAgreement[]
+  unlistedDataSource: DataSourceDigitalContent[]
+  listedDataSource: DataSourceDigitalContent[]
   account: User
 }
 
 export const messages = {
-  publicAgreementsTabTitle: 'PUBLIC AGREEMENTS',
-  unlistedAgreementsTabTitle: 'HIDDEN AGREEMENTS',
+  publicDigitalContentsTabTitle: 'PUBLIC AGREEMENTS',
+  unlistedDigitalContentsTabTitle: 'HIDDEN AGREEMENTS',
   thisYear: 'This Year'
 }
 
@@ -93,10 +93,10 @@ const makeColumns = (account: User, isUnlisted: boolean) => {
       width: 350,
       className: cn(styles.col, 'colName'),
       sorter: (a: any, b: any) => alphaSortFn(a.name, b.name),
-      render: (val: string, record: DataSourceAgreement) => (
-        <div className={styles.agreementName}>
+      render: (val: string, record: DataSourceDigitalContent) => (
+        <div className={styles.digitalContentName}>
           {val}
-          {record.is_delete ? ' [Deleted By Landlord]' : ''}
+          {record.is_delete ? ' [Deleted By Author]' : ''}
         </div>
       )
     },
@@ -132,14 +132,14 @@ const makeColumns = (account: User, isUnlisted: boolean) => {
             includeEdit={false}
             handle={account.handle}
             onClick={(e: any) => e.stopPropagation()}
-            agreementId={val.digital_content_id}
+            digitalContentId={val.digital_content_id}
             isFavorited={val.has_current_user_saved}
             isOwner
             isLandlordPick={account._landlord_pick === val.digital_content_id}
             isUnlisted={record.is_unlisted}
             index={index}
-            agreementTitle={val.name}
-            agreementPermalink={val.permalink}
+            digitalContentTitle={val.name}
+            digitalContentPermalink={val.permalink}
             hiddenUntilHover={false}
             includeEmbed={!isUnlisted && !record.is_delete}
             includeAddToContentList={!isUnlisted}
@@ -153,23 +153,23 @@ const makeColumns = (account: User, isUnlisted: boolean) => {
   return [...columns, overflowColumn]
 }
 
-const AgreementsTableContainer = ({
+const DigitalContentsTableContainer = ({
   onClickRow,
   listedDataSource,
   unlistedDataSource,
   account
-}: AgreementsTableProps) => {
+}: DigitalContentsTableProps) => {
   const tabRecalculator = useTabRecalculator()
 
   const tabHeaders = useMemo(
     () => [
       {
-        text: messages.publicAgreementsTabTitle,
-        label: messages.publicAgreementsTabTitle
+        text: messages.publicDigitalContentsTabTitle,
+        label: messages.publicDigitalContentsTabTitle
       },
       {
-        text: messages.unlistedAgreementsTabTitle,
-        label: messages.unlistedAgreementsTabTitle
+        text: messages.unlistedDigitalContentsTabTitle,
+        label: messages.unlistedDigitalContentsTabTitle
       }
     ],
     []
@@ -181,12 +181,12 @@ const AgreementsTableContainer = ({
         key='listed'
         className={cn(styles.sectionContainer, styles.tabBodyWrapper)}
       >
-        <AgreementsTable
+        <DigitalContentsTable
           dataSource={listedDataSource}
           limit={5}
           columns={makeColumns(account, false)}
           onClickRow={onClickRow}
-          didToggleShowAgreements={() => {
+          didToggleShowDigitalContents={() => {
             tabRecalculator.recalculate()
           }}
           animateTransitions={false}
@@ -196,12 +196,12 @@ const AgreementsTableContainer = ({
         key='unlisted'
         className={cn(styles.sectionContainer, styles.tabBodyWrapper)}
       >
-        <AgreementsTable
+        <DigitalContentsTable
           dataSource={unlistedDataSource}
           limit={5}
           columns={makeColumns(account, true)}
           onClickRow={onClickRow}
-          didToggleShowAgreements={() => tabRecalculator.recalculate()}
+          didToggleShowDigitalContents={() => tabRecalculator.recalculate()}
           animateTransitions={false}
         />
       </div>
@@ -240,7 +240,7 @@ export class LandlordDashboardPage extends Component<
   NonNullable<ReturnType<typeof mapper>>
 > {
   state = {
-    selectedAgreement: -1 // all agreements
+    selectedDigitalContent: -1 // all digitalContents
   }
 
   componentDidMount() {
@@ -249,8 +249,8 @@ export class LandlordDashboardPage extends Component<
   }
 
   componentDidUpdate() {
-    const agreementCount = this.props.account?.digital_content_count || 0
-    if (!(agreementCount > 0)) {
+    const digitalContentCount = this.props.account?.digital_content_count || 0
+    if (!(digitalContentCount > 0)) {
       this.props.goToRoute(TRENDING_PAGE)
     }
   }
@@ -259,8 +259,8 @@ export class LandlordDashboardPage extends Component<
     this.props.resetDashboard()
   }
 
-  formatMetadata(agreementMetadatas: DigitalContent[]): DataSourceAgreement[] {
-    return agreementMetadatas
+  formatMetadata(digitalContentMetadatas: DigitalContent[]): DataSourceDigitalContent[] {
+    return digitalContentMetadatas
       .map((metadata, i) => ({
         ...metadata,
         key: `${metadata.title}_${metadata.dateListened}_${i}`,
@@ -280,8 +280,8 @@ export class LandlordDashboardPage extends Component<
     goToRoute(record.permalink)
   }
 
-  onSetAgreementOption = (agreementId: ID) => {
-    this.setState({ selectedAgreement: agreementId })
+  onSetDigitalContentOption = (digitalContentId: ID) => {
+    this.setState({ selectedDigitalContent: digitalContentId })
   }
 
   onSetYearOption = (year: string) => {
@@ -296,19 +296,19 @@ export class LandlordDashboardPage extends Component<
       end = start.clone().add(1, 'year')
     }
     this.props.fetchDashboardListenData(
-      this.props.agreements.map((t: { digital_content_id: any }) => t.digital_content_id),
+      this.props.digitalContents.map((t: { digital_content_id: any }) => t.digital_content_id),
       start.toISOString(),
       end.toISOString()
     )
   }
 
   renderCreatorContent() {
-    const { account, listenData, agreements, unlistedAgreements, stats, isMatrix } =
+    const { account, listenData, digitalContents, unlistedDigitalContents, stats, isMatrix } =
       this.props
-    const agreementCount = this.props.account?.digital_content_count || 0
-    if (!account || !(agreementCount > 0)) return null
+    const digitalContentCount = this.props.account?.digital_content_count || 0
+    if (!account || !(digitalContentCount > 0)) return null
 
-    const { selectedAgreement } = this.state
+    const { selectedDigitalContent } = this.state
 
     const statTiles: ReactNode[] = []
     each(stats, (stat, title) =>
@@ -316,15 +316,15 @@ export class LandlordDashboardPage extends Component<
     )
 
     const chartData =
-      selectedAgreement === -1 ? listenData.all : listenData[selectedAgreement]
+      selectedDigitalContent === -1 ? listenData.all : listenData[selectedDigitalContent]
 
-    const chartAgreements = agreements.map((digital_content: any) => ({
+    const chartDigitalContents = digitalContents.map((digital_content: any) => ({
       id: digital_content.digital_content_id,
       name: digital_content.title
     }))
 
-    const listedDataSource = this.formatMetadata(agreements)
-    const unlistedDataSource = this.formatMetadata(unlistedAgreements)
+    const listedDataSource = this.formatMetadata(digitalContents)
+    const unlistedDataSource = this.formatMetadata(unlistedDigitalContents)
     return (
       <>
         <div className={styles.sectionContainer}>
@@ -332,10 +332,10 @@ export class LandlordDashboardPage extends Component<
             <TotalPlaysChart
               data={chartData}
               isMatrix={isMatrix}
-              agreements={chartAgreements}
-              selectedAgreement={selectedAgreement}
+              digitalContents={chartDigitalContents}
+              selectedDigitalContent={selectedDigitalContent}
               onSetYearOption={this.onSetYearOption}
-              onSetAgreementOption={this.onSetAgreementOption}
+              onSetDigitalContentOption={this.onSetDigitalContentOption}
               accountCreatedAt={account.created_at}
             />
           </Suspense>
@@ -343,8 +343,8 @@ export class LandlordDashboardPage extends Component<
         <div className={cn(styles.sectionContainer, styles.statsContainer)}>
           {statTiles}
         </div>
-        <div className={styles.agreementsTableWrapper}>
-          <AgreementsTableContainer
+        <div className={styles.digitalContentsTableWrapper}>
+          <DigitalContentsTableContainer
             onClickRow={this.onClickRow}
             listedDataSource={listedDataSource}
             unlistedDataSource={unlistedDataSource}
@@ -409,8 +409,8 @@ const makeMapStateToProps = () => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   fetchDashboard: () => dispatch(fetchDashboard()),
-  fetchDashboardListenData: (agreementIds: ID[], start: string, end: string) =>
-    dispatch(fetchDashboardListenData(agreementIds, start, end, 'month')),
+  fetchDashboardListenData: (digitalContentIds: ID[], start: string, end: string) =>
+    dispatch(fetchDashboardListenData(digitalContentIds, start, end, 'month')),
   resetDashboard: () => dispatch(resetDashboard()),
   goToRoute: (route: string) => dispatch(pushRoute(route))
 })

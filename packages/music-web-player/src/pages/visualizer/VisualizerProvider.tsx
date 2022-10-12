@@ -15,23 +15,23 @@ import { MountPlacement, ComponentPlacement } from 'components/types'
 import { getTheme } from 'common/store/ui/theme/selectors'
 import { shouldShowDark } from 'utils/theme/theme'
 import { profilePage } from 'utils/route'
-import { make, AgreementEvent } from 'store/analytics/actions'
+import { make, DigitalContentEvent } from 'store/analytics/actions'
 import { Name } from '@coliving/common'
 import { DigitalContent } from '@coliving/common'
 import { SquareSizes } from '@coliving/common'
 import DynamicImage from 'components/dynamicImage/dynamicImage'
-import PlayingAgreementInfo from 'components/playBar/desktop/components/playingAgreementInfo'
+import PlayingDigitalContentInfo from 'components/playBar/desktop/components/playingDigitalContentInfo'
 import AudioStream from 'audio/audioStream'
 import { webglSupported } from './utils'
-import { getDominantColorsByAgreement } from 'common/store/averageColor/slice'
+import { getDominantColorsByDigitalContent } from 'common/store/averageColor/slice'
 import { ReactComponent as IconRemove } from 'assets/img/iconRemove.svg'
 import { ReactComponent as ColivingLogoHorizontal } from 'assets/img/colivingLogoHorizontal.svg'
-import { useAgreementCoverArt } from 'hooks/useAgreementCoverArt'
+import { useDigitalContentCoverArt } from 'hooks/useDigitalContentCoverArt'
 
 const Artwork = ({ digital_content }: { digital_content?: DigitalContent | null }) => {
   const { digital_content_id, _cover_art_sizes } = digital_content || {}
 
-  const image = useAgreementCoverArt(
+  const image = useDigitalContentCoverArt(
     digital_content_id || -1,
     _cover_art_sizes || null,
     SquareSizes.SIZE_480_BY_480
@@ -127,7 +127,7 @@ const Visualizer = ({
     }
   }, [fadeVisualizer])
 
-  const goToAgreementPage = useCallback(() => {
+  const goToDigitalContentPage = useCallback(() => {
     const { digital_content, user } = currentQueueItem
     if (digital_content && user) {
       goToRoute(digital_content.permalink)
@@ -141,26 +141,26 @@ const Visualizer = ({
     }
   }, [currentQueueItem])
 
-  const renderAgreementInfo = () => {
+  const renderDigitalContentInfo = () => {
     const { uid, digital_content, user } = currentQueueItem
     const dominantColor = dominantColors
       ? dominantColors[0]
       : { r: 0, g: 0, b: 0 }
     return digital_content && user && uid ? (
-      <div className={styles.agreementInfoWrapper}>
-        <PlayingAgreementInfo
+      <div className={styles.digitalContentInfoWrapper}>
+        <PlayingDigitalContentInfo
           profilePictureSizes={user._profile_picture_sizes}
-          agreementId={digital_content.digital_content_id}
+          digitalContentId={digital_content.digital_content_id}
           isOwner={digital_content.owner_id === user.user_id}
-          agreementTitle={digital_content.title}
-          agreementPermalink={digital_content.permalink}
+          digitalContentTitle={digital_content.title}
+          digitalContentPermalink={digital_content.permalink}
           landlordName={user.name}
           landlordHandle={user.handle}
           landlordUserId={user.user_id}
           isVerified={user.is_verified}
-          isAgreementUnlisted={digital_content.is_unlisted}
-          onClickAgreementTitle={() => {
-            goToAgreementPage()
+          isDigitalContentUnlisted={digital_content.is_unlisted}
+          onClickDigitalContentTitle={() => {
+            goToDigitalContentPage()
             onClose()
           }}
           onClickLandlordName={() => {
@@ -172,7 +172,7 @@ const Visualizer = ({
         />
       </div>
     ) : (
-      <div className={styles.emptyAgreementInfoWrapper}></div>
+      <div className={styles.emptyDigitalContentInfoWrapper}></div>
     )
   }
 
@@ -195,12 +195,12 @@ const Visualizer = ({
             [styles.playing]: digital_content
           })}
           onClick={() => {
-            goToAgreementPage()
+            goToDigitalContentPage()
             onClose()
           }}>
           <Artwork digital_content={digital_content} />
         </div>
-        {renderAgreementInfo()}
+        {renderDigitalContentInfo()}
       </div>
       <Toast
         useCaret={false}
@@ -223,7 +223,7 @@ const makeMapStateToProps = () => {
       digitalcoin: getAudio(state),
       playing: getPlaying(state),
       theme: getTheme(state),
-      dominantColors: getDominantColorsByAgreement(state, {
+      dominantColors: getDominantColorsByDigitalContent(state, {
         digital_content: currentQueueItem.digital_content
       })
     }
@@ -233,12 +233,12 @@ const makeMapStateToProps = () => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   recordOpen: () => {
-    const agreementEvent: AgreementEvent = make(Name.VISUALIZER_OPEN, {})
-    dispatch(agreementEvent)
+    const digitalContentEvent: DigitalContentEvent = make(Name.VISUALIZER_OPEN, {})
+    dispatch(digitalContentEvent)
   },
   recordClose: () => {
-    const agreementEvent: AgreementEvent = make(Name.VISUALIZER_CLOSE, {})
-    dispatch(agreementEvent)
+    const digitalContentEvent: DigitalContentEvent = make(Name.VISUALIZER_CLOSE, {})
+    dispatch(digitalContentEvent)
   },
   goToRoute: (route: string) => dispatch(pushRoute(route))
 })

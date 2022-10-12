@@ -3,7 +3,7 @@ import { ComponentType, useCallback, useState } from 'react'
 import { Name, Nullable } from '@coliving/common'
 import { useDispatch } from 'react-redux'
 
-import { useUIAudio } from 'common/hooks/useUILive'
+import { useUIAudio } from 'common/hooks/useUIDigitalcoin'
 import { getNotificationUser } from 'common/store/notifications/selectors'
 import { TipReceive } from 'common/store/notifications/types'
 import {
@@ -16,7 +16,7 @@ import { make } from 'store/analytics/actions'
 import { useSelector } from 'utils/reducer'
 
 import styles from './TipReceivedNotification.module.css'
-import { LiveText } from './components/liveText'
+import { LiveText } from './components/digitalcoinText'
 import { NotificationBody } from './components/notificationBody'
 import { NotificationFooter } from './components/notificationFooter'
 import { NotificationHeader } from './components/notificationHeader'
@@ -35,11 +35,11 @@ const reactionList: [ReactionTypes, ComponentType<ReactionProps>][] =
 const messages = {
   title: 'You Received a Tip!',
   sent: 'sent you a tip of',
-  digitalcoin: '$LIVE',
+  digitalcoin: '$DGCO',
   sayThanks: 'Say Thanks With a Reaction',
   reactionSent: 'Reaction Sent!',
   twitterShare: (senderHandle: string, amount: number) =>
-    `Thanks ${senderHandle} for the ${amount} $LIVE tip on @dgc-network! #Coliving #LIVETip`
+    `Thanks ${senderHandle} for the ${amount} $DGCO tip on @dgc-network! #Coliving #LIVETip`
 }
 
 type TipReceivedNotificationProps = {

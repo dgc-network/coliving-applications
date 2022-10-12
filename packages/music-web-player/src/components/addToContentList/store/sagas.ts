@@ -7,7 +7,7 @@ import { requiresAccount } from 'utils/sagaHelpers'
 
 function* handleRequestOpen(action: ReturnType<typeof actions.requestOpen>) {
   yield put(fetchSavedContentLists())
-  yield put(actions.open(action.agreementId, action.agreementTitle))
+  yield put(actions.open(action.digitalContentId, action.digitalContentTitle))
   yield put(setVisibility({ modal: 'AddToContentList', visible: true }))
 }
 

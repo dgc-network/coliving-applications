@@ -8,22 +8,22 @@ import { useModalState } from 'common/hooks/useModalState'
 import {
   setTrendingRewardsModalType,
   TrendingRewardsModalType
-} from 'common/store/pages/liveRewards/slice'
+} from 'common/store/pages/digitalcoinRewards/slice'
 import { isMobile } from 'utils/clientUtil'
 
 import styles from './rewardsBanner.module.css'
 
 const messages = {
-  rewards: '$LIVE REWARDS',
-  agreementsDescription: 'TOP 5 AGREEMENTS EACH WEEK WIN $LIVE',
-  contentListsDescription: 'TOP 5 CONTENT_LISTS EACH WEEK WIN $LIVE',
-  undergroundDescription: 'TOP 5 AGREEMENTS EACH WEEK WIN $LIVE',
+  rewards: '$DGCO REWARDS',
+  digitalContentsDescription: 'TOP 5 AGREEMENTS EACH WEEK WIN $DGCO',
+  contentListsDescription: 'TOP 5 CONTENT_LISTS EACH WEEK WIN $DGCO',
+  undergroundDescription: 'TOP 5 AGREEMENTS EACH WEEK WIN $DGCO',
   learnMore: 'LEARN MORE'
 }
 
 const messageMap = {
-  agreements: {
-    description: messages.agreementsDescription
+  digitalContents: {
+    description: messages.digitalContentsDescription
   },
   contentLists: {
     description: messages.contentListsDescription
@@ -34,7 +34,7 @@ const messageMap = {
 }
 
 type RewardsBannerProps = {
-  bannerType: 'agreements' | 'contentLists' | 'underground'
+  bannerType: 'digitalContents' | 'contentLists' | 'underground'
 }
 
 const useHandleBannerClick = () => {

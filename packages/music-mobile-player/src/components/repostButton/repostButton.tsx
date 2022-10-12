@@ -2,8 +2,8 @@ import { useMemo } from 'react'
 
 import { StyleSheet } from 'react-native'
 
-import IconRepostOffLight from 'app/assets/animations/iconRepostAgreementTileOffLight.json'
-import IconRepostOnLight from 'app/assets/animations/iconRepostAgreementTileOnLight.json'
+import IconRepostOffLight from 'app/assets/animations/iconRepostDigitalContentTileOffLight.json'
+import IconRepostOnLight from 'app/assets/animations/iconRepostDigitalContentTileOnLight.json'
 import type { AnimatedButtonProps } from 'app/components/core'
 import { AnimatedButton } from 'app/components/core'
 import { colorize } from 'app/utils/colorizeLottie'

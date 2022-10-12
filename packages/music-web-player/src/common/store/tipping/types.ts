@@ -5,7 +5,7 @@ import {
   Supporting,
   UserTip,
   User,
-  StringLive,
+  StringDigitalcoin,
   Nullable
 } from '@coliving/common'
 
@@ -49,7 +49,7 @@ export type TippingState = {
   send: {
     status: Nullable<TippingSendStatus>
     user: Nullable<User>
-    amount: StringLive
+    amount: StringDigitalcoin
     error: Nullable<string>
     source: 'profile' | 'feed'
   }

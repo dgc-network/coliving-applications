@@ -1,7 +1,7 @@
 import {
   UID,
   LineupState,
-  LineupStateAgreement,
+  LineupStateDigitalContent,
   Order,
   Status
 } from '@coliving/common'
@@ -39,8 +39,8 @@ export const initialLineupState = {
   inView: false,
   // Boolean if the lineup should remove duplicate content in entries
   dedupe: false,
-  // Boolean if the lineup fetch call pagination includes deleted agreements/collections
-  // e.g. This should be true if we request 10 agreements but only get 9 back because
+  // Boolean if the lineup fetch call pagination includes deleted digitalContents/collections
+  // e.g. This should be true if we request 10 digitalContents but only get 9 back because
   // one is deleted
   // - Used to know if the lineup should stop fetching more content
   containsDeleted: true,
@@ -61,7 +61,7 @@ type FetchLineupMetadatasRequestedAction = {
 
 type FetchLineupMetadatasSucceededAction<T> = {
   type: typeof FETCH_LINEUP_METADATAS_SUCCEEDED
-  entries: LineupStateAgreement<T>[]
+  entries: LineupStateDigitalContent<T>[]
   deleted: number
   nullCount: number
   limit: number
@@ -79,7 +79,7 @@ type UpdateLineupOrderAction = {
 
 type AddAction<T> = {
   type: typeof ADD
-  entry: LineupStateAgreement<T>
+  entry: LineupStateDigitalContent<T>
 }
 
 type RemoveAction = {
@@ -135,7 +135,7 @@ export const actionsMap = {
     newState.hasMore =
       action.entries.length + action.deleted >= action.limit - action.offset
 
-    // If the lineup does not fetch deleted agreements and there are missing agreements
+    // If the lineup does not fetch deleted digitalContents and there are missing digitalContents
     // in the response (indicated by 'deleted' count), then there is no more content
     if (
       !newState.containsDeleted &&

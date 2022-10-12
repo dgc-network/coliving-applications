@@ -7,8 +7,8 @@ import * as uploadActions from './actions'
 const BYTES_PER_MB = 1000 * 1000
 
 const errorsWithoutRedirect = new Set([
-  // Multiagreement shouldn't redirect b/c
-  // some agreements are better than none
+  // MultidigitalContent shouldn't redirect b/c
+  // some digitalContents are better than none
   uploadActions.MULTI_AGREEMENT_TIMEOUT_ERROR,
   uploadActions.MULTI_AGREEMENT_UPLOAD_ERROR,
 
@@ -27,9 +27,9 @@ const errorsWithoutRedirect = new Set([
 type UploadErrorActions = {
   type: string
   error: string
-  agreementSizeBytes?: number
+  digitalContentSizeBytes?: number
   phase?: string
-  numAgreements?: number
+  numDigitalContents?: number
   isStem?: boolean
 }
 
@@ -41,17 +41,17 @@ function* handleUploadError(action: UploadErrorActions) {
     error?: string
     fileSize?: string
     phase?: string
-    numAgreements?: number
+    numDigitalContents?: number
     isStem?: boolean
   } = { error: action.error }
   switch (action.type) {
     case uploadActions.SINGLE_AGREEMENT_UPLOAD_ERROR:
-      extras.fileSize = `${action.agreementSizeBytes! / BYTES_PER_MB} mb`
+      extras.fileSize = `${action.digitalContentSizeBytes! / BYTES_PER_MB} mb`
       extras.phase = action.phase!
       break
     case uploadActions.MULTI_AGREEMENT_UPLOAD_ERROR:
       extras.phase = action.phase!
-      extras.numAgreements = action.numAgreements!
+      extras.numDigitalContents = action.numDigitalContents!
       extras.isStem = action.isStem!
       break
     default:

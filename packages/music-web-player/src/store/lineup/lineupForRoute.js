@@ -1,11 +1,11 @@
 import { matchPath } from 'react-router'
 
-import { getCollectionAgreementsLineup } from 'common/store/pages/collection/selectors'
+import { getCollectionDigitalContentsLineup } from 'common/store/pages/collection/selectors'
 import { getDiscoverFeedLineup } from 'common/store/pages/feed/selectors'
-import { getHistoryAgreementsLineup } from 'common/store/pages/historyPage/selectors'
-import { getProfileAgreementsLineup } from 'common/store/pages/profile/selectors'
-import { getSavedAgreementsLineup } from 'common/store/pages/savedPage/selectors'
-import { getSearchAgreementsLineup } from 'common/store/pages/searchResults/selectors'
+import { getHistoryDigitalContentsLineup } from 'common/store/pages/historyPage/selectors'
+import { getProfileDigitalContentsLineup } from 'common/store/pages/profile/selectors'
+import { getSavedDigitalContentsLineup } from 'common/store/pages/savedPage/selectors'
+import { getSearchDigitalContentsLineup } from 'common/store/pages/searchResults/selectors'
 import { getLineup } from 'common/store/pages/digital_content/selectors'
 import { getCurrentDiscoverTrendingLineup } from 'common/store/pages/trending/selectors'
 import {
@@ -51,22 +51,22 @@ export const getLineupSelectorForRoute = (state) => {
     return getCurrentDiscoverTrendingLineup
   }
   if (matchPage(SEARCH_CATEGORY_PAGE) || matchPage(SEARCH_PAGE)) {
-    return getSearchAgreementsLineup
+    return getSearchDigitalContentsLineup
   }
   if (matchPage(SAVED_PAGE)) {
-    return getSavedAgreementsLineup
+    return getSavedDigitalContentsLineup
   }
   if (matchPage(HISTORY_PAGE)) {
-    return getHistoryAgreementsLineup
+    return getHistoryDigitalContentsLineup
   }
   if (matchPage(CONTENT_LIST_PAGE) || matchPage(ALBUM_PAGE)) {
-    return getCollectionAgreementsLineup
+    return getCollectionDigitalContentsLineup
   }
   if (matchPage(AGREEMENT_PAGE)) {
     return getLineup
   }
   if (matchPage(PROFILE_PAGE)) {
-    return getProfileAgreementsLineup
+    return getProfileDigitalContentsLineup
   }
   return getDiscoverFeedLineup
 }

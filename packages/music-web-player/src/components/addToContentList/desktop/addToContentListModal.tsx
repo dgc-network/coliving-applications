@@ -9,13 +9,13 @@ import { ReactComponent as IconMultiselectAdd } from 'assets/img/iconMultiselect
 import { useModalState } from 'common/hooks/useModalState'
 import { getAccountWithOwnContentLists } from 'common/store/account/selectors'
 import {
-  addAgreementToContentList,
+  addDigitalContentToContentList,
   createContentList
 } from 'common/store/cache/collections/actions'
 import { getCollectionId } from 'common/store/pages/collection/selectors'
 import {
-  getAgreementId,
-  getAgreementTitle
+  getDigitalContentId,
+  getDigitalContentTitle
 } from 'common/store/ui/addToContentList/selectors'
 import DynamicImage from 'components/dynamicImage/dynamicImage'
 import SearchBar from 'components/searchBar/searchBar'
@@ -42,8 +42,8 @@ const AddToContentListModal = () => {
   const { toast } = useContext(ToastContext)
 
   const [isOpen, setIsOpen] = useModalState('AddToContentList')
-  const agreementId = useSelector(getAgreementId)
-  const agreementTitle = useSelector(getAgreementTitle)
+  const digitalContentId = useSelector(getDigitalContentId)
+  const digitalContentTitle = useSelector(getDigitalContentTitle)
   const currentCollectionId = useSelector(getCollectionId)
   const account = useSelector((state: AppState) =>
     getAccountWithOwnContentLists(state)
@@ -65,13 +65,13 @@ const AddToContentListModal = () => {
   }, [searchValue, account, currentCollectionId])
 
   const handleContentListClick = (contentList: Collection) => {
-    dispatch(addAgreementToContentList(agreementId, contentList.content_list_id))
-    if (account && agreementTitle) {
+    dispatch(addDigitalContentToContentList(digitalContentId, contentList.content_list_id))
+    if (account && digitalContentTitle) {
       toast(
         <ToastLinkContent
           text={messages.addedToast}
           linkText={messages.view}
-          link={contentListPage(account.handle, agreementTitle, contentList.content_list_id)}
+          link={contentListPage(account.handle, digitalContentTitle, contentList.content_list_id)}
         />
       )
     }
@@ -80,20 +80,20 @@ const AddToContentListModal = () => {
 
   const handleCreateContentList = () => {
     const metadata = newCollectionMetadata({
-      content_list_name: agreementTitle,
+      content_list_name: digitalContentTitle,
       is_private: false
     })
     const tempId = `${Date.now()}`
     dispatch(
-      createContentList(tempId, metadata, CreateContentListSource.FROM_AGREEMENT, agreementId)
+      createContentList(tempId, metadata, CreateContentListSource.FROM_AGREEMENT, digitalContentId)
     )
-    dispatch(addAgreementToContentList(agreementId, tempId))
-    if (account && agreementTitle) {
+    dispatch(addDigitalContentToContentList(digitalContentId, tempId))
+    if (account && digitalContentTitle) {
       toast(
         <ToastLinkContent
           text={messages.createdToast}
           linkText={messages.view}
-          link={contentListPage(account.handle, agreementTitle, tempId)}
+          link={contentListPage(account.handle, digitalContentTitle, tempId)}
         />
       )
     }

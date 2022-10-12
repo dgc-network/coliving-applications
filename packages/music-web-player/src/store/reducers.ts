@@ -14,7 +14,7 @@ import remixSettingsModal from 'components/remixSettingsModal/store/slice'
 import searchBar from 'components/searchBar/store/reducer'
 import serviceSelection from 'components/serviceSelection/store/slice'
 import unfollowConfirmation from 'components/unfollowConfirmationModal/store/reducers'
-import dashboard from 'pages/landlord-dashboard-page/store/reducer'
+import dashboard from 'pages/author-dashboard-page/store/reducer'
 import deactivateAccount from 'pages/deactivateAccountPage/store/slice'
 import deleted from 'pages/deletedPage/store/slice'
 import signOn from 'pages/signOn/store/reducer'
@@ -24,7 +24,7 @@ import appCTAModal from 'store/application/ui/appCTAModal/slice'
 import cookieBanner from 'store/application/ui/cookieBanner/reducer'
 import editFolderModal from 'store/application/ui/editFolderModal/slice'
 import editContentListModal from 'store/application/ui/editContentListModal/slice'
-import editAgreementModal from 'store/application/ui/editAgreementModal/reducer'
+import editDigitalContentModal from 'store/application/ui/editDigitalContentModal/reducer'
 import mobileKeyboard from 'store/application/ui/mobileKeyboard/reducer'
 import scrollLock from 'store/application/ui/scrollLock/reducer'
 import setAsLandlordPickConfirmation from 'store/application/ui/setAsLandlordPickConfirmation/reducer'
@@ -80,7 +80,7 @@ const createRootReducer = (routeHistory: History) =>
         deactivateAccount,
         editFolderModal,
         editContentListModal,
-        editAgreementModal,
+        editDigitalContentModal,
         embedModal,
         firstUploadModal,
         mobileKeyboard,

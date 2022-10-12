@@ -37,7 +37,7 @@ import { HeaderContextConsumer } from 'components/header/mobile/headerContextPro
 import Konami from 'components/konami/konami'
 import Navigator from 'components/nav/navigator'
 import { NotificationPage } from 'components/notification'
-import PinnedAgreementConfirmation from 'components/pinAgreementConfirmation/pinAgreementConfirmation'
+import PinnedDigitalContentConfirmation from 'components/pinDigitalContentConfirmation/pinDigitalContentConfirmation'
 import PlayBarProvider from 'components/playBar/playBarProvider'
 import ConnectedReachabilityBar from 'components/reachabilityBar/reachabilityBar'
 import { RewardClaimedToast } from 'components/rewardClaimedToast/rewardClaimedToast'
@@ -45,8 +45,8 @@ import DesktopRoute from 'components/routes/desktopRoute'
 import MobileRoute from 'components/routes/mobileRoute'
 import TrendingGenreSelectionPage from 'components/trendingGenreSelection/trendingGenreSelectionPage'
 import AnnouncementPage from 'pages/announcementPage/annoucementPage'
-import LandlordDashboardPage from 'pages/landlord-dashboard-page/LandlordDashboardPage'
-import LiveRewardsPage from 'pages/digitalcoin-rewards-page/LiveRewardsPage'
+import LandlordDashboardPage from 'pages/author-dashboard-page/LandlordDashboardPage'
+import DigitalcoinRewardsPage from 'pages/digitalcoin-rewards-page/DigitalcoinRewardsPage'
 import CheckPage from 'pages/checkPage/checkPage'
 import CollectionPage from 'pages/collectionPage/collectionPage'
 import EmptyPage from 'pages/emptyPage/emptyPage'
@@ -68,7 +68,7 @@ import {
 } from 'pages/signOn/store/actions'
 import { getStatus as getSignOnStatus } from 'pages/signOn/store/selectors'
 import { Pages as SignOnPages } from 'pages/signOn/store/types'
-import AgreementPage from 'pages/digital-content-page/AgreementPage'
+import DigitalContentPage from 'pages/digital-content-page/DigitalContentPage'
 import TrendingPage from 'pages/trendingPage/trendingPage'
 import TrendingContentListsPage from 'pages/trending-content-lists/TrendingContentListPage'
 import TrendingUndergroundPage from 'pages/trendingUnderground/trendingUndergroundPage'
@@ -802,7 +802,7 @@ class App extends Component {
                 exact
                 path={LIVE_PAGE}
                 isMobile={isMobileClient}
-                component={LiveRewardsPage}
+                component={DigitalcoinRewardsPage}
               />
               <Route
                 exact
@@ -875,7 +875,7 @@ class App extends Component {
                   />
                 )}
               />
-              <Route exact path={AGREEMENT_ID_PAGE} component={AgreementPage} />
+              <Route exact path={AGREEMENT_ID_PAGE} component={DigitalContentPage} />
               <Route exact path={CONTENT_LIST_ID_PAGE} component={CollectionPage} />
 
               {/*
@@ -901,7 +901,7 @@ class App extends Component {
                 )}
               />
 
-              <Route exact path={AGREEMENT_PAGE} component={AgreementPage} />
+              <Route exact path={AGREEMENT_PAGE} component={DigitalContentPage} />
 
               <Route
                 exact
@@ -1007,7 +1007,7 @@ class App extends Component {
         {!isMobileClient && <ConfirmerPreview />}
         {!isMobileClient && <DiscoveryNodeSelection />}
         {!isMobileClient && <Visualizer />}
-        {!isMobileClient && <PinnedAgreementConfirmation />}
+        {!isMobileClient && <PinnedDigitalContentConfirmation />}
         {!isMobileClient && <DevModeMananger />}
 
         {/* Mobile-only */}

@@ -28,7 +28,7 @@ export const challenges = {
   connectVerifiedDescription:
     'Get verified on Coliving by linking your verified Twitter or Instagram account!',
   connectVerifiedShortDescription:
-    'Link your verified social media accounts to earn 1 $LIVE',
+    'Link your verified social media accounts to earn 1 $DGCO',
   connectVerifiedButton: 'Verify Your Account',
   connectVerifiedProgressLabel: 'Not Linked',
 
@@ -37,32 +37,32 @@ export const challenges = {
   listenStreakDescription:
     'Sign in and listen to at least one digital_content every day for 7 days',
   listenStreakShortDescription:
-    'Listen to one digital_content a day for seven days to earn 1 $LIVE',
-  listenStreakButton: 'Trending Agreements',
+    'Listen to one digital_content a day for seven days to earn 1 $DGCO',
+  listenStreakButton: 'Trending DigitalContents',
   listenStreakProgressLabel: '%0/%1 Days',
 
   // Mobile Install
   mobileInstallTitle: 'Get the Coliving Mobile App',
   mobileInstallDescription:
     'Install the Coliving app for iPhone and Android and Sign in to your account!',
-  mobileInstallShortDescription: 'Earn 1 $LIVE',
+  mobileInstallShortDescription: 'Earn 1 $DGCO',
   mobileInstallButton: 'Get the App',
   mobileInstallProgressLabel: 'Not Installed',
 
   // Profile Completion
   profileCompletionTitle: 'Complete Your Profile',
   profileCompletionDescription:
-    'Fill out the missing details on your Coliving profile and start interacting with agreements and landlords!',
+    'Fill out the missing details on your Coliving profile and start interacting with digitalContents and landlords!',
   profileCompletionShortDescription:
-    'Complete your Coliving profile to earn 1 $LIVE',
+    'Complete your Coliving profile to earn 1 $DGCO',
   profileCompletionButton: 'More Info',
   profileCompletionProgressLabel: '%0/%1 Complete',
 
   // Referrals
   referreralsTitle: 'Invite your Friends',
   referralsDescription:
-    'Invite your Friends! You’ll earn 1 $LIVE for each friend who joins with your link (and they’ll get an $LIVE too)',
-  referralsShortDescription: 'Earn 1 $LIVE, for you and your friend',
+    'Invite your Friends! You’ll earn 1 $DGCO for each friend who joins with your link (and they’ll get an $DGCO too)',
+  referralsShortDescription: 'Earn 1 $DGCO, for you and your friend',
   referralsProgressLabel: '%0/%1 Invites Accepted',
   referralsRemainingLabel: '%0/%1 Invites Remain',
   referralsButton: 'Invite your Friends',
@@ -70,30 +70,30 @@ export const challenges = {
   // Verified Referrals
   referreralsVerifiedTitle: 'Invite your Residents',
   referralsVerifiedDescription:
-    'Invite your residents! You’ll earn 1 $LIVE for each friend who joins with your link (and they’ll get an $LIVE too)',
-  referralsVerifiedShortDescription: 'Earn up to 5,000 $LIVE',
+    'Invite your residents! You’ll earn 1 $DGCO for each friend who joins with your link (and they’ll get an $DGCO too)',
+  referralsVerifiedShortDescription: 'Earn up to 5,000 $DGCO',
   referralsVerifiedProgressLabel: '%0/%1 Invites Accepted',
   referralsVerifiedRemainingLabel: '%0/%1 Invites Remain',
 
   // Referred
   referredTitle: 'You Accepted An Invite',
-  referredDescription: 'You earned $LIVE for being invited',
-  referredShortDescription: 'You earned $LIVE for being invited',
+  referredDescription: 'You earned $DGCO for being invited',
+  referredShortDescription: 'You earned $DGCO for being invited',
   referredProgressLabel: '%0/%1 Invites',
 
   // DigitalContent Upload
-  agreementUploadTitle: 'Upload 3 Agreements',
-  agreementUploadDescription: 'Upload 3 agreements to your profile',
-  agreementUploadShortDescription: 'Upload 3 agreements to your profile',
-  agreementUploadProgressLabel: '%0/%1 Uploaded',
-  agreementUploadButton: 'Upload Agreements',
+  digitalContentUploadTitle: 'Upload 3 DigitalContents',
+  digitalContentUploadDescription: 'Upload 3 digitalContents to your profile',
+  digitalContentUploadShortDescription: 'Upload 3 digitalContents to your profile',
+  digitalContentUploadProgressLabel: '%0/%1 Uploaded',
+  digitalContentUploadButton: 'Upload DigitalContents',
 
   // Send First Tip
   sendFirstTipTitle: 'Send Your First Tip',
   sendFirstTipDescription:
-    'Show some love to your favorite landlord and send them a tip',
+    'Show some love to your favorite author and send them a tip',
   sendFirstTipShortDescription:
-    'Show some love to your favorite landlord and send them a tip',
+    'Show some love to your favorite author and send them a tip',
   sendFirstTipProgressLabel: 'Not Earned',
   sendFirstTipButton: 'Find Someone To Tip',
 
@@ -217,12 +217,12 @@ export const challengesConfig: Record<ChallengeRewardID, ChallengeConfig> = {
   },
   'digital-content-upload': {
     icon: MultipleMusicalNotes,
-    title: challenges.agreementUploadTitle,
-    description: challenges.agreementUploadDescription,
-    shortDescription: challenges.agreementUploadShortDescription,
-    progressLabel: challenges.agreementUploadProgressLabel,
+    title: challenges.digitalContentUploadTitle,
+    description: challenges.digitalContentUploadDescription,
+    shortDescription: challenges.digitalContentUploadShortDescription,
+    progressLabel: challenges.digitalContentUploadProgressLabel,
     buttonInfo: {
-      label: challenges.agreementUploadButton,
+      label: challenges.digitalContentUploadButton,
       renderIcon: (color) => <IconUpload fill={color} />,
       iconPosition: 'right'
     }
@@ -270,7 +270,7 @@ export const trendingRewardsConfig: Record<TrendingRewardID, ChallengeConfig> =
       }
     },
     'trending-digital-content': {
-      title: 'Top 5 Trending Agreements',
+      title: 'Top 5 Trending DigitalContents',
       icon: ChartIncreasing,
       description: 'Winners are selected every Friday at Noon PT!',
       buttonInfo: {

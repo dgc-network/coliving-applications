@@ -13,7 +13,7 @@ import { Text, TouchableOpacity, View } from 'react-native'
 import IconDrag from 'app/assets/images/iconDrag.svg'
 import IconHeart from 'app/assets/images/iconHeart.svg'
 import IconKebabHorizontal from 'app/assets/images/iconKebabHorizontal.svg'
-import IconRemoveAgreement from 'app/assets/images/iconRemoveAgreement.svg'
+import IconRemoveDigitalContent from 'app/assets/images/iconRemoveDigitalContent.svg'
 import { IconButton } from 'app/components/core'
 import UserBadges from 'app/components/userBadges'
 import { useDispatchWeb } from 'app/hooks/useDispatchWeb'
@@ -22,24 +22,24 @@ import { font, makeStyles } from 'app/styles'
 import { useThemeColors } from 'app/utils/theme'
 
 import { TablePlayButton } from './tablePlayButton'
-import { AgreementArtwork } from './AgreementArtwork'
-import type { AgreementMetadata } from './types'
+import { DigitalContentArtwork } from './DigitalContentArtwork'
+import type { DigitalContentMetadata } from './types'
 
-export type AgreementItemAction = 'save' | 'overflow' | 'remove'
+export type DigitalContentItemAction = 'save' | 'overflow' | 'remove'
 
 const useStyles = makeStyles(({ palette, spacing }) => ({
-  agreementContainer: {
+  digitalContentContainer: {
     width: '100%',
     height: 72,
     backgroundColor: palette.white
   },
-  agreementContainerActive: {
+  digitalContentContainerActive: {
     backgroundColor: palette.neutralLight9
   },
-  agreementContainerDisabled: {
+  digitalContentContainerDisabled: {
     backgroundColor: palette.neutralLight9
   },
-  agreementInnerContainer: {
+  digitalContentInnerContainer: {
     height: '100%',
     width: '100%',
     flexDirection: 'row',
@@ -54,10 +54,10 @@ const useStyles = makeStyles(({ palette, spacing }) => ({
     overflow: 'hidden',
     height: '100%'
   },
-  agreementTitle: {
+  digitalContentTitle: {
     flexDirection: 'row'
   },
-  agreementTitleText: {
+  digitalContentTitleText: {
     ...font('demiBold'),
     color: palette.neutral
   },
@@ -81,10 +81,10 @@ const useStyles = makeStyles(({ palette, spacing }) => ({
 }))
 
 const getMessages = ({ isDeleted = false }: { isDeleted?: boolean } = {}) => ({
-  deleted: isDeleted ? ' [Deleted By Landlord]' : ''
+  deleted: isDeleted ? ' [Deleted By Author]' : ''
 })
 
-export type AgreementListItemProps = {
+export type DigitalContentListItemProps = {
   drag: () => void
   hideArt?: boolean
   index: number
@@ -95,13 +95,13 @@ export type AgreementListItemProps = {
   isRemoveActive?: boolean
   isReorderable?: boolean
   onRemove?: (index: number) => void
-  onSave?: (isSaved: boolean, agreementId: ID) => void
-  togglePlay?: (uid: string, agreementId: ID) => void
-  digital_content: AgreementMetadata
-  agreementItemAction?: AgreementItemAction
+  onSave?: (isSaved: boolean, digitalContentId: ID) => void
+  togglePlay?: (uid: string, digitalContentId: ID) => void
+  digital_content: DigitalContentMetadata
+  digitalContentItemAction?: DigitalContentItemAction
 }
 
-export const AgreementListItem = ({
+export const DigitalContentListItem = ({
   drag,
   hideArt,
   index,
@@ -115,8 +115,8 @@ export const AgreementListItem = ({
   onSave,
   togglePlay,
   digital_content,
-  agreementItemAction
-}: AgreementListItemProps) => {
+  digitalContentItemAction
+}: DigitalContentListItemProps) => {
   const {
     _cover_art_sizes,
     has_current_user_reposted,
@@ -142,7 +142,7 @@ export const AgreementListItem = ({
     [messages]
   )
 
-  const onPressAgreement = () => {
+  const onPressDigitalContent = () => {
     if (uid && !isDeleted && togglePlay) {
       togglePlay(uid, digital_content_id)
     }
@@ -203,20 +203,20 @@ export const AgreementListItem = ({
   return (
     <View
       style={[
-        styles.agreementContainer,
-        isActive && styles.agreementContainerActive,
-        isDeleted && styles.agreementContainerDisabled
+        styles.digitalContentContainer,
+        isActive && styles.digitalContentContainerActive,
+        isDeleted && styles.digitalContentContainerDisabled
       ]}
     >
       <TouchableOpacity
-        style={styles.agreementInnerContainer}
-        onPress={onPressAgreement}
+        style={styles.digitalContentInnerContainer}
+        onPress={onPressDigitalContent}
         onLongPress={drag}
         disabled={isDeleted}
       >
         {!hideArt ? (
-          <AgreementArtwork
-            agreementId={digital_content_id}
+          <DigitalContentArtwork
+            digitalContentId={digital_content_id}
             coverArtSizes={_cover_art_sizes}
             isActive={isActive}
             isLoading={isLoading}
@@ -228,20 +228,20 @@ export const AgreementListItem = ({
               playing
               paused={!isPlaying}
               hideDefault={false}
-              onPress={onPressAgreement}
+              onPress={onPressDigitalContent}
             />
           </View>
         ) : null}
         {isReorderable && <IconDrag style={styles.dragIcon} />}
         <View style={styles.nameLandlordContainer}>
           <View
-            style={styles.agreementTitle}
+            style={styles.digitalContentTitle}
             onLayout={(e) => setTitleWidth(e.nativeEvent.layout.width)}
           >
             <Text
               numberOfLines={1}
               style={[
-                styles.agreementTitleText,
+                styles.digitalContentTitleText,
                 {
                   maxWidth: titleWidth ? titleWidth - deletedTextWidth : '100%'
                 }
@@ -251,7 +251,7 @@ export const AgreementListItem = ({
             </Text>
             <Text
               numberOfLines={1}
-              style={[styles.agreementTitleText, { flexBasis: deletedTextWidth }]}
+              style={[styles.digitalContentTitleText, { flexBasis: deletedTextWidth }]}
             >
               {messages.deleted}
             </Text>
@@ -261,7 +261,7 @@ export const AgreementListItem = ({
             <UserBadges user={digital_content.user} badgeSize={12} hideName />
           </Text>
         </View>
-        {agreementItemAction === 'save' ? (
+        {digitalContentItemAction === 'save' ? (
           <IconButton
             icon={IconHeart}
             styles={{
@@ -276,7 +276,7 @@ export const AgreementListItem = ({
             onPress={handlePressSave}
           />
         ) : null}
-        {agreementItemAction === 'overflow' ? (
+        {digitalContentItemAction === 'overflow' ? (
           <IconButton
             icon={IconKebabHorizontal}
             styles={{
@@ -286,9 +286,9 @@ export const AgreementListItem = ({
             onPress={handlePressOverflow}
           />
         ) : null}
-        {agreementItemAction === 'remove' ? (
+        {digitalContentItemAction === 'remove' ? (
           <IconButton
-            icon={IconRemoveAgreement}
+            icon={IconRemoveDigitalContent}
             styles={{
               root: styles.iconContainer,
               icon: styles.removeIcon

@@ -1,4 +1,4 @@
-import { AgreementSegment } from '@coliving/common'
+import { DigitalContentSegment } from '@coliving/common'
 import Hls from 'hls.js'
 
 import { fetchCID } from 'services/colivingBackend'
@@ -42,7 +42,7 @@ export enum AudioError {
 // eslint-disable-next-line
 class fLoader extends Hls.DefaultConfig.loader {
   getFallbacks = () => []
-  getAgreementId = () => ''
+  getDigitalContentId = () => ''
 
   constructor(config: Hls.LoaderConfig) {
     super(config)
@@ -56,7 +56,7 @@ class fLoader extends Hls.DefaultConfig.loader {
           this.getFallbacks(),
           /* cache */ false,
           /* asUrl */ true,
-          decodeHashId(this.getAgreementId())
+          decodeHashId(this.getDigitalContentId())
         ).then((resolved) => {
           const updatedContext = { ...context, url: resolved }
           load(updatedContext, config, callbacks)
@@ -190,11 +190,11 @@ class AudioStream {
   }
 
   load = (
-    segments: AgreementSegment[],
+    segments: DigitalContentSegment[],
     onEnd: () => void,
     prefetchedSegments = [],
     gateways = [],
-    info = { id: '', title: '', landlord: '' },
+    info = { id: '', title: '', author: '' },
     forceStreamSrc: string | null = null
   ) => {
     if (forceStreamSrc) {
@@ -222,7 +222,7 @@ class AudioStream {
         // eslint-disable-next-line
         class creatorFLoader extends fLoader {
           getFallbacks = () => gateways
-          getAgreementId = () => info.id
+          getDigitalContentId = () => info.id
         }
         const hlsConfig = { ...HlsConfig, fLoader: creatorFLoader }
         this.hls = new Hls(hlsConfig)
@@ -281,8 +281,8 @@ class AudioStream {
 
         this.digitalcoin.src = m3u8
         this.digitalcoin.title =
-          info.title && info.landlord
-            ? `${info.title} by ${info.landlord}`
+          info.title && info.author
+            ? `${info.title} by ${info.author}`
             : 'Coliving'
       }
     }
@@ -348,7 +348,7 @@ class AudioStream {
     const promise = this.digitalcoin.play()
     if (promise) {
       promise.catch((_) => {
-        // Let pauses interrupt plays (as the user could be rapidly skipping through agreements).
+        // Let pauses interrupt plays (as the user could be rapidly skipping through digitalContents).
       })
     }
   }

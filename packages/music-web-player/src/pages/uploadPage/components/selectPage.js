@@ -9,7 +9,7 @@ import Dropzone from 'components/upload/dropzone'
 import InvalidFileType from 'components/upload/invalidFileType'
 
 import styles from './selectPage.module.css'
-import AgreementsPreview from './agreementsPreview'
+import DigitalContentsPreview from './digitalContentsPreview'
 import UploadType from './uploadType'
 
 class SelectPage extends Component {
@@ -36,7 +36,7 @@ class SelectPage extends Component {
 
   render() {
     const {
-      agreements = [],
+      digitalContents = [],
       previewIndex,
       onSelect,
       onRemove,
@@ -49,7 +49,7 @@ class SelectPage extends Component {
     } = this.props
     const { showSelectServices } = this.state
 
-    const textAboveIcon = agreements.length > 0 ? 'More to Upload?' : null
+    const textAboveIcon = digitalContents.length > 0 ? 'More to Upload?' : null
 
     return (
       <div className={cn(styles.page)}>
@@ -65,13 +65,13 @@ class SelectPage extends Component {
           </div>
           <div
             className={cn(styles.uploaded, {
-              [styles.hide]: agreements.length === 0
+              [styles.hide]: digitalContents.length === 0
             })}
           >
-            {agreements.length > 0 ? (
+            {digitalContents.length > 0 ? (
               <div>
-                <AgreementsPreview
-                  agreements={agreements}
+                <DigitalContentsPreview
+                  digitalContents={digitalContents}
                   uploadType={uploadType}
                   previewIndex={previewIndex}
                   onRemove={onRemove}
@@ -80,9 +80,9 @@ class SelectPage extends Component {
                   stopPreview={stopPreview}
                 />
                 <div className={styles.count}>
-                  {agreements.length === 1
-                    ? `${agreements.length} digital_content uploaded`
-                    : `${agreements.length} agreements uploaded`}
+                  {digitalContents.length === 1
+                    ? `${digitalContents.length} digital_content uploaded`
+                    : `${digitalContents.length} digitalContents uploaded`}
                 </div>
                 <div className={styles.continue}>
                   <Button
@@ -113,8 +113,8 @@ SelectPage.propTypes = {
     UploadType.CONTENT_LIST,
     UploadType.ALBUM
   ]),
-  onCloseMultiAgreementNotification: PropTypes.func,
-  agreements: PropTypes.array,
+  onCloseMultiDigitalContentNotification: PropTypes.func,
+  digitalContents: PropTypes.array,
   previewIndex: PropTypes.number,
   dropdownMenu: PropTypes.object,
   onSelect: PropTypes.func,

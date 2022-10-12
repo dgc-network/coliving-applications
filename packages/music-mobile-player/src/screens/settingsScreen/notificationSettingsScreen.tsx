@@ -17,7 +17,7 @@ const messages = {
   followers: 'New Followers',
   reposts: 'Reposts',
   favorites: 'Favorites',
-  remixes: 'Remixes of My Agreements'
+  remixes: 'Remixes of My DigitalContents'
 }
 
 export const NotificationSettingsScreen = () => {

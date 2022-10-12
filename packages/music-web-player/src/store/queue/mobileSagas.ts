@@ -2,12 +2,12 @@ import { ID, UID, removeNullable } from '@coliving/common'
 import { all, put, select, takeEvery, call } from 'typed-redux-saga/macro'
 
 import { getUserId } from 'common/store/account/selectors'
-import { getAgreement } from 'common/store/cache/agreements/selectors'
+import { getDigitalContent } from 'common/store/cache/digital_contents/selectors'
 import { getUser } from 'common/store/cache/users/selectors'
 import {
   getOrder,
   getIndex,
-  getId as getQueueAgreementId,
+  getId as getQueueDigitalContentId,
   getShuffle,
   getShuffleIndex,
   getShuffleOrder,
@@ -39,11 +39,11 @@ const getImageUrl = (cid: string, gateway: string | null): string => {
   return `${gateway}${cid}`
 }
 
-function* getAgreementInfo(id: ID, uid: UID) {
+function* getDigitalContentInfo(id: ID, uid: UID) {
   const currentUserId = yield* select(getUserId)
   if (!currentUserId) return null
 
-  const digital_content = yield* select(getAgreement, { id })
+  const digital_content = yield* select(getDigitalContent, { id })
   if (!digital_content) return null
 
   const owner = yield* select(getUser, { id: digital_content.owner_id })
@@ -64,7 +64,7 @@ function* getAgreementInfo(id: ID, uid: UID) {
   const m3u8 = generateM3U8Variants(digital_content.digital_content_segments, [], m3u8Gateways)
   return {
     title: digital_content.title,
-    landlord: owner.name,
+    author: owner.name,
     artwork: getImageUrl(imageHash!, gateways[0]),
     largeArtwork: getImageUrl(largeImageHash!, gateways[0]),
     uid,
@@ -72,7 +72,7 @@ function* getAgreementInfo(id: ID, uid: UID) {
     currentListenCount: digital_content.play_count,
     isDelete: digital_content.is_delete || owner.is_deactivated,
     ownerId: digital_content.owner_id,
-    agreementId: id,
+    digitalContentId: id,
     id,
     genre: digital_content.genre,
     uri: m3u8
@@ -92,14 +92,14 @@ function* persistQueue() {
   const queueAutoplay: ReturnType<typeof getQueueAutoplay> = yield* select(
     getQueueAutoplay
   )
-  const agreements = yield* all(
+  const digitalContents = yield* all(
     queueOrder.map((queueItem: any) => {
-      return call(getAgreementInfo, queueItem.id, queueItem.uid)
+      return call(getDigitalContentInfo, queueItem.id, queueItem.uid)
     })
   )
 
   const message = new PersistQueueMessage(
-    agreements.filter(removeNullable),
+    digitalContents.filter(removeNullable),
     queueIndex,
     shuffle,
     shuffleIndex,
@@ -144,13 +144,13 @@ function* watchSyncQueue() {
       console.info(`
         Syncing queue:
         index: ${index},
-        id: ${info.agreementId},
+        id: ${info.digitalContentId},
         uid: ${info.uid},
         title: ${info.title}`)
       yield* put(updateIndex({ index }))
       // Update currently playing digital_content.
       if (!info.isDelete) {
-        yield* put(playerActions.set({ uid: info.uid, agreementId: info.agreementId }))
+        yield* put(playerActions.set({ uid: info.uid, digitalContentId: info.digitalContentId }))
       } else {
         yield* put(playerActions.stop({}))
       }
@@ -165,10 +165,10 @@ function* watchSyncQueue() {
 function* watchSyncPlayer() {
   yield* takeEvery(MessageType.SYNC_PLAYER, function* (action: Message) {
     const { isPlaying, incrementCounter } = action
-    const id = yield* select(getQueueAgreementId)
+    const id = yield* select(getQueueDigitalContentId)
     if (!id) return
 
-    const digital_content = yield* select(getAgreement, { id: id as number })
+    const digital_content = yield* select(getDigitalContent, { id: id as number })
     if (!digital_content) return
 
     const owner = yield* select(getUser, { id: digital_content?.owner_id })
@@ -192,12 +192,12 @@ export function* watchRequestQueueAutoplay() {
   yield* takeEvery(
     MessageType.REQUEST_QUEUE_AUTOPLAY,
     function* (action: Message) {
-      const { genre, agreementId } = action
+      const { genre, digitalContentId } = action
       const userId = yield* select(getUserId)
       yield* put(
         queueAutoplay({
           genre,
-          exclusionList: agreementId ? [agreementId] : [],
+          exclusionList: digitalContentId ? [digitalContentId] : [],
           currentUserId: userId
         })
       )

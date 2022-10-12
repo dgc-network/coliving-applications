@@ -72,7 +72,7 @@ type CardProps = {
   favorites?: number
   onClickReposts?: () => void
   onClickFavorites?: () => void
-  agreementCount?: number
+  digitalContentCount?: number
   onClick: () => void
 }
 
@@ -142,7 +142,7 @@ const Card = ({
   menu,
   reposts,
   favorites,
-  agreementCount,
+  digitalContentCount,
   onClickReposts,
   onClickFavorites,
   onClick
@@ -256,9 +256,9 @@ const Card = ({
               onClickFavorites={onClickFavorites!}
               className={styles.statsWrapper}
             />
-            {agreementCount !== undefined && (
-              <div className={styles.agreementCount}>
-                {`${agreementCount} ${pluralize('DigitalContent', agreementCount)}`}
+            {digitalContentCount !== undefined && (
+              <div className={styles.digitalContentCount}>
+                {`${digitalContentCount} ${pluralize('DigitalContent', digitalContentCount)}`}
               </div>
             )}
           </div>

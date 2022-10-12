@@ -11,7 +11,7 @@ import IconArrow from 'app/assets/images/iconArrow.svg'
 import { Tile, TextButton } from 'app/components/core'
 import { useNavigation } from 'app/hooks/useNavigation'
 import { useSelectorWeb } from 'app/hooks/useSelectorWeb'
-import { ProfilePictureList } from 'app/screens/notificationsScreen/Notification'
+import { ProfilePictureList } from 'app/screens/notificationsScreen/notification'
 import { makeStyles } from 'app/styles'
 
 import { useSelectProfile } from '../selectors'

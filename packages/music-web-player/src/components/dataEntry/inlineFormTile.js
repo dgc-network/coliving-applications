@@ -50,7 +50,7 @@ class InlineFormTile extends Component {
           <div className={styles.handle}>
             <IconDrag />
           </div>
-          <div className={styles.agreementName}>
+          <div className={styles.digitalContentName}>
             <LabeledInput
               placeholder='What should we call this digital_content?'
               label='DigitalContent Name'

@@ -20,12 +20,12 @@ import { LineupActions } from 'common/store/lineup/actions'
 import { getShowTip } from 'common/store/tipping/selectors'
 import { FeedTipTile } from 'components/tipping/feedTipTile/feedTipTile'
 import {
-  AgreementTileProps,
+  DigitalContentTileProps,
   ContentListTileProps,
-  AgreementTileSize,
+  DigitalContentTileSize,
   TileProps
 } from 'components/digital_content/types'
-import { AgreementEvent, make } from 'store/analytics/actions'
+import { DigitalContentEvent, make } from 'store/analytics/actions'
 import { AppState } from 'store/types'
 import { isMobile } from 'utils/clientUtil'
 
@@ -39,8 +39,8 @@ const MAX_TILES_COUNT = 1000
 // The max number of loading tiles to display if count prop passes
 const MAX_COUNT_LOADING_TILES = 18
 
-// The inital multiplier for number of agreements to fetch on lineup load
-// multiplied by the number of agreements that fit the browser height
+// The inital multiplier for number of digitalContents to fetch on lineup load
+// multiplied by the number of digitalContents that fit the browser height
 export const INITIAL_LOAD_AGREEMENTS_MULTIPLIER = 1.75
 export const INITIAL_CONTENT_LISTS_MULTIPLER = 1
 
@@ -49,10 +49,10 @@ export const INITIAL_CONTENT_LISTS_MULTIPLER = 1
 const AGREEMENTS_AHEAD_MULTIPLIER = 0.75
 
 // Threshold for how far away from the bottom (of the list) the user has to be
-// before fetching more agreements as a percentage of the page size
+// before fetching more digitalContents as a percentage of the page size
 const LOAD_MORE_PAGE_THRESHOLD = 3 / 5
 
-// The minimum inital multiplier for agreements to fetch on lineup load
+// The minimum inital multiplier for digitalContents to fetch on lineup load
 // use so that multiple lineups on the same page can switch w/out a reload
 const MINIMUM_INITIAL_LOAD_AGREEMENTS_MULTIPLIER = 1
 
@@ -65,7 +65,7 @@ const totalTileHeight = {
 }
 
 // Load AGREEMENTS_AHEAD x the number of tiles to be displayed on the screen
-export const getLoadMoreAgreementCount = (
+export const getLoadMoreDigitalContentCount = (
   variant: LineupVariant,
   multiplier: number | (() => number)
 ) =>
@@ -94,35 +94,35 @@ const shouldLoadMore = (
 
 const getInitPage = (
   lineupLen: number,
-  initialAgreementLoadCount: number,
-  agreementLoadMoreCount: number
+  initialDigitalContentLoadCount: number,
+  digitalContentLoadMoreCount: number
 ) => {
-  if (lineupLen < initialAgreementLoadCount) return 0
+  if (lineupLen < initialDigitalContentLoadCount) return 0
   return (
-    Math.floor((lineupLen - initialAgreementLoadCount) / agreementLoadMoreCount) + 1
+    Math.floor((lineupLen - initialDigitalContentLoadCount) / digitalContentLoadMoreCount) + 1
   )
 }
 
 export interface LineupProviderProps {
   'aria-label'?: string
   // Tile components
-  agreementTile: ComponentType<AgreementTileProps> | any
+  digitalContentTile: ComponentType<DigitalContentTileProps> | any
   contentListTile: ComponentType<ContentListTileProps> | any
 
   // Other props
 
-  /** The number of agreements to fetch */
+  /** The number of digitalContents to fetch */
   count?: number
 
-  /** The maximum number of agreements to fetch while paginating */
+  /** The maximum number of digitalContents to fetch while paginating */
   limit?: number
   start?: number
   lineup: Lineup<any>
   playingUid: UID | null
-  playingAgreementId: ID | null
+  playingDigitalContentId: ID | null
   playing: boolean
-  playAgreement: (uid: UID) => void
-  pauseAgreement: () => void
+  playDigitalContent: (uid: UID) => void
+  pauseDigitalContent: () => void
   variant: LineupVariant
   loadMore?: (offset: number, limit: number, overwrite: boolean) => void
   selfLoad: boolean
@@ -135,7 +135,7 @@ export interface LineupProviderProps {
   delineate?: boolean
 
   /**
-   * Indicator if a digital_content should be displayed differently (ie. landlord pick)
+   * Indicator if a digital_content should be displayed differently (ie. author pick)
    * The leadingElementId is displayed at the top of the lineup
    */
   leadingElementId?: ID
@@ -156,7 +156,7 @@ export interface LineupProviderProps {
   leadingElementClassName?: string
 
   /**
-   * Whether to show the landlord pick on the leading element.
+   * Whether to show the author pick on the leading element.
    * Defaults to true.
    */
   showLeadingElementLandlordPick?: boolean
@@ -207,9 +207,9 @@ export interface LineupProviderProps {
 interface LineupProviderState {
   scrollParent: HTMLElement | null
   loadMoreThreshold: number
-  minimumAgreementLoadCount: number
-  initialAgreementLoadCount: number
-  agreementLoadMoreCount: number
+  minimumDigitalContentLoadCount: number
+  initialDigitalContentLoadCount: number
+  digitalContentLoadMoreCount: number
   // Used to artificially enforce the ordering at which tiles are rendered to the user
   // Because tiles are connected themselves and are in charge of retrieving their own content
   // from the store/BE, they could appear in a non-progressive order. This ensures that the first
@@ -231,64 +231,64 @@ class LineupProvider extends PureComponent<CombinedProps, LineupProviderState> {
   constructor(props: any) {
     super(props)
     const loadMoreThreshold = getLoadMoreThreshold()
-    const minimumAgreementLoadCount = getLoadMoreAgreementCount(
+    const minimumDigitalContentLoadCount = getLoadMoreDigitalContentCount(
       this.props.variant === LineupVariant.CONTENT_LIST
         ? LineupVariant.CONTENT_LIST
         : LineupVariant.MAIN,
       MINIMUM_INITIAL_LOAD_AGREEMENTS_MULTIPLIER
     )
-    const initialAgreementLoadCount = getLoadMoreAgreementCount(
+    const initialDigitalContentLoadCount = getLoadMoreDigitalContentCount(
       this.props.variant,
       () =>
         this.props.variant === LineupVariant.CONTENT_LIST
           ? INITIAL_CONTENT_LISTS_MULTIPLER
           : INITIAL_LOAD_AGREEMENTS_MULTIPLIER
     )
-    const agreementLoadMoreCount = getLoadMoreAgreementCount(
+    const digitalContentLoadMoreCount = getLoadMoreDigitalContentCount(
       this.props.variant,
       AGREEMENTS_AHEAD_MULTIPLIER
     )
     const page = getInitPage(
       this.props.lineup.entries.length,
-      initialAgreementLoadCount,
-      agreementLoadMoreCount
+      initialDigitalContentLoadCount,
+      digitalContentLoadMoreCount
     )
     props.setPage(page, props.actions.setPage)
     this.state = {
       scrollParent: this.props.scrollParent || null,
       loadMoreThreshold,
-      minimumAgreementLoadCount,
-      initialAgreementLoadCount,
-      agreementLoadMoreCount,
+      minimumDigitalContentLoadCount,
+      initialDigitalContentLoadCount,
+      digitalContentLoadMoreCount,
       loadedTiles: new Array(200)
     }
   }
 
-  togglePlay = (uid: UID, agreementId: ID, source?: PlaybackSource) => {
-    const { playAgreement, pauseAgreement, playing, playingUid, record } = this.props
+  togglePlay = (uid: UID, digitalContentId: ID, source?: PlaybackSource) => {
+    const { playDigitalContent, pauseDigitalContent, playing, playingUid, record } = this.props
     if (uid !== playingUid || (uid === playingUid && !playing)) {
-      playAgreement(uid)
+      playDigitalContent(uid)
       record(
         make(Name.PLAYBACK_PLAY, {
-          id: `${agreementId}`,
+          id: `${digitalContentId}`,
           source: source || PlaybackSource.AGREEMENT_TILE
         })
       )
     } else if (uid === playingUid && playing) {
-      pauseAgreement()
+      pauseDigitalContent()
       record(
         make(Name.PLAYBACK_PAUSE, {
-          id: `${agreementId}`,
+          id: `${digitalContentId}`,
           source: source || PlaybackSource.AGREEMENT_TILE
         })
       )
     }
   }
 
-  pageAgreementCount = () => {
+  pageDigitalContentCount = () => {
     return (
-      this.state.initialAgreementLoadCount +
-      (this.props.lineup.page - 1) * this.state.agreementLoadMoreCount
+      this.state.initialDigitalContentLoadCount +
+      (this.props.lineup.page - 1) * this.state.digitalContentLoadMoreCount
     )
   }
 
@@ -300,7 +300,7 @@ class LineupProvider extends PureComponent<CombinedProps, LineupProviderState> {
       lineup: { page },
       loadMore
     } = this.props
-    const { minimumAgreementLoadCount, agreementLoadMoreCount, initialAgreementLoadCount } =
+    const { minimumDigitalContentLoadCount, digitalContentLoadMoreCount, initialDigitalContentLoadCount } =
       this.state
     const lineupLength = lineup.entries.length
     const offset = lineupLength + lineup.deleted + lineup.nullCount
@@ -308,15 +308,15 @@ class LineupProvider extends PureComponent<CombinedProps, LineupProviderState> {
       (!limit || lineupLength !== limit) &&
       loadMore &&
       lineupLength < count &&
-      (page === 0 || this.pageAgreementCount() <= offset)
+      (page === 0 || this.pageDigitalContentCount() <= offset)
     ) {
-      const agreementLoadCount =
+      const digitalContentLoadCount =
         page === 0
-          ? initialAgreementLoadCount
-          : initialAgreementLoadCount + page * agreementLoadMoreCount
+          ? initialDigitalContentLoadCount
+          : initialDigitalContentLoadCount + page * digitalContentLoadMoreCount
       this.props.setPage(page + 1, this.props.actions.setPage)
       const limit =
-        Math.min(agreementLoadCount, Math.max(count, minimumAgreementLoadCount)) -
+        Math.min(digitalContentLoadCount, Math.max(count, minimumDigitalContentLoadCount)) -
         offset
       loadMore(offset, limit, page === 0)
     }
@@ -326,7 +326,7 @@ class LineupProvider extends PureComponent<CombinedProps, LineupProviderState> {
     const lineupLength = this.props.lineup.entries.length
     if (
       this.props.selfLoad &&
-      lineupLength < this.state.minimumAgreementLoadCount
+      lineupLength < this.state.minimumDigitalContentLoadCount
     ) {
       this.loadMore()
     }
@@ -349,7 +349,7 @@ class LineupProvider extends PureComponent<CombinedProps, LineupProviderState> {
       const scrollParent = this.props.scrollParent
       this.setState({
         scrollParent,
-        agreementLoadMoreCount: getLoadMoreAgreementCount(
+        digitalContentLoadMoreCount: getLoadMoreDigitalContentCount(
           this.props.variant,
           AGREEMENTS_AHEAD_MULTIPLIER
         )
@@ -368,11 +368,11 @@ class LineupProvider extends PureComponent<CombinedProps, LineupProviderState> {
       }
     }
 
-    // Currently when requesting agreements with a limit, the backend may return more than the requested number of agreements.
-    // So, for pagination and loading more agreements, the lineup metadatas may have more than the 'pageAgreementCount'
+    // Currently when requesting digitalContents with a limit, the backend may return more than the requested number of digitalContents.
+    // So, for pagination and loading more digitalContents, the lineup metadatas may have more than the 'pageDigitalContentCount'
     if (
       prevProps.lineup.isMetadataLoading &&
-      this.props.lineup.entries.length >= this.pageAgreementCount()
+      this.props.lineup.entries.length >= this.pageDigitalContentCount()
     ) {
       const container = this.scrollContainer.current
       const { scrollParent: parent, loadMoreThreshold: threshold } = this.state
@@ -407,20 +407,20 @@ class LineupProvider extends PureComponent<CombinedProps, LineupProviderState> {
   // If the uid of the currently playing digital_content is not in the lineup, check if the digital_content and is playing
   // then return the first uid of the first digital_content that matches else the uid
   getPlayingUid = () => {
-    const { lineup, playingAgreementId, playingSource, playingUid } = this.props
+    const { lineup, playingDigitalContentId, playingSource, playingUid } = this.props
 
     const isLineupPlaying = lineup.entries.some((entry) => {
       if (entry.digital_content_id) return playingUid === entry.uid
       else if (entry.content_list_id)
-        return entry.agreements.some((digital_content: any) => digital_content.uid === playingUid)
+        return entry.digitalContents.some((digital_content: any) => digital_content.uid === playingUid)
       return false
     })
-    if (playingAgreementId && !isLineupPlaying && lineup.prefix === playingSource) {
+    if (playingDigitalContentId && !isLineupPlaying && lineup.prefix === playingSource) {
       for (const entry of lineup.entries) {
-        if (entry.digital_content_id === playingAgreementId) return entry.uid
+        if (entry.digital_content_id === playingDigitalContentId) return entry.uid
         if (entry.content_list_id) {
-          for (const digital_content of entry.agreements) {
-            if (digital_content.digital_content_id === playingAgreementId) return digital_content.uid
+          for (const digital_content of entry.digitalContents) {
+            if (digital_content.digital_content_id === playingDigitalContentId) return digital_content.uid
           }
         }
       }
@@ -458,10 +458,10 @@ class LineupProvider extends PureComponent<CombinedProps, LineupProviderState> {
       lineup,
       variant,
       ordered,
-      playAgreement,
-      pauseAgreement,
+      playDigitalContent,
+      pauseDigitalContent,
       delineate,
-      playingAgreementId,
+      playingDigitalContentId,
       leadingElementId,
       leadingElementDelineator,
       leadingElementTileProps,
@@ -484,39 +484,39 @@ class LineupProvider extends PureComponent<CombinedProps, LineupProviderState> {
     const status = lineup.status
     const {
       loadMoreThreshold,
-      initialAgreementLoadCount,
-      agreementLoadMoreCount,
+      initialDigitalContentLoadCount,
+      digitalContentLoadMoreCount,
       scrollParent
     } = this.state
 
-    let tileSize: AgreementTileSize
+    let tileSize: DigitalContentTileSize
     let lineupStyle = {}
     let containerClassName: string
     if (variant === LineupVariant.MAIN || variant === LineupVariant.CONTENT_LIST) {
-      tileSize = AgreementTileSize.LARGE
+      tileSize = DigitalContentTileSize.LARGE
       lineupStyle = styles.main
     } else if (variant === LineupVariant.SECTION) {
-      tileSize = AgreementTileSize.SMALL
+      tileSize = DigitalContentTileSize.SMALL
       lineupStyle = styles.section
-      containerClassName = styles.searchAgreementTileContainer
+      containerClassName = styles.searchDigitalContentTileContainer
     } else if (variant === LineupVariant.CONDENSED) {
-      tileSize = AgreementTileSize.SMALL
+      tileSize = DigitalContentTileSize.SMALL
       lineupStyle = styles.section
     }
 
     lineup.entries = lineup.entries || []
 
     // If the lineup is supposed to display a fixed count, make sure to skip over deleted
-    // agreements. E.g. if a lineup is supposed to show a count of 5, but two entries are deleted
+    // digitalContents. E.g. if a lineup is supposed to show a count of 5, but two entries are deleted
     // show 7 instead.
     const lineupCount = count !== undefined ? count : lineup.entries.length
     let tiles = lineup.entries
       .map((entry, index) => {
         if (entry.kind === Kind.AGREEMENTS || entry.digital_content_id) {
-          // Render a digital_content tile if the kind agreements or there's a digital_content id present
+          // Render a digital_content tile if the kind digitalContents or there's a digital_content id present
 
           if (entry._marked_deleted) return null
-          let agreementProps = {
+          let digitalContentProps = {
             ...entry,
             key: index,
             index,
@@ -532,11 +532,11 @@ class LineupProvider extends PureComponent<CombinedProps, LineupProviderState> {
             showRankIcon: index < rankIconCount
           }
           if (entry.id === leadingElementId) {
-            agreementProps = { ...agreementProps, ...leadingElementTileProps }
+            digitalContentProps = { ...digitalContentProps, ...leadingElementTileProps }
           }
-          return <this.props.agreementTile key={index} {...agreementProps} />
+          return <this.props.digitalContentTile key={index} {...digitalContentProps} />
         } else if (entry.kind === Kind.COLLECTIONS || entry.content_list_id) {
-          // Render a digital_content tile if the kind agreements or there's a digital_content id present
+          // Render a digital_content tile if the kind digitalContents or there's a digital_content id present
 
           const contentListProps = {
             ...entry,
@@ -545,9 +545,9 @@ class LineupProvider extends PureComponent<CombinedProps, LineupProviderState> {
             uid: entry.uid,
             size: tileSize,
             ordered,
-            playAgreement,
-            pauseAgreement,
-            playingAgreementId,
+            playDigitalContent,
+            pauseDigitalContent,
+            playingDigitalContentId,
             togglePlay: this.togglePlay,
             isLoading: !this.canLoad(index),
             hasLoaded: this.hasLoaded,
@@ -561,12 +561,12 @@ class LineupProvider extends PureComponent<CombinedProps, LineupProviderState> {
         // Poorly formed digital_content or contentList metatdata.
         return null
       })
-      // Remove nulls (invalid contentLists or agreements)
+      // Remove nulls (invalid contentLists or digitalContents)
       .filter(Boolean)
       .slice(start, lineupCount)
 
     const tilesDisplayCount =
-      page <= 1 ? initialAgreementLoadCount : this.pageAgreementCount()
+      page <= 1 ? initialDigitalContentLoadCount : this.pageDigitalContentCount()
     if (
       isMetadataLoading &&
       lineup.hasMore &&
@@ -599,7 +599,7 @@ class LineupProvider extends PureComponent<CombinedProps, LineupProviderState> {
         const SkeletonTileElement =
           variant === LineupVariant.CONTENT_LIST
             ? this.props.contentListTile
-            : this.props.agreementTile
+            : this.props.digitalContentTile
         // If elected to apply leading element styles to the skeletons
         // Create featured content structure around firest skeleton tile
         if (
@@ -647,8 +647,8 @@ class LineupProvider extends PureComponent<CombinedProps, LineupProviderState> {
     }
 
     if (status === Status.ERROR) {
-      // Error could mean no agreements or some agreements had an error loading.
-      // TODO: Distinguish between no agreements and error'd agreements
+      // Error could mean no digitalContents or some digitalContents had an error loading.
+      // TODO: Distinguish between no digitalContents and error'd digitalContents
       tiles = []
     }
 
@@ -673,9 +673,9 @@ class LineupProvider extends PureComponent<CombinedProps, LineupProviderState> {
       featuredTiles = featured
     }
     const allTiles = featuredTiles.concat(tiles)
-    const featuredAgreementUid =
+    const featuredDigitalContentUid =
       featuredTiles.length > 0 ? featuredTiles[0].props.uid : null
-    const allAgreements = allTiles.reduce((acc, digital_content) => {
+    const allDigitalContents = allTiles.reduce((acc, digital_content) => {
       acc[digital_content.props.uid] = digital_content
       return acc
     }, {})
@@ -683,11 +683,11 @@ class LineupProvider extends PureComponent<CombinedProps, LineupProviderState> {
     // Can load more:
     // If (the limit is not set OR the number of digital_content in the lineup is not equal to the limit)
     // AND (the lineup count is less than the count or less than the max tile count if not set)
-    // AND (the number of agreements requested is less than the number of agreements in total (in the lineup + deleted))
+    // AND (the number of digitalContents requested is less than the number of digitalContents in total (in the lineup + deleted))
     const canLoadMore =
       (!limit || limit !== lineupCount) &&
       lineupCount <= (count !== undefined ? count : MAX_TILES_COUNT) &&
-      page * agreementLoadMoreCount <= lineupCount + lineup.deleted
+      page * digitalContentLoadMoreCount <= lineupCount + lineup.deleted
 
     const endLineup =
       !lineup.hasMore && !count && endOfLineup ? endOfLineup : null
@@ -700,10 +700,10 @@ class LineupProvider extends PureComponent<CombinedProps, LineupProviderState> {
         key='lineup'
       >
         <Transition
-          items={featuredAgreementUid}
+          items={featuredDigitalContentUid}
           from={{ opacity: 0, marginBottom: 0, maxHeight: 0 }}
           // Set the `initial` value to the same as `enter` signifying that component mounts
-          // of the lineup do not trigger an animation, rather  updates to the featuredAgreementUid do.
+          // of the lineup do not trigger an animation, rather  updates to the featuredDigitalContentUid do.
           initial={{
             opacity: 1,
             marginBottom: 12,
@@ -740,7 +740,7 @@ class LineupProvider extends PureComponent<CombinedProps, LineupProviderState> {
                         maxHeight: props.maxHeight
                       }}
                     >
-                      {allAgreements[featuredId]}
+                      {allDigitalContents[featuredId]}
                     </div>
                   </div>
                 )
@@ -798,7 +798,7 @@ function mapDispatchToProps(dispatch: Dispatch) {
     goToRoute: (route: string) => dispatch(pushRoute(route)),
     setPage: (page: number, setPageAction: (page: number) => any) =>
       dispatch(setPageAction(page)),
-    record: (event: AgreementEvent) => dispatch(event)
+    record: (event: DigitalContentEvent) => dispatch(event)
   }
 }
 

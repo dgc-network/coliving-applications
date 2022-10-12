@@ -30,7 +30,7 @@ export const restrictedHandles = new Set(
     'repost',
     'share',
     'social',
-    'landlord',
+    'author',
     'options',
     'billing',
     'support',

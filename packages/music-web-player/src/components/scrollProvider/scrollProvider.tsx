@@ -26,7 +26,7 @@ export const ScrollContext = createContext<ScrollContextProps>({
 const SCROLL_PRESERVATION_BLACKLIST = [AGREEMENT_PAGE, NOTIFICATION_PAGE]
 
 /**
- * `ScrollProvider` is a context provider that agreements
+ * `ScrollProvider` is a context provider that digitalContents
  * the last maintained scroll position for given route.
  */
 export const ScrollProvider = memo((props: { children: JSX.Element }) => {

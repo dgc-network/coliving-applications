@@ -4,7 +4,7 @@ import { getTrendingGenre } from '@coliving/web/src/common/store/pages/trending/
 import IconAllTime from 'app/assets/images/iconAllTime.svg'
 import IconDay from 'app/assets/images/iconDay.svg'
 import IconMonth from 'app/assets/images/iconMonth.svg'
-import { RewardsBanner } from 'app/components/liveRewards'
+import { RewardsBanner } from 'app/components/digitalcoinRewards'
 import { Screen } from 'app/components/core'
 import { Header } from 'app/components/header'
 import { TopTabNavigator } from 'app/components/topTabBar'
@@ -18,7 +18,7 @@ const ThisWeekTab = () => {
   const trendingGenre = useSelectorWeb(getTrendingGenre)
   return (
     <TrendingLineup
-      header={trendingGenre ? null : <RewardsBanner type='agreements' />}
+      header={trendingGenre ? null : <RewardsBanner type='digitalContents' />}
       timeRange={TimeRange.WEEK}
       rankIconCount={5}
     />

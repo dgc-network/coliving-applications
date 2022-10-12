@@ -13,7 +13,7 @@ export const setRepost = createCustomAction(
   SET_REPOST,
   (id: ID, repostType: RepostType) => ({ id, repostType })
 )
-export const agreementRepostError = createCustomAction(
+export const digitalContentRepostError = createCustomAction(
   GET_AGREEMENT_REPOST_ERROR,
   (id: ID, error: string) => ({ id, error })
 )

@@ -7,13 +7,13 @@ import { Dispatch } from 'redux'
 
 import { getAccountWithOwnContentLists } from 'common/store/account/selectors'
 import {
-  addAgreementToContentList,
+  addDigitalContentToContentList,
   createContentList
 } from 'common/store/cache/collections/actions'
 import { close } from 'common/store/ui/addToContentList/actions'
 import {
-  getAgreementId,
-  getAgreementTitle
+  getDigitalContentId,
+  getDigitalContentTitle
 } from 'common/store/ui/addToContentList/selectors'
 import Card from 'components/card/mobile/card'
 import CardLineup from 'components/lineup/cardLineup'
@@ -40,12 +40,12 @@ export type AddToContentListProps = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>
 
 const g = withNullGuard((props: AddToContentListProps) => {
-  const { account, agreementTitle } = props
-  if (account && agreementTitle) {
+  const { account, digitalContentTitle } = props
+  if (account && digitalContentTitle) {
     return {
       ...props,
       account,
-      agreementTitle
+      digitalContentTitle
     }
   }
 })
@@ -53,11 +53,11 @@ const g = withNullGuard((props: AddToContentListProps) => {
 const AddToContentList = g(
   ({
     account,
-    agreementId,
-    agreementTitle,
+    digitalContentId,
+    digitalContentTitle,
     goToRoute,
     close,
-    addAgreementToContentList,
+    addDigitalContentToContentList,
     createContentList
   }) => {
     // Close the page if the route was changed
@@ -87,7 +87,7 @@ const AddToContentList = g(
           secondaryText={contentList.ownerName}
           onClick={() => {
             toast(messages.addedToast)
-            addAgreementToContentList(agreementId!, contentList.content_list_id)
+            addDigitalContentToContentList(digitalContentId!, contentList.content_list_id)
             close()
           }}
         />
@@ -96,21 +96,21 @@ const AddToContentList = g(
 
     const addToNewContentList = useCallback(() => {
       const metadata = newCollectionMetadata({
-        content_list_name: agreementTitle,
+        content_list_name: digitalContentTitle,
         is_private: false
       })
       const tempId = `${Date.now()}`
-      createContentList(tempId, metadata, agreementId!)
-      addAgreementToContentList(agreementId!, tempId)
+      createContentList(tempId, metadata, digitalContentId!)
+      addDigitalContentToContentList(digitalContentId!, tempId)
       toast(messages.createdToast)
-      goToRoute(contentListPage(account.handle, agreementTitle, tempId))
+      goToRoute(contentListPage(account.handle, digitalContentTitle, tempId))
       close()
     }, [
       account,
-      agreementId,
-      agreementTitle,
+      digitalContentId,
+      digitalContentTitle,
       createContentList,
-      addAgreementToContentList,
+      addDigitalContentToContentList,
       goToRoute,
       close,
       toast
@@ -132,23 +132,23 @@ const AddToContentList = g(
 function mapStateToProps(state: AppState) {
   return {
     account: getAccountWithOwnContentLists(state),
-    agreementId: getAgreementId(state),
-    agreementTitle: getAgreementTitle(state)
+    digitalContentId: getDigitalContentId(state),
+    digitalContentTitle: getDigitalContentTitle(state)
   }
 }
 
 function mapDispatchToProps(dispatch: Dispatch) {
   return {
     goToRoute: (route: string) => dispatch(pushRoute(route)),
-    addAgreementToContentList: (agreementId: ID, contentListId: ID | string) =>
-      dispatch(addAgreementToContentList(agreementId, contentListId)),
-    createContentList: (tempId: string, metadata: Collection, agreementId: ID) =>
+    addDigitalContentToContentList: (digitalContentId: ID, contentListId: ID | string) =>
+      dispatch(addDigitalContentToContentList(digitalContentId, contentListId)),
+    createContentList: (tempId: string, metadata: Collection, digitalContentId: ID) =>
       dispatch(
         createContentList(
           tempId,
           metadata,
           CreateContentListSource.FROM_AGREEMENT,
-          agreementId
+          digitalContentId
         )
       ),
     close: () => dispatch(close())

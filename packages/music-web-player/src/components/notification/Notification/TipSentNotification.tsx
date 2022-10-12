@@ -2,14 +2,14 @@ import { useCallback } from 'react'
 
 import { Name } from '@coliving/common'
 
-import { useUIAudio } from 'common/hooks/useUILive'
+import { useUIAudio } from 'common/hooks/useUIDigitalcoin'
 import { getNotificationUser } from 'common/store/notifications/selectors'
 import { TipSend } from 'common/store/notifications/types'
 import { make } from 'store/analytics/actions'
 import { useSelector } from 'utils/reducer'
 
 import styles from './TipSentNotification.module.css'
-import { LiveText } from './components/liveText'
+import { LiveText } from './components/digitalcoinText'
 import { NotificationBody } from './components/notificationBody'
 import { NotificationFooter } from './components/notificationFooter'
 import { NotificationHeader } from './components/notificationHeader'
@@ -26,7 +26,7 @@ const messages = {
   sent: 'You successfully sent a tip of',
   to: 'to',
   twitterShare: (senderHandle: string, uiAmount: number) =>
-    `I just tipped ${senderHandle} ${uiAmount} $LIVE on @dgc-network #Coliving #LIVETip`
+    `I just tipped ${senderHandle} ${uiAmount} $DGCO on @dgc-network #Coliving #LIVETip`
 }
 
 type TipSentNotificationProps = {

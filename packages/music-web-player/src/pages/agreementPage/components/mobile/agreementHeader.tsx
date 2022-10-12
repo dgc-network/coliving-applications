@@ -24,16 +24,16 @@ import { Size } from 'components/coSign/types'
 import DownloadButtons from 'components/downloadButtons/downloadButtons'
 import DynamicImage from 'components/dynamicImage/dynamicImage'
 import UserBadges from 'components/userBadges/userBadges'
-import { useAgreementCoverArt } from 'hooks/useAgreementCoverArt'
+import { useDigitalContentCoverArt } from 'hooks/useDigitalContentCoverArt'
 import { make, useRecord } from 'store/analytics/actions'
 import { moodMap } from 'utils/moods'
 import { isDarkMode } from 'utils/theme/theme'
 
-import HiddenAgreementHeader from '../hiddenAgreementHeader'
+import HiddenDigitalContentHeader from '../hiddenDigitalContentHeader'
 
 import ActionButtonRow from './actionButtonRow'
 import StatsButtonRow from './statsButtonRow'
-import styles from './agreementHeader.module.css'
+import styles from './digitalContentHeader.module.css'
 
 const messages = {
   digital_content: 'AGREEMENT',
@@ -62,7 +62,7 @@ const PlayButton = (props: { playing: boolean; onPlay: () => void }) => {
   )
 }
 
-type AgreementHeaderProps = {
+type DigitalContentHeaderProps = {
   isLoading: boolean
   isPlaying: boolean
   isOwner: boolean
@@ -70,7 +70,7 @@ type AgreementHeaderProps = {
   isReposted: boolean
   isFollowing: boolean
   title: string
-  agreementId: ID
+  digitalContentId: ID
   userId: ID
   coverArtSizes: CoverArtSizes | null
   landlordName: string
@@ -92,7 +92,7 @@ type AgreementHeaderProps = {
   onClickTag: (tag: string) => void
   onClickLandlordName: () => void
   onClickMobileOverflow: (
-    agreementId: ID,
+    digitalContentId: ID,
     overflowActions: OverflowAction[]
   ) => void
   onPlay: () => void
@@ -100,18 +100,18 @@ type AgreementHeaderProps = {
   onSave: () => void
   onRepost: () => void
   onDownload: (
-    agreementId: ID,
+    digitalContentId: ID,
     cid: CID,
     category?: string,
-    parentAgreementId?: ID
+    parentDigitalContentId?: ID
   ) => void
-  goToFavoritesPage: (agreementId: ID) => void
-  goToRepostsPage: (agreementId: ID) => void
+  goToFavoritesPage: (digitalContentId: ID) => void
+  goToRepostsPage: (digitalContentId: ID) => void
 }
 
-const AgreementHeader = ({
+const DigitalContentHeader = ({
   title,
-  agreementId,
+  digitalContentId,
   userId,
   coverArtSizes,
   landlordName,
@@ -146,18 +146,18 @@ const AgreementHeader = ({
   onClickMobileOverflow,
   goToFavoritesPage,
   goToRepostsPage
-}: AgreementHeaderProps) => {
-  const image = useAgreementCoverArt(
-    agreementId,
+}: DigitalContentHeaderProps) => {
+  const image = useDigitalContentCoverArt(
+    digitalContentId,
     coverArtSizes,
     SquareSizes.SIZE_480_BY_480
   )
-  const onSaveHeroAgreement = () => {
+  const onSaveHeroDigitalContent = () => {
     if (!isOwner) onSave()
   }
   const filteredTags = (tags || '').split(',').filter(Boolean)
 
-  const agreementLabels: { isHidden?: boolean; label: string; value: any }[] = [
+  const digitalContentLabels: { isHidden?: boolean; label: string; value: any }[] = [
     {
       label: 'Duration',
       value: formatSeconds(duration)
@@ -209,7 +209,7 @@ const AgreementHeader = ({
       OverflowAction.VIEW_LANDLORD_PAGE
     ].filter(Boolean) as OverflowAction[]
 
-    onClickMobileOverflow(agreementId, overflowActions)
+    onClickMobileOverflow(digitalContentId, overflowActions)
   }
 
   const renderTags = () => {
@@ -237,7 +237,7 @@ const AgreementHeader = ({
     return (
       <DownloadButtons
         className={styles.downloadButtonsContainer}
-        agreementId={agreementId}
+        digitalContentId={digitalContentId}
         isOwner={isOwner}
         following={isFollowing}
         onDownload={onDownload}
@@ -245,8 +245,8 @@ const AgreementHeader = ({
     )
   }
 
-  const renderAgreementLabels = () => {
-    return agreementLabels.map((infoFact) => {
+  const renderDigitalContentLabels = () => {
+    return digitalContentLabels.map((infoFact) => {
       return (
         <div key={infoFact.label} className={styles.infoFact}>
           <h2 className={styles.infoLabel}>{infoFact.label}</h2>
@@ -257,12 +257,12 @@ const AgreementHeader = ({
   }
 
   const onClickFavorites = useCallback(() => {
-    goToFavoritesPage(agreementId)
-  }, [goToFavoritesPage, agreementId])
+    goToFavoritesPage(digitalContentId)
+  }, [goToFavoritesPage, digitalContentId])
 
   const onClickReposts = useCallback(() => {
-    goToRepostsPage(agreementId)
-  }, [goToRepostsPage, agreementId])
+    goToRepostsPage(digitalContentId)
+  }, [goToRepostsPage, digitalContentId])
 
   const imageElement = coSign ? (
     <CoSign
@@ -283,10 +283,10 @@ const AgreementHeader = ({
   )
 
   return (
-    <div className={styles.agreementHeader}>
+    <div className={styles.digitalContentHeader}>
       {isUnlisted ? (
-        <div className={styles.hiddenAgreementHeaderWrapper}>
-          <HiddenAgreementHeader />
+        <div className={styles.hiddenDigitalContentHeaderWrapper}>
+          <HiddenDigitalContentHeader />
         </div>
       ) : (
         <div className={styles.typeLabel}>
@@ -295,7 +295,7 @@ const AgreementHeader = ({
       )}
       {imageElement}
       <h1 className={styles.title}>{title}</h1>
-      <div className={styles.landlord} onClick={onClickLandlordName}>
+      <div className={styles.author} onClick={onClickLandlordName}>
         <h2>{landlordName}</h2>
         <UserBadges
           className={styles.verified}
@@ -316,7 +316,7 @@ const AgreementHeader = ({
           isSaved={isSaved}
           onClickOverflow={onClickOverflow}
           onRepost={onRepost}
-          onFavorite={onSaveHeroAgreement}
+          onFavorite={onSaveHeroDigitalContent}
           onShare={onShare}
           darkMode={isDarkMode()}
         />
@@ -353,7 +353,7 @@ const AgreementHeader = ({
           [styles.noStats]: isUnlisted && !fieldVisibility.play_count
         })}
       >
-        {renderAgreementLabels()}
+        {renderDigitalContentLabels()}
       </div>
       {renderDownloadButtons()}
       {renderTags()}
@@ -361,7 +361,7 @@ const AgreementHeader = ({
   )
 }
 
-AgreementHeader.defaultProps = {
+DigitalContentHeader.defaultProps = {
   loading: false,
   playing: false,
   active: true,
@@ -371,7 +371,7 @@ AgreementHeader.defaultProps = {
 
   isOwner: false,
   isAlbum: false,
-  hasAgreements: false,
+  hasDigitalContents: false,
   isPublished: false,
   isSaved: false,
 
@@ -380,4 +380,4 @@ AgreementHeader.defaultProps = {
   onPlay: () => {}
 }
 
-export default AgreementHeader
+export default DigitalContentHeader

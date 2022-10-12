@@ -7,14 +7,14 @@ import { useParams } from 'react-router'
 import { Dispatch } from 'redux'
 
 import { makeGetLineupMetadatas } from 'common/store/lineup/selectors'
-import { agreementsActions } from 'common/store/pages/remixes/lineup/actions'
+import { digitalContentsActions } from 'common/store/pages/remixes/lineup/actions'
 import {
-  getAgreement,
+  getDigitalContent,
   getUser,
   getLineup,
   getCount
 } from 'common/store/pages/remixes/selectors'
-import { fetchAgreement, reset } from 'common/store/pages/remixes/slice'
+import { fetchDigitalContent, reset } from 'common/store/pages/remixes/slice'
 import { makeGetCurrent } from 'common/store/queue/selectors'
 import { LineupVariant } from 'components/lineup/types'
 import { getPlaying, getBuffering } from 'store/player/selectors'
@@ -45,10 +45,10 @@ const RemixesPageProvider = ({
   containerRef,
   children: Children,
   count,
-  originalAgreement,
+  originalDigitalContent,
   user,
-  agreements,
-  fetchAgreement,
+  digitalContents,
+  fetchDigitalContent,
   currentQueueItem,
   isPlaying,
   isBuffering,
@@ -57,25 +57,25 @@ const RemixesPageProvider = ({
   loadMore,
   goToRoute,
   reset,
-  resetAgreements
+  resetDigitalContents
 }: RemixesPageProviderProps) => {
   const { handle, slug } = useParams<{ handle: string; slug: string }>()
   useEffect(() => {
-    fetchAgreement(handle, slug)
-  }, [handle, slug, fetchAgreement])
+    fetchDigitalContent(handle, slug)
+  }, [handle, slug, fetchDigitalContent])
 
   useEffect(() => {
     return function cleanup() {
       reset()
-      resetAgreements()
+      resetDigitalContents()
     }
-  }, [reset, resetAgreements])
+  }, [reset, resetDigitalContents])
 
-  const goToAgreementPage = useCallback(() => {
-    if (user && originalAgreement) {
-      goToRoute(originalAgreement.permalink)
+  const goToDigitalContentPage = useCallback(() => {
+    if (user && originalDigitalContent) {
+      goToRoute(originalDigitalContent.permalink)
     }
-  }, [goToRoute, originalAgreement, user])
+  }, [goToRoute, originalDigitalContent, user])
 
   const goToLandlordPage = useCallback(() => {
     if (user) {
@@ -88,18 +88,18 @@ const RemixesPageProvider = ({
       selfLoad: true,
       variant: LineupVariant.MAIN,
       containerRef,
-      lineup: agreements,
+      lineup: digitalContents,
       playingUid: currentQueueItem.uid,
       playingSource: currentQueueItem.source,
-      playingAgreementId: currentQueueItem.digital_content && currentQueueItem.digital_content.digital_content_id,
+      playingDigitalContentId: currentQueueItem.digital_content && currentQueueItem.digital_content.digital_content_id,
       playing: isPlaying,
       buffering: isBuffering,
-      pauseAgreement: pause,
-      playAgreement: play,
-      actions: agreementsActions,
+      pauseDigitalContent: pause,
+      playDigitalContent: play,
+      actions: digitalContentsActions,
       scrollParent: containerRef as any,
       loadMore: (offset: number, limit: number) => {
-        loadMore(offset, limit, { agreementId: originalAgreement?.digital_content_id ?? null })
+        loadMore(offset, limit, { digitalContentId: originalDigitalContent?.digital_content_id ?? null })
       }
     }
   }
@@ -107,9 +107,9 @@ const RemixesPageProvider = ({
   const childProps = {
     title: messages.title,
     count,
-    originalAgreement,
+    originalDigitalContent,
     user,
-    goToAgreementPage,
+    goToDigitalContentPage,
     goToLandlordPage,
     getLineupProps
   }
@@ -118,15 +118,15 @@ const RemixesPageProvider = ({
 }
 
 function makeMapStateToProps() {
-  const getRemixesAgreementsLineup = makeGetLineupMetadatas(getLineup)
+  const getRemixesDigitalContentsLineup = makeGetLineupMetadatas(getLineup)
   const getCurrentQueueItem = makeGetCurrent()
 
   const mapStateToProps = (state: AppState) => {
     return {
       user: getUser(state),
-      originalAgreement: getAgreement(state),
+      originalDigitalContent: getDigitalContent(state),
       count: getCount(state),
-      agreements: getRemixesAgreementsLineup(state),
+      digitalContents: getRemixesDigitalContentsLineup(state),
       currentQueueItem: getCurrentQueueItem(state),
       isPlaying: getPlaying(state),
       isBuffering: getBuffering(state)
@@ -138,20 +138,20 @@ function makeMapStateToProps() {
 function mapDispatchToProps(dispatch: Dispatch) {
   return {
     goToRoute: (route: string) => dispatch(pushRoute(route)),
-    fetchAgreement: (handle: string, slug: string) =>
-      dispatch(fetchAgreement({ handle, slug })),
+    fetchDigitalContent: (handle: string, slug: string) =>
+      dispatch(fetchDigitalContent({ handle, slug })),
     loadMore: (
       offset: number,
       limit: number,
-      payload: { agreementId: ID | null }
+      payload: { digitalContentId: ID | null }
     ) =>
       dispatch(
-        agreementsActions.fetchLineupMetadatas(offset, limit, false, payload)
+        digitalContentsActions.fetchLineupMetadatas(offset, limit, false, payload)
       ),
-    pause: () => dispatch(agreementsActions.pause()),
-    play: (uid?: string) => dispatch(agreementsActions.play(uid)),
+    pause: () => dispatch(digitalContentsActions.pause()),
+    play: (uid?: string) => dispatch(digitalContentsActions.play(uid)),
     reset: () => dispatch(reset()),
-    resetAgreements: () => dispatch(agreementsActions.reset())
+    resetDigitalContents: () => dispatch(digitalContentsActions.reset())
   }
 }
 

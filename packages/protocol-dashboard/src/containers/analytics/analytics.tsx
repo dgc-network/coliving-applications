@@ -12,7 +12,7 @@ import UniqueUsersChart from 'components/uniqueUsersChart'
 import TotalStakedChart from 'components/totalStakedChart'
 import TopAppsChart from 'components/topAppsChart'
 import TopGenresChart from 'components/topGenresChart'
-import TopAgreements from 'components/topAgreements'
+import TopDigitalContents from 'components/topDigitalContents'
 import TopContentLists from 'components/topContentLists'
 import TopAlbums from 'components/topAlbums'
 import { createStyles } from 'utils/mobile'
@@ -49,7 +49,7 @@ const Analytics: React.FC<AnalyticsProps> = () => {
         <TopGenresChart />
       </div>
       <div className={styles.medium}>
-        <TopAgreements />
+        <TopDigitalContents />
       </div>
       <div className={styles.section}>
         <TopAlbums />

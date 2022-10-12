@@ -9,15 +9,15 @@ import {
   NotificationText,
   NotificationTitle,
   NotificationTwitterButton
-} from '../Notification'
+} from '../notification'
 
 const messages = {
-  amountEarned: (amount: number) => `You've earned ${amount} $LIVE`,
+  amountEarned: (amount: number) => `You've earned ${amount} $DGCO`,
   referredText:
     ' for being referred! Invite your friends to join to earn more!',
   challengeCompleteText: ' for completing this challenge!',
   twitterShareText:
-    'I earned $LIVE for completing challenges on @dgc-network #LiveRewards'
+    'I earned $DGCO for completing challenges on @dgc-network #DigitalcoinRewards'
 }
 
 const challengeInfoMap: Record<
@@ -33,7 +33,7 @@ const challengeInfoMap: Record<
     amount: 1
   },
   'digital-content-upload': {
-    title: '🎶 Upload 3 Agreements',
+    title: '🎶 Upload 3 DigitalContents',
     amount: 1
   },
   referrals: {

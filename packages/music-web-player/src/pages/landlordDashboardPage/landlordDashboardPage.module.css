@@ -64,7 +64,7 @@
   padding-left: 24px !important;
 }
 
-.agreementName {
+.digitalContentName {
   max-width: 350px;
   white-space: nowrap;
   overflow: hidden;
@@ -97,7 +97,7 @@
   margin-left: 8px;
 }
 
-.agreementsTableWrapper {
+.digitalContentsTableWrapper {
   margin-top: 50px;
 }
 

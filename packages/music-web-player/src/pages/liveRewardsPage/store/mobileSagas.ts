@@ -5,7 +5,7 @@ import {
   fetchCognitoFlowUrlFailed,
   fetchCognitoFlowUrlSucceeded,
   updateHCaptchaScore
-} from 'common/store/pages/liveRewards/slice'
+} from 'common/store/pages/digitalcoinRewards/slice'
 import {
   CognitoFlowResponse,
   getCognitoFlow

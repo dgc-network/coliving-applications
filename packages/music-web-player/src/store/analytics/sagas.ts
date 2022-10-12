@@ -9,7 +9,7 @@ import * as analyticsProvider from './providers'
 
 const NATIVE_MOBILE = process.env.REACT_APP_NATIVE_MOBILE
 
-function* agreementEventAsync(action: any) {
+function* digitalContentEventAsync(action: any) {
   const { eventName, callback, ...eventProps } = action
   yield call(analyticsProvider.digital_content, eventName, eventProps, callback)
 }
@@ -18,8 +18,8 @@ function* identifyEventAsync(action: any) {
   yield call(analyticsProvider.identify, action.handle, action.traits)
 }
 
-function* watchAgreementEvent() {
-  yield takeEvery(analyticsActions.AGREEMENT, agreementEventAsync)
+function* watchDigitalContentEvent() {
+  yield takeEvery(analyticsActions.AGREEMENT, digitalContentEventAsync)
 }
 
 function* watchIdentifyEvent() {
@@ -32,7 +32,7 @@ function* initProviders() {
   }
 }
 
-function* agreementLocation() {
+function* digitalContentLocation() {
   while (true) {
     const {
       payload: {
@@ -61,5 +61,5 @@ function* agreementLocation() {
 }
 
 export default function sagas() {
-  return [initProviders, watchAgreementEvent, watchIdentifyEvent, agreementLocation]
+  return [initProviders, watchDigitalContentEvent, watchIdentifyEvent, digitalContentLocation]
 }

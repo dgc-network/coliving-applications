@@ -43,7 +43,7 @@ export const getAccountVerified = createSelector(
   [internalGetAccountUser],
   (user) => (user ? user.is_verified : false)
 )
-export const getAccountHasAgreements = createSelector(
+export const getAccountHasDigitalContents = createSelector(
   [internalGetAccountUser],
   (user) => (user ? user.digital_content_count > 0 : false)
 )

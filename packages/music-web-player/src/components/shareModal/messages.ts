@@ -14,7 +14,7 @@ export const messages = {
   tikTok: 'Share Sound to TikTok',
   copyLink: (asset: ShareType) => `Copy Link to ${shareTypeMap[asset]}`,
   toast: (asset: ShareType) => `Copied Link to ${shareTypeMap[asset]}`,
-  agreementShareText: (title: string, handle: string) =>
+  digitalContentShareText: (title: string, handle: string) =>
     `Check out ${title} by ${handle} on @dgc-network #Coliving`,
   profileShareText: (handle: string) =>
     `Check out ${handle} on @dgc-network #Coliving`,

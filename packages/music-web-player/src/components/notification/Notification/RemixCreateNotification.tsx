@@ -8,7 +8,7 @@ import {
   getNotificationEntities,
   getNotificationUser
 } from 'common/store/notifications/selectors'
-import { RemixCreate, AgreementEntity } from 'common/store/notifications/types'
+import { RemixCreate, DigitalContentEntity } from 'common/store/notifications/types'
 import { make } from 'store/analytics/actions'
 import { useSelector } from 'utils/reducer'
 
@@ -26,7 +26,7 @@ import { getEntityLink } from './utils'
 const messages = {
   title: 'New remix of your digital_content',
   by: 'by',
-  shareTwitterText: (digital_content: AgreementEntity, handle: string) =>
+  shareTwitterText: (digital_content: DigitalContentEntity, handle: string) =>
     `New remix of ${digital_content.title} by ${handle} on @dgc-network #Coliving`
 }
 
@@ -38,58 +38,58 @@ export const RemixCreateNotification = (
   props: RemixCreateNotificationProps
 ) => {
   const { notification } = props
-  const { entityType, timeLabel, isViewed, childAgreementId, parentAgreementId } =
+  const { entityType, timeLabel, isViewed, childDigitalContentId, parentDigitalContentId } =
     notification
   const dispatch = useDispatch()
   const user = useSelector((state) => getNotificationUser(state, notification))
 
-  // TODO: casting from EntityType to AgreementEntity here, but
+  // TODO: casting from EntityType to DigitalContentEntity here, but
   // getNotificationEntities should be smart enough based on notif type
-  const agreements = useSelector((state) =>
+  const digitalContents = useSelector((state) =>
     getNotificationEntities(state, notification)
-  ) as Nullable<AgreementEntity[]>
+  ) as Nullable<DigitalContentEntity[]>
 
-  const childAgreement = agreements?.find((digital_content) => digital_content.digital_content_id === childAgreementId)
+  const childDigitalContent = digitalContents?.find((digital_content) => digital_content.digital_content_id === childDigitalContentId)
 
-  const parentAgreement = agreements?.find((digital_content) => digital_content.digital_content_id === parentAgreementId)
+  const parentDigitalContent = digitalContents?.find((digital_content) => digital_content.digital_content_id === parentDigitalContentId)
 
   const handleClick = useCallback(() => {
-    if (childAgreement) {
-      dispatch(push(getEntityLink(childAgreement)))
+    if (childDigitalContent) {
+      dispatch(push(getEntityLink(childDigitalContent)))
     }
-  }, [childAgreement, dispatch])
+  }, [childDigitalContent, dispatch])
 
   const handleShare = useCallback(
     (twitterHandle: string) => {
-      if (!parentAgreement) return null
-      const shareText = messages.shareTwitterText(parentAgreement, twitterHandle)
+      if (!parentDigitalContent) return null
+      const shareText = messages.shareTwitterText(parentDigitalContent, twitterHandle)
       const analytics = make(
         Name.NOTIFICATIONS_CLICK_REMIX_CREATE_TWITTER_SHARE,
         { text: shareText }
       )
       return { shareText, analytics }
     },
-    [parentAgreement]
+    [parentDigitalContent]
   )
 
-  if (!user || !parentAgreement || !childAgreement) return null
+  if (!user || !parentDigitalContent || !childDigitalContent) return null
 
   return (
     <NotificationTile notification={notification} onClick={handleClick}>
       <NotificationHeader icon={<IconRemix />}>
         <NotificationTitle>
           {messages.title}{' '}
-          <EntityLink entity={parentAgreement} entityType={entityType} />
+          <EntityLink entity={parentDigitalContent} entityType={entityType} />
         </NotificationTitle>
       </NotificationHeader>
       <NotificationBody>
-        <EntityLink entity={childAgreement} entityType={entityType} /> {messages.by}{' '}
+        <EntityLink entity={childDigitalContent} entityType={entityType} /> {messages.by}{' '}
         <UserNameLink user={user} notification={notification} />
       </NotificationBody>
       <TwitterShareButton
         type='dynamic'
         handle={user.handle}
-        url={getEntityLink(parentAgreement, true)}
+        url={getEntityLink(parentDigitalContent, true)}
         shareData={handleShare}
       />
       <NotificationFooter timeLabel={timeLabel} isViewed={isViewed} />

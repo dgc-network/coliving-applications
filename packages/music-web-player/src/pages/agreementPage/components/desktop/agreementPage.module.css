@@ -1,4 +1,4 @@
-.agreementPageWrapper {
+.digitalContentPageWrapper {
   position: relative;
 }
 
@@ -52,16 +52,16 @@
   font-size: var(--font-xl);
 }
 
-.originalAgreementDelineator > *:first-child {
+.originalDigitalContentDelineator > *:first-child {
   margin-bottom: 72px;
 }
 
-.originalAgreement {
+.originalDigitalContent {
   display: flex;
   justify-content: center;
   margin: auto -60px 0px !important;
 }
 
-.originalAgreement > * {
+.originalDigitalContent > * {
   width: 834px;
 }

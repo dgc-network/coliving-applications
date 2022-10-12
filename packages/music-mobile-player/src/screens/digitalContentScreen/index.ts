@@ -1,0 +1,1 @@
+export { DigitalContentScreen } from './digitalContentScreen'

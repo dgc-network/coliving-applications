@@ -15,12 +15,12 @@ import { getOptimisticUserChallenges } from 'common/store/challenges/selectors/o
 import {
   getUserChallenges,
   getUserChallengesLoading
-} from 'common/store/pages/liveRewards/selectors'
+} from 'common/store/pages/digitalcoinRewards/selectors'
 import {
   ChallengeRewardsModalType,
   fetchUserChallenges,
   setChallengeRewardsModalType
-} from 'common/store/pages/liveRewards/slice'
+} from 'common/store/pages/digitalcoinRewards/slice'
 import { fillString } from 'common/utils/fillString'
 import { formatNumberCommas } from 'common/utils/formatUtil'
 import LoadingSpinner from 'components/loadingSpinner/loadingSpinner'
@@ -33,10 +33,10 @@ import { Tile } from './components/explainerTile'
 import { challengeRewardsConfig } from './config'
 
 const messages = {
-  title: '$LIVE REWARDS',
-  description1: 'Complete tasks to earn $LIVE tokens!',
+  title: '$DGCO REWARDS',
+  description1: 'Complete tasks to earn $DGCO tokens!',
   description2:
-    'Opportunities to earn $LIVE will change, so check back often for more chances to earn!',
+    'Opportunities to earn $DGCO will change, so check back often for more chances to earn!',
   completeLabel: 'COMPLETE',
   claimReward: 'Claim Your Reward'
 }

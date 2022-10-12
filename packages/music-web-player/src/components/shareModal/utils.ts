@@ -5,7 +5,7 @@ import {
   fullAlbumPage,
   fullContentListPage,
   fullProfilePage,
-  fullAgreementPage,
+  fullDigitalContentPage,
   fullAudioNftContentListPage
 } from 'utils/route'
 
@@ -24,10 +24,10 @@ export const getTwitterShareText = (
     case 'digital_content': {
       const {
         digital_content: { title, permalink, digital_content_id },
-        landlord: { handle }
+        author: { handle }
       } = content
-      twitterText = messages.agreementShareText(title, handle)
-      link = fullAgreementPage(permalink)
+      twitterText = messages.digitalContentShareText(title, handle)
+      link = fullDigitalContentPage(permalink)
       analyticsEvent = { kind: 'digital_content', id: digital_content_id, url: link }
       break
     }
@@ -43,7 +43,7 @@ export const getTwitterShareText = (
     case 'album': {
       const {
         album: { content_list_name, content_list_id },
-        landlord: { handle }
+        author: { handle }
       } = content
       twitterText = messages.albumShareText(content_list_name, handle)
       link = fullAlbumPage(handle, content_list_name, content_list_id)

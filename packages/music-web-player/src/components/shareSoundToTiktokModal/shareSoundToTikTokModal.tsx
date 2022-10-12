@@ -14,7 +14,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useModalState } from 'common/hooks/useModalState'
 import {
   getStatus,
-  getAgreement
+  getDigitalContent
 } from 'common/store/ui/shareSoundToTiktokModal/selectors'
 import {
   authenticated,
@@ -59,7 +59,7 @@ const ShareSoundToTikTokModal = () => {
   const [isOpen, setIsOpen] = useModalState('ShareSoundToTikTok')
   const dispatch = useDispatch()
 
-  const digital_content = useSelector(getAgreement)
+  const digital_content = useSelector(getDigitalContent)
   const status = useSelector(getStatus)
 
   const withTikTokAuth = useTikTokAuth({

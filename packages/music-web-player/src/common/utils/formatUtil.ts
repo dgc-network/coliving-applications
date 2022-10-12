@@ -99,9 +99,9 @@ export const pluralize = (
 ) => `${message}${(count ?? 0) > 1 || pluralizeAnyway ? suffix : ''}`
 
 /**
- * Format a BN to the shortened $LIVE currency without decimals
+ * Format a BN to the shortened $DGCO currency without decimals
  * @param amount The wei amount
- * @returns $LIVE The $LIVE amount
+ * @returns $DGCO The $DGCO amount
  */
 export const formatAudio = (amount: BN) => {
   if (!BN.isBN(amount)) return ''

@@ -4,28 +4,28 @@ import { expectSaga } from 'redux-saga-test-plan'
 import * as matchers from 'redux-saga-test-plan/matchers'
 
 import * as cacheActions from 'common/store/cache/actions'
-import * as actions from 'common/store/social/agreements/actions'
+import * as actions from 'common/store/social/digital_contents/actions'
 import ColivingBackend from 'services/colivingBackend'
 import { waitForBackendSetup } from 'store/backend/sagas'
-import * as sagas from 'store/social/agreements/sagas'
+import * as sagas from 'store/social/digital_contents/sagas'
 import { noopReducer } from 'store/testHelper'
 
 const repostingUser = { repost_count: 0 }
 
 describe('repost', () => {
   it('reposts', async () => {
-    await expectSaga(sagas.watchRepostAgreement, actions)
+    await expectSaga(sagas.watchRepostDigitalContent, actions)
       .withReducer(
         combineReducers({
           account: noopReducer(),
-          agreements: noopReducer(),
+          digitalContents: noopReducer(),
           users: noopReducer()
         }),
         {
           account: {
             userId: 1
           },
-          agreements: {
+          digitalContents: {
             entries: {
               1: { metadata: { repost_count: 5 } }
             }
@@ -38,8 +38,8 @@ describe('repost', () => {
         }
       )
       .provide([[matchers.call.fn(waitForBackendSetup), true]])
-      .dispatch(actions.repostAgreement(1))
-      .call(sagas.confirmRepostAgreement, 1, repostingUser)
+      .dispatch(actions.repostDigitalContent(1))
+      .call(sagas.confirmRepostDigitalContent, 1, repostingUser)
       .put(
         cacheActions.update(Kind.AGREEMENTS, [
           {
@@ -55,18 +55,18 @@ describe('repost', () => {
   })
 
   it('undoes repost', async () => {
-    await expectSaga(sagas.watchUndoRepostAgreement, actions)
+    await expectSaga(sagas.watchUndoRepostDigitalContent, actions)
       .withReducer(
         combineReducers({
           account: noopReducer(),
-          agreements: noopReducer(),
+          digitalContents: noopReducer(),
           users: noopReducer()
         }),
         {
           account: {
             userId: 1
           },
-          agreements: {
+          digitalContents: {
             entries: {
               1: { metadata: { repost_count: 5 } }
             }
@@ -79,8 +79,8 @@ describe('repost', () => {
         }
       )
       .provide([[matchers.call.fn(waitForBackendSetup), true]])
-      .dispatch(actions.undoRepostAgreement(1))
-      .call(sagas.confirmUndoRepostAgreement, 1, repostingUser)
+      .dispatch(actions.undoRepostDigitalContent(1))
+      .call(sagas.confirmUndoRepostDigitalContent, 1, repostingUser)
       .put(
         cacheActions.update(Kind.AGREEMENTS, [
           {
@@ -98,17 +98,17 @@ describe('repost', () => {
 
 describe('save', () => {
   it('saves', async () => {
-    await expectSaga(sagas.watchSaveAgreement, actions)
+    await expectSaga(sagas.watchSaveDigitalContent, actions)
       .withReducer(
         combineReducers({
           account: noopReducer(),
-          agreements: noopReducer()
+          digitalContents: noopReducer()
         }),
         {
           account: {
             userId: 1
           },
-          agreements: {
+          digitalContents: {
             entries: {
               1: { metadata: { save_count: 5 } }
             }
@@ -116,8 +116,8 @@ describe('save', () => {
         }
       )
       .provide([[matchers.call.fn(waitForBackendSetup), true]])
-      .dispatch(actions.saveAgreement(1))
-      .call(sagas.confirmSaveAgreement, 1)
+      .dispatch(actions.saveDigitalContent(1))
+      .call(sagas.confirmSaveDigitalContent, 1)
       .put(
         cacheActions.update(Kind.AGREEMENTS, [
           {
@@ -133,17 +133,17 @@ describe('save', () => {
   })
 
   it('unsaves', async () => {
-    await expectSaga(sagas.watchUnsaveAgreement, actions)
+    await expectSaga(sagas.watchUnsaveDigitalContent, actions)
       .withReducer(
         combineReducers({
           account: noopReducer(),
-          agreements: noopReducer()
+          digitalContents: noopReducer()
         }),
         {
           account: {
             userId: 1
           },
-          agreements: {
+          digitalContents: {
             entries: {
               1: { metadata: { save_count: 5 } }
             }
@@ -151,8 +151,8 @@ describe('save', () => {
         }
       )
       .provide([[matchers.call.fn(waitForBackendSetup), true]])
-      .dispatch(actions.unsaveAgreement(1))
-      .call(sagas.confirmUnsaveAgreement, 1)
+      .dispatch(actions.unsaveDigitalContent(1))
+      .call(sagas.confirmUnsaveDigitalContent, 1)
       .put(
         cacheActions.update(Kind.AGREEMENTS, [
           {
@@ -174,22 +174,22 @@ describe('recordListen', () => {
       .withReducer(
         combineReducers({
           account: noopReducer(),
-          agreements: noopReducer()
+          digitalContents: noopReducer()
         }),
         {
           account: {
             userId: 1
           },
-          agreements: {
+          digitalContents: {
             entries: {
               1: { metadata: { owner_id: 2, _listen_count: 11 } }
             }
           }
         }
       )
-      .provide([[matchers.call.fn(ColivingBackend.recordAgreementListen), true]])
+      .provide([[matchers.call.fn(ColivingBackend.recordDigitalContentListen), true]])
       .dispatch(actions.recordListen(1))
-      .call(ColivingBackend.recordAgreementListen, 1)
+      .call(ColivingBackend.recordDigitalContentListen, 1)
       .silentRun()
   })
   it('limits listens on own account', async () => {
@@ -197,13 +197,13 @@ describe('recordListen', () => {
       .withReducer(
         combineReducers({
           account: noopReducer(),
-          agreements: noopReducer()
+          digitalContents: noopReducer()
         }),
         {
           account: {
             userId: 1
           },
-          agreements: {
+          digitalContents: {
             entries: {
               // Listens > 10 not counted
               1: { metadata: { owner_id: 1, _listen_count: 11 } }
@@ -211,9 +211,9 @@ describe('recordListen', () => {
           }
         }
       )
-      .provide([[matchers.call.fn(ColivingBackend.recordAgreementListen), true]])
+      .provide([[matchers.call.fn(ColivingBackend.recordDigitalContentListen), true]])
       .dispatch(actions.recordListen(1))
-      .not.call.fn(ColivingBackend.recordAgreementListen, 1)
+      .not.call.fn(ColivingBackend.recordDigitalContentListen, 1)
       .silentRun()
   })
 })

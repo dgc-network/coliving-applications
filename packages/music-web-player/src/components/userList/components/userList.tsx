@@ -4,7 +4,7 @@ import InfiniteScroll from 'react-infinite-scroller'
 import Lottie from 'react-lottie'
 
 import loadingSpinner from 'assets/animations/loadingSpinner.json'
-import LandlordChip from 'components/landlord/landlordChip'
+import LandlordChip from 'components/author/landlordChip'
 import FollowButton from 'components/followButton/followButton'
 import { MountPlacement } from 'components/types'
 

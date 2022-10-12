@@ -1,1 +1,1 @@
-export { AgreementList } from './agreementList'
+export { DigitalContentList } from './digitalContentList'

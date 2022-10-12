@@ -10,7 +10,7 @@ const NATIVE_MOBILE = process.env.REACT_APP_NATIVE_MOBILE
 type State = {
   // Identifiers for the digitalcoin that's playing.
   uid: UID | null
-  agreementId: ID | null
+  digitalContentId: ID | null
 
   collectible: Collectible | null
 
@@ -25,13 +25,13 @@ type State = {
   buffering: boolean
 
   // Unique integer that increments every time something is "played."
-  // E.g. replaying a digital_content doesn't change uid or agreementId, but counter changes.
+  // E.g. replaying a digital_content doesn't change uid or digitalContentId, but counter changes.
   counter: number
 }
 
 export const initialState: State = {
   uid: null,
-  agreementId: null,
+  digitalContentId: null,
 
   collectible: null,
 
@@ -50,13 +50,13 @@ type SetAudioStreamPayload = {
 
 type PlayPayload = {
   uid?: Nullable<UID>
-  agreementId?: ID
+  digitalContentId?: ID
   onEnd?: (...args: any) => any
 }
 
 type PlaySucceededPayload = {
   uid?: Nullable<UID>
-  agreementId?: ID
+  digitalContentId?: ID
 }
 
 type PlayCollectiblePayload = {
@@ -83,7 +83,7 @@ type SetBufferingPayload = {
 
 type SetPayload = {
   uid: UID
-  agreementId: ID
+  digitalContentId: ID
 }
 
 type SeekPayload = {
@@ -92,7 +92,7 @@ type SeekPayload = {
 
 type ErrorPayload = {
   error: string
-  agreementId: ID
+  digitalContentId: ID
   info: string
 }
 
@@ -115,11 +115,11 @@ const slice = createSlice({
     },
     play: (state, action: PayloadAction<PlayPayload>) => {},
     playSucceeded: (state, action: PayloadAction<PlaySucceededPayload>) => {
-      const { uid, agreementId } = action.payload
+      const { uid, digitalContentId } = action.payload
       state.playing = true
-      if (!uid || !agreementId) return
+      if (!uid || !digitalContentId) return
       state.uid = uid || state.uid
-      state.agreementId = agreementId || state.agreementId
+      state.digitalContentId = digitalContentId || state.digitalContentId
       state.collectible = null
     },
     playCollectible: (
@@ -133,7 +133,7 @@ const slice = createSlice({
       const { collectible } = action.payload
       state.playing = true
       state.uid = null
-      state.agreementId = null
+      state.digitalContentId = null
       state.collectible = collectible || state.collectible
     },
     pause: (state, action: PayloadAction<PausePayload>) => {
@@ -146,13 +146,13 @@ const slice = createSlice({
     stop: (state, action: PayloadAction<StopPayload>) => {
       state.playing = false
       state.uid = null
-      state.agreementId = null
+      state.digitalContentId = null
       state.counter = state.counter + 1
     },
     set: (state, action: PayloadAction<SetPayload>) => {
-      const { uid, agreementId } = action.payload
+      const { uid, digitalContentId } = action.payload
       state.uid = uid
-      state.agreementId = agreementId
+      state.digitalContentId = digitalContentId
     },
     reset: (state, action: PayloadAction<ResetPayload>) => {},
     resetSuceeded: (state, action: PayloadAction<ResetSucceededPayload>) => {

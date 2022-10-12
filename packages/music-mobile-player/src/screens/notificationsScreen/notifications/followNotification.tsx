@@ -12,7 +12,7 @@ import {
   UserNameLink,
   USER_LENGTH_LIMIT,
   NotificationText
-} from '../Notification'
+} from '../notification'
 
 import { useSocialActionHandler } from './useSocialActionHandler'
 

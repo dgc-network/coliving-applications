@@ -1,37 +1,37 @@
-import { ID, UserAgreement, Nullable } from '@coliving/common'
+import { ID, UserDigitalContent, Nullable } from '@coliving/common'
 import { call } from 'typed-redux-saga'
 
-import { processAndCacheAgreements } from 'common/store/cache/agreements/utils'
+import { processAndCacheDigitalContents } from 'common/store/cache/digital_contents/utils'
 import apiClient from 'services/colivingAPIClient/colivingAPIClient'
 
 import ColivingBackend from '../../services/colivingBackend'
 import Explore from '../../services/colivingBackend/explore'
 
-export function* getRecommendedAgreements(
+export function* getRecommendedDigitalContents(
   genre: string,
   exclusionList: number[],
   currentUserId: Nullable<ID>
 ) {
-  const agreements = yield* call([apiClient, apiClient.getRecommended], {
+  const digitalContents = yield* call([apiClient, apiClient.getRecommended], {
     genre,
     exclusionList,
     currentUserId
   })
-  yield* call(processAndCacheAgreements, agreements)
-  return agreements
+  yield* call(processAndCacheDigitalContents, digitalContents)
+  return digitalContents
 }
 
-export function* getLuckyAgreements(limit: number) {
-  const latestAgreementID = yield* call(Explore.getLatestAgreementID)
+export function* getLuckyDigitalContents(limit: number) {
+  const latestDigitalContentID = yield* call(Explore.getLatestDigitalContentID)
   const ids = Array.from({ length: limit }, () =>
-    Math.floor(Math.random() * latestAgreementID)
+    Math.floor(Math.random() * latestDigitalContentID)
   )
-  const agreements: UserAgreement[] = yield* call(ColivingBackend.getAllAgreements, {
+  const digitalContents: UserDigitalContent[] = yield* call(ColivingBackend.getAllDigitalContents, {
     offset: 0,
     limit,
     idsArray: ids,
     filterDeletes: true
   })
-  yield* call(processAndCacheAgreements, agreements)
-  return agreements
+  yield* call(processAndCacheDigitalContents, digitalContents)
+  return digitalContents
 }

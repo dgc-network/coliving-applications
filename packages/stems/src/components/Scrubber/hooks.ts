@@ -5,17 +5,17 @@ import { TimeData } from './types'
 
 /** Sets animation properties on the handle and digital_content. */
 const animate = (
-  agreementRef: React.MutableRefObject<HTMLDivElement | null>,
+  digitalContentRef: React.MutableRefObject<HTMLDivElement | null>,
   handleRef: React.MutableRefObject<HTMLDivElement | null>,
   transition: string,
   transform: string
 ) => {
-  if (handleRef.current && agreementRef.current) {
+  if (handleRef.current && digitalContentRef.current) {
     handleRef.current.style.transition = transition
     handleRef.current.style.transform = transform
 
-    agreementRef.current.style.transition = transition
-    agreementRef.current.style.transform = transform
+    digitalContentRef.current.style.transition = transition
+    digitalContentRef.current.style.transform = transform
   }
 }
 
@@ -24,7 +24,7 @@ const animate = (
  * const animations = useAnimations()
  */
 export const useAnimations = (
-  agreementRef: React.MutableRefObject<HTMLDivElement | null>,
+  digitalContentRef: React.MutableRefObject<HTMLDivElement | null>,
   handleRef: React.MutableRefObject<HTMLDivElement | null>,
   elapsedSeconds: number,
   totalSeconds: number
@@ -33,12 +33,12 @@ export const useAnimations = (
   const play = useCallback(() => {
     const timeRemaining = totalSeconds - elapsedSeconds
     animate(
-      agreementRef,
+      digitalContentRef,
       handleRef,
       `transform ${timeRemaining}s linear`,
       'translate(100%)'
     )
-  }, [agreementRef, handleRef, elapsedSeconds, totalSeconds])
+  }, [digitalContentRef, handleRef, elapsedSeconds, totalSeconds])
 
   /**
    * Pauses the animation at the current position.
@@ -47,34 +47,34 @@ export const useAnimations = (
    * cause jumping if elapsed seconds doesn't precisely reflect the animation.
    */
   const pause = useCallback(() => {
-    if (agreementRef.current) {
-      const agreementWidth = agreementRef.current.offsetWidth
-      const agreementTransform = window
-        .getComputedStyle(agreementRef.current)
+    if (digitalContentRef.current) {
+      const digitalContentWidth = digitalContentRef.current.offsetWidth
+      const digitalContentTransform = window
+        .getComputedStyle(digitalContentRef.current)
         .getPropertyValue('transform')
 
-      const agreementPosition = parseFloat(agreementTransform.split(',')[4])
-      const percentComplete = agreementPosition / agreementWidth
+      const digitalContentPosition = parseFloat(digitalContentTransform.split(',')[4])
+      const percentComplete = digitalContentPosition / digitalContentWidth
       animate(
-        agreementRef,
+        digitalContentRef,
         handleRef,
         'none',
         `translate(${percentComplete * 100}%)`
       )
     }
-  }, [agreementRef, handleRef])
+  }, [digitalContentRef, handleRef])
 
   /** Sets the animation to a given percentage: [0, 1]. */
   const setPercent = useCallback(
     (percentComplete: number) => {
       animate(
-        agreementRef,
+        digitalContentRef,
         handleRef,
         'none',
         `translate(${percentComplete * 100}%)`
       )
     },
-    [agreementRef, handleRef]
+    [digitalContentRef, handleRef]
   )
 
   /**

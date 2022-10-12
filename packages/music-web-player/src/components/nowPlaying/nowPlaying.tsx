@@ -16,7 +16,7 @@ import { Dispatch } from 'redux'
 
 import { ReactComponent as IconCaret } from 'assets/img/iconCaretRight.svg'
 import { getUserId } from 'common/store/account/selectors'
-import { getDominantColorsByAgreement } from 'common/store/averageColor/slice'
+import { getDominantColorsByDigitalContent } from 'common/store/averageColor/slice'
 import { getIsCasting, getMethod } from 'common/store/cast/selectors'
 import { makeGetCurrent } from 'common/store/queue/selectors'
 import {
@@ -29,11 +29,11 @@ import {
 } from 'common/store/queue/slice'
 import { RepeatMode } from 'common/store/queue/types'
 import {
-  saveAgreement,
-  unsaveAgreement,
-  repostAgreement,
-  undoRepostAgreement
-} from 'common/store/social/agreements/actions'
+  saveDigitalContent,
+  unsaveDigitalContent,
+  repostDigitalContent,
+  undoRepostDigitalContent
+} from 'common/store/social/digital_contents/actions'
 import { open } from 'common/store/ui/mobileOverflowMenu/slice'
 import {
   OverflowAction,
@@ -51,7 +51,7 @@ import RepeatButtonProvider from 'components/playBar/repeatButton/repeatButtonPr
 import ShuffleButtonProvider from 'components/playBar/shuffleButton/shuffleButtonProvider'
 import { PlayButtonStatus } from 'components/playBar/types'
 import UserBadges from 'components/userBadges/userBadges'
-import { useAgreementCoverArt } from 'hooks/useAgreementCoverArt'
+import { useDigitalContentCoverArt } from 'hooks/useDigitalContentCoverArt'
 import { HapticFeedbackMessage } from 'services/nativeMobileInterface/haptics'
 import { useRecord, make } from 'store/analytics/actions'
 import {
@@ -226,7 +226,7 @@ const NowPlaying = g(
 
     const { name, handle } = user
     const image =
-      useAgreementCoverArt(
+      useDigitalContentCoverArt(
         digital_content_id,
         _cover_art_sizes,
         SquareSizes.SIZE_480_BY_480
@@ -279,7 +279,7 @@ const NowPlaying = g(
       if (digital_content && digital_content_id && typeof digital_content_id !== 'string') share(digital_content_id)
     }, [share, digital_content, digital_content_id])
 
-    const goToAgreementPage = () => {
+    const goToDigitalContentPage = () => {
       onClose()
       if (digital_content) {
         goToRoute(digital_content.permalink)
@@ -400,7 +400,7 @@ const NowPlaying = g(
           >
             <div
               className={styles.image}
-              onClick={goToAgreementPage}
+              onClick={goToDigitalContentPage}
               style={artworkAverageColor}
             >
               <DynamicImage image={image} />
@@ -409,7 +409,7 @@ const NowPlaying = g(
         ) : (
           <div
             className={cn(styles.artwork, styles.image)}
-            onClick={goToAgreementPage}
+            onClick={goToDigitalContentPage}
             ref={artworkRef}
             style={artworkAverageColor}
           >
@@ -417,10 +417,10 @@ const NowPlaying = g(
           </div>
         )}
         <div className={styles.info}>
-          <div className={styles.title} onClick={goToAgreementPage}>
+          <div className={styles.title} onClick={goToDigitalContentPage}>
             {title}
           </div>
-          <div className={styles.landlord} onClick={goToProfilePage}>
+          <div className={styles.author} onClick={goToProfilePage}>
             {name}
             <UserBadges
               userId={owner_id}
@@ -516,7 +516,7 @@ function makeMapStateToProps() {
       isBuffering: getBuffering(state),
       isCasting: getIsCasting(state),
       castMethod: getMethod(state),
-      dominantColors: getDominantColorsByAgreement(state, {
+      dominantColors: getDominantColorsByDigitalContent(state, {
         digital_content: currentQueueItem.digital_content
       })
     }
@@ -550,31 +550,31 @@ function mapDispatchToProps(dispatch: Dispatch) {
     shuffle: (enable: boolean) => {
       dispatch(shuffle({ enable }))
     },
-    share: (agreementId: ID) =>
+    share: (digitalContentId: ID) =>
       dispatch(
         requestOpenShareModal({
           type: 'digital_content',
-          agreementId,
+          digitalContentId,
           source: ShareSource.NOW_PLAYING
         })
       ),
-    save: (agreementId: ID) =>
-      dispatch(saveAgreement(agreementId, FavoriteSource.NOW_PLAYING)),
-    unsave: (agreementId: ID) =>
-      dispatch(unsaveAgreement(agreementId, FavoriteSource.NOW_PLAYING)),
-    repost: (agreementId: ID) =>
-      dispatch(repostAgreement(agreementId, RepostSource.NOW_PLAYING)),
-    undoRepost: (agreementId: ID) =>
-      dispatch(undoRepostAgreement(agreementId, RepostSource.NOW_PLAYING)),
+    save: (digitalContentId: ID) =>
+      dispatch(saveDigitalContent(digitalContentId, FavoriteSource.NOW_PLAYING)),
+    unsave: (digitalContentId: ID) =>
+      dispatch(unsaveDigitalContent(digitalContentId, FavoriteSource.NOW_PLAYING)),
+    repost: (digitalContentId: ID) =>
+      dispatch(repostDigitalContent(digitalContentId, RepostSource.NOW_PLAYING)),
+    undoRepost: (digitalContentId: ID) =>
+      dispatch(undoRepostDigitalContent(digitalContentId, RepostSource.NOW_PLAYING)),
     clickOverflow: (
-      agreementId: ID | string,
+      digitalContentId: ID | string,
       overflowActions: OverflowAction[],
       callbacks: OverflowActionCallbacks
     ) =>
       dispatch(
         open({
           source: OverflowSource.AGREEMENTS,
-          id: agreementId,
+          id: digitalContentId,
           overflowActions,
           overflowActionCallbacks: callbacks
         })

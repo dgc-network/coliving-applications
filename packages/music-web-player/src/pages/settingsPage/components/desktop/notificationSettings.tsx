@@ -23,7 +23,7 @@ const messages = {
   followers: 'New Followers',
   reposts: 'Reposts',
   favorites: 'Favorites',
-  remixes: 'Remixes of My Agreements',
+  remixes: 'Remixes of My DigitalContents',
   emailFrequency: '‘What You Missed’ Email Frequency',
   enablePermissions:
     'Notifications for Coliving are blocked. Please enable in your browser settings and reload the page.'

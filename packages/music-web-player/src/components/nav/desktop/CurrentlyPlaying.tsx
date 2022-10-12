@@ -6,15 +6,15 @@ import cn from 'classnames'
 import { ReactComponent as IconVisualizer } from 'assets/img/iconVisualizer.svg'
 import Draggable from 'components/dragndrop/draggable'
 import DynamicImage from 'components/dynamicImage/dynamicImage'
-import { useAgreementCoverArt } from 'hooks/useAgreementCoverArt'
+import { useDigitalContentCoverArt } from 'hooks/useDigitalContentCoverArt'
 
 import styles from './CurrentlyPlaying.module.css'
 
 type CurrentlyPlayingProps = {
   isOwner: boolean
   isUnlisted: boolean
-  agreementId: Nullable<number>
-  agreementTitle: Nullable<string>
+  digitalContentId: Nullable<number>
+  digitalContentTitle: Nullable<string>
   coverArtSizes: Nullable<CoverArtSizes>
   coverArtColor: Nullable<Color>
   artworkLink?: Nullable<string>
@@ -35,8 +35,8 @@ type WrapperStyle = {
 const CurrentlyPlaying = ({
   isOwner,
   isUnlisted,
-  agreementId,
-  agreementTitle,
+  digitalContentId,
+  digitalContentTitle,
   coverArtSizes,
   coverArtColor,
   artworkLink,
@@ -44,24 +44,24 @@ const CurrentlyPlaying = ({
   onClick,
   onShowVisualizer
 }: CurrentlyPlayingProps) => {
-  const previousAgreementId = useRef(0)
+  const previousDigitalContentId = useRef(0)
 
-  const image = useAgreementCoverArt(
-    agreementId,
+  const image = useDigitalContentCoverArt(
+    digitalContentId,
     coverArtSizes,
     SquareSizes.SIZE_480_BY_480,
     ''
   )
 
-  let newAgreement = false
-  if (agreementId && agreementId !== previousAgreementId.current) {
-    newAgreement = true
-    previousAgreementId.current = agreementId
+  let newDigitalContent = false
+  if (digitalContentId && digitalContentId !== previousDigitalContentId.current) {
+    newDigitalContent = true
+    previousDigitalContentId.current = digitalContentId
   }
 
   let wrapperStyle: WrapperStyle
   let artworkStyle: ArtworkStyle
-  if (agreementId) {
+  if (digitalContentId) {
     const artworkAverageColor = coverArtColor ?? { r: 13, g: 16, b: 18 }
     wrapperStyle = {
       boxShadow: `0 1px 20px -3px rgba(
@@ -82,16 +82,16 @@ const CurrentlyPlaying = ({
 
   return (
     <Draggable
-      isDisabled={!agreementId || isUnlisted}
-      text={agreementTitle}
+      isDisabled={!digitalContentId || isUnlisted}
+      text={digitalContentTitle}
       kind='digital_content'
-      id={agreementId}
+      id={digitalContentId}
       isOwner={isOwner}
       link={draggableLink}
     >
       <div
         className={cn(styles.artworkWrapper, {
-          [styles.playing]: !!agreementId
+          [styles.playing]: !!digitalContentId
         })}
         style={wrapperStyle}
         onClick={onClick}
@@ -99,13 +99,13 @@ const CurrentlyPlaying = ({
         <DynamicImage
           useSkeleton={false}
           image={artworkLink ?? image}
-          immediate={newAgreement}
+          immediate={newDigitalContent}
           className={styles.artwork}
           imageStyle={artworkStyle}
         >
           <div
             className={cn(styles.bottomRightContainer, {
-              [styles.hide]: !agreementId
+              [styles.hide]: !digitalContentId
             })}
           >
             <div

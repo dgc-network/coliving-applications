@@ -5,7 +5,7 @@ import { ReactComponent as IconTrophy } from 'assets/img/iconTrophy.svg'
 import styles from './achievementTile.module.css'
 
 const getAchievement = () => {
-  // TODO: Use some information about the landlord to calculate the 'achievement'
+  // TODO: Use some information about the author to calculate the 'achievement'
   return { value: '300', valueLabel: 'th', label: 'Most Played' }
 }
 

@@ -3,23 +3,23 @@ import cn from 'classnames'
 import PropTypes from 'prop-types'
 
 import TabSlider from 'components/dataEntry/tabSlider'
-import AgreementPreview from 'components/upload/agreementPreview'
+import DigitalContentPreview from 'components/upload/digitalContentPreview'
 
-import styles from './agreementsPreview.module.css'
+import styles from './digitalContentsPreview.module.css'
 import UploadType from './uploadType'
 
 const uploadDescriptions = {
   [UploadType.CONTENT_LIST]:
-    'A contentList is a living thing that can change and grow over time. ContentLists can contain your own agreements, as well as agreements uploaded by others.',
+    'A contentList is a living thing that can change and grow over time. ContentLists can contain your own digitalContents, as well as digitalContents uploaded by others.',
   [UploadType.ALBUM]:
-    'An album is a curated listening experience that is frozen in time and does not change. Albums can only contain agreements that you upload.',
+    'An album is a curated listening experience that is frozen in time and does not change. Albums can only contain digitalContents that you upload.',
   [UploadType.INDIVIDUAL_AGREEMENTS]:
     'Every digital_content you upload will be a separate post.',
   [UploadType.INDIVIDUAL_AGREEMENT]:
     'Every digital_content you upload will be a separate post.'
 }
 
-const AgreementsPreview = (props) => {
+const DigitalContentsPreview = (props) => {
   return (
     <div className={styles.container}>
       <div className={styles.headerContainer}>
@@ -29,7 +29,7 @@ const AgreementsPreview = (props) => {
           onSelectOption={props.setUploadType}
           selected={props.uploadType}
           options={[
-            { key: UploadType.INDIVIDUAL_AGREEMENTS, text: 'Agreements' },
+            { key: UploadType.INDIVIDUAL_AGREEMENTS, text: 'DigitalContents' },
             { key: UploadType.ALBUM, text: 'Album' },
             { key: UploadType.CONTENT_LIST, text: 'ContentList' }
           ]}
@@ -39,15 +39,15 @@ const AgreementsPreview = (props) => {
         </div>
       </div>
       <Scrollbar
-        className={cn(styles.agreements, {
+        className={cn(styles.digitalContents, {
           [styles.shortScroll]:
             props.uploadType !== UploadType.INDIVIDUAL_AGREEMENTS
         })}
       >
-        {props.agreements.map((digital_content, i) => (
-          <AgreementPreview
+        {props.digitalContents.map((digital_content, i) => (
+          <DigitalContentPreview
             key={digital_content.metadata.title + i}
-            agreementTitle={digital_content.metadata.title}
+            digitalContentTitle={digital_content.metadata.title}
             fileType={digital_content.file.type}
             fileSize={digital_content.file.size}
             playing={props.previewIndex === i}
@@ -61,14 +61,14 @@ const AgreementsPreview = (props) => {
   )
 }
 
-AgreementsPreview.propTypes = {
+DigitalContentsPreview.propTypes = {
   uploadType: PropTypes.oneOf([
     UploadType.INDIVIDUAL_AGREEMENT,
     UploadType.INDIVIDUAL_AGREEMENTS,
     UploadType.CONTENT_LIST,
     UploadType.ALBUM
   ]),
-  agreements: PropTypes.array,
+  digitalContents: PropTypes.array,
   setUploadType: PropTypes.func,
   playPreview: PropTypes.func,
   stopPreview: PropTypes.func,
@@ -76,4 +76,4 @@ AgreementsPreview.propTypes = {
   previewIndex: PropTypes.number
 }
 
-export default AgreementsPreview
+export default DigitalContentsPreview

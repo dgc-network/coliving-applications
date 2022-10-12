@@ -278,7 +278,7 @@ class SearchBar extends Component {
                   kind={
                     group.title === 'Profiles'
                       ? Kind.USERS
-                      : group.title === 'Agreements'
+                      : group.title === 'DigitalContents'
                       ? Kind.AGREEMENTS
                       : Kind.COLLECTIONS
                   }

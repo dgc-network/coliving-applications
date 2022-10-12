@@ -211,7 +211,7 @@ export const signInFailed = (
 })
 
 /**
- * Requests all the follow landlord metadata is fetched
+ * Requests all the follow author metadata is fetched
  */
 export function fetchAllFollowLandlords() {
   return { type: FETCH_ALL_FOLLOW_LANDLORDS }
@@ -244,7 +244,7 @@ export function fetchFollowLandlordsSucceeded(
 }
 
 /**
- * Sets the Follow landlord category
+ * Sets the Follow author category
  * @param category The genre category to display to the user
  */
 export function setFollowAristsCategory(category: FollowLandlordsCategory) {

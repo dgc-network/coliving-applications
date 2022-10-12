@@ -18,13 +18,13 @@ export const fetchSavesFailed = () => ({
   type: FETCH_SAVES_FAILED
 })
 
-export const addLocalSave = (agreementId, uid) => ({
+export const addLocalSave = (digitalContentId, uid) => ({
   type: ADD_LOCAL_SAVE,
-  agreementId,
+  digitalContentId,
   uid
 })
 
-export const removeLocalSave = (agreementId) => ({
+export const removeLocalSave = (digitalContentId) => ({
   type: REMOVE_LOCAL_SAVE,
-  agreementId
+  digitalContentId
 })

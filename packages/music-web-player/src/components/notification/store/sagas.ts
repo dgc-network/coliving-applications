@@ -23,7 +23,7 @@ import {
 
 import { getUserId, getHasAccount } from 'common/store/account/selectors'
 import { retrieveCollections } from 'common/store/cache/collections/utils'
-import { retrieveAgreements } from 'common/store/cache/agreements/utils'
+import { retrieveDigitalContents } from 'common/store/cache/digital_contents/utils'
 import { fetchUsers } from 'common/store/cache/users/sagas'
 import * as notificationActions from 'common/store/notifications/actions'
 import {
@@ -187,7 +187,7 @@ export function* parseAndProcessNotifications(
    * Parse through the notifications & collect user /digital_content / collection IDs
    * that the notification references to fetch
    */
-  const agreementIdsToFetch: ID[] = []
+  const digitalContentIdsToFetch: ID[] = []
   const collectionIdsToFetch: ID[] = []
   const userIdsToFetch: ID[] = []
   const reactionSignatureToFetch: string[] = []
@@ -197,7 +197,7 @@ export function* parseAndProcessNotifications(
       if (notification.entityType === Entity.DigitalContent) {
         // @ts-ignore
         notification.entityIds = [...new Set(notification.entityIds)]
-        agreementIdsToFetch.push(...notification.entityIds)
+        digitalContentIdsToFetch.push(...notification.entityIds)
       } else if (
         notification.entityType === Entity.ContentList ||
         notification.entityType === Entity.Album
@@ -215,7 +215,7 @@ export function* parseAndProcessNotifications(
         'entityType' in notification)
     ) {
       if (notification.entityType === Entity.DigitalContent) {
-        agreementIdsToFetch.push(notification.entityId)
+        digitalContentIdsToFetch.push(notification.entityId)
       } else if (
         notification.entityType === Entity.ContentList ||
         notification.entityType === Entity.Album
@@ -237,25 +237,25 @@ export function* parseAndProcessNotifications(
       )
     }
     if (notification.type === NotificationType.RemixCreate) {
-      agreementIdsToFetch.push(
-        notification.parentAgreementId,
-        notification.childAgreementId
+      digitalContentIdsToFetch.push(
+        notification.parentDigitalContentId,
+        notification.childDigitalContentId
       )
       notification.entityType = Entity.DigitalContent
       notification.entityIds = [
-        notification.parentAgreementId,
-        notification.childAgreementId
+        notification.parentDigitalContentId,
+        notification.childDigitalContentId
       ]
     }
     if (notification.type === NotificationType.RemixCosign) {
-      agreementIdsToFetch.push(notification.childAgreementId)
-      userIdsToFetch.push(notification.parentAgreementUserId)
+      digitalContentIdsToFetch.push(notification.childDigitalContentId)
+      userIdsToFetch.push(notification.parentDigitalContentUserId)
       notification.entityType = Entity.DigitalContent
-      notification.entityIds = [notification.childAgreementId]
-      notification.userId = notification.parentAgreementUserId
+      notification.entityIds = [notification.childDigitalContentId]
+      notification.userId = notification.parentDigitalContentUserId
     }
-    if (notification.type === NotificationType.TrendingAgreement) {
-      agreementIdsToFetch.push(notification.entityId)
+    if (notification.type === NotificationType.TrendingDigitalContent) {
+      digitalContentIdsToFetch.push(notification.entityId)
     }
     if (
       notification.type === NotificationType.TipSend ||
@@ -269,20 +269,20 @@ export function* parseAndProcessNotifications(
     if (notification.type === NotificationType.TipReceive) {
       reactionSignatureToFetch.push(notification.tipTxSignature)
     }
-    if (notification.type === NotificationType.AddAgreementToContentList) {
-      agreementIdsToFetch.push(notification.agreementId)
+    if (notification.type === NotificationType.AddDigitalContentToContentList) {
+      digitalContentIdsToFetch.push(notification.digitalContentId)
       userIdsToFetch.push(notification.contentListOwnerId)
       collectionIdsToFetch.push(notification.contentListId)
     }
   })
 
-  const [agreements]: DigitalContent[][] = yield* all([
-    call(retrieveAgreements, { agreementIds: agreementIdsToFetch }),
+  const [digitalContents]: DigitalContent[][] = yield* all([
+    call(retrieveDigitalContents, { digitalContentIds: digitalContentIdsToFetch }),
     call(
       retrieveCollections,
       null, // userId
       collectionIdsToFetch, // collection ids
-      false // fetchAgreements
+      false // fetchDigitalContents
     ),
     call(
       fetchUsers,
@@ -303,7 +303,7 @@ export function* parseAndProcessNotifications(
   const now = moment()
   const userId = yield* select(getUserId)
   if (!userId) return []
-  const remixAgreementParents: Array<ID> = []
+  const remixDigitalContentParents: Array<ID> = []
   const processedNotifications = notifications.map((notif) => {
     if (
       notif.type === NotificationType.Milestone &&
@@ -311,29 +311,29 @@ export function* parseAndProcessNotifications(
     ) {
       notif.entityId = userId
     } else if (notif.type === NotificationType.RemixCreate) {
-      const childAgreement = agreements.find(
-        (digital_content) => digital_content.digital_content_id === notif.childAgreementId
+      const childDigitalContent = digitalContents.find(
+        (digital_content) => digital_content.digital_content_id === notif.childDigitalContentId
       )
-      if (childAgreement) {
-        notif.userId = childAgreement.owner_id
+      if (childDigitalContent) {
+        notif.userId = childDigitalContent.owner_id
       }
     } else if (notif.type === NotificationType.RemixCosign) {
-      const childAgreement = agreements.find(
-        (digital_content) => digital_content.digital_content_id === notif.childAgreementId
+      const childDigitalContent = digitalContents.find(
+        (digital_content) => digital_content.digital_content_id === notif.childDigitalContentId
       )
-      if (childAgreement && childAgreement.remix_of) {
-        const parentAgreementIds = childAgreement.remix_of.agreements.map(
+      if (childDigitalContent && childDigitalContent.remix_of) {
+        const parentDigitalContentIds = childDigitalContent.remix_of.digitalContents.map(
           (t) => t.parent_digital_content_id
         )
-        remixAgreementParents.push(...parentAgreementIds)
-        notif.entityIds.push(...parentAgreementIds)
+        remixDigitalContentParents.push(...parentDigitalContentIds)
+        notif.entityIds.push(...parentDigitalContentIds)
       }
     }
     notif.timeLabel = getTimeAgo(now, notif.timestamp)
     return notif
   })
-  if (remixAgreementParents.length > 0)
-    yield* call(retrieveAgreements, { agreementIds: remixAgreementParents })
+  if (remixDigitalContentParents.length > 0)
+    yield* call(retrieveDigitalContents, { digitalContentIds: remixDigitalContentParents })
   return processedNotifications
 }
 

@@ -1,0 +1,30 @@
+.digitalContent {
+  display: inline-flex;
+  align-items: center;
+  margin-top: 12px;
+  margin-bottom: 4px;
+}
+
+.cosign {
+  margin-right: 12px;
+}
+
+.digitalContentArtwork {
+  height: 42px;
+  width: 42px;
+  border: 1px solid var(--neutral-light-8);
+  overflow: hidden;
+  border-radius: 3px;
+}
+
+.digitalContentText {
+  color: var(--secondary);
+  font-size: var(--font-s);
+  font-weight: var(--font-demi-bold);
+  letter-spacing: 0;
+  line-height: 21px;
+}
+
+.digitalContentText:hover {
+  text-decoration: underline;
+}

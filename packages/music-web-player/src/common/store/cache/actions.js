@@ -47,8 +47,8 @@ export const addSucceeded = (
 
 /**
  * Updates an entry in the cache. Can also add transitive cache subscriptions.
- * E.g. if a collection references multiple agreements, the collection should be subscribed to those
- * agreements.
+ * E.g. if a collection references multiple digitalContents, the collection should be subscribed to those
+ * digitalContents.
  * @param {Kind} kind
  * @param {array} entries { id, metadata }
  * @param {?array} subscriptions { id, kind, uids }

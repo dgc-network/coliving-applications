@@ -88,7 +88,7 @@ export const ContentListNavLink = ({
 type ContentListNavItemProps = {
   contentList: AccountCollection
   url: string
-  addAgreement: (agreementId: ID) => void
+  addDigitalContent: (digitalContentId: ID) => void
   isOwner: boolean
   onReorder: (
     draggingId: ID | SmartCollectionVariant | string,
@@ -106,7 +106,7 @@ export const ContentListNavItem = ({
   contentList,
   hasUpdate = false,
   url,
-  addAgreement,
+  addDigitalContent,
   isOwner,
   onReorder,
   dragging,
@@ -123,7 +123,7 @@ export const ContentListNavItem = ({
       key={id}
       className={navColumnStyles.droppable}
       hoverClassName={navColumnStyles.droppableHover}
-      onDrop={addAgreement}
+      onDrop={addDigitalContent}
       acceptedKinds={['digital_content']}
       disabled={!isOwner}
     >

@@ -23,10 +23,10 @@ import { Dispatch } from 'redux'
 
 import { getUserId } from 'common/store/account/selectors'
 import { makeGetTableMetadatas } from 'common/store/lineup/selectors'
-import { agreementsActions } from 'common/store/pages/historyPage/lineups/agreements/actions'
-import { getHistoryAgreementsLineup } from 'common/store/pages/historyPage/selectors'
+import { digitalContentsActions } from 'common/store/pages/historyPage/lineups/digital_contents/actions'
+import { getHistoryDigitalContentsLineup } from 'common/store/pages/historyPage/selectors'
 import { makeGetCurrent } from 'common/store/queue/selectors'
-import * as socialActions from 'common/store/social/agreements/actions'
+import * as socialActions from 'common/store/social/digital_contents/actions'
 import { useRecord, make } from 'store/analytics/actions'
 import { getPlaying, getBuffering } from 'store/player/selectors'
 import { AppState } from 'store/types'
@@ -63,17 +63,17 @@ const HistoryPage = g((props) => {
     playing,
     userId,
     goToRoute,
-    agreements,
+    digitalContents,
     currentQueueItem,
     updateLineupOrder,
-    fetchHistoryAgreementMetadata,
-    saveAgreement,
-    unsaveAgreement,
-    repostAgreement,
-    undoRepostAgreement
+    fetchHistoryDigitalContentMetadata,
+    saveDigitalContent,
+    unsaveDigitalContent,
+    repostDigitalContent,
+    undoRepostDigitalContent
   } = props
 
-  const { entries, status } = agreements
+  const { entries, status } = digitalContents
   const record = useRecord()
 
   const [filterText, setFilterText] = useState('')
@@ -85,15 +85,15 @@ const HistoryPage = g((props) => {
   )
 
   useEffect(() => {
-    fetchHistoryAgreementMetadata()
-  }, [fetchHistoryAgreementMetadata])
+    fetchHistoryDigitalContentMetadata()
+  }, [fetchHistoryDigitalContentMetadata])
 
   const formatMetadata = (lineupEntries: any) => {
     return lineupEntries.map((entry: any, i: number) => ({
       ...entry,
       key: `${entry.title}_${entry.dateListened}_${i}`,
       name: entry.title,
-      landlord: entry.user.name,
+      author: entry.user.name,
       handle: entry.user.handle,
       date: entry.dateListened,
       time: entry.duration,
@@ -102,8 +102,8 @@ const HistoryPage = g((props) => {
   }
 
   const getFilteredData = useCallback(
-    (agreementMetadatas: any) => {
-      const filteredMetadata = formatMetadata(agreementMetadatas).filter(
+    (digitalContentMetadatas: any) => {
+      const filteredMetadata = formatMetadata(digitalContentMetadatas).filter(
         (entry: any) =>
           entry.title.toLowerCase().indexOf(filterText.toLowerCase()) > -1 ||
           entry.user.name.toLowerCase().indexOf(filterText.toLowerCase()) > -1
@@ -130,20 +130,20 @@ const HistoryPage = g((props) => {
   }, [status, dataSource])
 
   const onClickRow = useCallback(
-    (agreementRecord: any) => {
-      if (playing && agreementRecord.uid === currentQueueItem.uid) {
+    (digitalContentRecord: any) => {
+      if (playing && digitalContentRecord.uid === currentQueueItem.uid) {
         pause()
         record(
           make(Name.PLAYBACK_PAUSE, {
-            id: `${agreementRecord.digital_content_id}`,
+            id: `${digitalContentRecord.digital_content_id}`,
             source: PlaybackSource.HISTORY_PAGE
           })
         )
       } else {
-        play(agreementRecord.uid)
+        play(digitalContentRecord.uid)
         record(
           make(Name.PLAYBACK_PLAY, {
-            id: `${agreementRecord.digital_content_id}`,
+            id: `${digitalContentRecord.digital_content_id}`,
             source: PlaybackSource.HISTORY_PAGE
           })
         )
@@ -155,32 +155,32 @@ const HistoryPage = g((props) => {
   const onClickSave = useCallback(
     (record) => {
       if (!record.has_current_user_saved) {
-        saveAgreement(record.digital_content_id)
+        saveDigitalContent(record.digital_content_id)
       } else {
-        unsaveAgreement(record.digital_content_id)
+        unsaveDigitalContent(record.digital_content_id)
       }
     },
-    [saveAgreement, unsaveAgreement]
+    [saveDigitalContent, unsaveDigitalContent]
   )
 
   const onToggleSave = useCallback(
-    (isSaved: boolean, agreementId: ID) => {
+    (isSaved: boolean, digitalContentId: ID) => {
       if (!isSaved) {
-        saveAgreement(agreementId)
+        saveDigitalContent(digitalContentId)
       } else {
-        unsaveAgreement(agreementId)
+        unsaveDigitalContent(digitalContentId)
       }
     },
-    [saveAgreement, unsaveAgreement]
+    [saveDigitalContent, unsaveDigitalContent]
   )
 
   const onTogglePlay = useCallback(
-    (uid: UID, agreementId: ID) => {
+    (uid: UID, digitalContentId: ID) => {
       if (playing && uid === currentQueueItem.uid) {
         pause()
         record(
           make(Name.PLAYBACK_PAUSE, {
-            id: `${agreementId}`,
+            id: `${digitalContentId}`,
             source: PlaybackSource.HISTORY_PAGE
           })
         )
@@ -188,7 +188,7 @@ const HistoryPage = g((props) => {
         play(uid)
         record(
           make(Name.PLAYBACK_PLAY, {
-            id: `${agreementId}`,
+            id: `${digitalContentId}`,
             source: PlaybackSource.HISTORY_PAGE
           })
         )
@@ -197,7 +197,7 @@ const HistoryPage = g((props) => {
     [playing, play, pause, currentQueueItem, record]
   )
 
-  const onClickAgreementName = useCallback(
+  const onClickDigitalContentName = useCallback(
     (record) => {
       goToRoute(record.permalink)
     },
@@ -214,19 +214,19 @@ const HistoryPage = g((props) => {
   const onClickRepost = useCallback(
     (record) => {
       if (!record.has_current_user_reposted) {
-        repostAgreement(record.digital_content_id)
+        repostDigitalContent(record.digital_content_id)
       } else {
-        undoRepostAgreement(record.digital_content_id)
+        undoRepostDigitalContent(record.digital_content_id)
       }
     },
-    [repostAgreement, undoRepostAgreement]
+    [repostDigitalContent, undoRepostDigitalContent]
   )
 
   const isQueued = useCallback(() => {
-    return agreements.entries.some(
+    return digitalContents.entries.some(
       (entry: any) => currentQueueItem.uid === entry.uid
     )
-  }, [agreements, currentQueueItem])
+  }, [digitalContents, currentQueueItem])
 
   const getPlayingUid = useCallback(() => {
     return currentQueueItem.uid
@@ -243,7 +243,7 @@ const HistoryPage = g((props) => {
     }
   }, [isQueued, pause, play, playing, entries])
 
-  const onSortAgreements = (sorters: any) => {
+  const onSortDigitalContents = (sorters: any) => {
     const { column, order } = sorters
     const dataSource = formatMetadata(entries)
     let updatedOrder
@@ -297,9 +297,9 @@ const HistoryPage = g((props) => {
     getFilteredData,
     onClickSave,
     onClickRow,
-    onClickAgreementName,
+    onClickDigitalContentName,
     onClickLandlordName,
-    onSortAgreements
+    onSortDigitalContents
   }
 
   return (
@@ -313,11 +313,11 @@ const HistoryPage = g((props) => {
 })
 
 const makeMapStateToProps = () => {
-  const getLineupMetadatas = makeGetTableMetadatas(getHistoryAgreementsLineup)
+  const getLineupMetadatas = makeGetTableMetadatas(getHistoryDigitalContentsLineup)
   const getCurrentQueueItem = makeGetCurrent()
   const mapStateToProps = (state: AppState) => ({
     userId: getUserId(state),
-    agreements: getLineupMetadatas(state),
+    digitalContents: getLineupMetadatas(state),
     currentQueueItem: getCurrentQueueItem(state),
     playing: getPlaying(state),
     buffering: getBuffering(state)
@@ -326,21 +326,21 @@ const makeMapStateToProps = () => {
 }
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  fetchHistoryAgreementMetadata: () =>
-    dispatch(agreementsActions.fetchLineupMetadatas()),
-  play: (uid?: UID) => dispatch(agreementsActions.play(uid)),
-  pause: () => dispatch(agreementsActions.pause()),
+  fetchHistoryDigitalContentMetadata: () =>
+    dispatch(digitalContentsActions.fetchLineupMetadatas()),
+  play: (uid?: UID) => dispatch(digitalContentsActions.play(uid)),
+  pause: () => dispatch(digitalContentsActions.pause()),
   goToRoute: (route: string) => dispatch(pushRoute(route)),
   updateLineupOrder: (updatedOrderIndices: any) =>
-    dispatch(agreementsActions.updateLineupOrder(updatedOrderIndices)),
-  repostAgreement: (agreementId: ID) =>
-    dispatch(socialActions.repostAgreement(agreementId, RepostSource.HISTORY_PAGE)),
-  undoRepostAgreement: (agreementId: ID) =>
-    dispatch(socialActions.undoRepostAgreement(agreementId, RepostSource.HISTORY_PAGE)),
-  saveAgreement: (agreementId: ID) =>
-    dispatch(socialActions.saveAgreement(agreementId, FavoriteSource.HISTORY_PAGE)),
-  unsaveAgreement: (agreementId: ID) =>
-    dispatch(socialActions.unsaveAgreement(agreementId, FavoriteSource.HISTORY_PAGE))
+    dispatch(digitalContentsActions.updateLineupOrder(updatedOrderIndices)),
+  repostDigitalContent: (digitalContentId: ID) =>
+    dispatch(socialActions.repostDigitalContent(digitalContentId, RepostSource.HISTORY_PAGE)),
+  undoRepostDigitalContent: (digitalContentId: ID) =>
+    dispatch(socialActions.undoRepostDigitalContent(digitalContentId, RepostSource.HISTORY_PAGE)),
+  saveDigitalContent: (digitalContentId: ID) =>
+    dispatch(socialActions.saveDigitalContent(digitalContentId, FavoriteSource.HISTORY_PAGE)),
+  unsaveDigitalContent: (digitalContentId: ID) =>
+    dispatch(socialActions.unsaveDigitalContent(digitalContentId, FavoriteSource.HISTORY_PAGE))
 })
 
 export default withRouter(

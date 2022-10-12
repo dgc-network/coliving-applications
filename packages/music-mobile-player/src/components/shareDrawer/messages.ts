@@ -15,7 +15,7 @@ export const messages = {
   copyLink: (asset: ShareType) => `Copy Link to ${shareTypeMap[asset]}`,
   shareSheet: (asset: ShareType) => `Share ${asset} via...`,
   toast: (asset: ShareType) => `Copied Link to ${shareTypeMap[asset]}`,
-  agreementShareText: (title: string, handle: string) =>
+  digitalContentShareText: (title: string, handle: string) =>
     `Check out ${title} by ${handle} on @dgc-network #Coliving`,
   profileShareText: (handle: string) =>
     `Check out ${handle} on @dgc-network #Coliving`,

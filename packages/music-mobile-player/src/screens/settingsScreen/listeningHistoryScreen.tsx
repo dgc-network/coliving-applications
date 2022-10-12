@@ -3,12 +3,12 @@ import { useCallback } from 'react'
 import type { ID, UID } from '@coliving/common'
 import { Status, Name, PlaybackSource } from '@coliving/common'
 import { makeGetTableMetadatas } from '@coliving/web/src/common/store/lineup/selectors'
-import { agreementsActions } from '@coliving/web/src/common/store/pages/history-page/lineups/agreements/actions'
-import { getHistoryAgreementsLineup } from '@coliving/web/src/common/store/pages/history-page/selectors'
+import { digitalContentsActions } from '@coliving/web/src/common/store/pages/history-page/lineups/digital_contents/actions'
+import { getHistoryDigitalContentsLineup } from '@coliving/web/src/common/store/pages/history-page/selectors'
 import { useSelector } from 'react-redux'
 
 import { Screen, Tile, VirtualizedScrollView } from 'app/components/core'
-import { AgreementList } from 'app/components/agreementList'
+import { DigitalContentList } from 'app/components/digitalContentList'
 import { WithLoader } from 'app/components/withLoader/withLoader'
 import { useDispatchWeb } from 'app/hooks/useDispatchWeb'
 import { useSelectorWeb } from 'app/hooks/useSelectorWeb'
@@ -19,7 +19,7 @@ import { make, digital_content } from 'app/utils/analytics'
 const messages = {
   title: 'Listening History'
 }
-const getAgreements = makeGetTableMetadatas(getHistoryAgreementsLineup)
+const getDigitalContents = makeGetTableMetadatas(getHistoryDigitalContentsLineup)
 
 const useStyles = makeStyles(({ palette, spacing }) => ({
   container: {
@@ -27,7 +27,7 @@ const useStyles = makeStyles(({ palette, spacing }) => ({
     marginHorizontal: spacing(3),
     borderRadius: 6
   },
-  agreementListContainer: {
+  digitalContentListContainer: {
     backgroundColor: palette.white,
     borderRadius: 6,
     overflow: 'hidden'
@@ -39,15 +39,15 @@ export const ListeningHistoryScreen = () => {
   const dispatchWeb = useDispatchWeb()
   const isPlaying = useSelector(getPlaying)
   const playingUid = useSelector(getPlayingUid)
-  const historyAgreements = useSelectorWeb(getAgreements)
+  const historyDigitalContents = useSelectorWeb(getDigitalContents)
 
-  const status = historyAgreements.status
+  const status = historyDigitalContents.status
 
   const togglePlay = useCallback(
     (uid: UID, id: ID) => {
-      const isAgreementPlaying = uid === playingUid && isPlaying
-      if (!isAgreementPlaying) {
-        dispatchWeb(agreementsActions.play(uid))
+      const isDigitalContentPlaying = uid === playingUid && isPlaying
+      if (!isDigitalContentPlaying) {
+        dispatchWeb(digitalContentsActions.play(uid))
         digital_content(
           make({
             eventName: Name.PLAYBACK_PLAY,
@@ -56,7 +56,7 @@ export const ListeningHistoryScreen = () => {
           })
         )
       } else {
-        dispatchWeb(agreementsActions.pause())
+        dispatchWeb(digitalContentsActions.pause())
         digital_content(
           make({
             eventName: Name.PLAYBACK_PAUSE,
@@ -76,14 +76,14 @@ export const ListeningHistoryScreen = () => {
           <Tile
             styles={{
               root: styles.container,
-              tile: styles.agreementListContainer
+              tile: styles.digitalContentListContainer
             }}
           >
-            <AgreementList
-              agreements={historyAgreements.entries}
+            <DigitalContentList
+              digitalContents={historyDigitalContents.entries}
               showDivider
               togglePlay={togglePlay}
-              agreementItemAction='overflow'
+              digitalContentItemAction='overflow'
             />
           </Tile>
         </VirtualizedScrollView>

@@ -17,7 +17,7 @@ import { AlbumsTab } from './albumsTab'
 import { CollectiblesTab } from './collectiblesTab'
 import { ContentListsTab } from './ContentListsTab'
 import { RepostsTab } from './repostsTab'
-import { AgreementsTab } from './AgreementsTab'
+import { DigitalContentsTab } from './DigitalContentsTab'
 import { useSelectProfile } from './selectors'
 import { useShouldShowCollectiblesTab } from './utils'
 
@@ -52,10 +52,10 @@ export const ProfileTabNavigator = ({
 
   const showCollectiblesTab = useShouldShowCollectiblesTab()
 
-  const agreementScreen = collapsibleTabScreen({
-    name: 'Agreements',
+  const digitalContentScreen = collapsibleTabScreen({
+    name: 'DigitalContents',
     Icon: IconNote,
-    component: AgreementsTab,
+    component: DigitalContentsTab,
     initialParams,
     refreshing,
     onRefresh,
@@ -108,7 +108,7 @@ export const ProfileTabNavigator = ({
         renderHeader={renderHeader}
         animatedValue={animatedValue}
       >
-        {agreementScreen}
+        {digitalContentScreen}
         {albumsScreen}
         {contentListsScreen}
         {repostsScreen}

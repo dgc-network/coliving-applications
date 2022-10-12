@@ -5,7 +5,7 @@ import { CommonState } from 'common/store'
 const shareSoundToTikTokModalState = (state: CommonState) =>
   state.ui.shareSoundToTikTokModal
 
-export const getAgreement = createSelector(
+export const getDigitalContent = createSelector(
   shareSoundToTikTokModalState,
   (state) => state.digital_content
 )

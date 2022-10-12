@@ -9,6 +9,6 @@ export type TAudioStream = {
 
 export type Info = {
   title: string
-  landlord: string
+  author: string
   artwork: string
 }

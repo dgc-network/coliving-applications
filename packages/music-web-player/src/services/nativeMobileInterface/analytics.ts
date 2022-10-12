@@ -7,7 +7,7 @@ export class SetAnalyticsUser extends NativeMobileMessage {
   }
 }
 
-export class AgreementAnalyticsEvent extends NativeMobileMessage {
+export class DigitalContentAnalyticsEvent extends NativeMobileMessage {
   constructor(eventName: string, properties?: Record<string, any>) {
     super(MessageType.ANALYTICS_AGREEMENT, { eventName, properties })
   }

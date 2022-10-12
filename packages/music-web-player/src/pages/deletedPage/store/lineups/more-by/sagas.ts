@@ -1,7 +1,7 @@
 import { call, select } from 'typed-redux-saga/macro'
 
 import { getUserId } from 'common/store/account/selectors'
-import { retrieveUserAgreements } from 'common/store/pages/profile/lineups/agreements/retrieveUserAgreements'
+import { retrieveUserDigitalContents } from 'common/store/pages/profile/lineups/digital_contents/retrieveUserDigitalContents'
 import {
   PREFIX,
   moreByActions
@@ -9,7 +9,7 @@ import {
 import { getLineup } from 'pages/deletedPage/store/selectors'
 import { LineupSagas } from 'store/lineup/sagas'
 
-function* getAgreements({
+function* getDigitalContents({
   payload
 }: {
   offset: number
@@ -18,7 +18,7 @@ function* getAgreements({
 }) {
   const { handle } = payload
   const currentUserId = yield* select(getUserId)
-  const processed = yield* call(retrieveUserAgreements, {
+  const processed = yield* call(retrieveUserDigitalContents, {
     handle,
     currentUserId,
     sort: 'plays',
@@ -36,7 +36,7 @@ class MoreBySagas extends LineupSagas {
       PREFIX,
       moreByActions,
       getLineup,
-      getAgreements,
+      getDigitalContents,
       undefined,
       undefined,
       sourceSelector

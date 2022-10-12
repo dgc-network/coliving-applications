@@ -1,4 +1,4 @@
-import trendingUndergroundSagas from './lineups/agreements/sagas'
+import trendingUndergroundSagas from './lineups/digital_contents/sagas'
 
 const sagas = () => [...trendingUndergroundSagas()]
 export default sagas

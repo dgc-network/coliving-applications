@@ -20,8 +20,8 @@ import {
   EntityLink,
   UserNameLink,
   ProfilePicture
-} from '../Notification'
-import { getEntityRoute, getEntityScreen } from '../Notification/utils'
+} from '../notification'
+import { getEntityRoute, getEntityScreen } from '../notification/utils'
 import { useDrawerNavigation } from '../useDrawerNavigation'
 
 const messages = {

@@ -10,14 +10,14 @@ import {
 } from '@coliving/common'
 
 import {
-  CollectionAgreement,
-  AgreementRecord,
+  CollectionDigitalContent,
+  DigitalContentRecord,
   CollectionsPageType
 } from 'common/store/pages/collection/types'
 import CollectionHeader from 'components/collection/desktop/collectionHeader'
 import LoadingSpinner from 'components/loadingSpinner/loadingSpinner'
 import Page from 'components/page/page'
-import AgreementsTable from 'components/agreementsTable/agreementsTable'
+import DigitalContentsTable from 'components/digitalContentsTable/digitalContentsTable'
 import { computeCollectionMetadataProps } from 'pages/collectionPage/store/utils'
 
 import styles from './collectionPage.module.css'
@@ -59,33 +59,33 @@ export type CollectionPageProps = {
     metadata: Collection | SmartCollection | null
     user: User | null
   }
-  agreements: {
+  digitalContents: {
     status: string
-    entries: CollectionAgreement[]
+    entries: CollectionDigitalContent[]
   }
   columns?: any
   userId?: ID | null
   userContentLists?: any
   isQueued: () => boolean
-  onHeroAgreementClickLandlordName: () => void
-  onPlay: (record: AgreementRecord) => void
-  onHeroAgreementShare: (record: AgreementRecord) => void
-  onHeroAgreementSave?: (record: AgreementRecord) => void
-  onClickRow: (record: AgreementRecord, index: number) => void
-  onClickSave?: (record: AgreementRecord) => void
+  onHeroDigitalContentClickLandlordName: () => void
+  onPlay: (record: DigitalContentRecord) => void
+  onHeroDigitalContentShare: (record: DigitalContentRecord) => void
+  onHeroDigitalContentSave?: (record: DigitalContentRecord) => void
+  onClickRow: (record: DigitalContentRecord, index: number) => void
+  onClickSave?: (record: DigitalContentRecord) => void
   allowReordering: boolean
-  getFilteredData: (agreementMetadata: CollectionAgreement[]) => [AgreementRecord[], number]
+  getFilteredData: (digitalContentMetadata: CollectionDigitalContent[]) => [DigitalContentRecord[], number]
   onFilterChange: (evt: ChangeEvent<HTMLInputElement>) => void
-  onHeroAgreementEdit: () => void
+  onHeroDigitalContentEdit: () => void
   onPublish: () => void
-  onHeroAgreementRepost?: any
-  onClickAgreementName: (record: AgreementRecord) => void
-  onClickLandlordName: (record: AgreementRecord) => void
-  onClickRepostAgreement: (record: AgreementRecord) => void
-  onSortAgreements: (sorters: any) => void
-  onReorderAgreements: (source: number, destination: number) => void
+  onHeroDigitalContentRepost?: any
+  onClickDigitalContentName: (record: DigitalContentRecord) => void
+  onClickLandlordName: (record: DigitalContentRecord) => void
+  onClickRepostDigitalContent: (record: DigitalContentRecord) => void
+  onSortDigitalContents: (sorters: any) => void
+  onReorderDigitalContents: (source: number, destination: number) => void
   onClickRemove: (
-    agreementId: number,
+    digitalContentId: number,
     index: number,
     uid: string,
     timestamp: number
@@ -107,26 +107,26 @@ const CollectionPage = ({
   type,
   collection: { status, metadata, user },
   columns,
-  agreements,
+  digitalContents,
   userId,
   userContentLists,
   getFilteredData,
   isQueued,
-  onHeroAgreementClickLandlordName,
+  onHeroDigitalContentClickLandlordName,
   onFilterChange,
   onPlay,
-  onHeroAgreementEdit,
+  onHeroDigitalContentEdit,
   onPublish,
-  onHeroAgreementShare,
-  onHeroAgreementSave,
-  onHeroAgreementRepost,
+  onHeroDigitalContentShare,
+  onHeroDigitalContentSave,
+  onHeroDigitalContentRepost,
   onClickRow,
   onClickSave,
-  onClickAgreementName,
+  onClickDigitalContentName,
   onClickLandlordName,
-  onClickRepostAgreement,
-  onSortAgreements,
-  onReorderAgreements,
+  onClickRepostDigitalContent,
+  onSortDigitalContents,
+  onReorderDigitalContents,
   onClickRemove,
   onFollow,
   onUnfollow,
@@ -136,20 +136,20 @@ const CollectionPage = ({
 }: CollectionPageProps) => {
   // TODO: Consider dynamic lineups, esp. for caching improvement.
   const [dataSource, playingIndex] =
-    agreements.status === Status.SUCCESS
-      ? getFilteredData(agreements.entries)
+    digitalContents.status === Status.SUCCESS
+      ? getFilteredData(digitalContents.entries)
       : [[], -1]
   const collectionLoading = status === Status.LOADING
   const queuedAndPlaying = playing && isQueued()
-  const agreementsLoading = agreements.status === Status.LOADING
+  const digitalContentsLoading = digitalContents.status === Status.LOADING
 
   const coverArtSizes =
     metadata && metadata?.variant !== Variant.SMART
       ? metadata._cover_art_sizes
       : null
   const duration =
-    agreements.entries?.reduce(
-      (duration: number, entry: CollectionAgreement) =>
+    digitalContents.entries?.reduce(
+      (duration: number, entry: CollectionDigitalContent) =>
         duration + entry.duration || 0,
       0
     ) ?? 0
@@ -174,7 +174,7 @@ const CollectionPage = ({
     metadata?.variant === Variant.SMART ? metadata?.customEmptyText : null
 
   const {
-    agreementCount,
+    digitalContentCount,
     isEmpty,
     lastModified,
     contentListName,
@@ -192,9 +192,9 @@ const CollectionPage = ({
       collectionId={contentListId}
       userId={contentListOwnerId}
       loading={
-        typeTitle === 'Audio NFT ContentList' ? agreementsLoading : collectionLoading
+        typeTitle === 'Audio NFT ContentList' ? digitalContentsLoading : collectionLoading
       }
-      agreementsLoading={agreementsLoading}
+      digitalContentsLoading={digitalContentsLoading}
       type={typeTitle}
       title={contentListName}
       landlordName={contentListOwnerName}
@@ -203,7 +203,7 @@ const CollectionPage = ({
       description={description}
       isOwner={isOwner}
       isAlbum={isAlbum}
-      numAgreements={dataSource.length}
+      numDigitalContents={dataSource.length}
       modified={lastModified}
       duration={duration}
       isPublished={!isPrivate}
@@ -215,14 +215,14 @@ const CollectionPage = ({
       saves={contentListSaveCount}
       playing={queuedAndPlaying}
       // Actions
-      onClickLandlordName={onHeroAgreementClickLandlordName}
+      onClickLandlordName={onHeroDigitalContentClickLandlordName}
       onFilterChange={onFilterChange}
       onPlay={onPlay}
-      onEdit={onHeroAgreementEdit}
+      onEdit={onHeroDigitalContentEdit}
       onPublish={onPublish}
-      onShare={onHeroAgreementShare}
-      onSave={onHeroAgreementSave}
-      onRepost={onHeroAgreementRepost}
+      onShare={onHeroDigitalContentShare}
+      onSave={onHeroDigitalContentSave}
+      onRepost={onHeroDigitalContentRepost}
       onFollow={onFollow}
       onUnfollow={onUnfollow}
       onClickReposts={onClickReposts}
@@ -250,10 +250,10 @@ const CollectionPage = ({
           <EmptyPage isOwner={isOwner} text={customEmptyText} />
         ) : (
           <div className={styles.tableWrapper}>
-            <AgreementsTable
+            <DigitalContentsTable
               key={contentListName}
-              loading={agreementsLoading}
-              loadingRowsCount={agreementCount}
+              loading={digitalContentsLoading}
+              loadingRowsCount={digitalContentCount}
               columns={columns}
               userId={userId}
               playing={playing}
@@ -267,11 +267,11 @@ const CollectionPage = ({
               }
               onClickRow={onClickRow}
               onClickFavorite={onClickSave}
-              onClickAgreementName={onClickAgreementName}
+              onClickDigitalContentName={onClickDigitalContentName}
               onClickLandlordName={onClickLandlordName}
-              onClickRepost={onClickRepostAgreement}
-              onSortAgreements={onSortAgreements}
-              onReorderAgreements={onReorderAgreements}
+              onClickRepost={onClickRepostDigitalContent}
+              onSortDigitalContents={onSortDigitalContents}
+              onReorderDigitalContents={onReorderDigitalContents}
               onClickRemove={isOwner ? onClickRemove : null}
               removeText={`${messages.remove} ${
                 isAlbum ? messages.type.album : messages.type.contentList

@@ -10,7 +10,7 @@ import { Dimensions, StyleSheet, View } from 'react-native'
 import { SectionList } from 'app/components/core'
 import {
   CollectionTile,
-  AgreementTile,
+  DigitalContentTile,
   LineupTileSkeleton
 } from 'app/components/lineupTile'
 import { useDispatchWeb } from 'app/hooks/useDispatchWeb'
@@ -36,8 +36,8 @@ const MAX_TILES_COUNT = 1000
 // The max number of loading tiles to display if count prop passes
 const MAX_COUNT_LOADING_TILES = 18
 
-// The inital multiplier for number of agreements to fetch on lineup load
-// multiplied by the number of agreements that fit the screen height
+// The inital multiplier for number of digitalContents to fetch on lineup load
+// multiplied by the number of digitalContents that fit the screen height
 export const INITIAL_LOAD_AGREEMENTS_MULTIPLIER = 1.75
 export const INITIAL_CONTENT_LISTS_MULTIPLER = 1
 
@@ -46,10 +46,10 @@ export const INITIAL_CONTENT_LISTS_MULTIPLER = 1
 const AGREEMENTS_AHEAD_MULTIPLIER = 0.75
 
 // Threshold for how far away from the bottom (of the list) the user has to be
-// before fetching more agreements as a percentage of the list height
+// before fetching more digitalContents as a percentage of the list height
 const LOAD_MORE_THRESHOLD = 0.5
 
-// The minimum inital multiplier for agreements to fetch on lineup load
+// The minimum inital multiplier for digitalContents to fetch on lineup load
 // use so that multiple lineups on the same page can switch w/out a reload
 const MINIMUM_INITIAL_LOAD_AGREEMENTS_MULTIPLIER = 1
 
@@ -106,7 +106,7 @@ type Section = {
   data: Array<LineupItem | LoadingLineupItem | FeedTipLineupItem>
 }
 
-/** `Lineup` encapsulates the logic for displaying a list of items such as Agreements (e.g. prefetching items
+/** `Lineup` encapsulates the logic for displaying a list of items such as DigitalContents (e.g. prefetching items
  * displaying loading states, etc).
  */
 export const Lineup = ({
@@ -269,7 +269,7 @@ export const Lineup = ({
       if (item._marked_deleted) {
         return null
       }
-      return AgreementTile
+      return DigitalContentTile
     } else if (item.kind === Kind.COLLECTIONS || item.content_list_id) {
       return CollectionTile
     }

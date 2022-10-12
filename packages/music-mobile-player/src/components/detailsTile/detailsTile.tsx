@@ -76,7 +76,7 @@ const useStyles = makeStyles(({ palette, spacing, typography }) => ({
     marginBottom: spacing(4)
   },
 
-  landlord: {
+  author: {
     color: palette.secondary,
     fontSize: 18
   },
@@ -263,7 +263,7 @@ export const DetailsTile = ({
         {user ? (
           <TouchableOpacity onPress={handlePressLandlordName}>
             <View style={styles.landlordContainer}>
-              <Text style={styles.landlord}>{user.name}</Text>
+              <Text style={styles.author}>{user.name}</Text>
               <UserBadges
                 style={styles.badge}
                 badgeSize={16}

@@ -19,7 +19,7 @@ const WALLET_COUNT_LIMIT = 5
 const messages = {
   title: 'Connect Additional Wallets With Your Account',
   description:
-    'Show off your NFT Collectibles and flaunt your $LIVE with a VIP badge on your profile.',
+    'Show off your NFT Collectibles and flaunt your $DGCO with a VIP badge on your profile.',
   connectBtn: 'Connect New Wallet',
   limit: `Reached Limit of ${WALLET_COUNT_LIMIT} Connected Wallets.`
 }

@@ -20,11 +20,11 @@ import playerReducer, {
 } from 'store/player/slice'
 import { noopReducer, allSagas } from 'store/testHelper'
 
-const PREFIX = 'agreements'
+const PREFIX = 'digitalContents'
 const MOCK_TIMESTAMP = 1479427200000
 
-function* getAgreements() {
-  const agreements = yield all([
+function* getDigitalContents() {
+  const digitalContents = yield all([
     {
       digital_content_id: 1,
       owner_id: 1,
@@ -46,7 +46,7 @@ function* getAgreements() {
       keep_in_lineup: 44
     }
   ])
-  return agreements
+  return digitalContents
 }
 
 class Actions extends LineupActions {
@@ -63,8 +63,8 @@ class Sagas extends LineupSagas {
       actions,
       // Selector to fetch the lineup.
       (state) => state.lineup,
-      // Query to fetch remote agreements (e.g. from BE).
-      getAgreements,
+      // Query to fetch remote digitalContents (e.g. from BE).
+      getDigitalContents,
       // Selector of what to keep in the lineup.
       (digital_content) => ({
         id: digital_content.digital_content_id,
@@ -81,7 +81,7 @@ beforeAll(() => {
 })
 
 describe('fetch', () => {
-  it('fetches and add agreements to the lineup', async () => {
+  it('fetches and add digitalContents to the lineup', async () => {
     const { storeState } = await expectSaga(
       allSagas(sagas.getSagas().concat(cacheSagas())),
       actions
@@ -90,7 +90,7 @@ describe('fetch', () => {
         combineReducers({
           lineup: asLineup(PREFIX, noopReducer()),
           queue: queueReducer,
-          agreements: asCache(noopReducer(), Kind.AGREEMENTS),
+          digitalContents: asCache(noopReducer(), Kind.AGREEMENTS),
           users: asCache(noopReducer(), Kind.USERS),
           collections: asCache(noopReducer(), Kind.COLECTIONS),
           confirmer: noopReducer()
@@ -102,7 +102,7 @@ describe('fetch', () => {
           queue: {
             ...initialQueueState
           },
-          agreements: {
+          digitalContents: {
             ...initialCacheState
           },
           users: {
@@ -144,7 +144,7 @@ describe('fetch', () => {
         keepInLineup: 44
       }
     ])
-    expect(storeState.agreements).toEqual({
+    expect(storeState.digitalContents).toEqual({
       ...initialCacheState,
       uids: {
         'kind:AGREEMENTS-id:1-count:1': 1,
@@ -163,12 +163,12 @@ describe('fetch', () => {
 })
 
 describe('play', () => {
-  it('adds all agreements to the queue', async () => {
+  it('adds all digitalContents to the queue', async () => {
     const { storeState } = await expectSaga(allSagas(sagas.getSagas()), actions)
       .withReducer(
         combineReducers({
           lineup: asLineup(PREFIX, noopReducer()),
-          agreements: noopReducer(),
+          digitalContents: noopReducer(),
           queue: queueReducer,
           player: playerReducer
         }),
@@ -189,7 +189,7 @@ describe('play', () => {
             },
             prefix: PREFIX
           },
-          agreements: {
+          digitalContents: {
             ...initialCacheState,
             entries: {
               1: { metadata: { digital_content_id: 1, keep_in_lineup: 11 } },

@@ -11,7 +11,7 @@ export enum CollectionSortMode {
   SAVE_COUNT = 1
 }
 
-export enum AgreementsSortMode {
+export enum DigitalContentsSortMode {
   RECENT = 0,
   POPULAR = 1
 }
@@ -36,7 +36,7 @@ export type ProfilePageState = {
   followees: Follow
   followeeFollows: Follow
   feed: LineupState<{ id: ID }>
-  agreements: LineupState<{ id: ID }>
+  digitalContents: LineupState<{ id: ID }>
   isNotificationSubscribed: boolean
   error?: string
   mostUsedTags: string[]
@@ -51,7 +51,7 @@ export enum Tabs {
 }
 
 export enum TabRoute {
-  AGREEMENTS = 'agreements',
+  AGREEMENTS = 'digitalContents',
   ALBUMS = 'albums',
   CONTENT_LISTS = 'contentLists',
   REPOSTS = 'reposts',

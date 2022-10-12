@@ -1,10 +1,10 @@
 import type { EntityType } from '@coliving/web/src/common/store/notifications/types'
 
-import { getCollectionRoute, getAgreementRoute } from 'app/utils/routes'
+import { getCollectionRoute, getDigitalContentRoute } from 'app/utils/routes'
 
 export const getEntityRoute = (entity: EntityType, fullUrl = false) => {
   if ('digital_content_id' in entity) {
-    return getAgreementRoute(entity, fullUrl)
+    return getDigitalContentRoute(entity, fullUrl)
   } else if (entity.user) {
     const { user } = entity
     return getCollectionRoute({ ...entity, user }, fullUrl)

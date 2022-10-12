@@ -11,7 +11,7 @@ import placeholderArt from 'assets/img/imageBlank2x.png'
 import { getUserId } from 'common/store/account/selectors'
 import { getCollection } from 'common/store/cache/collections/selectors'
 import { getUserFromCollection } from 'common/store/cache/users/selectors'
-import { LandlordPopover } from 'components/landlord/landlordPopover'
+import { LandlordPopover } from 'components/author/landlordPopover'
 import DynamicImage from 'components/dynamicImage/dynamicImage'
 import Menu, { MenuType } from 'components/menu/menu'
 import PerspectiveCard from 'components/perspectiveCard/perspectiveCard'
@@ -202,20 +202,20 @@ function mapStateToProps(state: AppState, ownProps: OwnProps) {
 
 function mapDispatchToProps(dispatch: Dispatch) {
   return {
-    setRepostUsers: (agreementID: ID) =>
+    setRepostUsers: (digitalContentID: ID) =>
       dispatch(
         setUsers({
           userListType: UserListType.REPOST,
           entityType: UserListEntityType.COLLECTION,
-          id: agreementID
+          id: digitalContentID
         })
       ),
-    setFavoriteUsers: (agreementID: ID) =>
+    setFavoriteUsers: (digitalContentID: ID) =>
       dispatch(
         setUsers({
           userListType: UserListType.FAVORITE,
           entityType: UserListEntityType.COLLECTION,
-          id: agreementID
+          id: digitalContentID
         })
       ),
     setModalVisibility: () => dispatch(setVisibility(true)),

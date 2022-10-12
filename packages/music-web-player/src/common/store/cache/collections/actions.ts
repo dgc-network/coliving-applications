@@ -30,15 +30,15 @@ export const DELETE_CONTENT_LIST_FAILED = 'DELETE_CONTENT_LIST_FAILED'
 export const FETCH_COVER_ART = 'AGREEMENTS/FETCH_COVER_ART'
 
 /**
- * @param initAgreementId optional digital_content id to pull artwork from.
+ * @param initDigitalContentId optional digital_content id to pull artwork from.
  */
 export function createContentList(
   tempId: number | string,
   formFields: Record<string, unknown>,
   source: string,
-  initAgreementId?: number | null
+  initDigitalContentId?: number | null
 ) {
-  return { type: CREATE_CONTENT_LIST, tempId, formFields, source, initAgreementId }
+  return { type: CREATE_CONTENT_LIST, tempId, formFields, source, initDigitalContentId }
 }
 
 export function createContentListRequested() {
@@ -73,14 +73,14 @@ export function editContentListFailed(
   return { type: EDIT_CONTENT_LIST_FAILED, error, params, metadata }
 }
 
-export function addAgreementToContentList(
-  agreementId: ID | null,
+export function addDigitalContentToContentList(
+  digitalContentId: ID | null,
   contentListId: number | string
 ) {
-  return { type: ADD_AGREEMENT_TO_CONTENT_LIST, agreementId, contentListId }
+  return { type: ADD_AGREEMENT_TO_CONTENT_LIST, digitalContentId, contentListId }
 }
 
-export function addAgreementToContentListFailed(
+export function addDigitalContentToContentListFailed(
   error: Error,
   params: Record<string, unknown>,
   metadata: Record<string, unknown>
@@ -88,15 +88,15 @@ export function addAgreementToContentListFailed(
   return { type: ADD_AGREEMENT_TO_CONTENT_LIST_FAILED, error, params, metadata }
 }
 
-export function removeAgreementFromContentList(
-  agreementId: number,
+export function removeDigitalContentFromContentList(
+  digitalContentId: number,
   contentListId: number,
   timestamp: number
 ) {
-  return { type: REMOVE_AGREEMENT_FROM_CONTENT_LIST, agreementId, contentListId, timestamp }
+  return { type: REMOVE_AGREEMENT_FROM_CONTENT_LIST, digitalContentId, contentListId, timestamp }
 }
 
-export function removeAgreementFromContentListFailed(
+export function removeDigitalContentFromContentListFailed(
   error: Error,
   params: Record<string, unknown>,
   metadata: Record<string, unknown>
@@ -106,10 +106,10 @@ export function removeAgreementFromContentListFailed(
 
 export function orderContentList(
   contentListId: number,
-  agreementIdsAndTimes: { id: ID; time: number }[],
-  agreementUids?: UID[]
+  digitalContentIdsAndTimes: { id: ID; time: number }[],
+  digitalContentUids?: UID[]
 ) {
-  return { type: ORDER_CONTENT_LIST, contentListId, agreementIdsAndTimes, agreementUids }
+  return { type: ORDER_CONTENT_LIST, contentListId, digitalContentIdsAndTimes, digitalContentUids }
 }
 
 export function orderContentListFailed(

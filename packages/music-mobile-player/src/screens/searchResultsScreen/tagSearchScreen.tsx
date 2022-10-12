@@ -13,7 +13,7 @@ import { MessageType } from 'app/message'
 
 import { SearchFocusContext } from './searchFocusContext'
 import { ProfilesTab } from './tabs/profilesTab'
-import { AgreementsTab } from './tabs/AgreementsTab'
+import { DigitalContentsTab } from './tabs/DigitalContentsTab'
 
 const messages = {
   header: 'Tag Search'
@@ -21,7 +21,7 @@ const messages = {
 
 /**
  * Displays tag search results. Uses the same state as normal full search,
- * but only displays matching agreements & profiles.
+ * but only displays matching digitalContents & profiles.
  */
 export const TagSearchScreen = () => {
   const isFocused = useIsFocused()
@@ -37,10 +37,10 @@ export const TagSearchScreen = () => {
     })
   }, [dispatchWeb, query])
 
-  const agreementsScreen = tabScreen({
-    name: 'Agreements',
+  const digitalContentsScreen = tabScreen({
+    name: 'DigitalContents',
     Icon: IconNote,
-    component: AgreementsTab
+    component: DigitalContentsTab
   })
 
   const profilesScreen = tabScreen({
@@ -53,8 +53,8 @@ export const TagSearchScreen = () => {
     <Screen topbarRight={null}>
       <Header text={messages.header} />
       <SearchFocusContext.Provider value={focusContext}>
-        <TabNavigator initialScreenName='Agreements'>
-          {agreementsScreen}
+        <TabNavigator initialScreenName='DigitalContents'>
+          {digitalContentsScreen}
           {profilesScreen}
         </TabNavigator>
       </SearchFocusContext.Provider>

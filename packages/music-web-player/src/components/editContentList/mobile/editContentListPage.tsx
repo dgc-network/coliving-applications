@@ -19,13 +19,13 @@ import {
   createContentList,
   editContentList,
   orderContentList,
-  removeAgreementFromContentList
+  removeDigitalContentFromContentList
 } from 'common/store/cache/collections/actions'
-import { agreementsActions } from 'common/store/pages/collection/lineup/actions'
+import { digitalContentsActions } from 'common/store/pages/collection/lineup/actions'
 import * as createContentListActions from 'common/store/ui/createContentListModal/actions'
 import {
   getMetadata,
-  getAgreements
+  getDigitalContents
 } from 'common/store/ui/createContentListModal/selectors'
 import DynamicImage from 'components/dynamicImage/dynamicImage'
 import EditableRow, { Format } from 'components/groupableList/editableRow'
@@ -34,7 +34,7 @@ import Grouping from 'components/groupableList/grouping'
 import TextElement, { Type } from 'components/nav/mobile/textElement'
 import { useTemporaryNavContext } from 'components/nav/store/context'
 import { ToastContext } from 'components/toast/toastContext'
-import AgreementList from 'components/digital_content/mobile/AgreementList'
+import DigitalContentList from 'components/digital_content/mobile/DigitalContentList'
 import { useCollectionCoverArt } from 'hooks/useCollectionCoverArt'
 import useHasChangedRoute from 'hooks/useHasChangedRoute'
 import UploadStub from 'pages/profilePage/components/mobile/uploadStub'
@@ -45,7 +45,7 @@ import { contentListPage } from 'utils/route'
 import { withNullGuard } from 'utils/withNullGuard'
 
 import styles from './EditContentListPage.module.css'
-import RemoveContentListAgreementDrawer from './removeContentListAgreementDrawer'
+import RemoveContentListDigitalContentDrawer from './removeContentListDigitalContentDrawer'
 
 const IS_NATIVE_MOBILE = process.env.REACT_APP_NATIVE_MOBILE
 
@@ -78,8 +78,8 @@ const EditContentListPage = g(
     account,
     createContentList,
     metadata,
-    agreements,
-    removeAgreement,
+    digitalContents,
+    removeDigitalContent,
     editContentList,
     orderContentList,
     refreshLineup
@@ -96,28 +96,28 @@ const EditContentListPage = g(
       initialMetadata || initialFormFields
     )
 
-    const [showRemoveAgreementDrawer, setShowRemoveAgreementDrawer] = useState(false)
-    const onDrawerClose = () => setShowRemoveAgreementDrawer(false)
+    const [showRemoveDigitalContentDrawer, setShowRemoveDigitalContentDrawer] = useState(false)
+    const onDrawerClose = () => setShowRemoveDigitalContentDrawer(false)
 
-    // Holds all agreements to be removed on save
-    const [removedAgreements, setRemovedAgreements] = useState<
-      { timestamp: number; agreementId: ID }[]
+    // Holds all digitalContents to be removed on save
+    const [removedDigitalContents, setRemovedDigitalContents] = useState<
+      { timestamp: number; digitalContentId: ID }[]
     >([])
 
     // Holds digital_content to be removed if confirmed
-    const [confirmRemoveAgreement, setConfirmRemoveAgreement] =
-      useState<Nullable<{ title: string; agreementId: ID; timestamp: number }>>(
+    const [confirmRemoveDigitalContent, setConfirmRemoveDigitalContent] =
+      useState<Nullable<{ title: string; digitalContentId: ID; timestamp: number }>>(
         null
       )
 
     // State to keep digital_content of reordering
-    const [reorderedAgreements, setReorderedAgreements] = useState<number[]>([])
+    const [reorderedDigitalContents, setReorderedDigitalContents] = useState<number[]>([])
     const [hasReordered, setHasReordered] = useState(false)
     useEffect(() => {
-      if (reorderedAgreements.length === 0 && agreements && agreements.length !== 0) {
-        setReorderedAgreements(agreements.map((_: any, i: number) => i))
+      if (reorderedDigitalContents.length === 0 && digitalContents && digitalContents.length !== 0) {
+        setReorderedDigitalContents(digitalContents.map((_: any, i: number) => i))
       }
-    }, [setReorderedAgreements, reorderedAgreements, agreements])
+    }, [setReorderedDigitalContents, reorderedDigitalContents, digitalContents])
 
     const existingImage = useCollectionCoverArt(
       formFields.content_list_id,
@@ -180,23 +180,23 @@ const EditContentListPage = g(
 
     const onReorderContentList = useCallback(
       (source: number, destination: number) => {
-        const reorder = [...reorderedAgreements]
+        const reorder = [...reorderedDigitalContents]
         const tmp = reorder[source]
         reorder.splice(source, 1)
         reorder.splice(destination, 0, tmp)
 
         setHasReordered(true)
-        setReorderedAgreements(reorder)
+        setReorderedDigitalContents(reorder)
       },
-      [setHasReordered, reorderedAgreements, setReorderedAgreements]
+      [setHasReordered, reorderedDigitalContents, setReorderedDigitalContents]
     )
 
     const formatReorder = (
-      agreementIds: { digital_content: ID; time: number }[],
+      digitalContentIds: { digital_content: ID; time: number }[],
       reorder: number[]
     ) => {
       return reorder.map((i) => {
-        const { digital_content, time } = agreementIds[i]
+        const { digital_content, time } = digitalContentIds[i]
         return {
           id: digital_content,
           time
@@ -210,14 +210,14 @@ const EditContentListPage = g(
         formFields.description = null
       }
       // Copy the metadata contentList contents so that a reference is not changed between
-      // removing agreements, updating digital_content order, and edit contentList
-      const contentListAgreementIds = [
+      // removing digitalContents, updating digital_content order, and edit contentList
+      const contentListDigitalContentIds = [
         ...(metadata?.content_list_contents?.digital_content_ids ?? [])
       ]
 
-      for (const removedAgreement of removedAgreements) {
+      for (const removedDigitalContent of removedDigitalContents) {
         const { content_list_id } = metadata!
-        removeAgreement(removedAgreement.agreementId, content_list_id, removedAgreement.timestamp)
+        removeDigitalContent(removedDigitalContent.digitalContentId, content_list_id, removedDigitalContent.timestamp)
       }
 
       if (metadata && formFields.content_list_id) {
@@ -227,12 +227,12 @@ const EditContentListPage = g(
           // in the view behind the edit contentList page.
           orderContentList(
             metadata.content_list_id,
-            formatReorder(contentListAgreementIds, reorderedAgreements)
+            formatReorder(contentListDigitalContentIds, reorderedDigitalContents)
           )
           // Update the contentList content digital_content_ids so that the editContentList
-          // optimistically update the cached collection agreementIds
-          formFields.content_list_contents.digital_content_ids = reorderedAgreements.map(
-            (idx) => contentListAgreementIds[idx]
+          // optimistically update the cached collection digitalContentIds
+          formFields.content_list_contents.digital_content_ids = reorderedDigitalContents.map(
+            (idx) => contentListDigitalContentIds[idx]
           )
         }
         refreshLineup()
@@ -258,69 +258,69 @@ const EditContentListPage = g(
       metadata,
       editContentList,
       hasReordered,
-      reorderedAgreements,
+      reorderedDigitalContents,
       orderContentList,
       refreshLineup,
       toast,
-      removeAgreement,
-      removedAgreements
+      removeDigitalContent,
+      removedDigitalContents
     ])
 
     /**
      * Stores the digital_content to be removed if confirmed
      * Opens the drawer to confirm removal of the digital_content
      */
-    const onRemoveAgreement = useCallback(
+    const onRemoveDigitalContent = useCallback(
       (index: number) => {
         if ((metadata?.content_list_contents?.digital_content_ids.length ?? 0) <= index)
           return
-        const reorderedIndex = reorderedAgreements[index]
+        const reorderedIndex = reorderedDigitalContents[index]
         const { content_list_contents } = metadata!
-        const { digital_content: agreementId, time } =
+        const { digital_content: digitalContentId, time } =
           content_list_contents.digital_content_ids[reorderedIndex]
-        const agreementMetadata = agreements?.find(
-          (digital_content) => digital_content.digital_content_id === agreementId
+        const digitalContentMetadata = digitalContents?.find(
+          (digital_content) => digital_content.digital_content_id === digitalContentId
         )
-        if (!agreementMetadata) return
-        setConfirmRemoveAgreement({
-          title: agreementMetadata.title,
-          agreementId,
+        if (!digitalContentMetadata) return
+        setConfirmRemoveDigitalContent({
+          title: digitalContentMetadata.title,
+          digitalContentId,
           timestamp: time
         })
-        setShowRemoveAgreementDrawer(true)
+        setShowRemoveDigitalContentDrawer(true)
       },
       [
-        reorderedAgreements,
-        setShowRemoveAgreementDrawer,
+        reorderedDigitalContents,
+        setShowRemoveDigitalContentDrawer,
         metadata,
-        agreements,
-        setConfirmRemoveAgreement
+        digitalContents,
+        setConfirmRemoveDigitalContent
       ]
     )
 
     /**
-     * Moves the digital_content to be removed to the removedAgreements array
+     * Moves the digital_content to be removed to the removedDigitalContents array
      * Closes the drawer to confirm removal of the digital_content
      */
     const onConfirmRemove = useCallback(() => {
-      if (!confirmRemoveAgreement) return
+      if (!confirmRemoveDigitalContent) return
       const removeIdx = metadata?.content_list_contents.digital_content_ids.findIndex(
         (t) =>
-          t.digital_content === confirmRemoveAgreement.agreementId &&
-          t.time === confirmRemoveAgreement.timestamp
+          t.digital_content === confirmRemoveDigitalContent.digitalContentId &&
+          t.time === confirmRemoveDigitalContent.timestamp
       )
       if (removeIdx === -1) return
-      setRemovedAgreements((removed) =>
+      setRemovedDigitalContents((removed) =>
         removed.concat({
-          agreementId: confirmRemoveAgreement.agreementId,
-          timestamp: confirmRemoveAgreement.timestamp
+          digitalContentId: confirmRemoveDigitalContent.digitalContentId,
+          timestamp: confirmRemoveDigitalContent.timestamp
         })
       )
-      setReorderedAgreements((agreements) =>
-        agreements.filter((agreementIndex) => agreementIndex !== removeIdx)
+      setReorderedDigitalContents((digitalContents) =>
+        digitalContents.filter((digitalContentIndex) => digitalContentIndex !== removeIdx)
       )
       onDrawerClose()
-    }, [metadata, confirmRemoveAgreement, setRemovedAgreements, setReorderedAgreements])
+    }, [metadata, confirmRemoveDigitalContent, setRemovedDigitalContents, setReorderedDigitalContents])
 
     const setters = useCallback(
       () => ({
@@ -345,23 +345,23 @@ const EditContentListPage = g(
     useTemporaryNavContext(setters)
 
     // Put together digital_content list if necessary
-    let agreementList = null
-    if (agreements && reorderedAgreements.length > 0) {
-      agreementList = reorderedAgreements.map((i) => {
-        const t = agreements[i]
-        const contentListAgreement = metadata?.content_list_contents.digital_content_ids[i]
+    let digitalContentList = null
+    if (digitalContents && reorderedDigitalContents.length > 0) {
+      digitalContentList = reorderedDigitalContents.map((i) => {
+        const t = digitalContents[i]
+        const contentListDigitalContent = metadata?.content_list_contents.digital_content_ids[i]
         const isRemoveActive =
-          showRemoveAgreementDrawer &&
-          t.digital_content_id === confirmRemoveAgreement?.agreementId &&
-          contentListAgreement?.time === confirmRemoveAgreement?.timestamp
+          showRemoveDigitalContentDrawer &&
+          t.digital_content_id === confirmRemoveDigitalContent?.digitalContentId &&
+          contentListDigitalContent?.time === confirmRemoveDigitalContent?.timestamp
 
         return {
           isLoading: false,
           landlordName: t.user.name,
           landlordHandle: t.user.handle,
-          agreementTitle: t.title,
-          agreementId: t.digital_content_id,
-          time: contentListAgreement?.time,
+          digitalContentTitle: t.title,
+          digitalContentId: t.digital_content_id,
+          time: contentListDigitalContent?.time,
           isDeleted: t.is_delete || !!t.user.is_deactivated,
           isRemoveActive
         }
@@ -414,26 +414,26 @@ const EditContentListPage = g(
                 maxLength={256}
               />
             </Grouping>
-            {/** Don't render agreementlist on native mobile. Errors
+            {/** Don't render digitalContentlist on native mobile. Errors
              * get thrown because of the null renderer
              */}
-            {!IS_NATIVE_MOBILE && agreementList && agreementList.length > 0 && (
+            {!IS_NATIVE_MOBILE && digitalContentList && digitalContentList.length > 0 && (
               <Grouping>
-                <AgreementList
-                  agreements={agreementList}
+                <DigitalContentList
+                  digitalContents={digitalContentList}
                   showDivider
                   noDividerMargin
                   isReorderable
-                  onRemove={onRemoveAgreement}
+                  onRemove={onRemoveDigitalContent}
                   onReorder={onReorderContentList}
                 />
               </Grouping>
             )}
           </GroupableList>
         </div>
-        <RemoveContentListAgreementDrawer
-          isOpen={showRemoveAgreementDrawer}
-          agreementTitle={confirmRemoveAgreement?.title}
+        <RemoveContentListDigitalContentDrawer
+          isOpen={showRemoveDigitalContentDrawer}
+          digitalContentTitle={confirmRemoveDigitalContent?.title}
           onClose={onDrawerClose}
           onConfirm={onConfirmRemove}
         />
@@ -446,7 +446,7 @@ function mapStateToProps(state: AppState) {
   return {
     metadata: getMetadata(state),
     account: getAccountUser(state),
-    agreements: getAgreements(state)
+    digitalContents: getDigitalContents(state)
   }
 }
 
@@ -461,9 +461,9 @@ function mapDispatchToProps(dispatch: Dispatch) {
       dispatch(editContentList(id, metadata)),
     orderContentList: (contentListId: ID, idsAndTimes: any) =>
       dispatch(orderContentList(contentListId, idsAndTimes)),
-    removeAgreement: (agreementId: ID, contentListId: ID, timestamp: number) =>
-      dispatch(removeAgreementFromContentList(agreementId, contentListId, timestamp)),
-    refreshLineup: () => dispatch(agreementsActions.fetchLineupMetadatas()),
+    removeDigitalContent: (digitalContentId: ID, contentListId: ID, timestamp: number) =>
+      dispatch(removeDigitalContentFromContentList(digitalContentId, contentListId, timestamp)),
+    refreshLineup: () => dispatch(digitalContentsActions.fetchLineupMetadatas()),
     goToRoute: (route: string) => dispatch(pushRoute(route))
   }
 }

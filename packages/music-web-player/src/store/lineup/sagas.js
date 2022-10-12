@@ -14,12 +14,12 @@ import {
 
 import * as cacheActions from 'common/store/cache/actions'
 import { getCollection } from 'common/store/cache/collections/selectors'
-import { getAgreement, getAgreements } from 'common/store/cache/agreements/selectors'
+import { getDigitalContent, getDigitalContents } from 'common/store/cache/digital_contents/selectors'
 import { getUsers } from 'common/store/cache/users/selectors'
 import * as baseLineupActions from 'common/store/lineup/actions'
 import { getSource, getUid, getPositions } from 'common/store/queue/selectors'
 import * as queueActions from 'common/store/queue/slice'
-import { getUid as getCurrentPlayerAgreementUid } from 'store/player/selectors'
+import { getUid as getCurrentPlayerDigitalContentUid } from 'store/player/selectors'
 import { getToQueue } from 'store/queue/sagas'
 import { isMobile } from 'utils/clientUtil'
 
@@ -29,17 +29,17 @@ const getEntryId = (entry) => `${entry.kind}:${entry.id}`
 
 const flatten = (list) =>
   list.reduce((a, b) => a.concat(Array.isArray(b) ? flatten(b) : b), [])
-function* filterDeletes(agreementsMetadata, removeDeleted) {
-  const agreements = yield select(getAgreements)
+function* filterDeletes(digitalContentsMetadata, removeDeleted) {
+  const digitalContents = yield select(getDigitalContents)
   const users = yield select(getUsers)
-  return agreementsMetadata
+  return digitalContentsMetadata
     .map((metadata) => {
       // If the incoming metadata is null, return null
       // This will be accounted for in `nullCount`
       if (metadata === null) {
         return null
       }
-      // If we said to remove deleted agreements and it is deleted, remove it
+      // If we said to remove deleted digitalContents and it is deleted, remove it
       if (removeDeleted && metadata.is_delete) return null
       // If we said to remove deleted and the digital_content/contentList owner is deactivated, remove it
       else if (removeDeleted && users[metadata.owner_id]?.is_deactivated)
@@ -50,47 +50,47 @@ function* filterDeletes(agreementsMetadata, removeDeleted) {
       )
         return null
       // If the digital_content was not cached, keep it
-      else if (!agreements[metadata.digital_content_id]) return metadata
+      else if (!digitalContents[metadata.digital_content_id]) return metadata
       // If we said to remove deleted and it's marked deleted remove it
-      else if (removeDeleted && agreements[metadata.digital_content_id]._marked_deleted)
+      else if (removeDeleted && digitalContents[metadata.digital_content_id]._marked_deleted)
         return null
       return {
         ...metadata,
         // Maintain the marked deleted
-        _marked_deleted: !!agreements[metadata.digital_content_id]._marked_deleted
+        _marked_deleted: !!digitalContents[metadata.digital_content_id]._marked_deleted
       }
     })
     .filter(Boolean)
 }
 
-function getAgreementCacheables(metadata, uid, agreementSubscribers) {
-  agreementSubscribers.push({ uid: metadata.uid || uid, id: metadata.digital_content_id })
+function getDigitalContentCacheables(metadata, uid, digitalContentSubscribers) {
+  digitalContentSubscribers.push({ uid: metadata.uid || uid, id: metadata.digital_content_id })
 }
 
 function getCollectionCacheables(
   metadata,
   uid,
   collectionsToCache,
-  agreementSubscriptions,
-  agreementSubscribers
+  digitalContentSubscriptions,
+  digitalContentSubscribers
 ) {
   collectionsToCache.push({ id: metadata.content_list_id, uid, metadata })
 
-  const agreementIds = metadata.content_list_contents.digital_content_ids.map((t) => t.digital_content)
-  const agreementUids = agreementIds.map((id) =>
+  const digitalContentIds = metadata.content_list_contents.digital_content_ids.map((t) => t.digital_content)
+  const digitalContentUids = digitalContentIds.map((id) =>
     makeUid(Kind.AGREEMENTS, id, `collection:${metadata.content_list_id}`)
   )
 
-  agreementSubscriptions.push({
+  digitalContentSubscriptions.push({
     id: metadata.content_list_id,
     kind: Kind.AGREEMENTS,
-    uids: agreementUids
+    uids: digitalContentUids
   })
   metadata.content_list_contents.digital_content_ids =
     metadata.content_list_contents.digital_content_ids.map((t, i) => {
-      const agreementUid = t.uid || agreementUids[i]
-      agreementSubscribers.push({ uid: agreementUid, id: t.digital_content })
-      return { uid: agreementUid, ...t }
+      const digitalContentUid = t.uid || digitalContentUids[i]
+      digitalContentSubscribers.push({ uid: digitalContentUid, id: t.digital_content })
+      return { uid: digitalContentUid, ...t }
     })
 }
 
@@ -182,24 +182,24 @@ function* fetchLineupMetadatasAsync(
       )
       const uids = makeUids(kinds, ids, source)
 
-      // Cache agreements and collections.
+      // Cache digitalContents and collections.
       const collectionsToCache = []
 
-      const agreementSubscriptions = []
-      let agreementSubscribers = []
+      const digitalContentSubscriptions = []
+      let digitalContentSubscribers = []
 
       allMetadatas.forEach((metadata, i) => {
-        // Need to update the UIDs on the contentList agreements
+        // Need to update the UIDs on the contentList digitalContents
         if (metadata.content_list_id) {
           getCollectionCacheables(
             metadata,
             uids[i],
             collectionsToCache,
-            agreementSubscriptions,
-            agreementSubscribers
+            digitalContentSubscriptions,
+            digitalContentSubscribers
           )
         } else if (metadata.digital_content_id) {
-          getAgreementCacheables(metadata, uids[i], agreementSubscribers)
+          getDigitalContentCacheables(metadata, uids[i], digitalContentSubscribers)
         }
       })
 
@@ -208,7 +208,7 @@ function* fetchLineupMetadatasAsync(
       )
 
       lineupCollections.forEach((metadata) => {
-        const agreementUids = metadata.content_list_contents.digital_content_ids.map(
+        const digitalContentUids = metadata.content_list_contents.digital_content_ids.map(
           (digital_content, idx) => {
             const id = digital_content.digital_content
             const uid = new Uid(
@@ -220,19 +220,19 @@ function* fetchLineupMetadatasAsync(
             return { id, uid: uid.toString() }
           }
         )
-        agreementSubscribers = agreementSubscribers.concat(agreementUids)
+        digitalContentSubscribers = digitalContentSubscribers.concat(digitalContentUids)
       })
 
-      // We rewrote the contentList agreements with new UIDs, so we need to update them
+      // We rewrote the contentList digitalContents with new UIDs, so we need to update them
       // in the cache.
       if (collectionsToCache.length > 0) {
         yield put(cacheActions.update(Kind.COLLECTIONS, collectionsToCache))
       }
-      if (agreementSubscriptions.length > 0) {
-        yield put(cacheActions.update(Kind.COLLECTIONS, [], agreementSubscriptions))
+      if (digitalContentSubscriptions.length > 0) {
+        yield put(cacheActions.update(Kind.COLLECTIONS, [], digitalContentSubscriptions))
       }
-      if (agreementSubscribers.length > 0) {
-        yield put(cacheActions.subscribe(Kind.AGREEMENTS, agreementSubscribers))
+      if (digitalContentSubscribers.length > 0) {
+        yield put(cacheActions.subscribe(Kind.AGREEMENTS, digitalContentSubscribers))
       }
       // Retain specified info in the lineup itself and resolve with success.
       const lineupEntries = allMetadatas
@@ -273,7 +273,7 @@ function* fetchLineupMetadatasAsync(
     baseLineupActions.addPrefix(lineupPrefix, baseLineupActions.RESET)
   )
   // If a source is specified in the reset action, make sure it matches the lineup source
-  // If not specified, cancel the fetchAgreementMetdatas
+  // If not specified, cancel the fetchDigitalContentMetdatas
   if (!resetSource || resetSource === initSource) {
     yield cancel(task)
   }
@@ -297,14 +297,14 @@ function* updateQueueLineup(lineupPrefix, source, lineupEntries) {
 
 function* play(lineupActions, lineupSelector, prefix, action) {
   const lineup = yield select(lineupSelector)
-  const requestedPlayAgreement = yield select(getAgreement, { uid: action.uid })
+  const requestedPlayDigitalContent = yield select(getDigitalContent, { uid: action.uid })
 
   if (action.uid) {
     const source = yield select(getSource)
-    const currentPlayerAgreementUid = yield select(getCurrentPlayerAgreementUid)
+    const currentPlayerDigitalContentUid = yield select(getCurrentPlayerDigitalContentUid)
     if (
-      !currentPlayerAgreementUid ||
-      action.uid !== currentPlayerAgreementUid ||
+      !currentPlayerDigitalContentUid ||
+      action.uid !== currentPlayerDigitalContentUid ||
       source !== lineup.prefix
     ) {
       const toQueue = yield all(
@@ -318,7 +318,7 @@ function* play(lineupActions, lineupSelector, prefix, action) {
   yield put(
     queueActions.play({
       uid: action.uid,
-      agreementId: requestedPlayAgreement && requestedPlayAgreement.digital_content_id,
+      digitalContentId: requestedPlayDigitalContent && requestedPlayDigitalContent.digital_content_id,
       source: prefix
     })
   )
@@ -336,7 +336,7 @@ function* reset(
   action
 ) {
   const lineup = yield select(lineupSelector)
-  // Remove this lineup as a subscriber from all of its agreements and collections.
+  // Remove this lineup as a subscriber from all of its digitalContents and collections.
   const subscriptionsToRemove = {} // keyed by kind
   const source = sourceSelector ? yield select(sourceSelector) : lineupPrefix
 
@@ -349,20 +349,20 @@ function* reset(
     }
     if (entry.kind === Kind.COLLECTIONS) {
       const collection = yield select(getCollection, { uid: entry.uid })
-      const removeAgreementIds = collection.content_list_contents.digital_content_ids.map(
-        ({ digital_content: agreementId }, idx) => {
-          const agreementUid = new Uid(
+      const removeDigitalContentIds = collection.content_list_contents.digital_content_ids.map(
+        ({ digital_content: digitalContentId }, idx) => {
+          const digitalContentUid = new Uid(
             Kind.AGREEMENTS,
-            agreementId,
+            digitalContentId,
             makeCollectionSourceId(source, collection.content_list_id),
             idx
           )
-          return { UID: agreementUid.toString() }
+          return { UID: digitalContentUid.toString() }
         }
       )
       subscriptionsToRemove[Kind.AGREEMENTS] = (
         subscriptionsToRemove[Kind.AGREEMENTS] || []
-      ).concat(removeAgreementIds)
+      ).concat(removeDigitalContentIds)
     }
   }
   yield all(
@@ -446,10 +446,10 @@ export class LineupSagas {
    * @param {object} actions the actions class instance for the lineup
    * @param {function} selector the selector for the lineup, e.g. state => state.feed
    * @param {function * | async function} lineupMetadatasCall
-   *   the backend call to make to fetch the agreements metadatas for the lineup
+   *   the backend call to make to fetch the digitalContents metadatas for the lineup
    * @param {?function} retainSelector a selector used to retain various metadata inside the lineup state
    *   otherwise, the lineup will only retain the digital_content id indexing into the cache
-   * @param {?boolean} removeDeleted whether or not to prune deleted agreements
+   * @param {?boolean} removeDeleted whether or not to prune deleted digitalContents
    * @param {?function} sourceSelector optional selector that sets the UID source for entries
    */
   constructor(
@@ -503,7 +503,7 @@ export class LineupSagas {
     }
   }
 
-  watchPauseAgreement = () => {
+  watchPauseDigitalContent = () => {
     const instance = this
     return function* () {
       yield takeLatest(
@@ -581,7 +581,7 @@ export class LineupSagas {
     return [
       this.watchFetchLineupMetadata(),
       this.watchPlay(),
-      this.watchPauseAgreement(),
+      this.watchPauseDigitalContent(),
       this.watchReset(),
       this.watchAdd(),
       this.watchRemove(),

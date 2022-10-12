@@ -5,7 +5,7 @@ import {
   LineupState,
   SmartCollectionVariant,
   Status,
-  LineupAgreement
+  LineupDigitalContent
 } from '@coliving/common'
 import { Moment } from 'moment'
 
@@ -13,21 +13,21 @@ export type CollectionsPageState = {
   collectionId: ID | null
   collectionUid: UID | null
   status: Status | null
-  agreements: LineupState<{ dateAdded: Moment }>
+  digitalContents: LineupState<{ dateAdded: Moment }>
   userUid: UID | null
   smartCollectionVariant: SmartCollectionVariant
 }
 
 export type CollectionsPageType = 'contentList' | 'album'
 
-export type CollectionAgreement = LineupAgreement & { dateAdded: Moment } & {
+export type CollectionDigitalContent = LineupDigitalContent & { dateAdded: Moment } & {
   collectible?: Collectible
 }
 
-export type AgreementRecord = CollectionAgreement & {
+export type DigitalContentRecord = CollectionDigitalContent & {
   key: string
   name: string
-  landlord: string
+  author: string
   handle: string
   date: Moment
   time: number

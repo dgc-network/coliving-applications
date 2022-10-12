@@ -1,6 +1,6 @@
 import { makeGetSearchLandlords } from '@coliving/web/src/common/store/pages/search-results/selectors'
 
-import { LandlordCard } from 'app/components/landlordCard'
+import { LandlordCard } from 'app/components/authorCard'
 import { CardList } from 'app/components/core'
 import { useSelectorWeb } from 'app/hooks/useSelectorWeb'
 
@@ -16,7 +16,7 @@ export const ProfilesTab = () => {
       <CardList
         data={users}
         renderItem={({ item }) => (
-          <LandlordCard landlord={item} fromPage='search' />
+          <LandlordCard author={item} fromPage='search' />
         )}
       />
     </SearchResultsTab>

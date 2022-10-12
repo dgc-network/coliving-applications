@@ -23,11 +23,11 @@ import { getUserId } from 'common/store/account/selectors'
 import * as cacheActions from 'common/store/cache/actions'
 import { getCollection } from 'common/store/cache/collections/selectors'
 import { getId } from 'common/store/cache/selectors'
-import { getAgreement } from 'common/store/cache/agreements/selectors'
+import { getDigitalContent } from 'common/store/cache/digital_contents/selectors'
 import { getUser } from 'common/store/cache/users/selectors'
 import {
   getCollectible,
-  getId as getQueueAgreementId,
+  getId as getQueueDigitalContentId,
   getIndex,
   getLength,
   getOvershot,
@@ -53,12 +53,12 @@ import { RepeatMode, Source } from 'common/store/queue/types'
 import { make } from 'store/analytics/actions'
 import { getLineupSelectorForRoute } from 'store/lineup/lineupForRoute'
 import {
-  getAgreementId as getPlayerAgreementId,
+  getDigitalContentId as getPlayerDigitalContentId,
   getUid as getPlayerUid
 } from 'store/player/selectors'
 import * as playerActions from 'store/player/slice'
 
-import { getRecommendedAgreements } from '../recommendation/sagas'
+import { getRecommendedDigitalContents } from '../recommendation/sagas'
 
 import mobileSagas from './mobileSagas'
 
@@ -71,26 +71,26 @@ export function* getToQueue(prefix: string, entry: { kind: Kind; uid: UID }) {
     if (!collection) return
 
     const {
-      content_list_contents: { digital_content_ids: agreementIds }
+      content_list_contents: { digital_content_ids: digitalContentIds }
     } = collection
     // Replace the digital_content uid source w/ the full source including collection source
     // Replace the digital_content count w/ it's index in the array
     const collectionUid = Uid.fromString(entry.uid)
     const collectionSource = collectionUid.source
 
-    return agreementIds.map(({ digital_content, uid }, idx: number) => {
-      const agreementUid = Uid.fromString(uid ?? '')
-      agreementUid.source = `${collectionSource}:${agreementUid.source}`
-      agreementUid.count = idx
+    return digitalContentIds.map(({ digital_content, uid }, idx: number) => {
+      const digitalContentUid = Uid.fromString(uid ?? '')
+      digitalContentUid.source = `${collectionSource}:${digitalContentUid.source}`
+      digitalContentUid.count = idx
 
       return {
         id: digital_content,
-        uid: agreementUid.toString(),
+        uid: digitalContentUid.toString(),
         source: prefix
       }
     })
   } else if (entry.kind === Kind.AGREEMENTS) {
-    const digital_content = yield* select(getAgreement, { uid: entry.uid })
+    const digital_content = yield* select(getDigitalContent, { uid: entry.uid })
     if (!digital_content) return {}
     return {
       id: digital_content.digital_content_id,
@@ -118,7 +118,7 @@ function* handleQueueAutoplay({
     return
   }
 
-  // Get recommended agreements if not in shuffle mode
+  // Get recommended digitalContents if not in shuffle mode
   // and not in repeat mode and
   // - close to end of queue, or
   // - playing first song of lineup and lineup has only one song
@@ -158,32 +158,32 @@ export function* watchPlay() {
   yield* takeLatest(play.type, function* (action: ReturnType<typeof play>) {
     // persist queue in mobile layer
     yield* put(persist({}))
-    const { uid, agreementId, collectible } = action.payload
+    const { uid, digitalContentId, collectible } = action.payload
 
     // Play a specific uid
     const playerUid = yield* select(getPlayerUid)
-    const playerAgreementId = yield* select(getPlayerAgreementId)
-    if (uid || agreementId) {
-      const playActionAgreement = yield* select(
-        getAgreement,
-        agreementId ? { id: agreementId } : { uid }
+    const playerDigitalContentId = yield* select(getPlayerDigitalContentId)
+    if (uid || digitalContentId) {
+      const playActionDigitalContent = yield* select(
+        getDigitalContent,
+        digitalContentId ? { id: digitalContentId } : { uid }
       )
 
-      if (!playActionAgreement) return
+      if (!playActionDigitalContent) return
 
       yield* call(handleQueueAutoplay, {
         skip: false,
         ignoreSkip: true,
-        digital_content: playActionAgreement
+        digital_content: playActionDigitalContent
       })
 
-      const user: User | null = playActionAgreement
-        ? yield* select(getUser, { id: playActionAgreement.owner_id })
+      const user: User | null = playActionDigitalContent
+        ? yield* select(getUser, { id: playActionDigitalContent.owner_id })
         : null
 
-      // Skip deleted agreements
+      // Skip deleted digitalContents
       if (
-        (playActionAgreement && playActionAgreement.is_delete) ||
+        (playActionDigitalContent && playActionDigitalContent.is_delete) ||
         // @ts-ignore user incorrectly typed as `null`. ignoring until we implement typed-redux-saga
         user?.is_deactivated
       ) {
@@ -193,24 +193,24 @@ export function* watchPlay() {
 
       // Make sure that we should actually play
       const repeatMode = yield* select(getRepeat)
-      const noAgreementPlaying = !playerAgreementId
-      const agreementIsDifferent = playerAgreementId !== playActionAgreement.digital_content_id
-      const agreementIsSameButDifferentUid =
-        playerAgreementId === playActionAgreement.digital_content_id && uid !== playerUid
-      const agreementIsSameAndRepeatSingle =
-        playerAgreementId === playActionAgreement.digital_content_id &&
+      const noDigitalContentPlaying = !playerDigitalContentId
+      const digitalContentIsDifferent = playerDigitalContentId !== playActionDigitalContent.digital_content_id
+      const digitalContentIsSameButDifferentUid =
+        playerDigitalContentId === playActionDigitalContent.digital_content_id && uid !== playerUid
+      const digitalContentIsSameAndRepeatSingle =
+        playerDigitalContentId === playActionDigitalContent.digital_content_id &&
         repeatMode === RepeatMode.SINGLE
       if (
-        noAgreementPlaying ||
-        agreementIsDifferent ||
-        agreementIsSameButDifferentUid ||
-        agreementIsSameAndRepeatSingle
+        noDigitalContentPlaying ||
+        digitalContentIsDifferent ||
+        digitalContentIsSameButDifferentUid ||
+        digitalContentIsSameAndRepeatSingle
       ) {
         yield* put(playerActions.stop({}))
         yield* put(
           playerActions.play({
             uid,
-            agreementId: playActionAgreement.digital_content_id,
+            digitalContentId: playActionDigitalContent.digital_content_id,
             onEnd: next
           })
         )
@@ -244,27 +244,27 @@ export function* watchPlay() {
           const flattenedQueue = flatten(toQueue)
           yield* put(add({ entries: flattenedQueue }))
 
-          const playAgreement = yield* select(getAgreement, {
+          const playDigitalContent = yield* select(getDigitalContent, {
             uid: flattenedQueue[0].uid
           })
 
-          if (!playAgreement) return
+          if (!playDigitalContent) return
 
           yield* put(
             play({
               uid: flattenedQueue[0].uid,
-              agreementId: playAgreement.digital_content_id,
+              digitalContentId: playDigitalContent.digital_content_id,
               source: lineup.prefix
             })
           )
         }
       } else {
         const queueUid = yield* select(getPlayerUid)
-        const playerAgreementId = yield* select(getPlayerAgreementId)
-        if (queueUid && playerAgreementId && queueUid !== playerUid) {
+        const playerDigitalContentId = yield* select(getPlayerDigitalContentId)
+        if (queueUid && playerDigitalContentId && queueUid !== playerUid) {
           yield* put(playerActions.stop({}))
           yield* put(
-            playerActions.play({ uid: queueUid, agreementId: playerAgreementId })
+            playerActions.play({ uid: queueUid, digitalContentId: playerDigitalContentId })
           )
         } else {
           // Play whatever is/was playing
@@ -308,8 +308,8 @@ export function* watchNext() {
       return
     }
 
-    const id = (yield* select(getQueueAgreementId)) as ID
-    const digital_content = yield* select(getAgreement, { id })
+    const id = (yield* select(getQueueDigitalContentId)) as ID
+    const digital_content = yield* select(getDigitalContent, { id })
     const user = yield* select(getUser, { id: digital_content?.owner_id })
     // Skip deleted or owner deactivated digital_content
     if (digital_content && (digital_content.is_delete || user?.is_deactivated)) {
@@ -325,7 +325,7 @@ export function* watchNext() {
       })
 
       if (digital_content) {
-        yield* put(play({ uid, agreementId: id, source }))
+        yield* put(play({ uid, digitalContentId: id, source }))
 
         const event = make(Name.PLAYBACK_PLAY, {
           id: `${id}`,
@@ -344,18 +344,18 @@ export function* watchQueueAutoplay() {
     queueAutoplay.type,
     function* (action: ReturnType<typeof queueAutoplay>) {
       const { genre, exclusionList, currentUserId } = action.payload
-      const agreements = yield* call(
-        getRecommendedAgreements,
+      const digitalContents = yield* call(
+        getRecommendedDigitalContents,
         genre,
         exclusionList,
         currentUserId
       )
-      const recommendedAgreements = agreements.map(({ digital_content_id }) => ({
+      const recommendedDigitalContents = digitalContents.map(({ digital_content_id }) => ({
         id: digital_content_id,
         uid: makeUid(Kind.AGREEMENTS, digital_content_id),
         source: Source.RECOMMENDED_AGREEMENTS
       }))
-      yield* put(add({ entries: recommendedAgreements }))
+      yield* put(add({ entries: recommendedDigitalContents }))
     }
   )
 }
@@ -388,8 +388,8 @@ export function* watchPrevious() {
       }
 
       const uid = yield* select(getUid)
-      const id = (yield* select(getQueueAgreementId)) as Nullable<ID>
-      const digital_content = yield* select(getAgreement, { id })
+      const id = (yield* select(getQueueDigitalContentId)) as Nullable<ID>
+      const digital_content = yield* select(getDigitalContent, { id })
       const source = yield* select(getSource)
       const user = yield* select(getUser, { id: digital_content?.owner_id })
 
@@ -400,7 +400,7 @@ export function* watchPrevious() {
       } else {
         const index = yield* select(getIndex)
         if (index >= 0) {
-          yield* put(play({ uid, agreementId: id, source }))
+          yield* put(play({ uid, digitalContentId: id, source }))
           const event = make(Name.PLAYBACK_PLAY, {
             id: `${id}`,
             source: PlaybackSource.PASSIVE

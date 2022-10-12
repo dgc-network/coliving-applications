@@ -2,11 +2,11 @@ import { UID } from '@coliving/common'
 import { createSelector } from 'reselect'
 
 import { CommonState } from 'common/store'
-import { getAgreement } from 'common/store/cache/agreements/selectors'
+import { getDigitalContent } from 'common/store/cache/digital_contents/selectors'
 import { getUser } from 'common/store/cache/users/selectors'
 import {
   getUid as getPlayerUid,
-  getAgreementId as getPlayerAgreementId
+  getDigitalContentId as getPlayerDigitalContentId
 } from 'store/player/selectors'
 import { AppState } from 'store/types'
 
@@ -41,10 +41,10 @@ export const getCollectible = (state: CommonState) => {
   return state.queue.order[state.queue.index].collectible ?? null
 }
 
-const getCurrentAgreement = (state: AppState) =>
-  getAgreement(state, { id: getPlayerAgreementId(state) })
+const getCurrentDigitalContent = (state: AppState) =>
+  getDigitalContent(state, { id: getPlayerDigitalContentId(state) })
 const getCurrentUser = (state: AppState) => {
-  const digital_content = getCurrentAgreement(state)
+  const digital_content = getCurrentDigitalContent(state)
   const queueable = state.queue.order[state.queue.index]
   if (digital_content || queueable?.landlordId) {
     return getUser(state, { id: digital_content?.owner_id ?? queueable.landlordId })
@@ -54,7 +54,7 @@ const getCurrentUser = (state: AppState) => {
 
 export const makeGetCurrent = () => {
   return createSelector(
-    [getPlayerUid, getSource, getCurrentAgreement, getCurrentUser, getCollectible],
+    [getPlayerUid, getSource, getCurrentDigitalContent, getCurrentUser, getCollectible],
     (uid, source, digital_content, user, collectible) => ({
       uid,
       source,

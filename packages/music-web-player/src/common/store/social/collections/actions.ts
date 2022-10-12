@@ -16,7 +16,7 @@ export const UNSAVE_COLLECTION_FAILED = 'SOCIAL/UNSAVE_COLLECTION_FAILED'
 export const UNSAVE_SMART_COLLECTION = 'SOCIAL/UNSAVE_SMART_COLLECTION'
 
 export const SHARE_COLLECTION = 'SOCIAL/SHARE_COLLECTION'
-export const SHARE_LIVE_NFT_CONTENT_LIST = 'SOCIAL/SHARE_LIVE_NFT_CONTENT_LIST'
+export const SHARE_DGCO_NFT_CONTENT_LIST = 'SOCIAL/SHARE_DGCO_NFT_CONTENT_LIST'
 
 export const repostCollection = createCustomAction(
   REPOST_COLLECTION,
@@ -93,6 +93,6 @@ export const shareCollection = createCustomAction(
 )
 
 export const shareAudioNftContentList = createCustomAction(
-  SHARE_LIVE_NFT_CONTENT_LIST,
+  SHARE_DGCO_NFT_CONTENT_LIST,
   (handle: string, source: ShareSource) => ({ handle, source })
 )

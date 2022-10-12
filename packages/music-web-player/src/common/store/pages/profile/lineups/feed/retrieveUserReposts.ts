@@ -1,22 +1,22 @@
-import { ID, UserCollection, DigitalContent, UserAgreementMetadata } from '@coliving/common'
+import { ID, UserCollection, DigitalContent, UserDigitalContentMetadata } from '@coliving/common'
 import { all } from 'redux-saga/effects'
 
 import { processAndCacheCollections } from 'common/store/cache/collections/utils'
-import { processAndCacheAgreements } from 'common/store/cache/agreements/utils'
+import { processAndCacheDigitalContents } from 'common/store/cache/digital_contents/utils'
 import apiClient from 'services/colivingAPIClient/colivingAPIClient'
 
-const getAgreementsAndCollections = (
-  feed: (UserAgreementMetadata | UserCollection)[]
+const getDigitalContentsAndCollections = (
+  feed: (UserDigitalContentMetadata | UserCollection)[]
 ) =>
   feed.reduce(
     (
-      acc: [UserAgreementMetadata[], UserCollection[]],
-      cur: UserAgreementMetadata | UserCollection
+      acc: [UserDigitalContentMetadata[], UserCollection[]],
+      cur: UserDigitalContentMetadata | UserCollection
     ) =>
       ('digital_content_id' in cur
         ? [[...acc[0], cur], acc[1]]
         : [acc[0], [...acc[1], cur]]) as [
-        UserAgreementMetadata[],
+        UserDigitalContentMetadata[],
         UserCollection[]
       ],
     [[], []]
@@ -41,17 +41,17 @@ export function* retrieveUserReposts({
     limit,
     offset
   })
-  const [agreements, collections] = getAgreementsAndCollections(reposts)
-  const agreementIds = agreements.map((t) => t.digital_content_id)
-  const [processedAgreements, processedCollections] = yield all([
-    processAndCacheAgreements(agreements),
+  const [digitalContents, collections] = getDigitalContentsAndCollections(reposts)
+  const digitalContentIds = digitalContents.map((t) => t.digital_content_id)
+  const [processedDigitalContents, processedCollections] = yield all([
+    processAndCacheDigitalContents(digitalContents),
     processAndCacheCollections(
       collections,
-      /* shouldRetrieveAgreements */ false,
-      agreementIds
+      /* shouldRetrieveDigitalContents */ false,
+      digitalContentIds
     )
   ])
-  const processedAgreementsMap = processedAgreements.reduce(
+  const processedDigitalContentsMap = processedDigitalContents.reduce(
     (acc: any, cur: any) => ({ ...acc, [cur.digital_content_id]: cur }),
     {}
   )
@@ -61,7 +61,7 @@ export function* retrieveUserReposts({
   )
   const processed = reposts.map((m: any) =>
     m.digital_content_id
-      ? processedAgreementsMap[m.digital_content_id]
+      ? processedDigitalContentsMap[m.digital_content_id]
       : processedCollectionsMap[m.content_list_id]
   )
 

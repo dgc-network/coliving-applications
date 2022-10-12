@@ -6,21 +6,21 @@ import { NativeMobileMessage } from './helpers'
 import { MessageType } from './types'
 
 // Array of m3u8 "data" files
-type AgreementInfo = {
+type DigitalContentInfo = {
   uri: string
   title: string
-  landlord: string
+  author: string
   artwork: string
   id: ID
   currentUserId: ID
   currentListenCount: number
   uid: UID
 }
-export type Agreements = AgreementInfo[]
+export type DigitalContents = DigitalContentInfo[]
 
 export class PersistQueueMessage extends NativeMobileMessage {
   constructor(
-    agreements: Agreements,
+    digitalContents: DigitalContents,
     index: number,
     shuffle: boolean,
     shuffleIndex: number,
@@ -28,7 +28,7 @@ export class PersistQueueMessage extends NativeMobileMessage {
     queueAutoplay: boolean
   ) {
     super(MessageType.PERSIST_QUEUE, {
-      agreements,
+      digitalContents,
       index,
       shuffle,
       shuffleIndex,

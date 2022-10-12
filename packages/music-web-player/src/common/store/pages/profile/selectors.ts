@@ -35,8 +35,8 @@ export const getProfileUser = (
 
 export const getProfileFeedLineup = (state: CommonState) =>
   state.pages.profile.feed
-export const getProfileAgreementsLineup = (state: CommonState) =>
-  state.pages.profile.agreements
+export const getProfileDigitalContentsLineup = (state: CommonState) =>
+  state.pages.profile.digitalContents
 
 export const getProfileCollections = createDeepEqualSelector(
   [getProfileUserId, getUsers, getCollections],

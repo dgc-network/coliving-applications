@@ -2,7 +2,7 @@ import { useCallback } from 'react'
 
 import { Name } from '@coliving/common'
 
-import { useUIAudio } from 'common/hooks/useUILive'
+import { useUIAudio } from 'common/hooks/useUIDigitalcoin'
 import { getNotificationUser } from 'common/store/notifications/selectors'
 import { Reaction } from 'common/store/notifications/types'
 import { getReactionFromRawValue } from 'common/store/ui/reactions/slice'
@@ -10,7 +10,7 @@ import { make } from 'store/analytics/actions'
 import { useSelector } from 'utils/reducer'
 
 import styles from './TipReactionNotification.module.css'
-import { LiveText } from './components/liveText'
+import { LiveText } from './components/digitalcoinText'
 import { NotificationBody } from './components/notificationBody'
 import { NotificationFooter } from './components/notificationFooter'
 import { NotificationHeader } from './components/notificationHeader'
@@ -27,7 +27,7 @@ const messages = {
   reacted: 'reacted',
   react: 'reacted to your tip of ',
   twitterShare: (handle: string) =>
-    `I got a thanks from ${handle} for tipping them $LIVE on @colivingproject! #Coliving #LIVETip`
+    `I got a thanks from ${handle} for tipping them $DGCO on @colivingproject! #Coliving #LIVETip`
 }
 
 type TipReactionNotificationProps = {

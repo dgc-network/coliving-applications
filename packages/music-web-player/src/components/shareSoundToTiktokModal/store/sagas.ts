@@ -1,13 +1,13 @@
 import { Name } from '@coliving/common'
 import { takeEvery, put, call, select } from 'typed-redux-saga/macro'
 
-import { getAgreement } from 'common/store/cache/agreements/selectors'
+import { getDigitalContent } from 'common/store/cache/digital_contents/selectors'
 import { setVisibility } from 'common/store/ui/modals/slice'
 import {
   getAccessToken,
   getIsAuthenticated,
   getOpenId,
-  getAgreement as getAgreementToShare
+  getDigitalContent as getDigitalContentToShare
 } from 'common/store/ui/shareSoundToTiktokModal/selectors'
 import {
   authenticated,
@@ -31,11 +31,11 @@ const TIKTOK_SHARE_SOUND_ENDPOINT =
 
 // Because the digital_content blob cannot digitalcoin in an action (not a POJO),
 // we are creating a singleton here to store it
-let agreementBlob: Blob | null = null
+let digitalContentBlob: Blob | null = null
 
 function* handleRequestOpen(action: ReturnType<typeof requestOpen>) {
   const digital_content = yield* select((state: AppState) =>
-    getAgreement(state, { id: action.payload.id })
+    getDigitalContent(state, { id: action.payload.id })
   )
   if (!digital_content) return
 
@@ -56,24 +56,24 @@ async function* handleShare() {
 
   yield* put(setStatus({ status: Status.SHARE_STARTED }))
 
-  const digital_content = yield* select(getAgreementToShare)
+  const digital_content = yield* select(getDigitalContentToShare)
   if (!digital_content) return
   const { id } = digital_content
 
   try {
     // Fetch the digital_content blob
-    const encodedAgreementId = encodeHashId(id)
+    const encodedDigitalContentId = encodeHashId(id)
 
     const response = yield* call(
       window.fetch,
-      apiClient.makeUrl(`/agreements/${encodedAgreementId}/stream`)
+      apiClient.makeUrl(`/digital_contents/${encodedDigitalContentId}/stream`)
     )
 
     if (!response.ok) {
       throw new Error('TikTok Share sound request unsuccessful')
     }
 
-    agreementBlob = await response.blob()
+    digitalContentBlob = await response.blob()
 
     // If already authed with TikTok, start the upload
     const authenticated = yield* select(getIsAuthenticated)
@@ -92,7 +92,7 @@ function* handleAuthenticated(action: ReturnType<typeof authenticated>) {
   yield* put(setIsAuthenticated())
 
   // If digital_content blob already downloaded, start the upload
-  if (agreementBlob) {
+  if (digitalContentBlob) {
     yield* put(upload())
   }
 }
@@ -100,7 +100,7 @@ function* handleAuthenticated(action: ReturnType<typeof authenticated>) {
 function* handleUpload() {
   // Upload the digital_content blob to TikTok api
   const formData = new FormData()
-  formData.append('sound_file', agreementBlob as Blob)
+  formData.append('sound_file', digitalContentBlob as Blob)
 
   const openId = yield* select(getOpenId)
   const accessToken = yield* select(getAccessToken)
@@ -129,7 +129,7 @@ function* handleUpload() {
     yield* put(make(Name.TIKTOK_SHARE_SOUND_ERROR, { error: errorMessage }))
     yield* put(setStatus({ status: Status.SHARE_ERROR }))
   } finally {
-    agreementBlob = null
+    digitalContentBlob = null
   }
 }
 

@@ -24,7 +24,7 @@ import Linkify from 'linkifyjs/react'
 import { ReactComponent as BadgeLandlord } from 'assets/img/badgeLandlord.svg'
 import imageCoverPhotoBlank from 'assets/img/imageCoverPhotoBlank.jpg'
 import { formatCount, squashNewLines } from 'common/utils/formatUtil'
-import { LandlordRecommendationsDropdown } from 'components/landlordRecommendations/landlordRecommendationsDropdown'
+import { LandlordRecommendationsDropdown } from 'components/authorRecommendations/authorRecommendationsDropdown'
 import DynamicImage from 'components/dynamicImage/dynamicImage'
 import FollowButton from 'components/followButton/followButton'
 import Skeleton from 'components/skeleton/skeleton'
@@ -43,7 +43,7 @@ import UploadButton from './uploadButton'
 import UploadStub from './uploadStub'
 
 const messages = {
-  agreements: 'Agreements',
+  digitalContents: 'DigitalContents',
   followers: 'Followers',
   following: 'Following',
   contentLists: 'ContentLists',
@@ -88,7 +88,7 @@ type ProfileHeaderProps = {
   profilePictureSizes: ProfilePictureSizes | null
   hasProfilePicture: boolean
   contentListCount: number
-  agreementCount: number
+  digitalContentCount: number
   followerCount: number
   setFollowersUserId: (id: ID) => void
   followingCount: number
@@ -137,7 +137,7 @@ const ProfileHeader = ({
   coverPhotoSizes,
   profilePictureSizes,
   contentListCount,
-  agreementCount,
+  digitalContentCount,
   followerCount,
   followingCount,
   doesFollowCurrentUser,
@@ -384,10 +384,10 @@ const ProfileHeader = ({
           <div className={styles.landlordMetrics}>
             <div className={styles.landlordMetric}>
               <div className={styles.landlordMetricValue}>
-                {formatCount(isLandlord ? agreementCount : contentListCount)}
+                {formatCount(isLandlord ? digitalContentCount : contentListCount)}
               </div>
               <div className={styles.landlordMetricLabel}>
-                {isLandlord ? messages.agreements : messages.contentLists}
+                {isLandlord ? messages.digitalContents : messages.contentLists}
               </div>
             </div>
             <div

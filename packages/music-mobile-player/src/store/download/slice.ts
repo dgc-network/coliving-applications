@@ -7,19 +7,19 @@ export type DownloadState = typeof initialState
 type State = {
   downloadedPercentage: number
   fetchCancel: Nullable<() => void>
-  agreementName: Nullable<string>
+  digitalContentName: Nullable<string>
   fileName: Nullable<string>
 }
 
 const initialState: State = {
   downloadedPercentage: 0,
   fetchCancel: null,
-  agreementName: null,
+  digitalContentName: null,
   fileName: null
 }
 
 const slice = createSlice({
-  name: 'downloadAgreement',
+  name: 'downloadDigitalContent',
   initialState,
   reducers: {
     setDownloadedPercentage: (state, action: PayloadAction<number>) => {
@@ -28,11 +28,11 @@ const slice = createSlice({
     setFileInfo: (
       state,
       action: PayloadAction<{
-        agreementName: string
+        digitalContentName: string
         fileName: string
       }>
     ) => {
-      state.agreementName = action.payload.agreementName
+      state.digitalContentName = action.payload.digitalContentName
       state.fileName = action.payload.fileName
     },
     setFetchCancel: (state, action: PayloadAction<() => void>) => {

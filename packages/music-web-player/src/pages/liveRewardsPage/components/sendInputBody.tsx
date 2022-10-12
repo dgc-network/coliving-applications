@@ -5,7 +5,7 @@ import {
   BNAudio,
   BNWei,
   SolanaWalletAddress,
-  StringLive,
+  StringDigitalcoin,
   StringWei,
   WalletAddress,
   Nullable,
@@ -40,19 +40,19 @@ const { getRemoteVar } = remoteConfigInstance
 
 const messages = {
   warningTitle: 'PROCEED WITH CAUTION',
-  warningSubtitle: 'If you send $LIVE to the wrong address it will be lost.',
+  warningSubtitle: 'If you send $DGCO to the wrong address it will be lost.',
   warningSubtitle2:
-    'WARNING: $LIVE sent will not count towards badges, tiers, and unlocked features!',
+    'WARNING: $DGCO sent will not count towards badges, tiers, and unlocked features!',
   addressEthPlaceholder: '0xC7EF9651259197aA26544Af724441a46e491c12c',
   addressSolPlaceholder: '9qU2A32k4bL6sbohrah2MiZZRfemH92hyZTY7jKc5GR8',
-  sendAudio: 'SEND $LIVE',
-  insufficientBalance: 'Account does not have enough $LIVE',
+  sendAudio: 'SEND $DGCO',
+  insufficientBalance: 'Account does not have enough $DGCO',
   amountRequired: 'Amount is a required field',
-  amountInsufficient: 'This amount of $LIVE is too low to send.',
+  amountInsufficient: 'This amount of $DGCO is too low to send.',
   amountMalformed: 'Amount must be a valid number',
   addressMalformed: 'Please enter a valid address',
   addressRequired: 'Address is required',
-  addressIsSelf: 'You cannot send $LIVE to your own wallet!',
+  addressIsSelf: 'You cannot send $DGCO to your own wallet!',
   validSPLAddress: 'Please enter a valid Solana (SPL) wallet address',
   sendAmountLabel: 'Amount to SEND',
   destination: 'Destination Address',
@@ -73,7 +73,7 @@ type AddressError =
   | 'INVALID_SPL_ADDRESS'
 
 const makeMinAudioError = (num: number | string) =>
-  `You must send at least ${num} $LIVE`
+  `You must send at least ${num} $DGCO`
 
 const balanceErrorMap: { [B in BalanceError]: string } = {
   INSUFFICIENT_BALANCE: messages.insufficientBalance,
@@ -142,14 +142,14 @@ const validateEthWallet = (
 }
 
 const validateSendAmount = (
-  stringAudioAmount: StringLive,
+  stringAudioAmount: StringDigitalcoin,
   balanceWei: BNWei,
   minAudioSendAmount: number
 ): Nullable<BalanceError> => {
   if (!stringAudioAmount.length) return 'EMPTY'
   const sendWeiBN = parseAudioInputToWei(stringAudioAmount)
   const minWeiBN = parseAudioInputToWei(
-    (minAudioSendAmount?.toString() as StringLive) ?? ('0' as StringLive)
+    (minAudioSendAmount?.toString() as StringDigitalcoin) ?? ('0' as StringDigitalcoin)
   )
   if (!sendWeiBN) return 'MALFORMED'
   if (minWeiBN && sendWeiBN.lt(minWeiBN)) return 'LESS_THAN_MIN'
@@ -173,8 +173,8 @@ const SendInputBody = ({
   wallet,
   solWallet
 }: SendInputBodyProps) => {
-  const [amountToSend, setAmountToSend] = useState<StringLive>(
-    '' as StringLive
+  const [amountToSend, setAmountToSend] = useState<StringDigitalcoin>(
+    '' as StringDigitalcoin
   )
   const amountToSendBNWei: BNWei = useMemo(() => {
     const zeroWei = stringWeiToBN('0' as StringWei)
@@ -183,7 +183,7 @@ const SendInputBody = ({
   const [destinationAddress, setDestinationAddress] = useState('')
 
   const [min, max]: [BNAudio, BNAudio] = useMemo(() => {
-    const min = stringAudioToBN('0' as StringLive)
+    const min = stringAudioToBN('0' as StringDigitalcoin)
     const max = weiToAudio(currentBalance)
     return [min, max]
   }, [currentBalance])
@@ -194,7 +194,7 @@ const SendInputBody = ({
 
   const onChangeAmount = useCallback(
     (value: string) => {
-      setAmountToSend(value as StringLive)
+      setAmountToSend(value as StringDigitalcoin)
       if (balanceError) setBalanceError(null)
     },
     [balanceError, setBalanceError, setAmountToSend]
@@ -209,10 +209,10 @@ const SendInputBody = ({
   )
 
   const useSolSPLAudio = getFeatureEnabled(
-    FeatureFlags.ENABLE_SPL_LIVE
+    FeatureFlags.ENABLE_SPL_DGCO
   ) as boolean
   const minAudioSendAmount = getRemoteVar(
-    IntKeys.MIN_LIVE_SEND_AMOUNT
+    IntKeys.MIN_DGCO_SEND_AMOUNT
   ) as number
 
   const onClickSend = () => {
@@ -284,7 +284,7 @@ const SendInputBody = ({
         label={messages.sendAmountLabel}
         format={Format.INPUT}
         placeholder={'0'}
-        rightLabel={'$LIVE'}
+        rightLabel={'$DGCO'}
         value={amountToSend}
         isNumeric={true}
         onChange={onChangeAmount}
