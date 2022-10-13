@@ -4,7 +4,7 @@ import React from 'react'
 import BN from 'bn.js'
 import { formatWei } from 'utils/format'
 import { TICKER } from 'utils/consts'
-import DisplayLive from 'components/displayLive'
+import DisplayLive from 'components/displayDigitalcoin'
 
 type DelegationStatsChipProps = {
   className?: string

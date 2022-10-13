@@ -9,7 +9,7 @@ import { formatAud } from 'utils/format'
 import { usePushRoute } from 'utils/effects'
 import { accountPage } from 'utils/routes'
 import Modal from 'components/modal'
-import DisplayLive from 'components/displayLive'
+import DisplayLive from 'components/displayDigitalcoin'
 import UserImage from 'components/userImage'
 import UserName from 'components/userName'
 

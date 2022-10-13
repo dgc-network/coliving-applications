@@ -4,7 +4,7 @@ import styles from './ValueSlider.module.css'
 import ColivingClient from 'services/coliving'
 import { BigNumber } from 'types'
 import { Position } from 'components/tooltip'
-import DisplayLive from 'components/displayLive'
+import DisplayLive from 'components/displayDigitalcoin'
 
 const messages = {
   min: 'MIN',

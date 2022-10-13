@@ -17,7 +17,7 @@ import ConfirmTransactionModal, {
 import { useUndelegateStake } from 'store/actions/undelegateStake'
 import { accountPage } from 'utils/routes'
 import { usePushRoute } from 'utils/effects'
-import DisplayLive from 'components/displayLive'
+import DisplayLive from 'components/displayDigitalcoin'
 import UserImage from 'components/userImage'
 import UserName from 'components/userName'
 

@@ -1,2 +1,2 @@
-export * from './SelfId'
+export * from './selfId'
 export * from './types'

@@ -8,7 +8,7 @@ import BN from 'bn.js'
 import { Delegate, Address } from 'types'
 import { usePushRoute } from 'utils/effects'
 import { accountPage } from 'utils/routes'
-import DisplayLive from 'components/displayLive'
+import DisplayLive from 'components/displayDigitalcoin'
 import UserImage from 'components/userImage'
 import UserName from 'components/userName'
 

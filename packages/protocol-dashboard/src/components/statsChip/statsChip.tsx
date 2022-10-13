@@ -4,7 +4,7 @@ import Paper from 'components/paper'
 import styles from './StatsChip.module.css'
 import clsx from 'clsx'
 import Loading from 'components/loading'
-import DisplayLive from 'components/displayLive'
+import DisplayLive from 'components/displayDigitalcoin'
 
 export const Divider = ({ className }: { className?: string }) => {
   return (

@@ -19,7 +19,7 @@ import ConfirmTransactionModal, {
 } from 'components/confirmTransactionModal'
 import { TICKER } from 'utils/consts'
 import { Position } from 'components/tooltip'
-import DisplayLive from 'components/displayLive'
+import DisplayLive from 'components/displayDigitalcoin'
 
 const messages = {
   increaseTitle: 'Increase Stake',

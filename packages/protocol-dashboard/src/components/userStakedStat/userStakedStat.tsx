@@ -8,7 +8,7 @@ import { Status } from 'types'
 import { TICKER } from 'utils/consts'
 import { Address } from 'types'
 import Loading from 'components/loading'
-import DisplayLive from 'components/displayLive'
+import DisplayLive from 'components/displayDigitalcoin'
 
 const messages = {
   delegated: `DELEGATED`

@@ -4,7 +4,7 @@ import fragmentShader from './shaders/visualizer-1.frag'
 
 import createLine from './gl-line-3d'
 import vignette from './glVignetteBackground'
-import GLAudioAnalyser from 'utils/visualizer/GLAudioAnalyser'
+import GLAudioAnalyser from 'utils/visualizer/glAudioAnalyser'
 import { webglSupported } from 'pages/visualizer/utils'
 
 const createOrbit = require('orbit-controls')

@@ -12,7 +12,7 @@ import ConfirmTransactionModal, {
   StandaloneBox
 } from 'components/confirmTransactionModal'
 import { useModalControls } from 'utils/hooks'
-import DisplayLive from 'components/displayLive'
+import DisplayLive from 'components/displayDigitalcoin'
 import { TICKER } from 'utils/consts'
 import { checkWeiNumber, parseWeiNumber } from 'utils/numeric'
 

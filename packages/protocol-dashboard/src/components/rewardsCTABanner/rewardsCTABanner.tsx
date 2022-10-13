@@ -4,7 +4,7 @@ import clsx from 'clsx'
 import Paper from 'components/paper'
 import styles from './RewardsCTABanner.module.css'
 import { useIsMobile, useModalControls } from 'utils/hooks'
-import DigitalcoinRewardsModal from 'components/liveRewardsModal'
+import DigitalcoinRewardsModal from 'components/digitalcoinRewardsModal'
 import { IconArrow, IconCrown } from '@coliving/stems'
 
 const messages = {

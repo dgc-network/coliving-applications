@@ -11,7 +11,7 @@ import Table from 'components/table'
 import styles from './DelegatorsTable.module.css'
 import { Operator, Address, Delegate } from 'types'
 import DelegatorsModal from 'components/delegatorsModal'
-import DisplayLive from 'components/displayLive'
+import DisplayLive from 'components/displayDigitalcoin'
 import UserImage from 'components/userImage'
 import UserName from 'components/userName'
 

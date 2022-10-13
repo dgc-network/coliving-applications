@@ -13,7 +13,7 @@ import { Address, SortUser, Status } from 'types'
 import { usePushRoute } from 'utils/effects'
 import { useIsMobile } from 'utils/hooks'
 import getActiveStake from 'utils/activeStake'
-import DisplayLive from 'components/displayLive'
+import DisplayLive from 'components/displayDigitalcoin'
 import UserImage from 'components/userImage'
 import UserName from 'components/userName'
 

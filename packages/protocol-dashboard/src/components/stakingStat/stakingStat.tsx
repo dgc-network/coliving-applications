@@ -9,7 +9,7 @@ import { TICKER } from 'utils/consts'
 import { formatWei } from 'utils/format'
 import StatsChip, { Divider } from 'components/statsChip/statsChip'
 import InlineStat from 'components/inlineStat/inlineStat'
-import DisplayLive from 'components/displayLive'
+import DisplayLive from 'components/displayDigitalcoin'
 
 const messages = {
   staked: `Staked ${TICKER}`,

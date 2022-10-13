@@ -14,7 +14,7 @@ import { useSubmitVote } from 'store/actions/submitVote'
 import { useExecuteProposal } from 'store/actions/executeProposal'
 import { StandaloneBox } from 'components/confirmTransactionModal/confirmTransactionModal'
 import Loading from 'components/loading'
-import DisplayLive from 'components/displayLive'
+import DisplayLive from 'components/displayDigitalcoin'
 import {
   useProposalTimeRemaining,
   useAmountAbstained,

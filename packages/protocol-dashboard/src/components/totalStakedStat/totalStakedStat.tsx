@@ -5,7 +5,7 @@ import { TICKER } from 'utils/consts'
 import styles from './TotalStakedStat.module.css'
 import { Status } from 'types'
 import useTotalStaked from 'hooks/useTotalStaked'
-import DisplayLive from 'components/displayLive'
+import DisplayLive from 'components/displayDigitalcoin'
 
 const messages = {
   staked: `Active Stake ${TICKER}`

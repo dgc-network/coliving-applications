@@ -3,7 +3,7 @@ import React, { ReactNode } from 'react'
 import Paper from 'components/paper'
 import styles from './Bounds.module.css'
 import { Address } from 'types'
-import DisplayLive from 'components/displayLive'
+import DisplayLive from 'components/displayDigitalcoin'
 import { useUser } from 'store/cache/user/hooks'
 
 const messages = {

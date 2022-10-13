@@ -13,7 +13,7 @@ import UpdateDelegationModal from 'components/updateDelegationModal'
 import { Address, Status } from 'types'
 import { useHasPendingDecreaseDelegationTx } from 'store/account/hooks'
 import { usePendingClaim } from 'store/cache/claims/hooks'
-import DisplayLive from 'components/displayLive'
+import DisplayLive from 'components/displayDigitalcoin'
 
 const messages = {
   title: 'Manage Delegation',

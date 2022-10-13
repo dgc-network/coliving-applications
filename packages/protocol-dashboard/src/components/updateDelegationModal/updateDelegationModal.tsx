@@ -19,7 +19,7 @@ import { TICKER } from 'utils/consts'
 import { useModalControls } from 'utils/hooks'
 import { useUserDelegation } from 'store/actions/userDelegation'
 import useUpdateDelegation from 'store/actions/updateDelegation'
-import DisplayLive from 'components/displayLive'
+import DisplayLive from 'components/displayDigitalcoin'
 
 const messages = {
   increaseTitle: 'Increase Delegation',

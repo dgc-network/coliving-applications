@@ -9,7 +9,7 @@ import {
   useUserWeeklyRewards
 } from 'store/cache/rewards/hooks'
 import Loading from 'components/loading'
-import DisplayLive from 'components/displayLive'
+import DisplayLive from 'components/displayDigitalcoin'
 
 const messages = {
   staked: `Staked ${TICKER}`,
