@@ -5,7 +5,7 @@ import { push } from 'connected-react-router'
 import { useDispatch } from 'react-redux'
 
 import { ChallengeReward } from 'common/store/notifications/types'
-import { challengeRewardsConfig } from 'pages/liveRewardsPage/config'
+import { challengeRewardsConfig } from 'pages/digitalcoinRewardsPage/config'
 import { make, useRecord } from 'store/analytics/actions'
 import { LIVE_PAGE } from 'utils/route'
 

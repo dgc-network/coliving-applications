@@ -24,8 +24,8 @@ import UnfollowConfirmationModal from 'components/unfollowConfirmationModal/unfo
 import UnloadDialog from 'components/unloadDialog/unloadDialog'
 import TierExplainerModal from 'components/userBadges/tierExplainerModal'
 import ConnectedUserListModal from 'components/userListModal/connectedUserListModal'
-import DigitalcoinBreakdownModal from 'pages/liveRewardsPage/components/modals/digitalcoinBreakdownModal'
-import RewardsModals from 'pages/liveRewardsPage/components/modals/rewardsModals'
+import DigitalcoinBreakdownModal from 'pages/digitalcoinRewardsPage/components/modals/digitalcoinBreakdownModal'
+import RewardsModals from 'pages/digitalcoinRewardsPage/components/modals/rewardsModals'
 import { getClient } from 'utils/clientUtil'
 
 import { AppModal } from './appModal'

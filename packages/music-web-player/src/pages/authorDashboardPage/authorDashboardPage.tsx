@@ -23,7 +23,7 @@ import { profilePage, TRENDING_PAGE } from 'utils/route'
 import { withClassNullGuard } from 'utils/withNullGuard'
 
 import styles from './LandlordDashboardPage.module.css'
-import LandlordProfile from './components/landlordProfile'
+import LandlordProfile from './components/authorProfile'
 import {
   fetchDashboard,
   fetchDashboardListenData,

@@ -27,7 +27,7 @@ import editContentListModal from 'store/application/ui/editContentListModal/slic
 import editDigitalContentModal from 'store/application/ui/editDigitalContentModal/reducer'
 import mobileKeyboard from 'store/application/ui/mobileKeyboard/reducer'
 import scrollLock from 'store/application/ui/scrollLock/reducer'
-import setAsLandlordPickConfirmation from 'store/application/ui/setAsLandlordPickConfirmation/reducer'
+import setAsLandlordPickConfirmation from 'store/application/ui/setAsAuthorPickConfirmation/reducer'
 import userListModal from 'store/application/ui/userListModal/slice'
 import backend from 'store/backend/reducer'
 import confirmer from 'store/confirmer/reducer'

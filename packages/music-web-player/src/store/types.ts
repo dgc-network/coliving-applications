@@ -42,7 +42,7 @@ import { EditContentListModalState } from './application/ui/editContentListModal
 import EditDigitalContentModalState from './application/ui/editDigitalContentModal/types'
 import { MobileKeyboardState } from './application/ui/mobileKeyboard/types'
 import { ScrollLockState } from './application/ui/scrollLock/types'
-import { SetAsLandlordPickConfirmationState } from './application/ui/setAsLandlordPickConfirmation/types'
+import { SetAsLandlordPickConfirmationState } from './application/ui/setAsAuthorPickConfirmation/types'
 import { UserListModalState } from './application/ui/userListModal/types'
 import { BackendState } from './backend/types'
 import { ConfirmerState } from './confirmer/types'

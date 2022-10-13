@@ -6,7 +6,7 @@ import { stringAudioToBN, weiToAudio } from 'common/utils/wallet'
 import { ModalBodyTitle, ModalBodyWrapper } from '../walletModal'
 
 import DashboardTokenValueSlider from './dashboardTokenValueSlider'
-import DisplayLive from './displayLive'
+import DisplayLive from './displayDigitalcoin'
 import styles from './sendInputConfirmation.module.css'
 
 const messages = {

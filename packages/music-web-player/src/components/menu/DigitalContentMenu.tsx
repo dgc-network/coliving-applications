@@ -31,7 +31,7 @@ import * as embedModalActions from 'components/embedModal/store/actions'
 import { ToastContext } from 'components/toast/toastContext'
 import { newCollectionMetadata } from 'schemas'
 import * as editDigitalContentModalActions from 'store/application/ui/editDigitalContentModal/actions'
-import { showSetAsLandlordPickConfirmation } from 'store/application/ui/setAsLandlordPickConfirmation/actions'
+import { showSetAsLandlordPickConfirmation } from 'store/application/ui/setAsAuthorPickConfirmation/actions'
 import { AppState } from 'store/types'
 import { profilePage } from 'utils/route'
 

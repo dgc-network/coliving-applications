@@ -5,7 +5,7 @@ import lazyWithPreload from 'utils/lazyWithPreload'
 
 import ChallengeRewardsModal from './challengeRewards'
 import TopAPIModal from './topAPI'
-import TransferAudioMobileDrawer from './transferLiveMobileDrawer'
+import TransferAudioMobileDrawer from './transferDigitalcoinMobileDrawer'
 import TrendingRewardsModal from './trendingRewards'
 import VerifiedUpload from './verifiedUpload'
 

@@ -5,7 +5,7 @@ import LoadingSpinner from 'components/loadingSpinner/loadingSpinner'
 
 import { ModalBodyTitle, ModalBodyWrapper } from '../walletModal'
 
-import DisplayLive from './displayLive'
+import DisplayLive from './displayDigitalcoin'
 import { AddressWithArrow } from './sendInputConfirmation'
 import styles from './sendingModalBody.module.css'
 

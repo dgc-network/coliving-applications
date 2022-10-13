@@ -1,4 +1,4 @@
-import * as pinDigitalContentActions from 'store/application/ui/setAsLandlordPickConfirmation/actions'
+import * as pinDigitalContentActions from 'store/application/ui/setAsAuthorPickConfirmation/actions'
 import { makeReducer } from 'utils/reducer'
 
 import { SetAsLandlordPickConfirmationState } from './types'

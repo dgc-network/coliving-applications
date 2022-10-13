@@ -10,9 +10,9 @@ import {
   setLandlordPick,
   unsetLandlordPick
 } from 'common/store/social/digital_contents/actions'
-import { cancelSetAsLandlordPick } from 'store/application/ui/setAsLandlordPickConfirmation/actions'
-import { getSetAsLandlordPickConfirmation } from 'store/application/ui/setAsLandlordPickConfirmation/selectors'
-import { PinDigitalContentAction } from 'store/application/ui/setAsLandlordPickConfirmation/types'
+import { cancelSetAsLandlordPick } from 'store/application/ui/setAsAuthorPickConfirmation/actions'
+import { getSetAsLandlordPickConfirmation } from 'store/application/ui/setAsAuthorPickConfirmation/selectors'
+import { PinDigitalContentAction } from 'store/application/ui/setAsAuthorPickConfirmation/types'
 import { AppState } from 'store/types'
 
 import styles from './PinDigitalContentConfirmation.module.css'

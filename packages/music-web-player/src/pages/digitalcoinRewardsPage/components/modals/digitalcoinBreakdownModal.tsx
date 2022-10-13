@@ -9,7 +9,7 @@ import Tooltip from 'components/tooltip/tooltip'
 import { useWithMobileStyle } from 'hooks/useWithMobileStyle'
 import { useSelector } from 'utils/reducer'
 
-import DisplayLive from '../displayLive'
+import DisplayLive from '../displayDigitalcoin'
 import WalletsTable from '../walletsTable'
 
 import styles from './audioBreakdownModal.module.css'
