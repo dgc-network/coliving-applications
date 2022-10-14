@@ -367,7 +367,7 @@ function* confirmEditContentList(contentListId, userId, formFields) {
 
 function* watchAddDigitalContentToContentList() {
   yield takeEvery(
-    collectionActions.ADD_AGREEMENT_TO_CONTENT_LIST,
+    collectionActions.ADD_DIGITAL_CONTENT_TO_CONTENT_LIST,
     addDigitalContentToContentListAsync
   )
 }
@@ -509,7 +509,7 @@ function* confirmAddDigitalContentToContentList(userId, contentListId, digitalCo
       (result) => (result.content_list_id ? result.content_list_id : contentListId),
       undefined,
       {
-        operationId: ContentListOperations.ADD_AGREEMENT,
+        operationId: ContentListOperations.ADD_DIGITAL_CONTENT,
         parallelizable: true,
         useOnlyLastSuccessCall: true
       }
@@ -606,7 +606,7 @@ function* confirmRemoveDigitalContentFromContentList(
       makeKindId(Kind.COLLECTIONS, contentListId),
       function* (confirmedContentListId) {
         // NOTE: In an attempt to fix contentLists in a corrupted state, only attempt the delete contentList digital_content once,
-        // if it fails, check if the contentList is in a corrupted state and if so fix it before re-attempting to delete digital_content from contentList
+        // if it fails, check if the contentList is in a corrupted state and if so fix it before re-attempting to delete digital content from contentList
         let { blockHash, blockNumber, error } = yield call(
           ColivingBackend.deleteContentListDigitalContent,
           confirmedContentListId,

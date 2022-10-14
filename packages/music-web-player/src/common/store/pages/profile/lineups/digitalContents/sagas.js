@@ -2,7 +2,7 @@ import { Kind } from '@coliving/common'
 import { all, call, select, takeEvery, put } from 'redux-saga/effects'
 
 import { getUserId } from 'common/store/account/selectors'
-import { DELETE_AGREEMENT } from 'common/store/cache/digital_contents/actions'
+import { DELETE_DIGITAL_CONTENT } from 'common/store/cache/digital_contents/actions'
 import { getDigitalContent } from 'common/store/cache/digital_contents/selectors'
 import { retrieveDigitalContents } from 'common/store/cache/digital_contents/utils'
 import { getUser } from 'common/store/cache/users/selectors'
@@ -136,7 +136,7 @@ function* watchSetLandlordPick() {
 }
 
 function* watchDeleteDigitalContent() {
-  yield takeEvery(DELETE_AGREEMENT, function* (action) {
+  yield takeEvery(DELETE_DIGITAL_CONTENT, function* (action) {
     const { digitalContentId } = action
     const lineup = yield select(getProfileDigitalContentsLineup)
     const digitalContentLineupEntry = lineup.entries.find(

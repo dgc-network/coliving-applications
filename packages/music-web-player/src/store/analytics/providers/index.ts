@@ -46,7 +46,7 @@ export const init = async () => {
 
 let digitalContentCounter = 0
 
-const AGREEMENT_LIMIT = 10000
+const DIGITAL_CONTENT_LIMIT = 10000
 
 export const digital_content = async (
   event: string,
@@ -66,7 +66,7 @@ export const digital_content = async (
       )
     }
     // stop tracking analytics after we reach session limit
-    if (digitalContentCounter++ >= AGREEMENT_LIMIT) return
+    if (digitalContentCounter++ >= DIGITAL_CONTENT_LIMIT) return
 
     // Add generic digital_content event context for every event
     const propertiesWithContext = {

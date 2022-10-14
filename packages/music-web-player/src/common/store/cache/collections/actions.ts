@@ -9,8 +9,8 @@ export const EDIT_CONTENT_LIST = 'EDIT_CONTENT_LIST'
 export const EDIT_CONTENT_LIST_SUCCEEDED = 'EDIT_CONTENT_LIST_SUCCEEDED'
 export const EDIT_CONTENT_LIST_FAILED = 'EDIT_CONTENT_LIST_FAILED'
 
-export const ADD_AGREEMENT_TO_CONTENT_LIST = 'ADD_AGREEMENT_TO_CONTENT_LIST'
-export const ADD_AGREEMENT_TO_CONTENT_LIST_FAILED = 'ADD_AGREEMENT_TO_CONTENT_LIST_FAILED'
+export const ADD_DIGITAL_CONTENT_TO_CONTENT_LIST = 'ADD_DIGITAL_CONTENT_TO_CONTENT_LIST'
+export const ADD_DIGITAL_CONTENT_TO_CONTENT_LIST_FAILED = 'ADD_DIGITAL_CONTENT_TO_CONTENT_LIST_FAILED'
 
 export const REMOVE_AGREEMENT_FROM_CONTENT_LIST = 'REMOVE_AGREEMENT_FROM_CONTENT_LIST'
 export const REMOVE_AGREEMENT_FROM_CONTENT_LIST_FAILED =
@@ -77,7 +77,7 @@ export function addDigitalContentToContentList(
   digitalContentId: ID | null,
   contentListId: number | string
 ) {
-  return { type: ADD_AGREEMENT_TO_CONTENT_LIST, digitalContentId, contentListId }
+  return { type: ADD_DIGITAL_CONTENT_TO_CONTENT_LIST, digitalContentId, contentListId }
 }
 
 export function addDigitalContentToContentListFailed(
@@ -85,7 +85,7 @@ export function addDigitalContentToContentListFailed(
   params: Record<string, unknown>,
   metadata: Record<string, unknown>
 ) {
-  return { type: ADD_AGREEMENT_TO_CONTENT_LIST_FAILED, error, params, metadata }
+  return { type: ADD_DIGITAL_CONTENT_TO_CONTENT_LIST_FAILED, error, params, metadata }
 }
 
 export function removeDigitalContentFromContentList(

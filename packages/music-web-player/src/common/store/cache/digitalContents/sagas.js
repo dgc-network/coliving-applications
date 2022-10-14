@@ -341,7 +341,7 @@ function* confirmDeleteDigitalContent(digitalContentId) {
         const confirmed = yield call(confirmTransaction, blockHash, blockNumber)
         if (!confirmed) {
           throw new Error(
-            `Could not confirm delete digital_content for digital_content id ${digitalContentId}`
+            `Could not confirm delete digital content for digital_content id ${digitalContentId}`
           )
         }
 
@@ -393,7 +393,7 @@ function* confirmDeleteDigitalContent(digitalContentId) {
 }
 
 function* watchDeleteDigitalContent() {
-  yield takeEvery(digitalContentActions.DELETE_AGREEMENT, deleteDigitalContentAsync)
+  yield takeEvery(digitalContentActions.DELETE_DIGITAL_CONTENT, deleteDigitalContentAsync)
 }
 
 function* watchFetchCoverArt() {

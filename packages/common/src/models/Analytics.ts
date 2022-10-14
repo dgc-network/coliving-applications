@@ -141,7 +141,7 @@ export enum Name {
   NOTIFICATIONS_CLICK_TIP_SENT_TWITTER_SHARE = 'Notifications: Clicked Tip Sent Twitter Share',
   NOTIFICATIONS_CLICK_SUPPORTER_RANK_UP_TWITTER_SHARE = 'Notifications: Clicked Supporter Rank Up Twitter Share',
   NOTIFICATIONS_CLICK_SUPPORTING_RANK_UP_TWITTER_SHARE = 'Notifications: Clicked Supporting Rank Up Twitter Share',
-  NOTIFICATIONS_CLICK_ADD_AGREEMENT_TO_CONTENT_LIST_TWITTER_SHARE = 'Notifications: Clicked Add DigitalContent to ContentList Twitter Share',
+  NOTIFICATIONS_CLICK_ADD_DIGITAL_CONTENT_TO_CONTENT_LIST_TWITTER_SHARE = 'Notifications: Clicked Add DigitalContent to ContentList Twitter Share',
   NOTIFICATIONS_TOGGLE_SETTINGS = 'Notifications: Toggle Setting',
   BROWSER_NOTIFICATION_SETTINGS = 'Browser Push Notification',
 
@@ -756,7 +756,7 @@ type NotificationsClickSupportingRankUp = {
   text: string
 }
 type NotificationsClickAddDigitalContentToContentList = {
-  eventName: Name.NOTIFICATIONS_CLICK_ADD_AGREEMENT_TO_CONTENT_LIST_TWITTER_SHARE
+  eventName: Name.NOTIFICATIONS_CLICK_ADD_DIGITAL_CONTENT_TO_CONTENT_LIST_TWITTER_SHARE
   text: string
 }
 type NotificationsToggleSettings = {

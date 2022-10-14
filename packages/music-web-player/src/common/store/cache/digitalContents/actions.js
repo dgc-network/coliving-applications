@@ -2,9 +2,9 @@ export const EDIT_AGREEMENT = 'CACHE/AGREEMENTS/EDIT_AGREEMENT'
 export const EDIT_AGREEMENT_SUCCEEDED = 'CACHE/AGREEMENTS/EDIT_AGREEMENT_SUCCEEDED'
 export const EDIT_AGREEMENT_FAILED = 'CACHE/AGREEMENTS/EDIT_AGREEMENT_FAILED'
 
-export const DELETE_AGREEMENT = 'CACHE/AGREEMENTS/DELETE_AGREEMENT'
-export const DELETE_AGREEMENT_SUCCEEDED = 'CACHE/AGREEMENTS/DELETE_AGREEMENT_SUCCEEDED'
-export const DELETE_AGREEMENT_FAILED = 'CACHE/AGREEMENTS/DELETE_AGREEMENT_FAILED'
+export const DELETE_DIGITAL_CONTENT = 'CACHE/AGREEMENTS/DELETE_DIGITAL_CONTENT'
+export const DELETE_DIGITAL_CONTENT_SUCCEEDED = 'CACHE/AGREEMENTS/DELETE_DIGITAL_CONTENT_SUCCEEDED'
+export const DELETE_DIGITAL_CONTENT_FAILED = 'CACHE/AGREEMENTS/DELETE_DIGITAL_CONTENT_FAILED'
 
 export const FETCH_COVER_ART = 'CACHE/AGREEMENTS/FETCH_COVER_ART'
 
@@ -25,15 +25,15 @@ export function editDigitalContentFailed() {
 }
 
 export function deleteDigitalContent(digitalContentId) {
-  return { type: DELETE_AGREEMENT, digitalContentId }
+  return { type: DELETE_DIGITAL_CONTENT, digitalContentId }
 }
 
 export function deleteDigitalContentSucceeded(digitalContentId) {
-  return { type: DELETE_AGREEMENT_SUCCEEDED, digitalContentId }
+  return { type: DELETE_DIGITAL_CONTENT_SUCCEEDED, digitalContentId }
 }
 
 export function deleteDigitalContentFailed() {
-  return { type: DELETE_AGREEMENT_FAILED }
+  return { type: DELETE_DIGITAL_CONTENT_FAILED }
 }
 
 export function fetchCoverArt(digitalContentId, size) {

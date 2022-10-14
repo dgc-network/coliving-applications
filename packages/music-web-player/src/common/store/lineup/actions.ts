@@ -28,7 +28,7 @@ export const RESET_SUCCEEDED = 'RESET_SUCCEEDED'
 export const SET_IN_VIEW = 'SET_IN_VIEW'
 export const REFRESH_IN_VIEW = 'REFRESH_IN_VIEW'
 
-export const UPDATE_AGREEMENT_METADATA = 'UPDATE_AGREEMENT_METADATA'
+export const UPDATE_DIGITAL_CONTENT_METADATA = 'UPDATE_DIGITAL_CONTENT_METADATA'
 export const REMOVE = 'REMOVE'
 export const ADD = 'ADD'
 export const SET_LOADING = 'SET_LOADING'
@@ -169,7 +169,7 @@ export class LineupActions {
 
   updateDigitalContentMetadata(digitalContentId: ID, metadata: DigitalContentMetadata) {
     return {
-      type: addPrefix(this.prefix, UPDATE_AGREEMENT_METADATA),
+      type: addPrefix(this.prefix, UPDATE_DIGITAL_CONTENT_METADATA),
       digitalContentId,
       metadata
     }
