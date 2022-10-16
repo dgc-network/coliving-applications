@@ -69,7 +69,7 @@ export const AddToContentListDrawer = () => {
     })
     const tempId = `${Date.now()}`
     dispatchWeb(
-      createContentList(tempId, metadata, CreateContentListSource.FROM_AGREEMENT, digitalContentId)
+      createContentList(tempId, metadata, CreateContentListSource.FROM_DIGITAL_CONTENT, digitalContentId)
     )
     dispatchWeb(addDigitalContentToContentList(digitalContentId!, tempId))
     toast({ content: messages.createdToast })

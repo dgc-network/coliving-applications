@@ -31,7 +31,7 @@ import { AppState } from 'store/types'
 import { FEED_PAGE, getPathname } from 'utils/route'
 
 const messages = {
-  deleteDigitalContent: 'DELETE AGREEMENT'
+  deleteDigitalContent: 'DELETE DIGITAL_CONTENT'
 }
 
 type OwnProps = {}

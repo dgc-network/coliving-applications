@@ -363,7 +363,7 @@ function* confirmEditContentList(contentListId, userId, formFields) {
   )
 }
 
-/** ADD AGREEMENT TO CONTENT_LIST */
+/** ADD DIGITAL_CONTENT TO CONTENT_LIST */
 
 function* watchAddDigitalContentToContentList() {
   yield takeEvery(
@@ -391,7 +391,7 @@ function* addDigitalContentToContentListAsync(action) {
   const contentList = collections[action.contentListId]
 
   const digitalContentUid = makeUid(
-    Kind.AGREEMENTS,
+    Kind.DIGITAL_CONTENTS,
     action.digitalContentId,
     `collection:${action.contentListId}`
   )
@@ -428,7 +428,7 @@ function* addDigitalContentToContentListAsync(action) {
     ])
   )
   yield put(
-    cacheActions.subscribe(Kind.AGREEMENTS, [{ uid: digitalContentUid, id: action.digitalContentId }])
+    cacheActions.subscribe(Kind.DIGITAL_CONTENTS, [{ uid: digitalContentUid, id: action.digitalContentId }])
   )
 }
 
@@ -517,11 +517,11 @@ function* confirmAddDigitalContentToContentList(userId, contentListId, digitalCo
   )
 }
 
-/** REMOVE AGREEMENT FROM CONTENT_LIST */
+/** REMOVE DIGITAL_CONTENT FROM CONTENT_LIST */
 
 function* watchRemoveDigitalContentFromContentList() {
   yield takeEvery(
-    collectionActions.REMOVE_AGREEMENT_FROM_CONTENT_LIST,
+    collectionActions.REMOVE_DIGITAL_CONTENT_FROM_CONTENT_LIST,
     removeDigitalContentFromContentListAsync
   )
 }
@@ -682,7 +682,7 @@ function* confirmRemoveDigitalContentFromContentList(
       (result) => (result.content_list_id ? result.content_list_id : contentListId),
       undefined,
       {
-        operationId: ContentListOperations.REMOVE_AGREEMENT,
+        operationId: ContentListOperations.REMOVE_DIGITAL_CONTENT,
         parallelizable: true,
         useOnlyLastSuccessCall: true
       }
@@ -975,7 +975,7 @@ function* confirmDeleteAlbum(contentListId, digitalContentIds, userId) {
           ),
           put(
             cacheActions.update(
-              Kind.AGREEMENTS,
+              Kind.DIGITAL_CONTENTS,
               digitalContentIds.map((t) => ({
                 id: t.digital_content,
                 metadata: { _marked_deleted: true }
@@ -1022,7 +1022,7 @@ function* confirmDeleteAlbum(contentListId, digitalContentIds, userId) {
           ),
           put(
             cacheActions.update(
-              Kind.AGREEMENTS,
+              Kind.DIGITAL_CONTENTS,
               digitalContentIds.map((t) => ({
                 id: t.digital_content,
                 metadata: { _marked_deleted: false }

@@ -108,8 +108,8 @@ class SelectPage extends Component {
 SelectPage.propTypes = {
   account: PropTypes.object,
   uploadType: PropTypes.oneOf([
-    UploadType.INDIVIDUAL_AGREEMENT,
-    UploadType.INDIVIDUAL_AGREEMENTS,
+    UploadType.INDIVIDUAL_DIGITAL_CONTENT,
+    UploadType.INDIVIDUAL_DIGITAL_CONTENTS,
     UploadType.CONTENT_LIST,
     UploadType.ALBUM
   ]),

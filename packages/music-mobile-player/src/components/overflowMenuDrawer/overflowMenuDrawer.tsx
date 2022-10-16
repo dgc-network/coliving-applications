@@ -21,7 +21,7 @@ const rowMessageMap = {
   [OverflowAction.EDIT_CONTENT_LIST]: 'Edit ContentList',
   [OverflowAction.DELETE_CONTENT_LIST]: 'Delete ContentList',
   [OverflowAction.PUBLISH_CONTENT_LIST]: 'Publish ContentList',
-  [OverflowAction.VIEW_AGREEMENT_PAGE]: 'View DigitalContent Page',
+  [OverflowAction.VIEW_DIGITAL_CONTENT_PAGE]: 'View DigitalContent Page',
   [OverflowAction.VIEW_LANDLORD_PAGE]: 'View Author Page',
   [OverflowAction.VIEW_CONTENT_LIST_PAGE]: 'View ContentList Page',
   [OverflowAction.VIEW_ALBUM_PAGE]: 'View Album Page',
@@ -43,7 +43,7 @@ export const OverflowMenuDrawer = () => {
 
   const OverflowDrawerComponent =
     {
-      [OverflowSource.AGREEMENTS]: DigitalContentOverflowMenuDrawer,
+      [OverflowSource.DIGITAL_CONTENTS]: DigitalContentOverflowMenuDrawer,
       [OverflowSource.COLLECTIONS]: CollectionOverflowMenuDrawer,
       // No case for NOTIFICATIONS because there currently isn't an overflow menu on notifications
       [OverflowSource.PROFILE]: ProfileOverflowMenuDrawer

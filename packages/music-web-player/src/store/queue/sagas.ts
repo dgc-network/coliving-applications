@@ -89,7 +89,7 @@ export function* getToQueue(prefix: string, entry: { kind: Kind; uid: UID }) {
         source: prefix
       }
     })
-  } else if (entry.kind === Kind.AGREEMENTS) {
+  } else if (entry.kind === Kind.DIGITAL_CONTENTS) {
     const digital_content = yield* select(getDigitalContent, { uid: entry.uid })
     if (!digital_content) return {}
     return {
@@ -352,8 +352,8 @@ export function* watchQueueAutoplay() {
       )
       const recommendedDigitalContents = digitalContents.map(({ digital_content_id }) => ({
         id: digital_content_id,
-        uid: makeUid(Kind.AGREEMENTS, digital_content_id),
-        source: Source.RECOMMENDED_AGREEMENTS
+        uid: makeUid(Kind.DIGITAL_CONTENTS, digital_content_id),
+        source: Source.RECOMMENDED_DIGITAL_CONTENTS
       }))
       yield* put(add({ entries: recommendedDigitalContents }))
     }
@@ -422,7 +422,7 @@ export function* watchAdd() {
       uid: QUEUE_SUBSCRIBER_NAME,
       id: entry.id
     }))
-    yield* put(cacheActions.subscribe(Kind.AGREEMENTS, subscribers))
+    yield* put(cacheActions.subscribe(Kind.DIGITAL_CONTENTS, subscribers))
     // persist queue in mobile layer
     yield* put(persist({}))
   })
@@ -432,9 +432,9 @@ export function* watchRemove() {
   yield* takeEvery(remove.type, function* (action: ReturnType<typeof remove>) {
     const { uid } = action.payload
 
-    const id = yield* select(getId, { kind: Kind.AGREEMENTS, uid })
+    const id = yield* select(getId, { kind: Kind.DIGITAL_CONTENTS, uid })
     yield* put(
-      cacheActions.unsubscribe(Kind.AGREEMENTS, [
+      cacheActions.unsubscribe(Kind.DIGITAL_CONTENTS, [
         { uid: QUEUE_SUBSCRIBER_NAME, id }
       ])
     )

@@ -55,7 +55,7 @@ class SearchPageProvider extends Component {
       if (!!searchMatch || isTagSearch) {
         const query = isTagSearch ? helpers.getSearchTag() : searchMatch
         this.props.dispatch(digitalContentsActions.reset())
-        if (category !== SearchKind.AGREEMENTS) {
+        if (category !== SearchKind.DIGITAL_CONTENTS) {
           const limit = helpers.getResultsLimit(this.props.isMobile, category)
           query && this.search(isTagSearch, query, category, limit)
         }
@@ -67,7 +67,7 @@ class SearchPageProvider extends Component {
     const isTagSearch = helpers.isTagSearch()
     const query = isTagSearch ? helpers.getSearchTag() : helpers.getSearchText()
     const category = helpers.getCategory()
-    if (category !== SearchKind.AGREEMENTS) {
+    if (category !== SearchKind.DIGITAL_CONTENTS) {
       const limit = helpers.getResultsLimit(this.props.isMobile, category)
       query && this.search(isTagSearch, query, category, limit)
     }

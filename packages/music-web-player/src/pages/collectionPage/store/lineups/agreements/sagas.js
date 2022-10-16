@@ -93,7 +93,7 @@ function* getCollectionDigitalContents() {
 
 const keepDateAdded = (digital_content) => ({
   uid: digital_content.uid,
-  kind: Kind.AGREEMENTS,
+  kind: Kind.DIGITAL_CONTENTS,
   dateAdded: digital_content.dateAdded
 })
 

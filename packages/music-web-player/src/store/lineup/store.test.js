@@ -90,7 +90,7 @@ describe('fetch', () => {
         combineReducers({
           lineup: asLineup(PREFIX, noopReducer()),
           queue: queueReducer,
-          digitalContents: asCache(noopReducer(), Kind.AGREEMENTS),
+          digitalContents: asCache(noopReducer(), Kind.DIGITAL_CONTENTS),
           users: asCache(noopReducer(), Kind.USERS),
           collections: asCache(noopReducer(), Kind.COLECTIONS),
           confirmer: noopReducer()
@@ -125,38 +125,38 @@ describe('fetch', () => {
     expect(storeState.lineup.entries).toEqual([
       {
         id: 1,
-        uid: 'kind:AGREEMENTS-id:1-count:1',
+        uid: 'kind:DIGITAL_CONTENTS-id:1-count:1',
         keepInLineup: 11
       },
       {
         id: 2,
-        uid: 'kind:AGREEMENTS-id:2-count:2',
+        uid: 'kind:DIGITAL_CONTENTS-id:2-count:2',
         keepInLineup: 22
       },
       {
         id: 3,
-        uid: 'kind:AGREEMENTS-id:3-count:3',
+        uid: 'kind:DIGITAL_CONTENTS-id:3-count:3',
         keepInLineup: 33
       },
       {
         id: 4,
-        uid: 'kind:AGREEMENTS-id:4-count:4',
+        uid: 'kind:DIGITAL_CONTENTS-id:4-count:4',
         keepInLineup: 44
       }
     ])
     expect(storeState.digitalContents).toEqual({
       ...initialCacheState,
       uids: {
-        'kind:AGREEMENTS-id:1-count:1': 1,
-        'kind:AGREEMENTS-id:2-count:2': 2,
-        'kind:AGREEMENTS-id:3-count:3': 3,
-        'kind:AGREEMENTS-id:4-count:4': 4
+        'kind:DIGITAL_CONTENTS-id:1-count:1': 1,
+        'kind:DIGITAL_CONTENTS-id:2-count:2': 2,
+        'kind:DIGITAL_CONTENTS-id:3-count:3': 3,
+        'kind:DIGITAL_CONTENTS-id:4-count:4': 4
       },
       subscribers: {
-        1: new Set(['kind:AGREEMENTS-id:1-count:1']),
-        2: new Set(['kind:AGREEMENTS-id:2-count:2']),
-        3: new Set(['kind:AGREEMENTS-id:3-count:3']),
-        4: new Set(['kind:AGREEMENTS-id:4-count:4'])
+        1: new Set(['kind:DIGITAL_CONTENTS-id:1-count:1']),
+        2: new Set(['kind:DIGITAL_CONTENTS-id:2-count:2']),
+        3: new Set(['kind:DIGITAL_CONTENTS-id:3-count:3']),
+        4: new Set(['kind:DIGITAL_CONTENTS-id:4-count:4'])
       }
     })
   })
@@ -176,16 +176,16 @@ describe('play', () => {
           lineup: {
             ...initialLineupState,
             entries: [
-              { id: 1, uid: 'kind:AGREEMENTS-id:1-count:1', kind: Kind.AGREEMENTS },
-              { id: 2, uid: 'kind:AGREEMENTS-id:2-count:2', kind: Kind.AGREEMENTS },
-              { id: 3, uid: 'kind:AGREEMENTS-id:3-count:3', kind: Kind.AGREEMENTS },
-              { id: 4, uid: 'kind:AGREEMENTS-id:4-count:4', kind: Kind.AGREEMENTS }
+              { id: 1, uid: 'kind:DIGITAL_CONTENTS-id:1-count:1', kind: Kind.DIGITAL_CONTENTS },
+              { id: 2, uid: 'kind:DIGITAL_CONTENTS-id:2-count:2', kind: Kind.DIGITAL_CONTENTS },
+              { id: 3, uid: 'kind:DIGITAL_CONTENTS-id:3-count:3', kind: Kind.DIGITAL_CONTENTS },
+              { id: 4, uid: 'kind:DIGITAL_CONTENTS-id:4-count:4', kind: Kind.DIGITAL_CONTENTS }
             ],
             order: {
-              'kind:AGREEMENTS-id:1-count:1': 0,
-              'kind:AGREEMENTS-id:2-count:2': 1,
-              'kind:AGREEMENTS-id:3-count:3': 2,
-              'kind:AGREEMENTS-id:4-count:4': 3
+              'kind:DIGITAL_CONTENTS-id:1-count:1': 0,
+              'kind:DIGITAL_CONTENTS-id:2-count:2': 1,
+              'kind:DIGITAL_CONTENTS-id:3-count:3': 2,
+              'kind:DIGITAL_CONTENTS-id:4-count:4': 3
             },
             prefix: PREFIX
           },
@@ -198,16 +198,16 @@ describe('play', () => {
               4: { metadata: { digital_content_id: 4, keep_in_lineup: 44 } }
             },
             uids: {
-              'kind:AGREEMENTS-id:1-count:1': 1,
-              'kind:AGREEMENTS-id:2-count:2': 2,
-              'kind:AGREEMENTS-id:3-count:3': 3,
-              'kind:AGREEMENTS-id:4-count:4': 4
+              'kind:DIGITAL_CONTENTS-id:1-count:1': 1,
+              'kind:DIGITAL_CONTENTS-id:2-count:2': 2,
+              'kind:DIGITAL_CONTENTS-id:3-count:3': 3,
+              'kind:DIGITAL_CONTENTS-id:4-count:4': 4
             },
             subscribers: {
-              1: new Set(['kind:AGREEMENTS-id:1-count:1']),
-              2: new Set(['kind:AGREEMENTS-id:2-count:2']),
-              3: new Set(['kind:AGREEMENTS-id:3-count:3']),
-              4: new Set(['kind:AGREEMENTS-id:4-count:4'])
+              1: new Set(['kind:DIGITAL_CONTENTS-id:1-count:1']),
+              2: new Set(['kind:DIGITAL_CONTENTS-id:2-count:2']),
+              3: new Set(['kind:DIGITAL_CONTENTS-id:3-count:3']),
+              4: new Set(['kind:DIGITAL_CONTENTS-id:4-count:4'])
             }
           },
           queue: {
@@ -218,13 +218,13 @@ describe('play', () => {
           }
         }
       )
-      .dispatch(actions.play('kind:AGREEMENTS-id:2-count:2'))
+      .dispatch(actions.play('kind:DIGITAL_CONTENTS-id:2-count:2'))
       .silentRun()
     expect(storeState.queue.order).toEqual([
-      { id: 1, uid: 'kind:AGREEMENTS-id:1-count:1', source: PREFIX },
-      { id: 2, uid: 'kind:AGREEMENTS-id:2-count:2', source: PREFIX },
-      { id: 3, uid: 'kind:AGREEMENTS-id:3-count:3', source: PREFIX },
-      { id: 4, uid: 'kind:AGREEMENTS-id:4-count:4', source: PREFIX }
+      { id: 1, uid: 'kind:DIGITAL_CONTENTS-id:1-count:1', source: PREFIX },
+      { id: 2, uid: 'kind:DIGITAL_CONTENTS-id:2-count:2', source: PREFIX },
+      { id: 3, uid: 'kind:DIGITAL_CONTENTS-id:3-count:3', source: PREFIX },
+      { id: 4, uid: 'kind:DIGITAL_CONTENTS-id:4-count:4', source: PREFIX }
     ])
     expect(storeState.queue.index).toEqual(1)
   })

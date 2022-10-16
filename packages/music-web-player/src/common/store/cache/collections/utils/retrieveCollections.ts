@@ -70,7 +70,7 @@ export function* retrieveDigitalContentsForCollections(
     const withUids = filteredIds.map((t) => ({
       ...t,
       // Make a new UID if one doesn't already exist
-      uid: t.uid || makeUid(Kind.AGREEMENTS, t.digital_content, `collection:${c.content_list_id}`)
+      uid: t.uid || makeUid(Kind.DIGITAL_CONTENTS, t.digital_content, `collection:${c.content_list_id}`)
     }))
 
     return {

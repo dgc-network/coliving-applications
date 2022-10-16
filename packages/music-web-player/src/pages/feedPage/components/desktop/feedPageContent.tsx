@@ -6,7 +6,7 @@ import EndOfLineup from 'components/lineup/endOfLineup'
 import Lineup from 'components/lineup/lineup'
 import {
   getLoadMoreDigitalContentCount,
-  INITIAL_LOAD_AGREEMENTS_MULTIPLIER
+  INITIAL_LOAD_DIGITAL_CONTENTS_MULTIPLIER
 } from 'components/lineup/lineupProvider'
 import { LineupVariant } from 'components/lineup/types'
 import Page from 'components/page/page'
@@ -65,7 +65,7 @@ const FeedPageContent = ({
     resetFeedLineup()
     const fetchLimit = getLoadMoreDigitalContentCount(
       mainLineupProps.variant,
-      INITIAL_LOAD_AGREEMENTS_MULTIPLIER
+      INITIAL_LOAD_DIGITAL_CONTENTS_MULTIPLIER
     )
     const fetchOffset = 0
     loadMoreFeed(fetchOffset, fetchLimit, true)

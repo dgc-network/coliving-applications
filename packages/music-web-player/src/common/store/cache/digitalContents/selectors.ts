@@ -15,7 +15,7 @@ export const getDigitalContent = (
   }
   return getEntry(state, {
     ...props,
-    kind: Kind.AGREEMENTS
+    kind: Kind.DIGITAL_CONTENTS
   })
 }
 
@@ -56,7 +56,7 @@ export const getDigitalContents = (
     })
     return digitalContents
   }
-  return getAllEntries(state, { kind: Kind.AGREEMENTS })
+  return getAllEntries(state, { kind: Kind.DIGITAL_CONTENTS })
 }
 
 // TODO:

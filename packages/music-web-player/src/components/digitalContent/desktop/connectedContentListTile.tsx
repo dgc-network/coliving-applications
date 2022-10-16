@@ -165,7 +165,7 @@ const ConnectedContentListTile = memo(
             record(
               make(Name.PLAYBACK_PLAY, {
                 id: `${playingDigitalContentId}`,
-                source: PlaybackSource.CONTENT_LIST_TILE_AGREEMENT
+                source: PlaybackSource.CONTENT_LIST_TILE_DIGITAL_CONTENT
               })
             )
           }
@@ -178,7 +178,7 @@ const ConnectedContentListTile = memo(
             record(
               make(Name.PLAYBACK_PLAY, {
                 id: `${digitalContentId}`,
-                source: PlaybackSource.CONTENT_LIST_TILE_AGREEMENT
+                source: PlaybackSource.CONTENT_LIST_TILE_DIGITAL_CONTENT
               })
             )
           }
@@ -189,7 +189,7 @@ const ConnectedContentListTile = memo(
           record(
             make(Name.PLAYBACK_PAUSE, {
               id: `${playingDigitalContentId}`,
-              source: PlaybackSource.CONTENT_LIST_TILE_AGREEMENT
+              source: PlaybackSource.CONTENT_LIST_TILE_DIGITAL_CONTENT
             })
           )
         }

@@ -64,7 +64,7 @@ const DownloadButton = ({
         switch (type) {
           case ButtonType.STEM:
             return messages.downloadableStem
-          case ButtonType.AGREEMENT:
+          case ButtonType.DIGITAL_CONTENT:
             return messages.downloadableDigitalContent
         }
     }

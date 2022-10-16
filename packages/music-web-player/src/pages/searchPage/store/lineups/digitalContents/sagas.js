@@ -26,7 +26,7 @@ import { isMobile } from 'utils/clientUtil'
 function* getSearchPageResultsDigitalContents({ offset, limit, payload }) {
   const category = getCategory()
 
-  if (category === SearchKind.AGREEMENTS || isMobile()) {
+  if (category === SearchKind.DIGITAL_CONTENTS || isMobile()) {
     // If we are on the digitalContents sub-page of search or mobile, which we should paginate on
     let results
     if (isTagSearch()) {

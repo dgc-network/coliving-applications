@@ -4,7 +4,7 @@ import { matchPath } from 'react-router-dom'
 
 import useInstanceVar from 'common/hooks/useInstanceVar'
 import { useIsMobile } from 'utils/clientUtil'
-import { AGREEMENT_PAGE, NOTIFICATION_PAGE } from 'utils/route'
+import { DIGITAL_CONTENT_PAGE, NOTIFICATION_PAGE } from 'utils/route'
 
 type ScrollRecords = { [route: string]: number }
 
@@ -23,7 +23,7 @@ export const ScrollContext = createContext<ScrollContextProps>({
 })
 
 // Routes where we know we never want to preserve scroll
-const SCROLL_PRESERVATION_BLACKLIST = [AGREEMENT_PAGE, NOTIFICATION_PAGE]
+const SCROLL_PRESERVATION_BLACKLIST = [DIGITAL_CONTENT_PAGE, NOTIFICATION_PAGE]
 
 /**
  * `ScrollProvider` is a context provider that digitalContents

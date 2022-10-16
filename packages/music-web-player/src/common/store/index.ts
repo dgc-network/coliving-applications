@@ -117,7 +117,7 @@ export const reducers = (ctx: CommonStoreContext) => ({
 
   // Cache
   collections: asCache(collectionsReducer, Kind.COLLECTIONS),
-  digitalContents: asCache(digitalContentsReducer, Kind.AGREEMENTS),
+  digitalContents: asCache(digitalContentsReducer, Kind.DIGITAL_CONTENTS),
   users: asCache(usersReducer, Kind.USERS),
 
   // Playback

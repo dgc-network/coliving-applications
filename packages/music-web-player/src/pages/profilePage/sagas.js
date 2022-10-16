@@ -284,11 +284,11 @@ const MOST_USED_TAGS_COUNT = 5
 // Get all the digitalContents & parse the digitalContents for the most used tags
 // NOTE: The number of user digitalContents is not known b/c some digitalContents are deleted,
 // so the number of user digitalContents plus a large digital_content number are fetched
-const LARGE_AGREEMENTCOUNT_TAGS = 100
+const LARGE_DIGITAL_CONTENTCOUNT_TAGS = 100
 function* fetchMostUsedTags(userId, digitalContentCount) {
   const digitalContentResponse = yield call(ColivingBackend.getLandlordDigitalContents, {
     offset: 0,
-    limit: digitalContentCount + LARGE_AGREEMENTCOUNT_TAGS,
+    limit: digitalContentCount + LARGE_DIGITAL_CONTENTCOUNT_TAGS,
     userId,
     filterDeleted: true
   })

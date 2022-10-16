@@ -167,7 +167,7 @@ const DigitalContentList = ({
           onDragStart={onDragStart}
           onDragUpdate={onDragUpdate}
         >
-          <Droppable droppableId='digital-content-list-droppable' type='AGREEMENT'>
+          <Droppable droppableId='digital-content-list-droppable' type='DIGITAL_CONTENT'>
             {(provided: any, snapshot: any) => (
               <div ref={provided.innerRef} {...provided.droppableProps}>
                 {renderedDigitalContents}

@@ -147,7 +147,7 @@ function mapDispatchToProps(dispatch: Dispatch) {
         createContentList(
           tempId,
           metadata,
-          CreateContentListSource.FROM_AGREEMENT,
+          CreateContentListSource.FROM_DIGITAL_CONTENT,
           digitalContentId
         )
       ),

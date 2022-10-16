@@ -27,7 +27,7 @@ describe('add', () => {
     const { storeState } = await expectSaga(allSagas(sagas()), actions)
       .withReducer(
         combineReducers({
-          digitalContents: asCache(noopReducer(), Kind.AGREEMENTS),
+          digitalContents: asCache(noopReducer(), Kind.DIGITAL_CONTENTS),
           confirmer: noopReducer()
         }),
         {
@@ -36,7 +36,7 @@ describe('add', () => {
         }
       )
       .dispatch(
-        actions.add(Kind.AGREEMENTS, [
+        actions.add(Kind.DIGITAL_CONTENTS, [
           {
             id: 1,
             uid: '111',
@@ -45,7 +45,7 @@ describe('add', () => {
         ])
       )
       .put(
-        actions.addSucceeded(Kind.AGREEMENTS, [
+        actions.addSucceeded(Kind.DIGITAL_CONTENTS, [
           {
             id: 1,
             uid: '111',
@@ -69,7 +69,7 @@ describe('add', () => {
     const { storeState } = await expectSaga(allSagas(sagas()), actions)
       .withReducer(
         combineReducers({
-          digitalContents: asCache(noopReducer(), Kind.AGREEMENTS),
+          digitalContents: asCache(noopReducer(), Kind.DIGITAL_CONTENTS),
           confirmer: noopReducer()
         }),
         {
@@ -82,13 +82,13 @@ describe('add', () => {
           confirmer: {
             ...initialConfirmerState,
             confirm: {
-              [makeKindId(Kind.AGREEMENTS, 1)]: () => {}
+              [makeKindId(Kind.DIGITAL_CONTENTS, 1)]: () => {}
             }
           }
         }
       )
       .dispatch(
-        actions.add(Kind.AGREEMENTS, [
+        actions.add(Kind.DIGITAL_CONTENTS, [
           {
             id: 1,
             uid: '111',
@@ -97,7 +97,7 @@ describe('add', () => {
         ])
       )
       .put(
-        actions.subscribe(Kind.AGREEMENTS, [
+        actions.subscribe(Kind.DIGITAL_CONTENTS, [
           {
             id: 1,
             uid: '111'
@@ -121,7 +121,7 @@ describe('add', () => {
     const { storeState } = await expectSaga(allSagas(sagas()), actions)
       .withReducer(
         combineReducers({
-          digitalContents: asCache(noopReducer(), Kind.AGREEMENTS),
+          digitalContents: asCache(noopReducer(), Kind.DIGITAL_CONTENTS),
           confirmer: noopReducer()
         }),
         {
@@ -130,7 +130,7 @@ describe('add', () => {
         }
       )
       .dispatch(
-        actions.add(Kind.AGREEMENTS, [
+        actions.add(Kind.DIGITAL_CONTENTS, [
           {
             id: 1,
             uid: '111',
@@ -144,7 +144,7 @@ describe('add', () => {
         ])
       )
       .put(
-        actions.addSucceeded(Kind.AGREEMENTS, [
+        actions.addSucceeded(Kind.DIGITAL_CONTENTS, [
           {
             id: 1,
             uid: '111',
@@ -158,7 +158,7 @@ describe('add', () => {
         ])
       )
       .dispatch(
-        actions.add(Kind.AGREEMENTS, [
+        actions.add(Kind.DIGITAL_CONTENTS, [
           {
             id: 3,
             uid: '333',
@@ -188,7 +188,7 @@ describe('add', () => {
     const { storeState } = await expectSaga(allSagas(sagas()), actions)
       .withReducer(
         combineReducers({
-          digitalContents: asCache(noopReducer(), Kind.AGREEMENTS),
+          digitalContents: asCache(noopReducer(), Kind.DIGITAL_CONTENTS),
           confirmer: noopReducer()
         }),
         {
@@ -197,7 +197,7 @@ describe('add', () => {
         }
       )
       .dispatch(
-        actions.add(Kind.AGREEMENTS, [
+        actions.add(Kind.DIGITAL_CONTENTS, [
           {
             id: 1,
             uid: '111',
@@ -206,7 +206,7 @@ describe('add', () => {
         ])
       )
       .dispatch(
-        actions.add(Kind.AGREEMENTS, [
+        actions.add(Kind.DIGITAL_CONTENTS, [
           {
             id: 1,
             uid: '222',
@@ -234,7 +234,7 @@ describe('add', () => {
     const { storeState } = await expectSaga(allSagas(sagas()), actions)
       .withReducer(
         combineReducers({
-          digitalContents: asCache(noopReducer(), Kind.AGREEMENTS),
+          digitalContents: asCache(noopReducer(), Kind.DIGITAL_CONTENTS),
           confirmer: noopReducer()
         }),
         {
@@ -243,7 +243,7 @@ describe('add', () => {
         }
       )
       .dispatch(
-        actions.add(Kind.AGREEMENTS, [
+        actions.add(Kind.DIGITAL_CONTENTS, [
           {
             id: 1,
             uid: '111',
@@ -253,7 +253,7 @@ describe('add', () => {
       )
       .dispatch(
         actions.add(
-          Kind.AGREEMENTS,
+          Kind.DIGITAL_CONTENTS,
           [
             {
               id: 1,
@@ -286,7 +286,7 @@ describe('update', () => {
     )
       .withReducer(
         combineReducers({
-          digitalContents: asCache(noopReducer(), Kind.AGREEMENTS)
+          digitalContents: asCache(noopReducer(), Kind.DIGITAL_CONTENTS)
         }),
         {
           digitalContents: {
@@ -308,7 +308,7 @@ describe('update', () => {
         }
       )
       .dispatch(
-        actions.update(Kind.AGREEMENTS, [
+        actions.update(Kind.DIGITAL_CONTENTS, [
           {
             id: 1,
             metadata: { data: 11 }
@@ -316,7 +316,7 @@ describe('update', () => {
         ])
       )
       .dispatch(
-        actions.update(Kind.AGREEMENTS, [
+        actions.update(Kind.DIGITAL_CONTENTS, [
           {
             id: 2,
             metadata: { data: 21 }
@@ -343,7 +343,7 @@ describe('update', () => {
     const { storeState } = await expectSaga(takeSaga(actions.UPDATE), actions)
       .withReducer(
         combineReducers({
-          digitalContents: asCache(noopReducer(), Kind.AGREEMENTS),
+          digitalContents: asCache(noopReducer(), Kind.DIGITAL_CONTENTS),
           collections: asCache(noopReducer(), Kind.COLLECTIONS)
         }),
         {
@@ -379,7 +379,7 @@ describe('update', () => {
           [
             {
               id: 1,
-              kind: Kind.AGREEMENTS,
+              kind: Kind.DIGITAL_CONTENTS,
               uids: ['111', '222']
             }
           ]
@@ -388,8 +388,8 @@ describe('update', () => {
       .silentRun()
     expect(storeState.collections.subscriptions).toEqual({
       1: new Set([
-        { kind: Kind.AGREEMENTS, uid: '111' },
-        { kind: Kind.AGREEMENTS, uid: '222' }
+        { kind: Kind.DIGITAL_CONTENTS, uid: '111' },
+        { kind: Kind.DIGITAL_CONTENTS, uid: '222' }
       ])
     })
   })
@@ -403,7 +403,7 @@ describe('setStatus', () => {
     )
       .withReducer(
         combineReducers({
-          digitalContents: asCache(noopReducer(), Kind.AGREEMENTS)
+          digitalContents: asCache(noopReducer(), Kind.DIGITAL_CONTENTS)
         }),
         {
           digitalContents: {
@@ -425,7 +425,7 @@ describe('setStatus', () => {
         }
       )
       .dispatch(
-        actions.setStatus(Kind.AGREEMENTS, [
+        actions.setStatus(Kind.DIGITAL_CONTENTS, [
           {
             id: 1,
             status: Status.SUCCESS
@@ -461,13 +461,13 @@ describe('remove', () => {
     const { storeState } = await expectSaga(allSagas(sagas()), actions)
       .withReducer(
         combineReducers({
-          digitalContents: asCache(noopReducer(), Kind.AGREEMENTS)
+          digitalContents: asCache(noopReducer(), Kind.DIGITAL_CONTENTS)
         }),
         {
           digitalContents: initialTestState
         }
       )
-      .dispatch(actions.remove(Kind.AGREEMENTS, [1]))
+      .dispatch(actions.remove(Kind.DIGITAL_CONTENTS, [1]))
       .silentRun()
     expect(storeState.digitalContents).toEqual({
       ...initialCacheState
@@ -504,13 +504,13 @@ describe('remove with pruning', () => {
     const { storeState } = await expectSaga(allSagas(sagas()), actions)
       .withReducer(
         combineReducers({
-          digitalContents: asCache(noopReducer(), Kind.AGREEMENTS)
+          digitalContents: asCache(noopReducer(), Kind.DIGITAL_CONTENTS)
         }),
         {
           digitalContents: initialTestState
         }
       )
-      .dispatch(actions.remove(Kind.AGREEMENTS, [1]))
+      .dispatch(actions.remove(Kind.DIGITAL_CONTENTS, [1]))
       .silentRun()
     expect(storeState.digitalContents).toEqual({
       ...initialTestState,
@@ -527,7 +527,7 @@ describe('subscribe', () => {
     )
       .withReducer(
         combineReducers({
-          digitalContents: asCache(noopReducer(), Kind.AGREEMENTS)
+          digitalContents: asCache(noopReducer(), Kind.DIGITAL_CONTENTS)
         }),
         {
           digitalContents: {
@@ -546,8 +546,8 @@ describe('subscribe', () => {
           }
         }
       )
-      .dispatch(actions.subscribe(Kind.AGREEMENTS, [{ uid: '333', id: 1 }]))
-      .dispatch(actions.subscribe(Kind.AGREEMENTS, [{ uid: '444', id: 2 }]))
+      .dispatch(actions.subscribe(Kind.DIGITAL_CONTENTS, [{ uid: '333', id: 1 }]))
+      .dispatch(actions.subscribe(Kind.DIGITAL_CONTENTS, [{ uid: '444', id: 2 }]))
       .silentRun()
     expect(storeState.digitalContents.uids).toEqual({
       111: 1,
@@ -567,7 +567,7 @@ describe('unsubscribe', () => {
     const { storeState } = await expectSaga(allSagas(sagas()), actions)
       .withReducer(
         combineReducers({
-          digitalContents: asCache(noopReducer(), Kind.AGREEMENTS)
+          digitalContents: asCache(noopReducer(), Kind.DIGITAL_CONTENTS)
         }),
         {
           digitalContents: {
@@ -585,8 +585,8 @@ describe('unsubscribe', () => {
           }
         }
       )
-      .dispatch(actions.unsubscribe(Kind.AGREEMENTS, [{ uid: '222', id: 1 }]))
-      .put(actions.unsubscribeSucceeded(Kind.AGREEMENTS, [{ uid: '222', id: 1 }]))
+      .dispatch(actions.unsubscribe(Kind.DIGITAL_CONTENTS, [{ uid: '222', id: 1 }]))
+      .put(actions.unsubscribeSucceeded(Kind.DIGITAL_CONTENTS, [{ uid: '222', id: 1 }]))
       .silentRun()
     expect(storeState.digitalContents.uids).toEqual({
       111: 1
@@ -600,7 +600,7 @@ describe('unsubscribe', () => {
     const { storeState } = await expectSaga(allSagas(sagas()), actions)
       .withReducer(
         combineReducers({
-          digitalContents: asCache(noopReducer(), Kind.AGREEMENTS),
+          digitalContents: asCache(noopReducer(), Kind.DIGITAL_CONTENTS),
           collections: asCache(noopReducer(), Kind.COLLECTIONS)
         }),
         {
@@ -632,17 +632,17 @@ describe('unsubscribe', () => {
               1: new Set(['444'])
             },
             subscriptions: {
-              1: new Set([{ kind: Kind.AGREEMENTS, uid: '222' }])
+              1: new Set([{ kind: Kind.DIGITAL_CONTENTS, uid: '222' }])
             }
           }
         }
       )
       .dispatch(actions.unsubscribe(Kind.COLLECTIONS, [{ uid: '444', id: 1 }]))
-      .put(actions.unsubscribe(Kind.AGREEMENTS, [{ uid: '222' }]))
+      .put(actions.unsubscribe(Kind.DIGITAL_CONTENTS, [{ uid: '222' }]))
       .put(
         actions.unsubscribeSucceeded(Kind.COLLECTIONS, [{ uid: '444', id: 1 }])
       )
-      .put(actions.unsubscribeSucceeded(Kind.AGREEMENTS, [{ uid: '222' }]))
+      .put(actions.unsubscribeSucceeded(Kind.DIGITAL_CONTENTS, [{ uid: '222' }]))
       .silentRun()
     expect(storeState.digitalContents.uids).toEqual({
       111: 1,
@@ -659,7 +659,7 @@ describe('unsubscribe', () => {
     const { storeState } = await expectSaga(allSagas(sagas()), actions)
       .withReducer(
         combineReducers({
-          digitalContents: asCache(noopReducer(), Kind.AGREEMENTS)
+          digitalContents: asCache(noopReducer(), Kind.DIGITAL_CONTENTS)
         }),
         {
           digitalContents: {
@@ -677,11 +677,11 @@ describe('unsubscribe', () => {
           }
         }
       )
-      .dispatch(actions.unsubscribe(Kind.AGREEMENTS, [{ uid: '111', id: 1 }]))
-      .put(actions.unsubscribeSucceeded(Kind.AGREEMENTS, [{ uid: '111', id: 1 }]))
-      .dispatch(actions.unsubscribe(Kind.AGREEMENTS, [{ uid: '222', id: 1 }]))
-      .put(actions.unsubscribeSucceeded(Kind.AGREEMENTS, [{ uid: '222', id: 1 }]))
-      .put(actions.remove(Kind.AGREEMENTS, [1]))
+      .dispatch(actions.unsubscribe(Kind.DIGITAL_CONTENTS, [{ uid: '111', id: 1 }]))
+      .put(actions.unsubscribeSucceeded(Kind.DIGITAL_CONTENTS, [{ uid: '111', id: 1 }]))
+      .dispatch(actions.unsubscribe(Kind.DIGITAL_CONTENTS, [{ uid: '222', id: 1 }]))
+      .put(actions.unsubscribeSucceeded(Kind.DIGITAL_CONTENTS, [{ uid: '222', id: 1 }]))
+      .put(actions.remove(Kind.DIGITAL_CONTENTS, [1]))
       .silentRun()
     expect(storeState.digitalContents).toEqual(initialCacheState)
   })

@@ -14,5 +14,5 @@ export type Playable =
     }
   | {
       metadata: DigitalContent | null
-      type: PlayableType.AGREEMENT
+      type: PlayableType.DIGITAL_CONTENT
     }

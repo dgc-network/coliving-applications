@@ -160,7 +160,7 @@ const ConnectedDigitalContentTile = memo(
             : OverflowAction.FAVORITE
           : null,
         OverflowAction.ADD_TO_CONTENT_LIST,
-        OverflowAction.VIEW_AGREEMENT_PAGE,
+        OverflowAction.VIEW_DIGITAL_CONTENT_PAGE,
         OverflowAction.VIEW_LANDLORD_PAGE
       ].filter(Boolean) as OverflowAction[]
 
@@ -259,12 +259,12 @@ function mapDispatchToProps(dispatch: Dispatch) {
       dispatch(undoRepostDigitalContent(digitalContentId, RepostSource.TILE)),
     clickOverflow: (digitalContentId: ID, overflowActions: OverflowAction[]) =>
       dispatch(
-        open({ source: OverflowSource.AGREEMENTS, id: digitalContentId, overflowActions })
+        open({ source: OverflowSource.DIGITAL_CONTENTS, id: digitalContentId, overflowActions })
       ),
     setRepostDigitalContentId: (digitalContentId: ID) =>
-      dispatch(setRepost(digitalContentId, RepostType.AGREEMENT)),
+      dispatch(setRepost(digitalContentId, RepostType.DIGITAL_CONTENT)),
     setFavoriteDigitalContentId: (digitalContentId: ID) =>
-      dispatch(setFavorite(digitalContentId, FavoriteType.AGREEMENT)),
+      dispatch(setFavorite(digitalContentId, FavoriteType.DIGITAL_CONTENT)),
     goToRoute: (route: string) => dispatch(pushRoute(route))
   }
 }

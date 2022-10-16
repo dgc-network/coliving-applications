@@ -25,13 +25,13 @@ const pinDigitalContentActionMessages = {
     title: 'SET YOUR LANDLORD PICK',
     description:
       'This digital_content will appear at the top of your profile, above your recent uploads, until you change or remove it.',
-    confirm: 'PICK AGREEMENT'
+    confirm: 'PICK DIGITAL_CONTENT'
   },
   [PinDigitalContentAction.UPDATE]: {
     title: 'CHANGE YOUR LANDLORD PICK?',
     description:
       'This digital_content will appear at the top of your profile and replace your previously picked digital_content.',
-    confirm: 'CHANGE AGREEMENT'
+    confirm: 'CHANGE DIGITAL_CONTENT'
   },
   [PinDigitalContentAction.REMOVE]: {
     title: 'UNSET AS LANDLORD PICK',
@@ -41,7 +41,7 @@ const pinDigitalContentActionMessages = {
         <p>{'This digital_content will be displayed based on its release date.'}</p>
       </div>
     ),
-    confirm: 'UNSET AGREEMENT'
+    confirm: 'UNSET DIGITAL_CONTENT'
   }
 }
 

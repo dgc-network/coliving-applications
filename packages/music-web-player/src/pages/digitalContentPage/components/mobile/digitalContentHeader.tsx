@@ -36,7 +36,7 @@ import StatsButtonRow from './statsButtonRow'
 import styles from './digitalContentHeader.module.css'
 
 const messages = {
-  digital_content: 'AGREEMENT',
+  digital_content: 'DIGITAL_CONTENT',
   remix: 'REMIX',
   play: 'PLAY',
   pause: 'PAUSE'

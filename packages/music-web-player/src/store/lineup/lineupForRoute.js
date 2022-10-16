@@ -17,7 +17,7 @@ import {
   SEARCH_PAGE,
   CONTENT_LIST_PAGE,
   ALBUM_PAGE,
-  AGREEMENT_PAGE,
+  DIGITAL_CONTENT_PAGE,
   PROFILE_PAGE,
   UPLOAD_PAGE,
   DASHBOARD_PAGE,
@@ -62,7 +62,7 @@ export const getLineupSelectorForRoute = (state) => {
   if (matchPage(CONTENT_LIST_PAGE) || matchPage(ALBUM_PAGE)) {
     return getCollectionDigitalContentsLineup
   }
-  if (matchPage(AGREEMENT_PAGE)) {
+  if (matchPage(DIGITAL_CONTENT_PAGE)) {
     return getLineup
   }
   if (matchPage(PROFILE_PAGE)) {

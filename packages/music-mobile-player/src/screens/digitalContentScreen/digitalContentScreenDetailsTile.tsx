@@ -75,7 +75,7 @@ const recordPlay = (id, play = true) => {
     make({
       eventName: play ? Name.PLAYBACK_PLAY : Name.PLAYBACK_PAUSE,
       id: String(id),
-      source: PlaybackSource.AGREEMENT_PAGE
+      source: PlaybackSource.DIGITAL_CONTENT_PAGE
     })
   )
 }
@@ -222,22 +222,22 @@ export const DigitalContentScreenDetailsTile = ({
   }, [digital_content_id, uid, isPlayingUid, dispatchWeb, isPlaying, isLineupLoading])
 
   const handlePressFavorites = useCallback(() => {
-    dispatchWeb(setFavorite(digital_content_id, FavoriteType.AGREEMENT))
+    dispatchWeb(setFavorite(digital_content_id, FavoriteType.DIGITAL_CONTENT))
     navigation.push({
       native: {
         screen: 'Favorited',
-        params: { id: digital_content_id, favoriteType: FavoriteType.AGREEMENT }
+        params: { id: digital_content_id, favoriteType: FavoriteType.DIGITAL_CONTENT }
       },
       web: { route: FAVORITING_USERS_ROUTE }
     })
   }, [dispatchWeb, digital_content_id, navigation])
 
   const handlePressReposts = useCallback(() => {
-    dispatchWeb(setRepost(digital_content_id, RepostType.AGREEMENT))
+    dispatchWeb(setRepost(digital_content_id, RepostType.DIGITAL_CONTENT))
     navigation.push({
       native: {
         screen: 'Reposts',
-        params: { id: digital_content_id, repostType: RepostType.AGREEMENT }
+        params: { id: digital_content_id, repostType: RepostType.DIGITAL_CONTENT }
       },
       web: { route: REPOSTING_USERS_ROUTE }
     })
@@ -260,9 +260,9 @@ export const DigitalContentScreenDetailsTile = ({
   const handlePressSave = () => {
     if (!isOwner) {
       if (has_current_user_saved) {
-        dispatchWeb(unsaveDigitalContent(digital_content_id, FavoriteSource.AGREEMENT_PAGE))
+        dispatchWeb(unsaveDigitalContent(digital_content_id, FavoriteSource.DIGITAL_CONTENT_PAGE))
       } else {
-        dispatchWeb(saveDigitalContent(digital_content_id, FavoriteSource.AGREEMENT_PAGE))
+        dispatchWeb(saveDigitalContent(digital_content_id, FavoriteSource.DIGITAL_CONTENT_PAGE))
       }
     }
   }
@@ -270,9 +270,9 @@ export const DigitalContentScreenDetailsTile = ({
   const handlePressRepost = () => {
     if (!isOwner) {
       if (has_current_user_reposted) {
-        dispatchWeb(undoRepostDigitalContent(digital_content_id, RepostSource.AGREEMENT_PAGE))
+        dispatchWeb(undoRepostDigitalContent(digital_content_id, RepostSource.DIGITAL_CONTENT_PAGE))
       } else {
-        dispatchWeb(repostDigitalContent(digital_content_id, RepostSource.AGREEMENT_PAGE))
+        dispatchWeb(repostDigitalContent(digital_content_id, RepostSource.DIGITAL_CONTENT_PAGE))
       }
     }
   }
@@ -307,7 +307,7 @@ export const DigitalContentScreenDetailsTile = ({
 
     dispatchWeb(
       openOverflowMenu({
-        source: OverflowSource.AGREEMENTS,
+        source: OverflowSource.DIGITAL_CONTENTS,
         id: digital_content_id,
         overflowActions
       })

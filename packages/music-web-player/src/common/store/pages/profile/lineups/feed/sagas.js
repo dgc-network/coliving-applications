@@ -54,7 +54,7 @@ function* getReposts({ offset, limit, payload }) {
       Object.keys(confirming).forEach((kindId) => {
         const kind = getKindFromKindId(kindId)
         const id = getIdFromKindId(kindId)
-        if (kind === Kind.AGREEMENTS) {
+        if (kind === Kind.DIGITAL_CONTENTS) {
           const digital_content = digitalContents[id]
           if (
             digital_content.has_current_user_reposted &&

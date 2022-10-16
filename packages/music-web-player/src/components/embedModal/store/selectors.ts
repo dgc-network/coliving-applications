@@ -13,7 +13,7 @@ export const getMetadata = (state: AppState) => {
   const id = getId(state)
   const kind = getKind(state)
   switch (kind) {
-    case PlayableType.AGREEMENT:
+    case PlayableType.DIGITAL_CONTENT:
       return getDigitalContent(state, { id })
     case PlayableType.ALBUM:
     case PlayableType.CONTENT_LIST:

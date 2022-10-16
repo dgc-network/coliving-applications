@@ -117,8 +117,8 @@ import {
   SEARCH_PAGE,
   CONTENT_LIST_PAGE,
   ALBUM_PAGE,
-  AGREEMENT_PAGE,
-  AGREEMENT_REMIXES_PAGE,
+  DIGITAL_CONTENT_PAGE,
+  DIGITAL_CONTENT_REMIXES_PAGE,
   PROFILE_PAGE,
   SIGN_IN_PAGE,
   SIGN_UP_PAGE,
@@ -135,13 +135,13 @@ import {
   FOLLOWERS_USERS_ROUTE,
   TRENDING_GENRES,
   APP_REDIRECT,
-  AGREEMENT_ID_PAGE,
+  DIGITAL_CONTENT_ID_PAGE,
   USER_ID_PAGE,
   CONTENT_LIST_ID_PAGE,
   TRENDING_CONTENT_LISTS_PAGE,
   PROFILE_PAGE_COLLECTIBLES,
   PROFILE_PAGE_COLLECTIBLE_DETAILS,
-  PROFILE_PAGE_AGREEMENTS,
+  PROFILE_PAGE_DIGITAL_CONTENTS,
   PROFILE_PAGE_ALBUMS,
   PROFILE_PAGE_CONTENT_LISTS,
   PROFILE_PAGE_REPOSTS,
@@ -875,7 +875,7 @@ class App extends Component {
                   />
                 )}
               />
-              <Route exact path={AGREEMENT_ID_PAGE} component={DigitalContentPage} />
+              <Route exact path={DIGITAL_CONTENT_ID_PAGE} component={DigitalContentPage} />
               <Route exact path={CONTENT_LIST_ID_PAGE} component={CollectionPage} />
 
               {/*
@@ -886,7 +886,7 @@ class App extends Component {
               <Route
                 exact
                 path={[
-                  PROFILE_PAGE_AGREEMENTS,
+                  PROFILE_PAGE_DIGITAL_CONTENTS,
                   PROFILE_PAGE_ALBUMS,
                   PROFILE_PAGE_CONTENT_LISTS,
                   PROFILE_PAGE_REPOSTS,
@@ -901,11 +901,11 @@ class App extends Component {
                 )}
               />
 
-              <Route exact path={AGREEMENT_PAGE} component={DigitalContentPage} />
+              <Route exact path={DIGITAL_CONTENT_PAGE} component={DigitalContentPage} />
 
               <Route
                 exact
-                path={AGREEMENT_REMIXES_PAGE}
+                path={DIGITAL_CONTENT_REMIXES_PAGE}
                 render={(props) => (
                   <RemixesPage
                     {...props}

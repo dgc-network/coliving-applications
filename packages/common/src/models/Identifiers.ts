@@ -3,7 +3,7 @@ export type UID = string
 export type CID = string
 
 export enum PlayableType {
-  AGREEMENT = 'digital_content',
+  DIGITAL_CONTENT = 'digital_content',
   CONTENT_LIST = 'content_list',
   ALBUM = 'album'
 }

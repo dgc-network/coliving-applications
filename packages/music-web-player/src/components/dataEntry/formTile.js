@@ -674,7 +674,7 @@ class FormTile extends Component {
         {this.props.children.length > 0 ? (
           <DragDropContext onDragEnd={this.onDragEnd}>
             <div className={styles.children}>
-              <Droppable droppableId='droppable-1' type='AGREEMENT'>
+              <Droppable droppableId='droppable-1' type='DIGITAL_CONTENT'>
                 {(provided, snapshot) => (
                   <div ref={provided.innerRef} {...provided.droppableProps}>
                     {this.state.childrenOrder.map((index, i) => {

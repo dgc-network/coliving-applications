@@ -425,7 +425,7 @@ class CollectionPage extends Component<
       record(
         make(Name.PLAYBACK_PAUSE, {
           id: `${digitalContentRecord.digital_content_id}`,
-          source: PlaybackSource.CONTENT_LIST_AGREEMENT
+          source: PlaybackSource.CONTENT_LIST_DIGITAL_CONTENT
         })
       )
     } else if (playingUid !== digitalContentRecord.uid) {
@@ -433,7 +433,7 @@ class CollectionPage extends Component<
       record(
         make(Name.PLAYBACK_PLAY, {
           id: `${digitalContentRecord.digital_content_id}`,
-          source: PlaybackSource.CONTENT_LIST_AGREEMENT
+          source: PlaybackSource.CONTENT_LIST_DIGITAL_CONTENT
         })
       )
     } else {
@@ -441,7 +441,7 @@ class CollectionPage extends Component<
       record(
         make(Name.PLAYBACK_PLAY, {
           id: `${digitalContentRecord.digital_content_id}`,
-          source: PlaybackSource.CONTENT_LIST_AGREEMENT
+          source: PlaybackSource.CONTENT_LIST_DIGITAL_CONTENT
         })
       )
     }
@@ -845,7 +845,7 @@ function mapDispatchToProps(dispatch: Dispatch) {
       timestamp: number
     ) => {
       dispatch(removeDigitalContentFromContentList(digitalContentId, contentListId, timestamp))
-      dispatch(digitalContentsActions.remove(Kind.AGREEMENTS, uid))
+      dispatch(digitalContentsActions.remove(Kind.DIGITAL_CONTENTS, uid))
     },
     orderContentList: (contentListId: number, digitalContentIds: any, digitalContentUids: string[]) =>
       dispatch(orderContentList(contentListId, digitalContentIds, digitalContentUids)),

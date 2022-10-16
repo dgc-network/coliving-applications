@@ -226,15 +226,15 @@ const ProfilePage = ({
   const record = useRecord()
   const onClickUploadAlbum = useCallback(() => {
     goToRoute(UPLOAD_ALBUM_PAGE)
-    record(make(Name.AGREEMENT_UPLOAD_OPEN, { source: 'profile' }))
+    record(make(Name.DIGITAL_CONTENT_UPLOAD_OPEN, { source: 'profile' }))
   }, [goToRoute, record])
   const onClickUploadContentList = useCallback(() => {
     goToRoute(UPLOAD_CONTENT_LIST_PAGE)
-    record(make(Name.AGREEMENT_UPLOAD_OPEN, { source: 'profile' }))
+    record(make(Name.DIGITAL_CONTENT_UPLOAD_OPEN, { source: 'profile' }))
   }, [goToRoute, record])
   const onClickUploadDigitalContent = useCallback(() => {
     goToRoute(UPLOAD_PAGE)
-    record(make(Name.AGREEMENT_UPLOAD_OPEN, { source: 'profile' }))
+    record(make(Name.DIGITAL_CONTENT_UPLOAD_OPEN, { source: 'profile' }))
   }, [goToRoute, record])
 
   const { tierNumber } = useSelectTierInfo(userId ?? 0)
@@ -357,7 +357,7 @@ const ProfilePage = ({
     ) : null
 
     const headers = [
-      { icon: <IconNote />, text: Tabs.AGREEMENTS, label: Tabs.AGREEMENTS },
+      { icon: <IconNote />, text: Tabs.DIGITAL_CONTENTS, label: Tabs.DIGITAL_CONTENTS },
       { icon: <IconAlbum />, text: Tabs.ALBUMS, label: Tabs.ALBUMS },
       {
         icon: <IconContentLists />,
@@ -367,7 +367,7 @@ const ProfilePage = ({
       { icon: <IconReposts />, text: Tabs.REPOSTS, label: Tabs.REPOSTS }
     ]
     const elements = [
-      <div key={Tabs.AGREEMENTS} className={styles.tiles}>
+      <div key={Tabs.DIGITAL_CONTENTS} className={styles.tiles}>
         {renderProfileCompletionCard()}
         {status !== Status.LOADING ? (
           landlordDigitalContents.status !== Status.LOADING &&

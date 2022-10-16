@@ -13,9 +13,9 @@ const uploadDescriptions = {
     'A contentList is a living thing that can change and grow over time. ContentLists can contain your own digitalContents, as well as digitalContents uploaded by others.',
   [UploadType.ALBUM]:
     'An album is a curated listening experience that is frozen in time and does not change. Albums can only contain digitalContents that you upload.',
-  [UploadType.INDIVIDUAL_AGREEMENTS]:
+  [UploadType.INDIVIDUAL_DIGITAL_CONTENTS]:
     'Every digital_content you upload will be a separate post.',
-  [UploadType.INDIVIDUAL_AGREEMENT]:
+  [UploadType.INDIVIDUAL_DIGITAL_CONTENT]:
     'Every digital_content you upload will be a separate post.'
 }
 
@@ -29,7 +29,7 @@ const DigitalContentsPreview = (props) => {
           onSelectOption={props.setUploadType}
           selected={props.uploadType}
           options={[
-            { key: UploadType.INDIVIDUAL_AGREEMENTS, text: 'DigitalContents' },
+            { key: UploadType.INDIVIDUAL_DIGITAL_CONTENTS, text: 'DigitalContents' },
             { key: UploadType.ALBUM, text: 'Album' },
             { key: UploadType.CONTENT_LIST, text: 'ContentList' }
           ]}
@@ -41,7 +41,7 @@ const DigitalContentsPreview = (props) => {
       <Scrollbar
         className={cn(styles.digitalContents, {
           [styles.shortScroll]:
-            props.uploadType !== UploadType.INDIVIDUAL_AGREEMENTS
+            props.uploadType !== UploadType.INDIVIDUAL_DIGITAL_CONTENTS
         })}
       >
         {props.digitalContents.map((digital_content, i) => (
@@ -63,8 +63,8 @@ const DigitalContentsPreview = (props) => {
 
 DigitalContentsPreview.propTypes = {
   uploadType: PropTypes.oneOf([
-    UploadType.INDIVIDUAL_AGREEMENT,
-    UploadType.INDIVIDUAL_AGREEMENTS,
+    UploadType.INDIVIDUAL_DIGITAL_CONTENT,
+    UploadType.INDIVIDUAL_DIGITAL_CONTENTS,
     UploadType.CONTENT_LIST,
     UploadType.ALBUM
   ]),

@@ -38,12 +38,12 @@ const MAX_COUNT_LOADING_TILES = 18
 
 // The inital multiplier for number of digitalContents to fetch on lineup load
 // multiplied by the number of digitalContents that fit the screen height
-export const INITIAL_LOAD_AGREEMENTS_MULTIPLIER = 1.75
+export const INITIAL_LOAD_DIGITAL_CONTENTS_MULTIPLIER = 1.75
 export const INITIAL_CONTENT_LISTS_MULTIPLER = 1
 
 // A multiplier for the number of tiles to fill a page to be
 // loaded in on each call (after the intial call)
-const AGREEMENTS_AHEAD_MULTIPLIER = 0.75
+const DIGITAL_CONTENTS_AHEAD_MULTIPLIER = 0.75
 
 // Threshold for how far away from the bottom (of the list) the user has to be
 // before fetching more digitalContents as a percentage of the list height
@@ -51,7 +51,7 @@ const LOAD_MORE_THRESHOLD = 0.5
 
 // The minimum inital multiplier for digitalContents to fetch on lineup load
 // use so that multiple lineups on the same page can switch w/out a reload
-const MINIMUM_INITIAL_LOAD_AGREEMENTS_MULTIPLIER = 1
+const MINIMUM_INITIAL_LOAD_DIGITAL_CONTENTS_MULTIPLIER = 1
 
 // tile height + margin
 const totalTileHeight = {
@@ -77,14 +77,14 @@ const useItemCounts = (variant: LineupVariant) =>
         variant === LineupVariant.CONTENT_LIST
           ? LineupVariant.CONTENT_LIST
           : LineupVariant.MAIN,
-        MINIMUM_INITIAL_LOAD_AGREEMENTS_MULTIPLIER
+        MINIMUM_INITIAL_LOAD_DIGITAL_CONTENTS_MULTIPLIER
       ),
       initial: getItemCount(variant, () =>
         variant === LineupVariant.CONTENT_LIST
           ? INITIAL_CONTENT_LISTS_MULTIPLER
-          : INITIAL_LOAD_AGREEMENTS_MULTIPLIER
+          : INITIAL_LOAD_DIGITAL_CONTENTS_MULTIPLIER
       ),
-      loadMore: getItemCount(variant, AGREEMENTS_AHEAD_MULTIPLIER)
+      loadMore: getItemCount(variant, DIGITAL_CONTENTS_AHEAD_MULTIPLIER)
     }),
     [variant]
   )
@@ -246,7 +246,7 @@ export const Lineup = ({
             make({
               eventName: Name.PLAYBACK_PLAY,
               id: `${id}`,
-              source: source || PlaybackSource.AGREEMENT_TILE
+              source: source || PlaybackSource.DIGITAL_CONTENT_TILE
             })
           )
         } else {
@@ -255,7 +255,7 @@ export const Lineup = ({
             make({
               eventName: Name.PLAYBACK_PAUSE,
               id: `${id}`,
-              source: source || PlaybackSource.AGREEMENT_TILE
+              source: source || PlaybackSource.DIGITAL_CONTENT_TILE
             })
           )
         }
@@ -265,7 +265,7 @@ export const Lineup = ({
   )
 
   const getLineupTileComponent = (item: LineupItem) => {
-    if (item.kind === Kind.AGREEMENTS || item.digital_content_id) {
+    if (item.kind === Kind.DIGITAL_CONTENTS || item.digital_content_id) {
       if (item._marked_deleted) {
         return null
       }

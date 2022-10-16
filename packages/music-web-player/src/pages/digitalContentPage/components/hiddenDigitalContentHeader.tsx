@@ -3,7 +3,7 @@ import { ReactComponent as IconHidden } from 'assets/img/iconHidden.svg'
 import styles from './hiddenDigitalContentHeader.module.css'
 
 const messages = {
-  hiddenDigitalContentTitle: 'HIDDEN AGREEMENT'
+  hiddenDigitalContentTitle: 'HIDDEN DIGITAL_CONTENT'
 }
 
 // Presents the Hidden DigitalContent title. Extracted for use in mobile and desktop

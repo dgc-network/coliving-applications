@@ -28,7 +28,7 @@ const FlavorMap = {
 }
 
 const KindMap = {
-  [PlayableType.AGREEMENT]: 'digital_content',
+  [PlayableType.DIGITAL_CONTENT]: 'digital_content',
   [PlayableType.CONTENT_LIST]: 'contentList',
   [PlayableType.ALBUM]: 'album'
 }
@@ -57,7 +57,7 @@ const formatIFrame = (url: string, size: Size) => {
 
 const messages = {
   title: {
-    [PlayableType.AGREEMENT]: 'Embed DigitalContent',
+    [PlayableType.DIGITAL_CONTENT]: 'Embed DigitalContent',
     [PlayableType.CONTENT_LIST]: 'Embed ContentList',
     [PlayableType.ALBUM]: 'Embed Album'
   },
@@ -162,7 +162,7 @@ const EmbedModal = ({ isOpen, kind, id, metadata, close }: EmbedModalProps) => {
           >
             {delayedOpen && <EmbedFrame frameString={standardFrameString} />}
           </div>
-          {kind === PlayableType.AGREEMENT && (
+          {kind === PlayableType.DIGITAL_CONTENT && (
             <div
               className={cn(styles.switcher, {
                 [styles.show]: size === Size.COMPACT
@@ -171,7 +171,7 @@ const EmbedModal = ({ isOpen, kind, id, metadata, close }: EmbedModalProps) => {
               {delayedOpen && <EmbedFrame frameString={compactFrameString} />}
             </div>
           )}
-          {kind === PlayableType.AGREEMENT && (
+          {kind === PlayableType.DIGITAL_CONTENT && (
             <div
               className={cn(styles.switcher, {
                 [styles.show]: size === Size.TINY

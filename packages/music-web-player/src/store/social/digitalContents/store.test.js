@@ -41,7 +41,7 @@ describe('repost', () => {
       .dispatch(actions.repostDigitalContent(1))
       .call(sagas.confirmRepostDigitalContent, 1, repostingUser)
       .put(
-        cacheActions.update(Kind.AGREEMENTS, [
+        cacheActions.update(Kind.DIGITAL_CONTENTS, [
           {
             id: 1,
             metadata: {
@@ -82,7 +82,7 @@ describe('repost', () => {
       .dispatch(actions.undoRepostDigitalContent(1))
       .call(sagas.confirmUndoRepostDigitalContent, 1, repostingUser)
       .put(
-        cacheActions.update(Kind.AGREEMENTS, [
+        cacheActions.update(Kind.DIGITAL_CONTENTS, [
           {
             id: 1,
             metadata: {
@@ -119,7 +119,7 @@ describe('save', () => {
       .dispatch(actions.saveDigitalContent(1))
       .call(sagas.confirmSaveDigitalContent, 1)
       .put(
-        cacheActions.update(Kind.AGREEMENTS, [
+        cacheActions.update(Kind.DIGITAL_CONTENTS, [
           {
             id: 1,
             metadata: {
@@ -154,7 +154,7 @@ describe('save', () => {
       .dispatch(actions.unsaveDigitalContent(1))
       .call(sagas.confirmUnsaveDigitalContent, 1)
       .put(
-        cacheActions.update(Kind.AGREEMENTS, [
+        cacheActions.update(Kind.DIGITAL_CONTENTS, [
           {
             id: 1,
             metadata: {

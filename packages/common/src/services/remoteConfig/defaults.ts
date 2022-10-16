@@ -45,10 +45,10 @@ export const remoteConfigStringDefaults: {
     'trending-digital-content,trending-content-list,trending-underground,top-api',
   [StringKeys.CHALLENGE_REWARD_IDS]:
     'digital-content-upload,invite-friends,mobile-app,connect-verified,listen-streak,profile-completion,send-first-tip,first-content-list',
-  [StringKeys.REWARDS_TWEET_ID_AGREEMENTS]: '1374856377651187713',
+  [StringKeys.REWARDS_TWEET_ID_DIGITAL_CONTENTS]: '1374856377651187713',
   [StringKeys.REWARDS_TWEET_ID_CONTENT_LISTS]: '1374856377651187713',
   [StringKeys.REWARDS_TWEET_ID_UNDERGROUND]: '1374856377651187713',
-  [StringKeys.FORCE_MP3_STREAM_AGREEMENT_IDS]: null,
+  [StringKeys.FORCE_MP3_STREAM_DIGITAL_CONTENT_IDS]: null,
   [StringKeys.TF]: null,
   [StringKeys.TPF]: null,
   [StringKeys.UTF]: null,

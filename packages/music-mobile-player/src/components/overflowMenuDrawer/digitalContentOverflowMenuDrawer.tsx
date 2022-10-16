@@ -72,7 +72,7 @@ const DigitalContentOverflowMenuDrawer = ({ render }: Props) => {
       dispatchWeb(shareDigitalContent(id, ShareSource.OVERFLOW)),
     [OverflowAction.ADD_TO_CONTENT_LIST]: () =>
       dispatchWeb(openAddToContentListModal(id, title)),
-    [OverflowAction.VIEW_AGREEMENT_PAGE]: () => {
+    [OverflowAction.VIEW_DIGITAL_CONTENT_PAGE]: () => {
       closeNowPlayingDrawer()
       navigation.navigate({
         native: { screen: 'DigitalContent', params: { id } },

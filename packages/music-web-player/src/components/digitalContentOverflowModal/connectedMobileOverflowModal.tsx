@@ -136,7 +136,7 @@ const ConnectedMobileOverflowModal = ({
     onUnfollow?: () => void
   } => {
     switch (source) {
-      case OverflowSource.AGREEMENTS: {
+      case OverflowSource.DIGITAL_CONTENTS: {
         if (!id || !ownerId || !handle || !title || isAlbum === undefined)
           return {}
         return {
@@ -251,7 +251,7 @@ const getAdditionalInfo = ({
   if (!id) return {}
 
   switch (source) {
-    case OverflowSource.AGREEMENTS: {
+    case OverflowSource.DIGITAL_CONTENTS: {
       const digital_content = getDigitalContent(state, { id: id as number })
       if (!digital_content) {
         const { collectible, user } = getCurrent(state)

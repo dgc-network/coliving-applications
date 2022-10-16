@@ -3,7 +3,7 @@ import { put, takeEvery } from 'redux-saga/effects'
 import * as errorActions from 'common/store/errors/actions'
 
 import {
-  GET_AGREEMENT_FAVORITE_ERROR,
+  GET_DIGITAL_CONTENT_FAVORITE_ERROR,
   GET_CONTENT_LIST_FAVORITE_ERROR,
   digitalContentFavoriteError,
   contentListFavoriteError
@@ -29,7 +29,7 @@ export function* handleFavoriteError(action: ErrorActions) {
 
 export function* watchFavoriteError() {
   yield takeEvery(
-    [GET_AGREEMENT_FAVORITE_ERROR, GET_CONTENT_LIST_FAVORITE_ERROR],
+    [GET_DIGITAL_CONTENT_FAVORITE_ERROR, GET_CONTENT_LIST_FAVORITE_ERROR],
     handleFavoriteError
   )
 }

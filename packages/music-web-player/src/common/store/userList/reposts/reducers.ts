@@ -17,7 +17,7 @@ const userListReducer = UserListReducerFactory.createReducer({
 
 const initialState = {
   id: null,
-  repostType: RepostType.AGREEMENT
+  repostType: RepostType.DIGITAL_CONTENT
 }
 
 const repostsPageReducer = createReducer<RepostsOwnState, DigitalContentRepostActions>(

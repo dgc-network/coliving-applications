@@ -24,7 +24,7 @@ type UserListens = {
 }
 
 class Explore {
-  /** AGREEMENTS ENDPOINTS */
+  /** DIGITAL_CONTENTS ENDPOINTS */
   static async getTopUserListens(): Promise<TopUserListen[]> {
     try {
       const { data, signature } = await ColivingBackend.signData()

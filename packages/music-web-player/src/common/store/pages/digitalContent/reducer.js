@@ -2,11 +2,11 @@ import { asLineup } from 'common/store/lineup/reducer'
 import digitalContentsReducer from 'common/store/pages/digital_content/lineup/reducer'
 
 import {
-  SET_AGREEMENT_ID,
-  SET_AGREEMENT_PERMALINK,
+  SET_DIGITAL_CONTENT_ID,
+  SET_DIGITAL_CONTENT_PERMALINK,
   RESET,
-  SET_AGREEMENT_RANK,
-  SET_AGREEMENT_TRENDING_RANKS
+  SET_DIGITAL_CONTENT_RANK,
+  SET_DIGITAL_CONTENT_TRENDING_RANKS
 } from './actions'
 import { PREFIX as digitalContentsPrefix } from './lineup/actions'
 
@@ -25,19 +25,19 @@ const initialState = {
 }
 
 const actionsMap = {
-  [SET_AGREEMENT_ID](state, action) {
+  [SET_DIGITAL_CONTENT_ID](state, action) {
     return {
       ...state,
       digitalContentId: action.digitalContentId
     }
   },
-  [SET_AGREEMENT_PERMALINK](state, action) {
+  [SET_DIGITAL_CONTENT_PERMALINK](state, action) {
     return {
       ...state,
       digitalContentPermalink: action.permalink
     }
   },
-  [SET_AGREEMENT_RANK](state, action) {
+  [SET_DIGITAL_CONTENT_RANK](state, action) {
     return {
       ...state,
       rank: {
@@ -46,7 +46,7 @@ const actionsMap = {
       }
     }
   },
-  [SET_AGREEMENT_TRENDING_RANKS](state, action) {
+  [SET_DIGITAL_CONTENT_TRENDING_RANKS](state, action) {
     return {
       ...state,
       trendingDigitalContentRanks: {

@@ -9,8 +9,8 @@ type DigitalContentRepostErrors =
 const errorSagas = createErrorSagas<DigitalContentRepostErrors>({
   errorTypes: [
     socialDigitalContentActions.REPOST_FAILED,
-    socialDigitalContentActions.UNSAVE_AGREEMENT_FAILED,
-    socialDigitalContentActions.SAVE_AGREEMENT_FAILED
+    socialDigitalContentActions.UNSAVE_DIGITAL_CONTENT_FAILED,
+    socialDigitalContentActions.SAVE_DIGITAL_CONTENT_FAILED
   ],
   getShouldRedirect: () => false,
   getShouldReport: () => true,

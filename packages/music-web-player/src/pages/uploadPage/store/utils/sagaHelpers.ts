@@ -23,14 +23,14 @@ export function* reportSuccessAndFailureEvents({
   const primary = accountUser.content_node_endpoint?.split(',')[0]
   if (!primary) return
   const successEvents = range(numSuccess).map((_) =>
-    make(Name.AGREEMENT_UPLOAD_SUCCESS, {
+    make(Name.DIGITAL_CONTENT_UPLOAD_SUCCESS, {
       endpoint: primary,
       kind: uploadType
     })
   )
 
   const failureEvents = range(numFailure).map((i) =>
-    make(Name.AGREEMENT_UPLOAD_FAILURE, {
+    make(Name.DIGITAL_CONTENT_UPLOAD_FAILURE, {
       endpoint: primary,
       kind: uploadType,
       error: errors[i]

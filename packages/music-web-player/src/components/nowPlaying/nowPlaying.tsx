@@ -308,13 +308,13 @@ const NowPlaying = g(
             : OverflowAction.FAVORITE
           : null,
         !collectible ? OverflowAction.ADD_TO_CONTENT_LIST : null,
-        digital_content && OverflowAction.VIEW_AGREEMENT_PAGE,
+        digital_content && OverflowAction.VIEW_DIGITAL_CONTENT_PAGE,
         collectible && OverflowAction.VIEW_COLLECTIBLE_PAGE,
         OverflowAction.VIEW_LANDLORD_PAGE
       ].filter(Boolean) as OverflowAction[]
 
       const overflowCallbacks = {
-        [OverflowAction.VIEW_AGREEMENT_PAGE]: onClose,
+        [OverflowAction.VIEW_DIGITAL_CONTENT_PAGE]: onClose,
         [OverflowAction.VIEW_COLLECTIBLE_PAGE]: onClose,
         [OverflowAction.VIEW_LANDLORD_PAGE]: onClose
       }
@@ -573,7 +573,7 @@ function mapDispatchToProps(dispatch: Dispatch) {
     ) =>
       dispatch(
         open({
-          source: OverflowSource.AGREEMENTS,
+          source: OverflowSource.DIGITAL_CONTENTS,
           id: digitalContentId,
           overflowActions,
           overflowActionCallbacks: callbacks

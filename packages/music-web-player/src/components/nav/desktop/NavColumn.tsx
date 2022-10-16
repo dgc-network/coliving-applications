@@ -272,7 +272,7 @@ const NavColumn = ({
   const onClickUpload = useCallback(() => {
     if (!upload.uploading) resetUploadState()
     goToUpload()
-    record(make(Name.AGREEMENT_UPLOAD_OPEN, { source: 'nav' }))
+    record(make(Name.DIGITAL_CONTENT_UPLOAD_OPEN, { source: 'nav' }))
   }, [goToUpload, upload, resetUploadState, record])
 
   const profileCompletionMeter = (

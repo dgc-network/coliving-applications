@@ -50,7 +50,7 @@ import { reportSuccessAndFailureEvents } from './utils/sagaHelpers'
 
 const MAX_CONCURRENT_UPLOADS = 4
 const MAX_CONCURRENT_REGISTRATIONS = 4
-const MAX_CONCURRENT_AGREEMENT_SIZE_BYTES = 40 /* MB */ * 1024 * 1024
+const MAX_CONCURRENT_DIGITAL_CONTENT_SIZE_BYTES = 40 /* MB */ * 1024 * 1024
 const UPLOAD_TIMEOUT_MILLIS =
   2 /* hour */ * 60 /* min */ * 60 /* sec */ * 1000 /* ms */
 
@@ -89,11 +89,11 @@ const combineMetadata = (digitalContentMetadata, collectionMetadata) => {
 const getNumWorkers = (digitalContentFiles) => {
   const largestFileSize = Math.max(...digitalContentFiles.map((t) => t.size))
 
-  // Divide it out so that we never hit > MAX_CONCURRENT_AGREEMENT_SIZE_BYTES in flight.
+  // Divide it out so that we never hit > MAX_CONCURRENT_DIGITAL_CONTENT_SIZE_BYTES in flight.
   // e.g. so if we have 40 MB max upload and max digital_content size of 15MB,
   // floor(40/15) => 2 workers
   const numWorkers = Math.floor(
-    MAX_CONCURRENT_AGREEMENT_SIZE_BYTES / largestFileSize
+    MAX_CONCURRENT_DIGITAL_CONTENT_SIZE_BYTES / largestFileSize
   )
   const maxWorkers = Math.min(MAX_CONCURRENT_UPLOADS, digitalContentFiles.length)
 
@@ -411,7 +411,7 @@ export function* handleUploads({
     }
     yield put(requestChan, request)
     yield put(
-      make(Name.AGREEMENT_UPLOAD_AGREEMENT_UPLOADING, {
+      make(Name.DIGITAL_CONTENT_UPLOAD_DIGITAL_CONTENT_UPLOADING, {
         artworkSource: value.metadata.artwork.source,
         genre: value.metadata.genre,
         mood: value.metadata.mood,
@@ -775,7 +775,7 @@ function* uploadCollection(digitalContents, userId, collectionMetadata, isAlbum)
           })
         )
         yield put(
-          make(Name.AGREEMENT_UPLOAD_COMPLETE_UPLOAD, {
+          make(Name.DIGITAL_CONTENT_UPLOAD_COMPLETE_UPLOAD, {
             count: digitalContentIds.length,
             kind: isAlbum ? 'album' : 'contentList'
           })
@@ -819,7 +819,7 @@ function* uploadSingleDigitalContent(digital_content) {
   const responseChan = yield call(channel)
 
   const dispatcher = yield fork(actionChannelDispatcher, progressChan)
-  const recordEvent = make(Name.AGREEMENT_UPLOAD_AGREEMENT_UPLOADING, {
+  const recordEvent = make(Name.DIGITAL_CONTENT_UPLOAD_DIGITAL_CONTENT_UPLOADING, {
     artworkSource: digital_content.metadata.artwork.source,
     genre: digital_content.metadata.genre,
     mood: digital_content.metadata.mood,
@@ -932,7 +932,7 @@ function* uploadSingleDigitalContent(digital_content) {
     ])
   )
   yield put(
-    make(Name.AGREEMENT_UPLOAD_COMPLETE_UPLOAD, {
+    make(Name.DIGITAL_CONTENT_UPLOAD_COMPLETE_UPLOAD, {
       count: 1,
       kind: 'digitalContents'
     })
@@ -1011,7 +1011,7 @@ function* uploadMultipleDigitalContents(digitalContents) {
 
   yield put(uploadActions.uploadDigitalContentsSucceeded())
   yield put(
-    make(Name.AGREEMENT_UPLOAD_COMPLETE_UPLOAD, {
+    make(Name.DIGITAL_CONTENT_UPLOAD_COMPLETE_UPLOAD, {
       count: digitalContentsWithMetadata.length,
       kind: 'digitalContents'
     })
@@ -1113,14 +1113,14 @@ function* uploadDigitalContentsAsync(action) {
         return 'contentList'
       case UploadType.ALBUM:
         return 'album'
-      case UploadType.INDIVIDUAL_AGREEMENT:
-      case UploadType.INDIVIDUAL_AGREEMENTS:
+      case UploadType.INDIVIDUAL_DIGITAL_CONTENT:
+      case UploadType.INDIVIDUAL_DIGITAL_CONTENTS:
       default:
         return 'digitalContents'
     }
   })()
 
-  const recordEvent = make(Name.AGREEMENT_UPLOAD_START_UPLOADING, {
+  const recordEvent = make(Name.DIGITAL_CONTENT_UPLOAD_START_UPLOADING, {
     count: action.digitalContents.length,
     kind: uploadType
   })
@@ -1149,7 +1149,7 @@ function* uploadDigitalContentsAsync(action) {
 }
 
 function* watchUploadDigitalContents() {
-  yield takeLatest(uploadActions.UPLOAD_AGREEMENTS, uploadDigitalContentsAsync)
+  yield takeLatest(uploadActions.UPLOAD_DIGITAL_CONTENTS, uploadDigitalContentsAsync)
 }
 
 export default function sagas() {

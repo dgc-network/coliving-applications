@@ -38,7 +38,7 @@ export function getEntry(
 export function getEntry(
   state: CommonState,
   props: {
-    kind: Kind.AGREEMENTS
+    kind: Kind.DIGITAL_CONTENTS
     id?: ID | null
     uid?: UID | null
   }
@@ -103,7 +103,7 @@ export function getAllEntries(
 ): { [id: string]: Collection }
 export function getAllEntries(
   state: CommonState,
-  props: { kind: Kind.AGREEMENTS }
+  props: { kind: Kind.DIGITAL_CONTENTS }
 ): { [id: string]: DigitalContent }
 export function getAllEntries(
   state: CommonState,
@@ -130,7 +130,7 @@ export function getCache(
 ): Cache<Collection>
 export function getCache(
   state: CommonState,
-  props: { kind: Kind.AGREEMENTS }
+  props: { kind: Kind.DIGITAL_CONTENTS }
 ): DigitalContentsCacheState
 export function getCache(
   state: CommonState,
@@ -138,7 +138,7 @@ export function getCache(
 ): DigitalContentsCacheState | Cache<Collection> | UsersCacheState
 export function getCache(state: CommonState, props: { kind: Kind }) {
   switch (props.kind) {
-    case Kind.AGREEMENTS:
+    case Kind.DIGITAL_CONTENTS:
       return state.digitalContents
     case Kind.COLLECTIONS:
       return state.collections
@@ -150,7 +150,7 @@ export function getCache(state: CommonState, props: { kind: Kind }) {
 
 export function getId(state: CommonState, props: { kind: Kind; uid: UID }) {
   switch (props.kind) {
-    case Kind.AGREEMENTS: {
+    case Kind.DIGITAL_CONTENTS: {
       return state.digitalContents.uids[props.uid]
     }
     case Kind.COLLECTIONS: {

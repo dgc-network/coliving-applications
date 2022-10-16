@@ -77,7 +77,7 @@ function* fetchFirstSegments(entries) {
 
     yield put(
       cacheActions.update(
-        Kind.AGREEMENTS,
+        Kind.DIGITAL_CONTENTS,
         firstSegments.map((s, i) => {
           if (s === 'Unauthorized') {
             return {
@@ -103,7 +103,7 @@ function* fetchFirstSegments(entries) {
 
 function* watchAdd() {
   yield takeEvery(cacheActions.ADD_SUCCEEDED, function* (action) {
-    if (action.kind === Kind.AGREEMENTS) {
+    if (action.kind === Kind.DIGITAL_CONTENTS) {
       yield put(
         digitalContentActions.setPermalinkStatus(
           action.entries
@@ -160,7 +160,7 @@ function* editDigitalContentAsync(action) {
 
   if (!isPublishing && wasUnlisted && isNowListed) {
     yield put(
-      cacheActions.update(Kind.AGREEMENTS, [
+      cacheActions.update(Kind.DIGITAL_CONTENTS, [
         {
           id: action.digitalContentId,
           metadata: { _is_publishing: true }
@@ -190,7 +190,7 @@ function* editDigitalContentAsync(action) {
   }
 
   yield put(
-    cacheActions.update(Kind.AGREEMENTS, [{ id: digital_content.digital_content_id, metadata: digital_content }])
+    cacheActions.update(Kind.DIGITAL_CONTENTS, [{ id: digital_content.digital_content_id, metadata: digital_content }])
   )
   yield put(digitalContentActions.editDigitalContentSucceeded())
 
@@ -216,7 +216,7 @@ function* confirmEditDigitalContent(
 ) {
   yield put(
     confirmerActions.requestConfirmation(
-      makeKindId(Kind.AGREEMENTS, digitalContentId),
+      makeKindId(Kind.DIGITAL_CONTENTS, digitalContentId),
       function* () {
         if (!wasDownloadable && isNowDownloadable) {
           yield put(digitalContentActions.checkIsDownloadable(digitalContentId))
@@ -257,7 +257,7 @@ function* confirmEditDigitalContent(
         }
         // Update the cached digital_content so it no longer contains image upload artifacts
         yield put(
-          cacheActions.update(Kind.AGREEMENTS, [
+          cacheActions.update(Kind.DIGITAL_CONTENTS, [
             {
               id: confirmedDigitalContent.digital_content_id,
               metadata: { ...confirmedDigitalContent, artwork: {} }
@@ -292,7 +292,7 @@ function* confirmEditDigitalContent(
 }
 
 function* watchEditDigitalContent() {
-  yield takeEvery(digitalContentActions.EDIT_AGREEMENT, editDigitalContentAsync)
+  yield takeEvery(digitalContentActions.EDIT_DIGITAL_CONTENT, editDigitalContentAsync)
 }
 
 function* deleteDigitalContentAsync(action) {
@@ -320,7 +320,7 @@ function* deleteDigitalContentAsync(action) {
 
   const digital_content = yield select(getDigitalContent, { id: action.digitalContentId })
   yield put(
-    cacheActions.update(Kind.AGREEMENTS, [
+    cacheActions.update(Kind.DIGITAL_CONTENTS, [
       { id: digital_content.digital_content_id, metadata: { _marked_deleted: true } }
     ])
   )
@@ -331,7 +331,7 @@ function* deleteDigitalContentAsync(action) {
 function* confirmDeleteDigitalContent(digitalContentId) {
   yield put(
     confirmerActions.requestConfirmation(
-      makeKindId(Kind.AGREEMENTS, digitalContentId),
+      makeKindId(Kind.DIGITAL_CONTENTS, digitalContentId),
       function* () {
         const { blockHash, blockNumber } = yield call(
           ColivingBackend.deleteDigitalContent,
@@ -383,7 +383,7 @@ function* confirmDeleteDigitalContent(digitalContentId) {
       function* () {
         // On failure, do not mark the digital_content as deleted
         yield put(
-          cacheActions.update(Kind.AGREEMENTS, [
+          cacheActions.update(Kind.DIGITAL_CONTENTS, [
             { id: digitalContentId, metadata: { _marked_deleted: false } }
           ])
         )
@@ -424,7 +424,7 @@ function* watchFetchCoverArt() {
         [coverArtSize || DefaultSizes.OVERRIDE]: url
       }
       yield put(
-        cacheActions.update(Kind.AGREEMENTS, [{ id: digitalContentId, metadata: digital_content }])
+        cacheActions.update(Kind.DIGITAL_CONTENTS, [{ id: digitalContentId, metadata: digital_content }])
       )
 
       let smallImageUrl = url
@@ -476,7 +476,7 @@ function* watchCheckIsDownloadable() {
     }
 
     yield put(
-      cacheActions.update(Kind.AGREEMENTS, [
+      cacheActions.update(Kind.DIGITAL_CONTENTS, [
         {
           id: digital_content.digital_content_id,
           metadata: updatedMetadata

@@ -1,6 +1,6 @@
 import { LineupActions } from 'common/store/lineup/actions'
 
-export const PREFIX = 'COLLECTION_AGREEMENTS'
+export const PREFIX = 'COLLECTION_DIGITAL_CONTENTS'
 
 class DigitalContentsActions extends LineupActions {
   constructor() {

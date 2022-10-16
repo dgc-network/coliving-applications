@@ -26,7 +26,7 @@ type DigitalContentItemProps = {
 }
 
 // Max number of digital_content to display in a contentList
-const DISPLAY_AGREEMENT_COUNT = 5
+const DISPLAY_DIGITAL_CONTENT_COUNT = 5
 
 const DigitalContentItem = (props: DigitalContentItemProps) => {
   return (
@@ -83,7 +83,7 @@ const DigitalContentList = ({
 
   return (
     <div onClick={goToCollectionPage}>
-      {digitalContents.slice(0, DISPLAY_AGREEMENT_COUNT).map((digital_content, index) => (
+      {digitalContents.slice(0, DISPLAY_DIGITAL_CONTENT_COUNT).map((digital_content, index) => (
         <DigitalContentItem
           key={digital_content.uid}
           active={activeDigitalContentUid === digital_content.uid}

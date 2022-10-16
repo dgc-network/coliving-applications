@@ -18,7 +18,7 @@ const userListReducer = UserListReducerFactory.createReducer({
 
 const initialState = {
   id: null,
-  favoriteType: FavoriteType.AGREEMENT
+  favoriteType: FavoriteType.DIGITAL_CONTENT
 }
 
 const favoritesPageReducer = createReducer<FavoritesOwnState, FavoriteActions>(

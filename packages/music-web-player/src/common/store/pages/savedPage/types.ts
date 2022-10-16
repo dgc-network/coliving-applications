@@ -15,7 +15,7 @@ export default interface SavesPageState {
 }
 
 export enum Tabs {
-  AGREEMENTS = 'AGREEMENTS',
+  DIGITAL_CONTENTS = 'DIGITAL_CONTENTS',
   ALBUMS = 'ALBUMS',
   CONTENT_LISTS = 'CONTENT_LISTS'
 }

@@ -19,7 +19,7 @@ function* identifyEventAsync(action: any) {
 }
 
 function* watchDigitalContentEvent() {
-  yield takeEvery(analyticsActions.AGREEMENT, digitalContentEventAsync)
+  yield takeEvery(analyticsActions.DIGITAL_CONTENT, digitalContentEventAsync)
 }
 
 function* watchIdentifyEvent() {

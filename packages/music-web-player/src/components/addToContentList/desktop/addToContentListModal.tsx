@@ -85,7 +85,7 @@ const AddToContentListModal = () => {
     })
     const tempId = `${Date.now()}`
     dispatch(
-      createContentList(tempId, metadata, CreateContentListSource.FROM_AGREEMENT, digitalContentId)
+      createContentList(tempId, metadata, CreateContentListSource.FROM_DIGITAL_CONTENT, digitalContentId)
     )
     dispatch(addDigitalContentToContentList(digitalContentId, tempId))
     if (account && digitalContentTitle) {

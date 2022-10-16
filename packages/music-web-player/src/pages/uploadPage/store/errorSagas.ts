@@ -9,11 +9,11 @@ const BYTES_PER_MB = 1000 * 1000
 const errorsWithoutRedirect = new Set([
   // MultidigitalContent shouldn't redirect b/c
   // some digitalContents are better than none
-  uploadActions.MULTI_AGREEMENT_TIMEOUT_ERROR,
-  uploadActions.MULTI_AGREEMENT_UPLOAD_ERROR,
+  uploadActions.MULTI_DIGITAL_CONTENT_TIMEOUT_ERROR,
+  uploadActions.MULTI_DIGITAL_CONTENT_UPLOAD_ERROR,
 
   // Associate requires digital_content cleanup
-  uploadActions.COLLECTION_ASSOCIATE_AGREEMENTS_ERROR,
+  uploadActions.COLLECTION_ASSOCIATE_DIGITAL_CONTENTS_ERROR,
 
   // ContentList errors require
   // digital_content & possibly contentList cleanup
@@ -45,11 +45,11 @@ function* handleUploadError(action: UploadErrorActions) {
     isStem?: boolean
   } = { error: action.error }
   switch (action.type) {
-    case uploadActions.SINGLE_AGREEMENT_UPLOAD_ERROR:
+    case uploadActions.SINGLE_DIGITAL_CONTENT_UPLOAD_ERROR:
       extras.fileSize = `${action.digitalContentSizeBytes! / BYTES_PER_MB} mb`
       extras.phase = action.phase!
       break
-    case uploadActions.MULTI_AGREEMENT_UPLOAD_ERROR:
+    case uploadActions.MULTI_DIGITAL_CONTENT_UPLOAD_ERROR:
       extras.phase = action.phase!
       extras.numDigitalContents = action.numDigitalContents!
       extras.isStem = action.isStem!
@@ -71,14 +71,14 @@ export function* watchUploadErrors() {
   yield takeEvery(
     [
       uploadActions.UPGRADE_TO_CREATOR_ERROR,
-      uploadActions.SINGLE_AGREEMENT_UPLOAD_ERROR,
-      uploadActions.SINGLE_AGREEMENT_UPLOAD_TIMEOUT_ERROR,
-      uploadActions.MULTI_AGREEMENT_UPLOAD_ERROR,
-      uploadActions.MULTI_AGREEMENT_TIMEOUT_ERROR,
+      uploadActions.SINGLE_DIGITAL_CONTENT_UPLOAD_ERROR,
+      uploadActions.SINGLE_DIGITAL_CONTENT_UPLOAD_TIMEOUT_ERROR,
+      uploadActions.MULTI_DIGITAL_CONTENT_UPLOAD_ERROR,
+      uploadActions.MULTI_DIGITAL_CONTENT_TIMEOUT_ERROR,
       uploadActions.COLLECTION_CONTENT_NODE_UPLOAD_ERROR,
       uploadActions.COLLECTION_CONTENT_NODE_TIMEOUT_ERROR,
       uploadActions.COLLECTION_ADD_DIGITAL_CONTENT_TO_CHAIN_ERROR,
-      uploadActions.COLLECTION_ASSOCIATE_AGREEMENTS_ERROR,
+      uploadActions.COLLECTION_ASSOCIATE_DIGITAL_CONTENTS_ERROR,
       uploadActions.COLLECTION_CREATE_CONTENT_LIST_NO_ID_ERROR,
       uploadActions.COLLECTION_CREATE_CONTENT_LIST_ID_EXISTS_ERROR,
       uploadActions.COLLECTION_POLL_CONTENT_LIST_TIMEOUT_ERROR

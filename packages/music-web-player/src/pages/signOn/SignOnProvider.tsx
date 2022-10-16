@@ -551,7 +551,7 @@ function mapDispatchToProps(dispatch: Dispatch) {
       dispatch(digitalContentEvent)
     },
     recordGoToUpload: () => {
-      const digitalContentEvent: DigitalContentEvent = make(Name.AGREEMENT_UPLOAD_OPEN, {
+      const digitalContentEvent: DigitalContentEvent = make(Name.DIGITAL_CONTENT_UPLOAD_OPEN, {
         source: 'signup' as const
       })
       dispatch(digitalContentEvent)

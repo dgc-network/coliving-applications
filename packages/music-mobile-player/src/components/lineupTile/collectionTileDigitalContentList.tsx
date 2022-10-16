@@ -9,7 +9,7 @@ import { flexRowCentered, makeStyles } from 'app/styles'
 import type { GestureResponderHandler } from 'app/types/gesture'
 
 // Max number of digitalContents to display
-const DISPLAY_AGREEMENT_COUNT = 5
+const DISPLAY_DIGITAL_CONTENT_COUNT = 5
 
 type LineupTileDigitalContentListProps = {
   isLoading?: boolean
@@ -110,7 +110,7 @@ export const CollectionTileDigitalContentList = ({
   if (!digitalContents.length && isLoading) {
     return (
       <>
-        {range(DISPLAY_AGREEMENT_COUNT).map((i) => (
+        {range(DISPLAY_DIGITAL_CONTENT_COUNT).map((i) => (
           <DigitalContentItem key={i} active={false} index={i} showSkeleton />
         ))}
       </>
@@ -119,7 +119,7 @@ export const CollectionTileDigitalContentList = ({
 
   return (
     <Pressable onPress={onPress}>
-      {digitalContents.slice(0, DISPLAY_AGREEMENT_COUNT).map((digital_content, index) => (
+      {digitalContents.slice(0, DISPLAY_DIGITAL_CONTENT_COUNT).map((digital_content, index) => (
         <DigitalContentItem
           key={digital_content.uid}
           active={playingUid === digital_content.uid}

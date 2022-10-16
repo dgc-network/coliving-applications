@@ -3,7 +3,7 @@ import { ID } from '@coliving/common'
 import { UserListStoreState } from 'common/store/userList/types'
 
 export enum RepostType {
-  AGREEMENT = 'AGREEMENT',
+  DIGITAL_CONTENT = 'DIGITAL_CONTENT',
   COLLECTION = 'COLLECTION'
 }
 

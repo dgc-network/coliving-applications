@@ -3,7 +3,7 @@ import { put, takeEvery } from 'redux-saga/effects'
 import * as errorActions from 'common/store/errors/actions'
 
 import {
-  GET_AGREEMENT_REPOST_ERROR,
+  GET_DIGITAL_CONTENT_REPOST_ERROR,
   GET_CONTENT_LIST_REPOST_ERROR,
   digitalContentRepostError,
   contentListRepostError
@@ -29,7 +29,7 @@ export function* handleRepostError(action: ErrorActions) {
 
 export function* watchRepostsError() {
   yield takeEvery(
-    [GET_AGREEMENT_REPOST_ERROR, GET_CONTENT_LIST_REPOST_ERROR],
+    [GET_DIGITAL_CONTENT_REPOST_ERROR, GET_CONTENT_LIST_REPOST_ERROR],
     handleRepostError
   )
 }

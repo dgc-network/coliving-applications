@@ -4,7 +4,7 @@ import { MonitorPayload, ServiceMonitorType } from 'models/services'
 import { TimeRange } from 'models/timeRange'
 import { SolanaWalletAddress, StringDigitalcoin, WalletAddress } from 'models/wallet'
 
-const ANALYTICS_AGREEMENT_EVENT = 'ANALYTICS/AGREEMENT_EVENT'
+const ANALYTICS_DIGITAL_CONTENT_EVENT = 'ANALYTICS/DIGITAL_CONTENT_EVENT'
 
 export enum Name {
   SESSION_START = 'Session Start',
@@ -82,7 +82,7 @@ export enum Name {
   UNDO_REPOST = 'Undo Repost',
   FAVORITE = 'Favorite',
   UNFAVORITE = 'Unfavorite',
-  LANDLORD_PICK_SELECT_AGREEMENT = 'Author Pick: Select DigitalContent',
+  LANDLORD_PICK_SELECT_DIGITAL_CONTENT = 'Author Pick: Select DigitalContent',
   FOLLOW = 'Follow',
   UNFOLLOW = 'Unfollow',
 
@@ -110,16 +110,16 @@ export enum Name {
   EMBED_COPY = 'Embed: Copy',
 
   // Upload
-  AGREEMENT_UPLOAD_OPEN = 'DigitalContent Upload: Open',
-  AGREEMENT_UPLOAD_START_UPLOADING = 'DigitalContent Upload: Start Upload',
-  AGREEMENT_UPLOAD_AGREEMENT_UPLOADING = 'DigitalContent Upload: DigitalContent Uploading',
-  AGREEMENT_UPLOAD_COMPLETE_UPLOAD = 'DigitalContent Upload: Complete Upload',
-  AGREEMENT_UPLOAD_COPY_LINK = 'DigitalContent Upload: Copy Link',
-  AGREEMENT_UPLOAD_SHARE_WITH_FANS = 'DigitalContent Upload: Share with your residents',
-  AGREEMENT_UPLOAD_SHARE_SOUND_TO_TIKTOK = 'DigitalContent Upload: Share sound to TikTok',
-  AGREEMENT_UPLOAD_VIEW_AGREEMENT_PAGE = 'DigitalContent Upload: View DigitalContent page',
-  AGREEMENT_UPLOAD_SUCCESS = 'DigitalContent Upload: Success',
-  AGREEMENT_UPLOAD_FAILURE = 'DigitalContent Upload: Failure',
+  DIGITAL_CONTENT_UPLOAD_OPEN = 'DigitalContent Upload: Open',
+  DIGITAL_CONTENT_UPLOAD_START_UPLOADING = 'DigitalContent Upload: Start Upload',
+  DIGITAL_CONTENT_UPLOAD_DIGITAL_CONTENT_UPLOADING = 'DigitalContent Upload: DigitalContent Uploading',
+  DIGITAL_CONTENT_UPLOAD_COMPLETE_UPLOAD = 'DigitalContent Upload: Complete Upload',
+  DIGITAL_CONTENT_UPLOAD_COPY_LINK = 'DigitalContent Upload: Copy Link',
+  DIGITAL_CONTENT_UPLOAD_SHARE_WITH_FANS = 'DigitalContent Upload: Share with your residents',
+  DIGITAL_CONTENT_UPLOAD_SHARE_SOUND_TO_TIKTOK = 'DigitalContent Upload: Share sound to TikTok',
+  DIGITAL_CONTENT_UPLOAD_VIEW_DIGITAL_CONTENT_PAGE = 'DigitalContent Upload: View DigitalContent page',
+  DIGITAL_CONTENT_UPLOAD_SUCCESS = 'DigitalContent Upload: Success',
+  DIGITAL_CONTENT_UPLOAD_FAILURE = 'DigitalContent Upload: Failure',
   TWEET_FIRST_UPLOAD = 'Tweet First Upload',
 
   // Trending
@@ -156,8 +156,8 @@ export enum Name {
   PROFILE_PAGE_SHOWN_LANDLORD_RECOMMENDATIONS = 'ProfilePage: Shown Author Recommendations',
 
   // DigitalContent page
-  AGREEMENT_PAGE_DOWNLOAD = 'DigitalContent Page: Download',
-  AGREEMENT_PAGE_PLAY_MORE = 'DigitalContent Page: Play More By This Author',
+  DIGITAL_CONTENT_PAGE_DOWNLOAD = 'DigitalContent Page: Download',
+  DIGITAL_CONTENT_PAGE_PLAY_MORE = 'DigitalContent Page: Play More By This Author',
 
   // Playback
   PLAYBACK_PLAY = 'Playback: Play',
@@ -457,23 +457,23 @@ export enum RepostSource {
   TILE = 'tile',
   PLAYBAR = 'playbar',
   NOW_PLAYING = 'now playing',
-  AGREEMENT_PAGE = 'page',
+  DIGITAL_CONTENT_PAGE = 'page',
   COLLECTION_PAGE = 'collection page',
   HISTORY_PAGE = 'history page',
   FAVORITES_PAGE = 'favorites page',
   OVERFLOW = 'overflow',
-  AGREEMENT_LIST = 'digital_content list'
+  DIGITAL_CONTENT_LIST = 'digital_content list'
 }
 export enum FavoriteSource {
   TILE = 'tile',
   PLAYBAR = 'playbar',
   NOW_PLAYING = 'now playing',
-  AGREEMENT_PAGE = 'page',
+  DIGITAL_CONTENT_PAGE = 'page',
   COLLECTION_PAGE = 'collection page',
   HISTORY_PAGE = 'history page',
   FAVORITES_PAGE = 'favorites page',
   OVERFLOW = 'overflow',
-  AGREEMENT_LIST = 'digital_content list',
+  DIGITAL_CONTENT_LIST = 'digital_content list',
   SIGN_UP = 'sign up',
   // Favorite triggered by some implicit action, e.g.
   // you had a smart collection and it was favorited so it
@@ -483,7 +483,7 @@ export enum FavoriteSource {
 }
 export enum FollowSource {
   PROFILE_PAGE = 'profile page',
-  AGREEMENT_PAGE = 'digital_content page',
+  DIGITAL_CONTENT_PAGE = 'digital_content page',
   COLLECTION_PAGE = 'collection page',
   HOVER_TILE = 'hover tile',
   OVERFLOW = 'overflow',
@@ -533,7 +533,7 @@ type Unfavorite = {
   id: string
 }
 type LandlordPickSelectDigitalContent = {
-  eventName: Name.LANDLORD_PICK_SELECT_AGREEMENT
+  eventName: Name.LANDLORD_PICK_SELECT_DIGITAL_CONTENT
   id: string
 }
 type Follow = {
@@ -555,7 +555,7 @@ type TweetFirstUpload = {
 export enum CreateContentListSource {
   NAV = 'nav',
   CREATE_PAGE = 'create page',
-  FROM_AGREEMENT = 'from digital_content',
+  FROM_DIGITAL_CONTENT = 'from digital_content',
   FAVORITES_PAGE = 'favorites page'
 }
 
@@ -638,55 +638,55 @@ type EmbedCopy = {
 
 // DigitalContent Upload
 type DigitalContentUploadOpen = {
-  eventName: Name.AGREEMENT_UPLOAD_OPEN
+  eventName: Name.DIGITAL_CONTENT_UPLOAD_OPEN
   source: 'nav' | 'profile' | 'signup'
 }
 type DigitalContentUploadStartUploading = {
-  eventName: Name.AGREEMENT_UPLOAD_START_UPLOADING
+  eventName: Name.DIGITAL_CONTENT_UPLOAD_START_UPLOADING
   count: number
   kind: 'digitalContents' | 'album' | 'contentList'
 }
 type DigitalContentUploadDigitalContentUploading = {
-  eventName: Name.AGREEMENT_UPLOAD_AGREEMENT_UPLOADING
+  eventName: Name.DIGITAL_CONTENT_UPLOAD_DIGITAL_CONTENT_UPLOADING
   artworkSource: 'unsplash' | 'original'
   genre: string
   mood: string
   downloadable: 'yes' | 'no' | 'follow'
 }
 type DigitalContentUploadCompleteUpload = {
-  eventName: Name.AGREEMENT_UPLOAD_COMPLETE_UPLOAD
+  eventName: Name.DIGITAL_CONTENT_UPLOAD_COMPLETE_UPLOAD
   count: number
   kind: 'digitalContents' | 'album' | 'contentList'
 }
 
 type DigitalContentUploadSuccess = {
-  eventName: Name.AGREEMENT_UPLOAD_SUCCESS
+  eventName: Name.DIGITAL_CONTENT_UPLOAD_SUCCESS
   endpoint: string
   kind: 'single_digital_content' | 'multi_digital_content' | 'album' | 'contentList'
 }
 
 type DigitalContentUploadFailure = {
-  eventName: Name.AGREEMENT_UPLOAD_FAILURE
+  eventName: Name.DIGITAL_CONTENT_UPLOAD_FAILURE
   endpoint: string
   kind: 'single_digital_content' | 'multi_digital_content' | 'album' | 'contentList'
   error?: string
 }
 
 type DigitalContentUploadCopyLink = {
-  eventName: Name.AGREEMENT_UPLOAD_COPY_LINK
+  eventName: Name.DIGITAL_CONTENT_UPLOAD_COPY_LINK
   uploadType: string
   url: string
 }
 type DigitalContentUploadShareWithFans = {
-  eventName: Name.AGREEMENT_UPLOAD_SHARE_WITH_FANS
+  eventName: Name.DIGITAL_CONTENT_UPLOAD_SHARE_WITH_FANS
   uploadType: string
   text: string
 }
 type DigitalContentUploadShareSoundToTikTok = {
-  eventName: Name.AGREEMENT_UPLOAD_SHARE_SOUND_TO_TIKTOK
+  eventName: Name.DIGITAL_CONTENT_UPLOAD_SHARE_SOUND_TO_TIKTOK
 }
 type DigitalContentUploadViewDigitalContentPage = {
-  eventName: Name.AGREEMENT_UPLOAD_VIEW_AGREEMENT_PAGE
+  eventName: Name.DIGITAL_CONTENT_UPLOAD_VIEW_DIGITAL_CONTENT_PAGE
   uploadType: string
 }
 
@@ -806,13 +806,13 @@ type ProfilePageShownLandlordRecommendations = {
 
 // DigitalContent Page
 type DigitalContentPageDownload = {
-  eventName: Name.AGREEMENT_PAGE_DOWNLOAD
+  eventName: Name.DIGITAL_CONTENT_PAGE_DOWNLOAD
   id: ID
   category?: string
   parent_digital_content_id?: ID
 }
 type DigitalContentPagePlayMore = {
-  eventName: Name.AGREEMENT_PAGE_PLAY_MORE
+  eventName: Name.DIGITAL_CONTENT_PAGE_PLAY_MORE
   id: ID
 }
 
@@ -821,10 +821,10 @@ export enum PlaybackSource {
   PLAYBAR = 'playbar',
   NOW_PLAYING = 'now playing',
   CONTENT_LIST_PAGE = 'contentList page',
-  AGREEMENT_PAGE = 'digital_content page',
-  AGREEMENT_TILE = 'digital_content tile',
-  CONTENT_LIST_AGREEMENT = 'contentList page digital_content list',
-  CONTENT_LIST_TILE_AGREEMENT = 'contentList digital_content tile',
+  DIGITAL_CONTENT_PAGE = 'digital_content page',
+  DIGITAL_CONTENT_TILE = 'digital_content tile',
+  CONTENT_LIST_DIGITAL_CONTENT = 'contentList page digital_content list',
+  CONTENT_LIST_TILE_DIGITAL_CONTENT = 'contentList digital_content tile',
   HISTORY_PAGE = 'history page',
   FAVORITES_PAGE = 'favorites page',
   PASSIVE = 'passive',
@@ -1247,7 +1247,7 @@ type ColivingOauthError = {
   error: string
 }
 
-export type BaseAnalyticsEvent = { type: typeof ANALYTICS_AGREEMENT_EVENT }
+export type BaseAnalyticsEvent = { type: typeof ANALYTICS_DIGITAL_CONTENT_EVENT }
 
 export type AllTrackingEvents =
   | CreateAccountOpen

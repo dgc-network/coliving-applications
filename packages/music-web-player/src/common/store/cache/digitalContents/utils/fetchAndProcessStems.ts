@@ -38,7 +38,7 @@ export function* fetchAndProcessStems(digitalContentId: ID) {
   }))
 
   yield put(
-    cacheActions.update(Kind.AGREEMENTS, [
+    cacheActions.update(Kind.DIGITAL_CONTENTS, [
       {
         id: digitalContentId,
         metadata: {

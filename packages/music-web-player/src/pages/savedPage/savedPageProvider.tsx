@@ -69,7 +69,7 @@ class SavedPage extends PureComponent<SavedPageProps, SavedPageState> {
   state: SavedPageState = {
     filterText: '',
     initialOrder: null,
-    currentTab: ProfileTabs.AGREEMENTS
+    currentTab: ProfileTabs.DIGITAL_CONTENTS
   }
 
   componentDidMount() {

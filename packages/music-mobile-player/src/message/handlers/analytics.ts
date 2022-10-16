@@ -8,7 +8,7 @@ export const messageHandlers: Partial<MessageHandlers> = {
   [MessageType.ANALYTICS_IDENTIFY]: async ({ message }) => {
     await identify(message as Identify)
   },
-  [MessageType.ANALYTICS_AGREEMENT]: async ({ message }) => {
+  [MessageType.ANALYTICS_DIGITAL_CONTENT]: async ({ message }) => {
     await digital_content(message as DigitalContent)
   },
   [MessageType.ANALYTICS_SCREEN]: async ({ message }) => {

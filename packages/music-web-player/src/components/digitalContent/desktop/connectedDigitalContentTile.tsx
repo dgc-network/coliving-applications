@@ -390,7 +390,7 @@ function mapDispatchToProps(dispatch: Dispatch) {
       dispatch(
         setUsers({
           userListType: UserListType.REPOST,
-          entityType: UserListEntityType.AGREEMENT,
+          entityType: UserListEntityType.DIGITAL_CONTENT,
           id: digitalContentID
         })
       ),
@@ -398,7 +398,7 @@ function mapDispatchToProps(dispatch: Dispatch) {
       dispatch(
         setUsers({
           userListType: UserListType.FAVORITE,
-          entityType: UserListEntityType.AGREEMENT,
+          entityType: UserListEntityType.DIGITAL_CONTENT,
           id: digitalContentID
         })
       ),

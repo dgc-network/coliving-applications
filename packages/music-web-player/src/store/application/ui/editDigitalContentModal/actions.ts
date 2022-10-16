@@ -1,7 +1,7 @@
 import { ID } from '@coliving/common'
 
-export const OPEN = 'APPLICATION/UI/EDIT_AGREEMENT_MODAL/OPEN'
-export const CLOSE = 'APPLICATION/UI/EDIT_AGREEMENT_MODAL/CLOSE'
+export const OPEN = 'APPLICATION/UI/EDIT_DIGITAL_CONTENT_MODAL/OPEN'
+export const CLOSE = 'APPLICATION/UI/EDIT_DIGITAL_CONTENT_MODAL/CLOSE'
 
 type OpenAction = { type: typeof OPEN; digitalContentId: ID }
 type CloseAction = { type: typeof CLOSE }

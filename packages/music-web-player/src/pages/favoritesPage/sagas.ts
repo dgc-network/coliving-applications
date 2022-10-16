@@ -73,7 +73,7 @@ function* errorDispatcher(error: Error) {
   const id = yield* select(getId)
   if (!id) return
 
-  if (favoriteType === FavoriteType.AGREEMENT) {
+  if (favoriteType === FavoriteType.DIGITAL_CONTENT) {
     yield* put(digitalContentFavoriteError(id, error.message))
   } else {
     yield* put(contentListFavoriteError(id, error.message))
@@ -85,7 +85,7 @@ function* getFavorites(currentPage: number, pageSize: number) {
   if (!id) return { userIds: [], hasMore: false }
   const favoriteType = yield* select(getFavoriteType)
   return yield* (
-    favoriteType === FavoriteType.AGREEMENT
+    favoriteType === FavoriteType.DIGITAL_CONTENT
       ? getDigitalContentFavorites
       : getContentListFavorites
   )({ id, currentPage, pageSize })

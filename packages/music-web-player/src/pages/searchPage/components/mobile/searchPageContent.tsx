@@ -298,7 +298,7 @@ const messages = {
 }
 
 enum Tabs {
-  AGREEMENTS = 'AGREEMENTS',
+  DIGITAL_CONTENTS = 'DIGITAL_CONTENTS',
   ALBUMS = 'ALBUMS',
   CONTENT_LISTS = 'CONTENT_LISTS',
   PEOPLE = 'PEOPLE'
@@ -351,7 +351,7 @@ const SearchPageContent = (props: SearchPageContentProps) => {
             {
               icon: <IconNote />,
               text: messages.digitalContentsTitle,
-              label: Tabs.AGREEMENTS
+              label: Tabs.DIGITAL_CONTENTS
             },
             {
               icon: <IconUser />,
@@ -379,7 +379,7 @@ const SearchPageContent = (props: SearchPageContentProps) => {
             {
               icon: <IconNote />,
               text: messages.digitalContentsTitle,
-              label: Tabs.AGREEMENTS
+              label: Tabs.DIGITAL_CONTENTS
             },
             {
               icon: <IconAlbum />,

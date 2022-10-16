@@ -251,7 +251,7 @@ class DigitalContentPageProvider extends Component<
       record(
         make(Name.PLAYBACK_PAUSE, {
           id: `${digital_content.id}`,
-          source: PlaybackSource.AGREEMENT_PAGE
+          source: PlaybackSource.DIGITAL_CONTENT_PAGE
         })
       )
     } else if (
@@ -263,7 +263,7 @@ class DigitalContentPageProvider extends Component<
       record(
         make(Name.PLAYBACK_PLAY, {
           id: `${digital_content.id}`,
-          source: PlaybackSource.AGREEMENT_PAGE
+          source: PlaybackSource.DIGITAL_CONTENT_PAGE
         })
       )
     } else if (digital_content) {
@@ -271,7 +271,7 @@ class DigitalContentPageProvider extends Component<
       record(
         make(Name.PLAYBACK_PLAY, {
           id: `${digital_content.id}`,
-          source: PlaybackSource.AGREEMENT_PAGE
+          source: PlaybackSource.DIGITAL_CONTENT_PAGE
         })
       )
     }
@@ -440,7 +440,7 @@ class DigitalContentPageProvider extends Component<
           title={title}
           description={description}
           canonicalUrl={canonicalUrl}
-          playable={{ metadata: digital_content, type: PlayableType.AGREEMENT }}
+          playable={{ metadata: digital_content, type: PlayableType.DIGITAL_CONTENT }}
           user={user}
           deletedByLandlord={deletedByLandlord}
         />
@@ -494,9 +494,9 @@ class DigitalContentPageProvider extends Component<
   }
 }
 
-const REDIRECT_AGREEMENT_ID_RANGE = [416972, 418372]
+const REDIRECT_DIGITAL_CONTENT_ID_RANGE = [416972, 418372]
 const shouldRedirectDigitalContent = (digitalContentId: ID) =>
-  digitalContentId >= REDIRECT_AGREEMENT_ID_RANGE[0] && digitalContentId <= REDIRECT_AGREEMENT_ID_RANGE[1]
+  digitalContentId >= REDIRECT_DIGITAL_CONTENT_ID_RANGE[0] && digitalContentId <= REDIRECT_DIGITAL_CONTENT_ID_RANGE[1]
 
 function makeMapStateToProps() {
   const getMoreByLandlordLineup = makeGetLineupMetadatas(getLineup)
@@ -548,7 +548,7 @@ function mapDispatchToProps(dispatch: Dispatch) {
     reset: (source?: string) => dispatch(digitalContentsActions.reset(source)),
     play: (uid?: string) => dispatch(digitalContentsActions.play(uid)),
     recordPlayMoreByLandlord: (digitalContentId: ID) => {
-      const digitalContentEvent: DigitalContentEvent = make(Name.AGREEMENT_PAGE_PLAY_MORE, {
+      const digitalContentEvent: DigitalContentEvent = make(Name.DIGITAL_CONTENT_PAGE_PLAY_MORE, {
         id: digitalContentId
       })
       dispatch(digitalContentEvent)
@@ -564,29 +564,29 @@ function mapDispatchToProps(dispatch: Dispatch) {
       ),
     saveDigitalContent: (digitalContentId: ID) =>
       dispatch(
-        socialDigitalContentsActions.saveDigitalContent(digitalContentId, FavoriteSource.AGREEMENT_PAGE)
+        socialDigitalContentsActions.saveDigitalContent(digitalContentId, FavoriteSource.DIGITAL_CONTENT_PAGE)
       ),
     unsaveDigitalContent: (digitalContentId: ID) =>
       dispatch(
-        socialDigitalContentsActions.unsaveDigitalContent(digitalContentId, FavoriteSource.AGREEMENT_PAGE)
+        socialDigitalContentsActions.unsaveDigitalContent(digitalContentId, FavoriteSource.DIGITAL_CONTENT_PAGE)
       ),
     deleteDigitalContent: (digitalContentId: ID) =>
       dispatch(cacheDigitalContentActions.deleteDigitalContent(digitalContentId)),
     repostDigitalContent: (digitalContentId: ID) =>
       dispatch(
-        socialDigitalContentsActions.repostDigitalContent(digitalContentId, RepostSource.AGREEMENT_PAGE)
+        socialDigitalContentsActions.repostDigitalContent(digitalContentId, RepostSource.DIGITAL_CONTENT_PAGE)
       ),
     undoRepostDigitalContent: (digitalContentId: ID) =>
       dispatch(
-        socialDigitalContentsActions.undoRepostDigitalContent(digitalContentId, RepostSource.AGREEMENT_PAGE)
+        socialDigitalContentsActions.undoRepostDigitalContent(digitalContentId, RepostSource.DIGITAL_CONTENT_PAGE)
       ),
     editDigitalContent: (digitalContentId: ID, formFields: any) =>
       dispatch(cacheDigitalContentActions.editDigitalContent(digitalContentId, formFields)),
     onFollow: (userId: ID) =>
-      dispatch(socialUsersActions.followUser(userId, FollowSource.AGREEMENT_PAGE)),
+      dispatch(socialUsersActions.followUser(userId, FollowSource.DIGITAL_CONTENT_PAGE)),
     onUnfollow: (userId: ID) =>
       dispatch(
-        socialUsersActions.unfollowUser(userId, FollowSource.AGREEMENT_PAGE)
+        socialUsersActions.unfollowUser(userId, FollowSource.DIGITAL_CONTENT_PAGE)
       ),
     onConfirmUnfollow: (userId: ID) =>
       dispatch(unfollowConfirmationActions.setOpen(userId)),
@@ -605,7 +605,7 @@ function mapDispatchToProps(dispatch: Dispatch) {
           category
         )
       )
-      const digitalContentEvent: DigitalContentEvent = make(Name.AGREEMENT_PAGE_DOWNLOAD, {
+      const digitalContentEvent: DigitalContentEvent = make(Name.DIGITAL_CONTENT_PAGE_DOWNLOAD, {
         id: digitalContentId,
         category,
         parent_digital_content_id: parentDigitalContentId
@@ -614,12 +614,12 @@ function mapDispatchToProps(dispatch: Dispatch) {
     },
     clickOverflow: (digitalContentId: ID, overflowActions: OverflowAction[]) =>
       dispatch(
-        open({ source: OverflowSource.AGREEMENTS, id: digitalContentId, overflowActions })
+        open({ source: OverflowSource.DIGITAL_CONTENTS, id: digitalContentId, overflowActions })
       ),
     setRepostDigitalContentId: (digitalContentId: ID) =>
-      dispatch(setRepost(digitalContentId, RepostType.AGREEMENT)),
+      dispatch(setRepost(digitalContentId, RepostType.DIGITAL_CONTENT)),
     setFavoriteDigitalContentId: (digitalContentId: ID) =>
-      dispatch(setFavorite(digitalContentId, FavoriteType.AGREEMENT)),
+      dispatch(setFavorite(digitalContentId, FavoriteType.DIGITAL_CONTENT)),
     onExternalLinkClick: (event: any) => {
       const digitalContentEvent: DigitalContentEvent = make(Name.LINK_CLICKING, {
         url: event.target.href,
@@ -639,7 +639,7 @@ function mapDispatchToProps(dispatch: Dispatch) {
       dispatch(
         setUsers({
           userListType: UserListType.REPOST,
-          entityType: UserListEntityType.AGREEMENT,
+          entityType: UserListEntityType.DIGITAL_CONTENT,
           id: digitalContentID
         })
       ),
@@ -647,7 +647,7 @@ function mapDispatchToProps(dispatch: Dispatch) {
       dispatch(
         setUsers({
           userListType: UserListType.FAVORITE,
-          entityType: UserListEntityType.AGREEMENT,
+          entityType: UserListEntityType.DIGITAL_CONTENT,
           id: digitalContentID
         })
       ),

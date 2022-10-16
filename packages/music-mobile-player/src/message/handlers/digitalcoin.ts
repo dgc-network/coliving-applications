@@ -4,13 +4,13 @@ import type { MessageHandlers } from '../types'
 import { MessageType } from '../types'
 
 export const messageHandlers: Partial<MessageHandlers> = {
-  [MessageType.PLAY_AGREEMENT]: ({ dispatch }) => {
+  [MessageType.PLAY_DIGITAL_CONTENT]: ({ dispatch }) => {
     dispatch(liveActions.play())
   },
-  [MessageType.PAUSE_AGREEMENT]: ({ dispatch }) => {
+  [MessageType.PAUSE_DIGITAL_CONTENT]: ({ dispatch }) => {
     dispatch(liveActions.pause())
   },
-  [MessageType.SEEK_AGREEMENT]: ({ message, dispatch }) => {
+  [MessageType.SEEK_DIGITAL_CONTENT]: ({ message, dispatch }) => {
     dispatch(liveActions.seek(message))
   },
   [MessageType.GET_POSITION]: ({ message, postMessage }) => {

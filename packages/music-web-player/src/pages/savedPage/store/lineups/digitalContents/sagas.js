@@ -16,7 +16,7 @@ import {
   getSaves
 } from 'common/store/pages/savedPage/selectors'
 import * as queueActions from 'common/store/queue/slice'
-import { SAVE_AGREEMENT, UNSAVE_AGREEMENT } from 'common/store/social/digital_contents/actions'
+import { SAVE_DIGITAL_CONTENT, UNSAVE_DIGITAL_CONTENT } from 'common/store/social/digital_contents/actions'
 import { LineupSagas } from 'store/lineup/sagas'
 import { getUid as getPlayerUid } from 'store/player/selectors'
 
@@ -65,7 +65,7 @@ function* getDigitalContents() {
 
 const keepDateSaved = (entry) => ({
   uid: entry.uid,
-  kind: entry.digital_content_id ? Kind.AGREEMENTS : Kind.COLLECTIONS,
+  kind: entry.digital_content_id ? Kind.DIGITAL_CONTENTS : Kind.COLLECTIONS,
   id: entry.digital_content_id || entry.content_list_id,
   dateSaved: entry.dateSaved
 })
@@ -88,7 +88,7 @@ class SavedDigitalContentsSagas extends LineupSagas {
 
 // If a local save is being done and the user is on the saved page route, make sure to update the lineup.
 function* watchSave() {
-  yield takeEvery(SAVE_AGREEMENT, function* (action) {
+  yield takeEvery(SAVE_DIGITAL_CONTENT, function* (action) {
     const { digitalContentId } = action
 
     const digitalContents = yield select(getCacheDigitalContents, { ids: [digitalContentId] })
@@ -96,14 +96,14 @@ function* watchSave() {
     if (digital_content.has_current_user_saved) return
 
     const localSaveUid = makeUid(
-      Kind.AGREEMENTS,
+      Kind.DIGITAL_CONTENTS,
       digitalContentId,
       savedDigitalContentsActions.PREFIX
     )
 
     const newEntry = {
       uid: localSaveUid,
-      kind: Kind.AGREEMENTS,
+      kind: Kind.DIGITAL_CONTENTS,
       id: digitalContentId,
       dateSaved: moment().format()
     }
@@ -124,20 +124,20 @@ function* watchSave() {
 }
 
 function* watchUnsave() {
-  yield takeEvery(UNSAVE_AGREEMENT, function* (action) {
+  yield takeEvery(UNSAVE_DIGITAL_CONTENT, function* (action) {
     const { digitalContentId } = action
     const localSaveUid = yield select(getLocalSave, { id: digitalContentId })
     const playerUid = yield select(getPlayerUid)
     yield put(saveActions.removeLocalSave(action.digitalContentId))
     if (localSaveUid) {
-      yield put(savedDigitalContentsActions.remove(Kind.AGREEMENTS, localSaveUid))
+      yield put(savedDigitalContentsActions.remove(Kind.DIGITAL_CONTENTS, localSaveUid))
       if (localSaveUid !== playerUid) {
         yield put(queueActions.remove({ uid: localSaveUid }))
       }
     }
     const lineupSaveUid = yield select(getSavedDigitalContentsLineupUid, { id: digitalContentId })
     if (lineupSaveUid) {
-      yield put(savedDigitalContentsActions.remove(Kind.AGREEMENTS, lineupSaveUid))
+      yield put(savedDigitalContentsActions.remove(Kind.DIGITAL_CONTENTS, lineupSaveUid))
       if (lineupSaveUid !== playerUid) {
         yield put(queueActions.remove({ uid: lineupSaveUid }))
       }

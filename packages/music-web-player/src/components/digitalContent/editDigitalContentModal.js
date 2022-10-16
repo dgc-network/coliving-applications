@@ -98,7 +98,7 @@ const EditDigitalContentModal = ({
       isOpen={visible}
       onClose={onClose}
       // Antd modal default value, behind antd DropdownInput
-      zIndex={zIndex.EDIT_AGREEMENT_MODAL}
+      zIndex={zIndex.EDIT_DIGITAL_CONTENT_MODAL}
       bodyClassName={styles.modalBody}
       titleClassName={styles.modalTitle}
       headerContainerClassName={styles.modalHeader}
@@ -132,7 +132,7 @@ const EditDigitalContentModal = ({
           <div className={styles.buttonsLeft}>
             {onDelete ? (
               <Button
-                text='DELETE AGREEMENT'
+                text='DELETE DIGITAL_CONTENT'
                 size={ButtonSize.TINY}
                 type={ButtonType.SECONDARY}
                 onClick={onDelete}
@@ -188,7 +188,7 @@ EditDigitalContentModal.propTypes = {
 
 EditDigitalContentModal.defaultProps = {
   visible: true,
-  title: 'EDIT AGREEMENT',
+  title: 'EDIT DIGITAL_CONTENT',
   onCancel: () => {},
   onSave: () => {},
   onDelete: () => {},

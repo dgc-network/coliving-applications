@@ -10,7 +10,7 @@ export enum UserListType {
 }
 
 export enum UserListEntityType {
-  AGREEMENT = 'AGREEMENT',
+  DIGITAL_CONTENT = 'DIGITAL_CONTENT',
   COLLECTION = 'COLLECTION',
   USER = 'USER'
 }

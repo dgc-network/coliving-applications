@@ -109,7 +109,7 @@ const keepActivityTimeStamp = (
   entry: (LineupDigitalContent | Collection) & { uid: string } // LineupSaga adds a UID to each entry
 ) => ({
   uid: entry.uid,
-  kind: (entry as LineupDigitalContent).digital_content_id ? Kind.AGREEMENTS : Kind.COLLECTIONS,
+  kind: (entry as LineupDigitalContent).digital_content_id ? Kind.DIGITAL_CONTENTS : Kind.COLLECTIONS,
   id: (entry as LineupDigitalContent).digital_content_id || (entry as Collection).content_list_id,
   activityTimestamp: entry.activity_timestamp
 })

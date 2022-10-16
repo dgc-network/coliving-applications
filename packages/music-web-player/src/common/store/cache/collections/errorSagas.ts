@@ -16,7 +16,7 @@ const errorSagas = createErrorSagas<CollectionErrors>({
     collectionActions.CREATE_CONTENT_LIST_FAILED,
     collectionActions.EDIT_CONTENT_LIST_FAILED,
     collectionActions.ADD_DIGITAL_CONTENT_TO_CONTENT_LIST_FAILED,
-    collectionActions.REMOVE_AGREEMENT_FROM_CONTENT_LIST_FAILED,
+    collectionActions.REMOVE_DIGITAL_CONTENT_FROM_CONTENT_LIST_FAILED,
     collectionActions.ORDER_CONTENT_LIST_FAILED,
     collectionActions.DELETE_CONTENT_LIST_FAILED,
     collectionActions.PUBLISH_CONTENT_LIST_FAILED

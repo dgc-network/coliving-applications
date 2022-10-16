@@ -7,33 +7,33 @@ import {
 } from '@coliving/common'
 import { createCustomAction } from 'typesafe-actions'
 
-export const REPOST_AGREEMENT = 'SOCIAL/REPOST_AGREEMENT'
-export const UNDO_REPOST_AGREEMENT = 'SOCIAL/UNDO_REPOST_AGREEMENT'
-export const REPOST_FAILED = 'SOCIAL/AGREEMENT_REPOST_FAILED'
+export const REPOST_DIGITAL_CONTENT = 'SOCIAL/REPOST_DIGITAL_CONTENT'
+export const UNDO_REPOST_DIGITAL_CONTENT = 'SOCIAL/UNDO_REPOST_DIGITAL_CONTENT'
+export const REPOST_FAILED = 'SOCIAL/DIGITAL_CONTENT_REPOST_FAILED'
 
-export const SAVE_AGREEMENT = 'SOCIAL/SAVE_AGREEMENT'
-export const SAVE_AGREEMENT_SUCCEEDED = 'SOCIAL/SAVE_AGREEMENT_SUCCEEDED'
-export const SAVE_AGREEMENT_FAILED = 'SOCIAL/SAVE_AGREEMENT_FAILED'
+export const SAVE_DIGITAL_CONTENT = 'SOCIAL/SAVE_DIGITAL_CONTENT'
+export const SAVE_DIGITAL_CONTENT_SUCCEEDED = 'SOCIAL/SAVE_DIGITAL_CONTENT_SUCCEEDED'
+export const SAVE_DIGITAL_CONTENT_FAILED = 'SOCIAL/SAVE_DIGITAL_CONTENT_FAILED'
 
-export const UNSAVE_AGREEMENT = 'SOCIAL/UNSAVE_AGREEMENT'
-export const UNSAVE_AGREEMENT_SUCCEEDED = 'SOCIAL/UNSAVE_AGREEMENT_SUCCEEDED'
-export const UNSAVE_AGREEMENT_FAILED = 'SOCIAL/UNSAVE_AGREEMENT_FAILED'
+export const UNSAVE_DIGITAL_CONTENT = 'SOCIAL/UNSAVE_DIGITAL_CONTENT'
+export const UNSAVE_DIGITAL_CONTENT_SUCCEEDED = 'SOCIAL/UNSAVE_DIGITAL_CONTENT_SUCCEEDED'
+export const UNSAVE_DIGITAL_CONTENT_FAILED = 'SOCIAL/UNSAVE_DIGITAL_CONTENT_FAILED'
 
 export const SET_LANDLORD_PICK = 'SOCIAL/SET_LANDLORD_PICK'
 export const UNSET_LANDLORD_PICK = 'SOCIAL/UNSET_LANDLORD_PICK'
 
 export const RECORD_LISTEN = 'SOCIAL/RECORD_LISTEN'
-export const DOWNLOAD_AGREEMENT = 'SOCIAL/DOWNLOAD_AGREEMENT'
+export const DOWNLOAD_DIGITAL_CONTENT = 'SOCIAL/DOWNLOAD_DIGITAL_CONTENT'
 
-export const SHARE_AGREEMENT = 'SOCIAL/SHARE_AGREEMENT'
+export const SHARE_DIGITAL_CONTENT = 'SOCIAL/SHARE_DIGITAL_CONTENT'
 
 export const repostDigitalContent = createCustomAction(
-  REPOST_AGREEMENT,
+  REPOST_DIGITAL_CONTENT,
   (digitalContentId: ID, source: RepostSource) => ({ digitalContentId, source })
 )
 
 export const undoRepostDigitalContent = createCustomAction(
-  UNDO_REPOST_AGREEMENT,
+  UNDO_REPOST_DIGITAL_CONTENT,
   (digitalContentId: ID, source: RepostSource) => ({ digitalContentId, source })
 )
 
@@ -43,32 +43,32 @@ export const digitalContentRepostFailed = createCustomAction(
 )
 
 export const saveDigitalContent = createCustomAction(
-  SAVE_AGREEMENT,
+  SAVE_DIGITAL_CONTENT,
   (digitalContentId: ID, source: FavoriteSource) => ({ digitalContentId, source })
 )
 
 export const saveDigitalContentSucceeded = createCustomAction(
-  SAVE_AGREEMENT_SUCCEEDED,
+  SAVE_DIGITAL_CONTENT_SUCCEEDED,
   (digitalContentId: ID) => ({ digitalContentId })
 )
 
 export const saveDigitalContentFailed = createCustomAction(
-  SAVE_AGREEMENT_FAILED,
+  SAVE_DIGITAL_CONTENT_FAILED,
   (digitalContentId: ID, error: any) => ({ digitalContentId, error })
 )
 
 export const unsaveDigitalContent = createCustomAction(
-  UNSAVE_AGREEMENT,
+  UNSAVE_DIGITAL_CONTENT,
   (digitalContentId: ID, source: FavoriteSource) => ({ digitalContentId, source })
 )
 
 export const unsaveDigitalContentSucceeded = createCustomAction(
-  UNSAVE_AGREEMENT_SUCCEEDED,
+  UNSAVE_DIGITAL_CONTENT_SUCCEEDED,
   (digitalContentId: ID) => ({ digitalContentId })
 )
 
 export const unsaveDigitalContentFailed = createCustomAction(
-  UNSAVE_AGREEMENT_FAILED,
+  UNSAVE_DIGITAL_CONTENT_FAILED,
   (digitalContentId: ID, error: any) => ({ digitalContentId, error })
 )
 
@@ -87,7 +87,7 @@ export const recordListen = createCustomAction(
 )
 
 export const downloadDigitalContent = createCustomAction(
-  DOWNLOAD_AGREEMENT,
+  DOWNLOAD_DIGITAL_CONTENT,
   (digitalContentId: ID, cid: CID, contentNodeEndpoints: string, stemName?: string) => ({
     digitalContentId,
     cid,
@@ -97,6 +97,6 @@ export const downloadDigitalContent = createCustomAction(
 )
 
 export const shareDigitalContent = createCustomAction(
-  SHARE_AGREEMENT,
+  SHARE_DIGITAL_CONTENT,
   (digitalContentId: ID, source: ShareSource) => ({ digitalContentId, source })
 )

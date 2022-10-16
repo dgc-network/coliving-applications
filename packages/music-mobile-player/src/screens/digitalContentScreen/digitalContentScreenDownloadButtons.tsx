@@ -107,7 +107,7 @@ export const DigitalContentScreenDownloadButtons = ({
       dispatchWeb(downloadDigitalContent(id, cid, content_node_endpoint, category))
       digital_content(
         make({
-          eventName: Name.AGREEMENT_PAGE_DOWNLOAD,
+          eventName: Name.DIGITAL_CONTENT_PAGE_DOWNLOAD,
           id,
           category,
           parent_digital_content_id: parentDigitalContentId

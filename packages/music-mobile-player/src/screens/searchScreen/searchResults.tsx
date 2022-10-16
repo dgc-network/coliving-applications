@@ -16,7 +16,7 @@ import { SeeMoreResultsButton } from './content/seeMoreResultsButton'
 
 const messages = {
   profile: 'PROFILES',
-  digitalContents: 'AGREEMENTS',
+  digitalContents: 'DIGITAL_CONTENTS',
   contentLists: 'CONTENT_LISTS',
   albums: 'ALBUMS'
 }

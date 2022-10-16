@@ -27,8 +27,8 @@ class EditPage extends Component {
       const fields = mapValues(digital_content.metadata, (v) => false)
       fields.title = true
       if (
-        this.props.uploadType === UploadType.INDIVIDUAL_AGREEMENT ||
-        this.props.uploadType === UploadType.INDIVIDUAL_AGREEMENTS
+        this.props.uploadType === UploadType.INDIVIDUAL_DIGITAL_CONTENT ||
+        this.props.uploadType === UploadType.INDIVIDUAL_DIGITAL_CONTENTS
       ) {
         fields.genre = true
         fields.artwork = true
@@ -55,8 +55,8 @@ class EditPage extends Component {
         title: !digital_content.metadata.title
       }
       if (
-        uploadType === UploadType.INDIVIDUAL_AGREEMENT ||
-        uploadType === UploadType.INDIVIDUAL_AGREEMENTS
+        uploadType === UploadType.INDIVIDUAL_DIGITAL_CONTENT ||
+        uploadType === UploadType.INDIVIDUAL_DIGITAL_CONTENTS
       ) {
         newInvalidDigitalContentsFields[i].genre = !digital_content.metadata.genre
         newInvalidDigitalContentsFields[i].artwork = !digital_content.metadata.artwork.file

@@ -26,7 +26,7 @@ import { NOT_FOUND_PAGE, digitalContentRemixesPage } from 'utils/route'
 export const TRENDING_BADGE_LIMIT = 10
 
 function* watchDigitalContentBadge() {
-  yield takeEvery(digitalContentPageActions.GET_AGREEMENT_RANKS, function* (action) {
+  yield takeEvery(digitalContentPageActions.GET_DIGITAL_CONTENT_RANKS, function* (action) {
     try {
       yield call(waitForBackendSetup)
       yield call(remoteConfigInstance.waitForRemoteConfig)
@@ -98,9 +98,9 @@ function* getDigitalContentRanks(digitalContentId) {
 function* addDigitalContentToLineup(digital_content) {
   const source = yield select(getSourceSelector)
   const formattedDigitalContent = {
-    kind: Kind.AGREEMENTS,
+    kind: Kind.DIGITAL_CONTENTS,
     id: digital_content.digital_content_id,
-    uid: makeUid(Kind.AGREEMENTS, digital_content.digital_content_id, source)
+    uid: makeUid(Kind.DIGITAL_CONTENTS, digital_content.digital_content_id, source)
   }
 
   yield put(digitalContentsActions.add(formattedDigitalContent, digital_content.digital_content_id))
@@ -117,7 +117,7 @@ function* getRestOfLineup(permalink, ownerHandle) {
 }
 
 function* watchFetchDigitalContent() {
-  yield takeEvery(digitalContentPageActions.FETCH_AGREEMENT, function* (action) {
+  yield takeEvery(digitalContentPageActions.FETCH_DIGITAL_CONTENT, function* (action) {
     const { digitalContentId, handle, slug, canBeUnlisted } = action
     const permalink = `/${handle}/${slug}`
     try {
@@ -168,7 +168,7 @@ function* watchFetchDigitalContent() {
 }
 
 function* watchFetchDigitalContentSucceeded() {
-  yield takeEvery(digitalContentPageActions.FETCH_AGREEMENT_SUCCEEDED, function* (action) {
+  yield takeEvery(digitalContentPageActions.FETCH_DIGITAL_CONTENT_SUCCEEDED, function* (action) {
     const { digitalContentId } = action
     const digital_content = yield select(getCachedDigitalContent, { id: digitalContentId })
     if (
@@ -196,7 +196,7 @@ function* watchRefetchLineup() {
 }
 
 function* watchDigitalContentPageMakePublic() {
-  yield takeEvery(digitalContentPageActions.MAKE_AGREEMENT_PUBLIC, function* (action) {
+  yield takeEvery(digitalContentPageActions.MAKE_DIGITAL_CONTENT_PUBLIC, function* (action) {
     const { digitalContentId } = action
     let digital_content = yield select(getCachedDigitalContent, { id: digitalContentId })
 

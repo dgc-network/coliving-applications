@@ -108,7 +108,7 @@ const DigitalContentTileComponent = ({
       togglePlay({
         uid: lineupTileProps.uid,
         id: digital_content_id,
-        source: PlaybackSource.AGREEMENT_TILE,
+        source: PlaybackSource.DIGITAL_CONTENT_TILE,
         isPlaying,
         isPlayingUid
       })
@@ -140,13 +140,13 @@ const DigitalContentTileComponent = ({
         : null,
       OverflowAction.SHARE,
       OverflowAction.ADD_TO_CONTENT_LIST,
-      OverflowAction.VIEW_AGREEMENT_PAGE,
+      OverflowAction.VIEW_DIGITAL_CONTENT_PAGE,
       OverflowAction.VIEW_LANDLORD_PAGE
     ].filter(Boolean) as OverflowAction[]
 
     dispatchWeb(
       openOverflowMenu({
-        source: OverflowSource.AGREEMENTS,
+        source: OverflowSource.DIGITAL_CONTENTS,
         id: digital_content_id,
         overflowActions
       })
@@ -202,8 +202,8 @@ const DigitalContentTileComponent = ({
       {...lineupTileProps}
       isPlayingUid={isPlayingUid}
       duration={duration}
-      favoriteType={FavoriteType.AGREEMENT}
-      repostType={RepostType.AGREEMENT}
+      favoriteType={FavoriteType.DIGITAL_CONTENT}
+      repostType={RepostType.DIGITAL_CONTENT}
       hideShare={hideShare}
       hidePlays={hidePlays}
       id={digital_content_id}

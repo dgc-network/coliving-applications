@@ -143,7 +143,7 @@ const ShareBanner = ({ isHidden, type, upload, user }: ShareBannerProps) => {
     const { url, text } = await getShareTextUrl(type, user, upload)
     openTwitterLink(url, text)
     record(
-      make(Name.AGREEMENT_UPLOAD_SHARE_WITH_FANS, {
+      make(Name.DIGITAL_CONTENT_UPLOAD_SHARE_WITH_FANS, {
         uploadType: type,
         text
       })
@@ -165,14 +165,14 @@ const ShareBanner = ({ isHidden, type, upload, user }: ShareBannerProps) => {
       )
       setIsTikTokModalOpen(true)
     }
-    record(make(Name.AGREEMENT_UPLOAD_SHARE_SOUND_TO_TIKTOK, {}))
+    record(make(Name.DIGITAL_CONTENT_UPLOAD_SHARE_SOUND_TO_TIKTOK, {}))
   }, [upload, record, dispatch, setIsTikTokModalOpen])
 
   const onCopy = useCallback(async () => {
     const { url } = await getShareTextUrl(type, user, upload, false)
     copyLinkToClipboard(url)
     record(
-      make(Name.AGREEMENT_UPLOAD_COPY_LINK, {
+      make(Name.DIGITAL_CONTENT_UPLOAD_COPY_LINK, {
         uploadType: type,
         url
       })

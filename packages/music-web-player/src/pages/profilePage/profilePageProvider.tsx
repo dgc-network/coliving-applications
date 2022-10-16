@@ -180,7 +180,7 @@ class ProfilePage extends PureComponent<ProfilePageProps, ProfilePageState> {
     ) {
       if (profile.profile.digital_content_count > 0) {
         this.setState({
-          activeTab: Tabs.AGREEMENTS
+          activeTab: Tabs.DIGITAL_CONTENTS
         })
       } else {
         this.setState({
@@ -395,7 +395,7 @@ class ProfilePage extends PureComponent<ProfilePageProps, ProfilePageState> {
 
     // Once the hero card settles into place, then turn the mask off
     setTimeout(() => {
-      const firstTab = this.getIsLandlord() ? 'AGREEMENTS' : 'REPOSTS'
+      const firstTab = this.getIsLandlord() ? 'DIGITAL_CONTENTS' : 'REPOSTS'
       this.setState({
         shouldMaskContent: tab !== firstTab
       })
@@ -620,7 +620,7 @@ class ProfilePage extends PureComponent<ProfilePageProps, ProfilePageState> {
       let tab = `/${currLabel.toLowerCase()}`
       if (profile.digital_content_count > 0) {
         // An author, default route is digitalContents
-        if (currLabel === Tabs.AGREEMENTS) {
+        if (currLabel === Tabs.DIGITAL_CONTENTS) {
           tab = ''
         }
       } else {

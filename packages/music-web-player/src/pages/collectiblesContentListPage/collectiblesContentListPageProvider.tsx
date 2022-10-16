@@ -261,7 +261,7 @@ export const CollectiblesContentListPageProvider = ({
       landlordId: user?.user_id,
       collectible,
       title: collectible.name,
-      source: Source.COLLECTIBLE_CONTENT_LIST_AGREEMENTS
+      source: Source.COLLECTIBLE_CONTENT_LIST_DIGITAL_CONTENTS
     }))
 
   const onClickRow = (collectible: Collectible, index: number) => {

@@ -7,16 +7,16 @@ export const FETCH_LINEUP_METADATAS_SUCCEEDED =
   'FETCH_LINEUP_METADATAS_SUCCEEDED'
 export const FETCH_LINEUP_METADATAS_FAILED = 'FETCH_LINEUP_METADATAS_FAILED'
 
-export const FETCH_AGREEMENTS_METADATAS = 'FETCH_AGREEMENTS_METADATAS'
-export const FETCH_AGREEMENTS_METADATAS_REQUESTED =
-  'FETCH_AGREEMENTS_METADATAS_REQUESTED'
-export const FETCH_AGREEMENTS_METADATAS_SUCCEEDED =
-  'FETCH_AGREEMENTS_METADATAS_SUCCEEDED'
-export const FETCH_AGREEMENTS_METADATAS_FAILED = 'FETCH_AGREEMENTS_METADATAS_FAILED'
+export const FETCH_DIGITAL_CONTENTS_METADATAS = 'FETCH_DIGITAL_CONTENTS_METADATAS'
+export const FETCH_DIGITAL_CONTENTS_METADATAS_REQUESTED =
+  'FETCH_DIGITAL_CONTENTS_METADATAS_REQUESTED'
+export const FETCH_DIGITAL_CONTENTS_METADATAS_SUCCEEDED =
+  'FETCH_DIGITAL_CONTENTS_METADATAS_SUCCEEDED'
+export const FETCH_DIGITAL_CONTENTS_METADATAS_FAILED = 'FETCH_DIGITAL_CONTENTS_METADATAS_FAILED'
 
-export const FETCH_AGREEMENT_DGCO = 'FETCH_AGREEMENT_DGCO'
-export const FETCH_AGREEMENT_DGCO_REQUESTED = 'FETCH_AGREEMENT_DGCO_REQUESTED'
-export const FETCH_AGREEMENT_DGCO_SUCCEEDED = 'FETCH_AGREEMENT_DGCO_SUCCEEDED'
+export const FETCH_DIGITAL_CONTENT_DGCO = 'FETCH_DIGITAL_CONTENT_DGCO'
+export const FETCH_DIGITAL_CONTENT_DGCO_REQUESTED = 'FETCH_DIGITAL_CONTENT_DGCO_REQUESTED'
+export const FETCH_DIGITAL_CONTENT_DGCO_SUCCEEDED = 'FETCH_DIGITAL_CONTENT_DGCO_SUCCEEDED'
 export const UPDATE_LINEUP_ORDER = 'UPDATE_LINEUP_ORDER'
 
 export const PLAY = 'PLAY'
@@ -49,7 +49,7 @@ export const stripPrefix = (prefix: string, actionType: string) => {
  * @example
  *  // contentList.js
  *  // Creates lineup actions for a contentList, e.g.
- *  // CONTENT_LIST_FETCH_AGREEMENTS_METADATAS.
+ *  // CONTENT_LIST_FETCH_DIGITAL_CONTENTS_METADATAS.
  *  class ContentListActions extends LineupActions {
  *    constructor () {
  *      super("CONTENT_LIST")
@@ -133,14 +133,14 @@ export class LineupActions {
 
   fetchDigitalContentAudio(digitalContentMetadata: DigitalContentMetadata) {
     return {
-      type: addPrefix(this.prefix, FETCH_AGREEMENT_DGCO),
+      type: addPrefix(this.prefix, FETCH_DIGITAL_CONTENT_DGCO),
       digitalContentMetadata
     }
   }
 
   fetchDigitalContentAudioRequested(index: number, digitalContentId: ID) {
     return {
-      type: addPrefix(this.prefix, FETCH_AGREEMENT_DGCO_REQUESTED),
+      type: addPrefix(this.prefix, FETCH_DIGITAL_CONTENT_DGCO_REQUESTED),
       index,
       digitalContentId
     }
@@ -148,7 +148,7 @@ export class LineupActions {
 
   fetchDigitalContentAudioSucceeded(index: number, digitalContentId: ID) {
     return {
-      type: addPrefix(this.prefix, FETCH_AGREEMENT_DGCO_SUCCEEDED),
+      type: addPrefix(this.prefix, FETCH_DIGITAL_CONTENT_DGCO_SUCCEEDED),
       index,
       digitalContentId
     }

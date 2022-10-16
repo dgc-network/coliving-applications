@@ -6,7 +6,7 @@ import Switch from '../switch/switch'
 import styles from './UnlistedDigitalContentModal.module.css'
 
 const messages = {
-  title: 'AGREEMENT VISIBILITY',
+  title: 'DIGITAL_CONTENT VISIBILITY',
   subtitle:
     "Hidden digitalContents won't show up on your profile.\nAnyone who has the link will be able to listen.",
   hideDigitalContent: 'Hide DigitalContent'

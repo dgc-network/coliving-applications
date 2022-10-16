@@ -79,7 +79,7 @@ function* errorDispatcher(error: Error) {
   const id = yield* select(getId)
   if (!id) return
 
-  if (repostType === RepostType.AGREEMENT) {
+  if (repostType === RepostType.DIGITAL_CONTENT) {
     yield* put(digitalContentRepostError(id, error.message))
   } else {
     yield* put(contentListRepostError(id, error.message))
@@ -91,7 +91,7 @@ function* getReposts(currentPage: number, pageSize: number) {
   if (!id) return { userIds: [], hasMore: false }
   const repostType = yield* select(getRepostsType)
   return yield* (
-    repostType === RepostType.AGREEMENT ? getDigitalContentReposts : getContentListReposts
+    repostType === RepostType.DIGITAL_CONTENT ? getDigitalContentReposts : getContentListReposts
   )({ id, currentPage, pageSize })
 }
 

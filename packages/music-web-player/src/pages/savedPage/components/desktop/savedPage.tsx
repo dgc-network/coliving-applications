@@ -101,7 +101,7 @@ const SavedPage = ({
   const queuedAndPlaying = playing && isQueued
 
   // Setup play button
-  const playButtonActive = currentTab === ProfileTabs.AGREEMENTS && !digitalContentsLoading
+  const playButtonActive = currentTab === ProfileTabs.DIGITAL_CONTENTS && !digitalContentsLoading
   const playAllButton = (
     <div
       className={styles.playButtonContainer}
@@ -122,7 +122,7 @@ const SavedPage = ({
   )
 
   // Setup filter
-  const filterActive = currentTab === ProfileTabs.AGREEMENTS
+  const filterActive = currentTab === ProfileTabs.DIGITAL_CONTENTS
   const filter = (
     <div
       className={styles.filterContainer}
@@ -188,8 +188,8 @@ const SavedPage = ({
     tabs: [
       {
         icon: <IconNote />,
-        text: ProfileTabs.AGREEMENTS,
-        label: ProfileTabs.AGREEMENTS
+        text: ProfileTabs.DIGITAL_CONTENTS,
+        label: ProfileTabs.DIGITAL_CONTENTS
       },
       {
         icon: <IconAlbum />,

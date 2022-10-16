@@ -91,10 +91,10 @@ export const SEARCH_CATEGORY_PAGE = '/search/:query/:category'
 export const SEARCH_PAGE = '/search/:query?'
 export const CONTENT_LIST_PAGE = '/:handle/contentList/:contentListName'
 export const ALBUM_PAGE = '/:handle/album/:albumName'
-export const AGREEMENT_PAGE = '/:handle/:slug'
-export const AGREEMENT_REMIXES_PAGE = '/:handle/:slug/remixes'
+export const DIGITAL_CONTENT_PAGE = '/:handle/:slug'
+export const DIGITAL_CONTENT_REMIXES_PAGE = '/:handle/:slug/remixes'
 export const PROFILE_PAGE = '/:handle'
-export const PROFILE_PAGE_AGREEMENTS = '/:handle/digitalContents'
+export const PROFILE_PAGE_DIGITAL_CONTENTS = '/:handle/digitalContents'
 export const PROFILE_PAGE_ALBUMS = '/:handle/albums'
 export const PROFILE_PAGE_CONTENT_LISTS = '/:handle/contentLists'
 export const PROFILE_PAGE_REPOSTS = '/:handle/reposts'
@@ -102,7 +102,7 @@ export const PROFILE_PAGE_COLLECTIBLES = '/:handle/collectibles'
 export const PROFILE_PAGE_COLLECTIBLE_DETAILS =
   '/:handle/collectibles/:collectibleId'
 // Opaque id routes
-export const AGREEMENT_ID_PAGE = '/digital_contents/:id'
+export const DIGITAL_CONTENT_ID_PAGE = '/digital_contents/:id'
 export const USER_ID_PAGE = '/users/:id'
 export const CONTENT_LIST_ID_PAGE = '/contentLists/:id'
 
@@ -197,7 +197,7 @@ export const orderedRoutes = [
   HOME_PAGE,
   CONTENT_LIST_PAGE,
   ALBUM_PAGE,
-  AGREEMENT_PAGE,
+  DIGITAL_CONTENT_PAGE,
   REPOSTING_USERS_ROUTE,
   FAVORITING_USERS_ROUTE,
   FOLLOWING_USERS_ROUTE,

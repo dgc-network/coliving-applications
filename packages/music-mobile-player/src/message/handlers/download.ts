@@ -72,7 +72,7 @@ const download = async ({
 }
 
 export const messageHandlers: Partial<MessageHandlers> = {
-  [MessageType.DOWNLOAD_AGREEMENT]: async ({ message }) => {
+  [MessageType.DOWNLOAD_DIGITAL_CONTENT]: async ({ message }) => {
     const fileUrl = message.urls.find(
       (url) => url !== null && url !== undefined
     )

@@ -12,9 +12,9 @@ export const EDIT_CONTENT_LIST_FAILED = 'EDIT_CONTENT_LIST_FAILED'
 export const ADD_DIGITAL_CONTENT_TO_CONTENT_LIST = 'ADD_DIGITAL_CONTENT_TO_CONTENT_LIST'
 export const ADD_DIGITAL_CONTENT_TO_CONTENT_LIST_FAILED = 'ADD_DIGITAL_CONTENT_TO_CONTENT_LIST_FAILED'
 
-export const REMOVE_AGREEMENT_FROM_CONTENT_LIST = 'REMOVE_AGREEMENT_FROM_CONTENT_LIST'
-export const REMOVE_AGREEMENT_FROM_CONTENT_LIST_FAILED =
-  'REMOVE_AGREEMENT_FROM_CONTENT_LIST_FAILED'
+export const REMOVE_DIGITAL_CONTENT_FROM_CONTENT_LIST = 'REMOVE_DIGITAL_CONTENT_FROM_CONTENT_LIST'
+export const REMOVE_DIGITAL_CONTENT_FROM_CONTENT_LIST_FAILED =
+  'REMOVE_DIGITAL_CONTENT_FROM_CONTENT_LIST_FAILED'
 
 export const ORDER_CONTENT_LIST = 'ORDER_CONTENT_LIST'
 export const ORDER_CONTENT_LIST_FAILED = 'ORDER_CONTENT_LIST_FAILED'
@@ -27,7 +27,7 @@ export const DELETE_CONTENT_LIST_REQUESTED = 'DELETE_CONTENT_LIST_REQUESTED'
 export const DELETE_CONTENT_LIST_SUCCEEDED = 'DELETE_CONTENT_LIST_SUCCEEDED'
 export const DELETE_CONTENT_LIST_FAILED = 'DELETE_CONTENT_LIST_FAILED'
 
-export const FETCH_COVER_ART = 'AGREEMENTS/FETCH_COVER_ART'
+export const FETCH_COVER_ART = 'DIGITAL_CONTENTS/FETCH_COVER_ART'
 
 /**
  * @param initDigitalContentId optional digital_content id to pull artwork from.
@@ -93,7 +93,7 @@ export function removeDigitalContentFromContentList(
   contentListId: number,
   timestamp: number
 ) {
-  return { type: REMOVE_AGREEMENT_FROM_CONTENT_LIST, digitalContentId, contentListId, timestamp }
+  return { type: REMOVE_DIGITAL_CONTENT_FROM_CONTENT_LIST, digitalContentId, contentListId, timestamp }
 }
 
 export function removeDigitalContentFromContentListFailed(
@@ -101,7 +101,7 @@ export function removeDigitalContentFromContentListFailed(
   params: Record<string, unknown>,
   metadata: Record<string, unknown>
 ) {
-  return { type: REMOVE_AGREEMENT_FROM_CONTENT_LIST_FAILED, error, params, metadata }
+  return { type: REMOVE_DIGITAL_CONTENT_FROM_CONTENT_LIST_FAILED, error, params, metadata }
 }
 
 export function orderContentList(

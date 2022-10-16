@@ -23,24 +23,24 @@ const initialDigitalContents = {
     5: { metadata: { digital_content_segments: {} } }
   },
   uids: {
-    'kind:AGREEMENTS-id:1-count:1': 1,
-    'kind:AGREEMENTS-id:2-count:2': 2,
-    'kind:AGREEMENTS-id:3-count:3': 3,
-    'kind:AGREEMENTS-id:4-count:4': 4,
-    'kind:AGREEMENTS-id:5-count:5': 5
+    'kind:DIGITAL_CONTENTS-id:1-count:1': 1,
+    'kind:DIGITAL_CONTENTS-id:2-count:2': 2,
+    'kind:DIGITAL_CONTENTS-id:3-count:3': 3,
+    'kind:DIGITAL_CONTENTS-id:4-count:4': 4,
+    'kind:DIGITAL_CONTENTS-id:5-count:5': 5
   }
 }
 
 const makeInitialQueue = (config) => ({
   order: [
-    { id: 1, uid: 'kind:AGREEMENTS-id:1-count:1' },
-    { id: 2, uid: 'kind:AGREEMENTS-id:2-count:2' },
-    { id: 3, uid: 'kind:AGREEMENTS-id:3-count:3' }
+    { id: 1, uid: 'kind:DIGITAL_CONTENTS-id:1-count:1' },
+    { id: 2, uid: 'kind:DIGITAL_CONTENTS-id:2-count:2' },
+    { id: 3, uid: 'kind:DIGITAL_CONTENTS-id:3-count:3' }
   ],
   positions: {
-    'kind:AGREEMENTS-id:1-count:1': 0,
-    'kind:AGREEMENTS-id:2-count:2': 1,
-    'kind:AGREEMENTS-id:3-count:3': 2
+    'kind:DIGITAL_CONTENTS-id:1-count:1': 0,
+    'kind:DIGITAL_CONTENTS-id:2-count:2': 1,
+    'kind:DIGITAL_CONTENTS-id:3-count:3': 2
   },
   index: -1,
   repeat: RepeatMode.OFF,
@@ -83,12 +83,12 @@ describe('watchPlay', () => {
           digitalContents: initialDigitalContents
         }
       )
-      .dispatch(actions.play({ uid: 'kind:AGREEMENTS-id:1-count:1' }))
+      .dispatch(actions.play({ uid: 'kind:DIGITAL_CONTENTS-id:1-count:1' }))
       .put(playerActions.stop({}))
       .put(actions.persist({}))
       .put(
         playerActions.play({
-          uid: 'kind:AGREEMENTS-id:1-count:1',
+          uid: 'kind:DIGITAL_CONTENTS-id:1-count:1',
           digitalContentId: undefined,
           onEnd: actions.next
         })
@@ -405,8 +405,8 @@ describe('watchQueueAutoplay', () => {
     const expectedRecommendedDigitalContents = [
       {
         id: 1,
-        uid: 'kind:AGREEMENTS-id:1-count:1',
-        source: Source.RECOMMENDED_AGREEMENTS
+        uid: 'kind:DIGITAL_CONTENTS-id:1-count:1',
+        source: Source.RECOMMENDED_DIGITAL_CONTENTS
       }
     ]
     await expectSaga(sagas.watchQueueAutoplay, actions)
@@ -555,13 +555,13 @@ describe('watchAdd', () => {
       .dispatch(
         actions.add({
           entries: [
-            { id: 4, uid: 'kind:AGREEMENTS-id:4-count:4' },
-            { id: 5, uid: 'kind:AGREEMENTS-id:5-count:5' }
+            { id: 4, uid: 'kind:DIGITAL_CONTENTS-id:4-count:4' },
+            { id: 5, uid: 'kind:DIGITAL_CONTENTS-id:5-count:5' }
           ]
         })
       )
       .put(
-        cacheActions.subscribe(Kind.AGREEMENTS, [
+        cacheActions.subscribe(Kind.DIGITAL_CONTENTS, [
           { uid: 'QUEUE', id: 4 },
           { uid: 'QUEUE', id: 5 }
         ])
@@ -570,18 +570,18 @@ describe('watchAdd', () => {
       .silentRun()
     expect(storeState.queue).toMatchObject({
       order: [
-        { id: 1, uid: 'kind:AGREEMENTS-id:1-count:1' },
-        { id: 2, uid: 'kind:AGREEMENTS-id:2-count:2' },
-        { id: 3, uid: 'kind:AGREEMENTS-id:3-count:3' },
-        { id: 4, uid: 'kind:AGREEMENTS-id:4-count:4' },
-        { id: 5, uid: 'kind:AGREEMENTS-id:5-count:5' }
+        { id: 1, uid: 'kind:DIGITAL_CONTENTS-id:1-count:1' },
+        { id: 2, uid: 'kind:DIGITAL_CONTENTS-id:2-count:2' },
+        { id: 3, uid: 'kind:DIGITAL_CONTENTS-id:3-count:3' },
+        { id: 4, uid: 'kind:DIGITAL_CONTENTS-id:4-count:4' },
+        { id: 5, uid: 'kind:DIGITAL_CONTENTS-id:5-count:5' }
       ],
       positions: {
-        'kind:AGREEMENTS-id:1-count:1': 0,
-        'kind:AGREEMENTS-id:2-count:2': 1,
-        'kind:AGREEMENTS-id:3-count:3': 2,
-        'kind:AGREEMENTS-id:4-count:4': 3,
-        'kind:AGREEMENTS-id:5-count:5': 4
+        'kind:DIGITAL_CONTENTS-id:1-count:1': 0,
+        'kind:DIGITAL_CONTENTS-id:2-count:2': 1,
+        'kind:DIGITAL_CONTENTS-id:3-count:3': 2,
+        'kind:DIGITAL_CONTENTS-id:4-count:4': 3,
+        'kind:DIGITAL_CONTENTS-id:5-count:5': 4
       }
     })
     expect(storeState.queue.shuffleOrder).toHaveLength(5)
@@ -604,14 +604,14 @@ describe('watchAdd', () => {
       .dispatch(
         actions.add({
           entries: [
-            { id: 4, uid: 'kind:AGREEMENTS-id:4-count:4' },
-            { id: 5, uid: 'kind:AGREEMENTS-id:5-count:5' }
+            { id: 4, uid: 'kind:DIGITAL_CONTENTS-id:4-count:4' },
+            { id: 5, uid: 'kind:DIGITAL_CONTENTS-id:5-count:5' }
           ],
           index: 1
         })
       )
       .put(
-        cacheActions.subscribe(Kind.AGREEMENTS, [
+        cacheActions.subscribe(Kind.DIGITAL_CONTENTS, [
           { uid: 'QUEUE', id: 4 },
           { uid: 'QUEUE', id: 5 }
         ])
@@ -620,18 +620,18 @@ describe('watchAdd', () => {
       .silentRun()
     expect(storeState.queue).toMatchObject({
       order: [
-        { id: 1, uid: 'kind:AGREEMENTS-id:1-count:1' },
-        { id: 4, uid: 'kind:AGREEMENTS-id:4-count:4' },
-        { id: 5, uid: 'kind:AGREEMENTS-id:5-count:5' },
-        { id: 2, uid: 'kind:AGREEMENTS-id:2-count:2' },
-        { id: 3, uid: 'kind:AGREEMENTS-id:3-count:3' }
+        { id: 1, uid: 'kind:DIGITAL_CONTENTS-id:1-count:1' },
+        { id: 4, uid: 'kind:DIGITAL_CONTENTS-id:4-count:4' },
+        { id: 5, uid: 'kind:DIGITAL_CONTENTS-id:5-count:5' },
+        { id: 2, uid: 'kind:DIGITAL_CONTENTS-id:2-count:2' },
+        { id: 3, uid: 'kind:DIGITAL_CONTENTS-id:3-count:3' }
       ],
       positions: {
-        'kind:AGREEMENTS-id:1-count:1': 0,
-        'kind:AGREEMENTS-id:2-count:2': 3,
-        'kind:AGREEMENTS-id:3-count:3': 4,
-        'kind:AGREEMENTS-id:4-count:4': 1,
-        'kind:AGREEMENTS-id:5-count:5': 2
+        'kind:DIGITAL_CONTENTS-id:1-count:1': 0,
+        'kind:DIGITAL_CONTENTS-id:2-count:2': 3,
+        'kind:DIGITAL_CONTENTS-id:3-count:3': 4,
+        'kind:DIGITAL_CONTENTS-id:4-count:4': 1,
+        'kind:DIGITAL_CONTENTS-id:5-count:5': 2
       }
     })
     expect(storeState.queue.shuffleOrder).toHaveLength(5)
@@ -653,17 +653,17 @@ describe('watchRemove', () => {
           queue: initialQueue
         }
       )
-      .dispatch(actions.remove({ uid: 'kind:AGREEMENTS-id:2-count:2' }))
-      .put(cacheActions.unsubscribe(Kind.AGREEMENTS, [{ uid: 'QUEUE', id: 2 }]))
+      .dispatch(actions.remove({ uid: 'kind:DIGITAL_CONTENTS-id:2-count:2' }))
+      .put(cacheActions.unsubscribe(Kind.DIGITAL_CONTENTS, [{ uid: 'QUEUE', id: 2 }]))
       .silentRun()
     expect(storeState.queue).toMatchObject({
       order: [
-        { id: 1, uid: 'kind:AGREEMENTS-id:1-count:1' },
-        { id: 3, uid: 'kind:AGREEMENTS-id:3-count:3' }
+        { id: 1, uid: 'kind:DIGITAL_CONTENTS-id:1-count:1' },
+        { id: 3, uid: 'kind:DIGITAL_CONTENTS-id:3-count:3' }
       ],
       positions: {
-        'kind:AGREEMENTS-id:1-count:1': 0,
-        'kind:AGREEMENTS-id:3-count:3': 1
+        'kind:DIGITAL_CONTENTS-id:1-count:1': 0,
+        'kind:DIGITAL_CONTENTS-id:3-count:3': 1
       }
     })
     expect(storeState.queue.shuffleOrder).toHaveLength(2)
@@ -717,23 +717,23 @@ describe('watchReorder', () => {
       .dispatch(
         actions.reorder({
           orderedUids: [
-            'kind:AGREEMENTS-id:3-count:3',
-            'kind:AGREEMENTS-id:1-count:1',
-            'kind:AGREEMENTS-id:2-count:2'
+            'kind:DIGITAL_CONTENTS-id:3-count:3',
+            'kind:DIGITAL_CONTENTS-id:1-count:1',
+            'kind:DIGITAL_CONTENTS-id:2-count:2'
           ]
         })
       )
       .silentRun()
     expect(storeState.queue).toMatchObject({
       order: [
-        { id: 3, uid: 'kind:AGREEMENTS-id:3-count:3' },
-        { id: 1, uid: 'kind:AGREEMENTS-id:1-count:1' },
-        { id: 2, uid: 'kind:AGREEMENTS-id:2-count:2' }
+        { id: 3, uid: 'kind:DIGITAL_CONTENTS-id:3-count:3' },
+        { id: 1, uid: 'kind:DIGITAL_CONTENTS-id:1-count:1' },
+        { id: 2, uid: 'kind:DIGITAL_CONTENTS-id:2-count:2' }
       ],
       positions: {
-        'kind:AGREEMENTS-id:1-count:1': 1,
-        'kind:AGREEMENTS-id:2-count:2': 2,
-        'kind:AGREEMENTS-id:3-count:3': 0
+        'kind:DIGITAL_CONTENTS-id:1-count:1': 1,
+        'kind:DIGITAL_CONTENTS-id:2-count:2': 2,
+        'kind:DIGITAL_CONTENTS-id:3-count:3': 0
       }
     })
   })

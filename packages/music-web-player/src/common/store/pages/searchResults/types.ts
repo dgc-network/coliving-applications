@@ -11,7 +11,7 @@ export type SearchPageState = {
 }
 
 export enum SearchKind {
-  AGREEMENTS = 'digitalContents',
+  DIGITAL_CONTENTS = 'digitalContents',
   USERS = 'users',
   CONTENT_LISTS = 'contentLists',
   ALBUMS = 'albums',

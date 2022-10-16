@@ -79,8 +79,8 @@ type DigitalContentsTableProps = {
 }
 
 export const messages = {
-  publicDigitalContentsTabTitle: 'PUBLIC AGREEMENTS',
-  unlistedDigitalContentsTabTitle: 'HIDDEN AGREEMENTS',
+  publicDigitalContentsTabTitle: 'PUBLIC DIGITAL_CONTENTS',
+  unlistedDigitalContentsTabTitle: 'HIDDEN DIGITAL_CONTENTS',
   thisYear: 'This Year'
 }
 

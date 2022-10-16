@@ -163,13 +163,13 @@ export const DigitalContentListItem = ({
           : OverflowAction.FAVORITE
         : null,
       OverflowAction.ADD_TO_CONTENT_LIST,
-      OverflowAction.VIEW_AGREEMENT_PAGE,
+      OverflowAction.VIEW_DIGITAL_CONTENT_PAGE,
       OverflowAction.VIEW_LANDLORD_PAGE
     ].filter(Boolean) as OverflowAction[]
 
     dispatchWeb(
       openOverflowMenu({
-        source: OverflowSource.AGREEMENTS,
+        source: OverflowSource.DIGITAL_CONTENTS,
         id: digital_content_id,
         overflowActions
       })

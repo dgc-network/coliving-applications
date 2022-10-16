@@ -24,9 +24,9 @@ import watchDigitalContentErrors from './errorSagas'
 
 const NATIVE_MOBILE = process.env.REACT_APP_NATIVE_MOBILE
 
-/* REPOST AGREEMENT */
+/* REPOST DIGITAL_CONTENT */
 export function* watchRepostDigitalContent() {
-  yield* takeEvery(socialActions.REPOST_AGREEMENT, repostDigitalContentAsync)
+  yield* takeEvery(socialActions.REPOST_DIGITAL_CONTENT, repostDigitalContentAsync)
 }
 
 export function* repostDigitalContentAsync(
@@ -93,7 +93,7 @@ export function* repostDigitalContentAsync(
   }
 
   yield* put(
-    cacheActions.update(Kind.AGREEMENTS, [
+    cacheActions.update(Kind.DIGITAL_CONTENTS, [
       {
         id: action.digitalContentId,
         metadata: eagerlyUpdatedMetadata
@@ -141,7 +141,7 @@ export function* repostDigitalContentAsync(
 export function* confirmRepostDigitalContent(digitalContentId: ID, user: User) {
   yield* put(
     confirmerActions.requestConfirmation(
-      makeKindId(Kind.AGREEMENTS, digitalContentId),
+      makeKindId(Kind.DIGITAL_CONTENTS, digitalContentId),
       function* () {
         const { blockHash, blockNumber } = yield* call(
           ColivingBackend.repostDigitalContent,
@@ -180,7 +180,7 @@ export function* confirmRepostDigitalContent(digitalContentId: ID, user: User) {
 }
 
 export function* watchUndoRepostDigitalContent() {
-  yield* takeEvery(socialActions.UNDO_REPOST_AGREEMENT, undoRepostDigitalContentAsync)
+  yield* takeEvery(socialActions.UNDO_REPOST_DIGITAL_CONTENT, undoRepostDigitalContentAsync)
 }
 
 export function* undoRepostDigitalContentAsync(
@@ -240,7 +240,7 @@ export function* undoRepostDigitalContentAsync(
   }
 
   yield* put(
-    cacheActions.update(Kind.AGREEMENTS, [
+    cacheActions.update(Kind.DIGITAL_CONTENTS, [
       {
         id: action.digitalContentId,
         metadata: eagerlyUpdatedMetadata
@@ -252,7 +252,7 @@ export function* undoRepostDigitalContentAsync(
 export function* confirmUndoRepostDigitalContent(digitalContentId: ID, user: User) {
   yield* put(
     confirmerActions.requestConfirmation(
-      makeKindId(Kind.AGREEMENTS, digitalContentId),
+      makeKindId(Kind.DIGITAL_CONTENTS, digitalContentId),
       function* () {
         const { blockHash, blockNumber } = yield* call(
           ColivingBackend.undoRepostDigitalContent,
@@ -289,10 +289,10 @@ export function* confirmUndoRepostDigitalContent(digitalContentId: ID, user: Use
     )
   )
 }
-/* SAVE AGREEMENT */
+/* SAVE DIGITAL_CONTENT */
 
 export function* watchSaveDigitalContent() {
-  yield* takeEvery(socialActions.SAVE_AGREEMENT, saveDigitalContentAsync)
+  yield* takeEvery(socialActions.SAVE_DIGITAL_CONTENT, saveDigitalContentAsync)
 }
 
 export function* saveDigitalContentAsync(
@@ -344,7 +344,7 @@ export function* saveDigitalContentAsync(
   }
 
   yield* put(
-    cacheActions.update(Kind.AGREEMENTS, [
+    cacheActions.update(Kind.DIGITAL_CONTENTS, [
       {
         id: action.digitalContentId,
         metadata: eagerlyUpdatedMetadata
@@ -385,7 +385,7 @@ export function* saveDigitalContentAsync(
 export function* confirmSaveDigitalContent(digitalContentId: ID) {
   yield* put(
     confirmerActions.requestConfirmation(
-      makeKindId(Kind.AGREEMENTS, digitalContentId),
+      makeKindId(Kind.DIGITAL_CONTENTS, digitalContentId),
       function* () {
         const { blockHash, blockNumber } = yield* call(
           ColivingBackend.saveDigitalContent,
@@ -415,7 +415,7 @@ export function* confirmSaveDigitalContent(digitalContentId: ID) {
 }
 
 export function* watchUnsaveDigitalContent() {
-  yield* takeEvery(socialActions.UNSAVE_AGREEMENT, unsaveDigitalContentAsync)
+  yield* takeEvery(socialActions.UNSAVE_DIGITAL_CONTENT, unsaveDigitalContentAsync)
 }
 
 export function* unsaveDigitalContentAsync(
@@ -469,7 +469,7 @@ export function* unsaveDigitalContentAsync(
     }
 
     yield* put(
-      cacheActions.update(Kind.AGREEMENTS, [
+      cacheActions.update(Kind.DIGITAL_CONTENTS, [
         {
           id: action.digitalContentId,
           metadata: eagerlyUpdatedMetadata
@@ -484,7 +484,7 @@ export function* unsaveDigitalContentAsync(
 export function* confirmUnsaveDigitalContent(digitalContentId: ID) {
   yield* put(
     confirmerActions.requestConfirmation(
-      makeKindId(Kind.AGREEMENTS, digitalContentId),
+      makeKindId(Kind.DIGITAL_CONTENTS, digitalContentId),
       function* () {
         const { blockHash, blockNumber } = yield* call(
           ColivingBackend.unsaveDigitalContent,
@@ -531,7 +531,7 @@ export function* watchSetLandlordPick() {
       )
       yield* call(ColivingBackend.setLandlordPick, action.digitalContentId)
 
-      const event = make(Name.LANDLORD_PICK_SELECT_AGREEMENT, { id: action.digitalContentId })
+      const event = make(Name.LANDLORD_PICK_SELECT_DIGITAL_CONTENT, { id: action.digitalContentId })
       yield* put(event)
     }
   )
@@ -550,7 +550,7 @@ export function* watchUnsetLandlordPick() {
     )
     yield* call(ColivingBackend.setLandlordPick)
 
-    const event = make(Name.LANDLORD_PICK_SELECT_AGREEMENT, { id: 'none' })
+    const event = make(Name.LANDLORD_PICK_SELECT_DIGITAL_CONTENT, { id: 'none' })
     yield* put(event)
   })
 }
@@ -582,11 +582,11 @@ export function* watchRecordListen() {
   )
 }
 
-/* DOWNLOAD AGREEMENT */
+/* DOWNLOAD DIGITAL_CONTENT */
 
 function* watchDownloadDigitalContent() {
   yield* takeEvery(
-    socialActions.DOWNLOAD_AGREEMENT,
+    socialActions.DOWNLOAD_DIGITAL_CONTENT,
     function* (action: ReturnType<typeof socialActions.downloadDigitalContent>) {
       yield* call(waitForBackendSetup)
 
@@ -656,7 +656,7 @@ function* watchDownloadDigitalContent() {
 
 function* watchShareDigitalContent() {
   yield* takeEvery(
-    socialActions.SHARE_AGREEMENT,
+    socialActions.SHARE_DIGITAL_CONTENT,
     function* (action: ReturnType<typeof socialActions.shareDigitalContent>) {
       const { digitalContentId } = action
 

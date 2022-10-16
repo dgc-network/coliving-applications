@@ -67,17 +67,17 @@ function* setAudioStream() {
 
 // Set of digital_content ids that should be forceably streamed as mp3 rather than hls because
 // their hls maybe corrupt.
-let FORCE_MP3_STREAM_AGREEMENT_IDS: Set<string> | null = null
+let FORCE_MP3_STREAM_DIGITAL_CONTENT_IDS: Set<string> | null = null
 
 export function* watchPlay() {
   yield* takeLatest(play.type, function* (action: ReturnType<typeof play>) {
     const { uid, digitalContentId, onEnd } = action.payload
 
-    if (!FORCE_MP3_STREAM_AGREEMENT_IDS) {
-      FORCE_MP3_STREAM_AGREEMENT_IDS = new Set(
+    if (!FORCE_MP3_STREAM_DIGITAL_CONTENT_IDS) {
+      FORCE_MP3_STREAM_DIGITAL_CONTENT_IDS = new Set(
         (
           remoteConfigInstance.getRemoteVar(
-            StringKeys.FORCE_MP3_STREAM_AGREEMENT_IDS
+            StringKeys.FORCE_MP3_STREAM_DIGITAL_CONTENT_IDS
           ) || ''
         ).split(',')
       )
@@ -99,7 +99,7 @@ export function* watchPlay() {
         : []
       const encodedDigitalContentId = encodeHashId(digitalContentId)
       const forceStreamMp3 =
-        encodedDigitalContentId && FORCE_MP3_STREAM_AGREEMENT_IDS.has(encodedDigitalContentId)
+        encodedDigitalContentId && FORCE_MP3_STREAM_DIGITAL_CONTENT_IDS.has(encodedDigitalContentId)
       const forceStreamMp3Url = forceStreamMp3
         ? apiClient.makeUrl(`/digital_contents/${encodedDigitalContentId}/stream`)
         : null
@@ -126,7 +126,7 @@ export function* watchPlay() {
       })
       yield* spawn(actionChannelDispatcher, endChannel)
       yield* put(
-        cacheActions.subscribe(Kind.AGREEMENTS, [
+        cacheActions.subscribe(Kind.DIGITAL_CONTENTS, [
           { uid: PLAYER_SUBSCRIBER_NAME, id: digitalContentId }
         ])
       )
@@ -216,7 +216,7 @@ export function* watchStop() {
   yield* takeLatest(stop.type, function* (action: ReturnType<typeof stop>) {
     const id = yield* select(getDigitalContentId)
     yield* put(
-      cacheActions.unsubscribe(Kind.AGREEMENTS, [
+      cacheActions.unsubscribe(Kind.DIGITAL_CONTENTS, [
         { uid: PLAYER_SUBSCRIBER_NAME, id }
       ])
     )

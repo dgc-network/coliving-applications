@@ -29,7 +29,7 @@ export enum ButtonState {
 
 export enum ButtonType {
   STEM,
-  AGREEMENT
+  DIGITAL_CONTENT
 }
 
 type Stem = {
@@ -218,7 +218,7 @@ const makeDownloadOriginalButton = ({
   const config: DownloadButtonConfig = {
     state: ButtonState.PROCESSING,
     label,
-    type: ButtonType.AGREEMENT
+    type: ButtonType.DIGITAL_CONTENT
   }
 
   const requiresFollow = doesRequireFollow(isOwner, following, digital_content)

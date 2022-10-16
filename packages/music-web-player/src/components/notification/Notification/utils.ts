@@ -49,7 +49,7 @@ export const getTwitterHandleByUserHandle = async (userHandle: string) => {
 export const USER_LENGTH_LIMIT = 9
 
 export const entityToUserListEntity = {
-  [Entity.DigitalContent]: UserListEntityType.AGREEMENT,
+  [Entity.DigitalContent]: UserListEntityType.DIGITAL_CONTENT,
   [Entity.User]: UserListEntityType.USER,
   [Entity.Album]: UserListEntityType.COLLECTION,
   [Entity.ContentList]: UserListEntityType.COLLECTION

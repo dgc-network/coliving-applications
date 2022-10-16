@@ -51,7 +51,7 @@ export function* fetchAndProcessRemixes(digitalContentId: ID) {
   }))
 
   yield* put(
-    cacheActions.update(Kind.AGREEMENTS, [
+    cacheActions.update(Kind.DIGITAL_CONTENTS, [
       {
         id: digitalContentId,
         metadata: {
@@ -94,7 +94,7 @@ export function* fetchAndProcessRemixParents(digitalContentId: ID) {
   }))
 
   yield* put(
-    cacheActions.update(Kind.AGREEMENTS, [
+    cacheActions.update(Kind.DIGITAL_CONTENTS, [
       {
         id: digitalContentId,
         metadata: {

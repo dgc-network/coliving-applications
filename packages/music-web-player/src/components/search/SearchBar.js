@@ -279,7 +279,7 @@ class SearchBar extends Component {
                     group.title === 'Profiles'
                       ? Kind.USERS
                       : group.title === 'DigitalContents'
-                      ? Kind.AGREEMENTS
+                      ? Kind.DIGITAL_CONTENTS
                       : Kind.COLLECTIONS
                   }
                   id={opt.id}

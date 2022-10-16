@@ -46,7 +46,7 @@ function* getHistoryDigitalContents() {
 
 const keepDigitalContentIdAndDateListened = (entry) => ({
   uid: entry.uid,
-  kind: entry.digital_content_id ? Kind.AGREEMENTS : Kind.COLLECTIONS,
+  kind: entry.digital_content_id ? Kind.DIGITAL_CONTENTS : Kind.COLLECTIONS,
   id: entry.digital_content_id || entry.content_list_id,
   dateListened: entry.dateListened
 })

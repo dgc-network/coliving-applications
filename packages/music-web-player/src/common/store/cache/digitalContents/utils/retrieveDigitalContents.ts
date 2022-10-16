@@ -76,7 +76,7 @@ export function* retrieveDigitalContentByHandleAndSlug({
         }, permalinks)
         return digital_content
       },
-      kind: Kind.AGREEMENTS,
+      kind: Kind.DIGITAL_CONTENTS,
       idField: 'digital_content_id',
       forceRetrieveFromSource: false,
       shouldSetLoading: true,
@@ -85,7 +85,7 @@ export function* retrieveDigitalContentByHandleAndSlug({
         const selected = yield* select(
           (state: CommonState, ids: ID[]) =>
             ids.reduce((acc, id) => {
-              acc[id] = getEntryTimestamp(state, { kind: Kind.AGREEMENTS, id })
+              acc[id] = getEntryTimestamp(state, { kind: Kind.DIGITAL_CONTENTS, id })
               return acc
             }, {} as { [id: number]: number | null }),
           ids
@@ -203,7 +203,7 @@ export function* retrieveDigitalContents({
       const selected = yield* select(
         (state: CommonState, ids: ID[]) =>
           ids.reduce((acc, id) => {
-            acc[id] = getEntryTimestamp(state, { kind: Kind.AGREEMENTS, id })
+            acc[id] = getEntryTimestamp(state, { kind: Kind.DIGITAL_CONTENTS, id })
             return acc
           }, {} as { [id: number]: number | null }),
         ids
@@ -249,7 +249,7 @@ export function* retrieveDigitalContents({
       }
       return fetched
     },
-    kind: Kind.AGREEMENTS,
+    kind: Kind.DIGITAL_CONTENTS,
     idField: 'digital_content_id',
     forceRetrieveFromSource: false,
     shouldSetLoading: true,

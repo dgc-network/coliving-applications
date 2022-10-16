@@ -149,7 +149,7 @@ export const EmptyTab = (props: EmptyTabProps) => {
 }
 
 const landlordTabs = [
-  { icon: <IconNote />, text: 'DigitalContents', label: Tabs.AGREEMENTS },
+  { icon: <IconNote />, text: 'DigitalContents', label: Tabs.DIGITAL_CONTENTS },
   { icon: <IconAlbum />, text: 'Albums', label: Tabs.ALBUMS },
   { icon: <IconContentLists />, text: 'ContentLists', label: Tabs.CONTENT_LISTS },
   {

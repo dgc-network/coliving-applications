@@ -47,7 +47,7 @@ const REPOST_TIMEOUT = 1000
 const SAVED_TIMEOUT = 1000
 
 const messages = {
-  digitalContentTitle: 'AGREEMENT',
+  digitalContentTitle: 'DIGITAL_CONTENT',
   remixTitle: 'REMIX',
   hiddenDigitalContentTooltip: 'Anyone with a link to this page will be able to see it',
   makePublic: 'MAKE PUBLIC',

@@ -223,7 +223,7 @@ export enum StringKeys {
   CHALLENGE_REWARD_IDS = 'CHALLENGE_REWARD_IDS',
 
   /** Embedded tweet for trending rewards UI digitalContents */
-  REWARDS_TWEET_ID_AGREEMENTS = 'REWARDS_TWEET_ID_AGREEMENTS',
+  REWARDS_TWEET_ID_DIGITAL_CONTENTS = 'REWARDS_TWEET_ID_DIGITAL_CONTENTS',
 
   /** Embedded tweet for trending rewards UI contentLists */
   REWARDS_TWEET_ID_CONTENT_LISTS = 'REWARDS_TWEET_ID_CONTENT_LISTS',
@@ -232,7 +232,7 @@ export enum StringKeys {
   REWARDS_TWEET_ID_UNDERGROUND = 'REWARDS_TWEET_ID_UNDERGROUND',
 
   /** Audio that should be streamed via mp3 rather than HLS. Comma separated hash ids. */
-  FORCE_MP3_STREAM_AGREEMENT_IDS = 'FORCE_MP3_STREAM_AGREEMENT_IDS',
+  FORCE_MP3_STREAM_DIGITAL_CONTENT_IDS = 'FORCE_MP3_STREAM_DIGITAL_CONTENT_IDS',
 
   /** TF */
   TF = 'TF',

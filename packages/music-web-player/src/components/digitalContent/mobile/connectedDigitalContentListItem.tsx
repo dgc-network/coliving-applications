@@ -34,7 +34,7 @@ const ConnectedDigitalContentListItem = (props: ConnectedDigitalContentListItemP
       props.isReposted ? OverflowAction.UNREPOST : OverflowAction.REPOST,
       props.isSaved ? OverflowAction.UNFAVORITE : OverflowAction.FAVORITE,
       OverflowAction.ADD_TO_CONTENT_LIST,
-      OverflowAction.VIEW_AGREEMENT_PAGE,
+      OverflowAction.VIEW_DIGITAL_CONTENT_PAGE,
       OverflowAction.VIEW_LANDLORD_PAGE
     ].filter(Boolean) as OverflowAction[]
     props.clickOverflow(props.digitalContentId, overflowActions)
@@ -60,16 +60,16 @@ function mapDispatchToProps(dispatch: Dispatch) {
   return {
     goToRoute: (route: string) => dispatch(pushRoute(route)),
     saveDigitalContent: (digitalContentId: ID) =>
-      dispatch(saveDigitalContent(digitalContentId, FavoriteSource.AGREEMENT_LIST)),
+      dispatch(saveDigitalContent(digitalContentId, FavoriteSource.DIGITAL_CONTENT_LIST)),
     unsaveDigitalContent: (digitalContentId: ID) =>
-      dispatch(unsaveDigitalContent(digitalContentId, FavoriteSource.AGREEMENT_LIST)),
+      dispatch(unsaveDigitalContent(digitalContentId, FavoriteSource.DIGITAL_CONTENT_LIST)),
     repostDigitalContent: (digitalContentId: ID) =>
-      dispatch(repostDigitalContent(digitalContentId, RepostSource.AGREEMENT_LIST)),
+      dispatch(repostDigitalContent(digitalContentId, RepostSource.DIGITAL_CONTENT_LIST)),
     unrepostDigitalContent: (digitalContentId: ID) =>
-      dispatch(undoRepostDigitalContent(digitalContentId, RepostSource.AGREEMENT_LIST)),
+      dispatch(undoRepostDigitalContent(digitalContentId, RepostSource.DIGITAL_CONTENT_LIST)),
     clickOverflow: (digitalContentId: ID, overflowActions: OverflowAction[]) =>
       dispatch(
-        open({ source: OverflowSource.AGREEMENTS, id: digitalContentId, overflowActions })
+        open({ source: OverflowSource.DIGITAL_CONTENTS, id: digitalContentId, overflowActions })
       )
   }
 }

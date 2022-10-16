@@ -26,10 +26,10 @@ export function* processAndCacheDigitalContents<T extends DigitalContentMetadata
   // insert digitalContents into cache
   yield put(
     cacheActions.add(
-      Kind.AGREEMENTS,
+      Kind.DIGITAL_CONTENTS,
       reformattedDigitalContents.map((t) => ({
         id: t.digital_content_id,
-        uid: makeUid(Kind.AGREEMENTS, t.digital_content_id),
+        uid: makeUid(Kind.DIGITAL_CONTENTS, t.digital_content_id),
         metadata: t
       })),
       false,

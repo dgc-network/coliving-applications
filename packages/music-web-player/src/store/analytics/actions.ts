@@ -5,7 +5,7 @@ import { useDispatch as useDispatchRedux } from 'react-redux'
 
 /** UI EVENTS */
 export const IDENTIFY = 'ANALYTICS/IDENTIFY'
-export const AGREEMENT = 'ANALYTICS/AGREEMENT'
+export const DIGITAL_CONTENT = 'ANALYTICS/DIGITAL_CONTENT'
 
 export const identify = (handle: string, traits?: Record<string, any>) => ({
   type: IDENTIFY,
@@ -18,15 +18,15 @@ export const make = <U extends Name, T>(
   m: T
 ): {
   eventName: U
-  type: typeof AGREEMENT
+  type: typeof DIGITAL_CONTENT
 } & T => ({
-  type: AGREEMENT,
+  type: DIGITAL_CONTENT,
   eventName,
   ...m
 })
 
 export type DigitalContentEvent = AllTrackingEvents & {
-  type: typeof AGREEMENT
+  type: typeof DIGITAL_CONTENT
   callback?: () => void
   options?: Record<string, any>
 }

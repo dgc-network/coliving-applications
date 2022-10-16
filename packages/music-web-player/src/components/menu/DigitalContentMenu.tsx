@@ -262,7 +262,7 @@ function mapDispatchToProps(dispatch: Dispatch) {
         createContentList(
           tempId,
           newCollectionMetadata({ content_list_name: name }),
-          CreateContentListSource.FROM_AGREEMENT,
+          CreateContentListSource.FROM_DIGITAL_CONTENT,
           digitalContentId
         )
       ),
@@ -271,7 +271,7 @@ function mapDispatchToProps(dispatch: Dispatch) {
     openEditDigitalContentModal: (digitalContentId: ID) =>
       dispatch(editDigitalContentModalActions.open(digitalContentId)),
     openEmbedModal: (digitalContentId: ID) =>
-      dispatch(embedModalActions.open(digitalContentId, PlayableType.AGREEMENT))
+      dispatch(embedModalActions.open(digitalContentId, PlayableType.DIGITAL_CONTENT))
   }
 }
 

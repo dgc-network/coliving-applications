@@ -35,13 +35,13 @@ const messages = {
 
 const getShareUploadType = (uploadType, digitalContents) => {
   switch (uploadType) {
-    case UploadType.INDIVIDUAL_AGREEMENT: {
+    case UploadType.INDIVIDUAL_DIGITAL_CONTENT: {
       if (digitalContents.length > 0 && digitalContents[0].metadata.remix_of) {
         return 'Remix'
       }
       return 'DigitalContent'
     }
-    case UploadType.INDIVIDUAL_AGREEMENTS:
+    case UploadType.INDIVIDUAL_DIGITAL_CONTENTS:
       return 'DigitalContents'
     case UploadType.CONTENT_LIST:
       return 'ContentList'
@@ -71,7 +71,7 @@ class FinishPage extends Component {
   componentDidUpdate() {
     if (
       this.props.erroredDigitalContents.length > 0 &&
-      this.props.uploadType === UploadType.INDIVIDUAL_AGREEMENTS &&
+      this.props.uploadType === UploadType.INDIVIDUAL_DIGITAL_CONTENTS &&
       !this.state.didShowToast
     ) {
       this.setState({
@@ -136,8 +136,8 @@ class FinishPage extends Component {
 
     let content
     if (
-      uploadType === UploadType.INDIVIDUAL_AGREEMENT ||
-      uploadType === UploadType.INDIVIDUAL_AGREEMENTS
+      uploadType === UploadType.INDIVIDUAL_DIGITAL_CONTENT ||
+      uploadType === UploadType.INDIVIDUAL_DIGITAL_CONTENTS
     ) {
       content = digitalContents.map((digital_content, i) => {
         const hasErrored = erroredDigitalContentSet.has(i)
@@ -290,7 +290,7 @@ class FinishPage extends Component {
 
     let continueText
     switch (uploadType) {
-      case UploadType.INDIVIDUAL_AGREEMENT:
+      case UploadType.INDIVIDUAL_DIGITAL_CONTENT:
         continueText = 'View DigitalContent Page'
         break
       case UploadType.CONTENT_LIST:

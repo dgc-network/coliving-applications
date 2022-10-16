@@ -356,7 +356,7 @@ const messages = {
 }
 
 const tabHeaders = [
-  { icon: <IconNote />, text: messages.digitalContents, label: Tabs.AGREEMENTS },
+  { icon: <IconNote />, text: messages.digitalContents, label: Tabs.DIGITAL_CONTENTS },
   { icon: <IconAlbum />, text: messages.albums, label: Tabs.ALBUMS },
   { icon: <IconContentLists />, text: messages.contentLists, label: Tabs.CONTENT_LISTS }
 ]

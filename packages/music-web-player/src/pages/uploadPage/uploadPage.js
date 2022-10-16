@@ -63,7 +63,7 @@ class Upload extends Component {
     uploadType:
       this.props.uploadType ||
       this.props.upload.uploadType ||
-      UploadType.INDIVIDUAL_AGREEMENT,
+      UploadType.INDIVIDUAL_DIGITAL_CONTENT,
 
     digitalContents: this.props.upload.uploading ? this.props.upload.digitalContents : [],
 
@@ -147,10 +147,10 @@ class Upload extends Component {
 
     let uploadType = this.state.uploadType
     if (
-      this.state.uploadType === UploadType.INDIVIDUAL_AGREEMENT &&
+      this.state.uploadType === UploadType.INDIVIDUAL_DIGITAL_CONTENT &&
       this.state.digitalContents.length + digitalContents.length > 1
     ) {
-      uploadType = UploadType.INDIVIDUAL_AGREEMENTS
+      uploadType = UploadType.INDIVIDUAL_DIGITAL_CONTENTS
     }
 
     this.setState({
@@ -206,7 +206,7 @@ class Upload extends Component {
       digitalContents: this.state.digitalContents.filter((_, i) => i !== index),
       uploadType:
         this.state.digitalContents.length === 2
-          ? UploadType.INDIVIDUAL_AGREEMENT
+          ? UploadType.INDIVIDUAL_DIGITAL_CONTENT
           : this.state.uploadType
     })
   }
@@ -265,7 +265,7 @@ class Upload extends Component {
       digitalContents: [],
       preview: null,
       previewIndex: -1,
-      uploadType: UploadType.INDIVIDUAL_AGREEMENT,
+      uploadType: UploadType.INDIVIDUAL_DIGITAL_CONTENT,
       metadata: schemas.newCollectionMetadata({
         artwork: { file: null, url: '' }
       }),
@@ -304,7 +304,7 @@ class Upload extends Component {
     let uploadType = ''
     if (upload.completionId) {
       switch (this.state.uploadType) {
-        case UploadType.INDIVIDUAL_AGREEMENT: {
+        case UploadType.INDIVIDUAL_DIGITAL_CONTENT: {
           route = upload.digitalContents[0].metadata.permalink
           uploadType = 'digital_content'
           break
@@ -358,10 +358,10 @@ class Upload extends Component {
     // Only show errored digitalContents if we're not uploading
     // a collection
     const erroredDigitalContents =
-      uploadType === UploadType.INDIVIDUAL_AGREEMENTS ? failedDigitalContentIndices : []
+      uploadType === UploadType.INDIVIDUAL_DIGITAL_CONTENTS ? failedDigitalContentIndices : []
 
     let headerText
-    if (uploadType === UploadType.INDIVIDUAL_AGREEMENTS) {
+    if (uploadType === UploadType.INDIVIDUAL_DIGITAL_CONTENTS) {
       headerText = 'DigitalContents'
     } else if (uploadType === UploadType.CONTENT_LIST) {
       headerText = 'ContentList'
@@ -471,7 +471,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   onRecordViewCompletionPage: (uploadType) =>
-    dispatch(make(Name.AGREEMENT_UPLOAD_VIEW_AGREEMENT_PAGE, { uploadType })),
+    dispatch(make(Name.DIGITAL_CONTENT_UPLOAD_VIEW_DIGITAL_CONTENT_PAGE, { uploadType })),
   goToRoute: (route) => dispatch(pushRoute(route)),
   undoResetState: () => dispatch(undoResetState()),
   pauseQueue: () => dispatch(pauseQueue({})),

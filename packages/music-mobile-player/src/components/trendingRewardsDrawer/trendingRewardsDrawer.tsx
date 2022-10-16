@@ -41,7 +41,7 @@ const messages = {
   undergroundTitle: 'Top 5 DigitalContents Each Week Receive 100 $DGCO',
   winners: 'Winners are selected every Friday at Noon PT!',
   lastWeek: "LAST WEEK'S WINNERS",
-  digitalContents: 'AGREEMENTS',
+  digitalContents: 'DIGITAL_CONTENTS',
   contentLists: 'CONTENT_LISTS',
   underground: 'UNDERGROUND',
   terms: 'Terms and Conditions Apply',
@@ -166,7 +166,7 @@ const useRewardsType = (): [
 }
 
 const useTweetId = (type: TrendingRewardsModalType) => {
-  const digitalContentsId = useRemoteVar(StringKeys.REWARDS_TWEET_ID_AGREEMENTS)
+  const digitalContentsId = useRemoteVar(StringKeys.REWARDS_TWEET_ID_DIGITAL_CONTENTS)
   const contentListsId = useRemoteVar(StringKeys.REWARDS_TWEET_ID_CONTENT_LISTS)
   const undergroundId = useRemoteVar(StringKeys.REWARDS_TWEET_ID_UNDERGROUND)
   return {

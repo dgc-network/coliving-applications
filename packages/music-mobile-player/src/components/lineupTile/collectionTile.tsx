@@ -142,7 +142,7 @@ const CollectionTileComponent = ({
       togglePlay({
         uid: currentDigitalContent?.uid ?? digitalContents[0]?.uid ?? null,
         id: currentDigitalContent?.digital_content_id ?? digitalContents[0]?.digital_content_id ?? null,
-        source: PlaybackSource.CONTENT_LIST_TILE_AGREEMENT,
+        source: PlaybackSource.CONTENT_LIST_TILE_DIGITAL_CONTENT,
         isPlaying,
         isPlayingUid
       })

@@ -143,7 +143,7 @@ function* watchDeleteDigitalContent() {
       (entry) => entry.id === digitalContentId
     )
     if (digitalContentLineupEntry) {
-      yield put(digitalContentsActions.remove(Kind.AGREEMENTS, digitalContentLineupEntry.uid))
+      yield put(digitalContentsActions.remove(Kind.DIGITAL_CONTENTS, digitalContentLineupEntry.uid))
     }
   })
 }

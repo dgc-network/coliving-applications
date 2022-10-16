@@ -1,9 +1,9 @@
 import {
-  TOGGLE_MULTI_AGREEMENT_NOTIFICATION,
-  UPLOAD_AGREEMENTS_REQUESTED,
-  UPLOAD_AGREEMENTS_SUCCEEDED,
-  UPLOAD_AGREEMENTS_FAILED,
-  UPLOAD_SINGLE_AGREEMENT_FAILED,
+  TOGGLE_MULTI_DIGITAL_CONTENT_NOTIFICATION,
+  UPLOAD_DIGITAL_CONTENTS_REQUESTED,
+  UPLOAD_DIGITAL_CONTENTS_SUCCEEDED,
+  UPLOAD_DIGITAL_CONTENTS_FAILED,
+  UPLOAD_SINGLE_DIGITAL_CONTENT_FAILED,
   UPDATE_PROGRESS,
   RESET,
   RESET_STATE,
@@ -31,13 +31,13 @@ const initialState = {
 }
 
 const actionsMap = {
-  [TOGGLE_MULTI_AGREEMENT_NOTIFICATION](state, action) {
+  [TOGGLE_MULTI_DIGITAL_CONTENT_NOTIFICATION](state, action) {
     return {
       ...state,
       openMultiDigitalContentNotification: action.open
     }
   },
-  [UPLOAD_AGREEMENTS_REQUESTED](state, action) {
+  [UPLOAD_DIGITAL_CONTENTS_REQUESTED](state, action) {
     const newState = { ...state }
     newState.uploading = true
     newState.digitalContents = action.digitalContents
@@ -47,7 +47,7 @@ const actionsMap = {
     newState.stems = action.stems
     return newState
   },
-  [UPLOAD_AGREEMENTS_SUCCEEDED](state, action) {
+  [UPLOAD_DIGITAL_CONTENTS_SUCCEEDED](state, action) {
     const newState = { ...state }
     newState.uploading = false
     newState.success = true
@@ -64,7 +64,7 @@ const actionsMap = {
     }
     return newState
   },
-  [UPLOAD_AGREEMENTS_FAILED](state, action) {
+  [UPLOAD_DIGITAL_CONTENTS_FAILED](state, action) {
     const newState = { ...state }
     newState.uploading = false
     newState.uploadType = null
@@ -100,7 +100,7 @@ const actionsMap = {
       shouldReset: false
     }
   },
-  [UPLOAD_SINGLE_AGREEMENT_FAILED](state, action) {
+  [UPLOAD_SINGLE_DIGITAL_CONTENT_FAILED](state, action) {
     return {
       ...state,
       failedDigitalContentIndices: [...state.failedDigitalContentIndices, action.index]

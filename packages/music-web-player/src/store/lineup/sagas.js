@@ -78,12 +78,12 @@ function getCollectionCacheables(
 
   const digitalContentIds = metadata.content_list_contents.digital_content_ids.map((t) => t.digital_content)
   const digitalContentUids = digitalContentIds.map((id) =>
-    makeUid(Kind.AGREEMENTS, id, `collection:${metadata.content_list_id}`)
+    makeUid(Kind.DIGITAL_CONTENTS, id, `collection:${metadata.content_list_id}`)
   )
 
   digitalContentSubscriptions.push({
     id: metadata.content_list_id,
-    kind: Kind.AGREEMENTS,
+    kind: Kind.DIGITAL_CONTENTS,
     uids: digitalContentUids
   })
   metadata.content_list_contents.digital_content_ids =
@@ -175,7 +175,7 @@ function* fetchLineupMetadatasAsync(
       })
 
       const kinds = allMetadatas.map((metadata) =>
-        metadata.digital_content_id ? Kind.AGREEMENTS : Kind.COLLECTIONS
+        metadata.digital_content_id ? Kind.DIGITAL_CONTENTS : Kind.COLLECTIONS
       )
       const ids = allMetadatas.map(
         (metadata) => metadata.digital_content_id || metadata.content_list_id
@@ -212,7 +212,7 @@ function* fetchLineupMetadatasAsync(
           (digital_content, idx) => {
             const id = digital_content.digital_content
             const uid = new Uid(
-              Kind.AGREEMENTS,
+              Kind.DIGITAL_CONTENTS,
               id,
               makeCollectionSourceId(source, metadata.content_list_id),
               idx
@@ -232,7 +232,7 @@ function* fetchLineupMetadatasAsync(
         yield put(cacheActions.update(Kind.COLLECTIONS, [], digitalContentSubscriptions))
       }
       if (digitalContentSubscribers.length > 0) {
-        yield put(cacheActions.subscribe(Kind.AGREEMENTS, digitalContentSubscribers))
+        yield put(cacheActions.subscribe(Kind.DIGITAL_CONTENTS, digitalContentSubscribers))
       }
       // Retain specified info in the lineup itself and resolve with success.
       const lineupEntries = allMetadatas
@@ -352,7 +352,7 @@ function* reset(
       const removeDigitalContentIds = collection.content_list_contents.digital_content_ids.map(
         ({ digital_content: digitalContentId }, idx) => {
           const digitalContentUid = new Uid(
-            Kind.AGREEMENTS,
+            Kind.DIGITAL_CONTENTS,
             digitalContentId,
             makeCollectionSourceId(source, collection.content_list_id),
             idx
@@ -360,8 +360,8 @@ function* reset(
           return { UID: digitalContentUid.toString() }
         }
       )
-      subscriptionsToRemove[Kind.AGREEMENTS] = (
-        subscriptionsToRemove[Kind.AGREEMENTS] || []
+      subscriptionsToRemove[Kind.DIGITAL_CONTENTS] = (
+        subscriptionsToRemove[Kind.DIGITAL_CONTENTS] || []
       ).concat(removeDigitalContentIds)
     }
   }
@@ -419,7 +419,7 @@ function* refreshInView(lineupActions, lineupSelector, action) {
 
 const keepUidAndKind = (entry) => ({
   uid: entry.uid,
-  kind: entry.digital_content_id ? Kind.AGREEMENTS : Kind.COLLECTIONS,
+  kind: entry.digital_content_id ? Kind.DIGITAL_CONTENTS : Kind.COLLECTIONS,
   id: entry.digital_content_id || entry.content_list_id
 })
 

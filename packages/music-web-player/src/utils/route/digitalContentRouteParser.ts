@@ -1,7 +1,7 @@
 import { ID } from '@coliving/common'
 import { matchPath } from 'react-router-dom'
 
-import { AGREEMENT_ID_PAGE, AGREEMENT_PAGE } from 'utils/route'
+import { DIGITAL_CONTENT_ID_PAGE, DIGITAL_CONTENT_PAGE } from 'utils/route'
 
 import { decodeHashId } from './hashIds'
 
@@ -17,7 +17,7 @@ export type DigitalContentRouteParams =
  */
 export const parseDigitalContentRoute = (route: string): DigitalContentRouteParams => {
   const digitalContentIdPageMatch = matchPath<{ id: string }>(route, {
-    path: AGREEMENT_ID_PAGE,
+    path: DIGITAL_CONTENT_ID_PAGE,
     exact: true
   })
   if (digitalContentIdPageMatch) {
@@ -27,7 +27,7 @@ export const parseDigitalContentRoute = (route: string): DigitalContentRoutePara
   }
 
   const digitalContentPageMatch = matchPath<{ slug: string; handle: string }>(route, {
-    path: AGREEMENT_PAGE,
+    path: DIGITAL_CONTENT_PAGE,
     exact: true
   })
   if (digitalContentPageMatch) {

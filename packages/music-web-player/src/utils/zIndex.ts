@@ -18,7 +18,7 @@ export enum zIndex {
   COLLECTIBLE_EMBED_VIEW_MODAL = 25,
 
   // Set to 1000 to account for nested modals inside, which take a higher z-index
-  EDIT_AGREEMENT_MODAL = 1000,
+  EDIT_DIGITAL_CONTENT_MODAL = 1000,
   CREATE_CONTENT_LIST_MODAL = 1000,
   EDIT_CONTENT_LIST_MODAL = 1001,
   IMAGE_SELECTION_POPUP = 1002,
