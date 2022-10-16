@@ -565,7 +565,7 @@ function* userChallengePollingDaemon() {
   )!
   const liveRewardsPageChallengePollingTimeout =
     remoteConfigInstance.getRemoteVar(
-      IntKeys.CHALLENGE_REFRESH_INTERVAL_DGCO_PAGE_MS
+      IntKeys.CHALLENGE_REFRESH_INTERVAL_DGC_PAGE_MS
     )!
 
   yield take(fetchAccountSucceeded.type)

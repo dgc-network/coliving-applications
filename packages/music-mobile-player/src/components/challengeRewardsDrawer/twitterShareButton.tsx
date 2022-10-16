@@ -33,7 +33,7 @@ const renderIcon = (color: Color) => (
 const messages = {
   buttonTitleFriends: 'Share Invite With Your Friends',
   buttonTitleFans: 'Share Invite With Your Residents',
-  twitterCopy: `Come support me on @colivingproject! Use my link and we both earn $DGCO when you sign up.\n\n # #liverewards\n\n`
+  twitterCopy: `Come support me on @colivingproject! Use my link and we both earn $DGC when you sign up.\n\n # #liverewards\n\n`
 }
 
 export const TwitterShareButton = ({

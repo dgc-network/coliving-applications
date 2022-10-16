@@ -1,15 +1,15 @@
 import type { Message } from 'app/message'
 
-export const PLAY = 'LIVE/PLAY'
-export const PAUSE = 'LIVE/PAUSE'
-export const NEXT = 'LIVE/NEXT'
-export const PREVIOUS = 'LIVE/PREVIOUS'
-export const SEEK = 'LIVE/SEEK'
-export const SET_INFO = 'LIVE/SET_INFO'
-export const PERSIST_QUEUE = 'LIVE/PERSIST_QUEUE'
-export const REPEAT = 'LIVE/REPEAT'
-export const SHUFFLE = 'LIVE/SHUFFLE'
-export const RESET = 'LIVE/RESET'
+export const PLAY = 'AUDIO/PLAY'
+export const PAUSE = 'AUDIO/PAUSE'
+export const NEXT = 'AUDIO/NEXT'
+export const PREVIOUS = 'AUDIO/PREVIOUS'
+export const SEEK = 'AUDIO/SEEK'
+export const SET_INFO = 'AUDIO/SET_INFO'
+export const PERSIST_QUEUE = 'AUDIO/PERSIST_QUEUE'
+export const REPEAT = 'AUDIO/REPEAT'
+export const SHUFFLE = 'AUDIO/SHUFFLE'
+export const RESET = 'AUDIO/RESET'
 
 // TODO(aud-1606): Clean up actions after message passing is removed.
 

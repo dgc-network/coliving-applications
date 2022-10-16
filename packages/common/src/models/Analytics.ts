@@ -197,15 +197,15 @@ export enum Name {
   REMIX_COSIGN_INDICATOR = 'Remix: CoSign Indicator',
   REMIX_HIDE = 'Remix: Hide',
 
-  // $DGCO
-  SEND_DGCO_REQUEST = 'Send $DGCO: Request',
-  SEND_DGCO_SUCCESS = 'Send $DGCO: Success',
-  SEND_DGCO_FAILURE = 'Send $DGCO: Failure',
+  // $DGC
+  SEND_DGC_REQUEST = 'Send $DGC: Request',
+  SEND_DGC_SUCCESS = 'Send $DGC: Success',
+  SEND_DGC_FAILURE = 'Send $DGC: Failure',
 
-  // LIVE Manager
-  TRANSFER_DGCO_TO_WLIVE_REQUEST = 'TRANSFER_DGCO_TO_WLIVE_REQUEST',
-  TRANSFER_DGCO_TO_WLIVE_SUCCESS = 'TRANSFER_DGCO_TO_WLIVE_SUCCESS',
-  TRANSFER_DGCO_TO_WLIVE_FAILURE = 'TRANSFER_DGCO_TO_WLIVE_FAILURE',
+  // $DGC Manager
+  TRANSFER_DGC_TO_WDGC_REQUEST = 'TRANSFER_DGC_TO_WDGC_REQUEST',
+  TRANSFER_DGC_TO_WDGC_SUCCESS = 'TRANSFER_DGC_TO_WDGC_SUCCESS',
+  TRANSFER_DGC_TO_WDGC_FAILURE = 'TRANSFER_DGC_TO_WDGC_FAILURE',
 
   // Service monitoring
   SERVICE_MONITOR_REQUEST = 'Service Monitor: Request',
@@ -247,10 +247,10 @@ export enum Name {
   REWARDS_CLAIM_FINISH_COGNITO_FLOW = 'Rewards Claim: Finish Cognito Flow',
 
   // Tipping
-  TIP_DGCO_REQUEST = 'Tip Audio: Request',
-  TIP_DGCO_SUCCESS = 'Tip Audio: Success',
-  TIP_DGCO_FAILURE = 'Tip Audio: Failure',
-  TIP_DGCO_TWITTER_SHARE = 'Tip Audio: Twitter Share',
+  TIP_DGC_REQUEST = 'Tip Audio: Request',
+  TIP_DGC_SUCCESS = 'Tip Audio: Success',
+  TIP_DGC_FAILURE = 'Tip Audio: Failure',
+  TIP_DGC_TWITTER_SHARE = 'Tip Audio: Twitter Share',
   TIP_FEED_TILE_DISMISS = 'Tip Feed Tile: Dismiss',
 
   // Social Proof
@@ -979,38 +979,38 @@ type RemixHide = {
 }
 
 type SendAudioRequest = {
-  eventName: Name.SEND_DGCO_REQUEST
+  eventName: Name.SEND_DGC_REQUEST
   from: WalletAddress
   recipient: WalletAddress
 }
 
 type SendAudioSuccess = {
-  eventName: Name.SEND_DGCO_SUCCESS
+  eventName: Name.SEND_DGC_SUCCESS
   from: WalletAddress
   recipient: WalletAddress
 }
 
 type SendAudioFailure = {
-  eventName: Name.SEND_DGCO_FAILURE
+  eventName: Name.SEND_DGC_FAILURE
   from: WalletAddress
   recipient: WalletAddress
   error: string
 }
 
 type TransferAudioToWAudioRequest = {
-  eventName: Name.TRANSFER_DGCO_TO_WLIVE_REQUEST
+  eventName: Name.TRANSFER_DGC_TO_WDGC_REQUEST
   from: WalletAddress
 }
 
 type TransferAudioToWAudioSuccess = {
-  eventName: Name.TRANSFER_DGCO_TO_WLIVE_SUCCESS
+  eventName: Name.TRANSFER_DGC_TO_WDGC_SUCCESS
   from: WalletAddress
   txSignature: string
   logs: string
 }
 
 type TransferAudioToWAudioFailure = {
-  eventName: Name.TRANSFER_DGCO_TO_WLIVE_FAILURE
+  eventName: Name.TRANSFER_DGC_TO_WDGC_FAILURE
   from: WalletAddress
 }
 
@@ -1153,7 +1153,7 @@ type RewardsClaimUnknown = {
 }
 
 type TipAudioRequest = {
-  eventName: Name.TIP_DGCO_REQUEST
+  eventName: Name.TIP_DGC_REQUEST
   amount: StringDigitalcoin
   senderWallet: SolanaWalletAddress
   recipientWallet: SolanaWalletAddress
@@ -1164,7 +1164,7 @@ type TipAudioRequest = {
 }
 
 type TipAudioSuccess = {
-  eventName: Name.TIP_DGCO_SUCCESS
+  eventName: Name.TIP_DGC_SUCCESS
   amount: StringDigitalcoin
   senderWallet: SolanaWalletAddress
   recipientWallet: SolanaWalletAddress
@@ -1175,7 +1175,7 @@ type TipAudioSuccess = {
 }
 
 type TipAudioFailure = {
-  eventName: Name.TIP_DGCO_FAILURE
+  eventName: Name.TIP_DGC_FAILURE
   amount: StringDigitalcoin
   senderWallet: SolanaWalletAddress
   recipientWallet: SolanaWalletAddress
@@ -1187,7 +1187,7 @@ type TipAudioFailure = {
 }
 
 type TipAudioTwitterShare = {
-  eventName: Name.TIP_DGCO_TWITTER_SHARE
+  eventName: Name.TIP_DGC_TWITTER_SHARE
   amount: StringDigitalcoin
   senderWallet: SolanaWalletAddress
   recipientWallet: SolanaWalletAddress

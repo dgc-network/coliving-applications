@@ -37,7 +37,7 @@ const messages = {
   newWalletConnected: 'New Wallet Successfully Connected!',
   linkedWallets: 'LINKED WALLETS',
   collectibles: 'COLLECTIBLES',
-  digitalcoin: '$DGCO'
+  digitalcoin: '$DGC'
 }
 
 type WalletProps = {
@@ -65,7 +65,7 @@ const Wallet = ({
   hideCollectibles
 }: WalletProps) => {
   const { isEnabled: solWalletAudioEnabled } = useFlag(
-    FeatureFlags.SOL_WALLET_DGCO_ENABLED
+    FeatureFlags.SOL_WALLET_DGC_ENABLED
   )
 
   const isMobile = useIsMobile()

@@ -21,7 +21,7 @@ import styles from './NavPopupMenu.module.css'
 const messages = {
   settings: 'Settings',
   dashboard: 'Author Dashboard',
-  digitalcoin: '$DGCO & Rewards'
+  digitalcoin: '$DGC & Rewards'
 }
 
 const useAccountHasDigitalContents = () => {

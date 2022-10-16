@@ -21,7 +21,7 @@ const messages = {
   supportOnTwitter: 'Share your support on Twitter!',
   shareToTwitter: 'Share to Twitter',
   twitterCopyPrefix: 'I just tipped ',
-  twitterCopySuffix: ' $DGCO on @dgc-network #Coliving #LIVETip'
+  twitterCopySuffix: ' $DGC on @dgc-network #Coliving #LIVETip'
 }
 
 export const TipSent = () => {
@@ -40,7 +40,7 @@ export const TipSent = () => {
       const message = `${messages.twitterCopyPrefix}${recipientAndAmount}${messages.twitterCopySuffix}`
       openTwitterLink(null, message)
       record(
-        make(Name.TIP_DGCO_TWITTER_SHARE, {
+        make(Name.TIP_DGC_TWITTER_SHARE, {
           senderWallet: account.spl_wallet,
           recipientWallet: recipient.spl_wallet,
           senderHandle: account.handle,
@@ -63,7 +63,7 @@ export const TipSent = () => {
       </div>
       <div className={cn(styles.flexCenter, styles.modalContentHeaderSubtitle)}>
         <span className={styles.sendAmount}>{sendAmount}</span>
-        $DGCO
+        $DGC
       </div>
     </div>
   )

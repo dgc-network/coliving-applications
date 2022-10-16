@@ -47,26 +47,26 @@ import { TrendingRewards } from './trendingRewards'
 const LEARN_MORE_LINK = 'https://blog..co/article/community-meet-digitalcoin'
 
 const messages = {
-  title: '$DGCO & Rewards',
-  digitalcoin: '$DGCO',
-  totalAudio: 'Total $DGCO',
-  send: 'Send $DGCO',
-  receive: 'Receive $DGCO',
+  title: '$DGC & Rewards',
+  digitalcoin: '$DGC',
+  totalAudio: 'Total $DGC',
+  send: 'Send $DGC',
+  receive: 'Receive $DGC',
   connect: 'Connect Other Wallets',
-  rewards: '$DGCO Rewards',
-  rewardsBody1: 'Complete tasks to earn $DGCO tokens!',
+  rewards: '$DGC Rewards',
+  rewardsBody1: 'Complete tasks to earn $DGC tokens!',
   rewardsBody2:
-    'Opportunities to earn $DGCO will change, so check back often for more chances to earn!',
+    'Opportunities to earn $DGC will change, so check back often for more chances to earn!',
   trending: 'Trending Competitions',
-  trendingBody1: 'Win contests to earn $DGCO tokens!',
-  vipTiers: '$DGCO VIP Tiers',
-  vipTiersBody1: 'Unlock $DGCO VIP Tiers by simply holding more $DGCO!',
+  trendingBody1: 'Win contests to earn $DGC tokens!',
+  vipTiers: '$DGC VIP Tiers',
+  vipTiersBody1: 'Unlock $DGC VIP Tiers by simply holding more $DGC!',
   vipTiersBody2:
     'Advancing to a new tier will earn your profile a badge, visible throughout the app, and unlock various new features as they are released.',
   launchDiscord: 'Launch the VIP Discord',
-  what: 'What is $DGCO',
+  what: 'What is $DGC',
   whatBody1:
-    'Coliving is owned by people like you, not major corporations. Holding $DGCO grants you partial ownership of the Coliving platform and gives you access to special features as they are released.',
+    'Coliving is owned by people like you, not major corporations. Holding $DGC grants you partial ownership of the Coliving platform and gives you access to special features as they are released.',
   learnMore: 'Learn More',
   whatBody2: `Still confused? Don't worry, more details coming soon!`
 }

@@ -37,13 +37,13 @@ import { useGoToProfile } from './useGoToProfile'
 const messages = {
   title: 'You Received a Tip!',
   sent: 'sent you a tip of',
-  digitalcoin: '$DGCO',
+  digitalcoin: '$DGC',
   sayThanks: 'Say Thanks With a Reaction',
   reactionSent: 'Reaction Sent!',
   twitterShare: (senderHandle: string, amount: number) =>
     `Thanks ${senderHandle} for the ${formatNumberCommas(
       amount
-    )} $DGCO tip on @dgc-network! #Coliving #LIVETip`
+    )} $DGC tip on @dgc-network! #Coliving #LIVETip`
 }
 
 const useSetReaction = (tipTxSignature: string) => {

@@ -32,9 +32,9 @@ const messages = {
   sendATip: 'Send Tip',
   enterAnAmount: 'Enter an amount',
   insufficientBalance: 'Insufficient Balance',
-  tooltip: '$DGCO held in linked wallets cannot be used for tipping',
+  tooltip: '$DGC held in linked wallets cannot be used for tipping',
   becomeTopSupporterPrefix: 'Tip ',
-  becomeTopSupporterSuffix: ' $DGCO To Become Their Top Supporter',
+  becomeTopSupporterSuffix: ' $DGC To Become Their Top Supporter',
   becomeFirstSupporter: 'Tip To Become Their First Supporter'
 }
 
@@ -163,7 +163,7 @@ export const SendTip = () => {
           inputClassName={styles.input}
           format={Format.INPUT}
           placeholder={'Enter an amount'}
-          rightLabel={'$DGCO'}
+          rightLabel={'$DGC'}
           value={tipAmount}
           isNumeric={true}
           isWhole={true}

@@ -110,9 +110,9 @@ export const challengeRewardsConfig: Record<
     title: 'Invite your Friends',
     icon: <i className='emoji large incoming-envelope' />,
     description: (challenge) =>
-      `Earn ${challenge?.amount} $DGCO, for you and your friend`,
+      `Earn ${challenge?.amount} $DGC, for you and your friend`,
     fullDescription: (challenge) =>
-      `Invite your Friends! You’ll earn ${challenge?.amount} $DGCO for each friend who joins with your link (and they’ll get an $DGCO too)`,
+      `Invite your Friends! You’ll earn ${challenge?.amount} $DGC for each friend who joins with your link (and they’ll get an $DGC too)`,
     progressLabel: '%0/%1 Invites Accepted',
     remainingLabel: '%0/%1 Invites Remain',
     amount: amounts.referrals,
@@ -128,9 +128,9 @@ export const challengeRewardsConfig: Record<
     title: 'Invite your Residents',
     icon: <i className='emoji large incoming-envelope' />,
     description: (challenge) =>
-      `Earn up to ${formatNumberCommas(challenge?.totalAmount ?? '')} $DGCO`,
+      `Earn up to ${formatNumberCommas(challenge?.totalAmount ?? '')} $DGC`,
     fullDescription: (challenge) =>
-      `Invite your residents! You’ll earn ${challenge?.amount} $DGCO for each resident who joins with your link (and they’ll get an $DGCO too)`,
+      `Invite your residents! You’ll earn ${challenge?.amount} $DGC for each resident who joins with your link (and they’ll get an $DGC too)`,
     progressLabel: '%0/%1 Invites Accepted',
     remainingLabel: '%0/%1 Invites Remain',
     amount: amounts.referrals,
@@ -146,8 +146,8 @@ export const challengeRewardsConfig: Record<
     id: 'referred',
     title: 'You Accepted An Invite',
     icon: <i className='emoji large love-letter' />,
-    description: () => `You earned $DGCO for being invited`,
-    fullDescription: () => `You earned $DGCO for being invited`,
+    description: () => `You earned $DGC for being invited`,
+    fullDescription: () => `You earned $DGC for being invited`,
     progressLabel: '%0/%1 Invites',
     amount: amounts.referrals,
     panelButtonText: 'More Info',
@@ -162,7 +162,7 @@ export const challengeRewardsConfig: Record<
     title: 'Link Verified Accounts',
     icon: <i className='emoji large white-heavy-check-mark' />,
     description: (challenge) =>
-      `Link your verified social media accounts to earn ${challenge?.amount} $DGCO`,
+      `Link your verified social media accounts to earn ${challenge?.amount} $DGC`,
     fullDescription: () =>
       'Get verified on Coliving by linking your verified Twitter or Instagram account!',
     progressLabel: 'Not Linked',
@@ -179,7 +179,7 @@ export const challengeRewardsConfig: Record<
     title: 'Listening Streak: 7 Days',
     icon: <i className='emoji large headphone' />,
     description: (challenge) =>
-      `Listen to one digital_content a day for seven days to earn ${challenge?.amount} $DGCO`,
+      `Listen to one digital_content a day for seven days to earn ${challenge?.amount} $DGC`,
     fullDescription: () =>
       'Sign in and listen to at least one digital_content every day for 7 days',
     progressLabel: '%0/%1 Days',
@@ -195,7 +195,7 @@ export const challengeRewardsConfig: Record<
     id: 'mobile-install' as ChallengeRewardID,
     title: 'Get the Coliving Mobile App',
     icon: <i className='emoji large mobile-phone-with-arrow' />,
-    description: (challenge) => `Earn ${challenge?.amount} $DGCO`,
+    description: (challenge) => `Earn ${challenge?.amount} $DGC`,
     fullDescription: () =>
       'Install the Coliving app for iPhone and Android and Sign in to your account!',
     progressLabel: 'Not Installed',
@@ -212,7 +212,7 @@ export const challengeRewardsConfig: Record<
     title: 'Complete Your Profile',
     icon: <i className='emoji large white-heavy-check-mark' />,
     description: (challenge) =>
-      `Complete your Coliving profile to earn ${challenge?.amount} $DGCO`,
+      `Complete your Coliving profile to earn ${challenge?.amount} $DGC`,
     fullDescription: () =>
       'Fill out the missing details on your Coliving profile and start interacting with digitalContents and landlords!',
     progressLabel: '%0/%1 Complete',
@@ -228,7 +228,7 @@ export const challengeRewardsConfig: Record<
     id: 'digital-content-upload' as ChallengeRewardID,
     title: 'Upload 3 DigitalContents',
     icon: <i className='emoji large multiple-musical-notes' />,
-    description: (challenge) => `Earn ${challenge?.amount} $DGCO`,
+    description: (challenge) => `Earn ${challenge?.amount} $DGC`,
     fullDescription: () => 'Upload 3 digitalContents to your profile',
     progressLabel: '%0/%1 Uploaded',
     amount: amounts['digital-content-upload'],
@@ -243,7 +243,7 @@ export const challengeRewardsConfig: Record<
     id: 'send-first-tip' as ChallengeRewardID,
     title: 'Send Your First Tip',
     icon: <i className='emoji large money-mouth-face' />,
-    description: (challenge) => `Earn ${challenge?.amount} $DGCO`,
+    description: (challenge) => `Earn ${challenge?.amount} $DGC`,
     fullDescription: () =>
       'Show some love to your favorite author and send them a tip',
     progressLabel: 'Not Earned',
@@ -259,7 +259,7 @@ export const challengeRewardsConfig: Record<
     id: 'first-content-list' as ChallengeRewardID,
     title: 'Create Your First ContentList',
     icon: <i className='emoji large sparkles' />,
-    description: (challenge) => `Earn ${challenge?.amount} $DGCO`,
+    description: (challenge) => `Earn ${challenge?.amount} $DGC`,
     fullDescription: () => 'Create your first contentList & add a digital_content to it',
     progressLabel: 'Not Earned',
     amount: amounts['first-content-list'],

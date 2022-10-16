@@ -61,24 +61,24 @@ function* sendAsync({
     chain === Chain.Eth &&
     (!weiBNBalance || !weiBNBalance.gte(weiBNAmount))
   ) {
-    yield* put(sendFailed({ error: 'Not enough $DGCO' }))
+    yield* put(sendFailed({ error: 'Not enough $DGC' }))
     return
   } else if (chain === Chain.Sol) {
     if (weiBNAmount.gt(weiBNBalance)) {
-      yield* put(sendFailed({ error: 'Not enough $DGCO' }))
+      yield* put(sendFailed({ error: 'Not enough $DGC' }))
       return
     }
   }
 
   try {
     yield* put(
-      make(Name.SEND_DGCO_REQUEST, {
+      make(Name.SEND_DGC_REQUEST, {
         from: account?.wallet,
         recipient: recipientWallet
       })
     )
     // If transferring spl wrapped digitalcoin and there are insufficent funds with only the
-    // user bank balance, transfer all eth LIVE to spl wrapped digitalcoin
+    // user bank balance, transfer all eth $DGC to spl wrapped digitalcoin
     if (chain === Chain.Sol && weiBNAmount.gt(wei_digitalcoinWeiAmount)) {
       yield* put(transferEthAudioToSolWAudio())
       yield* call(walletClient.transferTokensFromEthToSol)
@@ -99,7 +99,7 @@ function* sendAsync({
         }
         if (
           errorMessage ===
-          'Recipient has no $DGCO token account. Please install Phantom-Wallet to create one.'
+          'Recipient has no $DGC token account. Please install Phantom-Wallet to create one.'
         ) {
           yield* put(sendFailed({ error: errorMessage }))
           return
@@ -117,7 +117,7 @@ function* sendAsync({
 
     yield* put(sendSucceeded())
     yield* put(
-      make(Name.SEND_DGCO_SUCCESS, {
+      make(Name.SEND_DGC_SUCCESS, {
         from: account?.wallet,
         recipient: recipientWallet
       })
@@ -128,11 +128,11 @@ function* sendAsync({
     let errorText = errorMessage
     if (isRateLimit) {
       errorText =
-        'If you’ve already sent $DGCO today, please wait a day before trying again'
+        'If you’ve already sent $DGC today, please wait a day before trying again'
     }
     yield* put(sendFailed({ error: errorText }))
     yield* put(
-      make(Name.SEND_DGCO_FAILURE, {
+      make(Name.SEND_DGC_FAILURE, {
         from: account?.wallet,
         recipient: recipientWallet,
         error: errorText
@@ -175,7 +175,7 @@ function* fetchBalanceAsync() {
     currentSolAudioWeiBalance
   ) as BNWei
 
-  const useSolAudio = getFeatureEnabled(FeatureFlags.ENABLE_SPL_DGCO)
+  const useSolAudio = getFeatureEnabled(FeatureFlags.ENABLE_SPL_DGC)
   if (useSolAudio) {
     const totalBalance = liveWeiBalance.add(associatedWalletBalance) as BNWei
     yield* put(

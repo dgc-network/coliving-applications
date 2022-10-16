@@ -14,7 +14,7 @@ type DisplayLiveProps = {
 }
 
 const messages = {
-  currency: '$DGCO'
+  currency: '$DGC'
 }
 
 const DisplayLive = ({

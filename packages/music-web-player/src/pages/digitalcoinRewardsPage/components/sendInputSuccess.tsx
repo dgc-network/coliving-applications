@@ -18,9 +18,9 @@ type SendInputSuccessProps = {
 
 const messages = {
   success: 'YOU HAVE SUCCESSFULLY SENT',
-  note: 'Note: The $DGCO may take a couple minutes to show up',
+  note: 'Note: The $DGC may take a couple minutes to show up',
   newBalance: 'YOUR BALANCE IS NOW',
-  currency: '$DGCO'
+  currency: '$DGC'
 }
 
 const SendInputSuccess = ({

@@ -17,7 +17,7 @@ const messages = {
   supporterChange: 'Became your',
   supporter: 'Top Supporter',
   twitterShare: (handle: string, rank: number) =>
-    `${handle} just became my #${rank} Top Supporter on @dgc-network #Coliving $DGCO #LIVETip`
+    `${handle} just became my #${rank} Top Supporter on @dgc-network #Coliving $DGC #LIVETip`
 }
 
 type TopSupporterNotificationProps = {

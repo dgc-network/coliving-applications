@@ -45,7 +45,7 @@ export const parseWeiNumber = (number: string) => {
 }
 
 /**
- * Divides $DGCO in Wei into whole $DGCO and casts to number
+ * Divides $DGC in Wei into whole $DGC and casts to number
  * @param num
  */
 export const weiAudToAud = (num: BN) => {

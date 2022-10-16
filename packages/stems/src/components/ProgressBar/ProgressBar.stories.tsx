@@ -30,6 +30,6 @@ export const WithLabelWrappers = Template.bind({})
 WithLabelWrappers.args = {
   ...baseProps,
   showLabels: true,
-  minWrapper: ({ value }) => <span>{value} $DGCO</span>,
-  maxWrapper: ({ value }) => <span>{value} $DGCO</span>
+  minWrapper: ({ value }) => <span>{value} $DGC</span>,
+  maxWrapper: ({ value }) => <span>{value} $DGC</span>
 }

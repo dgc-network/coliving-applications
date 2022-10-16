@@ -18,7 +18,7 @@ const TokenHoverTooltip = ({
 }: TokenHoverTooltipProps) => {
   return (
     <Tooltip
-      text={`${formatWei(balance)} $DGCO`}
+      text={`${formatWei(balance)} $DGC`}
       disabled={balance.isZero()}
       placement='top'
       mouseEnterDelay={0.2}

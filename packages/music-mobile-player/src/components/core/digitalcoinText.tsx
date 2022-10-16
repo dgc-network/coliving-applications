@@ -10,7 +10,7 @@ type DigitalcoinProps = TextProps
 export const LiveText = (props: DigitalcoinProps) => {
   return (
     <Text accessibilityLabel={messages.digitalcoin} {...props}>
-      $DGCO
+      $DGC
     </Text>
   )
 }

@@ -11,7 +11,7 @@ import { useThemeColors } from 'app/utils/theme'
 
 const messages = {
   tier: 'Tier',
-  minAmount: '$DGCO',
+  minAmount: '$DGC',
   current: 'Current Tier'
 }
 

@@ -53,13 +53,13 @@ import SendingModalBody from './components/sendingModalBody'
 import ModalDrawer from './components/modals/modalDrawer'
 
 const messages = {
-  receive: 'Receive $DGCO',
-  receiveSPL: 'Receive SPL $DGCO',
-  send: 'Send $DGCO',
-  confirmSend: 'Send $DGCO',
-  sending: 'Your $DGCO is Sending',
-  sent: 'Your $DGCO Has Been Sent',
-  sendError: 'Uh oh! Something went wrong sending your $DGCO.',
+  receive: 'Receive $DGC',
+  receiveSPL: 'Receive SPL $DGC',
+  send: 'Send $DGC',
+  confirmSend: 'Send $DGC',
+  sending: 'Your $DGC is Sending',
+  sent: 'Your $DGC Has Been Sent',
+  sendError: 'Uh oh! Something went wrong sending your $DGC.',
   discord: 'Launch the VIP Discord',
   connectOtherWallets: 'Connect Other Wallets',
   manageWallets: 'Manage Wallets',
@@ -102,7 +102,7 @@ const titlesMap = {
   RECEIVE: {
     KEY_DISPLAY: () => {
       const useSolSPLAudio = getFeatureEnabled(
-        FeatureFlags.ENABLE_SPL_DGCO
+        FeatureFlags.ENABLE_SPL_DGC
       ) as boolean
       return (
         <TitleWrapper
@@ -124,7 +124,7 @@ const titlesMap = {
         <IconSend className={styles.sendIconWrapper} />
       </TitleWrapper>
     ),
-    AWAITING_CONVERTING_ETH_DGCO_TO_SOL: () => (
+    AWAITING_CONVERTING_ETH_DGC_TO_SOL: () => (
       <>
         <i className={cn('emoji warning', styles.converting)} />
         {messages.awaitConvertingEthToSolAudio}
@@ -204,7 +204,7 @@ const ModalContent = ({
   const amountPendingTransfer = useSelector(getSendData)
   const discordCode = useSelector(getDiscordCode)
   const useSolSPLAudio = getFeatureEnabled(
-    FeatureFlags.ENABLE_SPL_DGCO
+    FeatureFlags.ENABLE_SPL_DGC
   ) as boolean
 
   if (!modalState || !account || (useSolSPLAudio && !account.userBank)) {
@@ -262,7 +262,7 @@ const ModalContent = ({
             />
           )
           break
-        case 'AWAITING_CONVERTING_ETH_DGCO_TO_SOL':
+        case 'AWAITING_CONVERTING_ETH_DGC_TO_SOL':
           ret = <MigrationModalBody />
           break
         case 'SENDING':
@@ -320,7 +320,7 @@ const shouldAllowDismiss = (modalState: Nullable<ModalState>) => {
     ) &&
     !(
       modalState.stage === 'SEND' &&
-      modalState.flowState.stage === 'AWAITING_CONVERTING_ETH_DGCO_TO_SOL'
+      modalState.flowState.stage === 'AWAITING_CONVERTING_ETH_DGC_TO_SOL'
     )
   )
 }
@@ -377,7 +377,7 @@ const WalletModal = () => {
             modalState &&
             'flowState' in modalState &&
             modalState.flowState?.stage ===
-              'AWAITING_CONVERTING_ETH_DGCO_TO_SOL'
+              'AWAITING_CONVERTING_ETH_DGC_TO_SOL'
         })}
         showTitleHeader
         title={getTitle(modalState)}

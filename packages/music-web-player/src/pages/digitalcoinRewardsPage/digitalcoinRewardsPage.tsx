@@ -28,8 +28,8 @@ import WalletModal from './walletModal'
 import ExplainerTile from './components/explainerTile'
 
 export const messages = {
-  title: '$DGCO & Rewards',
-  description: 'Complete tasks to earn $DGCO tokens!'
+  title: '$DGC & Rewards',
+  description: 'Complete tasks to earn $DGC tokens!'
 }
 
 export const RewardsContent = () => {

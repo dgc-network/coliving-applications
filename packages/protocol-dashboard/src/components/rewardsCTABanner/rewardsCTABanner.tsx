@@ -8,8 +8,8 @@ import DigitalcoinRewardsModal from 'components/digitalcoinRewardsModal'
 import { IconArrow, IconCrown } from '@coliving/stems'
 
 const messages = {
-  rewards: '$DGCO REWARDS',
-  description: 'TOP 10 API APPS EACH MONTH WIN $DGCO',
+  rewards: '$DGC REWARDS',
+  description: 'TOP 10 API APPS EACH MONTH WIN $DGC',
   learnMore: 'LEARN MORE'
 }
 

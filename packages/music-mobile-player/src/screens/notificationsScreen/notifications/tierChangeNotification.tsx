@@ -19,7 +19,7 @@ import {
 const messages = {
   unlocked: 'Tier Unlocked',
   congrats: (tierLabel: string, amount: number) =>
-    `Congrats, you’ve reached ${tierLabel} Tier by having over ${amount} $DGCO! You now have access to exclusive features & a shiny new badge by your name.`,
+    `Congrats, you’ve reached ${tierLabel} Tier by having over ${amount} $DGC! You now have access to exclusive features & a shiny new badge by your name.`,
   twitterShareText: (tier: string, icon: string) =>
     `I've reached ${tier} Tier on @dgc-network! Check out the shiny new badge next to my name ${icon}`
 }

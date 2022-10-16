@@ -11,7 +11,7 @@ type LiveTextProps = {
 export const LiveText = ({ value }: LiveTextProps) => {
   return (
     <span className={styles.root}>
-      {value} <span aria-label={messages.liveLabel}>$DGCO</span>
+      {value} <span aria-label={messages.liveLabel}>$DGC</span>
     </span>
   )
 }

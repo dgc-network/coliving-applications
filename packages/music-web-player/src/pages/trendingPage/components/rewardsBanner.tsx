@@ -14,10 +14,10 @@ import { isMobile } from 'utils/clientUtil'
 import styles from './rewardsBanner.module.css'
 
 const messages = {
-  rewards: '$DGCO REWARDS',
-  digitalContentsDescription: 'TOP 5 DIGITAL_CONTENTS EACH WEEK WIN $DGCO',
-  contentListsDescription: 'TOP 5 CONTENT_LISTS EACH WEEK WIN $DGCO',
-  undergroundDescription: 'TOP 5 DIGITAL_CONTENTS EACH WEEK WIN $DGCO',
+  rewards: '$DGC REWARDS',
+  digitalContentsDescription: 'TOP 5 DIGITAL_CONTENTS EACH WEEK WIN $DGC',
+  contentListsDescription: 'TOP 5 CONTENT_LISTS EACH WEEK WIN $DGC',
+  undergroundDescription: 'TOP 5 DIGITAL_CONTENTS EACH WEEK WIN $DGC',
   learnMore: 'LEARN MORE'
 }
 

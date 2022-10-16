@@ -36,9 +36,9 @@ const TRENDING_REWARDS_DRAWER_NAME = 'TrendingRewardsExplainer'
 const TOS_URL = 'https://blog..co/article/digitalcoin-rewards'
 
 const messages = {
-  digitalContentsTitle: 'Top 5 DigitalContents Each Week Receive 100 $DGCO',
-  contentListTitle: 'Top 5 ContentLists Each Week Receive 100 $DGCO',
-  undergroundTitle: 'Top 5 DigitalContents Each Week Receive 100 $DGCO',
+  digitalContentsTitle: 'Top 5 DigitalContents Each Week Receive 100 $DGC',
+  contentListTitle: 'Top 5 ContentLists Each Week Receive 100 $DGC',
+  undergroundTitle: 'Top 5 DigitalContents Each Week Receive 100 $DGC',
   winners: 'Winners are selected every Friday at Noon PT!',
   lastWeek: "LAST WEEK'S WINNERS",
   digitalContents: 'DIGITAL_CONTENTS',

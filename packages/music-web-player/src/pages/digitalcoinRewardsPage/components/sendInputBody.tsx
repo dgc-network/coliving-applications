@@ -40,19 +40,19 @@ const { getRemoteVar } = remoteConfigInstance
 
 const messages = {
   warningTitle: 'PROCEED WITH CAUTION',
-  warningSubtitle: 'If you send $DGCO to the wrong address it will be lost.',
+  warningSubtitle: 'If you send $DGC to the wrong address it will be lost.',
   warningSubtitle2:
-    'WARNING: $DGCO sent will not count towards badges, tiers, and unlocked features!',
+    'WARNING: $DGC sent will not count towards badges, tiers, and unlocked features!',
   addressEthPlaceholder: '0xC7EF9651259197aA26544Af724441a46e491c12c',
   addressSolPlaceholder: '9qU2A32k4bL6sbohrah2MiZZRfemH92hyZTY7jKc5GR8',
-  sendAudio: 'SEND $DGCO',
-  insufficientBalance: 'Account does not have enough $DGCO',
+  sendAudio: 'SEND $DGC',
+  insufficientBalance: 'Account does not have enough $DGC',
   amountRequired: 'Amount is a required field',
-  amountInsufficient: 'This amount of $DGCO is too low to send.',
+  amountInsufficient: 'This amount of $DGC is too low to send.',
   amountMalformed: 'Amount must be a valid number',
   addressMalformed: 'Please enter a valid address',
   addressRequired: 'Address is required',
-  addressIsSelf: 'You cannot send $DGCO to your own wallet!',
+  addressIsSelf: 'You cannot send $DGC to your own wallet!',
   validSPLAddress: 'Please enter a valid Solana (SPL) wallet address',
   sendAmountLabel: 'Amount to SEND',
   destination: 'Destination Address',
@@ -73,7 +73,7 @@ type AddressError =
   | 'INVALID_SPL_ADDRESS'
 
 const makeMinAudioError = (num: number | string) =>
-  `You must send at least ${num} $DGCO`
+  `You must send at least ${num} $DGC`
 
 const balanceErrorMap: { [B in BalanceError]: string } = {
   INSUFFICIENT_BALANCE: messages.insufficientBalance,
@@ -209,10 +209,10 @@ const SendInputBody = ({
   )
 
   const useSolSPLAudio = getFeatureEnabled(
-    FeatureFlags.ENABLE_SPL_DGCO
+    FeatureFlags.ENABLE_SPL_DGC
   ) as boolean
   const minAudioSendAmount = getRemoteVar(
-    IntKeys.MIN_DGCO_SEND_AMOUNT
+    IntKeys.MIN_DGC_SEND_AMOUNT
   ) as number
 
   const onClickSend = () => {
@@ -284,7 +284,7 @@ const SendInputBody = ({
         label={messages.sendAmountLabel}
         format={Format.INPUT}
         placeholder={'0'}
-        rightLabel={'$DGCO'}
+        rightLabel={'$DGC'}
         value={amountToSend}
         isNumeric={true}
         onChange={onChangeAmount}

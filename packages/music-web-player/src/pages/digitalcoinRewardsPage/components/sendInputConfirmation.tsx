@@ -11,7 +11,7 @@ import styles from './sendInputConfirmation.module.css'
 
 const messages = {
   title: "YOU'RE ABOUT TO SEND",
-  sendButton: 'SEND $DGCO'
+  sendButton: 'SEND $DGC'
 }
 
 type SendInputConfirmationProps = {

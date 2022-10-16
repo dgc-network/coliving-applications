@@ -1,1 +1,1 @@
-export const TICKER = '$DGCO'
+export const TICKER = '$DGC'

@@ -34,7 +34,7 @@ const useStyles = makeStyles(({ spacing, typography, palette }) => ({
 
 const messages = {
   available: 'Available to send',
-  disclaimer: '$DGCO held in linked wallets cannot be used to tip'
+  disclaimer: '$DGC held in linked wallets cannot be used to tip'
 }
 
 export const AvailableAudio = () => {

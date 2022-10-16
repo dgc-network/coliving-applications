@@ -167,16 +167,16 @@ const createStyles = (themeColors: ThemeColors) =>
   })
 
 const messages = {
-  modalTitle: '$DGCO BREAKDOWN',
-  total: 'TOTAL $DGCO',
+  modalTitle: '$DGC BREAKDOWN',
+  total: 'TOTAL $DGC',
   colivingWallet: 'COLIVING WALLET',
-  colivingWalletDescription: 'You can use this $DGCO throughout the app',
+  colivingWalletDescription: 'You can use this $DGC throughout the app',
   linkedWallets: 'LINKED WALLETS',
   linkedWalletsDescription:
     'Linked wallets are more secure but not all features are supported',
   linkedWalletsTooltip:
     'Linked wallets affect VIP status and NFTs. Upcoming features may require different behavior to support linked wallets. ',
-  digitalcoin: '$DGCO'
+  digitalcoin: '$DGC'
 }
 
 export const DigitalcoinBreakdownDrawer = () => {
@@ -292,7 +292,7 @@ type WalletProps = { chain: Chain; address: string; balance: BNWei }
 const Wallet = ({ chain, address, balance }: WalletProps) => {
   // todo: use feature flag to determine whether we show sol digitalcoin
   // const { isEnabled: solWalletAudioEnabled } = useFlag(
-  //   FeatureFlags.SOL_WALLET_DGCO_ENABLED
+  //   FeatureFlags.SOL_WALLET_DGC_ENABLED
   // )
   const solWalletAudioEnabled = false
   const styles = useThemedStyles(createStyles)

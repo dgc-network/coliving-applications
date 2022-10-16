@@ -30,7 +30,7 @@ const ethOwnerWallet = process.env.REACT_APP_ETH_OWNER_WALLET
 const ethNetworkId = process.env.REACT_APP_ETH_NETWORK_ID
 
 const SOLANA_CLUSTER_ENDPOINT = process.env.REACT_APP_SOLANA_CLUSTER_ENDPOINT
-const WLIVE_MINT_ADDRESS = process.env.REACT_APP_WLIVE_MINT_ADDRESS
+const WDGC_MINT_ADDRESS = process.env.REACT_APP_WDGC_MINT_ADDRESS
 const SOLANA_TOKEN_ADDRESS = process.env.REACT_APP_SOLANA_TOKEN_PROGRAM_ADDRESS
 const CLAIMABLE_TOKEN_PDA = process.env.REACT_APP_CLAIMABLE_TOKEN_PDA
 const SOLANA_FEE_PAYER_ADDRESS = process.env.REACT_APP_SOLANA_FEE_PAYER_ADDRESS
@@ -177,7 +177,7 @@ const configureReadOnlyLibs = async () => {
   )
   const solanaWeb3Config = .configSolanaWeb3({
     solanaClusterEndpoint: SOLANA_CLUSTER_ENDPOINT,
-    mintAddress: WLIVE_MINT_ADDRESS,
+    mintAddress: WDGC_MINT_ADDRESS,
     solanaTokenAddress: SOLANA_TOKEN_ADDRESS,
     claimableTokenPDA: CLAIMABLE_TOKEN_PDA,
     feePayerAddress: SOLANA_FEE_PAYER_ADDRESS,
@@ -237,7 +237,7 @@ const configureLibsWithAccount = async () => {
     ),
     solanaWeb3Config: .configSolanaWeb3({
       solanaClusterEndpoint: SOLANA_CLUSTER_ENDPOINT,
-      mintAddress: WLIVE_MINT_ADDRESS,
+      mintAddress: WDGC_MINT_ADDRESS,
       solanaTokenAddress: SOLANA_TOKEN_ADDRESS,
       claimableTokenPDA: CLAIMABLE_TOKEN_PDA,
       feePayerAddress: SOLANA_FEE_PAYER_ADDRESS,

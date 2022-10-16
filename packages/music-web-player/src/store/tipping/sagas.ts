@@ -229,13 +229,13 @@ function* sendTipAsync() {
   const wei_digitalcoinWeiAmount = yield* call(walletClient.getCurrentWAudioBalance)
 
   if (weiBNAmount.gt(weiBNBalance)) {
-    const errorMessage = 'Not enough $DGCO'
+    const errorMessage = 'Not enough $DGC'
     throw new Error(errorMessage)
   }
 
   try {
     yield put(
-      make(Name.TIP_DGCO_REQUEST, {
+      make(Name.TIP_DGC_REQUEST, {
         senderWallet: sender.spl_wallet,
         recipientWallet,
         senderHandle: sender.handle,
@@ -246,7 +246,7 @@ function* sendTipAsync() {
       })
     )
     // If transferring spl wrapped digitalcoin and there are insufficent funds with only the
-    // user bank balance, transfer all eth LIVE to spl wrapped digitalcoin
+    // user bank balance, transfer all eth $DGC to spl wrapped digitalcoin
     if (weiBNAmount.gt(wei_digitalcoinWeiAmount)) {
       // Wait for a second before showing the notice that this might take a while
       const showConvertingMessage = yield* fork(function* () {
@@ -272,7 +272,7 @@ function* sendTipAsync() {
 
     yield put(sendTipSucceeded())
     yield put(
-      make(Name.TIP_DGCO_SUCCESS, {
+      make(Name.TIP_DGC_SUCCESS, {
         senderWallet: sender.spl_wallet,
         recipientWallet,
         senderHandle: sender.handle,
@@ -308,7 +308,7 @@ function* sendTipAsync() {
     console.error(`Send tip failed: ${error}`)
     yield put(sendTipFailed({ error }))
     yield put(
-      make(Name.TIP_DGCO_FAILURE, {
+      make(Name.TIP_DGC_FAILURE, {
         senderWallet: sender.spl_wallet,
         recipientWallet,
         senderHandle: sender.handle,

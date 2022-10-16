@@ -551,7 +551,7 @@ export function* watchShareCollection() {
 
 export function* watchShareAudioNftContentList() {
   yield* takeEvery(
-    socialActions.SHARE_DGCO_NFT_CONTENT_LIST,
+    socialActions.SHARE_DGC_NFT_CONTENT_LIST,
     function* (action: ReturnType<typeof socialActions.shareAudioNftContentList>) {
       const { handle } = action
       const user = yield* select(getUser, { handle })

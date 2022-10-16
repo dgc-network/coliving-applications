@@ -67,11 +67,11 @@ export const parseAudioInputToWei = (digitalcoin: StringDigitalcoin): Nullable<B
 }
 
 /**
- * Format wei BN to the full $DGCO currency with decimals
+ * Format wei BN to the full $DGC currency with decimals
  * @param amount The wei amount
  * @param shouldTruncate truncate decimals at truncation length
  * @param significantDigits if truncation set to true, how many significant digits to include
- * @returns $DGCO The $DGCO amount with decimals
+ * @returns $DGC The $DGC amount with decimals
  */
 export const formatWei = (
   amount: BNWei,

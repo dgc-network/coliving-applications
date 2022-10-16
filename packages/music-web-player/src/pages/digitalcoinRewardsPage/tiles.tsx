@@ -29,15 +29,15 @@ import styles from './tiles.module.css'
 import TokenHoverTooltip from './components/tokenHoverTooltip'
 
 const messages = {
-  noClaim1: 'You earn $DGCO by using Coliving.',
-  noClaim2: 'The more you use Coliving, the more $DGCO you earn.',
-  balance: '$DGCO BALANCE',
-  receiveLabel: 'RECEIVE $DGCO',
-  sendLabel: 'SEND $DGCO',
-  digitalcoin: '$DGCO',
+  noClaim1: 'You earn $DGC by using Coliving.',
+  noClaim2: 'The more you use Coliving, the more $DGC you earn.',
+  balance: '$DGC BALANCE',
+  receiveLabel: 'RECEIVE $DGC',
+  sendLabel: 'SEND $DGC',
+  digitalcoin: '$DGC',
   manageWallets: 'Manage Wallets',
   connectWallets: 'Connect Other Wallets',
-  totalAudio: 'Total $DGCO'
+  totalAudio: 'Total $DGC'
 }
 
 export const LEARN_MORE_URL = 'http://blog.coliving.lol/posts/community-meet-digitalcoin'

@@ -33,10 +33,10 @@ import { Tile } from './components/explainerTile'
 import { challengeRewardsConfig } from './config'
 
 const messages = {
-  title: '$DGCO REWARDS',
-  description1: 'Complete tasks to earn $DGCO tokens!',
+  title: '$DGC REWARDS',
+  description1: 'Complete tasks to earn $DGC tokens!',
   description2:
-    'Opportunities to earn $DGCO will change, so check back often for more chances to earn!',
+    'Opportunities to earn $DGC will change, so check back often for more chances to earn!',
   completeLabel: 'COMPLETE',
   claimReward: 'Claim Your Reward'
 }

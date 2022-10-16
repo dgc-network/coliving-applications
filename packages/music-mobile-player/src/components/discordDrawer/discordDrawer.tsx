@@ -22,7 +22,7 @@ import { makeStyles } from 'app/styles'
 
 const messages = {
   title: 'Launch the VIP Discord',
-  body: 'To access the private token-holders only Discord channel and/or update your Discord role, send a DM to the Coliving VIP Discord Bot (@$DGCO-BOT) with this code',
+  body: 'To access the private token-holders only Discord channel and/or update your Discord role, send a DM to the Coliving VIP Discord Bot (@$DGC-BOT) with this code',
   launchDiscord: 'LAUNCH THE VIP DISCORD',
   copyThisCode: 'Copy This Code'
 }

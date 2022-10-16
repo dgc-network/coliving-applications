@@ -12,8 +12,8 @@ import { LIVE_PAGE } from 'utils/route'
 import styles from './TierExplainerModal.module.css'
 
 export const messages = {
-  title: '$DGCO VIP Tiers',
-  desc1: 'Unlock $DGCO VIP Tiers by simply holding more $DGCO.',
+  title: '$DGC VIP Tiers',
+  desc1: 'Unlock $DGC VIP Tiers by simply holding more $DGC.',
   desc2:
     'Advancing to a new tier will earn you a profile badge, visible throughout the app, and unlock various new features, as they are released.',
   learnMore: 'LEARN MORE'

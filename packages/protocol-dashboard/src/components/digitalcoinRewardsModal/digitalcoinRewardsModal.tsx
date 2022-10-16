@@ -9,7 +9,7 @@ import useOpenLink from 'hooks/useOpenLink'
 import { COLIVING_API_URL } from 'utils/routes'
 
 const messages = {
-  title: '$DGCO REWARDS',
+  title: '$DGC REWARDS',
   apiLogo: 'Coliving API Logo',
   header: 'It’s easy to build your own app on Coliving',
   description1: 'The top 10 Coliving API apps each month win.',

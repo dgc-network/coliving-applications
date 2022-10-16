@@ -16,7 +16,7 @@ export const MODAL_NAME = 'TiersExplainer'
 
 const messages = {
   tier: 'Tier',
-  explainer1: 'Unlock $DGCO VIP Tiers by simply holding more $DGCO.',
+  explainer1: 'Unlock $DGC VIP Tiers by simply holding more $DGC.',
   explainer2:
     'Advancing to a new tier will earn you a profile badge, visible throughout the app, and unlock various new features, as they are released.',
   learnMore: 'LEARN MORE'
@@ -88,7 +88,7 @@ export const TiersExplainerDrawer = () => {
             accessibilityLabel={`${minAudioText} or more digitalcoin tokens`}
             style={styles.minAudio}
           >
-            {minAudio.toString()}+ $DGCO
+            {minAudio.toString()}+ $DGC
           </Text>
         </View>
       </View>

@@ -15,7 +15,7 @@ import { SIGN_UP_PAGE } from 'utils/route'
 import styles from './TipAudio.module.css'
 
 const messages = {
-  tipAudio: 'Tip $DGCO'
+  tipAudio: 'Tip $DGC'
 }
 
 export const TipAudioButton = () => {

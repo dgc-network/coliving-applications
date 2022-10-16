@@ -14,8 +14,8 @@ const TOKEN_ANIMATION_URL =
   'https://d1ne8ucs302cxl.cloudfront.net/animations/spinnytoken.mp4'
 
 const messages = {
-  whatIsAudio: 'WHAT IS $DGCO',
-  liveDescription: `Coliving is owned by people like you, not major corporations. Holding $DGCO grants you partial ownership of the Coliving platform and gives you access to special features as they are released.`,
+  whatIsAudio: 'WHAT IS $DGC',
+  liveDescription: `Coliving is owned by people like you, not major corporations. Holding $DGC grants you partial ownership of the Coliving platform and gives you access to special features as they are released.`,
   confused: 'Still confused? Don’t worry, more details coming soon!',
   learnMore: 'Learn More'
 }

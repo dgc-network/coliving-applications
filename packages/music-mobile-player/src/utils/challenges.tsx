@@ -28,7 +28,7 @@ export const challenges = {
   connectVerifiedDescription:
     'Get verified on Coliving by linking your verified Twitter or Instagram account!',
   connectVerifiedShortDescription:
-    'Link your verified social media accounts to earn 1 $DGCO',
+    'Link your verified social media accounts to earn 1 $DGC',
   connectVerifiedButton: 'Verify Your Account',
   connectVerifiedProgressLabel: 'Not Linked',
 
@@ -37,7 +37,7 @@ export const challenges = {
   listenStreakDescription:
     'Sign in and listen to at least one digital_content every day for 7 days',
   listenStreakShortDescription:
-    'Listen to one digital_content a day for seven days to earn 1 $DGCO',
+    'Listen to one digital_content a day for seven days to earn 1 $DGC',
   listenStreakButton: 'Trending DigitalContents',
   listenStreakProgressLabel: '%0/%1 Days',
 
@@ -45,7 +45,7 @@ export const challenges = {
   mobileInstallTitle: 'Get the Coliving Mobile App',
   mobileInstallDescription:
     'Install the Coliving app for iPhone and Android and Sign in to your account!',
-  mobileInstallShortDescription: 'Earn 1 $DGCO',
+  mobileInstallShortDescription: 'Earn 1 $DGC',
   mobileInstallButton: 'Get the App',
   mobileInstallProgressLabel: 'Not Installed',
 
@@ -54,15 +54,15 @@ export const challenges = {
   profileCompletionDescription:
     'Fill out the missing details on your Coliving profile and start interacting with digitalContents and landlords!',
   profileCompletionShortDescription:
-    'Complete your Coliving profile to earn 1 $DGCO',
+    'Complete your Coliving profile to earn 1 $DGC',
   profileCompletionButton: 'More Info',
   profileCompletionProgressLabel: '%0/%1 Complete',
 
   // Referrals
   referreralsTitle: 'Invite your Friends',
   referralsDescription:
-    'Invite your Friends! You’ll earn 1 $DGCO for each friend who joins with your link (and they’ll get an $DGCO too)',
-  referralsShortDescription: 'Earn 1 $DGCO, for you and your friend',
+    'Invite your Friends! You’ll earn 1 $DGC for each friend who joins with your link (and they’ll get an $DGC too)',
+  referralsShortDescription: 'Earn 1 $DGC, for you and your friend',
   referralsProgressLabel: '%0/%1 Invites Accepted',
   referralsRemainingLabel: '%0/%1 Invites Remain',
   referralsButton: 'Invite your Friends',
@@ -70,15 +70,15 @@ export const challenges = {
   // Verified Referrals
   referreralsVerifiedTitle: 'Invite your Residents',
   referralsVerifiedDescription:
-    'Invite your residents! You’ll earn 1 $DGCO for each friend who joins with your link (and they’ll get an $DGCO too)',
-  referralsVerifiedShortDescription: 'Earn up to 5,000 $DGCO',
+    'Invite your residents! You’ll earn 1 $DGC for each friend who joins with your link (and they’ll get an $DGC too)',
+  referralsVerifiedShortDescription: 'Earn up to 5,000 $DGC',
   referralsVerifiedProgressLabel: '%0/%1 Invites Accepted',
   referralsVerifiedRemainingLabel: '%0/%1 Invites Remain',
 
   // Referred
   referredTitle: 'You Accepted An Invite',
-  referredDescription: 'You earned $DGCO for being invited',
-  referredShortDescription: 'You earned $DGCO for being invited',
+  referredDescription: 'You earned $DGC for being invited',
+  referredShortDescription: 'You earned $DGC for being invited',
   referredProgressLabel: '%0/%1 Invites',
 
   // DigitalContent Upload

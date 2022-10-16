@@ -14,9 +14,9 @@ export const FETCH_DIGITAL_CONTENTS_METADATAS_SUCCEEDED =
   'FETCH_DIGITAL_CONTENTS_METADATAS_SUCCEEDED'
 export const FETCH_DIGITAL_CONTENTS_METADATAS_FAILED = 'FETCH_DIGITAL_CONTENTS_METADATAS_FAILED'
 
-export const FETCH_DIGITAL_CONTENT_DGCO = 'FETCH_DIGITAL_CONTENT_DGCO'
-export const FETCH_DIGITAL_CONTENT_DGCO_REQUESTED = 'FETCH_DIGITAL_CONTENT_DGCO_REQUESTED'
-export const FETCH_DIGITAL_CONTENT_DGCO_SUCCEEDED = 'FETCH_DIGITAL_CONTENT_DGCO_SUCCEEDED'
+export const FETCH_DIGITAL_CONTENT_DGC = 'FETCH_DIGITAL_CONTENT_DGC'
+export const FETCH_DIGITAL_CONTENT_DGC_REQUESTED = 'FETCH_DIGITAL_CONTENT_DGC_REQUESTED'
+export const FETCH_DIGITAL_CONTENT_DGC_SUCCEEDED = 'FETCH_DIGITAL_CONTENT_DGC_SUCCEEDED'
 export const UPDATE_LINEUP_ORDER = 'UPDATE_LINEUP_ORDER'
 
 export const PLAY = 'PLAY'
@@ -133,14 +133,14 @@ export class LineupActions {
 
   fetchDigitalContentAudio(digitalContentMetadata: DigitalContentMetadata) {
     return {
-      type: addPrefix(this.prefix, FETCH_DIGITAL_CONTENT_DGCO),
+      type: addPrefix(this.prefix, FETCH_DIGITAL_CONTENT_DGC),
       digitalContentMetadata
     }
   }
 
   fetchDigitalContentAudioRequested(index: number, digitalContentId: ID) {
     return {
-      type: addPrefix(this.prefix, FETCH_DIGITAL_CONTENT_DGCO_REQUESTED),
+      type: addPrefix(this.prefix, FETCH_DIGITAL_CONTENT_DGC_REQUESTED),
       index,
       digitalContentId
     }
@@ -148,7 +148,7 @@ export class LineupActions {
 
   fetchDigitalContentAudioSucceeded(index: number, digitalContentId: ID) {
     return {
-      type: addPrefix(this.prefix, FETCH_DIGITAL_CONTENT_DGCO_SUCCEEDED),
+      type: addPrefix(this.prefix, FETCH_DIGITAL_CONTENT_DGC_SUCCEEDED),
       index,
       digitalContentId
     }

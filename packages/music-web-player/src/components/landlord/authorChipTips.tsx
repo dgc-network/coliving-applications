@@ -20,7 +20,7 @@ import { TIPPING_TOP_RANK_THRESHOLD } from 'utils/constants'
 import styles from './LandlordChip.module.css'
 
 const messages = {
-  digitalcoin: '$DGCO',
+  digitalcoin: '$DGC',
   supporter: 'Supporter'
 }
 
