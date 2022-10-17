@@ -1,6 +1,6 @@
 export { ReactComponent as ColivingLogoGlyph } from '../../assets/icons/colivingLogoGlyph.svg'
 export { ReactComponent as ColivingLogoHorizontal } from '../../assets/icons/colivingLogoHorizontal.svg'
-export { ReactComponent as BadgeLandlord } from '../../assets/icons/badgeLandlord.svg'
+export { ReactComponent as BadgeLandlord } from '../../assets/icons/badgeAuthor.svg'
 export { ReactComponent as BadgeUser } from '../../assets/icons/badgeUser.svg'
 export { ReactComponent as BgWaveLarge } from '../../assets/icons/bgWaveLarge.svg'
 export { ReactComponent as BgWaveSmall } from '../../assets/icons/bgWaveSmall.svg'

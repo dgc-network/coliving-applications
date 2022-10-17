@@ -1,6 +1,6 @@
 import { PlayableType } from 'models/identifiers'
 
-import { DigitalContent } from './digital_content'
+import { DigitalContent } from './digitalContent'
 import { Collection } from './collection'
 
 export type Playable =

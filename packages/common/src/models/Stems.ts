@@ -1,4 +1,4 @@
-import { DigitalContent } from 'models/digital_content'
+import { DigitalContent } from 'models/digitalContent'
 
 export enum StemCategory {
   INSTRUMENTAL = 'INSTRUMENTAL',

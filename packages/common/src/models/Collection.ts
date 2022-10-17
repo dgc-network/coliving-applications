@@ -5,7 +5,7 @@ import { CoverArtSizes } from 'models/imageSizes'
 import { Repost } from 'models/repost'
 import { Nullable } from 'utils/typeUtils'
 
-import { UserDigitalContentMetadata } from './digital_content'
+import { UserDigitalContentMetadata } from './digitalContent'
 import { Favorite } from './favorite'
 import { User, UserMetadata } from './user'
 
